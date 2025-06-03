@@ -17,7 +17,7 @@ const WelcomeHeader = () => {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-white font-serif">Grandpa's Story Corner</h1>
-              <p className="text-amber-100 text-sm font-medium">Where every story feels like coming home</p>
+              <p className="text-amber-100 text-sm font-medium">Where every story feels like a new adventure</p>
             </div>
           </div>
           
