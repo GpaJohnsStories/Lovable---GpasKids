@@ -1,7 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Volume2, Book } from "lucide-react";
+import { BookOpen, Volume2, Book, User } from "lucide-react";
 
 interface Story {
   id: number;
@@ -10,6 +10,7 @@ interface Story {
   readTime: string;
   illustration: string;
   category: string;
+  author: string;
 }
 
 interface StoryCardProps {
@@ -34,24 +35,29 @@ const getCategoryStyles = (category: string) => {
 const StoryCard = ({ story }: StoryCardProps) => {
   return (
     <Card className="story-card group cursor-pointer">
-      <CardContent className="p-4">
-        <div className="text-center mb-3">
-          <div className="text-4xl mb-2">{story.illustration}</div>
+      <CardContent className="p-3">
+        <div className="text-center mb-2">
+          <div className="text-3xl mb-1">{story.illustration}</div>
           <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getCategoryStyles(story.category)}`}>
             {story.category}
           </span>
         </div>
         
-        <h3 className="text-lg font-bold text-amber-800 mb-2 leading-relaxed">
+        <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight">
           {story.title}
         </h3>
         
-        <p className="text-amber-700 mb-3 leading-relaxed text-sm">
+        <div className="flex items-center text-xs text-amber-600 mb-2">
+          <User className="h-3 w-3 mr-1" />
+          <span className="font-medium">by {story.author}</span>
+        </div>
+        
+        <p className="text-amber-700 mb-2 leading-relaxed text-xs">
           {story.description}
         </p>
         
-        <div className="flex items-center justify-between text-xs mb-3">
-          <div className="flex items-center space-x-3">
+        <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center space-x-2">
             <div className="flex items-center text-green-600 cursor-pointer hover:text-green-700 font-bold">
               <Book className="h-3 w-3 mr-1" />
               Show me
