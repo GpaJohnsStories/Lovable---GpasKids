@@ -12,7 +12,7 @@ const WelcomeHeader = () => {
               <img 
                 src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png" 
                 alt="Grandpa's beloved companion"
-                className="w-16 h-16 rounded-full object-cover"
+                className="w-16 h-16 rounded-full object-cover object-top"
               />
             </div>
             <div>
