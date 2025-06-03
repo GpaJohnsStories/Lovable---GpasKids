@@ -1,5 +1,3 @@
-
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Heart, Home } from "lucide-react";
@@ -30,7 +28,7 @@ const Index = () => {
             </p>
             <Button className="cozy-button text-lg">
               <BookOpen className="mr-2 h-5 w-5" />
-              Now Begin <em>Your</em> Adventure
+              Now Begin <em>Your New</em> Adventure
             </Button>
           </div>
         </div>
@@ -62,4 +60,3 @@ const Index = () => {
 };
 
 export default Index;
-
