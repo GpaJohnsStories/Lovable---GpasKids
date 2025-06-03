@@ -34,35 +34,35 @@ const getCategoryStyles = (category: string) => {
 const StoryCard = ({ story }: StoryCardProps) => {
   return (
     <Card className="story-card group cursor-pointer">
-      <CardContent className="p-6">
-        <div className="text-center mb-4">
-          <div className="text-6xl mb-3">{story.illustration}</div>
-          <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getCategoryStyles(story.category)}`}>
+      <CardContent className="p-4">
+        <div className="text-center mb-3">
+          <div className="text-4xl mb-2">{story.illustration}</div>
+          <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getCategoryStyles(story.category)}`}>
             {story.category}
           </span>
         </div>
         
-        <h3 className="text-xl font-bold text-amber-800 mb-3 leading-relaxed">
+        <h3 className="text-lg font-bold text-amber-800 mb-2 leading-relaxed">
           {story.title}
         </h3>
         
-        <p className="text-amber-700 mb-4 leading-relaxed">
+        <p className="text-amber-700 mb-3 leading-relaxed text-sm">
           {story.description}
         </p>
         
-        <div className="flex items-center justify-between text-sm mb-4">
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between text-xs mb-3">
+          <div className="flex items-center space-x-3">
             <div className="flex items-center text-green-600 cursor-pointer hover:text-green-700 font-bold">
-              <Book className="h-4 w-4 mr-1" />
-              Show me this story
+              <Book className="h-3 w-3 mr-1" />
+              Show me
             </div>
             <div className="flex items-center text-blue-600 cursor-pointer hover:text-blue-700 font-bold">
-              <Volume2 className="h-4 w-4 mr-1" />
-              Read it to me
+              <Volume2 className="h-3 w-3 mr-1" />
+              Read it
             </div>
           </div>
           <div className="flex items-center text-amber-600 font-bold">
-            <BookOpen className="h-4 w-4 mr-1" />
+            <BookOpen className="h-3 w-3 mr-1" />
             {story.readTime}
           </div>
         </div>
