@@ -17,10 +17,10 @@ const Index = () => {
         <div className="text-center mb-12">
           <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-8 shadow-lg border-2 border-orange-200 mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-amber-800 mb-4 leading-relaxed font-serif">
-              Hello there, my dear friend! 👋
+              Welcome to my special place for children to enjoy stories! 👋
             </h1>
             <p className="text-xl text-amber-700 mb-6 leading-relaxed max-w-3xl mx-auto">
-              I'm so glad you've come to visit! I've been waiting to share some of my favorite stories with you. 
+              With over 80 years of life experience and 10 wonderful grandchildren, I have many stories to share with you. 
               Each one comes straight from my heart, filled with wonder, laughter, and the kind of magic 
               that happens when we sit together and let our imaginations soar.
             </p>
