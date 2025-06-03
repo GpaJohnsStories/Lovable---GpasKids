@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Volume2 } from "lucide-react";
@@ -49,17 +50,16 @@ const StoryCard = ({ story }: StoryCardProps) => {
           {story.description}
         </p>
         
-        <div className="flex items-center justify-end text-sm text-amber-600 mb-4">
-          <div className="flex items-center">
+        <div className="flex items-center justify-between text-sm mb-4">
+          <div className="flex items-center text-blue-600 cursor-pointer hover:text-blue-700">
+            <Volume2 className="h-4 w-4 mr-1" />
+            Read it to me
+          </div>
+          <div className="flex items-center text-amber-600">
             <BookOpen className="h-4 w-4 mr-1" />
             {story.readTime}
           </div>
         </div>
-        
-        <Button className="w-full cozy-button group-hover:shadow-lg">
-          <Volume2 className="mr-2 h-4 w-4" />
-          Read it to me
-        </Button>
       </CardContent>
     </Card>
   );
