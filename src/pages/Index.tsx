@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Heart, Home } from "lucide-react";
@@ -22,7 +21,7 @@ const Index = () => {
             <p className="text-xl text-amber-700 mb-6 leading-relaxed max-w-3xl mx-auto">
               With over 80 years of life experience and 10 wonderful grandchildren, I have many stories to share with you. 
               Each one comes straight from my heart, filled with wonder, laughter, and the kind of magic 
-              that happens when we sit together and let our imaginations soar.
+              that happens when we sit quietly with a good story.
             </p>
             <p className="text-lg text-amber-600 mb-6 leading-relaxed max-w-2xl mx-auto italic">
               "Every story I tell is a gift from my heart to yours. Come, let's create some magical memories together!"
