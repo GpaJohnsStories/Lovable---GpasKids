@@ -15,7 +15,7 @@ const GrandpaNote = () => {
           Each tale I share with you carries a piece of my heart and a sprinkle of the wisdom 
           I've gathered along the way.
         </p>
-        <p className="text-orange-600 text-base leading-relaxed font-handwritten">
+        <p className="text-orange-700 text-lg leading-relaxed font-handwritten">
           This is your safe haven, dear one. A place where imagination runs free, 
           kindness fills every corner, and every story ends with a warm hug.
         </p>
