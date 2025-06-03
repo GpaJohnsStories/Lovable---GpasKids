@@ -5,7 +5,7 @@ const WelcomeText = () => {
       <div className="text-center mb-12">
         <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-8 shadow-lg border-2 border-orange-200 mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-amber-800 mb-4 leading-relaxed font-serif">
-            Welcome to my special place for children to enjoy stories! 👋
+            Welcome to my special place for children to enjoy stories!
           </h1>
           <p className="text-xl text-amber-700 mb-6 leading-relaxed max-w-3xl mx-auto">
             With over 80 years of life experience and 10 wonderful grandchildren, I have many stories to share with you. 
