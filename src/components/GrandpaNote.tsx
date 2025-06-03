@@ -8,7 +8,7 @@ const GrandpaNote = () => {
       <Card className="bg-gradient-to-r from-orange-100 to-amber-100 border-2 border-orange-200 p-8 max-w-3xl mx-auto">
         <div className="flex items-center justify-center mb-4">
           <Heart className="h-8 w-8 text-orange-600 mr-3" />
-          <h3 className="text-2xl font-bold text-orange-800 font-handwritten">A Note From Grandpa</h3>
+          <h3 className="text-2xl font-bold text-orange-800 font-handwritten">A Note From Grandpa John</h3>
         </div>
         <p className="text-orange-700 text-lg leading-relaxed mb-4 font-handwritten">
           You know, in all my years, I've learned that the best stories aren't just read—they're felt. 
