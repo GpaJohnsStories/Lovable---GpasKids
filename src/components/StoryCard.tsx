@@ -1,7 +1,6 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Volume2 } from "lucide-react";
+import { BookOpen, Volume2, Book } from "lucide-react";
 
 interface Story {
   id: number;
@@ -51,9 +50,15 @@ const StoryCard = ({ story }: StoryCardProps) => {
         </p>
         
         <div className="flex items-center justify-between text-sm mb-4">
-          <div className="flex items-center text-blue-600 cursor-pointer hover:text-blue-700">
-            <Volume2 className="h-4 w-4 mr-1" />
-            Read it to me
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center text-green-600 cursor-pointer hover:text-green-700">
+              <Book className="h-4 w-4 mr-1" />
+              Show me this story
+            </div>
+            <div className="flex items-center text-blue-600 cursor-pointer hover:text-blue-700">
+              <Volume2 className="h-4 w-4 mr-1" />
+              Read it to me
+            </div>
           </div>
           <div className="flex items-center text-amber-600">
             <BookOpen className="h-4 w-4 mr-1" />
