@@ -1,3 +1,4 @@
+
 const WelcomeText = () => {
   return (
     <div className="container mx-auto px-4 py-8">
@@ -14,9 +15,9 @@ const WelcomeText = () => {
             </h1>
           </div>
           <p className="text-xl text-amber-700 mb-6 leading-relaxed max-w-3xl mx-auto">
-            With over 80 years of life experience and 10 wonderful grandchildren, I have many stories to share with you. 
-            Each one comes straight from my heart, filled with wonder, laughter, and the kind of magic 
-            that happens when we sit quietly and read and let our imaginations soar.
+            After living a long time and having 10 wonderful grandchildren, I have lots of stories! 
+            These stories are special because they come from my heart, and are full of exciting things, laughs, and the kind of magic 
+            you find when you read and let your mind go on an adventure.
           </p>
           <p className="text-lg text-amber-600 mb-6 leading-relaxed max-w-2xl mx-auto italic">
             "Every story I tell is a gift from my heart to yours. Come and read and create some magical memories."
