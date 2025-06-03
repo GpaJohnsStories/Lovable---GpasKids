@@ -21,6 +21,12 @@ const CookieFreeFooter = () => {
 
           <div className="flex justify-center space-x-6 text-sm">
             <Link 
+              to="/" 
+              className="text-amber-600 hover:text-amber-800 underline"
+            >
+              Stories
+            </Link>
+            <Link 
               to="/privacy" 
               className="text-amber-600 hover:text-amber-800 underline"
             >
