@@ -10,21 +10,24 @@ const StorySection = () => {
       title: "The Magical Forest Adventure",
       description: "Join little Emma as she discovers a hidden world where trees can talk and flowers sing lullabies.",
       readTime: "5 min read",
-      difficulty: "Easy"
+      illustration: "🌳",
+      category: "Fun"
     },
     {
       id: 2,
       title: "The Brave Little Dragon",
       description: "Meet Spark, a tiny dragon who's afraid of fire, and learn how courage comes in all sizes.",
       readTime: "7 min read",
-      difficulty: "Medium"
+      illustration: "🐉",
+      category: "Life"
     },
     {
       id: 3,
       title: "The Wishing Well's Secret",
       description: "What happens when Sarah discovers that the old well in her backyard grants wishes in unexpected ways?",
       readTime: "6 min read",
-      difficulty: "Easy"
+      illustration: "🏛️",
+      category: "Fun"
     }
   ];
 
