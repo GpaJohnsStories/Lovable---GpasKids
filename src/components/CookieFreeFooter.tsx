@@ -40,10 +40,15 @@ const CookieFreeFooter = () => {
             </Link>
           </div>
 
-          <div className="flex justify-center items-center space-x-1 text-amber-600 pt-4">
+          {/* Copyright Statement */}
+          <div className="text-amber-600 text-sm font-medium pt-2">
+            © 2025 Grandpa John's Stories
+          </div>
+
+          <div className="flex justify-center items-center space-x-1 text-amber-600 pt-2">
             <span>Made with</span>
             <Heart className="h-4 w-4 text-red-500" />
-            <span>by Grandpa's Story Corner</span>
+            <span>for children</span>
           </div>
         </div>
       </div>
