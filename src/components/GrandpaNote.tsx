@@ -16,7 +16,7 @@ const GrandpaNote = () => {
           I've gathered along the way.
         </p>
         <p className="text-orange-700 text-lg leading-relaxed font-handwritten">
-          This is your safe haven, dear one. A place where imagination runs free, 
+          This is your safe haven, a place where imagination runs free, 
           kindness fills every corner, and every story ends with a warm hug.
         </p>
       </Card>
