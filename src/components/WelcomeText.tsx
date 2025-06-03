@@ -13,7 +13,7 @@ const WelcomeText = () => {
             that happens when we sit together and let our imaginations soar.
           </p>
           <p className="text-lg text-amber-600 mb-6 leading-relaxed max-w-2xl mx-auto italic">
-            "Every story I tell is a gift from my heart to yours. Come, let's create some magical memories together!"
+            "Every story I tell is a gift from my heart to yours. Come and read and create some magical memories."
           </p>
         </div>
       </div>

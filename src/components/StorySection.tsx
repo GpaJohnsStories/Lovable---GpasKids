@@ -1,119 +1,60 @@
 
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Heart, User } from "lucide-react";
+import { BookOpen, Star, Heart } from "lucide-react";
 import StoryCard from "./StoryCard";
 
-const newestStories = [
-  {
-    id: 1,
-    title: "The Magical Garden Behind Our House",
-    description: "Come with me to discover the secret garden where flowers sing and butterflies tell jokes!",
-    readTime: "5 minutes",
-    illustration: "🌻",
-    category: "Fun"
-  },
-  {
-    id: 2,
-    title: "When I Was Your Age: The Great Cookie Caper",
-    description: "Let me tell you about the time your grandmother and I tried to bake cookies for the whole neighborhood...",
-    readTime: "7 minutes",
-    illustration: "🍪",
-    category: "Life"
-  },
-  {
-    id: 3,
-    title: "The Friendly Dragon in the Attic",
-    description: "Did I ever tell you about the tiny dragon who lived in our attic and helped us find lost socks?",
-    readTime: "6 minutes",
-    illustration: "🐉",
-    category: "North Pole"
-  },
-  {
-    id: 4,
-    title: "The Day the Stars Fell Down",
-    description: "A gentle story about the night when shooting stars brought wishes to everyone in our little town.",
-    readTime: "8 minutes",
-    illustration: "⭐",
-    category: "World Changers"
-  }
-];
-
-const popularStories = [
-  {
-    id: 5,
-    title: "The Singing Teapot's Secret",
-    description: "A funny tale about a teapot that could only sing opera and how it saved the day!",
-    readTime: "4 minutes",
-    illustration: "🫖",
-    category: "Fun"
-  },
-  {
-    id: 6,
-    title: "The Lesson of the Lost Bicycle",
-    description: "How losing my first bicycle taught me the most important lesson about honesty and friendship.",
-    readTime: "6 minutes",
-    illustration: "🚲",
-    category: "Life"
-  },
-  {
-    id: 7,
-    title: "Santa's Helper Who Couldn't Wrap",
-    description: "Meet Bumble, the elf who was terrible at wrapping presents but discovered his special gift.",
-    readTime: "7 minutes",
-    illustration: "🎁",
-    category: "North Pole"
-  },
-  {
-    id: 8,
-    title: "The Little Girl Who Planted Hope",
-    description: "The inspiring true story of a young girl who changed her whole community, one tree at a time.",
-    readTime: "5 minutes",
-    illustration: "🌳",
-    category: "World Changers"
-  }
-];
-
 const StorySection = () => {
+  const stories = [
+    {
+      id: 1,
+      title: "The Magical Forest Adventure",
+      description: "Join little Emma as she discovers a hidden world where trees can talk and flowers sing lullabies.",
+      readTime: "5 min read",
+      difficulty: "Easy"
+    },
+    {
+      id: 2,
+      title: "The Brave Little Dragon",
+      description: "Meet Spark, a tiny dragon who's afraid of fire, and learn how courage comes in all sizes.",
+      readTime: "7 min read",
+      difficulty: "Medium"
+    },
+    {
+      id: 3,
+      title: "The Wishing Well's Secret",
+      description: "What happens when Sarah discovers that the old well in her backyard grants wishes in unexpected ways?",
+      readTime: "6 min read",
+      difficulty: "Easy"
+    }
+  ];
+
   return (
-    <section className="mb-12">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-amber-800 mb-3">
-          Today's Stories from Grandpa
-        </h2>
-        <p className="text-lg text-amber-700 max-w-2xl mx-auto">
-          Each story is specially chosen to make you smile, wonder, and feel the warm 
-          feeling of being loved and safe.
+    <section className="py-16">
+      <div className="text-center mb-12">
+        <div className="flex items-center justify-center mb-4">
+          <BookOpen className="h-8 w-8 text-orange-600 mr-3" />
+          <h2 className="text-3xl font-bold text-orange-800 font-serif">Story Collection</h2>
+          <Star className="h-8 w-8 text-orange-600 ml-3" />
+        </div>
+        <p className="text-lg text-orange-700 max-w-2xl mx-auto leading-relaxed">
+          Each story is crafted with love and designed to spark imagination, teach gentle lessons, 
+          and create those precious bedtime moments you'll treasure forever.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-        {/* Newest Stories Column */}
-        <div>
-          <h3 className="text-2xl font-bold text-amber-800 mb-6 text-center">Newest</h3>
-          <div className="space-y-6">
-            {newestStories.map((story) => (
-              <StoryCard key={story.id} story={story} />
-            ))}
-          </div>
-        </div>
-
-        {/* Most Popular Stories Column */}
-        <div>
-          <h3 className="text-2xl font-bold text-amber-800 mb-6 text-center">Most Popular</h3>
-          <div className="space-y-6">
-            {popularStories.map((story) => (
-              <StoryCard key={story.id} story={story} />
-            ))}
-          </div>
-        </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {stories.map((story) => (
+          <StoryCard key={story.id} story={story} />
+        ))}
       </div>
 
-      <div className="text-center mt-10">
-        <Button variant="outline" size="lg" className="border-2 border-amber-600 text-amber-700 hover:bg-amber-50">
-          <BookOpen className="mr-2 h-5 w-5" />
-          See All Stories
+      <div className="text-center">
+        <Button className="cozy-button text-lg px-8 py-4">
+          Now Begin <em>Your</em> Adventure
         </Button>
+        <p className="text-orange-600 mt-4 text-sm">
+          More magical stories are being added every week!
+        </p>
       </div>
     </section>
   );
