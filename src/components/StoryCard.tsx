@@ -38,7 +38,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
       <CardContent className="p-3">
         <div className="text-center mb-2">
           <div className="text-3xl mb-1">{story.illustration}</div>
-          <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getCategoryStyles(story.category)}`}>
+          <span className={`inline-block px-2 py-1 rounded-full text-sm font-medium ${getCategoryStyles(story.category)}`}>
             {story.category}
           </span>
         </div>
@@ -47,16 +47,16 @@ const StoryCard = ({ story }: StoryCardProps) => {
           {story.title}
         </h3>
         
-        <div className="flex items-center text-xs text-amber-600 mb-2">
+        <div className="flex items-center text-sm text-amber-600 mb-2">
           <User className="h-3 w-3 mr-1" />
           <span className="font-medium">by {story.author}</span>
         </div>
         
-        <p className="text-amber-700 mb-2 leading-relaxed text-xs">
+        <p className="text-amber-700 mb-2 leading-relaxed text-sm">
           {story.description}
         </p>
         
-        <div className="flex items-center justify-between text-xs">
+        <div className="flex items-center justify-between text-sm">
           <div className="flex items-center space-x-2">
             <div className="flex items-center text-green-600 cursor-pointer hover:text-green-700 font-bold">
               <Book className="h-3 w-3 mr-1" />

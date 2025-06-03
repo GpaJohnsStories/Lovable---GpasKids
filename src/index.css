@@ -46,11 +46,19 @@
     @apply bg-background text-foreground;
     font-family: 'Georgia', 'Times New Roman', serif;
     line-height: 1.7;
+    font-size: 14px; /* Set minimum font size */
+    min-font-size: 14px; /* Ensure minimum font size */
   }
   
   h1, h2, h3 {
     font-family: 'Georgia', 'Times New Roman', serif;
     font-weight: 700;
+  }
+
+  /* Override any text-xs usage to use text-sm instead */
+  .text-xs {
+    font-size: 0.875rem !important; /* 14px */
+    line-height: 1.25rem !important;
   }
 }
 
@@ -76,5 +84,11 @@
   .personal-text {
     @apply text-amber-700 leading-relaxed;
     font-family: 'Georgia', 'Times New Roman', serif;
+  }
+
+  /* Utility class to enforce minimum font size */
+  .text-min {
+    font-size: 14px;
+    line-height: 1.25rem;
   }
 }
