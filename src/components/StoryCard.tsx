@@ -16,13 +16,28 @@ interface StoryCardProps {
   story: Story;
 }
 
+const getCategoryStyles = (category: string) => {
+  switch (category) {
+    case "Fun":
+      return "bg-blue-500 text-white";
+    case "Life":
+      return "bg-green-500 text-white";
+    case "North Pole":
+      return "bg-red-600 text-white";
+    case "World Changers":
+      return "bg-amber-400 text-amber-900";
+    default:
+      return "bg-amber-200 text-amber-800";
+  }
+};
+
 const StoryCard = ({ story }: StoryCardProps) => {
   return (
     <Card className="story-card group cursor-pointer">
       <CardContent className="p-6">
         <div className="text-center mb-4">
           <div className="text-6xl mb-3">{story.illustration}</div>
-          <span className="inline-block bg-amber-200 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
+          <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getCategoryStyles(story.category)}`}>
             {story.category}
           </span>
         </div>
