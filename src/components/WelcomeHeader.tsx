@@ -10,8 +10,8 @@ const WelcomeHeader = () => {
             {/* Personal Photo */}
             <div className="bg-white rounded-full p-1 shadow-lg">
               <img 
-                src="https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=80&h=80&fit=crop&crop=face" 
-                alt="Grandpa"
+                src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png" 
+                alt="Grandpa's beloved companion"
                 className="w-16 h-16 rounded-full object-cover"
               />
             </div>
