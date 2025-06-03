@@ -8,7 +8,7 @@ const WelcomeText = () => {
             <img 
               src="/lovable-uploads/c3b88b23-b809-4f82-9c07-a90f95a3bde5.png" 
               alt="Grandpa John and his friend Buddy"
-              className="w-32 h-32 rounded-xl object-cover shadow-lg flex-shrink-0"
+              className="w-44 h-44 rounded-xl object-cover shadow-lg flex-shrink-0"
             />
             <h1 className="text-4xl md:text-5xl font-bold text-amber-800 leading-relaxed font-serif text-left flex-1">
               Welcome to my special place for children to enjoy stories!
