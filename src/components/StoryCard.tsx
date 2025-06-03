@@ -1,7 +1,6 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, User } from "lucide-react";
+import { BookOpen, Volume2 } from "lucide-react";
 
 interface Story {
   id: number;
@@ -50,11 +49,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
           {story.description}
         </p>
         
-        <div className="flex items-center justify-between text-sm text-amber-600 mb-4">
-          <div className="flex items-center">
-            <User className="h-4 w-4 mr-1" />
-            Grandpa
-          </div>
+        <div className="flex items-center justify-end text-sm text-amber-600 mb-4">
           <div className="flex items-center">
             <BookOpen className="h-4 w-4 mr-1" />
             {story.readTime}
@@ -62,8 +57,8 @@ const StoryCard = ({ story }: StoryCardProps) => {
         </div>
         
         <Button className="w-full cozy-button group-hover:shadow-lg">
-          <BookOpen className="mr-2 h-4 w-4" />
-          Read This Story
+          <Volume2 className="mr-2 h-4 w-4" />
+          Read it to me
         </Button>
       </CardContent>
     </Card>
