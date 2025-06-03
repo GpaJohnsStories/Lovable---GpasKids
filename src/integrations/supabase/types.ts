@@ -9,7 +9,130 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      comments: {
+        Row: {
+          author_email: string | null
+          author_name: string
+          content: string
+          created_at: string
+          id: string
+          is_approved: boolean
+          story_id: string
+          updated_at: string
+        }
+        Insert: {
+          author_email?: string | null
+          author_name: string
+          content: string
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          story_id: string
+          updated_at?: string
+        }
+        Update: {
+          author_email?: string | null
+          author_name?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          story_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stories: {
+        Row: {
+          author: string
+          category: Database["public"]["Enums"]["story_category"]
+          created_at: string
+          excerpt: string | null
+          google_drive_link: string | null
+          id: string
+          photo_link_1: string | null
+          photo_link_2: string | null
+          photo_link_3: string | null
+          read_count: number
+          story_code: string
+          tagline: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author: string
+          category: Database["public"]["Enums"]["story_category"]
+          created_at?: string
+          excerpt?: string | null
+          google_drive_link?: string | null
+          id?: string
+          photo_link_1?: string | null
+          photo_link_2?: string | null
+          photo_link_3?: string | null
+          read_count?: number
+          story_code: string
+          tagline?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          category?: Database["public"]["Enums"]["story_category"]
+          created_at?: string
+          excerpt?: string | null
+          google_drive_link?: string | null
+          id?: string
+          photo_link_1?: string | null
+          photo_link_2?: string | null
+          photo_link_3?: string | null
+          read_count?: number
+          story_code?: string
+          tagline?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      story_reads: {
+        Row: {
+          id: string
+          ip_address: unknown | null
+          read_at: string
+          story_id: string
+          user_agent: string | null
+        }
+        Insert: {
+          id?: string
+          ip_address?: unknown | null
+          read_at?: string
+          story_id: string
+          user_agent?: string | null
+        }
+        Update: {
+          id?: string
+          ip_address?: unknown | null
+          read_at?: string
+          story_id?: string
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "story_reads_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +141,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      story_category: "Fun" | "Life" | "North Pole" | "World Changers"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +256,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      story_category: ["Fun", "Life", "North Pole", "World Changers"],
+    },
   },
 } as const
