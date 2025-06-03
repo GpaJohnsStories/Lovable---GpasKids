@@ -13,19 +13,23 @@ const Index = () => {
       
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        {/* Welcome Section */}
+        {/* Personal Welcome Section */}
         <div className="text-center mb-12">
           <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-8 shadow-lg border-2 border-orange-200 mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-amber-800 mb-4 leading-relaxed">
-              Welcome to Grandpa's Story Corner! 📚
+            <h1 className="text-4xl md:text-5xl font-bold text-amber-800 mb-4 leading-relaxed font-serif">
+              Hello there, my dear friend! 👋
             </h1>
             <p className="text-xl text-amber-700 mb-6 leading-relaxed max-w-3xl mx-auto">
-              Come sit by the fireplace and let me tell you the most wonderful stories! 
-              Pull up a cozy chair, grab your favorite blanket, and let's begin our adventure together.
+              I'm so glad you've come to visit! I've been waiting to share some of my favorite stories with you. 
+              Each one comes straight from my heart, filled with wonder, laughter, and the kind of magic 
+              that happens when we sit together and let our imaginations soar.
+            </p>
+            <p className="text-lg text-amber-600 mb-6 leading-relaxed max-w-2xl mx-auto italic">
+              "Every story I tell is a gift from my heart to yours. Come, let's create some magical memories together!"
             </p>
             <Button className="cozy-button text-lg">
               <BookOpen className="mr-2 h-5 w-5" />
-              Start Reading Stories
+              Let's Begin Our Adventure
             </Button>
           </div>
         </div>
@@ -33,16 +37,21 @@ const Index = () => {
         {/* Story Collection */}
         <StorySection />
 
-        {/* Safety Message */}
+        {/* Personal Message */}
         <div className="mt-16 text-center">
-          <Card className="bg-gradient-to-r from-green-100 to-emerald-100 border-2 border-green-200 p-6 max-w-2xl mx-auto">
-            <div className="flex items-center justify-center mb-3">
-              <Heart className="h-8 w-8 text-green-600 mr-2" />
-              <h3 className="text-2xl font-bold text-green-800">Safe & Secure</h3>
+          <Card className="bg-gradient-to-r from-orange-100 to-amber-100 border-2 border-orange-200 p-8 max-w-3xl mx-auto">
+            <div className="flex items-center justify-center mb-4">
+              <Heart className="h-8 w-8 text-orange-600 mr-3" />
+              <h3 className="text-2xl font-bold text-orange-800 font-serif">A Note From Grandpa</h3>
             </div>
-            <p className="text-green-700 text-lg leading-relaxed">
-              This is your safe space for stories and learning. No ads, no strangers, 
-              just wonderful tales and a cozy place to explore your imagination!
+            <p className="text-orange-700 text-lg leading-relaxed mb-4">
+              You know, in all my years, I've learned that the best stories aren't just read—they're felt. 
+              Each tale I share with you carries a piece of my heart and a sprinkle of the wisdom 
+              I've gathered along the way.
+            </p>
+            <p className="text-orange-600 text-base leading-relaxed">
+              This is your safe haven, dear one. A place where imagination runs free, 
+              kindness fills every corner, and every story ends with a warm hug.
             </p>
           </Card>
         </div>
