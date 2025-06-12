@@ -1,6 +1,7 @@
+
 const WelcomeText = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-4">
       <div className="text-center mb-12">
         <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-8 shadow-lg border-2 border-orange-200 mb-4 font-fun">
           <div className="flex flex-col md:flex-row items-start gap-6 mb-4">
