@@ -1,5 +1,6 @@
 
 
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Volume2, Book, User, Globe } from "lucide-react";
@@ -47,7 +48,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
     if (story.category === "World Changers") {
       return (
         <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-          {story.category}
+          World Changers — Real People Who Made A Difference
         </span>
       );
     }
@@ -101,4 +102,5 @@ const StoryCard = ({ story }: StoryCardProps) => {
 };
 
 export default StoryCard;
+
 
