@@ -29,7 +29,7 @@ const StorySection = () => {
   const newestStories = [
     // Include the newest real story if available
     ...(realStories.length > 0 ? [{
-      id: parseInt(realStories[0].id.replace(/-/g, '').substring(0, 8), 16), // Convert UUID to number for compatibility
+      id: Number(realStories[0].id.replace(/-/g, '').substring(0, 8), 16), // Convert UUID to number for compatibility
       title: realStories[0].title,
       description: realStories[0].excerpt || realStories[0].tagline || "A wonderful story waiting to be discovered.",
       readTime: "5 min read",
@@ -106,14 +106,12 @@ const StorySection = () => {
   ];
 
   const getCategoryHeader = (category: string) => {
-    console.log('Rendering header for category:', category);
-    
     switch (category) {
       case "World Changers":
         return (
-          <div className="flex items-center mb-6">
+          <div className="flex items-center justify-center mb-6">
             <Globe className="h-6 w-6 text-orange-600 mr-3" />
-            <div>
+            <div className="text-center">
               <h3 className="text-xl font-bold text-orange-800">World Changers</h3>
               <p className="text-sm text-orange-600">Real People Who Made A Difference</p>
             </div>
@@ -121,12 +119,12 @@ const StorySection = () => {
         );
       case "Life":
         return (
-          <div className="flex items-center mb-6">
+          <div className="flex items-center justify-center mb-6">
             <Avatar className="h-6 w-6 mr-3">
               <AvatarImage src="/lovable-uploads/9ae6be30-bcc5-40fd-9bb9-61d4ad4383ad.png" alt="Author" />
               <AvatarFallback>👤</AvatarFallback>
             </Avatar>
-            <div>
+            <div className="text-center">
               <h3 className="text-xl font-bold text-orange-800">Life</h3>
               <p className="text-sm text-orange-600">Lessons and Stories From My Life</p>
             </div>
@@ -134,9 +132,9 @@ const StorySection = () => {
         );
       case "Fun":
         return (
-          <div className="flex items-center mb-6">
+          <div className="flex items-center justify-center mb-6">
             <Smile className="h-6 w-6 text-orange-600 mr-3" />
-            <div>
+            <div className="text-center">
               <h3 className="text-xl font-bold text-orange-800">Fun</h3>
               <p className="text-sm text-orange-600">Jokes, Poems, Games</p>
             </div>
@@ -144,43 +142,18 @@ const StorySection = () => {
         );
       case "North Pole":
         return (
-          <div className="flex items-center mb-6">
+          <div className="flex items-center justify-center mb-6">
             <img src="/lovable-uploads/a63d1701-488c-49db-a1d3-5cb2b39f023d.png" alt="North Pole" className="h-6 w-6 mr-3" />
-            <div>
+            <div className="text-center">
               <h3 className="text-xl font-bold text-orange-800">North Pole</h3>
               <p className="text-sm text-orange-600">Stories from the North Pole</p>
             </div>
           </div>
         );
-      case "Newest":
-        console.log('Rendering Newest header with Star icon');
-        return (
-          <div className="flex items-center justify-center mb-6">
-            <Star className="h-6 w-6 text-orange-600 mr-3" />
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">✨ Newest Stories</h3>
-              <p className="text-sm text-orange-600">Fresh Stories Just Added</p>
-            </div>
-          </div>
-        );
-      case "Most Popular":
-        console.log('Rendering Most Popular header with Heart icon');
-        return (
-          <div className="flex items-center justify-center mb-6">
-            <Heart className="h-6 w-6 text-orange-600 mr-3" />
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">❤️ Most Popular</h3>
-              <p className="text-sm text-orange-600">Reader Favorites</p>
-            </div>
-          </div>
-        );
       default:
         return (
-          <div className="flex items-center justify-center mb-6">
-            <BookOpen className="h-6 w-6 text-orange-600 mr-3" />
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">{category}</h3>
-            </div>
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-bold text-orange-800">{category}</h3>
           </div>
         );
     }
