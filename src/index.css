@@ -50,7 +50,12 @@
     min-font-size: 14px; /* Ensure minimum font size */
   }
   
-  h1, h2, h3 {
+  h1 {
+    font-family: 'Segoe Print', cursive, sans-serif !important;
+    font-weight: 700;
+  }
+
+  h2, h3 {
     font-family: 'Georgia', 'Times New Roman', serif;
     font-weight: 700;
   }
