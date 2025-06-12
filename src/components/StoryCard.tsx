@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Volume2, Book, User, Globe } from "lucide-react";
@@ -39,7 +38,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
     if (story.category === "Life") {
       return (
         <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-          Life Lessons
+          Lessons and Stories From Grandpa John's Life
         </span>
       );
     }
@@ -47,7 +46,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
     if (story.category === "World Changers") {
       return (
         <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-          World Changers
+          World Changers — Real People Who Made A Difference
         </span>
       );
     }
@@ -55,7 +54,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
     if (story.category === "North Pole") {
       return (
         <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-          North Pole Stories
+          Stories from the North Pole
         </span>
       );
     }
@@ -63,7 +62,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
     if (story.category === "Fun") {
       return (
         <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-          Fun & Games
+          Fun Jokes, Poems, Games & More
         </span>
       );
     }
