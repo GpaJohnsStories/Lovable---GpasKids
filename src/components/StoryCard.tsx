@@ -39,7 +39,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
     if (story.category === "Life") {
       return (
         <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-          Lessons and Stories From Gpa John's Life
+          Life Lessons
         </span>
       );
     }
@@ -47,7 +47,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
     if (story.category === "World Changers") {
       return (
         <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-          World Changers — Real People Who Made A Difference
+          World Changers
         </span>
       );
     }
@@ -55,7 +55,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
     if (story.category === "North Pole") {
       return (
         <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-          Stories From the North Pole
+          North Pole Stories
         </span>
       );
     }
@@ -63,7 +63,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
     if (story.category === "Fun") {
       return (
         <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-          Fun Jokes, Poem, Games and More
+          Fun & Games
         </span>
       );
     }
