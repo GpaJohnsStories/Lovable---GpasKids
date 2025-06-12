@@ -58,6 +58,16 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden">
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          [contenteditable]:empty:before {
+            content: attr(data-placeholder);
+            color: #9ca3af;
+            font-style: italic;
+          }
+        `
+      }} />
+      
       <div className="flex items-center gap-2 p-3 bg-gray-50 border-b border-gray-200">
         <Button
           type="button"
@@ -101,14 +111,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         data-placeholder={placeholder}
         suppressContentEditableWarning={true}
       />
-      
-      <style jsx>{`
-        [contenteditable]:empty:before {
-          content: attr(data-placeholder);
-          color: #9ca3af;
-          font-style: italic;
-        }
-      `}</style>
     </div>
   );
 };
