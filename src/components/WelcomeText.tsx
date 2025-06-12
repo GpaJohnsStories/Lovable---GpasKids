@@ -1,5 +1,3 @@
-
-
 const WelcomeText = () => {
   return (
     <div className="container mx-auto px-4 py-4">
@@ -9,7 +7,7 @@ const WelcomeText = () => {
             <img 
               src="/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png" 
               alt="Grandpa John at his desk with Buddy on his lap"
-              className="w-56 h-56 rounded-xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
+              className="w-64 h-64 rounded-xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
               onLoad={() => console.log('Image loaded successfully:', '/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png')}
               onError={(e) => console.log('Image failed to load:', e)}
             />
@@ -29,4 +27,3 @@ const WelcomeText = () => {
 };
 
 export default WelcomeText;
-
