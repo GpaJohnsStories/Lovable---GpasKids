@@ -55,6 +55,16 @@
     font-weight: 700;
   }
 
+  /* Override serif font when font-fun class is used */
+  .font-fun h1,
+  .font-fun h2,
+  .font-fun h3,
+  h1.font-fun,
+  h2.font-fun,
+  h3.font-fun {
+    font-family: 'Segoe Print', cursive, sans-serif !important;
+  }
+
   /* Override any text-xs usage to use text-sm instead */
   .text-xs {
     font-size: 0.875rem !important; /* 14px */
