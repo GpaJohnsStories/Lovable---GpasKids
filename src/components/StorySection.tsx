@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { BookOpen, Star, Heart, Globe, Smile } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -105,6 +106,8 @@ const StorySection = () => {
   ];
 
   const getCategoryHeader = (category: string) => {
+    console.log('Rendering header for category:', category);
+    
     switch (category) {
       case "World Changers":
         return (
@@ -150,21 +153,23 @@ const StorySection = () => {
           </div>
         );
       case "Newest":
+        console.log('Rendering Newest header with Star icon');
         return (
           <div className="flex items-center justify-center mb-6">
             <Star className="h-6 w-6 text-orange-600 mr-3" />
             <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">Newest</h3>
+              <h3 className="text-xl font-bold text-orange-800">✨ Newest Stories</h3>
               <p className="text-sm text-orange-600">Fresh Stories Just Added</p>
             </div>
           </div>
         );
       case "Most Popular":
+        console.log('Rendering Most Popular header with Heart icon');
         return (
           <div className="flex items-center justify-center mb-6">
             <Heart className="h-6 w-6 text-orange-600 mr-3" />
             <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">Most Popular</h3>
+              <h3 className="text-xl font-bold text-orange-800">❤️ Most Popular</h3>
               <p className="text-sm text-orange-600">Reader Favorites</p>
             </div>
           </div>
