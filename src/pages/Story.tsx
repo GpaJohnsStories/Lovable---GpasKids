@@ -76,7 +76,7 @@ const Story = () => {
   const formatContent = (content: string) => {
     // Split by double line breaks to create paragraphs
     return content.split('\n\n').map((paragraph, index) => (
-      <p key={index} className="mb-4 text-orange-800 leading-relaxed">
+      <p key={index} className="mb-4 text-black leading-relaxed">
         {paragraph.trim()}
       </p>
     ));
@@ -151,7 +151,7 @@ const Story = () => {
                 <>
                   {story.excerpt && (
                     <div className="prose prose-orange max-w-none mb-6">
-                      <p className="text-orange-700 leading-relaxed text-base">
+                      <p className="text-black leading-relaxed text-base">
                         {story.excerpt}
                       </p>
                     </div>
