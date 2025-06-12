@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Volume2, Book, User, Globe } from "lucide-react";
@@ -38,11 +37,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
     if (story.category === "Life") {
       return (
         <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-          <Avatar className="h-4 w-4 mr-1">
-            <AvatarImage src="/lovable-uploads/86bd5c48-6f8e-4a52-a343-273bf88f31cd.png" alt="Author" />
-            <AvatarFallback>👤</AvatarFallback>
-          </Avatar>
-          Life — Lessons and Stories From My Life
+          Lessons and Stories From My Life
         </span>
       );
     }
