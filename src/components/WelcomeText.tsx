@@ -1,4 +1,5 @@
 
+
 const WelcomeText = () => {
   return (
     <div className="container mx-auto px-4 py-4">
@@ -6,10 +7,10 @@ const WelcomeText = () => {
         <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-8 shadow-lg border-2 border-orange-200 mb-4 font-fun">
           <div className="flex flex-col md:flex-row items-start gap-6 mb-4">
             <img 
-              src="/lovable-uploads/da1bb056-6363-4597-90b9-7aeb809ab7bd.png?v=2" 
+              src="/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png" 
               alt="Grandpa John at his desk with Buddy on his lap"
               className="w-48 h-48 rounded-xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
-              onLoad={() => console.log('Image loaded successfully:', '/lovable-uploads/da1bb056-6363-4597-90b9-7aeb809ab7bd.png')}
+              onLoad={() => console.log('Image loaded successfully:', '/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png')}
               onError={(e) => console.log('Image failed to load:', e)}
             />
             <h1 className="text-4xl md:text-5xl font-bold text-amber-800 leading-relaxed text-center md:text-left flex-1">
@@ -28,3 +29,4 @@ const WelcomeText = () => {
 };
 
 export default WelcomeText;
+
