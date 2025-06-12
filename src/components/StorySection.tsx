@@ -26,16 +26,16 @@ const StorySection = () => {
   console.log('Fetched stories:', realStories);
 
   const newestStories = [
-    // Include the newest real story if available
-    ...(realStories.length > 0 ? [{
-      id: parseInt(realStories[0].id.replace(/-/g, '').substring(0, 8), 16), // Convert UUID to number for compatibility
-      title: realStories[0].title,
-      description: realStories[0].excerpt || realStories[0].tagline || "A wonderful story waiting to be discovered.",
+    // Include the newest real stories if available - using actual UUIDs
+    ...(realStories.slice(0, 1).map(story => ({
+      id: story.id, // Use the actual UUID
+      title: story.title,
+      description: story.excerpt || story.tagline || "A wonderful story waiting to be discovered.",
       readTime: "5 min read",
       illustration: "📖",
-      category: realStories[0].category,
-      author: realStories[0].author
-    }] : []),
+      category: story.category,
+      author: story.author
+    }))),
     {
       id: 6,
       title: "Grandpa's Old Toolbox",

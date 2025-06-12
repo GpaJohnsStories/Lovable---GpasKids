@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Volume2, Book, User, Globe } from "lucide-react";
@@ -5,7 +6,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 
 interface Story {
-  id: number;
+  id: string | number; // Support both UUID strings and numbers
   title: string;
   description: string;
   readTime: string;
