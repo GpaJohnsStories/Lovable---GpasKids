@@ -1,5 +1,22 @@
 
 const WelcomeText = () => {
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const img = e.currentTarget;
+    console.log('Image failed to load:', img.src);
+    
+    // Try alternative paths
+    if (img.src.includes('/lovable-uploads/bc5df509-09d6-4f6c-8797-a54c0fcb3d35.png')) {
+      console.log('Trying alternative path with jpg extension...');
+      img.src = '/lovable-uploads/bc5df509-09d6-4f6c-8797-a54c0fcb3d35.jpg';
+    } else if (img.src.includes('.jpg')) {
+      console.log('Trying path without leading slash...');
+      img.src = 'lovable-uploads/bc5df509-09d6-4f6c-8797-a54c0fcb3d35.png';
+    } else {
+      console.log('All image paths failed, hiding image');
+      img.style.display = 'none';
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-4">
       <div className="text-center mb-12">
@@ -9,11 +26,8 @@ const WelcomeText = () => {
               src="/lovable-uploads/bc5df509-09d6-4f6c-8797-a54c0fcb3d35.png" 
               alt="Grandpa John and his friend Buddy"
               className="w-48 h-48 rounded-xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
-              onError={(e) => {
-                console.log('Image failed to load:', e.currentTarget.src);
-                e.currentTarget.style.display = 'none';
-              }}
-              onLoad={() => console.log('Image loaded successfully')}
+              onError={handleImageError}
+              onLoad={() => console.log('Image loaded successfully from:', document.querySelector('img')?.src)}
             />
             <h1 className="text-4xl md:text-5xl font-bold text-amber-800 leading-relaxed text-center md:text-left flex-1">
               Welcome to my special place for children to enjoy stories!
