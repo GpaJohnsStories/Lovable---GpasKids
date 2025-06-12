@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { BookOpen, Star, Heart, Globe, Smile } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -29,7 +28,7 @@ const StorySection = () => {
   const newestStories = [
     // Include the newest real story if available
     ...(realStories.length > 0 ? [{
-      id: Number(realStories[0].id.replace(/-/g, '').substring(0, 8), 16), // Convert UUID to number for compatibility
+      id: parseInt(realStories[0].id.replace(/-/g, '').substring(0, 8), 16), // Convert UUID to number for compatibility
       title: realStories[0].title,
       description: realStories[0].excerpt || realStories[0].tagline || "A wonderful story waiting to be discovered.",
       readTime: "5 min read",
