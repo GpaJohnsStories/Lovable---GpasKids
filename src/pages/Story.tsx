@@ -73,6 +73,46 @@ const Story = () => {
     }
   };
 
+  const renderCategoryBadge = (category: string) => {
+    if (category === "Life") {
+      return (
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(category)}`}>
+          Lessons and Stories From Grandpa John's Life
+        </span>
+      );
+    }
+
+    if (category === "World Changers") {
+      return (
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(category)}`}>
+          World Changers — Real People Who Made A Difference
+        </span>
+      );
+    }
+
+    if (category === "North Pole") {
+      return (
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(category)}`}>
+          Stories from the North Pole
+        </span>
+      );
+    }
+
+    if (category === "Fun") {
+      return (
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(category)}`}>
+          Fun Jokes, Poems, Games & More
+        </span>
+      );
+    }
+
+    return (
+      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(category)}`}>
+        {category}
+      </span>
+    );
+  };
+
   const formatContent = (content: string) => {
     // Split by double line breaks to create paragraphs
     return content.split('\n\n').map((paragraph, index) => (
@@ -94,9 +134,7 @@ const Story = () => {
           <Card className="mb-8">
             <CardContent className="p-8">
               <div className="text-center mb-6">
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-                  {story.category}
-                </span>
+                {renderCategoryBadge(story.category)}
               </div>
 
               <h1 className="text-3xl font-bold text-orange-800 text-center mb-4 leading-tight">
