@@ -60,6 +60,12 @@
     font-weight: 700;
   }
 
+  p {
+    @apply text-2xl text-amber-800 font-semibold;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.7;
+  }
+
   /* Override serif font when font-fun class is used */
   .font-fun h1,
   .font-fun h2,
