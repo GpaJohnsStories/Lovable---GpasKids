@@ -6,7 +6,7 @@ const WelcomeText = () => {
         <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-8 shadow-lg border-2 border-orange-200 mb-4 font-fun">
           <div className="flex flex-col md:flex-row items-start gap-6 mb-4">
             <img 
-              src="/lovable-uploads/c3b88b23-b809-4f82-9c07-a90f95a3bde5.png" 
+              src="/lovable-uploads/bc5df509-09d6-4f6c-8797-a54c0fcb3d35.png" 
               alt="Grandpa John and his friend Buddy"
               className="w-48 h-48 rounded-xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
             />
