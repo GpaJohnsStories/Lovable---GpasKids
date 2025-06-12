@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { BookOpen, Star, Heart, Globe, Smile } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -120,12 +119,11 @@ const StorySection = () => {
         return (
           <div className="flex items-center justify-center mb-6">
             <Avatar className="h-6 w-6 mr-3">
-              <AvatarImage src="/lovable-uploads/9ae6be30-bcc5-40fd-9bb9-61d4ad4383ad.png" alt="Author" />
+              <AvatarImage src="/lovable-uploads/86bd5c48-6f8e-4a52-a343-273bf88f31cd.png" alt="Author" />
               <AvatarFallback>👤</AvatarFallback>
             </Avatar>
             <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800 font-fun">Life</h3>
-              <p className="text-sm text-orange-600 font-fun">Lessons and Stories From My Life</p>
+              <h3 className="text-xl font-bold text-orange-800 font-fun">Life — Lessons and Stories From My Life</h3>
             </div>
           </div>
         );
