@@ -23,89 +23,46 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
       console.log('Raw RTF content length:', text.length);
       console.log('Raw RTF sample:', text.substring(0, 500));
       
-      // More sophisticated RTF parsing
+      // Clean RTF parsing approach
       let content = text;
       
-      // First, find where the actual content starts (after font tables, etc.)
-      // Look for common RTF document start patterns
-      const contentStartPatterns = [
-        /\\f0\\fs\d+/,  // font size declarations
-        /\\pard/,       // paragraph formatting
-        /\\plain/       // plain text formatting
-      ];
-      
-      let contentStartIndex = 0;
-      for (const pattern of contentStartPatterns) {
-        const match = content.search(pattern);
-        if (match > contentStartIndex) {
-          contentStartIndex = match;
-        }
-      }
-      
-      // If we found a content start, use it
-      if (contentStartIndex > 0) {
-        content = content.substring(contentStartIndex);
-      }
-      
-      // Remove RTF control groups that don't contain text
+      // Remove RTF header information (font tables, color tables, etc.)
       content = content.replace(/{\\fonttbl[^}]*}/g, '');
       content = content.replace(/{\\colortbl[^}]*}/g, '');
       content = content.replace(/{\\stylesheet[^}]*}/g, '');
       content = content.replace(/{\\info[^}]*}/g, '');
       content = content.replace(/{\\generator[^}]*}/g, '');
+      content = content.replace(/{\\*\\[^}]*}/g, ''); // Remove other RTF metadata
       
-      // Handle paragraph and line breaks first (before removing other controls)
-      content = content.replace(/\\par\b/g, '\n\n');
-      content = content.replace(/\\line\b/g, '\n');
-      content = content.replace(/\\tab\b/g, '\t');
+      // Convert RTF formatting to plain text equivalents
+      content = content.replace(/\\par\s*/g, '\n\n'); // Paragraph breaks
+      content = content.replace(/\\line\s*/g, '\n'); // Line breaks
+      content = content.replace(/\\tab\s*/g, '\t'); // Tabs
       
-      // Remove RTF control words (but keep the space after them)
-      content = content.replace(/\\[a-zA-Z]+\d*\s*/g, ' ');
+      // Remove RTF control sequences but be more careful about spaces
+      // First handle control words that might have parameters
+      content = content.replace(/\\[a-zA-Z]+\d*\s*/g, '');
       
-      // Remove RTF control symbols
-      content = content.replace(/\\[^a-zA-Z\s\n]/g, '');
+      // Remove RTF control symbols (like \', \{, \})
+      content = content.replace(/\\[^a-zA-Z\s]/g, '');
       
-      // Now handle braces - remove them but keep content inside
-      let result = '';
-      let braceLevel = 0;
-      let i = 0;
+      // Remove remaining braces
+      content = content.replace(/[{}]/g, '');
       
-      while (i < content.length) {
-        const char = content[i];
-        
-        if (char === '{') {
-          braceLevel++;
-        } else if (char === '}') {
-          braceLevel--;
-        } else if (char === '\\' && i + 1 < content.length) {
-          // Skip RTF control sequences we might have missed
-          i++;
-          while (i < content.length && /[a-zA-Z0-9]/.test(content[i])) {
-            i++;
-          }
-          continue;
-        } else {
-          // Only add text characters, not control characters
-          if (braceLevel <= 1 && char.match(/[\w\s\n\t.,!?;:'"()-]/) && char !== '\\') {
-            result += char;
-          }
-        }
-        i++;
-      }
+      // Clean up multiple spaces and normalize whitespace
+      content = content.replace(/[ \t]+/g, ' '); // Multiple spaces/tabs to single space
+      content = content.replace(/\n[ \t]+/g, '\n'); // Remove spaces at start of lines
+      content = content.replace(/[ \t]+\n/g, '\n'); // Remove spaces at end of lines
+      content = content.replace(/\n{3,}/g, '\n\n'); // Multiple newlines to double newlines
       
-      content = result;
-      
-      // Clean up whitespace
-      content = content.replace(/\s+/g, ' ');
-      content = content.replace(/\n\s+/g, '\n');
-      content = content.replace(/\s+\n/g, '\n');
-      content = content.replace(/\n{3,}/g, '\n\n');
+      // Final cleanup
       content = content.trim();
       
       console.log('Processed content length:', content.length);
       console.log('Processed content sample:', content.substring(0, 300));
       
-      if (content.length > 50 && content.match(/[a-zA-Z]/)) {
+      // Validate that we extracted meaningful content
+      if (content.length > 20 && /[a-zA-Z]{3,}/.test(content)) {
         onContentExtracted(content);
         toast({
           title: "Success",
