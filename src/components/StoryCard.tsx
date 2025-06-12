@@ -38,7 +38,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
   const renderCategoryBadge = () => {
     if (story.category === "Life") {
       return (
-        <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
           Lessons and Stories From Gpa John's Life
         </span>
       );
@@ -46,7 +46,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
 
     if (story.category === "World Changers") {
       return (
-        <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
           World Changers — Real People Who Made A Difference
         </span>
       );
@@ -54,7 +54,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
 
     if (story.category === "North Pole") {
       return (
-        <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
           Stories From the North Pole
         </span>
       );
@@ -62,14 +62,14 @@ const StoryCard = ({ story }: StoryCardProps) => {
 
     if (story.category === "Fun") {
       return (
-        <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
           Fun Jokes, Poem, Games and More
         </span>
       );
     }
 
     return (
-      <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
         {story.category}
       </span>
     );
