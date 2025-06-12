@@ -2,7 +2,6 @@
 import WelcomeHeader from "@/components/WelcomeHeader";
 import WelcomeText from "@/components/WelcomeText";
 import StorySection from "@/components/StorySection";
-import GrandpaNote from "@/components/GrandpaNote";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 
 const Index = () => {
@@ -12,7 +11,6 @@ const Index = () => {
       <main className="container mx-auto px-4 py-8">
         <WelcomeText />
         <StorySection />
-        <GrandpaNote />
       </main>
       <CookieFreeFooter />
     </div>
