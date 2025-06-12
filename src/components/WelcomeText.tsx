@@ -1,10 +1,8 @@
-
-
 const WelcomeText = () => {
   return (
     <div className="container mx-auto px-4 py-4">
       <div className="text-center">
-        <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-8 shadow-lg border-2 border-orange-200 font-fun">
+        <div style={{backgroundColor: '#ADD8E6'}} className="rounded-3xl p-8 shadow-lg border-2 border-orange-200 font-fun">
           <div className="flex flex-col md:flex-row items-start gap-6">
             <img 
               src="/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png" 
@@ -31,4 +29,3 @@ const WelcomeText = () => {
 };
 
 export default WelcomeText;
-
