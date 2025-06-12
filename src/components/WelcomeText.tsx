@@ -1,4 +1,5 @@
 
+
 const WelcomeText = () => {
   return (
     <div className="container mx-auto px-4 py-4">
@@ -8,7 +9,7 @@ const WelcomeText = () => {
             <img 
               src="/lovable-uploads/c3b88b23-b809-4f82-9c07-a90f95a3bde5.png" 
               alt="Grandpa John and his friend Buddy"
-              className="w-44 h-44 rounded-xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
+              className="w-48 h-48 rounded-xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
             />
             <h1 className="text-4xl md:text-5xl font-bold text-amber-800 leading-relaxed text-center md:text-left flex-1">
               Welcome to my special place for children to enjoy stories!
@@ -26,3 +27,4 @@ const WelcomeText = () => {
 };
 
 export default WelcomeText;
+
