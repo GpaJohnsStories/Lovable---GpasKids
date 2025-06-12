@@ -2,6 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Volume2, Book, User, Globe } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface Story {
   id: number;
@@ -33,16 +34,40 @@ const getCategoryStyles = (category: string) => {
 };
 
 const StoryCard = ({ story }: StoryCardProps) => {
+  const renderCategoryBadge = () => {
+    if (story.category === "Life") {
+      return (
+        <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+          <Avatar className="h-4 w-4 mr-1">
+            <AvatarImage src="/lovable-uploads/86bd5c48-6f8e-4a52-a343-273bf88f31cd.png" alt="Author" />
+            <AvatarFallback>👤</AvatarFallback>
+          </Avatar>
+          Life — Lessons and Stories From My Life
+        </span>
+      );
+    }
+
+    if (story.category === "World Changers") {
+      return (
+        <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+          <Globe className="h-3 w-3 mr-1" />
+          {story.category}
+        </span>
+      );
+    }
+
+    return (
+      <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+        {story.category}
+      </span>
+    );
+  };
+
   return (
     <Card className="story-card group cursor-pointer">
       <CardContent className="p-3">
         <div className="text-center mb-2">
-          <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
-            {story.category === "World Changers" && (
-              <Globe className="h-3 w-3 mr-1" />
-            )}
-            {story.category}
-          </span>
+          {renderCategoryBadge()}
         </div>
         
         <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight">
