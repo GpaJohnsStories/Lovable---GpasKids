@@ -1,10 +1,9 @@
-
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, BookOpen, User, Calendar, ExternalLink } from "lucide-react";
+import { ArrowLeft, BookOpen, User, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Story = () => {
@@ -163,54 +162,15 @@ const Story = () => {
                   <div className="text-lg font-serif leading-relaxed">
                     {formatContent(story.content)}
                   </div>
-                  
-                  {story.google_drive_link && (
-                    <div className="mt-8 pt-6 border-t border-orange-200">
-                      <p className="text-orange-600 text-center mb-4">
-                        Want to read this story in a different format?
-                      </p>
-                      <div className="text-center">
-                        <a 
-                          href={story.google_drive_link} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="inline-block"
-                        >
-                          <Button variant="outline" className="border-orange-300 text-orange-700 hover:bg-orange-50">
-                            <ExternalLink className="h-4 w-4 mr-2" />
-                            View in Google Drive
-                          </Button>
-                        </a>
-                      </div>
-                    </div>
-                  )}
                 </div>
               ) : (
-                <>
-                  {story.excerpt && (
-                    <div className="prose prose-orange max-w-none mb-6">
-                      <p className="text-black leading-relaxed text-base">
-                        {story.excerpt}
-                      </p>
-                    </div>
-                  )}
-
-                  {story.google_drive_link && (
-                    <div className="text-center mt-8">
-                      <a 
-                        href={story.google_drive_link} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-block"
-                      >
-                        <Button className="cozy-button text-lg px-8 py-4">
-                          <BookOpen className="h-5 w-5 mr-2" />
-                          Read Full Story
-                        </Button>
-                      </a>
-                    </div>
-                  )}
-                </>
+                story.excerpt && (
+                  <div className="prose prose-orange max-w-none">
+                    <p className="text-black leading-relaxed text-base">
+                      {story.excerpt}
+                    </p>
+                  </div>
+                )
               )}
             </CardContent>
           </Card>

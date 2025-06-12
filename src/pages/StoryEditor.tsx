@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,9 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Save, Trash2, Upload } from "lucide-react";
+import { ArrowLeft, Save, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import RTFUploader from "@/components/RTFUploader";
 
 interface Story {
   id?: string;
@@ -17,7 +17,6 @@ interface Story {
   title: string;
   author: string;
   category: 'Fun' | 'Life' | 'North Pole' | 'World Changers';
-  google_drive_link?: string;
   tagline?: string;
   excerpt?: string;
   content?: string;
@@ -150,6 +149,10 @@ const StoryEditor = () => {
     setStory(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleRTFContentExtracted = (content: string) => {
+    updateField('content', content);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
       <div className="bg-white shadow-sm border-b">
@@ -248,32 +251,26 @@ const StoryEditor = () => {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="content">Full Story Content</Label>
-                <Textarea
-                  id="content"
-                  value={story.content || ''}
-                  onChange={(e) => updateField('content', e.target.value)}
-                  placeholder="Write the full story content here. You can paste formatted text or write directly. Use line breaks for paragraphs."
-                  rows={15}
-                  className="font-serif text-base leading-relaxed"
+              <div className="space-y-4">
+                <RTFUploader 
+                  onContentExtracted={handleRTFContentExtracted}
+                  currentContent={story.content}
                 />
-                <p className="text-sm text-gray-600">
-                  Tip: You can paste formatted text here. Use double line breaks to separate paragraphs.
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="google_drive_link">Google Drive Link (Optional)</Label>
-                <Input
-                  id="google_drive_link"
-                  value={story.google_drive_link || ''}
-                  onChange={(e) => updateField('google_drive_link', e.target.value)}
-                  placeholder="Link to the full story document (if you want to provide an alternative link)"
-                />
-                <p className="text-sm text-gray-600">
-                  If you add story content above, this link becomes optional as readers can read the full story directly on the page.
-                </p>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="content">Story Content</Label>
+                  <Textarea
+                    id="content"
+                    value={story.content || ''}
+                    onChange={(e) => updateField('content', e.target.value)}
+                    placeholder="The full story content will appear here after uploading an RTF file, or you can type/paste directly..."
+                    rows={15}
+                    className="font-serif text-base leading-relaxed"
+                  />
+                  <p className="text-sm text-gray-600">
+                    Upload an RTF file above, or paste/type your story content directly here. Use double line breaks to separate paragraphs.
+                  </p>
+                </div>
               </div>
 
               <div className="space-y-4">
