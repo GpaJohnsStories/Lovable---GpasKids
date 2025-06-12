@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +11,7 @@ import { ArrowLeft, Save, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import RTFUploader from "@/components/RTFUploader";
+import RichTextEditor from "@/components/RichTextEditor";
 
 interface Story {
   id?: string;
@@ -38,7 +40,6 @@ const StoryEditor = () => {
     tagline: '',
     excerpt: '',
     content: '',
-    google_drive_link: '',
     photo_link_1: '',
     photo_link_2: '',
     photo_link_3: ''
@@ -153,6 +154,10 @@ const StoryEditor = () => {
     updateField('content', content);
   };
 
+  const handleRichTextChange = (content: string) => {
+    updateField('content', content);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
       <div className="bg-white shadow-sm border-b">
@@ -259,16 +264,13 @@ const StoryEditor = () => {
                 
                 <div className="space-y-2">
                   <Label htmlFor="content">Story Content</Label>
-                  <Textarea
-                    id="content"
-                    value={story.content || ''}
-                    onChange={(e) => updateField('content', e.target.value)}
-                    placeholder="The full story content will appear here after uploading an RTF file, or you can type/paste directly..."
-                    rows={15}
-                    className="font-serif text-base leading-relaxed"
+                  <RichTextEditor
+                    content={story.content || ''}
+                    onChange={handleRichTextChange}
+                    placeholder="Start writing your story with rich text formatting..."
                   />
                   <p className="text-sm text-gray-600">
-                    Upload an RTF file above, or paste/type your story content directly here. Use double line breaks to separate paragraphs.
+                    Use the toolbar above to format your text with bold, italic, and underline. You can also use keyboard shortcuts: Ctrl+B (bold), Ctrl+I (italic), Ctrl+U (underline).
                   </p>
                 </div>
               </div>

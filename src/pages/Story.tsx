@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -113,7 +114,17 @@ const Story = () => {
   };
 
   const formatContent = (content: string) => {
-    // Split by double line breaks to create paragraphs
+    // Check if content contains HTML tags (rich text)
+    if (content.includes('<') && content.includes('>')) {
+      return (
+        <div 
+          className="prose prose-orange max-w-none text-lg font-serif leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
+      );
+    }
+    
+    // Fallback to plain text formatting for backward compatibility
     return content.split('\n\n').map((paragraph, index) => (
       <p key={index} className="mb-4 text-black leading-relaxed">
         {paragraph.trim()}
@@ -159,9 +170,7 @@ const Story = () => {
 
               {story.content ? (
                 <div className="prose prose-orange max-w-none">
-                  <div className="text-lg font-serif leading-relaxed">
-                    {formatContent(story.content)}
-                  </div>
+                  {formatContent(story.content)}
                 </div>
               ) : (
                 story.excerpt && (
