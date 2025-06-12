@@ -53,6 +53,14 @@ const StoryCard = ({ story }: StoryCardProps) => {
       );
     }
 
+    if (story.category === "North Pole") {
+      return (
+        <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+          Stories From the North Pole
+        </span>
+      );
+    }
+
     return (
       <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
         {story.category}
@@ -102,5 +110,3 @@ const StoryCard = ({ story }: StoryCardProps) => {
 };
 
 export default StoryCard;
-
-
