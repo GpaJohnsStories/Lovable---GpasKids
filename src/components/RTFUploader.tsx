@@ -21,24 +21,60 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
     
     try {
       const text = await file.text();
+      console.log('Raw RTF content length:', text.length);
       
-      // Basic RTF to plain text conversion
-      // Remove RTF control codes and extract readable text
-      let content = text
-        .replace(/\\[a-z]+\d*\s?/g, '') // Remove RTF control words
-        .replace(/[{}]/g, '') // Remove braces
-        .replace(/\\\\/g, '\\') // Handle escaped backslashes
-        .replace(/\\'/g, "'") // Handle escaped quotes
-        .replace(/\s+/g, ' ') // Normalize whitespace
-        .trim();
+      // Enhanced RTF to plain text conversion
+      let content = text;
       
-      // Convert common RTF line breaks to proper paragraph breaks
+      // Remove RTF header and font table
+      content = content.replace(/^{\\rtf1[^}]*}/, '');
+      content = content.replace(/{\\\*\\[^}]*}/g, '');
+      
+      // Remove font table and color table
+      content = content.replace(/{\\fonttbl[^}]*}/g, '');
+      content = content.replace(/{\\colortbl[^}]*}/g, '');
+      
+      // Remove RTF control words with parameters
+      content = content.replace(/\\[a-zA-Z]+\d*\s?/g, ' ');
+      
+      // Remove remaining RTF control sequences
+      content = content.replace(/\\[^a-zA-Z\s]/g, '');
+      
+      // Handle special RTF sequences
       content = content.replace(/\\par\s*/g, '\n\n');
+      content = content.replace(/\\line\s*/g, '\n');
+      content = content.replace(/\\tab\s*/g, '\t');
       
-      // Clean up any remaining RTF artifacts
-      content = content.replace(/\\[a-z0-9]+/g, '');
+      // Remove braces but preserve content
+      let braceLevel = 0;
+      let result = '';
+      for (let i = 0; i < content.length; i++) {
+        const char = content[i];
+        if (char === '{') {
+          braceLevel++;
+        } else if (char === '}') {
+          braceLevel--;
+        } else if (braceLevel === 0 || (braceLevel === 1 && char !== '\\')) {
+          result += char;
+        }
+      }
+      content = result;
       
-      if (content.length > 0) {
+      // Clean up whitespace and special characters
+      content = content.replace(/\s+/g, ' ');
+      content = content.replace(/\n\s+/g, '\n');
+      content = content.replace(/\s+\n/g, '\n');
+      content = content.replace(/\n{3,}/g, '\n\n');
+      content = content.trim();
+      
+      // Remove any remaining RTF artifacts
+      content = content.replace(/[\\{}]/g, '');
+      content = content.replace(/\*[0-9a-fA-F]+/g, '');
+      
+      console.log('Processed content length:', content.length);
+      console.log('First 200 chars:', content.substring(0, 200));
+      
+      if (content.length > 10) {
         onContentExtracted(content);
         toast({
           title: "Success",
@@ -60,13 +96,19 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
   };
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('File input changed');
     const file = event.target.files?.[0];
     if (file) {
+      console.log('File selected:', file.name, file.type, file.size);
       handleFile(file);
     }
+    // Reset the input so the same file can be selected again
+    event.target.value = '';
   };
 
   const handleFile = (file: File) => {
+    console.log('Handling file:', file.name);
+    
     if (!file.name.toLowerCase().endsWith('.rtf')) {
       toast({
         title: "Invalid file type",
@@ -113,6 +155,14 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
         description: "Please drop an RTF (.rtf) file",
         variant: "destructive"
       });
+    }
+  };
+
+  const handleButtonClick = () => {
+    console.log('Upload button clicked');
+    const fileInput = document.getElementById('rtf-upload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
     }
   };
 
@@ -178,17 +228,16 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
               className="hidden"
               id="rtf-upload"
             />
-            <Label htmlFor="rtf-upload" className="cursor-pointer">
-              <Button 
-                type="button" 
-                variant="outline" 
-                disabled={isProcessing}
-                className="border-amber-300 text-amber-700 hover:bg-amber-50"
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                Choose RTF File
-              </Button>
-            </Label>
+            <Button 
+              type="button" 
+              variant="outline" 
+              disabled={isProcessing}
+              className="border-amber-300 text-amber-700 hover:bg-amber-50"
+              onClick={handleButtonClick}
+            >
+              <Upload className="h-4 w-4 mr-2" />
+              Choose RTF File
+            </Button>
           </div>
         </div>
       </div>
