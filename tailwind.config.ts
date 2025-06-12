@@ -65,7 +65,7 @@ export default {
 			},
 			fontFamily: {
 				'handwritten': ['Kalam', 'sans-serif'],
-				'fun': ['Comic Sans MS', 'cursive', 'sans-serif'],
+				'fun': ['Segoe Print', 'cursive', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
