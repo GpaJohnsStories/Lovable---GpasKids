@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -66,6 +65,7 @@ export default {
 			},
 			fontFamily: {
 				'handwritten': ['Kalam', 'sans-serif'],
+				'fun': ['Comic Sans MS', 'cursive', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
