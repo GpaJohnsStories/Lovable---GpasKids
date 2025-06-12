@@ -1,4 +1,5 @@
 
+
 const WelcomeText = () => {
   return (
     <div className="container mx-auto px-4 py-4">
@@ -16,7 +17,7 @@ const WelcomeText = () => {
               <h1 className="text-4xl md:text-5xl font-bold text-amber-800 leading-relaxed mb-6">
                 Welcome to my special place for children to enjoy stories!
               </h1>
-              <p className="text-2xl text-amber-800 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0">
+              <p className="text-2xl text-amber-800 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun">
                 I am Grandpa John with my friend Buddy.<br />
                 Here are stories, jokes, games and more.<br />
                 Enjoy your time here!
@@ -30,3 +31,4 @@ const WelcomeText = () => {
 };
 
 export default WelcomeText;
+
