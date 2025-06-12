@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,66 +21,98 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
     try {
       const text = await file.text();
       console.log('Raw RTF content length:', text.length);
+      console.log('Raw RTF sample:', text.substring(0, 500));
       
-      // Enhanced RTF to plain text conversion
+      // More sophisticated RTF parsing
       let content = text;
       
-      // Remove RTF header and font table
-      content = content.replace(/^{\\rtf1[^}]*}/, '');
-      content = content.replace(/{\\\*\\[^}]*}/g, '');
+      // First, find where the actual content starts (after font tables, etc.)
+      // Look for common RTF document start patterns
+      const contentStartPatterns = [
+        /\\f0\\fs\d+/,  // font size declarations
+        /\\pard/,       // paragraph formatting
+        /\\plain/       // plain text formatting
+      ];
       
-      // Remove font table and color table
+      let contentStartIndex = 0;
+      for (const pattern of contentStartPatterns) {
+        const match = content.search(pattern);
+        if (match > contentStartIndex) {
+          contentStartIndex = match;
+        }
+      }
+      
+      // If we found a content start, use it
+      if (contentStartIndex > 0) {
+        content = content.substring(contentStartIndex);
+      }
+      
+      // Remove RTF control groups that don't contain text
       content = content.replace(/{\\fonttbl[^}]*}/g, '');
       content = content.replace(/{\\colortbl[^}]*}/g, '');
+      content = content.replace(/{\\stylesheet[^}]*}/g, '');
+      content = content.replace(/{\\info[^}]*}/g, '');
+      content = content.replace(/{\\generator[^}]*}/g, '');
       
-      // Remove RTF control words with parameters
-      content = content.replace(/\\[a-zA-Z]+\d*\s?/g, ' ');
+      // Handle paragraph and line breaks first (before removing other controls)
+      content = content.replace(/\\par\b/g, '\n\n');
+      content = content.replace(/\\line\b/g, '\n');
+      content = content.replace(/\\tab\b/g, '\t');
       
-      // Remove remaining RTF control sequences
-      content = content.replace(/\\[^a-zA-Z\s]/g, '');
+      // Remove RTF control words (but keep the space after them)
+      content = content.replace(/\\[a-zA-Z]+\d*\s*/g, ' ');
       
-      // Handle special RTF sequences
-      content = content.replace(/\\par\s*/g, '\n\n');
-      content = content.replace(/\\line\s*/g, '\n');
-      content = content.replace(/\\tab\s*/g, '\t');
+      // Remove RTF control symbols
+      content = content.replace(/\\[^a-zA-Z\s\n]/g, '');
       
-      // Remove braces but preserve content
-      let braceLevel = 0;
+      // Now handle braces - remove them but keep content inside
       let result = '';
-      for (let i = 0; i < content.length; i++) {
+      let braceLevel = 0;
+      let i = 0;
+      
+      while (i < content.length) {
         const char = content[i];
+        
         if (char === '{') {
           braceLevel++;
         } else if (char === '}') {
           braceLevel--;
-        } else if (braceLevel === 0 || (braceLevel === 1 && char !== '\\')) {
-          result += char;
+        } else if (char === '\\' && i + 1 < content.length) {
+          // Skip RTF control sequences we might have missed
+          i++;
+          while (i < content.length && /[a-zA-Z0-9]/.test(content[i])) {
+            i++;
+          }
+          continue;
+        } else {
+          // Only add text characters, not control characters
+          if (braceLevel <= 1 && char.match(/[\w\s\n\t.,!?;:'"()-]/) && char !== '\\') {
+            result += char;
+          }
         }
+        i++;
       }
+      
       content = result;
       
-      // Clean up whitespace and special characters
+      // Clean up whitespace
       content = content.replace(/\s+/g, ' ');
       content = content.replace(/\n\s+/g, '\n');
       content = content.replace(/\s+\n/g, '\n');
       content = content.replace(/\n{3,}/g, '\n\n');
       content = content.trim();
       
-      // Remove any remaining RTF artifacts
-      content = content.replace(/[\\{}]/g, '');
-      content = content.replace(/\*[0-9a-fA-F]+/g, '');
-      
       console.log('Processed content length:', content.length);
-      console.log('First 200 chars:', content.substring(0, 200));
+      console.log('Processed content sample:', content.substring(0, 300));
       
-      if (content.length > 10) {
+      if (content.length > 50 && content.match(/[a-zA-Z]/)) {
         onContentExtracted(content);
         toast({
           title: "Success",
           description: "RTF file content extracted successfully"
         });
       } else {
-        throw new Error("No readable content found in RTF file");
+        throw new Error("No readable text content found in RTF file");
       }
     } catch (error) {
       console.error('Error processing RTF file:', error);
