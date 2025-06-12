@@ -1,5 +1,4 @@
 
-
 const WelcomeText = () => {
   return (
     <div className="container mx-auto px-4 py-8">
@@ -16,12 +15,9 @@ const WelcomeText = () => {
             </h1>
           </div>
           <p className="text-xl text-amber-700 mb-6 leading-relaxed max-w-3xl mx-auto">
-            I am Grandpa John with my friend Buddy.
-            Here are stories, jokes, games and more.
+            I am Grandpa John with my friend Buddy.<br />
+            Here are stories, jokes, games and more.<br />
             Enjoy your time here!
-          </p>
-          <p className="text-lg text-amber-600 mb-6 leading-relaxed max-w-2xl mx-auto italic">
-            "Every story I tell is a gift from my heart to yours. Come and read and create some magical memories."
           </p>
         </div>
       </div>
@@ -30,4 +26,3 @@ const WelcomeText = () => {
 };
 
 export default WelcomeText;
-
