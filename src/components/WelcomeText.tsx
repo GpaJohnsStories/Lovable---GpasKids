@@ -1,33 +1,15 @@
 
 const WelcomeText = () => {
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const img = e.currentTarget;
-    console.log('Image failed to load:', img.src);
-    
-    // Try alternative paths
-    if (img.src.includes('/lovable-uploads/bc5df509-09d6-4f6c-8797-a54c0fcb3d35.png')) {
-      console.log('Trying alternative path with jpg extension...');
-      img.src = '/lovable-uploads/bc5df509-09d6-4f6c-8797-a54c0fcb3d35.jpg';
-    } else if (img.src.includes('.jpg')) {
-      console.log('Trying path without leading slash...');
-      img.src = 'lovable-uploads/bc5df509-09d6-4f6c-8797-a54c0fcb3d35.png';
-    } else {
-      console.log('All image paths failed, hiding image');
-      img.style.display = 'none';
-    }
-  };
-
   return (
     <div className="container mx-auto px-4 py-4">
       <div className="text-center mb-12">
         <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-3xl p-8 shadow-lg border-2 border-orange-200 mb-4 font-fun">
           <div className="flex flex-col md:flex-row items-start gap-6 mb-4">
             <img 
-              src="/lovable-uploads/bc5df509-09d6-4f6c-8797-a54c0fcb3d35.png" 
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
               alt="Grandpa John and his friend Buddy"
               className="w-48 h-48 rounded-xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
-              onError={handleImageError}
-              onLoad={() => console.log('Image loaded successfully from:', document.querySelector('img')?.src)}
+              onLoad={() => console.log('Image loaded successfully')}
             />
             <h1 className="text-4xl md:text-5xl font-bold text-amber-800 leading-relaxed text-center md:text-left flex-1">
               Welcome to my special place for children to enjoy stories!
