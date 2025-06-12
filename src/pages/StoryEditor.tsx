@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,7 +39,6 @@ const StoryEditor = () => {
     tagline: '',
     excerpt: '',
     content: '',
-    google_drive_link: '',
     photo_link_1: '',
     photo_link_2: '',
     photo_link_3: ''
