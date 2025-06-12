@@ -20,6 +20,7 @@ interface Story {
   google_drive_link?: string;
   tagline?: string;
   excerpt?: string;
+  content?: string;
   photo_link_1?: string;
   photo_link_2?: string;
   photo_link_3?: string;
@@ -37,6 +38,7 @@ const StoryEditor = () => {
     category: 'Fun',
     tagline: '',
     excerpt: '',
+    content: '',
     google_drive_link: '',
     photo_link_1: '',
     photo_link_2: '',
@@ -247,13 +249,31 @@ const StoryEditor = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="google_drive_link">Google Drive Link</Label>
+                <Label htmlFor="content">Full Story Content</Label>
+                <Textarea
+                  id="content"
+                  value={story.content || ''}
+                  onChange={(e) => updateField('content', e.target.value)}
+                  placeholder="Write the full story content here. You can paste formatted text or write directly. Use line breaks for paragraphs."
+                  rows={15}
+                  className="font-serif text-base leading-relaxed"
+                />
+                <p className="text-sm text-gray-600">
+                  Tip: You can paste formatted text here. Use double line breaks to separate paragraphs.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="google_drive_link">Google Drive Link (Optional)</Label>
                 <Input
                   id="google_drive_link"
                   value={story.google_drive_link || ''}
                   onChange={(e) => updateField('google_drive_link', e.target.value)}
-                  placeholder="Link to the full story document"
+                  placeholder="Link to the full story document (if you want to provide an alternative link)"
                 />
+                <p className="text-sm text-gray-600">
+                  If you add story content above, this link becomes optional as readers can read the full story directly on the page.
+                </p>
               </div>
 
               <div className="space-y-4">

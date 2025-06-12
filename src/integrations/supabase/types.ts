@@ -54,6 +54,7 @@ export type Database = {
         Row: {
           author: string
           category: Database["public"]["Enums"]["story_category"]
+          content: string | null
           created_at: string
           excerpt: string | null
           google_drive_link: string | null
@@ -70,6 +71,7 @@ export type Database = {
         Insert: {
           author: string
           category: Database["public"]["Enums"]["story_category"]
+          content?: string | null
           created_at?: string
           excerpt?: string | null
           google_drive_link?: string | null
@@ -86,6 +88,7 @@ export type Database = {
         Update: {
           author?: string
           category?: Database["public"]["Enums"]["story_category"]
+          content?: string | null
           created_at?: string
           excerpt?: string | null
           google_drive_link?: string | null
