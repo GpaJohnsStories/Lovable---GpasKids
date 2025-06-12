@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { BookOpen, Star, Heart, Globe, Smile } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -108,45 +109,45 @@ const StorySection = () => {
     switch (category) {
       case "World Changers":
         return (
-          <div className="flex items-center justify-center mb-6">
-            <Globe className="h-6 w-6 text-orange-600 mr-3" />
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">World Changers</h3>
-              <p className="text-sm text-orange-600">Real People Who Made A Difference</p>
-            </div>
+          <div className="flex items-center mb-6">
+            <Globe className="h-5 w-5 text-orange-600 mr-2" />
+            <h3 className="text-xl font-bold text-orange-800">World Changers — Real People Who Made A Difference</h3>
           </div>
         );
       case "Life":
         return (
-          <div className="flex items-center justify-center mb-6">
-            <Avatar className="h-6 w-6 mr-3">
+          <div className="flex items-center mb-6">
+            <Avatar className="h-5 w-5 mr-2">
               <AvatarImage src="/lovable-uploads/9ae6be30-bcc5-40fd-9bb9-61d4ad4383ad.png" alt="Author" />
               <AvatarFallback>👤</AvatarFallback>
             </Avatar>
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">Life</h3>
-              <p className="text-sm text-orange-600">Lessons and Stories From My Life</p>
-            </div>
+            <h3 className="text-xl font-bold text-orange-800">Lessons and Stories From My Life</h3>
           </div>
         );
       case "Fun":
         return (
-          <div className="flex items-center justify-center mb-6">
-            <Smile className="h-6 w-6 text-orange-600 mr-3" />
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">Fun</h3>
-              <p className="text-sm text-orange-600">Jokes, Poems, Games</p>
-            </div>
+          <div className="flex items-center mb-6">
+            <Smile className="h-5 w-5 text-orange-600 mr-2" />
+            <h3 className="text-xl font-bold text-orange-800">Jokes, Poems, Games</h3>
           </div>
         );
       case "North Pole":
         return (
-          <div className="flex items-center justify-center mb-6">
-            <img src="/lovable-uploads/a63d1701-488c-49db-a1d3-5cb2b39f023d.png" alt="North Pole" className="h-6 w-6 mr-3" />
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">North Pole</h3>
-              <p className="text-sm text-orange-600">Stories from the North Pole</p>
-            </div>
+          <div className="flex items-center mb-6">
+            <img src="/lovable-uploads/a63d1701-488c-49db-a1d3-5cb2b39f023d.png" alt="North Pole" className="h-5 w-5 mr-2" />
+            <h3 className="text-xl font-bold text-orange-800">Stories from the North Pole</h3>
+          </div>
+        );
+      case "Newest":
+        return (
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-bold text-orange-800">Newest</h3>
+          </div>
+        );
+      case "Most Popular":
+        return (
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-bold text-orange-800">Most Popular</h3>
           </div>
         );
       default:
