@@ -14,7 +14,7 @@ const WelcomeText = () => {
               Welcome to my special place for children to enjoy stories!
             </h1>
           </div>
-          <p className="text-xl text-amber-700 mb-6 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-2xl text-amber-800 font-semibold mb-6 leading-relaxed max-w-3xl mx-auto">
             I am Grandpa John with my friend Buddy.<br />
             Here are stories, jokes, games and more.<br />
             Enjoy your time here!
