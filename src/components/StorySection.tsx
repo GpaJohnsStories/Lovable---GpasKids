@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
-import { BookOpen, Star, Heart } from "lucide-react";
+import { BookOpen, Star, Heart, Globe, Smile } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import StoryCard from "./StoryCard";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -28,7 +29,7 @@ const StorySection = () => {
   const newestStories = [
     // Include the newest real story if available
     ...(realStories.length > 0 ? [{
-      id: realStories[0].id,
+      id: Number(realStories[0].id.replace(/-/g, '').substring(0, 8), 16), // Convert UUID to number for compatibility
       title: realStories[0].title,
       description: realStories[0].excerpt || realStories[0].tagline || "A wonderful story waiting to be discovered.",
       readTime: "5 min read",
@@ -104,14 +105,64 @@ const StorySection = () => {
     }
   ];
 
+  const getCategoryHeader = (category: string) => {
+    switch (category) {
+      case "World Changers":
+        return (
+          <div className="flex items-center justify-center mb-6">
+            <Globe className="h-6 w-6 text-orange-600 mr-3" />
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-orange-800">World Changers</h3>
+              <p className="text-sm text-orange-600">Real People Who Made A Difference</p>
+            </div>
+          </div>
+        );
+      case "Life":
+        return (
+          <div className="flex items-center justify-center mb-6">
+            <Avatar className="h-6 w-6 mr-3">
+              <AvatarImage src="/lovable-uploads/9ae6be30-bcc5-40fd-9bb9-61d4ad4383ad.png" alt="Author" />
+              <AvatarFallback>👤</AvatarFallback>
+            </Avatar>
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-orange-800">Life</h3>
+              <p className="text-sm text-orange-600">Lessons and Stories From My Life</p>
+            </div>
+          </div>
+        );
+      case "Fun":
+        return (
+          <div className="flex items-center justify-center mb-6">
+            <Smile className="h-6 w-6 text-orange-600 mr-3" />
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-orange-800">Fun</h3>
+              <p className="text-sm text-orange-600">Jokes, Poems, Games</p>
+            </div>
+          </div>
+        );
+      case "North Pole":
+        return (
+          <div className="flex items-center justify-center mb-6">
+            <img src="/lovable-uploads/a63d1701-488c-49db-a1d3-5cb2b39f023d.png" alt="North Pole" className="h-6 w-6 mr-3" />
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-orange-800">North Pole</h3>
+              <p className="text-sm text-orange-600">Stories from the North Pole</p>
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-bold text-orange-800">{category}</h3>
+          </div>
+        );
+    }
+  };
+
   return (
     <section className="py-16">
       <div className="text-center mb-12">
-        <div className="flex items-center justify-center mb-4">
-          <BookOpen className="h-8 w-8 text-orange-600 mr-3" />
-          <h2 className="text-3xl font-bold text-orange-800 font-serif">Story Collection</h2>
-          <Star className="h-8 w-8 text-orange-600 ml-3" />
-        </div>
+        <h2 className="text-3xl font-bold text-orange-800 font-serif mb-4">Story Collection</h2>
         <p className="text-lg text-orange-700 max-w-2xl mx-auto leading-relaxed">
           Each story is crafted with love and designed to spark imagination, teach gentle lessons, 
           and create those precious bedtime moments you'll treasure forever.
@@ -121,7 +172,7 @@ const StorySection = () => {
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
         {/* Newest Stories Column */}
         <div>
-          <h3 className="text-xl font-bold text-orange-800 mb-6 text-center">Newest</h3>
+          {getCategoryHeader("Newest")}
           <div className="space-y-4">
             {newestStories.map((story) => (
               <StoryCard key={story.id} story={story} />
@@ -131,7 +182,7 @@ const StorySection = () => {
 
         {/* Most Popular Stories Column */}
         <div>
-          <h3 className="text-xl font-bold text-orange-800 mb-6 text-center">Most Popular</h3>
+          {getCategoryHeader("Most Popular")}
           <div className="space-y-4">
             {popularStories.map((story) => (
               <StoryCard key={story.id} story={story} />
