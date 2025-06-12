@@ -1,7 +1,6 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Volume2, Book, User } from "lucide-react";
+import { BookOpen, Volume2, Book, User, Globe } from "lucide-react";
 
 interface Story {
   id: number;
@@ -38,7 +37,10 @@ const StoryCard = ({ story }: StoryCardProps) => {
       <CardContent className="p-3">
         <div className="text-center mb-2">
           <div className="text-3xl mb-1">{story.illustration}</div>
-          <span className={`inline-block px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+          <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+            {story.category === "World Changers" && (
+              <Globe className="h-3 w-3 mr-1" />
+            )}
             {story.category}
           </span>
         </div>
