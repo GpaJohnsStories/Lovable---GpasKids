@@ -2,18 +2,40 @@
 import { Button } from "@/components/ui/button";
 import { BookOpen, Star, Heart } from "lucide-react";
 import StoryCard from "./StoryCard";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const StorySection = () => {
-  const newestStories = [
-    {
-      id: 5,
-      title: "The Rainbow Bridge",
-      description: "A colorful tale about friendship and the magic that connects us all.",
-      readTime: "4 min read",
-      illustration: "🌈",
-      category: "Fun",
-      author: "Emma Thompson"
+  const { data: realStories = [] } = useQuery({
+    queryKey: ['stories'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('stories')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) {
+        console.error('Error fetching stories:', error);
+        return [];
+      }
+      
+      return data;
     },
+  });
+
+  console.log('Fetched stories:', realStories);
+
+  const newestStories = [
+    // Include the newest real story if available
+    ...(realStories.length > 0 ? [{
+      id: realStories[0].id,
+      title: realStories[0].title,
+      description: realStories[0].excerpt || realStories[0].tagline || "A wonderful story waiting to be discovered.",
+      readTime: "5 min read",
+      illustration: "📖",
+      category: realStories[0].category,
+      author: realStories[0].author
+    }] : []),
     {
       id: 6,
       title: "Grandpa's Old Toolbox",
@@ -41,7 +63,7 @@ const StorySection = () => {
       category: "World Changers",
       author: "David Rodriguez"
     }
-  ];
+  ].slice(0, 4); // Ensure we only show 4 stories
 
   const popularStories = [
     {
