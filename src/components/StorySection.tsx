@@ -29,7 +29,7 @@ const StorySection = () => {
   const newestStories = [
     // Include the newest real story if available
     ...(realStories.length > 0 ? [{
-      id: Number(realStories[0].id.replace(/-/g, '').substring(0, 8), 16), // Convert UUID to number for compatibility
+      id: parseInt(realStories[0].id.replace(/-/g, '').substring(0, 8), 16), // Convert UUID to number for compatibility
       title: realStories[0].title,
       description: realStories[0].excerpt || realStories[0].tagline || "A wonderful story waiting to be discovered.",
       readTime: "5 min read",
@@ -112,8 +112,7 @@ const StorySection = () => {
           <div className="flex items-center justify-center mb-6">
             <Globe className="h-6 w-6 text-orange-600 mr-3" />
             <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">World Changers</h3>
-              <p className="text-sm text-orange-600">Real People Who Made A Difference</p>
+              <h3 className="text-xl font-bold text-orange-800 font-fun">World Changers — Real People Who Made A Difference</h3>
             </div>
           </div>
         );
@@ -125,8 +124,8 @@ const StorySection = () => {
               <AvatarFallback>👤</AvatarFallback>
             </Avatar>
             <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">Life</h3>
-              <p className="text-sm text-orange-600">Lessons and Stories From My Life</p>
+              <h3 className="text-xl font-bold text-orange-800 font-fun">Life</h3>
+              <p className="text-sm text-orange-600 font-fun">Lessons and Stories From My Life</p>
             </div>
           </div>
         );
@@ -135,8 +134,8 @@ const StorySection = () => {
           <div className="flex items-center justify-center mb-6">
             <Smile className="h-6 w-6 text-orange-600 mr-3" />
             <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">Fun</h3>
-              <p className="text-sm text-orange-600">Jokes, Poems, Games</p>
+              <h3 className="text-xl font-bold text-orange-800 font-fun">Fun</h3>
+              <p className="text-sm text-orange-600 font-fun">Jokes, Poems, Games</p>
             </div>
           </div>
         );
@@ -145,15 +144,27 @@ const StorySection = () => {
           <div className="flex items-center justify-center mb-6">
             <img src="/lovable-uploads/a63d1701-488c-49db-a1d3-5cb2b39f023d.png" alt="North Pole" className="h-6 w-6 mr-3" />
             <div className="text-center">
-              <h3 className="text-xl font-bold text-orange-800">North Pole</h3>
-              <p className="text-sm text-orange-600">Stories from the North Pole</p>
+              <h3 className="text-xl font-bold text-orange-800 font-fun">North Pole</h3>
+              <p className="text-sm text-orange-600 font-fun">Stories from the North Pole</p>
             </div>
+          </div>
+        );
+      case "Newest":
+        return (
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-bold text-orange-800 font-fun">Newest</h3>
+          </div>
+        );
+      case "Most Popular":
+        return (
+          <div className="text-center mb-6">
+            <h3 className="text-xl font-bold text-orange-800 font-fun">Most Popular</h3>
           </div>
         );
       default:
         return (
           <div className="text-center mb-6">
-            <h3 className="text-xl font-bold text-orange-800">{category}</h3>
+            <h3 className="text-xl font-bold text-orange-800 font-fun">{category}</h3>
           </div>
         );
     }
