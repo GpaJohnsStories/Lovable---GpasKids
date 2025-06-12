@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { BookOpen, Star, Heart, Globe, Smile } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -152,20 +151,31 @@ const StorySection = () => {
         );
       case "Newest":
         return (
-          <div className="text-center mb-6">
-            <h3 className="text-xl font-bold text-orange-800">Newest</h3>
+          <div className="flex items-center justify-center mb-6">
+            <Star className="h-6 w-6 text-orange-600 mr-3" />
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-orange-800">Newest</h3>
+              <p className="text-sm text-orange-600">Fresh Stories Just Added</p>
+            </div>
           </div>
         );
       case "Most Popular":
         return (
-          <div className="text-center mb-6">
-            <h3 className="text-xl font-bold text-orange-800">Most Popular</h3>
+          <div className="flex items-center justify-center mb-6">
+            <Heart className="h-6 w-6 text-orange-600 mr-3" />
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-orange-800">Most Popular</h3>
+              <p className="text-sm text-orange-600">Reader Favorites</p>
+            </div>
           </div>
         );
       default:
         return (
-          <div className="text-center mb-6">
-            <h3 className="text-xl font-bold text-orange-800">{category}</h3>
+          <div className="flex items-center justify-center mb-6">
+            <BookOpen className="h-6 w-6 text-orange-600 mr-3" />
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-orange-800">{category}</h3>
+            </div>
           </div>
         );
     }
