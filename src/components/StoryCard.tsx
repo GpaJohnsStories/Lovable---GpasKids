@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Volume2, Book, User } from "lucide-react";
@@ -38,7 +37,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
       <CardContent className="p-3">
         <div className="text-center mb-2">
           <div className="text-3xl mb-1">{story.illustration}</div>
-          <span className={`inline-block px-2 py-1 rounded-full text-sm font-medium ${getCategoryStyles(story.category)}`}>
+          <span className={`inline-block px-2 py-1 rounded-full text-sm font-medium font-fun ${getCategoryStyles(story.category)}`}>
             {story.category}
           </span>
         </div>
