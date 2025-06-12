@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,56 +21,31 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
     
     try {
       const text = await file.text();
-      console.log('Raw RTF content length:', text.length);
-      console.log('Raw RTF sample:', text.substring(0, 500));
       
-      // Clean RTF parsing approach
-      let content = text;
+      // Basic RTF to plain text conversion
+      // Remove RTF control codes and extract readable text
+      let content = text
+        .replace(/\\[a-z]+\d*\s?/g, '') // Remove RTF control words
+        .replace(/[{}]/g, '') // Remove braces
+        .replace(/\\\\/g, '\\') // Handle escaped backslashes
+        .replace(/\\'/g, "'") // Handle escaped quotes
+        .replace(/\s+/g, ' ') // Normalize whitespace
+        .trim();
       
-      // Remove RTF header information (font tables, color tables, etc.)
-      content = content.replace(/{\\fonttbl[^}]*}/g, '');
-      content = content.replace(/{\\colortbl[^}]*}/g, '');
-      content = content.replace(/{\\stylesheet[^}]*}/g, '');
-      content = content.replace(/{\\info[^}]*}/g, '');
-      content = content.replace(/{\\generator[^}]*}/g, '');
-      content = content.replace(/{\\*\\[^}]*}/g, ''); // Remove other RTF metadata
+      // Convert common RTF line breaks to proper paragraph breaks
+      content = content.replace(/\\par\s*/g, '\n\n');
       
-      // Convert RTF formatting to plain text equivalents
-      content = content.replace(/\\par\s*/g, '\n\n'); // Paragraph breaks
-      content = content.replace(/\\line\s*/g, '\n'); // Line breaks
-      content = content.replace(/\\tab\s*/g, '\t'); // Tabs
+      // Clean up any remaining RTF artifacts
+      content = content.replace(/\\[a-z0-9]+/g, '');
       
-      // Remove RTF control sequences but be more careful about spaces
-      // First handle control words that might have parameters
-      content = content.replace(/\\[a-zA-Z]+\d*\s*/g, '');
-      
-      // Remove RTF control symbols (like \', \{, \})
-      content = content.replace(/\\[^a-zA-Z\s]/g, '');
-      
-      // Remove remaining braces
-      content = content.replace(/[{}]/g, '');
-      
-      // Clean up multiple spaces and normalize whitespace
-      content = content.replace(/[ \t]+/g, ' '); // Multiple spaces/tabs to single space
-      content = content.replace(/\n[ \t]+/g, '\n'); // Remove spaces at start of lines
-      content = content.replace(/[ \t]+\n/g, '\n'); // Remove spaces at end of lines
-      content = content.replace(/\n{3,}/g, '\n\n'); // Multiple newlines to double newlines
-      
-      // Final cleanup
-      content = content.trim();
-      
-      console.log('Processed content length:', content.length);
-      console.log('Processed content sample:', content.substring(0, 300));
-      
-      // Validate that we extracted meaningful content
-      if (content.length > 20 && /[a-zA-Z]{3,}/.test(content)) {
+      if (content.length > 0) {
         onContentExtracted(content);
         toast({
           title: "Success",
           description: "RTF file content extracted successfully"
         });
       } else {
-        throw new Error("No readable text content found in RTF file");
+        throw new Error("No readable content found in RTF file");
       }
     } catch (error) {
       console.error('Error processing RTF file:', error);
@@ -84,19 +60,13 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
   };
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('File input changed');
     const file = event.target.files?.[0];
     if (file) {
-      console.log('File selected:', file.name, file.type, file.size);
       handleFile(file);
     }
-    // Reset the input so the same file can be selected again
-    event.target.value = '';
   };
 
   const handleFile = (file: File) => {
-    console.log('Handling file:', file.name);
-    
     if (!file.name.toLowerCase().endsWith('.rtf')) {
       toast({
         title: "Invalid file type",
@@ -143,14 +113,6 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
         description: "Please drop an RTF (.rtf) file",
         variant: "destructive"
       });
-    }
-  };
-
-  const handleButtonClick = () => {
-    console.log('Upload button clicked');
-    const fileInput = document.getElementById('rtf-upload') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
     }
   };
 
@@ -216,16 +178,17 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
               className="hidden"
               id="rtf-upload"
             />
-            <Button 
-              type="button" 
-              variant="outline" 
-              disabled={isProcessing}
-              className="border-amber-300 text-amber-700 hover:bg-amber-50"
-              onClick={handleButtonClick}
-            >
-              <Upload className="h-4 w-4 mr-2" />
-              Choose RTF File
-            </Button>
+            <Label htmlFor="rtf-upload" className="cursor-pointer">
+              <Button 
+                type="button" 
+                variant="outline" 
+                disabled={isProcessing}
+                className="border-amber-300 text-amber-700 hover:bg-amber-50"
+              >
+                <Upload className="h-4 w-4 mr-2" />
+                Choose RTF File
+              </Button>
+            </Label>
           </div>
         </div>
       </div>
