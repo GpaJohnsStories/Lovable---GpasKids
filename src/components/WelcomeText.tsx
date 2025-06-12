@@ -9,6 +9,11 @@ const WelcomeText = () => {
               src="/lovable-uploads/bc5df509-09d6-4f6c-8797-a54c0fcb3d35.png" 
               alt="Grandpa John and his friend Buddy"
               className="w-48 h-48 rounded-xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
+              onError={(e) => {
+                console.log('Image failed to load:', e.currentTarget.src);
+                e.currentTarget.style.display = 'none';
+              }}
+              onLoad={() => console.log('Image loaded successfully')}
             />
             <h1 className="text-4xl md:text-5xl font-bold text-amber-800 leading-relaxed text-center md:text-left flex-1">
               Welcome to my special place for children to enjoy stories!
