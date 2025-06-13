@@ -6,52 +6,55 @@ import { Label } from "@/components/ui/label";
 import { Upload, FileText, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-interface RTFUploaderProps {
+interface HTMLUploaderProps {
   onContentExtracted: (content: string) => void;
   currentContent?: string;
 }
 
-const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentContent }) => {
+const HTMLUploader: React.FC<HTMLUploaderProps> = ({ onContentExtracted, currentContent }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const { toast } = useToast();
 
-  const processRTFFile = async (file: File) => {
+  const processHTMLFile = async (file: File) => {
     setIsProcessing(true);
     
     try {
-      const text = await file.text();
+      const htmlContent = await file.text();
       
-      // Basic RTF to plain text conversion
-      // Remove RTF control codes and extract readable text
-      let content = text
-        .replace(/\\[a-z]+\d*\s?/g, '') // Remove RTF control words
-        .replace(/[{}]/g, '') // Remove braces
-        .replace(/\\\\/g, '\\') // Handle escaped backslashes
-        .replace(/\\'/g, "'") // Handle escaped quotes
-        .replace(/\s+/g, ' ') // Normalize whitespace
-        .trim();
+      // Extract content from HTML body if it exists, otherwise use the whole content
+      let content = htmlContent;
       
-      // Convert common RTF line breaks to proper paragraph breaks
-      content = content.replace(/\\par\s*/g, '\n\n');
-      
-      // Clean up any remaining RTF artifacts
-      content = content.replace(/\\[a-z0-9]+/g, '');
+      // If it's a full HTML document, extract the body content
+      const bodyMatch = htmlContent.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+      if (bodyMatch) {
+        content = bodyMatch[1].trim();
+      } else {
+        // If no body tag, but has HTML structure, clean it up
+        content = htmlContent
+          .replace(/<html[^>]*>/gi, '')
+          .replace(/<\/html>/gi, '')
+          .replace(/<head[\s\S]*?<\/head>/gi, '')
+          .replace(/<meta[^>]*>/gi, '')
+          .replace(/<title[\s\S]*?<\/title>/gi, '')
+          .replace(/<!DOCTYPE[^>]*>/gi, '')
+          .trim();
+      }
       
       if (content.length > 0) {
         onContentExtracted(content);
         toast({
           title: "Success",
-          description: "RTF file content extracted successfully"
+          description: "HTML file content loaded successfully"
         });
       } else {
-        throw new Error("No readable content found in RTF file");
+        throw new Error("No readable content found in HTML file");
       }
     } catch (error) {
-      console.error('Error processing RTF file:', error);
+      console.error('Error processing HTML file:', error);
       toast({
         title: "Error",
-        description: "Failed to process RTF file. Please try again or paste the content manually.",
+        description: "Failed to process HTML file. Please check the file format and try again.",
         variant: "destructive"
       });
     } finally {
@@ -67,25 +70,26 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
   };
 
   const handleFile = (file: File) => {
-    if (!file.name.toLowerCase().endsWith('.rtf')) {
+    const fileName = file.name.toLowerCase();
+    if (!fileName.endsWith('.html') && !fileName.endsWith('.htm')) {
       toast({
         title: "Invalid file type",
-        description: "Please select an RTF (.rtf) file",
+        description: "Please select an HTML (.html or .htm) file",
         variant: "destructive"
       });
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+    if (file.size > 10 * 1024 * 1024) { // 10MB limit
       toast({
         title: "File too large",
-        description: "Please select a file smaller than 5MB",
+        description: "Please select a file smaller than 10MB",
         variant: "destructive"
       });
       return;
     }
 
-    processRTFFile(file);
+    processHTMLFile(file);
   };
 
   const handleDragOver = (event: React.DragEvent) => {
@@ -103,14 +107,17 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
     setIsDragOver(false);
     
     const files = Array.from(event.dataTransfer.files);
-    const rtfFile = files.find(file => file.name.toLowerCase().endsWith('.rtf'));
+    const htmlFile = files.find(file => {
+      const fileName = file.name.toLowerCase();
+      return fileName.endsWith('.html') || fileName.endsWith('.htm');
+    });
     
-    if (rtfFile) {
-      handleFile(rtfFile);
+    if (htmlFile) {
+      handleFile(htmlFile);
     } else {
       toast({
         title: "Invalid file type",
-        description: "Please drop an RTF (.rtf) file",
+        description: "Please drop an HTML (.html or .htm) file",
         variant: "destructive"
       });
     }
@@ -123,7 +130,7 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <Label className="text-base font-semibold">Upload RTF Story File</Label>
+        <Label className="text-base font-semibold">Upload HTML Story File</Label>
         {currentContent && (
           <Button
             type="button"
@@ -159,26 +166,26 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
           
           <div>
             <p className="text-lg font-medium text-gray-900">
-              {isProcessing ? 'Processing RTF file...' : 'Drop your RTF file here'}
+              {isProcessing ? 'Processing HTML file...' : 'Drop your HTML file here'}
             </p>
             <p className="text-sm text-gray-500">
               or click below to browse for a file
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              Supports .rtf files up to 5MB
+              Supports .html and .htm files up to 10MB
             </p>
           </div>
           
           <div>
             <Input
               type="file"
-              accept=".rtf"
+              accept=".html,.htm"
               onChange={handleFileSelect}
               disabled={isProcessing}
               className="hidden"
-              id="rtf-upload"
+              id="html-upload"
             />
-            <Label htmlFor="rtf-upload" className="cursor-pointer">
+            <Label htmlFor="html-upload" className="cursor-pointer">
               <Button 
                 type="button" 
                 variant="outline" 
@@ -186,7 +193,7 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
                 className="border-amber-300 text-amber-700 hover:bg-amber-50"
               >
                 <Upload className="h-4 w-4 mr-2" />
-                Choose RTF File
+                Choose HTML File
               </Button>
             </Label>
           </div>
@@ -196,7 +203,10 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
       {currentContent && (
         <div className="bg-green-50 border border-green-200 rounded-lg p-3">
           <p className="text-sm text-green-700 font-medium">
-            ✓ Content loaded from RTF file ({currentContent.length} characters)
+            ✓ HTML content loaded ({currentContent.length} characters)
+          </p>
+          <p className="text-xs text-green-600 mt-1">
+            The content is now available in the rich text editor below and can be further edited.
           </p>
         </div>
       )}
@@ -204,4 +214,4 @@ const RTFUploader: React.FC<RTFUploaderProps> = ({ onContentExtracted, currentCo
   );
 };
 
-export default RTFUploader;
+export default HTMLUploader;

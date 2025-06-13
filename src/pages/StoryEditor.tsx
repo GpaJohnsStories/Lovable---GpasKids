@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, Save, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import RTFUploader from "@/components/RTFUploader";
+import HTMLUploader from "@/components/HTMLUploader";
 import RichTextEditor from "@/components/RichTextEditor";
 
 interface Story {
@@ -150,7 +149,7 @@ const StoryEditor = () => {
     setStory(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleRTFContentExtracted = (content: string) => {
+  const handleHTMLContentExtracted = (content: string) => {
     updateField('content', content);
   };
 
@@ -257,8 +256,8 @@ const StoryEditor = () => {
               </div>
 
               <div className="space-y-4">
-                <RTFUploader 
-                  onContentExtracted={handleRTFContentExtracted}
+                <HTMLUploader 
+                  onContentExtracted={handleHTMLContentExtracted}
                   currentContent={story.content}
                 />
                 
@@ -270,7 +269,8 @@ const StoryEditor = () => {
                     placeholder="Start writing your story with rich text formatting..."
                   />
                   <p className="text-sm text-gray-600">
-                    Use the toolbar above to format your text with bold, italic, and underline. You can also use keyboard shortcuts: Ctrl+B (bold), Ctrl+I (italic), Ctrl+U (underline).
+                    Upload an HTML file above to import formatted content, or write directly using the rich text editor. 
+                    You can use toolbar buttons or keyboard shortcuts: Ctrl+B (bold), Ctrl+I (italic), Ctrl+U (underline).
                   </p>
                 </div>
               </div>
