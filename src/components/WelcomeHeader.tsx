@@ -1,3 +1,4 @@
+
 import { Book, MessageSquare, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -49,18 +50,18 @@ const WelcomeHeader = () => {
               <img 
                 src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png" 
                 alt="Grandpa's beloved companion"
-                className="w-16 h-16 rounded-full object-cover object-top"
+                className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover object-top"
               />
             </Link>
-            <div>
-              <h1 className="text-3xl font-bold text-white font-handwritten">Grandpa John's Stories for Kids</h1>
-              <p className="text-amber-100 text-sm font-medium">Where every story feels like a new adventure</p>
+            <div className="text-center sm:text-left">
+              <h1 className="text-xl sm:text-3xl font-bold text-white font-handwritten">Grandpa John's Stories for Kids</h1>
+              <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story feels like a new adventure</p>
             </div>
           </div>
         </div>
         
         {/* Navigation Menu Buttons */}
-        <div className="flex justify-center mt-6 gap-4">
+        <div className="flex flex-col sm:flex-row justify-center mt-6 gap-3 sm:gap-4">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
             
@@ -71,11 +72,12 @@ const WelcomeHeader = () => {
                 className={`
                   ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
                   ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : ''}
-                  text-white px-6 py-3 rounded-lg font-semibold 
+                  text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold 
                   transition-all duration-200 
                   hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
-                  flex items-center justify-center min-w-[120px]
+                  flex items-center justify-center w-full sm:min-w-[120px] sm:w-auto
                   font-fun border-t border-white border-opacity-30
+                  text-sm sm:text-base
                 `}
               >
                 {item.name}
