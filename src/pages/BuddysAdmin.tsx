@@ -113,10 +113,10 @@ const BuddysAdmin = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-orange-800 text-center">
+            <CardTitle className="text-2xl font-bold text-black text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               <BookOpen className="h-8 w-8 mx-auto mb-2" />
               Buddy's Admin Login
             </CardTitle>
@@ -157,7 +157,7 @@ const BuddysAdmin = () => {
 
   if (showStoryForm) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 py-8">
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="container mx-auto px-4">
           <StoryForm
             story={editingStory}
@@ -170,10 +170,10 @@ const BuddysAdmin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-orange-800">Buddy's Admin Dashboard</h1>
+          <h1 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>Buddy's Admin Dashboard</h1>
           <Button onClick={handleLogout} variant="outline" className="cozy-button">
             <LogOut className="h-4 w-4 mr-2" />
             Logout
@@ -183,7 +183,7 @@ const BuddysAdmin = () => {
         <div className="mb-8">
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl text-orange-800">Create New Story</CardTitle>
+              <CardTitle className="text-xl text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>Create New Story</CardTitle>
             </CardHeader>
             <CardContent>
               <Button onClick={handleCreateStory} className="w-full cozy-button">
@@ -196,11 +196,11 @@ const BuddysAdmin = () => {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-xl text-orange-800">Stories Management</CardTitle>
+            <CardTitle className="text-xl text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>Stories Management</CardTitle>
           </CardHeader>
           <CardContent>
             {storiesLoading ? (
-              <div className="text-center py-8">
+              <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
                 <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
                 <p>Loading stories...</p>
               </div>
@@ -208,26 +208,26 @@ const BuddysAdmin = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Author</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Read Count</TableHead>
-                    <TableHead>Created</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Title</TableHead>
+                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Author</TableHead>
+                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Category</TableHead>
+                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Read Count</TableHead>
+                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Created</TableHead>
+                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {stories?.map((story) => (
                     <TableRow key={story.id}>
-                      <TableCell className="font-medium">{story.title}</TableCell>
-                      <TableCell>{story.author}</TableCell>
+                      <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>{story.title}</TableCell>
+                      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>{story.author}</TableCell>
                       <TableCell>
                         <Badge className={getCategoryBadgeColor(story.category)}>
                           {story.category}
                         </Badge>
                       </TableCell>
-                      <TableCell>{story.read_count}</TableCell>
-                      <TableCell>
+                      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>{story.read_count}</TableCell>
+                      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
                         {new Date(story.created_at).toLocaleDateString()}
                       </TableCell>
                       <TableCell>
