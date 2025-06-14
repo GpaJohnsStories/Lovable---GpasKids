@@ -114,22 +114,13 @@ const Story = () => {
   };
 
   const formatContent = (content: string) => {
-    // Check if content contains HTML tags (rich text)
-    if (content.includes('<') && content.includes('>')) {
-      return (
-        <div 
-          className="prose prose-orange max-w-none text-lg font-serif leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: content }}
-        />
-      );
-    }
-    
-    // Fallback to plain text formatting for backward compatibility
-    return content.split('\n\n').map((paragraph, index) => (
-      <p key={index} className="mb-4 text-black leading-relaxed">
-        {paragraph.trim()}
-      </p>
-    ));
+    // Always render HTML content directly without any processing
+    return (
+      <div 
+        className="prose prose-orange max-w-none text-lg font-serif leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    );
   };
 
   return (
