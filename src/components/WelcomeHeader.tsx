@@ -1,4 +1,3 @@
-
 import { Book, MessageSquare, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -81,7 +80,7 @@ const WelcomeHeader = () => {
               <img 
                 src="/lovable-uploads/3a1b5f78-6ca6-488d-90a3-369c6bc26b12.png"
                 alt="Under Construction"
-                className="w-40 h-40 object-contain"
+                className="w-64 h-64 object-contain"
               />
             </div>
           </div>
