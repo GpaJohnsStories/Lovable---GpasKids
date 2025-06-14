@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, LogOut, Trash2, Upload, FileText, Plus, Edit } from "lucide-react";
+import { BookOpen, LogOut, Trash2, Plus, Edit } from "lucide-react";
 import { toast } from "sonner";
 import StoryForm from "@/components/StoryForm";
 
@@ -15,10 +15,8 @@ const BuddysAdmin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
   const [showStoryForm, setShowStoryForm] = useState(false);
   const [editingStory, setEditingStory] = useState<any>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const ADMIN_EMAIL = "gpajohn.buddy@gmail.com";
   const ADMIN_PASSWORD = "gpaj0hn#bUdDy1o0s6e";
@@ -96,65 +94,6 @@ const BuddysAdmin = () => {
   const handleStoryFormCancel = () => {
     setShowStoryForm(false);
     setEditingStory(null);
-  };
-
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    if (file.type !== 'text/html') {
-      toast.error("Please select an HTML file");
-      return;
-    }
-
-    setIsUploading(true);
-
-    try {
-      const content = await file.text();
-      
-      // Extract title from HTML (look for <title> tag or first <h1>)
-      const titleMatch = content.match(/<title[^>]*>(.*?)<\/title>/i) || 
-                        content.match(/<h1[^>]*>(.*?)<\/h1>/i);
-      const title = titleMatch ? titleMatch[1].replace(/<[^>]*>/g, '').trim() : file.name.replace('.html', '');
-      
-      // Extract meta information if available
-      const authorMatch = content.match(/<meta[^>]*name=['"]author['"][^>]*content=['"]([^'"]*)['"]/i);
-      const categoryMatch = content.match(/<meta[^>]*name=['"]category['"][^>]*content=['"]([^'"]*)['"]/i);
-      
-      const storyData = {
-        title: title,
-        author: authorMatch ? authorMatch[1] : 'Grandpa John',
-        category: (categoryMatch ? categoryMatch[1] : 'Fun') as "Fun" | "Life" | "North Pole" | "World Changers",
-        content: content,
-        story_code: '',
-        tagline: '',
-        excerpt: '',
-        google_drive_link: '',
-        photo_link_1: '',
-        photo_link_2: '',
-        photo_link_3: ''
-      };
-
-      const { error } = await supabase
-        .from('stories')
-        .insert([storyData]);
-
-      if (error) {
-        console.error('Upload error:', error);
-        toast.error("Error uploading story");
-      } else {
-        toast.success("Story uploaded successfully!");
-        refetch();
-        if (fileInputRef.current) {
-          fileInputRef.current.value = '';
-        }
-      }
-    } catch (error) {
-      console.error('File processing error:', error);
-      toast.error("Error processing file");
-    } finally {
-      setIsUploading(false);
-    }
   };
 
   const getCategoryBadgeColor = (category: string) => {
@@ -241,7 +180,7 @@ const BuddysAdmin = () => {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="mb-8">
           <Card>
             <CardHeader>
               <CardTitle className="text-xl text-orange-800">Create New Story</CardTitle>
@@ -251,34 +190,6 @@ const BuddysAdmin = () => {
                 <Plus className="h-4 w-4 mr-2" />
                 Create Story with Editor
               </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-xl text-orange-800">Upload HTML Story</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center space-x-4">
-                <Input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".html"
-                  onChange={handleFileUpload}
-                  disabled={isUploading}
-                  className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
-                />
-                <div className="flex items-center text-sm text-orange-600">
-                  <FileText className="h-4 w-4 mr-2" />
-                  HTML files only
-                </div>
-                {isUploading && (
-                  <div className="flex items-center text-sm text-orange-600">
-                    <Upload className="h-4 w-4 mr-2 animate-spin" />
-                    Uploading...
-                  </div>
-                )}
-              </div>
             </CardContent>
           </Card>
         </div>
