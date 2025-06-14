@@ -114,13 +114,13 @@ const Story = () => {
   };
 
   const formatContent = (content: string) => {
-    // Always render HTML content directly without any processing
-    return (
-      <div 
-        className="prose prose-orange max-w-none text-lg font-serif leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
-    );
+    // Replace line breaks with paragraph tags for better formatting
+    const paragraphs = content.split('\n\n').filter(p => p.trim());
+    return paragraphs.map((paragraph, index) => (
+      <p key={index} className="mb-4 text-gray-800 leading-relaxed">
+        {paragraph.trim()}
+      </p>
+    ));
   };
 
   return (
@@ -166,7 +166,7 @@ const Story = () => {
               ) : (
                 story.excerpt && (
                   <div className="prose prose-orange max-w-none">
-                    <p className="text-black leading-relaxed text-base">
+                    <p className="text-gray-800 leading-relaxed">
                       {story.excerpt}
                     </p>
                   </div>
