@@ -1,8 +1,8 @@
-
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { 
   Bold, 
   Italic, 
@@ -32,6 +32,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   placeholder = "Start writing your story..." 
 }) => {
   const editorRef = useRef<HTMLDivElement>(null);
+  const [colorPopoverOpen, setColorPopoverOpen] = useState(false);
 
   useEffect(() => {
     if (editorRef.current) {
@@ -92,6 +93,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
   const handleFontColor = (color: string) => {
     execCommand('foreColor', color);
+    setColorPopoverOpen(false); // Close the popover after selecting a color
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -204,10 +206,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             grid-template-columns: repeat(6, 1fr);
             gap: 4px;
             padding: 8px;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
           }
           .color-option {
             width: 24px;
@@ -252,17 +250,19 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         </Select>
 
         {/* Font Color */}
-        <div className="relative group">
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="h-8 w-8 p-0"
-            title="Text Color"
-          >
-            <Palette className="h-4 w-4" />
-          </Button>
-          <div className="absolute top-full left-0 mt-1 hidden group-hover:block z-10">
+        <Popover open={colorPopoverOpen} onOpenChange={setColorPopoverOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="h-8 w-8 p-0"
+              title="Text Color"
+            >
+              <Palette className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-2" align="start">
             <div className="color-palette">
               {colors.map(color => (
                 <div
@@ -274,8 +274,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                 />
               ))}
             </div>
-          </div>
-        </div>
+          </PopoverContent>
+        </Popover>
 
         <Separator orientation="vertical" className="h-6 mx-1" />
 
