@@ -69,7 +69,7 @@ const WelcomeHeader = () => {
             {/* Speech Bubble Image */}
             <div className="absolute -left-28 top-4">
               <img 
-                src="/lovable-uploads/e7798bd4-677c-4dbb-95aa-766cda36060b.png" 
+                src="/lovable-uploads/9c707001-90fd-4d75-97f7-a969bc295b8a.png" 
                 alt="Speech bubble saying HURRY UP!!! We want to read!!!"
                 className="w-32 h-32 object-contain"
                 onLoad={() => console.log('New speech bubble image loaded successfully')}
