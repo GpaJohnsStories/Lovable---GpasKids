@@ -17,7 +17,7 @@ const WelcomeHeader = () => {
     { 
       name: 'Stories', 
       path: '/stories', 
-      icon: Book, 
+      icon: 'book', 
       bgColor: 'bg-gradient-to-b from-blue-400 via-blue-500 to-blue-600',
       hoverColor: 'hover:from-blue-500 hover:via-blue-600 hover:to-blue-700',
       shadowColor: 'shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)]',
@@ -26,7 +26,7 @@ const WelcomeHeader = () => {
     { 
       name: 'Comments', 
       path: '/comments', 
-      icon: MessageSquare, 
+      icon: 'chat', 
       bgColor: 'bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500',
       hoverColor: 'hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600',
       shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
@@ -57,6 +57,22 @@ const WelcomeHeader = () => {
         <img 
           src="/lovable-uploads/6b23362c-187e-44ee-b422-7de152d617c0.png" 
           alt="House"
+          className="w-5 h-5 object-cover"
+        />
+      );
+    } else if (item.icon === 'book') {
+      return (
+        <img 
+          src="/lovable-uploads/c3b88b23-b809-4f82-9c07-a90f95a3bde5.png" 
+          alt="Book"
+          className="w-5 h-5 object-cover"
+        />
+      );
+    } else if (item.icon === 'chat') {
+      return (
+        <img 
+          src="/lovable-uploads/86bd5c48-6f8e-4a52-a343-273bf88f31cd.png" 
+          alt="Chat"
           className="w-5 h-5 object-cover"
         />
       );
