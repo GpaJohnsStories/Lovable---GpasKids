@@ -43,7 +43,7 @@ const WelcomeHeader = () => {
   return (
     <header className="bg-gradient-to-r from-amber-600 to-orange-600 shadow-lg border-b-4 border-orange-300">
       <div className="container mx-auto px-4 py-6">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-start">
           <div className="flex items-center space-x-4">
             {/* Personal Photo */}
             <Link to="/" className="bg-white rounded-full p-1 shadow-lg hover:shadow-xl transition-shadow">
@@ -53,7 +53,7 @@ const WelcomeHeader = () => {
                 className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover object-top"
               />
             </Link>
-            <div className="text-center sm:text-left">
+            <div className="text-left">
               <h1 className="text-xl sm:text-3xl font-bold text-white font-handwritten">Grandpa John's Stories for Kids</h1>
               <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story feels like a new adventure</p>
             </div>
