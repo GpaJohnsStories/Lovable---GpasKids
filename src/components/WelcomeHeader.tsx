@@ -1,4 +1,3 @@
-
 import { Book, MessageSquare, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -81,7 +80,7 @@ const WelcomeHeader = () => {
               {/* Speech Bubble Image */}
               <div className="absolute -left-24 top-2">
                 <img 
-                  src="/lovable-uploads/9c707001-90fd-4d75-97f7-a969bc295b8a.png" 
+                  src="/lovable-uploads/85707d76-31c8-4dac-9fa7-c6752c4f8e74.png" 
                   alt="Speech bubble saying HURRY UP!!! We want to read!!!"
                   className="w-24 h-24 object-contain"
                   onLoad={() => console.log('New speech bubble image loaded successfully')}
@@ -106,8 +105,8 @@ const WelcomeHeader = () => {
             </div>
           </div>
           
-          {/* Navigation Menu Buttons - Moved up further with minimal spacing */}
-          <div className="flex flex-col sm:flex-row justify-start -mt-1 gap-2 sm:gap-3">
+          {/* Navigation Menu Buttons - Moved up even more */}
+          <div className="flex flex-col sm:flex-row justify-start -mt-3 gap-2 sm:gap-3">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               
