@@ -31,6 +31,8 @@ const CookieFreeFooter = () => {
             <Link 
               to="/admin" 
               className="text-amber-600 hover:text-amber-800 underline"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Admin
             </Link>
