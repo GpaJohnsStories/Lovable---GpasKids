@@ -26,7 +26,7 @@ const Index = () => {
         <img 
           src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczNveHBjNDkxcDNwMG5mcHh2dmxvYXlucm4zZjF5a3BxaWRxb3VoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cMALqIjmb7ygw/giphy.gif"
           alt="Fun dancing GIF"
-          className="w-48 h-48 rounded-lg shadow-lg border-4 border-white"
+          className="w-52 h-48 rounded-lg shadow-lg border-4 border-white"
         />
       </div>
 
