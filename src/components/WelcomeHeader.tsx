@@ -44,7 +44,7 @@ const WelcomeHeader = () => {
   return (
     <TooltipProvider>
       <header className="bg-gradient-to-r from-amber-600 to-orange-600 shadow-lg border-b-4 border-orange-300">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               {/* Personal Photo */}
