@@ -1,3 +1,4 @@
+
 import { Book, MessageSquare, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -105,8 +106,8 @@ const WelcomeHeader = () => {
             </div>
           </div>
           
-          {/* Navigation Menu Buttons - Moved up even more */}
-          <div className="flex flex-col sm:flex-row justify-start -mt-3 gap-2 sm:gap-3">
+          {/* Navigation Menu Buttons - Moved completely inside banner */}
+          <div className="flex flex-col sm:flex-row justify-start -mt-8 gap-2 sm:gap-3 mb-2">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               
