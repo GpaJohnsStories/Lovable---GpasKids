@@ -92,36 +92,27 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   };
 
   const handleFontColor = (color: string) => {
+    console.log('Color selected:', color);
+    
     if (editorRef.current) {
-      const selection = window.getSelection();
+      // Focus the editor first
+      editorRef.current.focus();
       
-      // If there's no selection or the selection is collapsed (just a cursor)
+      // Execute the color command
+      const success = document.execCommand('foreColor', false, color);
+      console.log('execCommand success:', success);
+      
+      // If no text is selected, we need to handle it differently
+      const selection = window.getSelection();
       if (!selection || selection.isCollapsed) {
-        // Create a temporary span to apply the color
-        const span = document.createElement('span');
-        span.style.color = color;
-        span.innerHTML = '&nbsp;'; // Non-breaking space
-        
-        // Insert the span at the current cursor position
-        if (selection && selection.rangeCount > 0) {
-          const range = selection.getRangeAt(0);
-          range.insertNode(span);
-          
-          // Position cursor after the span
-          range.setStartAfter(span);
-          range.setEndAfter(span);
-          selection.removeAllRanges();
-          selection.addRange(range);
-        }
-      } else {
-        // If text is selected, apply the color normally
-        execCommand('foreColor', color);
+        // Set the style for future text input
+        editorRef.current.style.color = color;
       }
       
-      // Focus back to editor and trigger change
-      editorRef.current.focus();
+      // Trigger change event
       onChange(editorRef.current.innerHTML);
     }
+    
     setColorPopoverOpen(false);
   };
 
