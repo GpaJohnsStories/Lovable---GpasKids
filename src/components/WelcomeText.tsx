@@ -1,7 +1,7 @@
 
 const WelcomeText = () => {
   return (
-    <div className="w-full py-4 mt-0" style={{backgroundColor: '#ADD8E6'}}>
+    <div className="w-screen py-4 mt-0 -mx-4 sm:-mx-8 md:-mx-16 lg:-mx-20 xl:-mx-24" style={{backgroundColor: '#ADD8E6'}}>
       <div className="rounded-3xl p-8 shadow-lg border-2 border-orange-200 font-fun mx-4">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row items-start gap-6">
