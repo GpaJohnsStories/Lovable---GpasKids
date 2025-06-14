@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -117,7 +116,10 @@ const Story = () => {
     return (
       <div 
         className="prose prose-orange max-w-none text-gray-800 leading-relaxed"
-        style={{ fontFamily: 'Georgia, serif', fontSize: '16px' }}
+        style={{ 
+          fontFamily: 'Georgia, serif', 
+          fontSize: '16px',
+        }}
         dangerouslySetInnerHTML={{ __html: content }}
       />
     );
@@ -125,6 +127,28 @@ const Story = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .prose p:empty {
+            margin: 1em 0;
+            height: 1em;
+          }
+          .prose br {
+            display: block;
+            margin: 0.5em 0;
+            content: "";
+          }
+          .prose p {
+            margin: 1em 0;
+          }
+          .prose p:first-child {
+            margin-top: 0;
+          }
+          .prose p:last-child {
+            margin-bottom: 0;
+          }
+        `
+      }} />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <Link to="/" className="inline-flex items-center text-orange-600 hover:text-orange-700 mb-6">
