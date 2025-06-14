@@ -1,4 +1,5 @@
 
+
 import { Book, MessageSquare, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -19,10 +20,10 @@ const WelcomeHeader = () => {
       name: 'Stories', 
       path: '/stories', 
       icon: 'book', 
-      bgColor: 'bg-gradient-to-b from-blue-400 via-blue-500 to-blue-600',
-      hoverColor: 'hover:from-blue-500 hover:via-blue-600 hover:to-blue-700',
-      shadowColor: 'shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)]',
-      hoverShadow: 'hover:shadow-[0_4px_0_#1e40af,0_6px_12px_rgba(0,0,0,0.4)]'
+      bgColor: 'bg-gradient-to-b from-[#C5E4F3] via-[#ADD8E6] to-[#8AC6D1]',
+      hoverColor: 'hover:from-[#B8DCF0] hover:via-[#9BCFDF] hover:to-[#7AB8C4]',
+      shadowColor: 'shadow-[0_6px_0_#7AB8C4,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]'
     },
     { 
       name: 'Comments', 
@@ -107,7 +108,6 @@ const WelcomeHeader = () => {
         <div className="flex justify-center mt-6 gap-4">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
-            const isStoriesItem = item.name === 'Stories';
             
             return (
               <Link
@@ -116,12 +116,11 @@ const WelcomeHeader = () => {
                 className={`
                   ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
                   ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : ''}
-                  ${isStoriesItem ? 'border-t-4 border-t-blue-200' : ''}
                   text-white px-6 py-3 rounded-lg font-semibold 
                   transition-all duration-200 
                   hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
                   flex items-center gap-2 min-w-[120px] justify-center
-                  font-fun ${isStoriesItem ? '' : 'border-t border-white border-opacity-30'}
+                  font-fun border-t border-white border-opacity-30
                 `}
               >
                 {renderIcon(item)}
@@ -136,3 +135,4 @@ const WelcomeHeader = () => {
 };
 
 export default WelcomeHeader;
+
