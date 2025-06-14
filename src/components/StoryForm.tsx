@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -186,16 +185,6 @@ const StoryForm: React.FC<StoryFormProps> = ({ story, onSave, onCancel }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <Label htmlFor="google_drive_link">Google Drive Link</Label>
-              <Input
-                id="google_drive_link"
-                value={formData.google_drive_link}
-                onChange={(e) => handleInputChange('google_drive_link', e.target.value)}
-                placeholder="Google Drive link"
-              />
-            </div>
-
-            <div>
               <Label htmlFor="photo_link_1">Photo Link 1</Label>
               <Input
                 id="photo_link_1"
@@ -214,16 +203,16 @@ const StoryForm: React.FC<StoryFormProps> = ({ story, onSave, onCancel }) => {
                 placeholder="Photo URL"
               />
             </div>
-          </div>
 
-          <div>
-            <Label htmlFor="photo_link_3">Photo Link 3</Label>
-            <Input
-              id="photo_link_3"
-              value={formData.photo_link_3}
-              onChange={(e) => handleInputChange('photo_link_3', e.target.value)}
-              placeholder="Photo URL"
-            />
+            <div>
+              <Label htmlFor="photo_link_3">Photo Link 3</Label>
+              <Input
+                id="photo_link_3"
+                value={formData.photo_link_3}
+                onChange={(e) => handleInputChange('photo_link_3', e.target.value)}
+                placeholder="Photo URL"
+              />
+            </div>
           </div>
 
           <div className="flex justify-end space-x-4">
