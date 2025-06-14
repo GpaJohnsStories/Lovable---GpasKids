@@ -34,14 +34,36 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (editorRef.current && editorRef.current.innerHTML !== content) {
-      editorRef.current.innerHTML = content;
+    if (editorRef.current) {
+      if (content && editorRef.current.innerHTML !== content) {
+        editorRef.current.innerHTML = content;
+      } else if (!content) {
+        // Apply default styles for new stories
+        applyDefaultStyles();
+      }
     }
   }, [content]);
+
+  const applyDefaultStyles = () => {
+    if (editorRef.current) {
+      // Set default font family, size, and color
+      editorRef.current.style.fontFamily = 'Georgia, serif';
+      editorRef.current.style.fontSize = '16px'; // Medium size
+      editorRef.current.style.color = '#000000'; // Black
+      editorRef.current.focus();
+    }
+  };
 
   const handleInput = () => {
     if (editorRef.current) {
       onChange(editorRef.current.innerHTML);
+    }
+  };
+
+  const handleFocus = () => {
+    if (editorRef.current && !content) {
+      // Ensure default styles are applied when focusing on empty editor
+      applyDefaultStyles();
     }
   };
 
@@ -136,6 +158,11 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             content: attr(data-placeholder);
             color: #9ca3af;
             font-style: italic;
+          }
+          .rich-editor {
+            font-family: Georgia, serif;
+            font-size: 16px;
+            color: #000000;
           }
           .rich-editor h1 {
             font-size: 2em;
@@ -405,8 +432,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         ref={editorRef}
         contentEditable
         onInput={handleInput}
+        onFocus={handleFocus}
         onKeyDown={handleKeyDown}
-        className="rich-editor min-h-[400px] p-4 font-serif text-base leading-relaxed focus:outline-none"
+        className="rich-editor min-h-[400px] p-4 leading-relaxed focus:outline-none"
         style={{ whiteSpace: 'pre-wrap' }}
         data-placeholder={placeholder}
         suppressContentEditableWarning={true}
