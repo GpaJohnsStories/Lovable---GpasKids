@@ -1,3 +1,4 @@
+
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -115,7 +116,7 @@ const Story = () => {
   const formatContent = (content: string) => {
     return (
       <div 
-        className="prose prose-orange max-w-none text-gray-800 leading-relaxed"
+        className="prose prose-orange max-w-none text-gray-800 leading-relaxed story-content"
         style={{ 
           fontFamily: 'Georgia, serif', 
           fontSize: '16px',
@@ -129,23 +130,30 @@ const Story = () => {
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
       <style dangerouslySetInnerHTML={{
         __html: `
-          .prose p:empty {
+          .story-content p {
             margin: 1em 0;
-            height: 1em;
+            min-height: 1.2em;
           }
-          .prose br {
+          
+          .story-content p:empty,
+          .story-content p:has(br:only-child),
+          .story-content p:has(&nbsp;:only-child) {
+            height: 1.2em;
+            margin: 1em 0;
+          }
+          
+          .story-content p:first-child {
+            margin-top: 0;
+          }
+          
+          .story-content p:last-child {
+            margin-bottom: 0;
+          }
+          
+          .story-content br {
             display: block;
             margin: 0.5em 0;
             content: "";
-          }
-          .prose p {
-            margin: 1em 0;
-          }
-          .prose p:first-child {
-            margin-top: 0;
-          }
-          .prose p:last-child {
-            margin-bottom: 0;
           }
         `
       }} />
