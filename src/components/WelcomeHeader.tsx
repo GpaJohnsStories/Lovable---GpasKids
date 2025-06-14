@@ -76,6 +76,14 @@ const WelcomeHeader = () => {
                 onError={(e) => console.log('New speech bubble image failed to load:', e)}
               />
             </div>
+            {/* Under Construction Image - Below Dancing GIF */}
+            <div className="absolute top-36 left-1/2 transform -translate-x-1/2">
+              <img 
+                src="/lovable-uploads/3a1b5f78-6ca6-488d-90a3-369c6bc26b12.png"
+                alt="Under Construction"
+                className="w-32 h-32 object-contain"
+              />
+            </div>
           </div>
         </div>
         
