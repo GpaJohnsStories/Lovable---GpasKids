@@ -71,25 +71,25 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Segoe Print', cursive, sans-serif;
+    font-family: 'Kalam', 'Caveat', cursive, sans-serif;
     line-height: 1.7;
     font-size: 14px; /* Set minimum font size */
     min-font-size: 14px; /* Ensure minimum font size */
   }
   
   h1 {
-    font-family: 'Segoe Print', cursive, sans-serif !important;
+    font-family: 'Kalam', 'Caveat', cursive, sans-serif !important;
     font-weight: 700;
   }
 
   h2, h3 {
-    font-family: 'Segoe Print', cursive, sans-serif;
+    font-family: 'Kalam', 'Caveat', cursive, sans-serif;
     font-weight: 700;
   }
 
   p {
     @apply text-2xl text-amber-800 font-semibold;
-    font-family: 'Segoe Print', cursive, sans-serif;
+    font-family: 'Kalam', 'Caveat', cursive, sans-serif;
     line-height: 1.7;
   }
 
@@ -100,7 +100,7 @@
   h1.font-fun,
   h2.font-fun,
   h3.font-fun {
-    font-family: 'Segoe Print', cursive, sans-serif !important;
+    font-family: 'Kalam', 'Caveat', cursive, sans-serif !important;
   }
 
   /* Override any text-xs usage to use text-sm instead */
@@ -117,7 +117,7 @@
   
   .cozy-button {
     @apply bg-gradient-to-r from-amber-600 to-orange-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105;
-    font-family: 'Segoe Print', cursive, sans-serif;
+    font-family: 'Kalam', 'Caveat', cursive, sans-serif;
   }
   
   .bookshelf-bg {
@@ -132,7 +132,7 @@
   
   .personal-text {
     @apply text-amber-700 leading-relaxed;
-    font-family: 'Segoe Print', cursive, sans-serif;
+    font-family: 'Kalam', 'Caveat', cursive, sans-serif;
   }
 
   /* Utility class to enforce minimum font size */
