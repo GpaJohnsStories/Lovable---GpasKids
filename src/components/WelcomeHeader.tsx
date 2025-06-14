@@ -56,9 +56,9 @@ const WelcomeHeader = () => {
                 />
               </Link>
               <div className="text-left">
-                <div className="text-lg sm:text-2xl font-bold text-white font-handwritten">
-                  <div>Grandpa John's</div>
-                  <div className="text-left">Stories for Kids</div>
+                <div className="text-lg sm:text-2xl font-bold font-handwritten">
+                  <div className="text-blue-900">Grandpa John's</div>
+                  <div className="text-left text-white">Stories for Kids</div>
                 </div>
                 <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story feels like a new adventure</p>
               </div>
