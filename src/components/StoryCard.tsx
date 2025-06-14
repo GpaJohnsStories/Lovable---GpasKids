@@ -1,12 +1,11 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { BookOpen, Volume2, Book, User, Globe } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { BookOpen, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import { renderCategoryBadge } from "@/utils/categoryUtils";
 
 interface Story {
-  id: string | number; // Support both UUID strings and numbers
+  id: string | number;
   title: string;
   description: string;
   readTime: string;
@@ -19,69 +18,14 @@ interface StoryCardProps {
   story: Story;
 }
 
-const getCategoryStyles = (category: string) => {
-  switch (category) {
-    case "Fun":
-      return "bg-blue-500 text-white";
-    case "Life":
-      return "bg-green-500 text-white";
-    case "North Pole":
-      return "bg-red-600 text-white";
-    case "World Changers":
-      return "bg-amber-400 text-amber-900";
-    default:
-      return "bg-amber-200 text-amber-800";
-  }
-};
-
 const StoryCard = ({ story }: StoryCardProps) => {
-  const renderCategoryBadge = () => {
-    if (story.category === "Life") {
-      return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getCategoryStyles(story.category)}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          Lessons and Stories From Grandpa John's Life
-        </span>
-      );
-    }
-
-    if (story.category === "World Changers") {
-      return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getCategoryStyles(story.category)}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          World Changers — Real People Who Made A Difference
-        </span>
-      );
-    }
-
-    if (story.category === "North Pole") {
-      return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getCategoryStyles(story.category)}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          Stories from the North Pole
-        </span>
-      );
-    }
-
-    if (story.category === "Fun") {
-      return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getCategoryStyles(story.category)}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          Fun Jokes, Poems, Games & More
-        </span>
-      );
-    }
-
-    return (
-      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getCategoryStyles(story.category)}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-        {story.category}
-      </span>
-    );
-  };
-
   return (
     <div className="w-2/5 mx-auto">
       <Link to={`/story/${story.id}`}>
         <Card className="story-card group cursor-pointer hover:shadow-lg transition-shadow" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <CardContent className="p-3 text-center">
             <div className="mb-2">
-              {renderCategoryBadge()}
+              {renderCategoryBadge(story.category)}
             </div>
             
             <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>

@@ -1,12 +1,16 @@
+
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, BookOpen, User, Calendar } from "lucide-react";
+import { ArrowLeft, User, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { renderCategoryBadge } from "@/utils/categoryUtils";
+import { formatStoryContent } from "@/utils/storyContentUtils";
 
 const Story = () => {
   const { id } = useParams();
@@ -35,12 +39,7 @@ const Story = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
         <WelcomeHeader />
-        <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 200px)' }}>
-          <div className="text-center">
-            <BookOpen className="h-12 w-12 animate-spin text-orange-600 mx-auto mb-4" />
-            <p className="text-orange-700 text-lg">Loading your story...</p>
-          </div>
-        </div>
+        <LoadingSpinner message="Loading your story..." />
         <CookieFreeFooter />
       </div>
     );
@@ -66,135 +65,6 @@ const Story = () => {
       </div>
     );
   }
-
-  const getCategoryStyles = (category: string) => {
-    switch (category) {
-      case "Fun":
-        return "bg-blue-500 text-white";
-      case "Life":
-        return "bg-green-500 text-white";
-      case "North Pole":
-        return "bg-red-600 text-white";
-      case "World Changers":
-        return "bg-amber-400 text-amber-900";
-      default:
-        return "bg-amber-200 text-amber-800";
-    }
-  };
-
-  const renderCategoryBadge = (category: string) => {
-    if (category === "Life") {
-      return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(category)}`}>
-          Lessons and Stories From Grandpa John's Life
-        </span>
-      );
-    }
-
-    if (category === "World Changers") {
-      return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(category)}`}>
-          World Changers — Real People Who Made A Difference
-        </span>
-      );
-    }
-
-    if (category === "North Pole") {
-      return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(category)}`}>
-          Stories from the North Pole
-        </span>
-      );
-    }
-
-    if (category === "Fun") {
-      return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(category)}`}>
-          Fun Jokes, Poems, Games & More
-        </span>
-      );
-    }
-
-    return (
-      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(category)}`}>
-        {category}
-      </span>
-    );
-  };
-
-  const cleanHtmlContent = (htmlContent: string) => {
-    // Create a temporary div to parse the HTML
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    
-    // Remove unnecessary nested divs and clean up structure
-    const cleanElement = (element: Element) => {
-      // Convert div elements that only contain text or simple content to paragraphs
-      if (element.tagName === 'DIV') {
-        const hasOnlyTextOrInlineContent = Array.from(element.childNodes).every(node => 
-          node.nodeType === Node.TEXT_NODE || 
-          (node.nodeType === Node.ELEMENT_NODE && ['SPAN', 'STRONG', 'EM', 'B', 'I', 'BR'].includes((node as Element).tagName))
-        );
-        
-        if (hasOnlyTextOrInlineContent && element.textContent?.trim()) {
-          const p = document.createElement('p');
-          p.innerHTML = element.innerHTML;
-          element.parentNode?.replaceChild(p, element);
-          return;
-        }
-        
-        // Remove empty divs
-        if (!element.textContent?.trim() && !element.querySelector('br')) {
-          element.remove();
-          return;
-        }
-        
-        // If div only contains other divs, unwrap it
-        const childDivs = element.querySelectorAll(':scope > div');
-        if (childDivs.length === element.children.length && element.children.length > 0) {
-          const parent = element.parentNode;
-          if (parent) {
-            while (element.firstChild) {
-              parent.insertBefore(element.firstChild, element);
-            }
-            element.remove();
-            return;
-          }
-        }
-      }
-      
-      // Clean children recursively
-      Array.from(element.children).forEach(cleanElement);
-    };
-    
-    // Clean all elements
-    Array.from(tempDiv.children).forEach(cleanElement);
-    
-    // Convert remaining empty divs to paragraph breaks
-    tempDiv.querySelectorAll('div').forEach(div => {
-      if (!div.textContent?.trim()) {
-        const br = document.createElement('br');
-        div.parentNode?.replaceChild(br, div);
-      }
-    });
-    
-    return tempDiv.innerHTML;
-  };
-
-  const formatContent = (content: string) => {
-    const cleanedContent = cleanHtmlContent(content);
-    
-    return (
-      <div 
-        className="prose prose-orange max-w-none text-gray-800 leading-relaxed story-content"
-        style={{ 
-          fontFamily: 'Georgia, serif', 
-          fontSize: '16px',
-        }}
-        dangerouslySetInnerHTML={{ __html: cleanedContent }}
-      />
-    );
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
@@ -267,7 +137,14 @@ const Story = () => {
               )}
 
               {story.content ? (
-                formatContent(story.content)
+                <div 
+                  className="prose prose-orange max-w-none text-gray-800 leading-relaxed story-content"
+                  style={{ 
+                    fontFamily: 'Georgia, serif', 
+                    fontSize: '16px',
+                  }}
+                  dangerouslySetInnerHTML={formatStoryContent(story.content)}
+                />
               ) : (
                 story.excerpt && (
                   <div className="prose prose-orange max-w-none">
