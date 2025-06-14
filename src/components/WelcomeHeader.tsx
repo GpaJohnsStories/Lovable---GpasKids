@@ -1,5 +1,6 @@
 
 import { Home, BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const WelcomeHeader = () => {
   return (
@@ -8,13 +9,13 @@ const WelcomeHeader = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             {/* Personal Photo */}
-            <div className="bg-white rounded-full p-1 shadow-lg">
+            <Link to="/" className="bg-white rounded-full p-1 shadow-lg hover:shadow-xl transition-shadow">
               <img 
                 src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png" 
                 alt="Grandpa's beloved companion"
                 className="w-16 h-16 rounded-full object-cover object-top"
               />
-            </div>
+            </Link>
             <div>
               <h1 className="text-3xl font-bold text-white font-handwritten">Grandpa John's Stories for Kids</h1>
               <p className="text-amber-100 text-sm font-medium">Where every story feels like a new adventure</p>
