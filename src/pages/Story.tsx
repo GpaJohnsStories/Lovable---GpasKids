@@ -114,13 +114,13 @@ const Story = () => {
   };
 
   const formatContent = (content: string) => {
-    // Replace line breaks with paragraph tags for better formatting
-    const paragraphs = content.split('\n\n').filter(p => p.trim());
-    return paragraphs.map((paragraph, index) => (
-      <p key={index} className="mb-4 text-gray-800 leading-relaxed">
-        {paragraph.trim()}
-      </p>
-    ));
+    return (
+      <div 
+        className="prose prose-orange max-w-none text-gray-800 leading-relaxed"
+        style={{ fontFamily: 'Georgia, serif', fontSize: '16px' }}
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    );
   };
 
   return (
@@ -142,7 +142,7 @@ const Story = () => {
                 {story.title}
               </h1>
 
-              <div className="flex items-center justify-center space-x-6 text-sm text-orange-600 mb-6">
+              <div className="flex items-center justify-center space-x-6 text-sm text-orange-600 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
                 <div className="flex items-center">
                   <User className="h-4 w-4 mr-1" />
                   <span className="font-medium">by {story.author}</span>
@@ -154,19 +154,17 @@ const Story = () => {
               </div>
 
               {story.tagline && (
-                <p className="text-lg text-orange-700 text-center mb-6 italic">
+                <p className="text-lg text-orange-700 text-center mb-6 italic" style={{ fontFamily: 'Georgia, serif' }}>
                   {story.tagline}
                 </p>
               )}
 
               {story.content ? (
-                <div className="prose prose-orange max-w-none">
-                  {formatContent(story.content)}
-                </div>
+                formatContent(story.content)
               ) : (
                 story.excerpt && (
                   <div className="prose prose-orange max-w-none">
-                    <p className="text-gray-800 leading-relaxed">
+                    <p className="text-gray-800 leading-relaxed" style={{ fontFamily: 'Georgia, serif', fontSize: '16px' }}>
                       {story.excerpt}
                     </p>
                   </div>
