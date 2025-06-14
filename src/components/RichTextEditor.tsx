@@ -92,8 +92,37 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   };
 
   const handleFontColor = (color: string) => {
-    execCommand('foreColor', color);
-    setColorPopoverOpen(false); // Close the popover after selecting a color
+    if (editorRef.current) {
+      const selection = window.getSelection();
+      
+      // If there's no selection or the selection is collapsed (just a cursor)
+      if (!selection || selection.isCollapsed) {
+        // Create a temporary span to apply the color
+        const span = document.createElement('span');
+        span.style.color = color;
+        span.innerHTML = '&nbsp;'; // Non-breaking space
+        
+        // Insert the span at the current cursor position
+        if (selection && selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          range.insertNode(span);
+          
+          // Position cursor after the span
+          range.setStartAfter(span);
+          range.setEndAfter(span);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+      } else {
+        // If text is selected, apply the color normally
+        execCommand('foreColor', color);
+      }
+      
+      // Focus back to editor and trigger change
+      editorRef.current.focus();
+      onChange(editorRef.current.innerHTML);
+    }
+    setColorPopoverOpen(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
