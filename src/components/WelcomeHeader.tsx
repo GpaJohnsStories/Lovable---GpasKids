@@ -10,29 +10,37 @@ const WelcomeHeader = () => {
       name: 'Home', 
       path: '/', 
       icon: 'house', 
-      bgColor: 'bg-[#ADD8E6]',
-      hoverColor: 'hover:bg-[#9BCFDF]'
+      bgColor: 'bg-gradient-to-b from-[#C5E4F3] via-[#ADD8E6] to-[#8AC6D1]',
+      hoverColor: 'hover:from-[#B8DCF0] hover:via-[#9BCFDF] hover:to-[#7AB8C4]',
+      shadowColor: 'shadow-[0_6px_0_#7AB8C4,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]'
     },
     { 
       name: 'Stories', 
       path: '/stories', 
       icon: BookOpen, 
-      bgColor: 'bg-gradient-to-r from-blue-400 to-blue-500',
-      hoverColor: 'hover:from-blue-500 hover:to-blue-600'
+      bgColor: 'bg-gradient-to-b from-blue-400 via-blue-500 to-blue-600',
+      hoverColor: 'hover:from-blue-500 hover:via-blue-600 hover:to-blue-700',
+      shadowColor: 'shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#1e40af,0_6px_12px_rgba(0,0,0,0.4)]'
     },
     { 
       name: 'Comments', 
       path: '/comments', 
       icon: MessageCircle, 
-      bgColor: 'bg-gradient-to-r from-yellow-300 to-yellow-400',
-      hoverColor: 'hover:from-yellow-400 hover:to-yellow-500'
+      bgColor: 'bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500',
+      hoverColor: 'hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600',
+      shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]'
     },
     { 
       name: 'About Us', 
       path: '/about', 
       icon: 'buddy', 
-      bgColor: 'bg-gradient-to-r from-sky-300 to-sky-400',
-      hoverColor: 'hover:from-sky-400 hover:to-sky-500'
+      bgColor: 'bg-gradient-to-b from-sky-300 via-sky-400 to-sky-500',
+      hoverColor: 'hover:from-sky-400 hover:via-sky-500 hover:to-sky-600',
+      shadowColor: 'shadow-[0_6px_0_#0369a1,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#0369a1,0_6px_12px_rgba(0,0,0,0.4)]'
     }
   ];
 
@@ -89,12 +97,13 @@ const WelcomeHeader = () => {
                 key={item.name}
                 to={item.path}
                 className={`
-                  ${item.bgColor} ${item.hoverColor}
-                  ${isActive ? 'ring-4 ring-white ring-opacity-50 scale-105' : ''}
-                  text-white px-6 py-3 rounded-lg font-semibold shadow-lg 
-                  hover:shadow-xl transition-all duration-300 hover:scale-105
+                  ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
+                  ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : ''}
+                  text-white px-6 py-3 rounded-lg font-semibold 
+                  transition-all duration-200 
+                  hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
                   flex items-center gap-2 min-w-[120px] justify-center
-                  font-fun
+                  font-fun border-t border-white border-opacity-30
                 `}
               >
                 {renderIcon(item)}
