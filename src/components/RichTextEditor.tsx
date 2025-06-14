@@ -98,31 +98,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       // Focus the editor first
       editorRef.current.focus();
       
-      const selection = window.getSelection();
-      
-      // If there's selected text, apply color to selection
-      if (selection && !selection.isCollapsed) {
-        const success = document.execCommand('foreColor', false, color);
-        console.log('execCommand success:', success);
-      } else {
-        // If no text is selected, create a temporary span for future typing
-        const span = document.createElement('span');
-        span.style.color = color;
-        span.innerHTML = '&#8203;'; // Zero-width space to position cursor
-        
-        // Insert the span at the current cursor position
-        if (selection && selection.rangeCount > 0) {
-          const range = selection.getRangeAt(0);
-          range.insertNode(span);
-          
-          // Position cursor inside the span for future typing
-          range.setStart(span, 1);
-          range.setEnd(span, 1);
-          range.collapse(true);
-          selection.removeAllRanges();
-          selection.addRange(range);
-        }
-      }
+      // Simply use execCommand for color - it handles both selected text and future typing
+      const success = document.execCommand('foreColor', false, color);
+      console.log('execCommand foreColor success:', success);
       
       // Trigger change event
       onChange(editorRef.current.innerHTML);
