@@ -108,15 +108,9 @@ const WelcomeHeader = () => {
                 </div>
               </div>
             )}
-          </div>
-        </div>
-      </header>
 
-      {/* Navigation Banner - Only show on non-home pages */}
-      {!isHomePage && (
-        <div className="bg-gradient-to-r from-amber-500 to-orange-500 shadow-md border-b-2 border-orange-300">
-          <div className="container mx-auto px-4 py-3">
-            <div className="flex justify-end">
+            {/* Navigation Menu - Show on all pages, positioned on the right */}
+            {!isHomePage && (
               <div className="flex flex-row gap-3">
                 {navItems.map((item) => {
                   const isActive = location.pathname === item.path;
@@ -141,10 +135,10 @@ const WelcomeHeader = () => {
                   );
                 })}
               </div>
-            </div>
+            )}
           </div>
         </div>
-      )}
+      </header>
     </TooltipProvider>
   );
 };
