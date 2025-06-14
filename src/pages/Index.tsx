@@ -30,10 +30,10 @@ const Index = () => {
             className="w-52 h-48 rounded-lg shadow-lg border-4 border-white"
           />
           {/* Speech Bubble Image */}
-          <div className="absolute -right-20 top-4">
+          <div className="absolute -right-28 top-4">
             <img 
               src="/lovable-uploads/e7798bd4-677c-4dbb-95aa-766cda36060b.png" 
-              alt="Speech bubble saying HURRY UP!!! We want to READ!!!"
+              alt="Speech bubble saying HURRY UP!!! We want to read!!!"
               className="w-32 h-32 object-contain"
               onLoad={() => console.log('New speech bubble image loaded successfully')}
               onError={(e) => console.log('New speech bubble image failed to load:', e)}
