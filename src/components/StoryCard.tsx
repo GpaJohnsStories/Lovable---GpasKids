@@ -95,17 +95,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
           {story.description}
         </p>
         
-        <div className="flex items-center justify-between text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          <div className="flex items-center space-x-2">
-            <Link to={`/story/${story.id}`} className="flex items-center text-green-600 cursor-pointer hover:text-green-700 font-bold">
-              <Book className="h-3 w-3 mr-1" />
-              Show me
-            </Link>
-            <div className="flex items-center text-blue-600 cursor-pointer hover:text-blue-700 font-bold">
-              <Volume2 className="h-3 w-3 mr-1" />
-              Read it
-            </div>
-          </div>
+        <div className="flex items-center justify-end text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <div className="flex items-center text-amber-600 font-bold">
             <BookOpen className="h-3 w-3 mr-1" />
             {story.readTime}
