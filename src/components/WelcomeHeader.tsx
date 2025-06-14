@@ -40,7 +40,7 @@ const WelcomeHeader = () => {
     if (item.icon === 'buddy') {
       return (
         <img 
-          src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png" 
+          src="/lovable-uploads/d857e4e2-2000-4e48-a99c-548e56c35e39.png" 
           alt="Buddy"
           className="w-5 h-5 rounded-full object-cover"
         />
