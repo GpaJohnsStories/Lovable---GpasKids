@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,27 +21,9 @@ const HTMLUploader: React.FC<HTMLUploaderProps> = ({ onContentExtracted, current
     try {
       const htmlContent = await file.text();
       
-      // Extract content from HTML body if it exists, otherwise use the whole content
-      let content = htmlContent;
-      
-      // If it's a full HTML document, extract the body content
-      const bodyMatch = htmlContent.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-      if (bodyMatch) {
-        content = bodyMatch[1].trim();
-      } else {
-        // If no body tag, but has HTML structure, clean it up
-        content = htmlContent
-          .replace(/<html[^>]*>/gi, '')
-          .replace(/<\/html>/gi, '')
-          .replace(/<head[\s\S]*?<\/head>/gi, '')
-          .replace(/<meta[^>]*>/gi, '')
-          .replace(/<title[\s\S]*?<\/title>/gi, '')
-          .replace(/<!DOCTYPE[^>]*>/gi, '')
-          .trim();
-      }
-      
-      if (content.length > 0) {
-        onContentExtracted(content);
+      // Use the HTML content exactly as provided without any processing
+      if (htmlContent.length > 0) {
+        onContentExtracted(htmlContent);
         toast({
           title: "Success",
           description: "HTML file content loaded successfully"
@@ -206,7 +187,7 @@ const HTMLUploader: React.FC<HTMLUploaderProps> = ({ onContentExtracted, current
             ✓ HTML content loaded ({currentContent.length} characters)
           </p>
           <p className="text-xs text-green-600 mt-1">
-            The content is now available in the rich text editor below and can be further edited.
+            The content is preserved exactly as uploaded and can be further edited in the rich text editor below.
           </p>
         </div>
       )}
