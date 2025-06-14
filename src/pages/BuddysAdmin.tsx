@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -7,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, LogOut, Trash2, Upload, FileText } from "lucide-react";
+import { BookOpen, LogOut, Trash2, Upload, FileText, Plus, Edit } from "lucide-react";
 import { toast } from "sonner";
+import StoryForm from "@/components/StoryForm";
 
 const BuddysAdmin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -16,6 +16,8 @@ const BuddysAdmin = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [showStoryForm, setShowStoryForm] = useState(false);
+  const [editingStory, setEditingStory] = useState<any>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const ADMIN_EMAIL = "gpajohn.buddy@gmail.com";
@@ -53,6 +55,8 @@ const BuddysAdmin = () => {
     setIsAuthenticated(false);
     setEmail("");
     setPassword("");
+    setShowStoryForm(false);
+    setEditingStory(null);
     toast.success("Logged out successfully");
   };
 
@@ -71,6 +75,27 @@ const BuddysAdmin = () => {
       toast.success("Story deleted successfully");
       refetch();
     }
+  };
+
+  const handleEditStory = (story: any) => {
+    setEditingStory(story);
+    setShowStoryForm(true);
+  };
+
+  const handleCreateStory = () => {
+    setEditingStory(null);
+    setShowStoryForm(true);
+  };
+
+  const handleStoryFormSave = () => {
+    setShowStoryForm(false);
+    setEditingStory(null);
+    refetch();
+  };
+
+  const handleStoryFormCancel = () => {
+    setShowStoryForm(false);
+    setEditingStory(null);
   };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -191,6 +216,20 @@ const BuddysAdmin = () => {
     );
   }
 
+  if (showStoryForm) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 py-8">
+        <div className="container mx-auto px-4">
+          <StoryForm
+            story={editingStory}
+            onSave={handleStoryFormSave}
+            onCancel={handleStoryFormCancel}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
       <div className="container mx-auto px-4 py-8">
@@ -202,33 +241,47 @@ const BuddysAdmin = () => {
           </Button>
         </div>
 
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="text-xl text-orange-800">Upload New Story</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center space-x-4">
-              <Input
-                ref={fileInputRef}
-                type="file"
-                accept=".html"
-                onChange={handleFileUpload}
-                disabled={isUploading}
-                className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
-              />
-              <div className="flex items-center text-sm text-orange-600">
-                <FileText className="h-4 w-4 mr-2" />
-                HTML files only
-              </div>
-              {isUploading && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl text-orange-800">Create New Story</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Button onClick={handleCreateStory} className="w-full cozy-button">
+                <Plus className="h-4 w-4 mr-2" />
+                Create Story with Editor
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl text-orange-800">Upload HTML Story</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center space-x-4">
+                <Input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".html"
+                  onChange={handleFileUpload}
+                  disabled={isUploading}
+                  className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
+                />
                 <div className="flex items-center text-sm text-orange-600">
-                  <Upload className="h-4 w-4 mr-2 animate-spin" />
-                  Uploading...
+                  <FileText className="h-4 w-4 mr-2" />
+                  HTML files only
                 </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+                {isUploading && (
+                  <div className="flex items-center text-sm text-orange-600">
+                    <Upload className="h-4 w-4 mr-2 animate-spin" />
+                    Uploading...
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         <Card>
           <CardHeader>
@@ -267,13 +320,22 @@ const BuddysAdmin = () => {
                         {new Date(story.created_at).toLocaleDateString()}
                       </TableCell>
                       <TableCell>
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => handleDeleteStory(story.id)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                        <div className="flex space-x-2">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleEditStory(story)}
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleDeleteStory(story.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
