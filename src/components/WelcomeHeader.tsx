@@ -1,5 +1,3 @@
-
-
 import { Book, MessageSquare, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -10,7 +8,6 @@ const WelcomeHeader = () => {
     { 
       name: 'Home', 
       path: '/', 
-      icon: 'house', 
       bgColor: 'bg-gradient-to-b from-[#C5E4F3] via-[#ADD8E6] to-[#8AC6D1]',
       hoverColor: 'hover:from-[#B8DCF0] hover:via-[#9BCFDF] hover:to-[#7AB8C4]',
       shadowColor: 'shadow-[0_6px_0_#7AB8C4,0_8px_15px_rgba(0,0,0,0.3)]',
@@ -19,7 +16,6 @@ const WelcomeHeader = () => {
     { 
       name: 'Stories', 
       path: '/stories', 
-      icon: 'book', 
       bgColor: 'bg-gradient-to-b from-[#C5E4F3] via-[#ADD8E6] to-[#8AC6D1]',
       hoverColor: 'hover:from-[#B8DCF0] hover:via-[#9BCFDF] hover:to-[#7AB8C4]',
       shadowColor: 'shadow-[0_6px_0_#7AB8C4,0_8px_15px_rgba(0,0,0,0.3)]',
@@ -28,7 +24,6 @@ const WelcomeHeader = () => {
     { 
       name: 'Comments', 
       path: '/comments', 
-      icon: 'chat', 
       bgColor: 'bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500',
       hoverColor: 'hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600',
       shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
@@ -37,52 +32,12 @@ const WelcomeHeader = () => {
     { 
       name: 'About Us', 
       path: '/about', 
-      icon: 'buddy', 
       bgColor: 'bg-gradient-to-b from-sky-300 via-sky-400 to-sky-500',
       hoverColor: 'hover:from-sky-400 hover:via-sky-500 hover:to-sky-600',
       shadowColor: 'shadow-[0_6px_0_#0369a1,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#0369a1,0_6px_12px_rgba(0,0,0,0.4)]'
     }
   ];
-
-  const renderIcon = (item: any) => {
-    if (item.icon === 'buddy') {
-      return (
-        <img 
-          src="/lovable-uploads/d857e4e2-2000-4e48-a99c-548e56c35e39.png" 
-          alt="Buddy"
-          className="w-5 h-5 rounded-full object-cover"
-        />
-      );
-    } else if (item.icon === 'house') {
-      return (
-        <img 
-          src="/lovable-uploads/6b23362c-187e-44ee-b422-7de152d617c0.png" 
-          alt="House"
-          className="w-5 h-5 object-cover"
-        />
-      );
-    } else if (item.icon === 'book') {
-      return (
-        <img 
-          src="/lovable-uploads/c3b88b23-b809-4f82-9c07-a90f95a3bde5.png" 
-          alt="Book"
-          className="w-5 h-5 object-cover"
-        />
-      );
-    } else if (item.icon === 'chat') {
-      return (
-        <img 
-          src="/lovable-uploads/86bd5c48-6f8e-4a52-a343-273bf88f31cd.png" 
-          alt="Chat"
-          className="w-5 h-5 object-cover"
-        />
-      );
-    } else {
-      const Icon = item.icon;
-      return <Icon className="h-5 w-5 text-white" fill="white" />;
-    }
-  };
 
   return (
     <header className="bg-gradient-to-r from-amber-600 to-orange-600 shadow-lg border-b-4 border-orange-300">
@@ -119,11 +74,10 @@ const WelcomeHeader = () => {
                   text-white px-6 py-3 rounded-lg font-semibold 
                   transition-all duration-200 
                   hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
-                  flex items-center gap-2 min-w-[120px] justify-center
+                  flex items-center justify-center min-w-[120px]
                   font-fun border-t border-white border-opacity-30
                 `}
               >
-                {renderIcon(item)}
                 {item.name}
               </Link>
             );
@@ -135,4 +89,3 @@ const WelcomeHeader = () => {
 };
 
 export default WelcomeHeader;
-
