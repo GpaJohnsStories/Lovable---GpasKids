@@ -1,5 +1,5 @@
 
-import { Home, BookOpen, MessageCircle, User } from "lucide-react";
+import { BookOpen, MessageCircle } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const WelcomeHeader = () => {
@@ -9,7 +9,7 @@ const WelcomeHeader = () => {
     { 
       name: 'Home', 
       path: '/', 
-      icon: Home, 
+      icon: 'buddy', 
       bgColor: 'bg-gradient-to-r from-amber-600 to-orange-600',
       hoverColor: 'hover:from-amber-700 hover:to-orange-700'
     },
@@ -30,16 +30,39 @@ const WelcomeHeader = () => {
     { 
       name: 'About Me', 
       path: '/about', 
-      icon: User, 
+      icon: 'headshot', 
       bgColor: 'bg-gradient-to-r from-sky-300 to-sky-400',
       hoverColor: 'hover:from-sky-400 hover:to-sky-500'
     }
   ];
 
+  const renderIcon = (item: any) => {
+    if (item.icon === 'buddy') {
+      return (
+        <img 
+          src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png" 
+          alt="Buddy"
+          className="w-5 h-5 rounded-full object-cover"
+        />
+      );
+    } else if (item.icon === 'headshot') {
+      return (
+        <img 
+          src="/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png" 
+          alt="Grandpa John"
+          className="w-5 h-5 rounded-full object-cover"
+        />
+      );
+    } else {
+      const Icon = item.icon;
+      return <Icon className="h-5 w-5" />;
+    }
+  };
+
   return (
     <header className="bg-gradient-to-r from-amber-600 to-orange-600 shadow-lg border-b-4 border-orange-300">
       <div className="container mx-auto px-4 py-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <div className="flex items-center space-x-4">
             {/* Personal Photo */}
             <Link to="/" className="bg-white rounded-full p-1 shadow-lg hover:shadow-xl transition-shadow">
@@ -54,26 +77,11 @@ const WelcomeHeader = () => {
               <p className="text-amber-100 text-sm font-medium">Where every story feels like a new adventure</p>
             </div>
           </div>
-          
-          <nav className="hidden md:flex space-x-6">
-            <a href="/" className="text-white hover:text-amber-200 transition-colors font-medium flex items-center">
-              <Home className="h-4 w-4 mr-2" />
-              Home
-            </a>
-            <a href="#" className="text-white hover:text-amber-200 transition-colors font-medium flex items-center">
-              <BookOpen className="h-4 w-4 mr-2" />
-              My Stories
-            </a>
-            <a href="#" className="text-white hover:text-amber-200 transition-colors font-medium">
-              About Me
-            </a>
-          </nav>
         </div>
         
         {/* Navigation Menu Buttons */}
         <div className="flex justify-center mt-6 gap-4">
           {navItems.map((item) => {
-            const Icon = item.icon;
             const isActive = location.pathname === item.path;
             
             return (
@@ -89,7 +97,7 @@ const WelcomeHeader = () => {
                   font-fun
                 `}
               >
-                <Icon className="h-5 w-5" />
+                {renderIcon(item)}
                 {item.name}
               </Link>
             );
