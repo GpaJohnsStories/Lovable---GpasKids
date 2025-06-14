@@ -1,5 +1,4 @@
 
-
 import { Book, MessageSquare, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -57,7 +56,10 @@ const WelcomeHeader = () => {
                 />
               </Link>
               <div className="text-left">
-                <h1 className="text-xl sm:text-3xl font-bold text-white font-handwritten">Grandpa John's Stories for Kids</h1>
+                <div className="text-xl sm:text-3xl font-bold text-white font-handwritten">
+                  <div>Grandpa John's</div>
+                  <div className="text-left">Stories for Kids</div>
+                </div>
                 <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story feels like a new adventure</p>
               </div>
             </div>
@@ -136,4 +138,3 @@ const WelcomeHeader = () => {
 };
 
 export default WelcomeHeader;
-
