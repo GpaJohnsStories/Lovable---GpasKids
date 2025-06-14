@@ -1,8 +1,8 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { 
   Bold, 
   Italic, 
@@ -16,8 +16,7 @@ import {
   Type,
   Heading1,
   Heading2,
-  Heading3,
-  Palette
+  Heading3
 } from "lucide-react";
 
 interface RichTextEditorProps {
@@ -32,7 +31,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   placeholder = "Start writing your story..." 
 }) => {
   const editorRef = useRef<HTMLDivElement>(null);
-  const [colorPopoverOpen, setColorPopoverOpen] = useState(false);
 
   useEffect(() => {
     if (editorRef.current) {
@@ -91,24 +89,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     execCommand('fontName', fontFamily);
   };
 
-  const handleFontColor = (color: string) => {
-    console.log('Color selected:', color);
-    
-    if (editorRef.current) {
-      // Focus the editor first
-      editorRef.current.focus();
-      
-      // Simply use execCommand for color - it handles both selected text and future typing
-      const success = document.execCommand('foreColor', false, color);
-      console.log('execCommand foreColor success:', success);
-      
-      // Trigger change event
-      onChange(editorRef.current.innerHTML);
-    }
-    
-    setColorPopoverOpen(false);
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     // Handle common shortcuts
     if (e.ctrlKey || e.metaKey) {
@@ -152,17 +132,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     { value: 'Courier New', label: 'Courier New' },
     { value: 'Impact', label: 'Impact' },
     { value: 'Comic Sans MS', label: 'Comic Sans MS' }
-  ];
-
-  const colors = [
-    '#000000', '#333333', '#666666', '#999999', '#CCCCCC', '#FFFFFF',
-    '#FF0000', '#FF6666', '#FF9999', '#FFCCCC',
-    '#00FF00', '#66FF66', '#99FF99', '#CCFFCC',
-    '#0000FF', '#6666FF', '#9999FF', '#CCCCFF',
-    '#FFFF00', '#FFFF66', '#FFFF99', '#FFFFCC',
-    '#FF00FF', '#FF66FF', '#FF99FF', '#FFCCFF',
-    '#00FFFF', '#66FFFF', '#99FFFF', '#CCFFFF',
-    '#FFA500', '#FFB366', '#FFC999', '#FFDCCC'
   ];
 
   return (
@@ -214,22 +183,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           .rich-editor p {
             margin: 1em 0;
           }
-          .color-palette {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 4px;
-            padding: 8px;
-          }
-          .color-option {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            border: 2px solid transparent;
-          }
-          .color-option:hover {
-            border-color: #374151;
-          }
         `
       }} />
       
@@ -261,34 +214,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             ))}
           </SelectContent>
         </Select>
-
-        {/* Font Color */}
-        <Popover open={colorPopoverOpen} onOpenChange={setColorPopoverOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              className="h-8 w-8 p-0"
-              title="Text Color"
-            >
-              <Palette className="h-4 w-4" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-2" align="start">
-            <div className="color-palette">
-              {colors.map(color => (
-                <div
-                  key={color}
-                  className="color-option"
-                  style={{ backgroundColor: color }}
-                  onClick={() => handleFontColor(color)}
-                  title={color}
-                />
-              ))}
-            </div>
-          </PopoverContent>
-        </Popover>
 
         <Separator orientation="vertical" className="h-6 mx-1" />
 
@@ -386,7 +311,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           variant="ghost"
           size="sm"
           onClick={() => execCommand('justifyCenter')}
-          className="h-8 w-8 p-0"
+          className="h-8 w-8 p0"
           title="Align Center"
         >
           <AlignCenter className="h-4 w-4" />
