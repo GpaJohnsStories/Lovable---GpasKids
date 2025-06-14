@@ -171,7 +171,7 @@ const StorySection = () => {
   return (
     <section className="py-16">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-orange-800 font-serif mb-4">Story Collection</h2>
+        <h2 className="text-3xl font-bold text-orange-800 mb-4" style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}>Story Collection</h2>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
