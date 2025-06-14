@@ -22,6 +22,10 @@ const WelcomeHeader = () => {
           </div>
           
           <nav className="hidden md:flex space-x-6">
+            <a href="/" className="text-white hover:text-amber-200 transition-colors font-medium flex items-center">
+              <Home className="h-4 w-4 mr-2" />
+              Home
+            </a>
             <a href="#" className="text-white hover:text-amber-200 transition-colors font-medium flex items-center">
               <BookOpen className="h-4 w-4 mr-2" />
               My Stories
