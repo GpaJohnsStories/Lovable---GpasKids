@@ -11,16 +11,12 @@ const Index = () => {
       
       {/* GIF and Under Construction Box */}
       <div className="relative -mt-8 mb-2 flex justify-center items-center gap-8 z-20">
-        {/* Under Construction Box */}
-        <div 
-          className="px-6 py-4 rounded-lg shadow-lg border-2 border-black font-bold text-black text-lg"
-          style={{
-            background: 'repeating-linear-gradient(45deg, #FFD700 0px, #FFD700 20px, #000000 20px, #000000 40px)',
-            fontFamily: 'Arial, sans-serif'
-          }}
-        >
-          Under Construction
-        </div>
+        {/* Under Construction Image */}
+        <img 
+          src="/lovable-uploads/3a1b5f78-6ca6-488d-90a3-369c6bc26b12.png"
+          alt="Under Construction"
+          className="w-40 h-40 object-contain"
+        />
         
         {/* Dancing GIF with Speech Bubble */}
         <div className="relative">
