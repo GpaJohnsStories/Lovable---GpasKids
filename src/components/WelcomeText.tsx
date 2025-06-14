@@ -14,7 +14,7 @@ const WelcomeText = () => {
             />
             <div className="flex flex-col justify-center text-center md:text-left flex-1">
               <h1 className="text-4xl md:text-5xl font-bold text-blue-900 leading-relaxed mb-6">
-                Hello! 👋
+                Hello! <span className="inline-block animate-[wave_1s_ease-in-out_infinite] origin-[70%_70%]">👋</span>
               </h1>
               <p className="text-2xl text-blue-900 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun">
                 You have found my fun place for kids.<br />
