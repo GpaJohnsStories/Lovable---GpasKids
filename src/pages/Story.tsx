@@ -104,11 +104,6 @@ const Story = () => {
       }} />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          <Link to="/" className="inline-flex items-center text-orange-600 hover:text-orange-700 mb-6">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Stories
-          </Link>
-
           <Card className="mb-8">
             <CardContent className="p-8">
               <div className="text-center mb-6">
