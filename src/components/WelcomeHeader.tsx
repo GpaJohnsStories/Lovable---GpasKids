@@ -1,3 +1,4 @@
+
 import { BookOpen, MessageCircle, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -8,9 +9,9 @@ const WelcomeHeader = () => {
     { 
       name: 'Home', 
       path: '/', 
-      icon: Home, 
-      bgColor: 'bg-gradient-to-r from-amber-600 to-orange-600',
-      hoverColor: 'hover:from-amber-700 hover:to-orange-700'
+      icon: 'house', 
+      bgColor: 'bg-[#ADD8E6]',
+      hoverColor: 'hover:bg-[#9BCFDF]'
     },
     { 
       name: 'Stories', 
@@ -42,6 +43,14 @@ const WelcomeHeader = () => {
           src="/lovable-uploads/d857e4e2-2000-4e48-a99c-548e56c35e39.png" 
           alt="Buddy"
           className="w-5 h-5 rounded-full object-cover"
+        />
+      );
+    } else if (item.icon === 'house') {
+      return (
+        <img 
+          src="/lovable-uploads/6b23362c-187e-44ee-b422-7de152d617c0.png" 
+          alt="House"
+          className="w-5 h-5 object-cover"
         />
       );
     } else {
