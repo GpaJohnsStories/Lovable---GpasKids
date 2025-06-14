@@ -44,8 +44,9 @@ const WelcomeHeader = () => {
 
   return (
     <TooltipProvider>
+      {/* Main Header Banner */}
       <header className="bg-gradient-to-r from-amber-600 to-orange-600 shadow-lg border-b-4 border-orange-300">
-        <div className="container mx-auto px-4 py-1">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               {/* Personal Photo */}
@@ -108,34 +109,42 @@ const WelcomeHeader = () => {
               </div>
             )}
           </div>
-          
-          {/* Navigation Menu Buttons - Moved completely inside banner */}
-          <div className="flex flex-col sm:flex-row justify-start -mt-8 gap-2 sm:gap-3 mb-2">
-            {navItems.map((item) => {
-              const isActive = location.pathname === item.path;
-              
-              return (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`
-                    ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
-                    ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : ''}
-                    text-white px-3 sm:px-5 py-2 rounded-lg font-semibold 
-                    transition-all duration-200 
-                    hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
-                    flex items-center justify-center w-full sm:min-w-[100px] sm:w-auto
-                    font-fun border-t border-white border-opacity-30
-                    text-sm
-                  `}
-                >
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
         </div>
       </header>
+
+      {/* Navigation Banner - Only show on non-home pages */}
+      {!isHomePage && (
+        <div className="bg-gradient-to-r from-amber-500 to-orange-500 shadow-md border-b-2 border-orange-300">
+          <div className="container mx-auto px-4 py-3">
+            <div className="flex justify-end">
+              <div className="flex flex-row gap-3">
+                {navItems.map((item) => {
+                  const isActive = location.pathname === item.path;
+                  
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className={`
+                        ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
+                        ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : ''}
+                        text-white px-5 py-2 rounded-lg font-semibold 
+                        transition-all duration-200 
+                        hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
+                        flex items-center justify-center min-w-[100px]
+                        font-fun border-t border-white border-opacity-30
+                        text-sm
+                      `}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </TooltipProvider>
   );
 };
