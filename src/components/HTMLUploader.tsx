@@ -21,12 +21,37 @@ const HTMLUploader: React.FC<HTMLUploaderProps> = ({ onContentExtracted, current
     try {
       const htmlContent = await file.text();
       
-      // Use the HTML content exactly as provided without any processing
-      if (htmlContent.length > 0) {
-        onContentExtracted(htmlContent);
+      // Extract content from HTML body if it exists, otherwise use the entire content
+      let extractedContent = htmlContent;
+      
+      // If it's a full HTML document, extract just the body content
+      const bodyMatch = htmlContent.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+      if (bodyMatch) {
+        extractedContent = bodyMatch[1].trim();
+      } else {
+        // If no body tag, look for content between html tags
+        const htmlMatch = htmlContent.match(/<html[^>]*>([\s\S]*)<\/html>/i);
+        if (htmlMatch) {
+          // Remove head section if present
+          extractedContent = htmlMatch[1].replace(/<head[\s\S]*?<\/head>/i, '').trim();
+        }
+      }
+      
+      // Clean up any remaining meta tags, but preserve all formatting tags
+      extractedContent = extractedContent
+        .replace(/<meta[^>]*>/gi, '')
+        .replace(/<title[^>]*>[\s\S]*?<\/title>/gi, '')
+        .replace(/<link[^>]*>/gi, '')
+        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+        .trim();
+      
+      if (extractedContent.length > 0) {
+        console.log('Extracted HTML content:', extractedContent);
+        onContentExtracted(extractedContent);
         toast({
           title: "Success",
-          description: "HTML file content loaded successfully"
+          description: "HTML file content loaded with formatting preserved"
         });
       } else {
         throw new Error("No readable content found in HTML file");
@@ -184,10 +209,10 @@ const HTMLUploader: React.FC<HTMLUploaderProps> = ({ onContentExtracted, current
       {currentContent && (
         <div className="bg-green-50 border border-green-200 rounded-lg p-3">
           <p className="text-sm text-green-700 font-medium">
-            ✓ HTML content loaded ({currentContent.length} characters)
+            ✓ HTML content loaded with formatting preserved ({currentContent.length} characters)
           </p>
           <p className="text-xs text-green-600 mt-1">
-            The content is preserved exactly as uploaded and can be further edited in the rich text editor below.
+            The original HTML formatting has been preserved exactly as uploaded.
           </p>
         </div>
       )}
