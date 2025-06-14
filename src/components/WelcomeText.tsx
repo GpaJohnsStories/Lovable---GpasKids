@@ -1,5 +1,4 @@
 
-
 const WelcomeText = () => {
   return (
     <div className="container mx-auto px-4 py-4">
@@ -15,11 +14,12 @@ const WelcomeText = () => {
             />
             <div className="flex flex-col justify-center text-center md:text-left flex-1">
               <h1 className="text-4xl md:text-5xl font-bold text-blue-900 leading-relaxed mb-6">
-                Welcome to my special place for children to enjoy stories!
+                Hello!
               </h1>
               <p className="text-2xl text-blue-900 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun">
+                You have found my fun place for kids.<br />
                 I am Grandpa John with my friend Buddy.<br />
-                Here are stories, jokes, games and more.<br />
+                Here you will find stories, jokes, games and more.<br />
                 Enjoy your time here!
               </p>
             </div>
@@ -31,4 +31,3 @@ const WelcomeText = () => {
 };
 
 export default WelcomeText;
-
