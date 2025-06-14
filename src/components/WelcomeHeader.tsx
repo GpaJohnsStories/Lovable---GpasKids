@@ -1,8 +1,41 @@
 
-import { Home, BookOpen } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Home, BookOpen, MessageCircle, User } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const WelcomeHeader = () => {
+  const location = useLocation();
+
+  const navItems = [
+    { 
+      name: 'Home', 
+      path: '/', 
+      icon: Home, 
+      bgColor: 'bg-gradient-to-r from-amber-600 to-orange-600',
+      hoverColor: 'hover:from-amber-700 hover:to-orange-700'
+    },
+    { 
+      name: 'Stories', 
+      path: '/stories', 
+      icon: BookOpen, 
+      bgColor: 'bg-gradient-to-r from-blue-400 to-blue-500',
+      hoverColor: 'hover:from-blue-500 hover:to-blue-600'
+    },
+    { 
+      name: 'Comments', 
+      path: '/comments', 
+      icon: MessageCircle, 
+      bgColor: 'bg-gradient-to-r from-yellow-300 to-yellow-400',
+      hoverColor: 'hover:from-yellow-400 hover:to-yellow-500'
+    },
+    { 
+      name: 'About Me', 
+      path: '/about', 
+      icon: User, 
+      bgColor: 'bg-gradient-to-r from-sky-300 to-sky-400',
+      hoverColor: 'hover:from-sky-400 hover:to-sky-500'
+    }
+  ];
+
   return (
     <header className="bg-gradient-to-r from-amber-600 to-orange-600 shadow-lg border-b-4 border-orange-300">
       <div className="container mx-auto px-4 py-6">
@@ -35,6 +68,32 @@ const WelcomeHeader = () => {
               About Me
             </a>
           </nav>
+        </div>
+        
+        {/* Navigation Menu Buttons */}
+        <div className="flex justify-center mt-6 gap-4">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            
+            return (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`
+                  ${item.bgColor} ${item.hoverColor}
+                  ${isActive ? 'ring-4 ring-white ring-opacity-50 scale-105' : ''}
+                  text-white px-6 py-3 rounded-lg font-semibold shadow-lg 
+                  hover:shadow-xl transition-all duration-300 hover:scale-105
+                  flex items-center gap-2 min-w-[120px] justify-center
+                  font-fun
+                `}
+              >
+                <Icon className="h-5 w-5" />
+                {item.name}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </header>
