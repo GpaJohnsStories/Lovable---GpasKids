@@ -77,11 +77,11 @@ const WelcomeHeader = () => {
               />
             </div>
             {/* Under Construction Image - Below Dancing GIF */}
-            <div className="absolute top-36 left-1/2 transform -translate-x-1/2">
+            <div className="absolute top-32 left-1/2 transform -translate-x-1/2">
               <img 
                 src="/lovable-uploads/3a1b5f78-6ca6-488d-90a3-369c6bc26b12.png"
                 alt="Under Construction"
-                className="w-32 h-32 object-contain"
+                className="w-40 h-40 object-contain"
               />
             </div>
           </div>
