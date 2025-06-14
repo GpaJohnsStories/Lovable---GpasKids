@@ -5,19 +5,6 @@ const WelcomeText = () => {
       <div className="text-center">
         <div style={{backgroundColor: '#ADD8E6'}} className="rounded-3xl p-8 shadow-lg border-2 border-orange-200 font-fun">
           <div className="flex flex-col md:flex-row items-start gap-6">
-            {/* Under Construction Box */}
-            <div className="flex items-center justify-center w-full md:w-auto">
-              <div 
-                className="px-6 py-4 rounded-lg shadow-lg border-2 border-black font-bold text-black text-lg"
-                style={{
-                  background: 'repeating-linear-gradient(45deg, #FFD700 0px, #FFD700 20px, #000000 20px, #000000 40px)',
-                  fontFamily: 'Arial, sans-serif'
-                }}
-              >
-                Under Construction
-              </div>
-            </div>
-            
             <img 
               src="/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png" 
               alt="Grandpa John at his desk with Buddy on his lap"
