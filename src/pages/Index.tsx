@@ -30,7 +30,7 @@ const Index = () => {
         />
       </div>
 
-      <main className="container mx-auto px-4" style={{ paddingTop: '10px' }}>
+      <main className="container mx-auto px-4" style={{ paddingTop: '0px' }}>
         <WelcomeText />
         <StorySection />
       </main>
