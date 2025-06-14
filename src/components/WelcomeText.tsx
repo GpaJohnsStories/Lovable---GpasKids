@@ -1,8 +1,6 @@
-
-
 const WelcomeText = () => {
   return (
-    <div className="container mx-auto px-4 py-4 mt-2">
+    <div className="container mx-auto px-4 py-4 mt-0">
       <div className="text-center">
         <div style={{backgroundColor: '#ADD8E6'}} className="rounded-3xl p-8 shadow-lg border-2 border-orange-200 font-fun">
           <div className="flex flex-col md:flex-row items-start gap-6">
@@ -34,4 +32,3 @@ const WelcomeText = () => {
 };
 
 export default WelcomeText;
-
