@@ -61,7 +61,7 @@ const WelcomeHeader = () => {
         </div>
         
         {/* Navigation Menu Buttons */}
-        <div className="flex flex-col sm:flex-row justify-center mt-6 gap-3 sm:gap-4">
+        <div className="flex flex-col sm:flex-row justify-start mt-6 gap-3 sm:gap-4">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
             
