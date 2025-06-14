@@ -76,9 +76,9 @@ const StoryCard = ({ story }: StoryCardProps) => {
   };
 
   return (
-    <Card className="story-card group cursor-pointer" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      <CardContent className="p-3">
-        <div className="text-center mb-2">
+    <Card className="story-card group cursor-pointer w-2/5 mx-auto" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <CardContent className="p-3 text-center">
+        <div className="mb-2">
           {renderCategoryBadge()}
         </div>
         
@@ -86,7 +86,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
           {story.title}
         </h3>
         
-        <div className="flex items-center text-sm text-amber-600 mb-2">
+        <div className="flex items-center justify-center text-sm text-amber-600 mb-2">
           <User className="h-3 w-3 mr-1" />
           <span className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>by {story.author}</span>
         </div>
@@ -95,7 +95,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
           {story.description}
         </p>
         
-        <div className="flex items-center justify-end text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <div className="flex items-center justify-center text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <div className="flex items-center text-amber-600 font-bold">
             <BookOpen className="h-3 w-3 mr-1" />
             {story.readTime}
