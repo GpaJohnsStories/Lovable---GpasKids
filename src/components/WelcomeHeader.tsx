@@ -43,7 +43,7 @@ const WelcomeHeader = () => {
   return (
     <header className="bg-gradient-to-r from-amber-600 to-orange-600 shadow-lg border-b-4 border-orange-300">
       <div className="container mx-auto px-4 py-6">
-        <div className="flex items-center justify-start">
+        <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             {/* Personal Photo */}
             <Link to="/" className="bg-white rounded-full p-1 shadow-lg hover:shadow-xl transition-shadow">
@@ -56,6 +56,25 @@ const WelcomeHeader = () => {
             <div className="text-left">
               <h1 className="text-xl sm:text-3xl font-bold text-white font-handwritten">Grandpa John's Stories for Kids</h1>
               <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story feels like a new adventure</p>
+            </div>
+          </div>
+          
+          {/* Dancing GIF with Speech Bubble - Right Aligned */}
+          <div className="relative hidden md:block">
+            <img 
+              src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczNveHBjNDkxcDNwMG5mcHh2dmxvYXlucm4zZjF5a3BxaWRxb3VoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cMALqIjmb7ygw/giphy.gif"
+              alt="Fun dancing GIF"
+              className="w-32 h-32 rounded-full border-4 border-white shadow-[inset_0_12px_20px_rgba(0,0,0,0.5),inset_0_6px_12px_rgba(0,0,0,0.3),inset_0_2px_6px_rgba(0,0,0,0.2)] object-cover"
+            />
+            {/* Speech Bubble Image */}
+            <div className="absolute -left-28 top-4">
+              <img 
+                src="/lovable-uploads/e7798bd4-677c-4dbb-95aa-766cda36060b.png" 
+                alt="Speech bubble saying HURRY UP!!! We want to read!!!"
+                className="w-32 h-32 object-contain"
+                onLoad={() => console.log('New speech bubble image loaded successfully')}
+                onError={(e) => console.log('New speech bubble image failed to load:', e)}
+              />
             </div>
           </div>
         </div>
