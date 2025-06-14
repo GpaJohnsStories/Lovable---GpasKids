@@ -1,3 +1,4 @@
+
 import { Book, MessageSquare, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -75,12 +76,12 @@ const WelcomeHeader = () => {
                 onError={(e) => console.log('New speech bubble image failed to load:', e)}
               />
             </div>
-            {/* Under Construction Image - Below Dancing GIF */}
-            <div className="absolute top-32 left-1/2 transform -translate-x-1/2">
+            {/* Under Construction Image - Positioned closer to Dancing GIF */}
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2">
               <img 
                 src="/lovable-uploads/3a1b5f78-6ca6-488d-90a3-369c6bc26b12.png"
                 alt="Under Construction"
-                className="w-64 h-64 object-contain"
+                className="w-48 h-48 object-contain"
               />
             </div>
           </div>
