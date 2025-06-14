@@ -1,5 +1,4 @@
-
-import { BookOpen, MessageCircle, Home } from "lucide-react";
+import { Book, MessageSquare, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const WelcomeHeader = () => {
@@ -18,7 +17,7 @@ const WelcomeHeader = () => {
     { 
       name: 'Stories', 
       path: '/stories', 
-      icon: BookOpen, 
+      icon: Book, 
       bgColor: 'bg-gradient-to-b from-blue-400 via-blue-500 to-blue-600',
       hoverColor: 'hover:from-blue-500 hover:via-blue-600 hover:to-blue-700',
       shadowColor: 'shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)]',
@@ -27,7 +26,7 @@ const WelcomeHeader = () => {
     { 
       name: 'Comments', 
       path: '/comments', 
-      icon: MessageCircle, 
+      icon: MessageSquare, 
       bgColor: 'bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500',
       hoverColor: 'hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600',
       shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
@@ -63,7 +62,7 @@ const WelcomeHeader = () => {
       );
     } else {
       const Icon = item.icon;
-      return <Icon className="h-5 w-5 text-white" fill="currentColor" />;
+      return <Icon className="h-5 w-5 text-white" fill="white" />;
     }
   };
 
