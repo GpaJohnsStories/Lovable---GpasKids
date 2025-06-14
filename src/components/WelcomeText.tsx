@@ -1,8 +1,9 @@
 
+
 const WelcomeText = () => {
   return (
-    <div className="w-full py-4 mt-0 px-4">
-      <div style={{backgroundColor: '#ADD8E6'}} className="rounded-3xl p-8 shadow-lg border-2 border-orange-200 font-fun">
+    <div className="w-full py-4 mt-0">
+      <div style={{backgroundColor: '#ADD8E6'}} className="rounded-3xl p-8 shadow-lg border-2 border-orange-200 font-fun mx-4">
         <div className="flex flex-col md:flex-row items-start gap-6">
           <div className="relative">
             <img 
@@ -31,3 +32,4 @@ const WelcomeText = () => {
 };
 
 export default WelcomeText;
+
