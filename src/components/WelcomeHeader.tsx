@@ -1,4 +1,3 @@
-
 import { BookOpen, MessageCircle, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -47,7 +46,7 @@ const WelcomeHeader = () => {
       );
     } else {
       const Icon = item.icon;
-      return <Icon className="h-5 w-5 text-white" />;
+      return <Icon className="h-5 w-5 text-white" fill="currentColor" />;
     }
   };
 
