@@ -10,7 +10,7 @@ const Index = () => {
       <WelcomeHeader />
       
       {/* GIF and Under Construction Box */}
-      <div className="relative -mt-8 mb-4 flex justify-center items-center gap-8 z-20">
+      <div className="relative -mt-8 mb-2 flex justify-center items-center gap-8 z-20">
         {/* Under Construction Box */}
         <div 
           className="px-6 py-4 rounded-lg shadow-lg border-2 border-black font-bold text-black text-lg"
@@ -30,7 +30,7 @@ const Index = () => {
         />
       </div>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4" style={{ paddingTop: '10px' }}>
         <WelcomeText />
         <StorySection />
       </main>
