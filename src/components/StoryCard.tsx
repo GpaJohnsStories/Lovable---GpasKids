@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Volume2, Book, User, Globe } from "lucide-react";
@@ -37,7 +38,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
   const renderCategoryBadge = () => {
     if (story.category === "Life") {
       return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getCategoryStyles(story.category)}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           Lessons and Stories From Grandpa John's Life
         </span>
       );
@@ -45,7 +46,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
 
     if (story.category === "World Changers") {
       return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getCategoryStyles(story.category)}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           World Changers — Real People Who Made A Difference
         </span>
       );
@@ -53,7 +54,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
 
     if (story.category === "North Pole") {
       return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getCategoryStyles(story.category)}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           Stories from the North Pole
         </span>
       );
@@ -61,40 +62,40 @@ const StoryCard = ({ story }: StoryCardProps) => {
 
     if (story.category === "Fun") {
       return (
-        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getCategoryStyles(story.category)}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           Fun Jokes, Poems, Games & More
         </span>
       );
     }
 
     return (
-      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold font-fun ${getCategoryStyles(story.category)}`}>
+      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${getCategoryStyles(story.category)}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         {story.category}
       </span>
     );
   };
 
   return (
-    <Card className="story-card group cursor-pointer">
+    <Card className="story-card group cursor-pointer" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       <CardContent className="p-3">
         <div className="text-center mb-2">
           {renderCategoryBadge()}
         </div>
         
-        <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight">
+        <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           {story.title}
         </h3>
         
         <div className="flex items-center text-sm text-amber-600 mb-2">
           <User className="h-3 w-3 mr-1" />
-          <span className="font-medium">by {story.author}</span>
+          <span className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>by {story.author}</span>
         </div>
         
-        <p className="text-amber-700 mb-2 leading-relaxed text-sm">
+        <p className="text-amber-700 mb-2 leading-relaxed text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontSize: '14px' }}>
           {story.description}
         </p>
         
-        <div className="flex items-center justify-between text-sm">
+        <div className="flex items-center justify-between text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <div className="flex items-center space-x-2">
             <Link to={`/story/${story.id}`} className="flex items-center text-green-600 cursor-pointer hover:text-green-700 font-bold">
               <Book className="h-3 w-3 mr-1" />
