@@ -44,7 +44,7 @@ const WelcomeHeader = () => {
   return (
     <TooltipProvider>
       <header className="bg-gradient-to-r from-amber-600 to-orange-600 shadow-lg border-b-4 border-orange-300">
-        <div className="container mx-auto px-4 py-2">
+        <div className="container mx-auto px-4 py-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               {/* Personal Photo */}
@@ -88,8 +88,8 @@ const WelcomeHeader = () => {
                   onError={(e) => console.log('New speech bubble image failed to load:', e)}
                 />
               </div>
-              {/* Under Construction Image - Positioned closer to Dancing GIF */}
-              <div className="absolute top-16 left-1/2 transform -translate-x-1/2">
+              {/* Under Construction Image - Positioned at bottom of telescope */}
+              <div className="absolute top-48 left-1/2 transform -translate-x-1/2">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <img 
@@ -106,8 +106,8 @@ const WelcomeHeader = () => {
             </div>
           </div>
           
-          {/* Navigation Menu Buttons - Moved up with reduced spacing */}
-          <div className="flex flex-col sm:flex-row justify-start mt-1 gap-2 sm:gap-3">
+          {/* Navigation Menu Buttons - Moved up further with minimal spacing */}
+          <div className="flex flex-col sm:flex-row justify-start -mt-1 gap-2 sm:gap-3">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               
