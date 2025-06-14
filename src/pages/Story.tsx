@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, BookOpen, User, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
+import WelcomeHeader from "@/components/WelcomeHeader";
+import CookieFreeFooter from "@/components/CookieFreeFooter";
 
 const Story = () => {
   const { id } = useParams();
@@ -31,28 +33,36 @@ const Story = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center">
-        <div className="text-center">
-          <BookOpen className="h-12 w-12 animate-spin text-orange-600 mx-auto mb-4" />
-          <p className="text-orange-700 text-lg">Loading your story...</p>
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+        <WelcomeHeader />
+        <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 200px)' }}>
+          <div className="text-center">
+            <BookOpen className="h-12 w-12 animate-spin text-orange-600 mx-auto mb-4" />
+            <p className="text-orange-700 text-lg">Loading your story...</p>
+          </div>
         </div>
+        <CookieFreeFooter />
       </div>
     );
   }
 
   if (error || !story) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-orange-800 mb-4">Story Not Found</h1>
-          <p className="text-orange-700 mb-6">The story you're looking for doesn't exist.</p>
-          <Link to="/">
-            <Button className="cozy-button">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Stories
-            </Button>
-          </Link>
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+        <WelcomeHeader />
+        <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 200px)' }}>
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-orange-800 mb-4">Story Not Found</h1>
+            <p className="text-orange-700 mb-6">The story you're looking for doesn't exist.</p>
+            <Link to="/">
+              <Button className="cozy-button">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Stories
+              </Button>
+            </Link>
+          </div>
         </div>
+        <CookieFreeFooter />
       </div>
     );
   }
@@ -188,6 +198,7 @@ const Story = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+      <WelcomeHeader />
       <style dangerouslySetInnerHTML={{
         __html: `
           .story-content p {
@@ -270,6 +281,7 @@ const Story = () => {
           </Card>
         </div>
       </div>
+      <CookieFreeFooter />
     </div>
   );
 };
