@@ -1,5 +1,5 @@
 
-import { BookOpen, MessageCircle } from "lucide-react";
+import { BookOpen, MessageCircle, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const WelcomeHeader = () => {
@@ -9,7 +9,7 @@ const WelcomeHeader = () => {
     { 
       name: 'Home', 
       path: '/', 
-      icon: 'buddy', 
+      icon: Home, 
       bgColor: 'bg-gradient-to-r from-amber-600 to-orange-600',
       hoverColor: 'hover:from-amber-700 hover:to-orange-700'
     },
@@ -28,9 +28,9 @@ const WelcomeHeader = () => {
       hoverColor: 'hover:from-yellow-400 hover:to-yellow-500'
     },
     { 
-      name: 'About Me', 
+      name: 'About Us', 
       path: '/about', 
-      icon: 'headshot', 
+      icon: 'buddy', 
       bgColor: 'bg-gradient-to-r from-sky-300 to-sky-400',
       hoverColor: 'hover:from-sky-400 hover:to-sky-500'
     }
@@ -45,17 +45,9 @@ const WelcomeHeader = () => {
           className="w-5 h-5 rounded-full object-cover"
         />
       );
-    } else if (item.icon === 'headshot') {
-      return (
-        <img 
-          src="/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png" 
-          alt="Grandpa John"
-          className="w-5 h-5 rounded-full object-cover"
-        />
-      );
     } else {
       const Icon = item.icon;
-      return <Icon className="h-5 w-5" />;
+      return <Icon className="h-5 w-5 text-white" />;
     }
   };
 
