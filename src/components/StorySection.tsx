@@ -172,10 +172,6 @@ const StorySection = () => {
     <section className="py-16">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-bold text-orange-800 font-serif mb-4">Story Collection</h2>
-        <p className="text-lg text-orange-700 max-w-2xl mx-auto leading-relaxed">
-          Each story is crafted with love and designed to spark imagination, teach gentle lessons, 
-          and create those precious bedtime moments you'll treasure forever.
-        </p>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
