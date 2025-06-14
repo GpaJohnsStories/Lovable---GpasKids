@@ -28,14 +28,14 @@ const CookieFreeFooter = () => {
             >
               Privacy
             </Link>
-            <Link 
-              to="/admin" 
+            <a 
+              href="https://gpaskids.com/buddys_admin" 
               className="text-amber-600 hover:text-amber-800 underline"
               target="_blank"
               rel="noopener noreferrer"
             >
               Admin
-            </Link>
+            </a>
           </div>
 
           {/* Right Side */}
