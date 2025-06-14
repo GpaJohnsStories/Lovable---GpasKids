@@ -22,12 +22,24 @@ const Index = () => {
           Under Construction
         </div>
         
-        {/* Dancing GIF */}
-        <img 
-          src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczNveHBjNDkxcDNwMG5mcHh2dmxvYXlucm4zZjF5a3BxaWRxb3VoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cMALqIjmb7ygw/giphy.gif"
-          alt="Fun dancing GIF"
-          className="w-52 h-48 rounded-lg shadow-lg border-4 border-white"
-        />
+        {/* Dancing GIF with Speech Bubble */}
+        <div className="relative">
+          <img 
+            src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczNveHBjNDkxcDNwMG5mcHh2dmxvYXlucm4zZjF5a3BxaWRxb3VoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cMALqIjmb7ygw/giphy.gif"
+            alt="Fun dancing GIF"
+            className="w-52 h-48 rounded-lg shadow-lg border-4 border-white"
+          />
+          {/* Speech Bubble Image */}
+          <div className="absolute -right-20 top-4">
+            <img 
+              src="/lovable-uploads/e7798bd4-677c-4dbb-95aa-766cda36060b.png" 
+              alt="Speech bubble saying HURRY UP!!! We want to READ!!!"
+              className="w-32 h-32 object-contain"
+              onLoad={() => console.log('New speech bubble image loaded successfully')}
+              onError={(e) => console.log('New speech bubble image failed to load:', e)}
+            />
+          </div>
+        </div>
       </div>
 
       <main className="container mx-auto px-4" style={{ paddingTop: '0px' }}>
