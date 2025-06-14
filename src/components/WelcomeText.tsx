@@ -14,18 +14,15 @@ const WelcomeText = () => {
                 onLoad={() => console.log('Image loaded successfully:', '/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png')}
                 onError={(e) => console.log('Image failed to load:', e)}
               />
-              {/* Speech Balloon */}
-              <div className="absolute -right-20 top-8 hidden md:block">
-                <div className="relative bg-white rounded-2xl px-4 py-3 shadow-lg border-2 border-blue-300 max-w-40">
-                  <p className="text-sm text-blue-900 font-bold italic leading-tight">
-                    HURRY UP!!! We want to read!!!
-                  </p>
-                  {/* Speech balloon tail */}
-                  <div className="absolute left-0 top-6 transform -translate-x-2">
-                    <div className="w-0 h-0 border-t-8 border-t-transparent border-r-12 border-r-white border-b-8 border-b-transparent"></div>
-                    <div className="absolute -left-0.5 -top-1 w-0 h-0 border-t-10 border-t-transparent border-r-14 border-r-blue-300 border-b-10 border-b-transparent"></div>
-                  </div>
-                </div>
+              {/* Speech Bubble Image */}
+              <div className="absolute -right-16 top-4 hidden md:block">
+                <img 
+                  src="/lovable-uploads/c123cf14-65c8-44b5-9dc1-10d4e5636d1a.png" 
+                  alt="Speech bubble saying HURRY UP!!! We want to READ!!!"
+                  className="w-32 h-24 object-contain"
+                  onLoad={() => console.log('Speech bubble image loaded successfully')}
+                  onError={(e) => console.log('Speech bubble image failed to load:', e)}
+                />
               </div>
             </div>
             <div className="flex flex-col justify-center text-center md:text-left flex-1">
