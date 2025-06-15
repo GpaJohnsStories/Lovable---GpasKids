@@ -1,3 +1,4 @@
+
 import React from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -106,8 +107,8 @@ const About = () => {
                         <div className="text-4xl text-blue-800" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>
                           Grandpa John
                         </div>
-                        {/* Buddy's paw print - 50% size */}
-                        <div className="text-black text-sm" style={{ transform: 'rotate(-15deg)' }}>
+                        {/* Buddy's paw print - 50% larger */}
+                        <div className="text-black text-base" style={{ transform: 'rotate(-15deg)' }}>
                           🐾
                         </div>
                       </div>
