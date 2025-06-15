@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -11,7 +12,6 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { format } from 'date-fns';
 import { useState, useMemo } from "react";
 import CommentsListHeader from "./CommentsListHeader";
-import { Button } from "@/components/ui/button";
 
 type CommentFromDB = {
   id: string;
@@ -30,11 +30,9 @@ type SortDirection = 'asc' | 'desc';
 
 interface CommentsListProps {
   personalIdFilter: string | null;
-  onShowMyComments: () => void;
-  onShowAllComments: () => void;
 }
 
-const CommentsList = ({ personalIdFilter, onShowMyComments, onShowAllComments }: CommentsListProps) => {
+const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
   const [sortField, setSortField] = useState<SortField>('created_at');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
@@ -113,18 +111,7 @@ const CommentsList = ({ personalIdFilter, onShowMyComments, onShowAllComments }:
   }
 
   return (
-    <div className="mt-12">
-      <h2 className="text-2xl font-bold text-center text-orange-800 mb-4 font-fun">
-        Published Comments
-      </h2>
-      <div className="my-4 flex flex-wrap justify-center gap-4">
-        <Button onClick={onShowMyComments} className="bg-cyan-500 hover:bg-cyan-600 text-white font-fun text-base px-6 py-3">
-          Select Only My Comments
-        </Button>
-        <Button onClick={onShowAllComments} className="bg-emerald-500 hover:bg-emerald-600 text-white font-fun text-base px-6 py-3">
-          Show All Comments
-        </Button>
-      </div>
+    <div className="mt-0">
       <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-orange-200">
         <Table>
           <CommentsListHeader
@@ -145,7 +132,7 @@ const CommentsList = ({ personalIdFilter, onShowMyComments, onShowAllComments }:
             ) : (
               <TableRow>
                 <TableCell colSpan={4} className="h-24 text-center text-orange-800 font-fun">
-                  No comments yet. Be the first to share your thoughts!
+                  {personalIdFilter ? "No comments found for this Personal Code." : "No comments yet. Be the first to share your thoughts!"}
                 </TableCell>
               </TableRow>
             )}
