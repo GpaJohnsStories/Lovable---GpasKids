@@ -4,6 +4,13 @@ import { Shield, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const CookieFreeFooter = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <footer className="bg-amber-100 border-t border-amber-200 mt-12">
       <div className="max-w-6xl mx-auto px-4 py-4">
@@ -13,6 +20,7 @@ const CookieFreeFooter = () => {
             <Shield className="h-4 w-4" />
             <Link 
               to="/privacy"
+              onClick={scrollToTop}
               className="font-semibold text-sm bg-green-100 hover:bg-green-200 px-2 py-1 rounded transition-colors cursor-pointer"
             >
               🍪 Cookie-Free
@@ -23,12 +31,14 @@ const CookieFreeFooter = () => {
           <div className="flex items-center space-x-6 text-sm">
             <Link 
               to="/" 
+              onClick={scrollToTop}
               className="text-amber-600 hover:text-amber-800 underline"
             >
               Stories
             </Link>
             <Link 
               to="/privacy" 
+              onClick={scrollToTop}
               className="text-amber-600 hover:text-amber-800 underline"
             >
               Privacy

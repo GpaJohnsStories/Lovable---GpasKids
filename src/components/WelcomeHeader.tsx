@@ -7,6 +7,13 @@ const WelcomeHeader = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const navItems = [
     { 
       name: 'Home', 
@@ -60,6 +67,7 @@ const WelcomeHeader = () => {
           <Link
             key={item.name}
             to={item.path}
+            onClick={scrollToTop}
             className={`
               ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
               ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : ''}
@@ -87,7 +95,7 @@ const WelcomeHeader = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               {/* Personal Photo */}
-              <Link to="/" className="bg-white rounded-full p-1 shadow-lg hover:shadow-xl transition-shadow">
+              <Link to="/" onClick={scrollToTop} className="bg-white rounded-full p-1 shadow-lg hover:shadow-xl transition-shadow">
                 <img 
                   src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png" 
                   alt="Grandpa's beloved companion"
