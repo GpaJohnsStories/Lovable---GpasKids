@@ -75,11 +75,13 @@ const WelcomeHeader = () => {
               hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
               flex items-center justify-center min-w-[100px]
               font-fun border-t border-white border-opacity-30
-              text-sm gap-1
+              text-sm ${item.icon ? 'gap-1' : ''}
             `}
           >
             {item.icon && <item.icon size={16} />}
-            {item.name}
+            <span className={item.icon ? '' : 'text-center w-full'}>
+              {item.name}
+            </span>
           </Link>
         );
       })}
