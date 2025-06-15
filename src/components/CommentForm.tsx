@@ -1,3 +1,4 @@
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -164,7 +165,7 @@ const CommentForm = () => {
                 if (existingPersonalIdError) setExistingPersonalIdError(null);
               }}
               maxLength={6}
-              className="w-full sm:w-72 text-base md:text-sm"
+              className="w-full sm:w-40 text-base md:text-sm"
             />
             {existingPersonalIdError && <p className="text-sm font-medium text-destructive">{existingPersonalIdError}</p>}
             <p className="text-sm text-orange-700 !mt-2 font-fun">
@@ -186,7 +187,7 @@ const CommentForm = () => {
                 <FormLabel className="text-orange-800 font-fun text-lg">Create a New Personal ID</FormLabel>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
                   <FormControl>
-                    <Input placeholder="Enter any 4 letters or numbers" {...field} maxLength={4} className="w-full sm:w-72 text-base md:text-sm"/>
+                    <Input placeholder="Enter any 4 letters or numbers" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
                   </FormControl>
                   <Button
                     type="button"
