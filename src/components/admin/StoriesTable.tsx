@@ -103,8 +103,14 @@ const StoriesTable = ({ onEditStory, showActions = true }: StoriesTableProps) =>
     <Card>
       <CardHeader>
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <div className="text-black text-xs italic font-sans">
-            <p className="mb-3">
+          <div style={{ 
+            color: 'black', 
+            fontSize: '12px', 
+            fontStyle: 'italic', 
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            lineHeight: '1.4'
+          }}>
+            <p style={{ marginBottom: '12px' }}>
               Click on any column heading to sort the library by that column. The first click will always sort down and the next click will sort up.
             </p>
             <p>
