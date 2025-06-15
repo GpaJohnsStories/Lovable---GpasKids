@@ -1,9 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Shield, Cookie, Eye, Lock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Shield, Cookie, Eye, Lock } from "lucide-react";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 
@@ -13,15 +11,6 @@ const Privacy = () => {
       <WelcomeHeader />
       
       <div className="max-w-4xl mx-auto p-6">
-        <div className="mb-6">
-          <Link to="/">
-            <Button variant="ghost" className="flex items-center space-x-2 text-amber-700">
-              <ArrowLeft className="h-4 w-4" />
-              <span>Back to Stories</span>
-            </Button>
-          </Link>
-        </div>
-
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold text-amber-800 mb-2">
