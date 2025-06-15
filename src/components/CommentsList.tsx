@@ -10,40 +10,78 @@ import {
 } from "@/components/ui/table";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { format } from 'date-fns';
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import CommentsListHeader from "./CommentsListHeader";
 
-type Comment = {
+type CommentFromDB = {
   id: string;
   created_at: string;
   personal_id: string;
   subject: string;
+  parent_id: string | null;
 };
 
-type SortField = 'personal_id' | 'created_at' | 'subject';
+type CommentWithReplies = CommentFromDB & {
+  replies_count: number;
+};
+
+type SortField = 'personal_id' | 'created_at' | 'subject' | 'replies_count';
 type SortDirection = 'asc' | 'desc';
 
 const CommentsList = () => {
   const [sortField, setSortField] = useState<SortField>('created_at');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
-  const { data: comments, isLoading, error } = useQuery<Comment[]>({
-    queryKey: ["comments", sortField, sortDirection],
+  const { data: comments, isLoading, error } = useQuery<CommentWithReplies[]>({
+    queryKey: ["comments"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("comments")
-        .select("id, created_at, personal_id, subject")
-        .eq("is_approved", true)
-        .is("parent_id", null)
-        .order(sortField, { ascending: sortDirection === 'asc' });
+        .select("id, created_at, personal_id, subject, parent_id")
+        .eq("is_approved", true);
 
       if (error) {
         throw new Error(error.message);
       }
+
+      const repliesCountMap: Record<string, number> = {};
+      const parentComments: CommentFromDB[] = [];
+
+      (data || []).forEach(comment => {
+        if (comment.parent_id) {
+          repliesCountMap[comment.parent_id] = (repliesCountMap[comment.parent_id] || 0) + 1;
+        } else {
+          parentComments.push(comment as CommentFromDB);
+        }
+      });
       
-      return data as any as Comment[];
+      const commentsWithReplies = parentComments.map(comment => ({
+        ...comment,
+        replies_count: repliesCountMap[comment.id] || 0,
+      }));
+
+      return commentsWithReplies;
     },
   });
+
+  const sortedComments = useMemo(() => {
+    if (!comments) return [];
+    
+    return [...comments].sort((a, b) => {
+        const aValue = a[sortField];
+        const bValue = b[sortField];
+
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+            return sortDirection === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        }
+
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+            return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
+        }
+
+        return 0;
+    });
+  }, [comments, sortField, sortDirection]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -75,13 +113,13 @@ const CommentsList = () => {
             onSort={handleSort}
           />
           <TableBody>
-            {comments && comments.length > 0 ? (
-              comments.map((comment) => (
+            {sortedComments && sortedComments.length > 0 ? (
+              sortedComments.map((comment) => (
                 <TableRow key={comment.id}>
                   <TableCell className="font-medium font-fun text-orange-800">{comment.personal_id}</TableCell>
                   <TableCell className="font-fun text-orange-800">{format(new Date(comment.created_at), 'MMM d, yyyy')}</TableCell>
                   <TableCell className="font-fun text-orange-800">{comment.subject}</TableCell>
-                  <TableCell className="text-right font-fun text-orange-800">0</TableCell>
+                  <TableCell className="text-right font-fun text-orange-800">{comment.replies_count}</TableCell>
                 </TableRow>
               ))
             ) : (

@@ -1,9 +1,8 @@
-
 import { Button } from "@/components/ui/button";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ArrowUp, ArrowDown } from "lucide-react";
 
-type SortField = 'personal_id' | 'created_at' | 'subject';
+type SortField = 'personal_id' | 'created_at' | 'subject' | 'replies_count';
 type SortDirection = 'asc' | 'desc';
 
 interface CommentsListHeaderProps {
@@ -26,6 +25,8 @@ const CommentsListHeader = ({ sortField, sortDirection, onSort }: CommentsListHe
         return 'bg-red-500 hover:bg-red-600 text-white';
       case 'subject':
         return 'bg-blue-500 hover:bg-blue-600 text-white';
+      case 'replies_count':
+        return 'bg-purple-500 hover:bg-purple-600 text-white';
       default:
         return 'bg-gray-500 hover:bg-gray-600 text-white';
     }
