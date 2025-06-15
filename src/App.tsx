@@ -12,6 +12,7 @@ import About from "./pages/About";
 import MakeComment from "./pages/MakeComment";
 import ViewComments from "./pages/ViewComments";
 import BuddysAdmin from "./pages/BuddysAdmin";
+import AdminComments from "./pages/AdminComments";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/make-comment" element={<MakeComment />} />
           <Route path="/view-comments" element={<ViewComments />} />
           <Route path="/buddys_admin" element={<BuddysAdmin />} />
+          <Route path="/admin/comments" element={<AdminComments />} />
           <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

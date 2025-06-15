@@ -15,9 +15,9 @@ export type Database = {
           content: string
           created_at: string
           id: string
-          is_approved: boolean
           parent_id: string | null
           personal_id: string
+          status: Database["public"]["Enums"]["comment_status"]
           subject: string
           updated_at: string
         }
@@ -26,9 +26,9 @@ export type Database = {
           content: string
           created_at?: string
           id?: string
-          is_approved?: boolean
           parent_id?: string | null
           personal_id: string
+          status?: Database["public"]["Enums"]["comment_status"]
           subject: string
           updated_at?: string
         }
@@ -37,9 +37,9 @@ export type Database = {
           content?: string
           created_at?: string
           id?: string
-          is_approved?: boolean
           parent_id?: string | null
           personal_id?: string
+          status?: Database["public"]["Enums"]["comment_status"]
           subject?: string
           updated_at?: string
         }
@@ -191,6 +191,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      comment_status: "pending" | "approved" | "rejected" | "archived"
       story_category: "Fun" | "Life" | "North Pole" | "World Changers"
     }
     CompositeTypes: {
@@ -307,6 +308,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      comment_status: ["pending", "approved", "rejected", "archived"],
       story_category: ["Fun", "Life", "North Pole", "World Changers"],
     },
   },

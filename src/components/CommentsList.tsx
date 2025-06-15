@@ -42,7 +42,7 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
       let query = supabase
         .from("comments")
         .select("id, created_at, personal_id, subject, parent_id")
-        .eq("is_approved", true);
+        .eq("status", "approved");
 
       if (personalIdFilter) {
         query = query.eq('personal_id', personalIdFilter);
