@@ -103,7 +103,7 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, onVoteU
           disabled={isVoting}
           className="flex flex-col items-center space-y-1 h-auto py-3 px-4 bg-yellow-500 hover:bg-yellow-600 text-white"
         >
-          <span className="text-lg">👌</span>
+          <span className="text-2xl">—</span>
           <span className="text-sm">OK</span>
           <span className="text-xs">({okCount})</span>
         </Button>
