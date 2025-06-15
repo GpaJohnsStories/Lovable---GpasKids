@@ -6,9 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, LogOut, Trash2, Plus, Edit } from "lucide-react";
+import { BookOpen, LogOut, Trash2, Plus, Edit, ArrowUp, ArrowDown } from "lucide-react";
 import { toast } from "sonner";
 import StoryForm from "@/components/StoryForm";
+
+type SortField = 'title' | 'author' | 'category' | 'read_count' | 'created_at';
+type SortDirection = 'asc' | 'desc';
 
 const BuddysAdmin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -17,23 +20,39 @@ const BuddysAdmin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showStoryForm, setShowStoryForm] = useState(false);
   const [editingStory, setEditingStory] = useState<any>(null);
+  const [sortField, setSortField] = useState<SortField>('created_at');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
   const ADMIN_EMAIL = "gpajohn.buddy@gmail.com";
   const ADMIN_PASSWORD = "gpaj0hn#bUdDy1o0s6e";
 
   const { data: stories, isLoading: storiesLoading, refetch } = useQuery({
-    queryKey: ['admin-stories'],
+    queryKey: ['admin-stories', sortField, sortDirection],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('stories')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order(sortField, { ascending: sortDirection === 'asc' });
       
       if (error) throw error;
       return data;
     },
     enabled: isAuthenticated,
   });
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
+
+  const getSortIcon = (field: SortField) => {
+    if (sortField !== field) return null;
+    return sortDirection === 'asc' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />;
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -208,11 +227,56 @@ const BuddysAdmin = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Title</TableHead>
-                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Author</TableHead>
-                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Category</TableHead>
-                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Read Count</TableHead>
-                    <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Created</TableHead>
+                    <TableHead 
+                      className="cursor-pointer hover:bg-gray-50 select-none"
+                      onClick={() => handleSort('title')}
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
+                      <div className="flex items-center gap-1">
+                        Title
+                        {getSortIcon('title')}
+                      </div>
+                    </TableHead>
+                    <TableHead 
+                      className="cursor-pointer hover:bg-gray-50 select-none"
+                      onClick={() => handleSort('author')}
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
+                      <div className="flex items-center gap-1">
+                        Author
+                        {getSortIcon('author')}
+                      </div>
+                    </TableHead>
+                    <TableHead 
+                      className="cursor-pointer hover:bg-gray-50 select-none"
+                      onClick={() => handleSort('category')}
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
+                      <div className="flex items-center gap-1">
+                        Category
+                        {getSortIcon('category')}
+                      </div>
+                    </TableHead>
+                    <TableHead 
+                      className="cursor-pointer hover:bg-gray-50 select-none"
+                      onClick={() => handleSort('read_count')}
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
+                      <div className="flex items-center gap-1">
+                        Read Count
+                        {getSortIcon('read_count')}
+                      </div>
+                    </TableHead>
+                    <TableHead 
+                      className="cursor-pointer hover:bg-gray-50 select-none"
+                      onClick={() => handleSort('created_at')}
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
+                      <div className="flex items-center gap-1">
+                        Created
+                        {getSortIcon('created_at')}
+                      </div>
+                    </TableHead>
                     <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
