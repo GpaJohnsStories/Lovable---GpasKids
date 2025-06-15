@@ -72,76 +72,12 @@ const About = () => {
             <div 
               className="border-2 border-amber-600 rounded-xl p-8 shadow-xl relative overflow-hidden"
               style={{
-                background: `
-                  linear-gradient(135deg, #f4f1e8 0%, #f0e68c 15%, #daa520 30%, #cd853f 45%, #f4e4bc 60%, #fff8dc 75%, #faf0e6 90%, #fffef7 100%)
-                `,
-                boxShadow: 'inset 0 4px 8px rgba(101, 67, 33, 0.15), inset 0 -4px 8px rgba(139, 69, 19, 0.12), 0 8px 32px rgba(0, 0, 0, 0.1)',
+                backgroundImage: `url('/lovable-uploads/cf9ebcda-a8d9-4c36-b3e9-e77e247d4932.png')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
               }}
             >
-              {/* Multiple texture layers for realistic parchment effect */}
-              <div 
-                className="absolute inset-0 rounded-xl opacity-40"
-                style={{
-                  backgroundImage: `
-                    radial-gradient(circle at 15% 25%, rgba(101, 67, 33, 0.12) 0%, transparent 20%),
-                    radial-gradient(circle at 85% 15%, rgba(160, 82, 45, 0.08) 0%, transparent 25%),
-                    radial-gradient(circle at 25% 75%, rgba(139, 69, 19, 0.1) 0%, transparent 30%),
-                    radial-gradient(circle at 75% 85%, rgba(101, 67, 33, 0.06) 0%, transparent 35%),
-                    radial-gradient(circle at 45% 45%, rgba(160, 82, 45, 0.04) 0%, transparent 40%)
-                  `
-                }}
-              ></div>
-              
-              {/* Fine paper texture */}
-              <div 
-                className="absolute inset-0 rounded-xl opacity-25"
-                style={{
-                  backgroundImage: `
-                    repeating-linear-gradient(
-                      0deg,
-                      transparent,
-                      transparent 0.5px,
-                      rgba(139, 69, 19, 0.08) 0.5px,
-                      rgba(139, 69, 19, 0.08) 1px
-                    ),
-                    repeating-linear-gradient(
-                      90deg,
-                      transparent,
-                      transparent 0.5px,
-                      rgba(160, 82, 45, 0.06) 0.5px,
-                      rgba(160, 82, 45, 0.06) 1px
-                    )
-                  `
-                }}
-              ></div>
-              
-              {/* Aging spots and stains */}
-              <div 
-                className="absolute inset-0 rounded-xl opacity-20"
-                style={{
-                  backgroundImage: `
-                    radial-gradient(ellipse 30px 20px at 20% 30%, rgba(101, 67, 33, 0.3) 0%, transparent 70%),
-                    radial-gradient(ellipse 25px 15px at 80% 20%, rgba(139, 69, 19, 0.25) 0%, transparent 70%),
-                    radial-gradient(ellipse 35px 25px at 10% 80%, rgba(160, 82, 45, 0.2) 0%, transparent 70%),
-                    radial-gradient(ellipse 20px 30px at 90% 70%, rgba(101, 67, 33, 0.15) 0%, transparent 70%),
-                    radial-gradient(ellipse 40px 20px at 60% 10%, rgba(139, 69, 19, 0.18) 0%, transparent 70%)
-                  `
-                }}
-              ></div>
-              
-              {/* Edge weathering */}
-              <div 
-                className="absolute inset-0 rounded-xl opacity-30"
-                style={{
-                  background: `
-                    radial-gradient(ellipse at top, rgba(139, 69, 19, 0.15) 0%, transparent 60%),
-                    radial-gradient(ellipse at bottom, rgba(101, 67, 33, 0.12) 0%, transparent 60%),
-                    radial-gradient(ellipse at left, rgba(160, 82, 45, 0.1) 0%, transparent 60%),
-                    radial-gradient(ellipse at right, rgba(139, 69, 19, 0.1) 0%, transparent 60%)
-                  `
-                }}
-              ></div>
-              
               <div className="relative z-10">
                 <h2 className="text-3xl font-bold text-amber-900 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                   My PROMISE to YOU!
