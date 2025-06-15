@@ -172,8 +172,8 @@ const CommentForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <Tabs value={idMode} onValueChange={handleTabChange} className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="existing">I have an ID</TabsTrigger>
-              <TabsTrigger value="create">Create New ID</TabsTrigger>
+              <TabsTrigger value="existing" className="font-bold bg-green-100 data-[state=active]:bg-green-200">I have an ID</TabsTrigger>
+              <TabsTrigger value="create" className="font-bold bg-yellow-100 data-[state=active]:bg-yellow-200">Create New ID</TabsTrigger>
             </TabsList>
             <TabsContent value="existing" className="pt-4">
               <div className="space-y-2">
