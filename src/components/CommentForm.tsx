@@ -34,12 +34,7 @@ const formSchema = z.object({
 
 const CommentForm = () => {
   const queryClient = useQueryClient();
-  const [idSuffix, setIdSuffix] = useState('');
   const [personalId, setPersonalId] = useState<string | null>(null);
-
-  useEffect(() => {
-    setIdSuffix(generateIdSuffix());
-  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,12 +49,10 @@ const CommentForm = () => {
   const prefix = form.watch("personal_id_prefix");
 
   useEffect(() => {
-    if (prefix && /^[a-zA-Z0-9]{4}$/.test(prefix) && idSuffix) {
-      setPersonalId(prefix + idSuffix);
-    } else {
+    if (personalId && !personalId.startsWith(prefix)) {
       setPersonalId(null);
     }
-  }, [prefix, idSuffix]);
+  }, [prefix, personalId]);
 
   const addCommentMutation = useMutation({
     mutationFn: async (newComment: { personal_id: string; subject: string; content: string; author_email?: string }) => {
@@ -83,6 +76,7 @@ const CommentForm = () => {
         description: "Your comment has been submitted and is awaiting approval.",
       });
       form.reset();
+      setPersonalId(null);
       queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
     onError: (error) => {
@@ -94,11 +88,30 @@ const CommentForm = () => {
     },
   });
 
+  const handleCreateId = () => {
+    form.trigger("personal_id_prefix").then(isValid => {
+        if (isValid) {
+            const currentPrefix = form.getValues("personal_id_prefix");
+            const suffix = generateIdSuffix();
+            setPersonalId(currentPrefix + suffix);
+        } else {
+            setPersonalId(null);
+        }
+    });
+  };
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (!personalId) {
-        form.setError("personal_id_prefix", { type: "manual", message: "A valid 4 character code is required." });
+        form.setError("personal_id_prefix", { type: "manual", message: "Please click the button to create your Personal ID." });
         return;
     }
+    
+    if (!personalId.startsWith(values.personal_id_prefix)) {
+        form.setError("personal_id_prefix", { type: "manual", message: "The code you entered doesn't match your generated ID. Please create a new one." });
+        setPersonalId(null);
+        return;
+    }
+
     addCommentMutation.mutate({
         personal_id: personalId,
         subject: values.subject,
@@ -119,25 +132,30 @@ const CommentForm = () => {
             name="personal_id_prefix"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-orange-800 font-fun text-lg">Create Your Personal ID</FormLabel>
+                <FormLabel className="text-orange-800 font-fun text-lg">Let's Create Your Personal ID</FormLabel>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
                   <FormControl>
-                    <Input placeholder="4 letters or numbers" {...field} maxLength={4} className="w-full sm:w-48 text-base md:text-sm"/>
+                    <Input placeholder="Please enter any 4 letters or numbers (No bad words please!)" {...field} maxLength={4} className="w-full sm:w-72 text-base md:text-sm"/>
                   </FormControl>
-                  {personalId && (
-                    <div className="mt-2 sm:mt-0">
-                      <p className="text-orange-800 font-fun text-base">
-                        Your Complete Personal ID: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
-                      </p>
-                    </div>
-                  )}
+                  <Button
+                    type="button"
+                    onClick={handleCreateId}
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold mt-2 sm:mt-0"
+                  >
+                    Click to create your Personal ID
+                  </Button>
                 </div>
+                <FormMessage />
                  {personalId && (
+                  <div className="!mt-4">
+                    <p className="text-orange-800 font-fun text-base">
+                      Your Complete Personal ID: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
+                    </p>
                     <p className="text-sm text-orange-700 !mt-2 font-fun">
                       Make a note of this code! This is how we'll show your comments.
                     </p>
+                  </div>
                 )}
-                <FormMessage />
               </FormItem>
             )}
           />
