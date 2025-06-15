@@ -1,15 +1,18 @@
 
-import { Book, MessageSquare, Home, Lock } from "lucide-react";
+import { ChevronDown, Book, MessageSquare, Home, Lock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   NavigationMenu as ShadcnNavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 
@@ -93,35 +96,38 @@ const WelcomeHeader = () => {
         {navItems.map((item) => (
           <NavigationMenuItem key={item.name}>
             {item.subItems ? (
-              <>
-                <NavigationMenuTrigger
-                  className={NavButtonClasses(item, item.subItems.some(si => location.pathname === si.path))}
-                >
-                   <span className={item.icon ? '' : 'text-center w-full'}>
-                    {item.name}
-                  </span>
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-1 p-2 md:w-[200px] bg-amber-50 border border-orange-200 rounded-lg shadow-lg">
-                    {item.subItems.map((subItem) => (
-                      <li key={subItem.name}>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to={subItem.path}
-                            onClick={scrollToTop}
-                            className={cn(
-                              "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors",
-                              "hover:bg-amber-100 focus:bg-amber-100 font-fun text-orange-800"
-                            )}
-                          >
-                            {subItem.name}
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className={cn(
+                      NavButtonClasses(item, item.subItems.some(si => location.pathname === si.path)),
+                      "group"
+                    )}
+                  >
+                    <span className={item.icon ? '' : 'text-center w-full'}>{item.name}</span>
+                    <ChevronDown
+                      className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="p-2 md:w-[200px] bg-amber-50 border border-orange-200 rounded-lg shadow-lg">
+                  {item.subItems.map((subItem) => (
+                    <DropdownMenuItem key={subItem.name} asChild className="p-0 focus:bg-transparent focus:text-inherit">
+                      <Link
+                        to={subItem.path}
+                        onClick={scrollToTop}
+                        className={cn(
+                          "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors w-full",
+                          "hover:bg-amber-100 focus:bg-amber-100 font-fun text-orange-800"
+                        )}
+                      >
+                        {subItem.name}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Link
                 to={item.path!}
