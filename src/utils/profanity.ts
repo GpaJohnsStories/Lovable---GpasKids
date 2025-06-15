@@ -6,6 +6,39 @@ const badWords = [
   'stupid',
   'dumb',
   'hate',
+  // Profanity
+  'fuck',
+  'shit',
+  'ass',
+  'asshole',
+  'bitch',
+  'damn',
+  'dick',
+  'cunt',
+  'hell',
+  // Slurs
+  'nigger',
+  'nigga',
+  'retard',
+  'faggot',
+  'tranny',
+  'kike',
+  'gook',
+  'spic',
+  'paki',
+  'chink',
+  // Sexually suggestive
+  'penis',
+  'vagina',
+  // General insults
+  'idiot',
+  'moron',
+  'loser',
+  'pathetic',
+  'jerk',
+  'creep',
+  'weakling',
+  'coward',
 ];
 
 const cleanText = (text: string): string => {

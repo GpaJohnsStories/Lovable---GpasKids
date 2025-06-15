@@ -206,7 +206,7 @@ const CommentForm = () => {
                     maxLength={6}
                     className="w-full sm:w-40 text-base md:text-sm"
                   />
-                  {existingPersonalIdError && <p className="text-sm font-medium text-destructive mt-2">{existingPersonalIdError}</p>}
+                  {existingPersonalIdError && <p className="text-sm font-bold text-destructive mt-2">{existingPersonalIdError}</p>}
                 </div>
               </div>
             </TabsContent>
