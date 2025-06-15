@@ -18,6 +18,7 @@ import { generateIdSuffix } from "@/utils/personalId";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const formSchema = z.object({
   personal_id_prefix: z.string().optional(),
@@ -35,6 +36,7 @@ const CommentForm = () => {
   const [personalId, setPersonalId] = useState<string | null>(null);
   const [existingPersonalId, setExistingPersonalId] = useState("");
   const [existingPersonalIdError, setExistingPersonalIdError] = useState<string | null>(null);
+  const [idMode, setIdMode] = useState("existing");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -79,6 +81,7 @@ const CommentForm = () => {
       setPersonalId(null);
       setExistingPersonalId("");
       setExistingPersonalIdError(null);
+      setIdMode("existing");
       queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
     onError: (error) => {
@@ -107,11 +110,24 @@ const CommentForm = () => {
     });
   };
 
+  const handleTabChange = (value: string) => {
+    setIdMode(value);
+    // Reset state when switching tabs
+    if (value === 'existing') {
+        setPersonalId(null);
+        form.setValue('personal_id_prefix', '');
+        form.clearErrors('personal_id_prefix');
+    } else {
+        setExistingPersonalId('');
+        setExistingPersonalIdError(null);
+    }
+  };
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     form.clearErrors();
     let finalPersonalId: string;
 
-    if (existingPersonalId) {
+    if (idMode === 'existing') {
         if (!/^[a-zA-Z0-9]{6}$/.test(existingPersonalId)) {
             setExistingPersonalIdError("Your Personal ID must be exactly 6 letters or numbers.");
             return;
@@ -145,7 +161,7 @@ const CommentForm = () => {
     });
   }
 
-  const isSubmittable = (existingPersonalId.length === 6) || !!personalId;
+  const isSubmittable = (idMode === 'existing' && existingPersonalId.length === 6) || (idMode === 'create' && !!personalId);
 
   return (
     <div className="mt-8">
@@ -154,56 +170,65 @@ const CommentForm = () => {
       </h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-2">
-            <Label className="text-orange-800 font-fun text-lg">Enter your 6-character ID</Label>
-            <Input
-              placeholder="6-character ID"
-              value={existingPersonalId}
-              onChange={(e) => {
-                setExistingPersonalId(e.target.value);
-                if (existingPersonalIdError) setExistingPersonalIdError(null);
-              }}
-              maxLength={6}
-              className="w-full sm:w-40 text-base md:text-sm"
-            />
-            {existingPersonalIdError && <p className="text-sm font-medium text-destructive">{existingPersonalIdError}</p>}
-          </div>
-          
-          <FormField
-            control={form.control}
-            name="personal_id_prefix"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-orange-800 font-fun text-lg">Enter any 4 letters or numbers to create your Personal ID</FormLabel>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-                  <FormControl>
-                    <Input placeholder="4-character code" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
-                  </FormControl>
-                  <Button
-                    type="button"
-                    onClick={handleCreateId}
-                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold mt-2 sm:mt-0"
-                  >
-                    Click to create your Personal ID
-                  </Button>
-                </div>
-                <FormMessage />
-                {personalId && (
-                  <div className="!mt-4">
-                    <p className="text-orange-800 font-fun text-base">
-                      Your Complete Personal ID: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
+          <Tabs value={idMode} onValueChange={handleTabChange} className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="existing">I have an ID</TabsTrigger>
+              <TabsTrigger value="create">Create New ID</TabsTrigger>
+            </TabsList>
+            <TabsContent value="existing" className="pt-4">
+              <div className="space-y-2">
+                <Label className="text-orange-800 font-fun text-lg">Enter your 6-character ID</Label>
+                <Input
+                  placeholder="6-character ID"
+                  value={existingPersonalId}
+                  onChange={(e) => {
+                    setExistingPersonalId(e.target.value);
+                    if (existingPersonalIdError) setExistingPersonalIdError(null);
+                  }}
+                  maxLength={6}
+                  className="w-full sm:w-40 text-base md:text-sm"
+                />
+                {existingPersonalIdError && <p className="text-sm font-medium text-destructive">{existingPersonalIdError}</p>}
+              </div>
+            </TabsContent>
+            <TabsContent value="create" className="pt-4">
+              <FormField
+                control={form.control}
+                name="personal_id_prefix"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-orange-800 font-fun text-lg">Enter any 4 letters or numbers to create your Personal ID</FormLabel>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                      <FormControl>
+                        <Input placeholder="4-character code" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
+                      </FormControl>
+                      <Button
+                        type="button"
+                        onClick={handleCreateId}
+                        className="bg-orange-500 hover:bg-orange-600 text-white font-bold mt-2 sm:mt-0"
+                      >
+                        Click to create your Personal ID
+                      </Button>
+                    </div>
+                    <FormMessage />
+                    {personalId && (
+                      <div className="!mt-4">
+                        <p className="text-orange-800 font-fun text-base">
+                          Your Complete Personal ID: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
+                        </p>
+                        <p className="text-sm text-orange-700 !mt-2 font-fun">
+                          Make a note of this code! This is how we'll show your comments.
+                        </p>
+                      </div>
+                    )}
+                     <p className="text-sm text-orange-700 !mt-2 font-fun">
+                      No bad words please!
                     </p>
-                    <p className="text-sm text-orange-700 !mt-2 font-fun">
-                      Make a note of this code! This is how we'll show your comments.
-                    </p>
-                  </div>
+                  </FormItem>
                 )}
-                 <p className="text-sm text-orange-700 !mt-2 font-fun">
-                  No bad words please!
-                </p>
-              </FormItem>
-            )}
-          />
+              />
+            </TabsContent>
+          </Tabs>
 
           <FormField
             control={form.control}
