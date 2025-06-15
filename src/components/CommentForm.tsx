@@ -198,34 +198,34 @@ const CommentForm = () => {
                 control={form.control}
                 name="personal_id_prefix"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-orange-800 font-fun text-lg">Enter any 4 letters or numbers to create your Personal ID</FormLabel>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                  <FormItem className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
+                    <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Enter any 4 letters or numbers to create your Personal ID</FormLabel>
+                    <div className="sm:col-span-2">
                       <FormControl>
                         <Input placeholder="4-character code" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
                       </FormControl>
                       <Button
                         type="button"
                         onClick={handleCreateId}
-                        className="bg-orange-500 hover:bg-orange-600 text-white font-bold mt-2 sm:mt-0"
+                        className="bg-orange-500 hover:bg-orange-600 text-white font-bold mt-2"
                       >
                         Click to create your Personal ID
                       </Button>
+                      <FormMessage />
+                      {personalId && (
+                        <div className="!mt-4">
+                          <p className="text-orange-800 font-fun text-base">
+                            Your Complete Personal ID: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
+                          </p>
+                          <p className="text-sm text-orange-700 !mt-2 font-fun">
+                            Make a note of this code! This is how we'll show your comments.
+                          </p>
+                        </div>
+                      )}
+                      <p className="text-sm text-orange-700 !mt-2 font-fun">
+                        No bad words please!
+                      </p>
                     </div>
-                    <FormMessage />
-                    {personalId && (
-                      <div className="!mt-4">
-                        <p className="text-orange-800 font-fun text-base">
-                          Your Complete Personal ID: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
-                        </p>
-                        <p className="text-sm text-orange-700 !mt-2 font-fun">
-                          Make a note of this code! This is how we'll show your comments.
-                        </p>
-                      </div>
-                    )}
-                     <p className="text-sm text-orange-700 !mt-2 font-fun">
-                      No bad words please!
-                    </p>
                   </FormItem>
                 )}
               />
