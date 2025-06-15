@@ -22,10 +22,10 @@ const Privacy = () => {
           }}
         >
           <div className="relative z-10">
-            <h2 className="text-3xl font-bold text-amber-900 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+            <h2 className="text-3xl font-bold text-amber-900 mb-6 text-center" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
               <div className="inline-block">
                 My Promise To You!
-                <div className="w-full h-1 bg-red-500 mt-2"></div>
+                <div className="w-full h-1 bg-amber-900 mt-2"></div>
               </div>
             </h2>
             <div className="space-y-4">
