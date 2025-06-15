@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +17,9 @@ interface Story {
   thumbs_down_count?: number;
   ok_count?: number;
   created_at: string;
+  photo_link_1?: string;
+  photo_link_2?: string;
+  photo_link_3?: string;
 }
 
 interface StoriesTableRowProps {
@@ -41,21 +45,41 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
     }
   };
 
+  const getFirstAvailablePhoto = () => {
+    return story.photo_link_1 || story.photo_link_2 || story.photo_link_3;
+  };
+
+  const firstPhoto = getFirstAvailablePhoto();
+
   return (
     <TableRow>
       <TableCell className="font-medium font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         {story.story_code}
       </TableCell>
       <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        <div>
-          <Link to={`/story/${story.id}`}>
-            <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer">{story.title}</div>
-          </Link>
-          {story.tagline && (
-            <div className="text-sm italic text-gray-600 mt-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-              {story.tagline}
+        <div className="flex items-center space-x-3">
+          {firstPhoto && (
+            <div className="flex-shrink-0">
+              <img 
+                src={firstPhoto} 
+                alt={`${story.title} thumbnail`}
+                className="w-12 h-12 object-cover rounded border border-gray-200"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
             </div>
           )}
+          <div className="flex-1">
+            <Link to={`/story/${story.id}`}>
+              <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer">{story.title}</div>
+            </Link>
+            {story.tagline && (
+              <div className="text-sm italic text-gray-600 mt-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                {story.tagline}
+              </div>
+            )}
+          </div>
         </div>
       </TableCell>
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
