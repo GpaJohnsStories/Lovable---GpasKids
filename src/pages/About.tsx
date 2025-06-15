@@ -99,7 +99,7 @@ const About = () => {
                     Thank you for visiting! I hope you enjoy the stories and<br />come back often to see what's new.
                   </p>
                   
-                  {/* Signature with flourish and paw print */}
+                  {/* Signature with paw print */}
                   <div className="flex justify-center items-center">
                     <div className="text-center ml-8">
                       <div className="flex items-center justify-center gap-2 mb-1">
@@ -113,10 +113,6 @@ const About = () => {
                           className="w-8 h-8 ml-2"
                           style={{ transform: 'rotate(-15deg)' }}
                         />
-                      </div>
-                      {/* Flourish under signature - moved closer */}
-                      <div className="text-blue-800 text-2xl -mt-1" style={{ fontFamily: 'serif' }}>
-                        ∽∽∽
                       </div>
                     </div>
                   </div>
