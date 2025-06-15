@@ -94,19 +94,8 @@ const StoriesTableHeader = ({ sortField, sortDirection, onSort, showActions }: S
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            Read Count
+            Read / Votes
             {getSortIcon('read_count')}
-          </Button>
-        </TableHead>
-        <TableHead className="p-2">
-          <Button
-            onClick={() => onSort('thumbs_up_count')}
-            className={`${getButtonColor('thumbs_up_count')} w-full justify-between`}
-            size="sm"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-          >
-            Votes
-            {getSortIcon('thumbs_up_count')}
           </Button>
         </TableHead>
         <TableHead className="p-2">

@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Trash2, ThumbsUp, ThumbsDown } from "lucide-react";
+import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface Story {
@@ -68,21 +68,24 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
         </Badge>
       </TableCell>
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        {story.read_count}
-      </TableCell>
-      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        <div className="flex items-center space-x-2">
-          <div className="flex items-center space-x-1 text-green-600">
-            <ThumbsUp className="h-3 w-3" />
-            <span className="text-xs">{story.thumbs_up_count || 0}</span>
+        <div className="space-y-1">
+          <div className="flex items-center space-x-1 text-blue-600">
+            <BookOpen className="h-3 w-3" />
+            <span className="text-xs font-medium">{story.read_count}</span>
           </div>
-          <div className="flex items-center space-x-1 text-yellow-600">
-            <span className="text-xs">👌</span>
-            <span className="text-xs">{story.ok_count || 0}</span>
-          </div>
-          <div className="flex items-center space-x-1 text-red-600">
-            <ThumbsDown className="h-3 w-3" />
-            <span className="text-xs">{story.thumbs_down_count || 0}</span>
+          <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1 text-green-600">
+              <ThumbsUp className="h-3 w-3" />
+              <span className="text-xs">{story.thumbs_up_count || 0}</span>
+            </div>
+            <div className="flex items-center space-x-1 text-yellow-600">
+              <span className="text-xs">👌</span>
+              <span className="text-xs">{story.ok_count || 0}</span>
+            </div>
+            <div className="flex items-center space-x-1 text-red-600">
+              <ThumbsDown className="h-3 w-3" />
+              <span className="text-xs">{story.thumbs_down_count || 0}</span>
+            </div>
           </div>
         </div>
       </TableCell>
