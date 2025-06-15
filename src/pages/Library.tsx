@@ -22,15 +22,15 @@ const Library = () => {
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
           <div style={{ 
             color: 'black !important', 
-            fontSize: '12px !important', 
+            fontSize: '16px !important', 
             fontStyle: 'italic !important', 
             fontFamily: 'system-ui, -apple-system, sans-serif !important',
             lineHeight: '1.4 !important'
           }}>
-            <div style={{ marginBottom: '12px', color: 'black !important', fontSize: '12px !important', fontStyle: 'italic !important', fontFamily: 'system-ui, -apple-system, sans-serif !important' }}>
+            <div style={{ marginBottom: '12px', color: 'black !important', fontSize: '16px !important', fontStyle: 'italic !important', fontFamily: 'system-ui, -apple-system, sans-serif !important' }}>
               Click on any column heading to sort the library by that column. The first click will always sort down and the next click will sort up.
             </div>
-            <div style={{ color: 'black !important', fontSize: '12px !important', fontStyle: 'italic !important', fontFamily: 'system-ui, -apple-system, sans-serif !important' }}>
+            <div style={{ color: 'black !important', fontSize: '16px !important', fontStyle: 'italic !important', fontFamily: 'system-ui, -apple-system, sans-serif !important' }}>
               As more stories are loaded, you may want to keep a note on your device or even use pencil and paper to record the Story Code so you can find it easily in the future.
             </div>
           </div>
