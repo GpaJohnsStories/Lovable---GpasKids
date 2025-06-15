@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Story from "./pages/Story";
 import Library from "./pages/Library";
 import Privacy from "./pages/Privacy";
+import About from "./pages/About";
 import BuddysAdmin from "./pages/BuddysAdmin";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/story/:id" element={<Story />} />
           <Route path="/library" element={<Library />} />
+          <Route path="/about" element={<About />} />
           <Route path="/buddys_admin" element={<BuddysAdmin />} />
           <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
