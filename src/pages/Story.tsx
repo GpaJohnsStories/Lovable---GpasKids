@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -84,6 +83,7 @@ const Story = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
       <WelcomeHeader />
+      
       <style dangerouslySetInnerHTML={{
         __html: `
           .story-content p {
@@ -119,6 +119,17 @@ const Story = () => {
       }} />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
+          {/* Voting component at the top */}
+          <div className="mb-8">
+            <StoryVoting
+              storyId={story.id}
+              thumbsUpCount={story.thumbs_up_count || 0}
+              thumbsDownCount={story.thumbs_down_count || 0}
+              okCount={story.ok_count || 0}
+              onVoteUpdate={handleVoteUpdate}
+            />
+          </div>
+
           <Card className="mb-8">
             <CardContent className="p-8">
               <div className="text-center mb-6">
@@ -167,6 +178,7 @@ const Story = () => {
             </CardContent>
           </Card>
 
+          {/* Voting component at the bottom */}
           <div className="mb-8">
             <StoryVoting
               storyId={story.id}
