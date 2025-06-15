@@ -176,19 +176,21 @@ const CommentForm = () => {
               <TabsTrigger value="create" className="font-bold bg-yellow-100 data-[state=active]:bg-yellow-200">Create New ID</TabsTrigger>
             </TabsList>
             <TabsContent value="existing" className="pt-4">
-              <div className="space-y-2">
-                <Label className="text-orange-800 font-fun text-lg">Enter your 6-character ID</Label>
-                <Input
-                  placeholder="6-character ID"
-                  value={existingPersonalId}
-                  onChange={(e) => {
-                    setExistingPersonalId(e.target.value);
-                    if (existingPersonalIdError) setExistingPersonalIdError(null);
-                  }}
-                  maxLength={6}
-                  className="w-full sm:w-40 text-base md:text-sm"
-                />
-                {existingPersonalIdError && <p className="text-sm font-medium text-destructive">{existingPersonalIdError}</p>}
+              <div className="space-y-2 sm:grid sm:grid-cols-3 sm:items-center sm:gap-4">
+                <Label className="text-orange-800 font-fun text-lg sm:text-right">Personal ID</Label>
+                <div className="sm:col-span-2">
+                  <Input
+                    placeholder="6-character ID"
+                    value={existingPersonalId}
+                    onChange={(e) => {
+                      setExistingPersonalId(e.target.value);
+                      if (existingPersonalIdError) setExistingPersonalIdError(null);
+                    }}
+                    maxLength={6}
+                    className="w-full sm:w-40 text-base md:text-sm"
+                  />
+                  {existingPersonalIdError && <p className="text-sm font-medium text-destructive mt-2">{existingPersonalIdError}</p>}
+                </div>
               </div>
             </TabsContent>
             <TabsContent value="create" className="pt-4">
