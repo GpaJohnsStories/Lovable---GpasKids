@@ -1,10 +1,8 @@
-
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import CommentForm from "@/components/CommentForm";
 import CommentsList from "@/components/CommentsList";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { getPersonalId } from "@/utils/personalId";
 import { toast } from "sonner";
 
@@ -103,16 +101,12 @@ const Comments = () => {
               </div>
             </div>
           </div>
-          <div className="my-8 flex flex-wrap justify-center gap-4">
-            <Button onClick={handleShowMyComments} className="bg-cyan-500 hover:bg-cyan-600 text-white font-fun text-base px-6 py-3">
-              Select Only My Comments
-            </Button>
-            <Button onClick={handleShowAllComments} className="bg-emerald-500 hover:bg-emerald-600 text-white font-fun text-base px-6 py-3">
-              Show All Comments
-            </Button>
-          </div>
           <CommentForm />
-          <CommentsList personalIdFilter={personalIdFilter} />
+          <CommentsList
+            personalIdFilter={personalIdFilter}
+            onShowMyComments={handleShowMyComments}
+            onShowAllComments={handleShowAllComments}
+          />
         </div>
       </main>
       <CookieFreeFooter />
@@ -121,4 +115,3 @@ const Comments = () => {
 };
 
 export default Comments;
-
