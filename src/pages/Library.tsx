@@ -30,6 +30,9 @@ const Library = () => {
             fontWeight: 'normal'
           }}>
             <div style={{ marginBottom: '16px', textAlign: 'center' }}>
+              Hover over a story title and it will turn red. Click on a story title and it will take you to the story page where you may enjoy it.
+            </div>
+            <div style={{ marginBottom: '16px', textAlign: 'center' }}>
               Click on any column heading to sort the library by that column.<br />The first click will always sort down and the next click will sort up.
             </div>
             <div style={{ textAlign: 'center' }}>
