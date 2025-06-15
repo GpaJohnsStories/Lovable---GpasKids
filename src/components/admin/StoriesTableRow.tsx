@@ -1,7 +1,8 @@
+
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, ThumbsUp, ThumbsDown } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface Story {
@@ -12,6 +13,9 @@ interface Story {
   author: string;
   category: string;
   read_count: number;
+  thumbs_up_count?: number;
+  thumbs_down_count?: number;
+  ok_count?: number;
   created_at: string;
 }
 
@@ -65,6 +69,22 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
       </TableCell>
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         {story.read_count}
+      </TableCell>
+      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+        <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 text-green-600">
+            <ThumbsUp className="h-3 w-3" />
+            <span className="text-xs">{story.thumbs_up_count || 0}</span>
+          </div>
+          <div className="flex items-center space-x-1 text-yellow-600">
+            <span className="text-xs">👌</span>
+            <span className="text-xs">{story.ok_count || 0}</span>
+          </div>
+          <div className="flex items-center space-x-1 text-red-600">
+            <ThumbsDown className="h-3 w-3" />
+            <span className="text-xs">{story.thumbs_down_count || 0}</span>
+          </div>
+        </div>
       </TableCell>
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         {new Date(story.created_at).toLocaleDateString()}

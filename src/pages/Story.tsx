@@ -1,6 +1,6 @@
 
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,11 +9,13 @@ import { Link } from "react-router-dom";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import StoryVoting from "@/components/StoryVoting";
 import { renderCategoryBadge } from "@/utils/categoryUtils";
 import { formatStoryContent } from "@/utils/storyContentUtils";
 
 const Story = () => {
   const { id } = useParams();
+  const queryClient = useQueryClient();
 
   const { data: story, isLoading, error } = useQuery({
     queryKey: ['story', id],
@@ -34,6 +36,19 @@ const Story = () => {
       return data;
     },
   });
+
+  const handleVoteUpdate = (newCounts: { thumbs_up_count: number; thumbs_down_count: number; ok_count: number }) => {
+    // Update the query cache with new vote counts
+    queryClient.setQueryData(['story', id], (oldData: any) => {
+      if (!oldData) return oldData;
+      return {
+        ...oldData,
+        thumbs_up_count: newCounts.thumbs_up_count,
+        thumbs_down_count: newCounts.thumbs_down_count,
+        ok_count: newCounts.ok_count
+      };
+    });
+  };
 
   if (isLoading) {
     return (
@@ -151,6 +166,16 @@ const Story = () => {
               )}
             </CardContent>
           </Card>
+
+          <div className="mb-8">
+            <StoryVoting
+              storyId={story.id}
+              thumbsUpCount={story.thumbs_up_count || 0}
+              thumbsDownCount={story.thumbs_down_count || 0}
+              okCount={story.ok_count || 0}
+              onVoteUpdate={handleVoteUpdate}
+            />
+          </div>
         </div>
       </div>
       <CookieFreeFooter />

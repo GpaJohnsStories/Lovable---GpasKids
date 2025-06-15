@@ -59,12 +59,15 @@ export type Database = {
           excerpt: string | null
           google_drive_link: string | null
           id: string
+          ok_count: number
           photo_link_1: string | null
           photo_link_2: string | null
           photo_link_3: string | null
           read_count: number
           story_code: string
           tagline: string | null
+          thumbs_down_count: number
+          thumbs_up_count: number
           title: string
           updated_at: string
         }
@@ -76,12 +79,15 @@ export type Database = {
           excerpt?: string | null
           google_drive_link?: string | null
           id?: string
+          ok_count?: number
           photo_link_1?: string | null
           photo_link_2?: string | null
           photo_link_3?: string | null
           read_count?: number
           story_code: string
           tagline?: string | null
+          thumbs_down_count?: number
+          thumbs_up_count?: number
           title: string
           updated_at?: string
         }
@@ -93,12 +99,15 @@ export type Database = {
           excerpt?: string | null
           google_drive_link?: string | null
           id?: string
+          ok_count?: number
           photo_link_1?: string | null
           photo_link_2?: string | null
           photo_link_3?: string | null
           read_count?: number
           story_code?: string
           tagline?: string | null
+          thumbs_down_count?: number
+          thumbs_up_count?: number
           title?: string
           updated_at?: string
         }
@@ -129,6 +138,41 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "story_reads_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      story_votes: {
+        Row: {
+          created_at: string
+          id: string
+          ip_address: unknown | null
+          story_id: string
+          user_agent: string | null
+          vote_type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          story_id: string
+          user_agent?: string | null
+          vote_type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          story_id?: string
+          user_agent?: string | null
+          vote_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "story_votes_story_id_fkey"
             columns: ["story_id"]
             isOneToOne: false
             referencedRelation: "stories"

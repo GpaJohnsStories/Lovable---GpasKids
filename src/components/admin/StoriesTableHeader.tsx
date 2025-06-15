@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ArrowUp, ArrowDown } from "lucide-react";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'created_at';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs_up_count' | 'created_at';
 type SortDirection = 'asc' | 'desc';
 
 interface StoriesTableHeaderProps {
@@ -31,6 +31,8 @@ const StoriesTableHeader = ({ sortField, sortDirection, onSort, showActions }: S
         return 'bg-purple-500 hover:bg-purple-600 text-white';
       case 'read_count':
         return 'bg-orange-500 hover:bg-orange-600 text-white';
+      case 'thumbs_up_count':
+        return 'bg-pink-500 hover:bg-pink-600 text-white';
       case 'created_at':
         return 'bg-red-500 hover:bg-red-600 text-white';
       default:
@@ -94,6 +96,17 @@ const StoriesTableHeader = ({ sortField, sortDirection, onSort, showActions }: S
           >
             Read Count
             {getSortIcon('read_count')}
+          </Button>
+        </TableHead>
+        <TableHead className="p-2">
+          <Button
+            onClick={() => onSort('thumbs_up_count')}
+            className={`${getButtonColor('thumbs_up_count')} w-full justify-between`}
+            size="sm"
+            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+          >
+            Votes
+            {getSortIcon('thumbs_up_count')}
           </Button>
         </TableHead>
         <TableHead className="p-2">
