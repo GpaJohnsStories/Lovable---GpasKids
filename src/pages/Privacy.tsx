@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Cookie, Eye, Lock } from "lucide-react";
@@ -67,11 +66,11 @@ const Privacy = () => {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold text-amber-800 mb-2">
-              Privacy & Security Policy
+              <div className="inline-block">
+                My Promise To You!
+                <div className="w-full h-1 bg-red-500 mt-2"></div>
+              </div>
             </CardTitle>
-            <p className="text-amber-600">
-              Grandpa John's Stories - A completely cookie-free experience
-            </p>
           </CardHeader>
           
           <CardContent className="space-y-6">
