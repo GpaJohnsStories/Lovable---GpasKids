@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import RichTextEditor from "./RichTextEditor";
 import StoryFormFields from "./StoryFormFields";
-import StoryPhotoFields from "./StoryPhotoFields";
+import StoryPhotoUpload from "./StoryPhotoUpload";
 import StoryFormActions from "./StoryFormActions";
 
 interface Story {
@@ -92,6 +92,14 @@ const StoryForm: React.FC<StoryFormProps> = ({ story, onSave, onCancel }) => {
     }));
   };
 
+  const handlePhotoUpload = (photoNumber: 1 | 2 | 3, url: string) => {
+    handleInputChange(`photo_link_${photoNumber}` as keyof Story, url);
+  };
+
+  const handlePhotoRemove = (photoNumber: 1 | 2 | 3) => {
+    handleInputChange(`photo_link_${photoNumber}` as keyof Story, '');
+  };
+
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
@@ -115,10 +123,18 @@ const StoryForm: React.FC<StoryFormProps> = ({ story, onSave, onCancel }) => {
             />
           </div>
 
-          <StoryPhotoFields 
-            formData={formData} 
-            onInputChange={handleInputChange} 
-          />
+          <div>
+            <Label className="text-base font-medium text-gray-700 mb-4 block">Story Photos</Label>
+            <StoryPhotoUpload
+              photoUrls={{
+                photo_link_1: formData.photo_link_1,
+                photo_link_2: formData.photo_link_2,
+                photo_link_3: formData.photo_link_3,
+              }}
+              onPhotoUpload={handlePhotoUpload}
+              onPhotoRemove={handlePhotoRemove}
+            />
+          </div>
 
           <StoryFormActions 
             isLoading={isLoading} 
