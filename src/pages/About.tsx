@@ -18,10 +18,10 @@ const About = () => {
                 <h1 className="text-4xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                   About Grandpa John
                 </h1>
-                <p className="text-2xl text-amber-800 font-semibold leading-relaxed mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                <p className="text-lg text-black font-semibold leading-relaxed mb-4" style={{ fontFamily: 'Georgia, serif' }}>
                   With over 60 years of marriage and a lifetime of experiences, I've collected stories that I'm excited to share with children around the world. My journey has taught me valuable lessons about kindness, perseverance, and the importance of imagination.
                 </p>
-                <p className="text-2xl text-amber-800 font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+                <p className="text-lg text-black font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
                   I believe every child deserves stories that make them feel safe, valued, and inspired to dream big. That's why I created this special place just for you.
                 </p>
               </div>
@@ -30,10 +30,10 @@ const About = () => {
                 <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                   My Story
                 </h2>
-                <p className="text-2xl text-amber-800 font-semibold leading-relaxed mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+                <p className="text-lg text-black font-semibold leading-relaxed mb-4" style={{ fontFamily: 'Georgia, serif' }}>
                   I've been blessed with a long life filled with adventures, challenges, and beautiful moments. Over my 80+ years, I've traveled to many places, met fascinating people, and learned valuable lessons that I'm eager to share with young minds like yours.
                 </p>
-                <p className="text-2xl text-amber-800 font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+                <p className="text-lg text-black font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
                   Being married for over 60 wonderful years has taught me about love, patience, and the importance of kindness. My 10 grandchildren have filled my heart with joy and inspired many of the stories you'll find here.
                 </p>
               </div>
@@ -57,10 +57,10 @@ const About = () => {
               <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 Why I Created This Website
               </h2>
-              <p className="text-2xl text-amber-800 font-semibold leading-relaxed mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+              <p className="text-lg text-black font-semibold leading-relaxed mb-4" style={{ fontFamily: 'Georgia, serif' }}>
                 I believe that children deserve a safe, comfortable place to explore stories and ideas. In today's digital world, it can be hard to find content that is both engaging and appropriate for young readers.
               </p>
-              <p className="text-2xl text-amber-800 font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+              <p className="text-lg text-black font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
                 That's why I created this special corner of the internet - a place without advertisements or distractions, where children can feel at home while enjoying stories that entertain and inspire.
               </p>
             </div>
@@ -69,7 +69,7 @@ const About = () => {
               <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 What You Will Find Here
               </h2>
-              <ul className="text-2xl text-amber-800 font-semibold leading-relaxed space-y-2 list-disc list-inside ml-4" style={{ fontFamily: 'Georgia, serif' }}>
+              <ul className="text-lg text-black font-semibold leading-relaxed space-y-2 list-disc list-inside ml-4" style={{ fontFamily: 'Georgia, serif' }}>
                 <li>Stories of ordinary people who changed the world</li>
                 <li>Stories from my friend Nick about things he said happened at the North Pole (I am not sure if they are true or not).</li>
                 <li>Fun Stuff like jokes, fun poems, rules for games, whatever I think you may enjoy</li>
@@ -82,20 +82,20 @@ const About = () => {
                 My PROMISE to YOU!
               </h2>
               <div className="space-y-4">
-                <p className="text-2xl text-amber-800 font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+                <p className="text-lg text-black font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
                   <span className="font-bold">Safety First:</span> This website is designed with children's safety in mind. There are no advertisements, no personal data collection, and strict security measures.
                 </p>
-                <p className="text-2xl text-amber-800 font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+                <p className="text-lg text-black font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
                   <span className="font-bold">Quality Content:</span> All stories are written by me or by my friends and then edited by me. They are carefully crafted to be engaging, age-appropriate for grade school students, encouraging, and meaningful.
                 </p>
-                <p className="text-2xl text-amber-800 font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+                <p className="text-lg text-black font-semibold leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
                   <span className="font-bold">A Comfortable Space:</span> I want you to feel at home here – like you're sitting in a cozy chair listening to your own grandparent tell you a story.
                 </p>
               </div>
             </div>
 
             <div className="text-center pt-8">
-              <p className="text-2xl text-amber-800 font-semibold leading-relaxed italic mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+              <p className="text-lg text-black font-semibold leading-relaxed italic mb-6" style={{ fontFamily: 'Georgia, serif' }}>
                 Thank you for visiting! I hope you enjoy the stories and come back often to see what's new.
               </p>
               <div className="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 inline-block cursor-pointer font-handwritten">
