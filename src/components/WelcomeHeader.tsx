@@ -1,4 +1,5 @@
 
+
 import { Book, MessageSquare, Home, Lock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -49,7 +50,7 @@ const WelcomeHeader = () => {
       hoverColor: 'hover:from-sky-400 hover:via-sky-500 hover:to-sky-600',
       shadowColor: 'shadow-[0_6px_0_#0369a1,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#0369a1,0_6px_12px_rgba(0,0,0,0.4)]',
-      textColor: 'text-yellow-600'
+      textColor: 'text-blue-950'
     },
     { 
       name: 'Privacy', 
