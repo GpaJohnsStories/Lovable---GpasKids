@@ -96,18 +96,24 @@ const About = () => {
                 
                 {/* Thank you message moved inside the promise box */}
                 <div className="mt-8 text-center">
-                  <p className="text-lg text-blue-600 leading-relaxed italic mb-6 font-normal" style={{ fontFamily: 'Segoe Print, cursive, sans-serif' }}>
+                  <p className="text-lg text-blue-800 leading-relaxed italic mb-6 font-normal" style={{ fontFamily: 'Segoe Print, cursive, sans-serif' }}>
                     Thank you for visiting! I hope you enjoy the stories and come back often to see what's new.
                   </p>
                   
-                  {/* Signature with flourish */}
+                  {/* Signature with flourish and paw print */}
                   <div className="flex justify-center items-center">
                     <div className="text-center ml-8">
-                      <div className="text-2xl text-blue-600 mb-2" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>
-                        Grandpa John
+                      <div className="flex items-center justify-center gap-2 mb-1">
+                        <div className="text-2xl text-blue-800" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>
+                          Grandpa John
+                        </div>
+                        {/* Buddy's paw print */}
+                        <div className="text-black text-xl" style={{ transform: 'rotate(-15deg)' }}>
+                          🐾
+                        </div>
                       </div>
-                      {/* Flourish under signature */}
-                      <div className="text-blue-600 text-3xl" style={{ fontFamily: 'serif' }}>
+                      {/* Flourish under signature - moved closer */}
+                      <div className="text-blue-800 text-2xl -mt-1" style={{ fontFamily: 'serif' }}>
                         ∽∽∽
                       </div>
                     </div>
