@@ -49,7 +49,7 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
         {story.author}
       </TableCell>
       <TableCell>
-        <Badge className={getCategoryBadgeColor(story.category)}>
+        <Badge className={`${getCategoryBadgeColor(story.category)} text-center flex items-center justify-center`}>
           {story.category}
         </Badge>
       </TableCell>
