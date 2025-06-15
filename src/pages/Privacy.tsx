@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Cookie, Eye, Lock } from "lucide-react";
@@ -111,7 +110,7 @@ const Privacy = () => {
                 <Shield className="h-6 w-6 text-purple-600" />
                 <h2 className="text-xl font-semibold text-purple-800">What We Don't Collect</h2>
               </div>
-              <ul className="text-purple-700 space-y-2">
+              <ul className="text-purple-700 space-y-2 leading-relaxed">
                 <li>• Personal information</li>
                 <li>• Email addresses (no newsletter signups required)</li>
                 <li>• IP addresses for tracking</li>
