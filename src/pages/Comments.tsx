@@ -1,5 +1,8 @@
+
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
+import CommentForm from "@/components/CommentForm";
+import CommentsList from "@/components/CommentsList";
 
 const Comments = () => {
   return (
@@ -17,7 +20,7 @@ const Comments = () => {
             Before you write, please read these simple rules with a grown-up to help keep our website a happy and safe place for everyone.
           </p>
 
-          <div className="font-fun text-orange-800 bg-amber-100/60 p-6 rounded-lg border-2 border-orange-200 text-xl">
+          <div className="font-fun text-orange-800 bg-amber-100/60 p-6 rounded-lg border-2 border-orange-200 text-xl mb-8">
             <p className="text-center mb-6">
               Please follow these simple rules to make this a fun and safe place for everyone.
             </p>
@@ -79,6 +82,8 @@ const Comments = () => {
               </div>
             </div>
           </div>
+          <CommentForm />
+          <CommentsList />
         </div>
       </main>
       <CookieFreeFooter />
