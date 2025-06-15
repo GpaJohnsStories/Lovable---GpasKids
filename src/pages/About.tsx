@@ -96,7 +96,7 @@ const About = () => {
                 
                 {/* Thank you message moved inside the promise box */}
                 <div className="mt-8 text-center">
-                  <p className="text-lg text-blue-800 leading-relaxed italic mb-6 font-normal" style={{ fontFamily: 'Segoe Print, cursive, sans-serif' }}>
+                  <p className="text-lg text-blue-800 font-bold leading-relaxed italic mb-6" style={{ fontFamily: 'Segoe Print, cursive, sans-serif' }}>
                     Thank you for visiting! I hope you enjoy the stories and<br />come back often to see what's new.
                   </p>
                   
@@ -104,11 +104,11 @@ const About = () => {
                   <div className="flex justify-center items-center">
                     <div className="text-center ml-8">
                       <div className="flex items-center justify-center gap-2 mb-1">
-                        <div className="text-4xl text-blue-800" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>
+                        <div className="text-4xl text-blue-800 font-bold" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>
                           Grandpa John
                         </div>
-                        {/* Buddy's paw print - 50% larger */}
-                        <div className="text-black text-base" style={{ transform: 'rotate(-15deg)' }}>
+                        {/* Buddy's paw print - double the current size */}
+                        <div className="text-black text-2xl" style={{ transform: 'rotate(-15deg)' }}>
                           🐾
                         </div>
                       </div>
