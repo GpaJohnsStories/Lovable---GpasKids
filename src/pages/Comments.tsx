@@ -1,3 +1,4 @@
+
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 
@@ -17,12 +18,12 @@ const Comments = () => {
             Before you write, please read these simple rules with a grown-up to help keep our website a happy and safe place for everyone.
           </p>
 
-          <div className="font-fun text-orange-800 bg-amber-100/60 p-6 rounded-lg border-2 border-orange-200">
-            <p className="text-center mb-6 text-lg">
+          <div className="font-fun text-orange-800 bg-amber-100/60 p-6 rounded-lg border-2 border-orange-200 text-lg">
+            <p className="text-center mb-6">
               Please follow these simple rules to make this a fun and safe place for everyone.
             </p>
 
-            <div className="space-y-4 text-left text-lg">
+            <div className="space-y-4 text-left">
               <div>
                 <h3 className="text-xl font-bold">1. Be Kind! 👍</h3>
                 <ul className="list-disc list-inside mt-1 space-y-1 pl-4">
