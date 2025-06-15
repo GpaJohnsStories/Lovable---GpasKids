@@ -90,6 +90,13 @@ const WelcomeHeader = () => {
                   <div className="text-left text-white text-xl sm:text-3xl">Stories for Kids</div>
                 </div>
                 <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story feels like a new adventure</p>
+                
+                {/* Navigation Menu - Show on home page, positioned below the text and left-aligned */}
+                {isHomePage && (
+                  <div className="mt-4">
+                    <NavigationMenu />
+                  </div>
+                )}
               </div>
             </div>
             
