@@ -9,9 +9,9 @@ const WelcomeText = () => {
   console.log('WelcomeText - Is home page:', isHomePage);
 
   return (
-    <div className="w-full py-6 mt-0">
+    <div className="w-full py-6 mt-0" style={{backgroundColor: '#ADD8E6'}}>
       <div className="container mx-auto px-4">
-        <div className="rounded-3xl p-6 md:p-8 shadow-lg border-2 border-orange-200 font-fun mx-2" style={{backgroundColor: '#ADD8E6'}}>
+        <div className="rounded-3xl p-6 md:p-8 shadow-lg border-2 border-orange-200 font-fun bg-white bg-opacity-90 mx-2">
           <div className="flex flex-col md:flex-row items-start gap-6">
             <div className="relative">
               <img 
