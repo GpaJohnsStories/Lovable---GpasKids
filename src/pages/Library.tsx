@@ -18,7 +18,7 @@ const Library = () => {
         </div>
         
         <div className="mb-8">
-          <StoriesTable onEditStory={handleEditStory} />
+          <StoriesTable onEditStory={handleEditStory} showActions={false} />
         </div>
       </main>
       <CookieFreeFooter />
