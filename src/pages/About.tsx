@@ -70,29 +70,53 @@ const About = () => {
             </div>
 
             <div 
-              className="border-2 border-orange-200 rounded-xl p-8 shadow-lg relative overflow-hidden"
+              className="border-2 border-amber-400 rounded-xl p-8 shadow-lg relative overflow-hidden"
               style={{
-                backgroundImage: `url('https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=800&h=600&fit=crop&crop=center')`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundBlendMode: 'multiply'
+                background: `
+                  radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.1) 0%, transparent 25%),
+                  radial-gradient(circle at 80% 20%, rgba(160, 82, 45, 0.08) 0%, transparent 30%),
+                  radial-gradient(circle at 40% 70%, rgba(139, 69, 19, 0.06) 0%, transparent 35%),
+                  radial-gradient(circle at 90% 80%, rgba(160, 82, 45, 0.05) 0%, transparent 25%),
+                  linear-gradient(135deg, #fef7cd 0%, #fde68a 20%, #fed7aa 40%, #fde68a 60%, #fef3c7 80%, #fffbeb 100%)
+                `,
+                boxShadow: 'inset 0 2px 4px rgba(139, 69, 19, 0.1), inset 0 -2px 4px rgba(139, 69, 19, 0.05)',
               }}
             >
-              {/* Semi-transparent overlay to ensure text readability */}
-              <div className="absolute inset-0 bg-amber-50 bg-opacity-80 rounded-xl"></div>
+              {/* Parchment texture overlay */}
+              <div 
+                className="absolute inset-0 rounded-xl opacity-30"
+                style={{
+                  backgroundImage: `
+                    repeating-linear-gradient(
+                      45deg,
+                      transparent,
+                      transparent 1px,
+                      rgba(139, 69, 19, 0.03) 1px,
+                      rgba(139, 69, 19, 0.03) 2px
+                    ),
+                    repeating-linear-gradient(
+                      -45deg,
+                      transparent,
+                      transparent 1px,
+                      rgba(160, 82, 45, 0.02) 1px,
+                      rgba(160, 82, 45, 0.02) 2px
+                    )
+                  `
+                }}
+              ></div>
               
               <div className="relative z-10">
-                <h2 className="text-3xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                <h2 className="text-3xl font-bold text-amber-900 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                   My PROMISE to YOU!
                 </h2>
                 <div className="space-y-4">
-                  <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                  <p className="text-lg text-amber-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
                     <span className="font-bold">Safety First</span>: This website is designed with children's safety in mind. There are no advertisements, no personal data collection, and strict security measures.
                   </p>
-                  <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                  <p className="text-lg text-amber-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
                     <span className="font-bold">Quality Content</span>: All stories are written by me or by my friends and then edited by me. They are carefully crafted to be engaging, age-appropriate for grade school students, encouraging, and meaningful.
                   </p>
-                  <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                  <p className="text-lg text-amber-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
                     <span className="font-bold">A Comfortable Space</span>: I want you to feel at home here – like you're sitting in a cozy chair listening to your own grandparent tell you a story.
                   </p>
                 </div>
