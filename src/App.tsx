@@ -9,7 +9,8 @@ import Story from "./pages/Story";
 import Library from "./pages/Library";
 import Privacy from "./pages/Privacy";
 import About from "./pages/About";
-import Comments from "./pages/Comments";
+import MakeComment from "./pages/MakeComment";
+import ViewComments from "./pages/ViewComments";
 import BuddysAdmin from "./pages/BuddysAdmin";
 import NotFound from "./pages/NotFound";
 
@@ -26,7 +27,8 @@ const App = () => (
           <Route path="/story/:id" element={<Story />} />
           <Route path="/library" element={<Library />} />
           <Route path="/about" element={<About />} />
-          <Route path="/comments" element={<Comments />} />
+          <Route path="/make-comment" element={<MakeComment />} />
+          <Route path="/view-comments" element={<ViewComments />} />
           <Route path="/buddys_admin" element={<BuddysAdmin />} />
           <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

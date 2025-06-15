@@ -1,8 +1,17 @@
 
-
 import { Book, MessageSquare, Home, Lock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  NavigationMenu as ShadcnNavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+import { cn } from "@/lib/utils";
+
 
 const WelcomeHeader = () => {
   const location = useLocation();
@@ -36,12 +45,15 @@ const WelcomeHeader = () => {
     },
     { 
       name: 'Comments', 
-      path: '/comments', 
       bgColor: 'bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500',
       hoverColor: 'hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600',
       shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
-      textColor: 'text-green-800'
+      textColor: 'text-green-800',
+      subItems: [
+        { name: 'Make Comment', path: '/make-comment' },
+        { name: 'View Comments', path: '/view-comments' },
+      ],
     },
     { 
       name: 'About Us', 
@@ -64,35 +76,68 @@ const WelcomeHeader = () => {
     }
   ];
 
+  const NavButtonClasses = (item: (typeof navItems)[0], isActive: boolean) => cn(
+    item.bgColor, item.hoverColor, item.shadowColor, item.hoverShadow,
+    isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : '',
+    item.textColor, 'px-5 py-2 rounded-lg font-semibold',
+    'transition-all duration-200', 
+    'hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]',
+    'flex items-center justify-center min-w-[100px]',
+    'font-fun border-t border-white border-opacity-30',
+    'text-sm', item.icon ? 'gap-1' : ''
+  );
+
   const NavigationMenu = () => (
-    <div className="flex flex-row gap-3">
-      {navItems.map((item) => {
-        const isActive = location.pathname === item.path;
-        
-        return (
-          <Link
-            key={item.name}
-            to={item.path}
-            onClick={scrollToTop}
-            className={`
-              ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
-              ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : ''}
-              ${item.textColor} px-5 py-2 rounded-lg font-semibold 
-              transition-all duration-200 
-              hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
-              flex items-center justify-center min-w-[100px]
-              font-fun border-t border-white border-opacity-30
-              text-sm ${item.icon ? 'gap-1' : ''}
-            `}
-          >
-            {item.icon && <item.icon size={16} />}
-            <span className={item.icon ? '' : 'text-center w-full'}>
-              {item.name}
-            </span>
-          </Link>
-        );
-      })}
-    </div>
+    <ShadcnNavigationMenu>
+      <NavigationMenuList className="flex flex-row gap-3">
+        {navItems.map((item) => (
+          <NavigationMenuItem key={item.name}>
+            {item.subItems ? (
+              <>
+                <NavigationMenuTrigger
+                  className={NavButtonClasses(item, item.subItems.some(si => location.pathname === si.path))}
+                >
+                   <span className={item.icon ? '' : 'text-center w-full'}>
+                    {item.name}
+                  </span>
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-1 p-2 md:w-[200px] bg-amber-50 border border-orange-200 rounded-lg shadow-lg">
+                    {item.subItems.map((subItem) => (
+                      <li key={subItem.name}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to={subItem.path}
+                            onClick={scrollToTop}
+                            className={cn(
+                              "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors",
+                              "hover:bg-amber-100 focus:bg-amber-100 font-fun text-orange-800"
+                            )}
+                          >
+                            {subItem.name}
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </>
+            ) : (
+              <Link
+                to={item.path!}
+                onClick={scrollToTop}
+                className={NavButtonClasses(item, location.pathname === item.path)}
+              >
+                {item.icon && <item.icon size={16} />}
+                <span className={item.icon ? '' : 'text-center w-full'}>
+                  {item.name}
+                </span>
+              </Link>
+            )}
+          </NavigationMenuItem>
+        ))}
+      </NavigationMenuList>
+    </ShadcnNavigationMenu>
   );
 
   return (

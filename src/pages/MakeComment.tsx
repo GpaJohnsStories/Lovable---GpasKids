@@ -1,29 +1,9 @@
+
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import CommentForm from "@/components/CommentForm";
-import CommentsList from "@/components/CommentsList";
-import { useState } from "react";
-import { getPersonalId } from "@/utils/personalId";
-import { toast } from "sonner";
 
-const Comments = () => {
-  const [personalIdFilter, setPersonalIdFilter] = useState<string | null>(null);
-
-  const handleShowMyComments = () => {
-    const personalId = getPersonalId();
-    if (personalId) {
-      setPersonalIdFilter(personalId);
-      toast.success(`Showing only comments for Personal ID: ${personalId}`);
-    } else {
-      toast.info("Enter or create a Personal ID in the form to filter your comments.");
-    }
-  };
-
-  const handleShowAllComments = () => {
-    setPersonalIdFilter(null);
-    toast.success("Showing all comments.");
-  };
-
+const MakeComment = () => {
   return (
     <div className="flex flex-col min-h-screen bg-amber-50">
       <WelcomeHeader />
@@ -102,11 +82,6 @@ const Comments = () => {
             </div>
           </div>
           <CommentForm />
-          <CommentsList
-            personalIdFilter={personalIdFilter}
-            onShowMyComments={handleShowMyComments}
-            onShowAllComments={handleShowAllComments}
-          />
         </div>
       </main>
       <CookieFreeFooter />
@@ -114,4 +89,4 @@ const Comments = () => {
   );
 };
 
-export default Comments;
+export default MakeComment;
