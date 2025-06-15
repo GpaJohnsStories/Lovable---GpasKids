@@ -2,6 +2,7 @@
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import StoriesTable from "@/components/admin/StoriesTable";
 import WelcomeHeader from "@/components/WelcomeHeader";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const Library = () => {
   const handleEditStory = (story: any) => {
@@ -43,6 +44,7 @@ const Library = () => {
         </div>
       </main>
       <CookieFreeFooter />
+      <ScrollToTop />
     </div>
   );
 };
