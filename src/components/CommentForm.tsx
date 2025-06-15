@@ -1,3 +1,4 @@
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -186,15 +187,15 @@ const CommentForm = () => {
         Leave a Comment
       </h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <Tabs value={idMode} onValueChange={handleTabChange} className="w-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="existing" className="font-bold bg-green-100 data-[state=active]:bg-green-200">I have an ID</TabsTrigger>
               <TabsTrigger value="create" className="font-bold bg-yellow-100 data-[state=active]:bg-yellow-200">Create New ID</TabsTrigger>
             </TabsList>
             <TabsContent value="existing" className="pt-4">
-              <div className="space-y-2 sm:grid sm:grid-cols-3 sm:items-center sm:gap-4">
-                <Label className="text-orange-800 font-fun text-lg sm:text-right">Personal ID</Label>
+              <div className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
+                <Label className="text-orange-800 font-fun text-lg sm:text-left">Personal ID</Label>
                 <div className="sm:col-span-2">
                   <Input
                     placeholder="6-character ID"
@@ -215,8 +216,8 @@ const CommentForm = () => {
                 control={form.control}
                 name="personal_id_prefix"
                 render={({ field }) => (
-                  <FormItem className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
-                    <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Enter any 4 letters or numbers to create your Personal ID</FormLabel>
+                  <FormItem className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-2">
+                    <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Enter any 4 letters or numbers to create your Personal ID</FormLabel>
                     <div className="sm:col-span-2">
                       <div className="flex flex-wrap items-start gap-2">
                         <div className="flex flex-col">
@@ -266,8 +267,8 @@ const CommentForm = () => {
             control={form.control}
             name="subject"
             render={({ field }) => (
-              <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4">
-                <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Subject</FormLabel>
+              <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
+                <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Subject</FormLabel>
                 <div className="sm:col-span-2">
                   <FormControl>
                     <div className="relative has-highlighting">
@@ -290,8 +291,8 @@ const CommentForm = () => {
             control={form.control}
             name="content"
             render={({ field }) => (
-              <FormItem className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
-                <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Your Comment</FormLabel>
+              <FormItem className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-2">
+                <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Your Comment</FormLabel>
                 <div className="sm:col-span-2">
                   <FormControl>
                     <div className="relative has-highlighting">
@@ -318,8 +319,8 @@ const CommentForm = () => {
             control={form.control}
             name="author_email"
             render={({ field }) => (
-              <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4">
-                <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Email (Optional)</FormLabel>
+              <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
+                <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Email (Optional)</FormLabel>
                 <div className="sm:col-span-2">
                   <FormControl>
                     <Input type="email" placeholder="Your grown-up's email (not shown publicly)" {...field} className="w-full text-base md:text-sm"/>
