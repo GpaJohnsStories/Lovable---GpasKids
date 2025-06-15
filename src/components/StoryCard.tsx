@@ -12,6 +12,9 @@ interface Story {
   illustration: string;
   category: string;
   author: string;
+  photo_link_1?: string;
+  photo_link_2?: string;
+  photo_link_3?: string;
 }
 
 interface StoryCardProps {
@@ -19,6 +22,12 @@ interface StoryCardProps {
 }
 
 const StoryCard = ({ story }: StoryCardProps) => {
+  const getFirstAvailablePhoto = () => {
+    return story.photo_link_1 || story.photo_link_2 || story.photo_link_3;
+  };
+
+  const firstPhoto = getFirstAvailablePhoto();
+
   return (
     <div className="w-2/5 mx-auto">
       <Link to={`/story/${story.id}`}>
@@ -28,9 +37,25 @@ const StoryCard = ({ story }: StoryCardProps) => {
               {renderCategoryBadge(story.category)}
             </div>
             
-            <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-              {story.title}
-            </h3>
+            <div className="flex items-center justify-center mb-2">
+              {firstPhoto && (
+                <div className="flex-shrink-0 mr-3">
+                  <img 
+                    src={firstPhoto} 
+                    alt={`${story.title} thumbnail`}
+                    className="w-16 h-16 object-cover rounded border border-gray-200"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
+              <div className="flex-1">
+                <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  {story.title}
+                </h3>
+              </div>
+            </div>
             
             <div className="flex items-center justify-center text-sm text-amber-600 mb-2">
               <User className="h-3 w-3 mr-1" />

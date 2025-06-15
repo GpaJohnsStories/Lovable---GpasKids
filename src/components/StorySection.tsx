@@ -34,7 +34,10 @@ const StorySection = () => {
       readTime: "5 min read",
       illustration: "📖",
       category: story.category,
-      author: story.author
+      author: story.author,
+      photo_link_1: story.photo_link_1,
+      photo_link_2: story.photo_link_2,
+      photo_link_3: story.photo_link_3
     }))),
     {
       id: 6,
