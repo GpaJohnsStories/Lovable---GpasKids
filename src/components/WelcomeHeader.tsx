@@ -1,4 +1,3 @@
-
 import { ChevronDown, Book, MessageSquare, Home, Lock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -19,6 +18,7 @@ import { cn } from "@/lib/utils";
 const WelcomeHeader = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const onStoryPage = location.pathname.startsWith('/story/');
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -44,7 +44,11 @@ const WelcomeHeader = () => {
       hoverColor: 'hover:from-orange-600 hover:via-orange-700 hover:to-orange-800',
       shadowColor: 'shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]',
-      textColor: 'text-white'
+      textColor: 'text-white',
+      subItems: [
+        { name: 'Story List', path: '/library' },
+        { name: 'Current Story', path: onStoryPage ? location.pathname : '#', disabled: !onStoryPage },
+      ]
     },
     { 
       name: 'Comments', 
@@ -113,13 +117,20 @@ const WelcomeHeader = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="p-2 md:w-[200px] bg-amber-50 border border-orange-200 rounded-lg shadow-lg">
                   {item.subItems.map((subItem) => (
-                    <DropdownMenuItem key={subItem.name} asChild className="p-0 focus:bg-transparent focus:text-inherit">
+                    <DropdownMenuItem key={subItem.name} asChild className="p-0 focus:bg-transparent focus:text-inherit" disabled={subItem.disabled}>
                       <Link
                         to={subItem.path}
-                        onClick={scrollToTop}
+                        onClick={(e) => {
+                          if (subItem.disabled) {
+                            e.preventDefault();
+                            return;
+                          }
+                          scrollToTop();
+                        }}
                         className={cn(
                           "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors w-full",
-                          "hover:bg-amber-100 focus:bg-amber-100 font-fun text-orange-800"
+                          "hover:bg-amber-100 focus:bg-amber-100 font-fun text-orange-800",
+                          subItem.disabled && "opacity-50 cursor-not-allowed hover:bg-transparent focus:bg-transparent"
                         )}
                       >
                         {subItem.name}
