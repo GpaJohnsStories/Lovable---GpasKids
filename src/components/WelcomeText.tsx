@@ -5,6 +5,9 @@ const WelcomeText = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
+  console.log('WelcomeText - Current pathname:', location.pathname);
+  console.log('WelcomeText - Is home page:', isHomePage);
+
   const navItems = [
     { 
       name: 'Home', 
@@ -64,11 +67,13 @@ const WelcomeText = () => {
               Enjoy your time here!
             </p>
             
-            {/* Navigation Menu - Only show on home page, left-aligned with text */}
+            {/* Navigation Menu - Show on home page, left-aligned with text */}
             {isHomePage && (
               <div className="flex flex-row gap-3 mt-6 justify-center md:justify-start">
                 {navItems.map((item) => {
                   const isActive = location.pathname === item.path;
+                  
+                  console.log('Rendering nav item:', item.name, 'isActive:', isActive);
                   
                   return (
                     <Link
