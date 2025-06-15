@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -173,12 +172,6 @@ const CommentForm = () => {
             </p>
           </div>
           
-          <div className="flex items-center">
-            <hr className="flex-grow border-t border-orange-200" />
-            <span className="px-4 text-orange-800 font-fun text-lg">OR</span>
-            <hr className="flex-grow border-t border-orange-200" />
-          </div>
-
           <FormField
             control={form.control}
             name="personal_id_prefix"
