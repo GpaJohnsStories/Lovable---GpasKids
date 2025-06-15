@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
-type SortField = 'title' | 'author' | 'category' | 'read_count' | 'created_at';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'created_at';
 type SortDirection = 'asc' | 'desc';
 
 interface StoriesTableProps {
@@ -49,6 +49,8 @@ const StoriesTable = ({ onEditStory }: StoriesTableProps) => {
 
   const getButtonColor = (field: SortField) => {
     switch (field) {
+      case 'story_code':
+        return 'bg-cyan-500 hover:bg-cyan-600 text-white';
       case 'title':
         return 'bg-blue-500 hover:bg-blue-600 text-white';
       case 'author':
@@ -115,6 +117,17 @@ const StoriesTable = ({ onEditStory }: StoriesTableProps) => {
               <TableRow>
                 <TableHead className="p-2">
                   <Button
+                    onClick={() => handleSort('story_code')}
+                    className={`${getButtonColor('story_code')} w-full justify-between`}
+                    size="sm"
+                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  >
+                    Code
+                    {getSortIcon('story_code')}
+                  </Button>
+                </TableHead>
+                <TableHead className="p-2">
+                  <Button
                     onClick={() => handleSort('title')}
                     className={`${getButtonColor('title')} w-full justify-between`}
                     size="sm"
@@ -174,6 +187,7 @@ const StoriesTable = ({ onEditStory }: StoriesTableProps) => {
             <TableBody>
               {stories?.map((story) => (
                 <TableRow key={story.id}>
+                  <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>{story.story_code}</TableCell>
                   <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>{story.title}</TableCell>
                   <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>{story.author}</TableCell>
                   <TableCell>
