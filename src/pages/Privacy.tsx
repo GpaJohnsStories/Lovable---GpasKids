@@ -17,7 +17,7 @@ const Privacy = () => {
               Privacy & Security Policy
             </CardTitle>
             <p className="text-amber-600">
-              Grandpa's Story Corner - A completely cookie-free experience
+              Grandpa John's Stories - A completely cookie-free experience
             </p>
           </CardHeader>
           
@@ -30,7 +30,7 @@ const Privacy = () => {
               </div>
               <p className="text-green-700 leading-relaxed">
                 We are proud to operate a <strong>completely cookie-free website</strong>. 
-                When you visit Grandpa's Story Corner to read our heartwarming stories, 
+                When you visit Grandpa John's Stories to read our heartwarming stories, 
                 no cookies are stored on your device. No tracking, no analytics, 
                 no third-party cookies - just pure, uninterrupted storytelling.
               </p>
@@ -92,7 +92,7 @@ const Privacy = () => {
             <div className="text-center pt-6">
               <p className="text-amber-600 italic">
                 "Privacy is not about hiding something. It's about protecting everything that matters." 
-                - Grandpa's Story Corner Team
+                - Grandpa John's Stories Team
               </p>
             </div>
           </CardContent>
