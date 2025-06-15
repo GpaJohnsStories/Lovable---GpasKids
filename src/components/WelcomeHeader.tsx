@@ -1,4 +1,5 @@
-import { Book, MessageSquare, Home } from "lucide-react";
+
+import { Book, MessageSquare, Home, Lock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -38,6 +39,15 @@ const WelcomeHeader = () => {
       hoverColor: 'hover:from-sky-400 hover:via-sky-500 hover:to-sky-600',
       shadowColor: 'shadow-[0_6px_0_#0369a1,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#0369a1,0_6px_12px_rgba(0,0,0,0.4)]'
+    },
+    { 
+      name: 'Privacy', 
+      path: '/privacy', 
+      bgColor: 'bg-gradient-to-b from-slate-400 via-slate-500 to-slate-600',
+      hoverColor: 'hover:from-slate-500 hover:via-slate-600 hover:to-slate-700',
+      shadowColor: 'shadow-[0_6px_0_#475569,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#475569,0_6px_12px_rgba(0,0,0,0.4)]',
+      icon: Lock
     }
   ];
 
@@ -58,9 +68,10 @@ const WelcomeHeader = () => {
               hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
               flex items-center justify-center min-w-[100px]
               font-fun border-t border-white border-opacity-30
-              text-sm
+              text-sm gap-1
             `}
           >
+            {item.icon && <item.icon size={16} />}
             {item.name}
           </Link>
         );
