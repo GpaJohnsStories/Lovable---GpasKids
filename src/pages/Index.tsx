@@ -11,6 +11,16 @@ const Index = () => {
       
       <main className="container mx-auto px-4 pt-8">
         <WelcomeText />
+        
+        {/* Note text below the blue box */}
+        <div className="w-full py-4">
+          <div className="container mx-auto px-4">
+            <p className="text-center text-black italic font-handwritten text-lg">
+              NOTE: For best viewing and reading, use your phone or tablet in landscape mode.
+            </p>
+          </div>
+        </div>
+        
         <StorySection />
       </main>
       <CookieFreeFooter />
