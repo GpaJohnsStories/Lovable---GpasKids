@@ -109,31 +109,33 @@ const WelcomeHeader = () => {
               </div>
             )}
 
-            {/* Navigation Menu - Show on all pages, positioned on the right */}
-            <div className="flex flex-row gap-3">
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.path;
-                
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className={`
-                      ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
-                      ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : ''}
-                      text-white px-5 py-2 rounded-lg font-semibold 
-                      transition-all duration-200 
-                      hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
-                      flex items-center justify-center min-w-[100px]
-                      font-fun border-t border-white border-opacity-30
-                      text-sm
-                    `}
-                  >
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </div>
+            {/* Navigation Menu - Only show on non-home pages, positioned on the right */}
+            {!isHomePage && (
+              <div className="flex flex-row gap-3">
+                {navItems.map((item) => {
+                  const isActive = location.pathname === item.path;
+                  
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className={`
+                        ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
+                        ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : ''}
+                        text-white px-5 py-2 rounded-lg font-semibold 
+                        transition-all duration-200 
+                        hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
+                        flex items-center justify-center min-w-[100px]
+                        font-fun border-t border-white border-opacity-30
+                        text-sm
+                      `}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </header>
