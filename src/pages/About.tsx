@@ -10,50 +10,42 @@ const About = () => {
       
       <main className="container mx-auto px-4 pt-8 pb-12">
         <div className="max-w-6xl mx-auto">
-          {/* Main content section with photo and intro */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            {/* Text content - left side */}
-            <div className="lg:col-span-2 space-y-8">
-              <div>
-                <h1 className="text-4xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                  About Grandpa John
-                </h1>
-                <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  With over 60 years of marriage and a lifetime of experiences, I've collected stories that I'm excited to share with children around the world. My journey has taught me valuable lessons about kindness, perseverance, and the importance of imagination.
-                </p>
-                <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  I believe every child deserves stories that make them feel safe, valued, and inspired to dream big. That's why I created this special place just for you.
-                </p>
-              </div>
-
-              <div>
-                <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                  My Story
-                </h2>
-                <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  I've been blessed with a long life filled with adventures, challenges, and beautiful moments. Over my 80+ years, I've traveled to many places, met fascinating people, and learned valuable lessons that I'm eager to share with young minds like yours.
-                </p>
-                <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  Being married for over 60 wonderful years has taught me about love, patience, and the importance of kindness. My 10 grandchildren have filled my heart with joy and inspired many of the stories you'll find here.
-                </p>
-              </div>
-            </div>
-
-            {/* Photo - right side */}
-            <div className="lg:col-span-1 flex justify-center lg:justify-end">
-              <div className="w-full max-w-sm">
-                <img 
-                  src="/lovable-uploads/14b5498f-ec5f-4553-aa24-94d67048ecfa.png" 
-                  alt="Grandpa John"
-                  className="w-full h-auto rounded-lg shadow-lg border-4 border-white"
-                />
-              </div>
-            </div>
+          {/* Photo positioned at upper right */}
+          <div className="float-right ml-8 mb-6 w-full max-w-sm lg:max-w-xs">
+            <img 
+              src="/lovable-uploads/14b5498f-ec5f-4553-aa24-94d67048ecfa.png" 
+              alt="Grandpa John"
+              className="w-full h-auto rounded-lg shadow-lg border-4 border-white"
+            />
           </div>
 
-          {/* Additional sections */}
+          {/* Main content with text wrapping around photo */}
           <div className="space-y-8">
             <div>
+              <h1 className="text-4xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                About Grandpa John
+              </h1>
+              <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                With over 60 years of marriage and a lifetime of experiences, I've collected stories that I'm excited to share with children around the world. My journey has taught me valuable lessons about kindness, perseverance, and the importance of imagination.
+              </p>
+              <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                I believe every child deserves stories that make them feel safe, valued, and inspired to dream big. That's why I created this special place just for you.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                My Story
+              </h2>
+              <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                I've been blessed with a long life filled with adventures, challenges, and beautiful moments. Over my 80+ years, I've traveled to many places, met fascinating people, and learned valuable lessons that I'm eager to share with young minds like yours.
+              </p>
+              <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                Being married for over 60 wonderful years has taught me about love, patience, and the importance of kindness. My 10 grandchildren have filled my heart with joy and inspired many of the stories you'll find here.
+              </p>
+            </div>
+
+            <div className="clear-right">
               <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 Why I Created This Website
               </h2>
