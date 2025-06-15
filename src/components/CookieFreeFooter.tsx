@@ -27,32 +27,6 @@ const CookieFreeFooter = () => {
             </Link>
           </div>
           
-          {/* Middle - Navigation Links */}
-          <div className="flex items-center space-x-6 text-sm">
-            <Link 
-              to="/" 
-              onClick={scrollToTop}
-              className="text-amber-600 hover:text-amber-800 underline"
-            >
-              Stories
-            </Link>
-            <Link 
-              to="/privacy" 
-              onClick={scrollToTop}
-              className="text-amber-600 hover:text-amber-800 underline"
-            >
-              Privacy
-            </Link>
-            <a 
-              href="https://gpaskids.com/buddys_admin" 
-              className="text-amber-600 hover:text-amber-800 underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Admin
-            </a>
-          </div>
-
           {/* Right Side */}
           <div className="flex items-center space-x-4 text-sm">
             <div className="flex items-center space-x-1 text-amber-600">
