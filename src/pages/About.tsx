@@ -1,3 +1,4 @@
+
 import React from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -92,15 +93,26 @@ const About = () => {
                     <span className="font-bold">A Comfortable Space</span>: I want you to feel at home here – like you're sitting in a cozy chair listening to your own grandparent tell you a story.
                   </p>
                 </div>
-              </div>
-            </div>
-
-            <div className="text-center pt-8">
-              <p className="text-lg text-black leading-relaxed italic mb-6 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                Thank you for visiting! I hope you enjoy the stories and come back often to see what's new.
-              </p>
-              <div className="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 inline-block cursor-pointer font-handwritten">
-                Send Me a Message
+                
+                {/* Thank you message moved inside the promise box */}
+                <div className="mt-8 text-center">
+                  <p className="text-lg text-blue-600 leading-relaxed italic mb-6 font-normal" style={{ fontFamily: 'Segoe Print, cursive, sans-serif' }}>
+                    Thank you for visiting! I hope you enjoy the stories and come back often to see what's new.
+                  </p>
+                  
+                  {/* Signature with flourish */}
+                  <div className="flex justify-center items-center">
+                    <div className="text-center ml-8">
+                      <div className="text-2xl text-blue-600 mb-2" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>
+                        Grandpa John
+                      </div>
+                      {/* Flourish under signature */}
+                      <div className="text-blue-600 text-3xl" style={{ fontFamily: 'serif' }}>
+                        ∽∽∽
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
