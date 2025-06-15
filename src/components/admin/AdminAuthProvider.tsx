@@ -1,7 +1,5 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { User } from '@supabase/supabase-js';
 
 interface AdminAuthContextType {
   isAuthenticated: boolean;
@@ -29,72 +27,41 @@ export const AdminAuthProvider = ({ children }: AdminAuthProviderProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const checkAdminStatus = async (user: User | null) => {
-      if (user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', user.id)
-          .single();
-        setIsAuthenticated(profile?.role === 'admin');
-      } else {
-        setIsAuthenticated(false);
+    try {
+      const storedAuth = sessionStorage.getItem('isAdminAuthenticated');
+      if (storedAuth === 'true') {
+        setIsAuthenticated(true);
       }
-      setIsLoading(false);
-    };
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      checkAdminStatus(session?.user ?? null);
-    });
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        checkAdminStatus(session?.user ?? null);
-      }
-    );
-
-    return () => {
-      authListener?.subscription.unsubscribe();
-    };
+    } catch (error) {
+      console.error("Could not access session storage", error);
+    }
+    setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
-    setIsLoading(true);
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    
-    if (error) {
-      setIsLoading(false);
-      return { success: false, error: error.message };
-    }
+    const ADMIN_EMAIL = 'admin@buddy.com';
+    const ADMIN_PASSWORD = 'password';
 
-    if (data.user) {
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', data.user.id)
-        .single();
-      
-      if (profileError || profile?.role !== 'admin') {
-        await supabase.auth.signOut();
-        setIsAuthenticated(false);
-        setIsLoading(false);
-        return { success: false, error: "You are not authorized to access this page." };
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      try {
+        sessionStorage.setItem('isAdminAuthenticated', 'true');
+        setIsAuthenticated(true);
+        return { success: true };
+      } catch (error) {
+        console.error("Could not access session storage", error);
+        return { success: false, error: 'Could not set session.' };
       }
-      
-      setIsAuthenticated(true);
-      setIsLoading(false);
-      return { success: true };
     }
-    
-    setIsLoading(false);
-    return { success: false, error: "An unknown error occurred." };
+    return { success: false, error: 'Invalid credentials' };
   };
 
   const logout = async () => {
-    setIsLoading(true);
-    await supabase.auth.signOut();
+    try {
+      sessionStorage.removeItem('isAdminAuthenticated');
+    } catch (error) {
+      console.error("Could not access session storage", error);
+    }
     setIsAuthenticated(false);
-    setIsLoading(false);
   };
 
   const value = { isAuthenticated, login, logout, isLoading };
