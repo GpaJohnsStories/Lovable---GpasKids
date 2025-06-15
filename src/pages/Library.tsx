@@ -25,7 +25,7 @@ const Library = () => {
               Click on any column heading to sort the library by that column.<br />The first click will always sort down and the next click will sort up.
             </div>
             <div className="text-black text-base italic font-sans">
-              As more stories are loaded, you may want to keep a note on your device or even use pencil and paper to record the Story Code so you can find it easily in the future.
+              As more stories are loaded, you may want to keep a note on your device or even use pencil and paper<br />to record the Story Code so you can find it easily in the future.
             </div>
           </div>
         </div>
