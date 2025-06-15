@@ -44,14 +44,14 @@ const Comments = () => {
                 <h3 className="text-xl font-bold">3. Keep Your Info Secret! 🤫</h3>
                 <ul className="list-disc list-inside mt-1 space-y-1 pl-4">
                   <li>Never share your full name, address, phone number, or email. That's your secret!</li>
-                  <li>Don't ask other kids for their secret information either.</li>
+                  <li>Don't ask others for their secret information either.</li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="text-xl font-bold">4. No Ads! 🚫</h3>
                 <ul className="list-disc list-inside mt-1 space-y-1 pl-4">
-                  <li>This space is just for our website. No trying to sell things or posting links to other websites.</li>
+                  <li>This space is just for Grandpa John's Stories. No trying to sell things or posting links to other websites.</li>
                 </ul>
               </div>
 
@@ -66,14 +66,14 @@ const Comments = () => {
               <div>
                 <h3 className="text-xl font-bold">6. Tell a Grown-Up if Something is Wrong! 🙋</h3>
                 <ul className="list-disc list-inside mt-1 space-y-1 pl-4">
-                  <li>If you see a comment that isn't kind or breaks a rule, tell a grown-up right away! You can ask them to email us at <span className="font-semibold">help@ourwebsite.com</span>.</li>
+                  <li>If you see a comment that isn't kind or breaks a rule, tell a grown-up right away! Your or a grown-up can send a comment explaining your concern.</li>
                 </ul>
               </div>
 
               <div>
                 <h3 className="text-xl font-bold">7. We Check All Comments! 👀</h3>
                 <ul className="list-disc list-inside mt-1 space-y-1 pl-4">
-                  <li>A grown-up reads all comments before they show up here. This keeps things safe and fun!</li>
+                  <li>Grandpa John or his helper read all comments before they show up here. This keeps things safe and fun!</li>
                   <li>If a comment doesn't follow the rules, it might not be posted.</li>
                 </ul>
               </div>
