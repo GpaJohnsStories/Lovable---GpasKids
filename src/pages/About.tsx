@@ -1,3 +1,4 @@
+
 import React from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -9,16 +10,7 @@ const About = () => {
       
       <main className="container mx-auto px-4 pt-8 pb-12">
         <div className="max-w-6xl mx-auto">
-          {/* Photo positioned at upper right, moved down */}
-          <div className="float-right ml-8 mb-6 w-full max-w-sm lg:max-w-xs" style={{ marginTop: '280px' }}>
-            <img 
-              src="/lovable-uploads/14b5498f-ec5f-4553-aa24-94d67048ecfa.png" 
-              alt="Grandpa John"
-              className="w-full h-auto rounded-lg shadow-lg border-4 border-white"
-            />
-          </div>
-
-          {/* Main content with text wrapping around photo */}
+          {/* Main content */}
           <div className="space-y-8">
             <div>
               <h1 className="text-4xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
@@ -44,7 +36,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="clear-right">
+            <div>
               <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 Why I Created This Website
               </h2>
@@ -78,6 +70,15 @@ const About = () => {
               }}
             >
               <div className="relative z-10">
+                {/* Photo positioned at top right inside the box */}
+                <div className="float-right ml-8 mb-6 w-full max-w-xs">
+                  <img 
+                    src="/lovable-uploads/14b5498f-ec5f-4553-aa24-94d67048ecfa.png" 
+                    alt="Grandpa John"
+                    className="w-full h-auto rounded-lg shadow-lg border-4 border-white"
+                  />
+                </div>
+
                 <h2 className="text-3xl font-bold text-amber-900 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                   My PROMISE to YOU!
                 </h2>
@@ -93,8 +94,8 @@ const About = () => {
                   </p>
                 </div>
                 
-                {/* Thank you message moved inside the promise box */}
-                <div className="mt-8 text-center">
+                {/* Thank you message */}
+                <div className="mt-8 text-center clear-right">
                   <p className="text-lg text-blue-800 font-bold leading-relaxed italic mb-6" style={{ fontFamily: 'Segoe Print, cursive, sans-serif' }}>
                     Thank you for visiting! I hope you enjoy the stories and<br />come back often to see what's new.
                   </p>
