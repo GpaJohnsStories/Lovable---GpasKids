@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ArrowUp, ArrowDown } from "lucide-react";
@@ -71,8 +72,17 @@ const CommentsListHeader = ({ sortField, sortDirection, onSort }: CommentsListHe
             </div>
           </Button>
         </TableHead>
-        <TableHead className="w-[100px] p-2 text-center text-orange-900 font-bold font-fun text-base">
-          Replies
+        <TableHead className="w-[100px] p-2 text-center">
+          <Button
+            onClick={() => onSort('replies_count')}
+            className={`${getButtonColor('replies_count')} w-full justify-center`}
+            size="sm"
+          >
+            <div className="flex items-center justify-center gap-2">
+              Replies
+              {getSortIcon('replies_count')}
+            </div>
+          </Button>
         </TableHead>
       </TableRow>
     </TableHeader>
