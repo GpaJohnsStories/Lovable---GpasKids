@@ -9,7 +9,7 @@ const Comments = () => {
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-orange-200">
           <h1 className="text-3xl font-bold text-center text-orange-800 mb-4 font-fun">
-            Comments & Feedback
+            Comments, Questions & Feedback
           </h1>
           <p className="text-center text-gray-600">
             This page is under construction. Come back soon to see what others are saying and share your thoughts!
@@ -22,3 +22,4 @@ const Comments = () => {
 };
 
 export default Comments;
+
