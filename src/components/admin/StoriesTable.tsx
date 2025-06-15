@@ -8,7 +8,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
-import StoriesTableInstructions from "./StoriesTableInstructions";
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'created_at';
 type SortDirection = 'asc' | 'desc';
@@ -63,9 +62,6 @@ const StoriesTable = ({ onEditStory, showActions = true }: StoriesTableProps) =>
 
   return (
     <Card>
-      <CardHeader>
-        <StoriesTableInstructions />
-      </CardHeader>
       <CardContent>
         {storiesLoading ? (
           <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
