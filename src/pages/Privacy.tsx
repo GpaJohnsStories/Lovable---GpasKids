@@ -4,10 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Shield, Cookie, Eye, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
+import WelcomeHeader from "@/components/WelcomeHeader";
+import CookieFreeFooter from "@/components/CookieFreeFooter";
 
 const Privacy = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
+      <WelcomeHeader />
+      
       <div className="max-w-4xl mx-auto p-6">
         <div className="mb-6">
           <Link to="/">
@@ -105,6 +109,8 @@ const Privacy = () => {
           </CardContent>
         </Card>
       </div>
+      
+      <CookieFreeFooter />
     </div>
   );
 };
