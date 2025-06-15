@@ -40,7 +40,7 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
 
   return (
     <TableRow>
-      <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="font-medium font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         {story.story_code}
       </TableCell>
       <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
