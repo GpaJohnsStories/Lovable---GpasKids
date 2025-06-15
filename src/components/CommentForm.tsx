@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -111,7 +110,7 @@ const CommentForm = () => {
             name="personal_id_prefix"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-orange-800 font-fun text-lg">Your Personal Code</FormLabel>
+                <FormLabel className="text-orange-800 font-fun text-lg">Create Your Personal ID</FormLabel>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
                   <FormControl>
                     <Input placeholder="4 letters or numbers" {...field} maxLength={4} className="w-full sm:w-48 text-base md:text-sm"/>
@@ -119,7 +118,7 @@ const CommentForm = () => {
                   {personalId && (
                     <div className="mt-2 sm:mt-0">
                       <p className="text-orange-800 font-fun text-base">
-                        Your full ID is: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
+                        Your Complete Personal ID: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
                       </p>
                     </div>
                   )}
