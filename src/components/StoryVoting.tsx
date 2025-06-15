@@ -118,15 +118,21 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
   };
 
   const getButtonClass = (voteType: 'thumbs_up' | 'thumbs_down' | 'ok') => {
-    const baseClass = "flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-200";
+    const baseClass = "flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-300";
     const isSelected = currentVote === voteType;
     
     if (voteType === 'thumbs_up') {
-      return `${baseClass} ${isSelected ? 'bg-green-600 shadow-lg shadow-green-300 scale-105' : 'bg-green-500 hover:bg-green-600'} text-white`;
+      return `${baseClass} ${isSelected 
+        ? 'bg-green-700 ring-4 ring-green-400 ring-opacity-75 shadow-2xl shadow-green-400/50 scale-110 border-2 border-green-300' 
+        : 'bg-green-500 hover:bg-green-600'} text-white`;
     } else if (voteType === 'thumbs_down') {
-      return `${baseClass} ${isSelected ? 'bg-red-600 shadow-lg shadow-red-300 scale-105' : 'bg-red-500 hover:bg-red-600'} text-white`;
+      return `${baseClass} ${isSelected 
+        ? 'bg-red-700 ring-4 ring-red-400 ring-opacity-75 shadow-2xl shadow-red-400/50 scale-110 border-2 border-red-300' 
+        : 'bg-red-500 hover:bg-red-600'} text-white`;
     } else {
-      return `${baseClass} ${isSelected ? 'bg-yellow-600 shadow-lg shadow-yellow-300 scale-105' : 'bg-yellow-500 hover:bg-yellow-600'} text-white`;
+      return `${baseClass} ${isSelected 
+        ? 'bg-yellow-700 ring-4 ring-yellow-400 ring-opacity-75 shadow-2xl shadow-yellow-400/50 scale-110 border-2 border-yellow-300' 
+        : 'bg-yellow-500 hover:bg-yellow-600'} text-white`;
     }
   };
 
