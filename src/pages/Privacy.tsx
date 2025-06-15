@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Cookie, Eye, Lock } from "lucide-react";
@@ -140,7 +139,7 @@ const Privacy = () => {
               <h2 className="text-xl font-semibold text-gray-800 mb-4">Questions About Our Privacy Policy?</h2>
               <p className="!text-gray-700 !text-base !font-normal leading-relaxed">
                 If you have any questions about our cookie-free approach or privacy practices, 
-                please feel free to contact us. We're always happy to discuss our commitment 
+                please feel free to contact us by leaving a comment on our <a href="/comments" className="text-blue-600 hover:text-blue-800 underline">Comment Page</a>. We're always happy to discuss our commitment 
                 to protecting your privacy while sharing Grandpa's stories.
               </p>
             </div>
