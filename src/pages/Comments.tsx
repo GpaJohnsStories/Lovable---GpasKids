@@ -1,4 +1,3 @@
-
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 
@@ -67,7 +66,7 @@ const Comments = () => {
               <div>
                 <h3 className="text-xl font-bold">6. Tell a Grown-Up if Something is Wrong! 🙋</h3>
                 <ul className="list-disc list-inside mt-1 space-y-1 pl-4">
-                  <li>If you see a comment that isn't kind or breaks a rule, tell a grown-up right away! Your or a grown-up can send a comment explaining your concern.</li>
+                  <li>If you see a comment that isn't kind or breaks a rule, tell a grown-up right away! You or a grown-up can send a comment explaining your concern.</li>
                 </ul>
               </div>
 
