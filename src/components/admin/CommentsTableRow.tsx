@@ -36,7 +36,7 @@ const CommentsTableRow = ({ comment, onUpdateStatus }: CommentsTableRowProps) =>
       <TableCell>{comment.subject}</TableCell>
       <TableCell className="max-w-xs truncate" title={comment.content}>{comment.content}</TableCell>
       <TableCell>{getStatusBadge(comment.status)}</TableCell>
-      <TableCell className="flex gap-1">
+      <TableCell className="flex space-x-2">
         {comment.status !== 'approved' && (
           <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white" onClick={() => onUpdateStatus(comment.id, 'approved')}>Approve</Button>
         )}

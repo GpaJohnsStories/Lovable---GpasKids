@@ -20,30 +20,50 @@ const CommentsTableHeader = ({ sortField, sortDirection, onSort }: CommentsTable
     return sortDirection === 'asc' ? <ArrowUp className="h-4 w-4 ml-2" /> : <ArrowDown className="h-4 w-4 ml-2" />;
   };
 
-  const headers: { label: string; field: SortField, className?: string }[] = [
-    { label: "Personal Code", field: "personal_id", className: "w-[150px]" },
-    { label: "Date", field: "created_at", className: "w-[200px]" },
-    { label: "Subject", field: "subject", className: "w-[200px]" },
+  const getButtonColor = (field: SortField) => {
+    switch (field) {
+      case 'personal_id':
+        return 'bg-cyan-500 hover:bg-cyan-600 text-white';
+      case 'subject':
+        return 'bg-blue-500 hover:bg-blue-600 text-white';
+      case 'content':
+        return 'bg-green-500 hover:bg-green-600 text-white';
+      case 'status':
+        return 'bg-purple-500 hover:bg-purple-600 text-white';
+      case 'created_at':
+        return 'bg-red-500 hover:bg-red-600 text-white';
+      default:
+        return 'bg-gray-500 hover:bg-gray-600 text-white';
+    }
+  };
+
+  const headers: { label: string; field: SortField }[] = [
+    { label: "Personal Code", field: "personal_id" },
+    { label: "Date", field: "created_at" },
+    { label: "Subject", field: "subject" },
     { label: "Content", field: "content" },
-    { label: "Status", field: "status", className: "w-[120px]" },
-    { label: "Actions", field: "actions", className: "w-[250px]" },
+    { label: "Status", field: "status" },
+    { label: "Actions", field: "actions" },
   ];
 
   return (
     <TableHeader>
       <TableRow>
         {headers.map(header => (
-          <TableHead key={header.field} className={header.className}>
+          <TableHead key={header.field} className="p-2 text-center">
             {header.field === 'actions' ? (
-              <span className="font-bold">{header.label}</span>
+              <span className="font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>{header.label}</span>
             ) : (
               <Button
-                variant="ghost"
                 onClick={() => onSort(header.field)}
-                className="font-bold p-0 hover:bg-transparent"
+                className={`${getButtonColor(header.field)} w-full justify-center`}
+                size="sm"
+                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
               >
-                {header.label}
-                {getSortIcon(header.field)}
+                <div className="flex items-center justify-center gap-2">
+                  {header.label}
+                  {getSortIcon(header.field)}
+                </div>
               </Button>
             )}
           </TableHead>

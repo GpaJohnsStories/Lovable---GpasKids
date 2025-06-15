@@ -4,19 +4,20 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   Table,
   TableBody,
+  TableRow,
+  TableCell,
 } from "@/components/ui/table";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import { Card, CardContent } from "@/components/ui/card";
+import { BookOpen } from "lucide-react";
 import { useState, useMemo } from "react";
 import { toast } from "sonner";
 import { Database } from "@/integrations/supabase/types";
 import CommentsTableHeader from "./CommentsTableHeader";
 import CommentsTableRow from "./CommentsTableRow";
-import { TableRow, TableCell } from "@/components/ui/table";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 type SortField = keyof Omit<Comment, 'author_email' | 'parent_id' | 'updated_at'> | 'actions';
 type SortDirection = 'asc' | 'desc';
-
 
 const CommentsTable = () => {
   const queryClient = useQueryClient();
@@ -97,43 +98,44 @@ const CommentsTable = () => {
     }
   };
 
-  if (isLoading) {
-    return <div className="flex justify-center py-8"><LoadingSpinner /></div>;
-  }
-
-  if (error) {
-    return <div className="text-red-500 text-center py-8">Error fetching comments: {error.message}</div>;
-  }
-
   return (
-    <div className="mt-0">
-      <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-orange-200">
-        <Table>
-          <CommentsTableHeader
-            sortField={sortField}
-            sortDirection={sortDirection}
-            onSort={handleSort}
-          />
-          <TableBody>
-            {sortedComments && sortedComments.length > 0 ? (
-              sortedComments.map((comment) => (
-                <CommentsTableRow 
-                  key={comment.id}
-                  comment={comment}
-                  onUpdateStatus={handleUpdateStatus}
-                />
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={7} className="h-24 text-center">
-                  No comments found.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
+    <Card>
+      <CardContent>
+        {isLoading ? (
+          <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+            <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
+            <p>Loading comments...</p>
+          </div>
+        ) : error ? (
+           <div className="text-red-500 text-center py-8">Error fetching comments: {error.message}</div>
+        ) : (
+          <Table>
+            <CommentsTableHeader
+              sortField={sortField}
+              sortDirection={sortDirection}
+              onSort={handleSort}
+            />
+            <TableBody>
+              {sortedComments && sortedComments.length > 0 ? (
+                sortedComments.map((comment) => (
+                  <CommentsTableRow 
+                    key={comment.id}
+                    comment={comment}
+                    onUpdateStatus={handleUpdateStatus}
+                  />
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} className="h-24 text-center">
+                    No comments found.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
