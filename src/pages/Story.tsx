@@ -11,10 +11,12 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import StoryVoting from "@/components/StoryVoting";
 import { renderCategoryBadge } from "@/utils/categoryUtils";
 import { formatStoryContent } from "@/utils/storyContentUtils";
+import { useState, useEffect } from "react";
 
 const Story = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
+  const [currentVote, setCurrentVote] = useState<'thumbs_up' | 'thumbs_down' | 'ok' | null>(null);
 
   const { data: story, isLoading, error } = useQuery({
     queryKey: ['story', id],
@@ -36,7 +38,35 @@ const Story = () => {
     },
   });
 
-  const handleVoteUpdate = (newCounts: { thumbs_up_count: number; thumbs_down_count: number; ok_count: number }) => {
+  // Check for existing vote when story loads
+  useEffect(() => {
+    const checkExistingVote = async () => {
+      if (!id) return;
+      
+      try {
+        const { data: existingVote, error } = await supabase
+          .from('story_votes')
+          .select('vote_type')
+          .eq('story_id', id)
+          .maybeSingle();
+
+        if (error && error.code !== 'PGRST116') {
+          console.error('Error checking existing vote:', error);
+          return;
+        }
+
+        if (existingVote) {
+          setCurrentVote(existingVote.vote_type as 'thumbs_up' | 'thumbs_down' | 'ok');
+        }
+      } catch (error) {
+        console.error('Error checking existing vote:', error);
+      }
+    };
+
+    checkExistingVote();
+  }, [id]);
+
+  const handleVoteUpdate = (newCounts: { thumbs_up_count: number; thumbs_down_count: number; ok_count: number }, newVote: 'thumbs_up' | 'thumbs_down' | 'ok' | null) => {
     // Update the query cache with new vote counts
     queryClient.setQueryData(['story', id], (oldData: any) => {
       if (!oldData) return oldData;
@@ -47,6 +77,9 @@ const Story = () => {
         ok_count: newCounts.ok_count
       };
     });
+    
+    // Update current vote state
+    setCurrentVote(newVote);
   };
 
   if (isLoading) {
@@ -126,6 +159,7 @@ const Story = () => {
               thumbsUpCount={story.thumbs_up_count || 0}
               thumbsDownCount={story.thumbs_down_count || 0}
               okCount={story.ok_count || 0}
+              currentVote={currentVote}
               onVoteUpdate={handleVoteUpdate}
             />
           </div>
@@ -185,6 +219,7 @@ const Story = () => {
               thumbsUpCount={story.thumbs_up_count || 0}
               thumbsDownCount={story.thumbs_down_count || 0}
               okCount={story.ok_count || 0}
+              currentVote={currentVote}
               onVoteUpdate={handleVoteUpdate}
             />
           </div>
