@@ -1,3 +1,4 @@
+
 import React from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -68,20 +69,33 @@ const About = () => {
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-amber-100 to-orange-100 border-2 border-orange-200 rounded-xl p-8 shadow-lg">
-              <h2 className="text-3xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                My PROMISE to YOU!
-              </h2>
-              <div className="space-y-4">
-                <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  <span className="font-bold">Safety First</span>: This website is designed with children's safety in mind. There are no advertisements, no personal data collection, and strict security measures.
-                </p>
-                <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  <span className="font-bold">Quality Content</span>: All stories are written by me or by my friends and then edited by me. They are carefully crafted to be engaging, age-appropriate for grade school students, encouraging, and meaningful.
-                </p>
-                <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  <span className="font-bold">A Comfortable Space</span>: I want you to feel at home here – like you're sitting in a cozy chair listening to your own grandparent tell you a story.
-                </p>
+            <div 
+              className="border-2 border-orange-200 rounded-xl p-8 shadow-lg relative overflow-hidden"
+              style={{
+                backgroundImage: `url('https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=800&h=600&fit=crop&crop=center')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundBlendMode: 'multiply'
+              }}
+            >
+              {/* Semi-transparent overlay to ensure text readability */}
+              <div className="absolute inset-0 bg-amber-50 bg-opacity-80 rounded-xl"></div>
+              
+              <div className="relative z-10">
+                <h2 className="text-3xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                  My PROMISE to YOU!
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                    <span className="font-bold">Safety First</span>: This website is designed with children's safety in mind. There are no advertisements, no personal data collection, and strict security measures.
+                  </p>
+                  <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                    <span className="font-bold">Quality Content</span>: All stories are written by me or by my friends and then edited by me. They are carefully crafted to be engaging, age-appropriate for grade school students, encouraging, and meaningful.
+                  </p>
+                  <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                    <span className="font-bold">A Comfortable Space</span>: I want you to feel at home here – like you're sitting in a cozy chair listening to your own grandparent tell you a story.
+                  </p>
+                </div>
               </div>
             </div>
 
