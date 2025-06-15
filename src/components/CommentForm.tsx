@@ -164,8 +164,8 @@ const CommentForm = () => {
             name="subject"
             render={({ field }) => (
               <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4">
-                <FormLabel className="text-orange-800 font-fun text-lg sm:col-start-3 sm:text-left">Subject</FormLabel>
-                <div className="sm:col-span-2 sm:row-start-1">
+                <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Subject</FormLabel>
+                <div className="sm:col-span-2">
                   <FormControl>
                     <Input placeholder="A short title for your comment" {...field} className="w-full text-base md:text-sm"/>
                   </FormControl>
@@ -179,8 +179,8 @@ const CommentForm = () => {
             name="content"
             render={({ field }) => (
               <FormItem className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
-                <FormLabel className="text-orange-800 font-fun text-lg sm:col-start-3 sm:text-left">Your Comment</FormLabel>
-                <div className="sm:col-span-2 sm:row-start-1">
+                <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Your Comment</FormLabel>
+                <div className="sm:col-span-2">
                   <FormControl>
                     <Textarea
                       placeholder="Tell us what you think..."
@@ -198,8 +198,8 @@ const CommentForm = () => {
             name="author_email"
             render={({ field }) => (
               <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4">
-                <FormLabel className="text-orange-800 font-fun text-lg sm:col-start-3 sm:text-left">Email (Optional)</FormLabel>
-                <div className="sm:col-span-2 sm:row-start-1">
+                <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Email (Optional)</FormLabel>
+                <div className="sm:col-span-2">
                   <FormControl>
                     <Input type="email" placeholder="Your grown-up's email (not shown publicly)" {...field} className="w-full text-base md:text-sm"/>
                   </FormControl>
