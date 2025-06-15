@@ -11,7 +11,12 @@ const CookieFreeFooter = () => {
           {/* Left Side */}
           <div className="flex items-center space-x-2 text-green-700">
             <Shield className="h-4 w-4" />
-            <span className="font-semibold text-sm">🍪 Cookie-Free</span>
+            <Link 
+              to="/privacy"
+              className="font-semibold text-sm bg-green-100 hover:bg-green-200 px-2 py-1 rounded transition-colors cursor-pointer"
+            >
+              🍪 Cookie-Free
+            </Link>
           </div>
           
           {/* Middle - Navigation Links */}
