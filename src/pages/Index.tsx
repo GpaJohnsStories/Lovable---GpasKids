@@ -15,7 +15,7 @@ const Index = () => {
         {/* Note text below the blue box */}
         <div className="w-full py-4">
           <div className="container mx-auto px-4">
-            <p className="text-center text-black italic font-handwritten text-lg">
+            <p className="text-center text-amber-700 italic font-handwritten text-lg">
               NOTE: For best viewing and reading, use your phone or tablet in landscape mode.
             </p>
           </div>
