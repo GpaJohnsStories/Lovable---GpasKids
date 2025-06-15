@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -45,7 +44,7 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
       </TableCell>
       <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div>
-          <div>{story.title}</div>
+          <div className="font-bold text-black">{story.title}</div>
           {story.tagline && (
             <div className="text-sm italic text-gray-600 mt-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               {story.tagline}
