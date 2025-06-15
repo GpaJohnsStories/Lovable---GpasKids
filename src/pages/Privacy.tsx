@@ -11,6 +11,59 @@ const Privacy = () => {
       <WelcomeHeader />
       
       <div className="max-w-4xl mx-auto p-6">
+        {/* My PROMISE to YOU! section moved from About page */}
+        <div 
+          className="border-2 border-amber-600 rounded-xl px-16 py-8 shadow-xl relative overflow-hidden mb-8"
+          style={{
+            backgroundImage: `url('/lovable-uploads/2a50a95f-ad31-4394-b52c-f65e3bc6f5b3.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          <div className="relative z-10">
+            <h2 className="text-3xl font-bold text-amber-900 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+              My PROMISE to YOU!
+            </h2>
+            <div className="space-y-4">
+              <p className="text-lg text-amber-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                <span className="font-bold">Safety First</span>: This website is designed with children's safety in mind. There are no advertisements, no personal data collection, and strict security measures.
+              </p>
+              <p className="text-lg text-amber-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                <span className="font-bold">Quality Content</span>: All stories are written by me or by my friends and then edited by me. They are carefully crafted to be engaging, age-appropriate for grade school students, encouraging, and meaningful.
+              </p>
+              <p className="text-lg text-amber-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                <span className="font-bold">A Comfortable Space</span>: I want you to feel at home here – like you're sitting in a cozy chair listening to your own grandparent tell you a story.
+              </p>
+            </div>
+            
+            {/* Thank you message */}
+            <div className="mt-8 text-center clear-right">
+              <p className="text-lg text-blue-800 font-bold leading-relaxed italic mb-6" style={{ fontFamily: 'Segoe Print, cursive, sans-serif' }}>
+                Thank you for visiting! I hope you enjoy the stories and<br />come back often to see what's new.
+              </p>
+              
+              {/* Signature with paw print */}
+              <div className="flex justify-center items-center">
+                <div className="text-center ml-8">
+                  <div className="flex items-center justify-center gap-2 mb-1">
+                    <div className="text-4xl text-blue-800 font-bold" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>
+                      Grandpa John
+                    </div>
+                    {/* Buddy's paw print using uploaded image */}
+                    <img 
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Paw-print.svg/256px-Paw-print.svg.png?20110605041351" 
+                      alt="Buddy's paw print"
+                      className="w-8 h-8 ml-2"
+                      style={{ transform: 'rotate(-15deg)' }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold text-amber-800 mb-2">
