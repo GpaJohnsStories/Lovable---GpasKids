@@ -1,4 +1,3 @@
-
 import { Book, MessageSquare, Home, Lock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -50,10 +49,10 @@ const WelcomeHeader = () => {
     { 
       name: 'Privacy', 
       path: '/privacy', 
-      bgColor: 'bg-gradient-to-b from-slate-400 via-slate-500 to-slate-600',
-      hoverColor: 'hover:from-slate-500 hover:via-slate-600 hover:to-slate-700',
-      shadowColor: 'shadow-[0_6px_0_#475569,0_8px_15px_rgba(0,0,0,0.3)]',
-      hoverShadow: 'hover:shadow-[0_4px_0_#475569,0_6px_12px_rgba(0,0,0,0.4)]',
+      bgColor: 'bg-gradient-to-b from-yellow-400 via-yellow-500 to-yellow-600',
+      hoverColor: 'hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700',
+      shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
       icon: Lock
     }
   ];
