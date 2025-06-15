@@ -1,4 +1,3 @@
-
 import React from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -72,7 +71,7 @@ const About = () => {
             <div 
               className="border-2 border-amber-600 rounded-xl px-16 py-8 shadow-xl relative overflow-hidden"
               style={{
-                backgroundImage: `url('/lovable-uploads/cf9ebcda-a8d9-4c36-b3e9-e77e247d4932.png')`,
+                backgroundImage: `url('/lovable-uploads/2a50a95f-ad31-4394-b52c-f65e3bc6f5b3.png')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
