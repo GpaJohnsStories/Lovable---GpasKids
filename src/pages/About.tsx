@@ -15,7 +15,7 @@ const About = () => {
             {/* Text content - left side */}
             <div className="lg:col-span-2 space-y-8">
               <div>
-                <h1 style={{ fontFamily: 'Segoe UI, sans-serif' }} className="text-4xl font-bold text-amber-800 mb-6">
+                <h1 className="text-4xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                   About Grandpa John
                 </h1>
                 <p className="text-2xl text-amber-800 font-semibold font-handwritten leading-relaxed mb-4">
@@ -27,7 +27,7 @@ const About = () => {
               </div>
 
               <div>
-                <h2 style={{ fontFamily: 'Segoe UI, sans-serif' }} className="text-3xl font-bold text-amber-800 mb-4">
+                <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                   My Story
                 </h2>
                 <p className="text-2xl text-amber-800 font-semibold font-handwritten leading-relaxed mb-4">
@@ -54,7 +54,7 @@ const About = () => {
           {/* Additional sections */}
           <div className="space-y-8">
             <div>
-              <h2 style={{ fontFamily: 'Segoe UI, sans-serif' }} className="text-3xl font-bold text-amber-800 mb-4">
+              <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 Why I Created This Website
               </h2>
               <p className="text-2xl text-amber-800 font-semibold font-handwritten leading-relaxed mb-4">
@@ -66,7 +66,7 @@ const About = () => {
             </div>
 
             <div>
-              <h2 style={{ fontFamily: 'Segoe UI, sans-serif' }} className="text-3xl font-bold text-amber-800 mb-4">
+              <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 What You Will Find Here
               </h2>
               <ul className="text-2xl text-amber-800 font-semibold font-handwritten leading-relaxed space-y-2 list-disc list-inside ml-4">
@@ -78,7 +78,7 @@ const About = () => {
             </div>
 
             <div className="bg-gradient-to-br from-amber-100 to-orange-100 border-2 border-orange-200 rounded-xl p-8 shadow-lg">
-              <h2 style={{ fontFamily: 'Segoe UI, sans-serif' }} className="text-3xl font-bold text-amber-800 mb-6">
+              <h2 className="text-3xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 My PROMISE to YOU!
               </h2>
               <div className="space-y-4">
