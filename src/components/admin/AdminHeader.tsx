@@ -7,8 +7,8 @@ import { useAdminAuth } from "./AdminAuthProvider";
 const AdminHeader = () => {
   const { logout } = useAdminAuth();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     toast.success("Logged out successfully");
   };
 

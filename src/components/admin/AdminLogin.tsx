@@ -17,11 +17,11 @@ const AdminLogin = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const success = await login(email, password);
+    const { success, error } = await login(email, password);
     if (success) {
       toast.success("Successfully logged in!");
     } else {
-      toast.error("Invalid credentials");
+      toast.error(error || "Invalid credentials");
     }
     
     setIsLoading(false);
