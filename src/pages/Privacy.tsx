@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Cookie, Eye, Lock } from "lucide-react";
@@ -86,7 +85,7 @@ const Privacy = () => {
               </div>
               <p className="!text-green-700 !text-base !font-normal leading-relaxed">
                 We are proud to operate a <strong>completely cookie-free website</strong>. 
-                When you visit Grandpa John's Stories to read our heartwarming stories, 
+                When you visit Grandpa John's Stories to read our stories, 
                 no cookies are stored on your device. No tracking, no analytics, 
                 no third-party cookies - just pure, uninterrupted storytelling.
               </p>
