@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -164,12 +163,14 @@ const CommentForm = () => {
             control={form.control}
             name="subject"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-orange-800 font-fun text-lg">Subject</FormLabel>
-                <FormControl>
-                  <Input placeholder="A short title for your comment" {...field} className="text-base md:text-sm"/>
-                </FormControl>
-                <FormMessage />
+              <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4">
+                <FormLabel className="text-orange-800 font-fun text-lg sm:col-start-3 sm:text-left">Subject</FormLabel>
+                <div className="sm:col-span-2 sm:row-start-1">
+                  <FormControl>
+                    <Input placeholder="A short title for your comment" {...field} className="w-full text-base md:text-sm"/>
+                  </FormControl>
+                  <FormMessage />
+                </div>
               </FormItem>
             )}
           />
@@ -177,16 +178,18 @@ const CommentForm = () => {
             control={form.control}
             name="content"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-orange-800 font-fun text-lg">Your Comment</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Tell us what you think..."
-                    className="resize-y"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
+              <FormItem className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
+                <FormLabel className="text-orange-800 font-fun text-lg sm:col-start-3 sm:text-left">Your Comment</FormLabel>
+                <div className="sm:col-span-2 sm:row-start-1">
+                  <FormControl>
+                    <Textarea
+                      placeholder="Tell us what you think..."
+                      className="resize-y"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </div>
               </FormItem>
             )}
           />
@@ -194,12 +197,14 @@ const CommentForm = () => {
             control={form.control}
             name="author_email"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-orange-800 font-fun text-lg">Email (Optional)</FormLabel>
-                <FormControl>
-                  <Input type="email" placeholder="Your grown-up's email (not shown publicly)" {...field} className="text-base md:text-sm"/>
-                </FormControl>
-                <FormMessage />
+              <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4">
+                <FormLabel className="text-orange-800 font-fun text-lg sm:col-start-3 sm:text-left">Email (Optional)</FormLabel>
+                <div className="sm:col-span-2 sm:row-start-1">
+                  <FormControl>
+                    <Input type="email" placeholder="Your grown-up's email (not shown publicly)" {...field} className="w-full text-base md:text-sm"/>
+                  </FormControl>
+                  <FormMessage />
+                </div>
               </FormItem>
             )}
           />
