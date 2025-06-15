@@ -1,4 +1,3 @@
-
 import React from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -107,10 +106,13 @@ const About = () => {
                         <div className="text-4xl text-blue-800 font-bold" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>
                           Grandpa John
                         </div>
-                        {/* Buddy's paw print - double the current size */}
-                        <div className="text-black text-2xl" style={{ transform: 'rotate(-15deg)' }}>
-                          🐾
-                        </div>
+                        {/* Buddy's paw print using uploaded image */}
+                        <img 
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Paw-print.svg/256px-Paw-print.svg.png?20110605041351" 
+                          alt="Buddy's paw print"
+                          className="w-8 h-8 ml-2"
+                          style={{ transform: 'rotate(-15deg)' }}
+                        />
                       </div>
                       {/* Flourish under signature - moved closer */}
                       <div className="text-blue-800 text-2xl -mt-1" style={{ fontFamily: 'serif' }}>
