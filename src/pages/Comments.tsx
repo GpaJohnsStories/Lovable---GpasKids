@@ -3,8 +3,29 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import CommentForm from "@/components/CommentForm";
 import CommentsList from "@/components/CommentsList";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { getPersonalId } from "@/utils/personalId";
+import { toast } from "sonner";
 
 const Comments = () => {
+  const [personalIdFilter, setPersonalIdFilter] = useState<string | null>(null);
+
+  const handleShowMyComments = () => {
+    const personalId = getPersonalId();
+    if (personalId) {
+      setPersonalIdFilter(personalId);
+      toast.success(`Showing only comments for Personal ID: ${personalId}`);
+    } else {
+      toast.info("Enter or create a Personal ID in the form to filter your comments.");
+    }
+  };
+
+  const handleShowAllComments = () => {
+    setPersonalIdFilter(null);
+    toast.success("Showing all comments.");
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-amber-50">
       <WelcomeHeader />
@@ -82,8 +103,16 @@ const Comments = () => {
               </div>
             </div>
           </div>
+          <div className="my-8 flex flex-wrap justify-center gap-4">
+            <Button onClick={handleShowMyComments} className="bg-cyan-500 hover:bg-cyan-600 text-white font-fun text-base px-6 py-3">
+              Select Only My Comments
+            </Button>
+            <Button onClick={handleShowAllComments} className="bg-emerald-500 hover:bg-emerald-600 text-white font-fun text-base px-6 py-3">
+              Show All Comments
+            </Button>
+          </div>
           <CommentForm />
-          <CommentsList />
+          <CommentsList personalIdFilter={personalIdFilter} />
         </div>
       </main>
       <CookieFreeFooter />
@@ -92,3 +121,4 @@ const Comments = () => {
 };
 
 export default Comments;
+

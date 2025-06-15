@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -28,17 +29,27 @@ type CommentWithReplies = CommentFromDB & {
 type SortField = 'personal_id' | 'created_at' | 'subject' | 'replies_count';
 type SortDirection = 'asc' | 'desc';
 
-const CommentsList = () => {
+interface CommentsListProps {
+  personalIdFilter: string | null;
+}
+
+const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
   const [sortField, setSortField] = useState<SortField>('created_at');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
   const { data: comments, isLoading, error } = useQuery<CommentWithReplies[]>({
-    queryKey: ["comments"],
+    queryKey: ["comments", personalIdFilter],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from("comments")
         .select("id, created_at, personal_id, subject, parent_id")
         .eq("is_approved", true);
+
+      if (personalIdFilter) {
+        query = query.eq('personal_id', personalIdFilter);
+      }
+      
+      const { data, error } = await query;
 
       if (error) {
         throw new Error(error.message);
@@ -137,3 +148,4 @@ const CommentsList = () => {
 };
 
 export default CommentsList;
+
