@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Edit, Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Story {
   id: string;
@@ -44,7 +45,9 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
       </TableCell>
       <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div>
-          <div className="font-bold text-black">{story.title}</div>
+          <Link to={`/story/${story.id}`}>
+            <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer">{story.title}</div>
+          </Link>
           {story.tagline && (
             <div className="text-sm italic text-gray-600 mt-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               {story.tagline}
