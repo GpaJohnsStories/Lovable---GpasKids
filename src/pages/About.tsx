@@ -16,6 +16,16 @@ const About = () => {
               <h1 className="text-4xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 About Grandpa John
               </h1>
+              
+              {/* Photo positioned at top right of the first section */}
+              <div className="float-right ml-8 mb-6 w-full max-w-xs">
+                <img 
+                  src="/lovable-uploads/14b5498f-ec5f-4553-aa24-94d67048ecfa.png" 
+                  alt="Grandpa John"
+                  className="w-full h-auto rounded-lg shadow-lg border-4 border-white"
+                />
+              </div>
+              
               <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
                 With over 60 years of marriage and a lifetime of experiences, I've collected stories that I'm excited to share with children around the world. My journey has taught me valuable lessons about kindness, perseverance, and the importance of imagination.
               </p>
@@ -24,7 +34,7 @@ const About = () => {
               </p>
             </div>
 
-            <div>
+            <div className="clear-right">
               <h2 className="text-3xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 My Story
               </h2>
@@ -70,15 +80,6 @@ const About = () => {
               }}
             >
               <div className="relative z-10">
-                {/* Photo positioned at top right inside the box */}
-                <div className="float-right ml-8 mb-6 w-full max-w-xs">
-                  <img 
-                    src="/lovable-uploads/14b5498f-ec5f-4553-aa24-94d67048ecfa.png" 
-                    alt="Grandpa John"
-                    className="w-full h-auto rounded-lg shadow-lg border-4 border-white"
-                  />
-                </div>
-
                 <h2 className="text-3xl font-bold text-amber-900 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                   My PROMISE to YOU!
                 </h2>
