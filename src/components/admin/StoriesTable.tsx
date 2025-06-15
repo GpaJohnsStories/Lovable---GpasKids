@@ -1,4 +1,5 @@
 
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -103,7 +104,7 @@ const StoriesTable = ({ onEditStory, showActions = true }: StoriesTableProps) =>
     <Card>
       <CardHeader>
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <div className="text-black text-sm italic" style={{ fontFamily: "'Segoe Print', cursive, sans-serif" }}>
+          <div className="text-black text-sm font-normal italic" style={{ fontFamily: "'Segoe Print', cursive, sans-serif" }}>
             <p className="mb-3">
               Click on any column heading to sort the library by that column. The first click will always sort down and the next click will sort up.
             </p>
@@ -240,3 +241,4 @@ const StoriesTable = ({ onEditStory, showActions = true }: StoriesTableProps) =>
 };
 
 export default StoriesTable;
+
