@@ -112,19 +112,27 @@ const CommentForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-orange-800 font-fun text-lg">Your Personal Code</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter 4 letters or numbers" {...field} maxLength={4} className="text-base md:text-sm"/>
-                </FormControl>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                  <FormControl>
+                    <Input placeholder="4 letters or numbers" {...field} maxLength={4} className="w-full sm:w-48 text-base md:text-sm"/>
+                  </FormControl>
+                  {personalId && (
+                    <div className="mt-2 sm:mt-0">
+                      <p className="text-orange-800 font-fun text-base">
+                        Your full ID is: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
+                      </p>
+                    </div>
+                  )}
+                </div>
+                 {personalId && (
+                    <p className="text-sm text-orange-700 !mt-2 font-fun">
+                      Make a note of this code! This is how we'll show your comments.
+                    </p>
+                )}
                 <FormMessage />
               </FormItem>
             )}
           />
-
-          {personalId && (
-            <p className="text-center text-orange-800 font-fun text-lg !mt-4">
-              Your full Personal ID is: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>. This is how we'll show your comments.
-            </p>
-          )}
 
           <FormField
             control={form.control}
