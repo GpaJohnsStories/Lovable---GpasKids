@@ -1,3 +1,4 @@
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -34,6 +35,7 @@ const formSchema = z.object({
 const CommentForm = () => {
   const queryClient = useQueryClient();
   const [idSuffix, setIdSuffix] = useState('');
+  const [personalId, setPersonalId] = useState<string | null>(null);
 
   useEffect(() => {
     setIdSuffix(generateIdSuffix());
@@ -50,7 +52,14 @@ const CommentForm = () => {
   });
 
   const prefix = form.watch("personal_id_prefix");
-  const personalId = prefix && /^[a-zA-Z0-9]{4}$/.test(prefix) ? prefix + idSuffix : null;
+
+  useEffect(() => {
+    if (prefix && /^[a-zA-Z0-9]{4}$/.test(prefix) && idSuffix) {
+      setPersonalId(prefix + idSuffix);
+    } else {
+      setPersonalId(null);
+    }
+  }, [prefix, idSuffix]);
 
   const addCommentMutation = useMutation({
     mutationFn: async (newComment: { personal_id: string; subject: string; content: string; author_email?: string }) => {
