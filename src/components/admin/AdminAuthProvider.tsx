@@ -39,8 +39,8 @@ export const AdminAuthProvider = ({ children }: AdminAuthProviderProps) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const ADMIN_EMAIL = 'admin@buddy.com';
-    const ADMIN_PASSWORD = 'password';
+    const ADMIN_EMAIL = 'gpajohn.buddy@gmail.com';
+    const ADMIN_PASSWORD = 'gpaj0hn#bUdDy1o0s6e';
 
     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
       try {
