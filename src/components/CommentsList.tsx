@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -11,6 +10,8 @@ import {
 } from "@/components/ui/table";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { format } from 'date-fns';
+import { useState } from "react";
+import CommentsListHeader from "./CommentsListHeader";
 
 type Comment = {
   id: string;
@@ -19,16 +20,22 @@ type Comment = {
   subject: string;
 };
 
+type SortField = 'personal_id' | 'created_at' | 'subject';
+type SortDirection = 'asc' | 'desc';
+
 const CommentsList = () => {
+  const [sortField, setSortField] = useState<SortField>('created_at');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+
   const { data: comments, isLoading, error } = useQuery<Comment[]>({
-    queryKey: ["comments"],
+    queryKey: ["comments", sortField, sortDirection],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("comments")
         .select("id, created_at, personal_id, subject")
         .eq("is_approved", true)
         .is("parent_id", null)
-        .order("created_at", { ascending: false });
+        .order(sortField, { ascending: sortDirection === 'asc' });
 
       if (error) {
         throw new Error(error.message);
@@ -37,6 +44,15 @@ const CommentsList = () => {
       return data as any as Comment[];
     },
   });
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
 
   if (isLoading) {
     return <div className="flex justify-center py-8"><LoadingSpinner /></div>;
@@ -53,14 +69,11 @@ const CommentsList = () => {
       </h2>
       <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-orange-200">
         <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[150px] text-orange-900 font-bold font-fun text-base">Personal Code</TableHead>
-              <TableHead className="w-[150px] text-orange-900 font-bold font-fun text-base">Date</TableHead>
-              <TableHead className="text-orange-900 font-bold font-fun text-base">Subject</TableHead>
-              <TableHead className="text-right w-[100px] text-orange-900 font-bold font-fun text-base">Replies</TableHead>
-            </TableRow>
-          </TableHeader>
+          <CommentsListHeader
+            sortField={sortField}
+            sortDirection={sortDirection}
+            onSort={handleSort}
+          />
           <TableBody>
             {comments && comments.length > 0 ? (
               comments.map((comment) => (
