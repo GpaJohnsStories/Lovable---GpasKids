@@ -155,9 +155,9 @@ const CommentForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="space-y-2">
-            <Label className="text-orange-800 font-fun text-lg">Your Personal ID</Label>
+            <Label className="text-orange-800 font-fun text-lg">Enter your 6-character ID</Label>
             <Input
-              placeholder="Enter your 6-character ID"
+              placeholder="6-character ID"
               value={existingPersonalId}
               onChange={(e) => {
                 setExistingPersonalId(e.target.value);
@@ -167,9 +167,6 @@ const CommentForm = () => {
               className="w-full sm:w-40 text-base md:text-sm"
             />
             {existingPersonalIdError && <p className="text-sm font-medium text-destructive">{existingPersonalIdError}</p>}
-            <p className="text-sm text-orange-700 !mt-2 font-fun">
-              Enter your Personal ID here or create one below.
-            </p>
           </div>
           
           <FormField
@@ -177,10 +174,10 @@ const CommentForm = () => {
             name="personal_id_prefix"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-orange-800 font-fun text-lg">Create a New Personal ID</FormLabel>
+                <FormLabel className="text-orange-800 font-fun text-lg">Enter any 4 letters or numbers to create your Personal ID</FormLabel>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
                   <FormControl>
-                    <Input placeholder="Enter any 4 letters or numbers" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
+                    <Input placeholder="4-character code" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
                   </FormControl>
                   <Button
                     type="button"
