@@ -69,20 +69,60 @@ const About = () => {
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-amber-100 to-orange-100 border-2 border-orange-200 rounded-xl p-8 shadow-lg">
-              <h2 className="text-3xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                My PROMISE to YOU!
-              </h2>
-              <div className="space-y-4">
-                <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  <span className="font-bold">Safety First</span>: This website is designed with children's safety in mind. There are no advertisements, no personal data collection, and strict security measures.
-                </p>
-                <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  <span className="font-bold">Quality Content</span>: All stories are written by me or by my friends and then edited by me. They are carefully crafted to be engaging, age-appropriate for grade school students, encouraging, and meaningful.
-                </p>
-                <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  <span className="font-bold">A Comfortable Space</span>: I want you to feel at home here – like you're sitting in a cozy chair listening to your own grandparent tell you a story.
-                </p>
+            <div className="relative bg-gradient-to-br from-amber-100 to-orange-100 border-2 border-orange-200 rounded-xl p-8 shadow-lg overflow-hidden">
+              {/* Parchment texture overlay */}
+              <div 
+                className="absolute inset-0 opacity-20 pointer-events-none"
+                style={{
+                  backgroundImage: `
+                    radial-gradient(circle at 20% 30%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(160, 82, 45, 0.08) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 80%, rgba(210, 180, 140, 0.15) 0%, transparent 30%),
+                    linear-gradient(45deg, transparent 40%, rgba(139, 69, 19, 0.05) 50%, transparent 60%),
+                    linear-gradient(-45deg, transparent 40%, rgba(160, 82, 45, 0.03) 50%, transparent 60%)
+                  `,
+                  backgroundSize: '200px 200px, 300px 300px, 150px 150px, 100px 100px, 120px 120px'
+                }}
+              />
+              
+              {/* Subtle paper texture */}
+              <div 
+                className="absolute inset-0 opacity-10 pointer-events-none"
+                style={{
+                  backgroundImage: `
+                    repeating-linear-gradient(
+                      0deg,
+                      transparent,
+                      transparent 2px,
+                      rgba(139, 69, 19, 0.1) 2px,
+                      rgba(139, 69, 19, 0.1) 4px
+                    ),
+                    repeating-linear-gradient(
+                      90deg,
+                      transparent,
+                      transparent 2px,
+                      rgba(160, 82, 45, 0.08) 2px,
+                      rgba(160, 82, 45, 0.08) 4px
+                    )
+                  `
+                }}
+              />
+              
+              <div className="relative z-10">
+                <h2 className="text-3xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                  My PROMISE to YOU!
+                </h2>
+                <div className="space-y-4">
+                  <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                    <span className="font-bold">Safety First</span>: This website is designed with children's safety in mind. There are no advertisements, no personal data collection, and strict security measures.
+                  </p>
+                  <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                    <span className="font-bold">Quality Content</span>: All stories are written by me or by my friends and then edited by me. They are carefully crafted to be engaging, age-appropriate for grade school students, encouraging, and meaningful.
+                  </p>
+                  <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                    <span className="font-bold">A Comfortable Space</span>: I want you to feel at home here – like you're sitting in a cozy chair listening to your own grandparent tell you a story.
+                  </p>
+                </div>
               </div>
             </div>
 
