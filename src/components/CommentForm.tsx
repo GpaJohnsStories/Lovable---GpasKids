@@ -218,16 +218,23 @@ const CommentForm = () => {
                   <FormItem className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
                     <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Enter any 4 letters or numbers to create your Personal ID</FormLabel>
                     <div className="sm:col-span-2">
-                      <FormControl>
-                        <Input placeholder="4-character code" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
-                      </FormControl>
-                      <Button
-                        type="button"
-                        onClick={handleCreateId}
-                        className="bg-orange-500 hover:bg-orange-600 text-white font-bold mt-2"
-                      >
-                        Click to create your Personal ID
-                      </Button>
+                      <div className="flex flex-wrap items-start gap-2">
+                        <div className="flex flex-col">
+                          <FormControl>
+                            <Input placeholder="4-character code" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
+                          </FormControl>
+                          <p className="text-sm text-orange-700 mt-1 font-fun">
+                            No bad words please!
+                          </p>
+                        </div>
+                        <Button
+                          type="button"
+                          onClick={handleCreateId}
+                          className="bg-orange-500 hover:bg-orange-600 text-white font-bold"
+                        >
+                          Click to create your Personal ID
+                        </Button>
+                      </div>
                       <FormMessage />
                       {personalId && (
                         <div className="!mt-4">
@@ -239,9 +246,6 @@ const CommentForm = () => {
                           </p>
                         </div>
                       )}
-                      <p className="text-sm text-orange-700 !mt-2 font-fun">
-                        No bad words please!
-                      </p>
                     </div>
                   </FormItem>
                 )}
