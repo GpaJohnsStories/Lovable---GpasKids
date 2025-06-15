@@ -66,40 +66,40 @@ const WelcomeText = () => {
               Here you will find stories, jokes, games and more.<br />
               Enjoy your time here!
             </p>
-            
-            {/* Navigation Menu - Show on home page */}
-            {isHomePage && (
-              <div className="w-full">
-                <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                  {navItems.map((item) => {
-                    const isActive = location.pathname === item.path;
-                    
-                    console.log('Rendering nav item:', item.name, 'isActive:', isActive, 'path:', item.path);
-                    
-                    return (
-                      <Link
-                        key={item.name}
-                        to={item.path}
-                        className={`
-                          ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
-                          ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' : ''}
-                          text-white px-6 py-3 rounded-lg font-semibold 
-                          transition-all duration-200 
-                          hover:transform hover:translate-y-1 active:translate-y-2 
-                          flex items-center justify-center min-w-[120px]
-                          font-fun border-t border-white border-opacity-30
-                          text-base
-                        `}
-                      >
-                        {item.name}
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
           </div>
         </div>
+        
+        {/* Navigation Menu - Show on home page, positioned at bottom of welcome box but left-aligned */}
+        {isHomePage && (
+          <div className="mt-6 flex justify-start">
+            <div className="flex flex-wrap gap-4">
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                
+                console.log('Rendering nav item:', item.name, 'isActive:', isActive, 'path:', item.path);
+                
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`
+                      ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
+                      ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' : ''}
+                      text-white px-6 py-3 rounded-lg font-semibold 
+                      transition-all duration-200 
+                      hover:transform hover:translate-y-1 active:translate-y-2 
+                      flex items-center justify-center min-w-[120px]
+                      font-fun border-t border-white border-opacity-30
+                      text-base
+                    `}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
