@@ -11,8 +11,8 @@ const Comments = () => {
           <h1 className="text-3xl font-bold text-center text-orange-800 mb-4 font-fun">
             Comments, Questions & Feedback
           </h1>
-          <p className="text-center text-gray-600">
-            This page is under construction. Come back soon to see what others are saying and share your thoughts!
+          <p className="text-center text-orange-800 font-fun">
+            Welcome to our Comment, Questions & Feedback page! We value your input as we grow and improve our website. Please take a moment to read our basic rules for engagement to ensure a positive and productive environment for everyone.
           </p>
         </div>
       </main>
@@ -22,4 +22,3 @@ const Comments = () => {
 };
 
 export default Comments;
-
