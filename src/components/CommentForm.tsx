@@ -17,13 +17,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { generateIdSuffix } from "@/utils/personalId";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
 const formSchema = z.object({
-  personal_id_prefix: z.string()
-    .length(4, { message: "Your code must be exactly 4 characters." })
-    .regex(/^[a-zA-Z0-9]{4}$/, { message: "Your code must be 4 letters or numbers." }),
+  personal_id_prefix: z.string().optional(),
   subject: z.string().min(2, {
     message: "Subject must be at least 2 characters.",
   }),
@@ -36,7 +33,6 @@ const formSchema = z.object({
 const CommentForm = () => {
   const queryClient = useQueryClient();
   const [personalId, setPersonalId] = useState<string | null>(null);
-  const [hasExistingId, setHasExistingId] = useState(false);
   const [existingPersonalId, setExistingPersonalId] = useState("");
   const [existingPersonalIdError, setExistingPersonalIdError] = useState<string | null>(null);
 
@@ -53,7 +49,7 @@ const CommentForm = () => {
   const prefix = form.watch("personal_id_prefix");
 
   useEffect(() => {
-    if (personalId && !personalId.startsWith(prefix)) {
+    if (personalId && !personalId.startsWith(prefix || '')) {
       setPersonalId(null);
     }
   }, [prefix, personalId]);
@@ -81,7 +77,6 @@ const CommentForm = () => {
       });
       form.reset();
       setPersonalId(null);
-      setHasExistingId(false);
       setExistingPersonalId("");
       setExistingPersonalIdError(null);
       queryClient.invalidateQueries({ queryKey: ["comments"] });
@@ -99,8 +94,13 @@ const CommentForm = () => {
     form.trigger("personal_id_prefix").then(isValid => {
         if (isValid) {
             const currentPrefix = form.getValues("personal_id_prefix");
-            const suffix = generateIdSuffix();
-            setPersonalId(currentPrefix + suffix);
+            if (currentPrefix && currentPrefix.length === 4) {
+              const suffix = generateIdSuffix();
+              setPersonalId(currentPrefix + suffix);
+            } else {
+              form.setError("personal_id_prefix", { type: "manual", message: "Your code must be exactly 4 letters or numbers." });
+              setPersonalId(null);
+            }
         } else {
             setPersonalId(null);
         }
@@ -108,21 +108,28 @@ const CommentForm = () => {
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    form.clearErrors();
     let finalPersonalId: string;
 
-    if (hasExistingId) {
+    if (existingPersonalId) {
         if (!/^[a-zA-Z0-9]{6}$/.test(existingPersonalId)) {
             setExistingPersonalIdError("Your Personal ID must be exactly 6 letters or numbers.");
             return;
         }
         finalPersonalId = existingPersonalId;
     } else {
+        const prefixValue = values.personal_id_prefix;
+        if (!prefixValue || !/^[a-zA-Z0-9]{4}$/.test(prefixValue)) {
+            form.setError("personal_id_prefix", { type: "manual", message: "Your code must be exactly 4 letters or numbers." });
+            return;
+        }
+
         if (!personalId) {
-            form.setError("personal_id_prefix", { type: "manual", message: "Please click the button to create your Personal ID." });
+            form.setError("personal_id_prefix", { type: "manual", message: "Please click the button to create your Personal ID after entering your code." });
             return;
         }
         
-        if (!personalId.startsWith(values.personal_id_prefix)) {
+        if (!personalId.startsWith(values.personal_id_prefix || '')) {
             form.setError("personal_id_prefix", { type: "manual", message: "The code you entered doesn't match your generated ID. Please create a new one." });
             setPersonalId(null);
             return;
@@ -138,6 +145,8 @@ const CommentForm = () => {
     });
   }
 
+  const isSubmittable = (existingPersonalId.length === 6) || !!personalId;
+
   return (
     <div className="mt-8">
       <h2 className="text-2xl font-bold text-center text-orange-800 mb-4 font-fun">
@@ -145,79 +154,65 @@ const CommentForm = () => {
       </h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="hasExistingId"
-              checked={hasExistingId}
-              onCheckedChange={(checked) => {
-                const newHasExistingId = Boolean(checked);
-                setHasExistingId(newHasExistingId);
-                if (newHasExistingId) {
-                  setPersonalId(null);
-                  form.resetField("personal_id_prefix");
-                } else {
-                  setExistingPersonalId("");
-                  setExistingPersonalIdError(null);
-                }
+          <div className="space-y-2">
+            <Label className="text-orange-800 font-fun text-lg">Your Personal ID</Label>
+            <Input
+              placeholder="Enter your 6-character ID"
+              value={existingPersonalId}
+              onChange={(e) => {
+                setExistingPersonalId(e.target.value);
+                if (existingPersonalIdError) setExistingPersonalIdError(null);
               }}
+              maxLength={6}
+              className="w-full sm:w-72 text-base md:text-sm"
             />
-            <Label htmlFor="hasExistingId" className="font-fun text-lg text-orange-800 cursor-pointer">
-              I already have a Personal ID
-            </Label>
+            {existingPersonalIdError && <p className="text-sm font-medium text-destructive">{existingPersonalIdError}</p>}
+            <p className="text-sm text-orange-700 !mt-2 font-fun">
+              Enter your Personal ID here or create one below.
+            </p>
+          </div>
+          
+          <div className="flex items-center">
+            <hr className="flex-grow border-t border-orange-200" />
+            <span className="px-4 text-orange-800 font-fun text-lg">OR</span>
+            <hr className="flex-grow border-t border-orange-200" />
           </div>
 
-          {hasExistingId ? (
-            <div className="space-y-2">
-              <Label className="text-orange-800 font-fun text-lg">Your Personal ID</Label>
-              <Input
-                placeholder="Enter your 6-character ID"
-                value={existingPersonalId}
-                onChange={(e) => {
-                  setExistingPersonalId(e.target.value);
-                  if (existingPersonalIdError) setExistingPersonalIdError(null);
-                }}
-                maxLength={6}
-                className="w-full sm:w-72 text-base md:text-sm"
-              />
-              {existingPersonalIdError && <p className="text-sm font-medium text-destructive">{existingPersonalIdError}</p>}
-              <p className="text-sm text-orange-700 !mt-2 font-fun">
-                Enter the 6-character ID you received previously to post a new comment with the same ID.
-              </p>
-            </div>
-          ) : (
-            <FormField
-              control={form.control}
-              name="personal_id_prefix"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-orange-800 font-fun text-lg">Let's Create Your Personal ID</FormLabel>
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-                    <FormControl>
-                      <Input placeholder="Please enter any 4 letters or numbers (No bad words please!)" {...field} maxLength={4} className="w-full sm:w-72 text-base md:text-sm"/>
-                    </FormControl>
-                    <Button
-                      type="button"
-                      onClick={handleCreateId}
-                      className="bg-orange-500 hover:bg-orange-600 text-white font-bold mt-2 sm:mt-0"
-                    >
-                      Click to create your Personal ID
-                    </Button>
+          <FormField
+            control={form.control}
+            name="personal_id_prefix"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-orange-800 font-fun text-lg">Create a New Personal ID</FormLabel>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+                  <FormControl>
+                    <Input placeholder="Enter any 4 letters or numbers" {...field} maxLength={4} className="w-full sm:w-72 text-base md:text-sm"/>
+                  </FormControl>
+                  <Button
+                    type="button"
+                    onClick={handleCreateId}
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold mt-2 sm:mt-0"
+                  >
+                    Click to create your Personal ID
+                  </Button>
+                </div>
+                <FormMessage />
+                {personalId && (
+                  <div className="!mt-4">
+                    <p className="text-orange-800 font-fun text-base">
+                      Your Complete Personal ID: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
+                    </p>
+                    <p className="text-sm text-orange-700 !mt-2 font-fun">
+                      Make a note of this code! This is how we'll show your comments.
+                    </p>
                   </div>
-                  <FormMessage />
-                  {personalId && (
-                    <div className="!mt-4">
-                      <p className="text-orange-800 font-fun text-base">
-                        Your Complete Personal ID: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>
-                      </p>
-                      <p className="text-sm text-orange-700 !mt-2 font-fun">
-                        Make a note of this code! This is how we'll show your comments.
-                      </p>
-                    </div>
-                  )}
-                </FormItem>
-              )}
-            />
-          )}
+                )}
+                 <p className="text-sm text-orange-700 !mt-2 font-fun">
+                  No bad words please!
+                </p>
+              </FormItem>
+            )}
+          />
 
           <FormField
             control={form.control}
@@ -268,7 +263,7 @@ const CommentForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white font-bold" disabled={addCommentMutation.isPending || (hasExistingId ? existingPersonalId.length !== 6 : !personalId)}>
+          <Button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white font-bold" disabled={addCommentMutation.isPending || !isSubmittable}>
             {addCommentMutation.isPending ? "Submitting..." : "Submit Comment"}
           </Button>
         </form>
