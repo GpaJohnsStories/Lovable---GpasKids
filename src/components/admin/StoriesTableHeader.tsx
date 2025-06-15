@@ -43,74 +43,86 @@ const StoriesTableHeader = ({ sortField, sortDirection, onSort, showActions }: S
   return (
     <TableHeader>
       <TableRow>
-        <TableHead className="p-2">
+        <TableHead className="p-2 text-center">
           <Button
             onClick={() => onSort('story_code')}
-            className={`${getButtonColor('story_code')} w-full justify-between`}
+            className={`${getButtonColor('story_code')} w-full justify-center`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            Code
-            {getSortIcon('story_code')}
+            <div className="flex items-center justify-center gap-2">
+              Code
+              {getSortIcon('story_code')}
+            </div>
           </Button>
         </TableHead>
-        <TableHead className="p-2">
+        <TableHead className="p-2 text-center">
           <Button
             onClick={() => onSort('title')}
-            className={`${getButtonColor('title')} w-full justify-between`}
+            className={`${getButtonColor('title')} w-full justify-center`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            Title
-            {getSortIcon('title')}
+            <div className="flex items-center justify-center gap-2">
+              Title
+              {getSortIcon('title')}
+            </div>
           </Button>
         </TableHead>
-        <TableHead className="p-2">
+        <TableHead className="p-2 text-center">
           <Button
             onClick={() => onSort('author')}
-            className={`${getButtonColor('author')} w-full justify-between`}
+            className={`${getButtonColor('author')} w-full justify-center`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            Author
-            {getSortIcon('author')}
+            <div className="flex items-center justify-center gap-2">
+              Author
+              {getSortIcon('author')}
+            </div>
           </Button>
         </TableHead>
-        <TableHead className="p-2">
+        <TableHead className="p-2 text-center">
           <Button
             onClick={() => onSort('category')}
-            className={`${getButtonColor('category')} w-full justify-between`}
+            className={`${getButtonColor('category')} w-full justify-center`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            Category
-            {getSortIcon('category')}
+            <div className="flex items-center justify-center gap-2">
+              Category
+              {getSortIcon('category')}
+            </div>
           </Button>
         </TableHead>
-        <TableHead className="p-2">
+        <TableHead className="p-2 text-center">
           <Button
             onClick={() => onSort('read_count')}
-            className={`${getButtonColor('read_count')} w-full justify-between`}
+            className={`${getButtonColor('read_count')} w-full justify-center`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            Read / Votes
-            {getSortIcon('read_count')}
+            <div className="flex items-center justify-center gap-2">
+              Read / Votes
+              {getSortIcon('read_count')}
+            </div>
           </Button>
         </TableHead>
-        <TableHead className="p-2">
+        <TableHead className="p-2 text-center">
           <Button
             onClick={() => onSort('created_at')}
-            className={`${getButtonColor('created_at')} w-full justify-between`}
+            className={`${getButtonColor('created_at')} w-full justify-center`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            Created
-            {getSortIcon('created_at')}
+            <div className="flex items-center justify-center gap-2">
+              Created
+              {getSortIcon('created_at')}
+            </div>
           </Button>
         </TableHead>
         {showActions && (
-          <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Actions</TableHead>
+          <TableHead className="text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Actions</TableHead>
         )}
       </TableRow>
     </TableHeader>
