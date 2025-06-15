@@ -40,3 +40,15 @@
 .read-the-docs {
   color: #888;
 }
+
+.has-highlighting > input,
+.has-highlighting > textarea {
+  background-color: transparent !important;
+  color: transparent !important;
+  caret-color: hsl(var(--foreground));
+}
+
+.has-highlighting > input::placeholder,
+.has-highlighting > textarea::placeholder {
+  color: hsl(var(--muted-foreground)) !important;
+}

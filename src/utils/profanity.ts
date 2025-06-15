@@ -51,3 +51,15 @@ export const containsBadWord = (text: string): boolean => {
   const cleanedText = cleanText(text);
   return badWords.some(word => cleanedText.includes(word));
 };
+
+export const getHighlightedParts = (text: string): { text: string; isBad: boolean }[] => {
+    if (!text) return [{ text: '', isBad: false }];
+
+    const regex = new RegExp(`(${badWords.join('|')})`, 'gi');
+    const parts = text.split(regex);
+
+    return parts.filter(part => part).map(part => {
+        const isBad = badWords.some(badWord => badWord.toLowerCase() === part.toLowerCase());
+        return { text: part, isBad };
+    });
+};

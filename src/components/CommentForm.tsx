@@ -19,7 +19,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { containsBadWord } from "@/utils/profanity";
+import { containsBadWord, getHighlightedParts } from "@/utils/profanity";
 
 const formSchema = z.object({
   personal_id_prefix: z.string().optional(),
@@ -221,7 +221,16 @@ const CommentForm = () => {
                       <div className="flex flex-wrap items-start gap-2">
                         <div className="flex flex-col">
                           <FormControl>
-                            <Input placeholder="4-character code" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
+                            <div className="relative has-highlighting">
+                              <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre" aria-hidden="true">
+                                {getHighlightedParts(field.value).map((part, i) => (
+                                  <span key={i} className={part.isBad ? 'text-destructive' : 'text-foreground'}>
+                                    {part.text}
+                                  </span>
+                                ))}
+                              </div>
+                              <Input placeholder="4-character code" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
+                            </div>
                           </FormControl>
                           <p className="text-sm text-orange-700 mt-1 font-fun">
                             No bad words please!
@@ -261,7 +270,16 @@ const CommentForm = () => {
                 <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Subject</FormLabel>
                 <div className="sm:col-span-2">
                   <FormControl>
-                    <Input placeholder="A short title for your comment" {...field} className="w-full text-base md:text-sm"/>
+                    <div className="relative has-highlighting">
+                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre" aria-hidden="true">
+                        {getHighlightedParts(field.value).map((part, i) => (
+                          <span key={i} className={part.isBad ? 'text-destructive' : 'text-foreground'}>
+                            {part.text}
+                          </span>
+                        ))}
+                      </div>
+                      <Input placeholder="A short title for your comment" {...field} className="w-full text-base md:text-sm"/>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </div>
@@ -276,11 +294,20 @@ const CommentForm = () => {
                 <FormLabel className="text-orange-800 font-fun text-lg sm:text-right">Your Comment</FormLabel>
                 <div className="sm:col-span-2">
                   <FormControl>
-                    <Textarea
-                      placeholder="Tell us what you think..."
-                      className="resize-y"
-                      {...field}
-                    />
+                    <div className="relative has-highlighting">
+                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre-wrap break-words" aria-hidden="true">
+                        {getHighlightedParts(field.value).map((part, i) => (
+                          <span key={i} className={part.isBad ? 'text-destructive' : 'text-foreground'}>
+                            {part.text}
+                          </span>
+                        ))}
+                      </div>
+                      <Textarea
+                        placeholder="Tell us what you think..."
+                        className="resize-y"
+                        {...field}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </div>
