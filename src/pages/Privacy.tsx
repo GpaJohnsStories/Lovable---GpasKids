@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Cookie, Eye, Lock } from "lucide-react";
@@ -22,7 +23,10 @@ const Privacy = () => {
         >
           <div className="relative z-10">
             <h2 className="text-3xl font-bold text-amber-900 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-              My PROMISE to YOU!
+              <div className="inline-block">
+                My Promise To You!
+                <div className="w-full h-1 bg-red-500 mt-2"></div>
+              </div>
             </h2>
             <div className="space-y-4">
               <p className="text-lg text-amber-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
@@ -66,11 +70,11 @@ const Privacy = () => {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold text-amber-800 mb-2">
-              <div className="inline-block">
-                My Promise To You!
-                <div className="w-full h-1 bg-red-500 mt-2"></div>
-              </div>
+              Privacy & Security Policy
             </CardTitle>
+            <p className="text-amber-600">
+              Grandpa John's Stories - A completely cookie-free experience
+            </p>
           </CardHeader>
           
           <CardContent className="space-y-6">
