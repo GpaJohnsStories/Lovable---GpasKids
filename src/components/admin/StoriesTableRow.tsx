@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -97,7 +96,7 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
           <div className="flex space-x-2">
             <Button
               size="sm"
-              variant="outline"
+              className="bg-green-600 hover:bg-green-700 text-white"
               onClick={() => onEdit(story)}
             >
               <Edit className="h-4 w-4" />
