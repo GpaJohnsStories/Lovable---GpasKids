@@ -60,40 +60,42 @@ const WelcomeText = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-blue-900 leading-relaxed mb-6">
               Hello!
             </h1>
-            <p className="text-2xl text-blue-900 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun">
+            <p className="text-2xl text-blue-900 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun mb-8">
               You have found my fun place for kids.<br />
               I am Grandpa John with my friend Buddy.<br />
               Here you will find stories, jokes, games and more.<br />
               Enjoy your time here!
             </p>
             
-            {/* Navigation Menu - Show on home page, left-aligned with text */}
+            {/* Navigation Menu - Show on home page */}
             {isHomePage && (
-              <div className="flex flex-row gap-3 mt-6 justify-center md:justify-start">
-                {navItems.map((item) => {
-                  const isActive = location.pathname === item.path;
-                  
-                  console.log('Rendering nav item:', item.name, 'isActive:', isActive);
-                  
-                  return (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      className={`
-                        ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
-                        ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : ''}
-                        text-white px-5 py-2 rounded-lg font-semibold 
-                        transition-all duration-200 
-                        hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]
-                        flex items-center justify-center min-w-[100px]
-                        font-fun border-t border-white border-opacity-30
-                        text-sm
-                      `}
-                    >
-                      {item.name}
-                    </Link>
-                  );
-                })}
+              <div className="w-full">
+                <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                  {navItems.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    
+                    console.log('Rendering nav item:', item.name, 'isActive:', isActive, 'path:', item.path);
+                    
+                    return (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className={`
+                          ${item.bgColor} ${item.hoverColor} ${item.shadowColor} ${item.hoverShadow}
+                          ${isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' : ''}
+                          text-white px-6 py-3 rounded-lg font-semibold 
+                          transition-all duration-200 
+                          hover:transform hover:translate-y-1 active:translate-y-2 
+                          flex items-center justify-center min-w-[120px]
+                          font-fun border-t border-white border-opacity-30
+                          text-base
+                        `}
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
