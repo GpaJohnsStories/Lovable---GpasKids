@@ -1,3 +1,4 @@
+
 import { ChevronDown, Book, MessageSquare, Home, Lock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -13,12 +14,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 
 
 const WelcomeHeader = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-  const onStoryPage = location.pathname.startsWith('/story/');
+
+  const [currentStoryPath, setCurrentStoryPath] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedPath = sessionStorage.getItem('currentStoryPath');
+    if (storedPath) {
+      setCurrentStoryPath(storedPath);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (location.pathname.startsWith('/story/')) {
+      sessionStorage.setItem('currentStoryPath', location.pathname);
+      setCurrentStoryPath(location.pathname);
+    }
+  }, [location.pathname]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -47,7 +64,7 @@ const WelcomeHeader = () => {
       textColor: 'text-white',
       subItems: [
         { name: 'Story List', path: '/library' },
-        { name: 'Current Story', path: onStoryPage ? location.pathname : '#', disabled: !onStoryPage },
+        { name: 'Current Story', path: currentStoryPath || '#', disabled: !currentStoryPath },
       ]
     },
     { 
