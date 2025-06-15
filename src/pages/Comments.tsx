@@ -1,4 +1,3 @@
-
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 
@@ -19,7 +18,6 @@ const Comments = () => {
           </p>
 
           <div className="font-fun text-orange-800 bg-amber-100/60 p-6 rounded-lg border-2 border-orange-200">
-            <h2 className="text-2xl font-bold mb-2 text-center">Hey Kids! We love hearing from you!</h2>
             <p className="text-center mb-6 text-lg">
               Please follow these simple rules to make this a fun and safe place for everyone.
             </p>
@@ -89,4 +87,3 @@ const Comments = () => {
 };
 
 export default Comments;
-
