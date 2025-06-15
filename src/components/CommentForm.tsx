@@ -15,11 +15,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { getOrSetPersonalId } from "@/utils/personalId";
+import { generateIdSuffix } from "@/utils/personalId";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const formSchema = z.object({
+  personal_id_prefix: z.string()
+    .length(4, { message: "Your code must be exactly 4 characters." })
+    .regex(/^[a-zA-Z0-9]{4}$/, { message: "Your code must be 4 letters or numbers." }),
   subject: z.string().min(2, {
     message: "Subject must be at least 2 characters.",
   }),
@@ -31,27 +34,35 @@ const formSchema = z.object({
 
 const CommentForm = () => {
   const queryClient = useQueryClient();
-  const [personalId] = useState(getOrSetPersonalId());
+  const [idSuffix, setIdSuffix] = useState('');
+
+  useEffect(() => {
+    setIdSuffix(generateIdSuffix());
+  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      personal_id_prefix: "",
       subject: "",
       content: "",
       author_email: "",
     },
   });
 
+  const prefix = form.watch("personal_id_prefix");
+  const personalId = prefix && /^[a-zA-Z0-9]{4}$/.test(prefix) ? prefix + idSuffix : null;
+
   const addCommentMutation = useMutation({
-    mutationFn: async (newComment: { subject: string; content: string; author_email?: string }) => {
+    mutationFn: async (newComment: { personal_id: string; subject: string; content: string; author_email?: string }) => {
       const { data, error } = await supabase.from("comments").insert([
         {
-          personal_id: personalId,
+          personal_id: newComment.personal_id,
           subject: newComment.subject,
           content: newComment.content,
           author_email: newComment.author_email || null,
         },
-      ]);
+      ] as any);
 
       if (error) {
         throw error;
@@ -76,7 +87,16 @@ const CommentForm = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    addCommentMutation.mutate(values);
+    if (!personalId) {
+        form.setError("personal_id_prefix", { type: "manual", message: "A valid 4 character code is required." });
+        return;
+    }
+    addCommentMutation.mutate({
+        personal_id: personalId,
+        subject: values.subject,
+        content: values.content,
+        author_email: values.author_email,
+    });
   }
 
   return (
@@ -84,11 +104,28 @@ const CommentForm = () => {
       <h2 className="text-2xl font-bold text-center text-orange-800 mb-4 font-fun">
         Leave a Comment
       </h2>
-      <p className="text-center text-orange-800 font-fun text-lg mb-4">
-        Your Personal ID is: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>. This is how we'll show your comments.
-      </p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="personal_id_prefix"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-orange-800 font-fun text-lg">Your Personal Code</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter 4 letters or numbers" {...field} maxLength={4} className="text-base md:text-sm"/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {personalId && (
+            <p className="text-center text-orange-800 font-fun text-lg !mt-4">
+              Your full Personal ID is: <span className="font-bold bg-amber-200 px-2 py-1 rounded">{personalId}</span>. This is how we'll show your comments.
+            </p>
+          )}
+
           <FormField
             control={form.control}
             name="subject"
@@ -132,7 +169,7 @@ const CommentForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white font-bold" disabled={addCommentMutation.isPending}>
+          <Button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white font-bold" disabled={addCommentMutation.isPending || !personalId}>
             {addCommentMutation.isPending ? "Submitting..." : "Submit Comment"}
           </Button>
         </form>
