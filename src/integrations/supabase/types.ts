@@ -12,40 +12,43 @@ export type Database = {
       comments: {
         Row: {
           author_email: string | null
-          author_name: string
           content: string
           created_at: string
           id: string
           is_approved: boolean
-          story_id: string
+          parent_id: string | null
+          personal_id: string
+          subject: string
           updated_at: string
         }
         Insert: {
           author_email?: string | null
-          author_name: string
           content: string
           created_at?: string
           id?: string
           is_approved?: boolean
-          story_id: string
+          parent_id?: string | null
+          personal_id: string
+          subject: string
           updated_at?: string
         }
         Update: {
           author_email?: string | null
-          author_name?: string
           content?: string
           created_at?: string
           id?: string
           is_approved?: boolean
-          story_id?: string
+          parent_id?: string | null
+          personal_id?: string
+          subject?: string
           updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: "comments_story_id_fkey"
-            columns: ["story_id"]
+            foreignKeyName: "comments_parent_id_fkey"
+            columns: ["parent_id"]
             isOneToOne: false
-            referencedRelation: "stories"
+            referencedRelation: "comments"
             referencedColumns: ["id"]
           },
         ]
