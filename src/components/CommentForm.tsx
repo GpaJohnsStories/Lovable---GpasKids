@@ -19,6 +19,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { containsBadWord } from "@/utils/profanity";
 
 const formSchema = z.object({
   personal_id_prefix: z.string().optional(),
@@ -94,20 +95,18 @@ const CommentForm = () => {
   });
 
   const handleCreateId = () => {
-    form.trigger("personal_id_prefix").then(isValid => {
-        if (isValid) {
-            const currentPrefix = form.getValues("personal_id_prefix");
-            if (currentPrefix && currentPrefix.length === 4) {
-              const suffix = generateIdSuffix();
-              setPersonalId(currentPrefix + suffix);
-            } else {
-              form.setError("personal_id_prefix", { type: "manual", message: "Your code must be exactly 4 letters or numbers." });
-              setPersonalId(null);
-            }
-        } else {
-            setPersonalId(null);
-        }
-    });
+    const currentPrefix = form.getValues("personal_id_prefix") || "";
+    form.clearErrors("personal_id_prefix");
+    setPersonalId(null); // Reset ID first
+
+    if (containsBadWord(currentPrefix)) {
+        form.setError("personal_id_prefix", { type: "manual", message: "Please use kinder words." });
+    } else if (currentPrefix.length !== 4 || !/^[a-zA-Z0-9]{4}$/.test(currentPrefix)) {
+        form.setError("personal_id_prefix", { type: "manual", message: "Your code must be exactly 4 letters or numbers." });
+    } else {
+        const suffix = generateIdSuffix();
+        setPersonalId(currentPrefix + suffix);
+    }
   };
 
   const handleTabChange = (value: string) => {
@@ -125,32 +124,50 @@ const CommentForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     form.clearErrors();
-    let finalPersonalId: string;
+    setExistingPersonalIdError(null);
+    let hasError = false;
+
+    // Bad word checks
+    if (containsBadWord(values.subject)) {
+      form.setError("subject", { type: 'manual', message: 'Please use kinder words in the subject.' });
+      hasError = true;
+    }
+    if (containsBadWord(values.content)) {
+      form.setError("content", { type: 'manual', message: 'Please use kinder words in your comment.' });
+      hasError = true;
+    }
+
+    let finalPersonalId: string | null = null;
 
     if (idMode === 'existing') {
-        if (!/^[a-zA-Z0-9]{6}$/.test(existingPersonalId)) {
-            setExistingPersonalIdError("Your Personal ID must be exactly 6 letters or numbers.");
-            return;
-        }
+      if (!/^[a-zA-Z0-9]{6}$/.test(existingPersonalId)) {
+        setExistingPersonalIdError("Your Personal ID must be exactly 6 letters or numbers.");
+        hasError = true;
+      } else {
         finalPersonalId = existingPersonalId;
-    } else {
-        const prefixValue = values.personal_id_prefix;
-        if (!prefixValue || !/^[a-zA-Z0-9]{4}$/.test(prefixValue)) {
-            form.setError("personal_id_prefix", { type: "manual", message: "Your code must be exactly 4 letters or numbers." });
-            return;
-        }
-
-        if (!personalId) {
-            form.setError("personal_id_prefix", { type: "manual", message: "Please click the button to create your Personal ID after entering your code." });
-            return;
-        }
-        
-        if (!personalId.startsWith(values.personal_id_prefix || '')) {
-            form.setError("personal_id_prefix", { type: "manual", message: "The code you entered doesn't match your generated ID. Please create a new one." });
-            setPersonalId(null);
-            return;
-        }
+      }
+    } else { // 'create' mode
+      const prefixValue = values.personal_id_prefix || '';
+      if (containsBadWord(prefixValue)) {
+        form.setError("personal_id_prefix", { type: "manual", message: "Please use kinder words." });
+        hasError = true;
+      } else if (!/^[a-zA-Z0-9]{4}$/.test(prefixValue)) {
+        form.setError("personal_id_prefix", { type: "manual", message: "Your code must be exactly 4 letters or numbers." });
+        hasError = true;
+      } else if (!personalId) {
+        form.setError("personal_id_prefix", { type: "manual", message: "Please click the button to create your Personal ID after entering your code." });
+        hasError = true;
+      } else if (!personalId.startsWith(prefixValue)) {
+        form.setError("personal_id_prefix", { type: "manual", message: "The code you entered doesn't match your generated ID. Please create a new one." });
+        setPersonalId(null);
+        hasError = true;
+      } else {
         finalPersonalId = personalId;
+      }
+    }
+
+    if (hasError || !finalPersonalId) {
+      return;
     }
 
     addCommentMutation.mutate({
