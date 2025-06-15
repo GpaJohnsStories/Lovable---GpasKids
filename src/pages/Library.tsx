@@ -22,7 +22,6 @@ const Library = () => {
         
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
           <div style={{ 
-            textAlign: 'center',
             color: '#000000',
             fontSize: '18px',
             fontStyle: 'italic',
@@ -30,10 +29,10 @@ const Library = () => {
             lineHeight: '1.6',
             fontWeight: 'normal'
           }}>
-            <div style={{ marginBottom: '16px' }}>
+            <div style={{ marginBottom: '16px', textAlign: 'center' }}>
               Click on any column heading to sort the library by that column.<br />The first click will always sort down and the next click will sort up.
             </div>
-            <div>
+            <div style={{ textAlign: 'center' }}>
               As more stories are loaded, you may want to keep a note on your device or even use<br />pencil and paper to record the Story Code so you can find it easily in the future.
             </div>
           </div>
