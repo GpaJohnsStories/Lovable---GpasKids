@@ -25,10 +25,10 @@ const WelcomeHeader = () => {
     { 
       name: 'Library', 
       path: '/library', 
-      bgColor: 'bg-gradient-to-b from-[#C5E4F3] via-[#ADD8E6] to-[#8AC6D1]',
-      hoverColor: 'hover:from-[#B8DCF0] hover:via-[#9BCFDF] hover:to-[#7AB8C4]',
-      shadowColor: 'shadow-[0_6px_0_#7AB8C4,0_8px_15px_rgba(0,0,0,0.3)]',
-      hoverShadow: 'hover:shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]'
+      bgColor: 'bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700',
+      hoverColor: 'hover:from-orange-600 hover:via-orange-700 hover:to-orange-800',
+      shadowColor: 'shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]'
     },
     { 
       name: 'Comments', 
