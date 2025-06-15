@@ -47,6 +47,23 @@ const StoriesTable = ({ onEditStory }: StoriesTableProps) => {
     return sortDirection === 'asc' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />;
   };
 
+  const getButtonColor = (field: SortField) => {
+    switch (field) {
+      case 'title':
+        return 'bg-blue-500 hover:bg-blue-600 text-white';
+      case 'author':
+        return 'bg-green-500 hover:bg-green-600 text-white';
+      case 'category':
+        return 'bg-purple-500 hover:bg-purple-600 text-white';
+      case 'read_count':
+        return 'bg-orange-500 hover:bg-orange-600 text-white';
+      case 'created_at':
+        return 'bg-red-500 hover:bg-red-600 text-white';
+      default:
+        return 'bg-gray-500 hover:bg-gray-600 text-white';
+    }
+  };
+
   const handleDeleteStory = async (id: string) => {
     if (!confirm("Are you sure you want to delete this story?")) return;
 
@@ -96,55 +113,60 @@ const StoriesTable = ({ onEditStory }: StoriesTableProps) => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead 
-                  className="cursor-pointer hover:bg-gray-50 select-none"
-                  onClick={() => handleSort('title')}
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
-                >
-                  <div className="flex items-center gap-1">
+                <TableHead className="p-2">
+                  <Button
+                    onClick={() => handleSort('title')}
+                    className={`${getButtonColor('title')} w-full justify-between`}
+                    size="sm"
+                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  >
                     Title
                     {getSortIcon('title')}
-                  </div>
+                  </Button>
                 </TableHead>
-                <TableHead 
-                  className="cursor-pointer hover:bg-gray-50 select-none"
-                  onClick={() => handleSort('author')}
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
-                >
-                  <div className="flex items-center gap-1">
+                <TableHead className="p-2">
+                  <Button
+                    onClick={() => handleSort('author')}
+                    className={`${getButtonColor('author')} w-full justify-between`}
+                    size="sm"
+                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  >
                     Author
                     {getSortIcon('author')}
-                  </div>
+                  </Button>
                 </TableHead>
-                <TableHead 
-                  className="cursor-pointer hover:bg-gray-50 select-none"
-                  onClick={() => handleSort('category')}
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
-                >
-                  <div className="flex items-center gap-1">
+                <TableHead className="p-2">
+                  <Button
+                    onClick={() => handleSort('category')}
+                    className={`${getButtonColor('category')} w-full justify-between`}
+                    size="sm"
+                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  >
                     Category
                     {getSortIcon('category')}
-                  </div>
+                  </Button>
                 </TableHead>
-                <TableHead 
-                  className="cursor-pointer hover:bg-gray-50 select-none"
-                  onClick={() => handleSort('read_count')}
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
-                >
-                  <div className="flex items-center gap-1">
+                <TableHead className="p-2">
+                  <Button
+                    onClick={() => handleSort('read_count')}
+                    className={`${getButtonColor('read_count')} w-full justify-between`}
+                    size="sm"
+                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  >
                     Read Count
                     {getSortIcon('read_count')}
-                  </div>
+                  </Button>
                 </TableHead>
-                <TableHead 
-                  className="cursor-pointer hover:bg-gray-50 select-none"
-                  onClick={() => handleSort('created_at')}
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
-                >
-                  <div className="flex items-center gap-1">
+                <TableHead className="p-2">
+                  <Button
+                    onClick={() => handleSort('created_at')}
+                    className={`${getButtonColor('created_at')} w-full justify-between`}
+                    size="sm"
+                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  >
                     Created
                     {getSortIcon('created_at')}
-                  </div>
+                  </Button>
                 </TableHead>
                 <TableHead style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>Actions</TableHead>
               </TableRow>
