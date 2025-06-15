@@ -8,6 +8,7 @@ interface Story {
   id: string;
   story_code: string;
   title: string;
+  tagline?: string;
   author: string;
   category: string;
   read_count: number;
@@ -43,7 +44,14 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
         {story.story_code}
       </TableCell>
       <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        {story.title}
+        <div>
+          <div>{story.title}</div>
+          {story.tagline && (
+            <div className="text-sm italic text-gray-600 mt-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              {story.tagline}
+            </div>
+          )}
+        </div>
       </TableCell>
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         {story.author}
