@@ -82,6 +82,18 @@ const Story = () => {
     setCurrentVote(newVote);
   };
 
+  // Helper function to get all available photos
+  const getStoryPhotos = () => {
+    if (!story) return [];
+    const photos = [];
+    if (story.photo_link_1) photos.push(story.photo_link_1);
+    if (story.photo_link_2) photos.push(story.photo_link_2);
+    if (story.photo_link_3) photos.push(story.photo_link_3);
+    return photos;
+  };
+
+  const storyPhotos = getStoryPhotos();
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
@@ -189,6 +201,30 @@ const Story = () => {
                 <p className="text-lg text-orange-700 text-center mb-6 italic" style={{ fontFamily: 'Georgia, serif' }}>
                   {story.tagline}
                 </p>
+              )}
+
+              {/* Story Photos Gallery */}
+              {storyPhotos.length > 0 && (
+                <div className="mb-8">
+                  <div className={`grid gap-4 ${
+                    storyPhotos.length === 1 ? 'grid-cols-1 justify-items-center' :
+                    storyPhotos.length === 2 ? 'grid-cols-2' :
+                    'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+                  }`}>
+                    {storyPhotos.map((photo, index) => (
+                      <div key={index} className="overflow-hidden rounded-lg border border-orange-200 shadow-sm">
+                        <img
+                          src={photo}
+                          alt={`${story.title} - Photo ${index + 1}`}
+                          className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
 
               {story.content ? (
