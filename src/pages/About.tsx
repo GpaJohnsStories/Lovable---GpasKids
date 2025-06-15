@@ -10,8 +10,8 @@ const About = () => {
       
       <main className="container mx-auto px-4 pt-8 pb-12">
         <div className="max-w-6xl mx-auto">
-          {/* Photo positioned at upper right */}
-          <div className="float-right ml-8 mb-6 w-full max-w-sm lg:max-w-xs">
+          {/* Photo positioned at upper right, moved down */}
+          <div className="float-right ml-8 mb-6 w-full max-w-sm lg:max-w-xs" style={{ marginTop: '280px' }}>
             <img 
               src="/lovable-uploads/14b5498f-ec5f-4553-aa24-94d67048ecfa.png" 
               alt="Grandpa John"
@@ -70,7 +70,7 @@ const About = () => {
             </div>
 
             <div 
-              className="border-2 border-amber-600 rounded-xl p-8 shadow-xl relative overflow-hidden"
+              className="border-2 border-amber-600 rounded-xl px-16 py-8 shadow-xl relative overflow-hidden"
               style={{
                 backgroundImage: `url('/lovable-uploads/cf9ebcda-a8d9-4c36-b3e9-e77e247d4932.png')`,
                 backgroundSize: 'cover',
