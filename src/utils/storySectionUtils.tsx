@@ -1,4 +1,3 @@
-
 import { Globe, Smile } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
@@ -87,7 +86,7 @@ export const getCategoryHeader = (category: string, stories?: Story[]) => {
             {config.icon}
             <div className="text-center">
               <h3 className="text-xl font-bold font-fun">{config.title}</h3>
-              {config.subtitle && <p className="text-sm font-fun">{config.subtitle}</p>}
+              {'subtitle' in config && config.subtitle && <p className="text-sm font-fun">{config.subtitle}</p>}
             </div>
           </div>
         </CategoryButton>
