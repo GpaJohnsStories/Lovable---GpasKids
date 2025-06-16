@@ -126,6 +126,7 @@ const Story = () => {
         <div className="max-w-4xl mx-auto">
           <StoryVotingSection
             storyId={story.id}
+            storyTitle={story.title}
             thumbsUpCount={story.thumbs_up_count || 0}
             thumbsDownCount={story.thumbs_down_count || 0}
             okCount={story.ok_count || 0}
@@ -157,6 +158,7 @@ const Story = () => {
 
           <StoryVotingSection
             storyId={story.id}
+            storyTitle={story.title}
             thumbsUpCount={story.thumbs_up_count || 0}
             thumbsDownCount={story.thumbs_down_count || 0}
             okCount={story.ok_count || 0}

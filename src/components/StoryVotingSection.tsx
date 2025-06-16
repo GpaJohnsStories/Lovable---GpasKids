@@ -1,8 +1,10 @@
 
 import StoryVoting from "./StoryVoting";
+import CreateCommentButton from "./CreateCommentButton";
 
 interface StoryVotingSectionProps {
   storyId: string;
+  storyTitle: string;
   thumbsUpCount: number;
   thumbsDownCount: number;
   okCount: number;
@@ -12,6 +14,7 @@ interface StoryVotingSectionProps {
 
 const StoryVotingSection = ({
   storyId,
+  storyTitle,
   thumbsUpCount,
   thumbsDownCount,
   okCount,
@@ -20,14 +23,17 @@ const StoryVotingSection = ({
 }: StoryVotingSectionProps) => {
   return (
     <div className="mb-8">
-      <StoryVoting
-        storyId={storyId}
-        thumbsUpCount={thumbsUpCount}
-        thumbsDownCount={thumbsDownCount}
-        okCount={okCount}
-        currentVote={currentVote}
-        onVoteUpdate={onVoteUpdate}
-      />
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-6">
+        <StoryVoting
+          storyId={storyId}
+          thumbsUpCount={thumbsUpCount}
+          thumbsDownCount={thumbsDownCount}
+          okCount={okCount}
+          currentVote={currentVote}
+          onVoteUpdate={onVoteUpdate}
+        />
+        <CreateCommentButton storyId={storyId} storyTitle={storyTitle} />
+      </div>
     </div>
   );
 };

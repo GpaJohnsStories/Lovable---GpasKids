@@ -1,9 +1,12 @@
-
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import CommentForm from "@/components/CommentForm";
+import { useSearchParams } from "react-router-dom";
 
 const MakeComment = () => {
+  const [searchParams] = useSearchParams();
+  const prefilledSubject = searchParams.get('subject') || '';
+
   return (
     <div className="flex flex-col min-h-screen bg-amber-50">
       <WelcomeHeader />
@@ -81,7 +84,7 @@ const MakeComment = () => {
               </div>
             </div>
           </div>
-          <CommentForm />
+          <CommentForm prefilledSubject={prefilledSubject} />
         </div>
       </main>
       <CookieFreeFooter />
