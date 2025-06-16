@@ -107,6 +107,9 @@ const StorySection = () => {
     }
   ];
 
+  // Combine all stories for category header linking
+  const allStories = [...newestStories, ...popularStories];
+
   return (
     <section className="py-16">
       <div className="text-center mb-12">
@@ -116,7 +119,7 @@ const StorySection = () => {
       <div className="grid lg:grid-cols-2 gap-8 mb-12">
         {/* Newest Stories Column */}
         <div>
-          {getCategoryHeader("Newest")}
+          {getCategoryHeader("Newest", allStories)}
           <div className="space-y-4">
             {newestStories.map((story) => (
               <StoryCard key={story.id} story={story} />
@@ -126,7 +129,7 @@ const StorySection = () => {
 
         {/* Most Popular Stories Column */}
         <div>
-          {getCategoryHeader("Most Popular")}
+          {getCategoryHeader("Most Popular", allStories)}
           <div className="space-y-4">
             {popularStories.map((story) => (
               <StoryCard key={story.id} story={story} />
