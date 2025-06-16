@@ -100,16 +100,12 @@ const PersonalIdSection = ({
                 <div className="flex flex-wrap items-start gap-2">
                   <div className="flex flex-col">
                     <FormControl>
-                      <div className="relative has-highlighting">
-                        <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre" aria-hidden="true">
-                          {getHighlightedParts(field.value).map((part, i) => (
-                            <span key={i} className={part.isBad ? 'text-destructive' : 'text-foreground'}>
-                              {part.text}
-                            </span>
-                          ))}
-                        </div>
-                        <Input placeholder="4-character code" {...field} maxLength={4} className="w-full sm:w-36 text-base md:text-sm"/>
-                      </div>
+                      <Input 
+                        placeholder="4-character code" 
+                        {...field} 
+                        maxLength={4} 
+                        className="w-full sm:w-36 text-base md:text-sm"
+                      />
                     </FormControl>
                     <p className="text-sm text-orange-700 mt-1 font-fun">
                       No bad words please!
