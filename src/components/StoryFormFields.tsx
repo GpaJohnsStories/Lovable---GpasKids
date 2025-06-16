@@ -17,6 +17,7 @@ interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
+  published: string;
 }
 
 interface StoryFormFieldsProps {
@@ -50,7 +51,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <Label htmlFor="category">Category</Label>
           <Select
@@ -77,6 +78,22 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
             onChange={(e) => onInputChange('story_code', e.target.value)}
             placeholder="Optional story code"
           />
+        </div>
+
+        <div>
+          <Label htmlFor="published">Published Status</Label>
+          <Select
+            value={formData.published}
+            onValueChange={(value) => onInputChange('published', value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Y">Published (Y)</SelectItem>
+              <SelectItem value="N">Not Published (N)</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 

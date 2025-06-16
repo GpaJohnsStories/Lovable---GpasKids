@@ -12,6 +12,7 @@ interface Story {
   tagline?: string;
   author: string;
   category: string;
+  published: string;
   read_count: number;
   thumbs_up_count?: number;
   thumbs_down_count?: number;
@@ -43,6 +44,12 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
       default:
         return "bg-amber-200 text-amber-800";
     }
+  };
+
+  const getPublishedBadgeColor = (published: string) => {
+    return published === 'Y' 
+      ? "bg-green-500 text-white" 
+      : "bg-red-500 text-white";
   };
 
   const getFirstAvailablePhoto = () => {
@@ -88,6 +95,11 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
       <TableCell>
         <Badge className={`${getCategoryBadgeColor(story.category)} text-center flex items-center justify-center`}>
           {story.category}
+        </Badge>
+      </TableCell>
+      <TableCell>
+        <Badge className={`${getPublishedBadgeColor(story.published)} text-center flex items-center justify-center`}>
+          {story.published === 'Y' ? 'Published' : 'Draft'}
         </Badge>
       </TableCell>
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>

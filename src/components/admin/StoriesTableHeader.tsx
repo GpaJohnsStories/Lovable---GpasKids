@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ArrowUp, ArrowDown } from "lucide-react";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs_up_count' | 'created_at';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'created_at';
 type SortDirection = 'asc' | 'desc';
 
 interface StoriesTableHeaderProps {
@@ -29,6 +29,8 @@ const StoriesTableHeader = ({ sortField, sortDirection, onSort, showActions }: S
         return 'bg-green-500 hover:bg-green-600 text-white';
       case 'category':
         return 'bg-purple-500 hover:bg-purple-600 text-white';
+      case 'published':
+        return 'bg-indigo-500 hover:bg-indigo-600 text-white';
       case 'read_count':
         return 'bg-orange-500 hover:bg-orange-600 text-white';
       case 'thumbs_up_count':
@@ -92,6 +94,19 @@ const StoriesTableHeader = ({ sortField, sortDirection, onSort, showActions }: S
             <div className="flex items-center justify-center gap-2">
               Category
               {getSortIcon('category')}
+            </div>
+          </Button>
+        </TableHead>
+        <TableHead className="p-2 text-center">
+          <Button
+            onClick={() => onSort('published')}
+            className={`${getButtonColor('published')} w-full justify-center`}
+            size="sm"
+            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+          >
+            <div className="flex items-center justify-center gap-2">
+              Published
+              {getSortIcon('published')}
             </div>
           </Button>
         </TableHead>

@@ -22,6 +22,7 @@ interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
+  published: string;
 }
 
 interface StoryFormProps {
@@ -42,7 +43,8 @@ const StoryForm: React.FC<StoryFormProps> = ({ story, onSave, onCancel }) => {
     google_drive_link: '',
     photo_link_1: '',
     photo_link_2: '',
-    photo_link_3: ''
+    photo_link_3: '',
+    published: 'N'
   });
   const [isLoading, setIsLoading] = useState(false);
 

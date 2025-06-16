@@ -84,6 +84,7 @@ export type Database = {
           photo_link_1: string | null
           photo_link_2: string | null
           photo_link_3: string | null
+          published: string
           read_count: number
           story_code: string
           tagline: string | null
@@ -104,6 +105,7 @@ export type Database = {
           photo_link_1?: string | null
           photo_link_2?: string | null
           photo_link_3?: string | null
+          published?: string
           read_count?: number
           story_code: string
           tagline?: string | null
@@ -124,6 +126,7 @@ export type Database = {
           photo_link_1?: string | null
           photo_link_2?: string | null
           photo_link_3?: string | null
+          published?: string
           read_count?: number
           story_code?: string
           tagline?: string | null

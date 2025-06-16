@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs_up_count' | 'created_at';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'created_at';
 type SortDirection = 'asc' | 'desc';
 
 interface StoriesTableProps {
