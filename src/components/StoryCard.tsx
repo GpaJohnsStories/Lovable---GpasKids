@@ -3,26 +3,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getCategoryButtonForStory } from "@/utils/storySectionUtils";
-
-interface Story {
-  id: string | number;
-  title: string;
-  description: string;
-  readTime: string;
-  illustration: string;
-  category: string;
-  author: string;
-  photo_link_1?: string;
-  photo_link_2?: string;
-  photo_link_3?: string;
-}
+import { StoryData } from "@/utils/storiesData";
 
 interface StoryCardProps {
-  story: Story;
+  story: StoryData;
 }
 
 const StoryCard = ({ story }: StoryCardProps) => {
-  const getFirstAvailablePhoto = () => {
+  const getFirstAvailablePhoto = (): string | undefined => {
     return story.photo_link_1 || story.photo_link_2 || story.photo_link_3;
   };
 

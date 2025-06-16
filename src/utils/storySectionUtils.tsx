@@ -1,3 +1,4 @@
+
 import { Globe, Smile } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
@@ -6,6 +7,19 @@ interface Story {
   id: string | number;
   category: string;
 }
+
+interface CategoryButtonProps {
+  children: React.ReactNode;
+  linkTo: string;
+}
+
+const CategoryButton = ({ children, linkTo }: CategoryButtonProps) => (
+  <Link to={linkTo}>
+    <button className="bg-gradient-to-b from-amber-400 to-orange-600 text-white px-6 py-3 rounded-full font-semibold shadow-[0_6px_12px_rgba(194,65,12,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-orange-700 transition-all duration-200 hover:shadow-[0_8px_16px_rgba(194,65,12,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)] mb-6">
+      {children}
+    </button>
+  </Link>
+);
 
 export const getCategoryHeader = (category: string, stories?: Story[]) => {
   // For "Newest" and "Most Popular", return titles with 3D banners
@@ -37,140 +51,99 @@ export const getCategoryHeader = (category: string, stories?: Story[]) => {
   const categoryStory = stories?.find(story => story.category === category);
   const linkTo = categoryStory ? `/story/${categoryStory.id}` : '#';
 
-  const CategoryButton = ({ children }: { children: React.ReactNode }) => (
-    <Link to={linkTo}>
-      <button className="bg-gradient-to-b from-amber-400 to-orange-600 text-white px-6 py-3 rounded-full font-semibold shadow-[0_6px_12px_rgba(194,65,12,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-orange-700 transition-all duration-200 hover:shadow-[0_8px_16px_rgba(194,65,12,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)] mb-6">
-        {children}
-      </button>
-    </Link>
-  );
+  const categoryConfig = {
+    "World Changers": {
+      icon: <Globe className="h-6 w-6 mr-3" />,
+      title: "World Changers — Real People Who Made A Difference"
+    },
+    "Life": {
+      icon: (
+        <Avatar className="h-6 w-6 mr-3">
+          <AvatarImage src="/lovable-uploads/86bd5c48-6f8e-4a52-a343-273bf88f31cd.png" alt="Author" />
+          <AvatarFallback>👤</AvatarFallback>
+        </Avatar>
+      ),
+      title: "Life — Lessons and Stories From My Life"
+    },
+    "Fun": {
+      icon: <Smile className="h-6 w-6 mr-3" />,
+      title: "Fun",
+      subtitle: "Jokes, Poems, Games"
+    },
+    "North Pole": {
+      icon: <img src="/lovable-uploads/a63d1701-488c-49db-a1d3-5cb2b39f023d.png" alt="North Pole" className="h-6 w-6 mr-3" />,
+      title: "North Pole",
+      subtitle: "Stories from the North Pole"
+    }
+  };
 
-  switch (category) {
-    case "World Changers":
-      return (
-        <div className="flex items-center justify-center">
-          <CategoryButton>
-            <div className="flex items-center">
-              <Globe className="h-6 w-6 mr-3" />
-              <div className="text-center">
-                <h3 className="text-xl font-bold font-fun">World Changers — Real People Who Made A Difference</h3>
-              </div>
+  const config = categoryConfig[category as keyof typeof categoryConfig];
+
+  if (config) {
+    return (
+      <div className="flex items-center justify-center">
+        <CategoryButton linkTo={linkTo}>
+          <div className="flex items-center">
+            {config.icon}
+            <div className="text-center">
+              <h3 className="text-xl font-bold font-fun">{config.title}</h3>
+              {config.subtitle && <p className="text-sm font-fun">{config.subtitle}</p>}
             </div>
-          </CategoryButton>
-        </div>
-      );
-    case "Life":
-      return (
-        <div className="flex items-center justify-center">
-          <CategoryButton>
-            <div className="flex items-center">
-              <Avatar className="h-6 w-6 mr-3">
-                <AvatarImage src="/lovable-uploads/86bd5c48-6f8e-4a52-a343-273bf88f31cd.png" alt="Author" />
-                <AvatarFallback>👤</AvatarFallback>
-              </Avatar>
-              <div className="text-center">
-                <h3 className="text-xl font-bold font-fun">Life — Lessons and Stories From My Life</h3>
-              </div>
-            </div>
-          </CategoryButton>
-        </div>
-      );
-    case "Fun":
-      return (
-        <div className="flex items-center justify-center">
-          <CategoryButton>
-            <div className="flex items-center">
-              <Smile className="h-6 w-6 mr-3" />
-              <div className="text-center">
-                <h3 className="text-xl font-bold font-fun">Fun</h3>
-                <p className="text-sm font-fun">Jokes, Poems, Games</p>
-              </div>
-            </div>
-          </CategoryButton>
-        </div>
-      );
-    case "North Pole":
-      return (
-        <div className="flex items-center justify-center">
-          <CategoryButton>
-            <div className="flex items-center">
-              <img src="/lovable-uploads/a63d1701-488c-49db-a1d3-5cb2b39f023d.png" alt="North Pole" className="h-6 w-6 mr-3" />
-              <div className="text-center">
-                <h3 className="text-xl font-bold font-fun">North Pole</h3>
-                <p className="text-sm font-fun">Stories from the North Pole</p>
-              </div>
-            </div>
-          </CategoryButton>
-        </div>
-      );
-    default:
-      return (
-        <div className="flex items-center justify-center">
-          <CategoryButton>
-            <h3 className="text-xl font-bold font-fun">{category}</h3>
-          </CategoryButton>
-        </div>
-      );
+          </div>
+        </CategoryButton>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center">
+      <CategoryButton linkTo={linkTo}>
+        <h3 className="text-xl font-bold font-fun">{category}</h3>
+      </CategoryButton>
+    </div>
+  );
+};
+
+// Category button configurations for story cards
+const categoryButtonConfig = {
+  "World Changers": {
+    className: "bg-amber-400 text-amber-900 border-amber-500",
+    icon: <Globe className="h-3 w-3 mr-1" />
+  },
+  "Life": {
+    className: "bg-green-500 text-white border-green-600",
+    icon: (
+      <Avatar className="h-3 w-3 mr-1">
+        <AvatarImage src="/lovable-uploads/86bd5c48-6f8e-4a52-a343-273bf88f31cd.png" alt="Author" />
+        <AvatarFallback>👤</AvatarFallback>
+      </Avatar>
+    )
+  },
+  "Fun": {
+    className: "bg-blue-500 text-white border-blue-600",
+    icon: <Smile className="h-3 w-3 mr-1" />
+  },
+  "North Pole": {
+    className: "bg-red-600 text-white border-red-700",
+    icon: <img src="/lovable-uploads/a63d1701-488c-49db-a1d3-5cb2b39f023d.png" alt="North Pole" className="h-3 w-3 mr-1" />
   }
 };
 
-// New function to create category buttons that link to specific stories
 export const getCategoryButtonForStory = (category: string, storyId: string | number) => {
-  switch (category) {
-    case "World Changers":
-      return (
-        <Link to={`/story/${storyId}`}>
-          <button className="bg-amber-400 text-amber-900 px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(194,65,12,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-amber-500 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(194,65,12,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
-            <div className="flex items-center">
-              <Globe className="h-3 w-3 mr-1" />
-              <span>World Changers</span>
-            </div>
-          </button>
-        </Link>
-      );
-    case "Life":
-      return (
-        <Link to={`/story/${storyId}`}>
-          <button className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(22,101,52,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-green-600 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(22,101,52,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
-            <div className="flex items-center">
-              <Avatar className="h-3 w-3 mr-1">
-                <AvatarImage src="/lovable-uploads/86bd5c48-6f8e-4a52-a343-273bf88f31cd.png" alt="Author" />
-                <AvatarFallback>👤</AvatarFallback>
-              </Avatar>
-              <span>Life</span>
-            </div>
-          </button>
-        </Link>
-      );
-    case "Fun":
-      return (
-        <Link to={`/story/${storyId}`}>
-          <button className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(29,78,216,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-blue-600 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(29,78,216,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
-            <div className="flex items-center">
-              <Smile className="h-3 w-3 mr-1" />
-              <span>Fun</span>
-            </div>
-          </button>
-        </Link>
-      );
-    case "North Pole":
-      return (
-        <Link to={`/story/${storyId}`}>
-          <button className="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(127,29,29,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-red-700 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(127,29,29,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
-            <div className="flex items-center">
-              <img src="/lovable-uploads/a63d1701-488c-49db-a1d3-5cb2b39f023d.png" alt="North Pole" className="h-3 w-3 mr-1" />
-              <span>North Pole</span>
-            </div>
-          </button>
-        </Link>
-      );
-    default:
-      return (
-        <Link to={`/story/${storyId}`}>
-          <button className="bg-gradient-to-b from-amber-400 to-orange-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(194,65,12,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-orange-700 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(194,65,12,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
-            <span>{category}</span>
-          </button>
-        </Link>
-      );
-  }
+  const config = categoryButtonConfig[category as keyof typeof categoryButtonConfig];
+  
+  const baseClasses = "px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(194,65,12,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] transition-all duration-200 hover:shadow-[0_4px_8px_rgba(194,65,12,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]";
+  
+  const className = config ? `${config.className} ${baseClasses}` : `bg-gradient-to-b from-amber-400 to-orange-600 text-white border-orange-700 ${baseClasses}`;
+
+  return (
+    <Link to={`/story/${storyId}`}>
+      <button className={className}>
+        <div className="flex items-center">
+          {config?.icon}
+          <span>{category}</span>
+        </div>
+      </button>
+    </Link>
+  );
 };
