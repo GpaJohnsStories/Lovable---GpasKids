@@ -254,7 +254,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
   return (
     <div className="mt-8">
       <h2 className="text-2xl font-bold text-center text-orange-800 mb-4 font-fun">
-        Leave a Comment
+        Leave a Comment or Question
       </h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -386,7 +386,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
             name="content"
             render={({ field }) => (
               <FormItem className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-2">
-                <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Your Comment</FormLabel>
+                <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Your Comment or Question</FormLabel>
                 <div className="sm:col-span-2">
                   <FormControl>
                     <div className="relative has-highlighting">
@@ -398,7 +398,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
                         ))}
                       </div>
                       <Textarea
-                        placeholder="Tell us what you think..."
+                        placeholder="Write your comment or question here"
                         className="resize-y relative z-10 bg-white"
                         {...field}
                       />
