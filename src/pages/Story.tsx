@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -143,6 +142,8 @@ const Story = () => {
                 author={story.author}
                 createdAt={story.created_at}
                 tagline={story.tagline}
+                storyCode={story.story_code}
+                showStoryCode={true}
               />
 
               <StoryPhotosGallery
