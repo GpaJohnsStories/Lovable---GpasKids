@@ -53,12 +53,6 @@ const StoriesTableRow = ({
     }
   };
 
-  const getPublishedBadgeColor = (published: string) => {
-    return published === 'Y' 
-      ? "bg-green-500 text-white" 
-      : "bg-red-500 text-white";
-  };
-
   const getFirstAvailablePhoto = () => {
     return story.photo_link_1 || story.photo_link_2 || story.photo_link_3;
   };
@@ -105,10 +99,17 @@ const StoriesTableRow = ({
         </Badge>
       </TableCell>
       {showPublishedColumn && (
-        <TableCell>
-          <Badge className={`${getPublishedBadgeColor(story.published)} text-center flex items-center justify-center`}>
-            {story.published === 'Y' ? 'Published' : 'Draft'}
-          </Badge>
+        <TableCell className="text-center">
+          <Button
+            size="sm"
+            className={story.published === 'Y' 
+              ? 'bg-green-500 hover:bg-green-600 text-white px-3 py-1 text-xs font-bold' 
+              : 'bg-red-500 hover:bg-red-600 text-white px-3 py-1 text-xs font-bold'
+            }
+            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+          >
+            {story.published}
+          </Button>
         </TableCell>
       )}
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>

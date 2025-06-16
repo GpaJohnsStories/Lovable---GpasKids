@@ -113,7 +113,7 @@ const StoriesTableHeader = ({
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
               <div className="flex items-center justify-center gap-2">
-                Published
+                Publ
                 {getSortIcon('published')}
               </div>
             </Button>
