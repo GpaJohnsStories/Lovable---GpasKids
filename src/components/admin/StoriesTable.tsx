@@ -15,19 +15,32 @@ type SortDirection = 'asc' | 'desc';
 interface StoriesTableProps {
   onEditStory: (story: any) => void;
   showActions?: boolean;
+  showPublishedOnly?: boolean;
+  showPublishedColumn?: boolean;
 }
 
-const StoriesTable = ({ onEditStory, showActions = true }: StoriesTableProps) => {
+const StoriesTable = ({ 
+  onEditStory, 
+  showActions = true, 
+  showPublishedOnly = false,
+  showPublishedColumn = true 
+}: StoriesTableProps) => {
   const [sortField, setSortField] = useState<SortField>('created_at');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
   const { data: stories, isLoading: storiesLoading, refetch } = useQuery({
-    queryKey: ['admin-stories', sortField, sortDirection],
+    queryKey: ['admin-stories', sortField, sortDirection, showPublishedOnly],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from('stories')
         .select('*')
         .order(sortField, { ascending: sortDirection === 'asc' });
+      
+      if (showPublishedOnly) {
+        query = query.eq('published', 'Y');
+      }
+      
+      const { data, error } = await query;
       
       if (error) throw error;
       return data;
@@ -75,6 +88,7 @@ const StoriesTable = ({ onEditStory, showActions = true }: StoriesTableProps) =>
               sortDirection={sortDirection}
               onSort={handleSort}
               showActions={showActions}
+              showPublishedColumn={showPublishedColumn}
             />
             <TableBody>
               {stories?.map((story) => (
@@ -82,6 +96,7 @@ const StoriesTable = ({ onEditStory, showActions = true }: StoriesTableProps) =>
                   key={story.id}
                   story={story}
                   showActions={showActions}
+                  showPublishedColumn={showPublishedColumn}
                   onEdit={onEditStory}
                   onDelete={handleDeleteStory}
                 />

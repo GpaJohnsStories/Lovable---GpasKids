@@ -44,7 +44,12 @@ const Library = () => {
           </div>
           
           <div className="mb-8">
-            <StoriesTable onEditStory={handleEditStory} showActions={false} />
+            <StoriesTable 
+              onEditStory={handleEditStory} 
+              showActions={false} 
+              showPublishedOnly={true}
+              showPublishedColumn={false}
+            />
           </div>
         </main>
         <CookieFreeFooter />

@@ -26,11 +26,18 @@ interface Story {
 interface StoriesTableRowProps {
   story: Story;
   showActions: boolean;
+  showPublishedColumn?: boolean;
   onEdit: (story: Story) => void;
   onDelete: (id: string) => void;
 }
 
-const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableRowProps) => {
+const StoriesTableRow = ({ 
+  story, 
+  showActions, 
+  showPublishedColumn = true, 
+  onEdit, 
+  onDelete 
+}: StoriesTableRowProps) => {
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
       case "Fun":
@@ -97,11 +104,13 @@ const StoriesTableRow = ({ story, showActions, onEdit, onDelete }: StoriesTableR
           {story.category}
         </Badge>
       </TableCell>
-      <TableCell>
-        <Badge className={`${getPublishedBadgeColor(story.published)} text-center flex items-center justify-center`}>
-          {story.published === 'Y' ? 'Published' : 'Draft'}
-        </Badge>
-      </TableCell>
+      {showPublishedColumn && (
+        <TableCell>
+          <Badge className={`${getPublishedBadgeColor(story.published)} text-center flex items-center justify-center`}>
+            {story.published === 'Y' ? 'Published' : 'Draft'}
+          </Badge>
+        </TableCell>
+      )}
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="space-y-1">
           <div className="flex items-center space-x-1 text-blue-600">
