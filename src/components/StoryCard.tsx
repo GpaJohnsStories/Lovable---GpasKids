@@ -2,7 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, User } from "lucide-react";
 import { Link } from "react-router-dom";
-import { renderCategoryBadge } from "@/utils/categoryUtils";
+import { getCategoryButtonForStory } from "@/utils/storySectionUtils";
 
 interface Story {
   id: string | number;
@@ -34,7 +34,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
         <Card className="story-card group cursor-pointer hover:shadow-lg transition-shadow" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <CardContent className="p-3 text-center">
             <div className="mb-2">
-              {renderCategoryBadge(story.category)}
+              {getCategoryButtonForStory(story.category, story.id)}
             </div>
             
             <div className="flex items-center justify-center mb-2">
