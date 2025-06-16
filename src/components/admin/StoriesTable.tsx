@@ -95,7 +95,7 @@ const StoriesTable = ({
             <Button
               onClick={() => setPublishedFilter('published')}
               className={publishedFilter === 'published' 
-                ? 'bg-green-500 hover:bg-green-600 text-white' 
+                ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700' 
                 : 'bg-gradient-to-b from-white to-gray-50 border-gray-300 hover:bg-gradient-to-b hover:from-gray-50 hover:to-gray-100 text-black'
               }
               size="sm"
@@ -105,7 +105,7 @@ const StoriesTable = ({
             <Button
               onClick={() => setPublishedFilter('unpublished')}
               className={publishedFilter === 'unpublished' 
-                ? 'bg-red-500 hover:bg-red-600 text-white' 
+                ? 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700' 
                 : 'bg-gradient-to-b from-white to-gray-50 border-gray-300 hover:bg-gradient-to-b hover:from-gray-50 hover:to-gray-100 text-black'
               }
               size="sm"
