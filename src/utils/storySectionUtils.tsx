@@ -113,7 +113,7 @@ export const getCategoryButtonForStory = (category: string, storyId: string | nu
     case "World Changers":
       return (
         <Link to={`/story/${storyId}`}>
-          <button className="bg-gradient-to-b from-sky-300 via-sky-400 to-sky-500 text-blue-950 px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(3,105,161,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-sky-600 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(3,105,161,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
+          <button className="bg-amber-400 text-amber-900 px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(194,65,12,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-amber-500 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(194,65,12,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
             <div className="flex items-center">
               <Globe className="h-3 w-3 mr-1" />
               <span>World Changers</span>
@@ -124,7 +124,7 @@ export const getCategoryButtonForStory = (category: string, storyId: string | nu
     case "Life":
       return (
         <Link to={`/story/${storyId}`}>
-          <button className="bg-gradient-to-b from-[#C5E4F3] via-[#ADD8E6] to-[#8AC6D1] text-blue-900 px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(123,184,196,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-[#7AB8C4] transition-all duration-200 hover:shadow-[0_4px_8px_rgba(123,184,196,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
+          <button className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(22,101,52,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-green-600 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(22,101,52,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
             <div className="flex items-center">
               <Avatar className="h-3 w-3 mr-1">
                 <AvatarImage src="/lovable-uploads/86bd5c48-6f8e-4a52-a343-273bf88f31cd.png" alt="Author" />
@@ -138,7 +138,7 @@ export const getCategoryButtonForStory = (category: string, storyId: string | nu
     case "Fun":
       return (
         <Link to={`/story/${storyId}`}>
-          <button className="bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500 text-green-800 px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(202,138,4,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-yellow-600 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(202,138,4,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
+          <button className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(29,78,216,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-blue-600 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(29,78,216,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
             <div className="flex items-center">
               <Smile className="h-3 w-3 mr-1" />
               <span>Fun</span>
@@ -149,7 +149,7 @@ export const getCategoryButtonForStory = (category: string, storyId: string | nu
     case "North Pole":
       return (
         <Link to={`/story/${storyId}`}>
-          <button className="bg-gradient-to-b from-yellow-400 via-yellow-500 to-yellow-600 text-black px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(202,138,4,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-yellow-700 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(202,138,4,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
+          <button className="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-[0_3px_6px_rgba(127,29,29,0.3),0_2px_4px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-red-700 transition-all duration-200 hover:shadow-[0_4px_8px_rgba(127,29,29,0.4),0_3px_6px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 active:shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_2px_rgba(0,0,0,0.1)]">
             <div className="flex items-center">
               <img src="/lovable-uploads/a63d1701-488c-49db-a1d3-5cb2b39f023d.png" alt="North Pole" className="h-3 w-3 mr-1" />
               <span>North Pole</span>
