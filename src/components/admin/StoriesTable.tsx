@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -86,31 +87,43 @@ const StoriesTable = ({
           <div className="flex gap-2 mb-4 pt-4">
             <Button
               onClick={() => setPublishedFilter('all')}
-              className={publishedFilter === 'all' 
-                ? 'bg-gradient-to-b from-orange-400 to-orange-600 border-orange-700 text-white hover:bg-gradient-to-b hover:from-orange-500 hover:to-orange-700' 
-                : 'bg-gradient-to-b from-white to-gray-50 border-gray-300 hover:bg-gradient-to-b hover:from-gray-50 hover:to-gray-100 text-black'
-              }
               size="sm"
+              style={{
+                background: publishedFilter === 'all' 
+                  ? 'linear-gradient(to bottom, #fb923c, #ea580c)' 
+                  : 'linear-gradient(to bottom, #ffffff, #f9fafb)',
+                borderColor: publishedFilter === 'all' ? '#c2410c' : '#d1d5db',
+                color: publishedFilter === 'all' ? 'white' : 'black',
+                fontFamily: 'system-ui, -apple-system, sans-serif'
+              }}
             >
               All
             </Button>
             <Button
               onClick={() => setPublishedFilter('published')}
-              className={publishedFilter === 'published' 
-                ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700' 
-                : 'bg-gradient-to-b from-white to-gray-50 border-gray-300 hover:bg-gradient-to-b hover:from-gray-50 hover:to-gray-100 text-black'
-              }
               size="sm"
+              style={{
+                background: publishedFilter === 'published' 
+                  ? 'linear-gradient(to bottom, #4ade80, #16a34a)' 
+                  : 'linear-gradient(to bottom, #ffffff, #f9fafb)',
+                borderColor: publishedFilter === 'published' ? '#166534' : '#d1d5db',
+                color: publishedFilter === 'published' ? 'white' : 'black',
+                fontFamily: 'system-ui, -apple-system, sans-serif'
+              }}
             >
               Published
             </Button>
             <Button
               onClick={() => setPublishedFilter('unpublished')}
-              className={publishedFilter === 'unpublished' 
-                ? 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700' 
-                : 'bg-gradient-to-b from-white to-gray-50 border-gray-300 hover:bg-gradient-to-b hover:from-gray-50 hover:to-gray-100 text-black'
-              }
               size="sm"
+              style={{
+                background: publishedFilter === 'unpublished' 
+                  ? 'linear-gradient(to bottom, #f87171, #dc2626)' 
+                  : 'linear-gradient(to bottom, #ffffff, #f9fafb)',
+                borderColor: publishedFilter === 'unpublished' ? '#991b1b' : '#d1d5db',
+                color: publishedFilter === 'unpublished' ? 'white' : 'black',
+                fontFamily: 'system-ui, -apple-system, sans-serif'
+              }}
             >
               Unpublished
             </Button>
