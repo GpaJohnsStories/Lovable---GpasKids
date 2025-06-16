@@ -70,24 +70,6 @@ const CommentFormFields = ({ form }: CommentFormFieldsProps) => {
           </FormItem>
         )}
       />
-      <FormField
-        control={form.control}
-        name="author_email"
-        render={({ field }) => (
-          <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
-            <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Your grown-up's email</FormLabel>
-            <div className="sm:col-span-2">
-              <FormControl>
-                <Input type="email" placeholder="Your grown-up's email (not shown publicly)" {...field} className="w-full text-base md:text-sm"/>
-              </FormControl>
-              <p className="text-sm text-orange-700 mt-1 font-fun">
-                Email address will NEVER be displayed publicly but will be stored in a secure location and is only accessible by Grandpa John in an emergency.
-              </p>
-              <FormMessage />
-            </div>
-          </FormItem>
-        )}
-      />
     </>
   );
 };

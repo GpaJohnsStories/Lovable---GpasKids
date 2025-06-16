@@ -22,7 +22,6 @@ const formSchema = z.object({
   content: z.string().min(10, {
     message: "Your comment must be at least 10 characters.",
   }),
-  author_email: z.string().email({ message: "Please enter a valid email." }).optional().or(z.literal('')),
 });
 
 interface CommentFormProps {
@@ -44,7 +43,6 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
       personal_id_prefix: "",
       subject: prefilledSubject,
       content: "",
-      author_email: "",
     },
   });
 
@@ -74,13 +72,12 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
   }, [prefix, personalId]);
 
   const addCommentMutation = useMutation({
-    mutationFn: async (newComment: { personal_id: string; subject: string; content: string; author_email?: string }) => {
+    mutationFn: async (newComment: { personal_id: string; subject: string; content: string }) => {
       const { data, error } = await supabase.from("comments").insert([
         {
           personal_id: newComment.personal_id,
           subject: newComment.subject,
           content: newComment.content,
-          author_email: newComment.author_email || null,
         },
       ] as any);
 
@@ -208,7 +205,6 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
         personal_id: finalPersonalId,
         subject: values.subject,
         content: values.content,
-        author_email: values.author_email,
     });
   }
 
