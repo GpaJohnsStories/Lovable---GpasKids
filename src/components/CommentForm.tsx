@@ -1,3 +1,4 @@
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -67,7 +68,10 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
   useEffect(() => {
     if (prefilledStoryCode) {
       form.setValue("story_code", prefilledStoryCode);
-      handleStoryCodeLookup();
+      // Use setTimeout to ensure the form value is set before lookup
+      setTimeout(() => {
+        handleStoryCodeLookup();
+      }, 100);
     }
   }, [prefilledStoryCode]);
 
