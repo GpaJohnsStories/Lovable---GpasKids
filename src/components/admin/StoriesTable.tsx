@@ -94,14 +94,20 @@ const StoriesTable = ({
             </Button>
             <Button
               onClick={() => setPublishedFilter('published')}
-              variant={publishedFilter === 'published' ? 'default' : 'outline'}
+              className={publishedFilter === 'published' 
+                ? 'bg-green-500 hover:bg-green-600 text-white' 
+                : 'bg-gradient-to-b from-white to-gray-50 border-gray-300 hover:bg-gradient-to-b hover:from-gray-50 hover:to-gray-100 text-black'
+              }
               size="sm"
             >
               Published
             </Button>
             <Button
               onClick={() => setPublishedFilter('unpublished')}
-              variant={publishedFilter === 'unpublished' ? 'default' : 'outline'}
+              className={publishedFilter === 'unpublished' 
+                ? 'bg-red-500 hover:bg-red-600 text-white' 
+                : 'bg-gradient-to-b from-white to-gray-50 border-gray-300 hover:bg-gradient-to-b hover:from-gray-50 hover:to-gray-100 text-black'
+              }
               size="sm"
             >
               Unpublished
