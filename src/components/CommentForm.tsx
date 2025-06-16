@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -34,7 +33,11 @@ const formSchema = z.object({
   author_email: z.string().email({ message: "Please enter a valid email." }).optional().or(z.literal('')),
 });
 
-const CommentForm = () => {
+interface CommentFormProps {
+  prefilledSubject?: string;
+}
+
+const CommentForm = ({ prefilledSubject = "" }: CommentFormProps) => {
   const queryClient = useQueryClient();
   const [personalId, setPersonalId] = useState<string | null>(null);
   const [existingPersonalId, setExistingPersonalId] = useState("");
@@ -46,11 +49,18 @@ const CommentForm = () => {
     defaultValues: {
       story_code: "",
       personal_id_prefix: "",
-      subject: "",
+      subject: prefilledSubject,
       content: "",
       author_email: "",
     },
   });
+
+  // Update subject when prefilledSubject changes
+  useEffect(() => {
+    if (prefilledSubject) {
+      form.setValue("subject", prefilledSubject);
+    }
+  }, [prefilledSubject, form]);
 
   const prefix = form.watch("personal_id_prefix");
 
