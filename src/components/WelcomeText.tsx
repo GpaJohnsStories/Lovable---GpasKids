@@ -27,10 +27,7 @@ const WelcomeText = () => {
                 Hello!
               </h1>
               <p className="text-2xl text-blue-900 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun mb-8">
-                You have found my fun, safe place for kids.<br />
-                I am Grandpa John with my friend Buddy.<br />
-                Here you will find stories, jokes, games and more.<br />
-                Enjoy your time here!
+                Hi there! Buddy and I, Grandpa John, welcome you to our safe and fun corner of the internet. We've got stories, jokes, games, and lots of other cool stuff waiting for you. So come on in and have a fantastic time exploring every page!
               </p>
             </div>
           </div>
