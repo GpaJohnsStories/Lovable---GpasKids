@@ -23,10 +23,10 @@ const WelcomeText = () => {
               />
             </div>
             <div className="flex flex-col justify-center text-center md:text-left flex-1">
-              <h1 className="text-4xl md:text-5xl font-bold text-blue-900 leading-relaxed mb-6">
+              <h1 className="text-3xl md:text-4xl font-bold text-blue-900 leading-relaxed mb-6">
                 Hi there!
               </h1>
-              <p className="text-2xl text-blue-900 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun mb-8">
+              <p className="text-xl text-blue-900 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun mb-8">
                 Buddy and I, Grandpa John, welcome you to our safe and fun corner of the internet. We've got stories, jokes, games, and lots of other cool stuff waiting for you. So come on in and have a fantastic time exploring every page!
               </p>
             </div>
