@@ -366,7 +366,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
                 <div className="sm:col-span-2">
                   <FormControl>
                     <div className="relative has-highlighting">
-                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre font-sans bg-transparent text-transparent" style={{ fontFamily: 'Arial, sans-serif', fontStyle: 'normal' }} aria-hidden="true">
+                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre-wrap break-words font-sans bg-transparent text-transparent" style={{ fontFamily: 'Arial, sans-serif', fontStyle: 'normal' }} aria-hidden="true">
                         {getHighlightedParts(field.value).map((part, i) => (
                           <span key={i} className={part.isBad ? 'text-destructive' : 'text-transparent'}>
                             {part.text}
@@ -420,7 +420,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
                     <Input type="email" placeholder="Your grown-up's email (not shown publicly)" {...field} className="w-full text-base md:text-sm"/>
                   </FormControl>
                   <p className="text-sm text-orange-700 mt-1 font-fun">
-                    Email address will NEVER be displayed but will be stored in a secure location and is only accessible by Grandpa John in an emergency.
+                    Email address will NEVER be displayed publicly but will be stored in a secure location and is only accessible by Grandpa John in an emergency.
                   </p>
                   <FormMessage />
                 </div>
