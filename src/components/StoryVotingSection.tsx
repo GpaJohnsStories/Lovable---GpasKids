@@ -4,6 +4,7 @@ import CreateCommentButton from "./CreateCommentButton";
 
 interface StoryVotingSectionProps {
   storyId: string;
+  storyCode: string;
   storyTitle: string;
   thumbsUpCount: number;
   thumbsDownCount: number;
@@ -14,6 +15,7 @@ interface StoryVotingSectionProps {
 
 const StoryVotingSection = ({
   storyId,
+  storyCode,
   storyTitle,
   thumbsUpCount,
   thumbsDownCount,
@@ -32,7 +34,7 @@ const StoryVotingSection = ({
           currentVote={currentVote}
           onVoteUpdate={onVoteUpdate}
         />
-        <CreateCommentButton storyId={storyId} storyTitle={storyTitle} />
+        <CreateCommentButton storyCode={storyCode} storyTitle={storyTitle} />
       </div>
     </div>
   );

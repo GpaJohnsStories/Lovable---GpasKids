@@ -35,9 +35,10 @@ const formSchema = z.object({
 
 interface CommentFormProps {
   prefilledSubject?: string;
+  prefilledStoryCode?: string;
 }
 
-const CommentForm = ({ prefilledSubject = "" }: CommentFormProps) => {
+const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: CommentFormProps) => {
   const queryClient = useQueryClient();
   const [personalId, setPersonalId] = useState<string | null>(null);
   const [existingPersonalId, setExistingPersonalId] = useState("");
@@ -47,7 +48,7 @@ const CommentForm = ({ prefilledSubject = "" }: CommentFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      story_code: "",
+      story_code: prefilledStoryCode,
       personal_id_prefix: "",
       subject: prefilledSubject,
       content: "",
@@ -61,6 +62,14 @@ const CommentForm = ({ prefilledSubject = "" }: CommentFormProps) => {
       form.setValue("subject", prefilledSubject);
     }
   }, [prefilledSubject, form]);
+
+  // Auto-lookup story when prefilledStoryCode is provided
+  useEffect(() => {
+    if (prefilledStoryCode) {
+      form.setValue("story_code", prefilledStoryCode);
+      handleStoryCodeLookup();
+    }
+  }, [prefilledStoryCode]);
 
   const prefix = form.watch("personal_id_prefix");
 
@@ -131,10 +140,11 @@ const CommentForm = ({ prefilledSubject = "" }: CommentFormProps) => {
       }
 
       if (story && story.title) {
-        form.setValue("subject", story.title, { shouldValidate: true });
+        const newSubject = `${storyCode.trim()} - ${story.title}`;
+        form.setValue("subject", newSubject, { shouldValidate: true });
         toast({
             title: "Story Found!",
-            description: `Subject has been filled with "${story.title}".`,
+            description: `Subject has been filled with "${newSubject}".`,
         });
       } else {
         toast({

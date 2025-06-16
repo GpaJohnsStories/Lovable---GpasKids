@@ -4,16 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 interface CreateCommentButtonProps {
-  storyId: string;
+  storyCode: string;
   storyTitle: string;
 }
 
-const CreateCommentButton = ({ storyId, storyTitle }: CreateCommentButtonProps) => {
-  const subject = `${storyId} - ${storyTitle}`;
-  const encodedSubject = encodeURIComponent(subject);
+const CreateCommentButton = ({ storyCode, storyTitle }: CreateCommentButtonProps) => {
+  const encodedStoryCode = encodeURIComponent(storyCode);
 
   return (
-    <Link to={`/make-comment?subject=${encodedSubject}`}>
+    <Link to={`/make-comment?storyCode=${encodedStoryCode}`}>
       <Button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 h-auto flex flex-col items-center space-y-1">
         <MessageSquare className="h-6 w-6" />
         <span className="text-sm">Create Comment</span>
