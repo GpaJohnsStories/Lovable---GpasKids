@@ -82,8 +82,8 @@ const StorySection = () => {
             Now Begin <em>Your</em> Adventure in Reading
           </Button>
         </Link>
-        <p className="text-orange-600 mt-4 text-sm">
-          More magical stories are being added every week!
+        <p className="text-blue-800 mt-4 text-sm">
+          I hope you will return here often as I try add new stories whenever I can.
         </p>
       </div>
     </section>
