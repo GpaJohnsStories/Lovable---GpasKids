@@ -1,5 +1,5 @@
 
-import { User, Hash } from "lucide-react";
+import { User } from "lucide-react";
 import { renderCategoryBadge } from "@/utils/categoryUtils";
 
 interface StoryHeaderProps {
@@ -30,12 +30,10 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         </div>
         {showStoryCode && storyCode ? (
           <div className="flex items-center">
-            <Hash className="h-4 w-4 mr-1" />
-            <span>Code: {storyCode}</span>
+            <span>Story Code: {storyCode}</span>
           </div>
         ) : (
           <div className="flex items-center">
-            <Hash className="h-4 w-4 mr-1" />
             <span>{new Date(createdAt).toLocaleDateString()}</span>
           </div>
         )}
