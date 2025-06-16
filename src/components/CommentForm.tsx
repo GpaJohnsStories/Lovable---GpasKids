@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -367,7 +366,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
                 <div className="sm:col-span-2">
                   <FormControl>
                     <div className="relative has-highlighting">
-                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre" aria-hidden="true">
+                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre font-sans" style={{ fontFamily: 'Arial, sans-serif', fontStyle: 'normal', color: 'black' }} aria-hidden="true">
                         {getHighlightedParts(field.value).map((part, i) => (
                           <span key={i} className={part.isBad ? 'text-destructive' : 'text-foreground'}>
                             {part.text}
@@ -391,7 +390,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
                 <div className="sm:col-span-2">
                   <FormControl>
                     <div className="relative has-highlighting">
-                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre-wrap break-words" aria-hidden="true">
+                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre-wrap break-words font-sans" style={{ fontFamily: 'Arial, sans-serif', fontStyle: 'normal', color: 'black' }} aria-hidden="true">
                         {getHighlightedParts(field.value).map((part, i) => (
                           <span key={i} className={part.isBad ? 'text-destructive' : 'text-foreground'}>
                             {part.text}
