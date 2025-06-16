@@ -3,6 +3,7 @@ import { AdminAuthProvider, useAdminAuth } from "@/components/admin/AdminAuthPro
 import AdminLogin from "@/components/admin/AdminLogin";
 import CommentsDashboard from "@/components/admin/CommentsDashboard";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import ContentProtection from "@/components/ContentProtection";
 
 const AdminCommentsContent = () => {
   const { isAuthenticated, isLoading } = useAdminAuth();
@@ -24,9 +25,11 @@ const AdminCommentsContent = () => {
 
 const AdminComments = () => {
   return (
-    <AdminAuthProvider>
-      <AdminCommentsContent />
-    </AdminAuthProvider>
+    <ContentProtection enableProtection={false}>
+      <AdminAuthProvider>
+        <AdminCommentsContent />
+      </AdminAuthProvider>
+    </ContentProtection>
   );
 };
 

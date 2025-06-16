@@ -12,6 +12,7 @@ import StoryHeader from "@/components/StoryHeader";
 import StoryPhotosGallery from "@/components/StoryPhotosGallery";
 import StoryContent from "@/components/StoryContent";
 import StoryVotingSection from "@/components/StoryVotingSection";
+import ContentProtection from "@/components/ContentProtection";
 import { getStoryPhotos } from "@/utils/storyUtils";
 import { useState, useEffect } from "react";
 
@@ -88,90 +89,96 @@ const Story = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-        <WelcomeHeader />
-        <LoadingSpinner message="Loading your story..." />
-        <CookieFreeFooter />
-      </div>
+      <ContentProtection enableProtection={true}>
+        <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+          <WelcomeHeader />
+          <LoadingSpinner message="Loading your story..." />
+          <CookieFreeFooter />
+        </div>
+      </ContentProtection>
     );
   }
 
   if (error || !story) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-        <WelcomeHeader />
-        <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 200px)' }}>
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-orange-800 mb-4">Story Not Found</h1>
-            <p className="text-orange-700 mb-6">The story you're looking for doesn't exist.</p>
-            <Link to="/">
-              <Button className="cozy-button">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Stories
-              </Button>
-            </Link>
+      <ContentProtection enableProtection={true}>
+        <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+          <WelcomeHeader />
+          <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 200px)' }}>
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-orange-800 mb-4">Story Not Found</h1>
+              <p className="text-orange-700 mb-6">The story you're looking for doesn't exist.</p>
+              <Link to="/">
+                <Button className="cozy-button">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back to Stories
+                </Button>
+              </Link>
+            </div>
           </div>
+          <CookieFreeFooter />
         </div>
-        <CookieFreeFooter />
-      </div>
+      </ContentProtection>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-      <WelcomeHeader />
-      
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <StoryVotingSection
-            storyId={story.id}
-            storyCode={story.story_code}
-            storyTitle={story.title}
-            thumbsUpCount={story.thumbs_up_count || 0}
-            thumbsDownCount={story.thumbs_down_count || 0}
-            okCount={story.ok_count || 0}
-            currentVote={currentVote}
-            onVoteUpdate={handleVoteUpdate}
-          />
+    <ContentProtection enableProtection={true}>
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+        <WelcomeHeader />
+        
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-4xl mx-auto">
+            <StoryVotingSection
+              storyId={story.id}
+              storyCode={story.story_code}
+              storyTitle={story.title}
+              thumbsUpCount={story.thumbs_up_count || 0}
+              thumbsDownCount={story.thumbs_down_count || 0}
+              okCount={story.ok_count || 0}
+              currentVote={currentVote}
+              onVoteUpdate={handleVoteUpdate}
+            />
 
-          <Card className="mb-8">
-            <CardContent className="p-8">
-              <StoryHeader
-                title={story.title}
-                category={story.category}
-                author={story.author}
-                createdAt={story.created_at}
-                tagline={story.tagline}
-                storyCode={story.story_code}
-                showStoryCode={true}
-              />
+            <Card className="mb-8">
+              <CardContent className="p-8">
+                <StoryHeader
+                  title={story.title}
+                  category={story.category}
+                  author={story.author}
+                  createdAt={story.created_at}
+                  tagline={story.tagline}
+                  storyCode={story.story_code}
+                  showStoryCode={true}
+                />
 
-              <StoryPhotosGallery
-                photos={storyPhotos}
-                storyTitle={story.title}
-              />
+                <StoryPhotosGallery
+                  photos={storyPhotos}
+                  storyTitle={story.title}
+                />
 
-              <StoryContent
-                content={story.content}
-                excerpt={story.excerpt}
-              />
-            </CardContent>
-          </Card>
+                <StoryContent
+                  content={story.content}
+                  excerpt={story.excerpt}
+                />
+              </CardContent>
+            </Card>
 
-          <StoryVotingSection
-            storyId={story.id}
-            storyCode={story.story_code}
-            storyTitle={story.title}
-            thumbsUpCount={story.thumbs_up_count || 0}
-            thumbsDownCount={story.thumbs_down_count || 0}
-            okCount={story.ok_count || 0}
-            currentVote={currentVote}
-            onVoteUpdate={handleVoteUpdate}
-          />
+            <StoryVotingSection
+              storyId={story.id}
+              storyCode={story.story_code}
+              storyTitle={story.title}
+              thumbsUpCount={story.thumbs_up_count || 0}
+              thumbsDownCount={story.thumbs_down_count || 0}
+              okCount={story.ok_count || 0}
+              currentVote={currentVote}
+              onVoteUpdate={handleVoteUpdate}
+            />
+          </div>
         </div>
+        <CookieFreeFooter />
       </div>
-      <CookieFreeFooter />
-    </div>
+    </ContentProtection>
   );
 };
 

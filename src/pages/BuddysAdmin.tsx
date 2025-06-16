@@ -3,6 +3,7 @@ import { AdminAuthProvider, useAdminAuth } from "@/components/admin/AdminAuthPro
 import AdminLogin from "@/components/admin/AdminLogin";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
+import ContentProtection from "@/components/ContentProtection";
 import { useAdminSession } from "@/hooks/useAdminSession";
 
 const BuddysAdminContent = () => {
@@ -40,9 +41,11 @@ const BuddysAdminContent = () => {
 
 const BuddysAdmin = () => {
   return (
-    <AdminAuthProvider>
-      <BuddysAdminContent />
-    </AdminAuthProvider>
+    <ContentProtection enableProtection={false}>
+      <AdminAuthProvider>
+        <BuddysAdminContent />
+      </AdminAuthProvider>
+    </ContentProtection>
   );
 };
 
