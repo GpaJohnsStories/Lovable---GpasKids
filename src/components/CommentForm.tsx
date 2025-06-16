@@ -1,3 +1,4 @@
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -366,14 +367,14 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
                 <div className="sm:col-span-2">
                   <FormControl>
                     <div className="relative has-highlighting">
-                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre font-sans" style={{ fontFamily: 'Arial, sans-serif', fontStyle: 'normal', color: 'black' }} aria-hidden="true">
+                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre font-sans bg-transparent text-transparent" style={{ fontFamily: 'Arial, sans-serif', fontStyle: 'normal' }} aria-hidden="true">
                         {getHighlightedParts(field.value).map((part, i) => (
-                          <span key={i} className={part.isBad ? 'text-destructive' : 'text-foreground'}>
+                          <span key={i} className={part.isBad ? 'text-destructive' : 'text-transparent'}>
                             {part.text}
                           </span>
                         ))}
                       </div>
-                      <Input placeholder="A short title for your comment" {...field} className="w-full text-base md:text-sm"/>
+                      <Input placeholder="A short title for your comment" {...field} className="w-full text-base md:text-sm relative z-10 bg-white"/>
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -390,16 +391,16 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
                 <div className="sm:col-span-2">
                   <FormControl>
                     <div className="relative has-highlighting">
-                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre-wrap break-words font-sans" style={{ fontFamily: 'Arial, sans-serif', fontStyle: 'normal', color: 'black' }} aria-hidden="true">
+                      <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre-wrap break-words font-sans bg-transparent text-transparent" style={{ fontFamily: 'Arial, sans-serif', fontStyle: 'normal' }} aria-hidden="true">
                         {getHighlightedParts(field.value).map((part, i) => (
-                          <span key={i} className={part.isBad ? 'text-destructive' : 'text-foreground'}>
+                          <span key={i} className={part.isBad ? 'text-destructive' : 'text-transparent'}>
                             {part.text}
                           </span>
                         ))}
                       </div>
                       <Textarea
                         placeholder="Tell us what you think..."
-                        className="resize-y"
+                        className="resize-y relative z-10 bg-white"
                         {...field}
                       />
                     </div>
