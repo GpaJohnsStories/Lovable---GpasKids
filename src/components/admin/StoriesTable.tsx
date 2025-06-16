@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -87,7 +86,10 @@ const StoriesTable = ({
           <div className="flex gap-2 mb-4 pt-4">
             <Button
               onClick={() => setPublishedFilter('all')}
-              variant={publishedFilter === 'all' ? 'default' : 'outline'}
+              className={publishedFilter === 'all' 
+                ? 'bg-gradient-to-b from-orange-400 to-orange-600 border-orange-700 text-white hover:bg-gradient-to-b hover:from-orange-500 hover:to-orange-700' 
+                : 'bg-gradient-to-b from-white to-gray-50 border-gray-300 hover:bg-gradient-to-b hover:from-gray-50 hover:to-gray-100 text-black'
+              }
               size="sm"
             >
               All
