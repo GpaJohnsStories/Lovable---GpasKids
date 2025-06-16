@@ -1,4 +1,3 @@
-
 import { Globe, Smile } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
@@ -9,11 +8,15 @@ interface Story {
 }
 
 export const getCategoryHeader = (category: string, stories?: Story[]) => {
-  // For "Newest" and "Most Popular", just return simple titles
+  // For "Newest" and "Most Popular", return titles with 3D banners
   if (category === "Newest") {
     return (
       <div className="flex items-center justify-center mb-6">
-        <h3 className="text-xl font-bold font-fun text-orange-800">{category}</h3>
+        <div className="w-[35%]">
+          <div className="bg-gradient-to-b from-blue-400 via-blue-500 to-blue-600 rounded-xl p-4 shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)] border border-blue-700">
+            <h3 className="text-lg font-bold font-fun text-white text-center">Newest Stories in Each Category</h3>
+          </div>
+        </div>
       </div>
     );
   }
@@ -21,7 +24,11 @@ export const getCategoryHeader = (category: string, stories?: Story[]) => {
   if (category === "Most Popular") {
     return (
       <div className="flex items-center justify-center mb-6">
-        <h3 className="text-xl font-bold font-fun text-orange-800">{category}</h3>
+        <div className="w-[35%]">
+          <div className="bg-gradient-to-b from-red-500 via-red-600 to-red-700 rounded-xl p-4 shadow-[0_6px_0_#b91c1c,0_8px_15px_rgba(0,0,0,0.3)] border border-red-800">
+            <h3 className="text-lg font-bold font-fun text-white text-center">Most Popular Stories in Each Category</h3>
+          </div>
+        </div>
       </div>
     );
   }
