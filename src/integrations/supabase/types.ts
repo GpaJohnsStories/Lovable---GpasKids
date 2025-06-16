@@ -201,60 +201,6 @@ export type Database = {
           },
         ]
       }
-      visitor_countries: {
-        Row: {
-          country_code: string
-          country_name: string
-          created_at: string
-          id: string
-          last_visit: string
-          updated_at: string
-          visit_count: number
-        }
-        Insert: {
-          country_code: string
-          country_name: string
-          created_at?: string
-          id?: string
-          last_visit?: string
-          updated_at?: string
-          visit_count?: number
-        }
-        Update: {
-          country_code?: string
-          country_name?: string
-          created_at?: string
-          id?: string
-          last_visit?: string
-          updated_at?: string
-          visit_count?: number
-        }
-        Relationships: []
-      }
-      visitor_sessions: {
-        Row: {
-          country_code: string
-          created_at: string
-          id: string
-          ip_hash: string
-          visit_date: string
-        }
-        Insert: {
-          country_code: string
-          created_at?: string
-          id?: string
-          ip_hash: string
-          visit_date?: string
-        }
-        Update: {
-          country_code?: string
-          created_at?: string
-          id?: string
-          ip_hash?: string
-          visit_date?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
