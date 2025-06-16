@@ -77,9 +77,11 @@ const StorySection = () => {
       </div>
 
       <div className="text-center">
-        <Button className="cozy-button text-lg px-8 py-4">
-          Now Begin <em>Your</em> Adventure
-        </Button>
+        <Link to="/library" onClick={scrollToTop}>
+          <Button className="cozy-button text-lg px-8 py-4">
+            Now Begin <em>Your</em> Adventure
+          </Button>
+        </Link>
         <p className="text-orange-600 mt-4 text-sm">
           More magical stories are being added every week!
         </p>
