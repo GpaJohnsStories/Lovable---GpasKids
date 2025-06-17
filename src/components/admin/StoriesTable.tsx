@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -9,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
+import { getFilterButtonStyles } from "@/utils/buttonStyleUtils";
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'created_at';
 type SortDirection = 'asc' | 'desc';
@@ -85,48 +85,24 @@ const StoriesTable = ({
       <CardContent>
         {showActions && (
           <div className="flex gap-2 mb-4 pt-4">
-            <Button
+            <button
               onClick={() => setPublishedFilter('all')}
-              size="sm"
-              style={{
-                background: publishedFilter === 'all' 
-                  ? 'linear-gradient(to bottom, #fb923c, #ea580c) !important' 
-                  : 'linear-gradient(to bottom, #ffffff, #f9fafb) !important',
-                borderColor: publishedFilter === 'all' ? '#c2410c !important' : '#d1d5db !important',
-                color: publishedFilter === 'all' ? 'white !important' : 'black !important',
-                fontFamily: 'system-ui, -apple-system, sans-serif !important'
-              }}
+              style={getFilterButtonStyles(publishedFilter === 'all', 'all')}
             >
               All
-            </Button>
-            <Button
+            </button>
+            <button
               onClick={() => setPublishedFilter('published')}
-              size="sm"
-              style={{
-                background: publishedFilter === 'published' 
-                  ? 'linear-gradient(to bottom, #4ade80, #16a34a) !important' 
-                  : 'linear-gradient(to bottom, #ffffff, #f9fafb) !important',
-                borderColor: publishedFilter === 'published' ? '#166534 !important' : '#d1d5db !important',
-                color: publishedFilter === 'published' ? 'white !important' : 'black !important',
-                fontFamily: 'system-ui, -apple-system, sans-serif !important'
-              }}
+              style={getFilterButtonStyles(publishedFilter === 'published', 'published')}
             >
               Published
-            </Button>
-            <Button
+            </button>
+            <button
               onClick={() => setPublishedFilter('unpublished')}
-              size="sm"
-              style={{
-                background: publishedFilter === 'unpublished' 
-                  ? 'linear-gradient(to bottom, #f87171, #dc2626) !important' 
-                  : 'linear-gradient(to bottom, #ffffff, #f9fafb) !important',
-                borderColor: publishedFilter === 'unpublished' ? '#991b1b !important' : '#d1d5db !important',
-                color: publishedFilter === 'unpublished' ? 'white !important' : 'black !important',
-                fontFamily: 'system-ui, -apple-system, sans-serif !important'
-              }}
+              style={getFilterButtonStyles(publishedFilter === 'unpublished', 'unpublished')}
             >
               Unpublished
-            </Button>
+            </button>
           </div>
         )}
         
