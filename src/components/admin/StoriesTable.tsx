@@ -84,77 +84,29 @@ const StoriesTable = ({
     refetch();
   };
 
-  const getFilterButtonStyle = (filter: PublishedFilter, isActive: boolean) => {
-    const baseStyle = {
-      padding: '8px 16px',
-      borderRadius: '6px',
-      border: 'none',
-      cursor: 'pointer',
-      fontSize: '14px',
-      fontWeight: '500',
-      transition: 'all 0.2s ease',
-      fontFamily: 'system-ui, -apple-system, sans-serif'
-    };
-
-    if (!isActive) {
-      return {
-        ...baseStyle,
-        backgroundColor: '#e5e7eb',
-        color: '#6b7280',
-      };
-    }
-
-    switch (filter) {
-      case 'all':
-        return {
-          ...baseStyle,
-          backgroundColor: '#3b82f6',
-          color: 'white',
-        };
-      case 'published':
-        return {
-          ...baseStyle,
-          backgroundColor: '#10b981',
-          color: 'white',
-        };
-      case 'unpublished':
-        return {
-          ...baseStyle,
-          backgroundColor: '#ef4444',
-          color: 'white',
-        };
-      default:
-        return {
-          ...baseStyle,
-          backgroundColor: '#e5e7eb',
-          color: '#6b7280',
-        };
-    }
-  };
-
   return (
     <Card>
       <CardContent>
         {showActions && (
           <div className="flex gap-2 mb-4 pt-4">
-            <button
+            <Button
               onClick={() => setPublishedFilter('all')}
-              style={getFilterButtonStyle('all', publishedFilter === 'all')}
+              variant={publishedFilter === 'all' ? 'default' : 'outline'}
             >
               All
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setPublishedFilter('published')}
-              style={getFilterButtonStyle('published', publishedFilter === 'published')}
+              variant={publishedFilter === 'published' ? 'default' : 'outline'}
             >
               Published
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setPublishedFilter('unpublished')}
-              style={getFilterButtonStyle('unpublished', publishedFilter === 'unpublished')}
+              variant={publishedFilter === 'unpublished' ? 'default' : 'outline'}
             >
               Unpublished
-            </button>
+            </Button>
           </div>
         )}
         
