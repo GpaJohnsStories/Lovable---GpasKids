@@ -33,7 +33,7 @@ const CookieFreeFooter = () => {
             <div className="flex items-center space-x-1 text-amber-600">
               <span>Made with</span>
               <Heart className="h-3 w-3 text-red-500" strokeWidth={3} />
-              <span>for children</span>
+              <span>for children with help from Lovable AI at Lovable.dev</span>
             </div>
             <div className="text-amber-600 font-medium">
               © 2025 Grandpa John's Stories
