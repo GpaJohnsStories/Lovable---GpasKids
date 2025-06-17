@@ -90,11 +90,11 @@ const StoriesTable = ({
               size="sm"
               style={{
                 background: publishedFilter === 'all' 
-                  ? 'linear-gradient(to bottom, #fb923c, #ea580c)' 
-                  : 'linear-gradient(to bottom, #ffffff, #f9fafb)',
-                borderColor: publishedFilter === 'all' ? '#c2410c' : '#d1d5db',
-                color: publishedFilter === 'all' ? 'white' : 'black',
-                fontFamily: 'system-ui, -apple-system, sans-serif'
+                  ? 'linear-gradient(to bottom, #fb923c, #ea580c) !important' 
+                  : 'linear-gradient(to bottom, #ffffff, #f9fafb) !important',
+                borderColor: publishedFilter === 'all' ? '#c2410c !important' : '#d1d5db !important',
+                color: publishedFilter === 'all' ? 'white !important' : 'black !important',
+                fontFamily: 'system-ui, -apple-system, sans-serif !important'
               }}
             >
               All
@@ -104,11 +104,11 @@ const StoriesTable = ({
               size="sm"
               style={{
                 background: publishedFilter === 'published' 
-                  ? 'linear-gradient(to bottom, #4ade80, #16a34a)' 
-                  : 'linear-gradient(to bottom, #ffffff, #f9fafb)',
-                borderColor: publishedFilter === 'published' ? '#166534' : '#d1d5db',
-                color: publishedFilter === 'published' ? 'white' : 'black',
-                fontFamily: 'system-ui, -apple-system, sans-serif'
+                  ? 'linear-gradient(to bottom, #4ade80, #16a34a) !important' 
+                  : 'linear-gradient(to bottom, #ffffff, #f9fafb) !important',
+                borderColor: publishedFilter === 'published' ? '#166534 !important' : '#d1d5db !important',
+                color: publishedFilter === 'published' ? 'white !important' : 'black !important',
+                fontFamily: 'system-ui, -apple-system, sans-serif !important'
               }}
             >
               Published
@@ -118,11 +118,11 @@ const StoriesTable = ({
               size="sm"
               style={{
                 background: publishedFilter === 'unpublished' 
-                  ? 'linear-gradient(to bottom, #f87171, #dc2626)' 
-                  : 'linear-gradient(to bottom, #ffffff, #f9fafb)',
-                borderColor: publishedFilter === 'unpublished' ? '#991b1b' : '#d1d5db',
-                color: publishedFilter === 'unpublished' ? 'white' : 'black',
-                fontFamily: 'system-ui, -apple-system, sans-serif'
+                  ? 'linear-gradient(to bottom, #f87171, #dc2626) !important' 
+                  : 'linear-gradient(to bottom, #ffffff, #f9fafb) !important',
+                borderColor: publishedFilter === 'unpublished' ? '#991b1b !important' : '#d1d5db !important',
+                color: publishedFilter === 'unpublished' ? 'white !important' : 'black !important',
+                fontFamily: 'system-ui, -apple-system, sans-serif !important'
               }}
             >
               Unpublished
