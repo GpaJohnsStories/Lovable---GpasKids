@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -79,6 +80,10 @@ const StoriesTable = ({
     }
   };
 
+  const handleStatusChange = () => {
+    refetch();
+  };
+
   const getFilterButtonClass = (filter: PublishedFilter, isActive: boolean) => {
     const baseClass = 'filter-button-base';
     
@@ -147,6 +152,7 @@ const StoriesTable = ({
                   showPublishedColumn={showPublishedColumn}
                   onEdit={onEditStory}
                   onDelete={handleDeleteStory}
+                  onStatusChange={handleStatusChange}
                 />
               ))}
             </TableBody>

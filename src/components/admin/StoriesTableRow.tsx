@@ -4,6 +4,8 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface Story {
   id: string;
@@ -29,6 +31,7 @@ interface StoriesTableRowProps {
   showPublishedColumn?: boolean;
   onEdit: (story: Story) => void;
   onDelete: (id: string) => void;
+  onStatusChange?: () => void;
 }
 
 const StoriesTableRow = ({ 
@@ -36,7 +39,8 @@ const StoriesTableRow = ({
   showActions, 
   showPublishedColumn = true, 
   onEdit, 
-  onDelete 
+  onDelete,
+  onStatusChange
 }: StoriesTableRowProps) => {
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
@@ -55,6 +59,25 @@ const StoriesTableRow = ({
 
   const getFirstAvailablePhoto = () => {
     return story.photo_link_1 || story.photo_link_2 || story.photo_link_3;
+  };
+
+  const handleTogglePublished = async () => {
+    const newStatus = story.published === 'Y' ? 'N' : 'Y';
+    
+    const { error } = await supabase
+      .from('stories')
+      .update({ published: newStatus })
+      .eq('id', story.id);
+
+    if (error) {
+      toast.error("Error updating story status");
+      console.error(error);
+    } else {
+      toast.success(`Story ${newStatus === 'Y' ? 'published' : 'unpublished'} successfully`);
+      if (onStatusChange) {
+        onStatusChange();
+      }
+    }
   };
 
   const firstPhoto = getFirstAvailablePhoto();
@@ -102,9 +125,10 @@ const StoriesTableRow = ({
         <TableCell className="text-center">
           <Button
             size="sm"
+            onClick={handleTogglePublished}
             className={story.published === 'Y' 
-              ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-3 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700' 
-              : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-3 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700'
+              ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-3 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer' 
+              : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-3 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer'
             }
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
