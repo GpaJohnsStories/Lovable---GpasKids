@@ -84,22 +84,51 @@ const StoriesTable = ({
     refetch();
   };
 
-  const getFilterButtonClass = (filter: PublishedFilter, isActive: boolean) => {
-    const baseClass = 'filter-button-base';
-    
+  const getFilterButtonStyle = (filter: PublishedFilter, isActive: boolean) => {
+    const baseStyle = {
+      padding: '8px 16px',
+      borderRadius: '6px',
+      border: 'none',
+      cursor: 'pointer',
+      fontSize: '14px',
+      fontWeight: '500',
+      transition: 'all 0.2s ease',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    };
+
     if (!isActive) {
-      return `${baseClass} filter-button-inactive`;
+      return {
+        ...baseStyle,
+        backgroundColor: '#e5e7eb',
+        color: '#6b7280',
+      };
     }
 
     switch (filter) {
       case 'all':
-        return `${baseClass} filter-button-all`;
+        return {
+          ...baseStyle,
+          backgroundColor: '#3b82f6',
+          color: 'white',
+        };
       case 'published':
-        return `${baseClass} filter-button-published`;
+        return {
+          ...baseStyle,
+          backgroundColor: '#10b981',
+          color: 'white',
+        };
       case 'unpublished':
-        return `${baseClass} filter-button-unpublished`;
+        return {
+          ...baseStyle,
+          backgroundColor: '#ef4444',
+          color: 'white',
+        };
       default:
-        return `${baseClass} filter-button-inactive`;
+        return {
+          ...baseStyle,
+          backgroundColor: '#e5e7eb',
+          color: '#6b7280',
+        };
     }
   };
 
@@ -110,19 +139,19 @@ const StoriesTable = ({
           <div className="flex gap-2 mb-4 pt-4">
             <button
               onClick={() => setPublishedFilter('all')}
-              className={getFilterButtonClass('all', publishedFilter === 'all')}
+              style={getFilterButtonStyle('all', publishedFilter === 'all')}
             >
               All
             </button>
             <button
               onClick={() => setPublishedFilter('published')}
-              className={getFilterButtonClass('published', publishedFilter === 'published')}
+              style={getFilterButtonStyle('published', publishedFilter === 'published')}
             >
               Published
             </button>
             <button
               onClick={() => setPublishedFilter('unpublished')}
-              className={getFilterButtonClass('unpublished', publishedFilter === 'unpublished')}
+              style={getFilterButtonStyle('unpublished', publishedFilter === 'unpublished')}
             >
               Unpublished
             </button>
