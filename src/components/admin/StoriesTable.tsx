@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -8,7 +9,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
-import { getFilterButtonStyles } from "@/utils/buttonStyleUtils";
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'created_at';
 type SortDirection = 'asc' | 'desc';
@@ -87,19 +87,19 @@ const StoriesTable = ({
           <div className="flex gap-2 mb-4 pt-4">
             <button
               onClick={() => setPublishedFilter('all')}
-              style={getFilterButtonStyles(publishedFilter === 'all', 'all')}
+              className={`filter-button ${publishedFilter === 'all' ? 'filter-button-all-active' : 'filter-button-inactive'}`}
             >
               All
             </button>
             <button
               onClick={() => setPublishedFilter('published')}
-              style={getFilterButtonStyles(publishedFilter === 'published', 'published')}
+              className={`filter-button ${publishedFilter === 'published' ? 'filter-button-published-active' : 'filter-button-inactive'}`}
             >
               Published
             </button>
             <button
               onClick={() => setPublishedFilter('unpublished')}
-              style={getFilterButtonStyles(publishedFilter === 'unpublished', 'unpublished')}
+              className={`filter-button ${publishedFilter === 'unpublished' ? 'filter-button-unpublished-active' : 'filter-button-inactive'}`}
             >
               Unpublished
             </button>
