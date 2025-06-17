@@ -12,16 +12,16 @@ const CreateStoryCard = ({ onCreateStory }: CreateStoryCardProps) => {
     <div className="mb-8">
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-            Create New Story
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-xl text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              Create New Story
+            </CardTitle>
+            <Button onClick={onCreateStory} className="cozy-button">
+              <Plus className="h-4 w-4 mr-2" />
+              Create Story
+            </Button>
+          </div>
         </CardHeader>
-        <CardContent>
-          <Button onClick={onCreateStory} className="w-full cozy-button">
-            <Plus className="h-4 w-4 mr-2" />
-            Create Story with Editor
-          </Button>
-        </CardContent>
       </Card>
     </div>
   );
