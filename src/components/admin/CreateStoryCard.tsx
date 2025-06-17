@@ -12,7 +12,7 @@ const CreateStoryCard = ({ onCreateStory }: CreateStoryCardProps) => {
     <div className="mb-8">
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
             <CardTitle className="text-xl text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               Create New Story
             </CardTitle>
