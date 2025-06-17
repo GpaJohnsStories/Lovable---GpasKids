@@ -80,6 +80,65 @@ const StoriesTable = ({
     }
   };
 
+  const getButtonStyle = (filter: PublishedFilter, isActive: boolean) => {
+    const baseStyle = {
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+      fontSize: '0.875rem',
+      fontWeight: '500',
+      padding: '0.5rem 1rem',
+      borderRadius: '0.375rem',
+      border: '1px solid',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease-in-out',
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textDecoration: 'none',
+      outline: 'none',
+      minHeight: '2.5rem',
+      minWidth: '5rem',
+      boxShadow: '0 6px 12px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.1), inset 0 1px 2px rgba(255,255,255,0.2)'
+    };
+
+    if (!isActive) {
+      return {
+        ...baseStyle,
+        background: 'linear-gradient(to bottom, #ffffff, #f9fafb)',
+        borderColor: '#d1d5db',
+        color: '#374151'
+      };
+    }
+
+    switch (filter) {
+      case 'all':
+        return {
+          ...baseStyle,
+          background: 'linear-gradient(to bottom, #fb923c, #ea580c)',
+          borderColor: '#c2410c',
+          color: 'white',
+          boxShadow: '0 6px 12px rgba(194,65,12,0.3), 0 3px 6px rgba(0,0,0,0.1), inset 0 1px 2px rgba(255,255,255,0.3)'
+        };
+      case 'published':
+        return {
+          ...baseStyle,
+          background: 'linear-gradient(to bottom, #4ade80, #16a34a)',
+          borderColor: '#166534',
+          color: 'white',
+          boxShadow: '0 6px 12px rgba(22,101,52,0.3), 0 3px 6px rgba(0,0,0,0.1), inset 0 1px 2px rgba(255,255,255,0.3)'
+        };
+      case 'unpublished':
+        return {
+          ...baseStyle,
+          background: 'linear-gradient(to bottom, #f87171, #dc2626)',
+          borderColor: '#991b1b',
+          color: 'white',
+          boxShadow: '0 6px 12px rgba(127,29,29,0.3), 0 3px 6px rgba(0,0,0,0.1), inset 0 1px 2px rgba(255,255,255,0.3)'
+        };
+      default:
+        return baseStyle;
+    }
+  };
+
   return (
     <Card>
       <CardContent>
@@ -87,19 +146,19 @@ const StoriesTable = ({
           <div className="flex gap-2 mb-4 pt-4">
             <button
               onClick={() => setPublishedFilter('all')}
-              className={`filter-button ${publishedFilter === 'all' ? 'filter-button-all-active' : 'filter-button-inactive'}`}
+              style={getButtonStyle('all', publishedFilter === 'all')}
             >
               All
             </button>
             <button
               onClick={() => setPublishedFilter('published')}
-              className={`filter-button ${publishedFilter === 'published' ? 'filter-button-published-active' : 'filter-button-inactive'}`}
+              style={getButtonStyle('published', publishedFilter === 'published')}
             >
               Published
             </button>
             <button
               onClick={() => setPublishedFilter('unpublished')}
-              className={`filter-button ${publishedFilter === 'unpublished' ? 'filter-button-unpublished-active' : 'filter-button-inactive'}`}
+              style={getButtonStyle('unpublished', publishedFilter === 'unpublished')}
             >
               Unpublished
             </button>
