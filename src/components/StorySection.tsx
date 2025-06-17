@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import StoryCard from "./StoryCard";
 import { useQuery } from "@tanstack/react-query";
@@ -9,11 +8,12 @@ import { getNewestStories, getPopularStories } from "@/utils/storiesData";
 
 const StorySection = () => {
   const { data: realStories = [] } = useQuery({
-    queryKey: ['stories'],
+    queryKey: ['stories', 'published'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('stories')
         .select('*')
+        .eq('published', 'Y')
         .order('created_at', { ascending: false });
       
       if (error) {
@@ -25,7 +25,7 @@ const StorySection = () => {
     },
   });
 
-  console.log('Fetched stories:', realStories);
+  console.log('Fetched published stories:', realStories);
 
   const newestStories = getNewestStories(realStories);
   const popularStories = getPopularStories();
