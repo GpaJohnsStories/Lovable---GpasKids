@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Shield, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const CookieFreeFooter = () => {
@@ -17,7 +17,6 @@ const CookieFreeFooter = () => {
         <div className="flex justify-between items-center">
           {/* Left Side */}
           <div className="flex items-center space-x-2 text-green-700">
-            <Shield className="h-4 w-4" />
             <Link 
               to="/privacy"
               onClick={scrollToTop}
