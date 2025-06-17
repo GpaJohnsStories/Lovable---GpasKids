@@ -1,5 +1,4 @@
 
-import { User } from "lucide-react";
 import { renderCategoryBadge } from "@/utils/categoryUtils";
 
 interface StoryHeaderProps {
@@ -25,7 +24,6 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
 
       <div className="flex items-center justify-center space-x-6 text-sm text-orange-600 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
         <div className="flex items-center">
-          <User className="h-4 w-4 mr-1" />
           <span className="font-medium">by {author}</span>
         </div>
         {showStoryCode && storyCode ? (
