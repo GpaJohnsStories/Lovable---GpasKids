@@ -16,7 +16,7 @@ const CreateStoryCard = ({ onCreateStory }: CreateStoryCardProps) => {
             <CardTitle className="text-xl text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               Create New Story
             </CardTitle>
-            <Button onClick={onCreateStory} className="cozy-button">
+            <Button onClick={onCreateStory} className="bg-green-500 hover:bg-green-600 text-white">
               <Plus className="h-4 w-4 mr-2" />
               Create Story
             </Button>
