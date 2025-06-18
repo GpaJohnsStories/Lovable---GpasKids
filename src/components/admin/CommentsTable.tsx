@@ -16,8 +16,11 @@ const CommentsTable = () => {
     selectedComment,
     isDetailOpen,
     searchPersonalCode,
+    selectedStatus,
+    statusCounts,
     filteredAndSortedComments,
     setSearchPersonalCode,
+    setSelectedStatus,
     handleUpdateStatus,
     handleViewComment,
     handleCloseDetail,
@@ -47,6 +50,9 @@ const CommentsTable = () => {
                 onClearSearch={handleClearSearch}
                 filteredCount={filteredAndSortedComments.length}
                 totalCount={comments?.length || 0}
+                selectedStatus={selectedStatus}
+                onStatusChange={setSelectedStatus}
+                statusCounts={statusCounts}
               />
               
               <CommentsTableContent

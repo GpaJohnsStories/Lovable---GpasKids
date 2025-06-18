@@ -8,6 +8,7 @@ import { Database } from "@/integrations/supabase/types";
 type Comment = Database['public']['Tables']['comments']['Row'];
 type SortField = keyof Omit<Comment, 'author_email' | 'parent_id' | 'updated_at' | 'content'> | 'actions';
 type SortDirection = 'asc' | 'desc';
+type StatusFilter = 'all' | Comment['status'];
 
 export const useCommentsTable = () => {
   const queryClient = useQueryClient();
@@ -16,6 +17,7 @@ export const useCommentsTable = () => {
   const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [searchPersonalCode, setSearchPersonalCode] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState<StatusFilter>('all');
 
   const { data: comments, isLoading, error } = useQuery<Comment[]>({
     queryKey: ["admin_comments"],
@@ -41,6 +43,24 @@ export const useCommentsTable = () => {
       return data || [];
     },
   });
+
+  const statusCounts = useMemo(() => {
+    if (!comments) return { all: 0, pending: 0, approved: 0, rejected: 0, archived: 0 };
+    
+    const counts = {
+      all: comments.length,
+      pending: 0,
+      approved: 0,
+      rejected: 0,
+      archived: 0
+    };
+
+    comments.forEach(comment => {
+      counts[comment.status]++;
+    });
+
+    return counts;
+  }, [comments]);
 
   const updateCommentStatusMutation = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: Comment['status'] }) => {
@@ -73,8 +93,15 @@ export const useCommentsTable = () => {
     if (!comments) return [];
     
     let filtered = comments;
+    
+    // Filter by status
+    if (selectedStatus !== 'all') {
+      filtered = filtered.filter(comment => comment.status === selectedStatus);
+    }
+    
+    // Filter by personal code
     if (searchPersonalCode.trim()) {
-      filtered = comments.filter(comment => 
+      filtered = filtered.filter(comment => 
         comment.personal_id.toLowerCase().includes(searchPersonalCode.toLowerCase())
       );
     }
@@ -102,7 +129,7 @@ export const useCommentsTable = () => {
 
       return 0;
     });
-  }, [comments, sortField, sortDirection, searchPersonalCode]);
+  }, [comments, sortField, sortDirection, searchPersonalCode, selectedStatus]);
 
   const handleUpdateStatus = (id: string, status: Comment['status']) => {
     updateCommentStatusMutation.mutate({ id, status });
@@ -140,8 +167,11 @@ export const useCommentsTable = () => {
     selectedComment,
     isDetailOpen,
     searchPersonalCode,
+    selectedStatus,
+    statusCounts,
     filteredAndSortedComments,
     setSearchPersonalCode,
+    setSelectedStatus,
     handleUpdateStatus,
     handleViewComment,
     handleCloseDetail,
