@@ -54,34 +54,26 @@ const StoryForm: React.FC<StoryFormProps> = ({ story, onSave, onCancel }) => {
     }
   }, [story]);
 
-  const generateUniqueStoryCode = async (baseCode: string): Promise<string> => {
-    if (!baseCode.trim()) {
-      // Generate a random code if none provided
-      baseCode = `STORY_${Date.now()}`;
+  const checkStoryCodeExists = async (storyCode: string, excludeId?: string): Promise<boolean> => {
+    let query = supabase
+      .from('stories')
+      .select('id')
+      .eq('story_code', storyCode.trim())
+      .limit(1);
+
+    // Exclude current story when editing
+    if (excludeId) {
+      query = query.neq('id', excludeId);
     }
 
-    let uniqueCode = baseCode;
-    let counter = 1;
+    const { data, error } = await query;
 
-    while (true) {
-      const { data, error } = await supabase
-        .from('stories')
-        .select('id')
-        .eq('story_code', uniqueCode)
-        .limit(1);
-
-      if (error) {
-        console.error('Error checking story code:', error);
-        throw error;
-      }
-
-      if (!data || data.length === 0) {
-        return uniqueCode;
-      }
-
-      uniqueCode = `${baseCode}_${counter}`;
-      counter++;
+    if (error) {
+      console.error('Error checking story code:', error);
+      throw error;
     }
+
+    return data && data.length > 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -89,18 +81,34 @@ const StoryForm: React.FC<StoryFormProps> = ({ story, onSave, onCancel }) => {
     setIsLoading(true);
 
     try {
-      let finalFormData = { ...formData };
+      // Validate required fields
+      if (!formData.title.trim()) {
+        toast.error("Title is required");
+        return;
+      }
 
-      // If creating a new story, ensure unique story code
-      if (!story?.id) {
-        finalFormData.story_code = await generateUniqueStoryCode(formData.story_code);
+      if (!formData.story_code.trim()) {
+        toast.error("Story code is required");
+        return;
+      }
+
+      if (!formData.content.trim()) {
+        toast.error("Story content is required");
+        return;
+      }
+
+      // Check for duplicate story code
+      const isDuplicate = await checkStoryCodeExists(formData.story_code, story?.id);
+      if (isDuplicate) {
+        toast.error("Story code already exists. Please choose a different code.");
+        return;
       }
 
       if (story?.id) {
         // Update existing story
         const { error } = await supabase
           .from('stories')
-          .update(finalFormData)
+          .update(formData)
           .eq('id', story.id);
         
         if (error) {
@@ -112,7 +120,7 @@ const StoryForm: React.FC<StoryFormProps> = ({ story, onSave, onCancel }) => {
         // Create new story
         const { error } = await supabase
           .from('stories')
-          .insert([finalFormData]);
+          .insert([formData]);
         
         if (error) {
           console.error('Insert error:', error);
@@ -125,13 +133,8 @@ const StoryForm: React.FC<StoryFormProps> = ({ story, onSave, onCancel }) => {
     } catch (error: any) {
       console.error('Error saving story:', error);
       
-      // Provide specific error messages based on the error type
-      if (error?.code === '23505') {
-        if (error.constraint === 'stories_story_code_key') {
-          toast.error("Story code already exists. Please use a different code.");
-        } else {
-          toast.error("A story with these details already exists.");
-        }
+      if (error?.code === '23505' && error.constraint === 'stories_story_code_key') {
+        toast.error("Story code already exists. Please use a different code.");
       } else if (error?.message) {
         toast.error(`Error saving story: ${error.message}`);
       } else {

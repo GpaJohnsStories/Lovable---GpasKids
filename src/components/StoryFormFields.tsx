@@ -71,12 +71,13 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
         </div>
 
         <div>
-          <Label htmlFor="story_code">Story Code</Label>
+          <Label htmlFor="story_code">Story Code *</Label>
           <Input
             id="story_code"
             value={formData.story_code}
             onChange={(e) => onInputChange('story_code', e.target.value)}
-            placeholder="Optional story code"
+            required
+            placeholder="Enter unique story code"
           />
         </div>
 
