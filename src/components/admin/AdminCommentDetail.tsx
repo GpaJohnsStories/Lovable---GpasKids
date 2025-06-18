@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from 'date-fns';
 import { Database } from "@/integrations/supabase/types";
+import { Megaphone } from "lucide-react";
 import CommentReplyForm from "@/components/CommentReplyForm";
 import CommentRepliesList from "@/components/CommentRepliesList";
 
@@ -18,6 +19,8 @@ interface AdminCommentDetailProps {
 
 const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminCommentDetailProps) => {
   if (!comment) return null;
+
+  const isAnnouncement = comment.personal_id === '000000';
 
   const getStatusBadge = (status: Comment['status']) => {
     switch (status) {
@@ -34,6 +37,18 @@ const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminC
     }
   };
 
+  const getPersonalIdDisplay = () => {
+    if (isAnnouncement) {
+      return (
+        <div className="flex items-center gap-2">
+          <Megaphone className="h-4 w-4 text-blue-600" />
+          <span className="text-blue-600 font-semibold">Admin</span>
+        </div>
+      );
+    }
+    return comment.personal_id;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -45,14 +60,21 @@ const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminC
 
         <div className="space-y-6">
           {/* Comment Header */}
-          <div className="bg-gray-50 p-4 rounded-lg border">
+          <div className={`p-4 rounded-lg border ${isAnnouncement ? 'bg-blue-50 border-blue-200' : 'bg-gray-50'}`}>
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                <h2 className={`text-lg font-semibold mb-2 ${isAnnouncement ? 'text-blue-900' : 'text-gray-900'}`}>
+                  {isAnnouncement && (
+                    <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 mr-2 mb-1">
+                      📢 Announcement
+                    </Badge>
+                  )}
                   {comment.subject}
                 </h2>
                 <div className="flex items-center gap-4 text-sm text-gray-600">
-                  <span className="font-medium">By: {comment.personal_id}</span>
+                  <span className="font-medium flex items-center gap-2">
+                    By: {getPersonalIdDisplay()}
+                  </span>
                   <span>Posted: {format(new Date(comment.created_at), 'MMM d, yyyy, h:mm a')}</span>
                   {getStatusBadge(comment.status)}
                 </div>
@@ -60,7 +82,7 @@ const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminC
             </div>
             
             <div className="prose prose-gray max-w-none">
-              <div className="text-gray-800 whitespace-pre-wrap leading-relaxed text-lg">
+              <div className={`whitespace-pre-wrap leading-relaxed text-lg ${isAnnouncement ? 'text-blue-800' : 'text-gray-800'}`}>
                 {comment.content}
               </div>
             </div>
