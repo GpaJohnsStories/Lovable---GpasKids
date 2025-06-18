@@ -14,11 +14,18 @@ const StoryCard = ({ story }: StoryCardProps) => {
     return story.photo_link_1 || story.photo_link_2 || story.photo_link_3;
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const firstPhoto = getFirstAvailablePhoto();
 
   return (
     <div className="w-2/5 mx-auto">
-      <Link to={`/story/${story.id}`}>
+      <Link to={`/story/${story.id}`} onClick={scrollToTop}>
         <Card className="story-card group cursor-pointer hover:shadow-lg transition-shadow" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <CardContent className="p-3 text-center">
             <div className="mb-2">
