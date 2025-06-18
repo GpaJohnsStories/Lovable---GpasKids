@@ -35,13 +35,13 @@ const CommentsTableHeader = ({ sortField, sortDirection, onSort }: CommentsTable
     }
   };
 
-  const headers: { label: string; field: SortField }[] = [
+  const headers: { label: string; field: SortField; isAction?: boolean }[] = [
     { label: "Personal Code", field: "personal_id" },
     { label: "Date", field: "created_at" },
     { label: "Subject", field: "subject" },
-    { label: "Content", field: "actions" }, // Using actions for the View button column
+    { label: "Content", field: "actions", isAction: true },
     { label: "Status", field: "status" },
-    { label: "Actions", field: "actions" },
+    { label: "Actions", field: "actions", isAction: true },
   ];
 
   return (
@@ -49,7 +49,7 @@ const CommentsTableHeader = ({ sortField, sortDirection, onSort }: CommentsTable
       <TableRow>
         {headers.map((header, index) => (
           <TableHead key={`${header.field}-${index}`} className="p-2 text-center">
-            {header.field === 'actions' || (header.label === 'Content' && header.field === 'actions') ? (
+            {header.isAction ? (
               <span className="font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>{header.label}</span>
             ) : (
               <Button
