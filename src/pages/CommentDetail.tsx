@@ -92,7 +92,7 @@ const CommentDetail = () => {
                 </p>
                 <Button onClick={() => navigate("/view-comments")} className="bg-orange-500 hover:bg-orange-600">
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Comments
+                  Back to Comments List
                 </Button>
               </div>
             </div>
@@ -118,7 +118,7 @@ const CommentDetail = () => {
                 className="mb-4"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Comments
+                Back to Comments List
               </Button>
             </div>
 
