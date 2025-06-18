@@ -38,8 +38,7 @@ const CommentsTableHeader = ({ sortField, sortDirection, onSort }: CommentsTable
   const headers: { label: string; field: SortField; isAction?: boolean; width?: string }[] = [
     { label: "Code", field: "personal_id", width: "w-20" },
     { label: "Date", field: "created_at", width: "w-32" },
-    { label: "Subject", field: "subject", width: "w-80" },
-    { label: "Content", field: "actions", isAction: true, width: "w-24" },
+    { label: "Subject", field: "subject", width: "w-96" },
     { label: "Status", field: "status", width: "w-28" },
     { label: "Actions", field: "actions", isAction: true, width: "w-36" },
   ];

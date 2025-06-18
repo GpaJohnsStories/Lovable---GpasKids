@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { format } from 'date-fns';
 import { Database } from "@/integrations/supabase/types";
 import { Badge } from "@/components/ui/badge";
-import { Eye, Megaphone } from "lucide-react";
+import { Megaphone } from "lucide-react";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
@@ -50,8 +50,11 @@ const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTa
         {getPersonalIdDisplay()}
       </TableCell>
       <TableCell className="w-32 text-center text-base">{format(new Date(comment.created_at), 'MMM d, yyyy')}</TableCell>
-      <TableCell className="w-80">
-        <div className={`font-medium break-words whitespace-normal text-base ${isAnnouncement ? 'text-blue-800' : ''}`}>
+      <TableCell className="w-96">
+        <div 
+          className={`font-medium break-words whitespace-normal text-base cursor-pointer hover:text-blue-600 transition-colors ${isAnnouncement ? 'text-blue-800 hover:text-blue-900' : 'hover:text-blue-600'}`}
+          onClick={() => onViewComment(comment)}
+        >
           {isAnnouncement && (
             <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 mr-2 mb-1">
               📢 Announcement
@@ -59,17 +62,6 @@ const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTa
           )}
           {comment.subject}
         </div>
-      </TableCell>
-      <TableCell className="w-24 text-center">
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => onViewComment(comment)}
-          className="flex items-center gap-1"
-        >
-          <Eye className="h-3 w-3" />
-          View
-        </Button>
       </TableCell>
       <TableCell className="w-28 text-center">{getStatusBadge(comment.status)}</TableCell>
       <TableCell className="w-36">
