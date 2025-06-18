@@ -11,6 +11,7 @@ import Privacy from "./pages/Privacy";
 import About from "./pages/About";
 import MakeComment from "./pages/MakeComment";
 import ViewComments from "./pages/ViewComments";
+import CommentDetail from "./pages/CommentDetail";
 import BuddysAdmin from "./pages/BuddysAdmin";
 import AdminComments from "./pages/AdminComments";
 import NotFound from "./pages/NotFound";
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/make-comment" element={<MakeComment />} />
           <Route path="/view-comments" element={<ViewComments />} />
+          <Route path="/comment/:id" element={<CommentDetail />} />
           <Route path="/buddys_admin" element={<BuddysAdmin />} />
           <Route path="/admin/comments" element={<AdminComments />} />
           <Route path="/privacy" element={<Privacy />} />

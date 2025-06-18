@@ -1,7 +1,4 @@
 
-import { UseFormReturn } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   FormControl,
   FormField,
@@ -9,64 +6,56 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { getHighlightedParts } from "@/utils/profanity";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { UseFormReturn } from "react-hook-form";
 
 interface CommentFormFieldsProps {
   form: UseFormReturn<any>;
+  hideSubject?: boolean;
 }
 
-const CommentFormFields = ({ form }: CommentFormFieldsProps) => {
+const CommentFormFields = ({ form, hideSubject = false }: CommentFormFieldsProps) => {
   return (
     <>
-      <FormField
-        control={form.control}
-        name="subject"
-        render={({ field }) => (
-          <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
-            <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Subject</FormLabel>
-            <div className="sm:col-span-2">
+      {!hideSubject && (
+        <FormField
+          control={form.control}
+          name="subject"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-orange-800 font-fun text-base">
+                Subject
+              </FormLabel>
               <FormControl>
-                <div className="relative has-highlighting">
-                  <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre-wrap break-words font-sans bg-transparent text-transparent" style={{ fontFamily: 'Arial, sans-serif', fontStyle: 'normal' }} aria-hidden="true">
-                    {getHighlightedParts(field.value).map((part, i) => (
-                      <span key={i} className={part.isBad ? 'text-destructive' : 'text-transparent'}>
-                        {part.text}
-                      </span>
-                    ))}
-                  </div>
-                  <Input placeholder="A short title for your comment" {...field} className="w-full text-base md:text-sm relative z-10 bg-white"/>
-                </div>
+                <Input 
+                  placeholder="What would you like to talk about?" 
+                  {...field} 
+                  className="font-fun"
+                />
               </FormControl>
               <FormMessage />
-            </div>
-          </FormItem>
-        )}
-      />
+            </FormItem>
+          )}
+        />
+      )}
+
       <FormField
         control={form.control}
         name="content"
         render={({ field }) => (
-          <FormItem className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-2">
-            <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Your Comment or Question</FormLabel>
-            <div className="sm:col-span-2">
-              <FormControl>
-                <div className="relative has-highlighting">
-                  <div className="absolute inset-0 px-3 py-2 text-base md:text-sm pointer-events-none whitespace-pre-wrap break-words font-sans bg-transparent text-transparent" style={{ fontFamily: 'Arial, sans-serif', fontStyle: 'normal' }} aria-hidden="true">
-                    {getHighlightedParts(field.value).map((part, i) => (
-                      <span key={i} className={part.isBad ? 'text-destructive' : 'text-transparent'}>
-                        {part.text}
-                      </span>
-                    ))}
-                  </div>
-                  <Textarea
-                    placeholder="Write your comment or question here"
-                    className="resize-y relative z-10 bg-white"
-                    {...field}
-                  />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </div>
+          <FormItem>
+            <FormLabel className="text-orange-800 font-fun text-base">
+              {hideSubject ? "Your Reply" : "Your Comment"}
+            </FormLabel>
+            <FormControl>
+              <Textarea
+                placeholder={hideSubject ? "Share your thoughts on this comment..." : "Share your thoughts, ask a question, or tell us about your experience..."}
+                className="min-h-[120px] font-fun"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />

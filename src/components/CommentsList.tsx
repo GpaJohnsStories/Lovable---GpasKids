@@ -5,12 +5,12 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { format } from 'date-fns';
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import CommentsListHeader from "./CommentsListHeader";
 
 type CommentFromDB = {
@@ -35,6 +35,7 @@ interface CommentsListProps {
 const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
   const [sortField, setSortField] = useState<SortField>('created_at');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const navigate = useNavigate();
 
   const { data: comments, isLoading, error } = useQuery<CommentWithReplies[]>({
     queryKey: ["comments", personalIdFilter],
@@ -102,6 +103,10 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
     }
   };
 
+  const handleCommentClick = (commentId: string) => {
+    navigate(`/comment/${commentId}`);
+  };
+
   if (isLoading) {
     return <div className="flex justify-center py-8"><LoadingSpinner /></div>;
   }
@@ -122,7 +127,11 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
           <TableBody>
             {sortedComments && sortedComments.length > 0 ? (
               sortedComments.map((comment) => (
-                <TableRow key={comment.id}>
+                <TableRow 
+                  key={comment.id} 
+                  className="cursor-pointer hover:bg-orange-50/50 transition-colors"
+                  onClick={() => handleCommentClick(comment.id)}
+                >
                   <TableCell className="font-medium font-fun text-orange-800">{comment.personal_id}</TableCell>
                   <TableCell className="font-fun text-orange-800">{format(new Date(comment.created_at), 'MMM d, yyyy')}</TableCell>
                   <TableCell className="font-fun text-orange-800">{comment.subject}</TableCell>
