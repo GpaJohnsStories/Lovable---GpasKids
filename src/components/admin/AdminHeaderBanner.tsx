@@ -15,7 +15,7 @@ const AdminHeaderBanner = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-orange-500 to-orange-600 border-b border-orange-700 shadow-lg">
+    <div className="sticky top-0 z-50 bg-gradient-to-r from-orange-500 to-orange-600 border-b border-orange-700 shadow-lg">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-6">

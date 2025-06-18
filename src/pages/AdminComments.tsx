@@ -4,6 +4,7 @@ import AdminLogin from "@/components/admin/AdminLogin";
 import CommentsDashboard from "@/components/admin/CommentsDashboard";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ContentProtection from "@/components/ContentProtection";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const AdminCommentsContent = () => {
   const { isAuthenticated, isLoading } = useAdminAuth();
@@ -20,7 +21,12 @@ const AdminCommentsContent = () => {
     return <AdminLogin />;
   }
 
-  return <CommentsDashboard />;
+  return (
+    <>
+      <CommentsDashboard />
+      <ScrollToTop />
+    </>
+  );
 };
 
 const AdminComments = () => {

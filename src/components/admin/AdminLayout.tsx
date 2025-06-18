@@ -2,6 +2,7 @@
 import React from 'react';
 import ContentProtection from "@/components/ContentProtection";
 import AdminHeaderBanner from "./AdminHeaderBanner";
+import ScrollToTop from "@/components/ScrollToTop";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             {children}
           </div>
         </main>
+        <ScrollToTop />
       </div>
     </ContentProtection>
   );
