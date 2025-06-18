@@ -7,44 +7,37 @@ import { useState } from "react";
 import { getPersonalId } from "@/utils/personalId";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Search } from "lucide-react";
 
 const ViewComments = () => {
   const [personalIdFilter, setPersonalIdFilter] = useState<string | null>(null);
-  const [manualIdInput, setManualIdInput] = useState<string>("");
+  const [searchInput, setSearchInput] = useState<string>("");
 
   const handleShowMyComments = () => {
     const personalId = getPersonalId();
     if (personalId) {
       setPersonalIdFilter(personalId);
-      setManualIdInput(personalId);
+      setSearchInput(personalId);
       toast.success(`Showing only comments for your Personal Code: ${personalId}`);
     } else {
       toast.info("You don't have a Personal Code yet. Make a comment first to get one.");
     }
   };
 
-  const handleShowAllComments = () => {
+  const handleClearSearch = () => {
     setPersonalIdFilter(null);
-    setManualIdInput("");
+    setSearchInput("");
     toast.success("Showing all comments.");
   };
 
-  const handleFilterByInput = () => {
-    const trimmedInput = manualIdInput.trim();
-    if (trimmedInput) {
-      setPersonalIdFilter(trimmedInput);
-      toast.success(`Filtering by Personal Code: ${trimmedInput}`);
+  const handleSearchChange = (value: string) => {
+    setSearchInput(value);
+    const trimmedValue = value.trim();
+    if (trimmedValue) {
+      setPersonalIdFilter(trimmedValue);
     } else {
       setPersonalIdFilter(null);
-      toast.info("Input is empty. Showing all comments.");
-    }
-  };
-  
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      handleFilterByInput();
     }
   };
 
@@ -59,32 +52,33 @@ const ViewComments = () => {
             </h2>
 
             <div className="my-6 p-4 bg-amber-100/60 rounded-lg border-2 border-orange-200">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
-                <div className="flex-grow sm:flex-grow-0">
-                  <Label htmlFor="personalIdInput" className="font-fun text-orange-800 text-base mb-1 block text-center sm:text-left">
-                    Filter by Personal Code
-                  </Label>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="flex items-center gap-2 flex-grow">
+                  <Search className="h-4 w-4 text-orange-600" />
                   <Input
-                    id="personalIdInput"
                     type="text"
-                    value={manualIdInput}
-                    onChange={(e) => setManualIdInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Enter Personal Code"
-                    className="w-full sm:w-64 font-fun"
+                    value={searchInput}
+                    onChange={(e) => handleSearchChange(e.target.value)}
+                    placeholder="Search by Personal Code..."
+                    className="flex-grow font-fun"
                   />
+                  {searchInput && (
+                    <Button 
+                      onClick={handleClearSearch}
+                      variant="outline" 
+                      size="sm"
+                      className="whitespace-nowrap"
+                    >
+                      Clear
+                    </Button>
+                  )}
                 </div>
-                <div className="flex gap-2 mt-2 sm:mt-0 sm:self-end flex-wrap justify-center">
-                  <Button onClick={handleFilterByInput} className="bg-blue-500 hover:bg-blue-600 text-white font-fun text-base">
-                    Filter
-                  </Button>
-                  <Button onClick={handleShowMyComments} className="bg-cyan-500 hover:bg-cyan-600 text-white font-fun text-base">
-                    Use My Code
-                  </Button>
-                  <Button onClick={handleShowAllComments} className="bg-emerald-500 hover:bg-emerald-600 text-white font-fun text-base">
-                    Show All
-                  </Button>
-                </div>
+                <Button 
+                  onClick={handleShowMyComments} 
+                  className="bg-cyan-500 hover:bg-cyan-600 text-white font-fun text-base whitespace-nowrap"
+                >
+                  Use My Code
+                </Button>
               </div>
             </div>
             
