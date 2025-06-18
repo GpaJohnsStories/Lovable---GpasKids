@@ -33,10 +33,10 @@ const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTa
 
   return (
     <TableRow>
-      <TableCell className="w-20 text-center">{comment.personal_id}</TableCell>
-      <TableCell className="w-32 text-center text-sm">{format(new Date(comment.created_at), 'MMM d, yyyy')}</TableCell>
+      <TableCell className="w-20 text-center text-base">{comment.personal_id}</TableCell>
+      <TableCell className="w-32 text-center text-base">{format(new Date(comment.created_at), 'MMM d, yyyy')}</TableCell>
       <TableCell className="w-80">
-        <div className="font-medium break-words whitespace-normal">{comment.subject}</div>
+        <div className="font-medium break-words whitespace-normal text-base">{comment.subject}</div>
       </TableCell>
       <TableCell className="w-24 text-center">
         <Button
