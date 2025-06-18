@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,81 +20,28 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
   const handleVote = async (voteType: 'thumbs_up' | 'thumbs_down' | 'ok') => {
     if (isVoting) return;
     
-    // Prevent voting for the same option
-    if (currentVote === voteType) {
-      toast.error("You have already voted for this option");
-      return;
-    }
-    
     setIsVoting(true);
     
     try {
-      // Check if user has already voted from this IP
-      const { data: existingVote, error: checkError } = await supabase
+      // Simply record the new vote without any tracking
+      const { error: voteError } = await supabase
         .from('story_votes')
-        .select('*')
-        .eq('story_id', storyId)
-        .maybeSingle();
+        .insert({
+          story_id: storyId,
+          vote_type: voteType
+        });
 
-      if (checkError && checkError.code !== 'PGRST116') {
-        console.error('Error checking existing vote:', checkError);
-        throw checkError;
+      if (voteError) {
+        console.error('Error recording vote:', voteError);
+        throw voteError;
       }
 
-      let newCounts = {
-        thumbs_up_count: thumbsUpCount,
-        thumbs_down_count: thumbsDownCount,
-        ok_count: okCount
+      // Calculate new counts
+      const newCounts = {
+        thumbs_up_count: voteType === 'thumbs_up' ? thumbsUpCount + 1 : thumbsUpCount,
+        thumbs_down_count: voteType === 'thumbs_down' ? thumbsDownCount + 1 : thumbsDownCount,
+        ok_count: voteType === 'ok' ? okCount + 1 : okCount
       };
-
-      if (existingVote) {
-        // User is changing their vote - update the existing vote
-        const { error: updateError } = await supabase
-          .from('story_votes')
-          .update({ vote_type: voteType })
-          .eq('id', existingVote.id);
-
-        if (updateError) {
-          console.error('Error updating vote:', updateError);
-          throw updateError;
-        }
-
-        // Adjust counts: decrease old vote, increase new vote
-        const oldVoteField = `${existingVote.vote_type}_count`;
-        const newVoteField = `${voteType}_count`;
-        
-        newCounts = {
-          thumbs_up_count: existingVote.vote_type === 'thumbs_up' ? thumbsUpCount - 1 : voteType === 'thumbs_up' ? thumbsUpCount + 1 : thumbsUpCount,
-          thumbs_down_count: existingVote.vote_type === 'thumbs_down' ? thumbsDownCount - 1 : voteType === 'thumbs_down' ? thumbsDownCount + 1 : thumbsDownCount,
-          ok_count: existingVote.vote_type === 'ok' ? okCount - 1 : voteType === 'ok' ? okCount + 1 : okCount
-        };
-
-        toast.success("Your vote has been updated!");
-      } else {
-        // Record the new vote
-        const { error: voteError } = await supabase
-          .from('story_votes')
-          .insert({
-            story_id: storyId,
-            vote_type: voteType,
-            ip_address: null, // Will be handled by RLS/server
-            user_agent: navigator.userAgent
-          });
-
-        if (voteError) {
-          console.error('Error recording vote:', voteError);
-          throw voteError;
-        }
-
-        // Increase the vote count
-        newCounts = {
-          thumbs_up_count: voteType === 'thumbs_up' ? thumbsUpCount + 1 : thumbsUpCount,
-          thumbs_down_count: voteType === 'thumbs_down' ? thumbsDownCount + 1 : thumbsDownCount,
-          ok_count: voteType === 'ok' ? okCount + 1 : okCount
-        };
-
-        toast.success("Thank you for your vote!");
-      }
 
       // Update the story vote count in database
       const { error: updateError } = await supabase
@@ -108,6 +55,7 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
       }
 
       onVoteUpdate(newCounts, voteType);
+      toast.success("Thank you for your vote!");
 
     } catch (error) {
       console.error('Error voting:', error);
@@ -119,20 +67,13 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
 
   const getButtonClass = (voteType: 'thumbs_up' | 'thumbs_down' | 'ok') => {
     const baseClass = "flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-300";
-    const isSelected = currentVote === voteType;
     
     if (voteType === 'thumbs_up') {
-      return `${baseClass} ${isSelected 
-        ? 'bg-green-700 ring-4 ring-green-400 ring-opacity-75 shadow-2xl shadow-green-400/50 scale-110 border-2 border-green-300' 
-        : 'bg-green-500 hover:bg-green-600'} text-white`;
+      return `${baseClass} bg-green-500 hover:bg-green-600 text-white`;
     } else if (voteType === 'thumbs_down') {
-      return `${baseClass} ${isSelected 
-        ? 'bg-red-700 ring-4 ring-red-400 ring-opacity-75 shadow-2xl shadow-red-400/50 scale-110 border-2 border-red-300' 
-        : 'bg-red-500 hover:bg-red-600'} text-white`;
+      return `${baseClass} bg-red-500 hover:bg-red-600 text-white`;
     } else {
-      return `${baseClass} ${isSelected 
-        ? 'bg-yellow-700 ring-4 ring-yellow-400 ring-opacity-75 shadow-2xl shadow-yellow-400/50 scale-110 border-2 border-yellow-300' 
-        : 'bg-yellow-500 hover:bg-yellow-600'} text-white`;
+      return `${baseClass} bg-yellow-500 hover:bg-yellow-600 text-white`;
     }
   };
 
