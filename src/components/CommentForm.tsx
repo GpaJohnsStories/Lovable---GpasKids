@@ -74,52 +74,81 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
 
   const addCommentMutation = useMutation({
     mutationFn: async (newComment: { personal_id: string; subject: string; content: string }) => {
-      console.log("📝 Starting comment submission process");
-      console.log("📝 Comment data:", {
+      console.log("🚀 Starting comment submission process");
+      console.log("📊 Comment data being submitted:", {
         personal_id: newComment.personal_id,
         subject: newComment.subject,
         content_length: newComment.content.length,
         status: 'pending'
       });
       
-      // Test database connection first
+      // Test database connection first with detailed logging
       console.log("🔍 Testing database connection...");
-      const { data: testData, error: testError } = await supabase
-        .from("comments")
-        .select("count")
-        .limit(1);
-        
-      if (testError) {
-        console.error("❌ Database connection test failed:", testError);
-        throw new Error(`Database connection failed: ${testError.message}`);
-      }
-      
-      console.log("✅ Database connection successful");
-      
-      // Now attempt the insert
-      console.log("📝 Attempting to insert comment into database...");
-      const { data, error } = await supabase.from("comments").insert([
-        {
-          personal_id: newComment.personal_id,
-          subject: newComment.subject,
-          content: newComment.content,
-          status: 'pending' as const
-        },
-      ]).select();
-
-      if (error) {
-        console.error("❌ Error submitting comment:", error);
-        console.error("❌ Error details:", {
-          message: error.message,
-          details: error.details,
-          hint: error.hint,
-          code: error.code
+      try {
+        const { data: testData, error: testError } = await supabase
+          .from("comments")
+          .select("count")
+          .limit(1);
+          
+        console.log("📊 Database connection test result:", {
+          success: !testError,
+          data: testData,
+          error: testError
         });
-        throw new Error(`Failed to submit comment: ${error.message}`);
+        
+        if (testError) {
+          console.error("❌ Database connection test failed:", testError);
+          throw new Error(`Database connection failed: ${testError.message}`);
+        }
+        
+        console.log("✅ Database connection successful");
+      } catch (connError) {
+        console.error("💥 Database connection error:", connError);
+        throw connError;
       }
       
-      console.log("✅ Comment submitted successfully:", data);
-      return data;
+      // Now attempt the insert with detailed logging
+      console.log("📝 Attempting to insert comment into database...");
+      console.log("📝 Insert payload:", {
+        personal_id: newComment.personal_id,
+        subject: newComment.subject,
+        content: newComment.content,
+        status: 'pending'
+      });
+      
+      try {
+        const { data, error } = await supabase.from("comments").insert([
+          {
+            personal_id: newComment.personal_id,
+            subject: newComment.subject,
+            content: newComment.content,
+            status: 'pending' as const
+          },
+        ]).select();
+
+        console.log("📊 Insert operation result:", {
+          success: !error,
+          data: data,
+          error: error
+        });
+
+        if (error) {
+          console.error("❌ Error submitting comment:", error);
+          console.error("❌ Error details:", {
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+            code: error.code
+          });
+          throw new Error(`Failed to submit comment: ${error.message}`);
+        }
+        
+        console.log("✅ Comment submitted successfully:", data);
+        return data;
+      } catch (insertError) {
+        console.error("💥 Insert operation failed:", insertError);
+        throw insertError;
+      }
     },
     onSuccess: (data) => {
       console.log("🎉 Comment submission successful, invalidating queries");
@@ -201,7 +230,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("🚀 Form submission started");
+    console.log("🚀 Form submission started with values:", values);
     form.clearErrors();
     setExistingPersonalIdError(null);
     let hasError = false;
@@ -244,6 +273,14 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
         finalPersonalId = personalId;
       }
     }
+
+    console.log("📊 Form validation result:", {
+      hasError,
+      finalPersonalId,
+      idMode,
+      existingPersonalId,
+      personalId
+    });
 
     if (hasError || !finalPersonalId) {
       console.log("❌ Form validation failed");
