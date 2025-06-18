@@ -57,6 +57,8 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
         throw new Error(error.message);
       }
 
+      console.log("Raw comments data from DB:", data);
+
       const repliesCountMap: Record<string, number> = {};
       const parentComments: CommentFromDB[] = [];
 
@@ -73,6 +75,9 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
         replies_count: repliesCountMap[comment.id] || 0,
       }));
 
+      console.log("Parent comments with replies:", commentsWithReplies);
+      console.log("Announcements found:", commentsWithReplies.filter(c => c.personal_id === '000000'));
+
       return commentsWithReplies;
     },
   });
@@ -80,11 +85,19 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
   const sortedComments = useMemo(() => {
     if (!comments) return [];
     
+    console.log("Sorting comments. Current sort field:", sortField, "direction:", sortDirection);
+    
     return [...comments].sort((a, b) => {
       // Always put announcements (000000) at the top when sorting by date (default)
       if (sortField === 'created_at') {
-        if (a.personal_id === '000000' && b.personal_id !== '000000') return -1;
-        if (b.personal_id === '000000' && a.personal_id !== '000000') return 1;
+        if (a.personal_id === '000000' && b.personal_id !== '000000') {
+          console.log("Moving announcement to top:", a.subject);
+          return -1;
+        }
+        if (b.personal_id === '000000' && a.personal_id !== '000000') {
+          console.log("Moving announcement to top:", b.subject);
+          return 1;
+        }
       }
       
       const aValue = a[sortField];
@@ -117,6 +130,7 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
 
   const getPersonalIdDisplay = (personalId: string) => {
     if (personalId === '000000') {
+      console.log("Rendering admin display for:", personalId);
       return (
         <div className="flex items-center gap-2 justify-center">
           <Megaphone className="h-4 w-4 text-blue-600" />
@@ -135,6 +149,8 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
     return <div className="text-red-500 text-center py-8">Error fetching comments: {error.message}</div>;
   }
 
+  console.log("Final sorted comments for rendering:", sortedComments);
+
   return (
     <div className="mt-0">
       <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-orange-200">
@@ -148,6 +164,7 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
             {sortedComments && sortedComments.length > 0 ? (
               sortedComments.map((comment) => {
                 const isAnnouncement = comment.personal_id === '000000';
+                console.log("Rendering comment:", comment.subject, "isAnnouncement:", isAnnouncement);
                 return (
                   <TableRow 
                     key={comment.id} 
