@@ -34,7 +34,7 @@ const CommentsListHeader = ({ sortField, sortDirection, onSort }: CommentsListHe
   };
 
   const headers: { label: string; field: SortField; width?: string }[] = [
-    { label: "Author", field: "personal_id", width: "w-32" },
+    { label: "Code", field: "personal_id", width: "w-32" },
     { label: "Date", field: "created_at", width: "w-32" },
     { label: "Subject", field: "subject", width: "w-96" },
     { label: "Replies", field: "replies_count", width: "w-24" },
