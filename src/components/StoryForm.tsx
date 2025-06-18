@@ -54,34 +54,89 @@ const StoryForm: React.FC<StoryFormProps> = ({ story, onSave, onCancel }) => {
     }
   }, [story]);
 
+  const generateUniqueStoryCode = async (baseCode: string): Promise<string> => {
+    if (!baseCode.trim()) {
+      // Generate a random code if none provided
+      baseCode = `STORY_${Date.now()}`;
+    }
+
+    let uniqueCode = baseCode;
+    let counter = 1;
+
+    while (true) {
+      const { data, error } = await supabase
+        .from('stories')
+        .select('id')
+        .eq('story_code', uniqueCode)
+        .limit(1);
+
+      if (error) {
+        console.error('Error checking story code:', error);
+        throw error;
+      }
+
+      if (!data || data.length === 0) {
+        return uniqueCode;
+      }
+
+      uniqueCode = `${baseCode}_${counter}`;
+      counter++;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
+      let finalFormData = { ...formData };
+
+      // If creating a new story, ensure unique story code
+      if (!story?.id) {
+        finalFormData.story_code = await generateUniqueStoryCode(formData.story_code);
+      }
+
       if (story?.id) {
         // Update existing story
         const { error } = await supabase
           .from('stories')
-          .update(formData)
+          .update(finalFormData)
           .eq('id', story.id);
         
-        if (error) throw error;
+        if (error) {
+          console.error('Update error:', error);
+          throw error;
+        }
         toast.success("Story updated successfully!");
       } else {
         // Create new story
         const { error } = await supabase
           .from('stories')
-          .insert([formData]);
+          .insert([finalFormData]);
         
-        if (error) throw error;
+        if (error) {
+          console.error('Insert error:', error);
+          throw error;
+        }
         toast.success("Story created successfully!");
       }
       
       onSave();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving story:', error);
-      toast.error("Error saving story");
+      
+      // Provide specific error messages based on the error type
+      if (error?.code === '23505') {
+        if (error.constraint === 'stories_story_code_key') {
+          toast.error("Story code already exists. Please use a different code.");
+        } else {
+          toast.error("A story with these details already exists.");
+        }
+      } else if (error?.message) {
+        toast.error(`Error saving story: ${error.message}`);
+      } else {
+        toast.error("Error saving story. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
