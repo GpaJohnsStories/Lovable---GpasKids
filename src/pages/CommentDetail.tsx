@@ -123,7 +123,7 @@ const CommentDetail = () => {
               </div>
               
               <div className="prose prose-orange max-w-none">
-                <div className="text-gray-800 whitespace-pre-wrap font-fun leading-relaxed">
+                <div className="text-gray-800 whitespace-pre-wrap font-fun leading-relaxed text-lg">
                   {comment.content}
                 </div>
               </div>

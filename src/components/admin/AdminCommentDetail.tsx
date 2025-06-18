@@ -60,7 +60,7 @@ const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminC
             </div>
             
             <div className="prose prose-gray max-w-none">
-              <div className="text-gray-800 whitespace-pre-wrap leading-relaxed">
+              <div className="text-gray-800 whitespace-pre-wrap leading-relaxed text-lg">
                 {comment.content}
               </div>
             </div>

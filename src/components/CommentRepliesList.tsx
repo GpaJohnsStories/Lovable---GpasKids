@@ -72,7 +72,7 @@ const CommentRepliesList = ({ parentId }: CommentRepliesListProps) => {
             </div>
           </div>
           
-          <div className="text-gray-800 whitespace-pre-wrap font-fun leading-relaxed">
+          <div className="text-gray-800 whitespace-pre-wrap font-fun leading-relaxed text-lg">
             {reply.content}
           </div>
         </div>
