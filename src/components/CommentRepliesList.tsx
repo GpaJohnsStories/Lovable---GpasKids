@@ -1,8 +1,8 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { format } from 'date-fns';
+import { Megaphone } from "lucide-react";
 
 type Reply = {
   id: string;
@@ -35,6 +35,18 @@ const CommentRepliesList = ({ parentId }: CommentRepliesListProps) => {
     },
   });
 
+  const getPersonalIdDisplay = (personalId: string) => {
+    if (personalId === '000000') {
+      return (
+        <div className="flex items-center gap-2">
+          <Megaphone className="h-4 w-4 text-blue-600" />
+          <span className="text-blue-600 font-semibold font-fun">Admin</span>
+        </div>
+      );
+    }
+    return <span className="font-fun text-orange-600">{personalId}</span>;
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center py-4">
@@ -61,22 +73,36 @@ const CommentRepliesList = ({ parentId }: CommentRepliesListProps) => {
 
   return (
     <div className="space-y-4">
-      {replies.map((reply) => (
-        <div key={reply.id} className="bg-white/60 p-4 rounded-lg border border-orange-100 ml-4">
-          <div className="flex justify-between items-start mb-3">
-            <div className="flex items-center gap-4 text-sm text-orange-600">
-              <span className="font-semibold font-fun">By: {reply.personal_id}</span>
-              <span className="font-fun">
-                {format(new Date(reply.created_at), 'MMM d, yyyy, h:mm a')}
-              </span>
+      {replies.map((reply) => {
+        const isAnnouncement = reply.personal_id === '000000';
+        return (
+          <div 
+            key={reply.id} 
+            className={`p-4 rounded-lg border ml-4 ${
+              isAnnouncement 
+                ? 'bg-blue-50/60 border-blue-200' 
+                : 'bg-white/60 border-orange-100'
+            }`}
+          >
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex items-center gap-4 text-sm">
+                <span className="font-semibold">
+                  By: {getPersonalIdDisplay(reply.personal_id)}
+                </span>
+                <span className={`font-fun ${isAnnouncement ? 'text-blue-600' : 'text-orange-600'}`}>
+                  {format(new Date(reply.created_at), 'MMM d, yyyy, h:mm a')}
+                </span>
+              </div>
+            </div>
+            
+            <div className={`whitespace-pre-wrap font-fun leading-relaxed text-lg ${
+              isAnnouncement ? 'text-blue-800' : 'text-gray-800'
+            }`}>
+              {reply.content}
             </div>
           </div>
-          
-          <div className="text-gray-800 whitespace-pre-wrap font-fun leading-relaxed text-lg">
-            {reply.content}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };
