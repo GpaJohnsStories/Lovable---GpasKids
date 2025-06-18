@@ -73,25 +73,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
 
   const addCommentMutation = useMutation({
     mutationFn: async (newComment: { personal_id: string; subject: string; content: string }) => {
-      console.log("📝 Submitting comment to database:", {
-        personal_id: newComment.personal_id,
-        subject: newComment.subject.substring(0, 50) + "...",
-        content_length: newComment.content.length
-      });
-      
-      // Test database connection first
-      const { data: testData, error: testError } = await supabase
-        .from("comments")
-        .select("count", { count: 'exact', head: true });
-
-      console.log("🔌 Database connection test:", {
-        success: !testError,
-        error: testError?.message
-      });
-
-      if (testError) {
-        throw new Error(`Database connection failed: ${testError.message}`);
-      }
+      console.log("📝 Submitting comment to database");
       
       const { data, error } = await supabase.from("comments").insert([
         {
@@ -102,23 +84,16 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
         },
       ]).select();
 
-      console.log("💾 Comment insertion result:", {
-        success: !error,
-        insertedData: data,
-        error: error?.message,
-        errorDetails: error
-      });
-
       if (error) {
         console.error("❌ Error submitting comment:", error);
         throw new Error(`Failed to submit comment: ${error.message}`);
       }
       
-      console.log("✅ Comment submitted successfully:", data);
+      console.log("✅ Comment submitted successfully");
       return data;
     },
     onSuccess: (data) => {
-      console.log("🎉 Comment submission successful, invalidating queries");
+      console.log("🎉 Comment submission successful");
       
       // Store the personal ID in localStorage for future use
       const finalPersonalId = idMode === 'existing' ? existingPersonalId : personalId;
@@ -244,7 +219,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
       return;
     }
 
-    console.log("🚀 Form validation passed, submitting comment with Personal ID:", finalPersonalId);
+    console.log("🚀 Form validation passed, submitting comment");
     addCommentMutation.mutate({
         personal_id: finalPersonalId,
         subject: values.subject,

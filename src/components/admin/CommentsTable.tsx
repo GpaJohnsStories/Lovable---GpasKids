@@ -29,17 +29,6 @@ const CommentsTable = () => {
     queryFn: async () => {
       console.log("🔍 Admin fetching comments...");
       
-      // First, let's check if we can access comments at all
-      const { data: testAccess, error: testError } = await supabase
-        .from("comments")
-        .select("count", { count: 'exact', head: true });
-
-      console.log("📊 Test access result:", {
-        count: testAccess,
-        error: testError?.message
-      });
-
-      // Now fetch all comments (admins should see everything)
       const { data, error } = await supabase
         .from("comments")
         .select("*")
@@ -48,8 +37,7 @@ const CommentsTable = () => {
       console.log("📊 Admin comments query result:", {
         success: !error,
         count: data?.length || 0,
-        error: error?.message,
-        data: data?.slice(0, 3) // Log first 3 comments for debugging
+        error: error?.message
       });
 
       if (error) {
@@ -141,15 +129,6 @@ const CommentsTable = () => {
            <div className="text-red-500 text-center py-8">
              <p className="font-semibold">Error fetching comments:</p>
              <p className="text-sm mb-4">{error.message}</p>
-             <div className="text-gray-600 text-xs">
-               <p>This might be due to:</p>
-               <ul className="list-disc list-inside mt-2">
-                 <li>Database connection issues</li>
-                 <li>RLS policy restrictions</li>
-                 <li>Authentication problems</li>
-               </ul>
-               <p className="mt-2">Check the browser console for more details.</p>
-             </div>
            </div>
         ) : (
           <div>
@@ -181,13 +160,7 @@ const CommentsTable = () => {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={7} className="h-24 text-center">
-                      <div className="space-y-2">
-                        <p>No comments found.</p>
-                        <p className="text-xs text-gray-500">
-                          Comments submitted through the website should appear here once they're in the database.
-                          Try submitting a test comment to verify the system is working.
-                        </p>
-                      </div>
+                      <p>No comments found. Comments submitted through the website should appear here.</p>
                     </TableCell>
                   </TableRow>
                 )}
