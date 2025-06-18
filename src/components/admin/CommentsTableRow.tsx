@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { format } from 'date-fns';
 import { Database } from "@/integrations/supabase/types";
 import { Badge } from "@/components/ui/badge";
-import { Eye } from "lucide-react";
+import { Eye, Megaphone } from "lucide-react";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
@@ -15,6 +15,7 @@ interface CommentsTableRowProps {
 }
 
 const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTableRowProps) => {
+  const isAnnouncement = comment.personal_id === '000000';
 
   const getStatusBadge = (status: Comment['status']) => {
     switch (status) {
@@ -31,12 +32,33 @@ const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTa
     }
   };
 
+  const getPersonalIdDisplay = () => {
+    if (isAnnouncement) {
+      return (
+        <div className="flex items-center gap-2">
+          <Megaphone className="h-4 w-4 text-blue-600" />
+          <span className="text-blue-600 font-semibold">Admin</span>
+        </div>
+      );
+    }
+    return <span className="text-base">{comment.personal_id}</span>;
+  };
+
   return (
-    <TableRow>
-      <TableCell className="w-20 text-center text-base">{comment.personal_id}</TableCell>
+    <TableRow className={isAnnouncement ? "bg-blue-50 border-l-4 border-l-blue-500" : ""}>
+      <TableCell className="w-20 text-center">
+        {getPersonalIdDisplay()}
+      </TableCell>
       <TableCell className="w-32 text-center text-base">{format(new Date(comment.created_at), 'MMM d, yyyy')}</TableCell>
       <TableCell className="w-80">
-        <div className="font-medium break-words whitespace-normal text-base">{comment.subject}</div>
+        <div className={`font-medium break-words whitespace-normal text-base ${isAnnouncement ? 'text-blue-800' : ''}`}>
+          {isAnnouncement && (
+            <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 mr-2 mb-1">
+              📢 Announcement
+            </Badge>
+          )}
+          {comment.subject}
+        </div>
       </TableCell>
       <TableCell className="w-24 text-center">
         <Button

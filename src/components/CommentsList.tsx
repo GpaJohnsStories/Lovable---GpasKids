@@ -12,6 +12,8 @@ import { format } from 'date-fns';
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import CommentsListHeader from "./CommentsListHeader";
+import { Badge } from "@/components/ui/badge";
+import { Megaphone } from "lucide-react";
 
 type CommentFromDB = {
   id: string;
@@ -79,18 +81,24 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
     if (!comments) return [];
     
     return [...comments].sort((a, b) => {
-        const aValue = a[sortField];
-        const bValue = b[sortField];
+      // Always put announcements (000000) at the top when sorting by date (default)
+      if (sortField === 'created_at') {
+        if (a.personal_id === '000000' && b.personal_id !== '000000') return -1;
+        if (b.personal_id === '000000' && a.personal_id !== '000000') return 1;
+      }
+      
+      const aValue = a[sortField];
+      const bValue = b[sortField];
 
-        if (typeof aValue === 'string' && typeof bValue === 'string') {
-            return sortDirection === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-        }
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return sortDirection === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+      }
 
-        if (typeof aValue === 'number' && typeof bValue === 'number') {
-            return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
-        }
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
+      }
 
-        return 0;
+      return 0;
     });
   }, [comments, sortField, sortDirection]);
 
@@ -105,6 +113,18 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
 
   const handleCommentClick = (commentId: string) => {
     navigate(`/comment/${commentId}`);
+  };
+
+  const getPersonalIdDisplay = (personalId: string) => {
+    if (personalId === '000000') {
+      return (
+        <div className="flex items-center gap-2 justify-center">
+          <Megaphone className="h-4 w-4 text-blue-600" />
+          <span className="text-blue-600 font-semibold font-fun">Admin</span>
+        </div>
+      );
+    }
+    return <span className="font-fun text-orange-800">{personalId}</span>;
   };
 
   if (isLoading) {
@@ -126,18 +146,34 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
           />
           <TableBody>
             {sortedComments && sortedComments.length > 0 ? (
-              sortedComments.map((comment) => (
-                <TableRow 
-                  key={comment.id} 
-                  className="cursor-pointer hover:bg-orange-50/50 transition-colors"
-                  onClick={() => handleCommentClick(comment.id)}
-                >
-                  <TableCell className="font-medium font-fun text-orange-800">{comment.personal_id}</TableCell>
-                  <TableCell className="font-fun text-orange-800">{format(new Date(comment.created_at), 'MMM d, yyyy')}</TableCell>
-                  <TableCell className="font-fun text-orange-800">{comment.subject}</TableCell>
-                  <TableCell className="text-right font-fun text-orange-800">{comment.replies_count}</TableCell>
-                </TableRow>
-              ))
+              sortedComments.map((comment) => {
+                const isAnnouncement = comment.personal_id === '000000';
+                return (
+                  <TableRow 
+                    key={comment.id} 
+                    className={`cursor-pointer transition-colors ${
+                      isAnnouncement 
+                        ? "bg-blue-50/80 hover:bg-blue-100/80 border-l-4 border-l-blue-500" 
+                        : "hover:bg-orange-50/50"
+                    }`}
+                    onClick={() => handleCommentClick(comment.id)}
+                  >
+                    <TableCell className="font-medium text-center">
+                      {getPersonalIdDisplay(comment.personal_id)}
+                    </TableCell>
+                    <TableCell className="font-fun text-orange-800">{format(new Date(comment.created_at), 'MMM d, yyyy')}</TableCell>
+                    <TableCell className={`font-fun ${isAnnouncement ? 'text-blue-800' : 'text-orange-800'}`}>
+                      {isAnnouncement && (
+                        <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 mr-2 mb-1">
+                          📢 Announcement
+                        </Badge>
+                      )}
+                      {comment.subject}
+                    </TableCell>
+                    <TableCell className="text-right font-fun text-orange-800">{comment.replies_count}</TableCell>
+                  </TableRow>
+                );
+              })
             ) : (
               <TableRow>
                 <TableCell colSpan={4} className="h-24 text-center text-orange-800 font-fun">
