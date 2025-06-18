@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getCategoryHeader } from "@/utils/storySectionUtils";
 import { Link } from "react-router-dom";
-import { getNewestStories, getPopularStories } from "@/utils/storiesData";
+import { getNewestStories } from "@/utils/storiesData";
 
 const StorySection = () => {
   const { data: realStories = [] } = useQuery({
@@ -29,8 +29,6 @@ const StorySection = () => {
   console.log('Fetched published stories:', realStories);
 
   const newestStories = getNewestStories(realStories);
-  const popularStories = getPopularStories();
-  const allStories = [...newestStories, ...popularStories];
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -55,27 +53,24 @@ const StorySection = () => {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8 mb-12">
-        {/* Newest Stories Column */}
-        <div>
-          {getCategoryHeader("Newest", allStories)}
-          <div className="space-y-4">
-            {newestStories.map((story) => (
-              <StoryCard key={story.id} story={story} />
-            ))}
+      {newestStories.length > 0 ? (
+        <div className="mb-12">
+          {/* Stories Section */}
+          <div>
+            {getCategoryHeader("Newest", newestStories)}
+            <div className="space-y-4">
+              {newestStories.map((story) => (
+                <StoryCard key={story.id} story={story} />
+              ))}
+            </div>
           </div>
         </div>
-
-        {/* Most Popular Stories Column */}
-        <div>
-          {getCategoryHeader("Most Popular", allStories)}
-          <div className="space-y-4">
-            {popularStories.map((story) => (
-              <StoryCard key={story.id} story={story} />
-            ))}
-          </div>
+      ) : (
+        <div className="text-center mb-12">
+          <p className="text-amber-700 text-lg">No published stories available at the moment.</p>
+          <p className="text-amber-600 text-sm mt-2">Please check back soon for new stories!</p>
         </div>
-      </div>
+      )}
 
       <div className="text-center">
         <Link to="/library" onClick={scrollToTop}>
