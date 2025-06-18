@@ -51,15 +51,15 @@ const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTa
       </TableCell>
       <TableCell className="w-28 text-center">{getStatusBadge(comment.status)}</TableCell>
       <TableCell className="w-36">
-        <div className="flex flex-col space-y-1">
+        <div className="flex flex-row gap-1">
           {comment.status !== 'approved' && (
-            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs" onClick={() => onUpdateStatus(comment.id, 'approved')}>Approve</Button>
+            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 min-w-fit" onClick={() => onUpdateStatus(comment.id, 'approved')}>Approve</Button>
           )}
           {comment.status !== 'rejected' && (
-            <Button size="sm" variant="destructive" className="text-xs" onClick={() => onUpdateStatus(comment.id, 'rejected')}>Reject</Button>
+            <Button size="sm" variant="destructive" className="text-xs px-2 py-1 min-w-fit" onClick={() => onUpdateStatus(comment.id, 'rejected')}>Reject</Button>
           )}
           {comment.status !== 'archived' && (
-            <Button size="sm" variant="secondary" className="text-xs" onClick={() => onUpdateStatus(comment.id, 'archived')}>Archive</Button>
+            <Button size="sm" variant="secondary" className="text-xs px-2 py-1 min-w-fit" onClick={() => onUpdateStatus(comment.id, 'archived')}>Archive</Button>
           )}
         </div>
       </TableCell>
