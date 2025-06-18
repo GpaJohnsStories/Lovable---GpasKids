@@ -33,33 +33,35 @@ const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTa
 
   return (
     <TableRow>
-      <TableCell>{comment.personal_id}</TableCell>
-      <TableCell>{format(new Date(comment.created_at), 'MMM d, yyyy, h:mm a')}</TableCell>
-      <TableCell className="max-w-md">
-        <div className="font-medium">{comment.subject}</div>
+      <TableCell className="w-20 text-center">{comment.personal_id}</TableCell>
+      <TableCell className="w-32 text-center text-sm">{format(new Date(comment.created_at), 'MMM d, yyyy')}</TableCell>
+      <TableCell className="w-80">
+        <div className="font-medium break-words whitespace-normal">{comment.subject}</div>
       </TableCell>
-      <TableCell>
+      <TableCell className="w-24 text-center">
         <Button
           size="sm"
           variant="outline"
           onClick={() => onViewComment(comment)}
-          className="flex items-center gap-2"
+          className="flex items-center gap-1"
         >
-          <Eye className="h-4 w-4" />
-          View Full
+          <Eye className="h-3 w-3" />
+          View
         </Button>
       </TableCell>
-      <TableCell>{getStatusBadge(comment.status)}</TableCell>
-      <TableCell className="flex space-x-2">
-        {comment.status !== 'approved' && (
-          <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white" onClick={() => onUpdateStatus(comment.id, 'approved')}>Approve</Button>
-        )}
-        {comment.status !== 'rejected' && (
-          <Button size="sm" variant="destructive" onClick={() => onUpdateStatus(comment.id, 'rejected')}>Reject</Button>
-        )}
-        {comment.status !== 'archived' && (
-          <Button size="sm" variant="secondary" onClick={() => onUpdateStatus(comment.id, 'archived')}>Archive</Button>
-        )}
+      <TableCell className="w-28 text-center">{getStatusBadge(comment.status)}</TableCell>
+      <TableCell className="w-36">
+        <div className="flex flex-col space-y-1">
+          {comment.status !== 'approved' && (
+            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs" onClick={() => onUpdateStatus(comment.id, 'approved')}>Approve</Button>
+          )}
+          {comment.status !== 'rejected' && (
+            <Button size="sm" variant="destructive" className="text-xs" onClick={() => onUpdateStatus(comment.id, 'rejected')}>Reject</Button>
+          )}
+          {comment.status !== 'archived' && (
+            <Button size="sm" variant="secondary" className="text-xs" onClick={() => onUpdateStatus(comment.id, 'archived')}>Archive</Button>
+          )}
+        </div>
       </TableCell>
     </TableRow>
   );

@@ -35,22 +35,27 @@ const CommentsTableHeader = ({ sortField, sortDirection, onSort }: CommentsTable
     }
   };
 
-  const headers: { label: string; field: SortField; isAction?: boolean }[] = [
-    { label: "Personal Code", field: "personal_id" },
-    { label: "Date", field: "created_at" },
-    { label: "Subject", field: "subject" },
-    { label: "Content", field: "actions", isAction: true },
-    { label: "Status", field: "status" },
-    { label: "Actions", field: "actions", isAction: true },
+  const headers: { label: string; field: SortField; isAction?: boolean; width?: string }[] = [
+    { label: "Code", field: "personal_id", width: "w-20" },
+    { label: "Date", field: "created_at", width: "w-32" },
+    { label: "Subject", field: "subject", width: "w-80" },
+    { label: "Content", field: "actions", isAction: true, width: "w-24" },
+    { label: "Status", field: "status", width: "w-28" },
+    { label: "Actions", field: "actions", isAction: true, width: "w-36" },
   ];
 
   return (
     <TableHeader>
       <TableRow>
         {headers.map((header, index) => (
-          <TableHead key={`${header.field}-${index}`} className="p-2 text-center">
+          <TableHead key={`${header.field}-${index}`} className={`p-2 text-center ${header.width || ''}`}>
             {header.isAction ? (
-              <span className="font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>{header.label}</span>
+              <span 
+                className="font-bold bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded shadow-[0_6px_12px_rgba(161,98,7,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-yellow-700" 
+                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+              >
+                {header.label}
+              </span>
             ) : (
               <Button
                 onClick={() => onSort(header.field)}
