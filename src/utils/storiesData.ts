@@ -87,6 +87,8 @@ export const SAMPLE_STORIES: StoryData[] = [
 ];
 
 export const getNewestStories = (realStories: any[] = []): StoryData[] => {
+  console.log('Real stories from database:', realStories);
+  
   const realStoryData = realStories.slice(0, 1).map(story => ({
     id: story.id,
     title: story.title,
@@ -103,12 +105,22 @@ export const getNewestStories = (realStories: any[] = []): StoryData[] => {
 
   // Filter sample stories to only include published ones
   const publishedSampleStories = SAMPLE_STORIES.filter(story => story.published === 'Y');
+  console.log('Published sample stories:', publishedSampleStories);
   
-  return [...realStoryData, ...publishedSampleStories.slice(0, 3)].slice(0, 4);
+  const newestStories = [...realStoryData, ...publishedSampleStories.slice(0, 3)].slice(0, 4);
+  console.log('Final newest stories:', newestStories);
+  
+  return newestStories;
 };
 
 export const getPopularStories = (): StoryData[] => {
   // Filter sample stories to only include published ones
   const publishedSampleStories = SAMPLE_STORIES.filter(story => story.published === 'Y');
-  return publishedSampleStories.slice(3);
+  console.log('All published sample stories:', publishedSampleStories);
+  
+  // Get popular stories starting from index 1 (skip the first one used in newest)
+  const popularStories = publishedSampleStories.slice(1);
+  console.log('Final popular stories:', popularStories);
+  
+  return popularStories;
 };
