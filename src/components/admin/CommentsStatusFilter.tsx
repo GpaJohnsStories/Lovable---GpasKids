@@ -35,16 +35,44 @@ const CommentsStatusFilter = ({
         }}
         className="justify-start gap-2"
       >
-        <ToggleGroupItem value="all" variant="outline" className="data-[state=on]:bg-blue-500 data-[state=on]:text-white data-[state=on]:border-blue-600 data-[state=on]:shadow-lg">
+        <ToggleGroupItem 
+          value="all" 
+          variant="outline" 
+          className={selectedStatus === 'all' 
+            ? "bg-blue-500 text-white border-blue-600 shadow-lg hover:bg-blue-600" 
+            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+          }
+        >
           All ({statusCounts.all})
         </ToggleGroupItem>
-        <ToggleGroupItem value="approved" variant="outline" className="data-[state=on]:bg-green-500 data-[state=on]:text-white data-[state=on]:border-green-600 data-[state=on]:shadow-lg">
+        <ToggleGroupItem 
+          value="approved" 
+          variant="outline" 
+          className={selectedStatus === 'approved' 
+            ? "bg-green-500 text-white border-green-600 shadow-lg hover:bg-green-600" 
+            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+          }
+        >
           Approved ({statusCounts.approved})
         </ToggleGroupItem>
-        <ToggleGroupItem value="rejected" variant="outline" className="data-[state=on]:bg-red-500 data-[state=on]:text-white data-[state=on]:border-red-600 data-[state=on]:shadow-lg">
+        <ToggleGroupItem 
+          value="rejected" 
+          variant="outline" 
+          className={selectedStatus === 'rejected' 
+            ? "bg-red-500 text-white border-red-600 shadow-lg hover:bg-red-600" 
+            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+          }
+        >
           Rejected ({statusCounts.rejected})
         </ToggleGroupItem>
-        <ToggleGroupItem value="archived" variant="outline" className="data-[state=on]:bg-gray-500 data-[state=on]:text-white data-[state=on]:border-gray-600 data-[state=on]:shadow-lg">
+        <ToggleGroupItem 
+          value="archived" 
+          variant="outline" 
+          className={selectedStatus === 'archived' 
+            ? "bg-gray-500 text-white border-gray-600 shadow-lg hover:bg-gray-600" 
+            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+          }
+        >
           Archived ({statusCounts.archived})
         </ToggleGroupItem>
       </ToggleGroup>

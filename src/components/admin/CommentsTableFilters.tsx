@@ -38,30 +38,32 @@ const CommentsTableFilters = ({
   return (
     <div className="mb-6">
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-        <CommentsStatusFilter
-          selectedStatus={selectedStatus}
-          onStatusChange={onStatusChange}
-          statusCounts={statusCounts}
-        />
-        
-        <div className="flex items-center gap-2">
-          <Search className="h-4 w-4 text-gray-500" />
-          <Input
-            placeholder="Search by Personal Code..."
-            value={searchPersonalCode}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="w-64"
+        <div className="flex items-center gap-4">
+          <CommentsStatusFilter
+            selectedStatus={selectedStatus}
+            onStatusChange={onStatusChange}
+            statusCounts={statusCounts}
           />
-          {searchPersonalCode && (
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={onClearSearch}
-              className="whitespace-nowrap"
-            >
-              Clear
-            </Button>
-          )}
+          
+          <div className="flex items-center gap-2">
+            <Search className="h-4 w-4 text-gray-500" />
+            <Input
+              placeholder="Search by Personal Code..."
+              value={searchPersonalCode}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="w-64"
+            />
+            {searchPersonalCode && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={onClearSearch}
+                className="whitespace-nowrap"
+              >
+                Clear
+              </Button>
+            )}
+          </div>
         </div>
       </div>
       
