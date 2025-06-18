@@ -146,16 +146,6 @@ const CommentsTable = () => {
              </div>
           ) : (
             <div>
-              <div className="mb-4 text-sm text-gray-600">
-                Found {comments?.length || 0} comments total
-                {comments && comments.length > 0 && (
-                  <span className="ml-2 text-xs">
-                    (Status breakdown: {comments.filter(c => c.status === 'pending').length} pending, 
-                    {comments.filter(c => c.status === 'approved').length} approved, 
-                    {comments.filter(c => c.status === 'rejected').length} rejected)
-                  </span>
-                )}
-              </div>
               <Table>
                 <CommentsTableHeader
                   sortField={sortField}
