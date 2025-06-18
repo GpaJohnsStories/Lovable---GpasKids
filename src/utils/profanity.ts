@@ -41,25 +41,25 @@ const badWords = [
   'coward',
 ];
 
-const cleanText = (text: string): string => {
-    // This makes the check case-insensitive and ignores simple ways to bypass the filter
-    return text.toLowerCase().replace(/[^a-z0-9]/g, '');
-}
-
 export const containsBadWord = (text: string): boolean => {
   if (!text) return false;
-  const cleanedText = cleanText(text);
-  return badWords.some(word => cleanedText.includes(word));
+  
+  // Use word boundaries to match only complete words
+  const regex = new RegExp(`\\b(${badWords.join('|')})\\b`, 'gi');
+  return regex.test(text);
 };
 
 export const getHighlightedParts = (text: string): { text: string; isBad: boolean }[] => {
     if (!text) return [{ text: '', isBad: false }];
 
-    const regex = new RegExp(`(${badWords.join('|')})`, 'gi');
+    // Use word boundaries for highlighting as well
+    const regex = new RegExp(`\\b(${badWords.join('|')})\\b`, 'gi');
     const parts = text.split(regex);
 
     return parts.filter(part => part).map(part => {
-        const isBad = badWords.some(badWord => badWord.toLowerCase() === part.toLowerCase());
+        const isBad = badWords.some(badWord => 
+          new RegExp(`\\b${badWord}\\b`, 'i').test(part)
+        );
         return { text: part, isBad };
     });
 };
