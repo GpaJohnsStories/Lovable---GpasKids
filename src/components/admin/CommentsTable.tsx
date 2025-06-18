@@ -1,4 +1,3 @@
-
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -8,10 +7,12 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Search } from "lucide-react";
 import { useState, useMemo } from "react";
 import { toast } from "sonner";
 import { Database } from "@/integrations/supabase/types";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import CommentsTableHeader from "./CommentsTableHeader";
 import CommentsTableRow from "./CommentsTableRow";
 import AdminCommentDetail from "./AdminCommentDetail";
@@ -26,6 +27,7 @@ const CommentsTable = () => {
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [searchPersonalCode, setSearchPersonalCode] = useState('');
 
   const { data: comments, isLoading, error } = useQuery<Comment[]>({
     queryKey: ["admin_comments"],
@@ -93,10 +95,19 @@ const CommentsTable = () => {
     setSelectedComment(null);
   };
 
-  const sortedComments = useMemo(() => {
+  const filteredAndSortedComments = useMemo(() => {
     if (!comments) return [];
     
-    return [...comments].sort((a, b) => {
+    // First filter by personal code if search term exists
+    let filtered = comments;
+    if (searchPersonalCode.trim()) {
+      filtered = comments.filter(comment => 
+        comment.personal_id.toLowerCase().includes(searchPersonalCode.toLowerCase())
+      );
+    }
+    
+    // Then sort the filtered results
+    return [...filtered].sort((a, b) => {
       if (sortField === 'actions') return 0;
       const aValue = a[sortField as keyof Comment];
       const bValue = b[sortField as keyof Comment];
@@ -119,7 +130,7 @@ const CommentsTable = () => {
 
       return 0;
     });
-  }, [comments, sortField, sortDirection]);
+  }, [comments, sortField, sortDirection, searchPersonalCode]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -128,6 +139,10 @@ const CommentsTable = () => {
       setSortField(field);
       setSortDirection('asc');
     }
+  };
+
+  const handleClearSearch = () => {
+    setSearchPersonalCode('');
   };
 
   return (
@@ -146,6 +161,33 @@ const CommentsTable = () => {
              </div>
           ) : (
             <div>
+              <div className="mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  <Search className="h-4 w-4 text-gray-500" />
+                  <Input
+                    placeholder="Search by Personal Code..."
+                    value={searchPersonalCode}
+                    onChange={(e) => setSearchPersonalCode(e.target.value)}
+                    className="w-full sm:w-64"
+                  />
+                  {searchPersonalCode && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={handleClearSearch}
+                      className="whitespace-nowrap"
+                    >
+                      Clear
+                    </Button>
+                  )}
+                </div>
+                {searchPersonalCode && (
+                  <div className="text-sm text-gray-600">
+                    Showing {filteredAndSortedComments.length} of {comments?.length || 0} comments
+                  </div>
+                )}
+              </div>
+              
               <Table>
                 <CommentsTableHeader
                   sortField={sortField}
@@ -153,8 +195,8 @@ const CommentsTable = () => {
                   onSort={handleSort}
                 />
                 <TableBody>
-                  {sortedComments && sortedComments.length > 0 ? (
-                    sortedComments.map((comment) => (
+                  {filteredAndSortedComments && filteredAndSortedComments.length > 0 ? (
+                    filteredAndSortedComments.map((comment) => (
                       <CommentsTableRow 
                         key={comment.id}
                         comment={comment}
@@ -165,7 +207,12 @@ const CommentsTable = () => {
                   ) : (
                     <TableRow>
                       <TableCell colSpan={6} className="h-24 text-center">
-                        <p>No comments found. Comments submitted through the website should appear here.</p>
+                        <p>
+                          {searchPersonalCode 
+                            ? `No comments found for Personal Code "${searchPersonalCode}"`
+                            : "No comments found. Comments submitted through the website should appear here."
+                          }
+                        </p>
                       </TableCell>
                     </TableRow>
                   )}
