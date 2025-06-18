@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -74,20 +73,45 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
 
   const addCommentMutation = useMutation({
     mutationFn: async (newComment: { personal_id: string; subject: string; content: string }) => {
-      console.log("📝 Submitting comment:", newComment);
+      console.log("📝 Submitting comment to database:", {
+        personal_id: newComment.personal_id,
+        subject: newComment.subject.substring(0, 50) + "...",
+        content_length: newComment.content.length
+      });
+      
+      // Test database connection first
+      const { data: testData, error: testError } = await supabase
+        .from("comments")
+        .select("count", { count: 'exact', head: true });
+
+      console.log("🔌 Database connection test:", {
+        success: !testError,
+        error: testError?.message
+      });
+
+      if (testError) {
+        throw new Error(`Database connection failed: ${testError.message}`);
+      }
       
       const { data, error } = await supabase.from("comments").insert([
         {
           personal_id: newComment.personal_id,
           subject: newComment.subject,
           content: newComment.content,
-          status: 'pending' // Explicitly set status to pending
+          status: 'pending' as const
         },
-      ]);
+      ]).select();
+
+      console.log("💾 Comment insertion result:", {
+        success: !error,
+        insertedData: data,
+        error: error?.message,
+        errorDetails: error
+      });
 
       if (error) {
         console.error("❌ Error submitting comment:", error);
-        throw error;
+        throw new Error(`Failed to submit comment: ${error.message}`);
       }
       
       console.log("✅ Comment submitted successfully:", data);
@@ -220,7 +244,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
       return;
     }
 
-    console.log("🚀 Submitting comment with Personal ID:", finalPersonalId);
+    console.log("🚀 Form validation passed, submitting comment with Personal ID:", finalPersonalId);
     addCommentMutation.mutate({
         personal_id: finalPersonalId,
         subject: values.subject,

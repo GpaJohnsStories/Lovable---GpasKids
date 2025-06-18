@@ -29,6 +29,17 @@ const CommentsTable = () => {
     queryFn: async () => {
       console.log("🔍 Admin fetching comments...");
       
+      // First, let's check if we can access comments at all
+      const { data: testAccess, error: testError } = await supabase
+        .from("comments")
+        .select("count", { count: 'exact', head: true });
+
+      console.log("📊 Test access result:", {
+        count: testAccess,
+        error: testError?.message
+      });
+
+      // Now fetch all comments (admins should see everything)
       const { data, error } = await supabase
         .from("comments")
         .select("*")
@@ -37,12 +48,13 @@ const CommentsTable = () => {
       console.log("📊 Admin comments query result:", {
         success: !error,
         count: data?.length || 0,
-        error: error?.message
+        error: error?.message,
+        data: data?.slice(0, 3) // Log first 3 comments for debugging
       });
 
       if (error) {
         console.error("❌ Error fetching admin comments:", error);
-        throw new Error(error.message);
+        throw new Error(`Failed to fetch comments: ${error.message}`);
       }
       
       return data || [];
@@ -127,16 +139,29 @@ const CommentsTable = () => {
           </div>
         ) : error ? (
            <div className="text-red-500 text-center py-8">
-             Error fetching comments: {error.message}
-             <br />
-             <small className="text-gray-600 mt-2 block">
-               This might be due to permissions. Make sure you're logged in as an admin.
-             </small>
+             <p className="font-semibold">Error fetching comments:</p>
+             <p className="text-sm mb-4">{error.message}</p>
+             <div className="text-gray-600 text-xs">
+               <p>This might be due to:</p>
+               <ul className="list-disc list-inside mt-2">
+                 <li>Database connection issues</li>
+                 <li>RLS policy restrictions</li>
+                 <li>Authentication problems</li>
+               </ul>
+               <p className="mt-2">Check the browser console for more details.</p>
+             </div>
            </div>
         ) : (
           <div>
             <div className="mb-4 text-sm text-gray-600">
               Found {comments?.length || 0} comments total
+              {comments && comments.length > 0 && (
+                <span className="ml-2 text-xs">
+                  (Status breakdown: {comments.filter(c => c.status === 'pending').length} pending, 
+                  {comments.filter(c => c.status === 'approved').length} approved, 
+                  {comments.filter(c => c.status === 'rejected').length} rejected)
+                </span>
+              )}
             </div>
             <Table>
               <CommentsTableHeader
@@ -156,7 +181,13 @@ const CommentsTable = () => {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={7} className="h-24 text-center">
-                      No comments found. Try submitting a comment first to test the system.
+                      <div className="space-y-2">
+                        <p>No comments found.</p>
+                        <p className="text-xs text-gray-500">
+                          Comments submitted through the website should appear here once they're in the database.
+                          Try submitting a test comment to verify the system is working.
+                        </p>
+                      </div>
                     </TableCell>
                   </TableRow>
                 )}
