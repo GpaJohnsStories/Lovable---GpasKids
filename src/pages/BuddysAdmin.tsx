@@ -4,7 +4,6 @@ import AdminLogin from "@/components/admin/AdminLogin";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
 import ContentProtection from "@/components/ContentProtection";
-import ScrollToTop from "@/components/ScrollToTop";
 import { useAdminSession } from "@/hooks/useAdminSession";
 
 const BuddysAdminContent = () => {
@@ -24,25 +23,19 @@ const BuddysAdminContent = () => {
 
   if (showStoryForm) {
     return (
-      <>
-        <AdminStoryForm
-          editingStory={editingStory}
-          onSave={handleStoryFormSave}
-          onCancel={handleStoryFormCancel}
-        />
-        <ScrollToTop />
-      </>
+      <AdminStoryForm
+        editingStory={editingStory}
+        onSave={handleStoryFormSave}
+        onCancel={handleStoryFormCancel}
+      />
     );
   }
 
   return (
-    <>
-      <AdminDashboard
-        onCreateStory={handleCreateStory}
-        onEditStory={handleEditStory}
-      />
-      <ScrollToTop />
-    </>
+    <AdminDashboard
+      onCreateStory={handleCreateStory}
+      onEditStory={handleEditStory}
+    />
   );
 };
 

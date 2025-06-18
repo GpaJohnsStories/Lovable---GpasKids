@@ -27,7 +27,7 @@ const ScrollToTop = () => {
     <button
       onClick={scrollToTop}
       className="fixed bottom-8 right-8 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-full shadow-lg transition-all duration-300 hover:scale-105 z-50 flex items-center gap-2"
-      style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}
+      aria-label="Scroll to top"
     >
       <span className="font-semibold">Top</span>
       <ArrowUp className="h-4 w-4" />
