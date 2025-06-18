@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -81,8 +80,8 @@ const CommentReplyForm = ({ parentId, parentSubject }: CommentReplyFormProps) =>
       }
       
       toast({
-        title: "Success!",
-        description: "Your reply has been submitted and is awaiting approval.",
+        title: "Reply Submitted Successfully!",
+        description: "Your reply has been submitted and is awaiting approval by Grandpa John. You won't see your reply until it's approved, which usually takes 1-2 days. Thank you for your patience!",
       });
       form.reset();
       setPersonalId(null);

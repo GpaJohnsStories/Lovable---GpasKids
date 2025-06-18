@@ -1,4 +1,3 @@
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -160,8 +159,8 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
       }
       
       toast({
-        title: "Success!",
-        description: "Your comment has been submitted and is awaiting approval.",
+        title: "Comment Submitted Successfully!",
+        description: "Your comment has been submitted and is awaiting approval by Grandpa John. You won't see your comment in the list until it's approved, which usually takes 1-2 days. Thank you for your patience!",
       });
       form.reset();
       setPersonalId(null);
