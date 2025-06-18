@@ -27,37 +27,15 @@ const CommentsTable = () => {
   const { data: comments, isLoading, error } = useQuery<Comment[]>({
     queryKey: ["admin_comments"],
     queryFn: async () => {
-      console.log("🔍 Fetching comments for admin dashboard...");
-      
-      // First, let's check if we're authenticated and what our role is
-      const { data: { user } } = await supabase.auth.getUser();
-      console.log("👤 Current user:", user?.id ? "Authenticated" : "Not authenticated");
-      
-      if (user) {
-        // Check if user is admin
-        const { data: isAdminResult, error: adminError } = await supabase
-          .rpc('is_admin');
-        
-        console.log("🔒 Admin check result:", isAdminResult, "Error:", adminError);
-      }
-
       const { data, error } = await supabase
         .from("comments")
         .select("*")
         .order('created_at', { ascending: false });
 
-      console.log("📊 Comments query result:", {
-        data: data,
-        dataLength: data?.length || 0,
-        error: error
-      });
-
       if (error) {
-        console.error("❌ Error fetching comments:", error);
         throw new Error(error.message);
       }
       
-      console.log("✅ Successfully fetched comments:", data?.length || 0, "comments");
       return data;
     },
   });
@@ -123,27 +101,9 @@ const CommentsTable = () => {
     }
   };
 
-  // Add debug info to the UI
-  console.log("🎨 Rendering CommentsTable:", {
-    commentsCount: comments?.length || 0,
-    isLoading,
-    hasError: !!error
-  });
-
   return (
     <Card>
       <CardContent>
-        {/* Debug info panel - remove this after debugging */}
-        <div className="mb-4 p-3 bg-gray-100 rounded text-sm">
-          <strong>Debug Info:</strong>
-          <br />
-          Comments found: {comments?.length || 0}
-          <br />
-          Loading: {isLoading ? 'Yes' : 'No'}
-          <br />
-          Error: {error ? error.message : 'None'}
-        </div>
-        
         {isLoading ? (
           <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
             <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
