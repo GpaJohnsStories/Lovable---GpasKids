@@ -27,35 +27,51 @@ const CommentsTable = () => {
   const { data: comments, isLoading, error } = useQuery<Comment[]>({
     queryKey: ["admin_comments"],
     queryFn: async () => {
+      console.log("🔍 Admin fetching comments...");
+      
       const { data, error } = await supabase
         .from("comments")
         .select("*")
         .order('created_at', { ascending: false });
 
+      console.log("📊 Admin comments query result:", {
+        success: !error,
+        count: data?.length || 0,
+        error: error?.message
+      });
+
       if (error) {
+        console.error("❌ Error fetching admin comments:", error);
         throw new Error(error.message);
       }
       
-      return data;
+      return data || [];
     },
   });
 
   const updateCommentStatusMutation = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: Comment['status'] }) => {
+      console.log("🔄 Updating comment status:", { id, status });
+      
       const { error } = await supabase
         .from('comments')
         .update({ status })
         .eq('id', id);
 
       if (error) {
+        console.error("❌ Error updating comment status:", error);
         throw new Error(error.message);
       }
+      
+      console.log("✅ Comment status updated successfully");
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin_comments'] });
+      queryClient.invalidateQueries({ queryKey: ['comments'] }); // Also invalidate public comments
       toast.success("Comment status updated successfully!");
     },
     onError: (error) => {
+      console.error("💥 Failed to update comment status:", error);
       toast.error(`Error updating comment: ${error.message}`);
     },
   });
@@ -110,32 +126,43 @@ const CommentsTable = () => {
             <p>Loading comments...</p>
           </div>
         ) : error ? (
-           <div className="text-red-500 text-center py-8">Error fetching comments: {error.message}</div>
+           <div className="text-red-500 text-center py-8">
+             Error fetching comments: {error.message}
+             <br />
+             <small className="text-gray-600 mt-2 block">
+               This might be due to permissions. Make sure you're logged in as an admin.
+             </small>
+           </div>
         ) : (
-          <Table>
-            <CommentsTableHeader
-              sortField={sortField}
-              sortDirection={sortDirection}
-              onSort={handleSort}
-            />
-            <TableBody>
-              {sortedComments && sortedComments.length > 0 ? (
-                sortedComments.map((comment) => (
-                  <CommentsTableRow 
-                    key={comment.id}
-                    comment={comment}
-                    onUpdateStatus={handleUpdateStatus}
-                  />
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={7} className="h-24 text-center">
-                    No comments found.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+          <div>
+            <div className="mb-4 text-sm text-gray-600">
+              Found {comments?.length || 0} comments total
+            </div>
+            <Table>
+              <CommentsTableHeader
+                sortField={sortField}
+                sortDirection={sortDirection}
+                onSort={handleSort}
+              />
+              <TableBody>
+                {sortedComments && sortedComments.length > 0 ? (
+                  sortedComments.map((comment) => (
+                    <CommentsTableRow 
+                      key={comment.id}
+                      comment={comment}
+                      onUpdateStatus={handleUpdateStatus}
+                    />
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={7} className="h-24 text-center">
+                      No comments found. Try submitting a comment first to test the system.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         )}
       </CardContent>
     </Card>

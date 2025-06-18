@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { containsBadWord } from "@/utils/profanity";
+import { setPersonalId } from "@/utils/personalId";
 import PersonalIdSection from "./PersonalIdSection";
 import StoryCodeField from "./StoryCodeField";
 import CommentFormFields from "./CommentFormFields";
@@ -73,20 +74,34 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
 
   const addCommentMutation = useMutation({
     mutationFn: async (newComment: { personal_id: string; subject: string; content: string }) => {
+      console.log("📝 Submitting comment:", newComment);
+      
       const { data, error } = await supabase.from("comments").insert([
         {
           personal_id: newComment.personal_id,
           subject: newComment.subject,
           content: newComment.content,
+          status: 'pending' // Explicitly set status to pending
         },
-      ] as any);
+      ]);
 
       if (error) {
+        console.error("❌ Error submitting comment:", error);
         throw error;
       }
+      
+      console.log("✅ Comment submitted successfully:", data);
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log("🎉 Comment submission successful, invalidating queries");
+      
+      // Store the personal ID in localStorage for future use
+      const finalPersonalId = idMode === 'existing' ? existingPersonalId : personalId;
+      if (finalPersonalId) {
+        setPersonalId(finalPersonalId);
+      }
+      
       toast({
         title: "Success!",
         description: "Your comment has been submitted and is awaiting approval.",
@@ -96,9 +111,13 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
       setExistingPersonalId("");
       setExistingPersonalIdError(null);
       setIdMode("existing");
+      
+      // Invalidate both public and admin comment queries
       queryClient.invalidateQueries({ queryKey: ["comments"] });
+      queryClient.invalidateQueries({ queryKey: ["admin_comments"] });
     },
     onError: (error) => {
+      console.error("💥 Comment submission failed:", error);
       toast({
         title: "Error submitting comment",
         description: error.message,
@@ -201,6 +220,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
       return;
     }
 
+    console.log("🚀 Submitting comment with Personal ID:", finalPersonalId);
     addCommentMutation.mutate({
         personal_id: finalPersonalId,
         subject: values.subject,
