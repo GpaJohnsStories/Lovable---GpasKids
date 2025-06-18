@@ -1,3 +1,4 @@
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -73,8 +74,30 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
 
   const addCommentMutation = useMutation({
     mutationFn: async (newComment: { personal_id: string; subject: string; content: string }) => {
-      console.log("📝 Submitting comment to database");
+      console.log("📝 Starting comment submission process");
+      console.log("📝 Comment data:", {
+        personal_id: newComment.personal_id,
+        subject: newComment.subject,
+        content_length: newComment.content.length,
+        status: 'pending'
+      });
       
+      // Test database connection first
+      console.log("🔍 Testing database connection...");
+      const { data: testData, error: testError } = await supabase
+        .from("comments")
+        .select("count")
+        .limit(1);
+        
+      if (testError) {
+        console.error("❌ Database connection test failed:", testError);
+        throw new Error(`Database connection failed: ${testError.message}`);
+      }
+      
+      console.log("✅ Database connection successful");
+      
+      // Now attempt the insert
+      console.log("📝 Attempting to insert comment into database...");
       const { data, error } = await supabase.from("comments").insert([
         {
           personal_id: newComment.personal_id,
@@ -86,14 +109,20 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
 
       if (error) {
         console.error("❌ Error submitting comment:", error);
+        console.error("❌ Error details:", {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
         throw new Error(`Failed to submit comment: ${error.message}`);
       }
       
-      console.log("✅ Comment submitted successfully");
+      console.log("✅ Comment submitted successfully:", data);
       return data;
     },
     onSuccess: (data) => {
-      console.log("🎉 Comment submission successful");
+      console.log("🎉 Comment submission successful, invalidating queries");
       
       // Store the personal ID in localStorage for future use
       const finalPersonalId = idMode === 'existing' ? existingPersonalId : personalId;
@@ -119,7 +148,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
       console.error("💥 Comment submission failed:", error);
       toast({
         title: "Error submitting comment",
-        description: error.message,
+        description: `Please try again. Error: ${error.message}`,
         variant: "destructive",
       });
     },
@@ -172,6 +201,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("🚀 Form submission started");
     form.clearErrors();
     setExistingPersonalIdError(null);
     let hasError = false;
@@ -216,10 +246,11 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
     }
 
     if (hasError || !finalPersonalId) {
+      console.log("❌ Form validation failed");
       return;
     }
 
-    console.log("🚀 Form validation passed, submitting comment");
+    console.log("✅ Form validation passed, submitting comment with personal_id:", finalPersonalId);
     addCommentMutation.mutate({
         personal_id: finalPersonalId,
         subject: values.subject,
