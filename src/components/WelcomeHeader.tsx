@@ -1,4 +1,3 @@
-
 import { ChevronDown, Book, MessageSquare, Home, Lock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -15,7 +14,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
-
 
 const WelcomeHeader = () => {
   const location = useLocation();
@@ -176,8 +174,8 @@ const WelcomeHeader = () => {
 
   return (
     <TooltipProvider>
-      {/* Main Header Banner */}
-      <header className="bg-gradient-to-r from-amber-600 to-orange-600 shadow-lg border-b-4 border-orange-300">
+      {/* Main Header Banner - Now with sticky positioning */}
+      <header className="sticky top-0 z-50 bg-gradient-to-r from-amber-600 to-orange-600 shadow-lg border-b-4 border-orange-300">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
