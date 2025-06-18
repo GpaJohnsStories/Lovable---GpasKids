@@ -7,6 +7,7 @@ export interface StoryData {
   illustration: string;
   category: string;
   author: string;
+  published?: string;
   photo_link_1?: string;
   photo_link_2?: string;
   photo_link_3?: string;
@@ -20,7 +21,8 @@ export const SAMPLE_STORIES: StoryData[] = [
     readTime: "6 min read",
     illustration: "🧰",
     category: "Life",
-    author: "Michael Chen"
+    author: "Michael Chen",
+    published: "Y"
   },
   {
     id: 7,
@@ -29,7 +31,8 @@ export const SAMPLE_STORIES: StoryData[] = [
     readTime: "5 min read",
     illustration: "⭐",
     category: "North Pole",
-    author: "Sarah Williams"
+    author: "Sarah Williams",
+    published: "Y"
   },
   {
     id: 8,
@@ -38,7 +41,8 @@ export const SAMPLE_STORIES: StoryData[] = [
     readTime: "7 min read",
     illustration: "🚌",
     category: "World Changers",
-    author: "David Rodriguez"
+    author: "David Rodriguez",
+    published: "N"
   },
   {
     id: 9,
@@ -47,7 +51,8 @@ export const SAMPLE_STORIES: StoryData[] = [
     readTime: "3 min read",
     illustration: "🍪",
     category: "Fun",
-    author: "Lisa Park"
+    author: "Lisa Park",
+    published: "Y"
   },
   {
     id: 10,
@@ -56,7 +61,8 @@ export const SAMPLE_STORIES: StoryData[] = [
     readTime: "8 min read",
     illustration: "🤐",
     category: "Life",
-    author: "James Foster"
+    author: "James Foster",
+    published: "Y"
   },
   {
     id: 11,
@@ -65,7 +71,8 @@ export const SAMPLE_STORIES: StoryData[] = [
     readTime: "6 min read",
     illustration: "🎅",
     category: "North Pole",
-    author: "Maria Garcia"
+    author: "Maria Garcia",
+    published: "N"
   },
   {
     id: 12,
@@ -74,7 +81,8 @@ export const SAMPLE_STORIES: StoryData[] = [
     readTime: "9 min read",
     illustration: "🌱",
     category: "World Changers",
-    author: "Robert Kim"
+    author: "Robert Kim",
+    published: "Y"
   }
 ];
 
@@ -87,14 +95,20 @@ export const getNewestStories = (realStories: any[] = []): StoryData[] => {
     illustration: "📖",
     category: story.category,
     author: story.author,
+    published: story.published,
     photo_link_1: story.photo_link_1,
     photo_link_2: story.photo_link_2,
     photo_link_3: story.photo_link_3
   }));
 
-  return [...realStoryData, ...SAMPLE_STORIES.slice(0, 3)].slice(0, 4);
+  // Filter sample stories to only include published ones
+  const publishedSampleStories = SAMPLE_STORIES.filter(story => story.published === 'Y');
+  
+  return [...realStoryData, ...publishedSampleStories.slice(0, 3)].slice(0, 4);
 };
 
 export const getPopularStories = (): StoryData[] => {
-  return SAMPLE_STORIES.slice(3);
+  // Filter sample stories to only include published ones
+  const publishedSampleStories = SAMPLE_STORIES.filter(story => story.published === 'Y');
+  return publishedSampleStories.slice(3);
 };
