@@ -7,7 +7,7 @@ import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ContentProtection from "@/components/ContentProtection";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Megaphone } from "lucide-react";
 import { format } from 'date-fns';
 import CommentReplyForm from "@/components/CommentReplyForm";
 import CommentRepliesList from "@/components/CommentRepliesList";
@@ -50,6 +50,18 @@ const CommentDetail = () => {
     enabled: !!id,
   });
 
+  const getPersonalIdDisplay = (personalId: string) => {
+    if (personalId === '000000') {
+      return (
+        <div className="flex items-center gap-2">
+          <Megaphone className="h-4 w-4 text-blue-600" />
+          <span className="text-blue-600 font-semibold font-fun">Admin</span>
+        </div>
+      );
+    }
+    return <span className="font-fun text-orange-600">{personalId}</span>;
+  };
+
   if (isLoading) {
     return (
       <ContentProtection enableProtection={true}>
@@ -91,6 +103,8 @@ const CommentDetail = () => {
     );
   }
 
+  const isAnnouncement = comment.personal_id === '000000';
+
   return (
     <ContentProtection enableProtection={true}>
       <div className="flex flex-col min-h-screen bg-amber-50">
@@ -109,21 +123,33 @@ const CommentDetail = () => {
             </div>
 
             {/* Main Comment */}
-            <div className="bg-white/80 p-6 rounded-lg border border-orange-200 mb-8">
+            <div className={`p-6 rounded-lg border mb-8 ${
+              isAnnouncement 
+                ? 'bg-blue-50/80 border-blue-200' 
+                : 'bg-white/80 border-orange-200'
+            }`}>
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h1 className="text-2xl font-bold text-orange-800 font-fun mb-2">
+                  <h1 className={`text-2xl font-bold font-fun mb-2 ${
+                    isAnnouncement ? 'text-blue-800' : 'text-orange-800'
+                  }`}>
                     {comment.subject}
                   </h1>
-                  <div className="flex items-center gap-4 text-sm text-orange-600">
-                    <span className="font-semibold">By: {comment.personal_id}</span>
-                    <span>Posted: {format(new Date(comment.created_at), 'MMM d, yyyy, h:mm a')}</span>
+                  <div className="flex items-center gap-4 text-sm">
+                    <span className="font-semibold">
+                      By: {getPersonalIdDisplay(comment.personal_id)}
+                    </span>
+                    <span className={`font-fun ${isAnnouncement ? 'text-blue-600' : 'text-orange-600'}`}>
+                      Posted: {format(new Date(comment.created_at), 'MMM d, yyyy, h:mm a')}
+                    </span>
                   </div>
                 </div>
               </div>
               
               <div className="prose prose-orange max-w-none">
-                <div className="text-gray-800 whitespace-pre-wrap font-fun leading-relaxed text-lg">
+                <div className={`whitespace-pre-wrap font-fun leading-relaxed text-lg ${
+                  isAnnouncement ? 'text-blue-800' : 'text-gray-800'
+                }`}>
                   {comment.content}
                 </div>
               </div>
