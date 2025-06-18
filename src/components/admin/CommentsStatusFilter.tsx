@@ -24,7 +24,7 @@ const CommentsStatusFilter = ({
   statusCounts 
 }: CommentsStatusFilterProps) => {
   return (
-    <div className="mb-4">
+    <div>
       <ToggleGroup
         type="single"
         value={selectedStatus}
@@ -35,16 +35,16 @@ const CommentsStatusFilter = ({
         }}
         className="justify-start gap-2"
       >
-        <ToggleGroupItem value="all" variant="outline" className="data-[state=on]:bg-blue-100 data-[state=on]:text-blue-700 data-[state=on]:border-blue-300">
+        <ToggleGroupItem value="all" variant="outline" className="data-[state=on]:bg-blue-500 data-[state=on]:text-white data-[state=on]:border-blue-600 data-[state=on]:shadow-lg">
           All ({statusCounts.all})
         </ToggleGroupItem>
-        <ToggleGroupItem value="approved" variant="outline" className="data-[state=on]:bg-blue-100 data-[state=on]:text-blue-700 data-[state=on]:border-blue-300">
+        <ToggleGroupItem value="approved" variant="outline" className="data-[state=on]:bg-green-500 data-[state=on]:text-white data-[state=on]:border-green-600 data-[state=on]:shadow-lg">
           Approved ({statusCounts.approved})
         </ToggleGroupItem>
-        <ToggleGroupItem value="rejected" variant="outline" className="data-[state=on]:bg-blue-100 data-[state=on]:text-blue-700 data-[state=on]:border-blue-300">
+        <ToggleGroupItem value="rejected" variant="outline" className="data-[state=on]:bg-red-500 data-[state=on]:text-white data-[state=on]:border-red-600 data-[state=on]:shadow-lg">
           Rejected ({statusCounts.rejected})
         </ToggleGroupItem>
-        <ToggleGroupItem value="archived" variant="outline" className="data-[state=on]:bg-blue-100 data-[state=on]:text-blue-700 data-[state=on]:border-blue-300">
+        <ToggleGroupItem value="archived" variant="outline" className="data-[state=on]:bg-gray-500 data-[state=on]:text-white data-[state=on]:border-gray-600 data-[state=on]:shadow-lg">
           Archived ({statusCounts.archived})
         </ToggleGroupItem>
       </ToggleGroup>

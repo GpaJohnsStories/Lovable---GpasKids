@@ -36,21 +36,21 @@ const CommentsTableFilters = ({
   statusCounts
 }: CommentsTableFiltersProps) => {
   return (
-    <div className="mb-6 space-y-4">
-      <CommentsStatusFilter
-        selectedStatus={selectedStatus}
-        onStatusChange={onStatusChange}
-        statusCounts={statusCounts}
-      />
-      
-      <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-        <div className="flex items-center gap-2 w-full sm:w-auto">
+    <div className="mb-6">
+      <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+        <CommentsStatusFilter
+          selectedStatus={selectedStatus}
+          onStatusChange={onStatusChange}
+          statusCounts={statusCounts}
+        />
+        
+        <div className="flex items-center gap-2">
           <Search className="h-4 w-4 text-gray-500" />
           <Input
             placeholder="Search by Personal Code..."
             value={searchPersonalCode}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full sm:w-64"
+            className="w-64"
           />
           {searchPersonalCode && (
             <Button 
@@ -63,12 +63,13 @@ const CommentsTableFilters = ({
             </Button>
           )}
         </div>
-        {(searchPersonalCode || selectedStatus !== 'all') && (
-          <div className="text-sm text-gray-600">
-            Showing {filteredCount} of {totalCount} comments
-          </div>
-        )}
       </div>
+      
+      {(searchPersonalCode || selectedStatus !== 'all') && (
+        <div className="text-sm text-gray-600 mt-4">
+          Showing {filteredCount} of {totalCount} comments
+        </div>
+      )}
     </div>
   );
 };

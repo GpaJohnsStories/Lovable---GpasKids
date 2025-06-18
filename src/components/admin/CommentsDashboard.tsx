@@ -32,9 +32,6 @@ const CommentsDashboard = () => {
           <h2 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             Manage Comments
           </h2>
-          <div className="text-base text-gray-600">
-            Found {comments?.length || 0} comments total
-          </div>
         </div>
       </div>
       <CommentsTable />
