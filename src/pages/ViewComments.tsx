@@ -4,7 +4,6 @@ import CookieFreeFooter from "@/components/CookieFreeFooter";
 import CommentsList from "@/components/CommentsList";
 import ContentProtection from "@/components/ContentProtection";
 import { useState } from "react";
-import { getPersonalId } from "@/utils/personalId";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -13,17 +12,6 @@ import { Search } from "lucide-react";
 const ViewComments = () => {
   const [personalIdFilter, setPersonalIdFilter] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState<string>("");
-
-  const handleShowMyComments = () => {
-    const personalId = getPersonalId();
-    if (personalId) {
-      setPersonalIdFilter(personalId);
-      setSearchInput(personalId);
-      toast.success(`Showing only comments for your Personal Code: ${personalId}`);
-    } else {
-      toast.info("You don't have a Personal Code yet. Make a comment first to get one.");
-    }
-  };
 
   const handleClearSearch = () => {
     setPersonalIdFilter(null);
@@ -52,33 +40,25 @@ const ViewComments = () => {
             </h2>
 
             <div className="my-6 p-4 bg-amber-100/60 rounded-lg border-2 border-orange-200">
-              <div className="flex flex-col sm:flex-row items-center gap-4">
-                <div className="flex items-center gap-2 flex-grow">
-                  <Search className="h-4 w-4 text-orange-600" />
-                  <Input
-                    type="text"
-                    value={searchInput}
-                    onChange={(e) => handleSearchChange(e.target.value)}
-                    placeholder="Search by Personal Code..."
-                    className="flex-grow font-fun"
-                  />
-                  {searchInput && (
-                    <Button 
-                      onClick={handleClearSearch}
-                      variant="outline" 
-                      size="sm"
-                      className="whitespace-nowrap"
-                    >
-                      Clear
-                    </Button>
-                  )}
-                </div>
-                <Button 
-                  onClick={handleShowMyComments} 
-                  className="bg-cyan-500 hover:bg-cyan-600 text-white font-fun text-base whitespace-nowrap"
-                >
-                  Use My Code
-                </Button>
+              <div className="flex items-center justify-center gap-2">
+                <Search className="h-4 w-4 text-orange-600" />
+                <Input
+                  type="text"
+                  value={searchInput}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  placeholder="Search by Personal Code..."
+                  className="w-64 font-fun"
+                />
+                {searchInput && (
+                  <Button 
+                    onClick={handleClearSearch}
+                    variant="outline" 
+                    size="sm"
+                    className="whitespace-nowrap"
+                  >
+                    Clear
+                  </Button>
+                )}
               </div>
             </div>
             
