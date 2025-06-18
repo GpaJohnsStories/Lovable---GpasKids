@@ -5,7 +5,7 @@ import { ArrowUp, ArrowDown } from "lucide-react";
 import { Database } from "@/integrations/supabase/types";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
-type SortField = keyof Omit<Comment, 'author_email' | 'parent_id' | 'updated_at'> | 'actions';
+type SortField = keyof Omit<Comment, 'author_email' | 'parent_id' | 'updated_at' | 'content'> | 'actions';
 type SortDirection = 'asc' | 'desc';
 
 interface CommentsTableHeaderProps {
@@ -26,8 +26,6 @@ const CommentsTableHeader = ({ sortField, sortDirection, onSort }: CommentsTable
         return 'bg-cyan-500 hover:bg-cyan-600 text-white';
       case 'subject':
         return 'bg-blue-500 hover:bg-blue-600 text-white';
-      case 'content':
-        return 'bg-green-500 hover:bg-green-600 text-white';
       case 'status':
         return 'bg-purple-500 hover:bg-purple-600 text-white';
       case 'created_at':
@@ -41,7 +39,7 @@ const CommentsTableHeader = ({ sortField, sortDirection, onSort }: CommentsTable
     { label: "Personal Code", field: "personal_id" },
     { label: "Date", field: "created_at" },
     { label: "Subject", field: "subject" },
-    { label: "Content", field: "content" },
+    { label: "Content", field: "actions" }, // Using actions for the View button column
     { label: "Status", field: "status" },
     { label: "Actions", field: "actions" },
   ];
@@ -49,9 +47,9 @@ const CommentsTableHeader = ({ sortField, sortDirection, onSort }: CommentsTable
   return (
     <TableHeader>
       <TableRow>
-        {headers.map(header => (
-          <TableHead key={header.field} className="p-2 text-center">
-            {header.field === 'actions' ? (
+        {headers.map((header, index) => (
+          <TableHead key={`${header.field}-${index}`} className="p-2 text-center">
+            {header.field === 'actions' || (header.label === 'Content' && header.field === 'actions') ? (
               <span className="font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>{header.label}</span>
             ) : (
               <Button

@@ -14,15 +14,18 @@ import { toast } from "sonner";
 import { Database } from "@/integrations/supabase/types";
 import CommentsTableHeader from "./CommentsTableHeader";
 import CommentsTableRow from "./CommentsTableRow";
+import AdminCommentDetail from "./AdminCommentDetail";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
-type SortField = keyof Omit<Comment, 'author_email' | 'parent_id' | 'updated_at'> | 'actions';
+type SortField = keyof Omit<Comment, 'author_email' | 'parent_id' | 'updated_at' | 'content'> | 'actions';
 type SortDirection = 'asc' | 'desc';
 
 const CommentsTable = () => {
   const queryClient = useQueryClient();
   const [sortField, setSortField] = useState<SortField>('created_at');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const { data: comments, isLoading, error } = useQuery<Comment[]>({
     queryKey: ["admin_comments"],
@@ -80,6 +83,16 @@ const CommentsTable = () => {
     updateCommentStatusMutation.mutate({ id, status });
   };
 
+  const handleViewComment = (comment: Comment) => {
+    setSelectedComment(comment);
+    setIsDetailOpen(true);
+  };
+
+  const handleCloseDetail = () => {
+    setIsDetailOpen(false);
+    setSelectedComment(null);
+  };
+
   const sortedComments = useMemo(() => {
     if (!comments) return [];
     
@@ -118,58 +131,68 @@ const CommentsTable = () => {
   };
 
   return (
-    <Card>
-      <CardContent>
-        {isLoading ? (
-          <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-            <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
-            <p>Loading comments...</p>
-          </div>
-        ) : error ? (
-           <div className="text-red-500 text-center py-8">
-             <p className="font-semibold">Error fetching comments:</p>
-             <p className="text-sm mb-4">{error.message}</p>
-           </div>
-        ) : (
-          <div>
-            <div className="mb-4 text-sm text-gray-600">
-              Found {comments?.length || 0} comments total
-              {comments && comments.length > 0 && (
-                <span className="ml-2 text-xs">
-                  (Status breakdown: {comments.filter(c => c.status === 'pending').length} pending, 
-                  {comments.filter(c => c.status === 'approved').length} approved, 
-                  {comments.filter(c => c.status === 'rejected').length} rejected)
-                </span>
-              )}
+    <>
+      <Card>
+        <CardContent>
+          {isLoading ? (
+            <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+              <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
+              <p>Loading comments...</p>
             </div>
-            <Table>
-              <CommentsTableHeader
-                sortField={sortField}
-                sortDirection={sortDirection}
-                onSort={handleSort}
-              />
-              <TableBody>
-                {sortedComments && sortedComments.length > 0 ? (
-                  sortedComments.map((comment) => (
-                    <CommentsTableRow 
-                      key={comment.id}
-                      comment={comment}
-                      onUpdateStatus={handleUpdateStatus}
-                    />
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={7} className="h-24 text-center">
-                      <p>No comments found. Comments submitted through the website should appear here.</p>
-                    </TableCell>
-                  </TableRow>
+          ) : error ? (
+             <div className="text-red-500 text-center py-8">
+               <p className="font-semibold">Error fetching comments:</p>
+               <p className="text-sm mb-4">{error.message}</p>
+             </div>
+          ) : (
+            <div>
+              <div className="mb-4 text-sm text-gray-600">
+                Found {comments?.length || 0} comments total
+                {comments && comments.length > 0 && (
+                  <span className="ml-2 text-xs">
+                    (Status breakdown: {comments.filter(c => c.status === 'pending').length} pending, 
+                    {comments.filter(c => c.status === 'approved').length} approved, 
+                    {comments.filter(c => c.status === 'rejected').length} rejected)
+                  </span>
                 )}
-              </TableBody>
-            </Table>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+              </div>
+              <Table>
+                <CommentsTableHeader
+                  sortField={sortField}
+                  sortDirection={sortDirection}
+                  onSort={handleSort}
+                />
+                <TableBody>
+                  {sortedComments && sortedComments.length > 0 ? (
+                    sortedComments.map((comment) => (
+                      <CommentsTableRow 
+                        key={comment.id}
+                        comment={comment}
+                        onUpdateStatus={handleUpdateStatus}
+                        onViewComment={handleViewComment}
+                      />
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={6} className="h-24 text-center">
+                        <p>No comments found. Comments submitted through the website should appear here.</p>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <AdminCommentDetail
+        comment={selectedComment}
+        isOpen={isDetailOpen}
+        onClose={handleCloseDetail}
+        onUpdateStatus={handleUpdateStatus}
+      />
+    </>
   );
 };
 

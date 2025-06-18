@@ -4,15 +4,17 @@ import { Button } from "@/components/ui/button";
 import { format } from 'date-fns';
 import { Database } from "@/integrations/supabase/types";
 import { Badge } from "@/components/ui/badge";
+import { Eye } from "lucide-react";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
 interface CommentsTableRowProps {
   comment: Comment;
   onUpdateStatus: (id: string, status: Comment['status']) => void;
+  onViewComment: (comment: Comment) => void;
 }
 
-const CommentsTableRow = ({ comment, onUpdateStatus }: CommentsTableRowProps) => {
+const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTableRowProps) => {
 
   const getStatusBadge = (status: Comment['status']) => {
     switch (status) {
@@ -33,8 +35,20 @@ const CommentsTableRow = ({ comment, onUpdateStatus }: CommentsTableRowProps) =>
     <TableRow>
       <TableCell>{comment.personal_id}</TableCell>
       <TableCell>{format(new Date(comment.created_at), 'MMM d, yyyy, h:mm a')}</TableCell>
-      <TableCell>{comment.subject}</TableCell>
-      <TableCell className="max-w-xs truncate" title={comment.content}>{comment.content}</TableCell>
+      <TableCell className="max-w-md">
+        <div className="font-medium">{comment.subject}</div>
+      </TableCell>
+      <TableCell>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => onViewComment(comment)}
+          className="flex items-center gap-2"
+        >
+          <Eye className="h-4 w-4" />
+          View Full
+        </Button>
+      </TableCell>
       <TableCell>{getStatusBadge(comment.status)}</TableCell>
       <TableCell className="flex space-x-2">
         {comment.status !== 'approved' && (
