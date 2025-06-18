@@ -1,0 +1,107 @@
+
+import { useLocation } from "react-router-dom";
+import { Lock } from "lucide-react";
+import {
+  NavigationMenu as ShadcnNavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import NavigationButton from "./NavigationButton";
+import NavigationDropdown from "./NavigationDropdown";
+import { useState, useEffect } from "react";
+
+const NavigationMenu = () => {
+  const location = useLocation();
+  const [currentStoryPath, setCurrentStoryPath] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedPath = sessionStorage.getItem('currentStoryPath');
+    if (storedPath) {
+      setCurrentStoryPath(storedPath);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (location.pathname.startsWith('/story/')) {
+      sessionStorage.setItem('currentStoryPath', location.pathname);
+      setCurrentStoryPath(location.pathname);
+    }
+  }, [location.pathname]);
+
+  const navItems = [
+    { 
+      name: 'Home', 
+      path: '/', 
+      bgColor: 'bg-gradient-to-b from-[#C5E4F3] via-[#ADD8E6] to-[#8AC6D1]',
+      hoverColor: 'hover:from-[#B8DCF0] hover:via-[#9BCFDF] hover:to-[#7AB8C4]',
+      shadowColor: 'shadow-[0_6px_0_#7AB8C4,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-blue-900'
+    },
+    { 
+      name: 'Library', 
+      path: '/library', 
+      bgColor: 'bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700',
+      hoverColor: 'hover:from-orange-600 hover:via-orange-700 hover:to-orange-800',
+      shadowColor: 'shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-white',
+      subItems: [
+        { name: 'Story List', path: '/library' },
+        { name: 'Current Story', path: currentStoryPath || '#', disabled: !currentStoryPath },
+      ]
+    },
+    { 
+      name: 'Comments', 
+      bgColor: 'bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500',
+      hoverColor: 'hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600',
+      shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-green-800',
+      subItems: [
+        { name: 'Make Comment', path: '/make-comment' },
+        { name: 'View Comments', path: '/view-comments' },
+      ],
+    },
+    { 
+      name: 'About Us', 
+      path: '/about', 
+      bgColor: 'bg-gradient-to-b from-sky-300 via-sky-400 to-sky-500',
+      hoverColor: 'hover:from-sky-400 hover:via-sky-500 hover:to-sky-600',
+      shadowColor: 'shadow-[0_6px_0_#0369a1,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#0369a1,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-blue-950'
+    },
+    { 
+      name: 'Privacy', 
+      path: '/privacy', 
+      bgColor: 'bg-gradient-to-b from-yellow-400 via-yellow-500 to-yellow-600',
+      hoverColor: 'hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700',
+      shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-black',
+      icon: Lock
+    }
+  ];
+
+  return (
+    <ShadcnNavigationMenu>
+      <NavigationMenuList className="flex flex-row gap-3">
+        {navItems.map((item) => (
+          <NavigationMenuItem key={item.name}>
+            {item.subItems ? (
+              <NavigationDropdown item={item} />
+            ) : (
+              <NavigationButton
+                item={item}
+                isActive={location.pathname === item.path}
+              />
+            )}
+          </NavigationMenuItem>
+        ))}
+      </NavigationMenuList>
+    </ShadcnNavigationMenu>
+  );
+};
+
+export default NavigationMenu;

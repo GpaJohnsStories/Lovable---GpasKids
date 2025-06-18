@@ -1,0 +1,94 @@
+
+import { Link } from "react-router-dom";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import NavigationMenu from "./NavigationMenu";
+
+interface HeaderContentProps {
+  isHomePage: boolean;
+}
+
+const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex items-center space-x-4">
+        {/* Personal Photo */}
+        <Link to="/" onClick={scrollToTop} className="bg-white rounded-full p-1 shadow-lg hover:shadow-xl transition-shadow">
+          <img 
+            src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png" 
+            alt="Grandpa's beloved companion"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover object-top"
+          />
+        </Link>
+        <div className="text-left">
+          <div className="text-lg sm:text-2xl font-bold font-handwritten">
+            <div className="text-blue-900">Grandpa John's</div>
+            <div className="text-left text-white text-xl sm:text-3xl">Stories for Kids</div>
+          </div>
+          <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story feels like a new adventure</p>
+          
+          {/* Navigation Menu - Show on home page, positioned below the text and left-aligned */}
+          {isHomePage && (
+            <div className="mt-4">
+              <NavigationMenu />
+            </div>
+          )}
+        </div>
+      </div>
+      
+      {/* Dancing GIF with Speech Bubble - Only show on home page */}
+      {isHomePage && (
+        <div className="relative hidden md:block">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <img 
+                src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczNveHBjNDkxcDNwMG5mcHh2dmxvYXlycm4zZjF5a3BxaWRxb3VoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cMALqIjmb7ygw/giphy.gif"
+                alt="Fun dancing GIF"
+                className="w-72 h-48 rounded-full border-4 border-white shadow-[inset_0_12px_20px_rgba(0,0,0,0.5),inset_0_6px_12px_rgba(0,0,0,0.3),inset_0_2px_6px_rgba(0,0,0,0.2)] object-cover object-left cursor-pointer"
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Telescope</p>
+            </TooltipContent>
+          </Tooltip>
+          {/* Speech Bubble Image */}
+          <div className="absolute -left-24 top-2">
+            <img 
+              src="/lovable-uploads/85707d76-31c8-4dac-9fa7-c6752c4f8e74.png" 
+              alt="Speech bubble saying HURRY UP!!! We want to read!!!"
+              className="w-24 h-24 object-contain"
+              onLoad={() => console.log('New speech bubble image loaded successfully')}
+              onError={(e) => console.log('New speech bubble image failed to load:', e)}
+            />
+          </div>
+          {/* Under Construction Image - Positioned at bottom of telescope */}
+          <div className="absolute top-48 left-1/2 transform -translate-x-1/2">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <img 
+                  src="/lovable-uploads/3a1b5f78-6ca6-488d-90a3-369c6bc26b12.png"
+                  alt="Under Construction"
+                  className="w-36 h-36 object-contain cursor-pointer"
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>UC</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        </div>
+      )}
+
+      {/* Navigation Menu - Only show on non-home pages */}
+      {!isHomePage && <NavigationMenu />}
+    </div>
+  );
+};
+
+export default HeaderContent;

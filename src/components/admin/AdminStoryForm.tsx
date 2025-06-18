@@ -1,23 +1,39 @@
 
-import StoryForm from "@/components/StoryForm";
+import React from 'react';
+import StoryFormContainer from '@/components/StoryFormContainer';
+import AdminLayout from './AdminLayout';
+
+interface Story {
+  id?: string;
+  title: string;
+  author: string;
+  category: "Fun" | "Life" | "North Pole" | "World Changers";
+  content: string;
+  tagline: string;
+  excerpt: string;
+  story_code: string;
+  google_drive_link: string;
+  photo_link_1: string;
+  photo_link_2: string;
+  photo_link_3: string;
+  published: string;
+}
 
 interface AdminStoryFormProps {
-  editingStory: any;
+  editingStory?: Story;
   onSave: () => void;
   onCancel: () => void;
 }
 
-const AdminStoryForm = ({ editingStory, onSave, onCancel }: AdminStoryFormProps) => {
+const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ editingStory, onSave, onCancel }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-      <div className="container mx-auto px-4">
-        <StoryForm
-          story={editingStory}
-          onSave={onSave}
-          onCancel={onCancel}
-        />
-      </div>
-    </div>
+    <AdminLayout>
+      <StoryFormContainer
+        story={editingStory}
+        onSave={onSave}
+        onCancel={onCancel}
+      />
+    </AdminLayout>
   );
 };
 
