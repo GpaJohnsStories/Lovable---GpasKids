@@ -35,16 +35,16 @@ const CommentsStatusFilter = ({
         }}
         className="justify-start gap-2"
       >
-        <ToggleGroupItem value="all" variant="outline" className="data-[state=on]:bg-blue-100">
+        <ToggleGroupItem value="all" variant="outline" className="data-[state=on]:bg-blue-100 data-[state=on]:text-blue-700 data-[state=on]:border-blue-300">
           All ({statusCounts.all})
         </ToggleGroupItem>
-        <ToggleGroupItem value="approved" variant="outline" className="data-[state=on]:bg-green-100">
+        <ToggleGroupItem value="approved" variant="outline" className="data-[state=on]:bg-blue-100 data-[state=on]:text-blue-700 data-[state=on]:border-blue-300">
           Approved ({statusCounts.approved})
         </ToggleGroupItem>
-        <ToggleGroupItem value="rejected" variant="outline" className="data-[state=on]:bg-red-100">
+        <ToggleGroupItem value="rejected" variant="outline" className="data-[state=on]:bg-blue-100 data-[state=on]:text-blue-700 data-[state=on]:border-blue-300">
           Rejected ({statusCounts.rejected})
         </ToggleGroupItem>
-        <ToggleGroupItem value="archived" variant="outline" className="data-[state=on]:bg-gray-100">
+        <ToggleGroupItem value="archived" variant="outline" className="data-[state=on]:bg-blue-100 data-[state=on]:text-blue-700 data-[state=on]:border-blue-300">
           Archived ({statusCounts.archived})
         </ToggleGroupItem>
       </ToggleGroup>
