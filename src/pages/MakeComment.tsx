@@ -1,7 +1,7 @@
-
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import CommentForm from "@/components/CommentForm";
+import ScrollToTop from "@/components/ScrollToTop";
 import { useSearchParams } from "react-router-dom";
 
 const MakeComment = () => {
@@ -89,6 +89,7 @@ const MakeComment = () => {
         </div>
       </main>
       <CookieFreeFooter />
+      <ScrollToTop />
     </div>
   );
 };

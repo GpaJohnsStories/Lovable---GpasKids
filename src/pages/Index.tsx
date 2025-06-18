@@ -4,6 +4,7 @@ import WelcomeText from "@/components/WelcomeText";
 import StorySection from "@/components/StorySection";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ContentProtection from "@/components/ContentProtection";
+import ScrollToTop from "@/components/ScrollToTop";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -45,6 +46,7 @@ const Index = () => {
           <StorySection />
         </main>
         <CookieFreeFooter />
+        <ScrollToTop />
       </div>
     </ContentProtection>
   );

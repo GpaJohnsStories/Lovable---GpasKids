@@ -3,6 +3,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import CommentsList from "@/components/CommentsList";
 import ContentProtection from "@/components/ContentProtection";
+import ScrollToTop from "@/components/ScrollToTop";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
@@ -68,6 +69,7 @@ const ViewComments = () => {
           </div>
         </main>
         <CookieFreeFooter />
+        <ScrollToTop />
       </div>
     </ContentProtection>
   );

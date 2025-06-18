@@ -13,6 +13,7 @@ import StoryPhotosGallery from "@/components/StoryPhotosGallery";
 import StoryContent from "@/components/StoryContent";
 import StoryVotingSection from "@/components/StoryVotingSection";
 import ContentProtection from "@/components/ContentProtection";
+import ScrollToTop from "@/components/ScrollToTop";
 import { getStoryPhotos } from "@/utils/storyUtils";
 import { useState } from "react";
 
@@ -66,6 +67,7 @@ const Story = () => {
           <WelcomeHeader />
           <LoadingSpinner message="Loading your story..." />
           <CookieFreeFooter />
+          <ScrollToTop />
         </div>
       </ContentProtection>
     );
@@ -89,6 +91,7 @@ const Story = () => {
             </div>
           </div>
           <CookieFreeFooter />
+          <ScrollToTop />
         </div>
       </ContentProtection>
     );
@@ -149,6 +152,7 @@ const Story = () => {
           </div>
         </div>
         <CookieFreeFooter />
+        <ScrollToTop />
       </div>
     </ContentProtection>
   );
