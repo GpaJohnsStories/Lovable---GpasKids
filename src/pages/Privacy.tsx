@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Cookie, Eye, Lock } from "lucide-react";
@@ -54,7 +55,7 @@ const Privacy = () => {
                     </div>
                     {/* Buddy's paw print using uploaded image */}
                     <img 
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Paw-print.svg/256px-Paw-print.svg.png?20110605041351" 
+                      src="/lovable-uploads/5fcd6648-5bf3-4287-9e52-84dc0382f4ef.png" 
                       alt="Buddy's paw print"
                       className="w-8 h-8 ml-2"
                       style={{ transform: 'rotate(-15deg)' }}
