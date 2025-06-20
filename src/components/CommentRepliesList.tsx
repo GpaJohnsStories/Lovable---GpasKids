@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { format } from 'date-fns';
-import { Megaphone } from "lucide-react";
 
 type Reply = {
   id: string;
@@ -38,10 +37,7 @@ const CommentRepliesList = ({ parentId }: CommentRepliesListProps) => {
   const getPersonalIdDisplay = (personalId: string) => {
     if (personalId === '000000') {
       return (
-        <div className="flex items-center gap-2">
-          <Megaphone className="h-4 w-4 text-blue-600" />
-          <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
-        </div>
+        <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
       );
     }
     return <span className="font-fun text-orange-600">{personalId}</span>;

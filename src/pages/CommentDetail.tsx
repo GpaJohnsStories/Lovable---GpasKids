@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -8,7 +7,7 @@ import ContentProtection from "@/components/ContentProtection";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Megaphone } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { format } from 'date-fns';
 import CommentReplyForm from "@/components/CommentReplyForm";
 import CommentRepliesList from "@/components/CommentRepliesList";
@@ -71,10 +70,7 @@ const CommentDetail = () => {
   const getPersonalIdDisplay = (personalId: string) => {
     if (personalId === '000000') {
       return (
-        <div className="flex items-center gap-2">
-          <Megaphone className="h-4 w-4 text-blue-600" />
-          <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
-        </div>
+        <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
       );
     }
     return <span className="font-fun text-orange-600">{personalId}</span>;

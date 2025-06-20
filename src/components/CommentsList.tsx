@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -13,7 +12,6 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import CommentsListHeader from "./CommentsListHeader";
 import { Badge } from "@/components/ui/badge";
-import { Megaphone } from "lucide-react";
 
 type CommentFromDB = {
   id: string;
@@ -133,7 +131,6 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
       console.log("Rendering GpaJohn display for:", personalId);
       return (
         <div className="flex items-center gap-2 justify-center">
-          <Megaphone className="h-4 w-4 text-blue-600" />
           <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
         </div>
       );

@@ -1,10 +1,8 @@
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from 'date-fns';
 import { Database } from "@/integrations/supabase/types";
-import { Megaphone } from "lucide-react";
 import CommentReplyForm from "@/components/CommentReplyForm";
 import CommentRepliesList from "@/components/CommentRepliesList";
 
@@ -40,10 +38,7 @@ const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminC
   const getPersonalIdDisplay = () => {
     if (isAnnouncement) {
       return (
-        <div className="flex items-center gap-2">
-          <Megaphone className="h-4 w-4 text-blue-600" />
-          <span className="text-blue-600 font-semibold">GpaJohn</span>
-        </div>
+        <span className="text-blue-600 font-semibold">GpaJohn</span>
       );
     }
     return comment.personal_id;

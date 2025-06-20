@@ -1,8 +1,7 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from 'date-fns';
-import { Megaphone, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
 
@@ -59,7 +58,6 @@ const GpaJohnComments = () => {
         <div className="bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 rounded-xl p-4 shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)] border border-blue-700 mb-4">
           <div className="flex flex-col items-center text-center space-y-3">
             <div className="flex items-center gap-3">
-              <Megaphone className="h-6 w-6 text-white" />
               <h2 className="text-2xl font-bold text-white font-fun">Latest from GpaJohn</h2>
             </div>
             <Link to="/view-comments" onClick={scrollToTop}>
@@ -81,7 +79,6 @@ const GpaJohnComments = () => {
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <Megaphone className="h-5 w-5 text-blue-600" />
                   <span className="font-bold text-blue-800 font-fun text-lg">GpaJohn</span>
                   <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-fun">
                     📢 Announcement
