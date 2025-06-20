@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -7,7 +8,7 @@ import ContentProtection from "@/components/ContentProtection";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Megaphone } from "lucide-react";
+import { ArrowLeft, Megaphone, Home } from "lucide-react";
 import { format } from 'date-fns';
 import CommentReplyForm from "@/components/CommentReplyForm";
 import CommentRepliesList from "@/components/CommentRepliesList";
@@ -50,6 +51,23 @@ const CommentDetail = () => {
     enabled: !!id,
   });
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  const handleHomeClick = () => {
+    scrollToTop();
+    navigate("/");
+  };
+
+  const handleCommentsListClick = () => {
+    scrollToTop();
+    navigate("/view-comments");
+  };
+
   const getPersonalIdDisplay = (personalId: string) => {
     if (personalId === '000000') {
       return (
@@ -91,10 +109,22 @@ const CommentDetail = () => {
                 <p className="text-orange-600 mb-4">
                   {error ? error.message : "The comment you're looking for doesn't exist or hasn't been approved yet."}
                 </p>
-                <Button onClick={() => navigate("/view-comments")} className="bg-orange-500 hover:bg-orange-600">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Comments List
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                  <button
+                    onClick={handleHomeClick}
+                    className="bg-gradient-to-b from-cyan-400 to-cyan-600 text-white px-6 py-3 rounded-lg font-semibold shadow-[0_6px_0_#0891b2,0_8px_15px_rgba(0,0,0,0.3)] border border-cyan-700 transition-all duration-200 hover:shadow-[0_4px_0_#0891b2,0_6px_12px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#0891b2,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center gap-2"
+                  >
+                    <Home className="w-4 h-4" />
+                    Back to Home Page
+                  </button>
+                  <button
+                    onClick={handleCommentsListClick}
+                    className="bg-gradient-to-b from-orange-400 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)] border border-orange-700 transition-all duration-200 hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#c2410c,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center gap-2"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    Back to Comments List
+                  </button>
+                </div>
               </div>
             </div>
           </main>
@@ -114,14 +144,22 @@ const CommentDetail = () => {
         <main className="flex-grow container mx-auto px-4 py-8">
           <div className="bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-orange-200">
             <div className="mb-6">
-              <Button 
-                onClick={() => navigate("/view-comments")} 
-                variant="outline"
-                className="mb-4"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Comments List
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-3 mb-4">
+                <button
+                  onClick={handleHomeClick}
+                  className="bg-gradient-to-b from-cyan-400 to-cyan-600 text-white px-6 py-3 rounded-lg font-semibold shadow-[0_6px_0_#0891b2,0_8px_15px_rgba(0,0,0,0.3)] border border-cyan-700 transition-all duration-200 hover:shadow-[0_4px_0_#0891b2,0_6px_12px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#0891b2,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center justify-center gap-2"
+                >
+                  <Home className="w-4 h-4" />
+                  Back to Home Page
+                </button>
+                <button
+                  onClick={handleCommentsListClick}
+                  className="bg-gradient-to-b from-orange-400 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)] border border-orange-700 transition-all duration-200 hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#c2410c,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back to Comments List
+                </button>
+              </div>
             </div>
 
             {/* Main Comment */}
