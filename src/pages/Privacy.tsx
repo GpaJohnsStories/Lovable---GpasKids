@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, Cookie, Eye, Lock } from "lucide-react";
+import { Shield, Cookie, Eye, Lock, HardDrive } from "lucide-react";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 
@@ -89,6 +88,43 @@ const Privacy = () => {
                 When you visit Grandpa John's Stories to read our stories, 
                 no cookies are stored on your device. No tracking, no analytics, 
                 no third-party cookies - just pure, uninterrupted storytelling.
+              </p>
+            </div>
+
+            {/* Cloudflare Security Cookie */}
+            <div className="bg-orange-50 p-6 rounded-lg">
+              <div className="flex items-center space-x-3 mb-4">
+                <Shield className="h-6 w-6 text-orange-600" />
+                <h2 className="text-xl font-semibold text-orange-800">Cloudflare Security Protection</h2>
+              </div>
+              <p className="!text-orange-700 !text-base !font-normal leading-relaxed mb-3">
+                Our website hosting service (Supabase) uses Cloudflare for security protection. 
+                Cloudflare may set a temporary security cookie called <code className="bg-orange-100 px-1 rounded">__cf_bm</code> 
+                to protect against malicious bot traffic and ensure the website remains safe and accessible.
+              </p>
+              <p className="!text-orange-700 !text-base !font-normal leading-relaxed">
+                This cookie is <strong>essential for security</strong>, expires within 30 minutes, 
+                contains no personal information, and is managed entirely by Cloudflare's security systems. 
+                It helps keep our stories safe for children to enjoy.
+              </p>
+            </div>
+
+            {/* Local Storage Section */}
+            <div className="bg-indigo-50 p-6 rounded-lg">
+              <div className="flex items-center space-x-3 mb-4">
+                <HardDrive className="h-6 w-6 text-indigo-600" />
+                <h2 className="text-xl font-semibold text-indigo-800">Local Browser Storage</h2>
+              </div>
+              <p className="!text-indigo-700 !text-base !font-normal leading-relaxed mb-3">
+                To improve your reading experience, we store a small piece of information called 
+                <code className="bg-indigo-100 px-1 rounded">currentStoryPath</code> in your browser's 
+                session storage. This helps you easily return to the story you were reading through 
+                our "Current Story" menu option.
+              </p>
+              <p className="!text-indigo-700 !text-base !font-normal leading-relaxed">
+                This information stays only in your browser, is never sent to our servers, 
+                and automatically disappears when you close your browser tab. It contains no personal 
+                information - just the path to the story you were reading.
               </p>
             </div>
 
