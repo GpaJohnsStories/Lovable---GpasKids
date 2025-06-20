@@ -8,6 +8,13 @@ const WelcomeText = () => {
   console.log('WelcomeText - Current pathname:', location.pathname);
   console.log('WelcomeText - Is home page:', isHomePage);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <div className="w-full py-6 mt-0">
       <div className="container mx-auto px-4">
@@ -26,9 +33,27 @@ const WelcomeText = () => {
               <h1 className="text-3xl md:text-4xl font-bold text-blue-900 leading-relaxed mb-6">
                 Hi there!
               </h1>
-              <p className="text-xl text-blue-900 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun mb-4">
+              <p className="text-xl text-blue-900 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun mb-6">
                 Buddy and I, Grandpa John, welcome you to our safe and fun corner of the internet. We've got stories, jokes, games, and lots of other cool stuff waiting for you. So come on in and have a fantastic time exploring every page!
               </p>
+              
+              {/* Note text moved inside the blue box */}
+              <div className="space-y-2">
+                <p className="text-blue-800 italic font-fun text-lg">
+                  NOTE: For best viewing and reading, use your phone or tablet in landscape mode.
+                </p>
+                <p className="text-blue-800 italic font-fun text-lg">
+                  Please be sure to read our promise to you, click{' '}
+                  <Link 
+                    to="/privacy" 
+                    onClick={scrollToTop}
+                    className="text-blue-600 hover:text-blue-800 underline font-bold"
+                  >
+                    HERE
+                  </Link>
+                  {' '}or the Privacy button in the menu.
+                </p>
+              </div>
             </div>
           </div>
         </div>
