@@ -119,7 +119,7 @@ const CommentDetail = () => {
                   </button>
                   <button
                     onClick={handleCommentsListClick}
-                    className="bg-gradient-to-b from-orange-400 to-orange-600 text-white px-5 py-2 rounded-lg font-semibold shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)] border border-white border-opacity-30 transition-all duration-200 hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#c2410c,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center gap-1 min-w-[100px] border-t-white/30"
+                    className="bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500 text-green-800 px-5 py-2 rounded-lg font-semibold shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)] border border-white border-opacity-30 transition-all duration-200 hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#ca8a04,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center gap-1 min-w-[100px] border-t-white/30"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     Back to Comments List
@@ -154,7 +154,7 @@ const CommentDetail = () => {
                 </button>
                 <button
                   onClick={handleCommentsListClick}
-                  className="bg-gradient-to-b from-orange-400 to-orange-600 text-white px-5 py-2 rounded-lg font-semibold shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)] border border-white border-opacity-30 transition-all duration-200 hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#c2410c,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center justify-center gap-1 min-w-[100px] border-t-white/30"
+                  className="bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500 text-green-800 px-5 py-2 rounded-lg font-semibold shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)] border border-white border-opacity-30 transition-all duration-200 hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#ca8a04,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center justify-center gap-1 min-w-[100px] border-t-white/30"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back to Comments List
