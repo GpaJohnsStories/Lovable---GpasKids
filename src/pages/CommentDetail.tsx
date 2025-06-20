@@ -112,7 +112,7 @@ const CommentDetail = () => {
                 <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                   <button
                     onClick={handleHomeClick}
-                    className="bg-gradient-to-b from-orange-400 to-orange-600 text-white px-5 py-2 rounded-lg font-semibold shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)] border border-white border-opacity-30 transition-all duration-200 hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#c2410c,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center gap-1 min-w-[100px] border-t-white/30"
+                    className="bg-gradient-to-b from-cyan-400 to-cyan-600 text-white px-5 py-2 rounded-lg font-semibold shadow-[0_6px_0_#0891b2,0_8px_15px_rgba(0,0,0,0.3)] border border-white border-opacity-30 transition-all duration-200 hover:shadow-[0_4px_0_#0891b2,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#0891b2,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center gap-1 min-w-[100px] border-t-white/30"
                   >
                     <Home className="w-4 h-4" />
                     Back to Home Page
@@ -147,7 +147,7 @@ const CommentDetail = () => {
               <div className="flex flex-col sm:flex-row gap-3 mb-4">
                 <button
                   onClick={handleHomeClick}
-                  className="bg-gradient-to-b from-orange-400 to-orange-600 text-white px-5 py-2 rounded-lg font-semibold shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)] border border-white border-opacity-30 transition-all duration-200 hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#c2410c,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center justify-center gap-1 min-w-[100px] border-t-white/30"
+                  className="bg-gradient-to-b from-cyan-400 to-cyan-600 text-white px-5 py-2 rounded-lg font-semibold shadow-[0_6px_0_#0891b2,0_8px_15px_rgba(0,0,0,0.3)] border border-white border-opacity-30 transition-all duration-200 hover:shadow-[0_4px_0_#0891b2,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#0891b2,0_4px_8px_rgba(0,0,0,0.3)] font-fun flex items-center justify-center gap-1 min-w-[100px] border-t-white/30"
                 >
                   <Home className="w-4 h-4" />
                   Back to Home Page
