@@ -2,6 +2,7 @@
 import WelcomeHeader from "@/components/WelcomeHeader";
 import WelcomeText from "@/components/WelcomeText";
 import StorySection from "@/components/StorySection";
+import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -44,6 +45,9 @@ const Index = () => {
           </div>
           
           <StorySection />
+          
+          {/* GpaJohn's Recent Comments */}
+          <GpaJohnComments />
         </main>
         <CookieFreeFooter />
         <ScrollToTop />
