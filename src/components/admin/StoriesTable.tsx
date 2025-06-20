@@ -54,6 +54,23 @@ const StoriesTable = ({
     },
   });
 
+  const { data: storyCounts } = useQuery({
+    queryKey: ['story-counts'],
+    queryFn: async () => {
+      const [allResult, publishedResult, unpublishedResult] = await Promise.all([
+        supabase.from('stories').select('id', { count: 'exact', head: true }),
+        supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y'),
+        supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N')
+      ]);
+
+      return {
+        all: allResult.count || 0,
+        published: publishedResult.count || 0,
+        unpublished: unpublishedResult.count || 0
+      };
+    },
+  });
+
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -93,19 +110,19 @@ const StoriesTable = ({
               onClick={() => setPublishedFilter('all')}
               variant={publishedFilter === 'all' ? 'default' : 'outline'}
             >
-              All
+              All {storyCounts && `(${storyCounts.all})`}
             </Button>
             <Button
               onClick={() => setPublishedFilter('published')}
               variant={publishedFilter === 'published' ? 'default' : 'outline'}
             >
-              Published
+              Published {storyCounts && `(${storyCounts.published})`}
             </Button>
             <Button
               onClick={() => setPublishedFilter('unpublished')}
               variant={publishedFilter === 'unpublished' ? 'default' : 'outline'}
             >
-              Unpublished
+              Unpublished {storyCounts && `(${storyCounts.unpublished})`}
             </Button>
           </div>
         )}
