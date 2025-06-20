@@ -130,11 +130,11 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
 
   const getPersonalIdDisplay = (personalId: string) => {
     if (personalId === '000000') {
-      console.log("Rendering admin display for:", personalId);
+      console.log("Rendering GpaJohn display for:", personalId);
       return (
         <div className="flex items-center gap-2 justify-center">
           <Megaphone className="h-4 w-4 text-blue-600" />
-          <span className="text-blue-600 font-semibold font-fun">Admin</span>
+          <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
         </div>
       );
     }

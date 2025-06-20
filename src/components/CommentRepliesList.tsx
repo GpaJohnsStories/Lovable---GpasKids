@@ -40,7 +40,7 @@ const CommentRepliesList = ({ parentId }: CommentRepliesListProps) => {
       return (
         <div className="flex items-center gap-2">
           <Megaphone className="h-4 w-4 text-blue-600" />
-          <span className="text-blue-600 font-semibold font-fun">Admin</span>
+          <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
         </div>
       );
     }

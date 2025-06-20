@@ -42,7 +42,7 @@ const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminC
       return (
         <div className="flex items-center gap-2">
           <Megaphone className="h-4 w-4 text-blue-600" />
-          <span className="text-blue-600 font-semibold">Admin</span>
+          <span className="text-blue-600 font-semibold">GpaJohn</span>
         </div>
       );
     }
