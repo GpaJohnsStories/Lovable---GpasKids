@@ -44,10 +44,10 @@ const Index = () => {
             </div>
           </div>
           
-          <StorySection />
-          
-          {/* GpaJohn's Recent Comments */}
+          {/* GpaJohn's Recent Comments - Now positioned above stories */}
           <GpaJohnComments />
+          
+          <StorySection />
         </main>
         <CookieFreeFooter />
         <ScrollToTop />
