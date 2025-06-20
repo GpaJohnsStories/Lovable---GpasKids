@@ -54,13 +54,13 @@ const GpaJohnComments = () => {
 
   return (
     <section className="py-8">
-      {/* Header Banner */}
-      <div className="w-[90%] mx-auto mb-8">
-        <div className="bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 rounded-xl p-6 shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)] border border-blue-700">
-          <div className="flex flex-col items-center text-center space-y-4">
+      {/* Header Banner - Made shorter and same width as content below */}
+      <div className="container mx-auto px-4">
+        <div className="bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 rounded-xl p-4 shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)] border border-blue-700 mb-4">
+          <div className="flex flex-col items-center text-center space-y-3">
             <div className="flex items-center gap-3">
-              <Megaphone className="h-8 w-8 text-white" />
-              <h2 className="text-3xl font-bold text-white font-fun">Latest from GpaJohn</h2>
+              <Megaphone className="h-6 w-6 text-white" />
+              <h2 className="text-2xl font-bold text-white font-fun">Latest from GpaJohn</h2>
             </div>
             <Link to="/view-comments" onClick={scrollToTop}>
               <button className="bg-gradient-to-b from-blue-600 via-blue-700 to-blue-800 text-white px-4 py-2 rounded-lg font-semibold shadow-[0_4px_0_#1e40af,0_6px_12px_rgba(0,0,0,0.3)] border border-blue-800 transition-all duration-200 hover:shadow-[0_3px_0_#1e40af,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#1e40af,0_2px_4px_rgba(0,0,0,0.3)] font-fun text-sm">
