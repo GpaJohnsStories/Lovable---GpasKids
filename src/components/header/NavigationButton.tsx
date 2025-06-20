@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronDown, LucideIcon } from "lucide-react";
 
@@ -27,6 +27,8 @@ interface NavigationButtonProps {
 }
 
 const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: NavigationButtonProps) => {
+  const navigate = useNavigate();
+
   const buttonClasses = cn(
     item.bgColor, item.hoverColor, item.shadowColor, item.hoverShadow,
     isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : '',
@@ -36,19 +38,27 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: Navig
     'flex items-center justify-center min-w-[100px]',
     'font-fun border-t border-white border-opacity-30',
     'text-sm', item.icon ? 'gap-1' : '',
-    isDropdown && "group cursor-pointer"
+    isDropdown ? "group cursor-pointer" : "cursor-pointer"
   );
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+  const handleClick = () => {
+    if (isDropdown && onClick) {
+      onClick();
+      return;
+    }
+    
+    if (item.path) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      navigate(item.path);
+    }
   };
 
   if (isDropdown) {
     return (
-      <div className={buttonClasses} onClick={onClick}>
+      <div className={buttonClasses} onClick={handleClick}>
         <span className={item.icon ? '' : 'text-center w-full'}>{item.name}</span>
         <ChevronDown
           className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
@@ -70,16 +80,12 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: Navig
   }
 
   return (
-    <Link
-      to={item.path}
-      onClick={scrollToTop}
-      className={buttonClasses}
-    >
+    <div className={buttonClasses} onClick={handleClick}>
       {item.icon && <item.icon size={16} />}
       <span className={item.icon ? '' : 'text-center w-full'}>
         {item.name}
       </span>
-    </Link>
+    </div>
   );
 };
 
