@@ -43,7 +43,9 @@ const NavigationDropdown = ({ item }: NavigationDropdownProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <NavigationButton item={item} isActive={isActive} isDropdown />
+        <div>
+          <NavigationButton item={item} isActive={isActive} isDropdown />
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-2 md:w-[200px] bg-amber-50 border border-orange-200 rounded-lg shadow-lg">
         {item.subItems?.map((subItem) => (

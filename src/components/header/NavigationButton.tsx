@@ -36,7 +36,7 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: Navig
     'flex items-center justify-center min-w-[100px]',
     'font-fun border-t border-white border-opacity-30',
     'text-sm', item.icon ? 'gap-1' : '',
-    isDropdown && "group"
+    isDropdown && "group cursor-pointer"
   );
 
   const scrollToTop = () => {
@@ -48,19 +48,30 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: Navig
 
   if (isDropdown) {
     return (
-      <button className={buttonClasses} onClick={onClick}>
+      <div className={buttonClasses} onClick={onClick}>
         <span className={item.icon ? '' : 'text-center w-full'}>{item.name}</span>
         <ChevronDown
           className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
           aria-hidden="true"
         />
-      </button>
+      </div>
+    );
+  }
+
+  if (!item.path) {
+    return (
+      <div className={buttonClasses}>
+        {item.icon && <item.icon size={16} />}
+        <span className={item.icon ? '' : 'text-center w-full'}>
+          {item.name}
+        </span>
+      </div>
     );
   }
 
   return (
     <Link
-      to={item.path!}
+      to={item.path}
       onClick={scrollToTop}
       className={buttonClasses}
     >
