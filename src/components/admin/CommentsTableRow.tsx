@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { format } from 'date-fns';
 import { Database } from "@/integrations/supabase/types";
 import { Badge } from "@/components/ui/badge";
-import { Megaphone } from "lucide-react";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
@@ -35,10 +34,7 @@ const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTa
   const getPersonalIdDisplay = () => {
     if (isAnnouncement) {
       return (
-        <div className="flex items-center gap-2">
-          <Megaphone className="h-4 w-4 text-blue-600" />
-          <span className="text-blue-600 font-semibold">GpaJohn</span>
-        </div>
+        <span className="text-blue-600 font-semibold">GpaJohn</span>
       );
     }
     return <span className="text-base">{comment.personal_id}</span>;
