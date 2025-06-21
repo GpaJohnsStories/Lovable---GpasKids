@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
-import { Play, Square, Volume2, AlertCircle } from "lucide-react";
+import { Play, Square, Volume2, AlertCircle, CheckCircle } from "lucide-react";
 import LoadingSpinner from "./LoadingSpinner";
 import { toast } from "@/hooks/use-toast";
 
@@ -25,11 +25,13 @@ const VoicePreview = () => {
   const [loadingVoice, setLoadingVoice] = useState<string | null>(null);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
   const [lastError, setLastError] = useState<string | null>(null);
+  const [lastSuccess, setLastSuccess] = useState<string | null>(null);
 
   const playVoice = async (voiceId: string) => {
     try {
-      // Clear any previous errors
+      // Clear any previous states
       setLastError(null);
+      setLastSuccess(null);
       
       // Stop any currently playing audio
       if (currentAudio) {
@@ -39,7 +41,8 @@ const VoicePreview = () => {
       }
 
       setLoadingVoice(voiceId);
-      console.log(`Attempting to generate speech for voice: ${voiceId}`);
+      console.log(`🎵 Starting voice generation for voice: ${voiceId}`);
+      console.log(`📝 Text to convert: "${sampleText.substring(0, 50)}..."`);
 
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
@@ -48,8 +51,10 @@ const VoicePreview = () => {
         }
       });
 
+      console.log('📡 Supabase function response:', { data, error });
+
       if (error) {
-        console.error('Supabase function error:', error);
+        console.error('❌ Supabase function error:', error);
         setLastError(`Function error: ${error.message}`);
         toast({
           title: "Error generating speech",
@@ -60,7 +65,7 @@ const VoicePreview = () => {
       }
 
       if (!data || !data.audioContent) {
-        console.error('No audio content returned:', data);
+        console.error('❌ No audio content returned:', data);
         setLastError('No audio content returned from the API');
         toast({
           title: "Error generating speech",
@@ -70,7 +75,8 @@ const VoicePreview = () => {
         return;
       }
 
-      console.log('Audio content received, converting to playable format...');
+      console.log('✅ Audio content received, length:', data.audioContent.length);
+      console.log('🔄 Converting base64 to audio blob...');
 
       // Convert base64 to audio blob
       const binaryString = atob(data.audioContent);
@@ -82,20 +88,20 @@ const VoicePreview = () => {
       const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
       const audioUrl = URL.createObjectURL(audioBlob);
       
-      console.log('Audio blob created, attempting to play...');
+      console.log('🎧 Audio blob created successfully, attempting to play...');
       
       const audio = new Audio(audioUrl);
       setCurrentAudio(audio);
       setCurrentlyPlaying(voiceId);
       
       audio.onended = () => {
-        console.log('Audio playback ended');
+        console.log('🎵 Audio playback ended');
         setCurrentlyPlaying(null);
         URL.revokeObjectURL(audioUrl);
       };
       
       audio.onerror = (e) => {
-        console.error('Audio playback error:', e);
+        console.error('❌ Audio playback error:', e);
         setLastError('Failed to play audio - check if your browser supports MP3 playback');
         setCurrentlyPlaying(null);
         URL.revokeObjectURL(audioUrl);
@@ -107,14 +113,28 @@ const VoicePreview = () => {
       };
 
       audio.oncanplay = () => {
-        console.log('Audio is ready to play');
+        console.log('✅ Audio is ready to play');
+        setLastSuccess(`Successfully generated and ready to play ${voiceId} voice`);
+      };
+
+      audio.onloadstart = () => {
+        console.log('🔄 Audio loading started');
+      };
+
+      audio.onloadeddata = () => {
+        console.log('📊 Audio data loaded');
       };
       
       await audio.play();
-      console.log('Audio playback started successfully');
+      console.log('🎵 Audio playback started successfully');
+      
+      toast({
+        title: "Voice generated successfully!",
+        description: `Now playing ${voices.find(v => v.id === voiceId)?.name} voice`,
+      });
       
     } catch (error) {
-      console.error('Error in playVoice:', error);
+      console.error('❌ Error in playVoice:', error);
       setLastError(`Playback error: ${error.message}`);
       toast({
         title: "Error playing voice",
@@ -156,6 +176,16 @@ const VoicePreview = () => {
           </div>
         )}
 
+        {lastSuccess && (
+          <div className="bg-green-50 p-4 rounded-lg border border-green-200 flex items-start gap-2">
+            <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="text-green-800 font-semibold">Success:</p>
+              <p className="text-green-700 text-sm">{lastSuccess}</p>
+            </div>
+          </div>
+        )}
+
         <div>
           <label className="block text-sm font-medium text-orange-800 mb-2 font-fun">
             Sample Text (edit to test with different content):
@@ -189,7 +219,7 @@ const VoicePreview = () => {
                         onClick={stopAudio}
                         variant="outline"
                         size="sm"
-                        className="flex items-center gap-2 font-fun"
+                        className="flex items-center gap-2 font-fun bg-orange-100 border-orange-300"
                       >
                         <Square className="h-4 w-4" />
                         Stop
@@ -199,7 +229,7 @@ const VoicePreview = () => {
                         onClick={() => playVoice(voice.id)}
                         variant="outline"
                         size="sm"
-                        className="flex items-center gap-2 font-fun"
+                        className="flex items-center gap-2 font-fun hover:bg-orange-50 hover:border-orange-300"
                         disabled={loadingVoice !== null}
                       >
                         <Play className="h-4 w-4" />
@@ -220,14 +250,12 @@ const VoicePreview = () => {
           </p>
         </div>
 
-        {lastError && (
-          <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-            <p className="text-yellow-800 font-fun text-sm">
-              🔧 <strong>Troubleshooting:</strong> If you're experiencing issues, please check the browser console for detailed error messages. 
-              Make sure your OpenAI API key is correctly configured and has sufficient credits.
-            </p>
-          </div>
-        )}
+        <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+          <p className="text-yellow-800 font-fun text-sm">
+            🔧 <strong>Debugging Info:</strong> Check the browser console (F12) for detailed logs about the voice generation process. 
+            This will help identify any issues with API calls or audio playback.
+          </p>
+        </div>
       </CardContent>
     </Card>
   );
