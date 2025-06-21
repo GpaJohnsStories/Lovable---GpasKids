@@ -14,6 +14,7 @@ import ViewComments from "./pages/ViewComments";
 import CommentDetail from "./pages/CommentDetail";
 import BuddysAdmin from "./pages/BuddysAdmin";
 import AdminComments from "./pages/AdminComments";
+import VoicePreview from "./pages/VoicePreview";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/make-comment" element={<MakeComment />} />
           <Route path="/view-comments" element={<ViewComments />} />
           <Route path="/comment/:id" element={<CommentDetail />} />
+          <Route path="/voice-preview" element={<VoicePreview />} />
           <Route path="/buddys_admin" element={<BuddysAdmin />} />
           <Route path="/admin/comments" element={<AdminComments />} />
           <Route path="/privacy" element={<Privacy />} />
