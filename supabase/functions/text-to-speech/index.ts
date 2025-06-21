@@ -59,11 +59,22 @@ serve(async (req) => {
       throw new Error(errorMessage)
     }
 
-    // Convert audio buffer to base64
+    // Convert audio buffer to base64 using a safer method
     const arrayBuffer = await response.arrayBuffer()
-    const base64Audio = btoa(
-      String.fromCharCode(...new Uint8Array(arrayBuffer))
-    )
+    const uint8Array = new Uint8Array(arrayBuffer)
+    
+    // Convert to base64 in chunks to avoid call stack overflow
+    let base64Audio = ''
+    const chunkSize = 8192
+    
+    for (let i = 0; i < uint8Array.length; i += chunkSize) {
+      const chunk = uint8Array.slice(i, i + chunkSize)
+      let binaryString = ''
+      for (let j = 0; j < chunk.length; j++) {
+        binaryString += String.fromCharCode(chunk[j])
+      }
+      base64Audio += btoa(binaryString)
+    }
 
     console.log('Successfully generated speech audio')
 
