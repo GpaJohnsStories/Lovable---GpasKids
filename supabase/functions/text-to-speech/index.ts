@@ -59,24 +59,18 @@ serve(async (req) => {
       throw new Error(errorMessage)
     }
 
-    // Convert audio buffer to base64 using a safer method
+    // Get the audio as array buffer
     const arrayBuffer = await response.arrayBuffer()
+    console.log('Audio buffer size:', arrayBuffer.byteLength)
+    
+    // Convert to Uint8Array
     const uint8Array = new Uint8Array(arrayBuffer)
     
-    // Convert to base64 in chunks to avoid call stack overflow
-    let base64Audio = ''
-    const chunkSize = 8192
-    
-    for (let i = 0; i < uint8Array.length; i += chunkSize) {
-      const chunk = uint8Array.slice(i, i + chunkSize)
-      let binaryString = ''
-      for (let j = 0; j < chunk.length; j++) {
-        binaryString += String.fromCharCode(chunk[j])
-      }
-      base64Audio += btoa(binaryString)
-    }
+    // Use TextEncoder/TextDecoder approach for safer base64 conversion
+    const binaryString = Array.from(uint8Array, byte => String.fromCharCode(byte)).join('')
+    const base64Audio = btoa(binaryString)
 
-    console.log('Successfully generated speech audio')
+    console.log('Successfully generated speech audio, base64 length:', base64Audio.length)
 
     return new Response(
       JSON.stringify({ audioContent: base64Audio }),
