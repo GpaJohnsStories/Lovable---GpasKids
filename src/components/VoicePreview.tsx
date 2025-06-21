@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
-import { Play, Square, Volume2 } from "lucide-react";
+import { Play, Square, Volume2, AlertCircle } from "lucide-react";
 import LoadingSpinner from "./LoadingSpinner";
+import { toast } from "@/hooks/use-toast";
 
 const voices = [
   { id: 'alloy', name: 'Alloy', description: 'Neutral and balanced' },
@@ -23,9 +24,13 @@ const VoicePreview = () => {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
   const [loadingVoice, setLoadingVoice] = useState<string | null>(null);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+  const [lastError, setLastError] = useState<string | null>(null);
 
   const playVoice = async (voiceId: string) => {
     try {
+      // Clear any previous errors
+      setLastError(null);
+      
       // Stop any currently playing audio
       if (currentAudio) {
         currentAudio.pause();
@@ -34,6 +39,7 @@ const VoicePreview = () => {
       }
 
       setLoadingVoice(voiceId);
+      console.log(`Attempting to generate speech for voice: ${voiceId}`);
 
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
@@ -43,9 +49,28 @@ const VoicePreview = () => {
       });
 
       if (error) {
-        console.error('Error generating speech:', error);
+        console.error('Supabase function error:', error);
+        setLastError(`Function error: ${error.message}`);
+        toast({
+          title: "Error generating speech",
+          description: error.message,
+          variant: "destructive",
+        });
         return;
       }
+
+      if (!data || !data.audioContent) {
+        console.error('No audio content returned:', data);
+        setLastError('No audio content returned from the API');
+        toast({
+          title: "Error generating speech",
+          description: "No audio content was generated",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log('Audio content received, converting to playable format...');
 
       // Convert base64 to audio blob
       const binaryString = atob(data.audioContent);
@@ -57,24 +82,45 @@ const VoicePreview = () => {
       const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
       const audioUrl = URL.createObjectURL(audioBlob);
       
+      console.log('Audio blob created, attempting to play...');
+      
       const audio = new Audio(audioUrl);
       setCurrentAudio(audio);
       setCurrentlyPlaying(voiceId);
       
       audio.onended = () => {
+        console.log('Audio playback ended');
         setCurrentlyPlaying(null);
         URL.revokeObjectURL(audioUrl);
       };
       
-      audio.onerror = () => {
-        console.error('Error playing audio');
+      audio.onerror = (e) => {
+        console.error('Audio playback error:', e);
+        setLastError('Failed to play audio - check if your browser supports MP3 playback');
         setCurrentlyPlaying(null);
         URL.revokeObjectURL(audioUrl);
+        toast({
+          title: "Audio playback error",
+          description: "Failed to play the generated audio",
+          variant: "destructive",
+        });
+      };
+
+      audio.oncanplay = () => {
+        console.log('Audio is ready to play');
       };
       
       await audio.play();
+      console.log('Audio playback started successfully');
+      
     } catch (error) {
-      console.error('Error playing voice:', error);
+      console.error('Error in playVoice:', error);
+      setLastError(`Playback error: ${error.message}`);
+      toast({
+        title: "Error playing voice",
+        description: error.message,
+        variant: "destructive",
+      });
     } finally {
       setLoadingVoice(null);
     }
@@ -100,6 +146,16 @@ const VoicePreview = () => {
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
+        {lastError && (
+          <div className="bg-red-50 p-4 rounded-lg border border-red-200 flex items-start gap-2">
+            <AlertCircle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="text-red-800 font-semibold">Error:</p>
+              <p className="text-red-700 text-sm">{lastError}</p>
+            </div>
+          </div>
+        )}
+
         <div>
           <label className="block text-sm font-medium text-orange-800 mb-2 font-fun">
             Sample Text (edit to test with different content):
@@ -163,6 +219,15 @@ const VoicePreview = () => {
             You can paste in a paragraph from one of your stories to get a better feel for how it would sound!
           </p>
         </div>
+
+        {lastError && (
+          <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+            <p className="text-yellow-800 font-fun text-sm">
+              🔧 <strong>Troubleshooting:</strong> If you're experiencing issues, please check the browser console for detailed error messages. 
+              Make sure your OpenAI API key is correctly configured and has sufficient credits.
+            </p>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
