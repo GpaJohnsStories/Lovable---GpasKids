@@ -36,9 +36,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ onCommand, onInsertLink }
   ];
 
   const fontFamilies = [
+    { value: 'Georgia', label: 'Georgia (Default)' },
     { value: 'Arial', label: 'Arial' },
     { value: 'Times New Roman', label: 'Times New Roman' },
-    { value: 'Georgia', label: 'Georgia' },
     { value: 'Helvetica', label: 'Helvetica' },
     { value: 'Verdana', label: 'Verdana' },
     { value: 'Courier New', label: 'Courier New' },
@@ -46,12 +46,22 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ onCommand, onInsertLink }
     { value: 'Comic Sans MS', label: 'Comic Sans MS' }
   ];
 
+  const handleFontChange = (value: string) => {
+    onCommand('fontName', value);
+    // Reapply default font size after font change
+    setTimeout(() => onCommand('fontSize', '4'), 10);
+  };
+
+  const handleFontSizeChange = (value: string) => {
+    onCommand('fontSize', value);
+  };
+
   return (
     <div className="flex items-center gap-1 p-3 bg-gray-50 border-b border-gray-200 flex-wrap">
       {/* Font Family */}
-      <Select onValueChange={(value) => onCommand('fontName', value)}>
-        <SelectTrigger className="w-32 h-8">
-          <SelectValue placeholder="Font" />
+      <Select defaultValue="Georgia" onValueChange={handleFontChange}>
+        <SelectTrigger className="w-36 h-8">
+          <SelectValue placeholder="Georgia" />
         </SelectTrigger>
         <SelectContent>
           {fontFamilies.map(font => (
@@ -63,9 +73,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ onCommand, onInsertLink }
       </Select>
 
       {/* Font Size */}
-      <Select onValueChange={(value) => onCommand('fontSize', value)}>
+      <Select defaultValue="4" onValueChange={handleFontSizeChange}>
         <SelectTrigger className="w-24 h-8">
-          <SelectValue placeholder="Size" />
+          <SelectValue placeholder="Medium" />
         </SelectTrigger>
         <SelectContent>
           {fontSizes.map(size => (

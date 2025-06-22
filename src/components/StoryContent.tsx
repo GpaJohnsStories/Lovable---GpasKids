@@ -11,51 +11,162 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
     <>
       <style dangerouslySetInnerHTML={{
         __html: `
+          .story-content {
+            font-family: Georgia, serif;
+            font-size: 18px;
+            color: #000000;
+            line-height: 1.15;
+            font-weight: normal;
+            font-style: normal;
+          }
+          
+          .story-content * {
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            line-height: 1.15 !important;
+          }
+          
           .story-content p {
-            margin: 1em 0;
-            min-height: 1.2em;
-          }
-          
-          .story-content p:empty,
-          .story-content p:has(br:only-child),
-          .story-content p:has(&nbsp;:only-child) {
-            height: 1.2em;
-            margin: 1em 0;
-          }
-          
-          .story-content p:first-child {
-            margin-top: 0;
+            margin: 0 0 1.5em 0;
+            font-family: Georgia, serif;
+            font-size: 18px;
+            color: #000000;
+            line-height: 1.15;
+            font-weight: normal;
+            font-style: normal;
+            min-height: 1.15em;
           }
           
           .story-content p:last-child {
             margin-bottom: 0;
           }
           
-          .story-content br {
-            display: block;
-            margin: 0.5em 0;
-            content: "";
+          .story-content p:empty,
+          .story-content p:has(br:only-child),
+          .story-content p:has(&nbsp;:only-child) {
+            min-height: 1.15em;
+            margin: 0 0 1.5em 0;
           }
           
           .story-content div {
-            margin: 0.5em 0;
+            margin: 0 0 1.5em 0;
+            font-family: Georgia, serif;
+            font-size: 18px;
+            color: #000000;
+            line-height: 1.15;
+            min-height: 1.15em;
+          }
+          
+          .story-content div:empty {
+            min-height: 1.15em;
+            margin: 0 0 1.5em 0;
+          }
+          
+          .story-content br {
+            line-height: 1.15;
+          }
+          
+          .story-content h1 {
+            font-size: 2em !important;
+            font-weight: bold !important;
+            margin: 0 0 1.5em 0 !important;
+            font-family: Georgia, serif !important;
+            color: #000000 !important;
+            line-height: 1.15 !important;
+          }
+          
+          .story-content h2 {
+            font-size: 1.5em !important;
+            font-weight: bold !important;
+            margin: 0 0 1.5em 0 !important;
+            font-family: Georgia, serif !important;
+            color: #000000 !important;
+            line-height: 1.15 !important;
+          }
+          
+          .story-content h3 {
+            font-size: 1.17em !important;
+            font-weight: bold !important;
+            margin: 0 0 1.5em 0 !important;
+            font-family: Georgia, serif !important;
+            color: #000000 !important;
+            line-height: 1.15 !important;
+          }
+          
+          .story-content ul {
+            list-style-type: disc;
+            margin: 0 0 1.5em 0;
+            padding-left: 2em;
+            font-family: Georgia, serif;
+            font-size: 18px;
+            color: #000000;
+            line-height: 1.15;
+          }
+          
+          .story-content ol {
+            list-style-type: decimal;
+            margin: 0 0 1.5em 0;
+            padding-left: 2em;
+            font-family: Georgia, serif;
+            font-size: 18px;
+            color: #000000;
+            line-height: 1.15;
+          }
+          
+          .story-content li {
+            margin: 0.25em 0;
+            font-family: Georgia, serif;
+            font-size: 18px;
+            color: #000000;
+            line-height: 1.15;
+          }
+          
+          .story-content a {
+            color: #3b82f6 !important;
+            text-decoration: underline;
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            line-height: 1.15 !important;
+          }
+          
+          .story-content strong,
+          .story-content b {
+            font-weight: bold !important;
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            line-height: 1.15 !important;
+          }
+          
+          .story-content em,
+          .story-content i {
+            font-style: italic !important;
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            line-height: 1.15 !important;
+          }
+          
+          .story-content u {
+            text-decoration: underline !important;
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            line-height: 1.15 !important;
           }
         `
       }} />
       
       {content ? (
         <div 
-          className="prose prose-orange max-w-none text-gray-800 leading-relaxed story-content"
-          style={{ 
-            fontFamily: 'Georgia, serif', 
-            fontSize: '16px',
-          }}
+          className="prose prose-orange max-w-none story-content"
           dangerouslySetInnerHTML={formatStoryContent(content)}
         />
       ) : (
         excerpt && (
           <div className="prose prose-orange max-w-none">
-            <p className="text-gray-800 leading-relaxed" style={{ fontFamily: 'Georgia, serif', fontSize: '16px' }}>
+            <p className="story-content">
               {excerpt}
             </p>
           </div>

@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect } from 'react';
-import { applyDefaultStyles, handleKeyboardShortcuts } from './EditorUtils';
+import { applyDefaultStyles, handleKeyboardShortcuts, normalizeContent } from './EditorUtils';
 
 interface EditorContentProps {
   content: string;
@@ -21,6 +21,7 @@ const EditorContent: React.FC<EditorContentProps> = ({
     if (editorRef.current) {
       if (content && editorRef.current.innerHTML !== content) {
         editorRef.current.innerHTML = content;
+        normalizeContent(editorRef.current);
       } else if (!content) {
         applyDefaultStyles(editorRef.current);
       }
@@ -29,18 +30,32 @@ const EditorContent: React.FC<EditorContentProps> = ({
 
   const handleInput = () => {
     if (editorRef.current) {
+      normalizeContent(editorRef.current);
       onChange(editorRef.current.innerHTML);
     }
   };
 
   const handleFocus = () => {
-    if (editorRef.current && !content) {
+    if (editorRef.current) {
       applyDefaultStyles(editorRef.current);
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     handleKeyboardShortcuts(e, onCommand);
+  };
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+    const text = e.clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, text);
+    
+    setTimeout(() => {
+      if (editorRef.current) {
+        normalizeContent(editorRef.current);
+        onChange(editorRef.current.innerHTML);
+      }
+    }, 0);
   };
 
   return (
@@ -50,8 +65,17 @@ const EditorContent: React.FC<EditorContentProps> = ({
       onInput={handleInput}
       onFocus={handleFocus}
       onKeyDown={handleKeyDown}
-      className="rich-editor min-h-[400px] p-4 leading-relaxed focus:outline-none"
-      style={{ whiteSpace: 'pre-wrap' }}
+      onPaste={handlePaste}
+      className="rich-editor min-h-[400px] p-4 focus:outline-none"
+      style={{ 
+        whiteSpace: 'pre-wrap',
+        fontFamily: 'Georgia, serif',
+        fontSize: '18px',
+        color: '#000000',
+        lineHeight: '1.15',
+        fontWeight: 'normal',
+        fontStyle: 'normal'
+      }}
       data-placeholder={placeholder}
       suppressContentEditableWarning={true}
     />

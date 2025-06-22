@@ -14,8 +14,11 @@ export const insertLink = () => {
 export const applyDefaultStyles = (element: HTMLDivElement) => {
   if (element) {
     element.style.fontFamily = 'Georgia, serif';
-    element.style.fontSize = '16px';
+    element.style.fontSize = '18px';
     element.style.color = '#000000';
+    element.style.lineHeight = '1.15';
+    element.style.fontWeight = 'normal';
+    element.style.fontStyle = 'normal';
     element.focus();
   }
 };
@@ -43,6 +46,38 @@ export const handleKeyboardShortcuts = (
         const url = insertLink();
         if (url) onCommand('createLink', url);
         break;
+    }
+  }
+};
+
+export const handleEnterKey = (e: KeyboardEvent, element: HTMLDivElement) => {
+  // Let the browser handle the enter key naturally for now
+  // The CSS styling will ensure proper paragraph spacing
+};
+
+export const normalizeContent = (element: HTMLDivElement) => {
+  if (!element) return;
+  
+  // Apply default styles to all text nodes and elements
+  const walker = document.createTreeWalker(
+    element,
+    NodeFilter.SHOW_ELEMENT,
+    null
+  );
+  
+  let node;
+  while (node = walker.nextNode()) {
+    const el = node as HTMLElement;
+    if (el.tagName !== 'UL' && el.tagName !== 'OL' && el.tagName !== 'LI' && 
+        !el.tagName.startsWith('H') && el.tagName !== 'STRONG' && 
+        el.tagName !== 'EM' && el.tagName !== 'B' && el.tagName !== 'I' && 
+        el.tagName !== 'U' && el.tagName !== 'A') {
+      el.style.fontFamily = 'Georgia, serif';
+      el.style.fontSize = '18px';
+      el.style.color = '#000000';
+      el.style.lineHeight = '1.15';
+      el.style.fontWeight = 'normal';
+      el.style.fontStyle = 'normal';
     }
   }
 };
