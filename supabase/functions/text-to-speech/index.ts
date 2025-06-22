@@ -13,13 +13,13 @@ serve(async (req) => {
   }
 
   try {
-    const { text, voice } = await req.json()
+    const { text, voice, speed } = await req.json()
 
     if (!text) {
       throw new Error('Text is required')
     }
 
-    console.log(`Generating speech for text: "${text}" with voice: ${voice}`)
+    console.log(`Generating speech for text: "${text}" with voice: ${voice} at speed: ${speed || 1.0}`)
 
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY')
     
@@ -39,8 +39,9 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'tts-1',
         input: text,
-        voice: voice || 'alloy',
+        voice: voice || 'nova',
         response_format: 'mp3',
+        speed: speed || 1.0, // Support custom speed
       }),
     })
 
