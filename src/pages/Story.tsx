@@ -125,6 +125,8 @@ const Story = () => {
                   tagline={story.tagline}
                   storyCode={story.story_code}
                   showStoryCode={true}
+                  content={story.content}
+                  description={story.description}
                 />
 
                 <StoryPhotosGallery

@@ -43,17 +43,8 @@ const StoryCard = ({ story }: StoryCardProps) => {
 
       setIsPlaying(true);
       
-      // Prepare text for reading - combine title, description, and excerpt/content
+      // Prepare text for reading - combine title and description
       let textToRead = `${story.title}. ${story.description}`;
-      if (story.excerpt) {
-        textToRead += ` ${story.excerpt}`;
-      } else if (story.content) {
-        // Strip HTML tags from content for better speech
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = story.content;
-        const cleanContent = tempDiv.textContent || tempDiv.innerText || '';
-        textToRead += ` ${cleanContent}`;
-      }
 
       console.log('🎵 Starting voice generation for story:', story.title);
 
@@ -144,25 +135,13 @@ const StoryCard = ({ story }: StoryCardProps) => {
   return (
     <div className="w-2/5 mx-auto">
       <Link to={`/story/${story.id}`} onClick={scrollToTop}>
-        <Card className="story-card group cursor-pointer hover:shadow-lg transition-shadow" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <Card className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <CardContent className="p-3 text-center relative">
             <div className="mb-2">
               {getCategoryButtonForStory(story.category, story.id)}
             </div>
             
-            <div className="flex items-center justify-center mb-2 relative">
-              {/* Purple 3D Read Button - positioned in upper left */}
-              <button
-                onClick={handleReadStory}
-                disabled={isPlaying}
-                className="absolute -left-2 -top-1 z-10 bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white text-xs px-3 py-2 rounded-lg font-bold shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.3)] border border-purple-700 transition-all duration-200 hover:shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)] flex items-center gap-1 font-fun hover:from-purple-500 hover:via-purple-600 hover:to-purple-700"
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                title={isPlaying ? "Click to stop reading" : "Click to read this story aloud"}
-              >
-                <Volume2 className="h-3 w-3" />
-                {isPlaying ? "Stop Reading" : "Please Read This Story"}
-              </button>
-
+            <div className="flex items-center justify-center mb-2">
               {firstPhoto && (
                 <div className="flex-shrink-0 mr-3">
                   <img 
@@ -197,6 +176,20 @@ const StoryCard = ({ story }: StoryCardProps) => {
                 {story.readTime}
               </div>
             </div>
+
+            {/* Purple 3D Read Button - positioned in bottom left */}
+            <button
+              onClick={handleReadStory}
+              disabled={isPlaying}
+              className="absolute bottom-3 left-3 z-10 bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white text-xs px-2 py-1 rounded-lg font-bold shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.3)] border border-purple-700 transition-all duration-200 hover:shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)] flex items-center gap-1 font-fun hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 leading-tight"
+              style={{ fontFamily: 'system-ui, -apple-system, sans-serif', maxWidth: '70px' }}
+              title={isPlaying ? "Click to stop reading" : "Click to read this story aloud"}
+            >
+              <Volume2 className="h-3 w-3 flex-shrink-0" />
+              <span className="text-[10px]">
+                {isPlaying ? "Stop Reading" : "Please Read This Story"}
+              </span>
+            </button>
           </CardContent>
         </Card>
       </Link>
