@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -108,8 +109,13 @@ const StoriesTableRow = ({
               <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer">{story.title}</div>
             </Link>
             {story.tagline && (
-              <div className="text-sm italic text-gray-600 mt-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <div className="text-sm italic text-amber-700 mt-1 font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 {story.tagline}
+              </div>
+            )}
+            {story.excerpt && (
+              <div className="text-xs text-gray-600 mt-1 line-clamp-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                {story.excerpt}
               </div>
             )}
           </div>

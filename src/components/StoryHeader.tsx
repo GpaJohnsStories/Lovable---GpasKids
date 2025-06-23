@@ -1,3 +1,4 @@
+
 import { renderCategoryBadge } from "@/utils/categoryUtils";
 import { Volume2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -158,6 +159,12 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         </h1>
       </div>
 
+      {tagline && (
+        <h2 className="text-xl text-orange-700 text-center mb-4 italic font-medium" style={{ fontFamily: 'Georgia, serif' }}>
+          {tagline}
+        </h2>
+      )}
+
       <div className="flex items-center justify-center space-x-6 text-sm text-orange-600 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
         <div className="flex items-center">
           <span className="font-medium">by {author}</span>
@@ -174,9 +181,9 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         )}
       </div>
 
-      {tagline && (
+      {description && (
         <p className="text-lg text-orange-700 text-center mb-6 italic" style={{ fontFamily: 'Georgia, serif' }}>
-          {tagline}
+          {description}
         </p>
       )}
     </>

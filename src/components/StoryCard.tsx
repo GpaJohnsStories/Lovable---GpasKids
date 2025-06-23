@@ -1,6 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, User } from "lucide-react";
+import { BookOpen, User, Hash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getCategoryButtonForStory } from "@/utils/storySectionUtils";
 import { StoryData } from "@/utils/storiesData";
@@ -50,12 +50,22 @@ const StoryCard = ({ story }: StoryCardProps) => {
                 <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                   {story.title}
                 </h3>
+                {story.tagline && (
+                  <h4 className="text-sm font-medium text-amber-700 mb-1 italic leading-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    {story.tagline}
+                  </h4>
+                )}
               </div>
             </div>
             
             <div className="flex items-center justify-center text-sm text-amber-600 mb-2">
               <User className="h-3 w-3 mr-1" />
               <span className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>by {story.author}</span>
+            </div>
+
+            <div className="flex items-center justify-center text-xs text-amber-600 mb-2">
+              <Hash className="h-3 w-3 mr-1" />
+              <span className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>Story Code: {story.story_code}</span>
             </div>
             
             <p className="text-amber-700 mb-2 leading-relaxed text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontSize: '14px' }}>
