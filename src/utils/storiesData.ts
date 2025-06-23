@@ -11,6 +11,7 @@ export interface StoryData {
   photo_link_1?: string;
   photo_link_2?: string;
   photo_link_3?: string;
+  content?: string;
 }
 
 export const getNewestStories = (realStories: any[] = []): StoryData[] => {
@@ -27,7 +28,8 @@ export const getNewestStories = (realStories: any[] = []): StoryData[] => {
     published: story.published,
     photo_link_1: story.photo_link_1,
     photo_link_2: story.photo_link_2,
-    photo_link_3: story.photo_link_3
+    photo_link_3: story.photo_link_3,
+    content: story.content
   }));
 
   console.log('Final newest stories:', realStoryData);

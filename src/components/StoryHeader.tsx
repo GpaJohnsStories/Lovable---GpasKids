@@ -1,9 +1,9 @@
-
 import { renderCategoryBadge } from "@/utils/categoryUtils";
 import { Volume2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { calculateReadingTime } from "@/utils/readingTimeUtils";
 
 interface StoryHeaderProps {
   title: string;
@@ -163,8 +163,9 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
           <span className="font-medium">by {author}</span>
         </div>
         {showStoryCode && storyCode ? (
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
             <span>Story Code: {storyCode}</span>
+            <span className="text-amber-600 font-medium">{calculateReadingTime(content || description || '')}</span>
           </div>
         ) : (
           <div className="flex items-center">

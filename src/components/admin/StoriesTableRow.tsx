@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -6,6 +5,7 @@ import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { calculateReadingTime } from "@/utils/readingTimeUtils";
 
 interface Story {
   id: string;
@@ -23,6 +23,8 @@ interface Story {
   photo_link_1?: string;
   photo_link_2?: string;
   photo_link_3?: string;
+  content?: string;
+  excerpt?: string;
 }
 
 interface StoriesTableRowProps {
@@ -138,6 +140,7 @@ const StoriesTableRow = ({
       )}
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="space-y-1">
+          <div className="text-xs text-amber-600 mb-1">{calculateReadingTime(story.content || story.excerpt || '')}</div>
           <div className="flex items-center space-x-1 text-blue-600">
             <BookOpen className="h-3 w-3" />
             <span className="text-xs font-medium">{story.read_count}</span>

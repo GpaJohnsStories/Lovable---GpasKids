@@ -4,6 +4,7 @@ import { BookOpen, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getCategoryButtonForStory } from "@/utils/storySectionUtils";
 import { StoryData } from "@/utils/storiesData";
+import { calculateReadingTime } from "@/utils/readingTimeUtils";
 
 interface StoryCardProps {
   story: StoryData;
@@ -64,7 +65,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
             <div className="flex items-center justify-center text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               <div className="flex items-center text-amber-600 font-bold">
                 <BookOpen className="h-3 w-3 mr-1" />
-                {story.readTime}
+                {calculateReadingTime(story.content || story.description)}
               </div>
             </div>
           </CardContent>
