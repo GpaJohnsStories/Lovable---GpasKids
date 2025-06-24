@@ -46,6 +46,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             display: block;
             content: "";
             margin-top: 0;
+            line-height: 1.6;
           }
           
           /* Remove any unwanted spacing from divs */
@@ -67,6 +68,27 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
           /* Override any conflicting styles that might prevent centering */
           .story-content [style*="text-align: center"] {
             text-align: center !important;
+          }
+          
+          /* Fix line spacing for bold text within centered content */
+          .story-content p[style*="text-align: center"] strong,
+          .story-content p[style*="text-align: center"] b,
+          .story-content div[style*="text-align: center"] strong,
+          .story-content div[style*="text-align: center"] b {
+            display: inline !important;
+            line-height: 1.6 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+          
+          /* Ensure line breaks within bold centered text work properly */
+          .story-content p[style*="text-align: center"] strong br,
+          .story-content p[style*="text-align: center"] b br,
+          .story-content div[style*="text-align: center"] strong br,
+          .story-content div[style*="text-align: center"] b br {
+            line-height: 1.6 !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
           
           .story-content h1 {
@@ -155,7 +177,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif !important;
             font-size: 18px !important;
             color: #000000 !important;
-            line-line: 1.6 !important;
+            line-height: 1.6 !important;
           }
         `
       }} />
