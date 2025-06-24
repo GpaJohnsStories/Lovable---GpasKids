@@ -4,39 +4,37 @@ export const cleanHtmlContent = (htmlContent: string) => {
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = htmlContent;
   
-  // Remove unnecessary nested divs and clean up structure
+  // Convert <br> tags to line breaks within paragraphs
+  const processBrTags = (element: Element) => {
+    const brTags = element.querySelectorAll('br');
+    brTags.forEach(br => {
+      // Replace <br> with a line break character that we'll preserve
+      const textNode = document.createTextNode('\n');
+      br.parentNode?.replaceChild(textNode, br);
+    });
+  };
+  
+  // Process all elements to handle br tags
+  processBrTags(tempDiv);
+  
   const cleanElement = (element: Element) => {
-    // Convert div elements that only contain text or simple content to paragraphs
+    // Convert div elements that contain line breaks to paragraphs with preserved breaks
     if (element.tagName === 'DIV') {
-      const hasOnlyTextOrInlineContent = Array.from(element.childNodes).every(node => 
-        node.nodeType === Node.TEXT_NODE || 
-        (node.nodeType === Node.ELEMENT_NODE && ['SPAN', 'STRONG', 'EM', 'B', 'I', 'BR'].includes((node as Element).tagName))
-      );
+      const textContent = element.textContent || '';
       
-      if (hasOnlyTextOrInlineContent && element.textContent?.trim()) {
+      // If the div has meaningful content, convert it to a paragraph
+      if (textContent.trim()) {
         const p = document.createElement('p');
-        p.innerHTML = element.innerHTML;
+        // Preserve the innerHTML but ensure line breaks are maintained
+        p.innerHTML = element.innerHTML.replace(/\n/g, '<br>');
         element.parentNode?.replaceChild(p, element);
         return;
       }
       
-      // Remove empty divs
-      if (!element.textContent?.trim() && !element.querySelector('br')) {
+      // Remove completely empty divs
+      if (!textContent.trim()) {
         element.remove();
         return;
-      }
-      
-      // If div only contains other divs, unwrap it
-      const childDivs = element.querySelectorAll(':scope > div');
-      if (childDivs.length === element.children.length && element.children.length > 0) {
-        const parent = element.parentNode;
-        if (parent) {
-          while (element.firstChild) {
-            parent.insertBefore(element.firstChild, element);
-          }
-          element.remove();
-          return;
-        }
       }
     }
     
@@ -46,14 +44,6 @@ export const cleanHtmlContent = (htmlContent: string) => {
   
   // Clean all elements
   Array.from(tempDiv.children).forEach(cleanElement);
-  
-  // Convert remaining empty divs to paragraph breaks
-  tempDiv.querySelectorAll('div').forEach(div => {
-    if (!div.textContent?.trim()) {
-      const br = document.createElement('br');
-      div.parentNode?.replaceChild(br, div);
-    }
-  });
   
   return tempDiv.innerHTML;
 };

@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect } from 'react';
-import { applyDefaultStyles, handleKeyboardShortcuts, normalizeContent } from './EditorUtils';
+import { applyDefaultStyles, handleKeyboardShortcuts, normalizeContent, handleEnterKey } from './EditorUtils';
 
 interface EditorContentProps {
   content: string;
@@ -43,12 +43,29 @@ const EditorContent: React.FC<EditorContentProps> = ({
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     handleKeyboardShortcuts(e, onCommand);
+    
+    // Handle Enter key for proper line breaks
+    if (e.key === 'Enter') {
+      if (e.shiftKey) {
+        // Shift+Enter creates a line break
+        e.preventDefault();
+        document.execCommand('insertHTML', false, '<br>');
+        setTimeout(() => {
+          if (editorRef.current) {
+            onChange(editorRef.current.innerHTML);
+          }
+        }, 0);
+      }
+      // Regular Enter creates a new paragraph (browser default)
+    }
   };
 
   const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault();
     const text = e.clipboardData.getData('text/plain');
-    document.execCommand('insertText', false, text);
+    // Preserve line breaks when pasting
+    const htmlText = text.replace(/\n/g, '<br>');
+    document.execCommand('insertHTML', false, htmlText);
     
     setTimeout(() => {
       if (editorRef.current) {
@@ -68,11 +85,11 @@ const EditorContent: React.FC<EditorContentProps> = ({
       onPaste={handlePaste}
       className="rich-editor min-h-[400px] p-4 focus:outline-none"
       style={{ 
-        whiteSpace: 'pre-wrap',
+        whiteSpace: 'pre-line',
         fontFamily: 'Georgia, serif',
         fontSize: '18px',
         color: '#000000',
-        lineHeight: '1.15',
+        lineHeight: '1.6',
         fontWeight: 'normal',
         fontStyle: 'normal'
       }}

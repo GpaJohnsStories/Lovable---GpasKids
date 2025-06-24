@@ -15,16 +15,16 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif;
             font-size: 18px;
             color: #000000;
-            line-height: 1.15;
+            line-height: 1.6;
             font-weight: normal;
             font-style: normal;
+            white-space: pre-line;
           }
           
           .story-content * {
             font-family: Georgia, serif !important;
             font-size: 18px !important;
             color: #000000 !important;
-            line-height: 1.15 !important;
           }
           
           .story-content p {
@@ -32,21 +32,18 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif;
             font-size: 18px;
             color: #000000;
-            line-height: 1.15;
+            line-height: 1.6;
             font-weight: normal;
             font-style: normal;
-            min-height: 1.15em;
+            white-space: pre-line;
           }
           
           .story-content p:last-child {
             margin-bottom: 0;
           }
           
-          .story-content p:empty,
-          .story-content p:has(br:only-child),
-          .story-content p:has(&nbsp;:only-child) {
-            min-height: 1.15em;
-            margin: 0 0 1.5em 0;
+          .story-content br {
+            line-height: 1.6;
           }
           
           .story-content div {
@@ -54,17 +51,8 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif;
             font-size: 18px;
             color: #000000;
-            line-height: 1.15;
-            min-height: 1.15em;
-          }
-          
-          .story-content div:empty {
-            min-height: 1.15em;
-            margin: 0 0 1.5em 0;
-          }
-          
-          .story-content br {
-            line-height: 1.15;
+            line-height: 1.6;
+            white-space: pre-line;
           }
           
           .story-content h1 {
@@ -73,7 +61,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             margin: 0 0 1.5em 0 !important;
             font-family: Georgia, serif !important;
             color: #000000 !important;
-            line-height: 1.15 !important;
+            line-height: 1.6 !important;
           }
           
           .story-content h2 {
@@ -82,7 +70,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             margin: 0 0 1.5em 0 !important;
             font-family: Georgia, serif !important;
             color: #000000 !important;
-            line-height: 1.15 !important;
+            line-height: 1.6 !important;
           }
           
           .story-content h3 {
@@ -91,7 +79,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             margin: 0 0 1.5em 0 !important;
             font-family: Georgia, serif !important;
             color: #000000 !important;
-            line-height: 1.15 !important;
+            line-height: 1.6 !important;
           }
           
           .story-content ul {
@@ -101,7 +89,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif;
             font-size: 18px;
             color: #000000;
-            line-height: 1.15;
+            line-height: 1.6;
           }
           
           .story-content ol {
@@ -111,7 +99,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif;
             font-size: 18px;
             color: #000000;
-            line-height: 1.15;
+            line-height: 1.6;
           }
           
           .story-content li {
@@ -119,7 +107,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif;
             font-size: 18px;
             color: #000000;
-            line-height: 1.15;
+            line-height: 1.6;
           }
           
           .story-content a {
@@ -127,7 +115,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             text-decoration: underline;
             font-family: Georgia, serif !important;
             font-size: 18px !important;
-            line-height: 1.15 !important;
+            line-height: 1.6 !important;
           }
           
           .story-content strong,
@@ -136,7 +124,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif !important;
             font-size: 18px !important;
             color: #000000 !important;
-            line-height: 1.15 !important;
+            line-height: 1.6 !important;
           }
           
           .story-content em,
@@ -145,7 +133,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif !important;
             font-size: 18px !important;
             color: #000000 !important;
-            line-height: 1.15 !important;
+            line-height: 1.6 !important;
           }
           
           .story-content u {
@@ -153,7 +141,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif !important;
             font-size: 18px !important;
             color: #000000 !important;
-            line-height: 1.15 !important;
+            line-height: 1.6 !important;
           }
         `
       }} />

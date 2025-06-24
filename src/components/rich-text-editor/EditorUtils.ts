@@ -16,9 +16,10 @@ export const applyDefaultStyles = (element: HTMLDivElement) => {
     element.style.fontFamily = 'Georgia, serif';
     element.style.fontSize = '18px';
     element.style.color = '#000000';
-    element.style.lineHeight = '1.15';
+    element.style.lineHeight = '1.6';
     element.style.fontWeight = 'normal';
     element.style.fontStyle = 'normal';
+    element.style.whiteSpace = 'pre-line';
     element.focus();
   }
 };
@@ -51,14 +52,23 @@ export const handleKeyboardShortcuts = (
 };
 
 export const handleEnterKey = (e: KeyboardEvent, element: HTMLDivElement) => {
-  // Let the browser handle the enter key naturally for now
-  // The CSS styling will ensure proper paragraph spacing
+  // Preserve line breaks and paragraph structure
+  if (e.key === 'Enter') {
+    if (e.shiftKey) {
+      // Shift+Enter creates a line break
+      e.preventDefault();
+      document.execCommand('insertHTML', false, '<br>');
+    } else {
+      // Regular Enter creates a new paragraph
+      // Let the browser handle this naturally
+    }
+  }
 };
 
 export const normalizeContent = (element: HTMLDivElement) => {
   if (!element) return;
   
-  // Apply default styles to all text nodes and elements
+  // Apply default styles to maintain consistency while preserving structure
   const walker = document.createTreeWalker(
     element,
     NodeFilter.SHOW_ELEMENT,
@@ -71,13 +81,16 @@ export const normalizeContent = (element: HTMLDivElement) => {
     if (el.tagName !== 'UL' && el.tagName !== 'OL' && el.tagName !== 'LI' && 
         !el.tagName.startsWith('H') && el.tagName !== 'STRONG' && 
         el.tagName !== 'EM' && el.tagName !== 'B' && el.tagName !== 'I' && 
-        el.tagName !== 'U' && el.tagName !== 'A') {
+        el.tagName !== 'U' && el.tagName !== 'A' && el.tagName !== 'BR') {
       el.style.fontFamily = 'Georgia, serif';
       el.style.fontSize = '18px';
       el.style.color = '#000000';
-      el.style.lineHeight = '1.15';
+      el.style.lineHeight = '1.6';
       el.style.fontWeight = 'normal';
       el.style.fontStyle = 'normal';
+      if (el.tagName === 'P' || el.tagName === 'DIV') {
+        el.style.whiteSpace = 'pre-line';
+      }
     }
   }
 };
