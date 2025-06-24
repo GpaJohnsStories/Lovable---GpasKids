@@ -4,34 +4,21 @@ export const cleanHtmlContent = (htmlContent: string) => {
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = htmlContent;
   
-  // Convert <br> tags to line breaks within paragraphs
-  const processBrTags = (element: Element) => {
-    const brTags = element.querySelectorAll('br');
-    brTags.forEach(br => {
-      // Replace <br> with a line break character that we'll preserve
-      const textNode = document.createTextNode('\n');
-      br.parentNode?.replaceChild(textNode, br);
-    });
-  };
-  
-  // Process all elements to handle br tags
-  processBrTags(tempDiv);
-  
   const cleanElement = (element: Element) => {
-    // Convert div elements that contain line breaks to paragraphs with preserved breaks
+    // Handle div elements - these are typically created by contentEditable on Enter
     if (element.tagName === 'DIV') {
       const textContent = element.textContent || '';
       
-      // If the div has meaningful content, convert it to a paragraph
+      // If the div has meaningful content, convert it to a proper paragraph
       if (textContent.trim()) {
         const p = document.createElement('p');
-        // Preserve the innerHTML but ensure line breaks are maintained
-        p.innerHTML = element.innerHTML.replace(/\n/g, '<br>');
+        // Preserve any br tags within the div (these are Shift+Enter line breaks)
+        p.innerHTML = element.innerHTML;
         element.parentNode?.replaceChild(p, element);
         return;
       }
       
-      // Remove completely empty divs
+      // Remove empty divs
       if (!textContent.trim()) {
         element.remove();
         return;
@@ -45,7 +32,21 @@ export const cleanHtmlContent = (htmlContent: string) => {
   // Clean all elements
   Array.from(tempDiv.children).forEach(cleanElement);
   
-  return tempDiv.innerHTML;
+  // Ensure we have proper paragraph structure
+  const html = tempDiv.innerHTML;
+  
+  // If there's no paragraph structure, wrap content in paragraphs
+  if (!html.includes('<p>') && html.trim()) {
+    // Split by double line breaks (paragraph breaks) but preserve single line breaks
+    const paragraphs = html.split(/(?:<br\s*\/?>\s*){2,}/);
+    const wrappedContent = paragraphs
+      .filter(p => p.trim())
+      .map(p => `<p>${p.trim()}</p>`)
+      .join('');
+    return wrappedContent;
+  }
+  
+  return html;
 };
 
 export const formatStoryContent = (content: string) => {

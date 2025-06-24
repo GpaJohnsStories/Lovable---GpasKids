@@ -18,7 +18,6 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             line-height: 1.6;
             font-weight: normal;
             font-style: normal;
-            white-space: pre-line;
           }
           
           .story-content * {
@@ -35,24 +34,30 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             line-height: 1.6;
             font-weight: normal;
             font-style: normal;
-            white-space: pre-line;
           }
           
           .story-content p:last-child {
             margin-bottom: 0;
           }
           
-          .story-content br {
+          /* Handle line breaks within paragraphs (Shift+Enter) */
+          .story-content p br {
             line-height: 1.6;
           }
           
+          /* Remove any unwanted spacing from divs */
           .story-content div {
             margin: 0 0 1.5em 0;
             font-family: Georgia, serif;
             font-size: 18px;
             color: #000000;
             line-height: 1.6;
-            white-space: pre-line;
+          }
+          
+          /* Ensure centered content stays centered */
+          .story-content p[style*="text-align: center"],
+          .story-content div[style*="text-align: center"] {
+            text-align: center !important;
           }
           
           .story-content h1 {
