@@ -12,8 +12,12 @@ export const cleanHtmlContent = (htmlContent: string) => {
       // If the div has meaningful content, convert it to a proper paragraph
       if (textContent.trim()) {
         const p = document.createElement('p');
-        // Preserve any br tags within the div (these are Shift+Enter line breaks)
+        // Preserve any br tags and other inline formatting within the div
         p.innerHTML = element.innerHTML;
+        // Copy any style attributes (like text-align: center) from div to paragraph
+        if (element.getAttribute('style')) {
+          p.setAttribute('style', element.getAttribute('style') || '');
+        }
         element.parentNode?.replaceChild(p, element);
         return;
       }
@@ -32,10 +36,10 @@ export const cleanHtmlContent = (htmlContent: string) => {
   // Clean all elements
   Array.from(tempDiv.children).forEach(cleanElement);
   
-  // Ensure we have proper paragraph structure
-  const html = tempDiv.innerHTML;
+  // Get the cleaned HTML
+  let html = tempDiv.innerHTML;
   
-  // If there's no paragraph structure, wrap content in paragraphs
+  // If there's no paragraph structure, wrap content in paragraphs while preserving line breaks
   if (!html.includes('<p>') && html.trim()) {
     // Split by double line breaks (paragraph breaks) but preserve single line breaks
     const paragraphs = html.split(/(?:<br\s*\/?>\s*){2,}/);

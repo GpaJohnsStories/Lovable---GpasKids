@@ -34,15 +34,18 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             line-height: 1.6;
             font-weight: normal;
             font-style: normal;
+            white-space: pre-line;
           }
           
           .story-content p:last-child {
             margin-bottom: 0;
           }
           
-          /* Handle line breaks within paragraphs (Shift+Enter) */
-          .story-content p br {
-            line-height: 1.6;
+          /* Preserve line breaks created by <br> tags */
+          .story-content br {
+            display: block;
+            content: "";
+            margin-top: 0;
           }
           
           /* Remove any unwanted spacing from divs */
@@ -52,11 +55,17 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-size: 18px;
             color: #000000;
             line-height: 1.6;
+            white-space: pre-line;
           }
           
           /* Ensure centered content stays centered */
           .story-content p[style*="text-align: center"],
           .story-content div[style*="text-align: center"] {
+            text-align: center !important;
+          }
+          
+          /* Override any conflicting styles that might prevent centering */
+          .story-content [style*="text-align: center"] {
             text-align: center !important;
           }
           
@@ -146,7 +155,7 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             font-family: Georgia, serif !important;
             font-size: 18px !important;
             color: #000000 !important;
-            line-height: 1.6 !important;
+            line-line: 1.6 !important;
           }
         `
       }} />
