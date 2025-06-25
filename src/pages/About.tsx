@@ -1,4 +1,3 @@
-
 import React from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -64,7 +63,7 @@ const About = () => {
               </h2>
               <ul className="text-lg text-black leading-relaxed space-y-2 list-disc list-inside ml-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
                 <li>World Changers -- Stories of ordinary people and unusual events that changed the world.</li>
-                <li>Stories from the North Pole -- Stories from my friend Nick about things he said happened at the North Pole (I am not sure if they are true or not).</li>
+                <li>North Pole -- Stories from my friend Nick about things he said happened at the North Pole (I am not sure if they are true or not).</li>
                 <li>Fun -- Fun Stuff like jokes, fun poems, rules for games, whatever I think you may enjoy, maybe even one of my favorite easy delicious recipes for you.</li>
                 <li>Life -- Stories and things I have learned during my long lifetime that I think you might find helpful.</li>
               </ul>
