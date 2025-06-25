@@ -55,15 +55,6 @@ const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, 
           />
 
           <div>
-            <Label htmlFor="content">Story Content *</Label>
-            <SimpleRichTextEditor
-              content={formData.content}
-              onChange={(content) => handleInputChange('content', content)}
-              placeholder="Write your story here..."
-            />
-          </div>
-
-          <div>
             <Label className="text-base font-medium text-gray-700 mb-4 block">Story Photos</Label>
             <StoryPhotoUpload
               photoUrls={{
@@ -73,6 +64,15 @@ const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, 
               }}
               onPhotoUpload={handlePhotoUpload}
               onPhotoRemove={handlePhotoRemove}
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="content">Story Content *</Label>
+            <SimpleRichTextEditor
+              content={formData.content}
+              onChange={(content) => handleInputChange('content', content)}
+              placeholder="Write your story here..."
             />
           </div>
 
