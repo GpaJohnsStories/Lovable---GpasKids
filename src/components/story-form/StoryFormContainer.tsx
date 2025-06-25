@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import RichTextEditor from "../RichTextEditor";
+import SimpleRichTextEditor from "../SimpleRichTextEditor";
 import StoryFormFields from "../StoryFormFields";
 import StoryPhotoUpload from "../StoryPhotoUpload";
 import StoryFormActions from "../StoryFormActions";
@@ -56,7 +56,7 @@ const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, 
 
           <div>
             <Label htmlFor="content">Story Content *</Label>
-            <RichTextEditor
+            <SimpleRichTextEditor
               content={formData.content}
               onChange={(content) => handleInputChange('content', content)}
               placeholder="Write your story here..."
