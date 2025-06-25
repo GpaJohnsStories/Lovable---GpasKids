@@ -1,6 +1,6 @@
 
 import { renderCategoryBadge } from "@/utils/categoryUtils";
-import { Volume2 } from "lucide-react";
+import { Headphones } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -150,8 +150,8 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
           style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           title={isPlaying ? "Click to stop reading" : "Click to read this story aloud"}
         >
-          <Volume2 className="h-4 w-4" />
-          {isPlaying ? "Stop Reading" : "Please Read This Story"}
+          <Headphones className="h-4 w-4" />
+          {isPlaying ? "Stop Reading" : "Please read this to me."}
         </button>
 
         <h1 className="text-3xl font-bold text-orange-800 text-center leading-tight">
