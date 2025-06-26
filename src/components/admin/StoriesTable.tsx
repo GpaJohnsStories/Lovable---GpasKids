@@ -39,7 +39,9 @@ const StoriesTable = ({
         .order(sortField, { ascending: sortDirection === 'asc' });
       
       if (showPublishedOnly) {
-        query = query.eq('published', 'Y');
+        query = query
+          .eq('published', 'Y')
+          .lte('updated_at', new Date().toISOString()); // Only show stories where updated_at is in the past for public library
       } else if (publishedFilter === 'published') {
         query = query.eq('published', 'Y');
       } else if (publishedFilter === 'unpublished') {

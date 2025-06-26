@@ -15,6 +15,7 @@ const StorySection = () => {
         .from('stories')
         .select('*')
         .eq('published', 'Y')
+        .lte('updated_at', new Date().toISOString()) // Only show stories where updated_at is in the past
         .order('updated_at', { ascending: false });
       
       if (error) {
