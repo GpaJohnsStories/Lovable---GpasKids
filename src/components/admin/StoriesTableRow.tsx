@@ -1,11 +1,13 @@
+
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen } from "lucide-react";
+import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { calculateReadingTime } from "@/utils/readingTimeUtils";
+import { useState } from "react";
 
 interface Story {
   id: string;
@@ -45,6 +47,9 @@ const StoriesTableRow = ({
   onDelete,
   onStatusChange
 }: StoriesTableRowProps) => {
+  const [isEditingDate, setIsEditingDate] = useState(false);
+  const [editedDate, setEditedDate] = useState('');
+
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
       case "Fun":
@@ -81,6 +86,41 @@ const StoriesTableRow = ({
         onStatusChange();
       }
     }
+  };
+
+  const handleEditDate = () => {
+    const currentDate = new Date(story.updated_at);
+    const formattedDate = currentDate.toISOString().slice(0, 16); // Format for datetime-local input
+    setEditedDate(formattedDate);
+    setIsEditingDate(true);
+  };
+
+  const handleSaveDate = async () => {
+    if (!editedDate) {
+      toast.error("Please enter a valid date");
+      return;
+    }
+
+    const { error } = await supabase
+      .from('stories')
+      .update({ updated_at: new Date(editedDate).toISOString() })
+      .eq('id', story.id);
+
+    if (error) {
+      toast.error("Error updating date");
+      console.error(error);
+    } else {
+      toast.success("Updated date saved successfully");
+      setIsEditingDate(false);
+      if (onStatusChange) {
+        onStatusChange();
+      }
+    }
+  };
+
+  const handleCancelDateEdit = () => {
+    setIsEditingDate(false);
+    setEditedDate('');
   };
 
   const firstPhoto = getFirstAvailablePhoto();
@@ -168,7 +208,44 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        {new Date(story.updated_at).toLocaleDateString()}
+        {isEditingDate ? (
+          <div className="flex items-center space-x-2">
+            <input
+              type="datetime-local"
+              value={editedDate}
+              onChange={(e) => setEditedDate(e.target.value)}
+              className="text-xs border rounded px-1 py-1"
+              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+            />
+            <div className="flex space-x-1">
+              <Button
+                size="sm"
+                onClick={handleSaveDate}
+                className="bg-green-600 hover:bg-green-700 text-white p-1 h-6 w-6"
+              >
+                <Check className="h-3 w-3" />
+              </Button>
+              <Button
+                size="sm"
+                onClick={handleCancelDateEdit}
+                className="bg-red-600 hover:bg-red-700 text-white p-1 h-6 w-6"
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center space-x-2">
+            <span>{new Date(story.updated_at).toLocaleDateString()}</span>
+            <Button
+              size="sm"
+              onClick={handleEditDate}
+              className="bg-blue-600 hover:bg-blue-700 text-white p-1 h-6 w-6"
+            >
+              <Calendar className="h-3 w-3" />
+            </Button>
+          </div>
+        )}
       </TableCell>
       {showActions && (
         <TableCell>
