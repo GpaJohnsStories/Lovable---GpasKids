@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +20,7 @@ interface Story {
   thumbs_down_count?: number;
   ok_count?: number;
   created_at: string;
+  updated_at: string;
   photo_link_1?: string;
   photo_link_2?: string;
   photo_link_3?: string;
@@ -168,7 +168,7 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        {new Date(story.created_at).toLocaleDateString()}
+        {new Date(story.updated_at).toLocaleDateString()}
       </TableCell>
       {showActions && (
         <TableCell>
