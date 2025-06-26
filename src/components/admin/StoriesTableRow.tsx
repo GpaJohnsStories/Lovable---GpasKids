@@ -90,7 +90,14 @@ const StoriesTableRow = ({
 
   const handleEditDate = () => {
     const currentDate = new Date(story.updated_at);
-    const formattedDate = currentDate.toISOString().slice(0, 16); // Format for datetime-local input
+    // Convert to local time for the datetime-local input
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+    
     setEditedDate(formattedDate);
     setIsEditingDate(true);
   };
@@ -101,9 +108,16 @@ const StoriesTableRow = ({
       return;
     }
 
+    // Create a Date object from the local datetime input
+    // This will be interpreted as local time
+    const localDate = new Date(editedDate);
+    
+    // Convert to UTC for storage
+    const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+
     const { error } = await supabase
       .from('stories')
-      .update({ updated_at: new Date(editedDate).toISOString() })
+      .update({ updated_at: utcDate.toISOString() })
       .eq('id', story.id);
 
     if (error) {
