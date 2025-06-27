@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -88,8 +89,7 @@ const StoriesTableRow = ({
   };
 
   const handleEditDate = () => {
-    // Simply format the stored date for the datetime-local input
-    // This will be displayed as the local time equivalent
+    // Format the stored date for the datetime-local input
     const currentDate = new Date(story.updated_at);
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -108,13 +108,22 @@ const StoriesTableRow = ({
       return;
     }
 
-    // Simply store the date as entered - no timezone conversion needed
-    // The user enters the time they want it released in their timezone
-    const newDate = new Date(editedDate);
+    // Parse the datetime-local input value and create a proper ISO string
+    // The input gives us "YYYY-MM-DDTHH:mm" format
+    // We need to treat this as the user's intended local time and store it as UTC
+    const [datePart, timePart] = editedDate.split('T');
+    const [year, month, day] = datePart.split('-').map(Number);
+    const [hours, minutes] = timePart.split(':').map(Number);
+    
+    // Create date in UTC with the exact values the user entered
+    const utcDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, 0, 0));
+
+    console.log('User entered:', editedDate);
+    console.log('Storing as UTC:', utcDate.toISOString());
 
     const { error } = await supabase
       .from('stories')
-      .update({ updated_at: newDate.toISOString() })
+      .update({ updated_at: utcDate.toISOString() })
       .eq('id', story.id);
 
     if (error) {
