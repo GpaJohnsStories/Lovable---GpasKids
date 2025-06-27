@@ -89,13 +89,14 @@ const StoriesTableRow = ({
   };
 
   const handleEditDate = () => {
-    // Format the stored date for the datetime-local input
-    const currentDate = new Date(story.updated_at);
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const hours = String(currentDate.getHours()).padStart(2, '0');
-    const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+    // Parse the stored UTC date and format it for datetime-local input
+    // We want to show the exact UTC values in the input (no timezone conversion)
+    const utcDate = new Date(story.updated_at);
+    const year = utcDate.getUTCFullYear();
+    const month = String(utcDate.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(utcDate.getUTCDate()).padStart(2, '0');
+    const hours = String(utcDate.getUTCHours()).padStart(2, '0');
+    const minutes = String(utcDate.getUTCMinutes()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
     
     setEditedDate(formattedDate);
