@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Cookie, Eye, Lock, HardDrive } from "lucide-react";
@@ -32,7 +33,7 @@ const Privacy = () => {
                 <span className="font-bold">Safety First</span>: This website is designed with children's safety in mind. There are no advertisements, no personal data collection, and strict security measures.
               </p>
               <p className="text-lg text-amber-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                <span className="font-bold">Quality Content</span>: All stories are written by me or by my friends and then edited by me. They are carefully crafted to be engaging, age-appropriate for grade school students, encouraging, and meaningful.
+                <span className="font-bold">Quality Content</span>: Many of these stories are written by me but all stories and other content are edited by me to be engaging, age-appropriate for grade school students, encouraging, and meaningful.
               </p>
               <p className="text-lg text-amber-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
                 <span className="font-bold">A Comfortable Space</span>: I want you to feel at home here – like you're sitting in a cozy chair listening to your own grandparent tell you a story.
