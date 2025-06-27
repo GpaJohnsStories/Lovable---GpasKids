@@ -39,9 +39,20 @@ const StoriesTable = ({
         .order(sortField, { ascending: sortDirection === 'asc' });
       
       if (showPublishedOnly) {
-        query = query
-          .eq('published', 'Y')
-          .lte('updated_at', new Date().toISOString()); // Only show stories where updated_at is in the past for public library
+        query = query.eq('published', 'Y');
+        
+        const { data, error } = await query;
+        
+        if (error) throw error;
+        
+        // Filter stories based on visitor's local time for public library
+        const now = new Date();
+        const filteredStories = data.filter(story => {
+          const storyDate = new Date(story.updated_at);
+          return storyDate <= now;
+        });
+        
+        return filteredStories;
       } else if (publishedFilter === 'published') {
         query = query.eq('published', 'Y');
       } else if (publishedFilter === 'unpublished') {

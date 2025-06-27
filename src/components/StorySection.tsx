@@ -15,7 +15,6 @@ const StorySection = () => {
         .from('stories')
         .select('*')
         .eq('published', 'Y')
-        .lte('updated_at', new Date().toISOString()) // Only show stories where updated_at is in the past
         .order('updated_at', { ascending: false });
       
       if (error) {
@@ -23,7 +22,14 @@ const StorySection = () => {
         return [];
       }
       
-      return data;
+      // Filter stories based on visitor's local time
+      const now = new Date();
+      const filteredStories = data.filter(story => {
+        const storyDate = new Date(story.updated_at);
+        return storyDate <= now;
+      });
+      
+      return filteredStories;
     },
   });
 

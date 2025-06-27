@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -89,8 +88,9 @@ const StoriesTableRow = ({
   };
 
   const handleEditDate = () => {
+    // Simply format the stored date for the datetime-local input
+    // This will be displayed as the local time equivalent
     const currentDate = new Date(story.updated_at);
-    // Convert to local time for the datetime-local input
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const day = String(currentDate.getDate()).padStart(2, '0');
@@ -108,16 +108,13 @@ const StoriesTableRow = ({
       return;
     }
 
-    // Create a Date object from the local datetime input
-    // This will be interpreted as local time
-    const localDate = new Date(editedDate);
-    
-    // Convert to UTC for storage
-    const utcDate = new Date(localDate.getTime() - (localDate.getTimezoneOffset() * 60000));
+    // Simply store the date as entered - no timezone conversion needed
+    // The user enters the time they want it released in their timezone
+    const newDate = new Date(editedDate);
 
     const { error } = await supabase
       .from('stories')
-      .update({ updated_at: utcDate.toISOString() })
+      .update({ updated_at: newDate.toISOString() })
       .eq('id', story.id);
 
     if (error) {
