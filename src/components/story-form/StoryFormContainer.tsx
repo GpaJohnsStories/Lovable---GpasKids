@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import SimpleRichTextEditor from "../SimpleRichTextEditor";
 import StoryFormFields from "../StoryFormFields";
 import StoryPhotoUpload from "../StoryPhotoUpload";
+import StoryVideoUpload from "../StoryVideoUpload";
 import StoryFormActions from "../StoryFormActions";
 import { useStoryForm } from './useStoryForm';
 
@@ -21,6 +22,7 @@ interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
+  video_url: string;
   published: string;
 }
 
@@ -37,6 +39,8 @@ const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, 
     handleInputChange,
     handlePhotoUpload,
     handlePhotoRemove,
+    handleVideoUpload,
+    handleVideoRemove,
     handleSubmit
   } = useStoryForm(story, onSave);
 
@@ -64,6 +68,14 @@ const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, 
               }}
               onPhotoUpload={handlePhotoUpload}
               onPhotoRemove={handlePhotoRemove}
+            />
+          </div>
+
+          <div>
+            <StoryVideoUpload
+              videoUrl={formData.video_url}
+              onVideoUpload={handleVideoUpload}
+              onVideoRemove={handleVideoRemove}
             />
           </div>
 

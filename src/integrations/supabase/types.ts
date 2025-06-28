@@ -92,6 +92,7 @@ export type Database = {
           thumbs_up_count: number
           title: string
           updated_at: string
+          video_url: string | null
         }
         Insert: {
           author: string
@@ -113,6 +114,7 @@ export type Database = {
           thumbs_up_count?: number
           title: string
           updated_at?: string
+          video_url?: string | null
         }
         Update: {
           author?: string
@@ -134,6 +136,7 @@ export type Database = {
           thumbs_up_count?: number
           title?: string
           updated_at?: string
+          video_url?: string | null
         }
         Relationships: []
       }

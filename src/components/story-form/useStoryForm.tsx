@@ -15,6 +15,7 @@ interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
+  video_url: string;
   published: string;
 }
 
@@ -30,6 +31,7 @@ const initialFormData: Story = {
   photo_link_1: '',
   photo_link_2: '',
   photo_link_3: '',
+  video_url: '',
   published: 'N'
 };
 
@@ -58,6 +60,14 @@ export const useStoryForm = (story?: Story, onSave?: () => void) => {
     handleInputChange(`photo_link_${photoNumber}` as keyof Story, '');
   };
 
+  const handleVideoUpload = (url: string) => {
+    handleInputChange('video_url', url);
+  };
+
+  const handleVideoRemove = () => {
+    handleInputChange('video_url', '');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -77,6 +87,8 @@ export const useStoryForm = (story?: Story, onSave?: () => void) => {
     handleInputChange,
     handlePhotoUpload,
     handlePhotoRemove,
+    handleVideoUpload,
+    handleVideoRemove,
     handleSubmit
   };
 };

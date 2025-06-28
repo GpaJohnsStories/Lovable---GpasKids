@@ -16,6 +16,7 @@ interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
+  video_url: string;
   published: string;
 }
 

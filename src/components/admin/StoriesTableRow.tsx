@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +27,7 @@ interface Story {
   photo_link_3?: string;
   content?: string;
   excerpt?: string;
+  video_url?: string;
 }
 
 interface StoriesTableRowProps {
@@ -68,6 +68,9 @@ const StoriesTableRow = ({
   const getFirstAvailablePhoto = () => {
     return story.photo_link_1 || story.photo_link_2 || story.photo_link_3;
   };
+
+  const hasVideo = story.video_url && story.video_url.trim() !== '';
+  const videoIndicator = hasVideo ? '🎥' : '';
 
   const handleTogglePublished = async () => {
     const newStatus = story.published === 'Y' ? 'N' : 'Y';
@@ -149,7 +152,10 @@ const StoriesTableRow = ({
   return (
     <TableRow>
       <TableCell className="font-medium font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        {story.story_code}
+        <div className="flex items-center space-x-1">
+          <span>{story.story_code}</span>
+          {hasVideo && <span className="text-lg" title="Has video">🎥</span>}
+        </div>
       </TableCell>
       <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="flex items-center space-x-3">
@@ -167,7 +173,9 @@ const StoriesTableRow = ({
           )}
           <div className="flex-1">
             <Link to={`/story/${story.id}`}>
-              <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer">{story.title}</div>
+              <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer">
+                {story.title} {videoIndicator}
+              </div>
             </Link>
             {story.tagline && (
               <div className="text-sm italic text-amber-700 mt-1 font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>

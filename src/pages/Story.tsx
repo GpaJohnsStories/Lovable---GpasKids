@@ -13,6 +13,7 @@ import StoryHeader from "@/components/StoryHeader";
 import StoryPhotosGallery from "@/components/StoryPhotosGallery";
 import StoryContent from "@/components/StoryContent";
 import StoryVotingSection from "@/components/StoryVotingSection";
+import StoryVideoPlayer from "@/components/StoryVideoPlayer";
 import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
 import { getStoryPhotos } from "@/utils/storyUtils";
@@ -129,6 +130,16 @@ const Story = () => {
                   content={story.content}
                   description={story.excerpt}
                 />
+
+                {story.video_url && (
+                  <div className="mb-8">
+                    <StoryVideoPlayer
+                      videoUrl={story.video_url}
+                      title={story.title}
+                      className="max-w-2xl mx-auto"
+                    />
+                  </div>
+                )}
 
                 <StoryPhotosGallery
                   photos={storyPhotos}
