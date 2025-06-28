@@ -76,7 +76,7 @@ const StoryVideoPlayer: React.FC<StoryVideoPlayerProps> = ({
       <div 
         className="relative bg-black rounded-lg overflow-hidden"
         onMouseEnter={() => setShowControls(true)}
-        onMouseLeave={() => setShowControls(false)}
+        onMouseLeave={() => setShowControls(true)} // Keep controls visible
       >
         <video
           ref={videoRef}
@@ -91,46 +91,37 @@ const StoryVideoPlayer: React.FC<StoryVideoPlayerProps> = ({
           Your browser does not support the video tag.
         </video>
 
-        {/* Custom Controls Overlay */}
-        <div 
-          className={`absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center transition-opacity duration-300 ${
-            showControls ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          {/* Play/Pause Button */}
+        {/* Large Play/Pause Button Overlay - Always visible */}
+        <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
           <Button
             size="lg"
             variant="secondary"
             onClick={togglePlay}
-            className="bg-white bg-opacity-90 hover:bg-opacity-100 text-black rounded-full w-16 h-16 flex items-center justify-center"
+            className="bg-white bg-opacity-95 hover:bg-opacity-100 text-black rounded-full w-20 h-20 flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110"
           >
-            {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6 ml-1" />}
+            {isPlaying ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8 ml-1" />}
           </Button>
         </div>
 
-        {/* Bottom Controls */}
-        <div 
-          className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 transition-opacity duration-300 ${
-            showControls ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
+        {/* Bottom Controls - Always visible */}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black to-transparent p-4 opacity-90">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
               <Button
                 size="sm"
                 variant="ghost"
                 onClick={togglePlay}
-                className="text-white hover:bg-white hover:bg-opacity-20"
+                className="text-white hover:bg-white hover:bg-opacity-20 p-2"
               >
-                {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
               </Button>
               <Button
                 size="sm"
                 variant="ghost"
                 onClick={toggleMute}
-                className="text-white hover:bg-white hover:bg-opacity-20"
+                className="text-white hover:bg-white hover:bg-opacity-20 p-2"
               >
-                {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
               </Button>
             </div>
             
@@ -138,18 +129,18 @@ const StoryVideoPlayer: React.FC<StoryVideoPlayerProps> = ({
               size="sm"
               variant="ghost"
               onClick={toggleFullscreen}
-              className="text-white hover:bg-white hover:bg-opacity-20"
+              className="text-white hover:bg-white hover:bg-opacity-20 p-2"
             >
-              {isFullscreen ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
+              {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
             </Button>
           </div>
         </div>
       </div>
 
       {/* Video Title */}
-      <div className="mt-2 text-center">
-        <p className="text-sm text-gray-600 italic">
-          Video: {title}
+      <div className="mt-3 text-center">
+        <p className="text-base text-gray-700 font-medium">
+          🎥 {title}
         </p>
       </div>
     </div>
