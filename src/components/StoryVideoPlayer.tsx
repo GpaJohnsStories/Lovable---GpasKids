@@ -95,16 +95,18 @@ const StoryVideoPlayer: React.FC<StoryVideoPlayerProps> = ({
           Your browser does not support the video tag.
         </video>
 
-        {/* Large Play/Pause Button - Center */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <Button
-            size="lg"
-            onClick={togglePlay}
-            className="pointer-events-auto bg-orange-500 hover:bg-orange-600 text-white rounded-full w-24 h-24 flex items-center justify-center shadow-2xl transition-all duration-200 hover:scale-110 border-4 border-white"
-          >
-            {isPlaying ? <Pause className="h-10 w-10" /> : <Play className="h-10 w-10 ml-1" />}
-          </Button>
-        </div>
+        {/* Large Play Button - Center - Only show when NOT playing */}
+        {!isPlaying && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <Button
+              size="lg"
+              onClick={togglePlay}
+              className="pointer-events-auto bg-orange-500 hover:bg-orange-600 text-white rounded-full w-24 h-24 flex items-center justify-center shadow-2xl transition-all duration-200 hover:scale-110 border-4 border-white"
+            >
+              <Play className="h-10 w-10 ml-1" />
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Controls Bar - Below Video */}
