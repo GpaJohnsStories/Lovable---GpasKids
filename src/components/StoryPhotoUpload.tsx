@@ -13,14 +13,22 @@ interface StoryPhotoUploadProps {
     photo_link_2: string;
     photo_link_3: string;
   };
+  photoAlts: {
+    photo_alt_1: string;
+    photo_alt_2: string;
+    photo_alt_3: string;
+  };
   onPhotoUpload: (photoNumber: 1 | 2 | 3, url: string) => void;
   onPhotoRemove: (photoNumber: 1 | 2 | 3) => void;
+  onAltTextChange: (field: string, value: string) => void;
 }
 
 const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
   photoUrls,
+  photoAlts,
   onPhotoUpload,
   onPhotoRemove,
+  onAltTextChange,
 }) => {
   const [uploading, setUploading] = useState<{[key: number]: boolean}>({});
 
@@ -97,33 +105,49 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
     }
 
     onPhotoRemove(photoNumber);
+    // Also clear the alt text
+    onAltTextChange(`photo_alt_${photoNumber}`, '');
     toast.success(`Photo ${photoNumber} removed`);
   };
 
   const renderPhotoUpload = (photoNumber: 1 | 2 | 3) => {
     const photoUrl = photoUrls[`photo_link_${photoNumber}` as keyof typeof photoUrls];
+    const photoAlt = photoAlts[`photo_alt_${photoNumber}` as keyof typeof photoAlts];
     const isUploading = uploading[photoNumber];
 
     return (
-      <div key={photoNumber} className="space-y-2">
+      <div key={photoNumber} className="space-y-3">
         <Label htmlFor={`photo-${photoNumber}`}>Photo {photoNumber}</Label>
         
         {photoUrl ? (
-          <div className="relative">
-            <img
-              src={photoUrl}
-              alt={`Story photo ${photoNumber}`}
-              className="w-full h-32 object-cover rounded-md border"
-            />
-            <Button
-              type="button"
-              variant="destructive"
-              size="sm"
-              className="absolute top-2 right-2"
-              onClick={() => removePhoto(photoNumber)}
-            >
-              <X className="h-4 w-4" />
-            </Button>
+          <div className="space-y-2">
+            <div className="relative">
+              <img
+                src={photoUrl}
+                alt={photoAlt || `Story photo ${photoNumber}`}
+                title={photoAlt || `Story photo ${photoNumber}`}
+                className="w-full h-32 object-cover rounded-md border"
+              />
+              <Button
+                type="button"
+                variant="destructive"
+                size="sm"
+                className="absolute top-2 right-2"
+                onClick={() => removePhoto(photoNumber)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            <div>
+              <Label htmlFor={`alt-${photoNumber}`} className="text-sm">Alt Text (for accessibility)</Label>
+              <Input
+                id={`alt-${photoNumber}`}
+                value={photoAlt}
+                onChange={(e) => onAltTextChange(`photo_alt_${photoNumber}`, e.target.value)}
+                placeholder="Describe this image for screen readers..."
+                className="text-sm"
+              />
+            </div>
           </div>
         ) : (
           <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center">

@@ -22,6 +22,9 @@ interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
+  photo_alt_1: string;
+  photo_alt_2: string;
+  photo_alt_3: string;
   video_url: string;
   published: string;
 }
@@ -66,8 +69,14 @@ const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, 
                 photo_link_2: formData.photo_link_2,
                 photo_link_3: formData.photo_link_3,
               }}
+              photoAlts={{
+                photo_alt_1: formData.photo_alt_1,
+                photo_alt_2: formData.photo_alt_2,
+                photo_alt_3: formData.photo_alt_3,
+              }}
               onPhotoUpload={handlePhotoUpload}
               onPhotoRemove={handlePhotoRemove}
+              onAltTextChange={handleInputChange}
             />
           </div>
 
