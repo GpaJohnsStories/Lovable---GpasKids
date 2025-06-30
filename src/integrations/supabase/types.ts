@@ -81,6 +81,9 @@ export type Database = {
           google_drive_link: string | null
           id: string
           ok_count: number
+          photo_alt_1: string | null
+          photo_alt_2: string | null
+          photo_alt_3: string | null
           photo_link_1: string | null
           photo_link_2: string | null
           photo_link_3: string | null
@@ -103,6 +106,9 @@ export type Database = {
           google_drive_link?: string | null
           id?: string
           ok_count?: number
+          photo_alt_1?: string | null
+          photo_alt_2?: string | null
+          photo_alt_3?: string | null
           photo_link_1?: string | null
           photo_link_2?: string | null
           photo_link_3?: string | null
@@ -125,6 +131,9 @@ export type Database = {
           google_drive_link?: string | null
           id?: string
           ok_count?: number
+          photo_alt_1?: string | null
+          photo_alt_2?: string | null
+          photo_alt_3?: string | null
           photo_link_1?: string | null
           photo_link_2?: string | null
           photo_link_3?: string | null

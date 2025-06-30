@@ -15,6 +15,9 @@ interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
+  photo_alt_1: string;
+  photo_alt_2: string;
+  photo_alt_3: string;
   video_url: string;
   published: string;
 }
@@ -31,6 +34,9 @@ const initialFormData: Story = {
   photo_link_1: '',
   photo_link_2: '',
   photo_link_3: '',
+  photo_alt_1: '',
+  photo_alt_2: '',
+  photo_alt_3: '',
   video_url: '',
   published: 'N'
 };
