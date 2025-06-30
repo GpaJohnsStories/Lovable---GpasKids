@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Upload, X, Image } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Card, CardContent } from "@/components/ui/card";
+import { Upload, X, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 
 interface StoryPhotoUploadProps {
@@ -28,42 +28,11 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
   photoAlts,
   onPhotoUpload,
   onPhotoRemove,
-  onAltTextChange,
+  onAltTextChange
 }) => {
-  const [uploading, setUploading] = useState<{[key: number]: boolean}>({});
+  const [uploading, setUploading] = useState<{ [key: number]: boolean }>({});
 
-  const uploadPhoto = async (file: File, photoNumber: 1 | 2 | 3) => {
-    try {
-      setUploading(prev => ({ ...prev, [photoNumber]: true }));
-
-      // Create a unique filename
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-      const filePath = `story-photos/${fileName}`;
-
-      // Upload file to Supabase Storage
-      const { error: uploadError } = await supabase.storage
-        .from('story-photos')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      // Get public URL
-      const { data } = supabase.storage
-        .from('story-photos')
-        .getPublicUrl(filePath);
-
-      onPhotoUpload(photoNumber, data.publicUrl);
-      toast.success(`Photo ${photoNumber} uploaded successfully!`);
-    } catch (error) {
-      console.error('Error uploading photo:', error);
-      toast.error(`Failed to upload photo ${photoNumber}`);
-    } finally {
-      setUploading(prev => ({ ...prev, [photoNumber]: false }));
-    }
-  };
-
-  const handleFileSelect = (file: File | null, photoNumber: 1 | 2 | 3) => {
+  const handleFileUpload = async (file: File, photoNumber: 1 | 2 | 3) => {
     if (!file) return;
 
     // Validate file type
@@ -74,119 +43,131 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
 
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('Image must be smaller than 5MB');
+      toast.error('Image size must be less than 5MB');
       return;
     }
 
-    uploadPhoto(file, photoNumber);
-  };
+    setUploading(prev => ({ ...prev, [photoNumber]: true }));
 
-  const removePhoto = async (photoNumber: 1 | 2 | 3) => {
-    const photoUrl = photoUrls[`photo_link_${photoNumber}` as keyof typeof photoUrls];
-    
-    if (photoUrl) {
-      try {
-        // Extract file path from URL
-        const urlParts = photoUrl.split('/');
-        const fileName = urlParts[urlParts.length - 1];
-        const filePath = `story-photos/${fileName}`;
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
 
-        // Delete from storage
-        const { error } = await supabase.storage
-          .from('story-photos')
-          .remove([filePath]);
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
 
-        if (error) {
-          console.error('Error deleting file:', error);
-        }
-      } catch (error) {
-        console.error('Error removing photo:', error);
+      if (!response.ok) {
+        throw new Error('Upload failed');
       }
-    }
 
-    onPhotoRemove(photoNumber);
-    // Also clear the alt text
-    onAltTextChange(`photo_alt_${photoNumber}`, '');
-    toast.success(`Photo ${photoNumber} removed`);
+      const data = await response.json();
+      onPhotoUpload(photoNumber, data.url);
+      toast.success('Photo uploaded successfully!');
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast.error('Failed to upload photo. Please try again.');
+    } finally {
+      setUploading(prev => ({ ...prev, [photoNumber]: false }));
+    }
   };
 
-  const renderPhotoUpload = (photoNumber: 1 | 2 | 3) => {
+  const handleUrlInput = (photoNumber: 1 | 2 | 3, url: string) => {
+    onPhotoUpload(photoNumber, url);
+  };
+
+  const renderPhotoSection = (photoNumber: 1 | 2 | 3) => {
     const photoUrl = photoUrls[`photo_link_${photoNumber}` as keyof typeof photoUrls];
     const photoAlt = photoAlts[`photo_alt_${photoNumber}` as keyof typeof photoAlts];
     const isUploading = uploading[photoNumber];
 
     return (
-      <div key={photoNumber} className="space-y-3">
-        <Label htmlFor={`photo-${photoNumber}`}>Photo {photoNumber}</Label>
-        
-        {photoUrl ? (
-          <div className="space-y-2">
-            <div className="relative">
+      <Card key={photoNumber} className="p-4">
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Label className="text-sm font-medium">Photo {photoNumber}</Label>
+            {photoUrl && (
+              <Button
+                type="button"
+                size="sm"
+                variant="destructive"
+                onClick={() => onPhotoRemove(photoNumber)}
+              >
+                <X className="h-3 w-3 mr-1" />
+                Remove
+              </Button>
+            )}
+          </div>
+
+          {photoUrl ? (
+            <div className="space-y-3">
               <img
                 src={photoUrl}
                 alt={photoAlt || `Story photo ${photoNumber}`}
-                title={photoAlt || `Story photo ${photoNumber}`}
-                className="w-full h-32 object-cover rounded-md border"
+                className="w-full h-32 object-cover rounded border"
+                onError={(e) => {
+                  e.currentTarget.src = '/placeholder.svg';
+                }}
               />
-              <Button
-                type="button"
-                variant="destructive"
-                size="sm"
-                className="absolute top-2 right-2"
-                onClick={() => removePhoto(photoNumber)}
-              >
-                <X className="h-4 w-4" />
-              </Button>
+              <div>
+                <Label htmlFor={`alt_${photoNumber}`} className="text-sm">
+                  Alt Text (for accessibility)
+                </Label>
+                <Input
+                  id={`alt_${photoNumber}`}
+                  value={photoAlt}
+                  onChange={(e) => onAltTextChange(`photo_alt_${photoNumber}`, e.target.value)}
+                  placeholder="Describe what's in this photo"
+                  className="mt-1"
+                />
+              </div>
             </div>
-            <div>
-              <Label htmlFor={`alt-${photoNumber}`} className="text-sm">Alt Text (for accessibility)</Label>
-              <Input
-                id={`alt-${photoNumber}`}
-                value={photoAlt}
-                onChange={(e) => onAltTextChange(`photo_alt_${photoNumber}`, e.target.value)}
-                placeholder="Describe this image for screen readers..."
-                className="text-sm"
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center">
-            <Input
-              id={`photo-${photoNumber}`}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => handleFileSelect(e.target.files?.[0] || null, photoNumber)}
-              disabled={isUploading}
-            />
-            <Label
-              htmlFor={`photo-${photoNumber}`}
-              className="cursor-pointer flex flex-col items-center space-y-2"
-            >
-              {isUploading ? (
-                <div className="flex items-center space-x-2">
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-orange-600"></div>
-                  <span>Uploading...</span>
+          ) : (
+            <div className="space-y-3">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                <p className="text-sm text-gray-600 mb-3">
+                  Upload an image or enter a URL
+                </p>
+                
+                <div className="space-y-3">
+                  <div>
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handleFileUpload(file, photoNumber);
+                      }}
+                      className="mb-2"
+                      disabled={isUploading}
+                    />
+                    {isUploading && (
+                      <p className="text-sm text-blue-600">Uploading...</p>
+                    )}
+                  </div>
+                  
+                  <div className="text-sm text-gray-500">or</div>
+                  
+                  <Input
+                    placeholder="Enter image URL"
+                    onChange={(e) => handleUrlInput(photoNumber, e.target.value)}
+                  />
                 </div>
-              ) : (
-                <>
-                  <Image className="h-8 w-8 text-gray-400" />
-                  <span className="text-sm text-gray-600">Click to upload image</span>
-                  <span className="text-xs text-gray-400">Max 5MB</span>
-                </>
-              )}
-            </Label>
-          </div>
-        )}
-      </div>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     );
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {renderPhotoUpload(1)}
-      {renderPhotoUpload(2)}
-      {renderPhotoUpload(3)}
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {[1, 2, 3].map(photoNumber => renderPhotoSection(photoNumber as 1 | 2 | 3))}
+      </div>
     </div>
   );
 };

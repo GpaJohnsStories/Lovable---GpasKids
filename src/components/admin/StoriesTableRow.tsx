@@ -92,15 +92,19 @@ const StoriesTableRow = ({
   };
 
   const handleEditDate = () => {
-    // Parse the stored UTC date and format it for datetime-local input
-    // We want to show the exact UTC values in the input (no timezone conversion)
+    // Convert the stored UTC date to local datetime-local format
     const utcDate = new Date(story.updated_at);
-    const year = utcDate.getUTCFullYear();
-    const month = String(utcDate.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(utcDate.getUTCDate()).padStart(2, '0');
-    const hours = String(utcDate.getUTCHours()).padStart(2, '0');
-    const minutes = String(utcDate.getUTCMinutes()).padStart(2, '0');
+    
+    // Format for datetime-local input (YYYY-MM-DDTHH:mm)
+    const year = utcDate.getFullYear();
+    const month = String(utcDate.getMonth() + 1).padStart(2, '0');
+    const day = String(utcDate.getDate()).padStart(2, '0');
+    const hours = String(utcDate.getHours()).padStart(2, '0');
+    const minutes = String(utcDate.getMinutes()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+    
+    console.log('Original UTC date:', story.updated_at);
+    console.log('Formatted for input:', formattedDate);
     
     setEditedDate(formattedDate);
     setIsEditingDate(true);
@@ -112,33 +116,38 @@ const StoriesTableRow = ({
       return;
     }
 
-    // Parse the datetime-local input value and create a proper ISO string
-    // The input gives us "YYYY-MM-DDTHH:mm" format
-    // We need to treat this as the user's intended local time and store it as UTC
-    const [datePart, timePart] = editedDate.split('T');
-    const [year, month, day] = datePart.split('-').map(Number);
-    const [hours, minutes] = timePart.split(':').map(Number);
-    
-    // Create date in UTC with the exact values the user entered
-    const utcDate = new Date(Date.UTC(year, month - 1, day, hours, minutes, 0, 0));
-
-    console.log('User entered:', editedDate);
-    console.log('Storing as UTC:', utcDate.toISOString());
-
-    const { error } = await supabase
-      .from('stories')
-      .update({ updated_at: utcDate.toISOString() })
-      .eq('id', story.id);
-
-    if (error) {
-      toast.error("Error updating date");
-      console.error(error);
-    } else {
-      toast.success("Updated date saved successfully");
-      setIsEditingDate(false);
-      if (onStatusChange) {
-        onStatusChange();
+    try {
+      // Create a proper Date object from the datetime-local input
+      const inputDate = new Date(editedDate);
+      
+      // Check if the date is valid
+      if (isNaN(inputDate.getTime())) {
+        toast.error("Invalid date format");
+        return;
       }
+
+      console.log('User entered:', editedDate);
+      console.log('Parsed date:', inputDate);
+      console.log('ISO string to store:', inputDate.toISOString());
+
+      const { error } = await supabase
+        .from('stories')
+        .update({ updated_at: inputDate.toISOString() })
+        .eq('id', story.id);
+
+      if (error) {
+        toast.error("Error updating date");
+        console.error(error);
+      } else {
+        toast.success("Updated date saved successfully");
+        setIsEditingDate(false);
+        if (onStatusChange) {
+          onStatusChange();
+        }
+      }
+    } catch (error) {
+      console.error('Date parsing error:', error);
+      toast.error("Invalid date format");
     }
   };
 
