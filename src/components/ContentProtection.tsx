@@ -95,7 +95,7 @@ const ContentProtection = ({ children, enableProtection = true }: ContentProtect
             -moz-user-drag: none;
             -o-user-drag: none;
             user-drag: none;
-            pointer-events: none;
+            /* Allow hover events for tooltips while preventing other interactions */
           }
           
           .content-protected *::selection {
