@@ -21,6 +21,9 @@ const SimpleStoryContent = ({ content, excerpt }: SimpleStoryContentProps) => {
           .simple-story-content p {
             margin: 0 0 16px 0;
             line-height: 1.6;
+            font-family: Georgia, serif;
+            font-size: 18px;
+            color: #000000;
           }
           
           .simple-story-content p:last-child {
@@ -34,15 +37,21 @@ const SimpleStoryContent = ({ content, excerpt }: SimpleStoryContentProps) => {
           .simple-story-content strong,
           .simple-story-content b {
             font-weight: bold;
+            font-family: Georgia, serif;
+            color: #000000;
           }
           
           .simple-story-content em,
           .simple-story-content i {
             font-style: italic;
+            font-family: Georgia, serif;
+            color: #000000;
           }
           
           .simple-story-content u {
             text-decoration: underline;
+            font-family: Georgia, serif;
+            color: #000000;
           }
           
           /* Text alignment */

@@ -15,7 +15,7 @@ const EditorStyles: React.FC = () => {
           font-family: Georgia, serif;
           font-size: 18px;
           color: #000000;
-          line-height: 1.15;
+          line-height: 1.6;
           font-weight: normal;
           font-style: normal;
         }
@@ -24,7 +24,7 @@ const EditorStyles: React.FC = () => {
           font-family: Georgia, serif !important;
           font-size: 18px !important;
           color: #000000 !important;
-          line-height: 1.15 !important;
+          line-height: 1.6 !important;
         }
         
         .rich-editor p {
@@ -32,10 +32,10 @@ const EditorStyles: React.FC = () => {
           font-family: Georgia, serif;
           font-size: 18px;
           color: #000000;
-          line-height: 1.15;
+          line-height: 1.6;
           font-weight: normal;
           font-style: normal;
-          min-height: 1.15em;
+          min-height: 1.6em;
         }
         
         .rich-editor p:last-child {
@@ -43,7 +43,7 @@ const EditorStyles: React.FC = () => {
         }
         
         .rich-editor p:empty {
-          min-height: 1.15em;
+          min-height: 1.6em;
           margin: 0 0 1.5em 0;
         }
         
@@ -51,18 +51,18 @@ const EditorStyles: React.FC = () => {
           font-family: Georgia, serif;
           font-size: 18px;
           color: #000000;
-          line-height: 1.15;
+          line-height: 1.6;
           margin: 0 0 1.5em 0;
-          min-height: 1.15em;
+          min-height: 1.6em;
         }
         
         .rich-editor div:empty {
-          min-height: 1.15em;
+          min-height: 1.6em;
           margin: 0 0 1.5em 0;
         }
         
         .rich-editor br {
-          line-height: 1.15;
+          line-height: 1.6;
         }
         
         .rich-editor h1 {
@@ -71,7 +71,7 @@ const EditorStyles: React.FC = () => {
           margin: 0 0 1.5em 0 !important;
           font-family: Georgia, serif !important;
           color: #000000 !important;
-          line-height: 1.15 !important;
+          line-height: 1.6 !important;
         }
         
         .rich-editor h2 {
@@ -80,7 +80,7 @@ const EditorStyles: React.FC = () => {
           margin: 0 0 1.5em 0 !important;
           font-family: Georgia, serif !important;
           color: #000000 !important;
-          line-height: 1.15 !important;
+          line-height: 1.6 !important;
         }
         
         .rich-editor h3 {
@@ -89,7 +89,7 @@ const EditorStyles: React.FC = () => {
           margin: 0 0 1.5em 0 !important;
           font-family: Georgia, serif !important;
           color: #000000 !important;
-          line-height: 1.15 !important;
+          line-height: 1.6 !important;
         }
         
         .rich-editor ul {
@@ -99,7 +99,7 @@ const EditorStyles: React.FC = () => {
           font-family: Georgia, serif;
           font-size: 18px;
           color: #000000;
-          line-height: 1.15;
+          line-height: 1.6;
         }
         
         .rich-editor ol {
@@ -109,7 +109,7 @@ const EditorStyles: React.FC = () => {
           font-family: Georgia, serif;
           font-size: 18px;
           color: #000000;
-          line-height: 1.15;
+          line-height: 1.6;
         }
         
         .rich-editor li {
@@ -117,7 +117,7 @@ const EditorStyles: React.FC = () => {
           font-family: Georgia, serif;
           font-size: 18px;
           color: #000000;
-          line-height: 1.15;
+          line-height: 1.6;
         }
         
         .rich-editor a {
@@ -125,7 +125,7 @@ const EditorStyles: React.FC = () => {
           text-decoration: underline;
           font-family: Georgia, serif !important;
           font-size: 18px !important;
-          line-height: 1.15 !important;
+          line-height: 1.6 !important;
         }
         
         .rich-editor strong,
@@ -134,7 +134,7 @@ const EditorStyles: React.FC = () => {
           font-family: Georgia, serif !important;
           font-size: 18px !important;
           color: #000000 !important;
-          line-height: 1.15 !important;
+          line-height: 1.6 !important;
         }
         
         .rich-editor em,
@@ -143,7 +143,7 @@ const EditorStyles: React.FC = () => {
           font-family: Georgia, serif !important;
           font-size: 18px !important;
           color: #000000 !important;
-          line-height: 1.15 !important;
+          line-height: 1.6 !important;
         }
         
         .rich-editor u {
@@ -151,7 +151,7 @@ const EditorStyles: React.FC = () => {
           font-family: Georgia, serif !important;
           font-size: 18px !important;
           color: #000000 !important;
-          line-height: 1.15 !important;
+          line-height: 1.6 !important;
         }
       `
     }} />
