@@ -112,7 +112,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
               />
               <div>
                 <Label htmlFor={`alt_${photoNumber}`} className="text-sm">
-                  Alt Text (for accessibility)
+                  Picture Label (what children will see)
                 </Label>
                 <Input
                   id={`alt_${photoNumber}`}

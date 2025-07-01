@@ -38,7 +38,7 @@ const StoryPhotosGallery = ({ photos, storyTitle }: StoryPhotosGalleryProps) => 
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                <p className="max-w-xs text-sm">{photo.alt}</p>
+                <p className="max-w-xs text-lg font-fun text-blue-900 font-semibold">{photo.alt}</p>
               </TooltipContent>
             </Tooltip>
           ))}
