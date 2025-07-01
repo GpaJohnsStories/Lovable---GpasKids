@@ -314,4 +314,22 @@
     min-height: 2.5rem !important;
     min-width: 5rem !important;
   }
+
+  /* Tooltip content override - force Georgia font and black color */
+  [data-radix-tooltip-content] {
+    font-family: Georgia, serif !important;
+    font-size: 14px !important;
+    color: #000000 !important;
+    font-weight: normal !important;
+    line-height: 1.4 !important;
+  }
+
+  [data-radix-tooltip-content] p {
+    font-family: Georgia, serif !important;
+    font-size: 14px !important;
+    color: #000000 !important;
+    font-weight: normal !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+  }
 }
