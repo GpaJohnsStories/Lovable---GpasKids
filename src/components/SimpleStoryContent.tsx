@@ -11,74 +11,86 @@ const SimpleStoryContent = ({ content, excerpt }: SimpleStoryContentProps) => {
     <>
       <style dangerouslySetInnerHTML={{
         __html: `
-          .simple-story-content {
+          /* Use higher specificity selectors to override global styles */
+          div.simple-story-content,
+          div.simple-story-content *,
+          div.simple-story-content p,
+          div.simple-story-content div,
+          div.simple-story-content span,
+          div.simple-story-content strong,
+          div.simple-story-content b,
+          div.simple-story-content em,
+          div.simple-story-content i,
+          div.simple-story-content u {
             font-family: Georgia, serif !important;
             font-size: 18px !important;
             color: #000000 !important;
             line-height: 1.6 !important;
+            font-weight: normal !important;
+            font-style: normal !important;
           }
           
-          .simple-story-content *,
-          .simple-story-content p,
-          .simple-story-content div,
-          .simple-story-content span,
-          .simple-story-content strong,
-          .simple-story-content b,
-          .simple-story-content em,
-          .simple-story-content i,
-          .simple-story-content u {
+          /* Override Tailwind classes specifically */
+          div.simple-story-content p.text-2xl,
+          div.simple-story-content p.text-amber-800,
+          div.simple-story-content p.font-semibold {
             font-family: Georgia, serif !important;
             font-size: 18px !important;
             color: #000000 !important;
-            line-height: 1.6 !important;
+            font-weight: normal !important;
           }
           
-          .simple-story-content p {
+          div.simple-story-content p {
             margin: 0 0 16px 0 !important;
             line-height: 1.6 !important;
             font-family: Georgia, serif !important;
             font-size: 18px !important;
             color: #000000 !important;
+            font-weight: normal !important;
+            font-style: normal !important;
           }
           
-          .simple-story-content p:last-child {
+          div.simple-story-content p:last-child {
             margin-bottom: 0 !important;
           }
           
-          .simple-story-content br {
+          div.simple-story-content br {
             line-height: 1.6 !important;
           }
           
-          .simple-story-content strong,
-          .simple-story-content b {
+          div.simple-story-content strong,
+          div.simple-story-content b {
             font-weight: bold !important;
             font-family: Georgia, serif !important;
             color: #000000 !important;
+            font-size: 18px !important;
           }
           
-          .simple-story-content em,
-          .simple-story-content i {
+          div.simple-story-content em,
+          div.simple-story-content i {
             font-style: italic !important;
             font-family: Georgia, serif !important;
             color: #000000 !important;
+            font-size: 18px !important;
           }
           
-          .simple-story-content u {
+          div.simple-story-content u {
             text-decoration: underline !important;
             font-family: Georgia, serif !important;
             color: #000000 !important;
+            font-size: 18px !important;
           }
           
           /* Text alignment */
-          .simple-story-content [style*="text-align: center"] {
+          div.simple-story-content [style*="text-align: center"] {
             text-align: center !important;
           }
           
-          .simple-story-content [style*="text-align: right"] {
+          div.simple-story-content [style*="text-align: right"] {
             text-align: right !important;
           }
           
-          .simple-story-content [style*="text-align: left"] {
+          div.simple-story-content [style*="text-align: left"] {
             text-align: left !important;
           }
         `
@@ -92,7 +104,9 @@ const SimpleStoryContent = ({ content, excerpt }: SimpleStoryContentProps) => {
       ) : (
         excerpt && (
           <div className="simple-story-content">
-            <p>{excerpt}</p>
+            <p style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#000000', fontWeight: 'normal' }}>
+              {excerpt}
+            </p>
           </div>
         )
       )}
