@@ -62,6 +62,12 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Story content semantic colors
+				story: {
+					text: 'hsl(var(--story-text))',
+					'text-muted': 'hsl(var(--story-text-muted))',
+					background: 'hsl(var(--story-background))'
 				}
 			},
 			fontFamily: {

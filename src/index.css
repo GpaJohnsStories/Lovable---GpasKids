@@ -33,6 +33,11 @@
     --ring: 25 60% 45%;
 
     --radius: 1rem;
+
+    /* Story content specific tokens */
+    --story-text: 0 0% 0%;
+    --story-text-muted: 25 15% 35%;
+    --story-background: 0 0% 100%;
   }
 }
 
@@ -132,6 +137,26 @@
   .personal-text {
     @apply text-amber-700 leading-relaxed;
     font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
+  }
+
+  /* Story content styling using design tokens */
+  .story-content {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    color: hsl(var(--story-text));
+    line-height: 1.6;
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .story-content p {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    color: hsl(var(--story-text));
+    line-height: 1.6;
+    font-weight: normal;
+    font-style: normal;
+    margin: 0 0 1.5em 0;
   }
 
   /* Utility class to enforce minimum font size */
