@@ -187,9 +187,12 @@ const SimpleRichTextEditor: React.FC<SimpleRichTextEditorProps> = ({
         contentEditable
         onInput={handleInput}
         onKeyDown={handleKeyDown}
-        className="simple-editor"
+        className="story-content min-h-[400px] p-4 outline-none"
         data-placeholder={placeholder}
         suppressContentEditableWarning={true}
+        style={{
+          background: 'white'
+        }}
       />
     </div>
   );
