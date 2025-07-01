@@ -12,33 +12,42 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
       <style dangerouslySetInnerHTML={{
         __html: `
           .story-content {
-            font-family: Georgia, serif;
-            font-size: 18px;
-            color: #000000;
-            line-height: 1.6;
-            font-weight: normal;
-            font-style: normal;
-          }
-          
-          .story-content * {
             font-family: Georgia, serif !important;
             font-size: 18px !important;
             color: #000000 !important;
+            line-height: 1.6 !important;
+            font-weight: normal !important;
+            font-style: normal !important;
+          }
+          
+          .story-content *,
+          .story-content p,
+          .story-content div,
+          .story-content span,
+          .story-content strong,
+          .story-content b,
+          .story-content em,
+          .story-content i,
+          .story-content u {
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            line-height: 1.6 !important;
           }
           
           .story-content p {
-            margin: 0 0 1.5em 0;
-            font-family: Georgia, serif;
-            font-size: 18px;
-            color: #000000;
-            line-height: 1.6;
-            font-weight: normal;
-            font-style: normal;
+            margin: 0 0 1.5em 0 !important;
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            line-height: 1.6 !important;
+            font-weight: normal !important;
+            font-style: normal !important;
             white-space: pre-line;
           }
           
           .story-content p:last-child {
-            margin-bottom: 0;
+            margin-bottom: 0 !important;
           }
           
           /* Preserve line breaks created by <br> tags */
@@ -46,16 +55,16 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             display: block;
             content: "";
             margin-top: 0;
-            line-height: 1.6;
+            line-height: 1.6 !important;
           }
           
           /* Remove any unwanted spacing from divs */
           .story-content div {
-            margin: 0 0 1.5em 0;
-            font-family: Georgia, serif;
-            font-size: 18px;
-            color: #000000;
-            line-height: 1.6;
+            margin: 0 0 1.5em 0 !important;
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            line-height: 1.6 !important;
             white-space: pre-line;
           }
           
@@ -79,6 +88,9 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
             line-height: 1.6 !important;
             margin: 0 !important;
             padding: 0 !important;
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
           }
           
           /* Ensure line breaks within bold centered text work properly */
@@ -120,30 +132,30 @@ const StoryContent = ({ content, excerpt }: StoryContentProps) => {
           
           .story-content ul {
             list-style-type: disc;
-            margin: 0 0 1.5em 0;
+            margin: 0 0 1.5em 0 !important;
             padding-left: 2em;
-            font-family: Georgia, serif;
-            font-size: 18px;
-            color: #000000;
-            line-height: 1.6;
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            line-height: 1.6 !important;
           }
           
           .story-content ol {
             list-style-type: decimal;
-            margin: 0 0 1.5em 0;
+            margin: 0 0 1.5em 0 !important;
             padding-left: 2em;
-            font-family: Georgia, serif;
-            font-size: 18px;
-            color: #000000;
-            line-height: 1.6;
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            line-height: 1.6 !important;
           }
           
           .story-content li {
-            margin: 0.25em 0;
-            font-family: Georgia, serif;
-            font-size: 18px;
-            color: #000000;
-            line-height: 1.6;
+            margin: 0.25em 0 !important;
+            font-family: Georgia, serif !important;
+            font-size: 18px !important;
+            color: #000000 !important;
+            line-height: 1.6 !important;
           }
           
           .story-content a {
