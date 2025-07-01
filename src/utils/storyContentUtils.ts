@@ -9,15 +9,18 @@ export const cleanHtmlContent = (htmlContent: string) => {
     if (element.tagName === 'DIV') {
       const textContent = element.textContent || '';
       
-      // If the div has meaningful content, convert it to a proper paragraph
+      // If the div has meaningful content, convert it to a proper paragraph with inline styles
       if (textContent.trim()) {
         const p = document.createElement('p');
-        // Preserve any br tags and other inline formatting within the div
         p.innerHTML = element.innerHTML;
-        // Copy any style attributes (like text-align: center) from div to paragraph
+        p.setAttribute('style', 'font-family: Georgia, serif; font-size: 18px; color: #000000; line-height: 1.6; font-weight: normal; font-style: normal; margin: 0 0 1.5em 0;');
+        
+        // Copy any existing style attributes (like text-align: center) and merge them
         if (element.getAttribute('style')) {
-          p.setAttribute('style', element.getAttribute('style') || '');
+          const existingStyle = element.getAttribute('style') || '';
+          p.setAttribute('style', p.getAttribute('style') + ' ' + existingStyle);
         }
+        
         element.parentNode?.replaceChild(p, element);
         return;
       }
@@ -27,6 +30,13 @@ export const cleanHtmlContent = (htmlContent: string) => {
         element.remove();
         return;
       }
+    }
+    
+    // Add inline styles to all paragraph elements
+    if (element.tagName === 'P') {
+      const existingStyle = element.getAttribute('style') || '';
+      const baseStyle = 'font-family: Georgia, serif; font-size: 18px; color: #000000; line-height: 1.6; font-weight: normal; font-style: normal; margin: 0 0 1.5em 0;';
+      element.setAttribute('style', baseStyle + ' ' + existingStyle);
     }
     
     // Clean children recursively
@@ -39,13 +49,12 @@ export const cleanHtmlContent = (htmlContent: string) => {
   // Get the cleaned HTML
   let html = tempDiv.innerHTML;
   
-  // If there's no paragraph structure, wrap content in paragraphs while preserving line breaks
+  // If there's no paragraph structure, wrap content in paragraphs with inline styles
   if (!html.includes('<p>') && html.trim()) {
-    // Split by double line breaks (paragraph breaks) but preserve single line breaks
     const paragraphs = html.split(/(?:<br\s*\/?>\s*){2,}/);
     const wrappedContent = paragraphs
       .filter(p => p.trim())
-      .map(p => `<p>${p.trim()}</p>`)
+      .map(p => `<p style="font-family: Georgia, serif; font-size: 18px; color: #000000; line-height: 1.6; font-weight: normal; font-style: normal; margin: 0 0 1.5em 0;">${p.trim()}</p>`)
       .join('');
     return wrappedContent;
   }
