@@ -38,6 +38,9 @@
     --story-text: 0 0% 0%;
     --story-text-muted: 25 15% 35%;
     --story-background: 0 0% 100%;
+    
+    /* Grass green for Summer Buddy section */
+    --grass-green: 85 45% 55%;
   }
 }
 

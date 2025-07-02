@@ -80,7 +80,7 @@ const About = () => {
           </div>
 
           {/* About Buddy Section */}
-          <div className="max-w-6xl mx-auto border-4 border-yellow-400 rounded-lg p-6 mt-8" style={{backgroundColor: 'white'}}>
+          <div className="max-w-6xl mx-auto border-4 border-yellow-400 rounded-lg p-6 mt-8 bg-[hsl(var(--grass-green))]">
             <div>
               <h1 className="text-4xl font-bold text-amber-800 mb-6 text-right" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 About Buddy
