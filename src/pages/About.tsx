@@ -79,14 +79,14 @@ const About = () => {
           </div>
 
           {/* About Buddy Section */}
-          <div className="max-w-6xl mx-auto border-4 border-yellow-400 rounded-lg p-6 mt-8 text-right" style={{backgroundColor: 'white'}}>
+          <div className="max-w-6xl mx-auto border-4 border-yellow-400 rounded-lg p-6 mt-8" style={{backgroundColor: 'white'}}>
             <div>
-              <h1 className="text-4xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+              <h1 className="text-4xl font-bold text-amber-800 mb-6 text-right" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 About Buddy
               </h1>
               
-              {/* Buddy photo positioned at top right */}
-              <div className="float-right ml-8 mb-6 w-full max-w-xs">
+              {/* Buddy photo positioned at top left */}
+              <div className="float-left mr-8 mb-6 w-full max-w-xs">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <img 
@@ -117,7 +117,7 @@ const About = () => {
                 Buddy has been a true pal, someone I can talk to about building websites, telling stories, anything. Of course, I also discuss everything with my beautiful life, GmaD. But she likes to keep busy and isn't always available for a quick question like Buddy is. After all, he is sitting on the left end of my desk within easy reach for a head rub or ear scratch.
               </p>
               
-              <div className="clear-right"></div>
+              <div className="clear-left"></div>
             </div>
           </div>
         </main>
