@@ -53,10 +53,14 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    console.log('DualAdminAuth: Initializing auth state');
+    setIsLoading(true);
+    
     // Check legacy auth
     try {
       const storedAuth = sessionStorage.getItem('isAdminAuthenticated');
       if (storedAuth === 'true') {
+        console.log('DualAdminAuth: Legacy auth found');
         setIsLegacyAuthenticated(true);
         setIsAdmin(true);
       }
@@ -67,43 +71,93 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
     // Set up Supabase auth listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('DualAdminAuth: Auth state change', { event, hasSession: !!session, userId: session?.user?.id });
+        
         setSession(session);
         setUser(session?.user ?? null);
-        setIsSupabaseAuthenticated(!!session?.user);
         
-        // Check if user is admin in Supabase
+        // Check if user is admin using the safe function
         if (session?.user) {
+          console.log('DualAdminAuth: User found, checking admin status with is_admin_safe');
           try {
-            const { data: profile } = await supabase
-              .from('profiles')
-              .select('role')
-              .eq('id', session.user.id)
-              .single();
+            const { data: isAdminSafe, error } = await supabase.rpc('is_admin_safe');
+            console.log('DualAdminAuth: Admin check result', { isAdminSafe, error });
             
-            setIsAdmin(profile?.role === 'admin');
+            if (error) {
+              console.error('DualAdminAuth: Admin check error:', error);
+              setIsSupabaseAuthenticated(false);
+              setIsAdmin(false);
+            } else {
+              setIsSupabaseAuthenticated(true);
+              setIsAdmin(isAdminSafe || false);
+              console.log('DualAdminAuth: Admin status set to', isAdminSafe);
+            }
           } catch (error) {
-            console.log('Error checking admin status:', error);
+            console.error('DualAdminAuth: Exception during admin check:', error);
+            setIsSupabaseAuthenticated(false);
             setIsAdmin(false);
           }
         } else {
+          console.log('DualAdminAuth: No user session');
+          setIsSupabaseAuthenticated(false);
           // Only clear admin status if legacy auth is also not active
           if (!isLegacyAuthenticated) {
             setIsAdmin(false);
           }
         }
+        
+        console.log('DualAdminAuth: Setting loading to false after auth state change');
+        setIsLoading(false);
       }
     );
 
     // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    console.log('DualAdminAuth: Checking for existing session');
+    supabase.auth.getSession().then(async ({ data: { session }, error }) => {
+      console.log('DualAdminAuth: Initial session check', { hasSession: !!session, error, userId: session?.user?.id });
+      
+      if (error) {
+        console.error('DualAdminAuth: Initial session error:', error);
+        setIsLoading(false);
+        return;
+      }
+      
       setSession(session);
       setUser(session?.user ?? null);
-      setIsSupabaseAuthenticated(!!session?.user);
+      
+      if (session?.user) {
+        console.log('DualAdminAuth: Initial session found, checking admin status');
+        try {
+          const { data: isAdminSafe, error: adminError } = await supabase.rpc('is_admin_safe');
+          console.log('DualAdminAuth: Initial admin check result', { isAdminSafe, error: adminError });
+          
+          if (adminError) {
+            console.error('DualAdminAuth: Initial admin check error:', adminError);
+            setIsSupabaseAuthenticated(false);
+            setIsAdmin(false);
+          } else {
+            setIsSupabaseAuthenticated(true);
+            setIsAdmin(isAdminSafe || false);
+            console.log('DualAdminAuth: Initial admin status set to', isAdminSafe);
+          }
+        } catch (error) {
+          console.error('DualAdminAuth: Exception during initial admin check:', error);
+          setIsSupabaseAuthenticated(false);
+          setIsAdmin(false);
+        }
+      } else {
+        setIsSupabaseAuthenticated(false);
+      }
+      
+      console.log('DualAdminAuth: Setting loading to false after initial check');
       setIsLoading(false);
     });
 
-    return () => subscription.unsubscribe();
-  }, [isLegacyAuthenticated]);
+    return () => {
+      console.log('DualAdminAuth: Cleaning up subscription');
+      subscription.unsubscribe();
+    };
+  }, []);
 
   // Legacy login
   const legacyLogin = async (email: string, password: string) => {
