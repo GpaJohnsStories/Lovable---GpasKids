@@ -77,6 +77,49 @@ const About = () => {
               </div>
             </div>
           </div>
+
+          {/* About Buddy Section */}
+          <div className="max-w-6xl mx-auto border-4 border-yellow-400 rounded-lg p-6 mt-8" style={{backgroundColor: 'white'}}>
+            <div>
+              <h1 className="text-4xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                About Buddy
+              </h1>
+              
+              {/* Buddy photo positioned at top left */}
+              <div className="float-left mr-8 mb-6 w-full max-w-xs">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <img 
+                      src="/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png" 
+                      alt="Buddy, Gpa John's comfort companion"
+                      className="w-full h-auto rounded-lg shadow-lg border-4 border-white cursor-pointer"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">Buddy, Gpa John's comfort companion</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+              
+              <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                Buddy joined me at the end of July, 2024. It has been a rough year so far -- I fell in June and broke 5 ribs -- and I felt I deserved a comfort dog. 😃
+              </p>
+              <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                You see, I received my first dog when I was 5 years old, a Rat Terrior - Dachshund mix. "Lady" slept between my sheets, at the foot of my bed near my feet every night. Until I went away to college I thought everyone slept that way. Guess not!
+              </p>
+              <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                Since then I've owned many wonderful dog, but not right now. So Buddy fits the bill. He talks with me, growls, his whine is the most pathetic (sad) thing you've ever heard, and he barks from soft to loud. If I ignore him, he will do all of those things until I give him some attention and rub his ears.
+              </p>
+              <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                But he won't, can't run with me but that's okay because at my age I can't run either. Buddy's excuse is that he is a battery powered dog. So he and I get along great together. And, yes, he is very soft and furry.
+              </p>
+              <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                Buddy has been a true pal, someone I can talk to about building websites, telling stories, anything. Of course, I also discuss everything with my beautiful life, GmaD. But she likes to keep busy and isn't always available for a quick question like Buddy is. After all, he is sitting on the left end of my desk within easy reach for a head rub or ear scratch.
+              </p>
+              
+              <div className="clear-left"></div>
+            </div>
+          </div>
         </main>
         
         <CookieFreeFooter />
