@@ -25,9 +25,11 @@ interface NavigationButtonProps {
   isActive: boolean;
   isDropdown?: boolean;
   onClick?: () => void;
+  onHover?: (buttonName: string | null) => void;
+  isHovered?: boolean;
 }
 
-const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: NavigationButtonProps) => {
+const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover, isHovered }: NavigationButtonProps) => {
   const navigate = useNavigate();
 
   const buttonClasses = cn(
@@ -59,7 +61,11 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: Navig
 
   if (isDropdown) {
     return (
-      <div className="relative group">
+      <div 
+        className="relative"
+        onMouseEnter={() => onHover?.(item.name)}
+        onMouseLeave={() => onHover?.(null)}
+      >
         <div className={buttonClasses} onClick={handleClick}>
           <span className={item.icon ? '' : 'text-center w-full'}>{item.name}</span>
           <ChevronDown
@@ -67,8 +73,8 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: Navig
             aria-hidden="true"
           />
         </div>
-        {item.description && (
-          <div className="nav-bubble group-hover:opacity-100 group-hover:visible">
+        {item.description && isHovered && (
+          <div className="nav-bubble opacity-100 visible">
             {item.description}
           </div>
         )}
@@ -78,15 +84,19 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: Navig
 
   if (!item.path) {
     return (
-      <div className="relative group">
+      <div 
+        className="relative"
+        onMouseEnter={() => onHover?.(item.name)}
+        onMouseLeave={() => onHover?.(null)}
+      >
         <div className={buttonClasses}>
           {item.icon && <item.icon size={16} />}
           <span className={item.icon ? '' : 'text-center w-full'}>
             {item.name}
           </span>
         </div>
-        {item.description && (
-          <div className="nav-bubble group-hover:opacity-100 group-hover:visible">
+        {item.description && isHovered && (
+          <div className="nav-bubble opacity-100 visible">
             {item.description}
           </div>
         )}
@@ -95,15 +105,19 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: Navig
   }
 
   return (
-    <div className="relative group">
+    <div 
+      className="relative"
+      onMouseEnter={() => onHover?.(item.name)}
+      onMouseLeave={() => onHover?.(null)}
+    >
       <div className={buttonClasses} onClick={handleClick}>
         {item.icon && <item.icon size={16} />}
         <span className={item.icon ? '' : 'text-center w-full'}>
           {item.name}
         </span>
       </div>
-      {item.description && (
-        <div className="nav-bubble group-hover:opacity-100 group-hover:visible">
+      {item.description && isHovered && (
+        <div className="nav-bubble opacity-100 visible">
           {item.description}
         </div>
       )}

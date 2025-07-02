@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 const NavigationMenu = () => {
   const location = useLocation();
   const [currentStoryPath, setCurrentStoryPath] = useState<string | null>(null);
+  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   useEffect(() => {
     const storedPath = sessionStorage.getItem('currentStoryPath');
@@ -95,11 +96,17 @@ const NavigationMenu = () => {
         {navItems.map((item) => (
           <NavigationMenuItem key={item.name}>
             {item.subItems ? (
-              <NavigationDropdown item={item} />
+              <NavigationDropdown 
+                item={item} 
+                onHover={setHoveredButton} 
+                isHovered={hoveredButton === item.name}
+              />
             ) : (
               <NavigationButton
                 item={item}
                 isActive={location.pathname === item.path}
+                onHover={setHoveredButton}
+                isHovered={hoveredButton === item.name}
               />
             )}
           </NavigationMenuItem>

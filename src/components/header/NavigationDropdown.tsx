@@ -17,6 +17,7 @@ interface NavigationItem {
   shadowColor: string;
   hoverShadow: string;
   textColor: string;
+  description?: string;
   subItems?: Array<{
     name: string;
     path: string;
@@ -26,9 +27,11 @@ interface NavigationItem {
 
 interface NavigationDropdownProps {
   item: NavigationItem;
+  onHover?: (buttonName: string | null) => void;
+  isHovered?: boolean;
 }
 
-const NavigationDropdown = ({ item }: NavigationDropdownProps) => {
+const NavigationDropdown = ({ item, onHover, isHovered }: NavigationDropdownProps) => {
   const location = useLocation();
 
   const scrollToTop = () => {
@@ -44,7 +47,13 @@ const NavigationDropdown = ({ item }: NavigationDropdownProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div>
-          <NavigationButton item={item} isActive={isActive} isDropdown />
+          <NavigationButton 
+            item={item} 
+            isActive={isActive} 
+            isDropdown 
+            onHover={onHover}
+            isHovered={isHovered}
+          />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="p-2 md:w-[200px] bg-amber-50 border border-orange-200 rounded-lg shadow-lg">
