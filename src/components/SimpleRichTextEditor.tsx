@@ -67,42 +67,7 @@ const SimpleRichTextEditor: React.FC<SimpleRichTextEditorProps> = ({
     <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
       <style dangerouslySetInnerHTML={{
         __html: `
-          .simple-editor {
-            font-family: Georgia, serif;
-            font-size: 18px;
-            color: #000000;
-            line-height: 1.6;
-            min-height: 400px;
-            padding: 16px;
-            outline: none;
-          }
-          
-          .simple-editor p {
-            margin: 0 0 16px 0;
-            line-height: 1.6;
-          }
-          
-          .simple-editor p:last-child {
-            margin-bottom: 0;
-          }
-          
-          .simple-editor br {
-            line-height: 1.6;
-          }
-          
-          .simple-editor strong, .simple-editor b {
-            font-weight: bold;
-          }
-          
-          .simple-editor em, .simple-editor i {
-            font-style: italic;
-          }
-          
-          .simple-editor u {
-            text-decoration: underline;
-          }
-          
-          .simple-editor[contenteditable]:empty:before {
+          .story-content[contenteditable]:empty:before {
             content: attr(data-placeholder);
             color: #9ca3af;
             font-style: italic;
