@@ -166,8 +166,7 @@ const Privacy = () => {
 
             <div className="text-center pt-6">
               <p className="text-amber-600 italic">
-                "Privacy is not about hiding something. It's about protecting everything that matters." 
-                - Grandpa John
+                "Privacy is not about hiding something. It's about protecting everything that matters."
               </p>
             </div>
           </CardContent>
