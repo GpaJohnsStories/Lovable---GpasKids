@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+import { supabase } from "@/integrations/supabase/client";
 
 interface TinyMCEEditorProps {
   content: string;
@@ -13,6 +14,22 @@ const TinyMCEEditor: React.FC<TinyMCEEditorProps> = ({
   placeholder = "Start writing your story..." 
 }) => {
   const editorRef = useRef<any>(null);
+  const [apiKey, setApiKey] = useState<string>('no-api-key');
+
+  useEffect(() => {
+    const fetchApiKey = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke('get-tinymce-key');
+        if (data?.apiKey && !error) {
+          setApiKey(data.apiKey);
+        }
+      } catch (error) {
+        console.log('Using default API key for TinyMCE');
+      }
+    };
+
+    fetchApiKey();
+  }, []);
 
   const handleEditorChange = (content: string) => {
     onChange(content);
@@ -21,6 +38,7 @@ const TinyMCEEditor: React.FC<TinyMCEEditorProps> = ({
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
       <Editor
+        apiKey={apiKey}
         onInit={(evt, editor) => editorRef.current = editor}
         value={content}
         onEditorChange={handleEditorChange}
