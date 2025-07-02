@@ -45,24 +45,6 @@ const Privacy = () => {
               <p className="text-lg text-blue-800 font-bold leading-relaxed italic mb-6" style={{ fontFamily: 'Segoe Print, cursive, sans-serif' }}>
                 Thank you for visiting! I hope you enjoy the stories and<br />come back often to see what's new.
               </p>
-              
-              {/* Signature with paw print */}
-              <div className="flex justify-center items-center">
-                <div className="text-center ml-8">
-                  <div className="flex items-center justify-center gap-2 mb-1">
-                    <div className="text-4xl text-blue-800 font-bold" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>
-                      Grandpa John
-                    </div>
-                    {/* Buddy's paw print using uploaded image */}
-                    <img 
-                      src="/lovable-uploads/5fcd6648-5bf3-4287-9e52-84dc0382f4ef.png" 
-                      alt="Buddy's paw print"
-                      className="w-8 h-8 ml-2"
-                      style={{ transform: 'rotate(-15deg)' }}
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
