@@ -91,12 +91,12 @@ const About = () => {
                   <TooltipTrigger asChild>
                     <img 
                       src="/lovable-uploads/77401741-cee1-4a64-b565-5c8b5c64e25a.png" 
-                      alt="Buddy, Gpa John's comfort companion"
+                      alt="Buddy listening to one of Grandpa John's new stories."
                       className="w-full h-auto rounded-lg shadow-lg border-4 border-white cursor-pointer"
                     />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">Buddy, Gpa John's comfort companion</p>
+                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">Buddy listening to one of Grandpa John's new stories.</p>
                   </TooltipContent>
                 </Tooltip>
               </div>
