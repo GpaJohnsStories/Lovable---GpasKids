@@ -38,24 +38,38 @@ const DualAdminLogin = () => {
 
   const handleSupabaseAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Login: Starting Supabase auth process', { signUpMode, email });
     setIsLoading(true);
 
-    if (signUpMode) {
-      const { success, error } = await supabaseSignUp(email, password);
-      if (success) {
-        toast.success("Account created! Check your email to verify your account.");
+    try {
+      if (signUpMode) {
+        console.log('Login: Attempting sign up');
+        const { success, error } = await supabaseSignUp(email, password);
+        console.log('Login: Sign up result', { success, error });
+        
+        if (success) {
+          toast.success("Account created! Check your email to verify your account.");
+        } else {
+          toast.error(error || "Failed to create account");
+        }
       } else {
-        toast.error(error || "Failed to create account");
+        console.log('Login: Attempting login');
+        const { success, error } = await supabaseLogin(email, password);
+        console.log('Login: Login result', { success, error });
+        
+        if (success) {
+          console.log('Login: Login successful, waiting for auth state update');
+          toast.success("Successfully logged in with Supabase!");
+        } else {
+          toast.error(error || "Invalid credentials");
+        }
       }
-    } else {
-      const { success, error } = await supabaseLogin(email, password);
-      if (success) {
-        toast.success("Successfully logged in with Supabase!");
-      } else {
-        toast.error(error || "Invalid credentials");
-      }
+    } catch (err) {
+      console.error('Login: Exception during auth', err);
+      toast.error("An unexpected error occurred");
     }
     
+    console.log('Login: Setting loading to false');
     setIsLoading(false);
   };
 

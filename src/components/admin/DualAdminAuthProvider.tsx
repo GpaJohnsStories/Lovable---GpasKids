@@ -76,21 +76,37 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
         setSession(session);
         setUser(session?.user ?? null);
         
-        // Check if user is admin using the safe function
+        // Check if user is admin using a simpler approach first
         if (session?.user) {
-          console.log('DualAdminAuth: User found, checking admin status with is_admin_safe');
+          console.log('DualAdminAuth: User found, checking admin status with profile query');
           try {
-            const { data: isAdminSafe, error } = await supabase.rpc('is_admin_safe');
-            console.log('DualAdminAuth: Admin check result', { isAdminSafe, error });
+            // Try the simple approach first
+            const { data: profile, error: profileError } = await supabase
+              .from('profiles')
+              .select('role')
+              .eq('id', session.user.id)
+              .maybeSingle();
             
-            if (error) {
-              console.error('DualAdminAuth: Admin check error:', error);
-              setIsSupabaseAuthenticated(false);
-              setIsAdmin(false);
+            console.log('DualAdminAuth: Profile query result', { profile, error: profileError });
+            
+            if (profileError) {
+              console.log('DualAdminAuth: Profile query failed, trying RLS function');
+              // Fallback to RLS function
+              const { data: isAdminSafe, error: rpcError } = await supabase.rpc('is_admin_safe');
+              console.log('DualAdminAuth: RLS function result', { isAdminSafe, error: rpcError });
+              
+              if (rpcError) {
+                console.error('DualAdminAuth: Both admin checks failed', rpcError);
+                setIsSupabaseAuthenticated(false);
+                setIsAdmin(false);
+              } else {
+                setIsSupabaseAuthenticated(true);
+                setIsAdmin(isAdminSafe || false);
+              }
             } else {
               setIsSupabaseAuthenticated(true);
-              setIsAdmin(isAdminSafe || false);
-              console.log('DualAdminAuth: Admin status set to', isAdminSafe);
+              setIsAdmin(profile?.role === 'admin');
+              console.log('DualAdminAuth: Admin status set from profile', profile?.role === 'admin');
             }
           } catch (error) {
             console.error('DualAdminAuth: Exception during admin check:', error);
@@ -128,17 +144,33 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
       if (session?.user) {
         console.log('DualAdminAuth: Initial session found, checking admin status');
         try {
-          const { data: isAdminSafe, error: adminError } = await supabase.rpc('is_admin_safe');
-          console.log('DualAdminAuth: Initial admin check result', { isAdminSafe, error: adminError });
+          // Try the simple approach first
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .maybeSingle();
           
-          if (adminError) {
-            console.error('DualAdminAuth: Initial admin check error:', adminError);
-            setIsSupabaseAuthenticated(false);
-            setIsAdmin(false);
+          console.log('DualAdminAuth: Initial profile query result', { profile, error: profileError });
+          
+          if (profileError) {
+            console.log('DualAdminAuth: Initial profile query failed, trying RLS function');
+            // Fallback to RLS function
+            const { data: isAdminSafe, error: rpcError } = await supabase.rpc('is_admin_safe');
+            console.log('DualAdminAuth: Initial RLS function result', { isAdminSafe, error: rpcError });
+            
+            if (rpcError) {
+              console.error('DualAdminAuth: Both initial admin checks failed', rpcError);
+              setIsSupabaseAuthenticated(false);
+              setIsAdmin(false);
+            } else {
+              setIsSupabaseAuthenticated(true);
+              setIsAdmin(isAdminSafe || false);
+            }
           } else {
             setIsSupabaseAuthenticated(true);
-            setIsAdmin(isAdminSafe || false);
-            console.log('DualAdminAuth: Initial admin status set to', isAdminSafe);
+            setIsAdmin(profile?.role === 'admin');
+            console.log('DualAdminAuth: Initial admin status set from profile', profile?.role === 'admin');
           }
         } catch (error) {
           console.error('DualAdminAuth: Exception during initial admin check:', error);
