@@ -90,7 +90,7 @@ const About = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <img 
-                      src="/lovable-uploads/e7798bd4-677c-4dbb-95aa-766cda36060b.png" 
+                      src="/lovable-uploads/77401741-cee1-4a64-b565-5c8b5c64e25a.png" 
                       alt="Buddy, Gpa John's comfort companion"
                       className="w-full h-auto rounded-lg shadow-lg border-4 border-white cursor-pointer"
                     />
