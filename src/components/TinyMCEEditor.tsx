@@ -21,7 +21,6 @@ const TinyMCEEditor: React.FC<TinyMCEEditorProps> = ({
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
       <Editor
-        apiKey="no-api-key"
         onInit={(evt, editor) => editorRef.current = editor}
         value={content}
         onEditorChange={handleEditorChange}
