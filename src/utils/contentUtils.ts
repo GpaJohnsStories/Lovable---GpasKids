@@ -55,10 +55,21 @@ export const cleanRichHtmlContent = (htmlContent: string): string => {
         const p = document.createElement('p');
         p.innerHTML = element.innerHTML;
         
-        // Copy any existing style attributes (like text-align: center) and merge them
+        // Copy only alignment styles, remove font-related inline styles
         if (element.getAttribute('style')) {
           const existingStyle = element.getAttribute('style') || '';
-          p.setAttribute('style', existingStyle);
+          // Only preserve text-align and other layout styles, remove font styles
+          const cleanedStyle = existingStyle
+            .split(';')
+            .filter(style => {
+              const styleName = style.split(':')[0]?.trim().toLowerCase();
+              return styleName && ['text-align', 'margin', 'padding'].includes(styleName);
+            })
+            .join(';');
+          
+          if (cleanedStyle) {
+            p.setAttribute('style', cleanedStyle);
+          }
         }
         
         element.parentNode?.replaceChild(p, element);
