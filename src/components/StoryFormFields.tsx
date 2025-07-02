@@ -103,12 +103,23 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
 
       <div>
         <Label htmlFor="tagline">Tagline</Label>
-        <Input
-          id="tagline"
-          value={formData.tagline}
-          onChange={(e) => onInputChange('tagline', e.target.value)}
-          placeholder="Brief tagline for the story"
-        />
+        <div className="relative">
+          <Input
+            id="tagline"
+            value={formData.tagline}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value.length <= 100) {
+                onInputChange('tagline', value);
+              }
+            }}
+            placeholder="Brief tagline for the story (max 100 characters)"
+            maxLength={100}
+          />
+          <div className="text-xs text-gray-500 mt-1">
+            {formData.tagline.length}/100 characters
+          </div>
+        </div>
       </div>
 
       <div>
