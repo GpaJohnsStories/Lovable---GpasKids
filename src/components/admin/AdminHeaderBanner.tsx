@@ -28,7 +28,7 @@ const AdminHeaderBanner = () => {
               <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 Buddy's Admin
               </h1>
-              <div className="text-xs bg-white/20 rounded px-2 py-1 text-white">
+              <div className="text-xs bg-green-500 rounded px-2 py-1 text-white font-semibold">
                 {authMode === 'supabase' ? '🔒 Secure' : authMode === 'legacy' ? '⚠️ Legacy' : 'Unknown'}
               </div>
             </div>
