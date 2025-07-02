@@ -21,6 +21,7 @@ const WelcomeText = () => {
         <div className="rounded-3xl p-6 md:p-8 shadow-lg border-2 border-yellow-400 font-fun mx-2" style={{backgroundColor: '#ADD8E6'}}>
           <div className="flex flex-col md:flex-row items-start gap-6">
             <div className="relative">
+              <p className="text-center text-blue-900 font-semibold mb-2 font-fun">Gpa John & Buddy working together on new stories</p>
               <img 
                 src="/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png" 
                 alt="Gpa John & Buddy working together on new stories"

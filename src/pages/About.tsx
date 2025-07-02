@@ -18,6 +18,7 @@ const About = () => {
               
               {/* Photo positioned at top right of the first section */}
               <div className="float-right ml-8 mb-6 w-full max-w-xs">
+                <p className="text-center text-amber-800 font-semibold mb-2" style={{ fontFamily: 'Georgia, serif' }}>Gpa John relaxing in the park</p>
                 <img 
                   src="/lovable-uploads/14b5498f-ec5f-4553-aa24-94d67048ecfa.png" 
                   alt="Gpa John relaxing in the park"
