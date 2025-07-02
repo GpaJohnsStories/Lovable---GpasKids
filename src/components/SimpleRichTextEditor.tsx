@@ -27,6 +27,26 @@ const SimpleRichTextEditor: React.FC<SimpleRichTextEditorProps> = ({
   useEffect(() => {
     if (editorRef.current && content !== editorRef.current.innerHTML) {
       editorRef.current.innerHTML = content;
+      
+      // Clean up any inline font-size styles that might override our CSS
+      if (editorRef.current) {
+        const allElements = editorRef.current.querySelectorAll('*');
+        allElements.forEach(element => {
+          const style = (element as HTMLElement).style;
+          if (style.fontSize) {
+            style.removeProperty('font-size');
+          }
+          if (style.fontFamily) {
+            style.removeProperty('font-family');
+          }
+          if (style.color) {
+            style.removeProperty('color');
+          }
+          if (style.lineHeight) {
+            style.removeProperty('line-height');
+          }
+        });
+      }
     }
     
     // Force paragraph mode for proper spacing
@@ -44,6 +64,25 @@ const SimpleRichTextEditor: React.FC<SimpleRichTextEditorProps> = ({
 
   const handleInput = () => {
     if (editorRef.current) {
+      // Clean up any inline styles that might have been added
+      const allElements = editorRef.current.querySelectorAll('*');
+      allElements.forEach(element => {
+        const style = (element as HTMLElement).style;
+        // Only remove font styling, preserve alignment
+        if (style.fontSize) {
+          style.removeProperty('font-size');
+        }
+        if (style.fontFamily) {
+          style.removeProperty('font-family');
+        }
+        if (style.color) {
+          style.removeProperty('color');
+        }
+        if (style.lineHeight) {
+          style.removeProperty('line-height');
+        }
+      });
+      
       onChange(editorRef.current.innerHTML);
     }
   };
