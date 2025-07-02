@@ -85,13 +85,29 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          console.log('DualAdminAuth: User found, setting as authenticated');
+          console.log('DualAdminAuth: User found, checking admin status');
           setIsSupabaseAuthenticated(true);
           
-          // For now, let's assume any authenticated user is admin
-          // We can fix the admin check later
-          setIsAdmin(true);
-          console.log('DualAdminAuth: User set as admin (temporary)');
+          // Check admin status safely with timeout
+          setTimeout(async () => {
+            try {
+              const { data: profile, error } = await supabase
+                .from('profiles')
+                .select('role')
+                .eq('id', session.user.id)
+                .maybeSingle();
+              
+              if (!error && profile?.role === 'admin') {
+                setIsAdmin(true);
+                console.log('DualAdminAuth: User confirmed as admin');
+              } else {
+                console.log('DualAdminAuth: User not admin or error:', error);
+                // Keep them authenticated but not admin
+              }
+            } catch (err) {
+              console.log('DualAdminAuth: Admin check failed, keeping basic auth');
+            }
+          }, 100); // Small delay to avoid blocking
         } else {
           console.log('DualAdminAuth: No user session');
           setIsSupabaseAuthenticated(false);
@@ -121,7 +137,26 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
       if (session?.user) {
         console.log('DualAdminAuth: Initial session found');
         setIsSupabaseAuthenticated(true);
-        setIsAdmin(true); // Temporary - assume admin
+        
+        // Check admin status safely with timeout
+        setTimeout(async () => {
+          try {
+            const { data: profile, error } = await supabase
+              .from('profiles')
+              .select('role')
+              .eq('id', session.user.id)
+              .maybeSingle();
+            
+            if (!error && profile?.role === 'admin') {
+              setIsAdmin(true);
+              console.log('DualAdminAuth: Initial user confirmed as admin');
+            } else {
+              console.log('DualAdminAuth: Initial user not admin or error:', error);
+            }
+          } catch (err) {
+            console.log('DualAdminAuth: Initial admin check failed');
+          }
+        }, 100);
       } else {
         setIsSupabaseAuthenticated(false);
       }
