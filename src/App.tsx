@@ -14,6 +14,7 @@ import ViewComments from "./pages/ViewComments";
 import CommentDetail from "./pages/CommentDetail";
 import BuddysAdmin from "./pages/BuddysAdmin";
 import AdminComments from "./pages/AdminComments";
+import AdminDashboard from "./pages/AdminDashboard";
 import AdminVoicePreview from "./pages/AdminVoicePreview";
 import NotFound from "./pages/NotFound";
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/view-comments" element={<ViewComments />} />
           <Route path="/comment/:id" element={<CommentDetail />} />
           <Route path="/admin/voice-preview" element={<AdminVoicePreview />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/buddys_admin" element={<BuddysAdmin />} />
           <Route path="/admin/comments" element={<AdminComments />} />
           <Route path="/privacy" element={<Privacy />} />

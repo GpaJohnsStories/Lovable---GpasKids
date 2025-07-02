@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { LogOut, FileText, MessageSquare } from "lucide-react";
+import { LogOut, FileText, MessageSquare, LayoutDashboard } from "lucide-react";
 import { toast } from "sonner";
 import { useDualAdminAuth } from "./DualAdminAuthProvider";
 import { Link, useLocation } from "react-router-dom";
@@ -33,6 +33,19 @@ const AdminHeaderBanner = () => {
               </div>
             </div>
             <nav className="flex gap-2">
+              <Link to="/admin/dashboard">
+                <Button
+                  variant="ghost"
+                  className={`text-white hover:bg-orange-400/20 border border-transparent hover:border-orange-300/30 ${
+                    location.pathname === '/admin/dashboard' 
+                      ? 'bg-orange-400/30 border-orange-300/50' 
+                      : ''
+                  }`}
+                >
+                  <LayoutDashboard className="h-4 w-4 mr-2" />
+                  Dashboard
+                </Button>
+              </Link>
               <Link to="/buddys_admin">
                 <Button
                   variant="ghost"
