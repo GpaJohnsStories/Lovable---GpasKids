@@ -18,34 +18,64 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
   useRichCleaning = false,
   className = ""
 }) => {
-  // Custom styles that are completely isolated and override everything
-  const isolatedStyles: React.CSSProperties = {
-    fontFamily: 'Georgia, serif',
-    fontSize: '18px',
-    color: '#000000',
-    lineHeight: '1.6',
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    background: 'white',
-    padding: '0',
-    margin: '0'
-  };
-
   if (content) {
     return (
-      <div 
-        className={className}
-        style={isolatedStyles}
-        dangerouslySetInnerHTML={formatStoryContent(content, useRichCleaning)}
-      />
+      <div className={className}>
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            .isolated-story-content,
+            .isolated-story-content *,
+            .isolated-story-content p,
+            .isolated-story-content div,
+            .isolated-story-content span {
+              font-family: Georgia, serif !important;
+              font-size: 18px !important;
+              color: #000000 !important;
+              line-height: 1.6 !important;
+              font-weight: normal !important;
+              font-style: normal !important;
+            }
+            
+            .isolated-story-content p {
+              margin: 0 0 1.5em 0 !important;
+              min-height: 1.6em !important;
+            }
+            
+            .isolated-story-content strong,
+            .isolated-story-content b {
+              font-weight: bold !important;
+            }
+            
+            .isolated-story-content em,
+            .isolated-story-content i {
+              font-style: italic !important;
+            }
+            
+            .isolated-story-content u {
+              text-decoration: underline !important;
+            }
+          `
+        }} />
+        <div 
+          className="isolated-story-content"
+          dangerouslySetInnerHTML={formatStoryContent(content, useRichCleaning)}
+        />
+      </div>
     );
   }
 
   if (excerpt) {
     return (
       <div 
-        className={className}
-        style={isolatedStyles}
+        className={`isolated-story-content ${className}`}
+        style={{
+          fontFamily: 'Georgia, serif',
+          fontSize: '18px',
+          color: '#000000',
+          lineHeight: '1.6',
+          fontWeight: 'normal',
+          fontStyle: 'normal'
+        }}
       >
         {excerpt}
       </div>
