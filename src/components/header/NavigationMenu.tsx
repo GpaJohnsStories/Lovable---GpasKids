@@ -68,14 +68,18 @@ const NavigationMenu = () => {
       ],
     },
     { 
-      name: 'About Us', 
-      path: '/about', 
+      name: 'About', 
       bgColor: 'bg-gradient-to-b from-sky-300 via-sky-400 to-sky-500',
       hoverColor: 'hover:from-sky-400 hover:via-sky-500 hover:to-sky-600',
       shadowColor: 'shadow-[0_6px_0_#0369a1,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#0369a1,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-blue-950',
-      description: 'More about Grandpa John and Buddy'
+      description: 'More about Grandpa John, Buddy, and Copyright',
+      subItems: [
+        { name: 'About Grandpa John', path: '/about' },
+        { name: 'About Buddy', path: '/about#buddy' },
+        { name: 'About Copyright', path: '/about#copyright' },
+      ]
     },
     { 
       name: 'Privacy', 
