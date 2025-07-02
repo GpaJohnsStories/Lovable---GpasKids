@@ -35,7 +35,40 @@ const StorySection = () => {
 
   console.log('Fetched published stories:', realStories);
 
-  const newestStories = getNewestStories(realStories);
+  // Get the most read story (highest read_count)
+  const mostReadStory = realStories.length > 0 
+    ? realStories.reduce((prev, current) => (prev.read_count > current.read_count) ? prev : current)
+    : null;
+
+  // Get the most popular story (highest thumbs_up_count)
+  const mostPopularStory = realStories.length > 0 
+    ? realStories.reduce((prev, current) => (prev.thumbs_up_count > current.thumbs_up_count) ? prev : current)
+    : null;
+
+  // Convert to StoryData format
+  const convertToStoryData = (story: any) => ({
+    id: story.id,
+    title: story.title,
+    description: story.excerpt || story.tagline || "A wonderful story waiting to be discovered.",
+    readTime: "5 min read",
+    illustration: "📖",
+    category: story.category,
+    author: story.author,
+    published: story.published,
+    photo_link_1: story.photo_link_1,
+    photo_link_2: story.photo_link_2,
+    photo_link_3: story.photo_link_3,
+    content: story.content,
+    tagline: story.tagline,
+    story_code: story.story_code,
+    excerpt: story.excerpt
+  });
+
+  const featuredStories = [];
+  if (mostReadStory) featuredStories.push({ ...convertToStoryData(mostReadStory), category: 'Most Read' });
+  if (mostPopularStory && mostPopularStory.id !== mostReadStory?.id) {
+    featuredStories.push({ ...convertToStoryData(mostPopularStory), category: 'Most Popular' });
+  }
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -60,16 +93,18 @@ const StorySection = () => {
         </div>
       </div>
 
-      {newestStories.length > 0 ? (
+      {featuredStories.length > 0 ? (
         <div className="mb-12">
-          {/* Stories Section */}
-          <div>
-            {getCategoryHeader("Newest", newestStories)}
-            <div className="space-y-4">
-              {newestStories.map((story) => (
-                <StoryCard key={story.id} story={story} />
-              ))}
-            </div>
+          {/* Featured Stories Section */}
+          <div className="space-y-8">
+            {featuredStories.map((story) => (
+              <div key={story.id}>
+                {getCategoryHeader(story.category, [story])}
+                <div className="space-y-4">
+                  <StoryCard story={story} />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       ) : (
