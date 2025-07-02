@@ -115,16 +115,9 @@ const StorySection = () => {
             Click Here to Begin <em>Your</em> Adventure in Reading
           </Button>
         </Link>
-        <div className="text-center">
-          <p className="text-blue-800 mt-4 text-sm inline-block">
-            I hope you will return here often as I try add new stories whenever I can.
-          </p>
-          <div className="text-right">
-            <div className="text-sm text-blue-800 font-bold inline-block" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>
-              Gpa John
-            </div>
-          </div>
-        </div>
+        <p className="text-blue-800 mt-4 text-sm text-center">
+          I hope you will return here often as I try add new stories whenever I can.   <span className="text-sm text-blue-800 font-bold" style={{ fontFamily: 'Brush Script MT, cursive, sans-serif' }}>Gpa John</span>
+        </p>
       </div>
     </section>
   );
