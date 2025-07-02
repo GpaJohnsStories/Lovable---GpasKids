@@ -34,17 +34,6 @@ export const getCategoryHeader = (category: string, stories?: Story[]) => {
     );
   }
 
-  if (category === "Most Popular") {
-    return (
-      <div className="flex items-center justify-center mb-6">
-        <div className="w-[35%]">
-          <div className="bg-gradient-to-b from-red-500 via-red-600 to-red-700 rounded-xl h-20 shadow-[0_6px_0_#b91c1c,0_8px_15px_rgba(0,0,0,0.3)] border border-red-800 flex items-center justify-center">
-            <h3 className="text-lg font-bold font-fun text-white text-center">Most Popular Stories in Each Category</h3>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // Find a story from this category to link to
   const categoryStory = stories?.find(story => story.category === category);
