@@ -36,7 +36,8 @@ const NavigationMenu = () => {
       hoverColor: 'hover:from-[#B8DCF0] hover:via-[#9BCFDF] hover:to-[#7AB8C4]',
       shadowColor: 'shadow-[0_6px_0_#7AB8C4,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]',
-      textColor: 'text-blue-900'
+      textColor: 'text-blue-900',
+      description: 'Return to Home Screen'
     },
     { 
       name: 'Library', 
@@ -46,6 +47,7 @@ const NavigationMenu = () => {
       shadowColor: 'shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-white',
+      description: 'Visit List of Stories or View a Story',
       subItems: [
         { name: 'Story List', path: '/library' },
         { name: 'Current Story', path: currentStoryPath || '#', disabled: !currentStoryPath },
@@ -58,6 +60,7 @@ const NavigationMenu = () => {
       shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-green-800',
+      description: 'Make a Comment or View All Comments',
       subItems: [
         { name: 'Make Comment', path: '/make-comment' },
         { name: 'View Comments', path: '/view-comments' },
@@ -70,7 +73,8 @@ const NavigationMenu = () => {
       hoverColor: 'hover:from-sky-400 hover:via-sky-500 hover:to-sky-600',
       shadowColor: 'shadow-[0_6px_0_#0369a1,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#0369a1,0_6px_12px_rgba(0,0,0,0.4)]',
-      textColor: 'text-blue-950'
+      textColor: 'text-blue-950',
+      description: 'More about Grandpa John and Buddy'
     },
     { 
       name: 'Privacy', 
@@ -80,7 +84,8 @@ const NavigationMenu = () => {
       shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-black',
-      icon: Lock
+      icon: Lock,
+      description: 'Details of our privacy and security and how we\'ve implemented it'
     }
   ];
 

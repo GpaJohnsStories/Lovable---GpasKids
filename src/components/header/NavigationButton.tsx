@@ -12,6 +12,7 @@ interface NavigationItem {
   hoverShadow: string;
   textColor: string;
   icon?: LucideIcon;
+  description?: string;
   subItems?: Array<{
     name: string;
     path: string;
@@ -58,33 +59,54 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick }: Navig
 
   if (isDropdown) {
     return (
-      <div className={buttonClasses} onClick={handleClick}>
-        <span className={item.icon ? '' : 'text-center w-full'}>{item.name}</span>
-        <ChevronDown
-          className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
-          aria-hidden="true"
-        />
+      <div className="relative group">
+        <div className={buttonClasses} onClick={handleClick}>
+          <span className={item.icon ? '' : 'text-center w-full'}>{item.name}</span>
+          <ChevronDown
+            className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+            aria-hidden="true"
+          />
+        </div>
+        {item.description && (
+          <div className="nav-bubble group-hover:opacity-100 group-hover:visible">
+            {item.description}
+          </div>
+        )}
       </div>
     );
   }
 
   if (!item.path) {
     return (
-      <div className={buttonClasses}>
-        {item.icon && <item.icon size={16} />}
-        <span className={item.icon ? '' : 'text-center w-full'}>
-          {item.name}
-        </span>
+      <div className="relative group">
+        <div className={buttonClasses}>
+          {item.icon && <item.icon size={16} />}
+          <span className={item.icon ? '' : 'text-center w-full'}>
+            {item.name}
+          </span>
+        </div>
+        {item.description && (
+          <div className="nav-bubble group-hover:opacity-100 group-hover:visible">
+            {item.description}
+          </div>
+        )}
       </div>
     );
   }
 
   return (
-    <div className={buttonClasses} onClick={handleClick}>
-      {item.icon && <item.icon size={16} />}
-      <span className={item.icon ? '' : 'text-center w-full'}>
-        {item.name}
-      </span>
+    <div className="relative group">
+      <div className={buttonClasses} onClick={handleClick}>
+        {item.icon && <item.icon size={16} />}
+        <span className={item.icon ? '' : 'text-center w-full'}>
+          {item.name}
+        </span>
+      </div>
+      {item.description && (
+        <div className="nav-bubble group-hover:opacity-100 group-hover:visible">
+          {item.description}
+        </div>
+      )}
     </div>
   );
 };
