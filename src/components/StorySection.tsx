@@ -35,11 +35,6 @@ const StorySection = () => {
 
   console.log('Fetched published stories:', realStories);
 
-  // Get the most read story (highest read_count)
-  const mostReadStory = realStories.length > 0 
-    ? realStories.reduce((prev, current) => (prev.read_count > current.read_count) ? prev : current)
-    : null;
-
   // Get the most popular story (highest thumbs_up_count)
   const mostPopularStory = realStories.length > 0 
     ? realStories.reduce((prev, current) => (prev.thumbs_up_count > current.thumbs_up_count) ? prev : current)
@@ -65,8 +60,7 @@ const StorySection = () => {
   });
 
   const featuredStories = [];
-  if (mostReadStory) featuredStories.push({ ...convertToStoryData(mostReadStory), category: 'Most Read' });
-  if (mostPopularStory && mostPopularStory.id !== mostReadStory?.id) {
+  if (mostPopularStory) {
     featuredStories.push({ ...convertToStoryData(mostPopularStory), category: 'Most Popular' });
   }
 
