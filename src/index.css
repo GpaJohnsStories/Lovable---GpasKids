@@ -139,46 +139,47 @@
     font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
   }
 
-  /* Story content styling - matches admin editor exactly */
-  .story-content {
-    font-family: 'Georgia', serif !important;
-    font-size: 18px !important;
-    color: #000000 !important;
-    line-height: 1.6 !important;
-    font-weight: normal !important;
-    font-style: normal !important;
-  }
-
-  .story-content * {
-    font-family: 'Georgia', serif !important;
-    font-size: 18px !important;
-    color: #000000 !important;
-    line-height: 1.6 !important;
-  }
-
-  .story-content p {
-    font-family: 'Georgia', serif !important;
-    font-size: 18px !important;
-    color: #000000 !important;
-    line-height: 1.6 !important;
-    font-weight: normal !important;
-    font-style: normal !important;
-    margin: 0 0 1.5em 0 !important;
-    min-height: 1.6em !important;
-  }
-
+  /* Story content styling - matches admin editor exactly with maximum specificity */
+  .story-content,
+  div.story-content,
+  .story-content > *,
+  .story-content p,
   .story-content div {
     font-family: 'Georgia', serif !important;
     font-size: 18px !important;
     color: #000000 !important;
     line-height: 1.6 !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+  }
+
+  .story-content p,
+  div.story-content p {
+    font-family: 'Georgia', serif !important;
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+    font-weight: normal !important;
+    font-style: normal !important;
     margin: 0 0 1.5em 0 !important;
     min-height: 1.6em !important;
   }
 
-  /* Preserve text alignment styles */
+  .story-content div,
+  div.story-content div {
+    font-family: 'Georgia', serif !important;
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+    margin: 0 0 1.5em 0 !important;
+    min-height: 1.6em !important;
+  }
+
+  /* Preserve text alignment styles with maximum specificity */
   .story-content p[style*="text-align"],
-  .story-content div[style*="text-align"] {
+  .story-content div[style*="text-align"],
+  div.story-content p[style*="text-align"],
+  div.story-content div[style*="text-align"] {
     /* Keep alignment but force other styles */
     font-family: 'Georgia', serif !important;
     font-size: 18px !important;
@@ -186,8 +187,18 @@
     line-height: 1.6 !important;
   }
 
+  /* Handle font size variations with maximum specificity */
+  .story-content *[style*="font-size"],
+  div.story-content *[style*="font-size"] {
+    font-family: 'Georgia', serif !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+    /* Allow the inline font-size to take precedence for size variations */
+  }
+
   /* Force heading styles to match */
-  .story-content h1 {
+  .story-content h1,
+  div.story-content h1 {
     font-size: 2em !important;
     font-weight: bold !important;
     margin: 0 0 1.5em 0 !important;
@@ -196,7 +207,8 @@
     line-height: 1.6 !important;
   }
 
-  .story-content h2 {
+  .story-content h2,
+  div.story-content h2 {
     font-size: 1.5em !important;
     font-weight: bold !important;
     margin: 0 0 1.5em 0 !important;
@@ -205,7 +217,8 @@
     line-height: 1.6 !important;
   }
 
-  .story-content h3 {
+  .story-content h3,
+  div.story-content h3 {
     font-size: 1.17em !important;
     font-weight: bold !important;
     margin: 0 0 1.5em 0 !important;
@@ -215,7 +228,9 @@
   }
 
   .story-content strong,
-  .story-content b {
+  .story-content b,
+  div.story-content strong,
+  div.story-content b {
     font-weight: bold !important;
     font-family: 'Georgia', serif !important;
     font-size: 18px !important;
@@ -224,7 +239,9 @@
   }
 
   .story-content em,
-  .story-content i {
+  .story-content i,
+  div.story-content em,
+  div.story-content i {
     font-style: italic !important;
     font-family: 'Georgia', serif !important;
     font-size: 18px !important;
@@ -232,7 +249,8 @@
     line-height: 1.6 !important;
   }
 
-  .story-content u {
+  .story-content u,
+  div.story-content u {
     text-decoration: underline !important;
     font-family: 'Georgia', serif !important;
     font-size: 18px !important;
