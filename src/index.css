@@ -139,24 +139,105 @@
     font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
   }
 
-  /* Story content styling using design tokens */
+  /* Story content styling - matches admin editor exactly */
   .story-content {
-    font-family: 'Georgia', serif;
-    font-size: 18px;
-    color: hsl(var(--story-text));
-    line-height: 1.6;
-    font-weight: normal;
-    font-style: normal;
+    font-family: 'Georgia', serif !important;
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+  }
+
+  .story-content * {
+    font-family: 'Georgia', serif !important;
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
   }
 
   .story-content p {
-    font-family: 'Georgia', serif;
-    font-size: 18px;
-    color: hsl(var(--story-text));
-    line-height: 1.6;
-    font-weight: normal;
-    font-style: normal;
-    margin: 0 0 1.5em 0;
+    font-family: 'Georgia', serif !important;
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    margin: 0 0 1.5em 0 !important;
+    min-height: 1.6em !important;
+  }
+
+  .story-content div {
+    font-family: 'Georgia', serif !important;
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+    margin: 0 0 1.5em 0 !important;
+    min-height: 1.6em !important;
+  }
+
+  /* Preserve text alignment styles */
+  .story-content p[style*="text-align"],
+  .story-content div[style*="text-align"] {
+    /* Keep alignment but force other styles */
+    font-family: 'Georgia', serif !important;
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Force heading styles to match */
+  .story-content h1 {
+    font-size: 2em !important;
+    font-weight: bold !important;
+    margin: 0 0 1.5em 0 !important;
+    font-family: 'Georgia', serif !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+  }
+
+  .story-content h2 {
+    font-size: 1.5em !important;
+    font-weight: bold !important;
+    margin: 0 0 1.5em 0 !important;
+    font-family: 'Georgia', serif !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+  }
+
+  .story-content h3 {
+    font-size: 1.17em !important;
+    font-weight: bold !important;
+    margin: 0 0 1.5em 0 !important;
+    font-family: 'Georgia', serif !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+  }
+
+  .story-content strong,
+  .story-content b {
+    font-weight: bold !important;
+    font-family: 'Georgia', serif !important;
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+  }
+
+  .story-content em,
+  .story-content i {
+    font-style: italic !important;
+    font-family: 'Georgia', serif !important;
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+  }
+
+  .story-content u {
+    text-decoration: underline !important;
+    font-family: 'Georgia', serif !important;
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
   }
 
   /* Utility class to enforce minimum font size */
