@@ -15,6 +15,7 @@ const StorySection = () => {
         .from('stories')
         .select('*')
         .eq('published', 'Y')
+        .neq('category', 'System')
         .order('updated_at', { ascending: false });
       
       if (error) {
