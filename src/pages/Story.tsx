@@ -11,7 +11,7 @@ import CookieFreeFooter from "@/components/CookieFreeFooter";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import StoryHeader from "@/components/StoryHeader";
 import StoryPhotosGallery from "@/components/StoryPhotosGallery";
-import StoryContentRenderer from "@/components/content/StoryContentRenderer";
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 import StoryVotingSection from "@/components/StoryVotingSection";
 import StoryVideoPlayer from "@/components/StoryVideoPlayer";
 import ContentProtection from "@/components/ContentProtection";
@@ -146,7 +146,7 @@ const Story = () => {
                   storyTitle={story.title}
                 />
 
-                <StoryContentRenderer
+                <IsolatedStoryRenderer
                   content={story.content}
                   excerpt={story.excerpt}
                   useRichCleaning={true}
