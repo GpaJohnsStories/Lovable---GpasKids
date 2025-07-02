@@ -28,6 +28,11 @@ const SimpleRichTextEditor: React.FC<SimpleRichTextEditorProps> = ({
     if (editorRef.current && content !== editorRef.current.innerHTML) {
       editorRef.current.innerHTML = content;
     }
+    
+    // Force paragraph mode for proper spacing
+    if (editorRef.current) {
+      document.execCommand('defaultParagraphSeparator', false, 'p');
+    }
   }, [content]);
 
   const handleCommand = (command: string) => {
