@@ -9,6 +9,7 @@ import Story from "./pages/Story";
 import Library from "./pages/Library";
 import Privacy from "./pages/Privacy";
 import About from "./pages/About";
+import Writing from "./pages/Writing";
 import MakeComment from "./pages/MakeComment";
 import ViewComments from "./pages/ViewComments";
 import CommentDetail from "./pages/CommentDetail";
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/buddys_admin" element={<BuddysAdmin />} />
           <Route path="/admin/comments" element={<AdminComments />} />
+          <Route path="/writing" element={<Writing />} />
           <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
