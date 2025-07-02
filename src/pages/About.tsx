@@ -20,7 +20,7 @@ const About = () => {
               <div className="float-right ml-8 mb-6 w-full max-w-xs">
                 <img 
                   src="/lovable-uploads/14b5498f-ec5f-4553-aa24-94d67048ecfa.png" 
-                  alt="Grandpa John"
+                  alt="Gpa John relaxing in the park"
                   className="w-full h-auto rounded-lg shadow-lg border-4 border-white"
                 />
               </div>

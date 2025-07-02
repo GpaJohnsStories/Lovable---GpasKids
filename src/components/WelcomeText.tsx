@@ -23,7 +23,7 @@ const WelcomeText = () => {
             <div className="relative">
               <img 
                 src="/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png" 
-                alt="Grandpa John at his desk with Buddy on his lap"
+                alt="Gpa John & Buddy working together on new stories"
                 className="w-64 h-64 rounded-xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
                 onLoad={() => console.log('Image loaded successfully:', '/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png')}
                 onError={(e) => console.log('Image failed to load:', e)}
