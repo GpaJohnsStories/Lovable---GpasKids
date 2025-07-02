@@ -72,6 +72,11 @@ const SimpleRichTextEditor: React.FC<SimpleRichTextEditorProps> = ({
             color: #9ca3af;
             font-style: italic;
           }
+          
+          /* Force proper paragraph spacing in editor */
+          .story-content[contenteditable] p {
+            margin: 0 0 1.5em 0 !important;
+          }
         `
       }} />
       
