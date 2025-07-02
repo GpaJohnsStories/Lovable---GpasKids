@@ -94,7 +94,7 @@ const StorySection = () => {
           <div className="space-y-8">
             {featuredStories.map((story) => (
               <div key={story.id}>
-                {getCategoryHeader(story.category, [story])}
+                {story.category !== "Most Popular" && getCategoryHeader(story.category, [story])}
                 <div className="space-y-4">
                   <StoryCard story={story} />
                 </div>
