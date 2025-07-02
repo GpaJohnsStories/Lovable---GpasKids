@@ -28,7 +28,7 @@ const CookieFreeFooter = () => {
           </div>
           
           {/* Center */}
-          <div className="flex items-center space-x-1 text-amber-600 text-sm">
+          <div className="flex items-center space-x-1 text-amber-600 text-sm font-bold">
             <span>Made with</span>
             <Heart className="h-3 w-3 text-red-500" strokeWidth={3} />
             <span>for children with help from Lovable AI at Lovable.dev</span>
