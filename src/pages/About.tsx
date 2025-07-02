@@ -10,7 +10,7 @@ const About = () => {
         <WelcomeHeader />
         
         <main className="container mx-auto px-4 pt-8 pb-12">
-          <div className="max-w-6xl mx-auto border-4 border-blue-500 rounded-lg p-6">
+          <div className="max-w-6xl mx-auto border-4 border-blue-500 rounded-lg p-6" style={{backgroundColor: '#ADD8E6'}}>
             {/* Main content */}
             <div className="space-y-8">
               <div>
