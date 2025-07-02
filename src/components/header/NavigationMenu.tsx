@@ -78,7 +78,6 @@ const NavigationMenu = () => {
       subItems: [
         { name: 'About Grandpa John', path: '/about' },
         { name: 'About Buddy', path: '/about#buddy' },
-        { name: 'About Copyright', path: '/about#copyright' },
       ]
     },
     { 
