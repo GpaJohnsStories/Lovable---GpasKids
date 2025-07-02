@@ -1,12 +1,12 @@
 
-import { AdminAuthProvider, useAdminAuth } from "@/components/admin/AdminAuthProvider";
-import AdminLogin from "@/components/admin/AdminLogin";
+import { DualAdminAuthProvider, useDualAdminAuth } from "@/components/admin/DualAdminAuthProvider";
+import DualAdminLogin from "@/components/admin/DualAdminLogin";
 import CommentsDashboard from "@/components/admin/CommentsDashboard";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ContentProtection from "@/components/ContentProtection";
 
 const AdminCommentsContent = () => {
-  const { isAuthenticated, isLoading } = useAdminAuth();
+  const { isAuthenticated, isLoading } = useDualAdminAuth();
 
   if (isLoading) {
     return (
@@ -17,7 +17,7 @@ const AdminCommentsContent = () => {
   }
 
   if (!isAuthenticated) {
-    return <AdminLogin />;
+    return <DualAdminLogin />;
   }
 
   return <CommentsDashboard />;
@@ -26,9 +26,9 @@ const AdminCommentsContent = () => {
 const AdminComments = () => {
   return (
     <ContentProtection enableProtection={false}>
-      <AdminAuthProvider>
+      <DualAdminAuthProvider>
         <AdminCommentsContent />
-      </AdminAuthProvider>
+      </DualAdminAuthProvider>
     </ContentProtection>
   );
 };

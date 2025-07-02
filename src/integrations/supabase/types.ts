@@ -9,6 +9,45 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admin_audit: {
+        Row: {
+          action: string
+          admin_id: string | null
+          created_at: string | null
+          id: string
+          ip_address: unknown | null
+          new_values: Json | null
+          old_values: Json | null
+          record_id: string | null
+          table_name: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          action: string
+          admin_id?: string | null
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          action?: string
+          admin_id?: string | null
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       comments: {
         Row: {
           content: string
@@ -275,7 +314,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      emergency_admin_reset: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      emergency_promote_admin: {
+        Args: { user_email: string }
+        Returns: string
+      }
       is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      is_admin_safe: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      is_emergency_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
