@@ -16,6 +16,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
         {/* Text Formatting */}
         <div className="flex items-center gap-1">
           <Button
+            type="button"
             variant="outline"
             size="sm"
             onClick={() => onFormat('strong')}
@@ -24,6 +25,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             <Bold className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="outline"
             size="sm"
             onClick={() => onFormat('em')}
@@ -32,6 +34,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             <Italic className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="outline"
             size="sm"
             onClick={() => onFormat('u')}
@@ -46,6 +49,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
         {/* Text Alignment */}
         <div className="flex items-center gap-1">
           <Button
+            type="button"
             variant="outline"
             size="sm"
             onClick={() => onAlign('left')}
@@ -54,6 +58,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             <AlignLeft className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="outline"
             size="sm"
             onClick={() => onAlign('center')}
@@ -62,6 +67,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             <AlignCenter className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="outline"
             size="sm"
             onClick={() => onAlign('right')}
@@ -76,6 +82,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
         {/* Lists */}
         <div className="flex items-center gap-1">
           <Button
+            type="button"
             variant="outline"
             size="sm"
             onClick={() => onInsertList(false)}
@@ -84,6 +91,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             <List className="h-4 w-4" />
           </Button>
           <Button
+            type="button"
             variant="outline"
             size="sm"
             onClick={() => onInsertList(true)}
@@ -98,6 +106,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
         {/* Quick Tags */}
         <div className="flex items-center gap-1">
           <Button
+            type="button"
             variant="outline"
             size="sm"
             onClick={() => onFormat('h3')}
@@ -106,6 +115,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             H3
           </Button>
           <Button
+            type="button"
             variant="outline"
             size="sm"
             onClick={() => onFormat('p')}
