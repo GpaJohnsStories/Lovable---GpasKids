@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, forwardRef } from 'react';
 
 interface HTMLEditorProps {
   content: string;
@@ -6,21 +6,22 @@ interface HTMLEditorProps {
   placeholder?: string;
 }
 
-const HTMLEditor: React.FC<HTMLEditorProps> = ({ 
+const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({ 
   content, 
   onChange, 
   placeholder = "Start writing your story..." 
-}) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+}, ref) => {
+  const internalRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = ref || internalRef;
 
   useEffect(() => {
-    if (textareaRef.current) {
+    const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
+    if (textarea) {
       // Auto-resize textarea
-      const textarea = textareaRef.current;
       textarea.style.height = 'auto';
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
-  }, [content]);
+  }, [content, textareaRef]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const textarea = e.target as HTMLTextAreaElement;
@@ -63,6 +64,8 @@ const HTMLEditor: React.FC<HTMLEditorProps> = ({
       </div>
     </div>
   );
-};
+});
+
+HTMLEditor.displayName = 'HTMLEditor';
 
 export default HTMLEditor;

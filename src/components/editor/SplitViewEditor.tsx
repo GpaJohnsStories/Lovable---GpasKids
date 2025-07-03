@@ -103,6 +103,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
         <ResizablePanel defaultSize={50} minSize={30}>
           <HTMLEditor
+            ref={editorRef}
             content={content}
             onChange={onChange}
             placeholder={placeholder}
