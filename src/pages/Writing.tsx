@@ -30,17 +30,13 @@ const Writing = () => {
         <main className="container mx-auto px-4 pt-8 pb-12">
           {/* Copyright Section */}
           <div id="copyright" className="max-w-6xl mx-auto border-4 border-purple-500 rounded-lg p-6 bg-purple-50 relative">
-            <div className="flex justify-between items-start mb-6">
-              <h1 className="text-4xl font-bold text-purple-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                Copyright and What It Means for You
-              </h1>
-              
-              <div className="w-32 h-18 flex-shrink-0 ml-8">
-                <img 
-                  src={copyrightSign} 
-                  alt="Red copyright symbol"
-                  className="w-full h-auto rounded-lg shadow-lg"
-                />
+            <div className="flex items-start mb-6">
+              <div className="flex items-center">
+                <span className="text-red-600 text-6xl font-bold mr-4">©</span>
+                <span className="text-purple-800 text-4xl font-bold mr-4">—</span>
+                <h1 className="text-4xl font-bold text-purple-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                  Copyright and What It Means for You
+                </h1>
               </div>
             </div>
             
