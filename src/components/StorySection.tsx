@@ -66,9 +66,9 @@ const StorySection = () => {
   });
 
   const featuredStories = [];
-  if (mostReadStory) featuredStories.push({ ...convertToStoryData(mostReadStory), category: 'Most Read' });
+  if (mostReadStory) featuredStories.push({ ...convertToStoryData(mostReadStory), category: 'Most Read Stories' });
   if (mostPopularStory && mostPopularStory.id !== mostReadStory?.id) {
-    featuredStories.push({ ...convertToStoryData(mostPopularStory), category: 'Most Popular' });
+    featuredStories.push({ ...convertToStoryData(mostPopularStory), category: 'Most Popular Stories' });
   }
 
   const scrollToTop = () => {
@@ -80,15 +80,6 @@ const StorySection = () => {
 
   return (
     <section className="py-16">
-      {/* Colored Banner with Title */}
-      <div className="w-[90%] mx-auto mb-12">
-        <div className="bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700 rounded-xl p-4 shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)] border border-orange-700">
-          <div className="flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold text-white font-fun">Today's Highlighted Stories</h2>
-          </div>
-        </div>
-      </div>
-
       {featuredStories.length > 0 ? (
         <div className="mb-12">
           {/* Featured Stories Section */}
