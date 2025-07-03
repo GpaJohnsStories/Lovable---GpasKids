@@ -7,7 +7,7 @@ interface Story {
   id?: string;
   title: string;
   author: string;
-  category: "Fun" | "Life" | "North Pole" | "World Changers";
+  category: "Fun" | "Life" | "North Pole" | "World Changers" | "System";
   content: string;
   tagline: string;
   excerpt: string;
@@ -69,6 +69,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
               <SelectItem value="Life">Life</SelectItem>
               <SelectItem value="North Pole">North Pole</SelectItem>
               <SelectItem value="World Changers">World Changers</SelectItem>
+              <SelectItem value="System">System</SelectItem>
             </SelectContent>
           </Select>
         </div>
