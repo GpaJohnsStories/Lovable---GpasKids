@@ -45,6 +45,13 @@ const Privacy = () => {
               <p className="text-lg text-blue-800 font-bold leading-relaxed italic mb-6" style={{ fontFamily: 'Segoe Print, cursive, sans-serif' }}>
                 Thank you for visiting! I hope you enjoy the stories and<br />come back often to see what's new.
               </p>
+              
+              {/* Signature */}
+              <div className="text-right mt-6">
+                <p className="text-2xl text-amber-900 font-bold" style={{ fontFamily: 'Segoe Print, cursive, sans-serif' }}>
+                  Grandpa John
+                </p>
+              </div>
             </div>
           </div>
         </div>
