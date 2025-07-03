@@ -47,8 +47,8 @@ const Privacy = () => {
               </p>
               
               {/* Signature */}
-              <div className="text-right mt-6">
-                <p className="text-2xl text-blue-900 font-bold" style={{ fontFamily: 'Brush Script MT, cursive' }}>
+              <div className="text-center mt-3">
+                <p className="text-5xl text-blue-900 font-bold" style={{ fontFamily: 'Brush Script MT, cursive' }}>
                   Grandpa John
                 </p>
               </div>
