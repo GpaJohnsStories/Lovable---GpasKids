@@ -69,8 +69,9 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
         <div className={buttonClasses} onClick={handleClick}>
           <span className={item.icon ? '' : 'text-center w-full'}>{item.name}</span>
           <ChevronDown
-            className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+            className="relative top-[1px] ml-2 h-5 w-5 transition duration-200 group-data-[state=open]:rotate-180 drop-shadow-sm"
             aria-hidden="true"
+            strokeWidth={2.5}
           />
         </div>
         {item.description && isHovered && (
