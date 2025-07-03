@@ -25,7 +25,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
   const firstPhoto = getFirstAvailablePhoto();
 
   return (
-    <div className="w-2/5 mx-auto">
+    <div className="w-full max-w-md mx-auto">
       <Link to={`/story/${story.id}`} onClick={scrollToTop}>
         <Card className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <CardContent className="p-3 text-center relative">

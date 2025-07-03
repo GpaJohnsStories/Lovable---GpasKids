@@ -83,9 +83,9 @@ const StorySection = () => {
       {featuredStories.length > 0 ? (
         <div className="mb-12">
           {/* Featured Stories Section */}
-          <div className="flex flex-col lg:flex-row lg:gap-8 space-y-8 lg:space-y-0 lg:justify-center">
+          <div className="flex flex-col lg:flex-row lg:gap-6 space-y-8 lg:space-y-0">
             {featuredStories.map((story) => (
-              <div key={story.id} className="lg:flex-1 lg:max-w-md">
+              <div key={story.id} className="lg:flex-1">
                 <div className="space-y-4">
                   <StoryCard story={story} />
                 </div>
