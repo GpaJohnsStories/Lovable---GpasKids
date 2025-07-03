@@ -66,9 +66,9 @@ const StorySection = () => {
   });
 
   const featuredStories = [];
-  if (mostReadStory) featuredStories.push({ ...convertToStoryData(mostReadStory), category: 'Most Read Stories' });
+  if (mostReadStory) featuredStories.push({ ...convertToStoryData(mostReadStory), category: 'Most Read Story' });
   if (mostPopularStory && mostPopularStory.id !== mostReadStory?.id) {
-    featuredStories.push({ ...convertToStoryData(mostPopularStory), category: 'Most Popular Stories' });
+    featuredStories.push({ ...convertToStoryData(mostPopularStory), category: 'Most Popular Story' });
   }
 
   const scrollToTop = () => {

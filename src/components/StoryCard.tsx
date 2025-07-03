@@ -27,7 +27,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
   return (
     <div className="w-full max-w-md mx-auto">
       <Link to={`/story/${story.id}`} onClick={scrollToTop}>
-        <Card className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <Card className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative border-2 border-amber-300" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <CardContent className="p-3 text-center relative">
             <div className="mb-2">
               {getCategoryButtonForStory(story.category, story.id)}
