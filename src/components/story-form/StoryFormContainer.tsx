@@ -2,8 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import TinyMCEEditor from "../TinyMCEEditor";
-import AdminStoryPreview from "../admin/AdminStoryPreview";
+import SplitViewEditor from "../editor/SplitViewEditor";
 import StoryFormFields from "../StoryFormFields";
 import StoryPhotoUpload from "../StoryPhotoUpload";
 import StoryVideoUpload from "../StoryVideoUpload";
@@ -89,23 +88,13 @@ const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, 
             />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div>
-              <Label htmlFor="content">Story Content *</Label>
-              <TinyMCEEditor
-                content={formData.content}
-                onChange={(content) => handleInputChange('content', content)}
-                placeholder="Write your story here..."
-              />
-            </div>
-            
-            <div>
-              <Label>Live Preview</Label>
-              <AdminStoryPreview 
-                content={formData.content}
-                title={formData.title}
-              />
-            </div>
+          <div>
+            <Label htmlFor="content">Story Content *</Label>
+            <SplitViewEditor
+              content={formData.content}
+              onChange={(content) => handleInputChange('content', content)}
+              placeholder="Write your story here..."
+            />
           </div>
 
           <StoryFormActions 
