@@ -82,13 +82,16 @@ const NavigationMenu = () => {
     },
     { 
       name: 'Writing', 
-      path: '/writing', 
       bgColor: 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600',
       hoverColor: 'hover:from-purple-500 hover:via-purple-600 hover:to-purple-700',
       shadowColor: 'shadow-[0_6px_0_#7c3aed,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-white',
-      description: 'Learn about copyright and writing your own stories'
+      description: 'Learn about copyright and writing your own stories',
+      subItems: [
+        { name: 'What Copyright Means to You', path: '/writing#copyright' },
+        { name: 'Write a Story for Gpa\'s Kids', path: '/writing#write-story' },
+      ]
     },
     { 
       name: 'Privacy', 
