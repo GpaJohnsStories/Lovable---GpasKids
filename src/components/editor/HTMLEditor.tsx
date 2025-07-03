@@ -223,7 +223,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           break;
         case 'f':
           e.preventDefault();
-          wrapSelectedText('<span style="font-family: Georgia, serif;">', '</span>');
+          wrapSelectedText('<em style="font-family: serif;">', '</em>');
           break;
         case '=':
         case '+':
@@ -248,7 +248,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           break;
         case 't':
           e.preventDefault();
-          wrapSelectedText('<p style="text-align: center;">', '</p>');
+          wrapSelectedText('<center>', '</center>');
           break;
       }
     }
