@@ -92,12 +92,36 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     wrapSelectedText(`<p style="text-align: ${alignment};">`, '</p>');
   };
 
+  const handleClearHtml = () => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    
+    if (start === end) return; // No selection
+    
+    const selectedText = content.substring(start, end);
+    // Strip all HTML tags from selected text
+    const plainText = selectedText.replace(/<[^>]*>/g, '');
+    const newContent = content.substring(0, start) + plainText + content.substring(end);
+    onChange(newContent);
+    
+    // Maintain selection
+    setTimeout(() => {
+      textarea.selectionStart = start;
+      textarea.selectionEnd = start + plainText.length;
+      textarea.focus();
+    }, 0);
+  };
+
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
       <StickyToolbar 
         onFormat={handleFormat}
         onInsertList={handleInsertList}
         onAlign={handleAlign}
+        onClearHtml={handleClearHtml}
       />
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">

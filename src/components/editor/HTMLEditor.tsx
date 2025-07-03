@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, forwardRef } from 'react';
+import React, { useRef, useEffect, forwardRef, useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface HTMLEditorProps {
   content: string;
@@ -13,6 +14,8 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
 }, ref) => {
   const internalRef = useRef<HTMLTextAreaElement>(null);
   const textareaRef = ref || internalRef;
+  const [showHelp, setShowHelp] = useState(false);
+  const [currentFontSize, setCurrentFontSize] = useState(18);
 
   useEffect(() => {
     const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
@@ -22,6 +25,102 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
   }, [content, textareaRef]);
+
+  const wrapSelectedText = (openTag: string, closeTag: string) => {
+    const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    
+    if (selectedText) {
+      const wrappedText = `${openTag}${selectedText}${closeTag}`;
+      const newContent = content.substring(0, start) + wrappedText + content.substring(end);
+      onChange(newContent);
+      
+      setTimeout(() => {
+        textarea.selectionStart = start;
+        textarea.selectionEnd = start + wrappedText.length;
+        textarea.focus();
+      }, 0);
+    }
+  };
+
+  const insertAtCursor = (text: string) => {
+    const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const newContent = content.substring(0, start) + text + content.substring(end);
+    onChange(newContent);
+
+    setTimeout(() => {
+      textarea.selectionStart = textarea.selectionEnd = start + text.length;
+      textarea.focus();
+    }, 0);
+  };
+
+  const changeFontSize = (increase: boolean) => {
+    const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    
+    if (selectedText) {
+      const newSize = increase ? currentFontSize + 2 : Math.max(currentFontSize - 2, 10);
+      setCurrentFontSize(newSize);
+      const styledText = `<span style="font-size: ${newSize}px;">${selectedText}</span>`;
+      const newContent = content.substring(0, start) + styledText + content.substring(end);
+      onChange(newContent);
+    }
+  };
+
+  const showColorPicker = () => {
+    const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    
+    if (selectedText) {
+      const color = prompt('Enter color (hex, rgb, or name):');
+      if (color) {
+        const coloredText = `<span style="color: ${color};">${selectedText}</span>`;
+        const newContent = content.substring(0, start) + coloredText + content.substring(end);
+        onChange(newContent);
+      }
+    }
+  };
+
+  const handleClipboard = async (action: 'copy' | 'cut' | 'paste') => {
+    const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+
+    try {
+      if (action === 'copy' && selectedText) {
+        await navigator.clipboard.writeText(selectedText);
+      } else if (action === 'cut' && selectedText) {
+        await navigator.clipboard.writeText(selectedText);
+        const newContent = content.substring(0, start) + content.substring(end);
+        onChange(newContent);
+      } else if (action === 'paste') {
+        const clipboardText = await navigator.clipboard.readText();
+        const newContent = content.substring(0, start) + clipboardText + content.substring(end);
+        onChange(newContent);
+      }
+    } catch (err) {
+      console.warn('Clipboard operation failed:', err);
+    }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const textarea = e.target as HTMLTextAreaElement;
@@ -38,31 +137,145 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = start + 2;
       }, 0);
+      return;
+    }
+
+    // Keyboard shortcuts
+    if (e.ctrlKey || e.metaKey) {
+      switch (e.key.toLowerCase()) {
+        case 'b':
+          e.preventDefault();
+          wrapSelectedText('<strong>', '</strong>');
+          break;
+        case 'i':
+          e.preventDefault();
+          wrapSelectedText('<em>', '</em>');
+          break;
+        case 'u':
+          e.preventDefault();
+          wrapSelectedText('<u>', '</u>');
+          break;
+        case 'c':
+          e.preventDefault();
+          handleClipboard('copy');
+          break;
+        case 'x':
+          e.preventDefault();
+          handleClipboard('cut');
+          break;
+        case 'y':
+          e.preventDefault();
+          handleClipboard('paste');
+          break;
+        case 'p':
+          e.preventDefault();
+          wrapSelectedText('<p>', '</p>');
+          break;
+        case 'l':
+          e.preventDefault();
+          insertAtCursor('<ul>\n  <li></li>\n  <li></li>\n</ul>');
+          break;
+        case 'n':
+          e.preventDefault();
+          insertAtCursor('<ol>\n  <li></li>\n  <li></li>\n</ol>');
+          break;
+        case '1':
+          e.preventDefault();
+          wrapSelectedText('<h1>', '</h1>');
+          break;
+        case '2':
+          e.preventDefault();
+          wrapSelectedText('<h2>', '</h2>');
+          break;
+        case '3':
+          e.preventDefault();
+          wrapSelectedText('<h3>', '</h3>');
+          break;
+        case 'f':
+          e.preventDefault();
+          wrapSelectedText('<span style="font-family: Georgia, serif;">', '</span>');
+          break;
+        case '=':
+        case '+':
+          e.preventDefault();
+          changeFontSize(true);
+          break;
+        case '-':
+          e.preventDefault();
+          changeFontSize(false);
+          break;
+        case 'r':
+          e.preventDefault();
+          showColorPicker();
+          break;
+        case 'h':
+          e.preventDefault();
+          setShowHelp(true);
+          break;
+      }
     }
   };
 
+  const shortcuts = [
+    { key: 'Ctrl + B', action: 'Bold' },
+    { key: 'Ctrl + C', action: 'Copy' },
+    { key: 'Ctrl + F', action: 'Georgia Font' },
+    { key: 'Ctrl + H', action: 'Help' },
+    { key: 'Ctrl + I', action: 'Italics' },
+    { key: 'Ctrl + L', action: 'Bullets' },
+    { key: 'Ctrl + N', action: 'Numbered List' },
+    { key: 'Ctrl + P', action: 'Paragraph' },
+    { key: 'Ctrl + R', action: 'Color Picker' },
+    { key: 'Ctrl + U', action: 'Underline' },
+    { key: 'Ctrl + X', action: 'Cut' },
+    { key: 'Ctrl + Y', action: 'Paste' },
+    { key: 'Ctrl + 1', action: 'H1 Heading' },
+    { key: 'Ctrl + 2', action: 'H2 Heading' },
+    { key: 'Ctrl + 3', action: 'H3 Heading' },
+    { key: 'Ctrl + +', action: 'Increase Font Size' },
+    { key: 'Ctrl + -', action: 'Decrease Font Size' },
+  ];
+
   return (
-    <div className="h-full flex flex-col">
-      <div className="bg-gray-50 px-3 py-2 border-b border-gray-200">
-        <span className="text-sm font-medium text-gray-600">HTML Source</span>
+    <>
+      <div className="h-full flex flex-col">
+        <div className="bg-gray-50 px-3 py-2 border-b border-gray-200">
+          <span className="text-sm font-medium text-gray-600">HTML Source</span>
+        </div>
+        <div className="flex-1 relative">
+          <textarea
+            ref={textareaRef}
+            value={content}
+            onChange={(e) => onChange(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={placeholder}
+            className="w-full h-full min-h-[400px] p-4 border-none outline-none resize-none font-mono text-sm leading-relaxed bg-white"
+            style={{
+              fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+              lineHeight: '1.6'
+            }}
+          />
+          
+          {/* Line numbers overlay could go here in future */}
+        </div>
       </div>
-      <div className="flex-1 relative">
-        <textarea
-          ref={textareaRef}
-          value={content}
-          onChange={(e) => onChange(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          className="w-full h-full min-h-[400px] p-4 border-none outline-none resize-none font-mono text-sm leading-relaxed bg-white"
-          style={{
-            fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
-            lineHeight: '1.6'
-          }}
-        />
-        
-        {/* Line numbers overlay could go here in future */}
-      </div>
-    </div>
+
+      <Dialog open={showHelp} onOpenChange={setShowHelp}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Keyboard Shortcuts</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2 max-h-96 overflow-y-auto">
+            {shortcuts.map((shortcut, index) => (
+              <div key={index} className="flex justify-between items-center py-1 border-b border-gray-100 last:border-b-0">
+                <span className="font-mono text-sm">{shortcut.key}</span>
+                <span className="text-sm text-gray-600">{shortcut.action}</span>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 });
 
