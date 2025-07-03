@@ -122,6 +122,29 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     }
   };
 
+  const handleClearHtml = () => {
+    const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    
+    if (start === end) return; // No selection
+    
+    const selectedText = content.substring(start, end);
+    // Strip all HTML tags from selected text
+    const plainText = selectedText.replace(/<[^>]*>/g, '');
+    const newContent = content.substring(0, start) + plainText + content.substring(end);
+    onChange(newContent);
+    
+    // Maintain selection
+    setTimeout(() => {
+      textarea.selectionStart = start;
+      textarea.selectionEnd = start + plainText.length;
+      textarea.focus();
+    }, 0);
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const textarea = e.target as HTMLTextAreaElement;
     
@@ -137,6 +160,13 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = start + 2;
       }, 0);
+      return;
+    }
+
+    // Handle Ctrl+Enter for new line
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      insertAtCursor('<br>');
       return;
     }
 
@@ -212,6 +242,14 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           e.preventDefault();
           setShowHelp(true);
           break;
+        case 'e':
+          e.preventDefault();
+          handleClearHtml();
+          break;
+        case 't':
+          e.preventDefault();
+          wrapSelectedText('<p style="text-align: center;">', '</p>');
+          break;
       }
     }
   };
@@ -219,6 +257,8 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
   const shortcuts = [
     { key: 'Ctrl + B', action: 'Bold' },
     { key: 'Ctrl + C', action: 'Copy' },
+    { key: 'Ctrl + E', action: 'Clear HTML' },
+    { key: 'Ctrl + Enter', action: 'New Line (<br>)' },
     { key: 'Ctrl + F', action: 'Georgia Font' },
     { key: 'Ctrl + H', action: 'Help' },
     { key: 'Ctrl + I', action: 'Italics' },
@@ -226,6 +266,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + N', action: 'Numbered List' },
     { key: 'Ctrl + P', action: 'Paragraph' },
     { key: 'Ctrl + R', action: 'Color Picker' },
+    { key: 'Ctrl + T', action: 'Center Text' },
     { key: 'Ctrl + U', action: 'Underline' },
     { key: 'Ctrl + X', action: 'Cut' },
     { key: 'Ctrl + Y', action: 'Paste' },
