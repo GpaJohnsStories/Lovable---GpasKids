@@ -49,7 +49,7 @@ const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, 
   } = useStoryForm(story, onSave);
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
+    <Card className="w-full mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl text-orange-800">
           {story ? 'Edit Story' : 'Create New Story'}
