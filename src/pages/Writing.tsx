@@ -51,6 +51,17 @@ const Writing = () => {
                   Loading copyright information...
                 </p>
               )}
+            </div>
+            
+            {/* Story Code Identifier */}
+            <div className="absolute bottom-2 right-2">
+              <span 
+                className="text-black text-xs"
+                style={{ fontFamily: 'Georgia, serif', fontSize: '10px' }}
+              >
+                SYS-CPR
+              </span>
+            </div>
           </div>
 
           {/* Write a Story Section */}
@@ -67,17 +78,6 @@ const Writing = () => {
               <p className="text-lg text-gray-700 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
                 Content coming soon...
               </p>
-            </div>
-          </div>
-            
-            {/* Story Code Identifier */}
-            <div className="absolute bottom-2 right-2">
-              <span 
-                className="text-black text-xs"
-                style={{ fontFamily: 'Georgia, serif', fontSize: '10px' }}
-              >
-                SYS-CPR
-              </span>
             </div>
           </div>
         </main>
