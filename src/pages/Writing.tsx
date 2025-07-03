@@ -69,7 +69,7 @@ const Writing = () => {
             <div className="flex items-center mb-6">
               <span className="text-6xl mr-4">⌨️</span>
               <span className="text-orange-600 text-4xl font-bold mr-4">—</span>
-              <h2 className="text-4xl font-bold text-orange-600" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+              <h2 className="text-4xl font-bold text-orange-600 italic" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 Write a Story for Gpa's Kids
               </h2>
             </div>
