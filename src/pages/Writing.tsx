@@ -55,9 +55,13 @@ const Writing = () => {
 
           {/* Write a Story Section */}
           <div className="max-w-6xl mx-auto border-4 border-orange-500 rounded-lg p-6 bg-white mt-8">
-            <h2 className="text-4xl font-bold text-orange-600 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-              Write a Story for Gpa's Kids
-            </h2>
+            <div className="flex items-center mb-6">
+              <span className="text-6xl mr-4">⌨️</span>
+              <span className="text-orange-600 text-4xl font-bold mr-4">—</span>
+              <h2 className="text-4xl font-bold text-orange-600" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                Write a Story for Gpa's Kids
+              </h2>
+            </div>
             
             <div className="space-y-4">
               <p className="text-lg text-gray-700 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
