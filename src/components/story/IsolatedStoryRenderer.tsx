@@ -54,6 +54,21 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             .isolated-story-content u {
               text-decoration: underline !important;
             }
+            
+            .isolated-story-content h1 {
+              font-size: 2em !important;
+              font-weight: bold !important;
+            }
+            
+            .isolated-story-content h2 {
+              font-size: 1.5em !important;
+              font-weight: bold !important;
+            }
+            
+            .isolated-story-content h3 {
+              font-size: 1.17em !important;
+              font-weight: bold !important;
+            }
           `
         }} />
         <div 
