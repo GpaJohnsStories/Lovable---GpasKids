@@ -133,7 +133,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         setCurrentSegment(0);
         setIsPlaying(true);
         setIsPaused(false);
-        playNextSegment();
+        playNextSegment(0);
         return;
       }
 
