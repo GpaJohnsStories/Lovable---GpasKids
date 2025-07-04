@@ -187,9 +187,19 @@ const VoicePreview = () => {
         )}
 
         <div>
-          <label className="block text-sm font-medium text-orange-800 mb-2 font-fun">
-            Sample Text (edit to test with different content):
-          </label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-medium text-orange-800 font-fun">
+              Sample Text (edit to test with different content):
+            </label>
+            <Button
+              onClick={() => setSampleText('')}
+              variant="outline"
+              size="sm"
+              className="text-xs h-7 px-2 font-fun hover:bg-orange-50 hover:border-orange-300"
+            >
+              Clear Text
+            </Button>
+          </div>
           <Textarea
             value={sampleText}
             onChange={(e) => setSampleText(e.target.value)}
