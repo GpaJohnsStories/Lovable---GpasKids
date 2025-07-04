@@ -55,7 +55,7 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
         if (selectedText) {
           const range = selection.getRangeAt(0);
           const span = document.createElement('span');
-          span.style.fontSize = '20px';
+          span.style.fontSize = '24px';
           span.textContent = selectedText;
           range.deleteContents();
           range.insertNode(span);
@@ -112,26 +112,6 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    // Debug Ctrl+ and Ctrl- specifically
-    if (e.ctrlKey || e.metaKey) {
-      if (e.key === '=' || e.key === '+') {
-        console.log('Ctrl+ detected - font size increase');
-        setTimeout(() => {
-          if (editorRef.current) {
-            console.log('Editor HTML after Ctrl+:', editorRef.current.innerHTML);
-          }
-        }, 100);
-      }
-      if (e.key === '-') {
-        console.log('Ctrl- detected - font size decrease');
-        setTimeout(() => {
-          if (editorRef.current) {
-            console.log('Editor HTML after Ctrl-:', editorRef.current.innerHTML);
-          }
-        }, 100);
-      }
-    }
-
     // Handle keyboard shortcuts
     if (e.ctrlKey || e.metaKey) {
       switch (e.key) {
@@ -146,6 +126,11 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
         case 'u':
           e.preventDefault();
           handleCommand('underline');
+          break;
+        case 'o':
+          e.preventDefault();
+          // Trigger color selector with Ctrl+O instead of Ctrl+R
+          document.execCommand('foreColor', false, '#000000');
           break;
       }
     }
