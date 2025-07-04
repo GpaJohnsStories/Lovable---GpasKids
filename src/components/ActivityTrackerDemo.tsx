@@ -32,7 +32,7 @@ const ActivityTrackerDemo = () => {
         <Card className="fixed bottom-16 left-4 p-4 bg-white/95 backdrop-blur-sm border shadow-lg z-50 animate-fade-in">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-sm">Activity Tracker Demo</h3>
+              <h3 className="font-semibold text-sm">Activity Tracker</h3>
               <div 
                 className={`w-3 h-3 rounded-full ${
                   isActive ? 'bg-green-500 animate-pulse' : 'bg-gray-400'
@@ -66,14 +66,14 @@ const ActivityTrackerDemo = () => {
               </Button>
             )}
 
-            <div className="text-xs text-gray-400 border-t pt-2">
+            <div className="text-[10px] text-gray-400 border-t pt-2">
               <p>• Break suggestion at 1 hour</p>
               <p>• Repeats every 15 minutes if ignored</p>
               <p>• Resets after 5-minute break</p>
               <p>• Uses localStorage (no cookies)</p>
             </div>
 
-            <div className="text-xs text-gray-400 text-center mt-2 italic">
+            <div className="text-xs text-black text-center mt-2 italic">
               Click Activity Tracker to Hide This Message.
             </div>
           </div>
