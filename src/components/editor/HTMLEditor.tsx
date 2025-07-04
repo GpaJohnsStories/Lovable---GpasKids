@@ -15,7 +15,6 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
   const internalRef = useRef<HTMLTextAreaElement>(null);
   const textareaRef = ref || internalRef;
   const [showHelp, setShowHelp] = useState(false);
-  const [currentFontSize, setCurrentFontSize] = useState(18);
 
   useEffect(() => {
     const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
@@ -60,41 +59,6 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
       textarea.selectionStart = textarea.selectionEnd = start + text.length;
       textarea.focus();
     }, 0);
-  };
-
-  const changeFontSize = (increase: boolean) => {
-    const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = content.substring(start, end);
-    
-    if (selectedText) {
-      const newSize = increase ? currentFontSize + 2 : Math.max(currentFontSize - 2, 10);
-      setCurrentFontSize(newSize);
-      const styledText = `<span style="font-size: ${newSize}px;">${selectedText}</span>`;
-      const newContent = content.substring(0, start) + styledText + content.substring(end);
-      onChange(newContent);
-    }
-  };
-
-  const showColorPicker = () => {
-    const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = content.substring(start, end);
-    
-    if (selectedText) {
-      const color = prompt('Enter color (hex, rgb, or name):');
-      if (color) {
-        const coloredText = `<span style="color: ${color};">${selectedText}</span>`;
-        const newContent = content.substring(0, start) + coloredText + content.substring(end);
-        onChange(newContent);
-      }
-    }
   };
 
   const handleClipboard = async (action: 'copy' | 'cut' | 'paste') => {
@@ -225,19 +189,6 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           e.preventDefault();
           wrapSelectedText('<em style="font-family: serif;">', '</em>');
           break;
-        case '=':
-        case '+':
-          e.preventDefault();
-          changeFontSize(true);
-          break;
-        case '-':
-          e.preventDefault();
-          changeFontSize(false);
-          break;
-        case 'r':
-          e.preventDefault();
-          showColorPicker();
-          break;
         case 'h':
           e.preventDefault();
           setShowHelp(true);
@@ -265,7 +216,6 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + L', action: 'Bullets' },
     { key: 'Ctrl + N', action: 'Numbered List' },
     { key: 'Ctrl + P', action: 'Paragraph' },
-    { key: 'Ctrl + R', action: 'Color Picker' },
     { key: 'Ctrl + T', action: 'Center Text' },
     { key: 'Ctrl + U', action: 'Underline' },
     { key: 'Ctrl + X', action: 'Cut' },
@@ -273,8 +223,6 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + 1', action: 'H1 Heading' },
     { key: 'Ctrl + 2', action: 'H2 Heading' },
     { key: 'Ctrl + 3', action: 'H3 Heading' },
-    { key: 'Ctrl + +', action: 'Increase Font Size' },
-    { key: 'Ctrl + -', action: 'Decrease Font Size' },
   ];
 
   return (
