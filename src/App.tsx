@@ -37,10 +37,10 @@ const App = () => (
           <Route path="/make-comment" element={<MakeComment />} />
           <Route path="/view-comments" element={<ViewComments />} />
           <Route path="/comment/:id" element={<CommentDetail />} />
-          <Route path="/admin/voice-preview" element={<AdminVoicePreview />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/buddys_admin/voice-preview" element={<AdminVoicePreview />} />
+          <Route path="/buddys_admin/dashboard" element={<AdminDashboard />} />
           <Route path="/buddys_admin" element={<BuddysAdmin />} />
-          <Route path="/admin/comments" element={<AdminComments />} />
+          <Route path="/buddys_admin/comments" element={<AdminComments />} />
           <Route path="/writing" element={<Writing />} />
           <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

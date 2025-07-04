@@ -33,11 +33,11 @@ const AdminHeaderBanner = () => {
               </div>
             </div>
             <nav className="flex gap-2">
-              <Link to="/admin/dashboard">
+              <Link to="/buddys_admin/dashboard">
                 <Button
                   variant="ghost"
                   className={`transition-all duration-200 border shadow-[0_6px_0_#16a34a,0_8px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#16a34a,0_4px_8px_rgba(0,0,0,0.3)] ${
-                    location.pathname === '/admin/dashboard' 
+                    location.pathname === '/buddys_admin/dashboard' 
                       ? 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white border-green-700 ring-4 ring-white ring-opacity-50 transform translate-y-1' 
                       : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white border-green-700 hover:from-green-500 hover:via-green-600 hover:to-green-700'
                   }`}
@@ -59,11 +59,11 @@ const AdminHeaderBanner = () => {
                   Stories
                 </Button>
               </Link>
-              <Link to="/admin/comments">
+              <Link to="/buddys_admin/comments">
                 <Button
                   variant="ghost"
                   className={`transition-all duration-200 border shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#ca8a04,0_4px_8px_rgba(0,0,0,0.3)] ${
-                    location.pathname === '/admin/comments' 
+                    location.pathname === '/buddys_admin/comments' 
                       ? 'bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500 text-green-800 border-yellow-600 ring-4 ring-white ring-opacity-50 transform translate-y-1' 
                       : 'bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500 text-green-800 border-yellow-600 hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600'
                   }`}
@@ -72,11 +72,11 @@ const AdminHeaderBanner = () => {
                   Comments
                 </Button>
               </Link>
-              <Link to="/admin/voice-preview">
+              <Link to="/buddys_admin/voice-preview">
                 <Button
                   variant="ghost"
                   className={`transition-all duration-200 border shadow-[0_6px_0_#7c3aed,0_8px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.3)] ${
-                    location.pathname === '/admin/voice-preview' 
+                    location.pathname === '/buddys_admin/voice-preview' 
                       ? 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white border-purple-700 ring-4 ring-white ring-opacity-50 transform translate-y-1' 
                       : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white border-purple-700 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700'
                   }`}
