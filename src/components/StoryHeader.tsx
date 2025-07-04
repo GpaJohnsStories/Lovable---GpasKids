@@ -196,6 +196,11 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       // Add author information
       textToRead += `. By ${author}`;
       
+      // Add AI voice attribution if available
+      if (aiVoiceName) {
+        textToRead += `. Story is read by ${aiVoiceName} AI voice from OpenAI`;
+      }
+      
       // Add description/excerpt if available
       if (description) {
         textToRead += `. ${description}`;
