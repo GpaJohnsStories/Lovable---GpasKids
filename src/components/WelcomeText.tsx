@@ -49,7 +49,7 @@ const WelcomeText = () => {
                 {/* Note text moved inside the blue box */}
                 <div className="space-y-2">
                   <p className="text-blue-800 italic font-fun text-lg">
-                    NOTE: For best viewing and reading, use your phone or tablet in landscape mode.
+                    Note: For best viewing and reading on your phone or tablet, use landscape mode.
                   </p>
                   <p className="text-blue-800 italic font-fun text-lg">
                     Please be sure to read our promise to you, click{' '}
