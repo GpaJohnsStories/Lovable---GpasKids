@@ -5,7 +5,7 @@ import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X } from
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { calculateReadingTime } from "@/utils/readingTimeUtils";
+import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
 import { useState } from "react";
 
 interface Story {
@@ -231,7 +231,17 @@ const StoriesTableRow = ({
       )}
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="space-y-1">
-          <div className="text-xs text-amber-600 mb-1">{calculateReadingTime(story.content || story.excerpt || '')}</div>
+          <div className="text-xs text-amber-600 mb-1">
+            {(() => {
+              const { readingTime, wordCount } = calculateReadingTimeWithWordCount(story.content || story.excerpt || '');
+              return (
+                <div>
+                  <div>{readingTime}</div>
+                  <div className="text-gray-500">{wordCount} words</div>
+                </div>
+              );
+            })()}
+          </div>
           <div className="flex items-center space-x-1 text-blue-600">
             <BookOpen className="h-3 w-3" />
             <span className="text-xs font-medium">{story.read_count}</span>

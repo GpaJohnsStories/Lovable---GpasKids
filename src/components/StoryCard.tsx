@@ -72,12 +72,6 @@ const StoryCard = ({ story }: StoryCardProps) => {
               {story.description}
             </p>
             
-            <div className="flex items-center justify-center text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-              <div className="flex items-center text-amber-600 font-bold">
-                <BookOpen className="h-3 w-3 mr-1" />
-                {calculateReadingTime(story.content || story.description)}
-              </div>
-            </div>
           </CardContent>
         </Card>
       </Link>

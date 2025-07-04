@@ -2,6 +2,7 @@ import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
 
 interface Story {
   id?: string;
@@ -131,6 +132,24 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
           onChange={(e) => onInputChange('excerpt', e.target.value)}
           placeholder="Short description for story cards"
         />
+      </div>
+
+      {/* Reading Time and Word Count Display */}
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+        <div className="flex items-center justify-between text-sm">
+          <div className="text-amber-700 font-medium">Story Statistics</div>
+          <div className="text-amber-600">
+            {(() => {
+              const { readingTime, wordCount } = calculateReadingTimeWithWordCount(formData.content || formData.excerpt || '');
+              return (
+                <div className="text-right">
+                  <div className="font-medium">{readingTime}</div>
+                  <div className="text-gray-600">{wordCount} words</div>
+                </div>
+              );
+            })()}
+          </div>
+        </div>
       </div>
     </>
   );
