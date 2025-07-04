@@ -108,7 +108,7 @@ const NavigationMenu = () => {
 
   return (
     <ShadcnNavigationMenu>
-      <NavigationMenuList className="flex flex-row gap-3">
+      <NavigationMenuList className="flex flex-row flex-wrap gap-3">
         {navItems.map((item) => (
           <NavigationMenuItem key={item.name}>
             {item.subItems ? (
