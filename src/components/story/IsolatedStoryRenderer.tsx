@@ -24,16 +24,21 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
         <style dangerouslySetInnerHTML={{
           __html: `
             .isolated-story-content,
-            .isolated-story-content *,
             .isolated-story-content p,
-            .isolated-story-content div,
-            .isolated-story-content span {
+            .isolated-story-content div {
               font-family: Georgia, serif !important;
               font-size: 18px !important;
               color: #000000 !important;
               line-height: 1.6 !important;
               font-weight: normal !important;
               font-style: normal !important;
+            }
+            
+            /* Allow spans to inherit or use inline styles for font-size */
+            .isolated-story-content span {
+              font-family: Georgia, serif !important;
+              color: #000000 !important;
+              line-height: 1.6 !important;
             }
             
             .isolated-story-content p {
