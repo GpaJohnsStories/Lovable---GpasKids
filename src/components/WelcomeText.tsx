@@ -43,7 +43,7 @@ const WelcomeText = () => {
                   Hi there!
                 </h1>
                 <p className="text-xl text-blue-900 font-semibold leading-relaxed max-w-3xl mx-auto md:mx-0 font-fun mb-6">
-                  Buddy and I, Grandpa John, welcome you to our safe and fun corner of the internet. We've got stories, jokes, games, and lots of other cool stuff waiting for you. So come on in and have a fantastic time exploring every page!
+                  Buddy and I welcome you to our safe and fun corner of the internet. We've got stories, jokes, games, and lots of other cool stuff waiting for you. So come on in and have a fantastic time exploring every page!
                 </p>
                 
                 {/* Note text moved inside the blue box */}
