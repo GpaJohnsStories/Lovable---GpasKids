@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { MessageSquare, FileText } from "lucide-react";
+import { MessageSquare, FileText, Volume2 } from "lucide-react";
 
 const AdminSidebar = () => {
   const location = useLocation();
@@ -25,6 +25,11 @@ const AdminSidebar = () => {
       href: "/admin/comments",
       label: "Comments",
       icon: MessageSquare,
+    },
+    {
+      href: "/admin/voice-preview",
+      label: "Voice Preview",
+      icon: Volume2,
     },
   ];
 
