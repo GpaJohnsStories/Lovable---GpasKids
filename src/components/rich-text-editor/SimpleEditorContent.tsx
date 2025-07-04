@@ -48,7 +48,37 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
   }, [content]);
 
   const handleCommand = (command: string) => {
-    document.execCommand(command, false);
+    if (command === 'fontSize-increase') {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        const selectedText = selection.toString();
+        if (selectedText) {
+          const range = selection.getRangeAt(0);
+          const span = document.createElement('span');
+          span.style.fontSize = '20px';
+          span.textContent = selectedText;
+          range.deleteContents();
+          range.insertNode(span);
+          onChange(editorRef.current?.innerHTML || '');
+        }
+      }
+    } else if (command === 'fontSize-decrease') {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount > 0) {
+        const selectedText = selection.toString();
+        if (selectedText) {
+          const range = selection.getRangeAt(0);
+          const span = document.createElement('span');
+          span.style.fontSize = '16px';
+          span.textContent = selectedText;
+          range.deleteContents();
+          range.insertNode(span);
+          onChange(editorRef.current?.innerHTML || '');
+        }
+      }
+    } else {
+      document.execCommand(command, false);
+    }
     if (editorRef.current) {
       onChange(editorRef.current.innerHTML);
     }
