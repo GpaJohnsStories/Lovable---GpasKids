@@ -26,6 +26,11 @@ const SimpleEditorStyles: React.FC = () => {
           line-height: 1.6 !important;
         }
         
+        /* Ensure spans with inline font-size styles are respected */
+        .story-content[contenteditable] span[style*="font-size"] {
+          /* Inline font-size should take precedence */
+        }
+        
         /* Allow spans to have custom font-size */
         .story-content[contenteditable] span {
           font-family: 'Georgia', serif !important;

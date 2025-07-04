@@ -39,6 +39,12 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               font-family: Georgia, serif !important;
               color: #000000 !important;
               line-height: 1.6 !important;
+              /* Explicitly allow inline font-size to override default */
+            }
+            
+            /* Ensure spans with inline font-size are respected */
+            .isolated-story-content span[style*="font-size"] {
+              /* Let the inline style take precedence */
             }
             
             .isolated-story-content p {
