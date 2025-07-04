@@ -204,6 +204,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         console.log(`🎵 Starting segment ${currentSegment + 1}/${audioUrls.length}`);
         
         const audio = new Audio(audioUrls[currentSegment]);
+        audio.volume = 1.0; // Set volume to maximum (100%)
         currentPlayingAudio = audio;
         setCurrentAudio(audio);
         
