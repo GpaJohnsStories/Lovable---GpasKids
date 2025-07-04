@@ -66,6 +66,16 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         textToRead += ` ${cleanContent}`;
       }
 
+      // Convert dashes to natural pauses for better speech flow
+      // M-dash (—) becomes multiple periods for longer pause, n-dash (–) becomes ellipsis for shorter pause
+      const processTextForSpeech = (text: string) => {
+        return text
+          .replace(/—/g, '... ... ...')  // M-dash: longer pause with multiple periods
+          .replace(/–/g, '...');         // N-dash: shorter pause with ellipsis
+      };
+      
+      textToRead = processTextForSpeech(textToRead);
+
       console.log('🎵 Starting voice generation for story:', title);
 
       // Split text into chunks of ~4000 characters (leaving buffer for API limit)

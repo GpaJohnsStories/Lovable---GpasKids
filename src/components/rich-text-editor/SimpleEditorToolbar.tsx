@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 interface SimpleEditorToolbarProps {
-  onCommand: (command: string) => void;
+  onCommand: (command: string, value?: string) => void;
 }
 
 const SimpleEditorToolbar: React.FC<SimpleEditorToolbarProps> = ({ onCommand }) => {
@@ -109,6 +109,30 @@ const SimpleEditorToolbar: React.FC<SimpleEditorToolbarProps> = ({ onCommand }) 
         title="Align Right"
       >
         <AlignRight className="h-4 w-4" />
+      </Button>
+
+      <Separator orientation="vertical" className="h-6 mx-1" />
+
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => onCommand('insertHTML', '—')}
+        className="h-8 w-8 p-0 font-bold text-lg"
+        title="Insert M-dash (long pause for audio)"
+      >
+        —
+      </Button>
+      
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => onCommand('insertHTML', '–')}
+        className="h-8 w-8 p-0 font-bold text-lg"
+        title="Insert N-dash (short pause for audio)"
+      >
+        –
       </Button>
     </div>
   );

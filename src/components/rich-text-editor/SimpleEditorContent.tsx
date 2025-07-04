@@ -4,7 +4,7 @@ interface SimpleEditorContentProps {
   content: string;
   onChange: (content: string) => void;
   placeholder: string;
-  onCommandRef: React.MutableRefObject<(command: string) => void>;
+  onCommandRef: React.MutableRefObject<(command: string, value?: string) => void>;
 }
 
 const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
@@ -47,8 +47,12 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
     }
   }, [content]);
 
-  const handleCommand = (command: string) => {
-    document.execCommand(command, false);
+  const handleCommand = (command: string, value?: string) => {
+    if (command === 'insertHTML' && value) {
+      document.execCommand('insertHTML', false, value);
+    } else {
+      document.execCommand(command, false);
+    }
     if (editorRef.current) {
       onChange(editorRef.current.innerHTML);
     }

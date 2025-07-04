@@ -32,7 +32,26 @@ const TinyMCEEditor: React.FC<TinyMCEEditorProps> = ({
             'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
             'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
           ],
-          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | mdash ndash | removeformat',
+          setup: (editor) => {
+            // Add M-dash button (long pause)
+            editor.ui.registry.addButton('mdash', {
+              text: '—',
+              tooltip: 'Insert M-dash (long pause for audio)',
+              onAction: () => {
+                editor.insertContent('—');
+              }
+            });
+            
+            // Add N-dash button (short pause)
+            editor.ui.registry.addButton('ndash', {
+              text: '–',
+              tooltip: 'Insert N-dash (short pause for audio)',
+              onAction: () => {
+                editor.insertContent('–');
+              }
+            });
+          },
           content_style: `
             body { 
               font-family: Georgia, serif; 
