@@ -138,8 +138,9 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       console.log(`✅ Generated ${audioUrls.length} audio segments`);
 
       let currentSegment = 0;
+      let currentPlayingAudio: HTMLAudioElement | null = null;
       
-      const playNextSegment = () => {
+      const playNextSegment = async () => {
         if (currentSegment >= audioUrls.length) {
           console.log('🎵 All audio segments completed');
           setIsPlaying(false);
@@ -148,17 +149,36 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
           return;
         }
 
+        console.log(`🎵 Starting segment ${currentSegment + 1}/${audioUrls.length}`);
+        
         const audio = new Audio(audioUrls[currentSegment]);
+        currentPlayingAudio = audio;
         setCurrentAudio(audio);
         
-        audio.onended = () => {
-          console.log(`🎵 Segment ${currentSegment + 1} completed`);
-          currentSegment++;
-          playNextSegment();
-        };
-        
-        audio.onerror = (e) => {
-          console.error('❌ Audio playback error:', e);
+        // Create a promise that resolves when audio ends or errors
+        const playPromise = new Promise<void>((resolve, reject) => {
+          audio.onended = () => {
+            console.log(`🎵 Segment ${currentSegment + 1} completed`);
+            resolve();
+          };
+          
+          audio.onerror = (e) => {
+            console.error('❌ Audio playback error:', e);
+            reject(e);
+          };
+        });
+
+        try {
+          await audio.play();
+          await playPromise; // Wait for audio to finish
+          
+          // Only proceed to next segment if we're still playing
+          if (currentPlayingAudio === audio) {
+            currentSegment++;
+            await playNextSegment(); // Wait for next segment to complete
+          }
+        } catch (error) {
+          console.error('❌ Audio play error:', error);
           setIsPlaying(false);
           setCurrentAudio(null);
           audioUrls.forEach(url => URL.revokeObjectURL(url));
@@ -167,14 +187,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
             description: "Failed to play the generated audio",
             variant: "destructive",
           });
-        };
-
-        audio.play().catch(error => {
-          console.error('❌ Audio play error:', error);
-          setIsPlaying(false);
-          setCurrentAudio(null);
-          audioUrls.forEach(url => URL.revokeObjectURL(url));
-        });
+        }
       };
 
       // Start playing the first segment
