@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useActivityTracker } from '@/hooks/useActivityTracker';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Clock, Coffee, Settings, Eye, EyeOff } from 'lucide-react';
 
 const ActivityTrackerDemo = () => {
   const { isActive, timeActive, resetActivityTimer } = useActivityTracker();
@@ -25,9 +24,7 @@ const ActivityTrackerDemo = () => {
         className="fixed bottom-4 left-4 z-50 bg-blue-500 hover:bg-blue-600 text-white shadow-lg"
         size="sm"
       >
-        <Settings className="h-4 w-4 mr-2" />
         Activity Tracker
-        {isVisible ? <EyeOff className="h-4 w-4 ml-2" /> : <Eye className="h-4 w-4 ml-2" />}
       </Button>
 
       {/* Activity tracker card */}
@@ -46,7 +43,6 @@ const ActivityTrackerDemo = () => {
             
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-gray-600" />
                 <span>Time Active: <strong>{formatTime(timeActive)}</strong></span>
               </div>
               
@@ -66,7 +62,6 @@ const ActivityTrackerDemo = () => {
                 onClick={resetActivityTimer}
                 className="w-full text-xs"
               >
-                <Coffee className="h-3 w-3 mr-2" />
                 Simulate Break Taken
               </Button>
             )}
@@ -76,6 +71,10 @@ const ActivityTrackerDemo = () => {
               <p>• Repeats every 15 minutes if ignored</p>
               <p>• Resets after 5-minute break</p>
               <p>• Uses localStorage (no cookies)</p>
+            </div>
+
+            <div className="text-xs text-gray-400 text-center mt-2 italic">
+              Click Activity Tracker to Hide This Message.
             </div>
           </div>
         </Card>
