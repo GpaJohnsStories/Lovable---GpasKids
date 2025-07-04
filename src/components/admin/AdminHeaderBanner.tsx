@@ -75,10 +75,10 @@ const AdminHeaderBanner = () => {
               <Link to="/buddys_admin/voice-preview">
                 <Button
                   variant="ghost"
-                  className={`transition-all duration-200 border shadow-[0_6px_0_#7c3aed,0_8px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.3)] ${
+                  className={`transition-all duration-200 border shadow-[0_6px_0_#7c3aed,0_8px_15px_rgba(0,0,0,0.3)] ${
                     location.pathname === '/buddys_admin/voice-preview' 
                       ? 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white border-purple-700 ring-4 ring-white ring-opacity-50 transform translate-y-1' 
-                      : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white border-purple-700 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700'
+                      : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white border-purple-700 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.3)]'
                   }`}
                 >
                   <Volume2 className="h-4 w-4 mr-2" />
