@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { LogOut, FileText, MessageSquare, LayoutDashboard } from "lucide-react";
+import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2 } from "lucide-react";
 import { toast } from "sonner";
 import { useDualAdminAuth } from "./DualAdminAuthProvider";
 import { Link, useLocation } from "react-router-dom";
@@ -70,6 +70,19 @@ const AdminHeaderBanner = () => {
                 >
                   <MessageSquare className="h-4 w-4 mr-2" />
                   Comments
+                </Button>
+              </Link>
+              <Link to="/admin/voice-preview">
+                <Button
+                  variant="ghost"
+                  className={`transition-all duration-200 border shadow-[0_6px_0_#7c3aed,0_8px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.3)] ${
+                    location.pathname === '/admin/voice-preview' 
+                      ? 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white border-purple-700 ring-4 ring-white ring-opacity-50 transform translate-y-1' 
+                      : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white border-purple-700 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700'
+                  }`}
+                >
+                  <Volume2 className="h-4 w-4 mr-2" />
+                  Voice Preview
                 </Button>
               </Link>
             </nav>
