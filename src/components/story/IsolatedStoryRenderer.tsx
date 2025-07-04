@@ -80,6 +80,34 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               font-size: 1.17em !important;
               font-weight: bold !important;
             }
+            
+            .isolated-story-content ul {
+              list-style-type: disc !important;
+              margin: 0 0 1.5em 0 !important;
+              padding-left: 2em !important;
+              font-family: Georgia, serif !important;
+              font-size: 18px !important;
+              color: #000000 !important;
+              line-height: 1.6 !important;
+            }
+            
+            .isolated-story-content ol {
+              list-style-type: decimal !important;
+              margin: 0 0 1.5em 0 !important;
+              padding-left: 2em !important;
+              font-family: Georgia, serif !important;
+              font-size: 18px !important;
+              color: #000000 !important;
+              line-height: 1.6 !important;
+            }
+            
+            .isolated-story-content li {
+              margin: 0.5em 0 !important;
+              font-family: Georgia, serif !important;
+              font-size: 18px !important;
+              color: #000000 !important;
+              line-height: 1.6 !important;
+            }
           `
         }} />
         <div 
