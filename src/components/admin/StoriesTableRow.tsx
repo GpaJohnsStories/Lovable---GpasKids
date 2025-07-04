@@ -307,7 +307,7 @@ const StoriesTableRow = ({
           <div className="flex space-x-2">
             <Button
               size="sm"
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
               onClick={() => onEdit(story)}
             >
               <Edit className="h-4 w-4" />
