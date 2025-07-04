@@ -44,6 +44,40 @@ const EditorContent: React.FC<EditorContentProps> = ({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     handleKeyboardShortcuts(e, onCommand);
     
+    // Custom dash shortcuts
+    if (e.ctrlKey || e.metaKey) {
+      if (e.key === 'n') {
+        e.preventDefault();
+        document.execCommand('insertHTML', false, '–');
+        setTimeout(() => {
+          if (editorRef.current) {
+            onChange(editorRef.current.innerHTML);
+          }
+        }, 0);
+        return;
+      }
+      if (e.key === 'm') {
+        e.preventDefault();
+        document.execCommand('insertHTML', false, '—');
+        setTimeout(() => {
+          if (editorRef.current) {
+            onChange(editorRef.current.innerHTML);
+          }
+        }, 0);
+        return;
+      }
+      if (e.key === '#') {
+        e.preventDefault();
+        document.execCommand('insertOrderedList', false);
+        setTimeout(() => {
+          if (editorRef.current) {
+            onChange(editorRef.current.innerHTML);
+          }
+        }, 0);
+        return;
+      }
+    }
+    
     // Handle Enter key for proper line breaks
     if (e.key === 'Enter') {
       if (e.shiftKey) {

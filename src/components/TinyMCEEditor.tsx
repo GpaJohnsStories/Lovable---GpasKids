@@ -51,6 +51,19 @@ const TinyMCEEditor: React.FC<TinyMCEEditorProps> = ({
                 editor.insertContent('–');
               }
             });
+
+            // Custom keyboard shortcuts
+            editor.addShortcut('ctrl+n', 'Insert N-dash (short pause)', () => {
+              editor.insertContent('–');
+            });
+            
+            editor.addShortcut('ctrl+m', 'Insert M-dash (long pause)', () => {
+              editor.insertContent('—');
+            });
+            
+            editor.addShortcut('ctrl+shift+3', 'Insert numbered list', () => {
+              editor.execCommand('InsertOrderedList');
+            });
           },
           content_style: `
             body { 

@@ -101,6 +101,18 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
           e.preventDefault();
           handleCommand('underline');
           break;
+        case 'n':
+          e.preventDefault();
+          handleCommand('insertHTML', '–'); // N-dash (short pause)
+          break;
+        case 'm':
+          e.preventDefault();
+          handleCommand('insertHTML', '—'); // M-dash (long pause)
+          break;
+        case '#':
+          e.preventDefault();
+          handleCommand('insertOrderedList'); // Numbered list
+          break;
       }
     }
   };
