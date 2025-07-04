@@ -28,12 +28,13 @@ const SimpleRichTextEditor: React.FC<SimpleRichTextEditorProps> = ({
     if (editorRef.current && content !== editorRef.current.innerHTML) {
       editorRef.current.innerHTML = content;
       
-      // Clean up any inline font-size styles that might override our CSS
+      // Clean up any inline font-size styles that might override our CSS, but preserve spans
       if (editorRef.current) {
         const allElements = editorRef.current.querySelectorAll('*');
         allElements.forEach(element => {
           const style = (element as HTMLElement).style;
-          if (style.fontSize) {
+          // Don't remove font-size from spans
+          if (element.tagName !== 'SPAN' && style.fontSize) {
             style.removeProperty('font-size');
           }
           if (style.fontFamily) {
@@ -64,13 +65,15 @@ const SimpleRichTextEditor: React.FC<SimpleRichTextEditorProps> = ({
 
   const handleInput = () => {
     if (editorRef.current) {
-      // Clean up any inline styles that might have been added
+      // Clean up any inline styles that might have been added, but preserve font-size on spans
       const allElements = editorRef.current.querySelectorAll('*');
       allElements.forEach(element => {
         const style = (element as HTMLElement).style;
-        // Only remove font styling, preserve alignment
-        if (style.fontSize) {
-          style.removeProperty('font-size');
+        // Only remove font styling on non-span elements, preserve alignment and font-size on spans
+        if (element.tagName !== 'SPAN') {
+          if (style.fontSize) {
+            style.removeProperty('font-size');
+          }
         }
         if (style.fontFamily) {
           style.removeProperty('font-family');
@@ -129,9 +132,16 @@ const SimpleRichTextEditor: React.FC<SimpleRichTextEditorProps> = ({
           
           .story-content[contenteditable] * {
             font-family: 'Georgia', serif !important;
-            font-size: 18px !important;
             color: #000000 !important;
             line-height: 1.6 !important;
+          }
+          
+          /* Allow spans to have custom font-size */
+          .story-content[contenteditable] span {
+            font-family: 'Georgia', serif !important;
+            color: #000000 !important;
+            line-height: 1.6 !important;
+            /* Don't force font-size on spans */
           }
           
           .story-content[contenteditable] p {

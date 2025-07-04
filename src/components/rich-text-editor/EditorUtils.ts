@@ -81,7 +81,8 @@ export const normalizeContent = (element: HTMLDivElement) => {
     if (el.tagName !== 'UL' && el.tagName !== 'OL' && el.tagName !== 'LI' && 
         !el.tagName.startsWith('H') && el.tagName !== 'STRONG' && 
         el.tagName !== 'EM' && el.tagName !== 'B' && el.tagName !== 'I' && 
-        el.tagName !== 'U' && el.tagName !== 'A' && el.tagName !== 'BR') {
+        el.tagName !== 'U' && el.tagName !== 'A' && el.tagName !== 'BR' && 
+        el.tagName !== 'SPAN') {
       el.style.fontFamily = 'Georgia, serif';
       el.style.fontSize = '18px';
       el.style.color = '#000000';
@@ -91,6 +92,14 @@ export const normalizeContent = (element: HTMLDivElement) => {
       if (el.tagName === 'P' || el.tagName === 'DIV') {
         el.style.whiteSpace = 'pre-line';
       }
+    }
+    
+    // For spans, preserve font-size but normalize other properties
+    if (el.tagName === 'SPAN') {
+      el.style.fontFamily = 'Georgia, serif';
+      el.style.color = '#000000';
+      el.style.lineHeight = '1.6';
+      // Don't override font-size for spans
     }
   }
 };
