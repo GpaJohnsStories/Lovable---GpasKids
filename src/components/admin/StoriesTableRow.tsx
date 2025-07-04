@@ -72,6 +72,13 @@ const StoriesTableRow = ({
   const hasVideo = story.video_url && story.video_url.trim() !== '';
   const videoIndicator = hasVideo ? '🎥' : '';
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const handleTogglePublished = async () => {
     const newStatus = story.published === 'Y' ? 'N' : 'Y';
     
@@ -181,7 +188,7 @@ const StoriesTableRow = ({
             </div>
           )}
           <div className="flex-1">
-            <Link to={`/story/${story.id}`}>
+            <Link to={`/story/${story.id}`} onClick={scrollToTop}>
               <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer">
                 {story.title} {videoIndicator}
               </div>
