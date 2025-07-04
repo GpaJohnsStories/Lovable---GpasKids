@@ -19,15 +19,21 @@ serve(async (req) => {
       throw new Error('Text is required')
     }
 
-    console.log(`Generating speech for text: "${text}" with voice: ${voice} at speed: ${speed || 1.0}`)
+    console.log(`Generating speech for text: "${text.substring(0, 100)}..." with voice: ${voice} at speed: ${speed || 1.0}`)
 
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY')
     
     if (!openaiApiKey) {
+      console.error('❌ OpenAI API key not found in environment')
       throw new Error('OpenAI API key not configured')
     }
 
-    console.log('API key found, making request to OpenAI...')
+    if (!openaiApiKey.startsWith('sk-')) {
+      console.error('❌ OpenAI API key format is invalid - should start with sk-')
+      throw new Error('Invalid OpenAI API key format')
+    }
+
+    console.log('✅ Valid API key found, making request to OpenAI...')
 
     // Generate speech from text
     const response = await fetch('https://api.openai.com/v1/audio/speech', {
