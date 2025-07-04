@@ -116,6 +116,34 @@ const SimpleEditorStyles: React.FC = () => {
           color: #000000 !important;
           line-height: 1.6 !important;
         }
+        
+        .story-content[contenteditable] ul {
+          list-style-type: disc !important;
+          margin: 0 0 1.5em 0 !important;
+          padding-left: 2em !important;
+          font-family: 'Georgia', serif !important;
+          font-size: 18px !important;
+          color: #000000 !important;
+          line-height: 1.6 !important;
+        }
+        
+        .story-content[contenteditable] ol {
+          list-style-type: decimal !important;
+          margin: 0 0 1.5em 0 !important;
+          padding-left: 2em !important;
+          font-family: 'Georgia', serif !important;
+          font-size: 18px !important;
+          color: #000000 !important;
+          line-height: 1.6 !important;
+        }
+        
+        .story-content[contenteditable] li {
+          margin: 0.5em 0 !important;
+          font-family: 'Georgia', serif !important;
+          font-size: 18px !important;
+          color: #000000 !important;
+          line-height: 1.6 !important;
+        }
       `
     }} />
   );
