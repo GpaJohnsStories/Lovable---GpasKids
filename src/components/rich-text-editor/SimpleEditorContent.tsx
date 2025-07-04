@@ -48,37 +48,7 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
   }, [content]);
 
   const handleCommand = (command: string) => {
-    if (command === 'fontSize-increase') {
-      const selection = window.getSelection();
-      if (selection && selection.rangeCount > 0) {
-        const selectedText = selection.toString();
-        if (selectedText) {
-          const range = selection.getRangeAt(0);
-          const span = document.createElement('span');
-          span.style.fontSize = '24px';
-          span.textContent = selectedText;
-          range.deleteContents();
-          range.insertNode(span);
-          onChange(editorRef.current?.innerHTML || '');
-        }
-      }
-    } else if (command === 'fontSize-decrease') {
-      const selection = window.getSelection();
-      if (selection && selection.rangeCount > 0) {
-        const selectedText = selection.toString();
-        if (selectedText) {
-          const range = selection.getRangeAt(0);
-          const span = document.createElement('span');
-          span.style.fontSize = '16px';
-          span.textContent = selectedText;
-          range.deleteContents();
-          range.insertNode(span);
-          onChange(editorRef.current?.innerHTML || '');
-        }
-      }
-    } else {
-      document.execCommand(command, false);
-    }
+    document.execCommand(command, false);
     if (editorRef.current) {
       onChange(editorRef.current.innerHTML);
     }
@@ -126,11 +96,6 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
         case 'u':
           e.preventDefault();
           handleCommand('underline');
-          break;
-        case 'o':
-          e.preventDefault();
-          // Trigger color selector with Ctrl+O instead of Ctrl+R
-          document.execCommand('foreColor', false, '#000000');
           break;
       }
     }

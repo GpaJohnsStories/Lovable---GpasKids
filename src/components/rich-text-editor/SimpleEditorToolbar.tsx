@@ -7,9 +7,7 @@ import {
   Underline, 
   AlignLeft, 
   AlignCenter, 
-  AlignRight,
-  Plus,
-  Minus
+  AlignRight
 } from "lucide-react";
 
 interface SimpleEditorToolbarProps {
@@ -50,28 +48,6 @@ const SimpleEditorToolbar: React.FC<SimpleEditorToolbarProps> = ({ onCommand }) 
         title="Underline (Ctrl+U)"
       >
         <Underline className="h-4 w-4" />
-      </Button>
-
-      <Button
-        type="button"
-        variant="ghost"
-        size="sm"
-        onClick={() => onCommand('fontSize-increase')}
-        className="h-8 w-8 p-0"
-        title="Increase Font Size"
-      >
-        <Plus className="h-4 w-4" />
-      </Button>
-      
-      <Button
-        type="button"
-        variant="ghost"
-        size="sm"
-        onClick={() => onCommand('fontSize-decrease')}
-        className="h-8 w-8 p-0"
-        title="Decrease Font Size"
-      >
-        <Minus className="h-4 w-4" />
       </Button>
 
       <Separator orientation="vertical" className="h-6 mx-1" />
