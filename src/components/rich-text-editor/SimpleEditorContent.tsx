@@ -82,6 +82,26 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    // Debug Ctrl+ and Ctrl- specifically
+    if (e.ctrlKey || e.metaKey) {
+      if (e.key === '=' || e.key === '+') {
+        console.log('Ctrl+ detected - font size increase');
+        setTimeout(() => {
+          if (editorRef.current) {
+            console.log('Editor HTML after Ctrl+:', editorRef.current.innerHTML);
+          }
+        }, 100);
+      }
+      if (e.key === '-') {
+        console.log('Ctrl- detected - font size decrease');
+        setTimeout(() => {
+          if (editorRef.current) {
+            console.log('Editor HTML after Ctrl-:', editorRef.current.innerHTML);
+          }
+        }, 100);
+      }
+    }
+
     // Handle keyboard shortcuts
     if (e.ctrlKey || e.metaKey) {
       switch (e.key) {
