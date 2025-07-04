@@ -63,7 +63,7 @@ export const cleanRichHtmlContent = (htmlContent: string): string => {
             .split(';')
             .filter(style => {
               const styleName = style.split(':')[0]?.trim().toLowerCase();
-              return styleName && ['text-align', 'margin', 'padding'].includes(styleName);
+              return styleName && ['text-align', 'margin', 'padding', 'font-size'].includes(styleName);
             })
             .join(';');
           
