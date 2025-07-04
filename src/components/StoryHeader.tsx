@@ -345,7 +345,12 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
             <Headphones className="h-4 w-4" />
           )}
           {isLoading 
-            ? "Preparing your story for audio..." 
+            ? (
+                <span>
+                  Preparing your story for audio...<br />
+                  Please be patient, long stories may take 1 or 2 minutes.
+                </span>
+              )
             : isPlaying 
               ? "Pause Reading" 
               : isPaused
