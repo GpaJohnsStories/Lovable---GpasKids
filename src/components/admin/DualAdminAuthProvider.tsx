@@ -52,18 +52,65 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
   // Check admin status
   const [isAdmin, setIsAdmin] = useState(false);
 
+  // Periodic session validation
+  useEffect(() => {
+    if (!isLegacyAuthenticated) return;
+
+    const validateSession = () => {
+      try {
+        const authTimestamp = sessionStorage.getItem('adminAuthTimestamp');
+        const sessionTimeout = 30 * 60 * 1000; // 30 minutes
+        
+        if (authTimestamp) {
+          const timeSinceAuth = Date.now() - parseInt(authTimestamp);
+          
+          if (timeSinceAuth >= sessionTimeout) {
+            console.log('DualAdminAuth: Session expired during use, logging out');
+            sessionStorage.removeItem('isAdminAuthenticated');
+            sessionStorage.removeItem('adminAuthTimestamp');
+            setIsLegacyAuthenticated(false);
+            if (!isSupabaseAuthenticated) {
+              setIsAdmin(false);
+            }
+          }
+        }
+      } catch (error) {
+        console.error("Session validation error:", error);
+      }
+    };
+
+    const interval = setInterval(validateSession, 60000); // Check every minute
+    return () => clearInterval(interval);
+  }, [isLegacyAuthenticated, isSupabaseAuthenticated]);
+
   useEffect(() => {
     console.log('DualAdminAuth: Starting initialization');
     setIsLoading(true);
     
-    // Check legacy auth first
+    // Check legacy auth with expiration validation
     try {
       const storedAuth = sessionStorage.getItem('isAdminAuthenticated');
-      if (storedAuth === 'true') {
-        console.log('DualAdminAuth: Legacy auth found');
-        setIsLegacyAuthenticated(true);
-        setIsAdmin(true);
-        setIsLoading(false);
+      const authTimestamp = sessionStorage.getItem('adminAuthTimestamp');
+      const currentTime = Date.now();
+      const sessionTimeout = 30 * 60 * 1000; // 30 minutes in milliseconds
+      
+      if (storedAuth === 'true' && authTimestamp) {
+        const timeSinceAuth = currentTime - parseInt(authTimestamp);
+        
+        if (timeSinceAuth < sessionTimeout) {
+          console.log('DualAdminAuth: Valid legacy auth found');
+          setIsLegacyAuthenticated(true);
+          setIsAdmin(true);
+          setIsLoading(false);
+        } else {
+          console.log('DualAdminAuth: Legacy auth expired, clearing session');
+          sessionStorage.removeItem('isAdminAuthenticated');
+          sessionStorage.removeItem('adminAuthTimestamp');
+        }
+      } else if (storedAuth === 'true') {
+        // If there's no timestamp, it's an old session - clear it
+        console.log('DualAdminAuth: Legacy auth without timestamp, clearing session');
+        sessionStorage.removeItem('isAdminAuthenticated');
       }
     } catch (error) {
       console.error("Could not access session storage", error);
@@ -184,7 +231,9 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
 
     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
       try {
+        const currentTime = Date.now().toString();
         sessionStorage.setItem('isAdminAuthenticated', 'true');
+        sessionStorage.setItem('adminAuthTimestamp', currentTime);
         setIsLegacyAuthenticated(true);
         setIsAdmin(true);
         return { success: true };
@@ -200,6 +249,7 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
   const legacyLogout = async () => {
     try {
       sessionStorage.removeItem('isAdminAuthenticated');
+      sessionStorage.removeItem('adminAuthTimestamp');
     } catch (error) {
       console.error("Could not access session storage", error);
     }
