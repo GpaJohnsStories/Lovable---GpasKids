@@ -1,6 +1,6 @@
 
 import { renderCategoryBadge } from "@/utils/categoryUtils";
-import { Headphones } from "lucide-react";
+import { Headphones, Loader } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -20,6 +20,7 @@ interface StoryHeaderProps {
 
 const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, showStoryCode = false, content, description }: StoryHeaderProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
   const [audioCleanup, setAudioCleanup] = useState<(() => void) | null>(null);
 
@@ -39,6 +40,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
           audioCleanup();
         }
         setIsPlaying(false);
+        setIsLoading(false);
         setCurrentAudio(null);
         setAudioCleanup(null);
         toast({
@@ -49,6 +51,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       }
 
       setIsPlaying(true);
+      setIsLoading(true);
       
       // Prepare text for reading - combine title, description, and content
       let textToRead = `${title}`;
@@ -95,6 +98,13 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
 
       const audioUrls: string[] = [];
       
+      toast({
+        title: "Preparing your story...",
+        description: textChunks.length > 1 
+          ? `Generating ${textChunks.length} audio segments for "${title}"`
+          : `Generating audio for "${title}"`,
+      });
+      
       // Generate audio for each chunk
       for (let i = 0; i < textChunks.length; i++) {
         const chunk = textChunks[i];
@@ -113,6 +123,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
           // Clean up any audio URLs we've created so far
           audioUrls.forEach(url => URL.revokeObjectURL(url));
           setIsPlaying(false);
+          setIsLoading(false);
           setCurrentAudio(null);
           toast({
             title: "Error reading story",
@@ -126,6 +137,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
           console.error('❌ No audio content returned');
           audioUrls.forEach(url => URL.revokeObjectURL(url));
           setIsPlaying(false);
+          setIsLoading(false);
           setCurrentAudio(null);
           toast({
             title: "Error reading story",
@@ -148,6 +160,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       }
 
       console.log(`✅ Generated ${audioUrls.length} audio segments`);
+      setIsLoading(false);
 
       let currentSegment = 0;
       let currentPlayingAudio: HTMLAudioElement | null = null;
@@ -237,6 +250,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
     } catch (error) {
       console.error('❌ Error in handleReadStory:', error);
       setIsPlaying(false);
+      setIsLoading(false);
       setCurrentAudio(null);
       setAudioCleanup(null);
       toast({
@@ -257,12 +271,32 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         {/* Purple 3D Read Button - positioned left of title */}
         <button
           onClick={handleReadStory}
-          className="mr-4 bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white text-sm px-3 py-2 rounded-lg font-bold shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.3)] border border-purple-700 transition-all duration-200 hover:shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)] flex items-center gap-2 font-fun hover:from-purple-500 hover:via-purple-600 hover:to-purple-700"
+          disabled={isLoading}
+          className={`mr-4 text-white text-sm px-3 py-2 rounded-lg font-bold shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.3)] border border-purple-700 transition-all duration-200 flex items-center gap-2 font-fun ${
+            isLoading 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 hover:shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)] hover:from-purple-500 hover:via-purple-600 hover:to-purple-700'
+          }`}
           style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-          title={isPlaying ? "Click to stop reading" : "Click to read this story aloud"}
+          title={
+            isLoading 
+              ? "Preparing audio..." 
+              : isPlaying 
+                ? "Click to stop reading" 
+                : "Click to read this story aloud"
+          }
         >
-          <Headphones className="h-4 w-4" />
-          {isPlaying ? "Stop Reading" : "Please read this to me."}
+          {isLoading ? (
+            <Loader className="h-4 w-4 animate-spin" />
+          ) : (
+            <Headphones className="h-4 w-4" />
+          )}
+          {isLoading 
+            ? "Preparing audio..." 
+            : isPlaying 
+              ? "Stop Reading" 
+              : "Please read this to me."
+          }
         </button>
 
         <h1 className="text-3xl font-bold text-orange-800 text-center leading-tight">
