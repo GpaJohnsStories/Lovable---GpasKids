@@ -56,7 +56,7 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
     console.log('DualAdminAuth: Starting initialization');
     setIsLoading(true);
     
-    // Check legacy auth
+    // Check legacy auth first
     try {
       const storedAuth = sessionStorage.getItem('isAdminAuthenticated');
       if (storedAuth === 'true') {
@@ -64,13 +64,12 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
         setIsLegacyAuthenticated(true);
         setIsAdmin(true);
         setIsLoading(false);
-        return; // Exit early if legacy auth is found
       }
     } catch (error) {
       console.error("Could not access session storage", error);
     }
 
-    // Set up Supabase auth listener with timeout
+    // Always set up Supabase auth listener (even with legacy auth for dual system)
     const authTimeout = setTimeout(() => {
       console.error('DualAdminAuth: Auth check timed out, setting loading to false');
       setIsLoading(false);
@@ -116,63 +115,67 @@ export const DualAdminAuthProvider = ({ children }: DualAdminAuthProviderProps) 
           }
         }
         
-        setIsLoading(false);
+        if (!isLegacyAuthenticated) {
+          setIsLoading(false);
+        }
       }
     );
 
-    // Check for existing session with timeout
-    const sessionPromise = supabase.auth.getSession().then(({ data: { session }, error }) => {
-      console.log('DualAdminAuth: Initial session check', { hasSession: !!session, error });
-      clearTimeout(authTimeout);
-      
-      if (error) {
-        console.error('DualAdminAuth: Initial session error:', error);
-        setIsLoading(false);
-        return;
-      }
-      
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        console.log('DualAdminAuth: Initial session found');
-        setIsSupabaseAuthenticated(true);
+    // Check for existing session with timeout (only if no legacy auth)
+    if (!sessionStorage.getItem('isAdminAuthenticated')) {
+      supabase.auth.getSession().then(({ data: { session }, error }) => {
+        console.log('DualAdminAuth: Initial session check', { hasSession: !!session, error });
+        clearTimeout(authTimeout);
         
-        // Check admin status safely with timeout
-        setTimeout(async () => {
-          try {
-            const { data: profile, error } = await supabase
-              .from('profiles')
-              .select('role')
-              .eq('id', session.user.id)
-              .maybeSingle();
-            
-            if (!error && profile?.role === 'admin') {
-              setIsAdmin(true);
-              console.log('DualAdminAuth: Initial user confirmed as admin');
-            } else {
-              console.log('DualAdminAuth: Initial user not admin or error:', error);
+        if (error) {
+          console.error('DualAdminAuth: Initial session error:', error);
+          setIsLoading(false);
+          return;
+        }
+        
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          console.log('DualAdminAuth: Initial session found');
+          setIsSupabaseAuthenticated(true);
+          
+          // Check admin status safely with timeout
+          setTimeout(async () => {
+            try {
+              const { data: profile, error } = await supabase
+                .from('profiles')
+                .select('role')
+                .eq('id', session.user.id)
+                .maybeSingle();
+              
+              if (!error && profile?.role === 'admin') {
+                setIsAdmin(true);
+                console.log('DualAdminAuth: Initial user confirmed as admin');
+              } else {
+                console.log('DualAdminAuth: Initial user not admin or error:', error);
+              }
+            } catch (err) {
+              console.log('DualAdminAuth: Initial admin check failed');
             }
-          } catch (err) {
-            console.log('DualAdminAuth: Initial admin check failed');
-          }
-        }, 100);
-      } else {
-        setIsSupabaseAuthenticated(false);
-      }
-      
-      setIsLoading(false);
-    }).catch((error) => {
-      console.error('DualAdminAuth: Session check exception:', error);
-      clearTimeout(authTimeout);
-      setIsLoading(false);
-    });
+          }, 100);
+        } else {
+          setIsSupabaseAuthenticated(false);
+        }
+        
+        setIsLoading(false);
+      }).catch((error) => {
+        console.error('DualAdminAuth: Session check exception:', error);
+        clearTimeout(authTimeout);
+        setIsLoading(false);
+      });
+    }
 
     return () => {
       clearTimeout(authTimeout);
       subscription.unsubscribe();
     };
-  }, []);
+  }, [isLegacyAuthenticated]);
 
   // Legacy login
   const legacyLogin = async (email: string, password: string) => {
