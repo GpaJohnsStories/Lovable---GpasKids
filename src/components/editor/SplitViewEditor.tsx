@@ -128,6 +128,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
         onInsertList={handleInsertList}
         onAlign={handleAlign}
         onClearHtml={handleClearHtml}
+        onInsertText={insertTextAtCursor}
       />
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">

@@ -171,6 +171,14 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           break;
         case 'n':
           e.preventDefault();
+          insertAtCursor('–'); // N-dash (short pause)
+          break;
+        case 'm':
+          e.preventDefault();
+          insertAtCursor('—'); // M-dash (long pause)
+          break;
+        case '#':
+          e.preventDefault();
           insertAtCursor('<ol>\n  <li></li>\n  <li></li>\n</ol>');
           break;
         case '1':
@@ -214,12 +222,14 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + H', action: 'Help' },
     { key: 'Ctrl + I', action: 'Italics' },
     { key: 'Ctrl + L', action: 'Bullets' },
-    { key: 'Ctrl + N', action: 'Numbered List' },
+    { key: 'Ctrl + M', action: 'M-dash (long pause)' },
+    { key: 'Ctrl + N', action: 'N-dash (short pause)' },
     { key: 'Ctrl + P', action: 'Paragraph' },
     { key: 'Ctrl + T', action: 'Center Text' },
     { key: 'Ctrl + U', action: 'Underline' },
     { key: 'Ctrl + X', action: 'Cut' },
     { key: 'Ctrl + Y', action: 'Paste' },
+    { key: 'Ctrl + #', action: 'Numbered List' },
     { key: 'Ctrl + 1', action: 'H1 Heading' },
     { key: 'Ctrl + 2', action: 'H2 Heading' },
     { key: 'Ctrl + 3', action: 'H3 Heading' },

@@ -8,9 +8,10 @@ interface StickyToolbarProps {
   onInsertList: (ordered: boolean) => void;
   onAlign: (alignment: string) => void;
   onClearHtml: () => void;
+  onInsertText: (text: string) => void;
 }
 
-const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, onAlign, onClearHtml }) => {
+const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, onAlign, onClearHtml, onInsertText }) => {
   return (
     <div className="sticky top-0 z-10 bg-white border-b border-gray-200 p-3 shadow-sm">
       <div className="flex items-center gap-2 flex-wrap">
@@ -128,7 +129,31 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
 
         <Separator orientation="vertical" className="h-6" />
 
-        {/* Clear HTML */}
+        {/* Dash buttons for audio pauses */}
+        <div className="flex items-center gap-1">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => onInsertText('–')}
+            className="h-8 px-3 text-sm font-bold"
+            title="Insert N-dash (short pause for audio)"
+          >
+            –
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => onInsertText('—')}
+            className="h-8 px-3 text-sm font-bold"
+            title="Insert M-dash (long pause for audio)"
+          >
+            —
+          </Button>
+        </div>
+
+        <Separator orientation="vertical" className="h-6" />
         <Button
           type="button"
           variant="outline"
