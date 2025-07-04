@@ -1,6 +1,6 @@
 
 import { renderCategoryBadge } from "@/utils/categoryUtils";
-import { Headphones, Loader } from "lucide-react";
+import { Play, Pause, Square, Loader } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
@@ -24,7 +24,6 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
   const [audioCleanup, setAudioCleanup] = useState<(() => void) | null>(null);
   const [audioUrls, setAudioUrls] = useState<string[]>([]);
   const [currentSegment, setCurrentSegment] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [audioGenerated, setAudioGenerated] = useState(false);
 
   // Cleanup audio resources when component unmounts
@@ -96,43 +95,14 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
     }
   };
 
-  const handleReadStory = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
+  // Generate and play audio
+  const handlePlay = async () => {
     try {
-      // If currently playing, pause it
-      if (isPlaying && currentAudio) {
-        console.log('⏸️ Pausing audio playback');
-        currentAudio.pause();
-        setIsPlaying(false);
-        setIsPaused(true);
-        toast({
-          title: "Reading paused",
-          description: "Audio playback has been paused. Click again to resume.",
-        });
-        return;
-      }
-
-      // If paused and audio exists, resume playback
-      if (isPaused && currentAudio && audioGenerated) {
-        console.log('▶️ Resuming audio playback');
-        setIsPlaying(true);
-        setIsPaused(false);
-        await currentAudio.play();
-        toast({
-          title: "Reading resumed",
-          description: "Audio playback has been resumed",
-        });
-        return;
-      }
-
       // If audio already generated and not playing, start from beginning
       if (audioGenerated && audioUrls.length > 0) {
-        console.log('🔄 Restarting audio from beginning');
+        console.log('🔄 Starting audio playback');
         setCurrentSegment(0);
         setIsPlaying(true);
-        setIsPaused(false);
         playNextSegment(0);
         return;
       }
@@ -281,7 +251,6 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         setAudioUrls([]);
         setAudioGenerated(false);
         setCurrentSegment(0);
-        setIsPaused(false);
       };
       
       setAudioCleanup(() => cleanup);
@@ -297,7 +266,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       });
       
     } catch (error) {
-      console.error('❌ Error in handleReadStory:', error);
+      console.error('❌ Error in handlePlay:', error);
       setIsPlaying(false);
       setIsLoading(false);
       setCurrentAudio(null);
@@ -310,6 +279,34 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
     }
   };
 
+  // Pause audio playback
+  const handlePause = () => {
+    if (currentAudio && isPlaying) {
+      console.log('⏸️ Pausing audio playback');
+      currentAudio.pause();
+      setIsPlaying(false);
+      toast({
+        title: "Reading paused",
+        description: "Audio playback has been paused",
+      });
+    }
+  };
+
+  // Stop and reset audio
+  const handleStop = () => {
+    if (currentAudio) {
+      console.log('⏹️ Stopping audio playback');
+      currentAudio.pause();
+      setCurrentAudio(null);
+    }
+    setIsPlaying(false);
+    setCurrentSegment(0);
+    toast({
+      title: "Reading stopped",
+      description: "Audio playback has been stopped and reset",
+    });
+  };
+
   return (
     <>
       <div className="text-center mb-6">
@@ -317,49 +314,57 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       </div>
 
       <div className="flex items-center justify-center mb-4 relative">
-        {/* Purple 3D Read Button - positioned left of title */}
-        <button
-          onClick={handleReadStory}
-          disabled={isLoading}
-          className={`mr-4 text-white text-sm px-3 py-2 rounded-lg font-bold shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.3)] border border-purple-700 transition-all duration-200 flex items-center gap-2 font-fun ${
-            isLoading 
-              ? 'bg-gray-400 cursor-not-allowed' 
-              : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 hover:shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)] hover:from-purple-500 hover:via-purple-600 hover:to-purple-700'
-          }`}
-          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-          title={
-            isLoading 
-              ? "Preparing audio..." 
-              : isPlaying 
-                ? "Click to pause reading" 
-                : isPaused
-                  ? "Click to resume reading"
-                  : audioGenerated
-                    ? "Click to play the story again"
-                    : "Click to read this story aloud"
-          }
-        >
-          {isLoading ? (
-            <Loader className="h-4 w-4 animate-spin" />
-          ) : (
-            <Headphones className="h-4 w-4" />
-          )}
-          {isLoading 
-            ? (
-                <span>
-                  Preparing your story for audio...<br />
-                  Please be patient, long stories may take 1 or 2 minutes.
-                </span>
-              )
-            : isPlaying 
-              ? "Pause Reading" 
-              : isPaused
-                ? "Resume Reading"
-                : audioGenerated
-                  ? "Play Again"
-                  : "Please read this to me."
-          }
-        </button>
+        {/* Three separate audio control buttons */}
+        <div className="flex items-center gap-3 mr-4">
+          {/* Play Button */}
+          <button
+            onClick={handlePlay}
+            disabled={isLoading || isPlaying}
+            className={`text-white text-sm px-3 py-2 rounded-lg font-bold shadow-[0_4px_0_#22c55e,0_6px_12px_rgba(0,0,0,0.3)] border border-green-700 transition-all duration-200 flex items-center gap-2 ${
+              isLoading || isPlaying
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.3)] hover:from-green-500 hover:via-green-600 hover:to-green-700'
+            }`}
+            title={isLoading ? "Generating audio..." : isPlaying ? "Currently playing" : "Start playing the story"}
+          >
+            {isLoading ? (
+              <Loader className="h-4 w-4 animate-spin" />
+            ) : (
+              <Play className="h-4 w-4" />
+            )}
+            {isLoading ? "Loading..." : "Play"}
+          </button>
+
+          {/* Pause Button */}
+          <button
+            onClick={handlePause}
+            disabled={!isPlaying}
+            className={`text-white text-sm px-3 py-2 rounded-lg font-bold shadow-[0_4px_0_#f59e0b,0_6px_12px_rgba(0,0,0,0.3)] border border-amber-700 transition-all duration-200 flex items-center gap-2 ${
+              !isPlaying
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 hover:shadow-[0_3px_0_#f59e0b,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#f59e0b,0_2px_4px_rgba(0,0,0,0.3)] hover:from-amber-500 hover:via-amber-600 hover:to-amber-700'
+            }`}
+            title={isPlaying ? "Pause audio playback" : "No audio playing"}
+          >
+            <Pause className="h-4 w-4" />
+            Pause
+          </button>
+
+          {/* Stop Button */}
+          <button
+            onClick={handleStop}
+            disabled={!audioGenerated}
+            className={`text-white text-sm px-3 py-2 rounded-lg font-bold shadow-[0_4px_0_#ef4444,0_6px_12px_rgba(0,0,0,0.3)] border border-red-700 transition-all duration-200 flex items-center gap-2 ${
+              !audioGenerated
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-gradient-to-b from-red-400 via-red-500 to-red-600 hover:shadow-[0_3px_0_#ef4444,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#ef4444,0_2px_4px_rgba(0,0,0,0.3)] hover:from-red-500 hover:via-red-600 hover:to-red-700'
+            }`}
+            title={audioGenerated ? "Stop and reset audio" : "No audio to stop"}
+          >
+            <Square className="h-4 w-4" />
+            Stop
+          </button>
+        </div>
 
         <h1 className="text-3xl font-bold text-orange-800 text-center leading-tight">
           {title}
