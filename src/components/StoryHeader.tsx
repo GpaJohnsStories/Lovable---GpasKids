@@ -25,6 +25,8 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
   const [audioUrls, setAudioUrls] = useState<string[]>([]);
   const [currentSegment, setCurrentSegment] = useState(0);
   const [audioGenerated, setAudioGenerated] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [pausedPosition, setPausedPosition] = useState(0);
 
   // Cleanup audio resources when component unmounts
   useEffect(() => {
@@ -98,17 +100,28 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
   // Generate and play audio
   const handlePlay = async () => {
     try {
+      // If audio already generated and paused, resume from current position
+      if (audioGenerated && audioUrls.length > 0 && isPaused && currentAudio) {
+        console.log('▶️ Resuming audio playback');
+        setIsPlaying(true);
+        setIsPaused(false);
+        currentAudio.currentTime = pausedPosition;
+        await currentAudio.play();
+        return;
+      }
+
       // If audio already generated and not playing, start from beginning
       if (audioGenerated && audioUrls.length > 0) {
-        console.log('🔄 Starting audio playback');
+        console.log('🔄 Starting audio playback from beginning');
         setCurrentSegment(0);
         setIsPlaying(true);
-        playNextSegment(0);
+        setIsPaused(false);
+        setPausedPosition(0);
+        await playNextSegment(0);
         return;
       }
 
       // Generate new audio if not already generated
-      setIsPlaying(true);
       setIsLoading(true);
       
       // Prepare text for reading - combine title, subtitle, author, description, and content
@@ -243,6 +256,9 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       setAudioGenerated(true);
       setCurrentSegment(0);
       setIsLoading(false);
+      setIsPlaying(true);
+      setIsPaused(false);
+      setPausedPosition(0);
 
       // Create cleanup function that only runs on component unmount or page leave
       const cleanup = () => {
@@ -256,7 +272,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       setAudioCleanup(() => cleanup);
 
       // Start playing from the first segment
-      playNextSegment();
+      await playNextSegment(0);
       
       toast({
         title: "Now reading story!",
@@ -283,6 +299,8 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
   const handlePause = () => {
     if (currentAudio && isPlaying) {
       console.log('⏸️ Pausing audio playback');
+      setPausedPosition(currentAudio.currentTime);
+      setIsPaused(true);
       currentAudio.pause();
       setIsPlaying(false);
       toast({
@@ -300,6 +318,8 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       setCurrentAudio(null);
     }
     setIsPlaying(false);
+    setIsPaused(false);
+    setPausedPosition(0);
     setCurrentSegment(0);
     toast({
       title: "Reading stopped",
