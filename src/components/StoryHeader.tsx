@@ -3,7 +3,7 @@ import { renderCategoryBadge } from "@/utils/categoryUtils";
 import { Headphones, Loader } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface StoryHeaderProps {
   title: string;
@@ -22,33 +22,122 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
   const [isLoading, setIsLoading] = useState(false);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
   const [audioCleanup, setAudioCleanup] = useState<(() => void) | null>(null);
+  const [audioUrls, setAudioUrls] = useState<string[]>([]);
+  const [currentSegment, setCurrentSegment] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [audioGenerated, setAudioGenerated] = useState(false);
+
+  // Cleanup audio resources when component unmounts
+  useEffect(() => {
+    return () => {
+      if (audioCleanup) {
+        audioCleanup();
+      }
+    };
+  }, [audioCleanup]);
+
+  const playNextSegment = async (segmentIndex?: number) => {
+    const segment = segmentIndex !== undefined ? segmentIndex : currentSegment;
+    
+    if (segment >= audioUrls.length) {
+      console.log('🎵 All audio segments completed');
+      setIsPlaying(false);
+      setCurrentAudio(null);
+      setCurrentSegment(0);
+      return;
+    }
+
+    console.log(`🎵 Starting segment ${segment + 1}/${audioUrls.length}`);
+    
+    const audio = new Audio(audioUrls[segment]);
+    audio.volume = 1.0;
+    setCurrentAudio(audio);
+    
+    // Handle audio end - move to next segment
+    audio.onended = () => {
+      console.log(`🎵 Segment ${segment + 1} completed`);
+      const nextSegment = segment + 1;
+      setCurrentSegment(nextSegment);
+      
+      // Small delay before next segment to ensure state updates
+      setTimeout(() => {
+        if (nextSegment < audioUrls.length) {
+          playNextSegment(nextSegment);
+        } else {
+          setIsPlaying(false);
+          setCurrentAudio(null);
+          setCurrentSegment(0);
+        }
+      }, 100);
+    };
+    
+    audio.onerror = (e) => {
+      console.error('❌ Audio playback error:', e);
+      setIsPlaying(false);
+      setCurrentAudio(null);
+      toast({
+        title: "Audio playback error",
+        description: "Failed to play the generated audio",
+        variant: "destructive",
+      });
+    };
+
+    try {
+      await audio.play();
+    } catch (error) {
+      console.error('❌ Audio play error:', error);
+      setIsPlaying(false);
+      setCurrentAudio(null);
+      toast({
+        title: "Audio playback error",
+        description: "Failed to play the generated audio",
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleReadStory = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     
     try {
-      // Stop any currently playing audio
-      if (isPlaying) {
-        console.log('🛑 Stopping audio playback');
-        if (currentAudio) {
-          currentAudio.pause();
-          currentAudio.currentTime = 0;
-        }
-        if (audioCleanup) {
-          audioCleanup();
-        }
+      // If currently playing, pause it
+      if (isPlaying && currentAudio) {
+        console.log('⏸️ Pausing audio playback');
+        currentAudio.pause();
         setIsPlaying(false);
-        setIsLoading(false);
-        setCurrentAudio(null);
-        setAudioCleanup(null);
+        setIsPaused(true);
         toast({
-          title: "Reading stopped",
-          description: "Audio playback has been stopped",
+          title: "Reading paused",
+          description: "Audio playback has been paused. Click again to resume.",
         });
         return;
       }
 
+      // If paused and audio exists, resume playback
+      if (isPaused && currentAudio && audioGenerated) {
+        console.log('▶️ Resuming audio playback');
+        setIsPlaying(true);
+        setIsPaused(false);
+        await currentAudio.play();
+        toast({
+          title: "Reading resumed",
+          description: "Audio playback has been resumed",
+        });
+        return;
+      }
+
+      // If audio already generated and not playing, start from beginning
+      if (audioGenerated && audioUrls.length > 0) {
+        console.log('🔄 Restarting audio from beginning');
+        setCurrentSegment(0);
+        setIsPlaying(true);
+        setIsPaused(false);
+        playNextSegment();
+        return;
+      }
+
+      // Generate new audio if not already generated
       setIsPlaying(true);
       setIsLoading(true);
       
@@ -78,7 +167,6 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       }
 
       // Convert dashes to natural pauses for better speech flow
-      // M-dash (—) becomes multiple periods for longer pause, n-dash (–) becomes ellipsis for shorter pause
       const processTextForSpeech = (text: string) => {
         return text
           .replace(/—/g, '... ... ...')  // M-dash: longer pause with multiple periods
@@ -117,7 +205,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         }
       }
 
-      const audioUrls: string[] = [];
+      const newAudioUrls: string[] = [];
       
       toast({
         title: "Preparing your story...",
@@ -142,7 +230,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         if (error) {
           console.error('❌ Text-to-speech error:', error);
           // Clean up any audio URLs we've created so far
-          audioUrls.forEach(url => URL.revokeObjectURL(url));
+          newAudioUrls.forEach(url => URL.revokeObjectURL(url));
           setIsPlaying(false);
           setIsLoading(false);
           setCurrentAudio(null);
@@ -156,7 +244,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
 
         if (!data || !data.audioContent) {
           console.error('❌ No audio content returned');
-          audioUrls.forEach(url => URL.revokeObjectURL(url));
+          newAudioUrls.forEach(url => URL.revokeObjectURL(url));
           setIsPlaying(false);
           setIsLoading(false);
           setCurrentAudio(null);
@@ -177,89 +265,28 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         
         const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
         const audioUrl = URL.createObjectURL(audioBlob);
-        audioUrls.push(audioUrl);
+        newAudioUrls.push(audioUrl);
       }
 
-      console.log(`✅ Generated ${audioUrls.length} audio segments`);
+      console.log(`✅ Generated ${newAudioUrls.length} audio segments`);
+      setAudioUrls(newAudioUrls);
+      setAudioGenerated(true);
+      setCurrentSegment(0);
       setIsLoading(false);
 
-      let currentSegment = 0;
-      let currentPlayingAudio: HTMLAudioElement | null = null;
-      let shouldStop = false;
-      
-      // Create cleanup function
+      // Create cleanup function that only runs on component unmount or page leave
       const cleanup = () => {
         console.log('🧹 Cleaning up audio resources');
-        shouldStop = true;
-        if (currentPlayingAudio) {
-          currentPlayingAudio.pause();
-          currentPlayingAudio.currentTime = 0;
-        }
-        audioUrls.forEach(url => URL.revokeObjectURL(url));
+        newAudioUrls.forEach(url => URL.revokeObjectURL(url));
+        setAudioUrls([]);
+        setAudioGenerated(false);
+        setCurrentSegment(0);
+        setIsPaused(false);
       };
       
       setAudioCleanup(() => cleanup);
-      
-      const playNextSegment = async () => {
-        if (shouldStop || currentSegment >= audioUrls.length) {
-          if (!shouldStop) {
-            console.log('🎵 All audio segments completed');
-          }
-          setIsPlaying(false);
-          setCurrentAudio(null);
-          setAudioCleanup(null);
-          cleanup();
-          return;
-        }
 
-        console.log(`🎵 Starting segment ${currentSegment + 1}/${audioUrls.length}`);
-        
-        const audio = new Audio(audioUrls[currentSegment]);
-        audio.volume = 1.0; // Set volume to maximum (100%)
-        currentPlayingAudio = audio;
-        setCurrentAudio(audio);
-        
-        // Create a promise that resolves when audio ends or errors
-        const playPromise = new Promise<void>((resolve, reject) => {
-          audio.onended = () => {
-            console.log(`🎵 Segment ${currentSegment + 1} completed`);
-            resolve();
-          };
-          
-          audio.onerror = (e) => {
-            console.error('❌ Audio playback error:', e);
-            reject(e);
-          };
-        });
-
-        try {
-          if (shouldStop) return;
-          
-          await audio.play();
-          await playPromise; // Wait for audio to finish
-          
-          // Only proceed to next segment if we should continue
-          if (!shouldStop && currentPlayingAudio === audio) {
-            currentSegment++;
-            await playNextSegment(); // Wait for next segment to complete
-          }
-        } catch (error) {
-          if (!shouldStop) {
-            console.error('❌ Audio play error:', error);
-            setIsPlaying(false);
-            setCurrentAudio(null);
-            setAudioCleanup(null);
-            cleanup();
-            toast({
-              title: "Audio playback error",
-              description: "Failed to play the generated audio",
-              variant: "destructive",
-            });
-          }
-        }
-      };
-
-      // Start playing the first segment
+      // Start playing from the first segment
       playNextSegment();
       
       toast({
@@ -304,8 +331,12 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
             isLoading 
               ? "Preparing audio..." 
               : isPlaying 
-                ? "Click to stop reading" 
-                : "Click to read this story aloud"
+                ? "Click to pause reading" 
+                : isPaused
+                  ? "Click to resume reading"
+                  : audioGenerated
+                    ? "Click to play the story again"
+                    : "Click to read this story aloud"
           }
         >
           {isLoading ? (
@@ -316,8 +347,12 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
           {isLoading 
             ? "Preparing your story for audio..." 
             : isPlaying 
-              ? "Pause or Stop Reading" 
-              : "Please read this to me."
+              ? "Pause Reading" 
+              : isPaused
+                ? "Resume Reading"
+                : audioGenerated
+                  ? "Play Again"
+                  : "Please read this to me."
           }
         </button>
 
