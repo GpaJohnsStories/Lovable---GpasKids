@@ -15,9 +15,12 @@ interface StoryHeaderProps {
   showStoryCode?: boolean;
   content?: string;
   description?: string;
+  audioUrl?: string;
+  audioSegments?: number;
+  audioDuration?: number;
 }
 
-const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, showStoryCode = false, content, description }: StoryHeaderProps) => {
+const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, showStoryCode = false, content, description, audioUrl, audioSegments, audioDuration }: StoryHeaderProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
@@ -121,7 +124,63 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         return;
       }
 
-      // Generate new audio if not already generated
+      // First priority: Use pre-generated audio from database if available
+      if (audioUrl && !audioGenerated) {
+        console.log('🎵 Using pre-generated audio:', audioUrl);
+        setIsLoading(true);
+        
+        try {
+          const audio = new Audio(audioUrl);
+          audio.volume = 1.0;
+          setCurrentAudio(audio);
+          setAudioUrls([audioUrl]);
+          setAudioGenerated(true);
+          setCurrentSegment(0);
+          setIsLoading(false);
+          setIsPlaying(true);
+          setIsPaused(false);
+          setPausedPosition(0);
+
+          // Handle audio events
+          audio.onended = () => {
+            console.log('🎵 Pre-generated audio completed');
+            setIsPlaying(false);
+            setCurrentAudio(null);
+            setCurrentSegment(0);
+          };
+
+          audio.onerror = (e) => {
+            console.error('❌ Pre-generated audio playback error:', e);
+            setIsPlaying(false);
+            setCurrentAudio(null);
+            setAudioGenerated(false);
+            setAudioUrls([]);
+            toast({
+              title: "Audio playback error",
+              description: "Failed to play pre-generated audio",
+              variant: "destructive",
+            });
+          };
+
+          await audio.play();
+          
+          const segmentText = audioSegments ? ` (${audioSegments} segments)` : '';
+          toast({
+            title: "Now reading story!",
+            description: `Playing pre-generated audio for "${title}"${segmentText}`,
+          });
+          
+          return;
+        } catch (error) {
+          console.error('❌ Error playing pre-generated audio:', error);
+          setIsLoading(false);
+          setIsPlaying(false);
+          setCurrentAudio(null);
+          // Fall through to on-demand generation
+        }
+      }
+
+      // Fallback: Generate audio on-demand (existing logic)
       setIsLoading(true);
       
       // Prepare text for reading - combine title, subtitle, author, description, and content
@@ -158,7 +217,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       
       textToRead = processTextForSpeech(textToRead);
 
-      console.log('🎵 Starting voice generation for story:', title);
+      console.log('🎵 Starting on-demand voice generation for story:', title);
 
       // Split text into chunks of ~4000 characters (leaving buffer for API limit)
       const chunkSize = 4000;

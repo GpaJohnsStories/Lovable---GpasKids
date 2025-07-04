@@ -129,6 +129,9 @@ const Story = () => {
                   showStoryCode={true}
                   content={story.content}
                   description={story.excerpt}
+                  audioUrl={story.audio_url}
+                  audioSegments={story.audio_segments}
+                  audioDuration={story.audio_duration_seconds}
                 />
 
                 {story.video_url && (

@@ -112,6 +112,10 @@ export type Database = {
       }
       stories: {
         Row: {
+          audio_duration_seconds: number | null
+          audio_generated_at: string | null
+          audio_segments: number | null
+          audio_url: string | null
           author: string
           category: Database["public"]["Enums"]["story_category"]
           content: string | null
@@ -137,6 +141,10 @@ export type Database = {
           video_url: string | null
         }
         Insert: {
+          audio_duration_seconds?: number | null
+          audio_generated_at?: string | null
+          audio_segments?: number | null
+          audio_url?: string | null
           author: string
           category: Database["public"]["Enums"]["story_category"]
           content?: string | null
@@ -162,6 +170,10 @@ export type Database = {
           video_url?: string | null
         }
         Update: {
+          audio_duration_seconds?: number | null
+          audio_generated_at?: string | null
+          audio_segments?: number | null
+          audio_url?: string | null
           author?: string
           category?: Database["public"]["Enums"]["story_category"]
           content?: string | null

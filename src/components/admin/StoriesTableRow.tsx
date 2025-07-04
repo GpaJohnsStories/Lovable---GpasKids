@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X } from "lucide-react";
+import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volume2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -28,6 +28,10 @@ interface Story {
   content?: string;
   excerpt?: string;
   video_url?: string;
+  audio_url?: string;
+  audio_generated_at?: string;
+  audio_segments?: number;
+  audio_duration_seconds?: number;
 }
 
 interface StoriesTableRowProps {
@@ -49,6 +53,7 @@ const StoriesTableRow = ({
 }: StoriesTableRowProps) => {
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [editedDate, setEditedDate] = useState('');
+  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
 
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
@@ -161,6 +166,51 @@ const StoriesTableRow = ({
   const handleCancelDateEdit = () => {
     setIsEditingDate(false);
     setEditedDate('');
+  };
+
+  const handleGenerateAudio = async () => {
+    setIsGeneratingAudio(true);
+    
+    try {
+      toast.loading(`Generating audio for "${story.title}"...`, {
+        id: `audio-${story.id}`,
+        duration: 60000, // Show for up to 1 minute
+      });
+
+      const { data, error } = await supabase.functions.invoke('generate-story-audio', {
+        body: { storyId: story.id }
+      });
+
+      if (error) {
+        console.error('❌ Audio generation error:', error);
+        toast.error(`Failed to generate audio: ${error.message}`, {
+          id: `audio-${story.id}`,
+        });
+        return;
+      }
+
+      if (data?.success) {
+        toast.success(data.message || `Audio generated for "${story.title}"!`, {
+          id: `audio-${story.id}`,
+        });
+        
+        // Refresh the data to show updated audio status
+        if (onStatusChange) {
+          onStatusChange();
+        }
+      } else {
+        toast.error(data?.error || 'Failed to generate audio', {
+          id: `audio-${story.id}`,
+        });
+      }
+    } catch (error) {
+      console.error('❌ Audio generation error:', error);
+      toast.error('Failed to generate audio', {
+        id: `audio-${story.id}`,
+      });
+    } finally {
+      setIsGeneratingAudio(false);
+    }
   };
 
   const firstPhoto = getFirstAvailablePhoto();
@@ -311,6 +361,19 @@ const StoriesTableRow = ({
               onClick={() => onEdit(story)}
             >
               <Edit className="h-4 w-4" />
+            </Button>
+            <Button
+              size="sm"
+              className={`${
+                story.audio_url 
+                  ? '!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700' 
+                  : '!bg-gradient-to-b !from-purple-400 !to-purple-600 !text-white !border-purple-700'
+              } !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)]`}
+              onClick={handleGenerateAudio}
+              disabled={isGeneratingAudio}
+              title={story.audio_url ? 'Regenerate audio' : 'Generate audio'}
+            >
+              <Volume2 className="h-4 w-4" />
             </Button>
             <Button
               size="sm"
