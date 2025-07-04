@@ -132,6 +132,8 @@ const Story = () => {
                   audioUrl={story.audio_url}
                   audioSegments={story.audio_segments}
                   audioDuration={story.audio_duration_seconds}
+                  aiVoiceName={story.ai_voice_name}
+                  aiVoiceModel={story.ai_voice_model}
                 />
 
                 {story.video_url && (

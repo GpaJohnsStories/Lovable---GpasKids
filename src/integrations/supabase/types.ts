@@ -112,6 +112,8 @@ export type Database = {
       }
       stories: {
         Row: {
+          ai_voice_model: string | null
+          ai_voice_name: string | null
           audio_duration_seconds: number | null
           audio_generated_at: string | null
           audio_segments: number | null
@@ -141,6 +143,8 @@ export type Database = {
           video_url: string | null
         }
         Insert: {
+          ai_voice_model?: string | null
+          ai_voice_name?: string | null
           audio_duration_seconds?: number | null
           audio_generated_at?: string | null
           audio_segments?: number | null
@@ -170,6 +174,8 @@ export type Database = {
           video_url?: string | null
         }
         Update: {
+          ai_voice_model?: string | null
+          ai_voice_name?: string | null
           audio_duration_seconds?: number | null
           audio_generated_at?: string | null
           audio_segments?: number | null

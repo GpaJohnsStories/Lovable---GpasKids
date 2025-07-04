@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volume2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -32,6 +33,8 @@ interface Story {
   audio_generated_at?: string;
   audio_segments?: number;
   audio_duration_seconds?: number;
+  ai_voice_name?: string;
+  ai_voice_model?: string;
 }
 
 interface StoriesTableRowProps {
@@ -54,6 +57,7 @@ const StoriesTableRow = ({
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [editedDate, setEditedDate] = useState('');
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+  const [selectedVoice, setSelectedVoice] = useState(story.ai_voice_name || 'Nova');
 
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
@@ -168,11 +172,34 @@ const StoriesTableRow = ({
     setEditedDate('');
   };
 
+  const handleVoiceChange = async (newVoice: string) => {
+    setSelectedVoice(newVoice);
+    
+    // Update the story record with the selected voice
+    const { error } = await supabase
+      .from('stories')
+      .update({ 
+        ai_voice_name: newVoice,
+        ai_voice_model: 'tts-1'
+      })
+      .eq('id', story.id);
+
+    if (error) {
+      toast.error("Error updating voice selection");
+      console.error(error);
+    } else {
+      toast.success(`Voice updated to ${newVoice}`);
+      if (onStatusChange) {
+        onStatusChange();
+      }
+    }
+  };
+
   const handleGenerateAudio = async () => {
     setIsGeneratingAudio(true);
     
     try {
-      toast.loading(`Generating audio for "${story.title}"...`, {
+      toast.loading(`Generating audio for "${story.title}" with ${selectedVoice} voice...`, {
         id: `audio-${story.id}`,
         duration: 60000, // Show for up to 1 minute
       });
@@ -362,19 +389,34 @@ const StoriesTableRow = ({
             >
               <Edit className="h-4 w-4" />
             </Button>
-            <Button
-              size="sm"
-              className={`${
-                story.audio_url 
-                  ? '!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700' 
-                  : '!bg-gradient-to-b !from-purple-400 !to-purple-600 !text-white !border-purple-700'
-              } !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)]`}
-              onClick={handleGenerateAudio}
-              disabled={isGeneratingAudio}
-              title={story.audio_url ? 'Regenerate audio' : 'Generate audio'}
-            >
-              <Volume2 className="h-4 w-4" />
-            </Button>
+            <div className="flex flex-col space-y-1">
+              <Select value={selectedVoice} onValueChange={handleVoiceChange}>
+                <SelectTrigger className="w-20 h-6 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Nova">Nova</SelectItem>
+                  <SelectItem value="Alloy">Alloy</SelectItem>
+                  <SelectItem value="Echo">Echo</SelectItem>
+                  <SelectItem value="Fable">Fable</SelectItem>
+                  <SelectItem value="Onyx">Onyx</SelectItem>
+                  <SelectItem value="Shimmer">Shimmer</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                size="sm"
+                className={`${
+                  story.audio_url 
+                    ? '!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700' 
+                    : '!bg-gradient-to-b !from-purple-400 !to-purple-600 !text-white !border-purple-700'
+                } !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-20 h-6 text-xs`}
+                onClick={handleGenerateAudio}
+                disabled={isGeneratingAudio}
+                title={story.audio_url ? 'Regenerate audio' : 'Generate audio'}
+              >
+                <Volume2 className="h-3 w-3" />
+              </Button>
+            </div>
             <Button
               size="sm"
               variant="destructive"

@@ -118,7 +118,7 @@ serve(async (req) => {
         body: JSON.stringify({
           model: 'tts-1',
           input: chunk,
-          voice: 'nova',
+          voice: story.ai_voice_name?.toLowerCase() || 'nova',
           response_format: 'mp3',
           speed: 0.85,
         }),

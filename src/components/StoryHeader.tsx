@@ -18,9 +18,11 @@ interface StoryHeaderProps {
   audioUrl?: string;
   audioSegments?: number;
   audioDuration?: number;
+  aiVoiceName?: string;
+  aiVoiceModel?: string;
 }
 
-const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, showStoryCode = false, content, description, audioUrl, audioSegments, audioDuration }: StoryHeaderProps) => {
+const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, showStoryCode = false, content, description, audioUrl, audioSegments, audioDuration, aiVoiceName, aiVoiceModel }: StoryHeaderProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
@@ -475,6 +477,14 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         <p className="text-lg text-orange-700 text-center mb-6 italic" style={{ fontFamily: 'Georgia, serif' }}>
           {description}
         </p>
+      )}
+
+      {aiVoiceName && audioUrl && (
+        <div className="text-center mb-4">
+          <p className="text-sm text-orange-600 italic" style={{ fontFamily: 'Georgia, serif' }}>
+            Story is read by {aiVoiceName} AI voice from OpenAI
+          </p>
+        </div>
       )}
     </>
   );
