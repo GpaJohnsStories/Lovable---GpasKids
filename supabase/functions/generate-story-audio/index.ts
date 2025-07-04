@@ -57,9 +57,8 @@ serve(async (req) => {
     
     // Add main content
     if (story.content) {
-      // Strip HTML tags from content for better speech
-      const tempDiv = new DOMParser().parseFromString(story.content, 'text/html')
-      const cleanContent = tempDiv.body.textContent || tempDiv.body.innerText || ''
+      // Strip HTML tags from content for better speech using regex (Deno-compatible)
+      const cleanContent = story.content.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ')
       textToRead += ` ${cleanContent}`
     }
 
