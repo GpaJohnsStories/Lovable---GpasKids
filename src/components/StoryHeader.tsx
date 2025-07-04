@@ -292,7 +292,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
             <Headphones className="h-4 w-4" />
           )}
           {isLoading 
-            ? "Preparing audio..." 
+            ? "Preparing your story for audio..." 
             : isPlaying 
               ? "Stop Reading" 
               : "Please read this to me."
