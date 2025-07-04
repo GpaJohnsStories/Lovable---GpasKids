@@ -52,11 +52,23 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
       setIsPlaying(true);
       setIsLoading(true);
       
-      // Prepare text for reading - combine title, description, and content
+      // Prepare text for reading - combine title, subtitle, author, description, and content
       let textToRead = `${title}`;
+      
+      // Add tagline/subtitle if available
+      if (tagline) {
+        textToRead += `. ${tagline}`;
+      }
+      
+      // Add author information
+      textToRead += `. By ${author}`;
+      
+      // Add description/excerpt if available
       if (description) {
         textToRead += `. ${description}`;
       }
+      
+      // Add main content
       if (content) {
         // Strip HTML tags from content for better speech
         const tempDiv = document.createElement('div');
