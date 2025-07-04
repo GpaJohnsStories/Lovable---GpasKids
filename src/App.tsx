@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ActivityTracker from "@/components/ActivityTracker";
 import ActivityTrackerDemo from "@/components/ActivityTrackerDemo";
 import Index from "./pages/Index";
@@ -39,8 +39,9 @@ const App = () => (
           <Route path="/comment/:id" element={<CommentDetail />} />
           <Route path="/buddys_admin/voice-preview" element={<AdminVoicePreview />} />
           <Route path="/buddys_admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/buddys_admin" element={<BuddysAdmin />} />
+          <Route path="/buddys_admin/stories" element={<BuddysAdmin />} />
           <Route path="/buddys_admin/comments" element={<AdminComments />} />
+          <Route path="/buddys_admin" element={<Navigate to="/buddys_admin/stories" replace />} />
           <Route path="/writing" element={<Writing />} />
           <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

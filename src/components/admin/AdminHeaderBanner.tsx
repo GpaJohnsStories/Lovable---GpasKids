@@ -46,11 +46,11 @@ const AdminHeaderBanner = () => {
                   Dashboard
                 </Button>
               </Link>
-              <Link to="/buddys_admin">
+              <Link to="/buddys_admin/stories">
                 <Button
                   variant="ghost"
                   className={`transition-all duration-200 border shadow-[0_6px_0_#c2410c,0_8px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)] hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#c2410c,0_4px_8px_rgba(0,0,0,0.3)] ${
-                    location.pathname === '/buddys_admin' 
+                    location.pathname === '/buddys_admin/stories' 
                       ? 'bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700 text-white border-orange-800 ring-4 ring-white ring-opacity-50 transform translate-y-1' 
                       : 'bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700 text-white border-orange-800 hover:from-orange-600 hover:via-orange-700 hover:to-orange-800'
                   }`}

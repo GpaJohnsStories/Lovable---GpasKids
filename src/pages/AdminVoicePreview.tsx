@@ -4,12 +4,20 @@ import VoicePreview from "@/components/VoicePreview";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { DualAdminAuthProvider, useDualAdminAuth } from "@/components/admin/DualAdminAuthProvider";
+import DualAdminLogin from "@/components/admin/DualAdminLogin";
 
-const AdminVoicePreviewPage = () => {
+const AdminVoicePreviewContent = () => {
+  const { isAuthenticated } = useDualAdminAuth();
+
+  if (!isAuthenticated) {
+    return <DualAdminLogin />;
+  }
+
   return (
     <AdminLayout>
       <div className="mb-6 flex items-center justify-between">
-        <Link to="/buddys_admin">
+        <Link to="/buddys_admin/stories">
           <Button className="cozy-button">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Admin Dashboard
@@ -22,6 +30,14 @@ const AdminVoicePreviewPage = () => {
       
       <VoicePreview />
     </AdminLayout>
+  );
+};
+
+const AdminVoicePreviewPage = () => {
+  return (
+    <DualAdminAuthProvider>
+      <AdminVoicePreviewContent />
+    </DualAdminAuthProvider>
   );
 };
 
