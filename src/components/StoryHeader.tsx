@@ -53,74 +53,138 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
 
       console.log('🎵 Starting voice generation for story:', title);
 
-      const { data, error } = await supabase.functions.invoke('text-to-speech', {
-        body: {
-          text: textToRead,
-          voice: 'nova',
-          speed: 0.85 // Slightly slower reading speed
+      // Split text into chunks of ~4000 characters (leaving buffer for API limit)
+      const chunkSize = 4000;
+      const textChunks: string[] = [];
+      
+      if (textToRead.length <= chunkSize) {
+        textChunks.push(textToRead);
+      } else {
+        let currentPos = 0;
+        while (currentPos < textToRead.length) {
+          let chunkEnd = currentPos + chunkSize;
+          
+          // Try to break at sentence boundaries to avoid cutting words
+          if (chunkEnd < textToRead.length) {
+            const nearbyPeriod = textToRead.lastIndexOf('.', chunkEnd);
+            const nearbyExclamation = textToRead.lastIndexOf('!', chunkEnd);
+            const nearbyQuestion = textToRead.lastIndexOf('?', chunkEnd);
+            const bestBreak = Math.max(nearbyPeriod, nearbyExclamation, nearbyQuestion);
+            
+            if (bestBreak > currentPos + chunkSize * 0.7) {
+              chunkEnd = bestBreak + 1;
+            }
+          }
+          
+          textChunks.push(textToRead.slice(currentPos, chunkEnd));
+          currentPos = chunkEnd;
         }
-      });
+      }
 
-      if (error) {
-        console.error('❌ Text-to-speech error:', error);
-        toast({
-          title: "Error reading story",
-          description: error.message,
-          variant: "destructive",
+      const audioUrls: string[] = [];
+      
+      // Generate audio for each chunk
+      for (let i = 0; i < textChunks.length; i++) {
+        const chunk = textChunks[i];
+        console.log(`🎵 Generating audio for segment ${i + 1}/${textChunks.length}`);
+        
+        const { data, error } = await supabase.functions.invoke('text-to-speech', {
+          body: {
+            text: chunk,
+            voice: 'nova',
+            speed: 0.85
+          }
         });
-        return;
+
+        if (error) {
+          console.error('❌ Text-to-speech error:', error);
+          // Clean up any audio URLs we've created so far
+          audioUrls.forEach(url => URL.revokeObjectURL(url));
+          setIsPlaying(false);
+          setCurrentAudio(null);
+          toast({
+            title: "Error reading story",
+            description: error.message,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        if (!data || !data.audioContent) {
+          console.error('❌ No audio content returned');
+          audioUrls.forEach(url => URL.revokeObjectURL(url));
+          setIsPlaying(false);
+          setCurrentAudio(null);
+          toast({
+            title: "Error reading story",
+            description: "No audio content was generated",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        // Convert base64 to audio blob
+        const binaryString = atob(data.audioContent);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let j = 0; j < binaryString.length; j++) {
+          bytes[j] = binaryString.charCodeAt(j);
+        }
+        
+        const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        audioUrls.push(audioUrl);
       }
 
-      if (!data || !data.audioContent) {
-        console.error('❌ No audio content returned');
-        toast({
-          title: "Error reading story",
-          description: "No audio content was generated",
-          variant: "destructive",
+      console.log(`✅ Generated ${audioUrls.length} audio segments`);
+
+      let currentSegment = 0;
+      
+      const playNextSegment = () => {
+        if (currentSegment >= audioUrls.length) {
+          console.log('🎵 All audio segments completed');
+          setIsPlaying(false);
+          setCurrentAudio(null);
+          audioUrls.forEach(url => URL.revokeObjectURL(url));
+          return;
+        }
+
+        const audio = new Audio(audioUrls[currentSegment]);
+        setCurrentAudio(audio);
+        
+        audio.onended = () => {
+          console.log(`🎵 Segment ${currentSegment + 1} completed`);
+          currentSegment++;
+          playNextSegment();
+        };
+        
+        audio.onerror = (e) => {
+          console.error('❌ Audio playback error:', e);
+          setIsPlaying(false);
+          setCurrentAudio(null);
+          audioUrls.forEach(url => URL.revokeObjectURL(url));
+          toast({
+            title: "Audio playback error",
+            description: "Failed to play the generated audio",
+            variant: "destructive",
+          });
+        };
+
+        audio.play().catch(error => {
+          console.error('❌ Audio play error:', error);
+          setIsPlaying(false);
+          setCurrentAudio(null);
+          audioUrls.forEach(url => URL.revokeObjectURL(url));
         });
-        return;
-      }
-
-      console.log('✅ Audio content received, creating playback...');
-
-      // Convert base64 to audio blob
-      const binaryString = atob(data.audioContent);
-      const bytes = new Uint8Array(binaryString.length);
-      for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-      
-      const audioBlob = new Blob([bytes], { type: 'audio/mpeg' });
-      const audioUrl = URL.createObjectURL(audioBlob);
-      
-      const audio = new Audio(audioUrl);
-      setCurrentAudio(audio);
-      
-      audio.onended = () => {
-        console.log('🎵 Audio playback ended');
-        setIsPlaying(false);
-        setCurrentAudio(null);
-        URL.revokeObjectURL(audioUrl);
       };
-      
-      audio.onerror = (e) => {
-        console.error('❌ Audio playback error:', e);
-        setIsPlaying(false);
-        setCurrentAudio(null);
-        URL.revokeObjectURL(audioUrl);
-        toast({
-          title: "Audio playback error",
-          description: "Failed to play the generated audio",
-          variant: "destructive",
-        });
-      };
 
-      await audio.play();
-      console.log('🎵 Audio playbook started successfully');
+      // Start playing the first segment
+      playNextSegment();
       
       toast({
         title: "Now reading story!",
-        description: `Playing "${title}" with Nova voice`,
+        description: textChunks.length > 1 
+          ? `Playing "${title}" in ${textChunks.length} segments with Nova voice`
+          : `Playing "${title}" with Nova voice`,
       });
       
     } catch (error) {
