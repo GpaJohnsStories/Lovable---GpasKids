@@ -316,7 +316,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
           {isLoading 
             ? "Preparing your story for audio..." 
             : isPlaying 
-              ? "Stop Reading" 
+              ? "Pause or Stop Reading" 
               : "Please read this to me."
           }
         </button>
