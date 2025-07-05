@@ -43,7 +43,7 @@ export function createSafeHtml(content: string): { __html: string } {
   }
 
   // List of allowed HTML tags for story content (basic formatting only)
-  const allowedTags = ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'ol', 'ul', 'li', 'span'];
+  const allowedTags = ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'ol', 'ul', 'li', 'span', 'center'];
   
   let sanitized = content;
   
