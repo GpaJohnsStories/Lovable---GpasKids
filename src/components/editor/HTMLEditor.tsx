@@ -19,9 +19,15 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
   useEffect(() => {
     const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
     if (textarea) {
+      // Store current scroll position to prevent jumping
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
       // Auto-resize textarea
       textarea.style.height = 'auto';
       textarea.style.height = `${textarea.scrollHeight}px`;
+      
+      // Restore scroll position to prevent jumping
+      window.scrollTo(0, scrollTop);
     }
   }, [content, textareaRef]);
 
