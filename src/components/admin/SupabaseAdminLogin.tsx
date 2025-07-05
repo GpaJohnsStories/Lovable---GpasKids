@@ -77,7 +77,7 @@ const SupabaseAdminLogin = () => {
     setIsLoading(true);
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/buddys_admin`
+        redirectTo: `${window.location.origin}/buddys_admin/stories`
       });
       
       if (error) {
