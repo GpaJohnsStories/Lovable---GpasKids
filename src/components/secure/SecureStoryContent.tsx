@@ -1,22 +1,20 @@
-/**
- * Unified story content renderer that replaces both StoryContent and SimpleStoryContent
- */
-
 import { createSafeHtml } from "@/utils/xssProtection";
 
-interface StoryContentRendererProps {
+interface SecureStoryContentProps {
   content?: string;
   excerpt?: string;
-  useRichCleaning?: boolean;
   className?: string;
 }
 
-const StoryContentRenderer = ({ 
+/**
+ * Secure story content renderer that prevents XSS while preserving formatting
+ * Uses sanitized HTML rendering for story content
+ */
+const SecureStoryContent = ({ 
   content, 
   excerpt, 
-  useRichCleaning = false,
-  className = ""
-}: StoryContentRendererProps) => {
+  className = "" 
+}: SecureStoryContentProps) => {
   if (content) {
     const safeHtml = createSafeHtml(content);
     return (
@@ -28,6 +26,7 @@ const StoryContentRenderer = ({
   }
 
   if (excerpt) {
+    // For excerpts, use plain text (no HTML allowed)
     return (
       <p className={`story-content ${className}`}>
         {excerpt}
@@ -38,4 +37,4 @@ const StoryContentRenderer = ({
   return null;
 };
 
-export default StoryContentRenderer;
+export default SecureStoryContent;

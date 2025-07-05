@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { format } from 'date-fns';
+import SecureCommentDisplay from "@/components/secure/SecureCommentDisplay";
 
 type Reply = {
   id: string;
@@ -34,15 +35,6 @@ const CommentRepliesList = ({ parentId }: CommentRepliesListProps) => {
     },
   });
 
-  const getPersonalIdDisplay = (personalId: string) => {
-    if (personalId === '0000FF') {
-      return (
-        <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
-      );
-    }
-    return <span className="font-fun text-orange-600">{personalId}</span>;
-  };
-
   if (isLoading) {
     return (
       <div className="flex justify-center py-4">
@@ -72,31 +64,15 @@ const CommentRepliesList = ({ parentId }: CommentRepliesListProps) => {
       {replies.map((reply) => {
         const isAnnouncement = reply.personal_id === '0000FF';
         return (
-          <div 
-            key={reply.id} 
-            className={`p-4 rounded-lg border ml-4 ${
-              isAnnouncement 
-                ? 'bg-blue-50/60 border-blue-200' 
-                : 'bg-white/60 border-orange-100'
-            }`}
-          >
-            <div className="flex justify-between items-start mb-3">
-              <div className="flex items-center gap-4 text-sm">
-                <span className="font-semibold">
-                  By: {getPersonalIdDisplay(reply.personal_id)}
-                </span>
-                <span className={`font-fun ${isAnnouncement ? 'text-blue-600' : 'text-orange-600'}`}>
-                  {format(new Date(reply.created_at), 'MMM d, yyyy, h:mm a')}
-                </span>
-              </div>
-            </div>
-            
-            <div className={`whitespace-pre-wrap font-fun leading-relaxed text-lg ${
-              isAnnouncement ? 'text-blue-800' : 'text-gray-800'
-            }`}>
-              {reply.content}
-            </div>
-          </div>
+          <SecureCommentDisplay
+            key={reply.id}
+            subject={reply.subject}
+            content={reply.content}
+            personalId={reply.personal_id}
+            createdAt={format(new Date(reply.created_at), 'MMM d, yyyy, h:mm a')}
+            className="ml-4"
+            isAnnouncement={isAnnouncement}
+          />
         );
       })}
     </div>

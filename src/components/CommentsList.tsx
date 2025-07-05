@@ -12,6 +12,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import CommentsListHeader from "./CommentsListHeader";
 import { Badge } from "@/components/ui/badge";
+import { sanitizeCommentSubject, sanitizePersonalId } from "@/utils/xssProtection";
 
 type CommentFromDB = {
   id: string;
@@ -127,15 +128,16 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
   };
 
   const getPersonalIdDisplay = (personalId: string) => {
-    if (personalId === '0000FF') {
-      console.log("Rendering GpaJohn display for:", personalId);
+    const safePersonalId = sanitizePersonalId(personalId);
+    if (safePersonalId === '0000FF') {
+      console.log("Rendering GpaJohn display for:", safePersonalId);
       return (
         <div className="flex items-center gap-2 justify-center">
           <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
         </div>
       );
     }
-    return <span className="font-fun text-orange-800">{personalId}</span>;
+    return <span className="font-fun text-orange-800">{safePersonalId}</span>;
   };
 
   if (isLoading) {
@@ -182,7 +184,7 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
                           📢 Announcement
                         </Badge>
                       )}
-                      {comment.subject}
+                      {sanitizeCommentSubject(comment.subject)}
                     </TableCell>
                     <TableCell className="text-right font-fun text-orange-800">{comment.replies_count}</TableCell>
                   </TableRow>

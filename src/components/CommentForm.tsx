@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { containsBadWord } from "@/utils/profanity";
 import { setPersonalId } from "@/utils/personalId";
 import { initializeEncryption, encryptSensitiveData, encryptPersonalId } from "@/utils/encryption";
+import { detectXssAttempt, logSecurityIncident, sanitizeCommentContent, sanitizeCommentSubject } from "@/utils/xssProtection";
 import PersonalIdSection from "./PersonalIdSection";
 import StoryCodeField from "./StoryCodeField";
 import CommentFormFields from "./CommentFormFields";
@@ -272,6 +273,18 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
     setExistingPersonalIdError(null);
     let hasError = false;
 
+    // XSS Protection checks
+    if (detectXssAttempt(values.subject)) {
+      logSecurityIncident('xss_attempt_subject', values.subject);
+      form.setError("subject", { type: 'manual', message: 'Invalid characters detected in subject.' });
+      hasError = true;
+    }
+    if (detectXssAttempt(values.content)) {
+      logSecurityIncident('xss_attempt_content', values.content);
+      form.setError("content", { type: 'manual', message: 'Invalid characters detected in content.' });
+      hasError = true;
+    }
+
     // Bad word checks
     if (containsBadWord(values.subject)) {
       form.setError("subject", { type: 'manual', message: 'Please use kinder words in the subject.' });
@@ -325,11 +338,15 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
     }
 
     console.log("✅ Form validation passed, submitting comment with personal_id:", finalPersonalId);
-    addCommentMutation.mutate({
-        personal_id: finalPersonalId,
-        subject: values.subject,
-        content: values.content,
-    });
+    
+    // Sanitize data before submission
+    const sanitizedData = {
+      personal_id: finalPersonalId,
+      subject: sanitizeCommentSubject(values.subject),
+      content: sanitizeCommentContent(values.content),
+    };
+    
+    addCommentMutation.mutate(sanitizedData);
   }
 
   const isSubmittable = (idMode === 'existing' && existingPersonalId.length === 6) || (idMode === 'create' && !!personalId);

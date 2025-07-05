@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatStoryContent } from "@/utils/contentUtils";
+import { createSafeHtml } from "@/utils/xssProtection";
 
 interface IsolatedStoryRendererProps {
   content?: string;
@@ -19,6 +19,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
   className = ""
 }) => {
   if (content) {
+    const safeHtml = createSafeHtml(content);
     return (
       <div className={className}>
         <style dangerouslySetInnerHTML={{
@@ -112,7 +113,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
         }} />
         <div 
           className="isolated-story-content"
-          dangerouslySetInnerHTML={formatStoryContent(content, useRichCleaning)}
+          dangerouslySetInnerHTML={safeHtml}
         />
       </div>
     );
