@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { containsBadWord, getHighlightedParts } from "@/utils/profanity";
 import { generateCompletePersonalId } from "@/utils/personalId";
+import { X } from "lucide-react";
 
 interface PersonalIdSectionProps {
   form: UseFormReturn<any>;
@@ -39,6 +40,10 @@ const PersonalIdSection = ({
   setExistingPersonalIdError,
 }: PersonalIdSectionProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
+  
+  const handleClearId = () => {
+    setPersonalId(null);
+  };
   
   const handleCreateId = async () => {
     const currentPrefix = form.getValues("personal_id_prefix") || "";
@@ -143,14 +148,29 @@ const PersonalIdSection = ({
                 <FormMessage />
                 {personalId && (
                   <div className="mt-4 p-4 bg-amber-50 rounded-lg border-2 border-amber-300">
-                    <p className="text-orange-800 font-fun text-lg font-bold mb-2">
-                      Your Complete Personal ID:
-                    </p>
-                    <div className="bg-amber-200 px-4 py-2 rounded-lg inline-block">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-orange-800 font-fun text-lg font-bold">
+                        Your Complete Personal ID:
+                      </p>
+                      <Button
+                        type="button"
+                        onClick={handleClearId}
+                        variant="outline"
+                        size="sm"
+                        className="border-orange-300 text-orange-700 hover:bg-orange-100"
+                      >
+                        <X className="h-4 w-4 mr-1" />
+                        Clear
+                      </Button>
+                    </div>
+                    <div className="bg-amber-200 px-4 py-2 rounded-lg inline-block mb-3">
                       <span className="font-bold text-xl text-orange-900">{personalId}</span>
                     </div>
-                    <p className="text-sm text-orange-700 mt-3 font-fun">
+                    <p className="text-sm text-orange-700 font-fun">
                       Make a note of this code! This is your secure 6-character Personal ID (4 chars + random letter + check digit).
+                    </p>
+                    <p className="text-sm text-orange-600 mt-2 font-fun font-bold">
+                      Clear this ID from the screen after you've written it down safely.
                     </p>
                   </div>
                 )}
