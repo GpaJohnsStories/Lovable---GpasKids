@@ -28,17 +28,25 @@ export const handleStorySubmission = async (
   story?: Story,
   onSave?: () => void
 ): Promise<void> => {
+  console.log('Starting story submission...', { formData, story });
+  
   // Validate form data
   if (!validateStoryForm(formData)) {
+    console.log('Form validation failed');
     return;
   }
+
+  console.log('Form validation passed');
 
   // Check for duplicate story code
   const isDuplicate = await checkStoryCodeExists(formData.story_code, story?.id);
   if (isDuplicate) {
+    console.log('Duplicate story code detected');
     toast.error("Story code already exists. Please choose a different code.");
     return;
   }
+
+  console.log('Story code check passed');
 
   try {
     if (story?.id) {
