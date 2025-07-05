@@ -153,18 +153,29 @@ const SupabaseAdminLogin = () => {
             </Button>
           </form>
           
-          {!signUpMode && (
-            <div className="mt-4 text-center">
+          <div className="mt-4 text-center space-y-2">
+            {!signUpMode && (
               <button
                 type="button"
                 onClick={handlePasswordReset}
-                className="text-sm text-blue-600 hover:text-blue-800 underline"
+                className="text-sm text-blue-600 hover:text-blue-800 underline block w-full py-2"
                 disabled={isLoading}
               >
-                Forgot your password?
+                🔑 Forgot your password? Click here to reset
               </button>
-            </div>
-          )}
+            )}
+            
+            {signUpMode && email && (
+              <button
+                type="button"
+                onClick={handlePasswordReset}
+                className="text-sm text-blue-600 hover:text-blue-800 underline block w-full py-2"
+                disabled={isLoading}
+              >
+                🔑 Already have an account? Reset password
+              </button>
+            )}
+          </div>
           
           {signUpMode && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4 text-sm text-blue-800">
