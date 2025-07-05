@@ -67,7 +67,7 @@ async function isPersonalIdUsed(personalId: string): Promise<boolean> {
     .limit(1);
   
   if (error) {
-    console.error('Error checking Personal ID:', error);
+    // Don't log specific error details to prevent information leakage
     throw error;
   }
   
@@ -81,7 +81,7 @@ async function storePersonalId(personalId: string): Promise<void> {
     .insert([{ personal_id: personalId.toUpperCase() }]);
   
   if (error) {
-    console.error('Error storing Personal ID:', error);
+    // Don't log specific error details to prevent information leakage
     throw error;
   }
 }
@@ -102,7 +102,7 @@ export async function generateCompletePersonalId(prefix: string): Promise<string
     try {
       checkDigit = calculateCheckDigit(baseId);
     } catch (error) {
-      console.error('Error calculating check digit:', error);
+      // Don't log specific error details to prevent information leakage
       continue; // Try again with a different random letter
     }
     
@@ -127,13 +127,13 @@ export async function generateCompletePersonalId(prefix: string): Promise<string
       // Success! Return the complete Personal ID
       return completeId;
     } catch (error) {
-      console.error('Error checking/storing Personal ID:', error);
+      // Don't log specific error details to prevent information leakage
       continue; // Try again
     }
   }
   
   // If we couldn't generate a valid ID after maxAttempts, return null
-  console.error('Failed to generate unique Personal ID after', maxAttempts, 'attempts');
+  // Don't log specific attempt count to prevent information leakage
   return null;
 }
 
