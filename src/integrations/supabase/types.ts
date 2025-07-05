@@ -382,6 +382,10 @@ export type Database = {
         }
         Returns: Json
       }
+      change_admin_password: {
+        Args: { admin_email: string; new_password: string }
+        Returns: string
+      }
       emergency_admin_reset: {
         Args: Record<PropertyKey, never>
         Returns: string
