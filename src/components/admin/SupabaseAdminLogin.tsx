@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Shield } from "lucide-react";
 import { toast } from "sonner";
 import { useSupabaseAdminAuth } from "./SupabaseAdminAuthProvider";
+import { supabase } from "@/integrations/supabase/client";
 
 const SupabaseAdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +14,29 @@ const SupabaseAdminLogin = () => {
   const [signUpMode, setSignUpMode] = useState(false);
   
   const { login, signUp, isAuthenticated, isAdmin } = useSupabaseAdminAuth();
+  
+  const handlePasswordReset = async () => {
+    if (!email) {
+      toast.error("Please enter your email address first");
+      return;
+    }
+    
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/buddys_admin`
+      });
+      
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success("Password reset email sent! Check your inbox.");
+      }
+    } catch (err) {
+      toast.error("Failed to send reset email");
+    }
+    setIsLoading(false);
+  };
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -128,6 +152,19 @@ const SupabaseAdminLogin = () => {
               {isLoading ? "Processing..." : signUpMode ? "Create Admin Account" : "Login"}
             </Button>
           </form>
+          
+          {!signUpMode && (
+            <div className="mt-4 text-center">
+              <button
+                type="button"
+                onClick={handlePasswordReset}
+                className="text-sm text-blue-600 hover:text-blue-800 underline"
+                disabled={isLoading}
+              >
+                Forgot your password?
+              </button>
+            </div>
+          )}
           
           {signUpMode && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4 text-sm text-blue-800">
