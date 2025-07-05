@@ -75,14 +75,20 @@ export const useStoryForm = (story?: Story, onSave?: () => void) => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log('Form submit event triggered!', e);
     e.preventDefault();
+    console.log('Setting loading to true...');
     setIsLoading(true);
 
     try {
+      console.log('About to call handleStorySubmission...');
       await handleStorySubmission(formData, story, onSave);
+      console.log('handleStorySubmission completed successfully');
     } catch (error) {
+      console.error('Error in handleSubmit:', error);
       // Error is already handled in handleStorySubmission
     } finally {
+      console.log('Setting loading to false...');
       setIsLoading(false);
     }
   };
