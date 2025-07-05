@@ -155,15 +155,19 @@ const PersonalIdSection = ({
                       <div className="bg-amber-200 px-4 py-2 rounded-lg inline-block">
                         <span className="font-bold text-xl text-orange-900">{personalId}</span>
                       </div>
-                      <Button
+                      <button
                         type="button"
                         onClick={handleClearId}
-                        size="sm"
-                        className="!bg-red-500 hover:!bg-red-600 !text-yellow-300 font-bold !border-red-500"
+                        className="h-9 px-3 rounded-md text-sm font-bold inline-flex items-center justify-center gap-2"
+                        style={{ 
+                          backgroundColor: '#DC143C',
+                          color: '#FFFF00',
+                          border: '1px solid #DC143C'
+                        }}
                       >
                         <ArrowLeft className="h-4 w-4 mr-1" />
                         Clear
-                      </Button>
+                      </button>
                     </div>
                     <p className="text-sm text-orange-700 font-fun">
                       Make a note of this code! This is your secure 6-character Personal ID (4 chars + random letter + check digit).
