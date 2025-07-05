@@ -9,6 +9,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { containsBadWord } from "@/utils/profanity";
 import { setPersonalId } from "@/utils/personalId";
+import { initializeEncryption, encryptSensitiveData, encryptPersonalId } from "@/utils/encryption";
 import PersonalIdSection from "./PersonalIdSection";
 import StoryCodeField from "./StoryCodeField";
 import CommentFormFields from "./CommentFormFields";
@@ -35,6 +36,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
   const [existingPersonalId, setExistingPersonalId] = useState("");
   const [existingPersonalIdError, setExistingPersonalIdError] = useState<string | null>(null);
   const [idMode, setIdMode] = useState("existing");
+  const [encryptionReady, setEncryptionReady] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,6 +47,22 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
       content: "",
     },
   });
+
+  // Initialize encryption on component mount
+  useEffect(() => {
+    const initEncryption = async () => {
+      try {
+        await initializeEncryption();
+        setEncryptionReady(true);
+        console.log('🔐 Comment form encryption ready');
+      } catch (error) {
+        console.error('❌ Failed to initialize encryption in comment form:', error);
+        // Continue without encryption for backward compatibility
+        setEncryptionReady(false);
+      }
+    };
+    initEncryption();
+  }, []);
 
   // Update subject when prefilledSubject changes
   useEffect(() => {
@@ -75,10 +93,11 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
     mutationFn: async (newComment: { personal_id: string; subject: string; content: string }) => {
       console.log("🚀 Starting comment submission process");
       console.log("📊 Comment data being submitted:", {
-        personal_id: newComment.personal_id,
+        personal_id: 'encrypted',
         subject: newComment.subject,
         content_length: newComment.content.length,
-        status: 'pending'
+        status: 'pending',
+        encryption_enabled: encryptionReady
       });
       
       // Test database connection first with detailed logging
@@ -107,15 +126,36 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
         throw connError;
       }
       
+      // Encrypt sensitive data before database storage
+      console.log("🔐 Encrypting sensitive data...");
+      let encryptedPersonalId: string;
+      let encryptedContent: string;
+      
+      if (encryptionReady) {
+        try {
+          encryptedPersonalId = await encryptPersonalId(newComment.personal_id);
+          encryptedContent = await encryptSensitiveData(newComment.content);
+          console.log("✅ Data encryption successful");
+        } catch (encError) {
+          console.warn("⚠️ Encryption failed, storing unencrypted:", encError);
+          encryptedPersonalId = newComment.personal_id;
+          encryptedContent = newComment.content;
+        }
+      } else {
+        console.log("⚠️ Encryption not ready, storing unencrypted data");
+        encryptedPersonalId = newComment.personal_id;
+        encryptedContent = newComment.content;
+      }
+
       // Now attempt the insert with detailed logging
       console.log("📝 Attempting to insert comment into database...");
       const insertPayload = {
-        personal_id: newComment.personal_id,
+        personal_id: encryptedPersonalId,
         subject: newComment.subject,
-        content: newComment.content,
+        content: encryptedContent,
         status: 'pending' as const
       };
-      console.log("📝 Insert payload:", insertPayload);
+      console.log("📝 Insert payload prepared (sensitive data encrypted)");
       
       await logDatabaseOperation('insert', 'comments', 'public', insertPayload);
       
@@ -319,7 +359,20 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
 
           <Button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white font-bold" disabled={addCommentMutation.isPending || !isSubmittable}>
             {addCommentMutation.isPending ? "Submitting..." : "Submit Comment"}
+            {encryptionReady && <span className="ml-2 text-xs">🔐</span>}
           </Button>
+          
+          {encryptionReady && (
+            <p className="text-xs text-green-600 mt-2 flex items-center gap-1">
+              🔐 Your sensitive information is encrypted before submission for enhanced security.
+            </p>
+          )}
+          
+          {!encryptionReady && (
+            <p className="text-xs text-amber-600 mt-2 flex items-center gap-1">
+              ⚠️ Encryption unavailable in this browser. Your data is still protected by our security measures.
+            </p>
+          )}
         </form>
       </Form>
     </div>

@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { Database } from "@/integrations/supabase/types";
 import CommentReplyForm from "@/components/CommentReplyForm";
 import CommentRepliesList from "@/components/CommentRepliesList";
+import DecryptedCommentContent from "./DecryptedCommentContent";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
@@ -77,9 +78,11 @@ const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminC
             </div>
             
             <div className="prose prose-gray max-w-none">
-              <div className={`whitespace-pre-wrap leading-relaxed text-lg ${isAnnouncement ? 'text-blue-800' : 'text-gray-800'}`}>
-                {comment.content}
-              </div>
+              <DecryptedCommentContent 
+                content={comment.content}
+                personalId={comment.personal_id}
+                className={`whitespace-pre-wrap leading-relaxed text-lg ${isAnnouncement ? 'text-blue-800' : 'text-gray-800'}`}
+              />
             </div>
           </div>
 

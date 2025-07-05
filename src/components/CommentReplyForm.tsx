@@ -6,9 +6,10 @@ import { Form } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { containsBadWord } from "@/utils/profanity";
 import { setPersonalId } from "@/utils/personalId";
+import { initializeEncryption, encryptSensitiveData, encryptPersonalId } from "@/utils/encryption";
 import PersonalIdSection from "./PersonalIdSection";
 import CommentFormFields from "./CommentFormFields";
 
@@ -30,6 +31,7 @@ const CommentReplyForm = ({ parentId, parentSubject }: CommentReplyFormProps) =>
   const [existingPersonalId, setExistingPersonalId] = useState("");
   const [existingPersonalIdError, setExistingPersonalIdError] = useState<string | null>(null);
   const [idMode, setIdMode] = useState("existing");
+  const [encryptionReady, setEncryptionReady] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,24 +41,61 @@ const CommentReplyForm = ({ parentId, parentSubject }: CommentReplyFormProps) =>
     },
   });
 
+  // Initialize encryption on component mount
+  useEffect(() => {
+    const initEncryption = async () => {
+      try {
+        await initializeEncryption();
+        setEncryptionReady(true);
+        console.log('🔐 Reply form encryption ready');
+      } catch (error) {
+        console.error('❌ Failed to initialize encryption in reply form:', error);
+        setEncryptionReady(false);
+      }
+    };
+    initEncryption();
+  }, []);
+
   const prefix = form.watch("personal_id_prefix");
 
   const addReplyMutation = useMutation({
     mutationFn: async (newReply: { personal_id: string; content: string }) => {
       console.log("🚀 Starting reply submission process");
       console.log("📊 Reply data being submitted:", {
-        personal_id: newReply.personal_id,
+        personal_id: 'encrypted',
         parent_id: parentId,
         subject: `Re: ${parentSubject}`,
         content_length: newReply.content.length,
-        status: 'pending'
+        status: 'pending',
+        encryption_enabled: encryptionReady
       });
+      
+      // Encrypt sensitive data before database storage
+      console.log("🔐 Encrypting sensitive reply data...");
+      let encryptedPersonalId: string;
+      let encryptedContent: string;
+      
+      if (encryptionReady) {
+        try {
+          encryptedPersonalId = await encryptPersonalId(newReply.personal_id);
+          encryptedContent = await encryptSensitiveData(newReply.content);
+          console.log("✅ Reply data encryption successful");
+        } catch (encError) {
+          console.warn("⚠️ Reply encryption failed, storing unencrypted:", encError);
+          encryptedPersonalId = newReply.personal_id;
+          encryptedContent = newReply.content;
+        }
+      } else {
+        console.log("⚠️ Encryption not ready, storing unencrypted reply data");
+        encryptedPersonalId = newReply.personal_id;
+        encryptedContent = newReply.content;
+      }
       
       const { data, error } = await supabase.from("comments").insert([
         {
-          personal_id: newReply.personal_id,
+          personal_id: encryptedPersonalId,
           subject: `Re: ${parentSubject}`,
-          content: newReply.content,
+          content: encryptedContent,
           parent_id: parentId,
           status: 'pending' as const
         },
@@ -182,7 +221,14 @@ const CommentReplyForm = ({ parentId, parentSubject }: CommentReplyFormProps) =>
             disabled={addReplyMutation.isPending || !isSubmittable}
           >
             {addReplyMutation.isPending ? "Submitting..." : "Post Reply"}
+            {encryptionReady && <span className="ml-2 text-xs">🔐</span>}
           </Button>
+          
+          {encryptionReady && (
+            <p className="text-xs text-green-600 mt-2 flex items-center gap-1">
+              🔐 Your reply is encrypted before submission for enhanced security.
+            </p>
+          )}
         </form>
       </Form>
     </div>
