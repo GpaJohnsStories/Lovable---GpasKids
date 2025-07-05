@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { containsBadWord, getHighlightedParts } from "@/utils/profanity";
 import { generateCompletePersonalId } from "@/utils/personalId";
-import { X } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 interface PersonalIdSectionProps {
   form: UseFormReturn<any>;
@@ -161,7 +161,7 @@ const PersonalIdSection = ({
                         size="sm"
                         className="bg-red-600 hover:bg-red-700 text-yellow-300 font-bold"
                       >
-                        <X className="h-4 w-4 mr-1" />
+                        <ArrowLeft className="h-4 w-4 mr-1" />
                         Clear
                       </Button>
                     </div>
