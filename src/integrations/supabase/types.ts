@@ -48,6 +48,48 @@ export type Database = {
         }
         Relationships: []
       }
+      admin_users: {
+        Row: {
+          created_at: string
+          device_fingerprint: string | null
+          email: string
+          failed_login_attempts: number | null
+          id: string
+          last_login: string | null
+          locked_until: string | null
+          password_hash: string
+          role: string
+          trusted_devices: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          device_fingerprint?: string | null
+          email: string
+          failed_login_attempts?: number | null
+          id?: string
+          last_login?: string | null
+          locked_until?: string | null
+          password_hash: string
+          role?: string
+          trusted_devices?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          device_fingerprint?: string | null
+          email?: string
+          failed_login_attempts?: number | null
+          id?: string
+          last_login?: string | null
+          locked_until?: string | null
+          password_hash?: string
+          role?: string
+          trusted_devices?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       comments: {
         Row: {
           content: string
@@ -332,12 +374,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_login: {
+        Args: {
+          email_input: string
+          password_input: string
+          device_info?: string
+        }
+        Returns: Json
+      }
       emergency_admin_reset: {
         Args: Record<PropertyKey, never>
         Returns: string
       }
       emergency_promote_admin: {
         Args: { user_email: string }
+        Returns: string
+      }
+      hash_password: {
+        Args: { password: string }
         Returns: string
       }
       is_admin: {
@@ -350,6 +404,10 @@ export type Database = {
       }
       is_emergency_admin: {
         Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      verify_password: {
+        Args: { password: string; hash: string }
         Returns: boolean
       }
     }

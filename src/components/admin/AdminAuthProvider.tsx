@@ -1,5 +1,6 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { supabase } from "@/integrations/supabase/client";
 
 interface AdminAuthContextType {
   isAuthenticated: boolean;
@@ -39,20 +40,48 @@ export const AdminAuthProvider = ({ children }: AdminAuthProviderProps) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const ADMIN_EMAIL = 'gpajohn.buddy@gmail.com';
-    const ADMIN_PASSWORD = 'gpaj0hn#bUdDy1o0s6e';
+    try {
+      // Use secure database authentication
+      const { data, error } = await supabase.rpc('admin_login', {
+        email_input: email.toLowerCase().trim(),
+        password_input: password,
+        device_info: navigator.userAgent
+      });
 
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      try {
-        sessionStorage.setItem('isAdminAuthenticated', 'true');
-        setIsAuthenticated(true);
-        return { success: true };
-      } catch (error) {
-        console.error("Could not access session storage", error);
-        return { success: false, error: 'Could not set session.' };
+      if (error) {
+        console.error('Admin login error:', error);
+        return { success: false, error: 'Authentication service error' };
       }
+
+      const result = data as { success: boolean; error?: string; admin_id?: string; email?: string; role?: string };
+      
+      if (result.success) {
+        try {
+          // Store secure session data
+          const sessionData = {
+            isAuthenticated: true,
+            adminId: result.admin_id,
+            email: result.email,
+            role: result.role,
+            loginTime: new Date().toISOString(),
+            deviceFingerprint: btoa(navigator.userAgent)
+          };
+          
+          sessionStorage.setItem('adminSession', JSON.stringify(sessionData));
+          sessionStorage.setItem('isAdminAuthenticated', 'true');
+          setIsAuthenticated(true);
+          return { success: true };
+        } catch (storageError) {
+          console.error("Could not access session storage", storageError);
+          return { success: false, error: 'Could not create secure session.' };
+        }
+      } else {
+        return { success: false, error: result.error || 'Invalid credentials' };
+      }
+    } catch (error) {
+      console.error('Unexpected admin login error:', error);
+      return { success: false, error: 'Authentication failed' };
     }
-    return { success: false, error: 'Invalid credentials' };
   };
 
   const logout = async () => {
