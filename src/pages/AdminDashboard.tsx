@@ -31,6 +31,32 @@ const AdminDashboardContent = () => {
           <p className="text-gray-600">Welcome to the admin control center</p>
         </div>
         
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+            <h3 className="text-lg font-semibold mb-2 text-orange-800">📚 Story Management</h3>
+            <p className="text-gray-600 mb-4">Create, edit, and manage stories for children</p>
+            <Button asChild className="w-full">
+              <a href="/buddys_admin?tab=stories">Manage Stories</a>
+            </Button>
+          </div>
+          
+          <div className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+            <h3 className="text-lg font-semibold mb-2 text-orange-800">💬 Comments</h3>
+            <p className="text-gray-600 mb-4">Review and moderate user comments</p>
+            <Button asChild className="w-full" variant="outline">
+              <a href="/buddys_admin?tab=comments">View Comments</a>
+            </Button>
+          </div>
+          
+          <div className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+            <h3 className="text-lg font-semibold mb-2 text-orange-800">🔒 Security</h3>
+            <p className="text-gray-600 mb-4">Monitor security and audit logs</p>
+            <Button asChild className="w-full" variant="outline">
+              <a href="/buddys_admin?tab=security">Security Dashboard</a>
+            </Button>
+          </div>
+        </div>
+        
         {showSecurityGuide && (
           <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
