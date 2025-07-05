@@ -92,6 +92,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     if (alignment === 'center') {
       wrapSelectedText('<center>', '</center>');
     } else if (alignment === 'left') {
+      // Remove any existing alignment by just wrapping in <p>
       wrapSelectedText('<p>', '</p>');
     } else if (alignment === 'right') {
       wrapSelectedText('<p style="text-align: right;">', '</p>');

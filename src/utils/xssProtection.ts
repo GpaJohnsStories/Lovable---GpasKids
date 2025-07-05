@@ -69,17 +69,22 @@ export function createSafeHtml(content: string): { __html: string } {
     return '';
   });
   
-  // For attributes, only allow style attribute with font-size
+  // For attributes, allow safe style attributes for text formatting
   sanitized = sanitized.replace(/<([^>]+)\s+([^>]*)>/g, (match, tagContent, attributes) => {
     if (!attributes) return match;
     
-    // Only keep style attributes that contain font-size
+    // Keep style attributes that contain safe CSS properties
     const styleMatch = attributes.match(/style\s*=\s*["']([^"']*)["']/i);
-    if (styleMatch && styleMatch[1].includes('font-size')) {
-      // Sanitize the style value to only allow font-size
-      const styleValue = styleMatch[1].replace(/[^a-zA-Z0-9:\-\.\s;]/g, '');
-      if (styleValue.includes('font-size')) {
-        return `<${tagContent} style="${styleValue}">`;
+    if (styleMatch) {
+      const styleValue = styleMatch[1];
+      // Allow common text styling properties
+      const allowedStyleProps = ['font-size', 'font-weight', 'font-style', 'text-align', 'font-family'];
+      const hasAllowedStyle = allowedStyleProps.some(prop => styleValue.includes(prop));
+      
+      if (hasAllowedStyle) {
+        // Sanitize the style value to only allow safe properties
+        const cleanStyle = styleValue.replace(/[^a-zA-Z0-9:\-\.\s;]/g, '');
+        return `<${tagContent} style="${cleanStyle}">`;
       }
     }
     
