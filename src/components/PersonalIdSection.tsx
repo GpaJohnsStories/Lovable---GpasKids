@@ -159,7 +159,7 @@ const PersonalIdSection = ({
                         type="button"
                         onClick={handleClearId}
                         size="sm"
-                        className="bg-red-600 hover:bg-red-700 text-yellow-300 font-bold"
+                        className="bg-red-500 hover:bg-red-600 text-yellow-300 font-bold"
                       >
                         <ArrowLeft className="h-4 w-4 mr-1" />
                         Clear
