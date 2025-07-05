@@ -131,6 +131,45 @@ export type Database = {
           },
         ]
       }
+      database_operations_audit: {
+        Row: {
+          client_type: string
+          created_at: string
+          id: string
+          ip_address: unknown | null
+          operation_details: Json | null
+          operation_type: string
+          record_id: string | null
+          table_name: string
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          client_type: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          operation_details?: Json | null
+          operation_type: string
+          record_id?: string | null
+          table_name: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          client_type?: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          operation_details?: Json | null
+          operation_type?: string
+          record_id?: string | null
+          table_name?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -427,6 +466,20 @@ export type Database = {
       is_emergency_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean
+      }
+      is_trusted_client: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      log_database_operation: {
+        Args: {
+          p_operation_type: string
+          p_table_name: string
+          p_record_id?: string
+          p_client_type?: string
+          p_operation_details?: Json
+        }
+        Returns: undefined
       }
       verify_password: {
         Args: { password: string; hash: string }

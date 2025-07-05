@@ -12,6 +12,11 @@ export const publicClient = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLIS
   },
   db: {
     schema: 'public'
+  },
+  global: {
+    headers: {
+      'X-Client-Type': 'public'
+    }
   }
 });
 
@@ -23,6 +28,11 @@ export const adminClient = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISH
   },
   db: {
     schema: 'public'
+  },
+  global: {
+    headers: {
+      'X-Client-Type': 'admin'
+    }
   }
 });
 
@@ -58,6 +68,21 @@ export async function logDatabaseOperation(
   };
   
   console.log('🔐 Database Operation:', logEntry);
+  
+  // Use our database logging function
+  const client = clientType === 'admin' ? adminClient : publicClient;
+  try {
+    await client.rpc('log_database_operation', {
+      p_operation_type: operation,
+      p_table_name: table,
+      p_record_id: null,
+      p_client_type: clientType,
+      p_operation_details: details ? JSON.stringify(details) : null
+    });
+  } catch (error) {
+    // Ignore errors from database logging to not break main functionality
+    console.log('⚠️ Could not log to database:', error);
+  }
   
   // Store in session storage for debugging
   if (typeof window !== 'undefined') {
