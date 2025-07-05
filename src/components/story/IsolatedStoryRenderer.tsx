@@ -109,6 +109,15 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               color: #000000 !important;
               line-height: 1.6 !important;
             }
+            
+            .isolated-story-content center {
+              text-align: center !important;
+              display: block !important;
+              font-family: Georgia, serif !important;
+              font-size: 18px !important;
+              color: #000000 !important;
+              line-height: 1.6 !important;
+            }
           `
         }} />
         <div 
