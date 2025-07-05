@@ -46,35 +46,32 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Check admin status with a small delay to avoid blocking
-          setTimeout(async () => {
-            try {
-              const { data: profile, error } = await supabase
-                .from('profiles')
-                .select('role')
-                .eq('id', session.user.id)
-                .maybeSingle();
-              
-              if (!error && profile?.role === 'admin') {
-                setIsAdmin(true);
-                console.log('SupabaseAdminAuth: User confirmed as admin');
-              } else {
-                console.log('SupabaseAdminAuth: User not admin or error:', error);
-                setIsAdmin(false);
-                if (profile && profile.role !== 'admin') {
-                  toast.error("Access denied: Admin privileges required");
-                }
-              }
-            } catch (err) {
-              console.log('SupabaseAdminAuth: Admin check failed:', err);
+          // Check admin status
+          try {
+            const { data: profile, error } = await supabase
+              .from('profiles')
+              .select('role')
+              .eq('id', session.user.id)
+              .maybeSingle();
+            
+            if (!error && profile?.role === 'admin') {
+              setIsAdmin(true);
+              console.log('SupabaseAdminAuth: User confirmed as admin');
+            } else {
+              console.log('SupabaseAdminAuth: User not admin or error:', error);
               setIsAdmin(false);
+              if (profile && profile.role !== 'admin') {
+                toast.error("Access denied: Admin privileges required");
+              }
             }
-            setIsLoading(false);
-          }, 100);
+          } catch (err) {
+            console.log('SupabaseAdminAuth: Admin check failed:', err);
+            setIsAdmin(false);
+          }
         } else {
           setIsAdmin(false);
-          setIsLoading(false);
         }
+        setIsLoading(false);
       }
     );
 
@@ -88,36 +85,11 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
         return;
       }
       
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        // Check admin status
-        setTimeout(async () => {
-          try {
-            const { data: profile, error } = await supabase
-              .from('profiles')
-              .select('role')
-              .eq('id', session.user.id)
-              .maybeSingle();
-            
-            if (!error && profile?.role === 'admin') {
-              setIsAdmin(true);
-              console.log('SupabaseAdminAuth: Initial user confirmed as admin');
-            } else {
-              console.log('SupabaseAdminAuth: Initial user not admin or error:', error);
-              setIsAdmin(false);
-              if (profile && profile.role !== 'admin') {
-                toast.error("Access denied: Admin privileges required");
-              }
-            }
-          } catch (err) {
-            console.log('SupabaseAdminAuth: Initial admin check failed:', err);
-            setIsAdmin(false);
-          }
-          setIsLoading(false);
-        }, 100);
-      } else {
+      // Don't set session/user here if auth state change already handled it
+      if (!session) {
+        setSession(null);
+        setUser(null);
+        setIsAdmin(false);
         setIsLoading(false);
       }
     }).catch((error) => {
