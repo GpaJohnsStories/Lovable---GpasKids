@@ -19,7 +19,7 @@ const GpaJohnComments = () => {
       const { data, error } = await supabase
         .from("comments")
         .select("id, created_at, subject, content")
-        .eq("personal_id", "000000")
+        .eq("personal_id", "0000FF")
         .eq("status", "approved")
         .order("created_at", { ascending: false })
         .limit(3);

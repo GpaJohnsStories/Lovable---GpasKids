@@ -68,7 +68,7 @@ const CommentDetail = () => {
   };
 
   const getPersonalIdDisplay = (personalId: string) => {
-    if (personalId === '000000') {
+    if (personalId === '0000FF') {
       return (
         <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
       );
@@ -131,7 +131,7 @@ const CommentDetail = () => {
     );
   }
 
-  const isAnnouncement = comment.personal_id === '000000';
+  const isAnnouncement = comment.personal_id === '0000FF';
 
   return (
     <ContentProtection enableProtection={true}>

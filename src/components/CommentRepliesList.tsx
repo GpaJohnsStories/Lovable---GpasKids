@@ -35,7 +35,7 @@ const CommentRepliesList = ({ parentId }: CommentRepliesListProps) => {
   });
 
   const getPersonalIdDisplay = (personalId: string) => {
-    if (personalId === '000000') {
+    if (personalId === '0000FF') {
       return (
         <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
       );
@@ -70,7 +70,7 @@ const CommentRepliesList = ({ parentId }: CommentRepliesListProps) => {
   return (
     <div className="space-y-4">
       {replies.map((reply) => {
-        const isAnnouncement = reply.personal_id === '000000';
+        const isAnnouncement = reply.personal_id === '0000FF';
         return (
           <div 
             key={reply.id} 

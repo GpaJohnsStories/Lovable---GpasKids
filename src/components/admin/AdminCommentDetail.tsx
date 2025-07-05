@@ -18,7 +18,7 @@ interface AdminCommentDetailProps {
 const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminCommentDetailProps) => {
   if (!comment) return null;
 
-  const isAnnouncement = comment.personal_id === '000000';
+  const isAnnouncement = comment.personal_id === '0000FF';
 
   const getStatusBadge = (status: Comment['status']) => {
     switch (status) {

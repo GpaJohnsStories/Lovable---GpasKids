@@ -74,7 +74,7 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
       }));
 
       console.log("Parent comments with replies:", commentsWithReplies);
-      console.log("Announcements found:", commentsWithReplies.filter(c => c.personal_id === '000000'));
+      console.log("Announcements found:", commentsWithReplies.filter(c => c.personal_id === '0000FF'));
 
       return commentsWithReplies;
     },
@@ -86,13 +86,13 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
     console.log("Sorting comments. Current sort field:", sortField, "direction:", sortDirection);
     
     return [...comments].sort((a, b) => {
-      // Always put announcements (000000) at the top when sorting by date (default)
+      // Always put announcements (0000FF) at the top when sorting by date (default)
       if (sortField === 'created_at') {
-        if (a.personal_id === '000000' && b.personal_id !== '000000') {
+        if (a.personal_id === '0000FF' && b.personal_id !== '0000FF') {
           console.log("Moving announcement to top:", a.subject);
           return -1;
         }
-        if (b.personal_id === '000000' && a.personal_id !== '000000') {
+        if (b.personal_id === '0000FF' && a.personal_id !== '0000FF') {
           console.log("Moving announcement to top:", b.subject);
           return 1;
         }
@@ -127,7 +127,7 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
   };
 
   const getPersonalIdDisplay = (personalId: string) => {
-    if (personalId === '000000') {
+    if (personalId === '0000FF') {
       console.log("Rendering GpaJohn display for:", personalId);
       return (
         <div className="flex items-center gap-2 justify-center">
@@ -160,7 +160,7 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
           <TableBody>
             {sortedComments && sortedComments.length > 0 ? (
               sortedComments.map((comment) => {
-                const isAnnouncement = comment.personal_id === '000000';
+                const isAnnouncement = comment.personal_id === '0000FF';
                 console.log("Rendering comment:", comment.subject, "isAnnouncement:", isAnnouncement);
                 return (
                   <TableRow 
