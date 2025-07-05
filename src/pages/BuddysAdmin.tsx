@@ -1,13 +1,13 @@
 
-import { DualAdminAuthProvider, useDualAdminAuth } from "@/components/admin/DualAdminAuthProvider";
-import DualAdminLogin from "@/components/admin/DualAdminLogin";
+import { SupabaseAdminAuthProvider, useSupabaseAdminAuth } from "@/components/admin/SupabaseAdminAuthProvider";
+import SupabaseAdminLogin from "@/components/admin/SupabaseAdminLogin";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
 import ContentProtection from "@/components/ContentProtection";
 import { useAdminSession } from "@/hooks/useAdminSession";
 
 const BuddysAdminContent = () => {
-  const { isAuthenticated } = useDualAdminAuth();
+  const { isAuthenticated } = useSupabaseAdminAuth();
   const {
     showStoryForm,
     editingStory,
@@ -18,7 +18,7 @@ const BuddysAdminContent = () => {
   } = useAdminSession();
 
   if (!isAuthenticated) {
-    return <DualAdminLogin />;
+    return <SupabaseAdminLogin />;
   }
 
   if (showStoryForm) {
@@ -42,9 +42,9 @@ const BuddysAdminContent = () => {
 const BuddysAdmin = () => {
   return (
     <ContentProtection enableProtection={false}>
-      <DualAdminAuthProvider>
+      <SupabaseAdminAuthProvider>
         <BuddysAdminContent />
-      </DualAdminAuthProvider>
+      </SupabaseAdminAuthProvider>
     </ContentProtection>
   );
 };

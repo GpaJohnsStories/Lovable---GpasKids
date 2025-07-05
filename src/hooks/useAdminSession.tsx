@@ -1,9 +1,9 @@
 
 import { useState } from 'react';
-import { useDualAdminAuth } from '@/components/admin/DualAdminAuthProvider';
+import { useSupabaseAdminAuth } from '@/components/admin/SupabaseAdminAuthProvider';
 
 export const useAdminSession = () => {
-  const { isAuthenticated } = useDualAdminAuth();
+  const { isAuthenticated } = useSupabaseAdminAuth();
   const [showStoryForm, setShowStoryForm] = useState(false);
   const [editingStory, setEditingStory] = useState<any>(null);
 
