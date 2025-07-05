@@ -125,7 +125,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
 
   const signUp = async (email: string, password: string) => {
     try {
-      const redirectUrl = `${window.location.origin}/`;
+      const redirectUrl = `${window.location.origin}/buddys_admin`;
       
       const { error } = await supabase.auth.signUp({
         email,

@@ -481,6 +481,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      simple_promote_to_admin: {
+        Args: { user_email: string }
+        Returns: string
+      }
       verify_password: {
         Args: { password: string; hash: string }
         Returns: boolean

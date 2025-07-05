@@ -1,6 +1,4 @@
 
-console.log('BuddysAdmin.tsx: File loading');
-
 import { SupabaseAdminAuthProvider, useSupabaseAdminAuth } from "@/components/admin/SupabaseAdminAuthProvider";
 import SupabaseAdminLogin from "@/components/admin/SupabaseAdminLogin";
 import AdminDashboard from "@/components/admin/AdminDashboard";
@@ -18,8 +16,6 @@ const BuddysAdminContent = () => {
     handleStoryFormSave,
     handleStoryFormCancel,
   } = useAdminSession();
-  
-  console.log('BuddysAdminContent render:', { isAuthenticated, isLoading, showStoryForm });
 
   if (!isAuthenticated) {
     return <SupabaseAdminLogin />;
