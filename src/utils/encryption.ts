@@ -1,5 +1,7 @@
 // Enhanced Application-Level Encryption Utilities
 // Provides client-side encryption for sensitive data before database storage
+import { checkAndRotateKey, incrementEncryptionUsage } from './keyRotation';
+import { reportEncryptionFailure, detectSuspiciousActivity } from './threatDetection';
 
 class EncryptionService {
   private static instance: EncryptionService;
@@ -19,6 +21,9 @@ class EncryptionService {
     if (this.initialized) return;
 
     try {
+      // Check if key rotation is needed
+      await checkAndRotateKey();
+      
       // Derive encryption key from a combination of browser-specific data
       // This creates a unique key per browser/device for additional security
       const keyMaterial = await this.deriveKeyMaterial();
@@ -33,6 +38,7 @@ class EncryptionService {
       console.log('🔐 Encryption service initialized');
     } catch (error) {
       console.error('❌ Failed to initialize encryption service:', error);
+      reportEncryptionFailure('encryption_initialization', error as Error);
       throw new Error('Encryption initialization failed');
     }
   }
@@ -61,6 +67,9 @@ class EncryptionService {
     }
 
     try {
+      // Increment usage counter for key rotation monitoring
+      incrementEncryptionUsage();
+      
       const encoder = new TextEncoder();
       const data = encoder.encode(plaintext);
       
@@ -82,6 +91,7 @@ class EncryptionService {
       return btoa(String.fromCharCode(...combined));
     } catch (error) {
       console.error('❌ Encryption failed:', error);
+      reportEncryptionFailure('text_encryption', error as Error);
       throw new Error('Data encryption failed');
     }
   }

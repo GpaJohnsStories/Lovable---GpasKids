@@ -6,6 +6,7 @@ import AdminLayout from "./AdminLayout";
 import EmergencyAdminTools from "./EmergencyAdminTools";
 import SecurityAuditDashboard from "./SecurityAuditDashboard";
 import EncryptionStatusCard from "./EncryptionStatusCard";
+import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
 import { Button } from "@/components/ui/button";
 import { Volume2, Settings, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -60,8 +61,7 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
 
       {showSecurityAudit && (
         <div className="mb-6 space-y-6">
-          <EncryptionStatusCard />
-          <SecurityAuditDashboard />
+          <AdvancedSecurityDashboard />
         </div>
       )}
       
