@@ -148,23 +148,22 @@ const PersonalIdSection = ({
                 <FormMessage />
                 {personalId && (
                   <div className="mt-4 p-4 bg-amber-50 rounded-lg border-2 border-amber-300">
-                    <div className="flex items-center justify-between mb-2">
-                      <p className="text-orange-800 font-fun text-lg font-bold">
-                        Your Complete Personal ID:
-                      </p>
+                    <p className="text-orange-800 font-fun text-lg font-bold mb-2">
+                      Your Complete Personal ID:
+                    </p>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="bg-amber-200 px-4 py-2 rounded-lg inline-block">
+                        <span className="font-bold text-xl text-orange-900">{personalId}</span>
+                      </div>
                       <Button
                         type="button"
                         onClick={handleClearId}
-                        variant="outline"
                         size="sm"
-                        className="border-orange-300 text-orange-700 hover:bg-orange-100"
+                        className="bg-red-600 hover:bg-red-700 text-yellow-300 font-bold"
                       >
                         <X className="h-4 w-4 mr-1" />
                         Clear
                       </Button>
-                    </div>
-                    <div className="bg-amber-200 px-4 py-2 rounded-lg inline-block mb-3">
-                      <span className="font-bold text-xl text-orange-900">{personalId}</span>
                     </div>
                     <p className="text-sm text-orange-700 font-fun">
                       Make a note of this code! This is your secure 6-character Personal ID (4 chars + random letter + check digit).
