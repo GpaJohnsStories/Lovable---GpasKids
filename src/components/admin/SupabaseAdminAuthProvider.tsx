@@ -29,10 +29,14 @@ interface SupabaseAdminAuthProviderProps {
 }
 
 export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProviderProps) => {
+  console.log('SupabaseAdminAuthProvider: Component rendering');
+  
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  console.log('SupabaseAdminAuthProvider: State initialized', { isLoading, isAdmin, hasUser: !!user });
 
   useEffect(() => {
     console.log('SupabaseAdminAuth: Starting initialization');

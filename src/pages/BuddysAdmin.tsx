@@ -1,4 +1,6 @@
 
+console.log('BuddysAdmin.tsx: File loading');
+
 import { SupabaseAdminAuthProvider, useSupabaseAdminAuth } from "@/components/admin/SupabaseAdminAuthProvider";
 import SupabaseAdminLogin from "@/components/admin/SupabaseAdminLogin";
 import AdminDashboard from "@/components/admin/AdminDashboard";
@@ -42,6 +44,7 @@ const BuddysAdminContent = () => {
 };
 
 const BuddysAdmin = () => {
+  console.log('BuddysAdmin: Component rendering');
   return (
     <ContentProtection enableProtection={false}>
       <SupabaseAdminAuthProvider>
