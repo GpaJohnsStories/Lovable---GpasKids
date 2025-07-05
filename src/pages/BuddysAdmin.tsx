@@ -7,7 +7,7 @@ import ContentProtection from "@/components/ContentProtection";
 import { useAdminSession } from "@/hooks/useAdminSession";
 
 const BuddysAdminContent = () => {
-  const { isAuthenticated } = useSupabaseAdminAuth();
+  const { isAuthenticated, isLoading } = useSupabaseAdminAuth();
   const {
     showStoryForm,
     editingStory,
@@ -16,6 +16,8 @@ const BuddysAdminContent = () => {
     handleStoryFormSave,
     handleStoryFormCancel,
   } = useAdminSession();
+  
+  console.log('BuddysAdminContent render:', { isAuthenticated, isLoading, showStoryForm });
 
   if (!isAuthenticated) {
     return <SupabaseAdminLogin />;
