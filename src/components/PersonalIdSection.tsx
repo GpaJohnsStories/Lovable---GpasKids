@@ -170,7 +170,7 @@ const PersonalIdSection = ({
                       Make a note of this code! This is your secure 6-character Personal ID (4 chars + random letter + check digit).
                     </p>
                     <p className="text-sm text-orange-600 mt-2 font-fun font-bold">
-                      Clear this ID from the screen after you've written it down safely.
+                      Please clear this ID from the screen after you've written it down safely.
                     </p>
                   </div>
                 )}
