@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { containsBadWord, getHighlightedParts } from "@/utils/profanity";
-import { generateIdSuffix } from "@/utils/personalId";
+import { generateCompletePersonalId } from "@/utils/personalId";
 
 interface PersonalIdSectionProps {
   form: UseFormReturn<any>;
@@ -38,7 +38,9 @@ const PersonalIdSection = ({
   existingPersonalIdError,
   setExistingPersonalIdError,
 }: PersonalIdSectionProps) => {
-  const handleCreateId = () => {
+  const [isGenerating, setIsGenerating] = useState(false);
+  
+  const handleCreateId = async () => {
     const currentPrefix = form.getValues("personal_id_prefix") || "";
     form.clearErrors("personal_id_prefix");
     setPersonalId(null);
@@ -48,8 +50,26 @@ const PersonalIdSection = ({
     } else if (currentPrefix.length !== 4 || !/^[a-zA-Z0-9]{4}$/.test(currentPrefix)) {
       form.setError("personal_id_prefix", { type: "manual", message: "Your code must be exactly 4 letters or numbers." });
     } else {
-      const suffix = generateIdSuffix();
-      setPersonalId(currentPrefix + suffix);
+      setIsGenerating(true);
+      try {
+        const completeId = await generateCompletePersonalId(currentPrefix);
+        if (completeId) {
+          setPersonalId(completeId);
+        } else {
+          form.setError("personal_id_prefix", { 
+            type: "manual", 
+            message: "Unable to generate a unique ID. Please try a different code." 
+          });
+        }
+      } catch (error) {
+        console.error('Error generating Personal ID:', error);
+        form.setError("personal_id_prefix", { 
+          type: "manual", 
+          message: "Error generating ID. Please try again." 
+        });
+      } finally {
+        setIsGenerating(false);
+      }
     }
   };
 
@@ -114,9 +134,10 @@ const PersonalIdSection = ({
                   <Button
                     type="button"
                     onClick={handleCreateId}
-                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold"
+                    disabled={isGenerating}
+                    className="bg-orange-500 hover:bg-orange-600 text-white font-bold disabled:opacity-50"
                   >
-                    Click to create your Personal ID
+                    {isGenerating ? "Generating..." : "Click to create your Personal ID"}
                   </Button>
                 </div>
                 <FormMessage />
@@ -129,7 +150,7 @@ const PersonalIdSection = ({
                       <span className="font-bold text-xl text-orange-900">{personalId}</span>
                     </div>
                     <p className="text-sm text-orange-700 mt-3 font-fun">
-                      Make a note of this code! This is how we'll show your comments.
+                      Make a note of this code! This is your secure 6-character Personal ID (4 chars + random letter + check digit).
                     </p>
                   </div>
                 )}

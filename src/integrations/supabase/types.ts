@@ -315,6 +315,24 @@ export type Database = {
           },
         ]
       }
+      used_personal_ids: {
+        Row: {
+          created_at: string
+          id: string
+          personal_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          personal_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          personal_id?: string
+        }
+        Relationships: []
+      }
       visitor_countries: {
         Row: {
           country_code: string
