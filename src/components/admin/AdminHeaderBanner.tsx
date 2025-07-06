@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2 } from "lucide-react";
 import { toast } from "sonner";
-import { useDualAdminAuth } from "./DualAdminAuthProvider";
+import { useSupabaseAdminAuth } from "./SupabaseAdminAuthProvider";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
@@ -19,17 +19,12 @@ interface AdminNavButton {
 }
 
 const AdminHeaderBanner = () => {
-  const { legacyLogout, supabaseLogout, authMode, isLegacyAuthenticated, isSupabaseAuthenticated } = useDualAdminAuth();
+  const { logout } = useSupabaseAdminAuth();
   const location = useLocation();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const handleLogout = async () => {
-    if (isSupabaseAuthenticated) {
-      await supabaseLogout();
-    }
-    if (isLegacyAuthenticated) {
-      await legacyLogout();
-    }
+    await logout();
     toast.success("Logged out successfully");
   };
 
@@ -47,7 +42,7 @@ const AdminHeaderBanner = () => {
     },
     {
       name: 'Stories',
-      path: '/buddys_admin/stories',
+      path: '/buddys_admin/dashboard',
       icon: FileText,
       bgColor: 'bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700',
       hoverColor: 'hover:from-orange-600 hover:via-orange-700 hover:to-orange-800',
@@ -97,7 +92,7 @@ const AdminHeaderBanner = () => {
                 Buddy's Admin
               </h1>
               <div className="text-xs bg-green-500 rounded px-2 py-1 text-white font-semibold">
-                {authMode === 'supabase' ? '🔒 Secure' : authMode === 'legacy' ? '⚠️ Legacy' : 'Unknown'}
+                🔒 Secure
               </div>
             </div>
             <nav className="flex gap-2">

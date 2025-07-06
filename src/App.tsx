@@ -16,9 +16,6 @@ import MakeComment from "./pages/MakeComment";
 import ViewComments from "./pages/ViewComments";
 import CommentDetail from "./pages/CommentDetail";
 import BuddysAdmin from "./pages/BuddysAdmin";
-import AdminComments from "./pages/AdminComments";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminVoicePreview from "./pages/AdminVoicePreview";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,11 +34,8 @@ const App = () => (
           <Route path="/make-comment" element={<MakeComment />} />
           <Route path="/view-comments" element={<ViewComments />} />
           <Route path="/comment/:id" element={<CommentDetail />} />
-          <Route path="/buddys_admin/voice-preview" element={<AdminVoicePreview />} />
-          <Route path="/buddys_admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/buddys_admin/stories" element={<BuddysAdmin />} />
-          <Route path="/buddys_admin/comments" element={<AdminComments />} />
-          <Route path="/buddys_admin" element={<Navigate to="/buddys_admin/stories" replace />} />
+          <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
+          <Route path="/buddys_admin" element={<Navigate to="/buddys_admin/dashboard" replace />} />
           <Route path="/writing" element={<Writing />} />
           <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

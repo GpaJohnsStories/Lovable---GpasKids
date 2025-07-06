@@ -3,8 +3,12 @@ import { SupabaseAdminAuthProvider, useSupabaseAdminAuth } from "@/components/ad
 import SupabaseAdminLogin from "@/components/admin/SupabaseAdminLogin";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
+import CommentsDashboard from "@/components/admin/CommentsDashboard";
+import VoicePreview from "@/components/VoicePreview";
+import AdminLayout from "@/components/admin/AdminLayout";
 import ContentProtection from "@/components/ContentProtection";
 import { useAdminSession } from "@/hooks/useAdminSession";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 const BuddysAdminContent = () => {
   const { isAuthenticated, isLoading } = useSupabaseAdminAuth();
@@ -45,10 +49,21 @@ const BuddysAdminContent = () => {
   }
 
   return (
-    <AdminDashboard
-      onCreateStory={handleCreateStory}
-      onEditStory={handleEditStory}
-    />
+    <Routes>
+      <Route path="/" element={<Navigate to="/buddys_admin/dashboard" replace />} />
+      <Route path="/dashboard" element={
+        <AdminDashboard
+          onCreateStory={handleCreateStory}
+          onEditStory={handleEditStory}
+        />
+      } />
+      <Route path="/comments" element={<CommentsDashboard />} />
+      <Route path="/voice-preview" element={
+        <AdminLayout>
+          <VoicePreview />
+        </AdminLayout>
+      } />
+    </Routes>
   );
 };
 
