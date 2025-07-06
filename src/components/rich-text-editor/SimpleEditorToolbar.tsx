@@ -60,7 +60,7 @@ const SimpleEditorToolbar: React.FC<SimpleEditorToolbarProps> = ({ onCommand }) 
         size="sm"
         onClick={() => onCommand('insertUnorderedList')}
         className="h-8 w-8 p-0"
-        title="Bullet List"
+        title="Bullet List (Ctrl+L)"
       >
         <List className="h-4 w-4" />
       </Button>
@@ -71,7 +71,7 @@ const SimpleEditorToolbar: React.FC<SimpleEditorToolbarProps> = ({ onCommand }) 
         size="sm"
         onClick={() => onCommand('insertOrderedList')}
         className="h-8 w-8 p-0"
-        title="Numbered List"
+        title="Numbered List (Ctrl+Shift+L)"
       >
         <ListOrdered className="h-4 w-4" />
       </Button>

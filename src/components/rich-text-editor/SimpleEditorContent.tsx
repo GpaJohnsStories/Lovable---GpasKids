@@ -125,12 +125,13 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
           handleCommand('insertHTML', '—'); // M-dash (long pause)
           break;
         case 'l':
-          e.preventDefault();
-          handleCommand('insertUnorderedList'); // Bullet list
-          break;
-        case '#':
-          e.preventDefault();
-          handleCommand('insertOrderedList'); // Numbered list
+          if (e.shiftKey) {
+            e.preventDefault();
+            handleCommand('insertOrderedList'); // Numbered list (Ctrl+Shift+L)
+          } else {
+            e.preventDefault();
+            handleCommand('insertUnorderedList'); // Bullet list (Ctrl+L)
+          }
           break;
       }
     }
