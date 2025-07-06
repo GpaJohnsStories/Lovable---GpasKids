@@ -358,7 +358,7 @@ const AdvancedSecurityDashboard = () => {
                   className="flex items-center gap-2"
                 >
                   <RefreshCw className="h-4 w-4" />
-                  Emergency Rotation
+                  Rotate Key Now
                 </Button>
               </div>
             </CardContent>
