@@ -21,7 +21,7 @@ interface SimpleAdminAuthProviderProps {
   children: ReactNode;
 }
 
-const ADMIN_PASSWORD = 'buddy2025admin';
+const ADMIN_PASSWORD = 'k_R-0/G@trcD#';
 
 export const SimpleAdminAuthProvider = ({ children }: SimpleAdminAuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
