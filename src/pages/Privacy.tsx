@@ -62,7 +62,7 @@ const Privacy = () => {
               Privacy & Security Policy
             </CardTitle>
             <p className="text-amber-600">
-              Grandpa John's Stories - A completely cookie-free experience
+              Grandpa John's Stories — A completely cookie-free experience
             </p>
           </CardHeader>
           
@@ -77,7 +77,7 @@ const Privacy = () => {
                 We are proud to operate a <strong>completely cookie-free website</strong>. 
                 When you visit Grandpa John's Stories to read our stories, 
                 no cookies are stored on your device. No tracking, no analytics, 
-                no third-party cookies - just pure, uninterrupted storytelling.
+                no third-party cookies — just pure, uninterrupted storytelling.
               </p>
             </div>
 
@@ -114,7 +114,7 @@ const Privacy = () => {
               <p className="!text-indigo-700 !text-base !font-normal leading-relaxed">
                 This information stays only in your browser, is never sent to our servers, 
                 and automatically disappears when you close your browser tab. It contains no personal 
-                information - just the path to the story you were reading.
+                information — just the path to the story you were reading.
               </p>
             </div>
 

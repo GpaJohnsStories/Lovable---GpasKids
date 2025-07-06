@@ -89,9 +89,9 @@ const About = () => {
                 <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
                   I believe that children deserve a safe, comfortable place to explore stories and ideas. In today's digital world, it can be hard to find content that is both engaging and appropriate for young readers.
                 </p>
-                <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  That's why I created this special corner of the internet - a place without advertisements or distractions, where children can feel at home while enjoying stories that entertain and inspire.
-                </p>
+              <p className="text-lg text-black leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                That's why I created this special corner of the internet — a place without advertisements or distractions, where children can feel at home while enjoying stories that entertain and inspire.
+              </p>
               </div>
 
               <div>
@@ -99,10 +99,10 @@ const About = () => {
                   What You Will Find Here
                 </h2>
                 <ul className="text-lg text-black leading-relaxed space-y-2 list-disc list-inside ml-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  <li>World Changers -- Stories of ordinary people and unusual events that changed the world.</li>
-                  <li>North Pole -- Stories from my friend Nick about things he said happened at the North Pole (I am not sure if they are true or not).</li>
-                  <li>Fun -- Fun Stuff like jokes, fun poems, rules for games, whatever I think you may enjoy, maybe even one of my favorite easy delicious recipes for you.</li>
-                  <li>Life -- Stories and things I have learned during my long lifetime that I think you might find helpful.</li>
+                  <li>World Changers — Stories of ordinary people and unusual events that changed the world.</li>
+                  <li>North Pole — Stories from my friend Nick about things he said happened at the North Pole (I am not sure if they are true or not).</li>
+                  <li>Fun — Fun Stuff like jokes, fun poems, rules for games, whatever I think you may enjoy, maybe even one of my favorite easy delicious recipes for you.</li>
+                  <li>Life — Stories and things I have learned during my long lifetime that I think you might find helpful.</li>
                 </ul>
               </div>
             </div>
@@ -132,10 +132,10 @@ const About = () => {
               </div>
               
               <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                Buddy joined me at the end of July, 2024. It has been a rough year so far -- I fell in June and broke 5 ribs -- and I felt I deserved a comfort dog. 😃
+                Buddy joined me at the end of July, 2024. It has been a rough year so far — I fell in June and broke 5 ribs — and I felt I deserved a comfort dog. 😃
               </p>
               <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                You see, I received my first dog when I was 5 years old, a Rat Terrior - Dachshund mix. "Lady" slept between my sheets, at the foot of my bed near my feet every night. Until I went away to college I thought everyone slept that way. Guess not!
+                You see, I received my first dog when I was 5 years old, a Rat Terrior – Dachshund mix. "Lady" slept between my sheets, at the foot of my bed near my feet every night. Until I went away to college I thought everyone slept that way. Guess not!
               </p>
               <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
                 Since then I've owned many wonderful dog, but not right now. So Buddy fits the bill. He talks with me, growls, his whine is the most pathetic (sad) thing you've ever heard, and he barks from soft to loud. If I ignore him, he will do all of those things until I give him some attention and rub his ears.
