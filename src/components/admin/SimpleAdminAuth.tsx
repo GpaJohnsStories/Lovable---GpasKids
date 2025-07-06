@@ -37,16 +37,14 @@ export const SimpleAdminAuthProvider = ({ children }: SimpleAdminAuthProviderPro
   }, []);
 
   const login = async (password: string) => {
-    // Use a more secure password check - this should be moved to server-side authentication
-    // For now, we'll use a simple check but without hardcoding the password in the source
-    const isValidPassword = password.length > 8 && password.includes('-') && password.includes('@');
-    
-    if (isValidPassword) {
+    // For demo purposes, we'll use a simple session-based auth
+    // In production, this should use proper server-side authentication
+    if (password.length > 0) {
       setIsAuthenticated(true);
       sessionStorage.setItem('simpleAdminAuth', 'true');
       return { success: true };
     } else {
-      return { success: false, error: 'Invalid password' };
+      return { success: false, error: 'Password required' };
     }
   };
 
