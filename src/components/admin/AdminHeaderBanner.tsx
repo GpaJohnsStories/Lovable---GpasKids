@@ -42,7 +42,7 @@ const AdminHeaderBanner = () => {
     },
     {
       name: 'Stories',
-      path: '/buddys_admin/dashboard',
+      path: '/buddys_admin/stories',
       icon: FileText,
       bgColor: 'bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700',
       hoverColor: 'hover:from-orange-600 hover:via-orange-700 hover:to-orange-800',

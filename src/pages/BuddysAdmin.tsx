@@ -1,7 +1,8 @@
 
 import { SimpleAdminAuthProvider, useSimpleAdminAuth } from "@/components/admin/SimpleAdminAuth";
 import SimpleAdminLogin from "@/components/admin/SimpleAdminLogin";
-import AdminDashboard from "@/components/admin/AdminDashboard";
+import AdminOverview from "@/components/admin/AdminOverview";
+import AdminStories from "@/components/admin/AdminStories";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
 import CommentsDashboard from "@/components/admin/CommentsDashboard";
 import VoicePreview from "@/components/VoicePreview";
@@ -52,8 +53,9 @@ const BuddysAdminContent = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="dashboard" replace />} />
-      <Route path="dashboard" element={
-        <AdminDashboard
+      <Route path="dashboard" element={<AdminOverview />} />
+      <Route path="stories" element={
+        <AdminStories
           onCreateStory={handleCreateStory}
           onEditStory={handleEditStory}
         />
