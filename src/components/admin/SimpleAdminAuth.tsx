@@ -1,9 +1,10 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { supabase } from "@/integrations/supabase/client";
 
 interface SimpleAdminAuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (password: string) => Promise<{ success: boolean; error?: string }>;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
 }
 
@@ -36,15 +37,32 @@ export const SimpleAdminAuthProvider = ({ children }: SimpleAdminAuthProviderPro
     setIsLoading(false);
   }, []);
 
-  const login = async (password: string) => {
-    // For demo purposes, we'll use a simple session-based auth
-    // In production, this should use proper server-side authentication
-    if (password.length > 0) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem('simpleAdminAuth', 'true');
-      return { success: true };
-    } else {
-      return { success: false, error: 'Password required' };
+  const login = async (email: string, password: string) => {
+    try {
+      // Use the secure database admin_login function
+      const { data, error } = await supabase.rpc('admin_login', {
+        email_input: email,
+        password_input: password,
+        device_info: navigator.userAgent
+      });
+
+      if (error) {
+        return { success: false, error: 'Authentication failed' };
+      }
+
+      // Cast the JSON response to the expected type
+      const response = data as { success: boolean; error?: string };
+      
+      if (response && response.success) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem('simpleAdminAuth', 'true');
+        return { success: true };
+      } else {
+        return { success: false, error: response?.error || 'Invalid credentials' };
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      return { success: false, error: 'Authentication failed' };
     }
   };
 
