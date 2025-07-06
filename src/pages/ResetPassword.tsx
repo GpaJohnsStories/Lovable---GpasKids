@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,19 +13,23 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [searchParams] = useSearchParams();
+  const [sessionValid, setSessionValid] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if we have the necessary parameters for password reset
-    const accessToken = searchParams.get('access_token');
-    const refreshToken = searchParams.get('refresh_token');
+    // Check if user has a valid session (from password reset link)
+    const checkSession = async () => {
+      const { data: { session } } = await adminClient.auth.getSession();
+      if (session) {
+        setSessionValid(true);
+      } else {
+        toast.error("Invalid or expired reset link");
+        setTimeout(() => navigate('/buddys_admin'), 2000);
+      }
+    };
     
-    if (!accessToken || !refreshToken) {
-      toast.error("Invalid reset link");
-      navigate('/buddys_admin');
-    }
-  }, [searchParams, navigate]);
+    checkSession();
+  }, [navigate]);
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
