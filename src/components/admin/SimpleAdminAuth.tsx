@@ -29,7 +29,7 @@ export const SimpleAdminAuthProvider = ({ children }: SimpleAdminAuthProviderPro
 
   useEffect(() => {
     // Check if already authenticated on load
-    const stored = sessionStorage.getItem('simpleAdminAuth');
+    const stored = localStorage.getItem('simpleAdminAuth');
     if (stored === 'true') {
       setIsAuthenticated(true);
     }
@@ -41,7 +41,7 @@ export const SimpleAdminAuthProvider = ({ children }: SimpleAdminAuthProviderPro
     // In production, this token would be validated server-side
     if (token && token.length > 10) {
       setIsAuthenticated(true);
-      sessionStorage.setItem('simpleAdminAuth', 'true');
+      localStorage.setItem('simpleAdminAuth', 'true');
       return { success: true };
     } else {
       return { success: false, error: 'Invalid access token' };
@@ -50,7 +50,7 @@ export const SimpleAdminAuthProvider = ({ children }: SimpleAdminAuthProviderPro
 
   const logout = () => {
     setIsAuthenticated(false);
-    sessionStorage.removeItem('simpleAdminAuth');
+    localStorage.removeItem('simpleAdminAuth');
   };
 
   const value = {
