@@ -19,12 +19,14 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
     if (editorRef.current && content !== editorRef.current.innerHTML) {
       editorRef.current.innerHTML = content;
       
-      // Clean up any inline font-size styles that might override our CSS, but preserve spans
+      // Clean up any inline font-size styles that might override our CSS, but preserve spans and text-align
       if (editorRef.current) {
         const allElements = editorRef.current.querySelectorAll('*');
         allElements.forEach(element => {
           const style = (element as HTMLElement).style;
-          // Don't remove font-size from spans
+          const currentAlign = style.textAlign; // Preserve text alignment
+          
+          // Don't remove font-size from spans, don't remove text-align from any elements
           if (element.tagName !== 'SPAN' && style.fontSize) {
             style.removeProperty('font-size');
           }
@@ -36,6 +38,11 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
           }
           if (style.lineHeight) {
             style.removeProperty('line-height');
+          }
+          
+          // Restore text alignment if it was removed
+          if (currentAlign && !style.textAlign) {
+            style.textAlign = currentAlign;
           }
         });
       }
@@ -75,10 +82,12 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
 
   const handleInput = () => {
     if (editorRef.current) {
-      // Clean up any inline styles that might have been added, but preserve font-size on spans
+      // Clean up any inline styles that might have been added, but preserve font-size on spans and text-align
       const allElements = editorRef.current.querySelectorAll('*');
       allElements.forEach(element => {
         const style = (element as HTMLElement).style;
+        const currentAlign = style.textAlign; // Preserve text alignment
+        
         // Only remove font styling on non-span elements, preserve alignment and font-size on spans
         if (element.tagName !== 'SPAN') {
           if (style.fontSize) {
@@ -93,6 +102,11 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
         }
         if (style.lineHeight) {
           style.removeProperty('line-height');
+        }
+        
+        // Restore text alignment if it was removed
+        if (currentAlign && !style.textAlign) {
+          style.textAlign = currentAlign;
         }
       });
       
