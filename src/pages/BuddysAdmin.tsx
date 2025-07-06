@@ -50,15 +50,15 @@ const BuddysAdminContent = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/buddys_admin/dashboard" replace />} />
-      <Route path="/dashboard" element={
+      <Route path="/" element={<Navigate to="dashboard" replace />} />
+      <Route path="dashboard" element={
         <AdminDashboard
           onCreateStory={handleCreateStory}
           onEditStory={handleEditStory}
         />
       } />
-      <Route path="/comments" element={<CommentsDashboard />} />
-      <Route path="/voice-preview" element={
+      <Route path="comments" element={<CommentsDashboard />} />
+      <Route path="voice-preview" element={
         <AdminLayout>
           <VoicePreview />
         </AdminLayout>
