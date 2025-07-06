@@ -89,7 +89,7 @@ const NavigationMenu = () => {
       textColor: 'text-white',
       description: 'Learn about copyright and writing your own stories',
       subItems: [
-        { name: 'What Copyright Means to You', path: '/writing#copyright' },
+        { name: 'What Copyright Means to You', path: '/writing' },
         { name: 'Write a Story for Gpa\'s Kids', path: '/writing#write-story' },
       ]
     },
