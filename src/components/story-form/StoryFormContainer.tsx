@@ -36,6 +36,8 @@ interface StoryFormContainerProps {
 }
 
 const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, onCancel }) => {
+  console.log('=== StoryFormContainer RENDERING ===', { story: story?.id, onSave, onCancel });
+  
   const {
     formData,
     isLoading,
