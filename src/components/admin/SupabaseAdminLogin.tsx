@@ -18,27 +18,46 @@ const SupabaseAdminLogin = () => {
   
   const { login, signUp, isAuthenticated, isAdmin } = useSupabaseAdminAuth();
   
-  // Check if this is a password reset flow
+  // Check if this is a password reset flow with improved session recovery
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    
-    // Check both URL params and hash params for the tokens
-    const accessToken = urlParams.get('access_token') || hashParams.get('access_token');
-    const refreshToken = urlParams.get('refresh_token') || hashParams.get('refresh_token');
-    const type = urlParams.get('type') || hashParams.get('type');
-    
-    console.log('Password reset check:', { type, hasAccessToken: !!accessToken, hasRefreshToken: !!refreshToken });
-    
-    if (type === 'recovery' && accessToken && refreshToken) {
-      console.log('Setting password reset mode');
-      setIsPasswordReset(true);
-      // Set the session from the URL tokens
-      supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken
-      });
-    }
+    const handlePasswordResetFlow = async () => {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const hashParams = new URLSearchParams(window.location.hash.substring(1));
+        
+        // Check both URL params and hash params for the tokens
+        const accessToken = urlParams.get('access_token') || hashParams.get('access_token');
+        const refreshToken = urlParams.get('refresh_token') || hashParams.get('refresh_token');
+        const type = urlParams.get('type') || hashParams.get('type');
+        
+        console.log('Password reset check:', { type, hasAccessToken: !!accessToken, hasRefreshToken: !!refreshToken, url: window.location.href });
+        
+        if (type === 'recovery' && accessToken && refreshToken) {
+          console.log('Setting password reset mode with session recovery');
+          setIsPasswordReset(true);
+          
+          // Set the session from the URL tokens with error handling
+          const { data, error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken
+          });
+          
+          if (error) {
+            console.error('Failed to set session during password reset:', error);
+            toast.error("Password reset session expired. Please request a new reset link.");
+            setIsPasswordReset(false);
+          } else {
+            console.log('Password reset session established successfully');
+            toast.success("Ready to set your new password");
+          }
+        }
+      } catch (err) {
+        console.error('Error handling password reset flow:', err);
+        toast.error("Error processing password reset. Please try again.");
+      }
+    };
+
+    handlePasswordResetFlow();
   }, []);
 
   const handlePasswordUpdate = async (e: React.FormEvent) => {
