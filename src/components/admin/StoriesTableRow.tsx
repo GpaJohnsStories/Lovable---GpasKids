@@ -195,6 +195,50 @@ const StoriesTableRow = ({
     }
   };
 
+  // Determine audio status based on timestamps
+  const getAudioStatus = () => {
+    if (!story.audio_url || !story.audio_generated_at) {
+      return 'none'; // No audio generated yet
+    }
+    
+    const storyUpdated = new Date(story.updated_at);
+    const audioGenerated = new Date(story.audio_generated_at);
+    
+    if (storyUpdated > audioGenerated) {
+      return 'outdated'; // Story updated after audio was generated
+    }
+    
+    return 'current'; // Audio is up to date
+  };
+
+  const audioStatus = getAudioStatus();
+
+  const getAudioButtonClasses = () => {
+    switch (audioStatus) {
+      case 'none':
+        return '!bg-gradient-to-b !from-purple-400 !to-purple-600 !text-white !border-purple-700';
+      case 'outdated':
+        return '!bg-gradient-to-b !from-red-400 !to-red-600 !text-white !border-red-700';
+      case 'current':
+        return '!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700';
+      default:
+        return '!bg-gradient-to-b !from-purple-400 !to-purple-600 !text-white !border-purple-700';
+    }
+  };
+
+  const getAudioButtonTitle = () => {
+    switch (audioStatus) {
+      case 'none':
+        return 'Generate audio';
+      case 'outdated':
+        return 'Story updated - regenerate audio';
+      case 'current':
+        return 'Audio up to date - regenerate if needed';
+      default:
+        return 'Generate audio';
+    }
+  };
+
   const handleGenerateAudio = async () => {
     setIsGeneratingAudio(true);
     
@@ -405,14 +449,10 @@ const StoriesTableRow = ({
               </Select>
               <Button
                 size="sm"
-                className={`${
-                  story.audio_url 
-                    ? '!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700' 
-                    : '!bg-gradient-to-b !from-purple-400 !to-purple-600 !text-white !border-purple-700'
-                } !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-20 h-6 text-xs`}
+                className={`${getAudioButtonClasses()} !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-20 h-6 text-xs`}
                 onClick={handleGenerateAudio}
                 disabled={isGeneratingAudio}
-                title={story.audio_url ? 'Regenerate audio' : 'Generate audio'}
+                title={getAudioButtonTitle()}
               >
                 <Volume2 className="h-3 w-3" />
               </Button>
