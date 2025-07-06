@@ -1,10 +1,10 @@
 
 import { useState } from 'react';
-import { useSimpleAdminAuth } from '@/components/admin/SimpleAdminAuth';
+import { useSupabaseAdminAuth } from '@/components/admin/SupabaseAdminAuth';
 import { useQueryClient } from '@tanstack/react-query';
 
 export const useAdminSession = () => {
-  const { isAuthenticated } = useSimpleAdminAuth();
+  const { isAuthenticated, isAdmin } = useSupabaseAdminAuth();
   const [showStoryForm, setShowStoryForm] = useState(false);
   const [editingStory, setEditingStory] = useState<any>(null);
   const queryClient = useQueryClient();
@@ -47,6 +47,7 @@ export const useAdminSession = () => {
 
   return {
     isAuthenticated,
+    isAdmin,
     showStoryForm,
     editingStory,
     handleEditStory,

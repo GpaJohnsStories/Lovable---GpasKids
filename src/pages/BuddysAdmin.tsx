@@ -1,6 +1,6 @@
 
-import { SimpleAdminAuthProvider, useSimpleAdminAuth } from "@/components/admin/SimpleAdminAuth";
-import SimpleAdminLogin from "@/components/admin/SimpleAdminLogin";
+import { SupabaseAdminAuthProvider, useSupabaseAdminAuth } from "@/components/admin/SupabaseAdminAuth";
+import SupabaseAdminLogin from "@/components/admin/SupabaseAdminLogin";
 import AdminOverview from "@/components/admin/AdminOverview";
 import AdminStories from "@/components/admin/AdminStories";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
@@ -12,7 +12,7 @@ import { useAdminSession } from "@/hooks/useAdminSession";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 const BuddysAdminContent = () => {
-  const { isAuthenticated, isLoading } = useSimpleAdminAuth();
+  const { isAuthenticated, isLoading, isAdmin } = useSupabaseAdminAuth();
   const {
     showStoryForm,
     editingStory,
@@ -36,8 +36,8 @@ const BuddysAdminContent = () => {
     );
   }
 
-  if (!isAuthenticated) {
-    return <SimpleAdminLogin />;
+  if (!isAuthenticated || !isAdmin) {
+    return <SupabaseAdminLogin />;
   }
 
   if (showStoryForm) {
@@ -74,9 +74,9 @@ const BuddysAdmin = () => {
   console.log('BuddysAdmin: Component rendering');
   return (
     <ContentProtection enableProtection={false}>
-      <SimpleAdminAuthProvider>
+      <SupabaseAdminAuthProvider>
         <BuddysAdminContent />
-      </SimpleAdminAuthProvider>
+      </SupabaseAdminAuthProvider>
     </ContentProtection>
   );
 };
