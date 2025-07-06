@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2 } from "lucide-react";
 import { toast } from "sonner";
-import { useSupabaseAdminAuth } from "./SupabaseAdminAuthProvider";
+import { useSimpleAdminAuth } from "./SimpleAdminAuth";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
@@ -19,12 +19,12 @@ interface AdminNavButton {
 }
 
 const AdminHeaderBanner = () => {
-  const { logout } = useSupabaseAdminAuth();
+  const { logout } = useSimpleAdminAuth();
   const location = useLocation();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
-  const handleLogout = async () => {
-    await logout();
+  const handleLogout = () => {
+    logout();
     toast.success("Logged out successfully");
   };
 
