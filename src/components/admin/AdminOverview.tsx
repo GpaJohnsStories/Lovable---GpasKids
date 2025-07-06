@@ -5,8 +5,7 @@ import SecurityAuditDashboard from "./SecurityAuditDashboard";
 import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Volume2, Settings, Shield, FileText, MessageSquare, BarChart3 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Settings, Shield } from "lucide-react";
 import { useState } from "react";
 
 const AdminOverview = () => {
@@ -22,60 +21,6 @@ const AdminOverview = () => {
         <p className="text-gray-600 mt-2">Manage your website content and settings</p>
       </div>
       
-      {/* Quick Actions Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <FileText className="h-5 w-5 text-orange-600" />
-              Manage Stories
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600 mb-4">Add, edit, and organize your stories</p>
-            <Link to="/buddys_admin/stories">
-              <Button className="w-full bg-orange-600 hover:bg-orange-700">
-                Go to Stories
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <MessageSquare className="h-5 w-5 text-yellow-600" />
-              Manage Comments
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600 mb-4">Review and moderate user comments</p>
-            <Link to="/buddys_admin/comments">
-              <Button className="w-full bg-yellow-600 hover:bg-yellow-700">
-                Go to Comments
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <Volume2 className="h-5 w-5 text-purple-600" />
-              Voice Preview
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-gray-600 mb-4">Test story narration voices</p>
-            <Link to="/buddys_admin/voice-preview">
-              <Button className="w-full bg-purple-600 hover:bg-purple-700">
-                Go to Voice Preview
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* System Tools */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <Card>
