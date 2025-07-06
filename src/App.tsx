@@ -17,6 +17,7 @@ import ViewComments from "./pages/ViewComments";
 import CommentDetail from "./pages/CommentDetail";
 import BuddysAdmin from "./pages/BuddysAdmin";
 import VoicePreview from "./pages/VoicePreview";
+import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/comment/:id" element={<CommentDetail />} />
           <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
           <Route path="/buddys_admin" element={<Navigate to="/buddys_admin/dashboard" replace />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/writing" element={<Writing />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/voice-preview" element={<VoicePreview />} />

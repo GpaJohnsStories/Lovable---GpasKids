@@ -43,7 +43,7 @@ const SupabaseAdminLogin = () => {
     setIsResetting(true);
     try {
       const { error } = await adminClient.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/buddys_admin`
+        redirectTo: `${window.location.origin}/reset-password`
       });
       
       if (error) {
