@@ -1,26 +1,34 @@
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 
 const About = () => {
+  const location = useLocation();
+
   useEffect(() => {
-    // Handle hash navigation when component mounts
-    const hash = window.location.hash;
-    if (hash) {
-      // Small delay to ensure the page is fully rendered
-      setTimeout(() => {
-        const element = document.querySelector(hash);
-        if (element) {
-          element.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      }, 100);
-    }
-  }, []);
+    // Handle hash navigation when component mounts or hash changes
+    const scrollToHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        // Small delay to ensure the page is fully rendered
+        setTimeout(() => {
+          const element = document.querySelector(hash);
+          if (element) {
+            element.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }, 100);
+      }
+    };
+
+    // Run on mount and whenever the location changes (including hash)
+    scrollToHash();
+  }, [location]);
 
   return (
     <TooltipProvider>
