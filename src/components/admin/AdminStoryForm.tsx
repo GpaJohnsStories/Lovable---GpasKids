@@ -1,6 +1,6 @@
 
 import React from 'react';
-import StoryFormContainer from '@/components/StoryFormContainer';
+import SimpleStoryForm from '@/components/story-form/SimpleStoryForm';
 import AdminLayout from './AdminLayout';
 
 interface Story {
@@ -32,8 +32,8 @@ interface AdminStoryFormProps {
 const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ editingStory, onSave, onCancel }) => {
   return (
     <AdminLayout>
-      <StoryFormContainer
-        story={editingStory}
+      <SimpleStoryForm
+        storyId={editingStory?.id}
         onSave={onSave}
         onCancel={onCancel}
       />
