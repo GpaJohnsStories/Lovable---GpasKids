@@ -54,16 +54,35 @@ export const handleStorySubmission = async (
     if (story?.id) {
       // Update existing story
       console.log('Updating existing story with ID:', story.id);
-      console.log('Update data:', formData);
-      const { error } = await adminClient
+      console.log('Update data being sent:', JSON.stringify(formData, null, 2));
+      console.log('Story ID being used for update:', story.id);
+      
+      const { data, error } = await adminClient
         .from('stories')
         .update(formData)
-        .eq('id', story.id);
+        .eq('id', story.id)
+        .select();
+      
+      console.log('Database update response:', { data, error });
       
       if (error) {
-        console.error('Update error:', error);
+        console.error('Update error details:', error);
         throw error;
       }
+      
+      if (!data || data.length === 0) {
+        console.error('Update returned no data - story may not exist or no changes made');
+        console.log('Attempting to verify story exists...');
+        
+        const { data: existingStory, error: fetchError } = await adminClient
+          .from('stories')
+          .select('*')
+          .eq('id', story.id)
+          .single();
+          
+        console.log('Story exists check:', { existingStory, fetchError });
+      }
+      
       console.log('Story updated successfully!');
       toast.success("Story updated successfully!");
     } else {
