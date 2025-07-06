@@ -38,6 +38,7 @@ interface StoryFormContainerProps {
 const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, onCancel }) => {
   console.log('=== StoryFormContainer RENDERING ===', { story: story?.id, onSave, onCancel });
   console.log('=== STORY FORM CONTAINER LOADED - DEBUGGING ACTIVE ===');
+  console.log('=== Props received:', { story, onSave: typeof onSave, onCancel: typeof onCancel });
   
   const {
     formData,
@@ -58,7 +59,14 @@ const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, 
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form 
+          onSubmit={(e) => {
+            console.log('=== FORM SUBMIT EVENT ===', e);
+            console.log('=== handleSubmit function:', typeof handleSubmit);
+            handleSubmit(e);
+          }} 
+          className="space-y-6"
+        >
           <StoryFormFields 
             formData={formData} 
             onInputChange={handleInputChange} 
