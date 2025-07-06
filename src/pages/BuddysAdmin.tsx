@@ -17,6 +17,19 @@ const BuddysAdminContent = () => {
     handleStoryFormCancel,
   } = useAdminSession();
 
+  console.log('BuddysAdminContent: Auth state', { isAuthenticated, isLoading });
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600 mx-auto mb-4"></div>
+          <p className="text-amber-800">Loading admin panel...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!isAuthenticated) {
     return <SupabaseAdminLogin />;
   }
