@@ -24,7 +24,7 @@ const ActivityTrackerDemo = () => {
         className="fixed bottom-4 left-4 z-50 bg-blue-500 hover:bg-blue-600 text-white shadow-lg"
         size="sm"
       >
-        Activity Tracker
+        Activity Timer
       </Button>
 
       {/* Activity tracker card */}
@@ -32,7 +32,7 @@ const ActivityTrackerDemo = () => {
         <Card className="fixed bottom-16 left-4 p-4 bg-white/95 backdrop-blur-sm border shadow-lg z-50 animate-fade-in">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-sm">Activity Tracker</h3>
+              <h3 className="font-semibold text-sm">Activity Timer</h3>
               <div 
                 className={`w-3 h-3 rounded-full ${
                   isActive ? 'bg-green-500 animate-pulse' : 'bg-gray-400'
@@ -74,7 +74,7 @@ const ActivityTrackerDemo = () => {
             </div>
 
             <div className="text-xs text-black text-center mt-2 italic">
-              Click Activity Tracker to Hide This Message.
+              Click Activity Timer to Hide This Message.
             </div>
           </div>
         </Card>
