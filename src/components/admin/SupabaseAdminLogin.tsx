@@ -22,6 +22,7 @@ const SupabaseAdminLogin = () => {
   useEffect(() => {
     const handlePasswordResetFlow = async () => {
       try {
+        // Check if we're coming from an email link
         const urlParams = new URLSearchParams(window.location.search);
         const hashParams = new URLSearchParams(window.location.hash.substring(1));
         
@@ -30,25 +31,42 @@ const SupabaseAdminLogin = () => {
         const refreshToken = urlParams.get('refresh_token') || hashParams.get('refresh_token');
         const type = urlParams.get('type') || hashParams.get('type');
         
-        console.log('Password reset check:', { type, hasAccessToken: !!accessToken, hasRefreshToken: !!refreshToken, url: window.location.href });
+        console.log('Password reset check:', { 
+          type, 
+          hasAccessToken: !!accessToken, 
+          hasRefreshToken: !!refreshToken, 
+          url: window.location.href,
+          urlParams: Object.fromEntries(urlParams.entries()),
+          hashParams: Object.fromEntries(hashParams.entries())
+        });
         
-        if (type === 'recovery' && accessToken && refreshToken) {
-          console.log('Setting password reset mode with session recovery');
+        if (type === 'recovery') {
+          console.log('Detected recovery flow');
           setIsPasswordReset(true);
           
-          // Set the session from the URL tokens with error handling
-          const { data, error } = await supabase.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken
-          });
-          
-          if (error) {
-            console.error('Failed to set session during password reset:', error);
-            toast.error("Password reset session expired. Please request a new reset link.");
-            setIsPasswordReset(false);
+          if (accessToken && refreshToken) {
+            console.log('Setting session with recovery tokens');
+            // Set the session from the URL tokens with error handling
+            const { data, error } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken
+            });
+            
+            if (error) {
+              console.error('Failed to set session during password reset:', error);
+              toast.error("Password reset session expired. Please request a new reset link.");
+              setIsPasswordReset(false);
+            } else {
+              console.log('Password reset session established successfully', data);
+              toast.success("Ready to set your new password");
+              // Clear URL parameters to prevent reprocessing
+              window.history.replaceState({}, document.title, window.location.pathname);
+            }
           } else {
-            console.log('Password reset session established successfully');
-            toast.success("Ready to set your new password");
+            console.log('Recovery type detected but missing tokens');
+            // Just show the password reset form even without tokens
+            // This handles cases where tokens might be processed differently
+            toast.info("Please enter your new password");
           }
         }
       } catch (err) {
