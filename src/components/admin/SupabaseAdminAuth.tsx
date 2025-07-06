@@ -48,7 +48,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
         .from('profiles')
         .select('role')
         .eq('id', userId)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error checking admin role:', error);
@@ -105,15 +105,12 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
 
   const login = async (email: string, password: string) => {
     try {
-      console.log('Attempting admin login for:', email);
-      
       const { data, error } = await adminClient.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) {
-        console.error('Login error:', error);
         return { success: false, error: error.message };
       }
 
@@ -121,29 +118,15 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
         return { success: false, error: 'Login failed' };
       }
 
-      // Check admin role
-      const adminStatus = await checkAdminRole(data.user.id);
-      if (!adminStatus) {
-        // Sign out the user if they're not an admin
-        await adminClient.auth.signOut();
-        return { success: false, error: 'Access denied. Admin privileges required.' };
-      }
-
-      console.log('Admin login successful for:', email);
+      // Admin role will be checked by the auth state change handler
       return { success: true };
     } catch (error: any) {
-      console.error('Login exception:', error);
       return { success: false, error: error.message || 'Login failed' };
     }
   };
 
   const logout = async () => {
-    try {
-      await adminClient.auth.signOut();
-      console.log('Admin logout successful');
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
+    await adminClient.auth.signOut();
   };
 
   const value = {

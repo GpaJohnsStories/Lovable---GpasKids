@@ -19,14 +19,18 @@ const SupabaseAdminLogin = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const { success, error } = await login(email, password);
-    if (success) {
-      toast.success("Successfully logged in!");
-    } else {
-      toast.error(error || "Login failed");
+    try {
+      const { success, error } = await login(email, password);
+      if (success) {
+        toast.success("Successfully logged in!");
+      } else {
+        toast.error(error || "Login failed");
+      }
+    } catch (error) {
+      toast.error("Login failed");
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   const handlePasswordReset = async (e: React.FormEvent) => {
@@ -48,10 +52,11 @@ const SupabaseAdminLogin = () => {
         toast.success("Password reset email sent! Check your inbox.");
         setShowResetForm(false);
       }
-    } catch (error: any) {
+    } catch (error) {
       toast.error("Failed to send reset email");
+    } finally {
+      setIsResetting(false);
     }
-    setIsResetting(false);
   };
 
   return (
