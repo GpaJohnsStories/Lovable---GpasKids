@@ -29,6 +29,8 @@ export const handleStorySubmission = async (
   onSave?: () => void
 ): Promise<void> => {
   console.log('Starting story submission...', { formData, story });
+  console.log('Story content length:', formData.content?.length || 0);
+  console.log('Story content preview:', formData.content?.substring(0, 200) + (formData.content?.length > 200 ? '...' : ''));
   
   // Validate form data
   if (!validateStoryForm(formData)) {
@@ -51,6 +53,8 @@ export const handleStorySubmission = async (
   try {
     if (story?.id) {
       // Update existing story
+      console.log('Updating existing story with ID:', story.id);
+      console.log('Update data:', formData);
       const { error } = await supabase
         .from('stories')
         .update(formData)
@@ -60,9 +64,12 @@ export const handleStorySubmission = async (
         console.error('Update error:', error);
         throw error;
       }
+      console.log('Story updated successfully!');
       toast.success("Story updated successfully!");
     } else {
       // Create new story
+      console.log('Creating new story');
+      console.log('Insert data:', formData);
       const { error } = await supabase
         .from('stories')
         .insert([formData]);
@@ -71,6 +78,7 @@ export const handleStorySubmission = async (
         console.error('Insert error:', error);
         throw error;
       }
+      console.log('Story created successfully!');
       toast.success("Story created successfully!");
     }
     

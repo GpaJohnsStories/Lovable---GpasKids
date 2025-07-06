@@ -52,6 +52,7 @@ export const useStoryForm = (story?: Story, onSave?: () => void) => {
   }, [story]);
 
   const handleInputChange = (field: keyof Story, value: string) => {
+    console.log(`Updating field ${field} with value:`, value.substring(0, 100) + (value.length > 100 ? '...' : ''));
     setFormData(prev => ({
       ...prev,
       [field]: value
