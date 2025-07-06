@@ -17,9 +17,13 @@ const About = () => {
         setTimeout(() => {
           const element = document.querySelector(hash);
           if (element) {
-            element.scrollIntoView({ 
-              behavior: 'smooth',
-              block: 'start'
+            // Get the element's position and add some offset for the header
+            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - 100; // Add 100px offset to show title
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
             });
           }
         }, 100);
