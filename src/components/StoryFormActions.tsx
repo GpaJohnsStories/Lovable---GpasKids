@@ -9,6 +9,8 @@ interface StoryFormActionsProps {
 }
 
 const StoryFormActions: React.FC<StoryFormActionsProps> = ({ isLoading, onCancel }) => {
+  console.log('=== StoryFormActions RENDERING ===', { isLoading });
+  
   return (
     <div className="flex justify-end space-x-4">
       <Button type="button" variant="outline" onClick={onCancel}>
@@ -19,6 +21,7 @@ const StoryFormActions: React.FC<StoryFormActionsProps> = ({ isLoading, onCancel
         type="submit" 
         disabled={isLoading} 
         className="cozy-button"
+        onClick={() => console.log('=== SAVE BUTTON CLICKED ===')}
       >
         <Save className="h-4 w-4 mr-2" />
         {isLoading ? 'Saving...' : 'Save Story'}
