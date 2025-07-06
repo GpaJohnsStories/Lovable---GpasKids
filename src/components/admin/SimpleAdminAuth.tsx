@@ -27,6 +27,8 @@ export const SimpleAdminAuthProvider = ({ children }: SimpleAdminAuthProviderPro
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log('SimpleAdminAuthProvider: State', { isAuthenticated, isLoading });
+
   useEffect(() => {
     // Check if already authenticated on load
     const stored = sessionStorage.getItem('simpleAdminAuth');

@@ -22,6 +22,7 @@ const BuddysAdminContent = () => {
   } = useAdminSession();
 
   console.log('BuddysAdminContent: Auth state', { isAuthenticated, isLoading });
+  console.log('BuddysAdminContent: Story form state', { showStoryForm, editingStory });
 
   if (isLoading) {
     return (
