@@ -16,6 +16,7 @@ interface AdminNavButton {
   hoverShadow: string;
   textColor: string;
   description: string;
+  openInNewTab?: boolean;
 }
 
 const AdminHeaderBanner = () => {
@@ -64,14 +65,15 @@ const AdminHeaderBanner = () => {
     },
     {
       name: 'Voice Preview',
-      path: '/buddys_admin/voice-preview',
+      path: '/voice-preview',
       icon: Volume2,
       bgColor: 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600',
       hoverColor: 'hover:from-purple-500 hover:via-purple-600 hover:to-purple-700',
       shadowColor: 'shadow-[0_6px_0_#7c3aed,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-white',
-      description: 'Preview stories with various voices'
+      description: 'Preview stories with various voices (opens in new tab)',
+      openInNewTab: true
     }
   ];
 
@@ -100,6 +102,14 @@ const AdminHeaderBanner = () => {
                 const isActive = location.pathname === button.path;
                 const Icon = button.icon;
                 
+                const handleButtonClick = () => {
+                  if (button.openInNewTab) {
+                    window.open(button.path, '_blank');
+                  } else {
+                    scrollToTop();
+                  }
+                };
+
                 return (
                   <div 
                     key={button.name}
@@ -107,24 +117,41 @@ const AdminHeaderBanner = () => {
                     onMouseEnter={() => setHoveredButton(button.name)}
                     onMouseLeave={() => setHoveredButton(null)}
                   >
-                    <Link to={button.path} onClick={scrollToTop}>
+                    {button.openInNewTab ? (
                       <Button
                         variant="ghost"
+                        onClick={handleButtonClick}
                         className={`
                           transition-all duration-200 border font-fun
                           ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
                           hover:transform hover:translate-y-1 active:translate-y-2 
                           active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
-                          ${isActive 
-                            ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
-                            : button.hoverColor
-                          }
+                          ${button.hoverColor}
                         `}
                       >
                         <Icon className="h-4 w-4 mr-2" />
                         {button.name}
                       </Button>
-                    </Link>
+                    ) : (
+                      <Link to={button.path} onClick={scrollToTop}>
+                        <Button
+                          variant="ghost"
+                          className={`
+                            transition-all duration-200 border font-fun
+                            ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
+                            hover:transform hover:translate-y-1 active:translate-y-2 
+                            active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
+                            ${isActive 
+                              ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
+                              : button.hoverColor
+                            }
+                          `}
+                        >
+                          <Icon className="h-4 w-4 mr-2" />
+                          {button.name}
+                        </Button>
+                      </Link>
+                    )}
                     {hoveredButton === button.name && (
                       <div className="nav-bubble opacity-100 visible">
                         {button.description}
