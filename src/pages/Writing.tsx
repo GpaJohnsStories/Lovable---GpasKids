@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useLocation } from 'react-router-dom';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -8,6 +9,8 @@ import { supabase } from "@/integrations/supabase/client";
 import copyrightSign from "@/assets/copyright-sign.jpg";
 
 const Writing = () => {
+  const location = useLocation();
+  
   const { data: copyrightStory } = useQuery({
     queryKey: ['story', 'SYS-CPR'],
     queryFn: async () => {
@@ -21,6 +24,28 @@ const Writing = () => {
       return data;
     },
   });
+
+  useEffect(() => {
+    // Handle hash navigation when component mounts or hash changes
+    const scrollToHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        // Small delay to ensure the page is fully rendered
+        setTimeout(() => {
+          const element = document.querySelector(hash);
+          if (element) {
+            element.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }, 100);
+      }
+    };
+
+    // Run on mount and whenever the location changes (including hash)
+    scrollToHash();
+  }, [location]);
 
   return (
     <TooltipProvider>
