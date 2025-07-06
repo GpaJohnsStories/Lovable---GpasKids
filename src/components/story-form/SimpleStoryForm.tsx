@@ -93,10 +93,22 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('=== FORM SUBMITTED ===');
+    console.log('Form data at submission:', formData);
+    console.log('Story ID:', storyId);
+    console.log('onSave callback:', typeof onSave);
     
-    const success = await saveStory(formData, onSave);
-    if (success) {
-      console.log('=== SAVE SUCCESSFUL ===');
+    try {
+      console.log('About to call saveStory...');
+      const success = await saveStory(formData, onSave);
+      console.log('saveStory returned:', success);
+      
+      if (success) {
+        console.log('=== SAVE SUCCESSFUL ===');
+      } else {
+        console.log('=== SAVE FAILED ===');
+      }
+    } catch (error) {
+      console.error('Error in handleSubmit:', error);
     }
   };
 
