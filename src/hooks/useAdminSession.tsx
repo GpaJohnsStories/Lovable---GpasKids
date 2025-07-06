@@ -20,11 +20,21 @@ export const useAdminSession = () => {
   const handleStoryFormSave = () => {
     setShowStoryForm(false);
     setEditingStory(null);
+    // Scroll to top when returning to admin stories list
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   const handleStoryFormCancel = () => {
     setShowStoryForm(false);
     setEditingStory(null);
+    // Scroll to top when returning to admin stories list
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   return {
