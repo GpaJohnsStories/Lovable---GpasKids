@@ -1,9 +1,9 @@
 
 import { useState } from 'react';
-import { useSupabaseAdminAuth } from '@/components/admin/SupabaseAdminAuthProvider';
+import { useSimpleAdminAuth } from '@/components/admin/SimpleAdminAuth';
 
 export const useAdminSession = () => {
-  const { isAuthenticated } = useSupabaseAdminAuth();
+  const { isAuthenticated } = useSimpleAdminAuth();
   const [showStoryForm, setShowStoryForm] = useState(false);
   const [editingStory, setEditingStory] = useState<any>(null);
 
