@@ -7,8 +7,7 @@ import { toast } from "sonner";
 import { useSimpleAdminAuth } from "./SimpleAdminAuth";
 
 const SimpleAdminLogin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [token, setToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useSimpleAdminAuth();
 
@@ -16,11 +15,11 @@ const SimpleAdminLogin = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const { success, error } = await login(email, password);
+    const { success, error } = await login(token);
     if (success) {
       toast.success("Successfully logged in!");
     } else {
-      toast.error(error || "Invalid credentials");
+      toast.error(error || "Invalid access token");
     }
     
     setIsLoading(false);
@@ -35,27 +34,17 @@ const SimpleAdminLogin = () => {
             Buddy's Admin Login
           </CardTitle>
           <p className="text-sm text-gray-600 text-center">
-            Enter admin credentials to continue
+            Enter admin access token to continue
           </p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <Input
-                type="email"
-                placeholder="Admin Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="text-lg py-3"
-              />
-            </div>
-            <div>
-              <Input
-                type="password"
-                placeholder="Admin Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type="text"
+                placeholder="Admin Access Token"
+                value={token}
+                onChange={(e) => setToken(e.target.value)}
                 required
                 className="text-lg py-3"
               />
