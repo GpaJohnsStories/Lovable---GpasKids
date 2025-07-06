@@ -53,15 +53,15 @@ const BuddysAdminContent = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="dashboard" replace />} />
-      <Route path="dashboard" element={<AdminOverview />} />
-      <Route path="stories" element={
+      <Route path="/dashboard" element={<AdminOverview />} />
+      <Route path="/stories" element={
         <AdminStories
           onCreateStory={handleCreateStory}
           onEditStory={handleEditStory}
         />
       } />
-      <Route path="comments" element={<CommentsDashboard />} />
-      <Route path="voice-preview" element={
+      <Route path="/comments" element={<CommentsDashboard />} />
+      <Route path="/voice-preview" element={
         <AdminLayout>
           <VoicePreview />
         </AdminLayout>
