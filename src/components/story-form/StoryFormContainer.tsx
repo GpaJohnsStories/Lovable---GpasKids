@@ -61,11 +61,13 @@ const StoryFormContainer: React.FC<StoryFormContainerProps> = ({ story, onSave, 
       <CardContent>
         <form 
           onSubmit={(e) => {
-            console.log('=== FORM SUBMIT EVENT ===', e);
+            console.log('=== FORM SUBMIT EVENT TRIGGERED ===', e);
             console.log('=== handleSubmit function:', typeof handleSubmit);
+            console.log('=== formData:', formData);
             handleSubmit(e);
           }} 
           className="space-y-6"
+          onLoad={() => console.log('=== FORM LOADED ===')}
         >
           <StoryFormFields 
             formData={formData} 
