@@ -21,11 +21,17 @@ const SupabaseAdminLogin = () => {
   // Check if this is a password reset flow
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const accessToken = urlParams.get('access_token');
-    const refreshToken = urlParams.get('refresh_token');
-    const type = urlParams.get('type');
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    
+    // Check both URL params and hash params for the tokens
+    const accessToken = urlParams.get('access_token') || hashParams.get('access_token');
+    const refreshToken = urlParams.get('refresh_token') || hashParams.get('refresh_token');
+    const type = urlParams.get('type') || hashParams.get('type');
+    
+    console.log('Password reset check:', { type, hasAccessToken: !!accessToken, hasRefreshToken: !!refreshToken });
     
     if (type === 'recovery' && accessToken && refreshToken) {
+      console.log('Setting password reset mode');
       setIsPasswordReset(true);
       // Set the session from the URL tokens
       supabase.auth.setSession({
