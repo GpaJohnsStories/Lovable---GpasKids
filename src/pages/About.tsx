@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 
 const About = () => {
+  useEffect(() => {
+    // Handle hash navigation when component mounts
+    const hash = window.location.hash;
+    if (hash) {
+      // Small delay to ensure the page is fully rendered
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }, 100);
+    }
+  }, []);
+
   return (
     <TooltipProvider>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
