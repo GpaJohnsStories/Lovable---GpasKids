@@ -59,15 +59,18 @@ const NavigationDropdown = ({ item, onHover, isHovered }: NavigationDropdownProp
       <DropdownMenuContent className="p-2 md:w-[200px] bg-amber-50 border border-orange-200 rounded-lg shadow-lg">
         {item.subItems?.map((subItem) => (
           <DropdownMenuItem key={subItem.name} asChild className="p-0 focus:bg-transparent focus:text-inherit" disabled={subItem.disabled}>
-            <Link
-              to={subItem.path}
-              onClick={(e) => {
-                if (subItem.disabled) {
-                  e.preventDefault();
-                  return;
-                }
-                scrollToTop();
-              }}
+              <Link
+                to={subItem.path}
+                onClick={(e) => {
+                  if (subItem.disabled) {
+                    e.preventDefault();
+                    return;
+                  }
+                  // Only scroll to top if there's no hash in the path
+                  if (!subItem.path.includes('#')) {
+                    scrollToTop();
+                  }
+                }}
               className={cn(
                 "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors w-full",
                 "hover:bg-amber-100 focus:bg-amber-100 font-fun text-orange-800",
