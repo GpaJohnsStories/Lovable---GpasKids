@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volume2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -447,15 +448,30 @@ const StoriesTableRow = ({
                   <SelectItem value="Shimmer">Shimmer</SelectItem>
                 </SelectContent>
               </Select>
-              <Button
-                size="sm"
-                className={`${getAudioButtonClasses()} !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-20 h-6 text-xs`}
-                onClick={handleGenerateAudio}
-                disabled={isGeneratingAudio}
-                title={getAudioButtonTitle()}
-              >
-                <Volume2 className="h-3 w-3" />
-              </Button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      size="sm"
+                      className={`${getAudioButtonClasses()} !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-20 h-6 text-xs`}
+                      onClick={handleGenerateAudio}
+                      disabled={isGeneratingAudio}
+                    >
+                      <Volume2 className="h-3 w-3" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-gray-900 text-white p-3 rounded-lg shadow-lg border border-gray-700 max-w-xs">
+                    <div className="text-sm font-medium">
+                      {getAudioButtonTitle()}
+                    </div>
+                    <div className="text-xs text-gray-300 mt-1">
+                      {audioStatus === 'none' && 'Click to create audio narration'}
+                      {audioStatus === 'outdated' && 'Story content has changed since audio was generated'}
+                      {audioStatus === 'current' && 'Audio is synchronized with current story content'}
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
             <Button
               size="sm"
