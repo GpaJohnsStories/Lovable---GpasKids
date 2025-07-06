@@ -22,7 +22,12 @@ const StoryFormActions: React.FC<StoryFormActionsProps> = ({ isLoading, onCancel
         type="submit" 
         disabled={isLoading} 
         className="cozy-button"
-        onClick={() => console.log('=== SAVE BUTTON CLICKED - Should trigger form submit ===')}
+        onClick={(e) => {
+          console.log('=== SAVE BUTTON CLICKED ===');
+          console.log('Button type:', e.currentTarget.type);
+          console.log('Form element:', e.currentTarget.form);
+          // Don't prevent default - let the form submit naturally
+        }}
       >
         <Save className="h-4 w-4 mr-2" />
         {isLoading ? 'Saving...' : 'Save Story'}

@@ -82,6 +82,8 @@ export const handleStorySubmission = async (
       toast.success("Story created successfully!");
     }
     
+    // Only call onSave after successful database operation
+    console.log('Calling onSave callback...');
     onSave?.();
   } catch (error: any) {
     console.error('Error saving story:', error);
