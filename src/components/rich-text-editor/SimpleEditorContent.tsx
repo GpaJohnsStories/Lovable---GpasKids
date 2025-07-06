@@ -50,6 +50,21 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
   const handleCommand = (command: string, value?: string) => {
     if (command === 'insertHTML' && value) {
       document.execCommand('insertHTML', false, value);
+    } else if (command === 'insertUnorderedList' || command === 'insertOrderedList') {
+      // Improved list handling to preserve text
+      const selection = window.getSelection();
+      const range = selection?.rangeCount ? selection.getRangeAt(0) : null;
+      
+      if (range && !range.collapsed) {
+        // If text is selected, wrap it in a list
+        const selectedText = range.toString();
+        const listType = command === 'insertUnorderedList' ? 'ul' : 'ol';
+        const listHTML = `<${listType}><li>${selectedText}</li></${listType}>`;
+        document.execCommand('insertHTML', false, listHTML);
+      } else {
+        // If no text selected, just create an empty list
+        document.execCommand(command, false);
+      }
     } else {
       document.execCommand(command, false);
     }
@@ -108,6 +123,10 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
         case 'm':
           e.preventDefault();
           handleCommand('insertHTML', '—'); // M-dash (long pause)
+          break;
+        case 'l':
+          e.preventDefault();
+          handleCommand('insertUnorderedList'); // Bullet list
           break;
         case '#':
           e.preventDefault();
