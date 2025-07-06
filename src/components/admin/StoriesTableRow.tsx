@@ -385,43 +385,49 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        {isEditingDate ? (
-          <div className="flex items-center space-x-2">
-            <input
-              type="datetime-local"
-              value={editedDate}
-              onChange={(e) => setEditedDate(e.target.value)}
-              className="text-xs border rounded px-1 py-1"
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-            />
-            <div className="flex space-x-1">
-              <Button
-                size="sm"
-                onClick={handleSaveDate}
-                className="bg-green-600 hover:bg-green-700 text-white p-1 h-6 w-6"
-              >
-                <Check className="h-3 w-3" />
-              </Button>
-              <Button
-                size="sm"
-                onClick={handleCancelDateEdit}
-                className="bg-red-600 hover:bg-red-700 text-white p-1 h-6 w-6"
-              >
-                <X className="h-3 w-3" />
-              </Button>
-            </div>
-          </div>
+        {showActions ? (
+          <>
+            {isEditingDate ? (
+              <div className="flex items-center space-x-2">
+                <input
+                  type="datetime-local"
+                  value={editedDate}
+                  onChange={(e) => setEditedDate(e.target.value)}
+                  className="text-xs border rounded px-1 py-1"
+                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                />
+                <div className="flex space-x-1">
+                  <Button
+                    size="sm"
+                    onClick={handleSaveDate}
+                    className="bg-green-600 hover:bg-green-700 text-white p-1 h-6 w-6"
+                  >
+                    <Check className="h-3 w-3" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={handleCancelDateEdit}
+                    className="bg-red-600 hover:bg-red-700 text-white p-1 h-6 w-6"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <span>{new Date(story.updated_at).toLocaleDateString()}</span>
+                <Button
+                  size="sm"
+                  onClick={handleEditDate}
+                  className="bg-blue-600 hover:bg-blue-700 text-white p-1 h-6 w-6"
+                >
+                  <Calendar className="h-3 w-3" />
+                </Button>
+              </div>
+            )}
+          </>
         ) : (
-          <div className="flex items-center space-x-2">
-            <span>{new Date(story.updated_at).toLocaleDateString()}</span>
-            <Button
-              size="sm"
-              onClick={handleEditDate}
-              className="bg-blue-600 hover:bg-blue-700 text-white p-1 h-6 w-6"
-            >
-              <Calendar className="h-3 w-3" />
-            </Button>
-          </div>
+          <span>{new Date(story.updated_at).toLocaleDateString()}</span>
         )}
       </TableCell>
       {showActions && (
