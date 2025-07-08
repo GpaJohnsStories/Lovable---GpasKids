@@ -19,15 +19,33 @@ const SupabaseAdminLogin = () => {
     e.preventDefault();
     setIsLoading(true);
 
+    console.log('🔐 Admin Login Attempt:', { email, timestamp: new Date().toISOString() });
+
     try {
       const { success, error } = await login(email, password);
+      
+      console.log('🔐 Login Result:', { success, error, email });
+      
       if (success) {
         toast.success("Successfully logged in!");
+        console.log('✅ Admin login successful');
       } else {
-        toast.error(error || "Login failed");
+        console.error('❌ Admin login failed:', error);
+        
+        // Enhanced error messages
+        if (error?.includes('Invalid login credentials')) {
+          toast.error("Invalid email or password. Please check your credentials.");
+        } else if (error?.includes('too_many_requests')) {
+          toast.error("Too many login attempts. Please wait a few minutes and try again.");
+        } else if (error?.includes('email_not_confirmed')) {
+          toast.error("Please confirm your email address before logging in.");
+        } else {
+          toast.error(error || "Login failed. Please try again.");
+        }
       }
-    } catch (error) {
-      toast.error("Login failed");
+    } catch (error: any) {
+      console.error('💥 Login exception:', error);
+      toast.error(`Login error: ${error.message || 'Unknown error'}`);
     } finally {
       setIsLoading(false);
     }
@@ -141,13 +159,19 @@ const SupabaseAdminLogin = () => {
                 </Button>
               </form>
               <div className="mt-4 text-center">
-                <button
-                  type="button"
-                  onClick={() => setShowResetForm(true)}
-                  className="text-sm text-blue-600 hover:text-blue-800 underline"
-                >
-                  Forgot your password?
-                </button>
+                <div className="space-y-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowResetForm(true)}
+                    className="text-sm text-blue-600 hover:text-blue-800 underline block"
+                  >
+                    Forgot your password?
+                  </button>
+                  <div className="text-xs text-gray-500 mt-2 p-2 bg-gray-50 rounded">
+                    <strong>Debug Info:</strong> Login attempts will be logged to console. 
+                    Check browser dev tools if login fails.
+                  </div>
+                </div>
               </div>
             </>
           )}

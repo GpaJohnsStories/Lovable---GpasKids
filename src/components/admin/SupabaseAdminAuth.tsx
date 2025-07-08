@@ -104,23 +104,37 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
   }, []);
 
   const login = async (email: string, password: string) => {
+    console.log('🔐 Starting admin login process:', { email });
+    
     try {
       const { data, error } = await adminClient.auth.signInWithPassword({
         email,
         password,
       });
 
+      console.log('🔐 Supabase auth response:', { 
+        hasUser: !!data.user, 
+        userId: data.user?.id,
+        userEmail: data.user?.email,
+        hasSession: !!data.session,
+        error: error?.message 
+      });
+
       if (error) {
+        console.error('❌ Supabase auth error:', error);
         return { success: false, error: error.message };
       }
 
       if (!data.user) {
-        return { success: false, error: 'Login failed' };
+        console.error('❌ No user returned from auth');
+        return { success: false, error: 'Login failed - no user data' };
       }
 
+      console.log('✅ Authentication successful, checking admin role...');
       // Admin role will be checked by the auth state change handler
       return { success: true };
     } catch (error: any) {
+      console.error('💥 Login exception in auth component:', error);
       return { success: false, error: error.message || 'Login failed' };
     }
   };
