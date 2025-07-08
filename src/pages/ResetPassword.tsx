@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,22 +14,61 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [sessionValid, setSessionValid] = useState(false);
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user has a valid session (from password reset link)
-    const checkSession = async () => {
-      const { data: { session } } = await adminClient.auth.getSession();
-      if (session) {
-        setSessionValid(true);
+    // Handle password reset tokens from URL
+    const handlePasswordReset = async () => {
+      console.log('🔐 ResetPassword: Checking URL parameters...');
+      
+      const accessToken = searchParams.get('access_token');
+      const refreshToken = searchParams.get('refresh_token');
+      const type = searchParams.get('type');
+      
+      console.log('🔐 URL params:', { 
+        hasAccessToken: !!accessToken, 
+        hasRefreshToken: !!refreshToken, 
+        type 
+      });
+
+      if (accessToken && refreshToken && type === 'recovery') {
+        console.log('🔐 Setting session with recovery tokens...');
+        
+        try {
+          const { data, error } = await adminClient.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken
+          });
+          
+          console.log('🔐 Session set result:', { 
+            hasUser: !!data.user, 
+            hasSession: !!data.session, 
+            error: error?.message 
+          });
+          
+          if (error) {
+            console.error('❌ Failed to set session:', error);
+            toast.error("Invalid or expired reset link");
+            setTimeout(() => navigate('/buddys_admin'), 2000);
+          } else {
+            console.log('✅ Session set successfully');
+            setSessionValid(true);
+          }
+        } catch (error) {
+          console.error('💥 Exception setting session:', error);
+          toast.error("Failed to process reset link");
+          setTimeout(() => navigate('/buddys_admin'), 2000);
+        }
       } else {
-        toast.error("Invalid or expired reset link");
+        console.log('❌ Missing required URL parameters for password reset');
+        toast.error("Invalid reset link - missing parameters");
         setTimeout(() => navigate('/buddys_admin'), 2000);
       }
     };
     
-    checkSession();
-  }, [navigate]);
+    handlePasswordReset();
+  }, [searchParams, navigate]);
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,6 +102,27 @@ const ResetPassword = () => {
       setIsLoading(false);
     }
   };
+
+  if (!sessionValid) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold text-black text-center">
+              <BookOpen className="h-8 w-8 mx-auto mb-2" />
+              Processing Reset Link...
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600 mx-auto mb-4"></div>
+            <p className="text-sm text-gray-600">
+              Validating your password reset request...
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center p-4">
