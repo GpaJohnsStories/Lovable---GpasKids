@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2 } from "lucide-react";
 import { toast } from "sonner";
-import { useSupabaseAdminAuth } from "./SupabaseAdminAuth";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
@@ -20,13 +19,13 @@ interface AdminNavButton {
 }
 
 const AdminHeaderBanner = () => {
-  const { logout } = useSupabaseAdminAuth();
   const location = useLocation();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const handleLogout = async () => {
-    await logout();
-    toast.success("Logged out successfully");
+    // Simple redirect to home page since we're not using authentication
+    window.location.href = '/';
+    toast.success("Redirected to home page");
   };
 
   const navButtons: AdminNavButton[] = [
