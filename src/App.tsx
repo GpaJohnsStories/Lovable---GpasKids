@@ -38,6 +38,7 @@ const App = () => (
           <Route path="/comment/:id" element={<CommentDetail />} />
           <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
           <Route path="/buddys_admin" element={<Navigate to="/buddys_admin/dashboard" replace />} />
+          <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/writing" element={<Writing />} />
           <Route path="/privacy" element={<Privacy />} />
