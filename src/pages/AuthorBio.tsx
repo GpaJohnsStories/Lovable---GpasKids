@@ -10,7 +10,7 @@ import CookieFreeFooter from "@/components/CookieFreeFooter";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
-import StoryCard from "@/components/StoryCard";
+import AuthorStoriesTable from "@/components/AuthorStoriesTable";
 
 const AuthorBio = () => {
   const { authorName } = useParams();
@@ -71,6 +71,16 @@ const AuthorBio = () => {
 
   const decodedAuthorName = authorName ? decodeURIComponent(authorName) : '';
 
+  const handleEditStory = (story: any) => {
+    // Navigate to the story page for public viewing
+    window.location.href = `/story/${story.id}`;
+  };
+
+  const handleViewAuthorBio = (authorName: string) => {
+    // Navigate to the author bio page
+    window.location.href = `/author/${encodeURIComponent(authorName)}`;
+  };
+
   return (
     <ContentProtection enableProtection={true}>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
@@ -108,35 +118,25 @@ const AuthorBio = () => {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-8">
-                <h2 className="text-2xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                  Stories by {decodedAuthorName}
-                </h2>
-                
-                {authorStories && authorStories.length > 0 ? (
-                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {authorStories.map((story) => (
-                      <StoryCard 
-                        key={story.id} 
-                        story={{
-                          ...story,
-                          description: story.excerpt || '',
-                          readTime: '',
-                          illustration: story.photo_link_1 || ''
-                        }} 
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <p className="text-amber-700" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                      No published stories found for this author.
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                Stories by {decodedAuthorName}
+              </h2>
+              
+              {authorStories && authorStories.length > 0 ? (
+                <AuthorStoriesTable stories={authorStories} />
+              ) : (
+                <Card>
+                  <CardContent className="p-8">
+                    <div className="text-center py-8">
+                      <p className="text-amber-700" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                        No published stories found for this author.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
         </div>
         
