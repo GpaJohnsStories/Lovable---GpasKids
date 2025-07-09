@@ -47,6 +47,7 @@ interface StoriesTableRowProps {
   onDelete: (id: string) => void;
   onStatusChange?: () => void;
   hideAuthor?: boolean;
+  onEditBio?: (authorName: string) => void;
 }
 
 const StoriesTableRow = ({ 
@@ -56,7 +57,8 @@ const StoriesTableRow = ({
   onEdit, 
   onDelete,
   onStatusChange,
-  hideAuthor = false
+  hideAuthor = false,
+  onEditBio
 }: StoriesTableRowProps) => {
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [editedDate, setEditedDate] = useState('');
@@ -335,7 +337,15 @@ const StoriesTableRow = ({
         <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
           <div className="flex flex-col items-center gap-1">
             {story.author}
-            <AuthorLink authorName={story.author} size="sm" />
+            {onEditBio && (
+              <div 
+                className="inline-flex items-center h-auto py-1 px-2 text-xs border-2 border-amber-300 bg-white text-amber-700 hover:bg-amber-50 rounded cursor-pointer transition-colors font-bold"
+                onClick={() => onEditBio(story.author)}
+                title={`Edit ${story.author}'s biography`}
+              >
+                Bio
+              </div>
+            )}
           </div>
         </TableCell>
       )}

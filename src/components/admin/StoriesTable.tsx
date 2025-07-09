@@ -32,6 +32,7 @@ interface StoriesTableProps {
   showPublishedOnly?: boolean;
   showPublishedColumn?: boolean;
   groupByAuthor?: boolean;
+  onEditBio?: (authorName: string) => void;
 }
 
 const StoriesTable = ({ 
@@ -39,7 +40,8 @@ const StoriesTable = ({
   showActions = true, 
   showPublishedOnly = false,
   showPublishedColumn = true,
-  groupByAuthor = false
+  groupByAuthor = false,
+  onEditBio
 }: StoriesTableProps) => {
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -207,6 +209,7 @@ const StoriesTable = ({
                         onDelete={handleDeleteStory}
                         onStatusChange={handleStatusChange}
                         hideAuthor={true}
+                        onEditBio={onEditBio}
                       />
                     ))}
                   </TableBody>
@@ -233,6 +236,7 @@ const StoriesTable = ({
                   onEdit={onEditStory}
                   onDelete={handleDeleteStory}
                   onStatusChange={handleStatusChange}
+                  onEditBio={onEditBio}
                 />
               ))}
             </TableBody>

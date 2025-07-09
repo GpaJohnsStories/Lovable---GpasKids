@@ -6,6 +6,7 @@ import AdminStoryForm from "./AdminStoryForm";
 import AdminStoryPreview from "./AdminStoryPreview";
 import AuthorBiosTable from "./AuthorBiosTable";
 import AuthorBioForm from "./AuthorBioForm";
+import { adminClient } from "@/integrations/supabase/clients";
 
 const AdminStories = () => {
   const [selectedStory, setSelectedStory] = useState(null);
@@ -45,6 +46,30 @@ const AdminStories = () => {
   const handleEditBio = (bio: any) => {
     setSelectedBio(bio);
     setIsCreatingBio(false);
+  };
+
+  const handleEditBioByAuthorName = async (authorName: string) => {
+    try {
+      // Try to find existing bio
+      const { data: existingBio } = await adminClient
+        .from('author_bios')
+        .select('*')
+        .eq('author_name', authorName)
+        .maybeSingle();
+      
+      if (existingBio) {
+        setSelectedBio(existingBio);
+      } else {
+        // Create new bio with the author name pre-filled
+        setSelectedBio({ author_name: authorName, bio_content: '' });
+      }
+      setIsCreatingBio(false);
+    } catch (error) {
+      console.error('Error fetching author bio:', error);
+      // If there's an error, create a new bio
+      setSelectedBio({ author_name: authorName, bio_content: '' });
+      setIsCreatingBio(false);
+    }
   };
 
   const handleCreateBio = () => {
@@ -126,6 +151,7 @@ const AdminStories = () => {
           showActions={true}
           showPublishedColumn={true}
           groupByAuthor={groupByAuthor}
+          onEditBio={handleEditBioByAuthorName}
         />
       ) : (
         <AuthorBiosTable
