@@ -31,10 +31,26 @@ export const useStorySave = () => {
     console.log('Story ID:', formData.id);
     console.log('Supabase client:', supabase);
     
-    // Check admin session
+    // Check admin session and RLS function
     const { data: session, error: sessionError } = await supabase.auth.getSession();
     console.log('Current session:', session);
     console.log('Session error:', sessionError);
+    
+    // Test admin function
+    const { data: isAdminResult, error: adminError } = await supabase.rpc('is_admin_safe');
+    console.log('is_admin_safe result:', isAdminResult);
+    console.log('Admin check error:', adminError);
+    
+    // Check current user profile
+    if (session?.session?.user?.id) {
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', session.session.user.id)
+        .single();
+      console.log('Current user profile:', profile);
+      console.log('Profile error:', profileError);
+    }
     
     // Check if story exists
     if (formData.id) {
