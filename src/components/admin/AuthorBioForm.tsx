@@ -12,9 +12,10 @@ interface AuthorBioFormProps {
   bio?: any;
   onBack: () => void;
   onSave: () => void;
+  backButtonText?: string;
 }
 
-const AuthorBioForm = ({ bio, onBack, onSave }: AuthorBioFormProps) => {
+const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }: AuthorBioFormProps) => {
   const [formData, setFormData] = useState({
     author_name: '',
     bio_content: ''
@@ -92,7 +93,7 @@ const AuthorBioForm = ({ bio, onBack, onSave }: AuthorBioFormProps) => {
         <div className="flex items-center gap-4">
           <Button variant="outline" onClick={onBack}>
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Bios
+            {backButtonText}
           </Button>
           <CardTitle>
             {bio ? `Edit Bio: ${bio.author_name}` : 'Create New Author Bio'}

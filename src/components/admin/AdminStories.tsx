@@ -16,6 +16,7 @@ const AdminStories = () => {
   const [selectedBio, setSelectedBio] = useState(null);
   const [isCreatingBio, setIsCreatingBio] = useState(false);
   const [groupByAuthor, setGroupByAuthor] = useState(false);
+  const [bioEditSource, setBioEditSource] = useState<'stories' | 'bios'>('bios');
 
   const handleEditStory = (story: any) => {
     setSelectedStory(story);
@@ -44,11 +45,13 @@ const AdminStories = () => {
   };
 
   const handleEditBio = (bio: any) => {
+    setBioEditSource('bios');
     setSelectedBio(bio);
     setIsCreatingBio(false);
   };
 
   const handleEditBioByAuthorName = async (authorName: string) => {
+    setBioEditSource('stories');
     try {
       // Try to find existing bio
       const { data: existingBio } = await adminClient
@@ -96,8 +99,9 @@ const AdminStories = () => {
     return (
       <AuthorBioForm
         bio={selectedBio}
-        onBack={handleBackToBios}
-        onSave={handleBackToBios}
+        onBack={bioEditSource === 'stories' ? handleBackToStories : handleBackToBios}
+        onSave={bioEditSource === 'stories' ? handleBackToStories : handleBackToBios}
+        backButtonText={bioEditSource === 'stories' ? "Back to Admin Story List" : "Back to Bios"}
       />
     );
   }
