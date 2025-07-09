@@ -265,8 +265,8 @@ const AdvancedSecurityDashboard = () => {
                   <div className="flex justify-between">
                     <span>Service Status</span>
                     <Badge 
-                      variant={encryptionStatus?.initialized ? undefined : 'destructive'}
-                      className={encryptionStatus?.initialized ? 'bg-green-600 hover:bg-green-700 text-white border-green-600' : ''}
+                      variant={encryptionStatus?.initialized ? 'secondary' : 'destructive'}
+                      className={encryptionStatus?.initialized ? '!bg-green-600 !text-white !border-green-600 hover:!bg-green-700' : ''}
                     >
                       {encryptionStatus?.initialized ? 'Active' : 'Inactive'}
                     </Badge>
