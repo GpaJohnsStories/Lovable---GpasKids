@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Shield, Database as DatabaseIcon, Activity, AlertTriangle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { adminClient } from "@/integrations/supabase/clients";
 import { format } from "date-fns";
 
 import { Database } from "@/integrations/supabase/types";
@@ -19,7 +19,7 @@ const SecurityAuditDashboard = () => {
     queryFn: async () => {
       console.log("🔍 Fetching security audit logs...");
       
-      let query = supabase
+      let query = adminClient
         .from("database_operations_audit")
         .select("*")
         .order('created_at', { ascending: false })

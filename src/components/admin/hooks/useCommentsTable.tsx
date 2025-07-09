@@ -1,6 +1,6 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { adminClient } from "@/integrations/supabase/clients";
 import { logDatabaseOperation } from "@/integrations/supabase/clients";
 import { useState, useMemo } from "react";
 import { toast } from "sonner";
@@ -26,7 +26,7 @@ export const useCommentsTable = () => {
       console.log("🔍 Admin fetching comments...");
       await logDatabaseOperation('select_all', 'comments', 'admin');
       
-      const { data, error } = await supabase
+      const { data, error } = await adminClient
         .from("comments")
         .select("*")
         .order('created_at', { ascending: false });
@@ -69,7 +69,7 @@ export const useCommentsTable = () => {
       console.log("🔄 Updating comment status:", { id, status });
       await logDatabaseOperation('update', 'comments', 'admin', { id, status });
       
-      const { error } = await supabase
+      const { error } = await adminClient
         .from('comments')
         .update({ status })
         .eq('id', id);

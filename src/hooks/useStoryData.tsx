@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from "@/integrations/supabase/client";
+import { adminClient } from "@/integrations/supabase/clients";
 
 interface Story {
   id?: string;
@@ -33,7 +33,7 @@ export const useStoryData = (storyId?: string) => {
     setError(null);
     
     try {
-      const { data, error } = await supabase
+      const { data, error } = await adminClient
         .from('stories')
         .select('*')
         .eq('id', storyId)

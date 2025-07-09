@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volume2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { adminClient } from "@/integrations/supabase/clients";
 import { toast } from "sonner";
 import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
 import { useState } from "react";
@@ -92,7 +92,7 @@ const StoriesTableRow = ({
   const handleTogglePublished = async () => {
     const newStatus = story.published === 'Y' ? 'N' : 'Y';
     
-    const { error } = await supabase
+    const { error } = await adminClient
       .from('stories')
       .update({ published: newStatus })
       .eq('id', story.id);
@@ -147,7 +147,7 @@ const StoriesTableRow = ({
       console.log('Parsed date:', inputDate);
       console.log('ISO string to store:', inputDate.toISOString());
 
-      const { error } = await supabase
+      const { error } = await adminClient
         .from('stories')
         .update({ updated_at: inputDate.toISOString() })
         .eq('id', story.id);
@@ -177,7 +177,7 @@ const StoriesTableRow = ({
     setSelectedVoice(newVoice);
     
     // Update the story record with the selected voice
-    const { error } = await supabase
+    const { error } = await adminClient
       .from('stories')
       .update({ 
         ai_voice_name: newVoice,
@@ -249,7 +249,7 @@ const StoriesTableRow = ({
         duration: 60000, // Show for up to 1 minute
       });
 
-      const { data, error } = await supabase.functions.invoke('generate-story-audio', {
+      const { data, error } = await adminClient.functions.invoke('generate-story-audio', {
         body: { storyId: story.id }
       });
 

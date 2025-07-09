@@ -4,7 +4,7 @@ import { Table, TableBody } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { BookOpen } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { adminClient } from "@/integrations/supabase/clients";
 import { useQuery } from "@tanstack/react-query";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
@@ -33,7 +33,7 @@ const StoriesTable = ({
   const { data: stories, isLoading: storiesLoading, refetch } = useQuery({
     queryKey: ['admin-stories', sortField, sortDirection, showPublishedOnly, publishedFilter],
     queryFn: async () => {
-      let query = supabase
+      let query = adminClient
         .from('stories')
         .select('*')
         .order(sortField, { ascending: sortDirection === 'asc' });
@@ -70,9 +70,9 @@ const StoriesTable = ({
     queryKey: ['story-counts'],
     queryFn: async () => {
       const [allResult, publishedResult, unpublishedResult] = await Promise.all([
-        supabase.from('stories').select('id', { count: 'exact', head: true }),
-        supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y'),
-        supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N')
+        adminClient.from('stories').select('id', { count: 'exact', head: true }),
+        adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y'),
+        adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N')
       ]);
 
       return {
@@ -95,7 +95,7 @@ const StoriesTable = ({
   const handleDeleteStory = async (id: string) => {
     if (!confirm("Are you sure you want to delete this story?")) return;
 
-    const { error } = await supabase
+    const { error } = await adminClient
       .from('stories')
       .delete()
       .eq('id', id);

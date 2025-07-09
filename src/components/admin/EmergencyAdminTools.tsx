@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, Shield, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { adminClient } from "@/integrations/supabase/clients";
 
 const EmergencyAdminTools = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +18,7 @@ const EmergencyAdminTools = () => {
 
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.rpc('emergency_promote_admin', {
+      const { data, error } = await adminClient.rpc('emergency_promote_admin', {
         user_email: email.trim()
       });
 
@@ -48,7 +48,7 @@ const EmergencyAdminTools = () => {
 
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.rpc('emergency_admin_reset');
+      const { data, error } = await adminClient.rpc('emergency_admin_reset');
 
       if (error) {
         toast.error(`Error: ${error.message}`);

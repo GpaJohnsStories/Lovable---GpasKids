@@ -3,7 +3,7 @@ import AdminHeader from "./AdminHeader";
 import AdminLayout from "./AdminLayout";
 import CommentsTable from "./CommentsTable";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { adminClient } from "@/integrations/supabase/clients";
 import { Database } from "@/integrations/supabase/types";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
@@ -12,7 +12,7 @@ const CommentsDashboard = () => {
   const { data: comments } = useQuery<Comment[]>({
     queryKey: ["admin_comments"],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await adminClient
         .from("comments")
         .select("*")
         .order('created_at', { ascending: false });
