@@ -276,7 +276,18 @@ const AdvancedSecurityDashboard = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Security Level</span>
-                    <Badge variant="outline">
+                    <Badge 
+                      variant={
+                        encryptionStatus?.securityLevel === 'high' ? 'default' : 
+                        encryptionStatus?.securityLevel === 'medium' ? 'secondary' : 
+                        'destructive'
+                      }
+                      className={
+                        encryptionStatus?.securityLevel === 'high' ? 'bg-green-600 hover:bg-green-700 text-white' :
+                        encryptionStatus?.securityLevel === 'medium' ? 'bg-yellow-500 hover:bg-yellow-600 text-white' :
+                        'bg-red-600 hover:bg-red-700 text-white'
+                      }
+                    >
                       {encryptionStatus?.securityLevel?.toUpperCase()}
                     </Badge>
                   </div>
