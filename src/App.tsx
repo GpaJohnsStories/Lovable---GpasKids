@@ -31,6 +31,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/story/:id" element={<Story />} />
+          <Route path="/stories" element={<Navigate to="/library" replace />} />
           <Route path="/library" element={<Library />} />
           <Route path="/about" element={<About />} />
           <Route path="/make-comment" element={<MakeComment />} />
