@@ -138,7 +138,7 @@ export type Database = {
       }
       database_operations_audit: {
         Row: {
-          client_type: string
+          client_type: string | null
           created_at: string
           id: string
           ip_address: unknown | null
@@ -150,7 +150,7 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
-          client_type: string
+          client_type?: string | null
           created_at?: string
           id?: string
           ip_address?: unknown | null
@@ -162,7 +162,7 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
-          client_type?: string
+          client_type?: string | null
           created_at?: string
           id?: string
           ip_address?: unknown | null
