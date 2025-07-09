@@ -57,7 +57,7 @@ interface SimpleStoryFormProps {
 
 const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCancel }) => {
   const [formData, setFormData] = useState<Story>(initialFormData);
-  const { story, isLoading: isLoadingStory } = useStoryData(storyId);
+  const { story, isLoading: isLoadingStory, refetch: refetchStory } = useStoryData(storyId);
   const { saveStory, isSaving } = useStorySave();
 
   // Load story data into form when it's fetched
@@ -99,7 +99,14 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
     
     try {
       console.log('About to call saveStory...');
-      const success = await saveStory(formData, onSave);
+      const success = await saveStory(formData, async () => {
+        console.log('=== SAVE SUCCESSFUL - REFRESHING DATA ===');
+        // Refresh the story data to show updated content
+        if (storyId) {
+          await refetchStory();
+        }
+        onSave();
+      });
       console.log('saveStory returned:', success);
       
       if (success) {
