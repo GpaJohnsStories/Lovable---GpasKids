@@ -41,11 +41,6 @@ const StorySection = () => {
     ? realStories.reduce((prev, current) => (prev.read_count > current.read_count) ? prev : current)
     : null;
 
-  // Get the most popular story (highest thumbs_up_count)
-  const mostPopularStory = realStories.length > 0 
-    ? realStories.reduce((prev, current) => (prev.thumbs_up_count > current.thumbs_up_count) ? prev : current)
-    : null;
-
   // Convert to StoryData format
   const convertToStoryData = (story: any) => ({
     id: story.id,
@@ -67,9 +62,6 @@ const StorySection = () => {
 
   const featuredStories = [];
   if (mostReadStory) featuredStories.push({ ...convertToStoryData(mostReadStory), category: 'Most Read Story' });
-  if (mostPopularStory && mostPopularStory.id !== mostReadStory?.id) {
-    featuredStories.push({ ...convertToStoryData(mostPopularStory), category: 'Most Popular Story' });
-  }
 
   const scrollToTop = () => {
     window.scrollTo({
