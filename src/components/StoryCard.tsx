@@ -1,6 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, User, Hash } from "lucide-react";
+import { Hash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getCategoryButtonForStory } from "@/utils/storySectionUtils";
 import { StoryData } from "@/utils/storiesData";
@@ -59,7 +59,6 @@ const StoryCard = ({ story }: StoryCardProps) => {
             </div>
             
             <div className="flex items-center justify-center text-sm text-amber-600 mb-2">
-              <User className="h-3 w-3 mr-1" />
               <span className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>by {story.author}</span>
             </div>
 
