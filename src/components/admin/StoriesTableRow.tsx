@@ -315,13 +315,13 @@ const StoriesTableRow = ({
             <Link to={`/story/${story.id}`} onClick={scrollToTop}>
               <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer">
                 {story.title}
-                {hasVideo && (
-                  <span className="ml-2 text-sm font-normal">
-                    Video <span className="text-lg">🎥</span>
-                  </span>
-                )}
               </div>
             </Link>
+            {hasVideo && (
+              <div className="text-sm font-normal text-gray-600 mt-1">
+                <span className="text-lg">🎥</span> Video
+              </div>
+            )}
             {story.tagline && (
               <div className="text-sm italic text-amber-700 mt-1 font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 {story.tagline}
