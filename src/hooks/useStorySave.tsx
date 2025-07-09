@@ -31,6 +31,22 @@ export const useStorySave = () => {
     console.log('Story ID:', formData.id);
     console.log('Supabase client:', supabase);
     
+    // Check admin session
+    const { data: session, error: sessionError } = await supabase.auth.getSession();
+    console.log('Current session:', session);
+    console.log('Session error:', sessionError);
+    
+    // Check if story exists
+    if (formData.id) {
+      const { data: existingStory, error: fetchError } = await supabase
+        .from('stories')
+        .select('id, title, updated_at')
+        .eq('id', formData.id)
+        .single();
+      console.log('Existing story check:', existingStory);
+      console.log('Fetch error:', fetchError);
+    }
+    
     // Basic validation
     if (!formData.title.trim()) {
       console.log('Validation failed: Title required');
