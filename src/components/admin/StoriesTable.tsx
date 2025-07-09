@@ -26,8 +26,8 @@ const StoriesTable = ({
   showPublishedOnly = false,
   showPublishedColumn = true 
 }: StoriesTableProps) => {
-  const [sortField, setSortField] = useState<SortField>('updated_at');
-  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [sortField, setSortField] = useState<SortField>('title');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [publishedFilter, setPublishedFilter] = useState<PublishedFilter>('all');
 
   const { data: stories, isLoading: storiesLoading, refetch } = useQuery({
