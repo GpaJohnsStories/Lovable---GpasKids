@@ -57,7 +57,10 @@ export const handleStorySubmission = async (
       console.log('Update data:', formData);
       const { error } = await supabase
         .from('stories')
-        .update(formData)
+        .update({
+          ...formData,
+          updated_at: new Date().toISOString()
+        })
         .eq('id', story.id);
       
       if (error) {

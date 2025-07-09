@@ -59,7 +59,10 @@ export const useStorySave = () => {
         
         const { data, error } = await supabase
           .from('stories')
-          .update(formData)
+          .update({
+            ...formData,
+            updated_at: new Date().toISOString()
+          })
           .eq('id', formData.id)
           .select();
         
