@@ -25,14 +25,13 @@ const AuthorLink = ({ authorName, variant = "button", size = "sm" }: AuthorLinkP
 
   return (
     <Link to={`/author/${encodedAuthorName}`}>
-      <Button 
-        variant="outline" 
-        size={size}
-        className="h-auto py-1 px-2 text-xs border-amber-300 text-amber-700 hover:bg-amber-50"
+      <div 
+        className="inline-flex items-center h-auto py-1 px-2 text-xs border border-amber-300 text-amber-700 hover:bg-amber-50 rounded cursor-pointer transition-colors"
+        title={`View ${authorName}'s biography`}
       >
         <User className="h-3 w-3 mr-1" />
         Bio
-      </Button>
+      </div>
     </Link>
   );
 };
