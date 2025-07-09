@@ -64,7 +64,7 @@ const AdminHeaderBanner = () => {
     },
     {
       name: 'Voice Preview',
-      path: '/voice-preview',
+      path: '/buddys_admin/voice-preview',
       icon: Volume2,
       bgColor: 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600',
       hoverColor: 'hover:from-purple-500 hover:via-purple-600 hover:to-purple-700',
