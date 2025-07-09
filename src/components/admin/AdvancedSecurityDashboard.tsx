@@ -270,7 +270,11 @@ const AdvancedSecurityDashboard = () => {
                         backgroundColor: '#16a34a',
                         color: 'white',
                         borderColor: '#16a34a'
-                      } : {}}
+                      } : {
+                        backgroundColor: '#dc2626',
+                        color: 'white',
+                        borderColor: '#dc2626'
+                      }}
                     >
                       {encryptionStatus?.initialized ? 'Active' : 'Inactive'}
                     </Badge>
