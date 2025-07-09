@@ -44,12 +44,14 @@ const VoicePreview = () => {
       console.log(`🎵 Starting voice generation for voice: ${voiceId}`);
       console.log(`📝 Text to convert: "${sampleText.substring(0, 50)}..."`);
 
+      console.log('📡 Making request to text-to-speech function...');
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
           text: sampleText,
           voice: voiceId
         }
       });
+      console.log('📡 Raw function response:', { data, error });
 
       console.log('📡 Supabase function response:', { data, error });
 
