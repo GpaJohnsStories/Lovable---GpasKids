@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { toast } from "sonner";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Story {
   id?: string;
@@ -29,7 +29,7 @@ export const useStorySave = () => {
     console.log('=== STARTING SAVE OPERATION ===');
     console.log('Form data received:', formData);
     console.log('Story ID:', formData.id);
-    console.log('Admin client:', adminClient);
+    console.log('Supabase client:', supabase);
     
     // Basic validation
     if (!formData.title.trim()) {
@@ -57,7 +57,7 @@ export const useStorySave = () => {
         console.log('Updating story with ID:', formData.id);
         console.log('Update payload:', formData);
         
-        const { data, error } = await adminClient
+        const { data, error } = await supabase
           .from('stories')
           .update(formData)
           .eq('id', formData.id)
@@ -72,7 +72,7 @@ export const useStorySave = () => {
         console.log('Creating new story');
         console.log('Insert payload:', formData);
         
-        const { data, error } = await adminClient
+        const { data, error } = await supabase
           .from('stories')
           .insert([formData])
           .select();

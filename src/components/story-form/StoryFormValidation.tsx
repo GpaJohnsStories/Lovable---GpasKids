@@ -1,6 +1,6 @@
 
 import { toast } from "sonner";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Story {
   id?: string;
@@ -44,7 +44,7 @@ export const validateStoryForm = (formData: Story): boolean => {
 };
 
 export const checkStoryCodeExists = async (storyCode: string, excludeId?: string): Promise<boolean> => {
-  let query = adminClient
+  let query = supabase
     .from('stories')
     .select('id')
     .eq('story_code', storyCode.trim())

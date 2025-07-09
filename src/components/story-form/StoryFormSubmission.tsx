@@ -1,6 +1,6 @@
 
 import { toast } from "sonner";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 import { validateStoryForm, checkStoryCodeExists } from "./StoryFormValidation";
 
 interface Story {
@@ -55,7 +55,7 @@ export const handleStorySubmission = async (
       // Update existing story
       console.log('Updating existing story with ID:', story.id);
       console.log('Update data:', formData);
-      const { error } = await adminClient
+      const { error } = await supabase
         .from('stories')
         .update(formData)
         .eq('id', story.id);
@@ -70,7 +70,7 @@ export const handleStorySubmission = async (
       // Create new story
       console.log('Creating new story');
       console.log('Insert data:', formData);
-      const { error } = await adminClient
+      const { error } = await supabase
         .from('stories')
         .insert([formData]);
       
