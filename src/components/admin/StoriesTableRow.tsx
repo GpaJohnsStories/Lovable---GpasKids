@@ -333,7 +333,7 @@ const StoriesTableRow = ({
       </TableCell>
       {!hideAuthor && (
         <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col items-center gap-1">
             {story.author}
             <AuthorLink authorName={story.author} size="sm" />
           </div>
