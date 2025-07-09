@@ -11,6 +11,11 @@ const Library = () => {
     console.log('Edit story:', story);
   };
 
+  const handleViewAuthorBio = (authorName: string) => {
+    // Navigate to the public author bio page
+    window.location.href = `/author/${encodeURIComponent(authorName)}`;
+  };
+
   return (
     <ContentProtection enableProtection={true}>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
@@ -49,6 +54,7 @@ const Library = () => {
               showActions={false} 
               showPublishedOnly={true}
               showPublishedColumn={false}
+              onEditBio={handleViewAuthorBio}
             />
           </div>
         </main>
