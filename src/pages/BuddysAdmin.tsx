@@ -1,6 +1,4 @@
 
-import { SupabaseAdminAuthProvider, useSupabaseAdminAuth } from "@/components/admin/SupabaseAdminAuth";
-import SupabaseAdminLogin from "@/components/admin/SupabaseAdminLogin";
 import AdminOverview from "@/components/admin/AdminOverview";
 import AdminStories from "@/components/admin/AdminStories";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
@@ -12,7 +10,6 @@ import { useAdminSession } from "@/hooks/useAdminSession";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 const BuddysAdminContent = () => {
-  const { isAuthenticated, isLoading, isAdmin } = useSupabaseAdminAuth();
   const {
     showStoryForm,
     editingStory,
@@ -22,23 +19,7 @@ const BuddysAdminContent = () => {
     handleStoryFormCancel,
   } = useAdminSession();
 
-  console.log('BuddysAdminContent: Auth state', { isAuthenticated, isLoading });
   console.log('BuddysAdminContent: Story form state', { showStoryForm, editingStory });
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600 mx-auto mb-4"></div>
-          <p className="text-amber-800">Loading admin panel...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated || !isAdmin) {
-    return <SupabaseAdminLogin />;
-  }
 
   if (showStoryForm) {
     return (
@@ -74,9 +55,7 @@ const BuddysAdmin = () => {
   console.log('BuddysAdmin: Component rendering');
   return (
     <ContentProtection enableProtection={false}>
-      <SupabaseAdminAuthProvider>
-        <BuddysAdminContent />
-      </SupabaseAdminAuthProvider>
+      <BuddysAdminContent />
     </ContentProtection>
   );
 };
