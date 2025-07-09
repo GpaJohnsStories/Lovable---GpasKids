@@ -295,10 +295,7 @@ const StoriesTableRow = ({
   return (
     <TableRow>
       <TableCell className="font-medium font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        <div className="flex items-center space-x-1">
-          <span>{story.story_code}</span>
-          {hasVideo && <span className="text-lg" title="Has video">🎥</span>}
-        </div>
+        <span>{story.story_code}</span>
       </TableCell>
       <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="flex items-center space-x-3">
@@ -317,7 +314,12 @@ const StoriesTableRow = ({
           <div className="flex-1">
             <Link to={`/story/${story.id}`} onClick={scrollToTop}>
               <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer">
-                {story.title} {videoIndicator}
+                {story.title}
+                {hasVideo && (
+                  <span className="ml-2 text-sm font-normal">
+                    Video <span className="text-lg">🎥</span>
+                  </span>
+                )}
               </div>
             </Link>
             {story.tagline && (
