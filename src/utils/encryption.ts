@@ -21,8 +21,13 @@ class EncryptionService {
     if (this.initialized) return;
 
     try {
-      // Check if key rotation is needed
-      await checkAndRotateKey();
+      // Simplified initialization - try the full version first, then fallback
+      try {
+        // Check if key rotation is needed
+        await checkAndRotateKey();
+      } catch (error) {
+        console.warn('⚠️ Key rotation check failed, continuing with simple initialization:', error);
+      }
       
       // Derive encryption key from a combination of browser-specific data
       // This creates a unique key per browser/device for additional security
@@ -38,7 +43,12 @@ class EncryptionService {
       console.log('🔐 Encryption service initialized');
     } catch (error) {
       console.error('❌ Failed to initialize encryption service:', error);
-      reportEncryptionFailure('encryption_initialization', error as Error);
+      try {
+        // Try to report the failure, but don't let it break initialization
+        reportEncryptionFailure('encryption_initialization', error as Error);
+      } catch (reportError) {
+        console.warn('⚠️ Could not report encryption failure:', reportError);
+      }
       throw new Error('Encryption initialization failed');
     }
   }
@@ -67,8 +77,12 @@ class EncryptionService {
     }
 
     try {
-      // Increment usage counter for key rotation monitoring
-      incrementEncryptionUsage();
+      // Try to increment usage counter for key rotation monitoring, but don't fail if it doesn't work
+      try {
+        incrementEncryptionUsage();
+      } catch (usageError) {
+        console.warn('⚠️ Could not increment encryption usage:', usageError);
+      }
       
       const encoder = new TextEncoder();
       const data = encoder.encode(plaintext);
@@ -91,7 +105,11 @@ class EncryptionService {
       return btoa(String.fromCharCode(...combined));
     } catch (error) {
       console.error('❌ Encryption failed:', error);
-      reportEncryptionFailure('text_encryption', error as Error);
+      try {
+        reportEncryptionFailure('text_encryption', error as Error);
+      } catch (reportError) {
+        console.warn('⚠️ Could not report encryption failure:', reportError);
+      }
       throw new Error('Data encryption failed');
     }
   }
