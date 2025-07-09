@@ -152,11 +152,22 @@ const AdvancedSecurityDashboard = () => {
               <div className="text-sm text-gray-500">Overall Status</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">
+              <div className={`text-2xl font-bold ${
+                (securityStatus?.securityScore || 0) >= 80 ? 'text-green-600' :
+                (securityStatus?.securityScore || 0) >= 60 ? 'text-yellow-600' :
+                'text-red-600'
+              }`}>
                 {securityStatus?.securityScore}
               </div>
               <div className="text-sm text-gray-500">Security Score</div>
-              <Progress value={securityStatus?.securityScore} className="mt-2" />
+              <Progress 
+                value={securityStatus?.securityScore} 
+                className={`mt-2 ${
+                  (securityStatus?.securityScore || 0) >= 80 ? '[&>div]:bg-green-500' :
+                  (securityStatus?.securityScore || 0) >= 60 ? '[&>div]:bg-yellow-500' :
+                  '[&>div]:bg-red-500'
+                }`} 
+              />
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-red-600">
