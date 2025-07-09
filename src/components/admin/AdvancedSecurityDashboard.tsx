@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { getSecurityStatus, getThreatAnalytics, resolveThreat } from "@/utils/threatDetection";
 import { getKeyRotationStats, triggerEmergencyRotation } from "@/utils/keyRotation";
-import { getEncryptionStatus } from "@/utils/encryption";
+import { getEncryptionStatus, initializeEncryption } from "@/utils/encryption";
 
 const AdvancedSecurityDashboard = () => {
   const [securityStatus, setSecurityStatus] = useState<any>(null);
@@ -33,6 +33,9 @@ const AdvancedSecurityDashboard = () => {
   const refreshData = async () => {
     setRefreshing(true);
     try {
+      // First initialize encryption, then get all status data
+      await initializeEncryption();
+      
       const [security, threats, keys, encryption] = await Promise.all([
         getSecurityStatus(),
         getThreatAnalytics(),
