@@ -42,7 +42,7 @@ const AuthorBio = () => {
       
       const { data, error } = await supabase
         .from('stories')
-        .select('*')
+        .select('id, story_code, title, author, category, read_count, updated_at, created_at, tagline, excerpt')
         .eq('author', decodeURIComponent(authorName))
         .eq('published', 'Y')
         .order('title', { ascending: true });

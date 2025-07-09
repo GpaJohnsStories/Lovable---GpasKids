@@ -13,6 +13,7 @@ interface Story {
   read_count: number;
   updated_at: string;
   created_at: string;
+  tagline?: string;
   excerpt?: string;
 }
 
@@ -128,12 +129,24 @@ const AuthorStoriesTable = ({ stories }: AuthorStoriesTableProps) => {
                   {story.story_code}
                 </TableCell>
                 <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-                  <Link 
-                    to={`/story/${story.id}`} 
-                    className="hover:text-red-600 transition-colors duration-300 font-medium"
-                  >
-                    {story.title}
-                  </Link>
+                  <div>
+                    <Link 
+                      to={`/story/${story.id}`} 
+                      className="hover:text-red-600 transition-colors duration-300 font-medium text-base"
+                    >
+                      {story.title}
+                    </Link>
+                    {story.tagline && (
+                      <div className="text-sm font-medium text-amber-700 italic mt-1">
+                        {story.tagline}
+                      </div>
+                    )}
+                    {story.excerpt && (
+                      <div className="text-sm text-amber-600 mt-1 leading-relaxed">
+                        {story.excerpt}
+                      </div>
+                    )}
+                  </div>
                 </TableCell>
                 <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
                   <Badge 
