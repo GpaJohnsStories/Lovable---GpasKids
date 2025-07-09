@@ -3,10 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, Save } from "lucide-react";
 import { toast } from "sonner";
 import { adminClient } from "@/integrations/supabase/clients";
+import RichTextEditor from "@/components/RichTextEditor";
 
 interface AuthorBioFormProps {
   bio?: any;
@@ -123,12 +123,10 @@ const AuthorBioForm = ({ bio, onBack, onSave }: AuthorBioFormProps) => {
               {wordCount} words {wordCount > 500 && `(${wordCount > 1000 ? 'over limit!' : 'consider keeping under 500'})`}
             </span>
           </div>
-          <Textarea
-            id="bio_content"
-            value={formData.bio_content}
-            onChange={(e) => handleInputChange('bio_content', e.target.value)}
+          <RichTextEditor
+            content={formData.bio_content}
+            onChange={(content) => handleInputChange('bio_content', content)}
             placeholder="Enter the author's biography..."
-            className="min-h-[300px] resize-y"
           />
           <p className="text-sm text-muted-foreground">
             Ideal length: under 500 words. Maximum recommended: 1000 words.
