@@ -317,14 +317,15 @@ const StoriesTableRow = ({
                 {story.title}
               </div>
             </Link>
-            {hasVideo && (
-              <div className="text-sm font-normal text-gray-600 mt-1">
-                <span className="text-lg">🎥</span> Video
-              </div>
-            )}
             {story.tagline && (
               <div className="text-sm italic text-amber-700 mt-1 font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                {story.tagline}
+                {hasVideo && story.tagline.toUpperCase().includes('VIDEO') ? (
+                  <>
+                    <span className="text-lg">🎥</span> {story.tagline}
+                  </>
+                ) : (
+                  story.tagline
+                )}
               </div>
             )}
             {story.excerpt && (
