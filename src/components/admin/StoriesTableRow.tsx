@@ -9,6 +9,7 @@ import { adminClient } from "@/integrations/supabase/clients";
 import { toast } from "sonner";
 import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
 import { useState } from "react";
+import AuthorLink from "@/components/AuthorLink";
 
 interface Story {
   id: string;
@@ -45,6 +46,7 @@ interface StoriesTableRowProps {
   onEdit: (story: Story) => void;
   onDelete: (id: string) => void;
   onStatusChange?: () => void;
+  hideAuthor?: boolean;
 }
 
 const StoriesTableRow = ({ 
@@ -53,7 +55,8 @@ const StoriesTableRow = ({
   showPublishedColumn = true, 
   onEdit, 
   onDelete,
-  onStatusChange
+  onStatusChange,
+  hideAuthor = false
 }: StoriesTableRowProps) => {
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [editedDate, setEditedDate] = useState('');
@@ -328,9 +331,14 @@ const StoriesTableRow = ({
           </div>
         </div>
       </TableCell>
-      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        {story.author}
-      </TableCell>
+      {!hideAuthor && (
+        <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+          <div className="flex items-center gap-2">
+            {story.author}
+            <AuthorLink authorName={story.author} size="sm" />
+          </div>
+        </TableCell>
+      )}
       <TableCell>
         <Badge className={`${getCategoryBadgeColor(story.category)} text-center flex items-center justify-center`}>
           {story.category}

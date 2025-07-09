@@ -1,31 +1,139 @@
-import AdminHeader from "./AdminHeader";
-import CreateStoryCard from "./CreateStoryCard";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Plus, Users } from "lucide-react";
 import StoriesTable from "./StoriesTable";
-import AdminLayout from "./AdminLayout";
+import AdminStoryForm from "./AdminStoryForm";
+import AdminStoryPreview from "./AdminStoryPreview";
+import AuthorBiosTable from "./AuthorBiosTable";
+import AuthorBioForm from "./AuthorBioForm";
 
-interface AdminStoriesProps {
-  onCreateStory: () => void;
-  onEditStory: (story: any) => void;
-}
+const AdminStories = () => {
+  const [selectedStory, setSelectedStory] = useState(null);
+  const [isCreatingStory, setIsCreatingStory] = useState(false);
+  const [previewStory, setPreviewStory] = useState(null);
+  const [currentView, setCurrentView] = useState<'stories' | 'bios'>('stories');
+  const [selectedBio, setSelectedBio] = useState(null);
+  const [isCreatingBio, setIsCreatingBio] = useState(false);
+  const [groupByAuthor, setGroupByAuthor] = useState(false);
 
-const AdminStories = ({ onCreateStory, onEditStory }: AdminStoriesProps) => {
-  console.log('AdminStories: Rendering with props', { onCreateStory, onEditStory });
+  const handleEditStory = (story: any) => {
+    setSelectedStory(story);
+    setIsCreatingStory(false);
+    setPreviewStory(null);
+  };
+
+  const handleCreateStory = () => {
+    setSelectedStory(null);
+    setIsCreatingStory(true);
+    setPreviewStory(null);
+  };
+
+  const handleBackToStories = () => {
+    setSelectedStory(null);
+    setIsCreatingStory(false);
+    setPreviewStory(null);
+    setSelectedBio(null);
+    setIsCreatingBio(false);
+  };
+
+  const handlePreviewStory = (story: any) => {
+    setPreviewStory(story);
+    setSelectedStory(null);
+    setIsCreatingStory(false);
+  };
+
+  const handleEditBio = (bio: any) => {
+    setSelectedBio(bio);
+    setIsCreatingBio(false);
+  };
+
+  const handleCreateBio = () => {
+    setSelectedBio(null);
+    setIsCreatingBio(true);
+  };
+
+  const handleBackToBios = () => {
+    setSelectedBio(null);
+    setIsCreatingBio(false);
+  };
+
+  if (selectedStory || isCreatingStory) {
+    return (
+      <AdminStoryForm
+        editingStory={selectedStory}
+        onSave={handleBackToStories}
+        onCancel={handleBackToStories}
+      />
+    );
+  }
+
+  if (selectedBio || isCreatingBio) {
+    return (
+      <AuthorBioForm
+        bio={selectedBio}
+        onBack={handleBackToBios}
+        onSave={handleBackToBios}
+      />
+    );
+  }
 
   return (
-    <AdminLayout>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          Manage Stories
-        </h1>
-        <p className="text-gray-600 mt-2">Create, edit, and organize your stories</p>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div className="flex gap-4 items-center">
+          <h2 className="text-2xl font-bold">
+            {currentView === 'stories' ? 'Stories Management' : 'Author Biographies'}
+          </h2>
+          <div className="flex gap-2">
+            <Button 
+              variant={currentView === 'stories' ? 'default' : 'outline'}
+              onClick={() => setCurrentView('stories')}
+            >
+              Stories
+            </Button>
+            <Button 
+              variant={currentView === 'bios' ? 'default' : 'outline'}
+              onClick={() => setCurrentView('bios')}
+            >
+              <Users className="h-4 w-4 mr-2" />
+              Author Bios
+            </Button>
+          </div>
+        </div>
+        
+        <div className="flex gap-2">
+          {currentView === 'stories' && (
+            <>
+              <Button 
+                variant={groupByAuthor ? 'default' : 'outline'}
+                onClick={() => setGroupByAuthor(!groupByAuthor)}
+                size="sm"
+              >
+                Group by Author
+              </Button>
+              <Button onClick={handleCreateStory} className="cozy-button">
+                <Plus className="h-4 w-4 mr-2" />
+                Create New Story
+              </Button>
+            </>
+          )}
+        </div>
       </div>
       
-      <div className="mb-6">
-        <CreateStoryCard onCreateStory={onCreateStory} />
-      </div>
-      
-      <StoriesTable onEditStory={onEditStory} />
-    </AdminLayout>
+      {currentView === 'stories' ? (
+        <StoriesTable 
+          onEditStory={handleEditStory}
+          showActions={true}
+          showPublishedColumn={true}
+          groupByAuthor={groupByAuthor}
+        />
+      ) : (
+        <AuthorBiosTable
+          onEditBio={handleEditBio}
+          onCreateBio={handleCreateBio}
+        />
+      )}
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -13,18 +13,33 @@ type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
 
+interface GroupedStory extends Record<string, any> {
+  id: string;
+  story_code: string;
+  title: string;
+  author: string;
+  category: string;
+  published: string;
+  read_count: number;
+  thumbs_up_count: number;
+  updated_at: string;
+  created_at: string;
+}
+
 interface StoriesTableProps {
   onEditStory: (story: any) => void;
   showActions?: boolean;
   showPublishedOnly?: boolean;
   showPublishedColumn?: boolean;
+  groupByAuthor?: boolean;
 }
 
 const StoriesTable = ({ 
   onEditStory, 
   showActions = true, 
   showPublishedOnly = false,
-  showPublishedColumn = true 
+  showPublishedColumn = true,
+  groupByAuthor = false
 }: StoriesTableProps) => {
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -113,6 +128,27 @@ const StoriesTable = ({
     refetch();
   };
 
+  // Group stories by author when needed
+  const groupedStories = React.useMemo(() => {
+    if (!groupByAuthor || !stories) return null;
+    
+    const grouped = stories.reduce((acc: Record<string, GroupedStory[]>, story) => {
+      const author = story.author;
+      if (!acc[author]) {
+        acc[author] = [];
+      }
+      acc[author].push(story);
+      return acc;
+    }, {});
+    
+    // Sort stories within each author group by title
+    Object.keys(grouped).forEach(author => {
+      grouped[author].sort((a, b) => a.title.localeCompare(b.title));
+    });
+    
+    return grouped;
+  }, [stories, groupByAuthor]);
+
   return (
     <Card>
       <CardContent>
@@ -143,6 +179,40 @@ const StoriesTable = ({
           <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
             <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
             <p>Loading stories...</p>
+          </div>
+        ) : groupByAuthor && groupedStories ? (
+          <div className="space-y-8">
+            {Object.entries(groupedStories).sort(([a], [b]) => a.localeCompare(b)).map(([author, authorStories]) => (
+              <div key={author} className="space-y-4">
+                <h3 className="text-xl font-bold text-amber-800 border-b-2 border-amber-200 pb-2">
+                  {author} ({authorStories.length} {authorStories.length === 1 ? 'story' : 'stories'})
+                </h3>
+                <Table>
+                  <StoriesTableHeader
+                    sortField={sortField}
+                    sortDirection={sortDirection}
+                    onSort={handleSort}
+                    showActions={showActions}
+                    showPublishedColumn={showPublishedColumn}
+                    hideAuthorColumn={true}
+                  />
+                  <TableBody>
+                    {authorStories.map((story) => (
+                      <StoriesTableRow
+                        key={story.id}
+                        story={story}
+                        showActions={showActions}
+                        showPublishedColumn={showPublishedColumn}
+                        onEdit={onEditStory}
+                        onDelete={handleDeleteStory}
+                        onStatusChange={handleStatusChange}
+                        hideAuthor={true}
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            ))}
           </div>
         ) : (
           <Table>

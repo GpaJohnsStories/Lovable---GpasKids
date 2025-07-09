@@ -95,6 +95,30 @@ export type Database = {
         }
         Relationships: []
       }
+      author_bios: {
+        Row: {
+          author_name: string
+          bio_content: string | null
+          created_at: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          author_name: string
+          bio_content?: string | null
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          author_name?: string
+          bio_content?: string | null
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       comments: {
         Row: {
           content: string

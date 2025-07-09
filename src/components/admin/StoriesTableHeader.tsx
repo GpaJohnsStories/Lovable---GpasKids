@@ -12,6 +12,7 @@ interface StoriesTableHeaderProps {
   onSort: (field: SortField) => void;
   showActions: boolean;
   showPublishedColumn?: boolean;
+  hideAuthorColumn?: boolean;
 }
 
 const StoriesTableHeader = ({ 
@@ -19,7 +20,8 @@ const StoriesTableHeader = ({
   sortDirection, 
   onSort, 
   showActions, 
-  showPublishedColumn = true 
+  showPublishedColumn = true,
+  hideAuthorColumn = false
 }: StoriesTableHeaderProps) => {
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) return null;
@@ -78,19 +80,21 @@ const StoriesTableHeader = ({
             </div>
           </Button>
         </TableHead>
-        <TableHead className="p-2 text-center">
-          <Button
-            onClick={() => onSort('author')}
-            className={`${getButtonColor('author')} w-full justify-center`}
-            size="sm"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-          >
-            <div className="flex items-center justify-center gap-2">
-              Author
-              {getSortIcon('author')}
-            </div>
-          </Button>
-        </TableHead>
+        {!hideAuthorColumn && (
+          <TableHead className="p-2 text-center">
+            <Button
+              onClick={() => onSort('author')}
+              className={`${getButtonColor('author')} w-full justify-center`}
+              size="sm"
+              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+            >
+              <div className="flex items-center justify-center gap-2">
+                Author
+                {getSortIcon('author')}
+              </div>
+            </Button>
+          </TableHead>
+        )}
         <TableHead className="p-2 text-center">
           <Button
             onClick={() => onSort('category')}

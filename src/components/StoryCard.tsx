@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getCategoryButtonForStory } from "@/utils/storySectionUtils";
 import { StoryData } from "@/utils/storiesData";
 import { calculateReadingTime } from "@/utils/readingTimeUtils";
+import AuthorLink from "@/components/AuthorLink";
 
 interface StoryCardProps {
   story: StoryData;
@@ -58,7 +59,8 @@ const StoryCard = ({ story }: StoryCardProps) => {
             </div>
             
             <div className="flex items-center justify-center text-sm text-amber-600 mb-2">
-              <span className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>by {story.author}</span>
+              <span className="font-medium mr-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>by {story.author}</span>
+              <AuthorLink authorName={story.author} size="sm" />
             </div>
 
             <div className="flex items-center justify-center text-xs text-amber-600 mb-2">

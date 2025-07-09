@@ -18,6 +18,7 @@ import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
 import { getStoryPhotos } from "@/utils/storyUtils";
 import { useState } from "react";
+import AuthorLink from "@/components/AuthorLink";
 
 const Story = () => {
   const { id } = useParams();
@@ -135,6 +136,11 @@ const Story = () => {
                   aiVoiceName={story.ai_voice_name}
                   aiVoiceModel={story.ai_voice_model}
                 />
+
+                {/* Author bio link */}
+                <div className="flex justify-center mt-4 mb-6">
+                  <AuthorLink authorName={story.author} variant="button" />
+                </div>
 
                 {story.video_url && (
                   <div className="mb-8">

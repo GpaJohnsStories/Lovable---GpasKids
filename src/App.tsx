@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,6 +18,7 @@ import BuddysAdmin from "./pages/BuddysAdmin";
 import VoicePreview from "./pages/VoicePreview";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
+import AuthorBio from "./pages/AuthorBio";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +36,7 @@ const App = () => (
           <Route path="/make-comment" element={<MakeComment />} />
           <Route path="/view-comments" element={<ViewComments />} />
           <Route path="/comment/:id" element={<CommentDetail />} />
+          <Route path="/author/:authorName" element={<AuthorBio />} />
           <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
           <Route path="/buddys_admin" element={<Navigate to="/buddys_admin/dashboard" replace />} />
           <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
