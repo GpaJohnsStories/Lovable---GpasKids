@@ -43,6 +43,8 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
 
   // Enhanced admin role check using both auth.users and admin_users table
   const checkAdminRole = async (userId: string, userEmail: string) => {
+    console.log('🔍 Checking admin role for:', { userId, userEmail });
+    
     try {
       // First check: Verify user has admin role in profiles table
       const { data: profileData, error: profileError } = await adminClient
@@ -51,15 +53,19 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
         .eq('id', userId)
         .maybeSingle();
 
+      console.log('📋 Profile check result:', { profileData, profileError });
+
       if (profileError) {
-        console.error('Error checking profile admin role:', profileError);
+        console.error('❌ Error checking profile admin role:', profileError);
         return false;
       }
 
       if (profileData?.role !== 'admin') {
-        console.log('User does not have admin role in profiles');
+        console.log('❌ User does not have admin role in profiles. Current role:', profileData?.role);
         return false;
       }
+
+      console.log('✅ Profile admin role verified');
 
       // Second check: Verify user exists in admin_users table (enhanced security)
       const { data: adminData, error: adminError } = await adminClient
@@ -68,26 +74,28 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
         .eq('email', userEmail)
         .maybeSingle();
 
+      console.log('🏛️ Admin users check result:', { adminData, adminError });
+
       if (adminError) {
-        console.error('Error checking admin_users table:', adminError);
+        console.error('❌ Error checking admin_users table:', adminError);
         return false;
       }
 
       if (!adminData) {
-        console.log('User not found in admin_users table');
+        console.log('❌ User not found in admin_users table');
         return false;
       }
 
       // Check if account is locked
       if (adminData.locked_until && new Date(adminData.locked_until) > new Date()) {
-        console.log('Admin account is locked');
+        console.log('❌ Admin account is locked until:', adminData.locked_until);
         return false;
       }
 
       console.log('✅ User verified in both profiles and admin_users tables');
       return true;
     } catch (error) {
-      console.error('Error in enhanced checkAdminRole:', error);
+      console.error('💥 Error in enhanced checkAdminRole:', error);
       return false;
     }
   };
