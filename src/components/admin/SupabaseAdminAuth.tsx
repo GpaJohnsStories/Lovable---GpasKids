@@ -137,7 +137,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
     console.log('🔐 Starting secure admin login process:', { email });
     
     try {
-      // Use our custom admin_login function for secure authentication
+      // STEP 1: Use our custom admin_login function for secure authentication
       const { data: loginResult, error: loginError } = await adminClient
         .rpc('admin_login', {
           email_input: email,
@@ -162,17 +162,29 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
         return { success: false, error: result?.error || 'Invalid credentials' };
       }
 
-      // Custom login successful, now sign in to Supabase Auth for session management
-      console.log('✅ Custom admin auth successful, creating Supabase session...');
-      
+      console.log('✅ Custom admin authentication successful');
+
+      // STEP 2: Try Supabase Auth login for session management
       const { data: authData, error: authError } = await adminClient.auth.signInWithPassword({
         email,
         password,
       });
 
+      // If Supabase Auth fails, we need to handle this gracefully
       if (authError) {
-        console.error('❌ Supabase auth session creation failed:', authError);
-        return { success: false, error: 'Session creation failed' };
+        console.warn('⚠️ Supabase auth login failed, but custom auth passed:', authError.message);
+        
+        // Check if user exists in auth but password is different
+        if (authError.message.includes('Invalid login credentials')) {
+          console.log('🔧 Password mismatch detected. Custom auth passed but Supabase auth failed.');
+          console.log('💡 User should update their Supabase Auth password to match admin password.');
+          return { 
+            success: false, 
+            error: 'Password synchronization required. Please contact the system administrator to update your Supabase Auth password.' 
+          };
+        }
+        
+        return { success: false, error: 'Session creation failed: ' + authError.message };
       }
 
       if (!authData.user) {

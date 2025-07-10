@@ -19,6 +19,7 @@ import VoicePreview from "./pages/VoicePreview";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 import AuthorBio from "./pages/AuthorBio";
+import AdminPasswordSync from "./components/admin/AdminPasswordSync";
 
 const queryClient = new QueryClient();
 
