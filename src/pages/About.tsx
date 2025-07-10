@@ -112,7 +112,7 @@ const About = () => {
           <div id="buddy" className="max-w-6xl mx-auto border-4 border-yellow-400 rounded-lg p-6 mt-8 bg-[hsl(var(--grass-green))] relative">
             <div>
               <h1 className="text-4xl font-bold text-amber-800 mb-6 text-right" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                SYS-BDY
+                About Buddy
               </h1>
               
               {/* Buddy photo positioned at top left */}
@@ -135,7 +135,7 @@ const About = () => {
                 Buddy joined me at the end of July, 2024. It has been a rough year so far — I fell in June and broke 5 ribs — and I felt I deserved a comfort dog. 😃
               </p>
               <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                You see, I received my first dog when I was 5 years old, a Rat Terrior – Dachshund mix. "Lady" slept between my sheets, at the foot of my bed near my feet every night. Until I went away to college I thought everyone slept that way. Guess not!
+                You see, I received my first dog when I was 5 years old, a Terrior – Dachshund mix. "Lady" slept between my sheets, at the foot of my bed near my feet every night. Until I went away to college I thought everyone slept that way. Guess not!
               </p>
               <p className="text-lg text-black leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
                 Since then I've owned many wonderful dog, but not right now. So Buddy fits the bill. He talks with me, growls, his whine is the most pathetic (sad) thing you've ever heard, and he barks from soft to loud. If I ignore him, he will do all of those things until I give him some attention and rub his ears.
