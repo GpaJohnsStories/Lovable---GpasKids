@@ -116,18 +116,21 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
                   e.currentTarget.src = '/placeholder.svg';
                 }}
               />
-              <div>
-                <Label htmlFor={`alt_${photoNumber}`} className="text-sm">
-                  Picture Label (what children will see)
-                </Label>
-                <Input
-                  id={`alt_${photoNumber}`}
-                  value={photoAlt}
-                  onChange={(e) => onAltTextChange(`photo_alt_${photoNumber}`, e.target.value)}
-                  placeholder="Describe what's in this photo"
-                  className="mt-1"
-                />
-              </div>
+               <div className="bg-amber-50 p-3 rounded-lg border">
+                 <Label htmlFor={`alt_${photoNumber}`} className="text-sm font-medium text-orange-800">
+                   📝 Picture Description/Alt Text (required for accessibility)
+                 </Label>
+                 <p className="text-xs text-orange-600 mb-2">
+                   Describe what's in this photo for children who can't see the image
+                 </p>
+                 <Input
+                   id={`alt_${photoNumber}`}
+                   value={photoAlt}
+                   onChange={(e) => onAltTextChange(`photo_alt_${photoNumber}`, e.target.value)}
+                   placeholder="Example: A smiling child playing with toys in a sunny park"
+                   className="mt-1"
+                 />
+               </div>
             </div>
           ) : (
             <div className="space-y-3">
