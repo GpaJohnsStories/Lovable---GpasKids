@@ -178,8 +178,7 @@ const SupabaseAdminLogin = () => {
                     Password Sync Tool
                   </a>
                   <div className="text-xs text-gray-500 mt-2 p-2 bg-gray-50 rounded">
-                    <strong>Debug Info:</strong> Login attempts will be logged to console. 
-                    Check browser dev tools if login fails. Use "SecureAdmin2025!" as the password.
+                    <strong>Info:</strong> Admin login is now fully synchronized. Use your standard admin credentials.
                   </div>
                 </div>
               </div>

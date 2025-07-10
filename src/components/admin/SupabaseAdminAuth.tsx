@@ -161,68 +161,71 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
   }, []);
 
   const login = async (email: string, password: string) => {
-    console.log('🔐 Starting secure admin login process:', { email });
+    console.log('🔐 Starting simplified admin login process:', { email });
     
     try {
-      // STEP 1: Use our custom admin_login function for secure authentication
-      const { data: loginResult, error: loginError } = await adminClient
-        .rpc('admin_login', {
-          email_input: email,
-          password_input: password,
-          device_info: navigator.userAgent
-        });
-
-      console.log('🔐 Custom admin login response:', { 
-        result: loginResult,
-        error: loginError?.message 
-      });
-
-      if (loginError) {
-        console.error('❌ Custom admin login error:', loginError);
-        return { success: false, error: loginError.message };
-      }
-
-      // Type guard and validation for the response
-      const result = loginResult as any;
-      if (!result || result.success !== true) {
-        console.error('❌ Custom admin login failed:', result?.error);
-        return { success: false, error: result?.error || 'Invalid credentials' };
-      }
-
-      console.log('✅ Custom admin authentication successful');
-
-      // STEP 2: Try Supabase Auth login for session management
+      // Use Supabase Auth directly with the standardized password
       const { data: authData, error: authError } = await adminClient.auth.signInWithPassword({
         email,
         password,
       });
 
-      // If Supabase Auth fails, we need to handle this gracefully
+      console.log('🔐 Supabase auth response:', { 
+        user: authData.user?.email,
+        error: authError?.message 
+      });
+
       if (authError) {
-        console.warn('⚠️ Supabase auth login failed, but custom auth passed:', authError.message);
+        console.error('❌ Supabase auth login error:', authError);
         
-        // Check if user exists in auth but password is different
+        // Handle specific error cases
         if (authError.message.includes('Invalid login credentials')) {
-          console.log('🔧 Password mismatch detected. Custom auth passed but Supabase auth failed.');
-          console.log('💡 User should update their Supabase Auth password to match admin password.');
           return { 
             success: false, 
-            error: 'Password synchronization required. Please contact the system administrator to update your Supabase Auth password.' 
+            error: 'Invalid email or password. Please check your credentials and try again.'
+          };
+        } else if (authError.message.includes('Email not confirmed')) {
+          return { 
+            success: false, 
+            error: 'Please confirm your email address before logging in.'
+          };
+        } else if (authError.message.includes('too_many_requests')) {
+          return { 
+            success: false, 
+            error: 'Too many login attempts. Please wait a few minutes and try again.'
           };
         }
         
-        return { success: false, error: 'Session creation failed: ' + authError.message };
+        return { success: false, error: authError.message };
       }
 
       if (!authData.user) {
         console.error('❌ No user returned from Supabase auth');
-        return { success: false, error: 'Session creation failed - no user data' };
+        return { success: false, error: 'Login failed - no user data returned' };
       }
 
-      console.log('✅ Complete secure admin login successful');
+      console.log('✅ Supabase auth login successful');
+      
+      // Log the admin login to our audit table
+      try {
+        const { error: auditError } = await adminClient
+          .from('admin_audit')
+          .insert({
+            action: 'admin_login',
+            admin_id: authData.user.id,
+            user_agent: navigator.userAgent
+          });
+        
+        if (auditError) {
+          console.warn('⚠️ Failed to log admin login:', auditError.message);
+        }
+      } catch (auditError) {
+        console.warn('⚠️ Failed to log admin login:', auditError);
+      }
+
       return { success: true };
     } catch (error: any) {
-      console.error('💥 Secure login exception:', error);
+      console.error('💥 Login exception:', error);
       return { success: false, error: error.message || 'Login failed' };
     }
   };
