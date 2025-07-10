@@ -46,6 +46,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
     console.log('🔍 Checking admin role for:', { userId, userEmail });
     
     try {
+      console.log('📋 Starting profile check...');
       // First check: Verify user has admin role in profiles table
       const { data: profileData, error: profileError } = await adminClient
         .from('profiles')
@@ -67,6 +68,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
 
       console.log('✅ Profile admin role verified');
 
+      console.log('🏛️ Starting admin_users check...');
       // Second check: Verify user exists in admin_users table (enhanced security)
       const { data: adminData, error: adminError } = await adminClient
         .from('admin_users')
@@ -95,7 +97,12 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
       console.log('✅ User verified in both profiles and admin_users tables');
       return true;
     } catch (error) {
-      console.error('💥 Error in enhanced checkAdminRole:', error);
+      console.error('💥 Exception in checkAdminRole:', error);
+      console.error('💥 Error details:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      });
       return false;
     }
   };
