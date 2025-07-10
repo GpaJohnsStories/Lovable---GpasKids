@@ -472,8 +472,16 @@ export type Database = {
         Args: { admin_email: string }
         Returns: string
       }
+      armor: {
+        Args: { "": string }
+        Returns: string
+      }
       change_admin_password: {
         Args: { admin_email: string; new_password: string }
+        Returns: string
+      }
+      dearmor: {
+        Args: { "": string }
         Returns: string
       }
       emergency_admin_reset: {
@@ -482,6 +490,18 @@ export type Database = {
       }
       emergency_promote_admin: {
         Args: { user_email: string }
+        Returns: string
+      }
+      gen_random_bytes: {
+        Args: { "": number }
+        Returns: string
+      }
+      gen_random_uuid: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      gen_salt: {
+        Args: { "": string }
         Returns: string
       }
       hash_password: {
@@ -513,6 +533,14 @@ export type Database = {
           p_operation_details?: Json
         }
         Returns: undefined
+      }
+      pgp_armor_headers: {
+        Args: { "": string }
+        Returns: Record<string, unknown>[]
+      }
+      pgp_key_id: {
+        Args: { "": string }
+        Returns: string
       }
       simple_promote_to_admin: {
         Args: { user_email: string }

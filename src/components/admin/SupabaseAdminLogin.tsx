@@ -27,25 +27,29 @@ const SupabaseAdminLogin = () => {
       console.log('🔐 Login Result:', { success, error, email });
       
       if (success) {
-        toast.success("Successfully logged in!");
+        toast.success("Successfully logged in! Redirecting to admin dashboard...");
         console.log('✅ Admin login successful');
       } else {
         console.error('❌ Admin login failed:', error);
         
-        // Enhanced error messages
-        if (error?.includes('Invalid login credentials')) {
-          toast.error("Invalid email or password. Please check your credentials.");
+        // Enhanced error messages for better user experience
+        if (error?.includes('Invalid credentials')) {
+          toast.error("Invalid email or password. Please check your credentials and try again.");
+        } else if (error?.includes('Account temporarily locked')) {
+          toast.error("Account is temporarily locked due to multiple failed attempts. Please wait 15 minutes.");
         } else if (error?.includes('too_many_requests')) {
           toast.error("Too many login attempts. Please wait a few minutes and try again.");
         } else if (error?.includes('email_not_confirmed')) {
           toast.error("Please confirm your email address before logging in.");
+        } else if (error?.includes('Session creation failed')) {
+          toast.error("Authentication succeeded but session creation failed. Please try again.");
         } else {
-          toast.error(error || "Login failed. Please try again.");
+          toast.error(error || "Login failed. Please check your credentials and try again.");
         }
       }
     } catch (error: any) {
       console.error('💥 Login exception:', error);
-      toast.error(`Login error: ${error.message || 'Unknown error'}`);
+      toast.error(`Login error: ${error.message || 'Unknown error occurred'}`);
     } finally {
       setIsLoading(false);
     }
