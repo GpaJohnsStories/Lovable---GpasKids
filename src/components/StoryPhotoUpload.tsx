@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface StoryPhotoUploadProps {
   photoUrls: {
@@ -50,20 +51,25 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
     setUploading(prev => ({ ...prev, [photoNumber]: true }));
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
+      // Generate unique filename
+      const fileExt = file.name.split('.').pop();
+      const fileName = `story-photos/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
 
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
+      // Upload to Supabase storage
+      const { data, error } = await supabase.storage
+        .from('story-photos')
+        .upload(fileName, file);
 
-      if (!response.ok) {
-        throw new Error('Upload failed');
+      if (error) {
+        throw error;
       }
 
-      const data = await response.json();
-      onPhotoUpload(photoNumber, data.url);
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('story-photos')
+        .getPublicUrl(fileName);
+
+      onPhotoUpload(photoNumber, publicUrl);
       toast.success('Photo uploaded successfully!');
     } catch (error) {
       console.error('Upload error:', error);
