@@ -3,8 +3,9 @@ import AdminLayout from "./AdminLayout";
 import EmergencyAdminTools from "./EmergencyAdminTools";
 import SecurityAuditDashboard from "./SecurityAuditDashboard";
 import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
+import AdminPasswordChange from "./AdminPasswordChange";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, Shield } from "lucide-react";
+import { Settings, Shield, Key } from "lucide-react";
 
 const AdminOverview = () => {
   return (
@@ -14,6 +15,19 @@ const AdminOverview = () => {
           Admin Dashboard
         </h1>
       </div>
+      
+      {/* Password Management - Wide box with orange border */}
+      <Card className="mb-6 border-orange-500 border-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-orange-700">
+            <Key className="h-5 w-5" />
+            Password Management
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <AdminPasswordChange />
+        </CardContent>
+      </Card>
       
       {/* Security Audit - Wide box with green border */}
       <Card className="mb-6 border-green-500 border-2">
