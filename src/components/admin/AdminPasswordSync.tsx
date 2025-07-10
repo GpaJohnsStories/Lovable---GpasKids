@@ -18,34 +18,41 @@ const AdminPasswordSync = () => {
     console.log('🔧 Starting password synchronization:', { email });
 
     try {
-      // First, verify the admin password is correct in our admin system
-      const { data: loginResult, error: loginError } = await adminClient
-        .rpc('admin_login', {
-          email_input: email,
-          password_input: adminPassword,
-          device_info: 'password-sync-tool'
+      // Use our new secure admin function for password synchronization
+      const { data: syncResult, error: syncError } = await adminClient
+        .rpc('admin_sync_auth_password', {
+          admin_email: email,
+          admin_password: adminPassword,
+          new_auth_password: adminPassword
         });
 
-      if (loginError || !loginResult || !(loginResult as any).success) {
-        toast.error("Admin password verification failed. Please check your admin password.");
+      console.log('🔧 Password sync response:', { 
+        result: syncResult,
+        error: syncError?.message 
+      });
+
+      if (syncError) {
+        console.error('❌ Password sync error:', syncError);
+        toast.error("Password sync failed: " + syncError.message);
         return;
       }
 
-      console.log('✅ Admin password verified, updating Supabase Auth password...');
-
-      // Now update the Supabase Auth password to match
-      const { error: updateError } = await adminClient.auth.updateUser({
-        password: adminPassword
-      });
-
-      if (updateError) {
-        console.error('❌ Failed to update Supabase Auth password:', updateError);
-        toast.error("Failed to sync password: " + updateError.message);
+      // Type guard and validation for the response
+      const result = syncResult as any;
+      if (!result || result.success !== true) {
+        console.error('❌ Password sync failed:', result?.error);
+        toast.error("Password sync failed: " + (result?.error || 'Unknown error'));
         return;
       }
 
       console.log('✅ Password synchronization successful');
-      toast.success("Password synchronization successful! You can now log in normally.");
+      toast.success("Password synchronized successfully! You can now log in normally.");
+      
+      // Redirect to login page after successful sync
+      setTimeout(() => {
+        window.location.href = '/buddys_admin';
+      }, 2000);
+
     } catch (error: any) {
       console.error('💥 Password sync exception:', error);
       toast.error(`Password sync error: ${error.message || 'Unknown error'}`);

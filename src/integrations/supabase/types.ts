@@ -472,6 +472,14 @@ export type Database = {
         Args: { admin_email: string }
         Returns: string
       }
+      admin_sync_auth_password: {
+        Args: {
+          admin_email: string
+          admin_password: string
+          new_auth_password: string
+        }
+        Returns: Json
+      }
       armor: {
         Args: { "": string }
         Returns: string
