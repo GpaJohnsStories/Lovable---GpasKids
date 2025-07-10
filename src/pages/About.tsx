@@ -109,10 +109,10 @@ const About = () => {
           </div>
 
           {/* About Buddy Section */}
-          <div id="buddy" className="max-w-6xl mx-auto border-4 border-yellow-400 rounded-lg p-6 mt-8 bg-[hsl(var(--grass-green))]">
+          <div id="buddy" className="max-w-6xl mx-auto border-4 border-yellow-400 rounded-lg p-6 mt-8 bg-[hsl(var(--grass-green))] relative">
             <div>
               <h1 className="text-4xl font-bold text-amber-800 mb-6 text-right" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                About Buddy
+                SYS-BDY
               </h1>
               
               {/* Buddy photo positioned at top left */}
@@ -120,13 +120,13 @@ const About = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <img 
-                      src="/lovable-uploads/1b61cda7-3203-4a6b-9877-5e838c2f48de.png" 
-                      alt="Summer Buddy with his red bandana and tennis ball"
+                      src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752188691069-i44cleqpu.png" 
+                      alt="Buddy having a fun summer day at the park."
                       className="w-full h-auto rounded-lg shadow-lg border-4 border-white cursor-pointer"
                     />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">Buddy listening to one of Grandpa John's new stories.</p>
+                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">Buddy having a fun summer day at the park.</p>
                   </TooltipContent>
                 </Tooltip>
               </div>
@@ -148,6 +148,11 @@ const About = () => {
               </p>
               
               <div className="clear-left"></div>
+              
+              {/* Story Code in bottom right corner */}
+              <div className="absolute bottom-4 right-4 text-sm font-mono text-amber-700 bg-white/70 px-2 py-1 rounded">
+                SYS-BDY
+              </div>
             </div>
           </div>
 
