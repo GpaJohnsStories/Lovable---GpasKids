@@ -41,23 +41,53 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
     isAdmin 
   });
 
-  // Check if user has admin role
-  const checkAdminRole = async (userId: string) => {
+  // Enhanced admin role check using both auth.users and admin_users table
+  const checkAdminRole = async (userId: string, userEmail: string) => {
     try {
-      const { data, error } = await adminClient
+      // First check: Verify user has admin role in profiles table
+      const { data: profileData, error: profileError } = await adminClient
         .from('profiles')
         .select('role')
         .eq('id', userId)
         .maybeSingle();
 
-      if (error) {
-        console.error('Error checking admin role:', error);
+      if (profileError) {
+        console.error('Error checking profile admin role:', profileError);
         return false;
       }
 
-      return data?.role === 'admin';
+      if (profileData?.role !== 'admin') {
+        console.log('User does not have admin role in profiles');
+        return false;
+      }
+
+      // Second check: Verify user exists in admin_users table (enhanced security)
+      const { data: adminData, error: adminError } = await adminClient
+        .from('admin_users')
+        .select('email, role, locked_until')
+        .eq('email', userEmail)
+        .maybeSingle();
+
+      if (adminError) {
+        console.error('Error checking admin_users table:', adminError);
+        return false;
+      }
+
+      if (!adminData) {
+        console.log('User not found in admin_users table');
+        return false;
+      }
+
+      // Check if account is locked
+      if (adminData.locked_until && new Date(adminData.locked_until) > new Date()) {
+        console.log('Admin account is locked');
+        return false;
+      }
+
+      console.log('✅ User verified in both profiles and admin_users tables');
+      return true;
     } catch (error) {
-      console.error('Error in checkAdminRole:', error);
+      console.error('Error in enhanced checkAdminRole:', error);
       return false;
     }
   };
@@ -73,7 +103,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
         
         if (session?.user) {
           // Check admin role when user is authenticated
-          const adminStatus = await checkAdminRole(session.user.id);
+          const adminStatus = await checkAdminRole(session.user.id, session.user.email || '');
           setIsAdmin(adminStatus);
           console.log('Admin status:', adminStatus);
         } else {
@@ -91,7 +121,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
       setUser(session?.user ?? null);
       
       if (session?.user) {
-        checkAdminRole(session.user.id).then(adminStatus => {
+        checkAdminRole(session.user.id, session.user.email || '').then(adminStatus => {
           setIsAdmin(adminStatus);
           setIsLoading(false);
         });
@@ -104,37 +134,56 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
   }, []);
 
   const login = async (email: string, password: string) => {
-    console.log('🔐 Starting admin login process:', { email });
+    console.log('🔐 Starting secure admin login process:', { email });
     
     try {
-      const { data, error } = await adminClient.auth.signInWithPassword({
+      // Use our custom admin_login function for secure authentication
+      const { data: loginResult, error: loginError } = await adminClient
+        .rpc('admin_login', {
+          email_input: email,
+          password_input: password,
+          device_info: navigator.userAgent
+        });
+
+      console.log('🔐 Custom admin login response:', { 
+        result: loginResult,
+        error: loginError?.message 
+      });
+
+      if (loginError) {
+        console.error('❌ Custom admin login error:', loginError);
+        return { success: false, error: loginError.message };
+      }
+
+      // Type guard and validation for the response
+      const result = loginResult as any;
+      if (!result || result.success !== true) {
+        console.error('❌ Custom admin login failed:', result?.error);
+        return { success: false, error: result?.error || 'Invalid credentials' };
+      }
+
+      // Custom login successful, now sign in to Supabase Auth for session management
+      console.log('✅ Custom admin auth successful, creating Supabase session...');
+      
+      const { data: authData, error: authError } = await adminClient.auth.signInWithPassword({
         email,
         password,
       });
 
-      console.log('🔐 Supabase auth response:', { 
-        hasUser: !!data.user, 
-        userId: data.user?.id,
-        userEmail: data.user?.email,
-        hasSession: !!data.session,
-        error: error?.message 
-      });
-
-      if (error) {
-        console.error('❌ Supabase auth error:', error);
-        return { success: false, error: error.message };
+      if (authError) {
+        console.error('❌ Supabase auth session creation failed:', authError);
+        return { success: false, error: 'Session creation failed' };
       }
 
-      if (!data.user) {
-        console.error('❌ No user returned from auth');
-        return { success: false, error: 'Login failed - no user data' };
+      if (!authData.user) {
+        console.error('❌ No user returned from Supabase auth');
+        return { success: false, error: 'Session creation failed - no user data' };
       }
 
-      console.log('✅ Authentication successful, checking admin role...');
-      // Admin role will be checked by the auth state change handler
+      console.log('✅ Complete secure admin login successful');
       return { success: true };
     } catch (error: any) {
-      console.error('💥 Login exception in auth component:', error);
+      console.error('💥 Secure login exception:', error);
       return { success: false, error: error.message || 'Login failed' };
     }
   };
