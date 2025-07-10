@@ -101,44 +101,56 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
   };
 
   useEffect(() => {
+    console.log('🔄 Setting up auth state listener...');
+    
     // Set up auth state listener
     const { data: { subscription } } = adminClient.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state change:', event, session?.user?.email);
+        console.log('🔄 Auth state change:', event, session?.user?.email);
         
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
+          console.log('👤 User session detected, checking admin role...');
           // Check admin role when user is authenticated
           const adminStatus = await checkAdminRole(session.user.id, session.user.email || '');
+          console.log('🔐 Admin status result:', adminStatus);
           setIsAdmin(adminStatus);
-          console.log('Admin status:', adminStatus);
         } else {
+          console.log('❌ No user session, setting admin to false');
           setIsAdmin(false);
         }
         
         setIsLoading(false);
+        console.log('✅ Auth state update complete');
       }
     );
 
     // Check for existing session
+    console.log('🔍 Checking for existing session...');
     adminClient.auth.getSession().then(({ data: { session } }) => {
-      console.log('Initial session check:', session?.user?.email);
+      console.log('📋 Initial session check:', session?.user?.email);
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
+        console.log('👤 Existing session found, checking admin role...');
         checkAdminRole(session.user.id, session.user.email || '').then(adminStatus => {
+          console.log('🔐 Initial admin status:', adminStatus);
           setIsAdmin(adminStatus);
           setIsLoading(false);
         });
       } else {
+        console.log('❌ No existing session found');
         setIsLoading(false);
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      console.log('🧹 Cleaning up auth subscription');
+      subscription.unsubscribe();
+    };
   }, []);
 
   const login = async (email: string, password: string) => {
