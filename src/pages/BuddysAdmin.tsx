@@ -8,7 +8,11 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import ContentProtection from "@/components/ContentProtection";
 import { useAdminSession } from "@/hooks/useAdminSession";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { SupabaseAdminAuthProvider, useSupabaseAdminAuth } from "@/components/admin/SupabaseAdminAuth";
+import SupabaseAdminLogin from "@/components/admin/SupabaseAdminLogin";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
+// Protected admin content that requires authentication
 const BuddysAdminContent = () => {
   const {
     showStoryForm,
@@ -46,12 +50,48 @@ const BuddysAdminContent = () => {
   );
 };
 
-const BuddysAdmin = () => {
-  console.log('BuddysAdmin: Component rendering');
+// Authentication guard component
+const AdminAuthGuard = () => {
+  const { isAuthenticated, isLoading, isAdmin } = useSupabaseAdminAuth();
+
+  console.log('🔐 AdminAuthGuard State:', { 
+    isAuthenticated, 
+    isLoading, 
+    isAdmin,
+    timestamp: new Date().toISOString()
+  });
+
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  // Show login form if not authenticated or not admin
+  if (!isAuthenticated || !isAdmin) {
+    console.log('🔐 Showing login form - user not authenticated or not admin');
+    return <SupabaseAdminLogin />;
+  }
+
+  // User is authenticated and is admin - show admin content
+  console.log('✅ User authenticated and is admin - showing admin content');
   return (
     <ContentProtection enableProtection={false}>
       <BuddysAdminContent />
     </ContentProtection>
+  );
+};
+
+// Main admin component with authentication provider
+const BuddysAdmin = () => {
+  console.log('🔐 BuddysAdmin: Component rendering with auth provider');
+  return (
+    <SupabaseAdminAuthProvider>
+      <AdminAuthGuard />
+    </SupabaseAdminAuthProvider>
   );
 };
 
