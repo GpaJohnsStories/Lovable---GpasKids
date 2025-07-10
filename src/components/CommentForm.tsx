@@ -31,6 +31,7 @@ interface CommentFormProps {
   prefilledStoryCode?: string;
 }
 
+// Comment form component - encryption removed
 const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: CommentFormProps) => {
   const queryClient = useQueryClient();
   const [personalId, setPersonalId] = useState<string | null>(null);
