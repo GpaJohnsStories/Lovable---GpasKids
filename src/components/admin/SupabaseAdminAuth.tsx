@@ -112,18 +112,22 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
     
     // Set up auth state listener
     const { data: { subscription } } = adminClient.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         console.log('🔄 Auth state change:', event, session?.user?.email);
         
+        // Only synchronous state updates here to prevent deadlocks
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
           console.log('👤 User session detected, checking admin role...');
-          // Check admin role when user is authenticated
-          const adminStatus = await checkAdminRole(session.user.id, session.user.email || '');
-          console.log('🔐 Admin status result:', adminStatus);
-          setIsAdmin(adminStatus);
+          // Defer admin role check to prevent blocking auth flow
+          setTimeout(() => {
+            checkAdminRole(session.user.id, session.user.email || '').then(adminStatus => {
+              console.log('🔐 Admin status result:', adminStatus);
+              setIsAdmin(adminStatus);
+            });
+          }, 0);
         } else {
           console.log('❌ No user session, setting admin to false');
           setIsAdmin(false);
