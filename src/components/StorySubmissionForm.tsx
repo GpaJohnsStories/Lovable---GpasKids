@@ -158,7 +158,13 @@ const StorySubmissionForm = () => {
         
         {/* Personal ID Section */}
         <div className="bg-amber-50 border-2 border-amber-300 rounded-lg p-6">
-          <h3 className="text-xl font-bold text-orange-800 mb-4">Step 1: Your Personal ID</h3>
+          <h3 className="text-xl font-bold text-orange-800 mb-4">Step 1: Your Personal ID (Required)</h3>
+          <div className="mb-4 p-4 bg-orange-100 border border-orange-300 rounded">
+            <p className="text-orange-800 font-medium">
+              🔐 <strong>This step is required!</strong> Your Personal ID is the only information you must provide. 
+              Later, you can use this same Personal ID to view Grandpa John's comments about your story.
+            </p>
+          </div>
           <PersonalIdSection
             form={form}
             idMode={idMode}
