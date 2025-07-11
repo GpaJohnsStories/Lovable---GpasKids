@@ -74,7 +74,7 @@ const NavigationMenu = () => {
       shadowColor: 'shadow-[0_6px_0_#0369a1,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#0369a1,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-blue-950',
-      description: 'More about Grandpa John, Buddy, and Copyright',
+      description: 'More about Grandpa John, Buddy, and Special Thanks',
       subItems: [
         { name: 'About Grandpa John', path: '/about' },
         { name: 'About Buddy', path: '/about#buddy' },
