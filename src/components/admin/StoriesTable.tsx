@@ -184,67 +184,71 @@ const StoriesTable = ({
               <p>Loading stories...</p>
             </div>
           ) : groupByAuthor && groupedStories ? (
-            <div className="max-h-[calc(100vh-250px)] overflow-auto">
-              <div className="space-y-8">
-                {Object.entries(groupedStories).sort(([a], [b]) => a.localeCompare(b)).map(([author, authorStories]) => (
-                  <div key={author} className="space-y-4">
-                    <h3 className="text-xl font-bold text-amber-800 border-b-2 border-amber-200 pb-2 sticky top-0 bg-background z-20">
-                      {author} ({authorStories.length} {authorStories.length === 1 ? 'story' : 'stories'})
-                    </h3>
-                    <Table>
-                      <StoriesTableHeader
-                        sortField={sortField}
-                        sortDirection={sortDirection}
-                        onSort={handleSort}
-                        showActions={showActions}
-                        showPublishedColumn={showPublishedColumn}
-                        hideAuthorColumn={true}
-                      />
-                      <TableBody>
-                        {authorStories.map((story) => (
-                          <StoriesTableRow
-                            key={story.id}
-                            story={story}
-                            showActions={showActions}
-                            showPublishedColumn={showPublishedColumn}
-                            onEdit={onEditStory}
-                            onDelete={handleDeleteStory}
-                            onStatusChange={handleStatusChange}
-                            hideAuthor={true}
-                            onEditBio={onEditBio}
-                          />
-                        ))}
-                      </TableBody>
-                    </Table>
+            <div className="space-y-8">
+              {Object.entries(groupedStories).sort(([a], [b]) => a.localeCompare(b)).map(([author, authorStories]) => (
+                <div key={author} className="space-y-4">
+                  <h3 className="text-xl font-bold text-amber-800 border-b-2 border-amber-200 pb-2 sticky top-0 bg-background z-20">
+                    {author} ({authorStories.length} {authorStories.length === 1 ? 'story' : 'stories'})
+                  </h3>
+                  <div className="border rounded-lg overflow-hidden">
+                    <div className="max-h-[400px] overflow-y-auto">
+                      <Table>
+                        <StoriesTableHeader
+                          sortField={sortField}
+                          sortDirection={sortDirection}
+                          onSort={handleSort}
+                          showActions={showActions}
+                          showPublishedColumn={showPublishedColumn}
+                          hideAuthorColumn={true}
+                        />
+                        <TableBody>
+                          {authorStories.map((story) => (
+                            <StoriesTableRow
+                              key={story.id}
+                              story={story}
+                              showActions={showActions}
+                              showPublishedColumn={showPublishedColumn}
+                              onEdit={onEditStory}
+                              onDelete={handleDeleteStory}
+                              onStatusChange={handleStatusChange}
+                              hideAuthor={true}
+                              onEditBio={onEditBio}
+                            />
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           ) : (
-            <div className="max-h-[calc(100vh-250px)] overflow-auto">
-              <Table>
-                <StoriesTableHeader
-                  sortField={sortField}
-                  sortDirection={sortDirection}
-                  onSort={handleSort}
-                  showActions={showActions}
-                  showPublishedColumn={showPublishedColumn}
-                />
-                <TableBody>
-                  {stories?.map((story) => (
-                    <StoriesTableRow
-                      key={story.id}
-                      story={story}
-                      showActions={showActions}
-                      showPublishedColumn={showPublishedColumn}
-                      onEdit={onEditStory}
-                      onDelete={handleDeleteStory}
-                      onStatusChange={handleStatusChange}
-                      onEditBio={onEditBio}
-                    />
-                  ))}
-                </TableBody>
-              </Table>
+            <div className="border rounded-lg overflow-hidden">
+              <div className="max-h-[calc(100vh-250px)] overflow-y-auto">
+                <Table>
+                  <StoriesTableHeader
+                    sortField={sortField}
+                    sortDirection={sortDirection}
+                    onSort={handleSort}
+                    showActions={showActions}
+                    showPublishedColumn={showPublishedColumn}
+                  />
+                  <TableBody>
+                    {stories?.map((story) => (
+                      <StoriesTableRow
+                        key={story.id}
+                        story={story}
+                        showActions={showActions}
+                        showPublishedColumn={showPublishedColumn}
+                        onEdit={onEditStory}
+                        onDelete={handleDeleteStory}
+                        onStatusChange={handleStatusChange}
+                        onEditBio={onEditBio}
+                      />
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           )}
         </div>
