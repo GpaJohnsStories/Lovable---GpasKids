@@ -99,7 +99,7 @@ const PersonalIdSection = ({
       <TabsContent value="existing" className="pt-4">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3">
-            <Label className="text-orange-800 font-fun text-lg">Personal ID</Label>
+            <Label className="text-orange-800 font-fun text-lg">Personal ID <span className="bg-yellow-200 px-2 py-1 rounded font-semibold italic">This is required!</span></Label>
             <Input
               placeholder="6-character ID"
               value={existingPersonalId}
