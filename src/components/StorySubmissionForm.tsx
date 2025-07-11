@@ -128,7 +128,7 @@ const StorySubmissionForm = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 font-georgia">
+    <div className="max-w-4xl mx-auto space-y-6" style={{ fontFamily: 'Georgia, serif' }}>
       {/* Title */}
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
         Story Submission Release Form
