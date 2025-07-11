@@ -108,7 +108,7 @@ const PersonalIdSection = ({
                 if (existingPersonalIdError) setExistingPersonalIdError(null);
               }}
               maxLength={6}
-              className="w-full sm:w-40 text-base md:text-sm"
+              className="w-24 text-center font-bold text-base md:text-sm"
             />
             {existingPersonalIdError && <p className="text-sm font-bold text-destructive mt-2">{existingPersonalIdError}</p>}
           </div>
@@ -151,10 +151,12 @@ const PersonalIdSection = ({
                     <p className="text-orange-800 font-fun text-lg font-bold mb-2">
                       Your Complete Personal ID:
                     </p>
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="bg-amber-200 px-4 py-2 rounded-lg inline-block">
-                        <span className="font-bold text-xl text-orange-900">{personalId}</span>
+                    <div className="flex justify-center mb-3">
+                      <div className="bg-amber-200 px-3 py-2 rounded-lg">
+                        <span className="font-bold text-lg text-orange-900">{personalId}</span>
                       </div>
+                    </div>
+                    <div className="flex justify-center mb-3">
                       <button
                         type="button"
                         onClick={handleClearId}
