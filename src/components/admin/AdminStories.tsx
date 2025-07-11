@@ -6,6 +6,7 @@ import AdminStoryForm from "./AdminStoryForm";
 import AdminStoryPreview from "./AdminStoryPreview";
 import AuthorBiosTable from "./AuthorBiosTable";
 import AuthorBioForm from "./AuthorBioForm";
+import AdminLayout from "./AdminLayout";
 import { adminClient } from "@/integrations/supabase/clients";
 
 const AdminStories = () => {
@@ -107,63 +108,65 @@ const AdminStories = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div className="flex gap-4 items-center">
-          <h2 className="text-2xl font-bold">
-            {currentView === 'stories' ? 'Stories Management' : 'Author Biographies'}
-          </h2>
+    <AdminLayout>
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-4 items-center">
+            <h2 className="text-2xl font-bold">
+              {currentView === 'stories' ? 'Stories Management' : 'Author Biographies'}
+            </h2>
+            <div className="flex gap-2">
+              <Button 
+                variant={currentView === 'stories' ? 'default' : 'outline'}
+                onClick={() => setCurrentView('stories')}
+              >
+                Stories
+              </Button>
+              <Button 
+                variant={currentView === 'bios' ? 'default' : 'outline'}
+                onClick={() => setCurrentView('bios')}
+              >
+                <Users className="h-4 w-4 mr-2" />
+                Author Bios
+              </Button>
+            </div>
+          </div>
+          
           <div className="flex gap-2">
-            <Button 
-              variant={currentView === 'stories' ? 'default' : 'outline'}
-              onClick={() => setCurrentView('stories')}
-            >
-              Stories
-            </Button>
-            <Button 
-              variant={currentView === 'bios' ? 'default' : 'outline'}
-              onClick={() => setCurrentView('bios')}
-            >
-              <Users className="h-4 w-4 mr-2" />
-              Author Bios
-            </Button>
+            {currentView === 'stories' && (
+              <>
+                <Button 
+                  variant={groupByAuthor ? 'default' : 'outline'}
+                  onClick={() => setGroupByAuthor(!groupByAuthor)}
+                  size="sm"
+                >
+                  Group by Author
+                </Button>
+                <Button onClick={handleCreateStory} className="cozy-button">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create New Story
+                </Button>
+              </>
+            )}
           </div>
         </div>
         
-        <div className="flex gap-2">
-          {currentView === 'stories' && (
-            <>
-              <Button 
-                variant={groupByAuthor ? 'default' : 'outline'}
-                onClick={() => setGroupByAuthor(!groupByAuthor)}
-                size="sm"
-              >
-                Group by Author
-              </Button>
-              <Button onClick={handleCreateStory} className="cozy-button">
-                <Plus className="h-4 w-4 mr-2" />
-                Create New Story
-              </Button>
-            </>
-          )}
-        </div>
+        {currentView === 'stories' ? (
+          <StoriesTable 
+            onEditStory={handleEditStory}
+            showActions={true}
+            showPublishedColumn={true}
+            groupByAuthor={groupByAuthor}
+            onEditBio={handleEditBioByAuthorName}
+          />
+        ) : (
+          <AuthorBiosTable
+            onEditBio={handleEditBio}
+            onCreateBio={handleCreateBio}
+          />
+        )}
       </div>
-      
-      {currentView === 'stories' ? (
-        <StoriesTable 
-          onEditStory={handleEditStory}
-          showActions={true}
-          showPublishedColumn={true}
-          groupByAuthor={groupByAuthor}
-          onEditBio={handleEditBioByAuthorName}
-        />
-      ) : (
-        <AuthorBiosTable
-          onEditBio={handleEditBio}
-          onCreateBio={handleCreateBio}
-        />
-      )}
-    </div>
+    </AdminLayout>
   );
 };
 
