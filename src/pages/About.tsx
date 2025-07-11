@@ -156,20 +156,87 @@ const About = () => {
             </div>
           </div>
 
-          {/* New Section - Light Purple with Gold Border */}
+          {/* Special Thanks Section - Light Purple with Gold Border */}
           <div id="new-section" className="max-w-6xl mx-auto border-4 border-yellow-500 rounded-lg p-6 mt-8 bg-purple-100 relative">
             <div>
               <h1 className="text-4xl font-bold text-purple-800 mb-6 text-center" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                [Section Title Coming Soon]
+                A Special "Thank You" to ...
               </h1>
               
-              <p className="text-lg text-purple-900 leading-relaxed mb-4 font-normal text-center" style={{ fontFamily: 'Georgia, serif' }}>
-                Content will be added from the story table...
-              </p>
+              {/* Photos arranged side-by-side below title */}
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="overflow-hidden rounded-lg border border-purple-200 shadow-sm cursor-pointer">
+                      <img
+                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
+                        alt="#3 AI Assistant"
+                        className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#3 AI Assistant</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="overflow-hidden rounded-lg border border-purple-200 shadow-sm cursor-pointer">
+                      <img
+                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203773244-hhgj4xbfc.png"
+                        alt="#1 AI Assistant"
+                        className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#1 AI Assistant</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="overflow-hidden rounded-lg border border-purple-200 shadow-sm cursor-pointer">
+                      <img
+                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203785267-p40ovhg84.png"
+                        alt="#2 AI Assistant"
+                        className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#2 AI Assistant</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+              
+              <div className="text-lg text-purple-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                <p className="mb-4">
+                  I want to say an unusual "Thank You!!!" to 3 special helpers. I've never done this before because these 3 special helpers are all Artificial Intelligence (AI's).
+                </p>
+                <ul className="space-y-2 list-none ml-4 mb-4">
+                  <li><strong>#3</strong>: For general wording and some coding help, <strong>Google Gemini AI</strong> (<u><em>https://gemini.google.com/app</em></u>)</li>
+                  <li><strong>#2</strong>: For beautiful work on creating photos out of just ideas and a small photo, <strong>Microsoft CoPilot AI</strong> (<u><em>https://copilot.microsoft.com/</em></u>)</li>
+                  <li><strong>#1</strong>: For great work, unexpected super suggestions and all-around partner in building GpasKids.com, <strong>Lovable AI</strong> (<u><em>https://lovable.dev/</em></u>)</li>
+                </ul>
+                <p>
+                  Without the help of these 3 partners this and future Gpas website would not have been built.
+                </p>
+              </div>
               
               {/* Story Code in bottom right corner */}
               <div className="absolute bottom-4 right-4 text-sm font-mono text-purple-700 bg-white/70 px-2 py-1 rounded">
-                [Story Code TBD]
+                SYS-THY
               </div>
             </div>
           </div>
