@@ -52,7 +52,7 @@ const StoriesTableHeader = ({
   };
 
   return (
-    <TableHeader className="sticky top-0 z-10 bg-background border-b">
+    <TableHeader>
       <TableRow className="bg-background hover:bg-background">{/* Ensure row also has background */}
         <TableHead className="p-2 text-center bg-background">
           <Button

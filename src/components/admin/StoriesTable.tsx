@@ -224,7 +224,8 @@ const StoriesTable = ({
             </div>
           ) : (
             <div className="border rounded-lg overflow-hidden">
-              <div className="max-h-[calc(100vh-250px)] overflow-y-auto">
+              {/* Fixed header outside scrollable area */}
+              <div className="border-b bg-background">
                 <Table>
                   <StoriesTableHeader
                     sortField={sortField}
@@ -233,6 +234,11 @@ const StoriesTable = ({
                     showActions={showActions}
                     showPublishedColumn={showPublishedColumn}
                   />
+                </Table>
+              </div>
+              {/* Scrollable content area */}
+              <div className="max-h-[calc(100vh-320px)] overflow-y-auto">
+                <Table>
                   <TableBody>
                     {stories?.map((story) => (
                       <StoriesTableRow
