@@ -39,7 +39,7 @@ interface PageMapping {
   description: string;
 }
 
-// Define the mapping of story codes to page locations
+// Define the mapping of web-text codes to page locations
 const PAGE_MAPPINGS: PageMapping[] = [
   {
     storyCode: 'WELCOME_TEXT',
@@ -64,7 +64,14 @@ const PAGE_MAPPINGS: PageMapping[] = [
     pagePath: 'src/pages/HelpGpa.tsx',
     placeholderType: 'content',
     description: 'Help Grandpa John content'
-  }
+  },
+  // Add your new SYS- code mappings here:
+  // {
+  //   storyCode: 'SYS-ABC',
+  //   pagePath: 'src/pages/YourPage.tsx',
+  //   placeholderType: 'content',
+  //   description: 'Your web-text description'
+  // }
 ];
 
 const StaticDeploymentSystem = () => {
@@ -192,8 +199,8 @@ const StaticDeploymentSystem = () => {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-2xl font-bold text-amber-800">Static Content Deployment System</h1>
-            <p className="text-amber-600 mt-1">Deploy System stories directly to web pages for improved performance</p>
+            <h1 className="text-2xl font-bold text-amber-800">Static Web-Text Deployment System</h1>
+            <p className="text-amber-600 mt-1">Deploy System web-text pieces directly to web pages for improved performance</p>
           </div>
           <div className="flex gap-2">
             <Button
