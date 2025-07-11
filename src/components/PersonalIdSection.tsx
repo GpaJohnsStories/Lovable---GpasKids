@@ -97,9 +97,9 @@ const PersonalIdSection = ({
         <TabsTrigger value="create" className="font-bold bg-yellow-100 data-[state=active]:bg-yellow-200">Create New ID</TabsTrigger>
       </TabsList>
       <TabsContent value="existing" className="pt-4">
-        <div className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
-          <Label className="text-orange-800 font-fun text-lg sm:text-left">Personal ID</Label>
-          <div className="sm:col-span-2">
+        <div className="flex flex-col gap-2">
+          <Label className="text-orange-800 font-fun text-lg">Personal ID</Label>
+          <div>
             <Input
               placeholder="6-character ID"
               value={existingPersonalId}
