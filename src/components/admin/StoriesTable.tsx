@@ -83,22 +83,6 @@ const StoriesTable = ({
     },
   });
 
-  const { data: storyCounts } = useQuery({
-    queryKey: ['story-counts'],
-    queryFn: async () => {
-      const [allResult, publishedResult, unpublishedResult] = await Promise.all([
-        adminClient.from('stories').select('id', { count: 'exact', head: true }),
-        adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y'),
-        adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N')
-      ]);
-
-      return {
-        all: allResult.count || 0,
-        published: publishedResult.count || 0,
-        unpublished: unpublishedResult.count || 0
-      };
-    },
-  });
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -154,28 +138,6 @@ const StoriesTable = ({
   return (
     <Card>
       <CardContent>
-        {showActions && (
-          <div className="flex gap-2 mb-4 pt-4">
-            <Button
-              onClick={() => setPublishedFilter('all')}
-              variant={publishedFilter === 'all' ? 'default' : 'outline'}
-            >
-              All {storyCounts && `(${storyCounts.all})`}
-            </Button>
-            <Button
-              onClick={() => setPublishedFilter('published')}
-              variant={publishedFilter === 'published' ? 'default' : 'outline'}
-            >
-              Published {storyCounts && `(${storyCounts.published})`}
-            </Button>
-            <Button
-              onClick={() => setPublishedFilter('unpublished')}
-              variant={publishedFilter === 'unpublished' ? 'default' : 'outline'}
-            >
-              Unpublished {storyCounts && `(${storyCounts.unpublished})`}
-            </Button>
-          </div>
-        )}
         
         <div className="relative">
           {storiesLoading ? (
