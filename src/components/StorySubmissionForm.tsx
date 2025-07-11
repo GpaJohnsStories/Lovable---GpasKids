@@ -194,7 +194,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="story-file" className="text-blue-800 font-fun text-sm">Story File *</Label>
+              <Label htmlFor="story-file" className="text-blue-800 font-fun text-sm">Click to upload your story file *</Label>
               <Input
                 id="story-file"
                 type="file"
