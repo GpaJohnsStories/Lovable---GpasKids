@@ -95,7 +95,7 @@ const SimpleEditorToolbar: React.FC<SimpleEditorToolbarProps> = ({ onCommand }) 
         size="sm"
         onClick={() => onCommand('justifyCenter')}
         className="h-8 w-8 p-0"
-        title="Center (Ctrl+T)"
+        title="Center (Ctrl+E)"
       >
         <AlignCenter className="h-4 w-4" />
       </Button>

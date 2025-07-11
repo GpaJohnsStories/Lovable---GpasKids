@@ -144,9 +144,9 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
           e.preventDefault();
           handleCommand('underline');
           break;
-        case 't':
+        case 'e':
           e.preventDefault();
-          handleCommand('justifyCenter'); // Center alignment (Ctrl+T)
+          handleCommand('justifyCenter'); // Center alignment (Ctrl+E)
           break;
         case 'n':
           e.preventDefault();
