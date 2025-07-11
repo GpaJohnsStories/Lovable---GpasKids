@@ -177,71 +177,73 @@ const StoriesTable = ({
           </div>
         )}
         
-        {storiesLoading ? (
-          <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-            <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
-            <p>Loading stories...</p>
-          </div>
-        ) : groupByAuthor && groupedStories ? (
-          <div className="space-y-8">
-            {Object.entries(groupedStories).sort(([a], [b]) => a.localeCompare(b)).map(([author, authorStories]) => (
-              <div key={author} className="space-y-4">
-                <h3 className="text-xl font-bold text-amber-800 border-b-2 border-amber-200 pb-2">
-                  {author} ({authorStories.length} {authorStories.length === 1 ? 'story' : 'stories'})
-                </h3>
-                <Table>
-                  <StoriesTableHeader
-                    sortField={sortField}
-                    sortDirection={sortDirection}
-                    onSort={handleSort}
+        <div className="relative max-h-[calc(100vh-250px)] overflow-auto">
+          {storiesLoading ? (
+            <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+              <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
+              <p>Loading stories...</p>
+            </div>
+          ) : groupByAuthor && groupedStories ? (
+            <div className="space-y-8">
+              {Object.entries(groupedStories).sort(([a], [b]) => a.localeCompare(b)).map(([author, authorStories]) => (
+                <div key={author} className="space-y-4">
+                  <h3 className="text-xl font-bold text-amber-800 border-b-2 border-amber-200 pb-2 sticky top-0 bg-background z-10">
+                    {author} ({authorStories.length} {authorStories.length === 1 ? 'story' : 'stories'})
+                  </h3>
+                  <Table>
+                    <StoriesTableHeader
+                      sortField={sortField}
+                      sortDirection={sortDirection}
+                      onSort={handleSort}
+                      showActions={showActions}
+                      showPublishedColumn={showPublishedColumn}
+                      hideAuthorColumn={true}
+                    />
+                    <TableBody>
+                      {authorStories.map((story) => (
+                        <StoriesTableRow
+                          key={story.id}
+                          story={story}
+                          showActions={showActions}
+                          showPublishedColumn={showPublishedColumn}
+                          onEdit={onEditStory}
+                          onDelete={handleDeleteStory}
+                          onStatusChange={handleStatusChange}
+                          hideAuthor={true}
+                          onEditBio={onEditBio}
+                        />
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Table>
+              <StoriesTableHeader
+                sortField={sortField}
+                sortDirection={sortDirection}
+                onSort={handleSort}
+                showActions={showActions}
+                showPublishedColumn={showPublishedColumn}
+              />
+              <TableBody>
+                {stories?.map((story) => (
+                  <StoriesTableRow
+                    key={story.id}
+                    story={story}
                     showActions={showActions}
                     showPublishedColumn={showPublishedColumn}
-                    hideAuthorColumn={true}
+                    onEdit={onEditStory}
+                    onDelete={handleDeleteStory}
+                    onStatusChange={handleStatusChange}
+                    onEditBio={onEditBio}
                   />
-                  <TableBody>
-                    {authorStories.map((story) => (
-                      <StoriesTableRow
-                        key={story.id}
-                        story={story}
-                        showActions={showActions}
-                        showPublishedColumn={showPublishedColumn}
-                        onEdit={onEditStory}
-                        onDelete={handleDeleteStory}
-                        onStatusChange={handleStatusChange}
-                        hideAuthor={true}
-                        onEditBio={onEditBio}
-                      />
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <Table>
-            <StoriesTableHeader
-              sortField={sortField}
-              sortDirection={sortDirection}
-              onSort={handleSort}
-              showActions={showActions}
-              showPublishedColumn={showPublishedColumn}
-            />
-            <TableBody>
-              {stories?.map((story) => (
-                <StoriesTableRow
-                  key={story.id}
-                  story={story}
-                  showActions={showActions}
-                  showPublishedColumn={showPublishedColumn}
-                  onEdit={onEditStory}
-                  onDelete={handleDeleteStory}
-                  onStatusChange={handleStatusChange}
-                  onEditBio={onEditBio}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        )}
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
