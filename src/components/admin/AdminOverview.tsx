@@ -29,7 +29,7 @@ const AdminOverview = () => {
 
   return (
     <AdminLayout>
-      <div className="mb-8">
+      <div className="mb-0">
         <h1 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           Admin Dashboard
         </h1>
