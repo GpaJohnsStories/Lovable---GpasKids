@@ -57,6 +57,20 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
   const handleCommand = (command: string, value?: string) => {
     if (command === 'insertHTML' && value) {
       document.execCommand('insertHTML', false, value);
+    } else if (command === 'justifyCenter') {
+      // Handle center alignment by wrapping selected text in center tags
+      const selection = window.getSelection();
+      const range = selection?.rangeCount ? selection.getRangeAt(0) : null;
+      
+      if (range && !range.collapsed) {
+        // If text is selected, wrap it in center tags
+        const selectedText = range.toString();
+        const centerHTML = `<center>${selectedText}</center>`;
+        document.execCommand('insertHTML', false, centerHTML);
+      } else {
+        // If no text selected, insert center tags with placeholder
+        document.execCommand('insertHTML', false, '<center>Centered text</center>');
+      }
     } else if (command === 'insertUnorderedList' || command === 'insertOrderedList') {
       // Improved list handling to preserve text
       const selection = window.getSelection();
@@ -129,6 +143,10 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
         case 'u':
           e.preventDefault();
           handleCommand('underline');
+          break;
+        case 't':
+          e.preventDefault();
+          handleCommand('justifyCenter'); // Center alignment (Ctrl+T)
           break;
         case 'n':
           e.preventDefault();
