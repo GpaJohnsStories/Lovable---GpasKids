@@ -142,8 +142,7 @@ const StorySubmissionForm = () => {
           <h3 className="text-lg font-bold text-orange-800 mb-4">Step 1: Your Personal ID <span className="bg-yellow-200 px-2 py-1 rounded font-semibold italic">This is required!</span></h3>
           <div className="mb-4 p-4 bg-orange-100 border border-orange-300 rounded">
             <p className="text-orange-800 text-sm">
-              Your Personal ID is the only information you must provide. 
-              Later, you can use this same Personal ID to view Grandpa John's comments about your story.
+              Your Personal ID is needed so that later, you can use your same Personal ID to view Grandpa John's comments about your story.
             </p>
           </div>
           <PersonalIdSection
