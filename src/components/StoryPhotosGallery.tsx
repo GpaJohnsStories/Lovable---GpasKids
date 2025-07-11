@@ -30,7 +30,7 @@ const StoryPhotosGallery = ({ photos, storyTitle }: StoryPhotosGalleryProps) => 
                     src={photo.url}
                     alt={photo.alt}
                     title={photo.alt}
-                    className="w-full max-h-48 object-contain hover:scale-105 transition-transform duration-300"
+                    className="w-full max-h-48 object-contain transition-transform duration-300"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
