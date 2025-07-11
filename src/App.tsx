@@ -20,6 +20,7 @@ import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 import AuthorBio from "./pages/AuthorBio";
 import HelpGpa from "./pages/HelpGpa";
+import StoryContentTest from "./pages/StoryContentTest";
 import AdminPasswordSync from "./components/admin/AdminPasswordSync";
 
 const queryClient = new QueryClient();
@@ -64,6 +65,7 @@ const App = () => (
           <Route path="/writing" element={<Writing />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/help-gpa" element={<HelpGpa />} />
+          <Route path="/story-content-test" element={<StoryContentTest />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

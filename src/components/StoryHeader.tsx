@@ -419,7 +419,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
             ) : (
               <Play className="h-4 w-4" />
             )}
-            {isLoading ? "Loading..." : "Play"}
+            {isLoading ? "Loading..." : "Please Read It To Me"}
           </button>
 
           {/* Pause Button */}
