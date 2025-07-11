@@ -2,7 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import ActivityTracker from "@/components/ActivityTracker";
+import ActivityTrackerDemo from "@/components/ActivityTrackerDemo";
 import Index from "./pages/Index";
 import Story from "./pages/Story";
 import Library from "./pages/Library";
@@ -21,6 +23,24 @@ import HelpGpa from "./pages/HelpGpa";
 import AdminPasswordSync from "./components/admin/AdminPasswordSync";
 
 const queryClient = new QueryClient();
+
+// Component to conditionally render activity trackers
+const ConditionalActivityTrackers = () => {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith('/buddys_admin');
+  
+  // Don't show activity trackers on admin pages
+  if (isAdminPage) {
+    return null;
+  }
+  
+  return (
+    <>
+      <ActivityTracker />
+      <ActivityTrackerDemo />
+    </>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -48,6 +68,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <ConditionalActivityTrackers />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
