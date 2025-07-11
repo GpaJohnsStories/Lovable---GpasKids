@@ -14,6 +14,7 @@ import { supabase } from '@/integrations/supabase/client';
 interface StorySubmissionFormData {
   story_title: string;
   author_name: string;
+  author_pen_name: string;
   author_email: string;
   author_phone: string;
   date_of_birth: string;
@@ -37,6 +38,7 @@ const StorySubmissionForm = () => {
     defaultValues: {
       story_title: '',
       author_name: '',
+      author_pen_name: '',
       author_email: '',
       author_phone: '',
       date_of_birth: '',
@@ -213,6 +215,17 @@ const StorySubmissionForm = () => {
                 placeholder="e.g., Mark Twain, J.K. Rowling, or your real name"
               />
               <p className="text-xs text-green-600 mt-1">Author's real name will not be made available to the public but is for legal copyright and story ownership only.</p>
+            </div>
+            
+            <div>
+              <Label htmlFor="author_pen_name" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Author's Pen Name <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
+              <Input
+                id="author_pen_name"
+                {...form.register('author_pen_name')}
+                className="mt-1"
+                placeholder="Enter the name you want shown publicly"
+              />
+              <p className="text-xs text-green-600 mt-1" style={{ fontFamily: 'Georgia, serif' }}>This is the name that will be attached to your story when it is displayed in public on Gpa's Kids Website.</p>
             </div>
             
             <div>
