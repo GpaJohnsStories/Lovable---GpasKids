@@ -222,13 +222,13 @@ const StoriesTableRow = ({
   const getAudioButtonClasses = () => {
     switch (audioStatus) {
       case 'none':
-        return '!bg-gradient-to-b !from-purple-400 !to-purple-600 !text-white !border-purple-700';
+        return '!bg-gradient-to-b !from-red-400 !to-red-600 !text-white !border-red-700'; // Red for no audio
       case 'outdated':
-        return '!bg-gradient-to-b !from-red-400 !to-red-600 !text-white !border-red-700';
+        return '!bg-gradient-to-b !from-yellow-400 !to-yellow-600 !text-white !border-yellow-700'; // Yellow for outdated
       case 'current':
-        return '!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700';
+        return '!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700'; // Green for current
       default:
-        return '!bg-gradient-to-b !from-purple-400 !to-purple-600 !text-white !border-purple-700';
+        return '!bg-gradient-to-b !from-red-400 !to-red-600 !text-white !border-red-700';
     }
   };
 
