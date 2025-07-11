@@ -19,8 +19,8 @@ const AdminOverview = () => {
         adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y').not('category', 'eq', 'System'),
         // Include Story category in unpublished, exclude System
         adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N').not('category', 'eq', 'System'),
-        // Get all stories with categories (excluding System) to count by category
-        adminClient.from('stories').select('category').not('category', 'eq', 'System'),
+        // Get all stories with categories (including System for category display)
+        adminClient.from('stories').select('category'),
         // Count stories with video URLs
         adminClient.from('stories').select('id', { count: 'exact', head: true }).not('video_url', 'is', null),
         // Count stories with audio URLs
@@ -75,21 +75,21 @@ const AdminOverview = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-3 gap-3 mb-4">
-            <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="grid grid-cols-3 gap-3 mb-3">
+            <div className="text-center p-2 bg-blue-50 rounded-lg border border-blue-200">
               <div className="text-xl font-bold text-blue-600">
                 {storyCounts?.all || 0}
               </div>
-              <div className="text-xs text-blue-700 font-medium">Total Stories</div>
+              <div className="text-xs text-blue-700 font-medium">Total Story Files</div>
             </div>
-            <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
+            <div className="text-center p-2 bg-green-50 rounded-lg border border-green-200">
               <div className="text-xl font-bold text-green-600 flex items-center justify-center gap-1">
                 <Eye className="h-4 w-4" />
                 {storyCounts?.published || 0}
               </div>
               <div className="text-xs text-green-700 font-medium">Published</div>
             </div>
-            <div className="text-center p-3 bg-orange-50 rounded-lg border border-orange-200">
+            <div className="text-center p-2 bg-orange-50 rounded-lg border border-orange-200">
               <div className="text-xl font-bold text-orange-600 flex items-center justify-center gap-1">
                 <EyeOff className="h-4 w-4" />
                 {storyCounts?.unpublished || 0}
@@ -99,9 +99,9 @@ const AdminOverview = () => {
           </div>
           
           {/* Category counts */}
-          <div className="grid grid-cols-5 gap-2 mb-3">
-            {['Fun', 'Life', 'North Pole', 'World Changers', 'STORY'].map((category) => (
-              <div key={category} className="text-center p-2 bg-purple-50 rounded border border-purple-200">
+          <div className="grid grid-cols-6 gap-2 mb-2">
+            {['Fun', 'Life', 'North Pole', 'World Changers', 'STORY', 'System'].map((category) => (
+              <div key={category} className="text-center p-1 bg-purple-50 rounded border border-purple-200">
                 <div className="text-lg font-bold text-purple-600 flex items-center justify-center gap-1">
                   <Tag className="h-3 w-3" />
                   {storyCounts?.categories?.[category] || 0}
@@ -113,14 +113,14 @@ const AdminOverview = () => {
           
           {/* Media counts */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="text-center p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+            <div className="text-center p-2 bg-indigo-50 rounded-lg border border-indigo-200">
               <div className="text-xl font-bold text-indigo-600 flex items-center justify-center gap-1">
                 <Video className="h-4 w-4" />
                 {storyCounts?.videos || 0}
               </div>
               <div className="text-xs text-indigo-700 font-medium">With Videos</div>
             </div>
-            <div className="text-center p-3 bg-teal-50 rounded-lg border border-teal-200">
+            <div className="text-center p-2 bg-teal-50 rounded-lg border border-teal-200">
               <div className="text-xl font-bold text-teal-600 flex items-center justify-center gap-1">
                 <Volume2 className="h-4 w-4" />
                 {storyCounts?.audio || 0}
