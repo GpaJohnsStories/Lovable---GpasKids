@@ -158,7 +158,7 @@ const StorySubmissionForm = () => {
         
         {/* Personal ID Section */}
         <div className="bg-amber-50 border-2 border-amber-300 rounded-lg p-6">
-          <h3 className="text-xl font-bold text-orange-800 mb-4">Step 1: Your Personal ID (Required)</h3>
+          <h3 className="text-lg font-bold text-orange-800 mb-4">Step 1: Your Personal ID (Required)</h3>
           <div className="mb-4 p-4 bg-orange-100 border border-orange-300 rounded">
             <p className="text-orange-800 font-medium">
               🔐 <strong>This step is required!</strong> Your Personal ID is the only information you must provide. 
@@ -180,11 +180,11 @@ const StorySubmissionForm = () => {
 
         {/* Story Information */}
         <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-6">
-          <h3 className="text-xl font-bold text-blue-800 mb-4">Step 2: Story Information</h3>
+          <h3 className="text-lg font-bold text-blue-800 mb-4">Step 2: Story Information</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="story_title" className="text-blue-800 font-fun text-lg">Story Title *</Label>
+              <Label htmlFor="story_title" className="text-blue-800 font-fun text-sm">Story Title *</Label>
               <Input
                 id="story_title"
                 {...form.register('story_title', { required: 'Story title is required' })}
@@ -194,7 +194,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="story-file" className="text-blue-800 font-fun text-lg">Story File *</Label>
+              <Label htmlFor="story-file" className="text-blue-800 font-fun text-sm">Story File *</Label>
               <Input
                 id="story-file"
                 type="file"
@@ -214,7 +214,7 @@ const StorySubmissionForm = () => {
 
         {/* Author Information */}
         <div className="bg-green-50 border-2 border-green-300 rounded-lg p-6">
-          <h3 className="text-xl font-bold text-green-800 mb-4">Step 3: Author Information</h3>
+          <h3 className="text-lg font-bold text-green-800 mb-4">Step 3: Author Information</h3>
           
           <div className="space-y-4 mb-4">
             <div className="bg-yellow-50 border border-yellow-300 rounded p-4">
@@ -226,7 +226,7 @@ const StorySubmissionForm = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="author_name" className="text-green-800 font-fun text-lg">Author's Name (Real name or pen name)</Label>
+              <Label htmlFor="author_name" className="text-green-800 font-fun text-sm">Author's Name (Real name or pen name)</Label>
               <Input
                 id="author_name"
                 {...form.register('author_name')}
@@ -237,7 +237,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="author_email" className="text-green-800 font-fun text-lg">Author's Email *</Label>
+              <Label htmlFor="author_email" className="text-green-800 font-fun text-sm">Author's Email *</Label>
               <Input
                 id="author_email"
                 type="email"
@@ -248,7 +248,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="author_phone" className="text-green-800 font-fun text-lg">Author's Phone</Label>
+              <Label htmlFor="author_phone" className="text-green-800 font-fun text-sm">Author's Phone</Label>
               <Input
                 id="author_phone"
                 {...form.register('author_phone')}
@@ -258,7 +258,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="date_of_birth" className="text-green-800 font-fun text-lg">Date of Birth</Label>
+              <Label htmlFor="date_of_birth" className="text-green-800 font-fun text-sm">Date of Birth</Label>
               <Input
                 id="date_of_birth"
                 type="date"
@@ -268,7 +268,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div className="md:col-span-2">
-              <Label htmlFor="author_signature" className="text-green-800 font-fun text-lg">Electronic Signature (Author) *</Label>
+              <Label htmlFor="author_signature" className="text-green-800 font-fun text-sm">Electronic Signature (Author) *</Label>
               <Input
                 id="author_signature"
                 {...form.register('author_signature', { required: 'Author signature is required' })}
@@ -281,11 +281,11 @@ const StorySubmissionForm = () => {
 
         {/* Parent/Guardian Information */}
         <div className="bg-purple-50 border-2 border-purple-300 rounded-lg p-6">
-          <h3 className="text-xl font-bold text-purple-800 mb-4">Step 4: Parent/Guardian Information (if applicable)</h3>
+          <h3 className="text-lg font-bold text-purple-800 mb-4">Step 4: Parent/Guardian Information (if applicable)</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="parent_name" className="text-purple-800 font-fun text-lg">Parent/Guardian Name</Label>
+              <Label htmlFor="parent_name" className="text-purple-800 font-fun text-sm">Parent/Guardian Name</Label>
               <Input
                 id="parent_name"
                 {...form.register('parent_name')}
@@ -295,7 +295,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="parent_email" className="text-purple-800 font-fun text-lg">Parent/Guardian Email</Label>
+              <Label htmlFor="parent_email" className="text-purple-800 font-fun text-sm">Parent/Guardian Email</Label>
               <Input
                 id="parent_email"
                 type="email"
@@ -306,7 +306,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="parent_phone" className="text-purple-800 font-fun text-lg">Parent/Guardian Phone</Label>
+              <Label htmlFor="parent_phone" className="text-purple-800 font-fun text-sm">Parent/Guardian Phone</Label>
               <Input
                 id="parent_phone"
                 {...form.register('parent_phone')}
@@ -316,7 +316,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="parent_signature" className="text-purple-800 font-fun text-lg">Electronic Signature (Parent/Guardian)</Label>
+              <Label htmlFor="parent_signature" className="text-purple-800 font-fun text-sm">Electronic Signature (Parent/Guardian)</Label>
               <Input
                 id="parent_signature"
                 {...form.register('parent_signature')}
@@ -332,7 +332,7 @@ const StorySubmissionForm = () => {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 text-lg"
+            className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 text-base"
           >
             {isSubmitting ? (
               <>
