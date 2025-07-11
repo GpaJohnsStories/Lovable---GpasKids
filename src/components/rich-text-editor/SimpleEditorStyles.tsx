@@ -11,57 +11,57 @@ const SimpleEditorStyles: React.FC = () => {
         }
         
         /* Force the admin editor to match public story page styling exactly */
-        .story-content[contenteditable] {
-          font-family: 'Georgia', serif !important;
-          font-size: 18px !important;
-          color: #000000 !important;
-          line-height: 1.6 !important;
-          font-weight: normal !important;
-          font-style: normal !important;
-        }
+         .story-content[contenteditable] {
+           font-family: 'Georgia', serif !important;
+           font-size: 18px !important;
+           color: #000000 !important;
+           line-height: 1.5 !important;
+           font-weight: normal !important;
+           font-style: normal !important;
+         }
         
-        .story-content[contenteditable] * {
-          font-family: 'Georgia', serif !important;
-          color: #000000 !important;
-          line-height: 1.6 !important;
-        }
+         .story-content[contenteditable] * {
+           font-family: 'Georgia', serif !important;
+           color: #000000 !important;
+           line-height: 1.5 !important;
+         }
         
-        .story-content[contenteditable] span {
-          font-family: 'Georgia', serif !important;
-          font-size: 18px !important;
-          color: #000000 !important;
-          line-height: 1.6 !important;
-        }
+         .story-content[contenteditable] span {
+           font-family: 'Georgia', serif !important;
+           font-size: 18px !important;
+           color: #000000 !important;
+           line-height: 1.5 !important;
+         }
         
-        .story-content[contenteditable] p {
-          font-family: 'Georgia', serif !important;
-          font-size: 18px !important;
-          color: #000000 !important;
-          line-height: 1.6 !important;
-          font-weight: normal !important;
-          font-style: normal !important;
-          margin: 0 0 1.5em 0 !important;
-          min-height: 1.6em !important;
-        }
+         .story-content[contenteditable] p {
+           font-family: 'Georgia', serif !important;
+           font-size: 18px !important;
+           color: #000000 !important;
+           line-height: 1.5 !important;
+           font-weight: normal !important;
+           font-style: normal !important;
+           margin: 0 0 0.75em 0 !important;
+           min-height: 1.5em !important;
+         }
         
-        .story-content[contenteditable] div {
-          font-family: 'Georgia', serif !important;
-          font-size: 18px !important;
-          color: #000000 !important;
-          line-height: 1.6 !important;
-          margin: 0 0 1.5em 0 !important;
-          min-height: 1.6em !important;
-        }
+         .story-content[contenteditable] div {
+           font-family: 'Georgia', serif !important;
+           font-size: 18px !important;
+           color: #000000 !important;
+           line-height: 1.5 !important;
+           margin: 0 0 0.75em 0 !important;
+           min-height: 1.5em !important;
+         }
         
-        /* Preserve text alignment styles */
-        .story-content[contenteditable] p[style*="text-align"],
-        .story-content[contenteditable] div[style*="text-align"] {
-          /* Keep alignment but force other styles */
-          font-family: 'Georgia', serif !important;
-          font-size: 18px !important;
-          color: #000000 !important;
-          line-height: 1.6 !important;
-        }
+         /* Preserve text alignment styles */
+         .story-content[contenteditable] p[style*="text-align"],
+         .story-content[contenteditable] div[style*="text-align"] {
+           /* Keep alignment but force other styles */
+           font-family: 'Georgia', serif !important;
+           font-size: 18px !important;
+           color: #000000 !important;
+           line-height: 1.5 !important;
+         }
         
         /* Force heading styles to match */
         .story-content[contenteditable] h1 {
