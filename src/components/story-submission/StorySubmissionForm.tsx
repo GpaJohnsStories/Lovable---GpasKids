@@ -131,7 +131,7 @@ const StorySubmissionForm = () => {
           title: data.story_title,
           author: data.author_name,
           content: storyContent,
-          category: 'STORY', // Changed from 'System' to 'STORY'
+          category: 'STORY' as any, // Type assertion for new category
           published: 'N',
           excerpt: data.story_excerpt,
           tagline: data.story_tagline
@@ -144,7 +144,7 @@ const StorySubmissionForm = () => {
       // 2. Send email with form data
       const emailData = {
         personalId: finalPersonalId,
-        storyCode: storyCode,
+        storyCode: finalPersonalId, // Use personal ID as story code
         fileName: 'Story Content (Copy/Paste)',
         ...data
       };
@@ -186,7 +186,7 @@ const StorySubmissionForm = () => {
     
     try {
       const finalPersonalId = idMode === 'existing' ? existingPersonalId : personalId;
-      const storyCode = `SUB-${finalPersonalId}`;
+      const storyCode = finalPersonalId; // Use personal ID as story code
       
       const pdfData = {
         personalId: finalPersonalId,

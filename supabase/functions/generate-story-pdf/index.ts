@@ -280,10 +280,30 @@ const handler = async (req: Request): Promise<Response> => {
       console.log("PDF email sent successfully:", emailResponse);
     }
 
+    // ALWAYS send a copy of the PDF to the admin
+    const adminEmailHtml = `
+      <h1>📄 Story Submission Release Form - Admin Copy</h1>
+      <p><strong>Story:</strong> "${data.story_title}" by ${data.author_name}</p>
+      <p><strong>Personal ID:</strong> ${data.personalId}</p>
+      <p><strong>Story Code:</strong> ${data.storyCode}</p>
+      <p>Below is the complete story submission release form for your records:</p>
+      <hr style="margin: 20px 0;">
+      ${htmlContent}
+    `;
+
+    const adminEmailResponse = await resend.emails.send({
+      from: "Gpa's Kids Stories <onboarding@resend.dev>",
+      to: ["gpajohn.buddy@gmail.com"], // Admin email
+      subject: `📄 Story Submission PDF: "${data.story_title}" by ${data.author_name}`,
+      html: adminEmailHtml,
+    });
+
+    console.log("Admin PDF copy sent successfully:", adminEmailResponse);
+
     return new Response(JSON.stringify({ 
       success: true, 
       htmlContent,
-      message: data.send_email ? "PDF sent to your email address" : "PDF generated successfully"
+      message: data.send_email ? "PDF sent to your email address and admin copy sent" : "PDF generated successfully, admin copy sent"
     }), {
       status: 200,
       headers: {

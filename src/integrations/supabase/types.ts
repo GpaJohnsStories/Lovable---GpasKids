@@ -567,6 +567,7 @@ export type Database = {
         | "North Pole"
         | "World Changers"
         | "System"
+        | "STORY"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -695,7 +696,14 @@ export const Constants = {
   public: {
     Enums: {
       comment_status: ["pending", "approved", "rejected", "archived"],
-      story_category: ["Fun", "Life", "North Pole", "World Changers", "System"],
+      story_category: [
+        "Fun",
+        "Life",
+        "North Pole",
+        "World Changers",
+        "System",
+        "STORY",
+      ],
     },
   },
 } as const
