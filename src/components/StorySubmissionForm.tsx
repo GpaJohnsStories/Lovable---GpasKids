@@ -228,16 +228,6 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="author_phone" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Author's Phone</Label>
-              <Input
-                id="author_phone"
-                {...form.register('author_phone')}
-                className="mt-1"
-                placeholder="Phone number"
-              />
-            </div>
-            
-            <div>
               <Label htmlFor="date_of_birth" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Date of Birth</Label>
               <Input
                 id="date_of_birth"
