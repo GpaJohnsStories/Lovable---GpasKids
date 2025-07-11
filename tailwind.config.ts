@@ -73,6 +73,7 @@ export default {
 			fontFamily: {
 				'handwritten': ['Kalam', 'Comic Sans MS', 'Arial', 'sans-serif'],
 				'fun': ['Kalam', 'Comic Sans MS', 'Arial', 'sans-serif'],
+				'georgia': ['Georgia', 'Times New Roman', 'serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
