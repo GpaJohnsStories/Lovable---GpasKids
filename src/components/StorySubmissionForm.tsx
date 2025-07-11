@@ -251,7 +251,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="electronic_signature" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Electronic Signature (Author) *</Label>
+              <Label htmlFor="electronic_signature" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Electronic Signature (Author's Real Name) <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
               <Input
                 id="electronic_signature"
                 {...form.register('author_signature', { required: 'Author signature is required' })}
