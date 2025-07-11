@@ -205,7 +205,7 @@ const StorySubmissionForm = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="author_name" className="text-green-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Author's Real Name</Label>
+              <Label htmlFor="author_name" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Author's Real Name</Label>
               <Input
                 id="author_name"
                 {...form.register('author_name')}
@@ -216,7 +216,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="author_email" className="text-green-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Author's Email *</Label>
+              <Label htmlFor="author_email" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Author's Email *</Label>
               <Input
                 id="author_email"
                 type="email"
@@ -227,7 +227,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="author_phone" className="text-green-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Author's Phone</Label>
+              <Label htmlFor="author_phone" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Author's Phone</Label>
               <Input
                 id="author_phone"
                 {...form.register('author_phone')}
@@ -237,7 +237,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="date_of_birth" className="text-green-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Date of Birth</Label>
+              <Label htmlFor="date_of_birth" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Date of Birth</Label>
               <Input
                 id="date_of_birth"
                 type="date"
@@ -247,7 +247,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div className="md:col-span-2">
-              <Label htmlFor="author_signature" className="text-green-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Electronic Signature (Author) *</Label>
+              <Label htmlFor="author_signature" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Electronic Signature (Author) *</Label>
               <Input
                 id="author_signature"
                 {...form.register('author_signature', { required: 'Author signature is required' })}
