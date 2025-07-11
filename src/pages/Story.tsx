@@ -137,10 +137,6 @@ const Story = () => {
                   aiVoiceModel={story.ai_voice_model}
                 />
 
-                {/* Author bio link */}
-                <div className="flex justify-center mt-4 mb-6">
-                  <AuthorLink authorName={story.author} variant="button" />
-                </div>
 
                 {story.video_url && (
                   <div className="mb-8">

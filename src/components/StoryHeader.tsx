@@ -4,6 +4,7 @@ import { Play, Pause, Square, Loader } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
+import AuthorLink from "@/components/AuthorLink";
 
 interface StoryHeaderProps {
   title: string;
@@ -463,12 +464,13 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         </h2>
       )}
 
-      <div className="flex items-center justify-center space-x-6 text-sm text-orange-600 mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+      <div className="flex items-center justify-center space-x-4 text-sm text-orange-600 mb-2" style={{ fontFamily: 'Georgia, serif' }}>
         <div className="flex items-center">
           <span className="font-medium">by {author}</span>
         </div>
+        <AuthorLink authorName={author} variant="button" size="sm" />
         {showStoryCode && storyCode ? (
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center">
             <span>Story Code: {storyCode}</span>
           </div>
         ) : (
