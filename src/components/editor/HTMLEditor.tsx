@@ -219,7 +219,11 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           break;
         case 'e':
           e.preventDefault();
-          handleClearHtml();
+          wrapSelectedText('<center>', '</center>'); // Center text
+          break;
+        case 'k':
+          e.preventDefault();
+          handleClearHtml(); // Clear HTML
           break;
         case 's':
           e.preventDefault();
@@ -234,17 +238,17 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
   const shortcuts = [
     { key: 'Ctrl + B', action: 'Bold' },
     { key: 'Ctrl + C', action: 'Copy' },
-    { key: 'Ctrl + E', action: 'Clear HTML' },
+    { key: 'Ctrl + E', action: 'Center Text' },
     { key: 'Ctrl + Enter', action: 'New Line (<br>)' },
     { key: 'Ctrl + F', action: 'Georgia Font' },
     { key: 'Ctrl + H', action: 'Help' },
     { key: 'Ctrl + I', action: 'Italics' },
+    { key: 'Ctrl + K', action: 'Clear HTML' },
     { key: 'Ctrl + L', action: 'Bullets' },
     { key: 'Ctrl + M', action: 'M-dash — (long pause)' },
     { key: 'Ctrl + N', action: 'N-dash – (short pause)' },
     { key: 'Ctrl + P', action: 'Paragraph' },
     { key: 'Ctrl + S', action: 'Save Story' },
-    { key: 'Ctrl + T', action: 'Center Text' },
     { key: 'Ctrl + U', action: 'Underline' },
     { key: 'Ctrl + X', action: 'Cut' },
     { key: 'Ctrl + Y', action: 'Paste' },

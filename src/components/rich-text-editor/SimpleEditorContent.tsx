@@ -148,6 +148,14 @@ const SimpleEditorContent: React.FC<SimpleEditorContentProps> = ({
           e.preventDefault();
           handleCommand('justifyCenter'); // Center alignment (Ctrl+E)
           break;
+        case 'k':
+          e.preventDefault();
+          // Clear content - same as Ctrl+E used to do
+          if (editorRef.current) {
+            editorRef.current.innerHTML = '';
+            onChange('');
+          }
+          break;
         case 'n':
           e.preventDefault();
           handleCommand('insertHTML', '–'); // N-dash (short pause)
