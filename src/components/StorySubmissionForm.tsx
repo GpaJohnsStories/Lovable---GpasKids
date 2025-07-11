@@ -26,7 +26,7 @@ interface StorySubmissionFormData {
 
 const StorySubmissionForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [storyFile, setStoryFile] = useState<File | null>(null);
+  const [storyContent, setStoryContent] = useState('');
   const [idMode, setIdMode] = useState('existing');
   const [personalId, setPersonalIdState] = useState<string | null>(getPersonalId());
   const [existingPersonalId, setExistingPersonalId] = useState('');
@@ -47,27 +47,6 @@ const StorySubmissionForm = () => {
     }
   });
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      // Accept common document formats
-      const allowedTypes = [
-        'application/pdf',
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'text/plain',
-        'application/rtf'
-      ];
-      
-      if (allowedTypes.includes(file.type)) {
-        setStoryFile(file);
-        toast.success(`Story file "${file.name}" attached successfully!`);
-      } else {
-        toast.error('Please upload a PDF, Word document, or text file.');
-        event.target.value = '';
-      }
-    }
-  };
 
   const onSubmit = async (data: StorySubmissionFormData) => {
     // Validate personal ID
@@ -82,16 +61,15 @@ const StorySubmissionForm = () => {
       return;
     }
 
-    if (!storyFile) {
-      toast.error('Please attach your story file');
+    if (!storyContent.trim()) {
+      toast.error('Please enter your story content');
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      // 1. Save story file to the database
-      const storyContent = await storyFile.text();
+      // 1. Save story to the database
       const storyCode = `SUB-${finalPersonalId}`;
       
       const { error: storyError } = await supabase
@@ -115,7 +93,7 @@ const StorySubmissionForm = () => {
       const emailData = {
         personalId: finalPersonalId,
         storyCode: storyCode,
-        fileName: storyFile.name,
+        fileName: 'Story Content (Copy/Paste)',
         ...data
       };
 
@@ -136,13 +114,9 @@ const StorySubmissionForm = () => {
       
       // Reset form
       form.reset();
-      setStoryFile(null);
+      setStoryContent('');
       setPersonalIdState(null);
       setExistingPersonalId('');
-      
-      // Reset file input
-      const fileInput = document.getElementById('story-file') as HTMLInputElement;
-      if (fileInput) fileInput.value = '';
 
     } catch (error) {
       console.error('Submission error:', error);
@@ -193,21 +167,16 @@ const StorySubmissionForm = () => {
               />
             </div>
             
-            <div>
-              <Label htmlFor="story-file" className="text-blue-800 font-fun text-sm">Click to upload your story file *</Label>
-              <Input
-                id="story-file"
-                type="file"
-                onChange={handleFileChange}
-                accept=".pdf,.doc,.docx,.txt,.rtf"
-                className="mt-1"
+            <div className="md:col-span-2">
+              <Label htmlFor="story_content" className="text-blue-800 font-fun text-sm">Copy and paste your story here *</Label>
+              <Textarea
+                id="story_content"
+                value={storyContent}
+                onChange={(e) => setStoryContent(e.target.value)}
+                className="mt-1 min-h-[300px] resize-y"
+                placeholder="Paste your story content here..."
               />
-              {storyFile && (
-                <div className="mt-2 flex items-center text-sm text-green-600">
-                  <FileText className="w-4 h-4 mr-1" />
-                  {storyFile.name}
-                </div>
-              )}
+              <p className="text-xs text-blue-600 mt-1">Copy your story from your document and paste it here</p>
             </div>
           </div>
         </div>
