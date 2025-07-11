@@ -35,19 +35,6 @@ const AdminOverview = () => {
         </h1>
       </div>
       
-      {/* Password Management - Wide box with orange border */}
-      <Card className="mb-6 border-orange-500 border-2">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-orange-700">
-            <Key className="h-5 w-5" />
-            Password Management
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <AdminPasswordChange />
-        </CardContent>
-      </Card>
-      
       {/* Security Audit - Wide box with green border */}
       <Card className="mb-6 border-green-500 border-2">
         <CardHeader>
@@ -92,6 +79,19 @@ const AdminOverview = () => {
               <div className="text-sm text-orange-700 font-medium">Unpublished</div>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Password Management - Wide box with orange border */}
+      <Card className="mb-6 border-orange-500 border-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-orange-700">
+            <Key className="h-5 w-5" />
+            Password Management
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <AdminPasswordChange />
         </CardContent>
       </Card>
 
