@@ -3,8 +3,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import ActivityTracker from "@/components/ActivityTracker";
-import ActivityTrackerDemo from "@/components/ActivityTrackerDemo";
 import Index from "./pages/Index";
 import Story from "./pages/Story";
 import Library from "./pages/Library";
@@ -50,8 +48,6 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <ActivityTracker />
-        <ActivityTrackerDemo />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
