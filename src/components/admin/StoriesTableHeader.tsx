@@ -52,8 +52,8 @@ const StoriesTableHeader = ({
   };
 
   return (
-    <TableHeader>
-      <TableRow>
+    <TableHeader className="sticky top-0 z-10 bg-background">
+      <TableRow className="bg-background">{/* Ensure row also has background */}
         <TableHead className="p-2 text-center">
           <Button
             onClick={() => onSort('story_code')}
