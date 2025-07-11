@@ -113,27 +113,27 @@ const AdminOverview = () => {
               const getCategoryColors = (cat: string) => {
                 switch (cat) {
                   case 'Fun':
-                    return { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-600', textSm: 'text-blue-700' };
+                    return { bg: 'bg-blue-500', text: 'text-white' };
                   case 'Life':
-                    return { bg: 'bg-green-50', border: 'border-green-200', text: 'text-green-600', textSm: 'text-green-700' };
+                    return { bg: 'bg-green-500', text: 'text-white' };
                   case 'North Pole':
-                    return { bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-600', textSm: 'text-red-700' };
+                    return { bg: 'bg-red-600', text: 'text-white' };
                   case 'World Changers':
-                    return { bg: 'bg-orange-50', border: 'border-orange-300', text: 'text-orange-600', textSm: 'text-orange-800' };
+                    return { bg: 'bg-amber-400', text: 'text-amber-900' };
                   case 'System':
-                    return { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-600', textSm: 'text-gray-700' };
+                    return { bg: 'bg-gray-500', text: 'text-white' };
                   default:
-                    return { bg: 'bg-purple-50', border: 'border-purple-200', text: 'text-purple-600', textSm: 'text-purple-700' };
+                    return { bg: 'bg-gray-500', text: 'text-white' };
                 }
               };
               const colors = getCategoryColors(category);
               return (
-                <div key={category} className={`text-center p-1 ${colors.bg} rounded border ${colors.border}`}>
+                <div key={category} className={`text-center p-1 ${colors.bg} rounded`}>
                   <div className={`text-lg font-bold ${colors.text} flex items-center justify-center gap-1`}>
                     <Tag className="h-3 w-3" />
                     {storyCounts?.categories?.[category] || 0}
                   </div>
-                  <div className={`text-xs ${colors.textSm} font-medium`}>{category}</div>
+                  <div className={`text-xs ${colors.text} font-medium`}>{category}</div>
                 </div>
               );
             })}
