@@ -134,6 +134,17 @@ const StorySubmissionForm = () => {
         Story Submission Release Form
       </h1>
       
+      {/* Legal Notice */}
+      <div className="bg-yellow-50 border border-yellow-300 rounded p-4 mb-6">
+        <p className="text-sm text-yellow-800 leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+          <strong>Legal Notice:</strong> By submitting this story, you represent and warrant that: <br />
+          (1) you are the original author or have proper authorization to submit this work, <br />
+          (2) the story does not infringe upon any copyright, trademark, or other intellectual property rights, <br />
+          (3) the content is appropriate for children and does not contain harmful, offensive, or inappropriate material, and <br />
+          (4) you grant Gpa's Kids permission to review, edit, and potentially publish your story on our website. All submissions become part of our story collection and may be used for educational and entertainment purposes.
+        </p>
+      </div>
+      
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" style={{ fontFamily: 'Georgia, serif' }}>
         
@@ -190,18 +201,6 @@ const StorySubmissionForm = () => {
         {/* Author Information */}
         <div className="bg-green-50 border-2 border-green-300 rounded-lg p-6">
           <h3 className="text-lg font-bold text-green-800 mb-4">Step 3: Author Information</h3>
-          
-          <div className="space-y-4 mb-4">
-            <div className="bg-yellow-50 border border-yellow-300 rounded p-4">
-              <p className="text-sm text-yellow-800 leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
-                <strong>Legal Notice:</strong> By submitting this story, you represent and warrant that: <br />
-                (1) you are the original author or have proper authorization to submit this work, <br />
-                (2) the story does not infringe upon any copyright, trademark, or other intellectual property rights, <br />
-                (3) the content is appropriate for children and does not contain harmful, offensive, or inappropriate material, and <br />
-                (4) you grant Gpa's Kids permission to review, edit, and potentially publish your story on our website. All submissions become part of our story collection and may be used for educational and entertainment purposes.
-              </p>
-            </div>
-          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
