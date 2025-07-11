@@ -30,7 +30,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               font-family: Georgia, serif !important;
               font-size: 18px !important;
               color: #000000 !important;
-              line-height: 1.6 !important;
+              line-height: 1.5 !important;
               font-weight: normal !important;
               font-style: normal !important;
             }
@@ -39,7 +39,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             .isolated-story-content span {
               font-family: Georgia, serif !important;
               color: #000000 !important;
-              line-height: 1.6 !important;
+              line-height: 1.5 !important;
               /* Explicitly allow inline font-size to override default */
             }
             
@@ -49,8 +49,8 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             }
             
             .isolated-story-content p {
-              margin: 0 0 1.5em 0 !important;
-              min-height: 1.6em !important;
+              margin: 0 0 0.5em 0 !important;
+              min-height: 1.5em !important;
             }
             
             .isolated-story-content strong,
@@ -84,22 +84,22 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             
             .isolated-story-content ul {
               list-style-type: disc !important;
-              margin: 0 0 1.5em 0 !important;
+              margin: 0 0 0.5em 0 !important;
               padding-left: 2em !important;
               font-family: Georgia, serif !important;
               font-size: 18px !important;
               color: #000000 !important;
-              line-height: 1.6 !important;
+              line-height: 1.5 !important;
             }
             
             .isolated-story-content ol {
               list-style-type: decimal !important;
-              margin: 0 0 1.5em 0 !important;
+              margin: 0 0 0.5em 0 !important;
               padding-left: 2em !important;
               font-family: Georgia, serif !important;
               font-size: 18px !important;
               color: #000000 !important;
-              line-height: 1.6 !important;
+              line-height: 1.5 !important;
             }
             
             .isolated-story-content li {
@@ -107,7 +107,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               font-family: Georgia, serif !important;
               font-size: 18px !important;
               color: #000000 !important;
-              line-height: 1.6 !important;
+              line-height: 1.5 !important;
             }
             
             .isolated-story-content center {
@@ -116,7 +116,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               font-family: Georgia, serif !important;
               font-size: 18px !important;
               color: #000000 !important;
-              line-height: 1.6 !important;
+              line-height: 1.5 !important;
             }
           `
         }} />
@@ -136,7 +136,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
           fontFamily: 'Georgia, serif',
           fontSize: '18px',
           color: '#000000',
-          lineHeight: '1.6',
+          lineHeight: '1.5',
           fontWeight: 'normal',
           fontStyle: 'normal'
         }}
