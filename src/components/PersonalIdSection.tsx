@@ -98,8 +98,8 @@ const PersonalIdSection = ({
       </TabsList>
       <TabsContent value="existing" className="pt-4">
         <div className="flex flex-col gap-2">
-          <Label className="text-orange-800 font-fun text-lg">Personal ID</Label>
-          <div>
+          <div className="flex items-center gap-3">
+            <Label className="text-orange-800 font-fun text-lg">Personal ID</Label>
             <Input
               placeholder="6-character ID"
               value={existingPersonalId}
@@ -110,8 +110,8 @@ const PersonalIdSection = ({
               maxLength={6}
               className="w-24 text-center font-bold text-base md:text-sm"
             />
-            {existingPersonalIdError && <p className="text-sm font-bold text-destructive mt-2">{existingPersonalIdError}</p>}
           </div>
+          {existingPersonalIdError && <p className="text-sm font-bold text-destructive mt-2">{existingPersonalIdError}</p>}
         </div>
       </TabsContent>
       <TabsContent value="create" className="pt-4">
