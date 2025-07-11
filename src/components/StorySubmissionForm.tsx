@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,7 @@ import { Upload } from 'lucide-react';
 import PersonalIdSection from '@/components/PersonalIdSection';
 import { getPersonalId, setPersonalId } from '@/utils/personalId';
 import { supabase } from '@/integrations/supabase/client';
+import { differenceInYears } from 'date-fns';
 
 interface StorySubmissionFormData {
   story_title: string;
@@ -33,6 +34,9 @@ const StorySubmissionForm = () => {
   const [personalId, setPersonalIdState] = useState<string | null>(getPersonalId());
   const [existingPersonalId, setExistingPersonalId] = useState('');
   const [existingPersonalIdError, setExistingPersonalIdError] = useState<string | null>(null);
+  const [signatureError, setSignatureError] = useState<string | null>(null);
+  const [userAge, setUserAge] = useState<number | null>(null);
+  const [isStep4Required, setIsStep4Required] = useState(true);
 
   const form = useForm<StorySubmissionFormData>({
     defaultValues: {
@@ -50,8 +54,47 @@ const StorySubmissionForm = () => {
     }
   });
 
+  // Watch form values for validation
+  const watchedValues = form.watch(['author_name', 'author_signature', 'date_of_birth']);
+
+  useEffect(() => {
+    const [authorName, signature, dateOfBirth] = watchedValues;
+    
+    // Validate signature matches author name
+    if (signature && authorName) {
+      const normalizedSignature = signature.toLowerCase().trim();
+      const normalizedAuthorName = authorName.toLowerCase().trim();
+      
+      if (normalizedSignature !== normalizedAuthorName) {
+        setSignatureError('Electronic signature must match the author\'s real name exactly');
+      } else {
+        setSignatureError(null);
+      }
+    } else {
+      setSignatureError(null);
+    }
+
+    // Calculate age and determine if Step 4 is required
+    if (dateOfBirth) {
+      const birthDate = new Date(dateOfBirth);
+      const today = new Date();
+      const age = differenceInYears(today, birthDate);
+      
+      setUserAge(age);
+      setIsStep4Required(age < 21);
+    } else {
+      setUserAge(null);
+      setIsStep4Required(true);
+    }
+  }, [watchedValues]);
 
   const onSubmit = async (data: StorySubmissionFormData) => {
+    // Validate signature before submission
+    if (signatureError) {
+      toast.error('Please fix the electronic signature error before submitting');
+      return;
+    }
+
     // Validate personal ID
     const finalPersonalId = idMode === 'existing' ? existingPersonalId : personalId;
     
@@ -258,53 +301,76 @@ const StorySubmissionForm = () => {
                 className="mt-1"
                 placeholder="Type your full name as electronic signature"
               />
+              {signatureError && (
+                <p className="text-red-600 text-xs mt-1" style={{ fontFamily: 'Georgia, serif' }}>{signatureError}</p>
+              )}
             </div>
           </div>
         </div>
 
         {/* Parent/Guardian Information */}
-        <div className="bg-purple-50 border-2 border-purple-300 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-purple-800 mb-4">Step 4: Parent/Guardian Information (if applicable)</h3>
+        <div className={`border-2 rounded-lg p-6 transition-all duration-300 ${
+          isStep4Required 
+            ? 'bg-purple-50 border-purple-300' 
+            : 'bg-gray-100 border-gray-300 opacity-60'
+        }`}>
+          <h3 className={`text-lg font-bold mb-4 ${
+            isStep4Required 
+              ? 'text-purple-800' 
+              : 'text-gray-500'
+          }`} style={{ fontFamily: 'Georgia, serif' }}>
+            Step 4: Parent/Guardian Information 
+            {!isStep4Required && userAge !== null && (
+              <span className="text-sm font-normal"> (Not required - Author is {userAge} years old)</span>
+            )}
+            {isStep4Required && userAge !== null && (
+              <span className="bg-red-200 px-2 py-1 rounded font-bold italic text-sm ml-2">Required - Author is {userAge} years old</span>
+            )}
+          </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="parent_name" className="text-purple-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Parent/Guardian Name</Label>
+              <Label htmlFor="parent_name" className={`text-sm font-bold ${isStep4Required ? 'text-purple-800' : 'text-gray-500'}`} style={{ fontFamily: 'Georgia, serif' }}>Parent/Guardian Name</Label>
               <Input
                 id="parent_name"
                 {...form.register('parent_name')}
                 className="mt-1"
                 placeholder="Full name"
+                disabled={!isStep4Required}
               />
             </div>
             
             <div>
-              <Label htmlFor="parent_email" className="text-purple-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Parent/Guardian Email</Label>
+              <Label htmlFor="parent_email" className={`text-sm font-bold ${isStep4Required ? 'text-purple-800' : 'text-gray-500'}`} style={{ fontFamily: 'Georgia, serif' }}>Parent/Guardian Email</Label>
               <Input
                 id="parent_email"
                 type="email"
                 {...form.register('parent_email')}
                 className="mt-1"
                 placeholder="email@example.com"
+                disabled={!isStep4Required}
               />
             </div>
             
             <div>
-              <Label htmlFor="parent_phone" className="text-purple-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Parent/Guardian Phone</Label>
+              <Label htmlFor="parent_phone" className={`text-sm font-bold ${isStep4Required ? 'text-purple-800' : 'text-gray-500'}`} style={{ fontFamily: 'Georgia, serif' }}>Parent/Guardian Phone</Label>
               <Input
                 id="parent_phone"
                 {...form.register('parent_phone')}
                 className="mt-1"
                 placeholder="Phone number"
+                disabled={!isStep4Required}
               />
             </div>
             
             <div>
-              <Label htmlFor="parent_signature" className="text-purple-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Electronic Signature (Parent/Guardian)</Label>
+              <Label htmlFor="parent_signature" className={`text-sm font-bold ${isStep4Required ? 'text-purple-800' : 'text-gray-500'}`} style={{ fontFamily: 'Georgia, serif' }}>Electronic Signature (Parent/Guardian)</Label>
               <Input
                 id="parent_signature"
                 {...form.register('parent_signature')}
                 className="mt-1"
                 placeholder="Type full name as electronic signature"
+                disabled={!isStep4Required}
               />
             </div>
           </div>
