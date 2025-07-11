@@ -212,7 +212,7 @@ const StorySubmissionForm = () => {
                 className="mt-1"
                 placeholder="e.g., Mark Twain, J.K. Rowling, or your real name"
               />
-              <p className="text-xs text-green-600 mt-1">This will not be made available to the public but is for legal copyright and story ownership only.</p>
+              <p className="text-xs text-green-600 mt-1">Author's real name will not be made available to the public but is for legal copyright and story ownership only.</p>
             </div>
             
             <div>
