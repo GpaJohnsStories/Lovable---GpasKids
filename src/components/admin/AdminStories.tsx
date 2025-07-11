@@ -109,30 +109,32 @@ const AdminStories = () => {
 
   return (
     <AdminLayout>
-      <div className="space-y-6">
-        <div className="flex justify-between items-center">
-          <div className="flex gap-4 items-center">
-            <h2 className="text-2xl font-bold">
-              {currentView === 'stories' ? 'Stories Management' : 'Author Biographies'}
+      <div className="space-y-4">
+        <div className="flex justify-between items-center py-2">
+          <div className="flex gap-3 items-center">
+            <h2 className="text-xl font-bold">
+              {currentView === 'stories' ? 'Stories' : 'Author Bios'}
             </h2>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               <Button 
                 variant={currentView === 'stories' ? 'default' : 'outline'}
                 onClick={() => setCurrentView('stories')}
+                size="sm"
               >
                 Stories
               </Button>
               <Button 
                 variant={currentView === 'bios' ? 'default' : 'outline'}
                 onClick={() => setCurrentView('bios')}
+                size="sm"
               >
-                <Users className="h-4 w-4 mr-2" />
-                Author Bios
+                <Users className="h-3 w-3 mr-1" />
+                Bios
               </Button>
             </div>
           </div>
           
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             {currentView === 'stories' && (
               <>
                 <Button 
@@ -142,9 +144,9 @@ const AdminStories = () => {
                 >
                   Group by Author
                 </Button>
-                <Button onClick={handleCreateStory} className="cozy-button">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create New Story
+                <Button onClick={handleCreateStory} size="sm" className="cozy-button">
+                  <Plus className="h-3 w-3 mr-1" />
+                  Create Story
                 </Button>
               </>
             )}
