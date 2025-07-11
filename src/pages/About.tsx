@@ -167,7 +167,7 @@ const About = () => {
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="overflow-hidden rounded-lg border-4 border-amber-600 shadow-sm cursor-pointer">  {/* Bronze for Gemini */}
+                    <div className="overflow-hidden rounded-lg border-4 border-amber-600 bg-amber-600 shadow-sm cursor-pointer">  {/* Bronze background for Gemini */}
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
                         alt="#3 AI Assistant"
@@ -203,7 +203,7 @@ const About = () => {
                 
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="overflow-hidden rounded-lg border-4 border-gray-400 shadow-sm cursor-pointer">  {/* Silver for CoPilot */}
+                    <div className="overflow-hidden rounded-lg border-4 border-gray-400 bg-gray-400 shadow-sm cursor-pointer">  {/* Silver background for CoPilot */}
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203785267-p40ovhg84.png"
                         alt="#2 AI Assistant"
