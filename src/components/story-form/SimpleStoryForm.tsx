@@ -90,6 +90,26 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
     handleInputChange('video_url', '');
   };
 
+  const handleSaveOnly = async () => {
+    console.log('=== SAVE ONLY (Ctrl+S) ===');
+    try {
+      const success = await saveStory(formData, async () => {
+        console.log('=== SAVE SUCCESSFUL - REFRESHING DATA ===');
+        // Refresh the story data to show updated content
+        if (storyId) {
+          await refetchStory();
+        }
+        // Don't call onSave() here - stay on the edit page
+      });
+      
+      if (success) {
+        console.log('=== SAVE SUCCESSFUL (stayed on page) ===');
+      }
+    } catch (error) {
+      console.error('Error in handleSaveOnly:', error);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('=== FORM SUBMITTED ===');
@@ -105,7 +125,7 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
         if (storyId) {
           await refetchStory();
         }
-        onSave();
+        onSave(); // Navigate back to admin list
       });
       console.log('saveStory returned:', success);
       
@@ -177,10 +197,7 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
               content={formData.content}
               onChange={(content) => handleInputChange('content', content)}
               placeholder="Write your story here..."
-              onSave={async () => {
-                const event = new Event('submit', { bubbles: true, cancelable: true });
-                await handleSubmit(event as any);
-              }}
+              onSave={handleSaveOnly}
             />
           </div>
 
