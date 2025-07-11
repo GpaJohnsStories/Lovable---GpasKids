@@ -109,7 +109,7 @@ const AdminStories = () => {
 
   return (
     <AdminLayout>
-      <div className="space-y-2">
+      <div className="space-y-0">
         <div className="flex justify-between items-center py-1">
           <div className="flex gap-2 items-center">
             <h2 className="text-lg font-bold">
