@@ -5,6 +5,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
+import StorySubmissionForm from "@/components/StorySubmissionForm";
 import { supabase } from "@/integrations/supabase/client";
 import copyrightSign from "@/assets/copyright-sign.jpg";
 
@@ -103,10 +104,13 @@ const Writing = () => {
               </h1>
             </div>
             
-            <div className="space-y-4">
-              <p className="text-lg text-gray-700 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                Content coming soon...
+            <div className="space-y-6">
+              <p className="text-lg text-gray-700 leading-relaxed font-normal mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                Do you have a wonderful story to share with Gpa's Kids? We'd love to hear from you! 
+                Submit your story using the form below and it will be reviewed for possible inclusion on our website.
               </p>
+              
+              <StorySubmissionForm />
             </div>
           </div>
         </main>

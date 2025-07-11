@@ -1,0 +1,340 @@
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from 'sonner';
+import { Upload, FileText } from 'lucide-react';
+import PersonalIdSection from '@/components/PersonalIdSection';
+import { getPersonalId, setPersonalId } from '@/utils/personalId';
+import { supabase } from '@/integrations/supabase/client';
+
+interface StorySubmissionFormData {
+  story_title: string;
+  author_name: string;
+  author_email: string;
+  author_phone: string;
+  date_of_birth: string;
+  author_signature: string;
+  parent_name?: string;
+  parent_email?: string;
+  parent_phone?: string;
+  parent_signature?: string;
+  personal_id_prefix?: string;
+}
+
+const StorySubmissionForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [storyFile, setStoryFile] = useState<File | null>(null);
+  const [idMode, setIdMode] = useState('existing');
+  const [personalId, setPersonalIdState] = useState<string | null>(getPersonalId());
+  const [existingPersonalId, setExistingPersonalId] = useState('');
+  const [existingPersonalIdError, setExistingPersonalIdError] = useState<string | null>(null);
+
+  const form = useForm<StorySubmissionFormData>({
+    defaultValues: {
+      story_title: '',
+      author_name: '',
+      author_email: '',
+      author_phone: '',
+      date_of_birth: '',
+      author_signature: '',
+      parent_name: '',
+      parent_email: '',
+      parent_phone: '',
+      parent_signature: '',
+    }
+  });
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Accept common document formats
+      const allowedTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'text/plain',
+        'application/rtf'
+      ];
+      
+      if (allowedTypes.includes(file.type)) {
+        setStoryFile(file);
+        toast.success(`Story file "${file.name}" attached successfully!`);
+      } else {
+        toast.error('Please upload a PDF, Word document, or text file.');
+        event.target.value = '';
+      }
+    }
+  };
+
+  const onSubmit = async (data: StorySubmissionFormData) => {
+    // Validate personal ID
+    const finalPersonalId = idMode === 'existing' ? existingPersonalId : personalId;
+    
+    if (!finalPersonalId || finalPersonalId.length !== 6) {
+      if (idMode === 'existing') {
+        setExistingPersonalIdError('Please enter a valid 6-character Personal ID');
+      } else {
+        toast.error('Please create your Personal ID first');
+      }
+      return;
+    }
+
+    if (!storyFile) {
+      toast.error('Please attach your story file');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // 1. Save story file to the database
+      const storyContent = await storyFile.text();
+      const storyCode = `SUB-${finalPersonalId}`;
+      
+      const { error: storyError } = await supabase
+        .from('stories')
+        .insert({
+          story_code: storyCode,
+          title: data.story_title,
+          author: data.author_name,
+          content: storyContent,
+          category: 'System',
+          published: 'N',
+          excerpt: `Story submission from ${data.author_name}`,
+          tagline: 'User Submitted Story'
+        });
+
+      if (storyError) {
+        throw new Error('Failed to save story: ' + storyError.message);
+      }
+
+      // 2. Send email with form data
+      const emailData = {
+        personalId: finalPersonalId,
+        storyCode: storyCode,
+        fileName: storyFile.name,
+        ...data
+      };
+
+      const { error: emailError } = await supabase.functions.invoke('send-story-submission-email', {
+        body: emailData
+      });
+
+      if (emailError) {
+        throw new Error('Failed to send email: ' + emailError.message);
+      }
+
+      // Save personal ID if it was created
+      if (idMode === 'create' && personalId) {
+        setPersonalId(personalId);
+      }
+
+      toast.success('Story submitted successfully! Thank you for sharing your story.');
+      
+      // Reset form
+      form.reset();
+      setStoryFile(null);
+      setPersonalIdState(null);
+      setExistingPersonalId('');
+      
+      // Reset file input
+      const fileInput = document.getElementById('story-file') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
+
+    } catch (error) {
+      console.error('Submission error:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to submit story');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        
+        {/* Personal ID Section */}
+        <div className="bg-amber-50 border-2 border-amber-300 rounded-lg p-6">
+          <h3 className="text-xl font-bold text-orange-800 mb-4">Step 1: Your Personal ID</h3>
+          <PersonalIdSection
+            form={form}
+            idMode={idMode}
+            setIdMode={setIdMode}
+            personalId={personalId}
+            setPersonalId={setPersonalIdState}
+            existingPersonalId={existingPersonalId}
+            setExistingPersonalId={setExistingPersonalId}
+            existingPersonalIdError={existingPersonalIdError}
+            setExistingPersonalIdError={setExistingPersonalIdError}
+          />
+        </div>
+
+        {/* Story Information */}
+        <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-6">
+          <h3 className="text-xl font-bold text-blue-800 mb-4">Step 2: Story Information</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="story_title" className="text-blue-800 font-fun text-lg">Story Title *</Label>
+              <Input
+                id="story_title"
+                {...form.register('story_title', { required: 'Story title is required' })}
+                className="mt-1"
+                placeholder="Enter your story title"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="story-file" className="text-blue-800 font-fun text-lg">Story File *</Label>
+              <Input
+                id="story-file"
+                type="file"
+                onChange={handleFileChange}
+                accept=".pdf,.doc,.docx,.txt,.rtf"
+                className="mt-1"
+              />
+              {storyFile && (
+                <div className="mt-2 flex items-center text-sm text-green-600">
+                  <FileText className="w-4 h-4 mr-1" />
+                  {storyFile.name}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Author Information */}
+        <div className="bg-green-50 border-2 border-green-300 rounded-lg p-6">
+          <h3 className="text-xl font-bold text-green-800 mb-4">Step 3: Author Information</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="author_name" className="text-green-800 font-fun text-lg">Author's Full Name *</Label>
+              <Input
+                id="author_name"
+                {...form.register('author_name', { required: 'Author name is required' })}
+                className="mt-1"
+                placeholder="Full name"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="author_email" className="text-green-800 font-fun text-lg">Author's Email *</Label>
+              <Input
+                id="author_email"
+                type="email"
+                {...form.register('author_email', { required: 'Author email is required' })}
+                className="mt-1"
+                placeholder="email@example.com"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="author_phone" className="text-green-800 font-fun text-lg">Author's Phone</Label>
+              <Input
+                id="author_phone"
+                {...form.register('author_phone')}
+                className="mt-1"
+                placeholder="Phone number"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="date_of_birth" className="text-green-800 font-fun text-lg">Date of Birth</Label>
+              <Input
+                id="date_of_birth"
+                type="date"
+                {...form.register('date_of_birth')}
+                className="mt-1"
+              />
+            </div>
+            
+            <div className="md:col-span-2">
+              <Label htmlFor="author_signature" className="text-green-800 font-fun text-lg">Electronic Signature (Author) *</Label>
+              <Input
+                id="author_signature"
+                {...form.register('author_signature', { required: 'Author signature is required' })}
+                className="mt-1"
+                placeholder="Type your full name as electronic signature"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Parent/Guardian Information */}
+        <div className="bg-purple-50 border-2 border-purple-300 rounded-lg p-6">
+          <h3 className="text-xl font-bold text-purple-800 mb-4">Step 4: Parent/Guardian Information (if applicable)</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="parent_name" className="text-purple-800 font-fun text-lg">Parent/Guardian Name</Label>
+              <Input
+                id="parent_name"
+                {...form.register('parent_name')}
+                className="mt-1"
+                placeholder="Full name"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="parent_email" className="text-purple-800 font-fun text-lg">Parent/Guardian Email</Label>
+              <Input
+                id="parent_email"
+                type="email"
+                {...form.register('parent_email')}
+                className="mt-1"
+                placeholder="email@example.com"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="parent_phone" className="text-purple-800 font-fun text-lg">Parent/Guardian Phone</Label>
+              <Input
+                id="parent_phone"
+                {...form.register('parent_phone')}
+                className="mt-1"
+                placeholder="Phone number"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="parent_signature" className="text-purple-800 font-fun text-lg">Electronic Signature (Parent/Guardian)</Label>
+              <Input
+                id="parent_signature"
+                {...form.register('parent_signature')}
+                className="mt-1"
+                placeholder="Type full name as electronic signature"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <div className="text-center">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 text-lg"
+          >
+            {isSubmitting ? (
+              <>
+                <Upload className="w-5 h-5 mr-2 animate-spin" />
+                Submitting Story...
+              </>
+            ) : (
+              <>
+                <Upload className="w-5 h-5 mr-2" />
+                Submit My Story
+              </>
+            )}
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default StorySubmissionForm;
