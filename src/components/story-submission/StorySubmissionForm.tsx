@@ -15,6 +15,8 @@ import LegalNotice from './LegalNotice';
 
 interface StorySubmissionFormData {
   story_title: string;
+  story_tagline?: string;
+  story_excerpt?: string;
   author_name: string;
   author_pen_name: string;
   author_email: string;
@@ -128,8 +130,8 @@ const StorySubmissionForm = () => {
           content: storyContent,
           category: 'System',
           published: 'N',
-          excerpt: `Story submission from ${data.author_name}`,
-          tagline: 'User Submitted Story'
+          excerpt: data.story_excerpt || `Story submission from ${data.author_name}`,
+          tagline: data.story_tagline || 'User Submitted Story'
         });
 
       if (storyError) {
