@@ -216,7 +216,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="author_email" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Author's Email *</Label>
+              <Label htmlFor="author_email" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Author's Email <span className="bg-green-200 px-2 py-1 rounded font-bold italic text-yellow-800">Not Required</span></Label>
               <Input
                 id="author_email"
                 type="email"
