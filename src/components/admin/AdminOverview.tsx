@@ -92,11 +92,11 @@ const AdminOverview = () => {
               </div>
               <div className="text-xs text-green-700 font-medium">Published</div>
             </div>
-            <div className="text-center p-2 bg-yellow-50 rounded-lg border border-yellow-200">
-              <div className="text-xl font-bold text-yellow-600">
+            <div className="text-center p-2 bg-yellow-200 rounded-lg border border-yellow-300">
+              <div className="text-xl font-bold text-yellow-700">
                 {storyCounts?.newStories || 0}
               </div>
-              <div className="text-xs text-yellow-700 font-medium">New Stories</div>
+              <div className="text-xs text-yellow-800 font-medium">New Stories</div>
             </div>
             <div className="text-center p-2 bg-orange-50 rounded-lg border border-orange-200">
               <div className="text-xl font-bold text-orange-600 flex items-center justify-center gap-1">
@@ -108,16 +108,35 @@ const AdminOverview = () => {
           </div>
           
           {/* Category counts */}
-          <div className="grid grid-cols-6 gap-2 mb-2">
-            {['Fun', 'Life', 'North Pole', 'World Changers', 'STORY', 'System'].map((category) => (
-              <div key={category} className="text-center p-1 bg-purple-50 rounded border border-purple-200">
-                <div className="text-lg font-bold text-purple-600 flex items-center justify-center gap-1">
-                  <Tag className="h-3 w-3" />
-                  {storyCounts?.categories?.[category] || 0}
+          <div className="grid grid-cols-5 gap-2 mb-2">
+            {['Fun', 'Life', 'North Pole', 'World Changers', 'System'].map((category) => {
+              const getCategoryColors = (cat: string) => {
+                switch (cat) {
+                  case 'Fun':
+                    return { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-600', textSm: 'text-blue-700' };
+                  case 'Life':
+                    return { bg: 'bg-green-50', border: 'border-green-200', text: 'text-green-600', textSm: 'text-green-700' };
+                  case 'North Pole':
+                    return { bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-600', textSm: 'text-red-700' };
+                  case 'World Changers':
+                    return { bg: 'bg-orange-50', border: 'border-orange-300', text: 'text-orange-600', textSm: 'text-orange-800' };
+                  case 'System':
+                    return { bg: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-600', textSm: 'text-gray-700' };
+                  default:
+                    return { bg: 'bg-purple-50', border: 'border-purple-200', text: 'text-purple-600', textSm: 'text-purple-700' };
+                }
+              };
+              const colors = getCategoryColors(category);
+              return (
+                <div key={category} className={`text-center p-1 ${colors.bg} rounded border ${colors.border}`}>
+                  <div className={`text-lg font-bold ${colors.text} flex items-center justify-center gap-1`}>
+                    <Tag className="h-3 w-3" />
+                    {storyCounts?.categories?.[category] || 0}
+                  </div>
+                  <div className={`text-xs ${colors.textSm} font-medium`}>{category}</div>
                 </div>
-                <div className="text-xs text-purple-700 font-medium">{category}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           
           {/* Media counts */}
