@@ -156,6 +156,24 @@ const About = () => {
             </div>
           </div>
 
+          {/* New Section - Light Purple with Gold Border */}
+          <div id="new-section" className="max-w-6xl mx-auto border-4 border-yellow-500 rounded-lg p-6 mt-8 bg-purple-100 relative">
+            <div>
+              <h1 className="text-4xl font-bold text-purple-800 mb-6 text-center" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                [Section Title Coming Soon]
+              </h1>
+              
+              <p className="text-lg text-purple-900 leading-relaxed mb-4 font-normal text-center" style={{ fontFamily: 'Georgia, serif' }}>
+                Content will be added from the story table...
+              </p>
+              
+              {/* Story Code in bottom right corner */}
+              <div className="absolute bottom-4 right-4 text-sm font-mono text-purple-700 bg-white/70 px-2 py-1 rounded">
+                [Story Code TBD]
+              </div>
+            </div>
+          </div>
+
         </main>
         
         <CookieFreeFooter />
