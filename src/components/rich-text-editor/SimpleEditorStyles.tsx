@@ -40,7 +40,7 @@ const SimpleEditorStyles: React.FC = () => {
            line-height: 1.5 !important;
            font-weight: normal !important;
            font-style: normal !important;
-           margin: 0 0 0.75em 0 !important;
+           margin: 0 0 0.5em 0 !important;
            min-height: 1.5em !important;
          }
         
@@ -49,7 +49,7 @@ const SimpleEditorStyles: React.FC = () => {
            font-size: 18px !important;
            color: #000000 !important;
            line-height: 1.5 !important;
-           margin: 0 0 0.75em 0 !important;
+           margin: 0 0 0.5em 0 !important;
            min-height: 1.5em !important;
          }
         
