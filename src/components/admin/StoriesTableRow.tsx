@@ -3,7 +3,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volume2 } from "lucide-react";
+import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volume2, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 import { adminClient } from "@/integrations/supabase/clients";
 import { toast } from "sonner";
@@ -463,6 +463,16 @@ const StoriesTableRow = ({
             >
               <Edit className="h-4 w-4" />
             </Button>
+            {story.category === 'System' && (
+              <Button
+                size="sm"
+                className="!bg-gradient-to-b !from-blue-500 !to-blue-700 !text-white !border-blue-800 !shadow-[0_6px_12px_rgba(59,130,246,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(59,130,246,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)]"
+                onClick={() => window.open('/buddys_admin/deployment', '_blank')}
+                title="Deploy this System story to web pages"
+              >
+                <Globe className="h-4 w-4" />
+              </Button>
+            )}
             <div className="flex flex-col space-y-1">
               <Select value={selectedVoice} onValueChange={handleVoiceChange}>
                 <SelectTrigger className="w-20 h-6 text-xs">

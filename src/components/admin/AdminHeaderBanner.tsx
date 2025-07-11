@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2 } from "lucide-react";
+import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
@@ -61,6 +61,17 @@ const AdminHeaderBanner = () => {
       hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-green-800',
       description: 'Full comment list with edit and approval services'
+    },
+    {
+      name: 'Deployment',
+      path: '/buddys_admin/deployment',
+      icon: Globe,
+      bgColor: 'bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700',
+      hoverColor: 'hover:from-blue-600 hover:via-blue-700 hover:to-blue-800',
+      shadowColor: 'shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#1e40af,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-white',
+      description: 'Deploy System stories to static web pages'
     },
     {
       name: 'Voice Preview',
