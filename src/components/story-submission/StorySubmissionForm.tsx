@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { toast } from 'sonner';
-import { Upload } from 'lucide-react';
+import { Upload, Download, Mail, FileText, RotateCcw } from 'lucide-react';
 import { getPersonalId, setPersonalId } from '@/utils/personalId';
 import { supabase } from '@/integrations/supabase/client';
 import { differenceInYears } from 'date-fns';
@@ -40,6 +40,9 @@ const StorySubmissionForm = () => {
   const [signatureError, setSignatureError] = useState<string | null>(null);
   const [userAge, setUserAge] = useState<number | null>(null);
   const [isStep4Required, setIsStep4Required] = useState(false);
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const [submittedData, setSubmittedData] = useState<StorySubmissionFormData | null>(null);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   const form = useForm<StorySubmissionFormData>({
     defaultValues: {
@@ -161,13 +164,14 @@ const StorySubmissionForm = () => {
         setPersonalId(personalId);
       }
 
-      toast.success('Story submitted successfully! Thank you for sharing your story.');
+      // Set success state and store submitted data for PDF generation
+      setSubmittedData({
+        ...data,
+        personal_id_prefix: finalPersonalId
+      });
+      setSubmissionSuccess(true);
       
-      // Reset form
-      form.reset();
-      setStoryContent('');
-      setPersonalIdState(null);
-      setExistingPersonalId('');
+      toast.success('Story submitted successfully! You can now download or email your release form.');
 
     } catch (error) {
       console.error('Submission error:', error);
@@ -176,6 +180,162 @@ const StorySubmissionForm = () => {
       setIsSubmitting(false);
     }
   };
+
+  const generatePDF = async (sendEmail: boolean = false) => {
+    if (!submittedData) return;
+
+    setIsGeneratingPDF(true);
+    
+    try {
+      const finalPersonalId = idMode === 'existing' ? existingPersonalId : personalId;
+      const storyCode = `SUB-${finalPersonalId}`;
+      
+      const pdfData = {
+        personalId: finalPersonalId,
+        storyCode: storyCode,
+        story_title: submittedData.story_title,
+        story_tagline: submittedData.story_tagline,
+        story_excerpt: submittedData.story_excerpt,
+        story_content: storyContent,
+        author_name: submittedData.author_name,
+        author_pen_name: submittedData.author_pen_name,
+        author_email: submittedData.author_email,
+        author_phone: submittedData.author_phone,
+        date_of_birth: submittedData.date_of_birth,
+        author_signature: submittedData.author_signature,
+        parent_name: submittedData.parent_name,
+        parent_email: submittedData.parent_email,
+        parent_phone: submittedData.parent_phone,
+        parent_signature: submittedData.parent_signature,
+        send_email: sendEmail
+      };
+
+      const { data: response, error } = await supabase.functions.invoke('generate-story-pdf', {
+        body: pdfData
+      });
+
+      if (error) {
+        throw new Error('Failed to generate PDF: ' + error.message);
+      }
+
+      if (sendEmail) {
+        toast.success('PDF has been sent to your email address!');
+      } else {
+        // Open the HTML content in a new window for printing
+        const newWindow = window.open('', '_blank');
+        if (newWindow) {
+          newWindow.document.write(response.htmlContent);
+          newWindow.document.close();
+          newWindow.print();
+        }
+        toast.success('PDF opened for printing!');
+      }
+
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to generate PDF');
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
+  const resetForm = () => {
+    setSubmissionSuccess(false);
+    setSubmittedData(null);
+    form.reset();
+    setStoryContent('');
+    setPersonalIdState(null);
+    setExistingPersonalId('');
+    setExistingPersonalIdError(null);
+    setSignatureError(null);
+    setUserAge(null);
+    setIsStep4Required(false);
+  };
+
+  // Show success screen if submission was successful
+  if (submissionSuccess && submittedData) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-6" style={{ fontFamily: 'Georgia, serif' }}>
+        {/* Success Header */}
+        <div className="text-center bg-green-50 border-2 border-green-300 rounded-lg p-8">
+          <div className="text-6xl mb-4">🎉</div>
+          <h1 className="text-3xl font-bold text-green-800 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+            Story Submitted Successfully!
+          </h1>
+          <p className="text-lg text-green-700 mb-2">
+            Thank you for submitting "<strong>{submittedData.story_title}</strong>" to Gpa's Kids!
+          </p>
+          <p className="text-md text-green-600">
+            Your story has been saved and will be reviewed for publication.
+          </p>
+        </div>
+
+        {/* PDF Options */}
+        <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-6">
+          <h2 className="text-2xl font-bold text-blue-800 mb-4 flex items-center">
+            <FileText className="w-6 h-6 mr-2" />
+            Your Release Form
+          </h2>
+          <p className="text-blue-700 mb-6">
+            Your complete story submission release form is ready. You can download it for your records or have it sent to your email.
+          </p>
+          
+          <div className="space-y-4">
+            {/* Print/Download Option */}
+            <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-blue-200">
+              <div className="flex items-center">
+                <Download className="w-5 h-5 text-blue-600 mr-3" />
+                <div>
+                  <h3 className="font-semibold text-blue-800">Print Release Form</h3>
+                  <p className="text-sm text-blue-600">Open and print your complete release form document</p>
+                </div>
+              </div>
+              <Button
+                onClick={() => generatePDF(false)}
+                disabled={isGeneratingPDF}
+                className="bg-blue-500 hover:bg-blue-600 text-white"
+              >
+                {isGeneratingPDF ? 'Generating...' : 'Print PDF'}
+              </Button>
+            </div>
+
+            {/* Email Option (only if email provided) */}
+            {submittedData.author_email && (
+              <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-blue-200">
+                <div className="flex items-center">
+                  <Mail className="w-5 h-5 text-blue-600 mr-3" />
+                  <div>
+                    <h3 className="font-semibold text-blue-800">Email Release Form</h3>
+                    <p className="text-sm text-blue-600">Send the complete release form to: {submittedData.author_email}</p>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => generatePDF(true)}
+                  disabled={isGeneratingPDF}
+                  variant="outline"
+                  className="border-blue-500 text-blue-500 hover:bg-blue-50"
+                >
+                  {isGeneratingPDF ? 'Sending...' : 'Email PDF'}
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Submit Another Story */}
+        <div className="text-center">
+          <Button
+            onClick={resetForm}
+            variant="outline"
+            className="border-gray-400 text-gray-600 hover:bg-gray-50"
+          >
+            <RotateCcw className="w-4 h-4 mr-2" />
+            Submit Another Story
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-6" style={{ fontFamily: 'Georgia, serif' }}>
