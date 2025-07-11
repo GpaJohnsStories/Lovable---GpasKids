@@ -134,53 +134,6 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
         />
       </div>
 
-      {/* Photo Alt Text Fields */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <Label className="text-lg font-medium text-blue-800 mb-4 block">
-          📝 Photo Alt Text / Descriptions
-        </Label>
-        <p className="text-sm text-blue-600 mb-4">
-          These descriptions help screen readers and provide context when images don't load. Required for accessibility.
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <Label htmlFor="photo_alt_1" className="text-sm font-medium">
-              Photo 1 Alt Text
-            </Label>
-            <Input
-              id="photo_alt_1"
-              value={formData.photo_alt_1}
-              onChange={(e) => onInputChange('photo_alt_1', e.target.value)}
-              placeholder="Describe photo 1 content"
-            />
-          </div>
-          
-          <div>
-            <Label htmlFor="photo_alt_2" className="text-sm font-medium">
-              Photo 2 Alt Text
-            </Label>
-            <Input
-              id="photo_alt_2"
-              value={formData.photo_alt_2}
-              onChange={(e) => onInputChange('photo_alt_2', e.target.value)}
-              placeholder="Describe photo 2 content"
-            />
-          </div>
-          
-          <div>
-            <Label htmlFor="photo_alt_3" className="text-sm font-medium">
-              Photo 3 Alt Text
-            </Label>
-            <Input
-              id="photo_alt_3"
-              value={formData.photo_alt_3}
-              onChange={(e) => onInputChange('photo_alt_3', e.target.value)}
-              placeholder="Describe photo 3 content"
-            />
-          </div>
-        </div>
-      </div>
 
       {/* Reading Time and Word Count Display */}
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
