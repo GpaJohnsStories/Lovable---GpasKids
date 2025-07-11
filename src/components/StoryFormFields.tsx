@@ -22,6 +22,10 @@ interface Story {
   photo_alt_3: string;
   video_url: string;
   published: string;
+  read_count?: number;
+  thumbs_up_count?: number;
+  thumbs_down_count?: number;
+  ok_count?: number;
 }
 
 interface StoryFormFieldsProps {
@@ -135,17 +139,29 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
       </div>
 
 
-      {/* Reading Time and Word Count Display */}
+      {/* Story Statistics Display */}
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-        <div className="flex items-center justify-between text-sm">
-          <div className="text-amber-700 font-medium">Story Statistics</div>
-          <div className="text-amber-600">
+        <div className="text-amber-700 font-medium mb-3">Story Statistics</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+          <div className="text-center">
+            <div className="text-amber-800 font-semibold text-lg">{formData.read_count || 0}</div>
+            <div className="text-amber-600">Reads</div>
+          </div>
+          <div className="text-center">
+            <div className="text-green-600 font-semibold text-lg">{formData.thumbs_up_count || 0}</div>
+            <div className="text-amber-600">👍 Thumbs Up</div>
+          </div>
+          <div className="text-center">
+            <div className="text-red-600 font-semibold text-lg">{formData.thumbs_down_count || 0}</div>
+            <div className="text-amber-600">👎 Thumbs Down</div>
+          </div>
+          <div className="text-center">
             {(() => {
               const { readingTime, wordCount } = calculateReadingTimeWithWordCount(formData.content || formData.excerpt || '');
               return (
-                <div className="text-right">
-                  <div className="font-medium">{readingTime}</div>
-                  <div className="text-gray-600">{wordCount} words</div>
+                <div>
+                  <div className="text-amber-800 font-semibold">{readingTime}</div>
+                  <div className="text-amber-600">{wordCount} words</div>
                 </div>
               );
             })()}
