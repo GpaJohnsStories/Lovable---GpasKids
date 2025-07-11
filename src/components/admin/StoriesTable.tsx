@@ -56,7 +56,7 @@ const StoriesTable = ({
         .order(sortField, { ascending: sortDirection === 'asc' });
       
       if (showPublishedOnly) {
-        query = query.eq('published', 'Y').neq('category', 'System');
+        query = query.eq('published', 'Y').not('category', 'in', '(System,STORY)');
         
         const { data, error } = await query;
         
