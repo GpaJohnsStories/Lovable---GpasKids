@@ -26,6 +26,20 @@ const Writing = () => {
     },
   });
 
+  const { data: writingStory } = useQuery({
+    queryKey: ['story', 'SYS-WAS'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('stories')
+        .select('content')
+        .eq('story_code', 'SYS-WAS')
+        .maybeSingle();
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
   useEffect(() => {
     // Handle hash navigation when component mounts or hash changes
     const scrollToHash = () => {
@@ -95,7 +109,7 @@ const Writing = () => {
           </div>
 
           {/* Write a Story Section */}
-          <div id="write-story" className="max-w-6xl mx-auto border-4 border-orange-500 rounded-lg p-6 bg-white mt-8">
+          <div id="write-story" className="max-w-6xl mx-auto border-4 border-orange-500 rounded-lg p-6 bg-white mt-8 relative">
             <div className="flex items-center mb-6">
               <span className="text-6xl mr-4">⌨️</span>
               <span className="text-orange-600 text-4xl font-bold mr-4">—</span>
@@ -105,10 +119,26 @@ const Writing = () => {
             </div>
             
             <div className="space-y-6">
-              <p className="text-lg text-gray-700 leading-relaxed font-normal mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                Do you have a wonderful story to share with Gpa's Kids? We'd love to hear from you! 
-                Submit your story using the form below and it will be reviewed for possible inclusion on our website.
-              </p>
+              {writingStory?.content ? (
+                <IsolatedStoryRenderer
+                  content={writingStory.content}
+                  useRichCleaning={true}
+                />
+              ) : (
+                <p className="text-lg text-gray-700 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                  Loading story content...
+                </p>
+              )}
+              
+              {/* Story Code Identifier */}
+              <div className="absolute bottom-2 right-2">
+                <span 
+                  className="text-black text-xs"
+                  style={{ fontFamily: 'Georgia, serif', fontSize: '10px' }}
+                >
+                  SYS-WAS
+                </span>
+              </div>
               
               <StorySubmissionForm />
             </div>
