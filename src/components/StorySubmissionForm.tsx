@@ -205,7 +205,7 @@ const StorySubmissionForm = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="author_name" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Author's Real Name</Label>
+              <Label htmlFor="author_name" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Author's Real Name <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
               <Input
                 id="author_name"
                 {...form.register('author_name')}
