@@ -36,7 +36,7 @@ const StorySubmissionForm = () => {
   const [existingPersonalIdError, setExistingPersonalIdError] = useState<string | null>(null);
   const [signatureError, setSignatureError] = useState<string | null>(null);
   const [userAge, setUserAge] = useState<number | null>(null);
-  const [isStep4Required, setIsStep4Required] = useState(true);
+  const [isStep4Required, setIsStep4Required] = useState(false);
 
   const form = useForm<StorySubmissionFormData>({
     defaultValues: {
@@ -84,7 +84,7 @@ const StorySubmissionForm = () => {
       setIsStep4Required(age < 21);
     } else {
       setUserAge(null);
-      setIsStep4Required(true);
+      setIsStep4Required(false);
     }
   }, [watchedValues]);
 
