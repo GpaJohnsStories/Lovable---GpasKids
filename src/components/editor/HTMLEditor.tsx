@@ -118,6 +118,14 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const textarea = e.target as HTMLTextAreaElement;
     
+    // Handle Ctrl+T first to prevent new tab creation
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 't') {
+      e.preventDefault();
+      e.stopPropagation();
+      wrapSelectedText('<center>', '</center>');
+      return;
+    }
+    
     // Tab key handling
     if (e.key === 'Tab') {
       e.preventDefault();
@@ -210,10 +218,6 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
         case 'e':
           e.preventDefault();
           handleClearHtml();
-          break;
-        case 't':
-          e.preventDefault();
-          wrapSelectedText('<center>', '</center>');
           break;
       }
     }
