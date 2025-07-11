@@ -331,6 +331,12 @@ const StorySubmissionForm = () => {
             )}
           </h3>
           
+          <p className={`text-sm mb-4 leading-relaxed ${
+            isStep4Required ? 'text-purple-800' : 'text-gray-500'
+          }`} style={{ fontFamily: 'Georgia, serif' }}>
+            If the author is under 21 years of age, a parent or legal guardian must complete this section. By typing their name, the parent/guardian electronically signs and agrees to the terms.
+          </p>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="parent_name" className={`text-sm font-bold ${isStep4Required ? 'text-purple-800' : 'text-gray-500'}`} style={{ fontFamily: 'Georgia, serif' }}>Parent/Guardian Name</Label>
