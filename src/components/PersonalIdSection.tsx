@@ -153,7 +153,7 @@ const PersonalIdSection = ({
                     </p>
                     <div className="flex justify-center mb-3">
                       <div className="bg-amber-200 px-3 py-2 rounded-lg">
-                        <span className="font-bold text-lg text-orange-900">{personalId}</span>
+                        <span className="font-bold text-xl text-orange-900">{personalId}</span>
                       </div>
                     </div>
                     <div className="flex justify-center mb-3">
