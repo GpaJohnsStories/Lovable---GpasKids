@@ -284,7 +284,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="date_of_birth" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Date of Birth <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
+              <Label htmlFor="date_of_birth" className="text-green-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Author's Date of Birth <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
               <Input
                 id="date_of_birth"
                 type="date"
