@@ -163,7 +163,7 @@ const StorySubmissionForm = () => {
           <h3 className="text-lg font-bold text-blue-800 mb-4">Step 2: Story Information</h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
+            <div className="md:col-span-2">
               <Label htmlFor="story_title" className="text-blue-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Story Title <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
               <Input
                 id="story_title"
