@@ -110,7 +110,7 @@ const Writing = () => {
 
           {/* Write a Story Section */}
           <div id="write-story" className="max-w-6xl mx-auto border-4 border-orange-500 rounded-lg p-6 bg-white mt-8 relative">
-            <div className="flex items-center mb-6">
+            <div className="flex items-center justify-center mb-6">
               <h1 className="text-4xl font-bold text-orange-600 italic" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 Write a Story for Gpa's Kids
               </h1>
