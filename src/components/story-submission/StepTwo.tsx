@@ -6,8 +6,8 @@ import { Textarea } from '@/components/ui/textarea';
 
 interface StorySubmissionFormData {
   story_title: string;
-  story_tagline?: string;
-  story_excerpt?: string;
+  story_tagline: string;
+  story_excerpt: string;
   author_name: string;
   author_pen_name: string;
   author_email: string;
@@ -44,10 +44,11 @@ const StepTwo: React.FC<StepTwoProps> = ({ form, storyContent, setStoryContent }
         </div>
         
         <div className="md:col-span-2">
-          <Label htmlFor="story_tagline" className="text-blue-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Tagline or Sub-Title <span className="text-gray-600 font-normal">(Maximum 100 Characters)</span></Label>
+          <Label htmlFor="story_tagline" className="text-blue-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Tagline or Sub-Title <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span> <span className="text-gray-600 font-normal">(Maximum 100 Characters)</span></Label>
           <Input
             id="story_tagline"
             {...form.register('story_tagline', { 
+              required: 'Tagline is required',
               maxLength: { value: 100, message: 'Tagline cannot exceed 100 characters' }
             })}
             className="mt-1"
@@ -57,10 +58,10 @@ const StepTwo: React.FC<StepTwoProps> = ({ form, storyContent, setStoryContent }
         </div>
         
         <div className="md:col-span-2">
-          <Label htmlFor="story_excerpt" className="text-blue-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Excerpt of your Story -- a short description to encourage others to read it</Label>
+          <Label htmlFor="story_excerpt" className="text-blue-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Excerpt of your Story -- a short description to encourage others to read it <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
           <Textarea
             id="story_excerpt"
-            {...form.register('story_excerpt')}
+            {...form.register('story_excerpt', { required: 'Story excerpt is required' })}
             className="mt-1 min-h-[100px] resize-y"
             placeholder="Write a brief, engaging description that will make readers want to read your story..."
           />

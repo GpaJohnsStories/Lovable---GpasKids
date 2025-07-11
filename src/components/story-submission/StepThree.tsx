@@ -5,6 +5,8 @@ import { Label } from '@/components/ui/label';
 
 interface StorySubmissionFormData {
   story_title: string;
+  story_tagline: string;
+  story_excerpt: string;
   author_name: string;
   author_pen_name: string;
   author_email: string;
