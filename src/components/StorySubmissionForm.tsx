@@ -178,7 +178,7 @@ const StorySubmissionForm = () => {
                 className="mt-1 min-h-[300px] resize-y"
                 placeholder="Paste your story content here..."
               />
-              <p className="text-xs text-blue-600 mt-1">Copy your story from your document and paste it here</p>
+              
             </div>
           </div>
         </div>
