@@ -51,6 +51,11 @@ serve(async (req) => {
     // Add author information
     textToRead += `. By ${story.author}`
     
+    // Add AI voice attribution if available
+    if (story.ai_voice_name) {
+      textToRead += `. Story is read by ${story.ai_voice_name} AI voice from OpenAI`
+    }
+    
     // Add description/excerpt if available
     if (story.excerpt) {
       textToRead += `. ${story.excerpt}`

@@ -463,7 +463,7 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         </h2>
       )}
 
-      <div className="flex items-center justify-center space-x-6 text-sm text-orange-600 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+      <div className="flex items-center justify-center space-x-6 text-sm text-orange-600 mb-2" style={{ fontFamily: 'Georgia, serif' }}>
         <div className="flex items-center">
           <span className="font-medium">by {author}</span>
         </div>
@@ -478,19 +478,20 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         )}
       </div>
 
+      {aiVoiceName && (
+        <div className="text-center mb-6">
+          <p className="text-sm text-orange-600 italic" style={{ fontFamily: 'Georgia, serif' }}>
+            Story is read by {aiVoiceName} AI voice from OpenAI
+          </p>
+        </div>
+      )}
+
       {description && (
         <p className="text-lg text-orange-700 text-center mb-6 italic" style={{ fontFamily: 'Georgia, serif' }}>
           {description}
         </p>
       )}
 
-      {aiVoiceName && audioUrl && (
-        <div className="text-center mb-4">
-          <p className="text-sm text-orange-600 italic" style={{ fontFamily: 'Georgia, serif' }}>
-            Story is read by {aiVoiceName} AI voice from OpenAI
-          </p>
-        </div>
-      )}
     </>
   );
 };
