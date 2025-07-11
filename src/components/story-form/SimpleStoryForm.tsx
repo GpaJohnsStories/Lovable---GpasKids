@@ -212,7 +212,7 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
               className="cozy-button"
             >
               <Save className="h-4 w-4 mr-2" />
-              {isSaving ? 'Saving...' : 'Save Story'}
+              {isSaving ? 'Saving...' : 'Save Story & Return to Story List'}
             </Button>
           </div>
         </form>
