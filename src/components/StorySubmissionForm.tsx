@@ -362,17 +362,6 @@ const StorySubmissionForm = () => {
             </div>
             
             <div>
-              <Label htmlFor="parent_phone" className={`text-sm font-bold ${isStep4Required ? 'text-purple-800' : 'text-gray-500'}`} style={{ fontFamily: 'Georgia, serif' }}>Parent/Guardian Phone</Label>
-              <Input
-                id="parent_phone"
-                {...form.register('parent_phone')}
-                className="mt-1"
-                placeholder="Phone number"
-                disabled={!isStep4Required}
-              />
-            </div>
-            
-            <div>
               <Label htmlFor="parent_signature" className={`text-sm font-bold ${isStep4Required ? 'text-purple-800' : 'text-gray-500'}`} style={{ fontFamily: 'Georgia, serif' }}>Electronic Signature (Parent/Guardian)</Label>
               <Input
                 id="parent_signature"
