@@ -5,7 +5,7 @@ import SecurityAuditDashboard from "./SecurityAuditDashboard";
 import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
 import AdminPasswordChange from "./AdminPasswordChange";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, Shield, Key, BookOpen, Eye, EyeOff } from "lucide-react";
+import { Settings, Shield, Key, BookOpen, Eye, EyeOff, Tag, Video, Volume2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { adminClient } from "@/integrations/supabase/clients";
 
@@ -13,16 +13,34 @@ const AdminOverview = () => {
   const { data: storyCounts } = useQuery({
     queryKey: ['story-counts'],
     queryFn: async () => {
-      const [allResult, publishedResult, unpublishedResult] = await Promise.all([
-        adminClient.from('stories').select('id', { count: 'exact', head: true }),
-        adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y'),
-        adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N')
+      const [allResult, publishedResult, unpublishedResult, categoriesResult, videosResult, audioResult] = await Promise.all([
+        // Exclude System category from all counts
+        adminClient.from('stories').select('id', { count: 'exact', head: true }).not('category', 'eq', 'System'),
+        adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y').not('category', 'eq', 'System'),
+        // Include Story category in unpublished, exclude System
+        adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N').not('category', 'eq', 'System'),
+        // Get all stories with categories (excluding System) to count by category
+        adminClient.from('stories').select('category').not('category', 'eq', 'System'),
+        // Count stories with video URLs
+        adminClient.from('stories').select('id', { count: 'exact', head: true }).not('video_url', 'is', null),
+        // Count stories with audio URLs
+        adminClient.from('stories').select('id', { count: 'exact', head: true }).not('audio_url', 'is', null)
       ]);
+
+      // Count stories by category
+      const categoryCounts = categoriesResult.data?.reduce((acc: Record<string, number>, story) => {
+        const category = story.category;
+        acc[category] = (acc[category] || 0) + 1;
+        return acc;
+      }, {}) || {};
 
       return {
         all: allResult.count || 0,
         published: publishedResult.count || 0,
-        unpublished: unpublishedResult.count || 0
+        unpublished: unpublishedResult.count || 0,
+        categories: categoryCounts,
+        videos: videosResult.count || 0,
+        audio: audioResult.count || 0
       };
     },
   });
@@ -57,26 +75,57 @@ const AdminOverview = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <div className="text-2xl font-bold text-blue-600">
+          <div className="grid grid-cols-3 gap-3 mb-4">
+            <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="text-xl font-bold text-blue-600">
                 {storyCounts?.all || 0}
               </div>
-              <div className="text-sm text-blue-700 font-medium">Total Stories</div>
+              <div className="text-xs text-blue-700 font-medium">Total Stories</div>
             </div>
-            <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
-              <div className="text-2xl font-bold text-green-600 flex items-center justify-center gap-1">
-                <Eye className="h-5 w-5" />
+            <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
+              <div className="text-xl font-bold text-green-600 flex items-center justify-center gap-1">
+                <Eye className="h-4 w-4" />
                 {storyCounts?.published || 0}
               </div>
-              <div className="text-sm text-green-700 font-medium">Published</div>
+              <div className="text-xs text-green-700 font-medium">Published</div>
             </div>
-            <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
-              <div className="text-2xl font-bold text-orange-600 flex items-center justify-center gap-1">
-                <EyeOff className="h-5 w-5" />
+            <div className="text-center p-3 bg-orange-50 rounded-lg border border-orange-200">
+              <div className="text-xl font-bold text-orange-600 flex items-center justify-center gap-1">
+                <EyeOff className="h-4 w-4" />
                 {storyCounts?.unpublished || 0}
               </div>
-              <div className="text-sm text-orange-700 font-medium">Unpublished</div>
+              <div className="text-xs text-orange-700 font-medium">Unpublished</div>
+            </div>
+          </div>
+          
+          {/* Category counts */}
+          <div className="grid grid-cols-5 gap-2 mb-3">
+            {['Fun', 'Life', 'North Pole', 'World Changers', 'STORY'].map((category) => (
+              <div key={category} className="text-center p-2 bg-purple-50 rounded border border-purple-200">
+                <div className="text-lg font-bold text-purple-600 flex items-center justify-center gap-1">
+                  <Tag className="h-3 w-3" />
+                  {storyCounts?.categories?.[category] || 0}
+                </div>
+                <div className="text-xs text-purple-700 font-medium">{category}</div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Media counts */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="text-center p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+              <div className="text-xl font-bold text-indigo-600 flex items-center justify-center gap-1">
+                <Video className="h-4 w-4" />
+                {storyCounts?.videos || 0}
+              </div>
+              <div className="text-xs text-indigo-700 font-medium">With Videos</div>
+            </div>
+            <div className="text-center p-3 bg-teal-50 rounded-lg border border-teal-200">
+              <div className="text-xl font-bold text-teal-600 flex items-center justify-center gap-1">
+                <Volume2 className="h-4 w-4" />
+                {storyCounts?.audio || 0}
+              </div>
+              <div className="text-xs text-teal-700 font-medium">With Audio</div>
             </div>
           </div>
         </CardContent>
