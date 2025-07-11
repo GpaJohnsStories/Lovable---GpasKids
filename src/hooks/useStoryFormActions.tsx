@@ -11,13 +11,9 @@ export const useStoryFormActions = (
   const handleSaveOnly = async (formData: Story) => {
     console.log('=== SAVE ONLY (Ctrl+S) ===');
     try {
-      const success = await saveStory(formData, async () => {
-        console.log('=== SAVE SUCCESSFUL - REFRESHING DATA ===');
-        // Refresh the story data to show updated content
-        if (storyId && refetchStory) {
-          await refetchStory();
-        }
-        // Don't call onSave() here - stay on the edit page
+      const success = await saveStory(formData, () => {
+        console.log('=== SAVE SUCCESSFUL - STAYING ON PAGE ===');
+        // Don't call onSave() or refetch - just stay on the edit page
       });
       
       if (success) {
