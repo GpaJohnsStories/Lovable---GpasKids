@@ -108,7 +108,7 @@ const PersonalIdSection = ({
                 if (existingPersonalIdError) setExistingPersonalIdError(null);
               }}
               maxLength={6}
-              className="w-24 text-center font-bold text-base md:text-sm"
+              className="w-36 text-center font-bold text-base md:text-sm"
             />
           </div>
           {existingPersonalIdError && <p className="text-sm font-bold text-destructive mt-2">{existingPersonalIdError}</p>}
