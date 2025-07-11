@@ -177,6 +177,10 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
               content={formData.content}
               onChange={(content) => handleInputChange('content', content)}
               placeholder="Write your story here..."
+              onSave={async () => {
+                const event = new Event('submit', { bubbles: true, cancelable: true });
+                await handleSubmit(event as any);
+              }}
             />
           </div>
 

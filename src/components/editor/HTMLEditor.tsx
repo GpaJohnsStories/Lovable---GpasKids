@@ -5,12 +5,14 @@ interface HTMLEditorProps {
   content: string;
   onChange: (content: string) => void;
   placeholder?: string;
+  onSave?: () => void;
 }
 
 const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({ 
   content, 
   onChange, 
-  placeholder = "Start writing your story..." 
+  placeholder = "Start writing your story...",
+  onSave
 }, ref) => {
   const internalRef = useRef<HTMLTextAreaElement>(null);
   const textareaRef = ref || internalRef;
@@ -219,6 +221,12 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           e.preventDefault();
           handleClearHtml();
           break;
+        case 's':
+          e.preventDefault();
+          if (onSave) {
+            onSave();
+          }
+          break;
       }
     }
   };
@@ -235,6 +243,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + M', action: 'M-dash — (long pause)' },
     { key: 'Ctrl + N', action: 'N-dash – (short pause)' },
     { key: 'Ctrl + P', action: 'Paragraph' },
+    { key: 'Ctrl + S', action: 'Save Story' },
     { key: 'Ctrl + T', action: 'Center Text' },
     { key: 'Ctrl + U', action: 'Underline' },
     { key: 'Ctrl + X', action: 'Cut' },
