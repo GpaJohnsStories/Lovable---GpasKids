@@ -153,11 +153,18 @@ const Privacy = () => {
                 <Lock className="h-6 w-6 text-amber-600" />
                 <h2 className="text-xl font-semibold text-amber-800">Secure Admin Access</h2>
               </div>
-              <p className="!text-amber-700 !text-base !font-normal leading-relaxed">
+              <p className="!text-amber-700 !text-base !font-normal leading-relaxed mb-3">
                 Our content management system uses cookie-free authentication exclusively for 
                 administrative purposes. Admin sessions are stored locally on authorized devices 
                 only and never transmitted as cookies. This ensures secure content management 
                 while maintaining our cookie-free promise to visitors.
+              </p>
+              <p className="!text-amber-700 !text-base !font-normal leading-relaxed">
+                Additionally, administrative access requires a special external authentication key 
+                that is never stored on the website itself. This external key system provides an 
+                extra layer of security, ensuring that only authorized personnel can access the 
+                site's administrative functions while keeping all visitor interactions completely 
+                secure and private.
               </p>
             </div>
 
