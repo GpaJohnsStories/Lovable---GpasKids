@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Form } from '@/components/ui/form';
 import { toast } from 'sonner';
 import { Upload } from 'lucide-react';
 import PersonalIdSection from '@/components/PersonalIdSection';
@@ -128,7 +129,8 @@ const StorySubmissionForm = () => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         
         {/* Personal ID Section */}
         <div className="bg-amber-50 border-2 border-amber-300 rounded-lg p-6">
@@ -316,7 +318,8 @@ const StorySubmissionForm = () => {
             )}
           </Button>
         </div>
-      </form>
+        </form>
+      </Form>
     </div>
   );
 };
