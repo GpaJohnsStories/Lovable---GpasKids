@@ -109,10 +109,10 @@ const AdminStories = () => {
 
   return (
     <AdminLayout>
-      <div className="space-y-4">
-        <div className="flex justify-between items-center py-2">
-          <div className="flex gap-3 items-center">
-            <h2 className="text-xl font-bold">
+      <div className="space-y-2">
+        <div className="flex justify-between items-center py-1">
+          <div className="flex gap-2 items-center">
+            <h2 className="text-lg font-bold">
               {currentView === 'stories' ? 'Stories' : 'Author Bios'}
             </h2>
             <div className="flex gap-1">
@@ -120,6 +120,7 @@ const AdminStories = () => {
                 variant={currentView === 'stories' ? 'default' : 'outline'}
                 onClick={() => setCurrentView('stories')}
                 size="sm"
+                className="h-7 px-2 text-xs"
               >
                 Stories
               </Button>
@@ -127,6 +128,7 @@ const AdminStories = () => {
                 variant={currentView === 'bios' ? 'default' : 'outline'}
                 onClick={() => setCurrentView('bios')}
                 size="sm"
+                className="h-7 px-2 text-xs"
               >
                 <Users className="h-3 w-3 mr-1" />
                 Bios
@@ -141,10 +143,15 @@ const AdminStories = () => {
                   variant={groupByAuthor ? 'default' : 'outline'}
                   onClick={() => setGroupByAuthor(!groupByAuthor)}
                   size="sm"
+                  className="h-7 px-2 text-xs"
                 >
                   Group by Author
                 </Button>
-                <Button onClick={handleCreateStory} size="sm" className="cozy-button">
+                <Button 
+                  onClick={handleCreateStory} 
+                  size="sm" 
+                  className="cozy-button h-7 px-2 text-xs"
+                >
                   <Plus className="h-3 w-3 mr-1" />
                   Create Story
                 </Button>
