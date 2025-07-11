@@ -19,6 +19,7 @@ import VoicePreview from "./pages/VoicePreview";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 import AuthorBio from "./pages/AuthorBio";
+import HelpGpa from "./pages/HelpGpa";
 import AdminPasswordSync from "./components/admin/AdminPasswordSync";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/writing" element={<Writing />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/help-gpa" element={<HelpGpa />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
