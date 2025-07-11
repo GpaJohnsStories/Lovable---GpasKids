@@ -205,14 +205,14 @@ const StorySubmissionForm = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="author_name" className="text-green-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Author's Name (Real name or pen name)</Label>
+              <Label htmlFor="author_name" className="text-green-800 text-sm" style={{ fontFamily: 'Georgia, serif' }}>Author's Real Name</Label>
               <Input
                 id="author_name"
                 {...form.register('author_name')}
                 className="mt-1"
                 placeholder="e.g., Mark Twain, J.K. Rowling, or your real name"
               />
-              <p className="text-xs text-green-600 mt-1">Optional - You may use a pseudonym if you prefer</p>
+              <p className="text-xs text-green-600 mt-1">This will not be made available to the public but is for legal copyright and story ownership only.</p>
             </div>
             
             <div>
