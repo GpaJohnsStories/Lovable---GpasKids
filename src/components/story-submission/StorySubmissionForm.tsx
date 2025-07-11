@@ -123,17 +123,15 @@ const StorySubmissionForm = () => {
     setIsSubmitting(true);
 
     try {
-      // 1. Save story to the database
-      const storyCode = `SUB-${finalPersonalId}`;
-      
+      // 1. Save story to the database with correct category and story code
       const { error: storyError } = await supabase
         .from('stories')
         .insert({
-          story_code: storyCode,
+          story_code: finalPersonalId, // Use personal ID as story code
           title: data.story_title,
           author: data.author_name,
           content: storyContent,
-          category: 'System',
+          category: 'STORY', // Changed from 'System' to 'STORY'
           published: 'N',
           excerpt: data.story_excerpt,
           tagline: data.story_tagline
