@@ -1,8 +1,9 @@
+import { useCallback } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
 export const useStoryCodeLookup = () => {
-  const lookupStoryByCode = async (storyCode: string) => {
+  const lookupStoryByCode = useCallback(async (storyCode: string) => {
     try {
       const { data, error } = await supabase
         .from('stories')
@@ -41,7 +42,7 @@ export const useStoryCodeLookup = () => {
       });
       return null;
     }
-  };
+  }, []);
 
   return {
     lookupStoryByCode

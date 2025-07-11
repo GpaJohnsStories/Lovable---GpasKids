@@ -93,21 +93,40 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
   const { lookupStoryByCode } = useStoryCodeLookup();
   const [storyData, setStoryData] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
+    let isMounted = true;
+    
     const fetchStoryData = async () => {
+      if (!isMounted) return;
+      
       setIsLoading(true);
+      setError(null);
+      
       try {
         const data = await lookupStoryByCode(storyCode);
-        setStoryData(data);
+        if (isMounted) {
+          setStoryData(data);
+          setError(data ? null : `Story ${storyCode} not found`);
+        }
       } catch (error) {
         console.error('Error fetching story data:', error);
+        if (isMounted) {
+          setError('Failed to load story content');
+        }
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
     fetchStoryData();
+    
+    return () => {
+      isMounted = false;
+    };
   }, [storyCode, lookupStoryByCode]);
 
   if (isLoading) {
@@ -118,10 +137,10 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
     );
   }
 
-  if (!storyData) {
+  if (error || !storyData) {
     return (
       <div className="my-6 p-4 border border-orange-300 rounded-lg bg-orange-50">
-        <p className="text-orange-700 text-center">Story code {storyCode} not found.</p>
+        <p className="text-orange-700 text-center">{error || `Story code ${storyCode} not found.`}</p>
       </div>
     );
   }
