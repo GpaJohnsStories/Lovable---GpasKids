@@ -51,10 +51,13 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
     }
     
     if (item.path) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      // Only scroll to top if there's no hash in the path
+      if (!item.path.includes('#')) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
       navigate(item.path);
     }
   };
