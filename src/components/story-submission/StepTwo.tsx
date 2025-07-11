@@ -58,7 +58,7 @@ const StepTwo: React.FC<StepTwoProps> = ({ form, storyContent, setStoryContent }
         </div>
         
         <div className="md:col-span-2">
-          <Label htmlFor="story_excerpt" className="text-blue-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Excerpt of your Story -- a short description to encourage others to read it <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
+          <Label htmlFor="story_excerpt" className="text-blue-800 text-sm font-bold" style={{ fontFamily: 'Georgia, serif' }}>Excerpt of your Story <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
           <Textarea
             id="story_excerpt"
             {...form.register('story_excerpt', { required: 'Story excerpt is required' })}
