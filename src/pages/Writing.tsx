@@ -5,7 +5,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
-import StorySubmissionForm from "@/components/StorySubmissionForm";
+import StorySubmissionForm from "@/components/story-submission/StorySubmissionForm";
 import { supabase } from "@/integrations/supabase/client";
 import copyrightSign from "@/assets/copyright-sign.jpg";
 
