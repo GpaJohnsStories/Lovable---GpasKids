@@ -167,7 +167,7 @@ const About = () => {
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="overflow-hidden rounded-lg border-4 border-amber-600 bg-amber-200 shadow-sm cursor-pointer">  {/* Bronze border with lighter background for Gemini */}
+                    <div className="overflow-hidden rounded-lg border-4 border-amber-600 bg-amber-300 shadow-sm cursor-pointer">  {/* Bronze border with darker bronze background for Gemini */}
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
                         alt="#3 AI Assistant"
