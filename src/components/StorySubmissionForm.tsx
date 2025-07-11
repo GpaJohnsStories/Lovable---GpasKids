@@ -224,6 +224,7 @@ const StorySubmissionForm = () => {
                 className="mt-1"
                 placeholder="email@example.com"
               />
+              <p className="text-xs text-green-600 mt-1" style={{ fontFamily: 'Georgia, serif' }}>An email is only required if you'd rather communicate through email instead of using Comments on this web with your Personal ID. If you provide your email address, it will not be made available to the public.</p>
             </div>
             
             <div>
