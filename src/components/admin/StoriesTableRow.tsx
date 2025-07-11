@@ -254,9 +254,11 @@ const StoriesTableRow = ({
         duration: 60000, // Show for up to 1 minute
       });
 
+      console.log('🎵 Calling generate-story-audio function with storyId:', story.id);
       const { data, error } = await adminClient.functions.invoke('generate-story-audio', {
         body: { storyId: story.id }
       });
+      console.log('🎵 Function response:', { data, error });
 
       if (error) {
         console.error('❌ Audio generation error:', error);
