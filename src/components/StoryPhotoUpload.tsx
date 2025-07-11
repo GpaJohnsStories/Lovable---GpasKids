@@ -33,6 +33,53 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
 }) => {
   const [uploading, setUploading] = useState<{ [key: number]: boolean }>({});
 
+  const resizeImage = (file: File, maxWidth: number = 800, maxHeight: number = 600, quality: number = 0.8): Promise<File> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d')!;
+      const img = new Image();
+      
+      img.onload = () => {
+        // Calculate new dimensions while maintaining aspect ratio
+        let { width, height } = img;
+        
+        if (width > height) {
+          if (width > maxWidth) {
+            height = (height * maxWidth) / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = (width * maxHeight) / height;
+            height = maxHeight;
+          }
+        }
+        
+        // Set canvas size
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Draw and resize image
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Convert canvas to blob
+        canvas.toBlob((blob) => {
+          if (blob) {
+            // Create new file with same name and type
+            const resizedFile = new File([blob], file.name, {
+              type: file.type,
+              lastModified: Date.now(),
+            });
+            resolve(resizedFile);
+          }
+        }, file.type, quality);
+      };
+      
+      // Load the image
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
   const handleFileUpload = async (file: File, photoNumber: 1 | 2 | 3) => {
     if (!file) return;
 
@@ -42,23 +89,27 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
       return;
     }
 
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error('Image size must be less than 5MB');
+    // Validate file size (max 10MB for original, will be reduced after resize)
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('Image size must be less than 10MB');
       return;
     }
 
     setUploading(prev => ({ ...prev, [photoNumber]: true }));
 
     try {
+      // Resize the image to prevent cropping and reduce file size
+      toast.info('Resizing image...');
+      const resizedFile = await resizeImage(file, 800, 600, 0.85);
+      
       // Generate unique filename
-      const fileExt = file.name.split('.').pop();
+      const fileExt = resizedFile.name.split('.').pop();
       const fileName = `story-photos/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
 
-      // Upload to Supabase storage
+      // Upload resized file to Supabase storage
       const { data, error } = await supabase.storage
         .from('story-photos')
-        .upload(fileName, file);
+        .upload(fileName, resizedFile);
 
       if (error) {
         throw error;
@@ -70,7 +121,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
         .getPublicUrl(fileName);
 
       onPhotoUpload(photoNumber, publicUrl);
-      toast.success('Photo uploaded successfully!');
+      toast.success(`Photo resized and uploaded successfully! Original: ${(file.size / 1024 / 1024).toFixed(1)}MB → Resized: ${(resizedFile.size / 1024 / 1024).toFixed(1)}MB`);
     } catch (error) {
       console.error('Upload error:', error);
       toast.error('Failed to upload photo. Please try again.');
@@ -137,7 +188,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                 <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
                 <p className="text-sm text-gray-600 mb-3">
-                  Upload an image or enter a URL
+                  Upload an image (will be automatically resized to prevent cropping)
                 </p>
                 
                 <div className="space-y-3">
