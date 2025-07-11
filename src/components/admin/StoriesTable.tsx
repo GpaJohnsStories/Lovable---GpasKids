@@ -199,7 +199,7 @@ const StoriesTable = ({
                 </Table>
               </div>
               {/* Scrollable content area */}
-              <div className="max-h-[calc(100vh-320px)] overflow-y-auto">
+              <div className="max-h-[calc(100vh-180px)] overflow-y-auto">
                 <Table>
                   <TableBody>
                     {stories?.map((story) => (
