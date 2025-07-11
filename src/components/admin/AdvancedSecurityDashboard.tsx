@@ -220,7 +220,7 @@ const AdvancedSecurityDashboard = () => {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="threats" className="space-y-4">
+        <TabsContent value="threats" className="space-y-2">
           <Card>
             <CardHeader>
               <CardTitle>Active Threats</CardTitle>
@@ -228,7 +228,7 @@ const AdvancedSecurityDashboard = () => {
             </CardHeader>
             <CardContent>
               {securityStatus?.recentThreats?.length > 0 ? (
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {securityStatus.recentThreats.map((threat: any) => (
                     <div key={threat.id} className="flex items-center justify-between p-3 border rounded-lg">
                       <div className="flex-1">
@@ -256,7 +256,7 @@ const AdvancedSecurityDashboard = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-4 text-gray-500">
                   <Shield className="h-12 w-12 mx-auto mb-4 text-green-500" />
                   <p>No active threats detected</p>
                 </div>
