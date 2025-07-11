@@ -160,7 +160,7 @@ const StorySubmissionForm = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="story_title" className="text-blue-800 font-fun text-sm">Story Title *</Label>
+              <Label htmlFor="story_title" className="text-blue-800 font-fun text-sm">Story Title <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
               <Input
                 id="story_title"
                 {...form.register('story_title', { required: 'Story title is required' })}
@@ -170,7 +170,7 @@ const StorySubmissionForm = () => {
             </div>
             
             <div className="md:col-span-2">
-              <Label htmlFor="story_content" className="text-blue-800 font-fun text-sm">Copy and paste your story here *</Label>
+              <Label htmlFor="story_content" className="text-blue-800 font-fun text-sm">Copy and paste your story here <span className="bg-yellow-200 px-2 py-1 rounded font-bold italic">Required</span></Label>
               <Textarea
                 id="story_content"
                 value={storyContent}
