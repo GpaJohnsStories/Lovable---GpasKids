@@ -129,6 +129,11 @@ const StorySubmissionForm = () => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
+      {/* Title */}
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+        Story Submission Release Form
+      </h1>
+      
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         
