@@ -210,15 +210,24 @@ const StorySubmissionForm = () => {
         <div className="bg-green-50 border-2 border-green-300 rounded-lg p-6">
           <h3 className="text-xl font-bold text-green-800 mb-4">Step 3: Author Information</h3>
           
+          <div className="space-y-4 mb-4">
+            <div className="bg-yellow-50 border border-yellow-300 rounded p-4">
+              <p className="text-sm text-yellow-800 leading-relaxed">
+                <strong>Legal Notice:</strong> By submitting this story, you represent and warrant that: (1) you are the original author or have proper authorization to submit this work, (2) the story does not infringe upon any copyright, trademark, or other intellectual property rights, (3) the content is appropriate for children and does not contain harmful, offensive, or inappropriate material, and (4) you grant Gpa's Kids permission to review, edit, and potentially publish your story on our website. All submissions become part of our story collection and may be used for educational and entertainment purposes.
+              </p>
+            </div>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="author_name" className="text-green-800 font-fun text-lg">Author's Full Name *</Label>
+              <Label htmlFor="author_name" className="text-green-800 font-fun text-lg">Author's Name (Real name or pen name)</Label>
               <Input
                 id="author_name"
-                {...form.register('author_name', { required: 'Author name is required' })}
+                {...form.register('author_name')}
                 className="mt-1"
-                placeholder="Full name"
+                placeholder="e.g., Mark Twain, J.K. Rowling, or your real name"
               />
+              <p className="text-xs text-green-600 mt-1">Optional - You may use a pseudonym if you prefer</p>
             </div>
             
             <div>
