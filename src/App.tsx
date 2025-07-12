@@ -14,7 +14,6 @@ import Writing from "./pages/Writing";
 import MakeComment from "./pages/MakeComment";
 import ViewComments from "./pages/ViewComments";
 import CommentDetail from "./pages/CommentDetail";
-import BuddysAdmin from "./pages/BuddysAdmin";
 import SimpleAdmin from "./pages/SimpleAdmin";
 import VoicePreview from "./pages/VoicePreview";
 import ResetPassword from "./pages/ResetPassword";
@@ -61,9 +60,6 @@ const App = () => (
           <Route path="/comment/:id" element={<CommentDetail />} />
           <Route path="/author/:authorName" element={<AuthorBio />} />
           <Route path="/admin" element={<SimpleAdmin />} />
-          <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
-          <Route path="/simple-admin" element={<SimpleAdmin />} />
-          <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/writing" element={<Writing />} />

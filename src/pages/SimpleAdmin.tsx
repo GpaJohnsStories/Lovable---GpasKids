@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import SimpleAdminLogin from "@/components/admin/SimpleAdminLogin";
 import AdminDashboard from "@/components/admin/AdminDashboard";
+import { useAdminSession } from "@/hooks/useAdminSession";
+import AdminStoryForm from "@/components/admin/AdminStoryForm";
 
 const SimpleAdmin = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { showStoryForm, editingStory, handleCreateStory, handleEditStory, handleStoryFormSave, handleStoryFormCancel } = useAdminSession();
   
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
@@ -15,16 +18,6 @@ const SimpleAdmin = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     navigate('/');
-  };
-
-  const handleCreateStory = () => {
-    // Navigate to admin dashboard with story creation
-    navigate('/buddys_admin/dashboard');
-  };
-
-  const handleEditStory = (story: any) => {
-    // Navigate to admin dashboard with story editing
-    navigate('/buddys_admin/dashboard');
   };
 
   return (
@@ -43,7 +36,16 @@ const SimpleAdmin = () => {
               Logout
             </button>
           </div>
-          <AdminDashboard onCreateStory={handleCreateStory} onEditStory={handleEditStory} />
+          
+          {showStoryForm ? (
+            <AdminStoryForm 
+              editingStory={editingStory}
+              onSave={handleStoryFormSave}
+              onCancel={handleStoryFormCancel}
+            />
+          ) : (
+            <AdminDashboard onCreateStory={handleCreateStory} onEditStory={handleEditStory} />
+          )}
         </div>
       )}
     </div>

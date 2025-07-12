@@ -30,12 +30,10 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
       <div className="my-6 flex gap-4">
         <CreateStoryCard onCreateStory={onCreateStory} />
         <div className="flex-1 space-y-2">
-          <Link to="/buddys_admin/voice-preview">
-            <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center gap-2">
-              <Volume2 className="h-4 w-4" />
-              Voice Preview & Testing
-            </Button>
-          </Link>
+          <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center gap-2">
+            <Volume2 className="h-4 w-4" />
+            Voice Preview & Testing
+          </Button>
           <Button 
             onClick={() => setShowEmergencyTools(!showEmergencyTools)}
             variant="outline"
