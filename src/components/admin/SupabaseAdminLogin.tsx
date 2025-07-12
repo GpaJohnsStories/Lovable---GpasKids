@@ -13,6 +13,7 @@ const SupabaseAdminLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const [showResetForm, setShowResetForm] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
   const { login } = useSupabaseAdminAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -55,6 +56,32 @@ const SupabaseAdminLogin = () => {
     }
   };
 
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/buddys_admin`
+        }
+      });
+
+      if (error) {
+        toast.error(error.message);
+      } else if (data.user) {
+        toast.success("Account created! Please check your email to confirm your account, then return here to sign in.");
+        setIsSignUp(false);
+      }
+    } catch (error: any) {
+      toast.error(`Signup error: ${error.message || 'Unknown error occurred'}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim()) {
@@ -87,11 +114,13 @@ const SupabaseAdminLogin = () => {
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-black text-center">
             <BookOpen className="h-8 w-8 mx-auto mb-2" />
-            {showResetForm ? "Reset Password" : "Buddy's Admin Login"}
+            {showResetForm ? "Reset Password" : isSignUp ? "Create Admin Account" : "Buddy's Admin Login"}
           </CardTitle>
           <p className="text-sm text-gray-600 text-center">
             {showResetForm 
               ? "Enter your email to receive a password reset link" 
+              : isSignUp
+              ? "Create your Supabase Auth account for admin access"
               : "Sign in with your admin credentials"
             }
           </p>
@@ -131,7 +160,7 @@ const SupabaseAdminLogin = () => {
             </form>
           ) : (
             <>
-              <form onSubmit={handleLogin} className="space-y-4">
+              <form onSubmit={isSignUp ? handleSignUp : handleLogin} className="space-y-4">
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                   <Input
@@ -159,20 +188,29 @@ const SupabaseAdminLogin = () => {
                   className="w-full cozy-button text-lg py-3"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Signing in..." : "Sign In"}
+                  {isLoading ? (isSignUp ? "Creating Account..." : "Signing in...") : (isSignUp ? "Create Account" : "Sign In")}
                 </Button>
               </form>
               <div className="mt-4 text-center">
                 <div className="space-y-2">
+                  {!isSignUp && (
+                    <button
+                      type="button"
+                      onClick={() => setShowResetForm(true)}
+                      className="text-sm text-blue-600 hover:text-blue-800 underline block"
+                    >
+                      Forgot your password?
+                    </button>
+                  )}
                   <button
                     type="button"
-                    onClick={() => setShowResetForm(true)}
-                    className="text-sm text-blue-600 hover:text-blue-800 underline block"
+                    onClick={() => setIsSignUp(!isSignUp)}
+                    className="text-sm text-green-600 hover:text-green-800 underline block"
                   >
-                    Forgot your password?
+                    {isSignUp ? "Already have an account? Sign in" : "Need to create an account? Sign up"}
                   </button>
                   <div className="text-xs text-gray-500 mt-2 p-2 bg-blue-50 rounded border border-blue-200">
-                    <strong>Info:</strong> Admin login uses Supabase Auth with enhanced WebAuthn security.
+                    <strong>Note:</strong> {isSignUp ? "After creating account, you'll need admin promotion." : "Admin login uses Supabase Auth with enhanced WebAuthn security."}
                   </div>
                 </div>
               </div>
