@@ -1,42 +1,182 @@
-import { useState } from 'react';
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Key, CheckCircle, AlertCircle } from "lucide-react";
-import { useSupabaseAdminAuth } from "./SupabaseAdminAuth";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "sonner";
+import { Shield, ShieldCheck, AlertTriangle, Key, CheckCircle, AlertCircle } from "lucide-react";
+import type { User } from '@supabase/supabase-js';
 
 const WebAuthnManager = () => {
-  const { user, webauthnEnabled, enableWebAuthn, authenticateWithWebAuthn } = useSupabaseAdminAuth();
-  const [isEnabling, setIsEnabling] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [webauthnEnabled, setWebauthnEnabled] = useState(false);
+  const [isSupported, setIsSupported] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
+  useEffect(() => {
+    setIsSupported(!!window.PublicKeyCredential);
+    
+    // Get current user and WebAuthn status
+    const getCurrentUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+      
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('webauthn_enabled')
+          .eq('id', user.id)
+          .maybeSingle();
+        
+        setWebauthnEnabled(profile?.webauthn_enabled || false);
+      }
+    };
+    
+    getCurrentUser();
+  }, []);
+
   const handleEnableWebAuthn = async () => {
-    setIsEnabling(true);
+    if (!user) {
+      toast.error('Must be logged in to enable WebAuthn');
+      return;
+    }
+
+    setIsRegistering(true);
     try {
-      await enableWebAuthn();
-    } catch (error) {
+      // Check if WebAuthn is supported
+      if (!window.PublicKeyCredential) {
+        toast.error('WebAuthn is not supported on this device');
+        return;
+      }
+
+      // Generate credential creation options
+      const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
+        challenge: new TextEncoder().encode(`challenge-${Date.now()}`),
+        rp: {
+          name: "Grandpa's Kids Stories Admin",
+          id: window.location.hostname,
+        },
+        user: {
+          id: new TextEncoder().encode(user.id),
+          name: user.email!,
+          displayName: user.email!,
+        },
+        pubKeyCredParams: [
+          { alg: -7, type: "public-key" }, // ES256
+          { alg: -257, type: "public-key" }, // RS256
+        ],
+        authenticatorSelection: {
+          authenticatorAttachment: "platform",
+          userVerification: "required",
+        },
+        timeout: 60000,
+        attestation: "direct"
+      };
+
+      // Create the credential
+      const credential = await navigator.credentials.create({
+        publicKey: publicKeyCredentialCreationOptions
+      }) as PublicKeyCredential;
+
+      if (!credential) {
+        throw new Error('Failed to create credential');
+      }
+
+      // Store the credential in the user's profile
+      const credentialData = {
+        id: credential.id,
+        rawId: Array.from(new Uint8Array(credential.rawId)),
+        type: credential.type,
+        response: {
+          clientDataJSON: Array.from(new Uint8Array(credential.response.clientDataJSON)),
+          attestationObject: Array.from(new Uint8Array((credential.response as AuthenticatorAttestationResponse).attestationObject))
+        }
+      };
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          webauthn_enabled: true,
+          webauthn_credentials: [credentialData]
+        })
+        .eq('id', user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      setWebauthnEnabled(true);
+      toast.success('WebAuthn enabled successfully!');
+    } catch (error: any) {
       console.error('Failed to enable WebAuthn:', error);
+      toast.error('Failed to enable WebAuthn: ' + error.message);
     } finally {
-      setIsEnabling(false);
+      setIsRegistering(false);
     }
   };
 
-  const handleTestWebAuthn = async () => {
+  const handleTestAuthentication = async () => {
+    if (!user || !webauthnEnabled) {
+      return;
+    }
+
     setIsAuthenticating(true);
     try {
-      const success = await authenticateWithWebAuthn();
-      if (success) {
-        toast.success('WebAuthn test successful!');
-      } else {
-        toast.error('WebAuthn test failed');
+      // Get stored credentials
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('webauthn_credentials')
+        .eq('id', user.id)
+        .single();
+
+      const credentials = profile?.webauthn_credentials;
+      if (!credentials || !Array.isArray(credentials) || credentials.length === 0) {
+        toast.error('No WebAuthn credentials found');
+        return;
       }
-    } catch (error) {
-      console.error('WebAuthn test failed:', error);
+
+      // Generate assertion options
+      const publicKeyCredentialRequestOptions: PublicKeyCredentialRequestOptions = {
+        challenge: new TextEncoder().encode(`auth-challenge-${Date.now()}`),
+        allowCredentials: credentials.map((cred: any) => ({
+          id: new Uint8Array(cred.rawId),
+          type: 'public-key'
+        })),
+        timeout: 60000,
+        userVerification: 'required'
+      };
+
+      // Get the assertion
+      const assertion = await navigator.credentials.get({
+        publicKey: publicKeyCredentialRequestOptions
+      }) as PublicKeyCredential;
+
+      if (!assertion) {
+        toast.error('WebAuthn authentication failed');
+        return;
+      }
+
+      toast.success('WebAuthn test successful!');
+    } catch (error: any) {
+      console.error('WebAuthn authentication failed:', error);
+      toast.error('WebAuthn authentication failed');
     } finally {
       setIsAuthenticating(false);
     }
   };
+
+  if (!isSupported) {
+    return (
+      <Alert className="border-amber-200 bg-amber-50">
+        <AlertTriangle className="h-4 w-4" />
+        <AlertDescription>
+          WebAuthn is not supported on this browser. Please use a modern browser for enhanced security features.
+        </AlertDescription>
+      </Alert>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -71,14 +211,14 @@ const WebAuthnManager = () => {
             {!webauthnEnabled ? (
               <Button 
                 onClick={handleEnableWebAuthn}
-                disabled={isEnabling || !user}
+                disabled={isRegistering || !user}
                 size="sm"
               >
-                {isEnabling ? 'Setting up...' : 'Enable WebAuthn'}
+                {isRegistering ? 'Setting up...' : 'Enable WebAuthn'}
               </Button>
             ) : (
               <Button 
-                onClick={handleTestWebAuthn}
+                onClick={handleTestAuthentication}
                 disabled={isAuthenticating}
                 variant="outline"
                 size="sm"
@@ -95,7 +235,7 @@ const WebAuthnManager = () => {
                 <span className="font-medium">Enhanced Security Active</span>
               </div>
               <p className="mt-1 text-green-700">
-                Your admin account is protected with WebAuthn. Future logins may require your security key or biometric verification.
+                Your admin account is protected with WebAuthn. Future logins will require your security key or biometric verification.
               </p>
             </div>
           )}
