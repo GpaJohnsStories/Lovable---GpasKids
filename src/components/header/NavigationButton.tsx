@@ -1,5 +1,5 @@
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronDown, LucideIcon } from "lucide-react";
 
@@ -30,7 +30,6 @@ interface NavigationButtonProps {
 }
 
 const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover, isHovered }: NavigationButtonProps) => {
-  const navigate = useNavigate();
 
   const buttonClasses = cn(
     item.bgColor, item.hoverColor, item.shadowColor, item.hoverShadow,
@@ -50,15 +49,12 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
       return;
     }
     
-    if (item.path) {
-      // Only scroll to top if there's no hash in the path
-      if (!item.path.includes('#')) {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      }
-      navigate(item.path);
+    // Only scroll to top if there's no hash in the path
+    if (item.path && !item.path.includes('#')) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -114,12 +110,16 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
       onMouseEnter={() => onHover?.(item.name)}
       onMouseLeave={() => onHover?.(null)}
     >
-      <div className={buttonClasses} onClick={handleClick}>
+      <Link 
+        to={item.path} 
+        className={buttonClasses} 
+        onClick={handleClick}
+      >
         {item.icon && <item.icon size={16} />}
         <span className={item.icon ? '' : 'text-center w-full'}>
           {item.name}
         </span>
-      </div>
+      </Link>
       {item.description && isHovered && (
         <div className="nav-bubble opacity-100 visible">
           {item.description}
