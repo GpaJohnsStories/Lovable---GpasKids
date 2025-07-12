@@ -61,10 +61,41 @@ const AdminAuthGuard = () => {
   useEffect(() => {
     console.log('🔐 Admin guard starting...');
     
-    // Simple check - just set loading to false and show login
-    setIsLoading(false);
-    setShowLogin(true);
-    console.log('🔐 Admin guard ready - showing login');
+    // Check if user is already logged in
+    const checkSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session) {
+          console.log('🔐 Found existing session, checking admin role...');
+          
+          // Check if user is admin
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .maybeSingle();
+          
+          if (profile?.role === 'admin') {
+            console.log('✅ User is admin, allowing access');
+            setShowLogin(false);
+          } else {
+            console.log('❌ User is not admin');
+            setShowLogin(true);
+          }
+        } else {
+          console.log('❌ No session found');
+          setShowLogin(true);
+        }
+      } catch (error) {
+        console.error('❌ Session check error:', error);
+        setShowLogin(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    checkSession();
   }, []);
 
   const handleLoginSuccess = () => {
