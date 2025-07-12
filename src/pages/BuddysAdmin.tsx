@@ -54,51 +54,33 @@ const BuddysAdminContent = () => {
   );
 };
 
-// FORCE AUTHENTICATION - No bypassing allowed
+// Simple but effective authentication guard
 const AdminAuthGuard = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  console.log('🔐 AdminAuthGuard: Component mounted');
+  console.log('🔐 AdminAuthGuard: Current state:', { isLoading, isAuthenticated, isAdmin });
 
   useEffect(() => {
-    console.log('🔄 Starting FORCED auth check...');
+    console.log('🔄 Starting auth check...');
     
-    // FORCE logout first to ensure clean state
-    const forceAuthCheck = async () => {
-      console.log('🚪 Forcing logout to ensure clean auth state...');
-      await supabase.auth.signOut();
-      
-      // Wait a moment for logout to complete
-      setTimeout(() => {
-        console.log('✅ Logout complete, showing login form');
-        setIsLoading(false);
-        setIsAuthenticated(false);
-        setIsAdmin(false);
-        setUser(null);
-      }, 500);
-    };
-
-    forceAuthCheck();
-
-    // Set up auth state listener for future logins
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('🔄 Auth state change:', event, session?.user?.email);
+    const checkAuthAndAdmin = async () => {
+      try {
+        // Check current session WITHOUT forcing logout
+        const { data: { session } } = await supabase.auth.getSession();
+        console.log('📋 Session check:', session?.user?.email || 'No session');
         
         if (session?.user) {
-          console.log('👤 User logged in, checking admin role...');
-          
-          // Check admin role
+          // Check if user is admin
           const { data: profile } = await supabase
             .from('profiles')
             .select('role')
             .eq('id', session.user.id)
             .maybeSingle();
           
-          console.log('📋 Profile check result:', profile);
+          console.log('👤 Profile check:', profile);
           
           if (profile?.role === 'admin') {
             console.log('✅ Admin access granted');
@@ -106,26 +88,57 @@ const AdminAuthGuard = () => {
             setIsAuthenticated(true);
             setIsAdmin(true);
           } else {
-            console.log('❌ Not admin, forcing logout');
-            await supabase.auth.signOut();
+            console.log('❌ Not admin - require login');
             setIsAuthenticated(false);
             setIsAdmin(false);
-            setUser(null);
           }
         } else {
-          console.log('❌ No user session');
+          console.log('❌ No session - require login');
+          setIsAuthenticated(false);
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error('💥 Auth check error:', error);
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuthAndAdmin();
+
+    // Set up auth state listener for future changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('🔄 Auth state change:', event);
+        
+        if (session?.user) {
+          // Check admin role
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .maybeSingle();
+          
+          if (profile?.role === 'admin') {
+            setUser(session.user);
+            setIsAuthenticated(true);
+            setIsAdmin(true);
+          } else {
+            setUser(null);
+            setIsAuthenticated(false);
+            setIsAdmin(false);
+          }
+        } else {
           setUser(null);
           setIsAuthenticated(false);
           setIsAdmin(false);
         }
-        setIsLoading(false);
       }
     );
 
-    return () => {
-      console.log('🧹 Cleaning up auth subscription');
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleLoginSuccess = () => {
