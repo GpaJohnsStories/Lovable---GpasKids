@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Lock, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -36,7 +36,7 @@ const ResetPassword = () => {
         console.log('🔐 Setting session with recovery tokens...');
         
         try {
-          const { data, error } = await adminClient.auth.setSession({
+          const { data, error } = await supabase.auth.setSession({
             access_token: accessToken,
             refresh_token: refreshToken
           });
@@ -86,7 +86,7 @@ const ResetPassword = () => {
     setIsLoading(true);
 
     try {
-      const { error } = await adminClient.auth.updateUser({
+      const { error } = await supabase.auth.updateUser({
         password: password
       });
 
