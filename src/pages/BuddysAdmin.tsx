@@ -68,9 +68,12 @@ const AdminAuthGuard = () => {
         await supabase.auth.signOut();
         console.log('🚫 Forced signout of any existing session');
         
-        // Clear everything 
-        localStorage.clear();
-        sessionStorage.clear();
+        // Clear only Supabase-related storage items instead of everything
+        Object.keys(localStorage).forEach(key => {
+          if (key.startsWith('sb-') || key.includes('supabase')) {
+            localStorage.removeItem(key);
+          }
+        });
         
         // Always show login for admin access
         setShowLogin(true);
