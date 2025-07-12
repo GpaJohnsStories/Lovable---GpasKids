@@ -47,7 +47,25 @@ const SimpleAdmin = () => {
                     Logout
                   </button>
                 </div>
-                <AdminDashboard onCreateStory={handleCreateStory} onEditStory={handleEditStory} />
+                {/* Render AdminDashboard content directly without AdminLayout wrapper */}
+                <div className="my-6 flex gap-4">
+                  <div className="w-1/3">
+                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                      <h2 className="text-xl font-bold mb-4 text-blue-600">Create New Story</h2>
+                      <button 
+                        onClick={handleCreateStory}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+                      >
+                        Create Story
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-2">
+                    <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded flex items-center justify-center gap-2">
+                      Voice Preview & Testing
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           )}
