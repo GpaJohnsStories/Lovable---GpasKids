@@ -199,6 +199,48 @@ export type Database = {
         }
         Relationships: []
       }
+      deployed_content: {
+        Row: {
+          audio_url: string | null
+          author: string | null
+          content: string | null
+          created_at: string
+          deployed_at: string
+          id: string
+          is_active: boolean
+          photo_url: string | null
+          story_code: string
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          audio_url?: string | null
+          author?: string | null
+          content?: string | null
+          created_at?: string
+          deployed_at?: string
+          id?: string
+          is_active?: boolean
+          photo_url?: string | null
+          story_code: string
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          audio_url?: string | null
+          author?: string | null
+          content?: string | null
+          created_at?: string
+          deployed_at?: string
+          id?: string
+          is_active?: boolean
+          photo_url?: string | null
+          story_code?: string
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
