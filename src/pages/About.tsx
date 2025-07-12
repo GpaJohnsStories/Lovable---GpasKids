@@ -43,14 +43,23 @@ const About = () => {
         
         <main className="container mx-auto px-4 pt-8 pb-12">
           <div className="max-w-6xl mx-auto border-4 border-blue-500 rounded-lg p-6 relative" style={{backgroundColor: '#ADD8E6'}}>
-            {/* About Grandpa John Section */}
-            <h1 className="text-4xl font-bold text-amber-800 mb-6" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-              About Grandpa John
-            </h1>
+            {/* Title and Audio Controls on same line */}
+            <div className="flex items-center justify-between mb-6">
+              {/* Audio controls for this section */}
+              <div className="flex-shrink-0">
+                <DeployedContent 
+                  storyCode="SYS-AGJ"
+                  audioOnly={true}
+                />
+              </div>
+              <h1 className="text-4xl font-bold text-amber-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                About Grandpa John
+              </h1>
+            </div>
             
             <DeployedContent 
               storyCode="SYS-AGJ"
-              includeAudio={true}
+              includeAudio={false}
               className="text-lg text-black leading-relaxed font-normal"
               fallbackContent={
                 <div>
@@ -131,13 +140,23 @@ const About = () => {
 
           {/* About Buddy Section */}
           <div id="buddy" className="max-w-6xl mx-auto border-4 border-yellow-400 rounded-lg p-6 mt-8 bg-[hsl(var(--grass-green))] relative">
-            <h1 className="text-4xl font-bold text-amber-800 mb-6 text-right" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-              About Buddy
-            </h1>
+            {/* Title and Audio Controls on same line */}
+            <div className="flex items-center justify-between mb-6">
+              {/* Audio controls for this section */}
+              <div className="flex-shrink-0">
+                <DeployedContent 
+                  storyCode="SYS-BDY"
+                  audioOnly={true}
+                />
+              </div>
+              <h1 className="text-4xl font-bold text-amber-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                About Buddy
+              </h1>
+            </div>
             
             <DeployedContent 
               storyCode="SYS-BDY"
-              includeAudio={true}
+              includeAudio={false}
               className="text-lg text-black leading-relaxed font-normal"
               fallbackContent={
                 <div>

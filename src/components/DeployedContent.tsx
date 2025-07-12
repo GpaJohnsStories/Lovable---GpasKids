@@ -18,6 +18,8 @@ interface DeployedContentProps {
   storyCode: string;
   fallbackContent?: React.ReactNode;
   includeAudio?: boolean;
+  audioOnly?: boolean;
+  showInlineAudio?: boolean;
   className?: string;
 }
 
@@ -25,6 +27,8 @@ export const DeployedContent = ({
   storyCode, 
   fallbackContent, 
   includeAudio = false,
+  audioOnly = false,
+  showInlineAudio = false,
   className = "" 
 }: DeployedContentProps) => {
   const [content, setContent] = useState<DeployedContentData | null>(null);
@@ -83,6 +87,24 @@ export const DeployedContent = ({
     );
   }
 
+  // If audioOnly mode, only return audio controls
+  if (audioOnly && content.audio_url) {
+    return (
+      <div className="flex-shrink-0">
+        <StoryCodeAudioControls 
+          audioUrl={content.audio_url}
+          title={content.title || ''}
+          author={content.author || ''}
+        />
+      </div>
+    );
+  }
+
+  // If audioOnly but no audio, return nothing
+  if (audioOnly) {
+    return null;
+  }
+
   return (
     <div className={className}>
       {/* Audio controls at the top if requested and available */}
@@ -97,7 +119,7 @@ export const DeployedContent = ({
       )}
 
       {/* Photo if available - positioned to float left */}
-      {content.photo_url && (
+      {!audioOnly && content.photo_url && (
         <img 
           src={content.photo_url} 
           alt={content.title || 'Story image'}
@@ -106,7 +128,7 @@ export const DeployedContent = ({
       )}
       
       {/* Content */}
-      {content.content && (
+      {!audioOnly && content.content && (
         <div 
           className="deployed-story-content"
           style={{ fontFamily: 'Georgia, serif' }}
