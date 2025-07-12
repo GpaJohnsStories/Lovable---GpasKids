@@ -61,10 +61,13 @@ const Privacy = () => {
             bottom: '8px',
             right: '12px',
             fontSize: '12px',
-            color: '#666',
+            color: '#333',
             fontFamily: 'monospace',
-            fontWeight: 'normal',
-            opacity: 0.7
+            fontWeight: 'bold',
+            opacity: 0.8,
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            padding: '2px 4px',
+            borderRadius: '3px'
           }}>
             SYS-P2Y
           </div>
