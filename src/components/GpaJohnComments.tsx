@@ -56,11 +56,6 @@ const GpaJohnComments = () => {
           <div className="flex flex-col items-center text-center">
             <h2 className="text-2xl font-bold text-white font-fun">Latest Announcements from Grandpa John</h2>
           </div>
-          
-          {/* Web-text code in bottom right corner */}
-          <div className="absolute bottom-2 right-2 text-xs font-mono text-blue-200 bg-blue-900/50 px-2 py-1 rounded">
-            SYS-ANN
-          </div>
         </div>
       </div>
 
