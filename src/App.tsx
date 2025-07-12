@@ -60,6 +60,7 @@ const App = () => (
           <Route path="/view-comments" element={<ViewComments />} />
           <Route path="/comment/:id" element={<CommentDetail />} />
           <Route path="/author/:authorName" element={<AuthorBio />} />
+          <Route path="/admin" element={<SimpleAdmin />} />
           <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
           <Route path="/simple-admin" element={<SimpleAdmin />} />
           <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
