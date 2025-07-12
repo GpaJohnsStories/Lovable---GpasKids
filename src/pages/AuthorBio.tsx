@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import AuthorStoriesTable from "@/components/AuthorStoriesTable";
 
 const AuthorBio = () => {
   const { authorName } = useParams();
+  const navigate = useNavigate();
 
   const { data: authorBio, isLoading: bioLoading } = useQuery({
     queryKey: ['author-bio', authorName],
@@ -73,12 +74,12 @@ const AuthorBio = () => {
 
   const handleEditStory = (story: any) => {
     // Navigate to the story page for public viewing
-    window.location.href = `/story/${story.id}`;
+    navigate(`/story/${story.id}`);
   };
 
   const handleViewAuthorBio = (authorName: string) => {
     // Navigate to the author bio page
-    window.location.href = `/author/${encodeURIComponent(authorName)}`;
+    navigate(`/author/${encodeURIComponent(authorName)}`);
   };
 
   return (

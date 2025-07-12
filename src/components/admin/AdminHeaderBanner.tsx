@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe } from "lucide-react";
 import { toast } from "sonner";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 interface AdminNavButton {
@@ -20,11 +20,12 @@ interface AdminNavButton {
 
 const AdminHeaderBanner = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const handleLogout = async () => {
-    // Simple redirect to home page since we're not using authentication
-    window.location.href = '/';
+    // Use React Router navigation instead of window.location.href
+    navigate('/');
     toast.success("Redirected to home page");
   };
 

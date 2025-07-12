@@ -1,4 +1,5 @@
 
+import { useNavigate } from "react-router-dom";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import StoriesTable from "@/components/admin/StoriesTable";
 import WelcomeHeader from "@/components/WelcomeHeader";
@@ -7,6 +8,7 @@ import ContentProtection from "@/components/ContentProtection";
 import LibraryInstructions from "@/components/LibraryInstructions";
 
 const Library = () => {
+  const navigate = useNavigate();
   const handleEditStory = (story: any) => {
     // For now, just log the story - you can implement editing later
     console.log('Edit story:', story);
@@ -14,7 +16,7 @@ const Library = () => {
 
   const handleViewAuthorBio = (authorName: string) => {
     // Navigate to the public author bio page
-    window.location.href = `/author/${encodeURIComponent(authorName)}`;
+    navigate(`/author/${encodeURIComponent(authorName)}`);
   };
 
   return (
