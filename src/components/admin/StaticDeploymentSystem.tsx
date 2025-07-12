@@ -65,6 +65,19 @@ const PAGE_MAPPINGS: PageMapping[] = [
     placeholderType: 'content',
     description: 'Help Grandpa John content'
   },
+  // Home Page Sections
+  {
+    storyCode: 'SYS-WEL',
+    pagePath: 'src/components/WelcomeText.tsx',
+    placeholderType: 'content',
+    description: 'Homepage welcome message and intro text'
+  },
+  {
+    storyCode: 'SYS-ANN',
+    pagePath: 'src/components/GpaJohnComments.tsx',
+    placeholderType: 'content',
+    description: 'Announcements section header on homepage'
+  }
   // Add your new SYS- code mappings here:
   // {
   //   storyCode: 'SYS-ABC',

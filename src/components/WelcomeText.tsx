@@ -20,7 +20,7 @@ const WelcomeText = () => {
     <TooltipProvider>
       <div className="w-full py-6 mt-0">
         <div className="container mx-auto px-4">
-          <div className="rounded-3xl p-6 md:p-8 shadow-lg border-2 border-yellow-400 font-fun mx-2" style={{backgroundColor: '#ADD8E6'}}>
+          <div className="rounded-3xl p-6 md:p-8 shadow-lg border-2 border-yellow-400 font-fun mx-2 relative" style={{backgroundColor: '#ADD8E6'}}>
             <div className="flex flex-col md:flex-row items-start gap-6">
               <div className="relative flex-shrink-0">
                 <Tooltip>
@@ -39,6 +39,7 @@ const WelcomeText = () => {
                 </Tooltip>
               </div>
               <div className="flex flex-col justify-center text-center md:text-left flex-1">
+                {/* STORY_CODE:SYS-WEL:CONTENT */}
                 <h1 className="text-3xl md:text-4xl font-bold text-blue-900 leading-relaxed mb-6">
                   Hi there!
                 </h1>
@@ -63,7 +64,13 @@ const WelcomeText = () => {
                     {' '}or the Privacy button in the menu.
                   </p>
                 </div>
+                {/* END STORY_CODE:SYS-WEL:CONTENT */}
               </div>
+            </div>
+            
+            {/* Web-text code in bottom right corner */}
+            <div className="absolute bottom-4 right-4 text-sm font-mono text-blue-700 bg-white/70 px-2 py-1 rounded">
+              SYS-WEL
             </div>
           </div>
         </div>

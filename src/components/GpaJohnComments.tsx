@@ -55,9 +55,16 @@ const GpaJohnComments = () => {
     <section className="py-8">
       {/* Header Banner - Made shorter and same width as content below */}
       <div className="container mx-auto px-4">
-        <div className="bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 rounded-xl p-3 shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)] border border-blue-700 mb-4">
+        <div className="bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 rounded-xl p-3 shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)] border border-blue-700 mb-4 relative">
           <div className="flex flex-col items-center text-center">
+            {/* STORY_CODE:SYS-ANN:CONTENT */}
             <h2 className="text-2xl font-bold text-white font-fun">Latest Announcements from Grandpa John</h2>
+            {/* END STORY_CODE:SYS-ANN:CONTENT */}
+          </div>
+          
+          {/* Web-text code in bottom right corner */}
+          <div className="absolute bottom-2 right-2 text-xs font-mono text-blue-200 bg-blue-900/50 px-2 py-1 rounded">
+            SYS-ANN
           </div>
         </div>
       </div>
