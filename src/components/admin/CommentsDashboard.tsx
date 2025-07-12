@@ -5,10 +5,16 @@ import CommentsTable from "./CommentsTable";
 import { useQuery } from "@tanstack/react-query";
 import { adminClient } from "@/integrations/supabase/clients";
 import { Database } from "@/integrations/supabase/types";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import CreateAdminComment from "./CreateAdminComment";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
 const CommentsDashboard = () => {
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  
   const { data: comments } = useQuery<Comment[]>({
     queryKey: ["admin_comments"],
     queryFn: async () => {
@@ -32,8 +38,23 @@ const CommentsDashboard = () => {
           <h2 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             Manage Comments
           </h2>
+          <Button 
+            onClick={() => setShowCreateForm(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Create New Comment
+          </Button>
         </div>
       </div>
+      
+      {showCreateForm && (
+        <CreateAdminComment 
+          isOpen={showCreateForm}
+          onClose={() => setShowCreateForm(false)}
+        />
+      )}
+      
       <CommentsTable />
     </AdminLayout>
   );
