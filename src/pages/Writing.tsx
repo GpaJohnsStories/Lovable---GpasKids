@@ -97,14 +97,18 @@ const Writing = () => {
               )}
             </div>
             
-            {/* Story Code Identifier */}
-            <div className="absolute bottom-2 right-2">
-              <span 
-                className="text-black text-xs"
-                style={{ fontFamily: 'Georgia, serif', fontSize: '10px' }}
-              >
-                SYS-CPR
-              </span>
+            {/* Web-text code indicator */}
+            <div style={{ 
+              position: 'absolute',
+              bottom: '8px',
+              right: '12px',
+              fontSize: '12px',
+              color: '#666',
+              fontFamily: 'monospace',
+              fontWeight: 'normal',
+              opacity: 0.7
+            }}>
+              SYS-CPR
             </div>
           </div>
 
@@ -128,14 +132,18 @@ const Writing = () => {
                 </p>
               )}
               
-              {/* Story Code Identifier */}
-              <div className="absolute bottom-2 right-2">
-                <span 
-                  className="text-black text-xs"
-                  style={{ fontFamily: 'Georgia, serif', fontSize: '10px' }}
-                >
-                  SYS-WAS
-                </span>
+              {/* Web-text code indicator */}
+              <div style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                right: '12px',
+                fontSize: '12px',
+                color: '#666',
+                fontFamily: 'monospace',
+                fontWeight: 'normal',
+                opacity: 0.7
+              }}>
+                SYS-WAS
               </div>
             </div>
           </div>

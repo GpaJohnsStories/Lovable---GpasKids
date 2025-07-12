@@ -53,12 +53,23 @@ const CommentsRules = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto relative">
       <div 
         dangerouslySetInnerHTML={{ __html: content }}
       />
-      <div className="text-right text-xs text-orange-600 mt-2">
-        Web-text code: SYS-CCR
+      
+      {/* Web-text code indicator */}
+      <div style={{ 
+        position: 'absolute',
+        bottom: '8px',
+        right: '12px',
+        fontSize: '12px',
+        color: '#666',
+        fontFamily: 'monospace',
+        fontWeight: 'normal',
+        opacity: 0.7
+      }}>
+        SYS-CCR
       </div>
     </div>
   );
