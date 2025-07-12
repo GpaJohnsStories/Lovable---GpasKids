@@ -45,22 +45,25 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
 
       console.log('✅ Email login successful, checking admin role...');
 
-      // Check if user is admin
+      // Check if user is admin and get WebAuthn status
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('role, webauthn_enabled')
         .eq('id', authData.user.id)
-        .maybeSingle();
+        .single();
 
       if (profileError) {
         console.error('❌ Profile check error:', profileError);
         toast.error('Failed to verify admin access');
+        // Sign out on error to prevent stuck state
+        await supabase.auth.signOut();
         return;
       }
 
       if (!profile || profile.role !== 'admin') {
         console.log('❌ User is not admin:', profile?.role);
         toast.error('Access denied - admin role required');
+        // Sign out non-admin users immediately
         await supabase.auth.signOut();
         return;
       }
@@ -74,11 +77,18 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
       } else {
         console.log('✅ No WebAuthn required, login complete');
         toast.success('Login successful!');
+        // Let the auth state change handle the redirect
         onSuccess();
       }
     } catch (error: any) {
       console.error('💥 Login exception:', error);
       toast.error('Login failed: ' + error.message);
+      // Ensure we're logged out on any error
+      try {
+        await supabase.auth.signOut();
+      } catch (signOutError) {
+        console.error('❌ Sign out error:', signOutError);
+      }
     } finally {
       setIsLoading(false);
     }

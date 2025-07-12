@@ -53,90 +53,153 @@ const BuddysAdminContent = () => {
   );
 };
 
-// SIMPLIFIED authentication - remove complex state management
+// Robust authentication guard with race condition prevention
 const AdminAuthGuard = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [showLogin, setShowLogin] = useState(true);
-  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log('🔐 Admin guard starting...');
-    
-    // Check session and listen for changes
-    const checkAuth = async () => {
+    let mounted = true;
+    let checkInProgress = false;
+
+    console.log('🔐 Admin guard initializing...');
+
+    const verifyAdminAccess = async (session: any): Promise<boolean> => {
+      if (!session?.user) {
+        console.log('❌ No user in session');
+        return false;
+      }
+
       try {
-        const { data: { session } } = await supabase.auth.getSession();
-        console.log('🔐 Session check:', !!session);
+        console.log('🔐 Verifying admin access for:', session.user.email);
         
-        if (session?.user) {
-          // Check if user is admin
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', session.user.id)
-            .maybeSingle();
-          
-          console.log('🔐 Profile check:', profile);
-          
-          if (profile?.role === 'admin') {
-            console.log('✅ Admin access granted');
-            setUser(session.user);
-            setShowLogin(false);
-          } else {
-            console.log('❌ Not admin');
-            setUser(null);
-            setShowLogin(true);
-          }
-        } else {
-          console.log('❌ No session');
-          setUser(null);
-          setShowLogin(true);
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+
+        if (error) {
+          console.error('❌ Profile fetch error:', error);
+          return false;
         }
+
+        if (profile?.role !== 'admin') {
+          console.log('❌ User is not admin:', profile?.role);
+          return false;
+        }
+
+        console.log('✅ Admin access verified');
+        return true;
       } catch (error) {
-        console.error('❌ Auth check error:', error);
-        setUser(null);
-        setShowLogin(true);
-      } finally {
-        setIsLoading(false);
+        console.error('❌ Admin verification failed:', error);
+        return false;
       }
     };
 
-    // Listen for auth changes
+    const updateAuthState = async (session: any) => {
+      if (checkInProgress || !mounted) return;
+      checkInProgress = true;
+
+      try {
+        if (!session?.user) {
+          console.log('🔓 No session - showing login');
+          if (mounted) {
+            setUser(null);
+            setIsAuthenticated(false);
+            setAuthError(null);
+            setIsLoading(false);
+          }
+          return;
+        }
+
+        const isAdmin = await verifyAdminAccess(session);
+        
+        if (!mounted) return;
+
+        if (isAdmin) {
+          console.log('✅ Authentication successful');
+          setUser(session.user);
+          setIsAuthenticated(true);
+          setAuthError(null);
+        } else {
+          console.log('❌ Authentication failed - not admin');
+          setUser(null);
+          setIsAuthenticated(false);
+          setAuthError('Admin access required');
+        }
+        setIsLoading(false);
+      } catch (error) {
+        console.error('❌ Auth state update error:', error);
+        if (mounted) {
+          setUser(null);
+          setIsAuthenticated(false);
+          setAuthError('Authentication failed');
+          setIsLoading(false);
+        }
+      } finally {
+        checkInProgress = false;
+      }
+    };
+
+    // Initial session check
+    const initializeAuth = async () => {
+      try {
+        console.log('🔐 Getting initial session...');
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('❌ Session error:', error);
+          if (mounted) {
+            setAuthError('Failed to get session');
+            setIsLoading(false);
+          }
+          return;
+        }
+
+        await updateAuthState(session);
+      } catch (error) {
+        console.error('❌ Initialize auth error:', error);
+        if (mounted) {
+          setAuthError('Authentication initialization failed');
+          setIsLoading(false);
+        }
+      }
+    };
+
+    // Auth state change listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('🔐 Auth event:', event, !!session);
+        console.log('🔐 Auth state change:', event);
         
-        if (event === 'SIGNED_OUT' || !session) {
-          console.log('🔓 Signed out - requiring login');
+        if (!mounted) return;
+
+        // Handle logout immediately
+        if (event === 'SIGNED_OUT') {
+          console.log('🔓 User signed out');
           setUser(null);
-          setShowLogin(true);
+          setIsAuthenticated(false);
+          setAuthError(null);
           setIsLoading(false);
-        } else if (session?.user) {
-          console.log('🔐 Signed in - checking admin role');
-          
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', session.user.id)
-            .maybeSingle();
-          
-          if (profile?.role === 'admin') {
-            console.log('✅ Admin role confirmed');
-            setUser(session.user);
-            setShowLogin(false);
-          } else {
-            console.log('❌ Not admin role');
-            setUser(null);
-            setShowLogin(true);
-          }
-          setIsLoading(false);
+          return;
+        }
+
+        // Handle sign in and token refresh
+        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          await updateAuthState(session);
         }
       }
     );
 
-    checkAuth();
-    
-    return () => subscription.unsubscribe();
+    initializeAuth();
+
+    return () => {
+      console.log('🔐 Cleaning up auth guard');
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleLoginSuccess = () => {
@@ -151,7 +214,8 @@ const AdminAuthGuard = () => {
     try {
       // Clear state immediately
       setUser(null);
-      setShowLogin(true);
+      setIsAuthenticated(false);
+      setAuthError(null);
       
       // Sign out from Supabase
       const { error } = await supabase.auth.signOut();
@@ -183,7 +247,7 @@ const AdminAuthGuard = () => {
     );
   }
 
-  if (showLogin) {
+  if (!isAuthenticated || authError) {
     return <SimpleAdminLogin onSuccess={handleLoginSuccess} />;
   }
 
