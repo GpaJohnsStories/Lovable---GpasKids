@@ -12,6 +12,7 @@ import { useAdminSession } from "@/hooks/useAdminSession";
 import { Routes, Route, Navigate } from "react-router-dom";
 import SimpleAdminLogin from "@/components/admin/SimpleAdminLogin";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { Button } from "@/components/ui/button";
 import type { User } from '@supabase/supabase-js';
 
 // Protected admin content that requires authentication
@@ -24,8 +25,6 @@ const BuddysAdminContent = () => {
     handleStoryFormSave,
     handleStoryFormCancel,
   } = useAdminSession();
-
-  console.log('BuddysAdminContent: Story form state', { showStoryForm, editingStory });
 
   if (showStoryForm) {
     return (
@@ -53,188 +52,109 @@ const BuddysAdminContent = () => {
   );
 };
 
-// Robust authentication guard with race condition prevention
-const AdminAuthGuard = () => {
+// Main admin component with simple session management
+const BuddysAdmin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [authError, setAuthError] = useState<string | null>(null);
 
+  console.log('BuddysAdmin: Starting...');
+
+  // Verify admin access
+  const verifyAdminAccess = async (session: any): Promise<boolean> => {
+    if (!session?.user?.id) return false;
+    
+    try {
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', session.user.id)
+        .single();
+      
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return false;
+      }
+      
+      return profile?.role === 'admin';
+    } catch (error) {
+      console.error('Error in verifyAdminAccess:', error);
+      return false;
+    }
+  };
+
+  // Initialize authentication
   useEffect(() => {
-    let mounted = true;
-    let checkInProgress = false;
-
-    console.log('🔐 Admin guard initializing...');
-
-    const verifyAdminAccess = async (session: any): Promise<boolean> => {
-      if (!session?.user) {
-        console.log('❌ No user in session');
-        return false;
-      }
-
-      try {
-        console.log('🔐 Verifying admin access for:', session.user.email);
-        
-        const { data: profile, error } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', session.user.id)
-          .single();
-
-        if (error) {
-          console.error('❌ Profile fetch error:', error);
-          return false;
-        }
-
-        if (profile?.role !== 'admin') {
-          console.log('❌ User is not admin:', profile?.role);
-          return false;
-        }
-
-        console.log('✅ Admin access verified');
-        return true;
-      } catch (error) {
-        console.error('❌ Admin verification failed:', error);
-        return false;
-      }
-    };
-
-    const updateAuthState = async (session: any) => {
-      if (checkInProgress || !mounted) return;
-      checkInProgress = true;
-
-      try {
-        if (!session?.user) {
-          console.log('🔓 No session - showing login');
-          if (mounted) {
-            setUser(null);
-            setIsAuthenticated(false);
-            setAuthError(null);
-            setIsLoading(false);
-          }
-          return;
-        }
-
-        const isAdmin = await verifyAdminAccess(session);
-        
-        if (!mounted) return;
-
-        if (isAdmin) {
-          console.log('✅ Authentication successful');
-          setUser(session.user);
-          setIsAuthenticated(true);
-          setAuthError(null);
-        } else {
-          console.log('❌ Authentication failed - not admin');
-          setUser(null);
-          setIsAuthenticated(false);
-          setAuthError('Admin access required');
-        }
-        setIsLoading(false);
-      } catch (error) {
-        console.error('❌ Auth state update error:', error);
-        if (mounted) {
-          setUser(null);
-          setIsAuthenticated(false);
-          setAuthError('Authentication failed');
-          setIsLoading(false);
-        }
-      } finally {
-        checkInProgress = false;
-      }
-    };
-
-    // Initial session check
     const initializeAuth = async () => {
       try {
-        console.log('🔐 Getting initial session...');
+        // Get current session
         const { data: { session }, error } = await supabase.auth.getSession();
-        
         if (error) {
-          console.error('❌ Session error:', error);
-          if (mounted) {
-            setAuthError('Failed to get session');
-            setIsLoading(false);
-          }
+          console.error('Error getting session:', error);
+          setIsLoading(false);
           return;
         }
-
-        await updateAuthState(session);
-      } catch (error) {
-        console.error('❌ Initialize auth error:', error);
-        if (mounted) {
-          setAuthError('Authentication initialization failed');
-          setIsLoading(false);
+        
+        // Check admin access if session exists
+        if (session) {
+          const isAdmin = await verifyAdminAccess(session);
+          if (isAdmin) {
+            setIsAuthenticated(true);
+            setUser(session.user);
+          }
         }
+        
+        setIsLoading(false);
+        
+        // Listen for auth state changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            console.log('Auth state changed:', event);
+            
+            if (event === 'SIGNED_OUT') {
+              setIsAuthenticated(false);
+              setUser(null);
+            } else if (session) {
+              const isAdmin = await verifyAdminAccess(session);
+              setIsAuthenticated(isAdmin);
+              setUser(isAdmin ? session.user : null);
+            }
+          }
+        );
+
+        return () => subscription.unsubscribe();
+      } catch (error) {
+        console.error('Error in initializeAuth:', error);
+        setIsLoading(false);
       }
     };
 
-    // Auth state change listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('🔐 Auth state change:', event);
-        
-        if (!mounted) return;
-
-        // Handle logout immediately
-        if (event === 'SIGNED_OUT') {
-          console.log('🔓 User signed out');
-          setUser(null);
-          setIsAuthenticated(false);
-          setAuthError(null);
-          setIsLoading(false);
-          return;
-        }
-
-        // Handle sign in and token refresh
-        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-          await updateAuthState(session);
-        }
-      }
-    );
-
-    initializeAuth();
-
+    const cleanup = initializeAuth();
     return () => {
-      console.log('🔐 Cleaning up auth guard');
-      mounted = false;
-      subscription.unsubscribe();
+      if (cleanup && typeof cleanup.then === 'function') {
+        cleanup.then((cleanupFn) => {
+          if (cleanupFn && typeof cleanupFn === 'function') {
+            cleanupFn();
+          }
+        });
+      }
     };
   }, []);
 
   const handleLoginSuccess = () => {
-    console.log('🔐 Login success callback');
-    // The auth state change listener will handle the rest
+    console.log("Login successful");
+    // Auth state listener will handle the update
   };
 
   const handleLogout = async () => {
-    console.log('🔓 Logout initiated');
-    setIsLoading(true);
-    
     try {
-      // Clear state immediately
-      setUser(null);
+      await supabase.auth.signOut();
       setIsAuthenticated(false);
-      setAuthError(null);
-      
-      // Sign out from Supabase
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('❌ Logout error:', error);
-      } else {
-        console.log('✅ Supabase logout successful');
-      }
-      
-      // Clear storage
+      setUser(null);
       localStorage.clear();
-      sessionStorage.clear();
-      
-      // Redirect to home
       window.location.href = '/';
-      
     } catch (error) {
-      console.error('💥 Logout exception:', error);
-      // Force redirect anyway
+      console.error('Logout error:', error);
       window.location.href = '/';
     }
   };
@@ -247,29 +167,29 @@ const AdminAuthGuard = () => {
     );
   }
 
-  if (!isAuthenticated || authError) {
+  if (!isAuthenticated) {
     return <SimpleAdminLogin onSuccess={handleLoginSuccess} />;
   }
 
   return (
     <ContentProtection enableProtection={false}>
       <div className="relative">
-        <button
-          onClick={handleLogout}
-          className="absolute top-4 right-4 z-50 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
+        <div className="absolute top-4 right-4 z-50 flex items-center gap-4">
+          <span className="text-sm text-gray-600">
+            Welcome, {user?.email}
+          </span>
+          <Button
+            onClick={handleLogout}
+            variant="destructive"
+            size="sm"
+          >
+            Logout
+          </Button>
+        </div>
         <BuddysAdminContent />
       </div>
     </ContentProtection>
   );
-};
-
-// Main admin component
-const BuddysAdmin = () => {
-  console.log('🔐 BuddysAdmin: Starting...');
-  return <AdminAuthGuard />;
 };
 
 export default BuddysAdmin;
