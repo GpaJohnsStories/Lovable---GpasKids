@@ -41,7 +41,7 @@ const About = () => {
         <WelcomeHeader />
         
         <main className="container mx-auto px-4 pt-8 pb-12">
-          <div className="max-w-6xl mx-auto border-4 border-blue-500 rounded-lg p-6" style={{backgroundColor: '#ADD8E6'}}>
+          <div className="max-w-6xl mx-auto border-4 border-blue-500 rounded-lg p-6 relative" style={{backgroundColor: '#ADD8E6'}}>
             {/* Main content */}
             <div className="space-y-8">
               <div>
@@ -106,6 +106,20 @@ const About = () => {
                   <li>Life — Stories and things I have learned during my long lifetime that I think you might find helpful.</li>
                 </ul>
               </div>
+            </div>
+            
+            {/* Web-text code indicator */}
+            <div style={{ 
+              position: 'absolute',
+              bottom: '8px',
+              right: '12px',
+              fontSize: '12px',
+              color: '#666',
+              fontFamily: 'monospace',
+              fontWeight: 'normal',
+              opacity: 0.7
+            }}>
+              SYS-GPJ
             </div>
           </div>
 
