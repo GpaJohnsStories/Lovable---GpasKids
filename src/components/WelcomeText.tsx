@@ -67,7 +67,16 @@ const WelcomeText = () => {
             </div>
             
             {/* Web-text code in bottom right corner */}
-            <div className="absolute bottom-4 right-4 text-sm font-mono text-blue-700 bg-white/70 px-2 py-1 rounded">
+            <div style={{ 
+              position: 'absolute',
+              bottom: '8px',
+              right: '12px',
+              fontSize: '12px',
+              color: '#666',
+              fontFamily: 'monospace',
+              fontWeight: 'normal',
+              opacity: 0.7
+            }}>
               SYS-WEL
             </div>
           </div>
