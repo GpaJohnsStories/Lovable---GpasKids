@@ -3,7 +3,7 @@ import AdminLayout from "./AdminLayout";
 import EmergencyAdminTools from "./EmergencyAdminTools";
 import SecurityAuditDashboard from "./SecurityAuditDashboard";
 import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
-import AdminPasswordChange from "./AdminPasswordChange";
+import WebAuthnManager from "./WebAuthnManager";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Settings, Shield, Key, BookOpen, Eye, EyeOff, Tag, Video, Volume2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -159,16 +159,16 @@ const AdminOverview = () => {
         </CardContent>
       </Card>
 
-      {/* Password Management - Wide box with orange border */}
+      {/* Security Management - Wide box with orange border */}
       <Card className="mb-6 border-orange-500 border-2">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-orange-700">
             <Key className="h-5 w-5" />
-            Password Management
+            Security Management
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <AdminPasswordChange />
+          <WebAuthnManager />
         </CardContent>
       </Card>
 

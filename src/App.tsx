@@ -21,7 +21,7 @@ import NotFound from "./pages/NotFound";
 import AuthorBio from "./pages/AuthorBio";
 import HelpGpa from "./pages/HelpGpa";
 import StoryContentTest from "./pages/StoryContentTest";
-import AdminPasswordSync from "./components/admin/AdminPasswordSync";
+
 
 const queryClient = new QueryClient();
 

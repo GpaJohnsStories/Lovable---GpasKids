@@ -53,48 +53,6 @@ export type Database = {
         }
         Relationships: []
       }
-      admin_users: {
-        Row: {
-          created_at: string
-          device_fingerprint: string | null
-          email: string
-          failed_login_attempts: number | null
-          id: string
-          last_login: string | null
-          locked_until: string | null
-          password_hash: string
-          role: string
-          trusted_devices: string[] | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          device_fingerprint?: string | null
-          email: string
-          failed_login_attempts?: number | null
-          id?: string
-          last_login?: string | null
-          locked_until?: string | null
-          password_hash: string
-          role?: string
-          trusted_devices?: string[] | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          device_fingerprint?: string | null
-          email?: string
-          failed_login_attempts?: number | null
-          id?: string
-          last_login?: string | null
-          locked_until?: string | null
-          password_hash?: string
-          role?: string
-          trusted_devices?: string[] | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
       author_bios: {
         Row: {
           author_name: string
@@ -243,22 +201,34 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
+          display_name: string | null
           id: string
           role: string
           updated_at: string
+          webauthn_credentials: Json | null
+          webauthn_enabled: boolean | null
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
+          display_name?: string | null
           id: string
           role?: string
           updated_at?: string
+          webauthn_credentials?: Json | null
+          webauthn_enabled?: boolean | null
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
+          display_name?: string | null
           id?: string
           role?: string
           updated_at?: string
+          webauthn_credentials?: Json | null
+          webauthn_enabled?: boolean | null
         }
         Relationships: []
       }
@@ -502,32 +472,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      admin_login: {
-        Args: {
-          email_input: string
-          password_input: string
-          device_info?: string
-        }
-        Returns: Json
-      }
-      admin_reset_password: {
-        Args: { admin_email: string }
-        Returns: string
-      }
-      admin_sync_auth_password: {
-        Args: {
-          admin_email: string
-          admin_password: string
-          new_auth_password: string
-        }
-        Returns: Json
-      }
       armor: {
         Args: { "": string }
-        Returns: string
-      }
-      change_admin_password: {
-        Args: { admin_email: string; new_password: string }
         Returns: string
       }
       dearmor: {
@@ -552,10 +498,6 @@ export type Database = {
       }
       gen_salt: {
         Args: { "": string }
-        Returns: string
-      }
-      hash_password: {
-        Args: { password: string }
         Returns: string
       }
       is_admin: {
@@ -592,13 +534,13 @@ export type Database = {
         Args: { "": string }
         Returns: string
       }
-      simple_promote_to_admin: {
+      promote_user_to_admin: {
         Args: { user_email: string }
         Returns: string
       }
-      verify_password: {
-        Args: { password: string; hash: string }
-        Returns: boolean
+      simple_promote_to_admin: {
+        Args: { user_email: string }
+        Returns: string
       }
     }
     Enums: {

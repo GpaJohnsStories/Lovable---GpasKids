@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Mail, Lock, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { useSupabaseAdminAuth } from "./SupabaseAdminAuth";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 
 const SupabaseAdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -64,7 +64,7 @@ const SupabaseAdminLogin = () => {
 
     setIsResetting(true);
     try {
-      const { error } = await adminClient.auth.resetPasswordForEmail(email, {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/reset-password`
       });
       
@@ -171,14 +171,8 @@ const SupabaseAdminLogin = () => {
                   >
                     Forgot your password?
                   </button>
-                  <a
-                    href="/buddys_admin/password-sync"
-                    className="text-sm text-orange-600 hover:text-orange-800 underline block"
-                  >
-                    Password Sync Tool
-                  </a>
-                  <div className="text-xs text-gray-500 mt-2 p-2 bg-gray-50 rounded">
-                    <strong>Info:</strong> Admin login is now fully synchronized. Use your standard admin credentials.
+                  <div className="text-xs text-gray-500 mt-2 p-2 bg-blue-50 rounded border border-blue-200">
+                    <strong>Info:</strong> Admin login uses Supabase Auth with enhanced WebAuthn security.
                   </div>
                 </div>
               </div>

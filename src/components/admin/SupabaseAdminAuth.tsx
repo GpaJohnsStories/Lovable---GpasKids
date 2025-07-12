@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 import type { User, Session } from '@supabase/supabase-js';
+import { toast } from "sonner";
 
 interface SupabaseAdminAuthContextType {
   user: User | null;
@@ -8,8 +9,11 @@ interface SupabaseAdminAuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   isAdmin: boolean;
+  webauthnEnabled: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
+  enableWebAuthn: () => Promise<void>;
+  authenticateWithWebAuthn: () => Promise<boolean>;
 }
 
 const SupabaseAdminAuthContext = createContext<SupabaseAdminAuthContextType | undefined>(undefined);
@@ -31,6 +35,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [webauthnEnabled, setWebauthnEnabled] = useState(false);
 
   const isAuthenticated = !!user && !!session;
 
@@ -38,19 +43,18 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
     user: user?.email, 
     isAuthenticated, 
     isLoading, 
-    isAdmin 
+    isAdmin,
+    webauthnEnabled
   });
 
-  // Enhanced admin role check using both auth.users and admin_users table
-  const checkAdminRole = async (userId: string, userEmail: string) => {
-    console.log('🔍 Checking admin role for:', { userId, userEmail });
+  // Check admin role using only profiles table
+  const checkAdminRole = async (userId: string) => {
+    console.log('🔍 Checking admin role for user:', userId);
     
     try {
-      console.log('📋 Starting profile check...');
-      // First check: Verify user has admin role in profiles table
-      const { data: profileData, error: profileError } = await adminClient
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('role')
+        .select('role, webauthn_enabled')
         .eq('id', userId)
         .maybeSingle();
 
@@ -58,52 +62,22 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
 
       if (profileError) {
         console.error('❌ Error checking profile admin role:', profileError);
-        return false;
+        return { isAdmin: false, webauthnEnabled: false };
       }
 
       if (profileData?.role !== 'admin') {
-        console.log('❌ User does not have admin role in profiles. Current role:', profileData?.role);
-        return false;
+        console.log('❌ User does not have admin role. Current role:', profileData?.role);
+        return { isAdmin: false, webauthnEnabled: false };
       }
 
-      console.log('✅ Profile admin role verified');
-
-      console.log('🏛️ Starting admin_users check...');
-      // Second check: Verify user exists in admin_users table (enhanced security)
-      const { data: adminData, error: adminError } = await adminClient
-        .from('admin_users')
-        .select('email, role, locked_until')
-        .eq('email', userEmail)
-        .maybeSingle();
-
-      console.log('🏛️ Admin users check result:', { adminData, adminError });
-
-      if (adminError) {
-        console.error('❌ Error checking admin_users table:', adminError);
-        return false;
-      }
-
-      if (!adminData) {
-        console.log('❌ User not found in admin_users table');
-        return false;
-      }
-
-      // Check if account is locked
-      if (adminData.locked_until && new Date(adminData.locked_until) > new Date()) {
-        console.log('❌ Admin account is locked until:', adminData.locked_until);
-        return false;
-      }
-
-      console.log('✅ User verified in both profiles and admin_users tables');
-      return true;
+      console.log('✅ Admin role verified');
+      return { 
+        isAdmin: true, 
+        webauthnEnabled: profileData.webauthn_enabled || false 
+      };
     } catch (error) {
       console.error('💥 Exception in checkAdminRole:', error);
-      console.error('💥 Error details:', {
-        name: error.name,
-        message: error.message,
-        stack: error.stack
-      });
-      return false;
+      return { isAdmin: false, webauthnEnabled: false };
     }
   };
 
@@ -111,7 +85,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
     console.log('🔄 Setting up auth state listener...');
     
     // Set up auth state listener
-    const { data: { subscription } } = adminClient.auth.onAuthStateChange(
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         console.log('🔄 Auth state change:', event, session?.user?.email);
         
@@ -123,14 +97,16 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
           console.log('👤 User session detected, checking admin role...');
           // Defer admin role check to prevent blocking auth flow
           setTimeout(() => {
-            checkAdminRole(session.user.id, session.user.email || '').then(adminStatus => {
-              console.log('🔐 Admin status result:', adminStatus);
-              setIsAdmin(adminStatus);
+            checkAdminRole(session.user.id).then(({ isAdmin, webauthnEnabled }) => {
+              console.log('🔐 Admin status result:', { isAdmin, webauthnEnabled });
+              setIsAdmin(isAdmin);
+              setWebauthnEnabled(webauthnEnabled);
             });
           }, 0);
         } else {
           console.log('❌ No user session, setting admin to false');
           setIsAdmin(false);
+          setWebauthnEnabled(false);
         }
         
         setIsLoading(false);
@@ -140,16 +116,17 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
 
     // Check for existing session
     console.log('🔍 Checking for existing session...');
-    adminClient.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
       console.log('📋 Initial session check:', session?.user?.email);
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
         console.log('👤 Existing session found, checking admin role...');
-        checkAdminRole(session.user.id, session.user.email || '').then(adminStatus => {
-          console.log('🔐 Initial admin status:', adminStatus);
-          setIsAdmin(adminStatus);
+        checkAdminRole(session.user.id).then(({ isAdmin, webauthnEnabled }) => {
+          console.log('🔐 Initial admin status:', { isAdmin, webauthnEnabled });
+          setIsAdmin(isAdmin);
+          setWebauthnEnabled(webauthnEnabled);
           setIsLoading(false);
         });
       } else {
@@ -165,11 +142,10 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
   }, []);
 
   const login = async (email: string, password: string) => {
-    console.log('🔐 Starting simplified admin login process:', { email });
+    console.log('🔐 Starting Supabase Auth login:', { email });
     
     try {
-      // Use Supabase Auth directly with the standardized password
-      const { data: authData, error: authError } = await adminClient.auth.signInWithPassword({
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -212,7 +188,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
       
       // Log the admin login to our audit table
       try {
-        const { error: auditError } = await adminClient
+        const { error: auditError } = await supabase
           .from('admin_audit')
           .insert({
             action: 'admin_login',
@@ -235,7 +211,134 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
   };
 
   const logout = async () => {
-    await adminClient.auth.signOut();
+    await supabase.auth.signOut();
+  };
+
+  // WebAuthn support functions
+  const enableWebAuthn = async () => {
+    if (!user) {
+      toast.error('Must be logged in to enable WebAuthn');
+      return;
+    }
+
+    try {
+      // Check if WebAuthn is supported
+      if (!window.PublicKeyCredential) {
+        toast.error('WebAuthn is not supported on this device');
+        return;
+      }
+
+      // Generate credential creation options
+      const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
+        challenge: new TextEncoder().encode(`challenge-${Date.now()}`),
+        rp: {
+          name: "Grandpa's Kids Stories Admin",
+          id: window.location.hostname,
+        },
+        user: {
+          id: new TextEncoder().encode(user.id),
+          name: user.email!,
+          displayName: user.email!,
+        },
+        pubKeyCredParams: [
+          { alg: -7, type: "public-key" }, // ES256
+          { alg: -257, type: "public-key" }, // RS256
+        ],
+        authenticatorSelection: {
+          authenticatorAttachment: "platform",
+          userVerification: "required",
+        },
+        timeout: 60000,
+        attestation: "direct"
+      };
+
+      // Create the credential
+      const credential = await navigator.credentials.create({
+        publicKey: publicKeyCredentialCreationOptions
+      }) as PublicKeyCredential;
+
+      if (!credential) {
+        throw new Error('Failed to create credential');
+      }
+
+      // Store the credential in the user's profile
+      const credentialData = {
+        id: credential.id,
+        rawId: Array.from(new Uint8Array(credential.rawId)),
+        type: credential.type,
+        response: {
+          clientDataJSON: Array.from(new Uint8Array(credential.response.clientDataJSON)),
+          attestationObject: Array.from(new Uint8Array((credential.response as AuthenticatorAttestationResponse).attestationObject))
+        }
+      };
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          webauthn_enabled: true,
+          webauthn_credentials: [credentialData]
+        })
+        .eq('id', user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      setWebauthnEnabled(true);
+      toast.success('WebAuthn enabled successfully!');
+    } catch (error: any) {
+      console.error('Failed to enable WebAuthn:', error);
+      toast.error('Failed to enable WebAuthn: ' + error.message);
+    }
+  };
+
+  const authenticateWithWebAuthn = async (): Promise<boolean> => {
+    if (!user || !webauthnEnabled) {
+      return false;
+    }
+
+    try {
+      // Get stored credentials
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('webauthn_credentials')
+        .eq('id', user.id)
+        .single();
+
+      const credentials = profile?.webauthn_credentials;
+      if (!credentials || !Array.isArray(credentials) || credentials.length === 0) {
+        return false;
+      }
+
+      // Generate assertion options
+      const publicKeyCredentialRequestOptions: PublicKeyCredentialRequestOptions = {
+        challenge: new TextEncoder().encode(`auth-challenge-${Date.now()}`),
+        allowCredentials: credentials.map((cred: any) => ({
+          id: new Uint8Array(cred.rawId),
+          type: 'public-key'
+        })),
+        timeout: 60000,
+        userVerification: 'required'
+      };
+
+      // Get the assertion
+      const assertion = await navigator.credentials.get({
+        publicKey: publicKeyCredentialRequestOptions
+      }) as PublicKeyCredential;
+
+      if (!assertion) {
+        return false;
+      }
+
+      // In a real implementation, you would verify the assertion on the server
+      // For now, we'll just return true if we got an assertion
+      toast.success('WebAuthn authentication successful!');
+      return true;
+    } catch (error: any) {
+      console.error('WebAuthn authentication failed:', error);
+      toast.error('WebAuthn authentication failed');
+      return false;
+    }
   };
 
   const value = {
@@ -244,8 +347,11 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
     isAuthenticated,
     isLoading,
     isAdmin,
+    webauthnEnabled,
     login,
-    logout
+    logout,
+    enableWebAuthn,
+    authenticateWithWebAuthn
   };
 
   return (

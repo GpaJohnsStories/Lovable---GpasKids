@@ -11,7 +11,7 @@ import { useAdminSession } from "@/hooks/useAdminSession";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { SupabaseAdminAuthProvider, useSupabaseAdminAuth } from "@/components/admin/SupabaseAdminAuth";
 import SupabaseAdminLogin from "@/components/admin/SupabaseAdminLogin";
-import AdminPasswordSync from "@/components/admin/AdminPasswordSync";
+
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 // Protected admin content that requires authentication
@@ -92,10 +92,6 @@ const AdminAuthGuard = () => {
 const BuddysAdmin = () => {
   console.log('🔐 BuddysAdmin: Component rendering with auth provider');
   
-  // Check if this is the password sync route
-  if (window.location.pathname === '/buddys_admin/password-sync') {
-    return <AdminPasswordSync />;
-  }
   
   return (
     <SupabaseAdminAuthProvider>
