@@ -59,7 +59,7 @@ const AdminAuthGuard = () => {
   const [showLogin, setShowLogin] = useState(true);
 
   useEffect(() => {
-    console.log('🔐 Checking auth...');
+    console.log('🔐 Setting up auth monitoring...');
     
     const checkAuth = async () => {
       try {
@@ -93,7 +93,47 @@ const AdminAuthGuard = () => {
       setIsLoading(false);
     };
 
+    // Set up auth state listener to detect changes (like logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('🔄 Auth state changed:', event, session?.user?.email);
+        
+        if (event === 'SIGNED_OUT' || !session) {
+          console.log('🚪 User signed out, forcing login');
+          setShowLogin(true);
+          setIsLoading(false);
+          return;
+        }
+        
+        if (event === 'SIGNED_IN' && session?.user) {
+          console.log('🔑 User signed in, checking admin role');
+          
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .maybeSingle();
+          
+          if (profile?.role === 'admin') {
+            console.log('✅ Admin verified');
+            setShowLogin(false);
+          } else {
+            console.log('❌ Not admin');
+            setShowLogin(true);
+          }
+        }
+        
+        setIsLoading(false);
+      }
+    );
+
+    // Initial auth check
     checkAuth();
+
+    // Cleanup subscription
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleLoginSuccess = () => {
