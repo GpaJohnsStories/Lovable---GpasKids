@@ -54,6 +54,20 @@ const Privacy = () => {
               </div>
             </div>
           </div>
+          
+          {/* Web-text code indicator */}
+          <div style={{ 
+            position: 'absolute',
+            bottom: '8px',
+            right: '12px',
+            fontSize: '12px',
+            color: '#666',
+            fontFamily: 'monospace',
+            fontWeight: 'normal',
+            opacity: 0.7
+          }}>
+            SYS-P2Y
+          </div>
         </div>
 
         <Card>
