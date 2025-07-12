@@ -85,12 +85,12 @@ export const DeployedContent = ({
 
   return (
     <div className={className}>
-      {/* Photo if available */}
+      {/* Photo if available - positioned to float left */}
       {content.photo_url && (
         <img 
           src={content.photo_url} 
           alt={content.title || 'Story image'}
-          className="w-full h-auto rounded-lg mb-4 max-w-md mx-auto"
+          className="float-left mr-8 mb-6 w-full max-w-xs h-auto rounded-lg shadow-lg border-4 border-white"
         />
       )}
       
