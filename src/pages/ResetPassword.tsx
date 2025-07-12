@@ -21,24 +21,45 @@ const ResetPassword = () => {
     // Handle password reset tokens from URL
     const handlePasswordReset = async () => {
       console.log('🔐 ResetPassword: Checking URL parameters...');
+      console.log('🔐 Full URL:', window.location.href);
+      console.log('🔐 Search params:', window.location.search);
+      console.log('🔐 Hash:', window.location.hash);
       
+      // Check for tokens in URL params (direct from Supabase)
       const accessToken = searchParams.get('access_token');
       const refreshToken = searchParams.get('refresh_token');
       const type = searchParams.get('type');
+      
+      // Also check for tokens in hash (sometimes Supabase puts them there)
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const hashAccessToken = hashParams.get('access_token');
+      const hashRefreshToken = hashParams.get('refresh_token');
+      const hashType = hashParams.get('type');
       
       console.log('🔐 URL params:', { 
         hasAccessToken: !!accessToken, 
         hasRefreshToken: !!refreshToken, 
         type 
       });
+      
+      console.log('🔐 Hash params:', { 
+        hasAccessToken: !!hashAccessToken, 
+        hasRefreshToken: !!hashRefreshToken, 
+        type: hashType 
+      });
 
-      if (accessToken && refreshToken && type === 'recovery') {
+      // Use whichever set of tokens we found
+      const finalAccessToken = accessToken || hashAccessToken;
+      const finalRefreshToken = refreshToken || hashRefreshToken;
+      const finalType = type || hashType;
+
+      if (finalAccessToken && finalRefreshToken && finalType === 'recovery') {
         console.log('🔐 Setting session with recovery tokens...');
         
         try {
           const { data, error } = await supabase.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken
+            access_token: finalAccessToken,
+            refresh_token: finalRefreshToken
           });
           
           console.log('🔐 Session set result:', { 
@@ -62,8 +83,18 @@ const ResetPassword = () => {
         }
       } else {
         console.log('❌ Missing required URL parameters for password reset');
-        toast.error("Invalid reset link - missing parameters");
-        setTimeout(() => navigate('/buddys_admin'), 2000);
+        console.log('🔐 Trying to get current session...');
+        
+        // Maybe we already have a session from the auth flow
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          console.log('✅ Found existing session');
+          setSessionValid(true);
+        } else {
+          console.log('❌ No session found');
+          toast.error("Invalid reset link - missing parameters");
+          setTimeout(() => navigate('/buddys_admin'), 2000);
+        }
       }
     };
     
