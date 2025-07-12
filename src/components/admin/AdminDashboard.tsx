@@ -24,9 +24,7 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
   console.log('AdminDashboard: Rendering with props', { onCreateStory, onEditStory });
 
   return (
-    <AdminLayout>
-      <AdminHeader />
-      
+    <div>
       <div className="my-6 flex gap-4">
         <CreateStoryCard onCreateStory={onCreateStory} />
         <div className="flex-1 space-y-2">
@@ -66,7 +64,7 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
       )}
       
       <StoriesTable onEditStory={onEditStory} />
-    </AdminLayout>
+    </div>
   );
 };
 
