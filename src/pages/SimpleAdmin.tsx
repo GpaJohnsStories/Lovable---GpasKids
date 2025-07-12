@@ -4,6 +4,9 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import AdminHeaderBanner from "@/components/admin/AdminHeaderBanner";
 import SimpleAdminLogin from "@/components/admin/SimpleAdminLogin";
 import AdminDashboard from "@/components/admin/AdminDashboard";
+import StoriesTable from "@/components/admin/StoriesTable";
+import CommentsDashboard from "@/components/admin/CommentsDashboard";
+import StaticDeploymentSystem from "@/components/admin/StaticDeploymentSystem";
 import { useAdminSession } from "@/hooks/useAdminSession";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
 
@@ -52,19 +55,35 @@ const SimpleAdmin = () => {
                 )}
                 
                 {currentSection === 'stories' && (
-                  <div>Stories management interface will go here</div>
+                  <StoriesTable onEditStory={handleEditStory} />
                 )}
                 
                 {currentSection === 'comments' && (
-                  <div>Comments management interface will go here</div>
+                  <CommentsDashboard />
                 )}
                 
                 {currentSection === 'deployment' && (
-                  <div>Deployment tools will go here</div>
+                  <StaticDeploymentSystem />
                 )}
                 
                 {currentSection === 'voice-preview' && (
-                  <div>Voice preview testing will go here</div>
+                  <div className="bg-white rounded-lg shadow-md p-6">
+                    <h2 className="text-xl font-bold mb-4">Voice Preview & Testing</h2>
+                    <p className="text-gray-600 mb-4">Test different voices and preview story audio generation.</p>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Test Text:</label>
+                        <textarea 
+                          className="w-full p-3 border rounded-lg" 
+                          rows={4}
+                          placeholder="Enter text to preview with different voices..."
+                        />
+                      </div>
+                      <button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded">
+                        Generate Preview
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
