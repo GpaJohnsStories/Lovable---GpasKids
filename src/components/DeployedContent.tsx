@@ -85,6 +85,17 @@ export const DeployedContent = ({
 
   return (
     <div className={className}>
+      {/* Audio controls at the top if requested and available */}
+      {includeAudio && content.audio_url && (
+        <div className="mb-6">
+          <StoryCodeAudioControls 
+            audioUrl={content.audio_url}
+            title={content.title || ''}
+            author={content.author || ''}
+          />
+        </div>
+      )}
+
       {/* Photo if available - positioned to float left */}
       {content.photo_url && (
         <img 
@@ -101,17 +112,6 @@ export const DeployedContent = ({
           style={{ fontFamily: 'Georgia, serif' }}
           dangerouslySetInnerHTML={{ __html: content.content }}
         />
-      )}
-      
-      {/* Audio if requested and available */}
-      {includeAudio && content.audio_url && (
-        <div className="mt-6">
-          <StoryCodeAudioControls 
-            audioUrl={content.audio_url}
-            title={content.title || ''}
-            author={content.author || ''}
-          />
-        </div>
       )}
     </div>
   );
