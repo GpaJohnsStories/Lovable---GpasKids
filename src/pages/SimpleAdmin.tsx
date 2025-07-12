@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import WelcomeHeader from "@/components/WelcomeHeader";
+import AdminHeaderBanner from "@/components/admin/AdminHeaderBanner";
 import SimpleAdminLogin from "@/components/admin/SimpleAdminLogin";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import { useAdminSession } from "@/hooks/useAdminSession";
@@ -22,7 +23,8 @@ const SimpleAdmin = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <WelcomeHeader />
+      {!isLoggedIn && <WelcomeHeader />}
+      {isLoggedIn && <AdminHeaderBanner />}
       {!isLoggedIn ? (
         <SimpleAdminLogin onSuccess={handleLoginSuccess} />
       ) : (
