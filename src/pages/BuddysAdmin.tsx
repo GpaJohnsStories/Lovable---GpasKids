@@ -53,79 +53,18 @@ const BuddysAdminContent = () => {
   );
 };
 
-// ULTRA SIMPLE authentication - no complex state management
+// SIMPLIFIED authentication - remove complex state management
 const AdminAuthGuard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showLogin, setShowLogin] = useState(true);
 
   useEffect(() => {
-    console.log('🔐 FORCING FRESH AUTH - No session persistence for admin');
+    console.log('🔐 Admin guard starting...');
     
-    // FORCE logout any existing session when accessing admin
-    const forceAuthCheck = async () => {
-      try {
-        // Always sign out first to force fresh login
-        await supabase.auth.signOut();
-        console.log('🚫 Forced signout of any existing session');
-        
-        // Clear only Supabase-related storage items instead of everything
-        Object.keys(localStorage).forEach(key => {
-          if (key.startsWith('sb-') || key.includes('supabase')) {
-            localStorage.removeItem(key);
-          }
-        });
-        
-        // Always show login for admin access
-        setShowLogin(true);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Force auth error:', error);
-        setShowLogin(true);
-        setIsLoading(false);
-      }
-    };
-
-    // Set up auth state listener 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('🔄 Auth state changed:', event, session?.user?.email);
-        
-        if (event === 'SIGNED_OUT' || !session) {
-          console.log('🚪 User signed out');
-          setShowLogin(true);
-          setIsLoading(false);
-          return;
-        }
-        
-        if (event === 'SIGNED_IN' && session?.user) {
-          console.log('🔑 User signed in, checking admin role');
-          
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', session.user.id)
-            .maybeSingle();
-          
-          if (profile?.role === 'admin') {
-            console.log('✅ Admin verified');
-            setShowLogin(false);
-          } else {
-            console.log('❌ Not admin');
-            setShowLogin(true);
-          }
-        }
-        
-        setIsLoading(false);
-      }
-    );
-
-    // Force the auth check
-    forceAuthCheck();
-
-    // Cleanup subscription
-    return () => {
-      subscription.unsubscribe();
-    };
+    // Simple check - just set loading to false and show login
+    setIsLoading(false);
+    setShowLogin(true);
+    console.log('🔐 Admin guard ready - showing login');
   }, []);
 
   const handleLoginSuccess = () => {
