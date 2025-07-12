@@ -499,48 +499,58 @@
 }
 
 .deployed-story-content h3 {
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 1.875rem;
-  font-weight: bold;
-  color: #92400e; /* amber-800 */
-  margin-bottom: 1rem;
-  margin-top: 1.5rem;
+  font-family: 'Segoe UI', sans-serif !important;
+  font-size: 1.875rem !important;
+  font-weight: bold !important;
+  color: #92400e !important; /* amber-800 */
+  margin-bottom: 1rem !important;
+  margin-top: 1.5rem !important;
 }
 
 .deployed-story-content h2 {
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 1.875rem;
-  font-weight: bold;
-  color: #92400e; /* amber-800 */
-  margin-bottom: 1rem;
-  margin-top: 1.5rem;
+  font-family: 'Segoe UI', sans-serif !important;
+  font-size: 1.875rem !important;
+  font-weight: bold !important;
+  color: #92400e !important; /* amber-800 */
+  margin-bottom: 1rem !important;
+  margin-top: 1.5rem !important;
 }
 
 .deployed-story-content p {
-  font-size: 1.125rem;
-  margin-bottom: 1rem;
-  font-weight: normal;
+  font-family: 'Georgia', serif !important;
+  font-size: 1.125rem !important;
+  color: #000000 !important;
+  margin-bottom: 1rem !important;
+  font-weight: normal !important;
+  line-height: 1.6 !important;
 }
 
 .deployed-story-content ul {
-  font-size: 1.125rem;
-  line-height: 1.6;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
-  list-style-type: disc;
-  list-style-position: inside;
+  font-family: 'Georgia', serif !important;
+  font-size: 1.125rem !important;
+  color: #000000 !important;
+  line-height: 1.6 !important;
+  margin-left: 1rem !important;
+  margin-bottom: 1rem !important;
+  list-style-type: disc !important;
+  list-style-position: inside !important;
+  font-weight: normal !important;
 }
 
 .deployed-story-content li {
-  margin-bottom: 0.5rem;
-  font-weight: normal;
+  font-family: 'Georgia', serif !important;
+  font-size: 1.125rem !important;
+  color: #000000 !important;
+  margin-bottom: 0.5rem !important;
+  font-weight: normal !important;
+  line-height: 1.6 !important;
 }
 
 /* Special styling for colored/italic fun text */
 .deployed-story-content em,
 .deployed-story-content i {
-  color: #059669; /* emerald-600 for fun items */
-  font-style: italic;
+  color: #059669 !important; /* emerald-600 for fun items */
+  font-style: italic !important;
 }
 
 /* Clear floats */
