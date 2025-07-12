@@ -47,13 +47,10 @@ const GpaJohnComments = () => {
     );
   }
 
-  if (error || !comments || comments.length === 0) {
-    return null; // Don't show the section if there are no comments or an error
-  }
-
+  // Always show the announcements banner, even if no comments
   return (
     <section className="py-8">
-      {/* Header Banner - Made shorter and same width as content below */}
+      {/* Header Banner - Always visible */}
       <div className="container mx-auto px-4">
         <div className="bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 rounded-xl p-3 shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)] border border-blue-700 mb-4 relative">
           <div className="flex flex-col items-center text-center">
@@ -69,49 +66,51 @@ const GpaJohnComments = () => {
         </div>
       </div>
 
-      {/* Comments List */}
-      <div className="container mx-auto px-4">
-        <div className="space-y-4">
-          {comments.map((comment) => (
-            <div 
-              key={comment.id}
-              className="bg-blue-50/80 border-2 border-blue-200 rounded-lg p-6 shadow-lg"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <span className="font-bold text-blue-800 font-fun text-lg">GpaJohn</span>
-                  <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-fun">
-                    📢 Announcement
-                  </div>
-                </div>
-                <span className="text-blue-600 font-fun text-sm">
-                  {format(new Date(comment.created_at), 'MMM d, yyyy')}
-                </span>
-              </div>
-              
-              <h3 className="text-xl font-bold text-blue-800 font-fun mb-3">
-                {comment.subject}
-              </h3>
-              
-              <div className="text-blue-800 font-fun leading-relaxed text-base mb-4">
-                {comment.content.length > 200 
-                  ? `${comment.content.substring(0, 200)}...` 
-                  : comment.content
-                }
-              </div>
-              
-              <Link 
-                to={`/comment/${comment.id}`} 
-                onClick={scrollToTop}
-                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-fun font-semibold transition-colors"
+      {/* Comments List - Only show if we have comments and no error */}
+      {!error && comments && comments.length > 0 && (
+        <div className="container mx-auto px-4">
+          <div className="space-y-4">
+            {comments.map((comment) => (
+              <div 
+                key={comment.id}
+                className="bg-blue-50/80 border-2 border-blue-200 rounded-lg p-6 shadow-lg"
               >
-                <MessageCircle className="h-4 w-4" />
-                Read Full Comment & Replies
-              </Link>
-            </div>
-          ))}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <span className="font-bold text-blue-800 font-fun text-lg">GpaJohn</span>
+                    <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-fun">
+                      📢 Announcement
+                    </div>
+                  </div>
+                  <span className="text-blue-600 font-fun text-sm">
+                    {format(new Date(comment.created_at), 'MMM d, yyyy')}
+                  </span>
+                </div>
+                
+                <h3 className="text-xl font-bold text-blue-800 font-fun mb-3">
+                  {comment.subject}
+                </h3>
+                
+                <div className="text-blue-800 font-fun leading-relaxed text-base mb-4">
+                  {comment.content.length > 200 
+                    ? `${comment.content.substring(0, 200)}...` 
+                    : comment.content
+                  }
+                </div>
+                
+                <Link 
+                  to={`/comment/${comment.id}`} 
+                  onClick={scrollToTop}
+                  className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-fun font-semibold transition-colors"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Read Full Comment & Replies
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };
