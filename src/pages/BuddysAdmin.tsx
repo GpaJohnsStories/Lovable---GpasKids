@@ -57,18 +57,18 @@ const BuddysAdminContent = () => {
 const AdminAuthGuard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showLogin, setShowLogin] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     console.log('🔐 Admin guard starting...');
     
-    // Check if user is already logged in
-    const checkSession = async () => {
+    // Check session and listen for changes
+    const checkAuth = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
+        console.log('🔐 Session check:', !!session);
         
-        if (session) {
-          console.log('🔐 Found existing session, checking admin role...');
-          
+        if (session?.user) {
           // Check if user is admin
           const { data: profile } = await supabase
             .from('profiles')
@@ -76,35 +76,43 @@ const AdminAuthGuard = () => {
             .eq('id', session.user.id)
             .maybeSingle();
           
+          console.log('🔐 Profile check:', profile);
+          
           if (profile?.role === 'admin') {
-            console.log('✅ User is admin, allowing access');
+            console.log('✅ Admin access granted');
+            setUser(session.user);
             setShowLogin(false);
           } else {
-            console.log('❌ User is not admin');
+            console.log('❌ Not admin');
+            setUser(null);
             setShowLogin(true);
           }
         } else {
-          console.log('❌ No session found');
+          console.log('❌ No session');
+          setUser(null);
           setShowLogin(true);
         }
       } catch (error) {
-        console.error('❌ Session check error:', error);
+        console.error('❌ Auth check error:', error);
+        setUser(null);
         setShowLogin(true);
       } finally {
         setIsLoading(false);
       }
     };
-    
-    // Listen for auth state changes
+
+    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('🔐 Auth state changed:', event, !!session);
+        console.log('🔐 Auth event:', event, !!session);
         
         if (event === 'SIGNED_OUT' || !session) {
-          console.log('🔓 User signed out or no session');
+          console.log('🔓 Signed out - requiring login');
+          setUser(null);
           setShowLogin(true);
-        } else if (event === 'SIGNED_IN' && session) {
-          console.log('🔐 User signed in, checking admin role...');
+          setIsLoading(false);
+        } else if (session?.user) {
+          console.log('🔐 Signed in - checking admin role');
           
           const { data: profile } = await supabase
             .from('profiles')
@@ -113,60 +121,57 @@ const AdminAuthGuard = () => {
             .maybeSingle();
           
           if (profile?.role === 'admin') {
-            console.log('✅ User is admin, allowing access');
+            console.log('✅ Admin role confirmed');
+            setUser(session.user);
             setShowLogin(false);
           } else {
-            console.log('❌ User is not admin');
+            console.log('❌ Not admin role');
+            setUser(null);
             setShowLogin(true);
           }
+          setIsLoading(false);
         }
       }
     );
+
+    checkAuth();
     
-    checkSession();
-    
-    // Cleanup subscription on unmount
     return () => subscription.unsubscribe();
   }, []);
 
   const handleLoginSuccess = () => {
-    console.log('Login success!');
-    setShowLogin(false);
+    console.log('🔐 Login success callback');
+    // The auth state change listener will handle the rest
   };
 
   const handleLogout = async () => {
-    console.log('🔓 Logging out...');
+    console.log('🔓 Logout initiated');
+    setIsLoading(true);
     
     try {
+      // Clear state immediately
+      setUser(null);
+      setShowLogin(true);
+      
       // Sign out from Supabase
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.error('❌ Logout error:', error);
       } else {
-        console.log('✅ Successfully signed out from Supabase');
+        console.log('✅ Supabase logout successful');
       }
       
-      // Clear any local storage items
+      // Clear storage
       localStorage.clear();
       sessionStorage.clear();
-      console.log('🧹 Cleared local and session storage');
       
-      // Reset the login state immediately
-      setShowLogin(true);
-      console.log('🔐 Reset to show login screen');
-      
-      // Force a complete page reload to ensure everything is cleared
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 500);
+      // Redirect to home
+      window.location.href = '/';
       
     } catch (error) {
       console.error('💥 Logout exception:', error);
-      // Even if there's an error, force reload to clear everything
-      setShowLogin(true);
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 500);
+      // Force redirect anyway
+      window.location.href = '/';
     }
   };
 
