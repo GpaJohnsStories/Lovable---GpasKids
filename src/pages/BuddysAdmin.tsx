@@ -55,17 +55,19 @@ const BuddysAdminContent = () => {
 
 // Authentication guard component
 const AdminAuthGuard = () => {
-  const { isAuthenticated, isLoading, isAdmin } = useSupabaseAdminAuth();
+  const { isAuthenticated, isLoading, isAdmin, isCheckingAdmin } = useSupabaseAdminAuth();
 
   console.log('🔐 AdminAuthGuard State:', { 
     isAuthenticated, 
     isLoading, 
     isAdmin,
+    isCheckingAdmin,
     timestamp: new Date().toISOString()
   });
 
-  // Show loading spinner while checking authentication
-  if (isLoading) {
+  // Show loading spinner while checking authentication or admin status
+  if (isLoading || isCheckingAdmin) {
+    console.log('⏳ Showing loading spinner:', { isLoading, isCheckingAdmin });
     return (
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center">
         <LoadingSpinner />
@@ -73,9 +75,12 @@ const AdminAuthGuard = () => {
     );
   }
 
-  // Show login form if not authenticated or not admin
+  // Show login form only if definitively not authenticated or not admin
   if (!isAuthenticated || !isAdmin) {
-    console.log('🔐 Showing login form - user not authenticated or not admin');
+    console.log('🔐 Showing login form - user not authenticated or not admin:', { 
+      isAuthenticated, 
+      isAdmin 
+    });
     return <SupabaseAdminLogin />;
   }
 

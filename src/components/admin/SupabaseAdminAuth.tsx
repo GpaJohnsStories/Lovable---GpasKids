@@ -9,6 +9,7 @@ interface SupabaseAdminAuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   isAdmin: boolean;
+  isCheckingAdmin: boolean;
   webauthnEnabled: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
@@ -35,6 +36,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isCheckingAdmin, setIsCheckingAdmin] = useState(false);
   const [webauthnEnabled, setWebauthnEnabled] = useState(false);
 
   const isAuthenticated = !!user && !!session;
@@ -44,6 +46,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
     isAuthenticated, 
     isLoading, 
     isAdmin,
+    isCheckingAdmin,
     webauthnEnabled
   });
 
@@ -95,17 +98,20 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
         
         if (session?.user) {
           console.log('👤 User session detected, checking admin role...');
+          setIsCheckingAdmin(true);
           // Defer admin role check to prevent blocking auth flow
           setTimeout(() => {
             checkAdminRole(session.user.id).then(({ isAdmin, webauthnEnabled }) => {
               console.log('🔐 Admin status result:', { isAdmin, webauthnEnabled });
               setIsAdmin(isAdmin);
               setWebauthnEnabled(webauthnEnabled);
+              setIsCheckingAdmin(false);
             });
           }, 0);
         } else {
           console.log('❌ No user session, setting admin to false');
           setIsAdmin(false);
+          setIsCheckingAdmin(false);
           setWebauthnEnabled(false);
         }
         
@@ -123,14 +129,17 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
       
       if (session?.user) {
         console.log('👤 Existing session found, checking admin role...');
+        setIsCheckingAdmin(true);
         checkAdminRole(session.user.id).then(({ isAdmin, webauthnEnabled }) => {
           console.log('🔐 Initial admin status:', { isAdmin, webauthnEnabled });
           setIsAdmin(isAdmin);
           setWebauthnEnabled(webauthnEnabled);
+          setIsCheckingAdmin(false);
           setIsLoading(false);
         });
       } else {
         console.log('❌ No existing session found');
+        setIsCheckingAdmin(false);
         setIsLoading(false);
       }
     });
@@ -347,6 +356,7 @@ export const SupabaseAdminAuthProvider = ({ children }: SupabaseAdminAuthProvide
     isAuthenticated,
     isLoading,
     isAdmin,
+    isCheckingAdmin,
     webauthnEnabled,
     login,
     logout,
