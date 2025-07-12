@@ -195,7 +195,7 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
               <div className="text-center">
                 <button
                   type="button"
-                  onClick={() => window.location.href = '/reset-password'}
+                  onClick={() => window.location.href = '/forgot-password'}
                   className="text-sm text-muted-foreground hover:text-primary underline"
                 >
                   Forgot Password?

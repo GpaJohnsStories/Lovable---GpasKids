@@ -17,6 +17,7 @@ import CommentDetail from "./pages/CommentDetail";
 import BuddysAdmin from "./pages/BuddysAdmin";
 import VoicePreview from "./pages/VoicePreview";
 import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
 import AuthorBio from "./pages/AuthorBio";
 import HelpGpa from "./pages/HelpGpa";
@@ -61,6 +62,7 @@ const App = () => (
           <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
           <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/writing" element={<Writing />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/help-gpa" element={<HelpGpa />} />
