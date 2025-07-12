@@ -59,47 +59,36 @@ const AdminAuthGuard = () => {
   const [showLogin, setShowLogin] = useState(true);
 
   useEffect(() => {
-    console.log('🔐 Setting up auth monitoring...');
+    console.log('🔐 FORCING FRESH AUTH - No session persistence for admin');
     
-    const checkAuth = async () => {
+    // FORCE logout any existing session when accessing admin
+    const forceAuthCheck = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        // Always sign out first to force fresh login
+        await supabase.auth.signOut();
+        console.log('🚫 Forced signout of any existing session');
         
-        if (session?.user) {
-          console.log('📋 Found session for:', session.user.email);
-          
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', session.user.id)
-            .maybeSingle();
-          
-          if (profile?.role === 'admin') {
-            console.log('✅ Admin verified');
-            setShowLogin(false);
-          } else {
-            console.log('❌ Not admin');
-            setShowLogin(true);
-          }
-        } else {
-          console.log('❌ No session');
-          setShowLogin(true);
-        }
-      } catch (error) {
-        console.error('Auth error:', error);
+        // Clear everything 
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        // Always show login for admin access
         setShowLogin(true);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Force auth error:', error);
+        setShowLogin(true);
+        setIsLoading(false);
       }
-      
-      setIsLoading(false);
     };
 
-    // Set up auth state listener to detect changes (like logout)
+    // Set up auth state listener 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('🔄 Auth state changed:', event, session?.user?.email);
         
         if (event === 'SIGNED_OUT' || !session) {
-          console.log('🚪 User signed out, forcing login');
+          console.log('🚪 User signed out');
           setShowLogin(true);
           setIsLoading(false);
           return;
@@ -127,8 +116,8 @@ const AdminAuthGuard = () => {
       }
     );
 
-    // Initial auth check
-    checkAuth();
+    // Force the auth check
+    forceAuthCheck();
 
     // Cleanup subscription
     return () => {
