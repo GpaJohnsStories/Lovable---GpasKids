@@ -75,7 +75,7 @@ const CreateAdminComment = ({ isOpen, onClose }: CreateAdminCommentProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-blue-800">
             Create New Admin Comment (GpaJohn)
