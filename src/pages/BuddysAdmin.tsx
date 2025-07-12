@@ -52,110 +52,156 @@ const BuddysAdminContent = () => {
   );
 };
 
-// Main admin component with simple session management
+// Main admin component with simplified authentication
 const BuddysAdmin = () => {
+  // Start unauthenticated - only authenticate after proper verification
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
 
-  console.log('BuddysAdmin: Starting...');
+  console.log('BuddysAdmin: Starting, isAuthenticated:', isAuthenticated);
 
-  // Verify admin access
+  // Verify admin access with timeout and proper error handling
   const verifyAdminAccess = async (session: any): Promise<boolean> => {
-    if (!session?.user?.id) return false;
+    console.log('BuddysAdmin: Verifying admin access for session:', !!session);
+    
+    if (!session?.user?.id) {
+      console.log('BuddysAdmin: No valid session or user ID');
+      return false;
+    }
     
     try {
-      const { data: profile, error } = await supabase
+      // Add timeout to prevent hanging
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Admin verification timeout')), 10000)
+      );
+      
+      const verificationPromise = supabase
         .from('profiles')
         .select('role')
         .eq('id', session.user.id)
         .single();
       
+      const { data: profile, error } = await Promise.race([verificationPromise, timeoutPromise]) as any;
+      
       if (error) {
-        console.error('Error fetching profile:', error);
+        console.error('BuddysAdmin: Error fetching profile:', error);
         return false;
       }
       
-      return profile?.role === 'admin';
+      const isAdmin = profile?.role === 'admin';
+      console.log('BuddysAdmin: Admin verification result:', isAdmin);
+      return isAdmin;
     } catch (error) {
-      console.error('Error in verifyAdminAccess:', error);
+      console.error('BuddysAdmin: Error in verifyAdminAccess:', error);
       return false;
     }
   };
 
-  // Initialize authentication
+  // Clear authentication state immediately if verification fails
+  const clearAuthState = () => {
+    console.log('BuddysAdmin: Clearing auth state');
+    setIsAuthenticated(false);
+    setUser(null);
+  };
+
+  // Simplified authentication using only auth state listener
   useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        // Get current session
-        const { data: { session }, error } = await supabase.auth.getSession();
-        if (error) {
-          console.error('Error getting session:', error);
+    console.log('BuddysAdmin: Setting up auth listener');
+    
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('BuddysAdmin: Auth state changed:', event, !!session);
+        
+        if (event === 'SIGNED_OUT' || !session) {
+          clearAuthState();
           setIsLoading(false);
           return;
         }
         
-        // Check admin access if session exists
+        // For any session, verify admin access
         if (session) {
-          const isAdmin = await verifyAdminAccess(session);
-          if (isAdmin) {
-            setIsAuthenticated(true);
-            setUser(session.user);
+          try {
+            const isAdmin = await verifyAdminAccess(session);
+            if (isAdmin) {
+              console.log('BuddysAdmin: Admin access verified, setting authenticated');
+              setIsAuthenticated(true);
+              setUser(session.user);
+            } else {
+              console.log('BuddysAdmin: Admin access denied, clearing auth');
+              clearAuthState();
+              // Force logout if not admin
+              await supabase.auth.signOut();
+            }
+          } catch (error) {
+            console.error('BuddysAdmin: Error during admin verification:', error);
+            clearAuthState();
           }
         }
         
         setIsLoading(false);
-        
-        // Listen for auth state changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-          async (event, session) => {
-            console.log('Auth state changed:', event);
-            
-            if (event === 'SIGNED_OUT') {
-              setIsAuthenticated(false);
-              setUser(null);
-            } else if (session) {
-              const isAdmin = await verifyAdminAccess(session);
-              setIsAuthenticated(isAdmin);
-              setUser(isAdmin ? session.user : null);
-            }
-          }
-        );
+      }
+    );
 
-        return () => subscription.unsubscribe();
-      } catch (error) {
-        console.error('Error in initializeAuth:', error);
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (error) {
+        console.error('BuddysAdmin: Error getting initial session:', error);
+        setIsLoading(false);
+        return;
+      }
+      
+      // Trigger auth state change manually for existing session
+      if (session) {
+        console.log('BuddysAdmin: Found existing session, verifying admin access');
+        verifyAdminAccess(session).then(isAdmin => {
+          if (isAdmin) {
+            setIsAuthenticated(true);
+            setUser(session.user);
+          } else {
+            clearAuthState();
+            supabase.auth.signOut();
+          }
+          setIsLoading(false);
+        }).catch(error => {
+          console.error('BuddysAdmin: Error verifying existing session:', error);
+          clearAuthState();
+          setIsLoading(false);
+        });
+      } else {
         setIsLoading(false);
       }
-    };
+    });
 
-    const cleanup = initializeAuth();
     return () => {
-      if (cleanup && typeof cleanup.then === 'function') {
-        cleanup.then((cleanupFn) => {
-          if (cleanupFn && typeof cleanupFn === 'function') {
-            cleanupFn();
-          }
-        });
-      }
+      console.log('BuddysAdmin: Cleaning up auth listener');
+      subscription.unsubscribe();
     };
   }, []);
 
   const handleLoginSuccess = () => {
-    console.log("Login successful");
-    // Auth state listener will handle the update
+    console.log("BuddysAdmin: Login successful, auth listener will handle state update");
   };
 
   const handleLogout = async () => {
+    console.log('BuddysAdmin: Initiating logout');
     try {
+      // Clear local state immediately
+      clearAuthState();
+      
+      // Sign out from Supabase (let it handle its own cleanup)
       await supabase.auth.signOut();
-      setIsAuthenticated(false);
-      setUser(null);
-      localStorage.clear();
-      window.location.href = '/';
+      
+      // Small delay to ensure cleanup completes
+      setTimeout(() => {
+        // Redirect to Google search as requested
+        window.location.href = 'https://www.google.com';
+      }, 100);
     } catch (error) {
-      console.error('Logout error:', error);
-      window.location.href = '/';
+      console.error('BuddysAdmin: Logout error:', error);
+      // Force redirect even if logout fails
+      window.location.href = 'https://www.google.com';
     }
   };
 
