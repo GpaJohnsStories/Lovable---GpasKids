@@ -60,6 +60,7 @@ const App = () => (
           <Route path="/comment/:id" element={<CommentDetail />} />
           <Route path="/author/:authorName" element={<AuthorBio />} />
           <Route path="/admin" element={<SimpleAdmin />} />
+          <Route path="/buddys_admin/*" element={<Navigate to="/admin" replace />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/writing" element={<Writing />} />
