@@ -85,7 +85,7 @@ const Privacy = () => {
           
           <CardContent className="space-y-6">
             {/* Zero Cookies Section */}
-            <div className="bg-green-50 p-6 rounded-lg">
+            <div className="bg-green-50 p-6 rounded-lg relative">
               <div className="flex items-center space-x-3 mb-4">
                 <Cookie className="h-6 w-6 text-green-600" />
                 <h2 className="text-xl font-semibold text-green-800">Zero Cookies Promise</h2>
@@ -96,10 +96,27 @@ const Privacy = () => {
                 no cookies are stored on your device. No tracking, no analytics, 
                 no third-party cookies — just pure, uninterrupted storytelling.
               </p>
+              
+              {/* Web-text code indicator */}
+              <div style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                right: '12px',
+                fontSize: '12px',
+                color: '#333',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                opacity: 0.8,
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '2px 4px',
+                borderRadius: '3px'
+              }}>
+                SYS-PR1
+              </div>
             </div>
 
             {/* Cloudflare Security Cookie */}
-            <div className="bg-orange-50 p-6 rounded-lg">
+            <div className="bg-orange-50 p-6 rounded-lg relative">
               <div className="flex items-center space-x-3 mb-4">
                 <Shield className="h-6 w-6 text-orange-600" />
                 <h2 className="text-xl font-semibold text-orange-800">Cloudflare Security Protection</h2>
@@ -114,10 +131,27 @@ const Privacy = () => {
                 contains no personal information, and is managed entirely by Cloudflare's security systems. 
                 It helps keep our stories safe for children to enjoy.
               </p>
+              
+              {/* Web-text code indicator */}
+              <div style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                right: '12px',
+                fontSize: '12px',
+                color: '#333',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                opacity: 0.8,
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '2px 4px',
+                borderRadius: '3px'
+              }}>
+                SYS-PR2
+              </div>
             </div>
 
             {/* Local Storage Section */}
-            <div className="bg-indigo-50 p-6 rounded-lg">
+            <div className="bg-indigo-50 p-6 rounded-lg relative">
               <div className="flex items-center space-x-3 mb-4">
                 <HardDrive className="h-6 w-6 text-indigo-600" />
                 <h2 className="text-xl font-semibold text-indigo-800">Local Browser Storage</h2>
@@ -133,10 +167,27 @@ const Privacy = () => {
                 and automatically disappears when you close your browser tab. It contains no personal 
                 information — just the path to the story you were reading.
               </p>
+              
+              {/* Web-text code indicator */}
+              <div style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                right: '12px',
+                fontSize: '12px',
+                color: '#333',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                opacity: 0.8,
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '2px 4px',
+                borderRadius: '3px'
+              }}>
+                SYS-PR3
+              </div>
             </div>
 
             {/* No Tracking Section */}
-            <div className="bg-blue-50 p-6 rounded-lg">
+            <div className="bg-blue-50 p-6 rounded-lg relative">
               <div className="flex items-center space-x-3 mb-4">
                 <Eye className="h-6 w-6 text-blue-600" />
                 <h2 className="text-xl font-semibold text-blue-800">No Tracking or Analytics</h2>
@@ -146,10 +197,27 @@ const Privacy = () => {
                 Your reading habits, preferences, and browsing behavior remain completely private. 
                 We believe in respecting your digital privacy while you enjoy our stories.
               </p>
+              
+              {/* Web-text code indicator */}
+              <div style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                right: '12px',
+                fontSize: '12px',
+                color: '#333',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                opacity: 0.8,
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '2px 4px',
+                borderRadius: '3px'
+              }}>
+                SYS-PR4
+              </div>
             </div>
 
             {/* Data Collection Section */}
-            <div className="bg-purple-50 p-6 rounded-lg">
+            <div className="bg-purple-50 p-6 rounded-lg relative">
               <div className="flex items-center space-x-3 mb-4">
                 <Shield className="h-6 w-6 text-purple-600" />
                 <h2 className="text-xl font-semibold text-purple-800">What We Don't Collect</h2>
@@ -162,10 +230,27 @@ const Privacy = () => {
                 <p className="!text-purple-800 !text-base !font-normal leading-relaxed">• Device fingerprints</p>
                 <p className="!text-purple-800 !text-base !font-normal leading-relaxed">• Location data</p>
               </div>
+              
+              {/* Web-text code indicator */}
+              <div style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                right: '12px',
+                fontSize: '12px',
+                color: '#333',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                opacity: 0.8,
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '2px 4px',
+                borderRadius: '3px'
+              }}>
+                SYS-PR5
+              </div>
             </div>
 
             {/* Admin Access Section */}
-            <div className="bg-amber-50 p-6 rounded-lg">
+            <div className="bg-amber-50 p-6 rounded-lg relative">
               <div className="flex items-center space-x-3 mb-4">
                 <Lock className="h-6 w-6 text-amber-600" />
                 <h2 className="text-xl font-semibold text-amber-800">Secure Admin Access</h2>
@@ -183,22 +268,73 @@ const Privacy = () => {
                 site's administrative functions while keeping all visitor interactions completely 
                 secure and private.
               </p>
+              
+              {/* Web-text code indicator */}
+              <div style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                right: '12px',
+                fontSize: '12px',
+                color: '#333',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                opacity: 0.8,
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '2px 4px',
+                borderRadius: '3px'
+              }}>
+                SYS-PR6
+              </div>
             </div>
 
             {/* Contact Section */}
-            <div className="bg-gray-50 p-6 rounded-lg">
+            <div className="bg-gray-50 p-6 rounded-lg relative">
               <h2 className="text-xl font-semibold text-gray-800 mb-4">Questions About Our Privacy Policy?</h2>
               <p className="!text-gray-700 !text-base !font-normal leading-relaxed">
                 If you have any questions about our cookie-free approach or privacy practices, 
                 please feel free to contact us by leaving a comment on our <a href="/comments" className="text-blue-600 hover:text-blue-800 underline">Comment Page</a>. We're always happy to discuss our commitment 
                 to protecting your privacy while sharing Grandpa's stories.
               </p>
+              
+              {/* Web-text code indicator */}
+              <div style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                right: '12px',
+                fontSize: '12px',
+                color: '#333',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                opacity: 0.8,
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '2px 4px',
+                borderRadius: '3px'
+              }}>
+                SYS-PR7
+              </div>
             </div>
 
-            <div className="text-center pt-6">
+            <div className="text-center pt-6 relative">
               <p className="text-amber-600 italic">
                 "Privacy is not about hiding something.<br />It's about protecting everything that matters."
               </p>
+              
+              {/* Web-text code indicator */}
+              <div style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                right: '12px',
+                fontSize: '12px',
+                color: '#333',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                opacity: 0.8,
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '2px 4px',
+                borderRadius: '3px'
+              }}>
+                SYS-PRQ
+              </div>
             </div>
           </CardContent>
         </Card>
