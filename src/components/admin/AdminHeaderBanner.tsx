@@ -18,7 +18,12 @@ interface AdminNavButton {
   openInNewTab?: boolean;
 }
 
-const AdminHeaderBanner = () => {
+interface AdminHeaderBannerProps {
+  onSectionChange?: (section: string) => void;
+  currentSection?: string;
+}
+
+const AdminHeaderBanner = ({ onSectionChange, currentSection = 'dashboard' }: AdminHeaderBannerProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
@@ -32,7 +37,7 @@ const AdminHeaderBanner = () => {
   const navButtons: AdminNavButton[] = [
     {
       name: 'Dashboard',
-      path: '/buddys_admin/dashboard',
+      path: 'dashboard',
       icon: LayoutDashboard,
       bgColor: 'bg-gradient-to-b from-green-400 via-green-500 to-green-600',
       hoverColor: 'hover:from-green-500 hover:via-green-600 hover:to-green-700',
@@ -43,7 +48,7 @@ const AdminHeaderBanner = () => {
     },
     {
       name: 'Stories',
-      path: '/buddys_admin/stories',
+      path: 'stories',
       icon: FileText,
       bgColor: 'bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700',
       hoverColor: 'hover:from-orange-600 hover:via-orange-700 hover:to-orange-800',
@@ -54,7 +59,7 @@ const AdminHeaderBanner = () => {
     },
     {
       name: 'Comments',
-      path: '/buddys_admin/comments',
+      path: 'comments',
       icon: MessageSquare,
       bgColor: 'bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500',
       hoverColor: 'hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600',
@@ -65,7 +70,7 @@ const AdminHeaderBanner = () => {
     },
     {
       name: 'Deployment',
-      path: '/buddys_admin/deployment',
+      path: 'deployment',
       icon: Globe,
       bgColor: 'bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700',
       hoverColor: 'hover:from-blue-600 hover:via-blue-700 hover:to-blue-800',
@@ -76,15 +81,15 @@ const AdminHeaderBanner = () => {
     },
     {
       name: 'Voice Preview',
-      path: '/buddys_admin/voice-preview',
+      path: 'voice-preview',
       icon: Volume2,
       bgColor: 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600',
       hoverColor: 'hover:from-purple-500 hover:via-purple-600 hover:to-purple-700',
       shadowColor: 'shadow-[0_6px_0_#7c3aed,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-white',
-      description: 'Preview stories with various voices (opens in new tab)',
-      openInNewTab: true
+      description: 'Preview stories with various voices',
+      openInNewTab: false
     }
   ];
 
@@ -108,6 +113,51 @@ const AdminHeaderBanner = () => {
                 🔒 Secure
               </div>
             </div>
+            <nav className="flex gap-2">
+              {navButtons.map((button) => {
+                const isActive = currentSection === button.path;
+                const Icon = button.icon;
+                
+                const handleButtonClick = () => {
+                  if (onSectionChange) {
+                    onSectionChange(button.path);
+                  }
+                  scrollToTop();
+                };
+
+                return (
+                  <div 
+                    key={button.name}
+                    className="relative"
+                    onMouseEnter={() => setHoveredButton(button.name)}
+                    onMouseLeave={() => setHoveredButton(null)}
+                  >
+                    <Button
+                      variant="ghost"
+                      onClick={handleButtonClick}
+                      className={`
+                        transition-all duration-200 border font-fun
+                        ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
+                        hover:transform hover:translate-y-1 active:translate-y-2 
+                        active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
+                        ${isActive 
+                          ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
+                          : button.hoverColor
+                        }
+                      `}
+                    >
+                      <Icon className="h-4 w-4 mr-2" />
+                      {button.name}
+                    </Button>
+                    {hoveredButton === button.name && (
+                      <div className="nav-bubble opacity-100 visible">
+                        {button.description}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </nav>
           </div>
           <Button 
             onClick={handleLogout} 
