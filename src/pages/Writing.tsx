@@ -161,20 +161,6 @@ const Writing = () => {
             <div className="relative z-10">
               <StorySubmissionForm />
             </div>
-            
-            {/* Web-text code indicator */}
-            <div style={{ 
-              position: 'absolute',
-              bottom: '8px',
-              right: '12px',
-              fontSize: '12px',
-              color: '#666',
-              fontFamily: 'monospace',
-              fontWeight: 'normal',
-              opacity: 0.7
-            }}>
-              SYS-LGN
-            </div>
           </div>
         </main>
         
