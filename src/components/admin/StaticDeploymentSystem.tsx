@@ -46,6 +46,12 @@ const PAGE_MAPPINGS: PageMapping[] = [
     pagePath: 'src/components/WelcomeText.tsx',
     placeholderType: 'content',
     description: 'Homepage welcome message and intro text'
+  },
+  {
+    storyCode: 'SYS-LIB',
+    pagePath: 'src/components/LibraryInstructions.tsx',
+    placeholderType: 'content',
+    description: 'Library page instructional text'
   }
   // Other page mappings removed - titles like "Latest Announcements" are now hardcoded
 ];

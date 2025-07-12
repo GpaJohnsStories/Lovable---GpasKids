@@ -4,6 +4,7 @@ import StoriesTable from "@/components/admin/StoriesTable";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import ScrollToTop from "@/components/ScrollToTop";
 import ContentProtection from "@/components/ContentProtection";
+import LibraryInstructions from "@/components/LibraryInstructions";
 
 const Library = () => {
   const handleEditStory = (story: any) => {
