@@ -58,6 +58,18 @@ const PAGE_MAPPINGS: PageMapping[] = [
     pagePath: 'src/components/CommentsWelcome.tsx',
     placeholderType: 'content',
     description: 'Comments page welcome section and rules'
+  },
+  {
+    storyCode: 'SYS-AGJ',
+    pagePath: 'src/pages/About.tsx',
+    placeholderType: 'content',
+    description: 'About page - About Grandpa John section content'
+  },
+  {
+    storyCode: 'SYS-BDY',
+    pagePath: 'src/pages/About.tsx',
+    placeholderType: 'content',
+    description: 'About page - About Buddy section content'
   }
   // Other page mappings removed - titles like "Latest Announcements" are now hardcoded
 ];
