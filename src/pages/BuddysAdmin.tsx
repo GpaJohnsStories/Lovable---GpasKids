@@ -60,6 +60,12 @@ const AdminAuthGuard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  console.log('🔐 AdminAuthGuard: Component mounted, current state:', { 
+    user: user?.email, 
+    isLoading, 
+    isAuthenticated 
+  });
+
   useEffect(() => {
     console.log('🔄 Setting up auth listener...');
     
