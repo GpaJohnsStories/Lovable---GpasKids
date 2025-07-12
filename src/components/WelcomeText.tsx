@@ -39,7 +39,6 @@ const WelcomeText = () => {
                 </Tooltip>
               </div>
               <div className="flex flex-col justify-center text-center md:text-left flex-1">
-                {/* STORY_CODE:SYS-WEL:CONTENT */}
                 <h1 className="text-3xl md:text-4xl font-bold text-blue-900 leading-relaxed mb-6">
                   Hi there!
                 </h1>
@@ -64,7 +63,6 @@ const WelcomeText = () => {
                     {' '}or the Privacy button in the menu.
                   </p>
                 </div>
-                {/* END STORY_CODE:SYS-WEL:CONTENT */}
               </div>
             </div>
             

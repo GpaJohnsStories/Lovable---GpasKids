@@ -41,50 +41,8 @@ interface PageMapping {
 
 // Define the mapping of web-text codes to page locations
 const PAGE_MAPPINGS: PageMapping[] = [
-  {
-    storyCode: 'WELCOME_TEXT',
-    pagePath: 'src/pages/Index.tsx',
-    placeholderType: 'content',
-    description: 'Welcome message on homepage'
-  },
-  {
-    storyCode: 'ABOUT_BUDDY',
-    pagePath: 'src/pages/About.tsx',
-    placeholderType: 'both',
-    description: 'About Buddy story content and audio'
-  },
-  {
-    storyCode: 'PRIVACY_POLICY',
-    pagePath: 'src/pages/Privacy.tsx',
-    placeholderType: 'content',
-    description: 'Privacy policy content'
-  },
-  {
-    storyCode: 'HELP_GPA',
-    pagePath: 'src/pages/HelpGpa.tsx',
-    placeholderType: 'content',
-    description: 'Help Grandpa John content'
-  },
-  // Home Page Sections
-  {
-    storyCode: 'SYS-WEL',
-    pagePath: 'src/components/WelcomeText.tsx',
-    placeholderType: 'content',
-    description: 'Homepage welcome message and intro text'
-  },
-  {
-    storyCode: 'SYS-ANN',
-    pagePath: 'src/components/GpaJohnComments.tsx',
-    placeholderType: 'content',
-    description: 'Announcements section header on homepage'
-  }
-  // Add your new SYS- code mappings here:
-  // {
-  //   storyCode: 'SYS-ABC',
-  //   pagePath: 'src/pages/YourPage.tsx',
-  //   placeholderType: 'content',
-  //   description: 'Your web-text description'
-  // }
+  // Page mappings have been removed - titles and content are now hardcoded in components
+  // No more dynamic story code replacement for titles like "Latest Announcements"
 ];
 
 const StaticDeploymentSystem = () => {
