@@ -49,26 +49,39 @@ const PAGE_MAPPINGS: PageMapping[] = [
   }
 ];
 
-async function readFile(filePath: string): Promise<string> {
-  try {
-    // In a real implementation, this would read from filesystem
-    // For now, we'll simulate file reading
-    console.log(`📖 Reading file: ${filePath}`);
-    return `/* File content for ${filePath} would be read here */`;
-  } catch (error) {
-    throw new Error(`Failed to read file ${filePath}: ${error.message}`);
-  }
-}
+// Store content in database for dynamic loading
+async function storeContentForDeployment(
+  supabase: any,
+  storyCode: string, 
+  content: string, 
+  photoUrl?: string,
+  audioUrl?: string,
+  title?: string,
+  author?: string
+) {
+  const deploymentData = {
+    story_code: storyCode,
+    content: content,
+    photo_url: photoUrl || null,
+    audio_url: audioUrl || null,
+    title: title || null,
+    author: author || null,
+    deployed_at: new Date().toISOString(),
+    is_active: true
+  };
 
-async function writeFile(filePath: string, content: string): Promise<void> {
-  try {
-    // In a real implementation, this would write to filesystem
-    console.log(`📝 Writing file: ${filePath}`);
-    console.log(`📄 Content length: ${content.length} characters`);
-    // File would be written here
-  } catch (error) {
-    throw new Error(`Failed to write file ${filePath}: ${error.message}`);
+  // Insert or update deployment record
+  const { error } = await supabase
+    .from('deployed_content')
+    .upsert(deploymentData, { 
+      onConflict: 'story_code'
+    });
+
+  if (error) {
+    throw new Error(`Failed to store deployment data: ${error.message}`);
   }
+
+  console.log(`✅ Stored deployment data for ${storyCode}`);
 }
 
 function replaceContentSection(
@@ -144,7 +157,7 @@ function replaceAudioSection(
 }
 
 async function deployStaticContent(storyIds: string[]) {
-  console.log('🚀 Starting enhanced static content deployment for stories:', storyIds);
+  console.log('🚀 Starting database-based content deployment for stories:', storyIds);
   
   // Initialize Supabase client
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -170,7 +183,6 @@ async function deployStaticContent(storyIds: string[]) {
     console.log(`📚 Found ${stories.length} stories to deploy`);
 
     const deploymentResults = [];
-    const filesModified = new Set<string>();
 
     for (const story of stories) {
       console.log(`🔄 Processing story: ${story.story_code} - ${story.title}`);
@@ -189,43 +201,21 @@ async function deployStaticContent(storyIds: string[]) {
       }
 
       try {
-        console.log(`📝 Deploying to: ${mapping.pagePath}`);
-        
-        // Read the current file content
-        let fileContent = await readFile(mapping.pagePath);
+        console.log(`📝 Storing content for: ${mapping.pagePath}`);
         
         // Get the photo URL if specified
         const photoUrl = mapping.photoFieldName ? story[mapping.photoFieldName] : null;
         
-        // Replace content section
-        if (mapping.placeholderType === 'content' || mapping.placeholderType === 'both') {
-          fileContent = replaceContentSection(
-            fileContent, 
-            story.story_code, 
-            story.content || '', 
-            photoUrl
-          );
-          console.log(`✅ Updated content section for ${story.story_code}`);
-          if (photoUrl) {
-            console.log(`🖼️ Updated photo from ${mapping.photoFieldName}: ${photoUrl}`);
-          }
-        }
-        
-        // Replace audio section if needed
-        if (mapping.placeholderType === 'audio' || mapping.placeholderType === 'both') {
-          fileContent = replaceAudioSection(
-            fileContent,
-            story.story_code,
-            story.audio_url,
-            story.title,
-            story.author
-          );
-          console.log(`🎵 Updated audio section for ${story.story_code}`);
-        }
-        
-        // Write the updated file
-        await writeFile(mapping.pagePath, fileContent);
-        filesModified.add(mapping.pagePath);
+        // Store content in database for dynamic loading
+        await storeContentForDeployment(
+          supabase,
+          story.story_code,
+          story.content || '',
+          photoUrl,
+          story.audio_url,
+          story.title,
+          story.author
+        );
 
         deploymentResults.push({
           storyCode: story.story_code,
@@ -237,6 +227,11 @@ async function deployStaticContent(storyIds: string[]) {
           hasPhoto: !!photoUrl,
           photoFieldUsed: mapping.photoFieldName || null
         });
+
+        console.log(`✅ Successfully deployed ${story.story_code}`);
+        if (photoUrl) {
+          console.log(`🖼️ Included photo from ${mapping.photoFieldName}: ${photoUrl}`);
+        }
 
       } catch (deployError) {
         console.error(`❌ Failed to deploy story ${story.story_code}:`, deployError);
@@ -252,18 +247,15 @@ async function deployStaticContent(storyIds: string[]) {
     const failCount = deploymentResults.filter(r => !r.success).length;
 
     console.log(`🎉 Deployment completed: ${successCount} successful, ${failCount} failed`);
-    console.log(`📄 Files modified: ${Array.from(filesModified).join(', ')}`);
 
     return {
       success: true,
-      message: `Successfully deployed ${successCount} stories to ${filesModified.size} files`,
+      message: `Successfully deployed ${successCount} stories to database`,
       results: deploymentResults,
-      filesModified: Array.from(filesModified),
       summary: {
         total: deploymentResults.length,
         successful: successCount,
-        failed: failCount,
-        filesModified: filesModified.size
+        failed: failCount
       }
     };
 
