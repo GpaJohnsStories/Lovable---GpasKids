@@ -8,48 +8,26 @@ const corsHeaders = {
 interface PageMapping {
   storyCode: string;
   pagePath: string;
-  placeholderType: 'content' | 'audio' | 'both';
   description: string;
-  photoFieldName?: string; // Which photo field to use (photo_link_1, photo_link_2, etc.)
+  photoFieldName?: string;
 }
 
 // Define the mapping of story codes to page locations
 const PAGE_MAPPINGS: PageMapping[] = [
   {
-    storyCode: 'SYS-WEL',
-    pagePath: 'src/components/WelcomeText.tsx',
-    placeholderType: 'content',
-    description: 'Homepage welcome message and intro text'
-  },
-  {
-    storyCode: 'SYS-LIB',
-    pagePath: 'src/components/LibraryInstructions.tsx',
-    placeholderType: 'content',
-    description: 'Library page instructional text'
-  },
-  {
-    storyCode: 'SYS-CC1',
-    pagePath: 'src/components/CommentsWelcome.tsx',
-    placeholderType: 'content',
-    description: 'Comments page welcome section and rules'
-  },
-  {
     storyCode: 'SYS-AGJ',
     pagePath: 'src/pages/About.tsx',
-    placeholderType: 'content',
     description: 'About page - About Grandpa John section content',
     photoFieldName: 'photo_link_1'
   },
   {
     storyCode: 'SYS-BDY',
     pagePath: 'src/pages/About.tsx',
-    placeholderType: 'content',
     description: 'About page - About Buddy section content',
     photoFieldName: 'photo_link_1'
   }
 ];
 
-// Store content in database for dynamic loading
 async function storeContentForDeployment(
   supabase: any,
   storyCode: string, 
@@ -70,7 +48,6 @@ async function storeContentForDeployment(
     is_active: true
   };
 
-  // Insert or update deployment record
   const { error } = await supabase
     .from('deployed_content')
     .upsert(deploymentData, { 
@@ -84,17 +61,14 @@ async function storeContentForDeployment(
   console.log(`✅ Stored deployment data for ${storyCode}`);
 }
 
-
 async function deployStaticContent(storyIds: string[]) {
   console.log('🚀 Starting database-based content deployment for stories:', storyIds);
   
-  // Initialize Supabase client
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
   try {
-    // Fetch the selected stories with all photo fields
     const { data: stories, error: fetchError } = await supabase
       .from('stories')
       .select('*')
@@ -116,7 +90,6 @@ async function deployStaticContent(storyIds: string[]) {
     for (const story of stories) {
       console.log(`🔄 Processing story: ${story.story_code} - ${story.title}`);
       
-      // Find the corresponding page mapping
       const mapping = PAGE_MAPPINGS.find(m => m.storyCode === story.story_code);
       
       if (!mapping) {
@@ -132,10 +105,8 @@ async function deployStaticContent(storyIds: string[]) {
       try {
         console.log(`📝 Storing content for: ${mapping.pagePath}`);
         
-        // Get the photo URL if specified
         const photoUrl = mapping.photoFieldName ? story[mapping.photoFieldName] : null;
         
-        // Store content in database for dynamic loading
         await storeContentForDeployment(
           supabase,
           story.story_code,
@@ -195,7 +166,6 @@ async function deployStaticContent(storyIds: string[]) {
 }
 
 Deno.serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
@@ -216,7 +186,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log(`🚀 Enhanced deployment request received for ${storyIds.length} stories`);
+    console.log(`🚀 Deployment request received for ${storyIds.length} stories`);
 
     const result = await deployStaticContent(storyIds);
 
@@ -225,12 +195,12 @@ Deno.serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Enhanced deployment function error:', error);
+    console.error('❌ Deployment function error:', error);
     
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: error.message || 'Enhanced deployment failed' 
+        error: error.message || 'Deployment failed' 
       }),
       {
         status: 500,
