@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +12,7 @@ interface SimpleAdminLoginProps {
 }
 
 const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -205,7 +207,7 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
               <div className="text-center">
                 <button
                   type="button"
-                  onClick={() => window.location.href = '/forgot-password'}
+                  onClick={() => navigate('/forgot-password')}
                   className="text-sm text-muted-foreground hover:text-primary underline"
                 >
                   Forgot Password?

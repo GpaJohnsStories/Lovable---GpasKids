@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import SimpleAdminLogin from "@/components/admin/SimpleAdminLogin";
 
 const SimpleAdmin = () => {
+  const navigate = useNavigate();
+  
   const handleLoginSuccess = () => {
-    // Redirect to the full admin dashboard
-    window.location.href = '/buddys_admin';
+    // Use React Router navigation instead of window.location
+    navigate('/buddys_admin');
   };
 
   return (
