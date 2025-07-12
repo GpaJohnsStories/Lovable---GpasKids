@@ -103,8 +103,22 @@ const AdminAuthGuard = () => {
 
   const handleLogout = async () => {
     console.log('Logging out...');
-    await supabase.auth.signOut();
-    setShowLogin(true);
+    
+    try {
+      // Sign out from Supabase
+      await supabase.auth.signOut();
+      
+      // Clear any local storage items
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      // Force a complete page reload to ensure everything is cleared
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Even if there's an error, force reload to clear everything
+      window.location.href = '/';
+    }
   };
 
   if (isLoading) {
