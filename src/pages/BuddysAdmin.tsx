@@ -95,7 +95,38 @@ const AdminAuthGuard = () => {
       }
     };
     
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('🔐 Auth state changed:', event, !!session);
+        
+        if (event === 'SIGNED_OUT' || !session) {
+          console.log('🔓 User signed out or no session');
+          setShowLogin(true);
+        } else if (event === 'SIGNED_IN' && session) {
+          console.log('🔐 User signed in, checking admin role...');
+          
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .maybeSingle();
+          
+          if (profile?.role === 'admin') {
+            console.log('✅ User is admin, allowing access');
+            setShowLogin(false);
+          } else {
+            console.log('❌ User is not admin');
+            setShowLogin(true);
+          }
+        }
+      }
+    );
+    
     checkSession();
+    
+    // Cleanup subscription on unmount
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleLoginSuccess = () => {
@@ -104,22 +135,38 @@ const AdminAuthGuard = () => {
   };
 
   const handleLogout = async () => {
-    console.log('Logging out...');
+    console.log('🔓 Logging out...');
     
     try {
       // Sign out from Supabase
-      await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('❌ Logout error:', error);
+      } else {
+        console.log('✅ Successfully signed out from Supabase');
+      }
       
       // Clear any local storage items
       localStorage.clear();
       sessionStorage.clear();
+      console.log('🧹 Cleared local and session storage');
+      
+      // Reset the login state immediately
+      setShowLogin(true);
+      console.log('🔐 Reset to show login screen');
       
       // Force a complete page reload to ensure everything is cleared
-      window.location.href = '/';
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 500);
+      
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error('💥 Logout exception:', error);
       // Even if there's an error, force reload to clear everything
-      window.location.href = '/';
+      setShowLogin(true);
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 500);
     }
   };
 
