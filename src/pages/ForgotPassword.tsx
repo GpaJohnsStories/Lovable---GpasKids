@@ -24,8 +24,11 @@ const ForgotPassword = () => {
     setIsLoading(true);
 
     try {
+      const redirectUrl = "https://37a1286c-a0bf-481b-8daa-ca6740409270.lovableproject.com/reset-password";
+      console.log('Using redirect URL:', redirectUrl);
+      
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `https://37a1286c-a0bf-481b-8daa-ca6740409270.lovableproject.com/reset-password`,
+        redirectTo: redirectUrl,
       });
 
       if (error) {
