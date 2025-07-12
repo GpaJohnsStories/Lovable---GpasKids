@@ -41,8 +41,13 @@ interface PageMapping {
 
 // Define the mapping of web-text codes to page locations
 const PAGE_MAPPINGS: PageMapping[] = [
-  // Page mappings have been removed - titles and content are now hardcoded in components
-  // No more dynamic story code replacement for titles like "Latest Announcements"
+  {
+    storyCode: 'SYS-WEL',
+    pagePath: 'src/components/WelcomeText.tsx',
+    placeholderType: 'content',
+    description: 'Homepage welcome message and intro text'
+  }
+  // Other page mappings removed - titles like "Latest Announcements" are now hardcoded
 ];
 
 const StaticDeploymentSystem = () => {
