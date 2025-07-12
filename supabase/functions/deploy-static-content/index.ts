@@ -5,70 +5,38 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-interface PageMapping {
-  storyCode: string;
-  pagePath: string;
-  description: string;
-  photoFieldName?: string;
-}
-
-// Define the mapping of story codes to page locations
-const PAGE_MAPPINGS: PageMapping[] = [
-  {
-    storyCode: 'SYS-AGJ',
-    pagePath: 'src/pages/About.tsx',
-    description: 'About page - About Grandpa John section content',
-    photoFieldName: 'photo_link_1'
-  },
-  {
-    storyCode: 'SYS-BDY',
-    pagePath: 'src/pages/About.tsx',
-    description: 'About page - About Buddy section content',
-    photoFieldName: 'photo_link_1'
+Deno.serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
   }
-];
-
-async function storeContentForDeployment(
-  supabase: any,
-  storyCode: string, 
-  content: string, 
-  photoUrl?: string,
-  audioUrl?: string,
-  title?: string,
-  author?: string
-) {
-  const deploymentData = {
-    story_code: storyCode,
-    content: content,
-    photo_url: photoUrl || null,
-    audio_url: audioUrl || null,
-    title: title || null,
-    author: author || null,
-    deployed_at: new Date().toISOString(),
-    is_active: true
-  };
-
-  const { error } = await supabase
-    .from('deployed_content')
-    .upsert(deploymentData, { 
-      onConflict: 'story_code'
-    });
-
-  if (error) {
-    throw new Error(`Failed to store deployment data: ${error.message}`);
-  }
-
-  console.log(`✅ Stored deployment data for ${storyCode}`);
-}
-
-async function deployStaticContent(storyIds: string[]) {
-  console.log('🚀 Starting database-based content deployment for stories:', storyIds);
-  
-  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-  const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
   try {
+    console.log('🚀 Deploy function started');
+    
+    const { storyIds } = await req.json();
+
+    if (!storyIds || !Array.isArray(storyIds) || storyIds.length === 0) {
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: 'Please provide an array of story IDs to deploy' 
+        }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
+    console.log(`📚 Processing ${storyIds.length} stories`);
+
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Fetch the selected stories
     const { data: stories, error: fetchError } = await supabase
       .from('stories')
       .select('*')
@@ -90,48 +58,39 @@ async function deployStaticContent(storyIds: string[]) {
     for (const story of stories) {
       console.log(`🔄 Processing story: ${story.story_code} - ${story.title}`);
       
-      const mapping = PAGE_MAPPINGS.find(m => m.storyCode === story.story_code);
-      
-      if (!mapping) {
-        console.log(`⚠️ No page mapping found for story code: ${story.story_code}`);
-        deploymentResults.push({
-          storyCode: story.story_code,
-          success: false,
-          error: 'No page mapping found'
-        });
-        continue;
-      }
-
       try {
-        console.log(`📝 Storing content for: ${mapping.pagePath}`);
-        
-        const photoUrl = mapping.photoFieldName ? story[mapping.photoFieldName] : null;
-        
-        await storeContentForDeployment(
-          supabase,
-          story.story_code,
-          story.content || '',
-          photoUrl,
-          story.audio_url,
-          story.title,
-          story.author
-        );
+        // Store content in database
+        const deploymentData = {
+          story_code: story.story_code,
+          content: story.content || '',
+          photo_url: story.photo_link_1 || null,
+          audio_url: story.audio_url || null,
+          title: story.title || null,
+          author: story.author || null,
+          deployed_at: new Date().toISOString(),
+          is_active: true
+        };
+
+        const { error: upsertError } = await supabase
+          .from('deployed_content')
+          .upsert(deploymentData, { 
+            onConflict: 'story_code'
+          });
+
+        if (upsertError) {
+          throw new Error(`Failed to store deployment data: ${upsertError.message}`);
+        }
 
         deploymentResults.push({
           storyCode: story.story_code,
           title: story.title,
-          pagePath: mapping.pagePath,
           success: true,
           contentLength: story.content?.length || 0,
           hasAudio: !!story.audio_url,
-          hasPhoto: !!photoUrl,
-          photoFieldUsed: mapping.photoFieldName || null
+          hasPhoto: !!story.photo_link_1
         });
 
         console.log(`✅ Successfully deployed ${story.story_code}`);
-        if (photoUrl) {
-          console.log(`🖼️ Included photo from ${mapping.photoFieldName}: ${photoUrl}`);
-        }
 
       } catch (deployError) {
         console.error(`❌ Failed to deploy story ${story.story_code}:`, deployError);
@@ -148,7 +107,7 @@ async function deployStaticContent(storyIds: string[]) {
 
     console.log(`🎉 Deployment completed: ${successCount} successful, ${failCount} failed`);
 
-    return {
+    return new Response(JSON.stringify({
       success: true,
       message: `Successfully deployed ${successCount} stories to database`,
       results: deploymentResults,
@@ -157,40 +116,7 @@ async function deployStaticContent(storyIds: string[]) {
         successful: successCount,
         failed: failCount
       }
-    };
-
-  } catch (error) {
-    console.error('❌ Deployment failed:', error);
-    throw error;
-  }
-}
-
-Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders });
-  }
-
-  try {
-    const { storyIds } = await req.json();
-
-    if (!storyIds || !Array.isArray(storyIds) || storyIds.length === 0) {
-      return new Response(
-        JSON.stringify({ 
-          success: false, 
-          error: 'Please provide an array of story IDs to deploy' 
-        }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-    }
-
-    console.log(`🚀 Deployment request received for ${storyIds.length} stories`);
-
-    const result = await deployStaticContent(storyIds);
-
-    return new Response(JSON.stringify(result), {
+    }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
