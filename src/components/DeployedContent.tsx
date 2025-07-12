@@ -97,7 +97,8 @@ export const DeployedContent = ({
       {/* Content */}
       {content.content && (
         <div 
-          className="prose prose-lg max-w-none"
+          className="deployed-story-content"
+          style={{ fontFamily: 'Georgia, serif' }}
           dangerouslySetInnerHTML={{ __html: content.content }}
         />
       )}
