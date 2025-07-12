@@ -54,44 +54,73 @@ const BuddysAdminContent = () => {
   );
 };
 
-// Simple authentication guard component
+// FORCE AUTHENTICATION - No bypassing allowed
 const AdminAuthGuard = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  console.log('🔐 AdminAuthGuard: Component mounted, current state:', { 
-    user: user?.email, 
-    isLoading, 
-    isAuthenticated 
-  });
+  console.log('🔐 AdminAuthGuard: Component mounted');
 
   useEffect(() => {
-    console.log('🔄 Setting up auth listener...');
+    console.log('🔄 Starting FORCED auth check...');
     
-    // Check current session
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      console.log('📋 Initial session check:', session?.user?.email);
+    // FORCE logout first to ensure clean state
+    const forceAuthCheck = async () => {
+      console.log('🚪 Forcing logout to ensure clean auth state...');
+      await supabase.auth.signOut();
       
-      if (session?.user) {
-        setUser(session.user);
-        setIsAuthenticated(true);
-      }
-      setIsLoading(false);
+      // Wait a moment for logout to complete
+      setTimeout(() => {
+        console.log('✅ Logout complete, showing login form');
+        setIsLoading(false);
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+        setUser(null);
+      }, 500);
     };
 
-    // Set up auth state listener
+    forceAuthCheck();
+
+    // Set up auth state listener for future logins
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         console.log('🔄 Auth state change:', event, session?.user?.email);
-        setUser(session?.user ?? null);
-        setIsAuthenticated(!!session?.user);
+        
+        if (session?.user) {
+          console.log('👤 User logged in, checking admin role...');
+          
+          // Check admin role
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .maybeSingle();
+          
+          console.log('📋 Profile check result:', profile);
+          
+          if (profile?.role === 'admin') {
+            console.log('✅ Admin access granted');
+            setUser(session.user);
+            setIsAuthenticated(true);
+            setIsAdmin(true);
+          } else {
+            console.log('❌ Not admin, forcing logout');
+            await supabase.auth.signOut();
+            setIsAuthenticated(false);
+            setIsAdmin(false);
+            setUser(null);
+          }
+        } else {
+          console.log('❌ No user session');
+          setUser(null);
+          setIsAuthenticated(false);
+          setIsAdmin(false);
+        }
         setIsLoading(false);
       }
     );
-
-    checkSession();
 
     return () => {
       console.log('🧹 Cleaning up auth subscription');
@@ -100,16 +129,14 @@ const AdminAuthGuard = () => {
   }, []);
 
   const handleLoginSuccess = () => {
-    console.log('✅ Login success, showing admin content');
+    console.log('✅ Login success callback triggered');
     // The auth state change listener will handle the state update
   };
 
-  const handleLogout = async () => {
-    console.log('🚪 Logging out...');
-    await supabase.auth.signOut();
-  };
+  console.log('🔐 Current auth state:', { isLoading, isAuthenticated, isAdmin, userEmail: user?.email });
 
   if (isLoading) {
+    console.log('⏳ Showing loading spinner');
     return (
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100 flex items-center justify-center">
         <LoadingSpinner />
@@ -117,15 +144,20 @@ const AdminAuthGuard = () => {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !isAdmin) {
+    console.log('🔐 Showing login form - not authenticated or not admin');
     return <SimpleAdminLogin onSuccess={handleLoginSuccess} />;
   }
 
+  console.log('✅ Showing admin content');
   return (
     <ContentProtection enableProtection={false}>
       <div className="relative">
         <button
-          onClick={handleLogout}
+          onClick={async () => {
+            console.log('🚪 Manual logout clicked');
+            await supabase.auth.signOut();
+          }}
           className="absolute top-4 right-4 z-50 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
         >
           Logout
