@@ -144,87 +144,86 @@ const WebTextDeploymentDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-amber-800">
-            <Globe className="h-5 w-5" />
+      <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
+        <DialogHeader className="pb-2">
+          <DialogTitle className="text-center text-red-600 font-bold text-xl">
             Deploy WebText to Web Page
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
-          <Alert className="mb-4">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>
+        <div className="space-y-3">
+          <div className="text-center py-2">
+            <p className="text-blue-600 font-medium text-sm">
               This will deploy the WebText content directly to the web page file.
-            </AlertDescription>
-          </Alert>
+            </p>
+          </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-4">
             {/* WebText Details Column */}
-            <div className="p-4 border rounded-lg bg-blue-50">
-              <h3 className="font-semibold mb-3 flex items-center gap-2">
+            <div className="p-3 border rounded-lg bg-blue-50">
+              <h3 className="font-semibold mb-2 flex items-center gap-2 text-sm">
                 <FileText className="h-4 w-4" />
                 WebText Details
               </h3>
-              <div className="space-y-2 text-sm">
+              <div className="space-y-1 text-sm">
                 <div className="flex justify-between">
                   <span className="font-medium">Code:</span>
-                  <Badge variant="secondary">{story.story_code}</Badge>
+                  <Badge variant="secondary" className="text-xs">{story.story_code}</Badge>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Title:</span>
-                  <span className="truncate ml-2">{story.title}</span>
+                  <span className="truncate ml-2 text-xs">{story.title}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Author:</span>
-                  <span>{story.author}</span>
+                  <span className="text-xs">{story.author}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Updated:</span>
-                  <span>{new Date(story.updated_at).toLocaleDateString()}</span>
+                  <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
                 </div>
               </div>
             </div>
 
             {/* Deployment Destination Column */}
-            <div className={`p-4 border rounded-lg ${mapping ? 'bg-green-50' : 'bg-red-50'}`}>
-              <h3 className="font-semibold mb-3 flex items-center gap-2">
+            <div className={`p-3 border rounded-lg ${mapping ? 'bg-green-50' : 'bg-red-50'}`}>
+              <h3 className="font-semibold mb-2 flex items-center gap-2 text-sm">
                 <MapPin className="h-4 w-4" />
                 {mapping ? 'Deployment Destination' : 'No Mapping Found'}
               </h3>
               {mapping ? (
-                <div className="space-y-2 text-sm">
+                <div className="space-y-1 text-sm">
                   <div>
-                    <span className="font-medium block mb-1">File:</span>
-                    <code className="text-xs bg-gray-100 px-2 py-1 rounded block break-all">
+                    <span className="font-medium block mb-1 text-xs">File:</span>
+                    <code className="text-xs bg-gray-100 px-1 py-0.5 rounded block break-all">
                       {mapping.pagePath}
                     </code>
                   </div>
                   <div>
-                    <span className="font-medium block mb-1">Description:</span>
-                    <span className="text-sm">{mapping.description}</span>
+                    <span className="font-medium block mb-1 text-xs">Description:</span>
+                    <span className="text-xs">{mapping.description}</span>
                   </div>
                   <div>
-                    <span className="font-medium block mb-1">Type:</span>
+                    <span className="font-medium block mb-1 text-xs">Type:</span>
                     <Badge variant={mapping.placeholderType === 'both' ? 'default' : 'secondary'} className="text-xs">
                       {mapping.placeholderType}
                     </Badge>
                   </div>
                 </div>
               ) : (
-                <p className="text-sm text-red-600">
+                <p className="text-xs text-red-600">
                   Story code ({story.story_code}) has no page mapping. Deployment not possible.
                 </p>
               )}
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-4 border-t">
+          <div className="flex justify-end gap-2 pt-2 border-t">
             <Button
               variant="outline"
               onClick={onClose}
               disabled={isDeploying}
+              className="bg-yellow-400 hover:bg-yellow-500 text-black border-yellow-500 font-bold"
             >
               Cancel
             </Button>
