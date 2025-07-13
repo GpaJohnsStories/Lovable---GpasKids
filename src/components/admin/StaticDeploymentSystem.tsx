@@ -248,7 +248,7 @@ const StaticDeploymentSystem = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-green-700">
                       <CheckCircle className="h-5 w-5" />
-                      Deployable Stories ({mappedStories.length})
+                      Deployable WebText ({mappedStories.length})
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
@@ -299,7 +299,7 @@ const StaticDeploymentSystem = () => {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-amber-600">
                       <AlertTriangle className="h-5 w-5" />
-                      Unmapped Stories ({unmappedStories.length})
+                      Unmapped WebText ({unmappedStories.length})
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
