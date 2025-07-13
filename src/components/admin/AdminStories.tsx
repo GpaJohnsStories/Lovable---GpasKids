@@ -126,22 +126,6 @@ const AdminStories = () => {
   return (
     <AdminLayout>
       <div className="space-y-0">
-        <div className="flex justify-end items-center py-1">
-          <div className="flex gap-1">
-            {currentView === 'stories' && (
-              <>
-                <Button 
-                  variant={groupByAuthor ? 'default' : 'outline'}
-                  onClick={() => setGroupByAuthor(!groupByAuthor)}
-                  size="sm"
-                  className="h-7 px-2 text-xs"
-                >
-                  Group by Author
-                </Button>
-              </>
-            )}
-          </div>
-        </div>
         
         {currentView === 'stories' ? (
           <StoriesTable 
@@ -149,6 +133,7 @@ const AdminStories = () => {
             showActions={true}
             showPublishedColumn={true}
             groupByAuthor={groupByAuthor}
+            onToggleGroupByAuthor={() => setGroupByAuthor(!groupByAuthor)}
             onEditBio={handleEditBioByAuthorName}
           />
         ) : (

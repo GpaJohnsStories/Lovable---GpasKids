@@ -32,6 +32,7 @@ interface StoriesTableProps {
   showPublishedOnly?: boolean;
   showPublishedColumn?: boolean;
   groupByAuthor?: boolean;
+  onToggleGroupByAuthor?: () => void;
   onEditBio?: (authorName: string) => void;
 }
 
@@ -41,6 +42,7 @@ const StoriesTable = ({
   showPublishedOnly = false,
   showPublishedColumn = true,
   groupByAuthor = false,
+  onToggleGroupByAuthor,
   onEditBio
 }: StoriesTableProps) => {
   const [sortField, setSortField] = useState<SortField>('title');
@@ -162,6 +164,8 @@ const StoriesTable = ({
                           showActions={showActions}
                           showPublishedColumn={showPublishedColumn}
                           hideAuthorColumn={true}
+                          groupByAuthor={groupByAuthor}
+                          onToggleGroupByAuthor={onToggleGroupByAuthor}
                         />
                         <TableBody>
                           {authorStories.map((story) => (
@@ -195,6 +199,8 @@ const StoriesTable = ({
                     onSort={handleSort}
                     showActions={showActions}
                     showPublishedColumn={showPublishedColumn}
+                    groupByAuthor={groupByAuthor}
+                    onToggleGroupByAuthor={onToggleGroupByAuthor}
                   />
                 </Table>
               </div>

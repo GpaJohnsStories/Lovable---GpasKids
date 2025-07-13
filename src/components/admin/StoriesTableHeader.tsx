@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowUp, ArrowDown, Users } from "lucide-react";
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
@@ -13,6 +13,8 @@ interface StoriesTableHeaderProps {
   showActions: boolean;
   showPublishedColumn?: boolean;
   hideAuthorColumn?: boolean;
+  groupByAuthor?: boolean;
+  onToggleGroupByAuthor?: () => void;
 }
 
 const StoriesTableHeader = ({ 
@@ -21,7 +23,9 @@ const StoriesTableHeader = ({
   onSort, 
   showActions, 
   showPublishedColumn = true,
-  hideAuthorColumn = false
+  hideAuthorColumn = false,
+  groupByAuthor = false,
+  onToggleGroupByAuthor
 }: StoriesTableHeaderProps) => {
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) return null;
@@ -79,13 +83,22 @@ const StoriesTableHeader = ({
         {!hideAuthorColumn && (
           <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
             <Button
-              onClick={() => onSort('author')}
-              className={`${getButtonColor('author')} w-full h-6 text-xs px-1 py-1`}
+              onClick={onToggleGroupByAuthor || (() => onSort('author'))}
+              className={`${groupByAuthor ? 'bg-green-600 hover:bg-green-700' : getButtonColor('author')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1`}
               size="sm"
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
-              Author
-              {getSortIcon('author')}
+              {groupByAuthor ? (
+                <>
+                  <Users className="h-3 w-3" />
+                  Group
+                </>
+              ) : (
+                <>
+                  Author
+                  {getSortIcon('author')}
+                </>
+              )}
             </Button>
           </TableHead>
         )}
