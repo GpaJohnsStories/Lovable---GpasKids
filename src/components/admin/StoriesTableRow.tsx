@@ -299,7 +299,7 @@ const StoriesTableRow = ({
       <TableCell className="font-medium font-bold text-left pl-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '80px' }}>
         <span>{story.story_code}</span>
       </TableCell>
-      <TableCell className="font-medium pl-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '288px' }}>
+      <TableCell className="font-medium pl-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '288px' }}>
         <div className="flex items-center space-x-3">
           {firstPhoto && (
             <div className="flex-shrink-0">
