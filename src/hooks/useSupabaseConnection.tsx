@@ -24,7 +24,7 @@ export const useSupabaseConnection = () => {
       // Test basic database access with a simple query using a publicly accessible table
       const { data, error } = await supabase
         .from('stories')
-        .select('count(*)')
+        .select('id', { count: 'exact', head: true })
         .limit(1);
 
       if (error) {

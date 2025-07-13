@@ -42,7 +42,7 @@ const testConnection = async () => {
     console.log('🔗 Testing Supabase connection on client initialization...');
     const { data, error } = await supabase
       .from('stories')
-      .select('count(*)')
+      .select('id', { count: 'exact', head: true })
       .limit(1);
     
     if (error) {
