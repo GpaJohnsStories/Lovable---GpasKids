@@ -8,33 +8,61 @@ import { Link } from "react-router-dom";
 import { getNewestStories } from "@/utils/storiesData";
 
 const StorySection = () => {
-  const { data: realStories = [] } = useQuery({
+  const { data: realStories = [], error: queryError, isLoading } = useQuery({
     queryKey: ['stories', 'published'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('stories')
-        .select('*')
-        .eq('published', 'Y')
-        .not('category', 'in', '(System,STORY)')
-        .order('updated_at', { ascending: false });
-      
-      if (error) {
-        console.error('Error fetching stories:', error);
-        return [];
+      try {
+        console.log('📚 StorySection: Fetching published stories...');
+        
+        const { data, error } = await supabase
+          .from('stories')
+          .select('*')
+          .eq('published', 'Y')
+          .not('category', 'in', '(System,STORY)')
+          .order('updated_at', { ascending: false });
+        
+        if (error) {
+          console.error('📚 StorySection: Database error details:', {
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+            code: error.code
+          });
+          throw error;
+        }
+        
+        console.log('📚 StorySection: Successfully fetched', data?.length || 0, 'stories');
+        
+        // Filter stories based on visitor's local time
+        const now = new Date();
+        const filteredStories = (data || []).filter(story => {
+          const storyDate = new Date(story.updated_at);
+          return storyDate <= now;
+        });
+        
+        return filteredStories;
+      } catch (err) {
+        console.error('📚 StorySection: Query failed:', err);
+        throw err;
       }
-      
-      // Filter stories based on visitor's local time
-      const now = new Date();
-      const filteredStories = data.filter(story => {
-        const storyDate = new Date(story.updated_at);
-        return storyDate <= now;
-      });
-      
-      return filteredStories;
     },
+    retry: 2,
+    retryDelay: 1000,
+    staleTime: 30000,
+    refetchOnWindowFocus: false
   });
 
-  console.log('Fetched published stories:', realStories);
+  // Enhanced logging for debugging
+  console.log('📚 StorySection: Query state:', { 
+    isLoading, 
+    hasError: !!queryError, 
+    storiesCount: realStories?.length || 0,
+    error: queryError 
+  });
+  
+  if (queryError) {
+    console.error('📚 StorySection: Query error:', queryError);
+  }
 
   // Get the most read story (highest read_count)
   const mostReadStory = realStories.length > 0 
@@ -69,6 +97,43 @@ const StorySection = () => {
       behavior: 'smooth'
     });
   };
+
+  // Handle loading state
+  if (isLoading) {
+    return (
+      <section className="py-16">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p>Loading stories...</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Handle error state with friendly message
+  if (queryError) {
+    return (
+      <section className="py-16">
+        <div className="text-center mb-12">
+          <p className="text-amber-700 text-lg">Unable to load stories at the moment.</p>
+          <p className="text-amber-600 text-sm mt-2">Please refresh the page or try again later.</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
+          >
+            Try Again
+          </button>
+        </div>
+        <div className="text-center">
+          <Link to="/library" onClick={scrollToTop}>
+            <Button className="cozy-button text-lg px-8 py-4">
+              Browse Stories Library Instead
+            </Button>
+          </Link>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16">

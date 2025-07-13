@@ -21,6 +21,25 @@ const SimpleAdminCheck = ({ children }: SimpleAdminCheckProps) => {
         setIsLoading(true);
         setError(null);
 
+        // Test basic connection first
+        console.log('🔐 SimpleAdminCheck: Testing database connection...');
+        const { data: testData, error: testError } = await supabase
+          .from('profiles')
+          .select('count(*)')
+          .limit(1);
+        
+        if (testError) {
+          console.error('🔐 SimpleAdminCheck: Database connection test failed:', testError);
+          if (isMounted) {
+            setError(`Database connection failed: ${testError.message}. Please check your internet connection and try again.`);
+            setIsAuthorized(false);
+            setIsLoading(false);
+          }
+          return;
+        }
+        
+        console.log('🔐 SimpleAdminCheck: Database connection successful');
+
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
         if (sessionError) {
@@ -42,16 +61,44 @@ const SimpleAdminCheck = ({ children }: SimpleAdminCheckProps) => {
           return;
         }
 
-        console.log('🔐 SimpleAdminCheck: Session found, checking admin role for user:', session.user.id);
+        console.log('🔐 SimpleAdminCheck: Session found for user:', session.user.id);
+        console.log('🔐 SimpleAdminCheck: User email:', session.user.email);
 
         // Check if user is admin using the database function for better reliability
+        console.log('🔐 SimpleAdminCheck: Calling is_admin_safe function...');
         const { data: isAdmin, error: adminCheckError } = await supabase.rpc('is_admin_safe');
         
         if (adminCheckError) {
-          console.error('🔐 SimpleAdminCheck: Admin check error:', adminCheckError);
+          console.error('🔐 SimpleAdminCheck: Admin check error:', {
+            message: adminCheckError.message,
+            details: adminCheckError.details,
+            hint: adminCheckError.hint,
+            code: adminCheckError.code
+          });
+          
+          // Fallback: Check profiles table directly
+          console.log('🔐 SimpleAdminCheck: Trying fallback admin check via profiles table...');
+          const { data: profileData, error: profileError } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', session.user.id)
+            .single();
+          
+          if (profileError) {
+            console.error('🔐 SimpleAdminCheck: Fallback check also failed:', profileError);
+            if (isMounted) {
+              setError(`Failed to verify admin access: ${adminCheckError.message}. Fallback check also failed: ${profileError.message}`);
+              setIsAuthorized(false);
+              setIsLoading(false);
+            }
+            return;
+          }
+          
+          const fallbackIsAdmin = profileData?.role === 'admin';
+          console.log('🔐 SimpleAdminCheck: Fallback check result:', fallbackIsAdmin, 'Role:', profileData?.role);
+          
           if (isMounted) {
-            setError(`Admin verification failed: ${adminCheckError.message}`);
-            setIsAuthorized(false);
+            setIsAuthorized(fallbackIsAdmin);
             setIsLoading(false);
           }
           return;

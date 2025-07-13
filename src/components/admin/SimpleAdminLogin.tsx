@@ -7,7 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "sonner";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { Shield, Key } from "lucide-react";
+import { Shield, Key, Settings } from "lucide-react";
+import AdminDiagnostics from "./AdminDiagnostics";
 
 interface SimpleAdminLoginProps {
   onSuccess: () => void;
@@ -20,6 +21,7 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [awaitingWebAuthn, setAwaitingWebAuthn] = useState(false);
   const [tempUser, setTempUser] = useState<any>(null);
+  const [showDiagnostics, setShowDiagnostics] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -47,11 +49,12 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
       }
 
       // Check admin role using the database function
+      console.log('🔐 SimpleAdminLogin: Checking admin status for user:', authData.user.id);
       const { data: isAdmin, error: adminCheckError } = await supabase.rpc('is_admin_safe');
       
       if (adminCheckError) {
-        console.error('Admin check error:', adminCheckError);
-        toast.error('Failed to verify admin access');
+        console.error('🔐 SimpleAdminLogin: Admin check error:', adminCheckError);
+        toast.error(`Failed to verify admin access: ${adminCheckError.message}`);
         await supabase.auth.signOut();
         return;
       }
@@ -315,10 +318,19 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
               onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
             />
           </div>
-          <Button onClick={handleLogin} className="w-full" size="lg">
-            Login
+          <Button onClick={handleLogin} className="w-full" size="lg" disabled={isLoading}>
+            {isLoading ? 'Signing in...' : 'Login'}
           </Button>
-          <div className="text-center">
+          
+          <div className="flex flex-col space-y-2">
+            <button
+              type="button"
+              onClick={() => setShowDiagnostics(!showDiagnostics)}
+              className="text-xs text-muted-foreground hover:text-primary underline flex items-center justify-center gap-1"
+            >
+              <Settings className="h-3 w-3" />
+              {showDiagnostics ? 'Hide' : 'Show'} Diagnostics
+            </button>
             <button
               type="button"
               onClick={() => navigate('/')}
@@ -327,6 +339,12 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
               Back to Home
             </button>
           </div>
+          
+          {showDiagnostics && (
+            <div className="mt-4">
+              <AdminDiagnostics />
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
