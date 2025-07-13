@@ -354,23 +354,6 @@ const StoriesTableRow = ({
           </Badge>
         </div>
       </TableCell>
-      {showPublishedColumn && (
-        <TableCell className="p-1 text-center" style={{ width: '60px', minWidth: '60px', maxWidth: '60px' }}>
-          <div className="flex justify-center">
-            <Button
-              size="sm"
-              onClick={handleTogglePublished}
-              className={story.published === 'Y' 
-                ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 w-8 rounded-full' 
-                : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-8 rounded-full'
-              }
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-            >
-              Pub
-            </Button>
-          </div>
-        </TableCell>
-      )}
       <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="space-y-1">
           <div className="text-xs text-amber-600">
@@ -406,50 +389,79 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       <TableCell className="p-1 text-center" style={{ width: '120px', minWidth: '120px', maxWidth: '120px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        {showActions ? (
-          <>
-            {isEditingDate ? (
-              <div className="flex items-center space-x-1">
-                <input
-                  type="datetime-local"
-                  value={editedDate}
-                  onChange={(e) => setEditedDate(e.target.value)}
-                  className="text-xs border rounded px-1 py-1 w-full"
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                />
-                <div className="flex space-x-1">
-                  <Button
-                    size="sm"
-                    onClick={handleSaveDate}
-                    className="bg-green-600 hover:bg-green-700 text-white p-1 h-6 w-6"
-                  >
-                    <Check className="h-3 w-3" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={handleCancelDateEdit}
-                    className="bg-red-600 hover:bg-red-700 text-white p-1 h-6 w-6"
-                  >
-                    <X className="h-3 w-3" />
-                  </Button>
+        <div className="flex flex-col items-center space-y-1">
+          {showActions ? (
+            <>
+              {isEditingDate ? (
+                <div className="flex items-center space-x-1">
+                  <input
+                    type="datetime-local"
+                    value={editedDate}
+                    onChange={(e) => setEditedDate(e.target.value)}
+                    className="text-xs border rounded px-1 py-1 w-full"
+                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  />
+                  <div className="flex space-x-1">
+                    <Button
+                      size="sm"
+                      onClick={handleSaveDate}
+                      className="bg-green-600 hover:bg-green-700 text-white p-1 h-6 w-6"
+                    >
+                      <Check className="h-3 w-3" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={handleCancelDateEdit}
+                      className="bg-red-600 hover:bg-red-700 text-white p-1 h-6 w-6"
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center space-x-1">
-                <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
-                <Button
-                  size="sm"
-                  onClick={handleEditDate}
-                  className="bg-blue-600 hover:bg-blue-700 text-white p-1 h-6 w-6"
-                >
-                  <Calendar className="h-3 w-3" />
-                </Button>
-              </div>
-            )}
-          </>
-        ) : (
-          <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
-        )}
+              ) : (
+                <>
+                  <div className="flex items-center justify-center space-x-1">
+                    <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
+                    <Button
+                      size="sm"
+                      onClick={handleEditDate}
+                      className="bg-blue-600 hover:bg-blue-700 text-white p-1 h-6 w-6"
+                    >
+                      <Calendar className="h-3 w-3" />
+                    </Button>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    {showPublishedColumn && (
+                      <Button
+                        size="sm"
+                        onClick={handleTogglePublished}
+                        className={story.published === 'Y' 
+                          ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 w-8 rounded-full' 
+                          : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-8 rounded-full'
+                        }
+                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                      >
+                        Pub
+                      </Button>
+                    )}
+                    {story.category === 'System' && (
+                      <Button
+                        size="sm"
+                        className="!bg-gradient-to-b !from-blue-500 !to-blue-700 !text-white !border-blue-800 !shadow-[0_6px_12px_rgba(59,130,246,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(59,130,246,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] h-6 w-8 rounded-full"
+                        onClick={() => window.open('/buddys_admin/deployment', '_blank')}
+                        title="Deploy this System story to web pages"
+                      >
+                        <Globe className="h-3 w-3" />
+                      </Button>
+                    )}
+                  </div>
+                </>
+              )}
+            </>
+          ) : (
+            <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
+          )}
+        </div>
       </TableCell>
       {showActions && (
         <TableCell className="p-1" style={{ width: '160px', minWidth: '160px', maxWidth: '160px' }}>
@@ -485,18 +497,6 @@ const StoriesTableRow = ({
               </Button>
             </div>
             <div className="flex space-x-1 items-center">
-              {story.category === 'System' ? (
-                <Button
-                  size="sm"
-                  className="!bg-gradient-to-b !from-blue-500 !to-blue-700 !text-white !border-blue-800 !shadow-[0_6px_12px_rgba(59,130,246,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(59,130,246,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] h-6 w-8"
-                  onClick={() => window.open('/buddys_admin/deployment', '_blank')}
-                  title="Deploy this System story to web pages"
-                >
-                  <Globe className="h-3 w-3" />
-                </Button>
-              ) : (
-                <div className="h-6 w-8"></div>
-              )}
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
