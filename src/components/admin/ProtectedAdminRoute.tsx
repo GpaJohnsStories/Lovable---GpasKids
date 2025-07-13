@@ -12,56 +12,85 @@ const ProtectedAdminRoute = ({ children }: ProtectedAdminRouteProps) => {
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
+
+  const checkAdminStatus = async (userId: string) => {
+    try {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', userId)
+        .maybeSingle();
+      
+      return profile?.role === 'admin';
+    } catch (error) {
+      console.error('Error checking admin status:', error);
+      return false;
+    }
+  };
 
   useEffect(() => {
+    let isMounted = true;
+
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        if (!isMounted) return;
+        
         setSession(session);
         
         if (session?.user) {
-          // Check if user is admin
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', session.user.id)
-            .single();
-          
-          const userIsAdmin = profile?.role === 'admin';
-          setIsAdmin(userIsAdmin);
-          setAuthenticated(userIsAdmin);
+          const adminStatus = await checkAdminStatus(session.user.id);
+          if (isMounted) {
+            setIsAdmin(adminStatus);
+          }
         } else {
-          setIsAdmin(false);
-          setAuthenticated(false);
+          if (isMounted) {
+            setIsAdmin(false);
+          }
         }
-        setLoading(false);
+        
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     );
 
     // Check for existing session
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!isMounted) return;
+      
       setSession(session);
       
       if (session?.user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', session.user.id)
-          .single();
-        
-        const userIsAdmin = profile?.role === 'admin';
-        setIsAdmin(userIsAdmin);
-        setAuthenticated(userIsAdmin);
+        const adminStatus = await checkAdminStatus(session.user.id);
+        if (isMounted) {
+          setIsAdmin(adminStatus);
+        }
       }
-      setLoading(false);
-    });
+      
+      if (isMounted) {
+        setLoading(false);
+      }
+    };
 
-    return () => subscription.unsubscribe();
+    checkSession();
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
-  const handleLoginSuccess = () => {
-    setAuthenticated(true);
+  const handleLoginSuccess = async () => {
+    // Force a session refresh to trigger the auth state change
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      const adminStatus = await checkAdminStatus(session.user.id);
+      setIsAdmin(adminStatus);
+      setSession(session);
+    }
   };
 
   if (loading) {
@@ -72,7 +101,7 @@ const ProtectedAdminRoute = ({ children }: ProtectedAdminRouteProps) => {
     );
   }
 
-  if (!authenticated || !isAdmin) {
+  if (!session || !isAdmin) {
     return (
       <div className="min-h-screen bg-background">
         <SimpleAdminLogin onSuccess={handleLoginSuccess} />
