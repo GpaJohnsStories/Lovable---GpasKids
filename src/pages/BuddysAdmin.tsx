@@ -6,7 +6,7 @@ import StaticDeploymentSystem from "@/components/admin/StaticDeploymentSystem";
 import VoicePreview from "@/components/VoicePreview";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ContentProtection from "@/components/ContentProtection";
-import ProtectedAdminRoute from "@/components/admin/ProtectedAdminRoute";
+import SimpleAdminCheck from "@/components/admin/SimpleAdminCheck";
 import { useAdminSession } from "@/hooks/useAdminSession";
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -47,16 +47,18 @@ const BuddysAdminContent = () => {
   );
 };
 
-// Main admin component - temporarily bypassing auth to test
+// Main admin component - now with simple authentication
 const BuddysAdmin = () => {
   return (
     <ContentProtection enableProtection={false}>
-      <div className="relative">
-        <div className="absolute top-4 right-4 z-50 flex items-center gap-4">
-          <span className="text-sm text-gray-600">Admin Access</span>
+      <SimpleAdminCheck>
+        <div className="relative">
+          <div className="absolute top-4 right-4 z-50 flex items-center gap-4">
+            <span className="text-sm text-gray-600">Admin Access</span>
+          </div>
+          <BuddysAdminContent />
         </div>
-        <BuddysAdminContent />
-      </div>
+      </SimpleAdminCheck>
     </ContentProtection>
   );
 };
