@@ -215,6 +215,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           break;
         case 'h':
           e.preventDefault();
+          e.stopPropagation();
           setShowHelp(true);
           break;
         case 'e':
