@@ -12,9 +12,11 @@ if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
 }
 
 // Log configuration for debugging (safely)
-console.log('🔧 Supabase Configuration:');
+console.log('🔧 Supabase Configuration (v2):');
 console.log('URL:', SUPABASE_URL);
+console.log('Key full:', SUPABASE_PUBLISHABLE_KEY);
 console.log('Key prefix:', SUPABASE_PUBLISHABLE_KEY?.substring(0, 20) + '...');
+console.log('Key suffix:', '...' + SUPABASE_PUBLISHABLE_KEY?.substring(SUPABASE_PUBLISHABLE_KEY.length - 20));
 
 // Single unified Supabase client instance with enhanced configuration
 export const supabase = createClient<Database>(
