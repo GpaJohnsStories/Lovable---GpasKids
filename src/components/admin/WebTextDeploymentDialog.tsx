@@ -211,19 +211,13 @@ const WebTextDeploymentDialog = ({
           </div>
 
           <div className="flex justify-end gap-2 pt-2 border-t">
-            <Button
+            <button
               onClick={onClose}
               disabled={isDeploying}
-              className="font-bold py-2 px-4 rounded"
-              style={{ 
-                backgroundColor: '#fde047', 
-                borderColor: '#fde047', 
-                color: '#000000',
-                border: '1px solid #fde047'
-              }}
+              className="bg-yellow-300 text-black px-4 py-2 rounded font-bold hover:bg-yellow-200"
             >
               Cancel
-            </Button>
+            </button>
             <Button
               onClick={handleDeploy}
               disabled={!mapping || isDeploying}
