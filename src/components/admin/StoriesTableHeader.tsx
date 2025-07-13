@@ -140,7 +140,7 @@ const StoriesTableHeader = ({
             <Button
               className="bg-blue-500 hover:bg-blue-600 text-white h-8 text-xs px-1"
               size="sm"
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '120px' }}
+              style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '136px' }}
             >
               Actions
             </Button>
