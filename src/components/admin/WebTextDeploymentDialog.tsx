@@ -146,14 +146,14 @@ const WebTextDeploymentDialog = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
         <DialogHeader className="pb-2">
-          <DialogTitle className="text-center text-red-600 font-bold text-xl">
+          <DialogTitle className="text-center text-red-600 font-bold text-xl bg-yellow-300 py-2 rounded">
             Deploy WebText to Web Page
           </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-3">
           <div className="text-center py-2">
-            <p className="text-blue-600 font-medium text-sm">
+            <p className="text-blue-600 font-medium text-base">
               This will deploy the WebText content directly to the web page file.
             </p>
           </div>
@@ -163,13 +163,9 @@ const WebTextDeploymentDialog = ({
             <div className="p-3 border rounded-lg bg-blue-50">
               <h3 className="font-semibold mb-2 flex items-center gap-2 text-sm">
                 <FileText className="h-4 w-4" />
-                WebText Details
+                WebText Details  Code: {story.story_code}
               </h3>
               <div className="space-y-1 text-sm">
-                <div className="flex justify-between">
-                  <span className="font-medium">Code:</span>
-                  <Badge variant="secondary" className="text-xs">{story.story_code}</Badge>
-                </div>
                 <div className="flex justify-between">
                   <span className="font-medium">Title:</span>
                   <span className="truncate ml-2 text-xs">{story.title}</span>
@@ -189,12 +185,12 @@ const WebTextDeploymentDialog = ({
             <div className={`p-3 border rounded-lg ${mapping ? 'bg-green-50' : 'bg-red-50'}`}>
               <h3 className="font-semibold mb-2 flex items-center gap-2 text-sm">
                 <MapPin className="h-4 w-4" />
-                {mapping ? 'Deployment Destination' : 'No Mapping Found'}
+                {mapping ? `Deployment Destination  File: ${mapping.pagePath.split('/').pop()}` : 'No Mapping Found'}
               </h3>
               {mapping ? (
                 <div className="space-y-1 text-sm">
                   <div>
-                    <span className="font-medium block mb-1 text-xs">File:</span>
+                    <span className="font-medium block mb-1 text-xs">Full Path:</span>
                     <code className="text-xs bg-gray-100 px-1 py-0.5 rounded block break-all">
                       {mapping.pagePath}
                     </code>
