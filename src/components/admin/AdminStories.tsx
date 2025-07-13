@@ -120,32 +120,7 @@ const AdminStories = () => {
   return (
     <AdminLayout>
       <div className="space-y-0">
-        <div className="flex justify-between items-center py-1">
-          <div className="flex gap-2 items-center">
-            <h2 className="text-lg font-bold">
-              {currentView === 'stories' ? 'Stories' : 'Author Bios'}
-            </h2>
-            <div className="flex gap-1">
-              <Button 
-                variant={currentView === 'stories' ? 'default' : 'outline'}
-                onClick={() => setCurrentView('stories')}
-                size="sm"
-                className="h-7 px-2 text-xs"
-              >
-                Stories
-              </Button>
-              <Button 
-                variant={currentView === 'bios' ? 'default' : 'outline'}
-                onClick={() => setCurrentView('bios')}
-                size="sm"
-                className="h-7 px-2 text-xs"
-              >
-                <Users className="h-3 w-3 mr-1" />
-                Bios
-              </Button>
-            </div>
-          </div>
-          
+        <div className="flex justify-end items-center py-1">
           <div className="flex gap-1">
             {currentView === 'stories' && (
               <>
