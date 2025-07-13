@@ -17,6 +17,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
   const internalRef = useRef<HTMLTextAreaElement>(null);
   const textareaRef = ref || internalRef;
   const [showHelp, setShowHelp] = useState(false);
+  const [showFontReference, setShowFontReference] = useState(false);
 
   useEffect(() => {
     const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
@@ -226,6 +227,11 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           e.preventDefault();
           handleClearHtml(); // Clear HTML
           break;
+        case 'q':
+          e.preventDefault();
+          e.stopPropagation();
+          setShowFontReference(true);
+          break;
         case 's':
           e.preventDefault();
           if (onSave) {
@@ -249,6 +255,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + M', action: 'M-dash — (long pause)' },
     { key: 'Ctrl + N', action: 'N-dash – (short pause)' },
     { key: 'Ctrl + P', action: 'Paragraph' },
+    { key: 'Ctrl + Q', action: 'Font Reference' },
     { key: 'Ctrl + S', action: 'Save Story' },
     { key: 'Ctrl + U', action: 'Underline' },
     { key: 'Ctrl + X', action: 'Cut' },
@@ -295,6 +302,202 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                 <span className="text-sm text-gray-600">{shortcut.action}</span>
               </div>
             ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showFontReference} onOpenChange={setShowFontReference}>
+        <DialogContent className="max-w-4xl max-h-[90vh]">
+          <DialogHeader>
+            <DialogTitle>Font Reference Guide</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6 max-h-[70vh] overflow-y-auto pr-4">
+            
+            {/* Kalam Font Family */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold border-b pb-2">Kalam Font Family (UI Elements)</h3>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h1&gt;Heading 1&lt;/h1&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '2em', fontWeight: 700 }}>
+                    Heading 1
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h2&gt;Heading 2&lt;/h2&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '1.5em', fontWeight: 700 }}>
+                    Heading 2
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h3&gt;Heading 3&lt;/h3&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '1.17em', fontWeight: 700 }}>
+                    Heading 3
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p&gt;UI Text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '14px', lineHeight: '1.7' }}>
+                    UI Text (Navigation, Buttons, etc.)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Georgia Serif Font Family */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold border-b pb-2">Georgia Serif Font Family (Story Content)</h3>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h1&gt;Story Heading 1&lt;/h1&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '2em', fontWeight: 'bold', color: '#000000', lineHeight: '1.6' }}>
+                    Story Heading 1
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h2&gt;Story Heading 2&lt;/h2&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '1.5em', fontWeight: 'bold', color: '#000000', lineHeight: '1.6' }}>
+                    Story Heading 2
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h3&gt;Story Heading 3&lt;/h3&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '1.17em', fontWeight: 'bold', color: '#000000', lineHeight: '1.6' }}>
+                    Story Heading 3
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p&gt;Story paragraph text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000', lineHeight: '1.5' }}>
+                    Story paragraph text (main content)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;strong&gt;Bold text&lt;/strong&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', fontWeight: 'bold', color: '#000000', lineHeight: '1.6' }}>
+                    Bold text
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;em&gt;Italic text&lt;/em&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', fontStyle: 'italic', color: '#000000', lineHeight: '1.6' }}>
+                    Italic text
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;u&gt;Underlined text&lt;/u&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', textDecoration: 'underline', color: '#000000', lineHeight: '1.6' }}>
+                    Underlined text
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;center&gt;Centered text&lt;/center&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000', lineHeight: '1.5', textAlign: 'center' }}>
+                    Centered text
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;em style="font-family: serif;"&gt;Special serif style&lt;/em&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: 'serif', fontSize: '18px', fontStyle: 'italic', color: '#000000', lineHeight: '1.6' }}>
+                    Special serif style (Ctrl+F)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Special Elements */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold border-b pb-2">Special Elements</h3>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;br&gt;</code>
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    Line break (Ctrl+Enter)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;ul&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ul&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000' }}>
+                    <ul><li>Bullet list item</li></ul>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;ol&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ol&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000' }}>
+                    <ol><li>Numbered list item</li></ol>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">–</code>
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    N-dash (short pause) - Ctrl+N
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">—</code>
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    M-dash (long pause) - Ctrl+M
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-blue-800">
+                <strong>Note:</strong> Story content automatically uses Georgia serif font. UI elements use Kalam font for a child-friendly appearance.
+              </p>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
