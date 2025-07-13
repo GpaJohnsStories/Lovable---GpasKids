@@ -470,7 +470,7 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       {showActions && (
-        <TableCell className="p-1" style={{ width: '160px', minWidth: '160px', maxWidth: '160px' }}>
+        <TableCell className="p-1" style={{ width: '180px', minWidth: '180px', maxWidth: '180px' }}>
           <div className="flex flex-col space-y-1">
             <div className="flex space-x-1 items-center">
               <Button
@@ -481,7 +481,7 @@ const StoriesTableRow = ({
                 <Edit className="h-3 w-3" />
               </Button>
               <Select value={selectedVoice} onValueChange={handleVoiceChange}>
-                <SelectTrigger className="w-20 h-6 text-xs">
+                <SelectTrigger className="w-24 h-6 text-xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -508,7 +508,7 @@ const StoriesTableRow = ({
                   <TooltipTrigger asChild>
                     <Button
                       size="sm"
-                      className={`${getAudioButtonClasses()} !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-16 h-6 text-xs`}
+                      className={`${getAudioButtonClasses()} !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-24 h-6 text-xs`}
                       onClick={handleGenerateAudio}
                       disabled={isGeneratingAudio}
                     >
