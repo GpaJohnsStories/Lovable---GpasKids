@@ -296,10 +296,10 @@ const StoriesTableRow = ({
 
   return (
     <TableRow>
-      <TableCell className="font-medium font-bold w-20" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="font-medium font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '100px' }}>
         <span>{story.story_code}</span>
       </TableCell>
-      <TableCell className="font-medium w-72" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '400px' }}>
         <div className="flex items-center space-x-3">
           {firstPhoto && (
             <div className="flex-shrink-0">
@@ -339,7 +339,7 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       {!hideAuthor && (
-        <TableCell className="w-24" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+        <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '120px' }}>
           <div className="flex flex-col items-center gap-1">
             {story.author}
             {onEditBio && (
@@ -354,13 +354,13 @@ const StoriesTableRow = ({
           </div>
         </TableCell>
       )}
-      <TableCell className="w-20">
+      <TableCell style={{ width: '80px' }}>
         <Badge className={`${getCategoryBadgeColor(story.category)} text-center flex items-center justify-center`}>
           {story.category}
         </Badge>
       </TableCell>
       {showPublishedColumn && (
-        <TableCell className="text-center w-14">
+        <TableCell className="text-center" style={{ width: '60px' }}>
           <Button
             size="sm"
             onClick={handleTogglePublished}
@@ -374,7 +374,7 @@ const StoriesTableRow = ({
           </Button>
         </TableCell>
       )}
-      <TableCell className="w-20" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '100px' }}>
         <div className="space-y-1">
           <div className="text-xs text-amber-600 mb-1">
             {(() => {
@@ -407,7 +407,7 @@ const StoriesTableRow = ({
           </div>
         </div>
       </TableCell>
-      <TableCell className="w-24" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '120px' }}>
         {showActions ? (
           <>
             {isEditingDate ? (
@@ -454,7 +454,7 @@ const StoriesTableRow = ({
         )}
       </TableCell>
       {showActions && (
-        <TableCell className="w-28">
+        <TableCell style={{ width: '160px' }}>
           <div className="flex space-x-2">
             <Button
               size="sm"
