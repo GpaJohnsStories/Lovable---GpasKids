@@ -354,7 +354,7 @@ const StoriesTableRow = ({
           </div>
         </TableCell>
       )}
-      <TableCell style={{ width: '80px' }}>
+      <TableCell className="text-center" style={{ width: '80px' }}>
         <Badge className={`${getCategoryBadgeColor(story.category)} text-center flex items-center justify-center`}>
           {story.category}
         </Badge>
