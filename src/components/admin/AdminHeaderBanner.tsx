@@ -114,7 +114,7 @@ const AdminHeaderBanner = () => {
               </div>
             </div>
             <nav className="flex gap-2">
-              {navButtons.map((button) => {
+              {navButtons.map((button, index) => {
                 const isActive = location.pathname === button.path || 
                   (button.name === 'Stories' && (location.pathname === '/buddys_admin/stories' || location.pathname.includes('/buddys_admin/stories')));
                 const Icon = button.icon;
@@ -127,65 +127,88 @@ const AdminHeaderBanner = () => {
                   }
                 };
 
+                // Render Stories button
+                const storiesButton = (
+                  <div 
+                    key={button.name}
+                    className="relative"
+                    onMouseEnter={() => setHoveredButton(button.name)}
+                    onMouseLeave={() => setHoveredButton(null)}
+                  >
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className={`
+                            transition-all duration-200 border font-fun
+                            ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
+                            hover:transform hover:translate-y-1 active:translate-y-2 
+                            active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
+                            ${isActive 
+                              ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
+                              : button.hoverColor
+                            }
+                          `}
+                        >
+                          <Icon className="h-4 w-4 mr-2" />
+                          {button.name}
+                          <ChevronDown className="h-3 w-3 ml-1" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg">
+                        <DropdownMenuItem asChild>
+                          <Link 
+                            to="/buddys_admin/stories?view=stories" 
+                            onClick={scrollToTop}
+                            className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
+                          >
+                            <FileText className="h-4 w-4 mr-2" />
+                            Stories
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link 
+                            to="/buddys_admin/stories?view=bios" 
+                            onClick={scrollToTop}
+                            className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
+                          >
+                            <Users className="h-4 w-4 mr-2" />
+                            Bios
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    {hoveredButton === button.name && (
+                      <div className="nav-bubble opacity-100 visible">
+                        {button.description}
+                      </div>
+                    )}
+                  </div>
+                );
+
+                // Render + Story button after Stories button
+                const createStoryButton = (
+                  <Button
+                    key="create-story"
+                    onClick={handleCreateStory}
+                    variant="ghost"
+                    className="
+                      transition-all duration-200 border font-fun
+                      bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white
+                      shadow-[0_6px_0_#16a34a,0_8px_15px_rgba(0,0,0,0.3)]
+                      hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)]
+                      hover:transform hover:translate-y-1 active:translate-y-2 
+                      active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
+                      hover:from-green-500 hover:via-green-600 hover:to-green-700
+                    "
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                );
+
                 // Special handling for Stories button with dropdown
                 if (button.name === 'Stories') {
-                  return (
-                    <div 
-                      key={button.name}
-                      className="relative"
-                      onMouseEnter={() => setHoveredButton(button.name)}
-                      onMouseLeave={() => setHoveredButton(null)}
-                    >
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            className={`
-                              transition-all duration-200 border font-fun
-                              ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
-                              hover:transform hover:translate-y-1 active:translate-y-2 
-                              active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
-                              ${isActive 
-                                ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
-                                : button.hoverColor
-                              }
-                            `}
-                          >
-                            <Icon className="h-4 w-4 mr-2" />
-                            {button.name}
-                            <ChevronDown className="h-3 w-3 ml-1" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg">
-                          <DropdownMenuItem asChild>
-                            <Link 
-                              to="/buddys_admin/stories?view=stories" 
-                              onClick={scrollToTop}
-                              className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
-                            >
-                              <FileText className="h-4 w-4 mr-2" />
-                              Stories
-                            </Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem asChild>
-                            <Link 
-                              to="/buddys_admin/stories?view=bios" 
-                              onClick={scrollToTop}
-                              className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
-                            >
-                              <Users className="h-4 w-4 mr-2" />
-                              Bios
-                            </Link>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                      {hoveredButton === button.name && (
-                        <div className="nav-bubble opacity-100 visible">
-                          {button.description}
-                        </div>
-                      )}
-                    </div>
-                  );
+                  return [storiesButton, createStoryButton];
                 }
 
                 return (
@@ -238,24 +261,6 @@ const AdminHeaderBanner = () => {
                   </div>
                 );
               })}
-              
-              {/* Create Story Button */}
-              <Button
-                onClick={handleCreateStory}
-                variant="ghost"
-                className="
-                  transition-all duration-200 border font-fun
-                  bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white
-                  shadow-[0_6px_0_#16a34a,0_8px_15px_rgba(0,0,0,0.3)]
-                  hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)]
-                  hover:transform hover:translate-y-1 active:translate-y-2 
-                  active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
-                  hover:from-green-500 hover:via-green-600 hover:to-green-700
-                "
-              >
-                <Plus className="h-4 w-4 mr-1" />
-                + Story
-              </Button>
             </nav>
           </div>
           <Button 
