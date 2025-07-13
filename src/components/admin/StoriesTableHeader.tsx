@@ -113,19 +113,6 @@ const StoriesTableHeader = ({
             {getSortIcon('category')}
           </Button>
         </TableHead>
-        {showPublishedColumn && (
-          <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '60px', minWidth: '60px', maxWidth: '60px' }}>
-            <Button
-              onClick={() => onSort('published')}
-              className={`${getButtonColor('published')} w-full h-6 text-xs px-1 py-1`}
-              size="sm"
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-            >
-              Publ
-              {getSortIcon('published')}
-            </Button>
-          </TableHead>
-        )}
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
           <Button
             onClick={() => onSort('read_count')}
