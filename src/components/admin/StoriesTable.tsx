@@ -87,6 +87,11 @@ const StoriesTable = ({
 
 
   const handleSort = (field: SortField) => {
+    // Exit group by author view when sorting by other fields
+    if (groupByAuthor && field !== 'author' && onToggleGroupByAuthor) {
+      onToggleGroupByAuthor();
+    }
+    
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
