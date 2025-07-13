@@ -470,7 +470,7 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       {showActions && (
-        <TableCell className="p-1" style={{ width: '180px', minWidth: '180px', maxWidth: '180px' }}>
+        <TableCell className="p-1" style={{ width: '170px', minWidth: '170px', maxWidth: '170px' }}>
           <div className="flex flex-col space-y-1">
             <div className="flex space-x-1 items-center">
               <Button
@@ -502,7 +502,7 @@ const StoriesTableRow = ({
                 <Trash2 className="h-3 w-3" />
               </Button>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center items-center">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>

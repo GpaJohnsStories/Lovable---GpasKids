@@ -136,7 +136,7 @@ const StoriesTableHeader = ({
           </Button>
         </TableHead>
         {showActions && (
-          <TableHead className="p-1 text-center bg-background" style={{ width: '180px', minWidth: '180px', maxWidth: '180px' }}>
+          <TableHead className="p-1 text-center bg-background" style={{ width: '170px', minWidth: '170px', maxWidth: '170px' }}>
             <div
               className="bg-blue-500 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '100%', borderRadius: '0px' }}
