@@ -144,7 +144,7 @@ const WebTextDeploymentDialog = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-amber-800">
             <Globe className="h-5 w-5" />
@@ -153,83 +153,89 @@ const WebTextDeploymentDialog = ({
         </DialogHeader>
 
         <div className="space-y-4">
-          <Alert>
+          <Alert className="mb-4">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>
-              This will deploy the WebText content directly to the web page file. 
-              The change will be visible immediately after deployment.
+              This will deploy the WebText content directly to the web page file.
             </AlertDescription>
           </Alert>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-6">
+            {/* WebText Details Column */}
             <div className="p-4 border rounded-lg bg-blue-50">
-              <h3 className="font-semibold mb-2">WebText Details</h3>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
+              <h3 className="font-semibold mb-3 flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                WebText Details
+              </h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
                   <span className="font-medium">Code:</span>
                   <Badge variant="secondary">{story.story_code}</Badge>
                 </div>
-                <div className="flex items-center justify-between">
+                <div className="flex justify-between">
                   <span className="font-medium">Title:</span>
-                  <span className="text-sm">{story.title}</span>
+                  <span className="truncate ml-2">{story.title}</span>
                 </div>
-                <div className="flex items-center justify-between">
+                <div className="flex justify-between">
                   <span className="font-medium">Author:</span>
-                  <span className="text-sm">{story.author}</span>
+                  <span>{story.author}</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-medium">Last Updated:</span>
-                  <span className="text-sm">{new Date(story.updated_at).toLocaleDateString()}</span>
+                <div className="flex justify-between">
+                  <span className="font-medium">Updated:</span>
+                  <span>{new Date(story.updated_at).toLocaleDateString()}</span>
                 </div>
               </div>
             </div>
 
-            {mapping ? (
-              <div className="p-4 border rounded-lg bg-green-50">
-                <h3 className="font-semibold mb-2">Deployment Destination</h3>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <FileText className="h-4 w-4" />
-                    <code className="text-sm bg-gray-100 px-2 py-1 rounded">{mapping.pagePath}</code>
+            {/* Deployment Destination Column */}
+            <div className={`p-4 border rounded-lg ${mapping ? 'bg-green-50' : 'bg-red-50'}`}>
+              <h3 className="font-semibold mb-3 flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                {mapping ? 'Deployment Destination' : 'No Mapping Found'}
+              </h3>
+              {mapping ? (
+                <div className="space-y-2 text-sm">
+                  <div>
+                    <span className="font-medium block mb-1">File:</span>
+                    <code className="text-xs bg-gray-100 px-2 py-1 rounded block break-all">
+                      {mapping.pagePath}
+                    </code>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
+                  <div>
+                    <span className="font-medium block mb-1">Description:</span>
                     <span className="text-sm">{mapping.description}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div>
+                    <span className="font-medium block mb-1">Type:</span>
                     <Badge variant={mapping.placeholderType === 'both' ? 'default' : 'secondary'} className="text-xs">
                       {mapping.placeholderType}
                     </Badge>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <div className="p-4 border rounded-lg bg-red-50">
-                <h3 className="font-semibold mb-2 text-red-700">No Deployment Mapping</h3>
+              ) : (
                 <p className="text-sm text-red-600">
-                  This story code ({story.story_code}) does not have a page mapping configured. 
-                  Deployment is not possible.
+                  Story code ({story.story_code}) has no page mapping. Deployment not possible.
                 </p>
-              </div>
-            )}
-
-            <div className="flex justify-end gap-2 pt-4">
-              <Button
-                variant="outline"
-                onClick={onClose}
-                disabled={isDeploying}
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={handleDeploy}
-                disabled={!mapping || isDeploying}
-                className="bg-gradient-to-b from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white border-red-700 font-bold"
-              >
-                <Globe className="h-4 w-4 mr-2" />
-                {isDeploying ? "Deploying..." : "Click to Confirm Deployment"}
-              </Button>
+              )}
             </div>
+          </div>
+
+          <div className="flex justify-end gap-2 pt-4 border-t">
+            <Button
+              variant="outline"
+              onClick={onClose}
+              disabled={isDeploying}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleDeploy}
+              disabled={!mapping || isDeploying}
+              className="bg-gradient-to-b from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white border-red-700 font-bold"
+            >
+              <Globe className="h-4 w-4 mr-2" />
+              {isDeploying ? "Deploying..." : "Click to Confirm Deployment"}
+            </Button>
           </div>
         </div>
       </DialogContent>
