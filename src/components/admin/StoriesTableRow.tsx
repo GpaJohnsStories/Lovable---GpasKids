@@ -361,12 +361,12 @@ const StoriesTableRow = ({
               size="sm"
               onClick={handleTogglePublished}
               className={story.published === 'Y' 
-                ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 rounded-none' 
-                : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 rounded-none'
+                ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 w-8 rounded-full' 
+                : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-8 rounded-full'
               }
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
-              {story.published}
+              Pub
             </Button>
           </div>
         </TableCell>
