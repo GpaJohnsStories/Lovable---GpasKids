@@ -296,7 +296,7 @@ const StoriesTableRow = ({
 
   return (
     <TableRow>
-      <TableCell className="font-medium font-bold text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '100px' }}>
+      <TableCell className="font-medium font-bold text-left pl-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '80px' }}>
         <span>{story.story_code}</span>
       </TableCell>
       <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '288px' }}>

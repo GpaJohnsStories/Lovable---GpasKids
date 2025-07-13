@@ -54,7 +54,7 @@ const StoriesTableHeader = ({
   return (
     <TableHeader>
       <TableRow className="bg-background hover:bg-background">{/* Ensure row also has background */}
-        <TableHead className="pl-1 pr-2 py-2 text-center bg-background" style={{ width: '100px' }}>
+        <TableHead className="pl-1 pr-2 py-2 text-center bg-background" style={{ width: '80px' }}>
           <Button
             onClick={() => onSort('story_code')}
             className={`${getButtonColor('story_code')} w-full justify-center`}
