@@ -12,7 +12,7 @@ if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
 }
 
 // Log configuration for debugging (safely)
-console.log('🔧 Supabase Configuration (v3 - FORCED REBUILD):');
+console.log('🔧 Supabase Configuration (v4 - CACHE BUST):');
 console.log('URL:', SUPABASE_URL);
 console.log('Key full:', SUPABASE_PUBLISHABLE_KEY);
 console.log('Key prefix:', SUPABASE_PUBLISHABLE_KEY?.substring(0, 20) + '...');
