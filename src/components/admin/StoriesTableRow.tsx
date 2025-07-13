@@ -386,9 +386,8 @@ const StoriesTableRow = ({
               );
             })()}
           </div>
-          <div className="flex items-center justify-center space-x-1 text-blue-600">
-            <BookOpen className="h-3 w-3" />
-            <span className="text-xs font-medium">{story.read_count}</span>
+          <div className="text-xs text-blue-600 font-medium text-center">
+            {story.read_count} Readers
           </div>
           <div className="flex items-center justify-center space-x-2">
             <div className="flex items-center space-x-1 text-green-600">
