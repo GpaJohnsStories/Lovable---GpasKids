@@ -214,7 +214,7 @@ const WebTextDeploymentDialog = ({
             <button
               onClick={onClose}
               disabled={isDeploying}
-              className="bg-yellow-300 text-black px-4 py-2 rounded font-bold hover:bg-yellow-200 text-lg"
+              className="bg-yellow-300 text-black px-4 py-2 rounded-full font-bold hover:bg-yellow-200 text-lg"
             >
               Cancel
             </button>
