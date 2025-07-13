@@ -9,38 +9,114 @@ interface SimpleAdminCheckProps {
 
 const SimpleAdminCheck = ({ children }: SimpleAdminCheckProps) => {
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session?.user) {
-        setIsAuthorized(false);
-        return;
-      }
+    let isMounted = true;
 
-      // Check if user is admin
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', session.user.id)
-        .maybeSingle();
-      
-      setIsAuthorized(profile?.role === 'admin');
+    const checkAuth = async () => {
+      try {
+        console.log('🔐 SimpleAdminCheck: Starting auth check...');
+        setIsLoading(true);
+        setError(null);
+
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        
+        if (sessionError) {
+          console.error('🔐 SimpleAdminCheck: Session error:', sessionError);
+          if (isMounted) {
+            setError('Failed to check authentication');
+            setIsAuthorized(false);
+            setIsLoading(false);
+          }
+          return;
+        }
+
+        if (!session?.user) {
+          console.log('🔐 SimpleAdminCheck: No session found');
+          if (isMounted) {
+            setIsAuthorized(false);
+            setIsLoading(false);
+          }
+          return;
+        }
+
+        console.log('🔐 SimpleAdminCheck: Session found, checking admin role for user:', session.user.id);
+
+        // Check if user is admin
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .maybeSingle();
+        
+        if (profileError) {
+          console.error('🔐 SimpleAdminCheck: Profile error:', profileError);
+          if (isMounted) {
+            setError('Failed to verify admin access');
+            setIsAuthorized(false);
+            setIsLoading(false);
+          }
+          return;
+        }
+
+        const isAdmin = profile?.role === 'admin';
+        console.log('🔐 SimpleAdminCheck: Profile role:', profile?.role, 'Is Admin:', isAdmin);
+        
+        if (isMounted) {
+          setIsAuthorized(isAdmin);
+          setIsLoading(false);
+        }
+      } catch (err) {
+        console.error('🔐 SimpleAdminCheck: Unexpected error:', err);
+        if (isMounted) {
+          setError('Authentication check failed');
+          setIsAuthorized(false);
+          setIsLoading(false);
+        }
+      }
     };
 
+    // Initial auth check
     checkAuth();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
-      checkAuth();
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('🔐 SimpleAdminCheck: Auth state changed:', event, session ? 'Session exists' : 'No session');
+      if (isMounted) {
+        // Reset state and recheck when auth changes
+        setIsLoading(true);
+        setError(null);
+        checkAuth();
+      }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
+  // Show error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-destructive text-sm mb-4">{error}</div>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Still checking
-  if (isAuthorized === null) {
+  if (isLoading || isAuthorized === null) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -55,7 +131,11 @@ const SimpleAdminCheck = ({ children }: SimpleAdminCheckProps) => {
   if (!isAuthorized) {
     return (
       <div className="min-h-screen bg-background">
-        <SimpleAdminLogin onSuccess={() => setIsAuthorized(true)} />
+        <SimpleAdminLogin onSuccess={() => {
+          console.log('🔐 SimpleAdminCheck: Login successful, rechecking auth...');
+          setIsAuthorized(null);
+          setIsLoading(true);
+        }} />
       </div>
     );
   }
