@@ -67,7 +67,7 @@ const StoriesTableHeader = ({
             </div>
           </Button>
         </TableHead>
-        <TableHead className="p-2 text-center bg-background" style={{ width: '300px' }}>
+        <TableHead className="p-2 text-center bg-background" style={{ width: '250px' }}>
           <Button
             onClick={() => onSort('title')}
             className={`${getButtonColor('title')} w-full justify-center`}
