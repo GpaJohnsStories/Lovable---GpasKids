@@ -59,17 +59,19 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
         return;
       }
 
-      // Check if WebAuthn is enabled
-      if (profile.webauthn_enabled) {
+      // MANDATORY WebAuthn for ALL admins - no exceptions
+      if (!profile.webauthn_enabled) {
+        // Force WebAuthn setup on first login
         setTempUser(authData.user);
         setAwaitingWebAuthn(true);
-        toast.info('Please complete WebAuthn verification');
+        toast.error('WebAuthn setup required - admin access requires physical security key');
         return;
       }
 
-      // Success - proceed without WebAuthn
-      toast.success('Login successful!');
-      onSuccess();
+      // WebAuthn is enabled - require verification
+      setTempUser(authData.user);
+      setAwaitingWebAuthn(true);
+      toast.info('Physical security key required for admin access');
     } catch (error: any) {
       toast.error('Login failed');
       await supabase.auth.signOut();
@@ -83,16 +85,23 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
 
     setIsLoading(true);
     try {
-      // Get stored credentials
+      // Check if this is first-time setup
       const { data: profile } = await supabase
         .from('profiles')
-        .select('webauthn_credentials')
+        .select('webauthn_enabled, webauthn_credentials')
         .eq('id', tempUser.id)
         .single();
 
+      // If WebAuthn not enabled, force setup first
+      if (!profile?.webauthn_enabled) {
+        await handleForceWebAuthnSetup();
+        return;
+      }
+
+      // Proceed with normal verification
       const credentials = profile?.webauthn_credentials;
       if (!credentials || !Array.isArray(credentials) || credentials.length === 0) {
-        toast.error('No WebAuthn credentials found');
+        toast.error('No WebAuthn credentials found - contact system administrator');
         await supabase.auth.signOut();
         setAwaitingWebAuthn(false);
         setTempUser(null);
@@ -116,21 +125,21 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
       }) as PublicKeyCredential;
 
       if (!assertion) {
-        toast.error('WebAuthn verification failed');
+        toast.error('Physical security key verification failed');
         await supabase.auth.signOut();
         setAwaitingWebAuthn(false);
         setTempUser(null);
         return;
       }
 
-      // Success - both email/password and WebAuthn verified
-      toast.success('Login successful with WebAuthn!');
+      // Success - admin access granted
+      toast.success('Admin access granted with physical security key!');
       setAwaitingWebAuthn(false);
       setTempUser(null);
       onSuccess();
     } catch (error: any) {
       console.error('WebAuthn verification failed:', error);
-      toast.error('WebAuthn verification failed');
+      toast.error('Physical security key verification failed');
       await supabase.auth.signOut();
       setAwaitingWebAuthn(false);
       setTempUser(null);
@@ -139,11 +148,93 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
     }
   };
 
+  const handleForceWebAuthnSetup = async () => {
+    if (!tempUser) return;
+
+    try {
+      // Check if WebAuthn is supported
+      if (!window.PublicKeyCredential) {
+        toast.error('WebAuthn not supported - admin access requires compatible device');
+        await supabase.auth.signOut();
+        setAwaitingWebAuthn(false);
+        setTempUser(null);
+        return;
+      }
+
+      // Generate credential creation options
+      const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
+        challenge: new TextEncoder().encode(`challenge-${Date.now()}`),
+        rp: {
+          name: "Grandpa's Kids Stories Admin",
+          id: window.location.hostname,
+        },
+        user: {
+          id: new TextEncoder().encode(tempUser.id),
+          name: tempUser.email!,
+          displayName: tempUser.email!,
+        },
+        pubKeyCredParams: [
+          { alg: -7, type: "public-key" }, // ES256
+          { alg: -257, type: "public-key" }, // RS256
+        ],
+        authenticatorSelection: {
+          authenticatorAttachment: "platform",
+          userVerification: "required",
+        },
+        timeout: 60000,
+        attestation: "direct"
+      };
+
+      // Create the credential
+      const credential = await navigator.credentials.create({
+        publicKey: publicKeyCredentialCreationOptions
+      }) as PublicKeyCredential;
+
+      if (!credential) {
+        throw new Error('Failed to create security key credential');
+      }
+
+      // Store the credential
+      const credentialData = {
+        id: credential.id,
+        rawId: Array.from(new Uint8Array(credential.rawId)),
+        type: credential.type,
+        response: {
+          clientDataJSON: Array.from(new Uint8Array(credential.response.clientDataJSON)),
+          attestationObject: Array.from(new Uint8Array((credential.response as AuthenticatorAttestationResponse).attestationObject))
+        }
+      };
+
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          webauthn_enabled: true,
+          webauthn_credentials: [credentialData]
+        })
+        .eq('id', tempUser.id);
+
+      if (error) {
+        throw error;
+      }
+
+      toast.success('Security key registered! Admin access granted.');
+      setAwaitingWebAuthn(false);
+      setTempUser(null);
+      onSuccess();
+    } catch (error: any) {
+      console.error('Failed to setup WebAuthn:', error);
+      toast.error('Failed to setup security key - admin access denied');
+      await supabase.auth.signOut();
+      setAwaitingWebAuthn(false);
+      setTempUser(null);
+    }
+  };
+
   const handleCancelWebAuthn = async () => {
     await supabase.auth.signOut();
     setAwaitingWebAuthn(false);
     setTempUser(null);
-    toast.info('Login cancelled');
+    toast.error('Admin access denied - physical security key required');
   };
 
   if (isLoading) {
@@ -160,23 +251,23 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle className="text-center text-2xl font-bold text-primary flex items-center justify-center gap-2">
-              <Shield className="h-6 w-6" />
-              WebAuthn Verification
+              <Shield className="h-6 w-6 text-red-600" />
+              Security Key Required
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Alert className="border-blue-200 bg-blue-50">
-              <Key className="h-4 w-4" />
-              <AlertDescription>
-                Please use your security key or biometric authentication to complete the login process.
+            <Alert className="border-red-200 bg-red-50">
+              <Key className="h-4 w-4 text-red-600" />
+              <AlertDescription className="text-red-800">
+                <strong>MANDATORY:</strong> Physical security key required for admin access. No exceptions.
               </AlertDescription>
             </Alert>
             <div className="space-y-2">
-              <Button onClick={handleWebAuthnVerification} className="w-full" size="lg" disabled={isLoading}>
-                {isLoading ? 'Verifying...' : 'Complete WebAuthn Verification'}
+              <Button onClick={handleWebAuthnVerification} className="w-full bg-red-600 hover:bg-red-700" size="lg" disabled={isLoading}>
+                {isLoading ? 'Verifying Security Key...' : 'Use Physical Security Key'}
               </Button>
-              <Button onClick={handleCancelWebAuthn} variant="outline" className="w-full" size="lg">
-                Cancel
+              <Button onClick={handleCancelWebAuthn} variant="outline" className="w-full border-red-600 text-red-600 hover:bg-red-50" size="lg">
+                Cancel - Access Denied
               </Button>
             </div>
           </CardContent>
