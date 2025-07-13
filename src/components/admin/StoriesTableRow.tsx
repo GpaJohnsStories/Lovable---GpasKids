@@ -354,24 +354,28 @@ const StoriesTableRow = ({
           </div>
         </TableCell>
       )}
-      <TableCell className="text-center" style={{ width: '80px' }}>
-        <Badge className={`${getCategoryBadgeColor(story.category)} text-center flex items-center justify-center`}>
-          {story.category}
-        </Badge>
+      <TableCell className="text-center px-2" style={{ width: '80px' }}>
+        <div className="flex justify-center">
+          <Badge className={`${getCategoryBadgeColor(story.category)} text-center`}>
+            {story.category}
+          </Badge>
+        </div>
       </TableCell>
       {showPublishedColumn && (
-        <TableCell className="text-center" style={{ width: '60px' }}>
-          <Button
-            size="sm"
-            onClick={handleTogglePublished}
-            className={story.published === 'Y' 
-              ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-3 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer' 
-              : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-3 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer'
-            }
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-          >
-            {story.published}
-          </Button>
+        <TableCell className="text-center px-2" style={{ width: '60px' }}>
+          <div className="flex justify-center">
+            <Button
+              size="sm"
+              onClick={handleTogglePublished}
+              className={story.published === 'Y' 
+                ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-3 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer' 
+                : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-3 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer'
+              }
+              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+            >
+              {story.published}
+            </Button>
+          </div>
         </TableCell>
       )}
       <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '100px' }}>
