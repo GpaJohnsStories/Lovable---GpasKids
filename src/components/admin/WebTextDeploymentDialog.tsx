@@ -166,16 +166,16 @@ const WebTextDeploymentDialog = ({
                 WebText Details  Code: {story.story_code}
               </h3>
               <div className="space-y-1 text-sm">
-                <div className="flex justify-between">
-                  <span className="font-medium">Title:</span>
-                  <span className="truncate ml-2 text-xs">{story.title}</span>
+                <div>
+                  <span className="font-medium">Title:  </span>
+                  <span className="text-xs">{story.title}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Author:</span>
+                <div>
+                  <span className="font-medium">Author:  </span>
                   <span className="text-xs">{story.author}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Updated:</span>
+                <div>
+                  <span className="font-medium">Updated:  </span>
                   <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
                 </div>
               </div>
@@ -190,20 +190,16 @@ const WebTextDeploymentDialog = ({
               {mapping ? (
                 <div className="space-y-1 text-sm">
                   <div>
-                    <span className="font-medium block mb-1 text-xs">Full Path:</span>
-                    <code className="text-xs bg-gray-100 px-1 py-0.5 rounded block break-all">
-                      {mapping.pagePath}
-                    </code>
+                    <span className="font-medium">Full Path:  </span>
+                    <span className="text-xs break-all">{mapping.pagePath}</span>
                   </div>
                   <div>
-                    <span className="font-medium block mb-1 text-xs">Description:</span>
+                    <span className="font-medium">Description:  </span>
                     <span className="text-xs">{mapping.description}</span>
                   </div>
                   <div>
-                    <span className="font-medium block mb-1 text-xs">Type:</span>
-                    <Badge variant={mapping.placeholderType === 'both' ? 'default' : 'secondary'} className="text-xs">
-                      {mapping.placeholderType}
-                    </Badge>
+                    <span className="font-medium">Type:  </span>
+                    <span className="text-xs">{mapping.placeholderType}</span>
                   </div>
                 </div>
               ) : (
