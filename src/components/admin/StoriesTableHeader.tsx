@@ -54,7 +54,7 @@ const StoriesTableHeader = ({
   return (
     <TableHeader>
       <TableRow className="bg-background hover:bg-background">{/* Ensure row also has background */}
-        <TableHead className="p-2 text-center bg-background w-20">
+        <TableHead className="p-2 text-center bg-background w-24">
           <Button
             onClick={() => onSort('story_code')}
             className={`${getButtonColor('story_code')} w-full justify-center`}
@@ -67,7 +67,7 @@ const StoriesTableHeader = ({
             </div>
           </Button>
         </TableHead>
-        <TableHead className="p-2 text-center bg-background w-80">
+        <TableHead className="p-2 text-center bg-background" style={{ minWidth: '320px' }}>
           <Button
             onClick={() => onSort('title')}
             className={`${getButtonColor('title')} w-full justify-center`}
@@ -81,7 +81,7 @@ const StoriesTableHeader = ({
           </Button>
         </TableHead>
         {!hideAuthorColumn && (
-          <TableHead className="p-2 text-center bg-background w-32">
+          <TableHead className="p-2 text-center bg-background w-28">
             <Button
               onClick={() => onSort('author')}
               className={`${getButtonColor('author')} w-full justify-center`}
@@ -136,7 +136,7 @@ const StoriesTableHeader = ({
             </div>
           </Button>
         </TableHead>
-        <TableHead className="p-2 text-center bg-background w-24">
+        <TableHead className="p-2 text-center bg-background w-28">
           <Button
             onClick={() => onSort('updated_at')}
             className={`${getButtonColor('updated_at')} w-full justify-center`}
@@ -150,7 +150,7 @@ const StoriesTableHeader = ({
           </Button>
         </TableHead>
         {showActions && (
-          <TableHead className="p-2 text-center bg-background w-24">
+          <TableHead className="p-2 text-center bg-background w-32">
             <Button
               className="bg-blue-500 hover:bg-blue-600 text-white w-full justify-center"
               size="sm"

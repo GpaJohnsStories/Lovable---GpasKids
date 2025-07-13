@@ -296,10 +296,10 @@ const StoriesTableRow = ({
 
   return (
     <TableRow>
-      <TableCell className="font-medium font-bold w-20" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="font-medium font-bold w-24" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <span>{story.story_code}</span>
       </TableCell>
-      <TableCell className="font-medium w-80" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', minWidth: '320px' }}>
         <div className="flex items-center space-x-3">
           {firstPhoto && (
             <div className="flex-shrink-0">
@@ -339,7 +339,7 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       {!hideAuthor && (
-        <TableCell className="w-32" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+        <TableCell className="w-28" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
           <div className="flex flex-col items-center gap-1">
             {story.author}
             {onEditBio && (
@@ -407,7 +407,7 @@ const StoriesTableRow = ({
           </div>
         </div>
       </TableCell>
-      <TableCell className="w-24" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="w-28" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         {showActions ? (
           <>
             {isEditingDate ? (
@@ -454,7 +454,7 @@ const StoriesTableRow = ({
         )}
       </TableCell>
       {showActions && (
-        <TableCell className="w-24">
+        <TableCell className="w-32">
           <div className="flex space-x-2">
             <Button
               size="sm"
