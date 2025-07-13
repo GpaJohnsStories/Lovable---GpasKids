@@ -339,7 +339,7 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       {!hideAuthor && (
-        <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '120px' }}>
+        <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '108px' }}>
           <div className="flex flex-col items-center gap-1">
             {story.author}
             {onEditBio && (

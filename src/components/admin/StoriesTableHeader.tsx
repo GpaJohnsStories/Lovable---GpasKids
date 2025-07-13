@@ -81,7 +81,7 @@ const StoriesTableHeader = ({
           </Button>
         </TableHead>
         {!hideAuthorColumn && (
-          <TableHead className="p-2 text-center bg-background" style={{ width: '120px' }}>
+          <TableHead className="p-2 text-center bg-background" style={{ width: '108px' }}>
             <Button
               onClick={() => onSort('author')}
               className={`${getButtonColor('author')} w-full justify-center`}
