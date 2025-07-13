@@ -21,9 +21,9 @@ export const useSupabaseConnection = () => {
       console.log('🔗 Testing Supabase connection...');
       setState(prev => ({ ...prev, isLoading: true, error: null }));
 
-      // Test basic database access with a simple query
+      // Test basic database access with a simple query using a publicly accessible table
       const { data, error } = await supabase
-        .from('profiles')
+        .from('stories')
         .select('count(*)')
         .limit(1);
 

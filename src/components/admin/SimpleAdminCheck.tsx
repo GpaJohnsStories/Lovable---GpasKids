@@ -21,17 +21,28 @@ const SimpleAdminCheck = ({ children }: SimpleAdminCheckProps) => {
         setIsLoading(true);
         setError(null);
 
-        // Test basic connection first
+        // Test basic connection first using a publicly accessible table
         console.log('🔐 SimpleAdminCheck: Testing database connection...');
         const { data: testData, error: testError } = await supabase
-          .from('profiles')
+          .from('stories')
           .select('count(*)')
           .limit(1);
         
         if (testError) {
           console.error('🔐 SimpleAdminCheck: Database connection test failed:', testError);
+          
+          // Provide more specific error handling
+          let errorMessage = 'Database connection failed';
+          if (testError.message.includes('Invalid API key')) {
+            errorMessage = 'Invalid API key or database configuration error';
+          } else if (testError.message.includes('permission denied') || testError.message.includes('row-level security')) {
+            errorMessage = 'Database access restricted - this is likely a configuration issue';
+          } else {
+            errorMessage = `Database connection failed: ${testError.message}`;
+          }
+          
           if (isMounted) {
-            setError(`Database connection failed: ${testError.message}. Please check your internet connection and try again.`);
+            setError(`${errorMessage}. Please check your internet connection and try again.`);
             setIsAuthorized(false);
             setIsLoading(false);
           }
