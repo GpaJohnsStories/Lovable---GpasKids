@@ -95,7 +95,7 @@ const StoriesTableHeader = ({
             </Button>
           </TableHead>
         )}
-        <TableHead className="p-2 text-center bg-background w-28">
+        <TableHead className="p-2 text-center bg-background w-20">
           <Button
             onClick={() => onSort('category')}
             className={`${getButtonColor('category')} w-full justify-center`}
@@ -103,7 +103,7 @@ const StoriesTableHeader = ({
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
             <div className="flex items-center justify-center gap-2">
-              Category
+              Cat
               {getSortIcon('category')}
             </div>
           </Button>
@@ -123,7 +123,7 @@ const StoriesTableHeader = ({
             </Button>
           </TableHead>
         )}
-        <TableHead className="p-2 text-center bg-background w-28">
+        <TableHead className="p-2 text-center bg-background w-24">
           <Button
             onClick={() => onSort('read_count')}
             className={`${getButtonColor('read_count')} w-full justify-center`}
@@ -131,7 +131,7 @@ const StoriesTableHeader = ({
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
             <div className="flex items-center justify-center gap-2">
-              Read / Votes
+              Stats
               {getSortIcon('read_count')}
             </div>
           </Button>

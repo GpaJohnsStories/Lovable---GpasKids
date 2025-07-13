@@ -354,7 +354,7 @@ const StoriesTableRow = ({
           </div>
         </TableCell>
       )}
-      <TableCell className="w-28">
+      <TableCell className="w-20">
         <Badge className={`${getCategoryBadgeColor(story.category)} text-center flex items-center justify-center`}>
           {story.category}
         </Badge>
@@ -374,7 +374,7 @@ const StoriesTableRow = ({
           </Button>
         </TableCell>
       )}
-      <TableCell className="w-28" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="w-24" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="space-y-1">
           <div className="text-xs text-amber-600 mb-1">
             {(() => {
