@@ -21,11 +21,17 @@ const AdminStories = () => {
   const [groupByAuthor, setGroupByAuthor] = useState(false);
   const [bioEditSource, setBioEditSource] = useState<'stories' | 'bios'>('bios');
 
-  // Check URL parameters for initial view
+  // Check URL parameters for initial view and actions
   useEffect(() => {
     const viewParam = searchParams.get('view');
+    const actionParam = searchParams.get('action');
+    
     if (viewParam === 'bios' || viewParam === 'stories') {
       setCurrentView(viewParam);
+    }
+    
+    if (actionParam === 'create') {
+      handleCreateStory();
     }
   }, [searchParams]);
 
@@ -131,14 +137,6 @@ const AdminStories = () => {
                   className="h-7 px-2 text-xs"
                 >
                   Group by Author
-                </Button>
-                <Button 
-                  onClick={handleCreateStory} 
-                  size="sm" 
-                  className="cozy-button h-7 px-2 text-xs"
-                >
-                  <Plus className="h-3 w-3 mr-1" />
-                  Create Story
                 </Button>
               </>
             )}

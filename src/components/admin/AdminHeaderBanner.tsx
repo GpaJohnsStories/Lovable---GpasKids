@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users } from "lucide-react";
+import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -23,6 +23,10 @@ const AdminHeaderBanner = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+
+  const handleCreateStory = () => {
+    navigate('/buddys_admin/stories?action=create');
+  };
 
   const handleLogout = async () => {
     // Use React Router navigation instead of window.location.href
@@ -234,6 +238,24 @@ const AdminHeaderBanner = () => {
                   </div>
                 );
               })}
+              
+              {/* Create Story Button */}
+              <Button
+                onClick={handleCreateStory}
+                variant="ghost"
+                className="
+                  transition-all duration-200 border font-fun
+                  bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white
+                  shadow-[0_6px_0_#16a34a,0_8px_15px_rgba(0,0,0,0.3)]
+                  hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)]
+                  hover:transform hover:translate-y-1 active:translate-y-2 
+                  active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
+                  hover:from-green-500 hover:via-green-600 hover:to-green-700
+                "
+              >
+                <Plus className="h-4 w-4 mr-1" />
+                + Story
+              </Button>
             </nav>
           </div>
           <Button 
