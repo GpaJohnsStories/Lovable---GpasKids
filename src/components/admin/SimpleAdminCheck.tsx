@@ -26,7 +26,7 @@ const SimpleAdminCheck = ({ children }: SimpleAdminCheckProps) => {
         if (sessionError) {
           console.error('🔐 SimpleAdminCheck: Session error:', sessionError);
           if (isMounted) {
-            setError('Failed to check authentication');
+            setError(`Authentication error: ${sessionError.message}`);
             setIsAuthorized(false);
             setIsLoading(false);
           }
@@ -44,34 +44,29 @@ const SimpleAdminCheck = ({ children }: SimpleAdminCheckProps) => {
 
         console.log('🔐 SimpleAdminCheck: Session found, checking admin role for user:', session.user.id);
 
-        // Check if user is admin
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', session.user.id)
-          .maybeSingle();
+        // Check if user is admin using the database function for better reliability
+        const { data: isAdmin, error: adminCheckError } = await supabase.rpc('is_admin_safe');
         
-        if (profileError) {
-          console.error('🔐 SimpleAdminCheck: Profile error:', profileError);
+        if (adminCheckError) {
+          console.error('🔐 SimpleAdminCheck: Admin check error:', adminCheckError);
           if (isMounted) {
-            setError('Failed to verify admin access');
+            setError(`Admin verification failed: ${adminCheckError.message}`);
             setIsAuthorized(false);
             setIsLoading(false);
           }
           return;
         }
 
-        const isAdmin = profile?.role === 'admin';
-        console.log('🔐 SimpleAdminCheck: Profile role:', profile?.role, 'Is Admin:', isAdmin);
+        console.log('🔐 SimpleAdminCheck: Admin check result:', isAdmin);
         
         if (isMounted) {
-          setIsAuthorized(isAdmin);
+          setIsAuthorized(!!isAdmin);
           setIsLoading(false);
         }
       } catch (err) {
         console.error('🔐 SimpleAdminCheck: Unexpected error:', err);
         if (isMounted) {
-          setError('Authentication check failed');
+          setError(`Authentication check failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
           setIsAuthorized(false);
           setIsLoading(false);
         }
@@ -85,10 +80,16 @@ const SimpleAdminCheck = ({ children }: SimpleAdminCheckProps) => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log('🔐 SimpleAdminCheck: Auth state changed:', event, session ? 'Session exists' : 'No session');
       if (isMounted) {
-        // Reset state and recheck when auth changes
-        setIsLoading(true);
-        setError(null);
-        checkAuth();
+        // Only recheck on significant auth events
+        if (event === 'SIGNED_IN' || event === 'SIGNED_OUT' || event === 'TOKEN_REFRESHED') {
+          setTimeout(() => {
+            if (isMounted) {
+              setIsLoading(true);
+              setError(null);
+              checkAuth();
+            }
+          }, 100);
+        }
       }
     });
 

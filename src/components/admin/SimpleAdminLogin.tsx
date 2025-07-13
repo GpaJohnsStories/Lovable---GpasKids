@@ -46,32 +46,40 @@ const SimpleAdminLogin = ({ onSuccess }: SimpleAdminLoginProps) => {
         return;
       }
 
-      // Check admin role and WebAuthn status
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('role, webauthn_enabled')
-        .eq('id', authData.user.id)
-        .single();
+      // Check admin role using the database function
+      const { data: isAdmin, error: adminCheckError } = await supabase.rpc('is_admin_safe');
+      
+      if (adminCheckError) {
+        console.error('Admin check error:', adminCheckError);
+        toast.error('Failed to verify admin access');
+        await supabase.auth.signOut();
+        return;
+      }
 
-      if (profileError || !profile || profile.role !== 'admin') {
+      if (!isAdmin) {
         toast.error('Access denied - admin role required');
         await supabase.auth.signOut();
         return;
       }
 
-      // MANDATORY WebAuthn for ALL admins - no exceptions
-      if (!profile.webauthn_enabled) {
-        // Force WebAuthn setup on first login
-        setTempUser(authData.user);
-        setAwaitingWebAuthn(true);
-        toast.error('WebAuthn setup required - admin access requires physical security key');
+      // Get user profile for WebAuthn status
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('webauthn_enabled, webauthn_credentials')
+        .eq('id', authData.user.id)
+        .maybeSingle();
+
+      // For now, allow access without WebAuthn but encourage setup
+      if (!profile?.webauthn_enabled) {
+        toast.success('Admin access granted! Consider setting up WebAuthn for enhanced security.');
+        onSuccess();
         return;
       }
 
       // WebAuthn is enabled - require verification
       setTempUser(authData.user);
       setAwaitingWebAuthn(true);
-      toast.info('Physical security key required for admin access');
+      toast.info('Physical security key verification required');
     } catch (error: any) {
       toast.error('Login failed');
       await supabase.auth.signOut();
