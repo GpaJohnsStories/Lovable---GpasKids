@@ -337,7 +337,7 @@ const StoriesTableRow = ({
             <span className="text-xs">{story.author}</span>
             {onEditBio && (
               <div 
-                className="inline-flex items-center h-auto py-1 px-2 text-xs border-2 border-amber-300 bg-white text-amber-700 hover:bg-amber-50 rounded cursor-pointer transition-colors font-bold"
+                className="inline-flex items-center h-auto py-1 px-2 text-xs border-2 border-amber-300 bg-white text-amber-700 hover:bg-amber-50 rounded-md cursor-pointer transition-colors font-bold shadow-sm hover:shadow-md"
                 onClick={() => onEditBio(story.author)}
                 title={`Edit ${story.author}'s biography`}
               >
@@ -349,7 +349,7 @@ const StoriesTableRow = ({
       )}
       <TableCell className="p-1 text-center" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
         <div className="flex justify-center">
-          <Badge className={`${getCategoryBadgeColor(story.category)} text-xs`}>
+          <Badge className={`${getCategoryBadgeColor(story.category)} text-xs rounded-none`}>
             {story.category}
           </Badge>
         </div>
@@ -361,8 +361,8 @@ const StoriesTableRow = ({
               size="sm"
               onClick={handleTogglePublished}
               className={story.published === 'Y' 
-                ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6' 
-                : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6'
+                ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 rounded-none' 
+                : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 rounded-none'
               }
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
