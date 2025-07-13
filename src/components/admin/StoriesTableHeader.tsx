@@ -67,14 +67,14 @@ const StoriesTableHeader = ({
             </div>
           </Button>
         </TableHead>
-        <TableHead className="pl-2 pr-2 py-2 text-center bg-background" style={{ width: '170px' }}>
+        <TableHead className="p-0 text-center bg-background" style={{ width: '170px' }}>
           <Button
             onClick={() => onSort('title')}
-            className={`${getButtonColor('title')} w-full justify-center`}
+            className={`${getButtonColor('title')} w-full justify-start pl-2`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center gap-2">
               Title
               {getSortIcon('title')}
             </div>
