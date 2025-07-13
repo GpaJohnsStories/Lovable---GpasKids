@@ -4,7 +4,7 @@ import { Table, TableBody } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { BookOpen } from "lucide-react";
 import { toast } from "sonner";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
@@ -50,7 +50,7 @@ const StoriesTable = ({
   const { data: stories, isLoading: storiesLoading, refetch } = useQuery({
     queryKey: ['admin-stories', sortField, sortDirection, showPublishedOnly, publishedFilter],
     queryFn: async () => {
-      let query = adminClient
+      let query = supabase
         .from('stories')
         .select('*')
         .order(sortField, { ascending: sortDirection === 'asc' });
@@ -96,7 +96,7 @@ const StoriesTable = ({
   const handleDeleteStory = async (id: string) => {
     if (!confirm("Are you sure you want to delete this story?")) return;
 
-    const { error } = await adminClient
+    const { error } = await supabase
       .from('stories')
       .delete()
       .eq('id', id);

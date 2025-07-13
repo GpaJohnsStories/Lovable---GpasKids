@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Save } from "lucide-react";
 import { toast } from "sonner";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 import RichTextEditor from "@/components/RichTextEditor";
 
 interface AuthorBioFormProps {
@@ -49,7 +49,7 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
     try {
       if (bio) {
         // Update existing bio
-        const { error } = await adminClient
+        const { error } = await supabase
           .from('author_bios')
           .update({
             author_name: formData.author_name.trim(),
@@ -61,7 +61,7 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
         toast.success("Author bio updated successfully");
       } else {
         // Create new bio
-        const { error } = await adminClient
+        const { error } = await supabase
           .from('author_bios')
           .insert({
             author_name: formData.author_name.trim(),

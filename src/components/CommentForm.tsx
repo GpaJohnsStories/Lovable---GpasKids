@@ -4,7 +4,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
-import { publicClient, logDatabaseOperation } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { containsBadWord } from "@/utils/profanity";
@@ -85,9 +85,8 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
       
       // Test database connection first with detailed logging
       console.log("🔍 Testing database connection...");
-      await logDatabaseOperation('connection_test', 'comments', 'public');
       try {
-        const { data: testData, error: testError } = await publicClient
+        const { data: testData, error: testError } = await supabase
           .from("comments")
           .select("count")
           .limit(1);
@@ -119,10 +118,8 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
       };
       console.log("📝 Insert payload prepared");
       
-      await logDatabaseOperation('insert', 'comments', 'public', insertPayload);
-      
       try {
-        const { data, error } = await publicClient.from("comments").insert([insertPayload]).select();
+        const { data, error } = await supabase.from("comments").insert([insertPayload]).select();
 
         console.log("📊 Insert operation result:", {
           success: !error,
@@ -188,8 +185,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
     }
 
     try {
-      await logDatabaseOperation('select', 'stories', 'public', { story_code: storyCode.trim() });
-      const { data: story, error } = await publicClient
+      const { data: story, error } = await supabase
         .from("stories")
         .select("title")
         .ilike("story_code", storyCode.trim())

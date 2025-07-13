@@ -18,7 +18,7 @@ import {
   Globe
 } from "lucide-react";
 import { toast } from "sonner";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import AdminLayout from "./AdminLayout";
 
@@ -84,7 +84,7 @@ const StaticDeploymentSystem = () => {
   const { data: systemStories, isLoading, refetch } = useQuery({
     queryKey: ['system-stories'],
     queryFn: async () => {
-      const { data, error } = await adminClient
+      const { data, error } = await supabase
         .from('stories')
         .select('*')
         .eq('category', 'System')
@@ -155,7 +155,7 @@ const StaticDeploymentSystem = () => {
       const storyIds = deploymentPreview.map((item: any) => item.story.id);
       
       console.log('🚀 Calling deploy-static-content function with story IDs:', storyIds);
-      const { data, error } = await adminClient.functions.invoke('deploy-static-content', {
+      const { data, error } = await supabase.functions.invoke('deploy-static-content', {
         body: { storyIds }
       });
       

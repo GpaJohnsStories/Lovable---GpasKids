@@ -4,7 +4,7 @@ import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@
 import { Button } from "@/components/ui/button";
 import { BookOpen, Plus, Edit, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
 type SortField = 'author_name' | 'created_at' | 'updated_at';
@@ -22,7 +22,7 @@ const AuthorBiosTable = ({ onEditBio, onCreateBio }: AuthorBiosTableProps) => {
   const { data: bios, isLoading: biosLoading, refetch } = useQuery({
     queryKey: ['admin-author-bios', sortField, sortDirection],
     queryFn: async () => {
-      const { data, error } = await adminClient
+      const { data, error } = await supabase
         .from('author_bios')
         .select('*')
         .order(sortField, { ascending: sortDirection === 'asc' });
@@ -44,7 +44,7 @@ const AuthorBiosTable = ({ onEditBio, onCreateBio }: AuthorBiosTableProps) => {
   const handleDeleteBio = async (id: string, authorName: string) => {
     if (!confirm(`Are you sure you want to delete the bio for ${authorName}?`)) return;
 
-    const { error } = await adminClient
+    const { error } = await supabase
       .from('author_bios')
       .delete()
       .eq('id', id);

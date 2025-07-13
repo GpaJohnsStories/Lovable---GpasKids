@@ -7,7 +7,7 @@ import AdminStoryPreview from "./AdminStoryPreview";
 import AuthorBiosTable from "./AuthorBiosTable";
 import AuthorBioForm from "./AuthorBioForm";
 import AdminLayout from "./AdminLayout";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminStories = () => {
   const [selectedStory, setSelectedStory] = useState(null);
@@ -55,7 +55,7 @@ const AdminStories = () => {
     setBioEditSource('stories');
     try {
       // Try to find existing bio
-      const { data: existingBio } = await adminClient
+      const { data: existingBio } = await supabase
         .from('author_bios')
         .select('*')
         .eq('author_name', authorName)

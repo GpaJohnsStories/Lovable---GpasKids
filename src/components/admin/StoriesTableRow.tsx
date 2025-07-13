@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volume2, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
 import { useState } from "react";
@@ -97,7 +97,7 @@ const StoriesTableRow = ({
   const handleTogglePublished = async () => {
     const newStatus = story.published === 'Y' ? 'N' : 'Y';
     
-    const { error } = await adminClient
+    const { error } = await supabase
       .from('stories')
       .update({ published: newStatus })
       .eq('id', story.id);
@@ -152,7 +152,7 @@ const StoriesTableRow = ({
       console.log('Parsed date:', inputDate);
       console.log('ISO string to store:', inputDate.toISOString());
 
-      const { error } = await adminClient
+      const { error } = await supabase
         .from('stories')
         .update({ updated_at: inputDate.toISOString() })
         .eq('id', story.id);
@@ -182,7 +182,7 @@ const StoriesTableRow = ({
     setSelectedVoice(newVoice);
     
     // Update the story record with the selected voice
-    const { error } = await adminClient
+    const { error } = await supabase
       .from('stories')
       .update({ 
         ai_voice_name: newVoice,
@@ -255,7 +255,7 @@ const StoriesTableRow = ({
       });
 
       console.log('🎵 Calling generate-story-audio function with storyId:', story.id);
-      const { data, error } = await adminClient.functions.invoke('generate-story-audio', {
+      const { data, error } = await supabase.functions.invoke('generate-story-audio', {
         body: { storyId: story.id }
       });
       console.log('🎵 Function response:', { data, error });

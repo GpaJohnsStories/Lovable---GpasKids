@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 interface CreateAdminCommentProps {
@@ -22,7 +22,7 @@ const CreateAdminComment = ({ isOpen, onClose }: CreateAdminCommentProps) => {
 
   const createCommentMutation = useMutation({
     mutationFn: async (commentData: { subject: string; content: string }) => {
-      const { data, error } = await adminClient
+      const { data, error } = await supabase
         .from("comments")
         .insert({
           personal_id: "0000FF", // GpaJohn's official admin ID

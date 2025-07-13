@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { toast } from "sonner";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Story {
   id?: string;
@@ -29,21 +29,21 @@ export const useStorySave = () => {
     console.log('=== STARTING SAVE OPERATION ===');
     console.log('Form data received:', formData);
     console.log('Story ID:', formData.id);
-    console.log('Admin client:', adminClient);
+    console.log('Supabase client:', supabase);
     
     // Check admin session and RLS function
-    const { data: session, error: sessionError } = await adminClient.auth.getSession();
+    const { data: session, error: sessionError } = await supabase.auth.getSession();
     console.log('Current session:', session);
     console.log('Session error:', sessionError);
     
     // Test admin function
-    const { data: isAdminResult, error: adminError } = await adminClient.rpc('is_admin_safe');
+    const { data: isAdminResult, error: adminError } = await supabase.rpc('is_admin_safe');
     console.log('is_admin_safe result:', isAdminResult);
     console.log('Admin check error:', adminError);
     
     // Check current user profile
     if (session?.session?.user?.id) {
-      const { data: profile, error: profileError } = await adminClient
+      const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', session.session.user.id)
@@ -54,7 +54,7 @@ export const useStorySave = () => {
     
     // Check if story exists
     if (formData.id) {
-      const { data: existingStory, error: fetchError } = await adminClient
+      const { data: existingStory, error: fetchError } = await supabase
         .from('stories')
         .select('id, title, updated_at')
         .eq('id', formData.id)
@@ -89,7 +89,7 @@ export const useStorySave = () => {
         console.log('Updating story with ID:', formData.id);
         console.log('Update payload:', formData);
         
-        const { data, error } = await adminClient
+        const { data, error } = await supabase
           .from('stories')
           .update({
             ...formData,
@@ -107,7 +107,7 @@ export const useStorySave = () => {
         console.log('Creating new story');
         console.log('Insert payload:', formData);
         
-        const { data, error } = await adminClient
+        const { data, error } = await supabase
           .from('stories')
           .insert([formData])
           .select();

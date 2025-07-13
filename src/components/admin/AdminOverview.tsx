@@ -7,7 +7,7 @@ import WebAuthnManager from "./WebAuthnManager";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Settings, Shield, Key, BookOpen, Eye, EyeOff, Tag, Video, Volume2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { adminClient } from "@/integrations/supabase/clients";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminOverview = () => {
   const { data: storyCounts } = useQuery({
@@ -15,18 +15,18 @@ const AdminOverview = () => {
     queryFn: async () => {
       const [allResult, publishedResult, newStoriesResult, unpublishedResult, categoriesResult, videosResult, audioResult] = await Promise.all([
         // Exclude System category from all counts
-        adminClient.from('stories').select('id', { count: 'exact', head: true }).not('category', 'eq', 'System'),
-        adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y').not('category', 'eq', 'System'),
+        supabase.from('stories').select('id', { count: 'exact', head: true }).not('category', 'eq', 'System'),
+        supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y').not('category', 'eq', 'System'),
         // New stories created in the last 7 days
-        adminClient.from('stories').select('id', { count: 'exact', head: true }).gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()).not('category', 'eq', 'System'),
+        supabase.from('stories').select('id', { count: 'exact', head: true }).gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()).not('category', 'eq', 'System'),
         // Include Story category in unpublished, exclude System
-        adminClient.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N').not('category', 'eq', 'System'),
+        supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N').not('category', 'eq', 'System'),
         // Get all stories with categories (including System for category display)
-        adminClient.from('stories').select('category'),
+        supabase.from('stories').select('category'),
         // Count stories with video URLs
-        adminClient.from('stories').select('id', { count: 'exact', head: true }).not('video_url', 'is', null),
+        supabase.from('stories').select('id', { count: 'exact', head: true }).not('video_url', 'is', null),
         // Count stories with audio URLs
-        adminClient.from('stories').select('id', { count: 'exact', head: true }).not('audio_url', 'is', null)
+        supabase.from('stories').select('id', { count: 'exact', head: true }).not('audio_url', 'is', null)
       ]);
 
       // Count stories by category
