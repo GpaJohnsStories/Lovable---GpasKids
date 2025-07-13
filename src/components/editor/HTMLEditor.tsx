@@ -355,6 +355,39 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
               </div>
             </div>
 
+            {/* Home Page Header Elements */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold border-b pb-2">Home Page Header Elements</h3>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;div class="text-blue-900 font-handwritten text-2xl font-bold"&gt;Grandpa John's&lt;/div&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '1.5rem', fontWeight: 700, color: '#1e3a8a' }}>
+                    Grandpa John's
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;div class="text-white font-handwritten text-3xl font-bold"&gt;Stories for Kids&lt;/div&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '1.875rem', fontWeight: 700, color: '#ffffff', backgroundColor: '#1f2937', padding: '4px 8px', borderRadius: '4px' }}>
+                    Stories for Kids
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p class="text-amber-100 text-sm font-medium"&gt;Where every story feels like a new adventure&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '0.875rem', fontWeight: 500, color: '#fef3c7', backgroundColor: '#1f2937', padding: '4px 8px', borderRadius: '4px' }}>
+                    Where every story feels like a new adventure
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Georgia Serif Font Family */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold border-b pb-2">Georgia Serif Font Family (Story Content)</h3>
