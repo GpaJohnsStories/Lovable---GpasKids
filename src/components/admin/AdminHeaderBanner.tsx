@@ -202,7 +202,8 @@ const AdminHeaderBanner = () => {
                       hover:from-green-500 hover:via-green-600 hover:to-green-700
                     "
                   >
-                    <Plus className="h-4 w-4" />
+                    <Plus className="h-4 w-4 mr-2" />
+                    Story
                   </Button>
                 );
 
