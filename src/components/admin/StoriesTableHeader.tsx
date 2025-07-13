@@ -57,7 +57,7 @@ const StoriesTableHeader = ({
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
           <Button
             onClick={() => onSort('story_code')}
-            className={`${getButtonColor('story_code')} w-full h-8 text-xs px-1`}
+            className={`${getButtonColor('story_code')} w-full h-6 text-xs px-1 py-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
@@ -68,7 +68,7 @@ const StoriesTableHeader = ({
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '280px', minWidth: '280px', maxWidth: '280px' }}>
           <Button
             onClick={() => onSort('title')}
-            className={`${getButtonColor('title')} w-full h-8 text-xs px-1`}
+            className={`${getButtonColor('title')} w-full h-6 text-xs px-1 py-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
@@ -80,7 +80,7 @@ const StoriesTableHeader = ({
           <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
             <Button
               onClick={() => onSort('author')}
-              className={`${getButtonColor('author')} w-full h-8 text-xs px-1`}
+              className={`${getButtonColor('author')} w-full h-6 text-xs px-1 py-1`}
               size="sm"
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
@@ -92,7 +92,7 @@ const StoriesTableHeader = ({
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
           <Button
             onClick={() => onSort('category')}
-            className={`${getButtonColor('category')} w-full h-8 text-xs px-1`}
+            className={`${getButtonColor('category')} w-full h-6 text-xs px-1 py-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
@@ -104,7 +104,7 @@ const StoriesTableHeader = ({
           <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '60px', minWidth: '60px', maxWidth: '60px' }}>
             <Button
               onClick={() => onSort('published')}
-              className={`${getButtonColor('published')} w-full h-8 text-xs px-1`}
+              className={`${getButtonColor('published')} w-full h-6 text-xs px-1 py-1`}
               size="sm"
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
@@ -116,7 +116,7 @@ const StoriesTableHeader = ({
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
           <Button
             onClick={() => onSort('read_count')}
-            className={`${getButtonColor('read_count')} w-full h-8 text-xs px-1`}
+            className={`${getButtonColor('read_count')} w-full h-6 text-xs px-1 py-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
@@ -127,7 +127,7 @@ const StoriesTableHeader = ({
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '120px', minWidth: '120px', maxWidth: '120px' }}>
           <Button
             onClick={() => onSort('updated_at')}
-            className={`${getButtonColor('updated_at')} w-full h-8 text-xs px-1`}
+            className={`${getButtonColor('updated_at')} w-full h-6 text-xs px-1 py-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
@@ -138,7 +138,7 @@ const StoriesTableHeader = ({
         {showActions && (
           <TableHead className="p-1 text-left bg-background" style={{ width: '160px', minWidth: '160px', maxWidth: '160px' }}>
             <Button
-              className="bg-blue-500 hover:bg-blue-600 text-white h-8 text-xs px-1"
+              className="bg-blue-500 hover:bg-blue-600 text-white h-6 text-xs px-1 py-1"
               size="sm"
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '136px' }}
             >
