@@ -188,7 +188,7 @@ const StoriesTable = ({
             <div className="border rounded-lg overflow-hidden">
               {/* Fixed header outside scrollable area */}
               <div className="border-b bg-background">
-                <Table>
+                <Table className="table-fixed w-full">
                   <StoriesTableHeader
                     sortField={sortField}
                     sortDirection={sortDirection}
@@ -200,7 +200,7 @@ const StoriesTable = ({
               </div>
               {/* Scrollable content area */}
               <div className="max-h-[calc(100vh-180px)] overflow-y-auto">
-                <Table>
+                <Table className="table-fixed w-full">
                   <TableBody>
                     {stories?.map((story) => (
                       <StoriesTableRow

@@ -296,52 +296,45 @@ const StoriesTableRow = ({
 
   return (
     <TableRow>
-      <TableCell className="font-medium font-bold text-left pl-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '80px' }}>
-        <span>{story.story_code}</span>
+      <TableCell className="p-1 text-left border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+        <span className="text-xs font-bold">{story.story_code}</span>
       </TableCell>
-      <TableCell className="font-medium pl-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '288px' }}>
-        <div className="flex items-center space-x-3">
+      <TableCell className="p-1 border-r border-gray-200" style={{ width: '280px', minWidth: '280px', maxWidth: '280px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+        <div className="flex items-center space-x-2">
           {firstPhoto && (
             <div className="flex-shrink-0">
               <img 
                 src={firstPhoto} 
                 alt={`${story.title} thumbnail`}
-                className="w-12 h-12 object-cover rounded border border-gray-200"
+                className="w-10 h-10 object-cover rounded border border-gray-200"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}
               />
             </div>
           )}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <Link to={`/story/${story.id}`} onClick={scrollToTop}>
-              <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer">
+              <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer text-sm truncate">
                 {story.title}
               </div>
             </Link>
             {story.tagline && (
-              <div className="text-sm italic text-amber-700 mt-1 font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <div className="text-xs italic text-amber-700 truncate" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 {hasVideo && story.tagline.toUpperCase().includes('VIDEO') ? (
-                  <>
-                    <span className="text-lg">🎥</span> {story.tagline}
-                  </>
+                  <>🎥 {story.tagline}</>
                 ) : (
                   story.tagline
                 )}
-              </div>
-            )}
-            {story.excerpt && (
-              <div className="text-xs text-gray-600 mt-1 line-clamp-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                {story.excerpt}
               </div>
             )}
           </div>
         </div>
       </TableCell>
       {!hideAuthor && (
-        <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '108px' }}>
+        <TableCell className="p-1 text-center border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
           <div className="flex flex-col items-center gap-1">
-            {story.author}
+            <span className="text-xs">{story.author}</span>
             {onEditBio && (
               <div 
                 className="inline-flex items-center h-auto py-1 px-2 text-xs border-2 border-amber-300 bg-white text-amber-700 hover:bg-amber-50 rounded cursor-pointer transition-colors font-bold"
@@ -354,22 +347,22 @@ const StoriesTableRow = ({
           </div>
         </TableCell>
       )}
-      <TableCell className="text-center px-2" style={{ width: '80px' }}>
+      <TableCell className="p-1 text-center border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
         <div className="flex justify-center">
-          <Badge className={`${getCategoryBadgeColor(story.category)} text-center`}>
+          <Badge className={`${getCategoryBadgeColor(story.category)} text-xs`}>
             {story.category}
           </Badge>
         </div>
       </TableCell>
       {showPublishedColumn && (
-        <TableCell className="text-center px-2" style={{ width: '60px' }}>
+        <TableCell className="p-1 text-center border-r border-gray-200" style={{ width: '60px', minWidth: '60px', maxWidth: '60px' }}>
           <div className="flex justify-center">
             <Button
               size="sm"
               onClick={handleTogglePublished}
               className={story.published === 'Y' 
-                ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-3 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer' 
-                : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-3 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer'
+                ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6' 
+                : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6'
               }
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
@@ -378,9 +371,9 @@ const StoriesTableRow = ({
           </div>
         </TableCell>
       )}
-      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '100px' }}>
+      <TableCell className="p-1 text-center border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="space-y-1">
-          <div className="text-xs text-amber-600 mb-1">
+          <div className="text-xs text-amber-600">
             {(() => {
               const { readingTime, wordCount } = calculateReadingTimeWithWordCount(story.content || story.excerpt || '');
               return (
@@ -391,11 +384,11 @@ const StoriesTableRow = ({
               );
             })()}
           </div>
-          <div className="flex items-center space-x-1 text-blue-600">
+          <div className="flex items-center justify-center space-x-1 text-blue-600">
             <BookOpen className="h-3 w-3" />
             <span className="text-xs font-medium">{story.read_count}</span>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center justify-center space-x-2">
             <div className="flex items-center space-x-1 text-green-600">
               <ThumbsUp className="h-3 w-3" />
               <span className="text-xs">{story.thumbs_up_count || 0}</span>
@@ -411,16 +404,16 @@ const StoriesTableRow = ({
           </div>
         </div>
       </TableCell>
-      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black', width: '120px' }}>
+      <TableCell className="p-1 text-center border-r border-gray-200" style={{ width: '120px', minWidth: '120px', maxWidth: '120px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         {showActions ? (
           <>
             {isEditingDate ? (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1">
                 <input
                   type="datetime-local"
                   value={editedDate}
                   onChange={(e) => setEditedDate(e.target.value)}
-                  className="text-xs border rounded px-1 py-1"
+                  className="text-xs border rounded px-1 py-1 w-full"
                   style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                 />
                 <div className="flex space-x-1">
@@ -441,8 +434,8 @@ const StoriesTableRow = ({
                 </div>
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
-                <span>{new Date(story.updated_at).toLocaleDateString()}</span>
+              <div className="flex items-center justify-center space-x-1">
+                <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
                 <Button
                   size="sm"
                   onClick={handleEditDate}
@@ -454,32 +447,32 @@ const StoriesTableRow = ({
             )}
           </>
         ) : (
-          <span>{new Date(story.updated_at).toLocaleDateString()}</span>
+          <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
         )}
       </TableCell>
       {showActions && (
-        <TableCell style={{ width: '160px' }}>
-          <div className="flex space-x-2">
+        <TableCell className="p-1" style={{ width: '160px', minWidth: '160px', maxWidth: '160px' }}>
+          <div className="flex space-x-1">
             <Button
               size="sm"
-              className="!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700 !shadow-[0_6px_12px_rgba(34,197,94,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(34,197,94,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)]"
+              className="!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700 !shadow-[0_6px_12px_rgba(34,197,94,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(34,197,94,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] h-6 w-8"
               onClick={() => onEdit(story)}
             >
-              <Edit className="h-4 w-4" />
+              <Edit className="h-3 w-3" />
             </Button>
             {story.category === 'System' && (
               <Button
                 size="sm"
-                className="!bg-gradient-to-b !from-blue-500 !to-blue-700 !text-white !border-blue-800 !shadow-[0_6px_12px_rgba(59,130,246,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(59,130,246,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)]"
+                className="!bg-gradient-to-b !from-blue-500 !to-blue-700 !text-white !border-blue-800 !shadow-[0_6px_12px_rgba(59,130,246,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(59,130,246,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] h-6 w-8"
                 onClick={() => window.open('/buddys_admin/deployment', '_blank')}
                 title="Deploy this System story to web pages"
               >
-                <Globe className="h-4 w-4" />
+                <Globe className="h-3 w-3" />
               </Button>
             )}
             <div className="flex flex-col space-y-1">
               <Select value={selectedVoice} onValueChange={handleVoiceChange}>
-                <SelectTrigger className="w-20 h-6 text-xs">
+                <SelectTrigger className="w-16 h-6 text-xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -496,7 +489,7 @@ const StoriesTableRow = ({
                   <TooltipTrigger asChild>
                     <Button
                       size="sm"
-                      className={`${getAudioButtonClasses()} !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-20 h-6 text-xs`}
+                      className={`${getAudioButtonClasses()} !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-16 h-6 text-xs`}
                       onClick={handleGenerateAudio}
                       disabled={isGeneratingAudio}
                     >
@@ -520,8 +513,9 @@ const StoriesTableRow = ({
               size="sm"
               variant="destructive"
               onClick={() => onDelete(story.id)}
+              className="h-6 w-8"
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="h-3 w-3" />
             </Button>
           </div>
         </TableCell>

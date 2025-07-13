@@ -53,106 +53,92 @@ const StoriesTableHeader = ({
 
   return (
     <TableHeader>
-      <TableRow className="bg-background hover:bg-background">{/* Ensure row also has background */}
-        <TableHead className="pl-1 pr-2 py-2 text-center bg-background" style={{ width: '80px' }}>
+      <TableRow className="bg-background hover:bg-background">
+        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
           <Button
             onClick={() => onSort('story_code')}
-            className={`${getButtonColor('story_code')} w-full justify-center`}
+            className={`${getButtonColor('story_code')} w-full h-8 text-xs px-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            <div className="flex items-center justify-center gap-2">
-              Code
-              {getSortIcon('story_code')}
-            </div>
+            Code
+            {getSortIcon('story_code')}
           </Button>
         </TableHead>
-        <TableHead className="p-0 text-center bg-background" style={{ width: '170px' }}>
+        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '280px', minWidth: '280px', maxWidth: '280px' }}>
           <Button
             onClick={() => onSort('title')}
-            className={`${getButtonColor('title')} w-full justify-center pl-2`}
+            className={`${getButtonColor('title')} w-full h-8 text-xs px-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            <div className="flex items-center justify-center gap-2">
-              Title
-              {getSortIcon('title')}
-            </div>
+            Title
+            {getSortIcon('title')}
           </Button>
         </TableHead>
         {!hideAuthorColumn && (
-          <TableHead className="p-2 text-center bg-background" style={{ width: '108px' }}>
+          <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
             <Button
               onClick={() => onSort('author')}
-              className={`${getButtonColor('author')} w-full justify-center`}
+              className={`${getButtonColor('author')} w-full h-8 text-xs px-1`}
               size="sm"
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
-              <div className="flex items-center justify-center gap-2">
-                Author
-                {getSortIcon('author')}
-              </div>
+              Author
+              {getSortIcon('author')}
             </Button>
           </TableHead>
         )}
-        <TableHead className="p-2 text-center bg-background" style={{ width: '80px' }}>
+        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
           <Button
             onClick={() => onSort('category')}
-            className={`${getButtonColor('category')} w-full justify-center`}
+            className={`${getButtonColor('category')} w-full h-8 text-xs px-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            <div className="flex items-center justify-center gap-2">
-              Cat
-              {getSortIcon('category')}
-            </div>
+            Cat
+            {getSortIcon('category')}
           </Button>
         </TableHead>
         {showPublishedColumn && (
-          <TableHead className="p-2 text-center bg-background" style={{ width: '60px' }}>
+          <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '60px', minWidth: '60px', maxWidth: '60px' }}>
             <Button
               onClick={() => onSort('published')}
-              className={`${getButtonColor('published')} w-full justify-center`}
+              className={`${getButtonColor('published')} w-full h-8 text-xs px-1`}
               size="sm"
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
-              <div className="flex items-center justify-center gap-2">
-                Publ
-                {getSortIcon('published')}
-              </div>
+              Publ
+              {getSortIcon('published')}
             </Button>
           </TableHead>
         )}
-        <TableHead className="p-2 text-center bg-background" style={{ width: '100px' }}>
+        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
           <Button
             onClick={() => onSort('read_count')}
-            className={`${getButtonColor('read_count')} w-full justify-center`}
+            className={`${getButtonColor('read_count')} w-full h-8 text-xs px-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            <div className="flex items-center justify-center gap-2">
-              Stats
-              {getSortIcon('read_count')}
-            </div>
+            Stats
+            {getSortIcon('read_count')}
           </Button>
         </TableHead>
-        <TableHead className="p-2 text-center bg-background" style={{ width: '120px' }}>
+        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '120px', minWidth: '120px', maxWidth: '120px' }}>
           <Button
             onClick={() => onSort('updated_at')}
-            className={`${getButtonColor('updated_at')} w-full justify-center`}
+            className={`${getButtonColor('updated_at')} w-full h-8 text-xs px-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            <div className="flex items-center justify-center gap-2">
-              Updated
-              {getSortIcon('updated_at')}
-            </div>
+            Updated
+            {getSortIcon('updated_at')}
           </Button>
         </TableHead>
         {showActions && (
-          <TableHead className="p-2 text-center bg-background" style={{ width: '160px' }}>
+          <TableHead className="p-1 text-center bg-background" style={{ width: '160px', minWidth: '160px', maxWidth: '160px' }}>
             <Button
-              className="bg-blue-500 hover:bg-blue-600 text-white w-full justify-center"
+              className="bg-blue-500 hover:bg-blue-600 text-white w-full h-8 text-xs px-1"
               size="sm"
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
