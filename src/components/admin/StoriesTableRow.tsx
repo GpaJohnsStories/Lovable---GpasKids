@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
 import { useState } from "react";
 import AuthorLink from "@/components/AuthorLink";
+import WebTextDeploymentDialog from "./WebTextDeploymentDialog";
 
 interface Story {
   id: string;
@@ -64,6 +65,7 @@ const StoriesTableRow = ({
   const [editedDate, setEditedDate] = useState('');
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [selectedVoice, setSelectedVoice] = useState(story.ai_voice_name || 'Nova');
+  const [showDeployDialog, setShowDeployDialog] = useState(false);
 
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
@@ -438,8 +440,8 @@ const StoriesTableRow = ({
                           ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1' 
                           : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1'
                         }
-                        onClick={() => window.open('/buddys_admin/deployment', '_blank')}
-                        title="Deploy this System story to web pages"
+                        onClick={() => setShowDeployDialog(true)}
+                        title="Deploy this WebText to web page"
                         style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                       >
                         <Globe className="h-3 w-3" />
@@ -535,6 +537,13 @@ const StoriesTableRow = ({
           </div>
         </TableCell>
       )}
+      
+      <WebTextDeploymentDialog
+        story={story}
+        isOpen={showDeployDialog}
+        onClose={() => setShowDeployDialog(false)}
+        onSuccess={onStatusChange}
+      />
     </TableRow>
   );
 };
