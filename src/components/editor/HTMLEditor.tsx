@@ -711,6 +711,60 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                 <strong>Note:</strong> Story content automatically uses Georgia serif font. UI elements use Kalam font for a child-friendly appearance.
               </p>
             </div>
+
+            {/* Font-Family Code References */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold border-b pb-2">Font-Family CSS Code References</h3>
+              <div className="space-y-3">
+                <div className="p-4 bg-gray-50 rounded">
+                  <h4 className="font-semibold mb-2 text-gray-700">Kalam Font Family (UI Elements, Headers, Buttons)</h4>
+                  <code className="block text-sm bg-white p-3 rounded border font-mono">
+                    font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
+                  </code>
+                  <p className="text-xs text-gray-600 mt-2">Used for: Site title, navigation, buttons, welcome text, all UI elements</p>
+                </div>
+                
+                <div className="p-4 bg-gray-50 rounded">
+                  <h4 className="font-semibold mb-2 text-gray-700">Georgia Font Family (Story Content - Primary)</h4>
+                  <code className="block text-sm bg-white p-3 rounded border font-mono">
+                    font-family: 'Georgia', serif;
+                  </code>
+                  <p className="text-xs text-gray-600 mt-2">Used for: All story content, main text, paragraphs, headings in stories</p>
+                </div>
+                
+                <div className="p-4 bg-gray-50 rounded">
+                  <h4 className="font-semibold mb-2 text-gray-700">Georgia Font Family (Extended - Fallback)</h4>
+                  <code className="block text-sm bg-white p-3 rounded border font-mono">
+                    font-family: 'Georgia', 'Times New Roman', serif;
+                  </code>
+                  <p className="text-xs text-gray-600 mt-2">Used for: Tailwind georgia class with extended fallbacks</p>
+                </div>
+                
+                <div className="p-4 bg-gray-50 rounded">
+                  <h4 className="font-semibold mb-2 text-gray-700">Generic Serif (Special Cases)</h4>
+                  <code className="block text-sm bg-white p-3 rounded border font-mono">
+                    font-family: serif;
+                  </code>
+                  <p className="text-xs text-gray-600 mt-2">Used for: Special serif styling (Ctrl+F shortcut), system serif fallback</p>
+                </div>
+                
+                <div className="p-4 bg-gray-50 rounded">
+                  <h4 className="font-semibold mb-2 text-gray-700">Monospace (Code Display)</h4>
+                  <code className="block text-sm bg-white p-3 rounded border font-mono">
+                    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+                  </code>
+                  <p className="text-xs text-gray-600 mt-2">Used for: HTML editor textarea, code blocks, system codes</p>
+                </div>
+                
+                <div className="p-4 bg-gray-50 rounded">
+                  <h4 className="font-semibold mb-2 text-gray-700">System UI (Admin Elements)</h4>
+                  <code className="block text-sm bg-white p-3 rounded border font-mono">
+                    font-family: system-ui, -apple-system, sans-serif;
+                  </code>
+                  <p className="text-xs text-gray-600 mt-2">Used for: Admin filters, system buttons, technical UI elements</p>
+                </div>
+              </div>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
