@@ -142,7 +142,7 @@ const StoriesTableHeader = ({
               size="sm"
               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
-              Actions
+              Act
             </Button>
           </TableHead>
         )}
