@@ -4,9 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { Shield, ShieldCheck, AlertTriangle, Key, CheckCircle, AlertCircle } from "lucide-react";
+import { Shield, ShieldCheck, AlertTriangle, Key, CheckCircle, AlertCircle, Smartphone, Usb, Info } from "lucide-react";
 import type { User } from '@supabase/supabase-js';
+
+type AuthenticatorType = 'passkey' | 'security-key';
 
 const WebAuthnManager = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -14,6 +19,9 @@ const WebAuthnManager = () => {
   const [isSupported, setIsSupported] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [selectedType, setSelectedType] = useState<AuthenticatorType>('passkey');
+  const [showTypeSelection, setShowTypeSelection] = useState(false);
+  const [registeredTypes, setRegisteredTypes] = useState<string[]>([]);
 
   useEffect(() => {
     setIsSupported(!!window.PublicKeyCredential);
@@ -26,16 +34,26 @@ const WebAuthnManager = () => {
       if (user) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('webauthn_enabled')
+          .select('webauthn_enabled, webauthn_credentials')
           .eq('id', user.id)
           .maybeSingle();
         
         setWebauthnEnabled(profile?.webauthn_enabled || false);
+        
+        // Analyze registered credential types
+        if (profile?.webauthn_credentials && Array.isArray(profile.webauthn_credentials)) {
+          const types = profile.webauthn_credentials.map((cred: any) => cred.authenticatorType || 'unknown');
+          setRegisteredTypes([...new Set(types)]);
+        }
       }
     };
     
     getCurrentUser();
   }, []);
+
+  const handleShowSetup = () => {
+    setShowTypeSelection(true);
+  };
 
   const handleEnableWebAuthn = async () => {
     if (!user) {
@@ -51,9 +69,32 @@ const WebAuthnManager = () => {
         return;
       }
 
-      // Generate credential creation options
+      // Get existing credentials to append to
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('webauthn_credentials')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      const existingCredentials = Array.isArray(profile?.webauthn_credentials) ? profile.webauthn_credentials : [];
+
+      // Generate credential creation options based on selected type
+      const authenticatorSelection: AuthenticatorSelectionCriteria = {
+        userVerification: "required",
+      };
+
+      // Configure based on selected type
+      if (selectedType === 'security-key') {
+        authenticatorSelection.authenticatorAttachment = "cross-platform";
+        authenticatorSelection.residentKey = "preferred";
+      } else {
+        // For passkeys, allow both platform and cross-platform authenticators
+        // This enables 1Password, biometrics, and other password managers
+        authenticatorSelection.residentKey = "preferred";
+      }
+
       const publicKeyCredentialCreationOptions: PublicKeyCredentialCreationOptions = {
-        challenge: new TextEncoder().encode(`challenge-${Date.now()}`),
+        challenge: new TextEncoder().encode(`challenge-${Date.now()}-${selectedType}`),
         rp: {
           name: "Grandpa's Kids Stories Admin",
           id: window.location.hostname,
@@ -67,12 +108,13 @@ const WebAuthnManager = () => {
           { alg: -7, type: "public-key" }, // ES256
           { alg: -257, type: "public-key" }, // RS256
         ],
-        authenticatorSelection: {
-          authenticatorAttachment: "platform",
-          userVerification: "required",
-        },
+        authenticatorSelection,
         timeout: 60000,
-        attestation: "direct"
+        attestation: "direct",
+        excludeCredentials: existingCredentials.map((cred: any) => ({
+          id: new Uint8Array(cred.rawId),
+          type: "public-key"
+        }))
       };
 
       // Create the credential
@@ -89,17 +131,22 @@ const WebAuthnManager = () => {
         id: credential.id,
         rawId: Array.from(new Uint8Array(credential.rawId)),
         type: credential.type,
+        authenticatorType: selectedType,
+        createdAt: new Date().toISOString(),
         response: {
           clientDataJSON: Array.from(new Uint8Array(credential.response.clientDataJSON)),
           attestationObject: Array.from(new Uint8Array((credential.response as AuthenticatorAttestationResponse).attestationObject))
         }
       };
 
+      // Append to existing credentials
+      const updatedCredentials = [...(existingCredentials as any[]), credentialData];
+
       const { error } = await supabase
         .from('profiles')
         .update({
           webauthn_enabled: true,
-          webauthn_credentials: [credentialData]
+          webauthn_credentials: updatedCredentials
         })
         .eq('id', user.id);
 
@@ -108,10 +155,30 @@ const WebAuthnManager = () => {
       }
 
       setWebauthnEnabled(true);
-      toast.success('WebAuthn enabled successfully!');
+      setShowTypeSelection(false);
+      
+      // Update registered types
+      const types = updatedCredentials.map((cred: any) => cred.authenticatorType || 'unknown');
+      setRegisteredTypes([...new Set(types)]);
+
+      const typeLabel = selectedType === 'passkey' ? 'passkey authenticator' : 'physical security key';
+      toast.success(`${typeLabel} registered successfully!`);
     } catch (error: any) {
       console.error('Failed to enable WebAuthn:', error);
-      toast.error('Failed to enable WebAuthn: ' + error.message);
+      
+      // Provide more helpful error messages
+      let errorMessage = 'Failed to register authenticator';
+      if (error.name === 'NotAllowedError') {
+        errorMessage = 'Registration was cancelled or timed out';
+      } else if (error.name === 'InvalidStateError') {
+        errorMessage = 'This authenticator is already registered';
+      } else if (error.name === 'NotSupportedError') {
+        errorMessage = 'This authenticator type is not supported';
+      } else if (error.message) {
+        errorMessage += ': ' + error.message;
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsRegistering(false);
     }
@@ -137,7 +204,7 @@ const WebAuthnManager = () => {
         return;
       }
 
-      // Generate assertion options
+      // Generate assertion options - works with both types
       const publicKeyCredentialRequestOptions: PublicKeyCredentialRequestOptions = {
         challenge: new TextEncoder().encode(`auth-challenge-${Date.now()}`),
         allowCredentials: credentials.map((cred: any) => ({
@@ -145,7 +212,7 @@ const WebAuthnManager = () => {
           type: 'public-key'
         })),
         timeout: 60000,
-        userVerification: 'required'
+        userVerification: 'preferred' // More flexible for both types
       };
 
       // Get the assertion
@@ -161,7 +228,17 @@ const WebAuthnManager = () => {
       toast.success('WebAuthn test successful!');
     } catch (error: any) {
       console.error('WebAuthn authentication failed:', error);
-      toast.error('WebAuthn authentication failed');
+      
+      let errorMessage = 'Authentication failed';
+      if (error.name === 'NotAllowedError') {
+        errorMessage = 'Authentication was cancelled or timed out';
+      } else if (error.name === 'InvalidStateError') {
+        errorMessage = 'Invalid authenticator state';
+      } else if (error.message) {
+        errorMessage += ': ' + error.message;
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsAuthenticating(false);
     }
@@ -187,7 +264,7 @@ const WebAuthnManager = () => {
             WebAuthn Security
           </CardTitle>
           <CardDescription>
-            Enhanced security with physical security keys or biometric authentication
+            Enhanced security with passkeys, biometric authentication, or physical security keys
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -208,26 +285,118 @@ const WebAuthnManager = () => {
               )}
             </div>
             
-            {!webauthnEnabled ? (
+            {!webauthnEnabled || !showTypeSelection ? (
               <Button 
-                onClick={handleEnableWebAuthn}
+                onClick={webauthnEnabled ? handleShowSetup : handleShowSetup}
                 disabled={isRegistering || !user}
                 size="sm"
               >
-                {isRegistering ? 'Setting up...' : 'Enable WebAuthn'}
+                {webauthnEnabled ? 'Add Another' : 'Setup WebAuthn'}
               </Button>
-            ) : (
-              <Button 
-                onClick={handleTestAuthentication}
-                disabled={isAuthenticating}
-                variant="outline"
-                size="sm"
-              >
-                {isAuthenticating ? 'Testing...' : 'Test WebAuthn'}
-              </Button>
-            )}
+            ) : null}
           </div>
+
+          {/* Show registered authenticator types */}
+          {webauthnEnabled && registeredTypes.length > 0 && (
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Registered Authenticators:</Label>
+              <div className="flex gap-2 flex-wrap">
+                {registeredTypes.map((type) => (
+                  <Badge key={type} variant="outline" className="flex items-center gap-1">
+                    {type === 'passkey' ? (
+                      <>
+                        <Smartphone className="h-3 w-3" />
+                        Passkey
+                      </>
+                    ) : type === 'security-key' ? (
+                      <>
+                        <Usb className="h-3 w-3" />
+                        Security Key
+                      </>
+                    ) : (
+                      <>
+                        <Key className="h-3 w-3" />
+                        {type}
+                      </>
+                    )}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Authenticator type selection */}
+          {showTypeSelection && (
+            <div className="space-y-4 p-4 border rounded-lg bg-slate-50">
+              <div className="flex items-center gap-2">
+                <Info className="h-4 w-4 text-blue-500" />
+                <Label className="font-medium">Choose Your Authentication Method</Label>
+              </div>
+              
+              <RadioGroup value={selectedType} onValueChange={(value) => setSelectedType(value as AuthenticatorType)}>
+                <div className="space-y-3">
+                  <div className="flex items-start space-x-2 p-3 border rounded-lg hover:bg-white transition-colors">
+                    <RadioGroupItem value="passkey" id="passkey" className="mt-1" />
+                    <div className="space-y-1">
+                      <Label htmlFor="passkey" className="flex items-center gap-2 cursor-pointer">
+                        <Smartphone className="h-4 w-4" />
+                        <span className="font-medium">Passkey (Recommended)</span>
+                      </Label>
+                      <p className="text-sm text-muted-foreground">
+                        Use 1Password, Touch ID, Face ID, Windows Hello, or other built-in authentication methods. 
+                        Works seamlessly across your devices.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-2 p-3 border rounded-lg hover:bg-white transition-colors">
+                    <RadioGroupItem value="security-key" id="security-key" className="mt-1" />
+                    <div className="space-y-1">
+                      <Label htmlFor="security-key" className="flex items-center gap-2 cursor-pointer">
+                        <Usb className="h-4 w-4" />
+                        <span className="font-medium">Physical Security Key</span>
+                      </Label>
+                      <p className="text-sm text-muted-foreground">
+                        Use a USB, NFC, or Bluetooth security key like YubiKey, Titan Security Key, or similar hardware authenticators.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </RadioGroup>
+
+              <Separator />
+
+              <div className="flex gap-2 justify-end">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowTypeSelection(false)}
+                  disabled={isRegistering}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleEnableWebAuthn}
+                  disabled={isRegistering}
+                >
+                  {isRegistering ? 'Setting up...' : `Setup ${selectedType === 'passkey' ? 'Passkey' : 'Security Key'}`}
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Test Authentication Button */}
+          {webauthnEnabled && !showTypeSelection && (
+            <Button 
+              onClick={handleTestAuthentication}
+              disabled={isAuthenticating}
+              variant="outline"
+              className="w-full"
+            >
+              {isAuthenticating ? 'Testing...' : 'Test WebAuthn Authentication'}
+            </Button>
+          )}
           
+          {/* Status Messages */}
           {webauthnEnabled && (
             <div className="text-sm text-green-600 bg-green-50 p-3 rounded-lg border border-green-200">
               <div className="flex items-center gap-2">
@@ -235,19 +404,19 @@ const WebAuthnManager = () => {
                 <span className="font-medium">Enhanced Security Active</span>
               </div>
               <p className="mt-1 text-green-700">
-                Your admin account is protected with WebAuthn. Future logins will require your security key or biometric verification.
+                Your admin account is protected with WebAuthn. Future logins will require your registered authenticator.
               </p>
             </div>
           )}
           
-          {!webauthnEnabled && (
+          {!webauthnEnabled && !showTypeSelection && (
             <div className="text-sm text-amber-600 bg-amber-50 p-3 rounded-lg border border-amber-200">
               <div className="flex items-center gap-2">
                 <AlertCircle className="h-4 w-4" />
                 <span className="font-medium">Security Enhancement Available</span>
               </div>
               <p className="mt-1 text-amber-700">
-                Enable WebAuthn for an additional layer of security using security keys or biometric authentication.
+                Enable WebAuthn for mandatory additional security using passkeys, biometric authentication, or physical security keys.
               </p>
             </div>
           )}
