@@ -214,7 +214,8 @@ const WebTextDeploymentDialog = ({
             <Button
               onClick={onClose}
               disabled={isDeploying}
-              className="bg-yellow-300 hover:bg-yellow-200 text-black border-yellow-300 font-bold"
+              className="!bg-yellow-300 !hover:bg-yellow-200 !text-black !border-yellow-300 font-bold"
+              style={{ backgroundColor: '#fef08a !important', borderColor: '#fef08a !important' }}
             >
               Cancel
             </Button>
