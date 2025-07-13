@@ -442,6 +442,186 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
               </div>
             </div>
 
+            {/* Font Sizes */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold border-b pb-2">Font Sizes (Georgia Serif for Stories)</h3>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 12px;"&gt;Small text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '12px', color: '#000000', lineHeight: '1.5' }}>
+                    Small text (12px)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 14px;"&gt;Minimum text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '14px', color: '#000000', lineHeight: '1.5' }}>
+                    Minimum text (14px)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 16px;"&gt;Regular text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '16px', color: '#000000', lineHeight: '1.5' }}>
+                    Regular text (16px)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p&gt;Default story text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000', lineHeight: '1.5' }}>
+                    Default story text (18px)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 20px;"&gt;Large text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '20px', color: '#000000', lineHeight: '1.5' }}>
+                    Large text (20px)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 24px;"&gt;Extra large text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '24px', color: '#000000', lineHeight: '1.5' }}>
+                    Extra large text (24px)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Font Colors */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold border-b pb-2">Font Colors (Georgia Serif for Stories)</h3>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #000000;"&gt;Black text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000', lineHeight: '1.5' }}>
+                    Black text (default story color)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #92400e;"&gt;Amber-800 text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#92400e', lineHeight: '1.5' }}>
+                    Amber-800 text (warm brown)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #b45309;"&gt;Amber-700 text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#b45309', lineHeight: '1.5' }}>
+                    Amber-700 text (personal text color)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #dc2626;"&gt;Red text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#dc2626', lineHeight: '1.5' }}>
+                    Red text (alerts, warnings)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #059669;"&gt;Green text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#059669', lineHeight: '1.5' }}>
+                    Green text (success, nature)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #2563eb;"&gt;Blue text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#2563eb', lineHeight: '1.5' }}>
+                    Blue text (links, info)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #7c3aed;"&gt;Purple text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#7c3aed', lineHeight: '1.5' }}>
+                    Purple text (magical, special)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #64748b;"&gt;Gray text&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#64748b', lineHeight: '1.5' }}>
+                    Gray text (muted, secondary)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Combination Examples */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold border-b pb-2">Combination Examples</h3>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h2 style="color: #92400e; font-size: 24px;"&gt;Large Amber Heading&lt;/h2&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '24px', fontWeight: 'bold', color: '#92400e', lineHeight: '1.6' }}>
+                    Large Amber Heading
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #059669; font-size: 20px;"&gt;&lt;strong&gt;Bold Green Text&lt;/strong&gt;&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '20px', fontWeight: 'bold', color: '#059669', lineHeight: '1.5' }}>
+                    Bold Green Text
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #7c3aed; font-size: 16px;"&gt;&lt;em&gt;Purple Italic Text&lt;/em&gt;&lt;/p&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '16px', fontStyle: 'italic', color: '#7c3aed', lineHeight: '1.5' }}>
+                    Purple Italic Text
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;center&gt;&lt;p style="color: #dc2626; font-size: 22px;"&gt;&lt;u&gt;Centered Red Underlined&lt;/u&gt;&lt;/p&gt;&lt;/center&gt;</code>
+                  </div>
+                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '22px', textDecoration: 'underline', color: '#dc2626', lineHeight: '1.5', textAlign: 'center' }}>
+                    Centered Red Underlined
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Special Elements */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold border-b pb-2">Special Elements</h3>
