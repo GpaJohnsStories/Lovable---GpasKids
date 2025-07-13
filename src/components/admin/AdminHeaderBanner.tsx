@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
-import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -110,7 +111,8 @@ const AdminHeaderBanner = () => {
             </div>
             <nav className="flex gap-2">
               {navButtons.map((button) => {
-                const isActive = location.pathname === button.path;
+                const isActive = location.pathname === button.path || 
+                  (button.name === 'Stories' && (location.pathname === '/buddys_admin/stories' || location.pathname.includes('/buddys_admin/stories')));
                 const Icon = button.icon;
                 
                 const handleButtonClick = () => {
@@ -120,6 +122,67 @@ const AdminHeaderBanner = () => {
                     scrollToTop();
                   }
                 };
+
+                // Special handling for Stories button with dropdown
+                if (button.name === 'Stories') {
+                  return (
+                    <div 
+                      key={button.name}
+                      className="relative"
+                      onMouseEnter={() => setHoveredButton(button.name)}
+                      onMouseLeave={() => setHoveredButton(null)}
+                    >
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            className={`
+                              transition-all duration-200 border font-fun
+                              ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
+                              hover:transform hover:translate-y-1 active:translate-y-2 
+                              active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
+                              ${isActive 
+                                ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
+                                : button.hoverColor
+                              }
+                            `}
+                          >
+                            <Icon className="h-4 w-4 mr-2" />
+                            {button.name}
+                            <ChevronDown className="h-3 w-3 ml-1" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg">
+                          <DropdownMenuItem asChild>
+                            <Link 
+                              to="/buddys_admin/stories?view=stories" 
+                              onClick={scrollToTop}
+                              className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
+                            >
+                              <FileText className="h-4 w-4 mr-2" />
+                              Stories
+                            </Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem asChild>
+                            <Link 
+                              to="/buddys_admin/stories?view=bios" 
+                              onClick={scrollToTop}
+                              className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
+                            >
+                              <Users className="h-4 w-4 mr-2" />
+                              Bios
+                            </Link>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      {hoveredButton === button.name && (
+                        <div className="nav-bubble opacity-100 visible">
+                          {button.description}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
 
                 return (
                   <div 

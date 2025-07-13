@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Users } from "lucide-react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import StoriesTable from "./StoriesTable";
 import AdminStoryForm from "./AdminStoryForm";
 import AdminStoryPreview from "./AdminStoryPreview";
@@ -10,6 +11,7 @@ import AdminLayout from "./AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 
 const AdminStories = () => {
+  const [searchParams] = useSearchParams();
   const [selectedStory, setSelectedStory] = useState(null);
   const [isCreatingStory, setIsCreatingStory] = useState(false);
   const [previewStory, setPreviewStory] = useState(null);
@@ -18,6 +20,14 @@ const AdminStories = () => {
   const [isCreatingBio, setIsCreatingBio] = useState(false);
   const [groupByAuthor, setGroupByAuthor] = useState(false);
   const [bioEditSource, setBioEditSource] = useState<'stories' | 'bios'>('bios');
+
+  // Check URL parameters for initial view
+  useEffect(() => {
+    const viewParam = searchParams.get('view');
+    if (viewParam === 'bios' || viewParam === 'stories') {
+      setCurrentView(viewParam);
+    }
+  }, [searchParams]);
 
   const handleEditStory = (story: any) => {
     setSelectedStory(story);
