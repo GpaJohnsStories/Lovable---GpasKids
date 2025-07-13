@@ -35,7 +35,7 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
           <Link to="/buddys_admin/voice-preview">
             <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center gap-2">
               <Volume2 className="h-4 w-4" />
-              Voice Preview & Testing
+              Voices
             </Button>
           </Link>
           <Button 

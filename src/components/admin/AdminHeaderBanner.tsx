@@ -64,7 +64,7 @@ const AdminHeaderBanner = () => {
       description: 'Full comment list with edit and approval services'
     },
     {
-      name: 'Deployment',
+      name: 'Deploy',
       path: '/buddys_admin/deployment',
       icon: Globe,
       bgColor: 'bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700',
@@ -75,7 +75,7 @@ const AdminHeaderBanner = () => {
       description: 'Deploy System stories to static web pages'
     },
     {
-      name: 'Voice Preview',
+      name: 'Voices',
       path: '/buddys_admin/voice-preview',
       icon: Volume2,
       bgColor: 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600',
