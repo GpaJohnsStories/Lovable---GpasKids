@@ -481,7 +481,7 @@ const StoriesTableRow = ({
                 <Edit className="h-3 w-3" />
               </Button>
               <Select value={selectedVoice} onValueChange={handleVoiceChange}>
-                <SelectTrigger className="w-16 h-6 text-xs">
+                <SelectTrigger className="w-20 h-6 text-xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -502,7 +502,7 @@ const StoriesTableRow = ({
                 <Trash2 className="h-3 w-3" />
               </Button>
             </div>
-            <div className="flex space-x-1 items-center">
+            <div className="flex justify-center">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
