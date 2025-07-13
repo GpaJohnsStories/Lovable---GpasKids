@@ -25,7 +25,7 @@ const SimpleAdminCheck = ({ children }: SimpleAdminCheckProps) => {
         console.log('🔐 SimpleAdminCheck: Testing database connection...');
         const { data: testData, error: testError } = await supabase
           .from('stories')
-          .select('count(*)')
+          .select('id', { count: 'exact', head: true })
           .limit(1);
         
         if (testError) {

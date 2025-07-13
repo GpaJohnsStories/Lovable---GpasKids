@@ -28,7 +28,7 @@ const AdminDiagnostics = () => {
     try {
       const { data: connectionTest, error: connectionError } = await supabase
         .from('stories')
-        .select('count(*)')
+        .select('id', { count: 'exact', head: true })
         .limit(1);
 
       if (connectionError) {
