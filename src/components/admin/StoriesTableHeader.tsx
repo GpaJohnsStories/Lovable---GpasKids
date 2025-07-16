@@ -102,14 +102,14 @@ const StoriesTableHeader = ({
             </Button>
           </TableHead>
         )}
-        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
+        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
           <Button
             onClick={() => onSort('category')}
             className={`${getButtonColor('category')} w-full h-6 text-xs px-1 py-1`}
             size="sm"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
-            Cat
+            Category
             {getSortIcon('category')}
           </Button>
         </TableHead>
@@ -133,7 +133,7 @@ const StoriesTableHeader = ({
             {getSortIcon('read_count')}
           </Button>
         </TableHead>
-        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '120px', minWidth: '120px', maxWidth: '120px' }}>
+        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
           <Button
             onClick={() => onSort('updated_at')}
             className={`${getButtonColor('updated_at')} w-full h-6 text-xs px-1 py-1`}

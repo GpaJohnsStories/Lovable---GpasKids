@@ -370,7 +370,7 @@ const StoriesTableRow = ({
           </div>
         </TableCell>
       )}
-      <TableCell className="p-1 text-center" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
+      <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
         <div className="flex justify-center">
           <Badge className={`${getCategoryBadgeColor(story.category)} text-xs rounded-none`}>
             {story.category}
@@ -442,7 +442,7 @@ const StoriesTableRow = ({
           </div>
         </div>
       </TableCell>
-      <TableCell className="p-1 text-center" style={{ width: '120px', minWidth: '120px', maxWidth: '120px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="p-1 text-center" style={{ width: '80px', minWidth: '80px', maxWidth: '80px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="flex flex-col items-center space-y-1">
           {showActions ? (
             <>
