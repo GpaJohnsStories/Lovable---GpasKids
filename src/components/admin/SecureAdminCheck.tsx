@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import SecureAdminLogin from "./SecureAdminLogin";
+import SecureAdminLoginWithWebAuthn from "./SecureAdminLoginWithWebAuthn";
 
 interface SecureAdminCheckProps {
   children: React.ReactNode;
@@ -102,7 +102,7 @@ const SecureAdminCheck = ({ children }: SecureAdminCheckProps) => {
   if (!isAuthorized) {
     return (
       <div className="min-h-screen bg-background">
-        <SecureAdminLogin onSuccess={() => {
+        <SecureAdminLoginWithWebAuthn onSuccess={() => {
           setIsAuthorized(null);
           setIsLoading(true);
         }} />
