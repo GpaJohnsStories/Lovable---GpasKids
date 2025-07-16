@@ -5,7 +5,7 @@ interface Story {
   id?: string;
   title: string;
   author: string;
-  category: "Fun" | "Life" | "North Pole" | "World Changers" | "System" | "STORY";
+  category: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "STORY";
   content: string;
   tagline: string;
   excerpt: string;
@@ -40,7 +40,12 @@ export const useStoryData = (storyId?: string) => {
         .single();
       
       if (error) throw error;
-      setStory(data);
+      // Convert any "System" categories to "WebText" for compatibility
+      const processedData = {
+        ...data,
+        category: data.category === 'System' ? 'WebText' : data.category
+      };
+      setStory(processedData as Story);
     } catch (err: any) {
       console.error('Error fetching story:', err);
       setError(err.message);
