@@ -11,6 +11,7 @@ import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
 import { useState } from "react";
 import AuthorLink from "@/components/AuthorLink";
 import WebTextDeploymentDialog from "./WebTextDeploymentDialog";
+import { getCategoryShortName } from "@/utils/categoryUtils";
 
 interface Story {
   id: string;
@@ -372,8 +373,8 @@ const StoriesTableRow = ({
       )}
       <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
         <div className="flex justify-center">
-          <Badge className={`${getCategoryBadgeColor(story.category)} text-xs rounded-none`}>
-            {story.category}
+          <Badge className={`${getCategoryBadgeColor(story.category)} text-xs rounded-none w-full text-center`}>
+            {getCategoryShortName(story.category)}
           </Badge>
         </div>
       </TableCell>

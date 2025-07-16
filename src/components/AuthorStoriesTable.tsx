@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
+import { getCategoryShortName } from "@/utils/categoryUtils";
 
 interface Story {
   id: string;
@@ -150,9 +151,9 @@ const AuthorStoriesTable = ({ stories }: AuthorStoriesTableProps) => {
                 </TableCell>
                 <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
                   <Badge 
-                    className={`${getCategoryBadgeColor(story.category)} text-white`}
+                    className={`${getCategoryBadgeColor(story.category)} text-white w-full text-center`}
                   >
-                    {story.category}
+                    {getCategoryShortName(story.category)}
                   </Badge>
                 </TableCell>
                 <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
