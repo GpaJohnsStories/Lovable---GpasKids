@@ -214,7 +214,7 @@ const StoriesTableRow = ({
       toast.error("Error updating copyright status");
       console.error(error);
     } else {
-      const statusText = newStatus === 'P' ? 'Protected, Full Copyright' : 
+      const statusText = newStatus === '©' ? 'Full Copyright' : 
                         newStatus === 'O' ? 'Open, No Copyright' : 
                         'Limited Sharing, Gpa John\'s Copyright';
       toast.success(`Copyright status updated to ${statusText}`);
@@ -379,22 +379,22 @@ const StoriesTableRow = ({
       </TableCell>
       <TableCell className="p-1 text-center" style={{ width: '50px', minWidth: '50px', maxWidth: '50px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="flex justify-center">
-          {showActions ? (
+           {showActions ? (
             <Select 
-              value={story.copyright_status || 'P'} 
+              value={story.copyright_status || '©'} 
               onValueChange={handleCopyrightStatusChange}
             >
               <SelectTrigger className="w-full h-8 text-xs bg-white border">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="z-50 bg-white border shadow-lg">
-                <SelectItem value="P" className="text-xs">P</SelectItem>
+                <SelectItem value="©" className="text-xs">©</SelectItem>
                 <SelectItem value="O" className="text-xs">O</SelectItem>
                 <SelectItem value="S" className="text-xs">S</SelectItem>
               </SelectContent>
             </Select>
           ) : (
-            <span className="text-xs font-bold">{story.copyright_status || 'P'}</span>
+            <span className="text-xs font-bold">{story.copyright_status || '©'}</span>
           )}
         </div>
       </TableCell>

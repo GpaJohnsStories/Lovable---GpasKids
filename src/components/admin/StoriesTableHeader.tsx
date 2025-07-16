@@ -117,7 +117,7 @@ const StoriesTableHeader = ({
           <div
             className="bg-yellow-500 hover:bg-yellow-600 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '100%', borderRadius: '0px' }}
-            title="Copyright Status: P=Protected, O=Open, S=Limited Sharing"
+            title="Copyright Status: ©=Full Copyright, O=Open, S=Limited Sharing"
           >
             ©
           </div>
