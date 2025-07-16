@@ -38,6 +38,7 @@ interface Story {
   audio_duration_seconds?: number;
   ai_voice_name?: string;
   ai_voice_model?: string;
+  copyright_status?: string;
 }
 
 interface StoriesTableRowProps {
@@ -203,6 +204,26 @@ const StoriesTableRow = ({
     }
   };
 
+  const handleCopyrightStatusChange = async (newStatus: string) => {
+    const { error } = await supabase
+      .from('stories')
+      .update({ copyright_status: newStatus })
+      .eq('id', story.id);
+
+    if (error) {
+      toast.error("Error updating copyright status");
+      console.error(error);
+    } else {
+      const statusText = newStatus === 'P' ? 'Protected, Full Copyright' : 
+                        newStatus === 'O' ? 'Open, No Copyright' : 
+                        'Limited Sharing, Gpa John\'s Copyright';
+      toast.success(`Copyright status updated to ${statusText}`);
+      if (onStatusChange) {
+        onStatusChange();
+      }
+    }
+  };
+
   // Determine audio status based on timestamps
   const getAudioStatus = () => {
     if (!story.audio_url || !story.audio_generated_at) {
@@ -354,6 +375,27 @@ const StoriesTableRow = ({
           <Badge className={`${getCategoryBadgeColor(story.category)} text-xs rounded-none`}>
             {story.category}
           </Badge>
+        </div>
+      </TableCell>
+      <TableCell className="p-1 text-center" style={{ width: '50px', minWidth: '50px', maxWidth: '50px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+        <div className="flex justify-center">
+          {showActions ? (
+            <Select 
+              value={story.copyright_status || 'P'} 
+              onValueChange={handleCopyrightStatusChange}
+            >
+              <SelectTrigger className="w-full h-8 text-xs bg-white border">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="z-50 bg-white border shadow-lg">
+                <SelectItem value="P" className="text-xs">P</SelectItem>
+                <SelectItem value="O" className="text-xs">O</SelectItem>
+                <SelectItem value="S" className="text-xs">S</SelectItem>
+              </SelectContent>
+            </Select>
+          ) : (
+            <span className="text-xs font-bold">{story.copyright_status || 'P'}</span>
+          )}
         </div>
       </TableCell>
       <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>

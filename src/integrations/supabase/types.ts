@@ -243,6 +243,7 @@ export type Database = {
           author: string
           category: Database["public"]["Enums"]["story_category"]
           content: string | null
+          copyright_status: string | null
           created_at: string
           excerpt: string | null
           google_drive_link: string | null
@@ -274,6 +275,7 @@ export type Database = {
           author: string
           category: Database["public"]["Enums"]["story_category"]
           content?: string | null
+          copyright_status?: string | null
           created_at?: string
           excerpt?: string | null
           google_drive_link?: string | null
@@ -305,6 +307,7 @@ export type Database = {
           author?: string
           category?: Database["public"]["Enums"]["story_category"]
           content?: string | null
+          copyright_status?: string | null
           created_at?: string
           excerpt?: string | null
           google_drive_link?: string | null

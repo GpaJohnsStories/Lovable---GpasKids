@@ -113,6 +113,15 @@ const StoriesTableHeader = ({
             {getSortIcon('category')}
           </Button>
         </TableHead>
+        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '50px', minWidth: '50px', maxWidth: '50px' }}>
+          <div
+            className="bg-yellow-500 hover:bg-yellow-600 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
+            style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '100%', borderRadius: '0px' }}
+            title="Copyright Status: P=Protected, O=Open, S=Limited Sharing"
+          >
+            ©
+          </div>
+        </TableHead>
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
           <Button
             onClick={() => onSort('read_count')}
