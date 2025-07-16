@@ -9,13 +9,15 @@ interface SplitViewEditorProps {
   onChange: (content: string) => void;
   placeholder?: string;
   onSave?: () => void;
+  category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "STORY";
 }
 
 const SplitViewEditor: React.FC<SplitViewEditorProps> = ({ 
   content, 
   onChange, 
   placeholder = "Start writing your story...",
-  onSave
+  onSave,
+  category
 }) => {
   const editorRef = useRef<HTMLTextAreaElement>(null);
 
@@ -142,6 +144,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
             onChange={onChange}
             placeholder={placeholder}
             onSave={onSave}
+            category={category}
           />
         </ResizablePanel>
         
@@ -156,6 +159,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
               <IsolatedStoryRenderer
                 content={content}
                 useRichCleaning={true}
+                category={category}
               />
             </div>
           </div>

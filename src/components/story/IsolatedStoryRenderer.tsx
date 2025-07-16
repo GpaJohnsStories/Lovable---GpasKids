@@ -6,6 +6,7 @@ interface IsolatedStoryRendererProps {
   excerpt?: string;
   useRichCleaning?: boolean;
   className?: string;
+  category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "STORY";
 }
 
 /**
@@ -16,8 +17,14 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
   content, 
   excerpt, 
   useRichCleaning = false,
-  className = ""
+  className = "",
+  category
 }) => {
+  const isWebText = category === "WebText";
+  const baseFontFamily = isWebText 
+    ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" 
+    : "Georgia, serif";
+
   if (content) {
     const safeHtml = createSafeHtml(content);
     return (
@@ -27,7 +34,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             .isolated-story-content,
             .isolated-story-content p,
             .isolated-story-content div {
-              font-family: Georgia, serif !important;
+              font-family: ${baseFontFamily} !important;
               font-size: 18px !important;
               color: #000000 !important;
               line-height: 1.5 !important;
@@ -37,7 +44,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             
             /* Allow spans to inherit or use inline styles for font-size */
             .isolated-story-content span {
-              font-family: Georgia, serif !important;
+              font-family: ${baseFontFamily} !important;
               color: #000000 !important;
               line-height: 1.5 !important;
               /* Explicitly allow inline font-size to override default */
@@ -86,7 +93,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               list-style-type: disc !important;
               margin: 0 0 0.5em 0 !important;
               padding-left: 2em !important;
-              font-family: Georgia, serif !important;
+              font-family: ${baseFontFamily} !important;
               font-size: 18px !important;
               color: #000000 !important;
               line-height: 1.5 !important;
@@ -96,7 +103,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               list-style-type: decimal !important;
               margin: 0 0 0.5em 0 !important;
               padding-left: 2em !important;
-              font-family: Georgia, serif !important;
+              font-family: ${baseFontFamily} !important;
               font-size: 18px !important;
               color: #000000 !important;
               line-height: 1.5 !important;
@@ -104,7 +111,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             
             .isolated-story-content li {
               margin: 0.5em 0 !important;
-              font-family: Georgia, serif !important;
+              font-family: ${baseFontFamily} !important;
               font-size: 18px !important;
               color: #000000 !important;
               line-height: 1.5 !important;
@@ -113,7 +120,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             .isolated-story-content center {
               text-align: center !important;
               display: block !important;
-              font-family: Georgia, serif !important;
+              font-family: ${baseFontFamily} !important;
               font-size: 18px !important;
               color: #000000 !important;
               line-height: 1.5 !important;
@@ -133,7 +140,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
       <div 
         className={`isolated-story-content ${className}`}
         style={{
-          fontFamily: 'Georgia, serif',
+          fontFamily: baseFontFamily,
           fontSize: '18px',
           color: '#000000',
           lineHeight: '1.5',

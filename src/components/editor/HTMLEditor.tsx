@@ -6,13 +6,15 @@ interface HTMLEditorProps {
   onChange: (content: string) => void;
   placeholder?: string;
   onSave?: () => void;
+  category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "STORY";
 }
 
 const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({ 
   content, 
   onChange, 
   placeholder = "Start writing your story...",
-  onSave
+  onSave,
+  category
 }, ref) => {
   const internalRef = useRef<HTMLTextAreaElement>(null);
   const textareaRef = ref || internalRef;

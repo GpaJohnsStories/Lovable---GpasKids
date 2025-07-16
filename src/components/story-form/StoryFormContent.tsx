@@ -74,6 +74,7 @@ const StoryFormContent: React.FC<StoryFormContentProps> = ({
           onChange={(content) => onInputChange('content', content)}
           placeholder="Write your story here..."
           onSave={onSaveOnly}
+          category={formData.category}
         />
       </div>
 
