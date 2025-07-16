@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useAdminSessionTimeout } from "@/hooks/useAdminSessionTimeout";
+
 
 interface AdminNavButton {
   name: string;
@@ -26,12 +26,6 @@ const AdminHeaderBanner = () => {
   const navigate = useNavigate();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
-  // Initialize session timeout for admin pages
-  useAdminSessionTimeout({
-    timeoutMinutes: 15,
-    warningMinutes: 2,
-    isAdminPage: true
-  });
 
   const handleCreateStory = () => {
     navigate('/buddys_admin/stories?action=create');

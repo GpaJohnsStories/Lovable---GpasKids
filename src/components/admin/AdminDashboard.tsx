@@ -1,5 +1,4 @@
 
-import AdminHeader from "./AdminHeader";
 import StoriesTable from "./StoriesTable";
 import AdminLayout from "./AdminLayout";
 import EmergencyAdminTools from "./EmergencyAdminTools";
@@ -9,7 +8,7 @@ import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
 
 import EdgeFunctionAuthTest from "./EdgeFunctionAuthTest";
 import { Button } from "@/components/ui/button";
-import { Volume2, Settings, Shield } from "lucide-react";
+import { Volume2, Shield, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -22,11 +21,13 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
   const [showEmergencyTools, setShowEmergencyTools] = useState(false);
   const [showSecurityAudit, setShowSecurityAudit] = useState(false);
 
-  console.log('AdminDashboard: Rendering with props', { onCreateStory, onEditStory });
-
   return (
     <AdminLayout>
-      <AdminHeader />
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          Manage Stories
+        </h1>
+      </div>
       
       <div className="my-6 flex gap-4">
         <div className="flex-1 space-y-2">
@@ -66,7 +67,6 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
           <AdvancedSecurityDashboard />
         </div>
       )}
-
 
       <div className="mb-6">
         <EdgeFunctionAuthTest />
