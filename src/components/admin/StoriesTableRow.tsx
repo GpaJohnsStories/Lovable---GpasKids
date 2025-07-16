@@ -379,22 +379,32 @@ const StoriesTableRow = ({
       </TableCell>
       <TableCell className="p-1 text-center" style={{ width: '50px', minWidth: '50px', maxWidth: '50px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="flex justify-center">
-           {showActions ? (
+          {showActions ? (
             <Select 
               value={story.copyright_status || '©'} 
               onValueChange={handleCopyrightStatusChange}
             >
-              <SelectTrigger className="w-full h-8 text-xs bg-white border">
+              <SelectTrigger className={`w-full h-8 text-xs text-white font-bold border ${
+                (story.copyright_status || '©') === '©' ? 'bg-red-500 hover:bg-red-600 border-red-600' :
+                (story.copyright_status || '©') === 'O' ? 'bg-green-500 hover:bg-green-600 border-green-600' :
+                'bg-yellow-500 hover:bg-yellow-600 border-yellow-600'
+              }`}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="z-50 bg-white border shadow-lg">
-                <SelectItem value="©" className="text-xs">©</SelectItem>
-                <SelectItem value="O" className="text-xs">O</SelectItem>
-                <SelectItem value="S" className="text-xs">S</SelectItem>
+                <SelectItem value="©" className="text-xs text-red-600 font-bold">© Full Copyright</SelectItem>
+                <SelectItem value="O" className="text-xs text-green-600 font-bold">O Open, No Copyright</SelectItem>
+                <SelectItem value="S" className="text-xs text-yellow-600 font-bold">S Limited Sharing</SelectItem>
               </SelectContent>
             </Select>
           ) : (
-            <span className="text-xs font-bold">{story.copyright_status || '©'}</span>
+            <span className={`text-xs font-bold px-2 py-1 rounded text-white ${
+              (story.copyright_status || '©') === '©' ? 'bg-red-500' :
+              (story.copyright_status || '©') === 'O' ? 'bg-green-500' :
+              'bg-yellow-500'
+            }`}>
+              {story.copyright_status || '©'}
+            </span>
           )}
         </div>
       </TableCell>
