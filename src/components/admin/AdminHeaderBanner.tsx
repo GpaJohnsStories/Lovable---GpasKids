@@ -48,8 +48,8 @@ const AdminHeaderBanner = () => {
       localStorage.clear();
       sessionStorage.clear();
       
-      // Navigate to home
-      navigate('/');
+      // Redirect to Google
+      window.location.href = 'https://www.google.com/';
       toast.success("Successfully logged out");
     } catch (error) {
       console.error('🔓 AdminHeaderBanner: Logout exception:', error);
