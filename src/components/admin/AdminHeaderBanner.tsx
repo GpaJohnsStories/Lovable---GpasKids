@@ -5,6 +5,7 @@ import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, Chevr
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AdminNavButton {
   name: string;
@@ -29,9 +30,31 @@ const AdminHeaderBanner = () => {
   };
 
   const handleLogout = async () => {
-    // Use React Router navigation instead of window.location.href
-    navigate('/');
-    toast.success("Redirected to home page");
+    try {
+      console.log('🔓 AdminHeaderBanner: Starting logout process...');
+      
+      // Sign out from Supabase
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        console.error('🔓 AdminHeaderBanner: Logout error:', error);
+        toast.error('Logout failed');
+        return;
+      }
+      
+      console.log('🔓 AdminHeaderBanner: Successfully signed out from Supabase');
+      
+      // Clear any cached data
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      // Navigate to home
+      navigate('/');
+      toast.success("Successfully logged out");
+    } catch (error) {
+      console.error('🔓 AdminHeaderBanner: Logout exception:', error);
+      toast.error('Logout failed');
+    }
   };
 
   const navButtons: AdminNavButton[] = [
