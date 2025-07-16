@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import SimpleAdminLogin from "./SimpleAdminLogin";
+import SecureAdminLogin from "./SecureAdminLogin";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Session } from "@supabase/supabase-js";
 
@@ -121,7 +121,7 @@ const ProtectedAdminRoute = ({ children }: ProtectedAdminRouteProps) => {
     console.log('Showing login form');
     return (
       <div className="min-h-screen bg-background">
-        <SimpleAdminLogin onSuccess={handleLoginSuccess} />
+        <SecureAdminLogin onSuccess={handleLoginSuccess} />
       </div>
     );
   }
