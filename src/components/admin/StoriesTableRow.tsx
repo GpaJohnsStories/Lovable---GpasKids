@@ -363,7 +363,7 @@ const StoriesTableRow = ({
               <div 
                 className="inline-flex items-center h-auto py-1 px-2 text-xs border-2 border-amber-300 bg-white text-amber-700 hover:bg-amber-50 rounded-md cursor-pointer transition-colors font-bold shadow-sm hover:shadow-md"
                 onClick={() => onEditBio(story.author)}
-                title={`Edit ${story.author}'s biography`}
+                title={`${showActions ? 'Edit' : 'View'} ${story.author}'s biography`}
               >
                 Bio
               </div>
