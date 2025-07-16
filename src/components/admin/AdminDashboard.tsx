@@ -7,6 +7,7 @@ import SecurityAuditDashboard from "./SecurityAuditDashboard";
 import EncryptionStatusCard from "./EncryptionStatusCard";
 import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
 import AdminSettings from "./AdminSettings";
+import EdgeFunctionAuthTest from "./EdgeFunctionAuthTest";
 import { Button } from "@/components/ui/button";
 import { Volume2, Settings, Shield, Cog } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -80,6 +81,10 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
           <AdminSettings />
         </div>
       )}
+
+      <div className="mb-6">
+        <EdgeFunctionAuthTest />
+      </div>
       
       <StoriesTable onEditStory={onEditStory} />
     </AdminLayout>
