@@ -12,8 +12,8 @@ const CookieFreeFooter = () => {
   };
 
   return (
-    <footer className="bg-amber-100 border-t border-amber-200 mt-12">
-      <div className="max-w-6xl mx-auto px-4 py-4">
+    <footer className="bg-amber-100 border-t border-amber-200 mt-6">
+      <div className="max-w-6xl mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
           {/* Left Side */}
           <div className="flex items-center space-x-2 text-green-700">
