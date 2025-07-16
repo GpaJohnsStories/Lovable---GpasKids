@@ -26,6 +26,7 @@ interface Story {
   thumbs_up_count?: number;
   thumbs_down_count?: number;
   ok_count?: number;
+  copyright_status?: string;
 }
 
 interface StoryFormFieldsProps {
@@ -59,7 +60,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div>
           <Label htmlFor="category">Category</Label>
           <Select
@@ -88,6 +89,27 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
             required
             placeholder="Enter unique story code"
           />
+        </div>
+
+        <div>
+          <Label htmlFor="copyright_status">Copyright Status</Label>
+          <Select
+            value={formData.copyright_status || '©'}
+            onValueChange={(value) => onInputChange('copyright_status', value)}
+          >
+            <SelectTrigger className={`text-white font-bold ${
+              (formData.copyright_status || '©') === '©' ? 'bg-red-500 hover:bg-red-600 border-red-600' :
+              (formData.copyright_status || '©') === 'O' ? 'bg-green-500 hover:bg-green-600 border-green-600' :
+              'bg-yellow-500 hover:bg-yellow-600 border-yellow-600'
+            }`}>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="z-50 bg-white border shadow-lg">
+              <SelectItem value="©" className="text-xs text-red-600 font-bold">© Full Copyright</SelectItem>
+              <SelectItem value="O" className="text-xs text-green-600 font-bold">O Open, No Copyright</SelectItem>
+              <SelectItem value="S" className="text-xs text-yellow-600 font-bold">S Limited Sharing</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div>
