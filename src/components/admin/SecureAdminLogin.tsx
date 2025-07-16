@@ -47,6 +47,18 @@ const SecureAdminLogin = ({ onSuccess }: SecureAdminLoginProps) => {
       }
 
       if (data.session && data.user) {
+        // Manually set the session in the client
+        const { error: setSessionError } = await supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token
+        });
+
+        if (setSessionError) {
+          console.error('Failed to set session:', setSessionError);
+          toast.error('Login failed - session error');
+          return;
+        }
+
         toast.success('Login successful!');
         onSuccess();
       } else {

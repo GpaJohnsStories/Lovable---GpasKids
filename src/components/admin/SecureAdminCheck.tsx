@@ -15,12 +15,20 @@ const SecureAdminCheck = ({ children }: SecureAdminCheckProps) => {
 
     const checkAuth = async () => {
       try {
+        console.log('🔐 SecureAdminCheck: Starting auth check...');
         setIsLoading(true);
 
         // Get current session
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
+        console.log('🔐 SecureAdminCheck: Session check result:', { 
+          hasSession: !!session, 
+          hasUser: !!session?.user, 
+          sessionError 
+        });
+        
         if (sessionError || !session?.user) {
+          console.log('🔐 SecureAdminCheck: No valid session found');
           if (isMounted) {
             setIsAuthorized(false);
             setIsLoading(false);
@@ -28,10 +36,15 @@ const SecureAdminCheck = ({ children }: SecureAdminCheckProps) => {
           return;
         }
 
+        console.log('🔐 SecureAdminCheck: Checking admin status for user:', session.user.id);
+        
         // Check admin status
         const { data: isAdmin, error: adminCheckError } = await supabase.rpc('is_admin_safe');
         
+        console.log('🔐 SecureAdminCheck: Admin check result:', { isAdmin, adminCheckError });
+        
         if (adminCheckError || !isAdmin) {
+          console.log('🔐 SecureAdminCheck: Admin check failed or user not admin');
           if (isMounted) {
             setIsAuthorized(false);
             setIsLoading(false);
@@ -39,12 +52,13 @@ const SecureAdminCheck = ({ children }: SecureAdminCheckProps) => {
           return;
         }
 
+        console.log('🔐 SecureAdminCheck: User authorized as admin');
         if (isMounted) {
           setIsAuthorized(true);
           setIsLoading(false);
         }
       } catch (err) {
-        console.error('Auth check failed:', err);
+        console.error('🔐 SecureAdminCheck: Auth check failed:', err);
         if (isMounted) {
           setIsAuthorized(false);
           setIsLoading(false);
