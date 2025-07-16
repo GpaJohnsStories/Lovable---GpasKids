@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus, Settings } from "lucide-react";
+import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -122,17 +122,6 @@ const AdminHeaderBanner = () => {
       description: 'Preview stories with various voices (opens in new tab)',
       openInNewTab: true
     },
-    {
-      name: 'Settings',
-      path: '/buddys_admin/settings',
-      icon: Settings,
-      bgColor: 'bg-gradient-to-b from-gray-500 via-gray-600 to-gray-700',
-      hoverColor: 'hover:from-gray-600 hover:via-gray-700 hover:to-gray-800',
-      shadowColor: 'shadow-[0_6px_0_#374151,0_8px_15px_rgba(0,0,0,0.3)]',
-      hoverShadow: 'hover:shadow-[0_4px_0_#374151,0_6px_12px_rgba(0,0,0,0.4)]',
-      textColor: 'text-white',
-      description: 'Admin settings and security configuration'
-    }
   ];
 
   const scrollToTop = () => {

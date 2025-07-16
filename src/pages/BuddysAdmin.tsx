@@ -1,7 +1,7 @@
 import AdminOverview from "@/components/admin/AdminOverview";
 import AdminStories from "@/components/admin/AdminStories";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
-import AdminSettings from "@/components/admin/AdminSettings";
+
 import CommentsDashboard from "@/components/admin/CommentsDashboard";
 import StaticDeploymentSystem from "@/components/admin/StaticDeploymentSystem";
 import VoicePreview from "@/components/VoicePreview";
@@ -39,11 +39,6 @@ const BuddysAdminContent = () => {
       <Route path="/stories" element={<AdminStories />} />
       <Route path="/comments" element={<CommentsDashboard />} />
       <Route path="/deployment" element={<StaticDeploymentSystem />} />
-      <Route path="/settings" element={
-        <AdminLayout>
-          <AdminSettings />
-        </AdminLayout>
-      } />
       <Route path="/voice-preview" element={
         <AdminLayout>
           <VoicePreview />

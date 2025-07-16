@@ -6,10 +6,10 @@ import EmergencyAdminTools from "./EmergencyAdminTools";
 import SecurityAuditDashboard from "./SecurityAuditDashboard";
 import EncryptionStatusCard from "./EncryptionStatusCard";
 import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
-import AdminSettings from "./AdminSettings";
+
 import EdgeFunctionAuthTest from "./EdgeFunctionAuthTest";
 import { Button } from "@/components/ui/button";
-import { Volume2, Settings, Shield, Cog } from "lucide-react";
+import { Volume2, Settings, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -21,7 +21,6 @@ interface AdminDashboardProps {
 const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => {
   const [showEmergencyTools, setShowEmergencyTools] = useState(false);
   const [showSecurityAudit, setShowSecurityAudit] = useState(false);
-  const [showAdminSettings, setShowAdminSettings] = useState(false);
 
   console.log('AdminDashboard: Rendering with props', { onCreateStory, onEditStory });
 
@@ -53,14 +52,6 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
             <Shield className="h-4 w-4" />
             Security Audit Dashboard
           </Button>
-          <Button 
-            onClick={() => setShowAdminSettings(!showAdminSettings)}
-            variant="outline"
-            className="w-full flex items-center justify-center gap-2 text-green-600 border-green-600 hover:bg-green-50"
-          >
-            <Cog className="h-4 w-4" />
-            Admin Settings
-          </Button>
         </div>
       </div>
       
@@ -76,11 +67,6 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
         </div>
       )}
 
-      {showAdminSettings && (
-        <div className="mb-6">
-          <AdminSettings />
-        </div>
-      )}
 
       <div className="mb-6">
         <EdgeFunctionAuthTest />
