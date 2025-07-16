@@ -399,13 +399,32 @@ const StoriesTableRow = ({
               </SelectContent>
             </Select>
           ) : (
-            <span className={`text-xs font-bold px-2 py-1 rounded text-white ${
-              (story.copyright_status || '©') === '©' ? 'bg-red-500' :
-              (story.copyright_status || '©') === 'O' ? 'bg-green-500' :
-              'bg-yellow-500'
-            }`}>
-              {story.copyright_status || '©'}
-            </span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-help ${
+                    (story.copyright_status || '©') === '©' ? 'bg-red-500' :
+                    (story.copyright_status || '©') === 'O' ? 'bg-green-500' :
+                    'bg-yellow-500'
+                  }`}>
+                    {story.copyright_status || '©'}
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent className="bg-white border border-gray-300 shadow-lg p-2 z-50">
+                  <div className="text-xs font-medium text-gray-800">
+                    {(story.copyright_status || '©') === '©' && (
+                      <span className="text-red-600 font-bold">© Full Copyright - All rights reserved</span>
+                    )}
+                    {(story.copyright_status || '©') === 'O' && (
+                      <span className="text-green-600 font-bold">O Open, No Copyright - Free to share</span>
+                    )}
+                    {(story.copyright_status || '©') === 'S' && (
+                      <span className="text-yellow-600 font-bold">S Limited Sharing - Gpa John's Copyright</span>
+                    )}
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )}
         </div>
       </TableCell>
