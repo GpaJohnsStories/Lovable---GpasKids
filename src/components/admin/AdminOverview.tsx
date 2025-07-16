@@ -109,7 +109,7 @@ const AdminOverview = () => {
           
           {/* Category counts */}
           <div className="grid grid-cols-5 gap-2 mb-2">
-            {['Fun', 'Life', 'North Pole', 'World Changers', 'System'].map((category) => {
+            {['Fun', 'Life', 'North Pole', 'World Changers', 'WebText'].map((category) => {
               const getCategoryColors = (cat: string) => {
                 switch (cat) {
                   case 'Fun':
@@ -120,7 +120,7 @@ const AdminOverview = () => {
                     return { bg: 'bg-red-600', text: 'text-white' };
                   case 'World Changers':
                     return { bg: 'bg-amber-400', text: 'text-amber-900' };
-                  case 'System':
+                  case 'WebText':
                     return { bg: 'bg-gray-500', text: 'text-white' };
                   default:
                     return { bg: 'bg-gray-500', text: 'text-white' };
