@@ -199,6 +199,33 @@ export type Database = {
         }
         Relationships: []
       }
+      monthly_visits: {
+        Row: {
+          created_at: string
+          id: string
+          month: number
+          updated_at: string
+          visit_count: number
+          year: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          month: number
+          updated_at?: string
+          visit_count?: number
+          year: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          month?: number
+          updated_at?: string
+          visit_count?: number
+          year?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -413,60 +440,6 @@ export type Database = {
           created_at?: string
           id?: string
           personal_id?: string
-        }
-        Relationships: []
-      }
-      visitor_countries: {
-        Row: {
-          country_code: string
-          country_name: string
-          created_at: string
-          id: string
-          last_visit: string
-          updated_at: string
-          visit_count: number
-        }
-        Insert: {
-          country_code: string
-          country_name: string
-          created_at?: string
-          id?: string
-          last_visit?: string
-          updated_at?: string
-          visit_count?: number
-        }
-        Update: {
-          country_code?: string
-          country_name?: string
-          created_at?: string
-          id?: string
-          last_visit?: string
-          updated_at?: string
-          visit_count?: number
-        }
-        Relationships: []
-      }
-      visitor_sessions: {
-        Row: {
-          country_code: string
-          created_at: string
-          id: string
-          ip_hash: string
-          visit_date: string
-        }
-        Insert: {
-          country_code: string
-          created_at?: string
-          id?: string
-          ip_hash: string
-          visit_date?: string
-        }
-        Update: {
-          country_code?: string
-          created_at?: string
-          id?: string
-          ip_hash?: string
-          visit_date?: string
         }
         Relationships: []
       }

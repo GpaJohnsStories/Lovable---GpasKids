@@ -4,6 +4,7 @@ import EmergencyAdminTools from "./EmergencyAdminTools";
 import SecurityAuditDashboard from "./SecurityAuditDashboard";
 import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
 import WebAuthnManager from "./WebAuthnManager";
+import { MonthlyVisitsCard } from "./MonthlyVisitsCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Settings, Shield, Key, BookOpen, Eye, EyeOff, Tag, Video, Volume2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -56,6 +57,11 @@ const AdminOverview = () => {
         </h1>
       </div>
       
+      {/* Monthly Visits Card */}
+      <div className="mb-6">
+        <MonthlyVisitsCard />
+      </div>
+
       {/* Security Audit - Wide box with green border */}
       <Card className="mb-6 border-green-500 border-2">
         <CardHeader>

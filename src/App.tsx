@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import ActivityTracker from "@/components/ActivityTracker";
 import ActivityTrackerDemo from "@/components/ActivityTrackerDemo";
+import { useVisitTracker } from "@/hooks/useVisitTracker";
 import Index from "./pages/Index";
 import Story from "./pages/Story";
 import Library from "./pages/Library";
@@ -28,10 +29,13 @@ import StoryContentTest from "./pages/StoryContentTest";
 
 const queryClient = new QueryClient();
 
-// Component to conditionally render activity trackers
+// Component to conditionally render activity trackers and visit tracking
 const ConditionalActivityTrackers = () => {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/buddys_admin');
+  
+  // Track visits for non-admin pages
+  useVisitTracker();
   
   // Don't show activity trackers on admin pages
   if (isAdminPage) {
