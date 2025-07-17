@@ -69,10 +69,15 @@ export const MonthlyVisitsCard = () => {
         <Users className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{totalVisits.toLocaleString()}</div>
-        <CardDescription className="flex items-center gap-1">
-          {new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-        </CardDescription>
+        <div className="text-center">
+          <div className="text-2xl font-bold">{totalVisits.toLocaleString()}</div>
+          <div className="text-sm text-muted-foreground">
+            {new Date().toLocaleDateString('en-US', { month: 'short' })}
+          </div>
+          <div className="text-sm text-muted-foreground">
+            {new Date().getFullYear()}
+          </div>
+        </div>
         
         {chartData.length > 0 && (
           <div className="mt-4">
