@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import ActivityTracker from "@/components/ActivityTracker";
 import ActivityTrackerDemo from "@/components/ActivityTrackerDemo";
@@ -52,37 +53,39 @@ const ConditionalActivityTrackers = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/story/:id" element={<Story />} />
-          <Route path="/library" element={<Library />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/make-comment" element={<MakeComment />} />
-          <Route path="/view-comments" element={<ViewComments />} />
-          <Route path="/comment/:id" element={<CommentDetail />} />
-          <Route path="/author/:authorName" element={<AuthorBio />} />
-          <Route path="/admin" element={<SimpleAdmin />} />
-          <Route path="/admin-access" element={<AdminAccess />} />
-          <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
-          <Route path="/simple-admin" element={<SimpleAdmin />} />
-          <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/writing" element={<Writing />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/help-gpa" element={<HelpGpa />} />
-          <Route path="/story-content-test" element={<StoryContentTest />} />
-          
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <ConditionalActivityTrackers />
-      </BrowserRouter>
-    </TooltipProvider>
+    <HelmetProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/story/:id" element={<Story />} />
+            <Route path="/library" element={<Library />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/make-comment" element={<MakeComment />} />
+            <Route path="/view-comments" element={<ViewComments />} />
+            <Route path="/comment/:id" element={<CommentDetail />} />
+            <Route path="/author/:authorName" element={<AuthorBio />} />
+            <Route path="/admin" element={<SimpleAdmin />} />
+            <Route path="/admin-access" element={<AdminAccess />} />
+            <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
+            <Route path="/simple-admin" element={<SimpleAdmin />} />
+            <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/writing" element={<Writing />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/help-gpa" element={<HelpGpa />} />
+            <Route path="/story-content-test" element={<StoryContentTest />} />
+            
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <ConditionalActivityTrackers />
+        </BrowserRouter>
+      </TooltipProvider>
+    </HelmetProvider>
   </QueryClientProvider>
 );
 
