@@ -17,8 +17,9 @@ import StoryVideoPlayer from "@/components/StoryVideoPlayer";
 import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
 import { getStoryPhotos } from "@/utils/storyUtils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AuthorLink from "@/components/AuthorLink";
+import { Helmet } from "react-helmet-async";
 
 const Story = () => {
   const { id } = useParams();
@@ -66,6 +67,10 @@ const Story = () => {
   if (isLoading) {
     return (
       <ContentProtection enableProtection={true}>
+        <Helmet>
+          <title>Loading Story... | Grandpa John's Stories</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
         <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
           <WelcomeHeader />
           <LoadingSpinner message="Loading your story..." />
@@ -102,6 +107,54 @@ const Story = () => {
 
   return (
     <ContentProtection enableProtection={true}>
+      <Helmet>
+        <title>{story.title} | Grandpa John's Stories for Kids</title>
+        <meta name="description" content={story.excerpt || `Read "${story.title}" by ${story.author} - A wonderful children's story from Grandpa John's collection.`} />
+        <meta name="keywords" content={`${story.title}, ${story.author}, ${story.category}, children story, kids story, grandpa john`} />
+        <link rel="canonical" href={`https://gpaskids.com/story/${story.id}`} />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content={`${story.title} | Grandpa John's Stories`} />
+        <meta property="og:description" content={story.excerpt || `Read "${story.title}" by ${story.author} - A wonderful children's story.`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://gpaskids.com/story/${story.id}`} />
+        {storyPhotos[0] && <meta property="og:image" content={storyPhotos[0].url} />}
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${story.title} | Grandpa John's Stories`} />
+        <meta name="twitter:description" content={story.excerpt || `Read "${story.title}" by ${story.author}`} />
+        {storyPhotos[0] && <meta name="twitter:image" content={storyPhotos[0].url} />}
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": story.title,
+            "description": story.excerpt || story.tagline,
+            "author": {
+              "@type": "Person",
+              "name": story.author
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Grandpa John's Stories"
+            },
+            "datePublished": story.created_at,
+            "dateModified": story.updated_at,
+            "genre": story.category,
+            "audience": {
+              "@type": "Audience",
+              "audienceType": "Children"
+            },
+            "url": `https://gpaskids.com/story/${story.id}`,
+            ...(storyPhotos[0] && {
+              "image": storyPhotos[0].url
+            })
+          })}
+        </script>
+      </Helmet>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
         <WelcomeHeader />
         
