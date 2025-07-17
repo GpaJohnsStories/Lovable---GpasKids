@@ -56,11 +56,6 @@ const AdminOverview = () => {
           Admin Dashboard
         </h1>
       </div>
-      
-      {/* Monthly Visits Card */}
-      <div className="mb-6">
-        <MonthlyVisitsCard />
-      </div>
 
       {/* Security Audit - Wide box with green border */}
       <Card className="mb-6 border-green-500 border-2">
@@ -72,6 +67,19 @@ const AdminOverview = () => {
         </CardHeader>
         <CardContent>
           <AdvancedSecurityDashboard />
+        </CardContent>
+      </Card>
+      
+      {/* Monthly Site Visits - Wide box with red border */}
+      <Card className="mb-6 border-red-500 border-2">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-red-700">
+            <Eye className="h-5 w-5" />
+            Monthly Site Visits
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <MonthlyVisitsCard />
         </CardContent>
       </Card>
       
