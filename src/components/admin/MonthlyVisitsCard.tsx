@@ -71,20 +71,7 @@ export const MonthlyVisitsCard = () => {
       <CardContent>
         <div className="text-2xl font-bold">{totalVisits.toLocaleString()}</div>
         <CardDescription className="flex items-center gap-1">
-          {growth > 0 ? (
-            <>
-              <TrendingUp className="h-3 w-3 text-green-500" />
-              <span className="text-green-500">+{growth.toFixed(1)}%</span>
-            </>
-          ) : growth < 0 ? (
-            <>
-              <TrendingUp className="h-3 w-3 text-red-500 rotate-180" />
-              <span className="text-red-500">{growth.toFixed(1)}%</span>
-            </>
-          ) : (
-            <span className="text-muted-foreground">No change</span>
-          )}
-          <span className="text-muted-foreground ml-1">from last month</span>
+          {new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
         </CardDescription>
         
         {chartData.length > 0 && (
