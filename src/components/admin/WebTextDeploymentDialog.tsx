@@ -80,6 +80,12 @@ const PAGE_MAPPINGS: PageMapping[] = [
     pagePath: 'src/pages/About.tsx',
     placeholderType: 'content',
     description: 'About page - About Buddy section content'
+  },
+  {
+    storyCode: 'SYS-THY',
+    pagePath: 'src/pages/About.tsx',
+    placeholderType: 'content',
+    description: 'About page - Thank You section content'
   }
 ];
 
