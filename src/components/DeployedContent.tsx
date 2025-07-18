@@ -7,7 +7,7 @@ interface DeployedContentData {
   story_code: string;
   content: string | null;
   photo_url: string | null;
-  photo_alt_text: string | null;
+  photo_alt_text?: string | null;
   audio_url: string | null;
   title: string | null;
   author: string | null;
