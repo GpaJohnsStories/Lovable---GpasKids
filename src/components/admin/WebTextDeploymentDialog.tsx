@@ -118,13 +118,16 @@ const WebTextDeploymentDialog = ({
     try {
       toast.loading(`Deploying "${story.title}" to web page...`, { id: 'deploy' });
       
-      console.log('🚀 Calling deploy-static-content function with story ID:', story.id);
+      
+      console.log('🚀 Calling edge function...');
       const { data, error } = await supabase.functions.invoke('deploy-static-content', {
         body: { storyIds: [story.id] }
       });
       
+      console.log('📦 Raw response:', { data, error });
+      
       if (error) {
-        console.error('❌ Deployment error:', error);
+        console.error('❌ Supabase function error:', error);
         toast.error(`Failed to deploy content: ${error.message}`, { id: 'deploy' });
         return;
       }
@@ -134,22 +137,29 @@ const WebTextDeploymentDialog = ({
         console.log('✅ SUCCESS! Deployment results:', results);
         console.log('✅ SUCCESS! Summary:', summary);
         
-        toast.success(
-          `Successfully deployed "${story.title}" to web page!`, 
-          { 
-            id: 'deploy',
-            duration: 4000,
-            description: `Content is now live and visible on the website.`
-          }
-        );
+        // Force close the dialog immediately
+        console.log('🔄 Force closing dialog...');
+        setIsDeploying(false);
+        onClose();
+        
+        // Show success toast after closing
+        setTimeout(() => {
+          toast.success(
+            `Successfully deployed "${story.title}" to web page!`, 
+            { 
+              id: 'deploy',
+              duration: 4000,
+              description: `Content is now live and visible on the website.`
+            }
+          );
+        }, 100);
         
         console.log('✅ Calling onSuccess callback...');
         if (onSuccess) {
-          onSuccess();
+          setTimeout(() => onSuccess(), 200);
         }
         
-        console.log('✅ Closing dialog...');
-        onClose();
+        return; // Exit early on success
       } else {
         console.log('❌ Deployment response indicates failure:', data);
         toast.error(data?.error || 'Deployment failed', { id: 'deploy' });
