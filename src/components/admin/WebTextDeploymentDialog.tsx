@@ -131,18 +131,27 @@ const WebTextDeploymentDialog = ({
 
       if (data?.success) {
         const { results, summary } = data;
+        console.log('✅ SUCCESS! Deployment results:', results);
+        console.log('✅ SUCCESS! Summary:', summary);
+        
         toast.success(
           `Successfully deployed "${story.title}" to web page!`, 
-          { id: 'deploy' }
+          { 
+            id: 'deploy',
+            duration: 4000,
+            description: `Content is now live and visible on the website.`
+          }
         );
         
-        console.log('✅ Deployment results:', results);
-        
+        console.log('✅ Calling onSuccess callback...');
         if (onSuccess) {
           onSuccess();
         }
+        
+        console.log('✅ Closing dialog...');
         onClose();
       } else {
+        console.log('❌ Deployment response indicates failure:', data);
         toast.error(data?.error || 'Deployment failed', { id: 'deploy' });
       }
       
