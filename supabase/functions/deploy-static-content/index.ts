@@ -64,6 +64,7 @@ Deno.serve(async (req) => {
           story_code: story.story_code,
           content: story.content || '',
           photo_url: story.photo_link_1 || null,
+          photo_alt_text: story.photo_alt_1 || null,
           audio_url: story.audio_url || null,
           title: story.title || null,
           author: story.author || null,

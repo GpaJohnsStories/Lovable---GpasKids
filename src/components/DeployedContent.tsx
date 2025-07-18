@@ -7,6 +7,7 @@ interface DeployedContentData {
   story_code: string;
   content: string | null;
   photo_url: string | null;
+  photo_alt_text: string | null;
   audio_url: string | null;
   title: string | null;
   author: string | null;
@@ -122,7 +123,7 @@ export const DeployedContent = ({
       {!audioOnly && content.photo_url && (
         <img 
           src={content.photo_url} 
-          alt={content.title || 'Story image'}
+          alt={content.photo_alt_text || content.title || 'Story image'}
           className="float-left mr-8 mb-6 w-full max-w-xs h-auto rounded-lg shadow-lg border-4 border-white"
         />
       )}
