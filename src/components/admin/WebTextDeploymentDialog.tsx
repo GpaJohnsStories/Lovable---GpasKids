@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Globe, MapPin, FileText, AlertTriangle } from "lucide-react";
@@ -149,6 +149,9 @@ const WebTextDeploymentDialog = ({
           <DialogTitle className="text-center text-red-600 font-bold text-xl bg-yellow-300 py-2 rounded">
             Deploy WebText to Web Page
           </DialogTitle>
+          <DialogDescription className="text-center text-gray-600">
+            Deploy WebText content directly to the web page with current story content and photo alt text
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-3">
