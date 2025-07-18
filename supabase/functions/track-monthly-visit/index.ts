@@ -15,48 +15,18 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing required environment variables')
+    }
+    
     const supabase = createClient(supabaseUrl, supabaseKey, {
       auth: { persistSession: false }
     })
 
-    // Set client type for RLS policies
-    const { error: configError } = await supabase.rpc('set_config', {
-      setting_name: 'app.client_type',
-      setting_value: 'service'
-    })
-    
-    if (configError) {
-      console.log('Could not set config (function may not exist):', configError.message)
-    }
-
     console.log('Processing monthly visit tracking request')
 
-    // Get auth header to check if user is admin
-    const authHeader = req.headers.get('Authorization')
-    let isAdmin = false
-
-    if (authHeader) {
-      try {
-        // Create client with user token to check admin status
-        const userSupabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
-          auth: { persistSession: false },
-          global: {
-            headers: {
-              Authorization: authHeader
-            }
-          }
-        })
-
-        // Check if user is admin
-        const { data: adminCheck } = await userSupabase.rpc('is_admin_safe')
-        isAdmin = adminCheck === true
-
-        console.log(`Admin check result: ${isAdmin}`)
-      } catch (error) {
-        console.log('Error checking admin status:', error)
-        // Continue with non-admin tracking if check fails
-      }
-    }
+    // Skip admin check for now to simplify
+    const isAdmin = false
 
     // Skip tracking if user is admin
     if (isAdmin) {
