@@ -22,6 +22,7 @@ interface DeployedContentProps {
   includeAudio?: boolean;
   audioOnly?: boolean;
   showInlineAudio?: boolean;
+  hidePhotos?: boolean;
   className?: string;
 }
 
@@ -31,6 +32,7 @@ export const DeployedContent = ({
   includeAudio = false,
   audioOnly = false,
   showInlineAudio = false,
+  hidePhotos = false,
   className = "" 
 }: DeployedContentProps) => {
   const [content, setContent] = useState<DeployedContentData | null>(null);
@@ -125,7 +127,7 @@ export const DeployedContent = ({
       )}
 
       {/* Photo if available - positioned to float left with Tooltip */}
-      {!audioOnly && content.photo_url && (
+      {!audioOnly && !hidePhotos && content.photo_url && (
         <div className="float-left mr-8 mb-6 w-full max-w-xs">
           <TooltipProvider>
             <Tooltip>

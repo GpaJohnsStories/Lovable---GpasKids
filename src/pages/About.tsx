@@ -234,6 +234,7 @@ const About = () => {
             <DeployedContent 
               storyCode="SYS-THY"
               includeAudio={false}
+              hidePhotos={true}
               className="text-lg text-purple-900 leading-relaxed font-normal"
               fallbackContent={
                 <div>
