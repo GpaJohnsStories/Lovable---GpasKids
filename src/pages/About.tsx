@@ -244,7 +244,9 @@ const About = () => {
                       src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
                       alt="#3 AI Assistant"
                       className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                      onLoad={() => console.log('Photo 1 loaded successfully')}
                       onError={(e) => {
+                        console.error('Photo 1 failed to load:', e.currentTarget.src);
                         e.currentTarget.style.display = 'none';
                       }}
                     />
@@ -262,7 +264,9 @@ const About = () => {
                       src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203773244-hhgj4xbfc.png"
                       alt="#1 AI Assistant"
                       className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                      onLoad={() => console.log('Photo 2 loaded successfully')}
                       onError={(e) => {
+                        console.error('Photo 2 failed to load:', e.currentTarget.src);
                         e.currentTarget.style.display = 'none';
                       }}
                     />
@@ -280,7 +284,9 @@ const About = () => {
                       src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203785267-p40ovhg84.png"
                       alt="#2 AI Assistant"
                       className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                      onLoad={() => console.log('Photo 3 loaded successfully')}
                       onError={(e) => {
+                        console.error('Photo 3 failed to load:', e.currentTarget.src);
                         e.currentTarget.style.display = 'none';
                       }}
                     />
