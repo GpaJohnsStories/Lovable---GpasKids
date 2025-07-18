@@ -20,12 +20,14 @@ Deno.serve(async (req) => {
     })
 
     // Set client type for RLS policies
-    await supabase.rpc('set_config', {
+    const { error: configError } = await supabase.rpc('set_config', {
       setting_name: 'app.client_type',
       setting_value: 'service'
-    }).catch(() => {
-      // Ignore if function doesn't exist
     })
+    
+    if (configError) {
+      console.log('Could not set config (function may not exist):', configError.message)
+    }
 
     console.log('Processing monthly visit tracking request')
 
