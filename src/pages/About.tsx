@@ -14,21 +14,26 @@ const About = () => {
     // Handle hash navigation when component mounts or hash changes
     const scrollToHash = () => {
       const hash = window.location.hash;
+      console.log('About page: handling hash navigation, hash:', hash);
       if (hash) {
-        // Small delay to ensure the page is fully rendered
+        // Longer delay to ensure the page is fully rendered
         setTimeout(() => {
           const element = document.querySelector(hash);
+          console.log('About page: found element for hash', hash, element);
           if (element) {
             // Get the element's position and add some offset for the header
             const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
             const offsetPosition = elementPosition - 100; // Add 100px offset to show title
             
+            console.log('About page: scrolling to position', offsetPosition);
             window.scrollTo({
               top: offsetPosition,
               behavior: 'smooth'
             });
+          } else {
+            console.log('About page: element not found for hash', hash);
           }
-        }, 100);
+        }, 300); // Increased delay
       }
     };
 
