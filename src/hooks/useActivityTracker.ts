@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 
 interface ActivityData {
@@ -9,6 +10,9 @@ interface ActivityData {
 }
 
 export const useActivityTracker = () => {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith('/buddys_admin');
+  
   const [isActive, setIsActive] = useState(true);
   const [timeActive, setTimeActive] = useState(0);
   const lastActivityRef = useRef<number>(Date.now());
@@ -150,6 +154,11 @@ export const useActivityTracker = () => {
   };
 
   useEffect(() => {
+    // Don't initialize activity tracking on admin pages
+    if (isAdminPage) {
+      return;
+    }
+    
     // Initialize activity data
     const activityData = loadActivityData();
     lastActivityRef.current = activityData.lastActivity;
@@ -197,7 +206,7 @@ export const useActivityTracker = () => {
         clearInterval(updateIntervalRef.current);
       }
     };
-  }, []);
+  }, [isAdminPage]);
 
   return {
     isActive,
