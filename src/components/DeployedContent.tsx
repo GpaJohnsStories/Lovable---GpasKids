@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { StoryCodeAudioControls } from '@/components/story-content/StoryCodeAudioControls';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface DeployedContentData {
   id: string;
@@ -123,13 +124,26 @@ export const DeployedContent = ({
         </div>
       )}
 
-      {/* Photo if available - positioned to float left */}
+      {/* Photo if available - positioned to float left with Tooltip */}
       {!audioOnly && content.photo_url && (
-        <img 
-          src={content.photo_url} 
-          alt={content.photo_alt_text || content.title || 'Story image'}
-          className="float-left mr-8 mb-6 w-full max-w-xs h-auto rounded-lg shadow-lg border-4 border-white"
-        />
+        <div className="float-left mr-8 mb-6 w-full max-w-xs">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <img 
+                  src={content.photo_url} 
+                  alt={content.photo_alt_text || content.title || 'Story image'}
+                  className="w-full h-auto rounded-lg shadow-lg border-4 border-white cursor-pointer"
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">
+                  {content.photo_alt_text || content.title || 'Story image'}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       )}
       
       {/* Content */}
