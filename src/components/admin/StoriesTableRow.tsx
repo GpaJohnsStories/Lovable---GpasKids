@@ -505,7 +505,7 @@ const StoriesTableRow = ({
                     </Button>
                   </div>
                   <div className="flex items-center space-x-1">
-                    {story.category === 'System' ? (
+                    {(story.category === 'System' || story.category === 'WebText') ? (
                       <Button
                         size="sm"
                         className={story.published === 'Y' 

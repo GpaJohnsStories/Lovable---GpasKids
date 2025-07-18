@@ -40,7 +40,7 @@ Deno.serve(async (req) => {
       .from('stories')
       .select('*')
       .in('id', storyIds)
-      .eq('category', 'WebText');
+      .in('category', ['System', 'WebText']);
 
     if (fetchError) {
       console.error('Fetch error:', fetchError);
