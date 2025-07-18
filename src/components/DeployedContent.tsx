@@ -78,6 +78,7 @@ export const DeployedContent = ({
   }
 
   if (error || !content) {
+    console.log(`DeployedContent: No content found for ${storyCode}, error:`, error, 'content:', content);
     return (
       <div className={className}>
         {fallbackContent || (
@@ -88,6 +89,8 @@ export const DeployedContent = ({
       </div>
     );
   }
+
+  console.log(`DeployedContent: Using deployed content for ${storyCode}:`, content);
 
   // If audioOnly mode, only return audio controls
   if (audioOnly && content.audio_url) {
