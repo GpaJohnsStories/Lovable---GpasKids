@@ -55,6 +55,7 @@ export const DeployedContent = ({
           return;
         }
 
+        console.log(`DeployedContent: fetched data for ${storyCode}:`, data);
         setContent(data);
       } catch (err) {
         console.error(`Error in fetchDeployedContent for ${storyCode}:`, err);
