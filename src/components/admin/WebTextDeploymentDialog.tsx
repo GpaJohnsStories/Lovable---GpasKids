@@ -102,11 +102,17 @@ const WebTextDeploymentDialog = ({
   const mapping = PAGE_MAPPINGS.find(m => m.storyCode === story.story_code);
 
   const handleDeploy = async () => {
+    console.log('🔥 RED BUTTON CLICKED - handleDeploy called');
+    console.log('🔥 Story details:', { id: story.id, story_code: story.story_code, title: story.title });
+    console.log('🔥 Mapping details:', mapping);
+    
     if (!mapping) {
+      console.log('❌ No mapping found for story code:', story.story_code);
       toast.error("No page mapping found for this story code");
       return;
     }
 
+    console.log('✅ Starting deployment process...');
     setIsDeploying(true);
     
     try {
