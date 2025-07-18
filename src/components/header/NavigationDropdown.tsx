@@ -66,7 +66,7 @@ const NavigationDropdown = ({ item, onHover, isHovered }: NavigationDropdownProp
                     e.preventDefault();
                     return;
                   }
-                  // Only scroll to top if there's no hash in the path
+                  // Don't scroll to top when there's a hash - let the About page handle it
                   if (!subItem.path.includes('#')) {
                     scrollToTop();
                   }

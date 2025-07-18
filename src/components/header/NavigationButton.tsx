@@ -51,6 +51,7 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
     }
     
     if (item.path) {
+      navigate(item.path);
       // Only scroll to top if there's no hash in the path
       if (!item.path.includes('#')) {
         window.scrollTo({
@@ -58,7 +59,6 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
           behavior: 'smooth'
         });
       }
-      navigate(item.path);
     }
   };
 
