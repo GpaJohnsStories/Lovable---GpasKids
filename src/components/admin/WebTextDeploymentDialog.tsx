@@ -253,9 +253,18 @@ const WebTextDeploymentDialog = ({
               Cancel
             </button>
             <Button
-              onClick={handleDeploy}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🔥 RED BUTTON CLICKED - Direct click handler');
+                handleDeploy();
+              }}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                console.log('🔥 RED BUTTON MOUSE DOWN - Backup handler');
+              }}
               disabled={!mapping || isDeploying}
-              className="bg-gradient-to-b from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white border-red-700 font-bold"
+              className="bg-gradient-to-b from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white border-red-700 font-bold pointer-events-auto"
             >
               <Globe className="h-4 w-4 mr-2" />
               {isDeploying ? "Deploying..." : "Click to Confirm Deployment"}
