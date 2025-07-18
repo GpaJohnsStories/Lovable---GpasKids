@@ -166,6 +166,7 @@ export type Database = {
           deployed_at: string
           id: string
           is_active: boolean
+          photo_alt_text: string | null
           photo_url: string | null
           story_code: string
           title: string | null
@@ -179,6 +180,7 @@ export type Database = {
           deployed_at?: string
           id?: string
           is_active?: boolean
+          photo_alt_text?: string | null
           photo_url?: string | null
           story_code: string
           title?: string | null
@@ -192,6 +194,7 @@ export type Database = {
           deployed_at?: string
           id?: string
           is_active?: boolean
+          photo_alt_text?: string | null
           photo_url?: string | null
           story_code?: string
           title?: string | null
