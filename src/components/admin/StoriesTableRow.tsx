@@ -124,8 +124,8 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
 
       {/* Author */}
       {!hideAuthor && (
-        <TableCell className="w-[120px]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          <div className="flex flex-col items-start gap-1">
+        <TableCell className="w-[120px] text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <div className="flex flex-col items-center gap-1">
             <span className="text-sm font-medium text-gray-700">{story.author}</span>
             {/* Show Bio button if author has a bio - placeholder for now */}
             {story.author === 'Grandpa John' && (
@@ -146,7 +146,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       )}
 
       {/* Category */}
-      <TableCell className="w-32" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <TableCell className="w-32 text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <Badge 
           variant="outline" 
           className={`text-sm font-medium border ${getCategoryColor(story.category)}`}
@@ -158,7 +158,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
 
       {/* Published Status */}
       {showPublishedColumn && (
-        <TableCell className="w-24">
+        <TableCell className="w-24 text-center">
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
@@ -182,7 +182,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       )}
 
       {/* Stats */}
-      <TableCell className="w-20" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <TableCell className="w-20 text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <div className="flex flex-col gap-1 text-sm font-medium text-gray-700">
           <div className="flex items-center gap-1">
             <BarChart3 className="h-3 w-3" />
@@ -202,7 +202,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
 
       {/* Actions */}
       {showActions && (
-        <TableCell className="w-28">
+        <TableCell className="w-28 text-center">
           <div className="flex items-center gap-1">
             <Button
               variant="ghost"
