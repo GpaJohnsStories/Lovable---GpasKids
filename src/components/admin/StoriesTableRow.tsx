@@ -132,7 +132,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
               <Button
                 variant="outline"
                 size="sm"
-                className="h-6 px-2 text-xs bg-orange-100 text-orange-800 border-orange-300 hover:bg-orange-200"
+                className="h-6 px-2 text-xs font-bold bg-orange-100 text-orange-800 border-2 border-orange-300 hover:bg-orange-200"
                 onClick={() => {
                   // TODO: Navigate to author bio or show bio modal
                   console.log(`Show bio for ${story.author}`);
