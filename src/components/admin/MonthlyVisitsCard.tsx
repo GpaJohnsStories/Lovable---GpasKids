@@ -92,13 +92,13 @@ export const MonthlyVisitsCard = () => {
 
   return (
     <Card>
-      <CardHeader className="pb-1">
+      <CardHeader className="pb-0">
         <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
         {renderLegend()}
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-2">
         {/* Main approved visitors metric */}
-        <div className="mb-4">
+        <div className="mb-3">
           <div className="text-2xl font-bold">{totalApprovedVisits.toLocaleString()}</div>
           <div className="text-sm text-muted-foreground flex items-center gap-1">
             Approved Visitors
@@ -119,7 +119,7 @@ export const MonthlyVisitsCard = () => {
               <LineChart data={chartData}>
                 <CartesianGrid 
                   strokeDasharray="none" 
-                  stroke="#e5e7eb" 
+                  stroke="#6b7280" 
                   horizontal={true} 
                   vertical={false}
                 />
