@@ -12,7 +12,10 @@ import {
   ThumbsUp, 
   BarChart3,
   Calendar,
-  FileText
+  FileText,
+  Copyright,
+  Globe,
+  UserCheck
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -31,6 +34,7 @@ interface Story {
   content?: string;
   tagline?: string;
   excerpt?: string;
+  copyright_status?: string;
 }
 
 interface StoriesTableRowProps {
@@ -55,6 +59,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
   onEditBio
 }) => {
   const [isChangingStatus, setIsChangingStatus] = useState(false);
+  const [isChangingCopyright, setIsChangingCopyright] = useState(false);
 
   const handlePublishToggle = async () => {
     setIsChangingStatus(true);
@@ -79,6 +84,33 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
     }
   };
 
+  const handleCopyrightStatusChange = async (newStatus: string) => {
+    setIsChangingCopyright(true);
+    
+    try {
+      const { error } = await supabase
+        .from('stories')
+        .update({ copyright_status: newStatus })
+        .eq('id', story.id);
+
+      if (error) throw error;
+
+      const statusLabels = {
+        '©': 'Full Copyright',
+        'O': 'Open No Copyright', 
+        'S': 'Limited Sharing'
+      };
+
+      toast.success(`Copyright status updated to ${statusLabels[newStatus as keyof typeof statusLabels]}`);
+      onStatusChange();
+    } catch (error) {
+      console.error('Error updating copyright status:', error);
+      toast.error('Failed to update copyright status');
+    } finally {
+      setIsChangingCopyright(false);
+    }
+  };
+
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'Fun': return 'bg-blue-500 text-white';
@@ -91,6 +123,24 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
     }
   };
 
+  const getCopyrightColor = (status: string) => {
+    switch (status) {
+      case '©': return 'bg-red-100 text-red-800 border-red-300';
+      case 'O': return 'bg-green-100 text-green-800 border-green-300';
+      case 'S': return 'bg-orange-100 text-orange-800 border-orange-300';
+      default: return 'bg-gray-100 text-gray-800 border-gray-300';
+    }
+  };
+
+  const getCopyrightIcon = (status: string) => {
+    switch (status) {
+      case '©': return Copyright;
+      case 'O': return Globe;
+      case 'S': return UserCheck;
+      default: return Copyright;
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       month: 'short',
@@ -100,6 +150,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
   };
 
   const isWebText = story.category === 'WebText' || story.category === 'System';
+  const currentCopyrightStatus = story.copyright_status || '©';
 
   return (
     <TableRow className="hover:bg-muted/50">
@@ -153,6 +204,44 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
         >
           {story.category === 'System' ? 'WebText' : story.category}
         </Badge>
+      </TableCell>
+
+      {/* Copyright Status */}
+      <TableCell className="w-28 text-center">
+        <div className="flex flex-col gap-1">
+          <div className="flex justify-center gap-1">
+            {['©', 'O', 'S'].map((status) => {
+              const Icon = getCopyrightIcon(status);
+              const isActive = currentCopyrightStatus === status;
+              return (
+                <Button
+                  key={status}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleCopyrightStatusChange(status)}
+                  disabled={isChangingCopyright}
+                  className={`h-7 w-7 p-0 border-2 ${
+                    isActive 
+                      ? getCopyrightColor(status)
+                      : 'bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100'
+                  }`}
+                  title={
+                    status === '©' ? 'Full Copyright' :
+                    status === 'O' ? 'Open No Copyright' :
+                    'Limited Sharing'
+                  }
+                >
+                  <Icon className="h-3 w-3" />
+                </Button>
+              );
+            })}
+          </div>
+          <span className="text-xs text-gray-600 font-medium">
+            {currentCopyrightStatus === '©' ? 'Full' :
+             currentCopyrightStatus === 'O' ? 'Open' :
+             currentCopyrightStatus === 'S' ? 'Limited' : 'Full'}
+          </span>
+        </div>
       </TableCell>
 
       {/* Published Status */}
