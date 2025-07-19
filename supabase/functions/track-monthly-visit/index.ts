@@ -12,36 +12,64 @@ const EXCLUDED_IPS = [
   '2600:1700:4800:1bb0:ad47:5d1f:f4a2:7b1c' // Your IPv6
 ];
 
-// Known bot user agents (partial matches)
-const BOT_USER_AGENTS = [
-  'bot', 'crawler', 'spider', 'scraper', 'facebook', 'twitter', 'linkedin',
-  'whatsapp', 'telegram', 'slackbot', 'discordbot', 'googlebot', 'bingbot',
-  'yandexbot', 'baiduspider', 'duckduckbot', 'applebot', 'amazonbot',
-  'headlesschrome', 'phantomjs', 'selenium', 'webdriver', 'puppeteer',
-  'playwright', 'curl', 'wget', 'postman', 'insomnia', 'httpie'
+// Legitimate search engine crawlers that should be allowed for SEO
+const SEARCH_ENGINE_CRAWLERS = [
+  'googlebot', 'bingbot', 'slurp', 'duckduckbot', 'baiduspider', 
+  'yandexbot', 'facebookexternalhit', 'twitterbot', 'applebot',
+  'linkedinbot', 'pinterestbot', 'redditbot', 'whatsapp', 'telegrambot'
 ];
 
-// Additional bot detection patterns
+// Known unwanted bots (partial matches)
+const UNWANTED_BOT_USER_AGENTS = [
+  'scrapy', 'scraper', 'headlesschrome', 'phantomjs', 'selenium', 
+  'webdriver', 'puppeteer', 'playwright', 'curl', 'wget', 'postman', 
+  'insomnia', 'httpie', 'bot/1.0', 'crawler/1.0', 'spider/1.0'
+];
+
+// Additional bot detection patterns for unwanted bots
 const SUSPICIOUS_PATTERNS = [
-  'python', 'java', 'ruby', 'php', 'node', 'go/', 'rust',
-  'monitor', 'check', 'test', 'scan', 'probe', 'fetch'
+  'python-urllib', 'python-requests', 'java/', 'ruby/', 'php/', 
+  'node-fetch', 'go-http-client', 'rust/', 'monitor/', 'check/', 
+  'test/', 'scan/', 'probe/', 'fetch/', 'libwww-perl'
 ];
 
-function detectBot(userAgent: string | null, headers: Headers): boolean {
+function detectSearchEngine(userAgent: string | null): boolean {
+  if (!userAgent) return false;
+  
+  const lowerUA = userAgent.toLowerCase();
+  
+  // Check if it's a legitimate search engine crawler
+  for (const searchEngine of SEARCH_ENGINE_CRAWLERS) {
+    if (lowerUA.includes(searchEngine)) {
+      console.log(`Search engine detected: ${searchEngine}`);
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+function detectUnwantedBot(userAgent: string | null, headers: Headers): boolean {
   console.log('Bot detection - User Agent:', userAgent);
   
   // No user agent is suspicious
   if (!userAgent) {
-    console.log('Bot detected: Missing user agent');
+    console.log('Unwanted bot detected: Missing user agent');
     return true;
   }
 
   const lowerUA = userAgent.toLowerCase();
   
-  // Check against known bot patterns
-  for (const botPattern of BOT_USER_AGENTS) {
+  // First check if it's a legitimate search engine - if so, it's NOT an unwanted bot
+  if (detectSearchEngine(userAgent)) {
+    console.log('Legitimate search engine detected - allowing');
+    return false;
+  }
+  
+  // Check against known unwanted bot patterns
+  for (const botPattern of UNWANTED_BOT_USER_AGENTS) {
     if (lowerUA.includes(botPattern)) {
-      console.log(`Bot detected: User agent contains "${botPattern}"`);
+      console.log(`Unwanted bot detected: User agent contains "${botPattern}"`);
       return true;
     }
   }
@@ -49,22 +77,22 @@ function detectBot(userAgent: string | null, headers: Headers): boolean {
   // Check against suspicious patterns
   for (const pattern of SUSPICIOUS_PATTERNS) {
     if (lowerUA.includes(pattern)) {
-      console.log(`Bot detected: User agent contains suspicious pattern "${pattern}"`);
+      console.log(`Unwanted bot detected: User agent contains suspicious pattern "${pattern}"`);
       return true;
     }
   }
   
-  // Check for missing Accept header (common in bots)
+  // Check for missing Accept header (common in unwanted bots, but search engines usually have this)
   const acceptHeader = headers.get('Accept');
   if (!acceptHeader || !acceptHeader.includes('text/html')) {
-    console.log('Bot detected: Missing or invalid Accept header');
+    console.log('Unwanted bot detected: Missing or invalid Accept header');
     return true;
   }
   
-  // Check for missing Accept-Language header (common in bots)
+  // Check for missing Accept-Language header (less strict for search engines)
   const acceptLanguage = headers.get('Accept-Language');
   if (!acceptLanguage) {
-    console.log('Bot detected: Missing Accept-Language header');
+    console.log('Unwanted bot detected: Missing Accept-Language header');
     return true;
   }
   
@@ -134,6 +162,7 @@ async function trackExcludedVisit(supabase: any, year: number, month: number, co
         visit_count: 0,
         bot_visits_count: 0,
         admin_visits_count: 0,
+        search_engine_visits_count: 0,
         other_excluded_count: 0,
         [columnName]: 1
       };
@@ -203,15 +232,33 @@ Deno.serve(async (req) => {
       )
     }
 
-    // Check if this is a bot
-    if (detectBot(userAgent, req.headers)) {
-      console.log('Visit excluded: Bot detected');
+    // Check if this is a search engine crawler
+    if (detectSearchEngine(userAgent)) {
+      console.log('Search engine crawler detected - tracking separately');
+      await trackExcludedVisit(supabase, year, month, 'search_engine_visits_count');
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: 'Search engine visit tracked',
+          excluded_reason: 'search_engine',
+          user_agent: userAgent
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200 
+        }
+      )
+    }
+
+    // Check if this is an unwanted bot
+    if (detectUnwantedBot(userAgent, req.headers)) {
+      console.log('Visit excluded: Unwanted bot detected');
       await trackExcludedVisit(supabase, year, month, 'bot_visits_count');
       return new Response(
         JSON.stringify({ 
           success: true, 
-          message: 'Visit excluded - bot detected',
-          excluded_reason: 'bot',
+          message: 'Visit excluded - unwanted bot detected',
+          excluded_reason: 'unwanted_bot',
           user_agent: userAgent
         }),
         { 

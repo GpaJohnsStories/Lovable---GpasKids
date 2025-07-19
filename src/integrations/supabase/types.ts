@@ -165,6 +165,7 @@ export type Database = {
           id: string
           month: number
           other_excluded_count: number
+          search_engine_visits_count: number
           updated_at: string
           visit_count: number
           year: number
@@ -176,6 +177,7 @@ export type Database = {
           id?: string
           month: number
           other_excluded_count?: number
+          search_engine_visits_count?: number
           updated_at?: string
           visit_count?: number
           year: number
@@ -187,6 +189,7 @@ export type Database = {
           id?: string
           month?: number
           other_excluded_count?: number
+          search_engine_visits_count?: number
           updated_at?: string
           visit_count?: number
           year?: number

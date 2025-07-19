@@ -11,6 +11,7 @@ interface MonthlyVisit {
   visit_count: number;
   bot_visits_count: number;
   admin_visits_count: number;
+  search_engine_visits_count?: number;
   other_excluded_count: number;
   created_at: string;
   updated_at: string;
@@ -36,6 +37,7 @@ export const MonthlyVisitsCard = () => {
   const chartData = monthlyVisits?.map((visit) => ({
     period: `${visit.year}-${visit.month.toString().padStart(2, '0')}`,
     approved: visit.visit_count,
+    searchEngines: visit.search_engine_visits_count || 0,
     bots: visit.bot_visits_count || 0,
     admin: visit.admin_visits_count || 0,
     other: visit.other_excluded_count || 0,
@@ -57,6 +59,10 @@ export const MonthlyVisitsCard = () => {
       <div className="flex items-center gap-1.5">
         <div className="w-4 h-1 bg-green-600 rounded-sm"></div>
         <span>Approved</span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        <div className="w-4 h-1 bg-emerald-500 rounded-sm"></div>
+        <span>Search Engines</span>
       </div>
       <div className="flex items-center gap-1.5">
         <div className="w-4 h-1 bg-red-600 rounded-sm"></div>
@@ -158,6 +164,24 @@ export const MonthlyVisitsCard = () => {
                     dataKey="approved" 
                     position="top" 
                     style={{ fontSize: '14px', fontWeight: 'bold', fill: '#16a34a' }}
+                    offset={8}
+                  />
+                </Line>
+                
+                {/* Search Engine visits line - Emerald */}
+                <Line 
+                  type="monotone" 
+                  dataKey="searchEngines" 
+                  name="Search Engines"
+                  stroke="#10b981" 
+                  strokeWidth={2}
+                  dot={{ fill: "#10b981", strokeWidth: 2, r: 3 }}
+                  activeDot={{ r: 5, stroke: "#10b981", strokeWidth: 2 }}
+                >
+                  <LabelList 
+                    dataKey="searchEngines" 
+                    position="top" 
+                    style={{ fontSize: '14px', fontWeight: 'bold', fill: '#10b981' }}
                     offset={8}
                   />
                 </Line>
