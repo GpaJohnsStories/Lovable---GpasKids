@@ -86,6 +86,12 @@ const PAGE_MAPPINGS: PageMapping[] = [
     pagePath: 'src/pages/About.tsx',
     placeholderType: 'content',
     description: 'About page - Thank You section content'
+  },
+  {
+    storyCode: 'SYS-CPR',
+    pagePath: 'src/pages/About.tsx',
+    placeholderType: 'content',
+    description: 'About page - Copyright section content'
   }
 ];
 
