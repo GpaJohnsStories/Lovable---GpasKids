@@ -104,14 +104,8 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
   return (
     <TableRow className="hover:bg-muted/50">
       {/* Story Code */}
-      <TableCell className="font-mono text-sm w-28" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-        <div className="flex flex-col">
-          <span className="font-semibold">{story.story_code}</span>
-          <span className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
-            <Calendar className="h-3 w-3" />
-            {formatDate(story.updated_at)}
-          </span>
-        </div>
+      <TableCell className="w-28 text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <span className="font-semibold text-base">{story.story_code}</span>
       </TableCell>
 
       {/* Title */}
@@ -196,6 +190,11 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
             <span>{story.thumbs_up_count}</span>
           </div>
         </div>
+      </TableCell>
+
+      {/* Updated */}
+      <TableCell className="w-20 text-center text-sm text-muted-foreground" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        {formatDate(story.updated_at)}
       </TableCell>
 
       {/* Actions */}
