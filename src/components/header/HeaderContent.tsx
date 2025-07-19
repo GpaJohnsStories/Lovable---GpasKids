@@ -17,13 +17,13 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
 
   return (
     <div className="flex items-center justify-between relative">
-      {/* Buddy's Photo - Fixed position */}
-      <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
+      {/* Buddy's Photo - Fixed position at left border */}
+      <div className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10">
         <Link to="/" onClick={scrollToTop}>
           <img 
             src="/lovable-uploads/27c4298b-582d-4de3-94d9-c1b9b177f6d0.png" 
             alt="Grandpa's beloved companion"
-            className="w-15 h-15 sm:w-18 sm:h-18 rounded-full object-cover object-center"
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-center"
           />
         </Link>
       </div>
