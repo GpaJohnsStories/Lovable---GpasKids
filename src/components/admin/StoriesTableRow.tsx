@@ -159,6 +159,28 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
         </Badge>
       </TableCell>
 
+      {/* Copyright */}
+      <TableCell className="p-1 text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '50px', minWidth: '50px', maxWidth: '50px' }}>
+        <Popover>
+          <PopoverTrigger asChild>
+            <div 
+              className={`inline-flex items-center justify-center w-8 h-8 rounded-xl text-white font-bold text-sm cursor-pointer hover:opacity-80 transition-opacity ${
+                story.copyright_status === '©' ? 'bg-red-500' :
+                story.copyright_status === 'O' ? 'bg-green-500' :
+                story.copyright_status === 'S' ? 'bg-yellow-500' :
+                'bg-red-500'
+              }`}
+              title="Click to see copyright color key"
+            >
+              {story.copyright_status || '©'}
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <CopyrightColorKey />
+          </PopoverContent>
+        </Popover>
+      </TableCell>
+
       {/* Published Status */}
       {showPublishedColumn && (
         <TableCell className="w-24 text-center">
@@ -196,28 +218,6 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
             <span>{story.thumbs_up_count}</span>
           </div>
         </div>
-      </TableCell>
-
-      {/* Copyright */}
-      <TableCell className="p-1 text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '50px', minWidth: '50px', maxWidth: '50px' }}>
-        <Popover>
-          <PopoverTrigger asChild>
-            <div 
-              className={`inline-flex items-center justify-center w-8 h-8 rounded-xl text-white font-bold text-sm cursor-pointer hover:opacity-80 transition-opacity ${
-                story.copyright_status === '©' ? 'bg-red-500' :
-                story.copyright_status === 'O' ? 'bg-green-500' :
-                story.copyright_status === 'S' ? 'bg-yellow-500' :
-                'bg-red-500'
-              }`}
-              title="Click to see copyright color key"
-            >
-              {story.copyright_status || '©'}
-            </div>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <CopyrightColorKey />
-          </PopoverContent>
-        </Popover>
       </TableCell>
 
       {/* Updated */}
