@@ -80,8 +80,8 @@
     @apply bg-background text-foreground;
     font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
     line-height: 1.7;
-    font-size: 14px; /* Set minimum font size */
-    min-font-size: 14px; /* Ensure minimum font size */
+    font-size: 16px; /* Set minimum font size for seniors */
+    min-font-size: 16px; /* Ensure minimum font size */
   }
   
   h1 {
@@ -110,10 +110,15 @@
     font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif !important;
   }
 
-  /* Override any text-xs usage to use text-sm instead */
+  /* Senior-friendly font size overrides - minimum 16px for accessibility */
   .text-xs {
-    font-size: 0.875rem !important; /* 14px */
-    line-height: 1.25rem !important;
+    font-size: 1rem !important; /* 16px - override Tailwind's 12px */
+    line-height: 1.5rem !important;
+  }
+
+  .text-sm {
+    font-size: 1rem !important; /* 16px - override Tailwind's 14px */
+    line-height: 1.5rem !important;
   }
 }
 
@@ -140,6 +145,7 @@
   .personal-text {
     @apply text-amber-700 leading-relaxed;
     font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
+    font-size: 1.125rem; /* 18px for seniors */
   }
 
   /* Story content styling - matches admin editor exactly with maximum specificity */
@@ -261,10 +267,10 @@
     line-height: 1.6 !important;
   }
 
-  /* Utility class to enforce minimum font size */
+  /* Utility class to enforce minimum font size for seniors */
   .text-min {
-    font-size: 14px;
-    line-height: 1.25rem;
+    font-size: 16px; /* Senior-friendly minimum */
+    line-height: 1.5rem;
   }
 
   /* 3D Button Styles - Applied to all buttons globally */
