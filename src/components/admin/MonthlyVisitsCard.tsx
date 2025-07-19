@@ -117,7 +117,7 @@ export const MonthlyVisitsCard = () => {
             <ResponsiveContainer width="100%" height={200}>
               <LineChart 
                 data={chartData}
-                margin={{ left: 0, right: 20, top: 5, bottom: 5 }}
+                margin={{ left: 0, right: 50, top: 5, bottom: 5 }}
               >
                 <CartesianGrid 
                   strokeDasharray="none" 
@@ -131,6 +131,9 @@ export const MonthlyVisitsCard = () => {
                   tickLine={false}
                   axisLine={false}
                   tick={{ textAnchor: 'start' }}
+                  domain={['dataMin', 'dataMax']}
+                  type="category"
+                  interval={0}
                 />
                 <YAxis 
                   fontSize={12}
