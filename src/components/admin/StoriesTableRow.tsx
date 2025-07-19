@@ -160,8 +160,8 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       </TableCell>
 
       {/* Copyright */}
-      <TableCell className="p-1 text-center bg-background border-r border-gray-200" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '50px', minWidth: '50px', maxWidth: '50px' }}>
-        <div className="flex items-center justify-center w-full h-full">
+      <TableCell className="p-1 text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '50px', minWidth: '50px', maxWidth: '50px' }}>
+        <div className="flex items-center justify-center">
           <Popover>
             <PopoverTrigger asChild>
               <div 
