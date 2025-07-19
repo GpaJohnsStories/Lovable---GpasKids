@@ -6,6 +6,98 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+// Your IP addresses to exclude
+const EXCLUDED_IPS = [
+  '168.157.32.95',     // Your IPv4
+  '2600:1700:4800:1bb0:ad47:5d1f:f4a2:7b1c' // Your IPv6
+];
+
+// Known bot user agents (partial matches)
+const BOT_USER_AGENTS = [
+  'bot', 'crawler', 'spider', 'scraper', 'facebook', 'twitter', 'linkedin',
+  'whatsapp', 'telegram', 'slackbot', 'discordbot', 'googlebot', 'bingbot',
+  'yandexbot', 'baiduspider', 'duckduckbot', 'applebot', 'amazonbot',
+  'headlesschrome', 'phantomjs', 'selenium', 'webdriver', 'puppeteer',
+  'playwright', 'curl', 'wget', 'postman', 'insomnia', 'httpie'
+];
+
+// Additional bot detection patterns
+const SUSPICIOUS_PATTERNS = [
+  'python', 'java', 'ruby', 'php', 'node', 'go/', 'rust',
+  'monitor', 'check', 'test', 'scan', 'probe', 'fetch'
+];
+
+function detectBot(userAgent: string | null, headers: Headers): boolean {
+  console.log('Bot detection - User Agent:', userAgent);
+  
+  // No user agent is suspicious
+  if (!userAgent) {
+    console.log('Bot detected: Missing user agent');
+    return true;
+  }
+
+  const lowerUA = userAgent.toLowerCase();
+  
+  // Check against known bot patterns
+  for (const botPattern of BOT_USER_AGENTS) {
+    if (lowerUA.includes(botPattern)) {
+      console.log(`Bot detected: User agent contains "${botPattern}"`);
+      return true;
+    }
+  }
+  
+  // Check against suspicious patterns
+  for (const pattern of SUSPICIOUS_PATTERNS) {
+    if (lowerUA.includes(pattern)) {
+      console.log(`Bot detected: User agent contains suspicious pattern "${pattern}"`);
+      return true;
+    }
+  }
+  
+  // Check for missing Accept header (common in bots)
+  const acceptHeader = headers.get('Accept');
+  if (!acceptHeader || !acceptHeader.includes('text/html')) {
+    console.log('Bot detected: Missing or invalid Accept header');
+    return true;
+  }
+  
+  // Check for missing Accept-Language header (common in bots)
+  const acceptLanguage = headers.get('Accept-Language');
+  if (!acceptLanguage) {
+    console.log('Bot detected: Missing Accept-Language header');
+    return true;
+  }
+  
+  console.log('Human visitor detected');
+  return false;
+}
+
+function getClientIP(req: Request): string | null {
+  // Try various headers for the real IP
+  const headers = [
+    'CF-Connecting-IP',     // Cloudflare
+    'X-Real-IP',           // Nginx
+    'X-Forwarded-For',     // Standard proxy header
+    'X-Client-IP',         // Some proxies
+    'X-Forwarded',         // Alternative
+    'Forwarded-For',       // Alternative
+    'Forwarded'            // RFC 7239
+  ];
+  
+  for (const header of headers) {
+    const value = req.headers.get(header);
+    if (value) {
+      // X-Forwarded-For can contain multiple IPs, take the first one
+      const ip = value.split(',')[0].trim();
+      console.log(`IP found in ${header}: ${ip}`);
+      return ip;
+    }
+  }
+  
+  console.log('No IP found in headers');
+  return null;
+}
+
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -24,7 +116,48 @@ Deno.serve(async (req) => {
       auth: { persistSession: false }
     })
 
-    console.log('Processing monthly visit tracking request')
+    console.log('=== PROCESSING VISIT TRACKING REQUEST ===')
+
+    // Get client information
+    const userAgent = req.headers.get('User-Agent');
+    const clientIP = getClientIP(req);
+    
+    console.log('Client IP:', clientIP);
+    console.log('User Agent:', userAgent);
+
+    // Check if IP should be excluded (your IP)
+    if (clientIP && EXCLUDED_IPS.includes(clientIP)) {
+      console.log(`Visit excluded: IP ${clientIP} is in exclusion list`);
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: 'Visit excluded - owner IP',
+          excluded_reason: 'owner_ip',
+          ip: clientIP
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200 
+        }
+      )
+    }
+
+    // Check if this is a bot
+    if (detectBot(userAgent, req.headers)) {
+      console.log('Visit excluded: Bot detected');
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: 'Visit excluded - bot detected',
+          excluded_reason: 'bot',
+          user_agent: userAgent
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200 
+        }
+      )
+    }
 
     // Check if user is authenticated and admin
     let isAdmin = false
@@ -55,9 +188,13 @@ Deno.serve(async (req) => {
 
     // Skip tracking if user is admin
     if (isAdmin) {
-      console.log('Skipping visit tracking for admin user')
+      console.log('Visit excluded: Admin user')
       return new Response(
-        JSON.stringify({ success: true, message: 'Admin visit excluded from tracking' }),
+        JSON.stringify({ 
+          success: true, 
+          message: 'Visit excluded - admin user',
+          excluded_reason: 'admin'
+        }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 200 
@@ -70,7 +207,12 @@ Deno.serve(async (req) => {
     const year = now.getFullYear()
     const month = now.getMonth() + 1 // JavaScript months are 0-indexed
 
-    console.log(`Tracking visit for ${year}-${month}`)
+    console.log(`=== TRACKING LEGITIMATE VISIT FOR ${year}-${month} ===`)
+    console.log('Visit details:', {
+      ip: clientIP,
+      userAgent: userAgent?.substring(0, 100),
+      timestamp: now.toISOString()
+    });
 
     // Try to increment visit count for current month
     // First, try to get existing record
@@ -96,6 +238,8 @@ Deno.serve(async (req) => {
         console.error('Error updating monthly visit:', updateError)
         throw updateError
       }
+      
+      console.log(`Visit count updated: ${existingRecord.visit_count} -> ${existingRecord.visit_count + 1}`);
     } else {
       // Insert new record
       const { error: insertError } = await supabase
@@ -110,12 +254,23 @@ Deno.serve(async (req) => {
         console.error('Error inserting monthly visit:', insertError)
         throw insertError
       }
+      
+      console.log('New monthly visit record created with count: 1');
     }
 
-    console.log('Successfully tracked monthly visit')
+    console.log('=== VISIT SUCCESSFULLY TRACKED ===')
 
     return new Response(
-      JSON.stringify({ success: true, year, month }),
+      JSON.stringify({ 
+        success: true, 
+        year, 
+        month,
+        message: 'Visit tracked successfully',
+        client_info: {
+          ip: clientIP,
+          user_agent: userAgent?.substring(0, 100)
+        }
+      }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200 
