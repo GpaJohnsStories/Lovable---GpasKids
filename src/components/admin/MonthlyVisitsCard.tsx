@@ -77,7 +77,7 @@ export const MonthlyVisitsCard = () => {
     return (
       <Card>
         <CardHeader className="pb-0">
-          <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
+          <CardTitle className="text-sm font-medium">Site Visits</CardTitle>
         </CardHeader>
         <CardContent className="pt-2">
           <div className="animate-pulse">
@@ -93,7 +93,7 @@ export const MonthlyVisitsCard = () => {
   return (
     <Card>
       <CardHeader className="pb-0">
-        <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
+        <CardTitle className="text-sm font-medium">Site Visits</CardTitle>
         {renderLegend()}
       </CardHeader>
       <CardContent className="pt-2">
