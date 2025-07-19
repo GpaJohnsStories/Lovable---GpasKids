@@ -197,15 +197,15 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       </TableCell>
 
       {/* Copyright */}
-      <TableCell className="text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '60px', minWidth: '60px', maxWidth: '60px' }}>
-        <div className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-white font-bold text-sm ${
+      <TableCell className="p-1 text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '50px', minWidth: '50px', maxWidth: '50px' }}>
+        <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-help ${
           story.copyright_status === '©' ? 'bg-red-500' :
           story.copyright_status === 'O' ? 'bg-green-500' :
           story.copyright_status === 'S' ? 'bg-yellow-500' :
           'bg-red-500'
         }`}>
           {story.copyright_status || '©'}
-        </div>
+        </span>
       </TableCell>
 
       {/* Updated */}
