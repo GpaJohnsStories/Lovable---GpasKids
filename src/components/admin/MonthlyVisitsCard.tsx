@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Legend } from "recharts";
+import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
 import { TrendingUp, Users } from "lucide-react";
 
 interface MonthlyVisit {
@@ -53,21 +53,21 @@ export const MonthlyVisitsCard = () => {
 
   // Custom legend component
   const renderLegend = () => (
-    <div className="flex flex-wrap gap-3 text-xs justify-end">
-      <div className="flex items-center gap-1">
-        <div className="w-3 h-0.5 bg-green-600"></div>
+    <div className="flex flex-wrap gap-3 text-xs">
+      <div className="flex items-center gap-1.5">
+        <div className="w-4 h-1 bg-green-600 rounded-sm"></div>
         <span>Approved</span>
       </div>
-      <div className="flex items-center gap-1">
-        <div className="w-3 h-0.5 bg-yellow-400"></div>
+      <div className="flex items-center gap-1.5">
+        <div className="w-4 h-1 bg-yellow-400 rounded-sm"></div>
         <span>Bots</span>
       </div>
-      <div className="flex items-center gap-1">
-        <div className="w-3 h-0.5 bg-blue-500"></div>
+      <div className="flex items-center gap-1.5">
+        <div className="w-4 h-1 bg-blue-500 rounded-sm"></div>
         <span>Admin</span>
       </div>
-      <div className="flex items-center gap-1">
-        <div className="w-3 h-0.5 bg-orange-500"></div>
+      <div className="flex items-center gap-1.5">
+        <div className="w-4 h-1 bg-orange-500 rounded-sm"></div>
         <span>Other</span>
       </div>
     </div>
@@ -76,9 +76,8 @@ export const MonthlyVisitsCard = () => {
   if (isLoading) {
     return (
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardHeader className="pb-1">
           <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
-          <Users className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="animate-pulse">
@@ -93,12 +92,9 @@ export const MonthlyVisitsCard = () => {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <div className="flex items-center gap-4">
-          <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
-          {renderLegend()}
-        </div>
-        <Users className="h-4 w-4 text-muted-foreground" />
+      <CardHeader className="pb-1">
+        <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
+        {renderLegend()}
       </CardHeader>
       <CardContent>
         {/* Main approved visitors metric */}
@@ -121,6 +117,12 @@ export const MonthlyVisitsCard = () => {
           <div className="mt-4">
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={chartData}>
+                <CartesianGrid 
+                  strokeDasharray="none" 
+                  stroke="#e5e7eb" 
+                  horizontal={true} 
+                  vertical={false}
+                />
                 <XAxis 
                   dataKey="period" 
                   fontSize={12}
