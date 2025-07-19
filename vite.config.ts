@@ -20,17 +20,4 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // Ensure static files like sitemap.xml are served correctly
-  publicDir: 'public',
-  build: {
-    copyPublicDir: true,
-    rollupOptions: {
-      // Ensure static files are included in the build
-      input: {
-        main: path.resolve(__dirname, 'index.html'),
-      },
-    },
-  },
-  // Add explicit handling for static files
-  assetsInclude: ['**/*.xml', '**/*.txt'],
 }));
