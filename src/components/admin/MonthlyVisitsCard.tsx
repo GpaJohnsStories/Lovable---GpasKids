@@ -59,11 +59,11 @@ export const MonthlyVisitsCard = () => {
         <span>Approved</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <div className="w-4 h-1 bg-yellow-400 rounded-sm"></div>
+        <div className="w-4 h-1 bg-blue-400 rounded-sm"></div>
         <span>Bots</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <div className="w-4 h-1 bg-blue-500 rounded-sm"></div>
+        <div className="w-4 h-1 bg-blue-600 rounded-sm"></div>
         <span>Admin</span>
       </div>
       <div className="flex items-center gap-1.5">
@@ -77,7 +77,7 @@ export const MonthlyVisitsCard = () => {
     return (
       <Card>
         <CardHeader className="pb-0">
-          <CardTitle className="text-sm font-medium">Site Visits</CardTitle>
+          <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
         </CardHeader>
         <CardContent className="pt-2">
           <div className="animate-pulse">
@@ -93,12 +93,12 @@ export const MonthlyVisitsCard = () => {
   return (
     <Card>
       <CardHeader className="pb-0">
-        <CardTitle className="text-sm font-medium">Site Visits</CardTitle>
+        <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
         {renderLegend()}
       </CardHeader>
       <CardContent className="pt-2">
-        {/* Main approved visitors metric */}
-        <div className="mb-3">
+        {/* Main approved visitors metric - positioned to align with chart */}
+        <div className="mb-2 ml-10">
           <div className="text-2xl font-bold">{totalApprovedVisits.toLocaleString()}</div>
           <div className="text-sm text-muted-foreground flex items-center gap-1">
             Approved Visitors
@@ -168,15 +168,15 @@ export const MonthlyVisitsCard = () => {
                   activeDot={{ r: 5, stroke: "#16a34a", strokeWidth: 2 }}
                 />
                 
-                {/* Bot visits line - Bright Yellow */}
+                {/* Bot visits line - Blue */}
                 <Line 
                   type="monotone" 
                   dataKey="bots" 
                   name="Bots"
-                  stroke="#facc15" 
+                  stroke="#60a5fa" 
                   strokeWidth={2}
-                  dot={{ fill: "#facc15", strokeWidth: 2, r: 3 }}
-                  activeDot={{ r: 5, stroke: "#facc15", strokeWidth: 2 }}
+                  dot={{ fill: "#60a5fa", strokeWidth: 2, r: 3 }}
+                  activeDot={{ r: 5, stroke: "#60a5fa", strokeWidth: 2 }}
                 />
                 
                 {/* Admin visits line - Blue */}
