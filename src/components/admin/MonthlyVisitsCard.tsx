@@ -76,8 +76,8 @@ export const MonthlyVisitsCard = () => {
   if (isLoading) {
     return (
       <Card>
-        <CardHeader className="pb-0">
-          <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
+        <CardHeader className="pb-2">
+          <div className="text-sm font-medium text-red-600">Monthly Site Visits</div>
         </CardHeader>
         <CardContent className="pt-2">
           <div className="animate-pulse">
@@ -92,8 +92,8 @@ export const MonthlyVisitsCard = () => {
 
   return (
     <Card>
-      <CardHeader className="pb-0">
-        <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
+      <CardHeader className="pb-2">
+        <div className="text-sm font-medium text-red-600">Monthly Site Visits</div>
         {renderLegend()}
       </CardHeader>
       <CardContent className="pt-2">
