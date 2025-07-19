@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Globe, MapPin, FileText, AlertTriangle } from "lucide-react";
+import { FileText, MapPin, Globe, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -49,7 +49,7 @@ interface WebTextDeploymentDialogProps {
   onSuccess?: () => void;
 }
 
-// Copy the page mappings from StaticDeploymentSystem
+// Page mappings for webtext deployment
 const PAGE_MAPPINGS: PageMapping[] = [
   {
     storyCode: 'SYS-WEL',
@@ -96,205 +96,133 @@ const WebTextDeploymentDialog = ({
   onSuccess 
 }: WebTextDeploymentDialogProps) => {
   const [isDeploying, setIsDeploying] = useState(false);
-  const [deploymentSuccess, setDeploymentSuccess] = useState(false);
-
-  // Force close dialog on successful deployment to bypass browser extension interference
-  useEffect(() => {
-    if (deploymentSuccess) {
-      console.log('🔄 useEffect: Forcing dialog close due to successful deployment');
-      const forceClose = () => {
-        setIsDeploying(false);
-        setDeploymentSuccess(false);
-        onClose();
-      };
-      
-      // Try multiple times to ensure closure
-      forceClose();
-      setTimeout(forceClose, 100);
-      setTimeout(forceClose, 300);
-      setTimeout(forceClose, 500);
-    }
-  }, [deploymentSuccess, onClose]);
-
-  // Reset state when dialog opens/closes
-  useEffect(() => {
-    if (!isOpen) {
-      setIsDeploying(false);
-      setDeploymentSuccess(false);
-    }
-  }, [isOpen]);
+  const [deploymentComplete, setDeploymentComplete] = useState(false);
 
   if (!story) return null;
 
   const mapping = PAGE_MAPPINGS.find(m => m.storyCode === story.story_code);
 
   const handleDeploy = async () => {
-    console.log('🔥 RED BUTTON CLICKED - handleDeploy called');
-    console.log('🔥 Story details:', { id: story.id, story_code: story.story_code, title: story.title });
-    console.log('🔥 Mapping details:', mapping);
-    
     if (!mapping) {
-      console.log('❌ No mapping found for story code:', story.story_code);
       toast.error("No page mapping found for this story code");
       return;
     }
 
-    console.log('✅ Starting deployment process...');
     setIsDeploying(true);
     
     try {
-      toast.loading(`Deploying "${story.title}" to web page...`, { id: 'deploy' });
-      
-      
-      console.log('🚀 Calling edge function...');
       const { data, error } = await supabase.functions.invoke('deploy-static-content', {
         body: { storyIds: [story.id] }
       });
       
-      console.log('📦 Raw response:', { data, error });
-      
       if (error) {
-        console.error('❌ Supabase function error:', error);
-        toast.error(`Failed to deploy content: ${error.message}`, { id: 'deploy' });
+        toast.error(`Failed to deploy content: ${error.message}`);
         return;
       }
 
       if (data?.success) {
-        const { results, summary } = data;
-        console.log('✅ SUCCESS! Deployment results:', results);
-        console.log('✅ SUCCESS! Summary:', summary);
+        setDeploymentComplete(true);
+        toast.success(`Successfully deployed "${story.title}" to web page!`);
         
-        // Trigger the useEffect to force close
-        console.log('🔄 Setting deploymentSuccess to trigger force close...');
-        setDeploymentSuccess(true);
-        
-        // Show success toast
-        toast.success(
-          `Successfully deployed "${story.title}" to web page!`, 
-          { 
-            id: 'deploy',
-            duration: 4000,
-            description: `Content is now live and visible on the website.`
-          }
-        );
-        
-        console.log('✅ Calling onSuccess callback...');
-        if (onSuccess) {
-          setTimeout(() => onSuccess(), 200);
-        }
-        
-        return; // Exit early on success
+        // Close dialog after a short delay to show success state
+        setTimeout(() => {
+          setDeploymentComplete(false);
+          onClose();
+          if (onSuccess) onSuccess();
+        }, 1500);
       } else {
-        console.log('❌ Deployment response indicates failure:', data);
-        toast.error(data?.error || 'Deployment failed', { id: 'deploy' });
+        toast.error(data?.error || 'Deployment failed');
       }
       
     } catch (error) {
       console.error('Deployment error:', error);
-      toast.error("Failed to deploy content", { id: 'deploy' });
+      toast.error("Failed to deploy content");
     } finally {
       setIsDeploying(false);
     }
   };
 
+  const handleClose = () => {
+    if (!isDeploying && !deploymentComplete) {
+      onClose();
+    }
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
-        <DialogHeader className="pb-2">
-          <DialogTitle className="text-center text-red-600 font-bold text-xl bg-yellow-300 py-2 rounded">
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent className="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle className="text-center text-lg font-bold">
             Deploy WebText to Web Page
           </DialogTitle>
-          <DialogDescription className="text-center text-gray-600">
-            Deploy WebText content directly to the web page with current story content and photo alt text
+          <DialogDescription className="text-center">
+            Deploy content directly to the web page
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-3">
-          <div className="text-center py-2">
-            <p className="text-blue-600 font-medium text-base">
-              This will deploy the WebText content directly to the web page file.
-            </p>
+        {deploymentComplete ? (
+          <div className="text-center py-8">
+            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-green-700 mb-2">Deployment Successful!</h3>
+            <p className="text-gray-600">Content has been deployed to the web page.</p>
           </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              {/* WebText Details */}
+              <div className="p-4 border rounded-lg bg-blue-50">
+                <h3 className="font-semibold mb-3 flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  WebText Details
+                </h3>
+                <div className="space-y-2 text-sm">
+                  <div><strong>Code:</strong> {story.story_code}</div>
+                  <div><strong>Title:</strong> {story.title}</div>
+                  <div><strong>Author:</strong> {story.author}</div>
+                  <div><strong>Updated:</strong> {new Date(story.updated_at).toLocaleDateString()}</div>
+                </div>
+              </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            {/* WebText Details Column */}
-            <div className="p-3 border rounded-lg bg-blue-50">
-              <h3 className="font-semibold mb-2 flex items-center gap-2 text-sm">
-                <FileText className="h-4 w-4" />
-                WebText Details  Code: {story.story_code}
-              </h3>
-              <div className="space-y-1 text-sm">
-                <div>
-                  <span className="font-medium">Title:  </span>
-                  <span className="text-xs">{story.title}</span>
-                </div>
-                <div>
-                  <span className="font-medium">Author:  </span>
-                  <span className="text-xs">{story.author}</span>
-                </div>
-                <div>
-                  <span className="font-medium">Updated:  </span>
-                  <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
-                </div>
+              {/* Deployment Target */}
+              <div className={`p-4 border rounded-lg ${mapping ? 'bg-green-50' : 'bg-red-50'}`}>
+                <h3 className="font-semibold mb-3 flex items-center gap-2">
+                  <MapPin className="h-4 w-4" />
+                  Deployment Target
+                </h3>
+                {mapping ? (
+                  <div className="space-y-2 text-sm">
+                    <div><strong>File:</strong> {mapping.pagePath.split('/').pop()}</div>
+                    <div><strong>Path:</strong> {mapping.pagePath}</div>
+                    <div><strong>Type:</strong> {mapping.placeholderType}</div>
+                    <div><strong>Description:</strong> {mapping.description}</div>
+                  </div>
+                ) : (
+                  <p className="text-sm text-red-600">
+                    No mapping found for story code: {story.story_code}
+                  </p>
+                )}
               </div>
             </div>
 
-            {/* Deployment Destination Column */}
-            <div className={`p-3 border rounded-lg ${mapping ? 'bg-green-50' : 'bg-red-50'}`}>
-              <h3 className="font-semibold mb-2 flex items-center gap-2 text-sm">
-                <MapPin className="h-4 w-4" />
-                {mapping ? `Deployment Destination  File: ${mapping.pagePath.split('/').pop()}` : 'No Mapping Found'}
-              </h3>
-              {mapping ? (
-                <div className="space-y-1 text-sm">
-                  <div>
-                    <span className="font-medium">Full Path:  </span>
-                    <span className="text-xs break-all">{mapping.pagePath}</span>
-                  </div>
-                  <div>
-                    <span className="font-medium">Description:  </span>
-                    <span className="text-xs">{mapping.description}</span>
-                  </div>
-                  <div>
-                    <span className="font-medium">Type:  </span>
-                    <span className="text-xs">{mapping.placeholderType}</span>
-                  </div>
-                </div>
-              ) : (
-                <p className="text-xs text-red-600">
-                  Story code ({story.story_code}) has no page mapping. Deployment not possible.
-                </p>
-              )}
+            <div className="flex justify-end gap-3 pt-4 border-t">
+              <Button
+                variant="outline"
+                onClick={handleClose}
+                disabled={isDeploying}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleDeploy}
+                disabled={!mapping || isDeploying}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                <Globe className="h-4 w-4 mr-2" />
+                {isDeploying ? "Deploying..." : "Deploy to Web Page"}
+              </Button>
             </div>
           </div>
-
-          <div className="flex justify-end gap-2 pt-2 border-t">
-            <button
-              onClick={onClose}
-              disabled={isDeploying}
-              className="bg-yellow-300 text-black px-4 py-2 rounded-full font-bold hover:bg-yellow-200 text-lg"
-            >
-              Cancel
-            </button>
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log('🔥 RED BUTTON CLICKED - Direct click handler');
-                handleDeploy();
-              }}
-              onMouseDown={(e) => {
-                e.preventDefault();
-                console.log('🔥 RED BUTTON MOUSE DOWN - Backup handler');
-              }}
-              disabled={!mapping || isDeploying}
-              className="bg-gradient-to-b from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white border-red-700 font-bold pointer-events-auto"
-            >
-              <Globe className="h-4 w-4 mr-2" />
-              {isDeploying ? "Deploying..." : "Click to Confirm Deployment"}
-            </Button>
-          </div>
-        </div>
+        )}
       </DialogContent>
     </Dialog>
   );
