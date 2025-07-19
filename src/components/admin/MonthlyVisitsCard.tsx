@@ -96,21 +96,6 @@ export const MonthlyVisitsCard = () => {
         {renderLegend()}
       </CardHeader>
       <CardContent className="pt-2">
-        {/* Main approved visitors metric - positioned to align with chart */}
-        <div className="mb-2 ml-10">
-          <div className="text-2xl font-bold">{totalApprovedVisits.toLocaleString()}</div>
-          <div className="text-sm text-muted-foreground flex items-center gap-1">
-            Approved Visitors
-            {growth !== 0 && (
-              <>
-                <TrendingUp className="h-3 w-3" />
-                <span className={growth > 0 ? "text-green-600" : "text-red-600"}>
-                  {growth > 0 ? "+" : ""}{growth.toFixed(1)}%
-                </span>
-              </>
-            )}
-          </div>
-        </div>
         
         {chartData.length > 0 && (
           <div className="mt-4">
