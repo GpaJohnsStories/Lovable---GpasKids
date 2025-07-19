@@ -115,7 +115,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
             {story.title}
           </div>
           {(story.tagline || story.excerpt) && (
-            <div className="text-sm text-muted-foreground line-clamp-1">
+            <div className="text-sm text-gray-600 line-clamp-1">
               {story.tagline || story.excerpt}
             </div>
           )}
@@ -126,7 +126,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       {!hideAuthor && (
         <TableCell className="w-[120px]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <div className="flex flex-col items-start gap-1">
-            <span className="text-sm font-medium text-muted-foreground">{story.author}</span>
+            <span className="text-sm font-medium text-gray-700">{story.author}</span>
             {/* Show Bio button if author has a bio - placeholder for now */}
             {story.author === 'Grandpa John' && (
               <Button
@@ -174,7 +174,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
             >
               {story.published === 'Y' ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
             </Button>
-            <span className="text-xs text-muted-foreground">
+            <span className="text-xs text-gray-600">
               {story.published === 'Y' ? 'Pub' : 'Draft'}
             </span>
           </div>
@@ -183,7 +183,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
 
       {/* Stats */}
       <TableCell className="w-20" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-        <div className="flex flex-col gap-1 text-sm font-medium text-muted-foreground">
+        <div className="flex flex-col gap-1 text-sm font-medium text-gray-700">
           <div className="flex items-center gap-1">
             <BarChart3 className="h-3 w-3" />
             <span>{story.read_count}</span>
@@ -196,7 +196,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       </TableCell>
 
       {/* Updated */}
-      <TableCell className="text-center text-sm text-muted-foreground" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '80px', minWidth: '80px', maxWidth: '80px' }}>
+      <TableCell className="text-center text-sm text-gray-700" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '80px', minWidth: '80px', maxWidth: '80px' }}>
         {formatDate(story.updated_at)}
       </TableCell>
 
