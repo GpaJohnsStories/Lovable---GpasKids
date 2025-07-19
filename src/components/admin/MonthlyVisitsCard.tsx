@@ -172,7 +172,7 @@ export const MonthlyVisitsCard = () => {
                   <LabelList 
                     dataKey="approved" 
                     position="top" 
-                    style={{ fontSize: '12px', fontWeight: 'bold', fill: '#16a34a' }}
+                    style={{ fontSize: '14px', fontWeight: 'bold', fill: '#16a34a' }}
                     offset={8}
                   />
                 </Line>
@@ -190,7 +190,7 @@ export const MonthlyVisitsCard = () => {
                   <LabelList 
                     dataKey="bots" 
                     position="top" 
-                    style={{ fontSize: '12px', fontWeight: 'bold', fill: '#dc2626' }}
+                    style={{ fontSize: '14px', fontWeight: 'bold', fill: '#dc2626' }}
                     offset={8}
                   />
                 </Line>
@@ -208,7 +208,7 @@ export const MonthlyVisitsCard = () => {
                   <LabelList 
                     dataKey="admin" 
                     position="top" 
-                    style={{ fontSize: '12px', fontWeight: 'bold', fill: '#3b82f6' }}
+                    style={{ fontSize: '14px', fontWeight: 'bold', fill: '#3b82f6' }}
                     offset={8}
                   />
                 </Line>
@@ -226,7 +226,7 @@ export const MonthlyVisitsCard = () => {
                   <LabelList 
                     dataKey="other" 
                     position="top" 
-                    style={{ fontSize: '12px', fontWeight: 'bold', fill: '#f97316' }}
+                    style={{ fontSize: '14px', fontWeight: 'bold', fill: '#f97316' }}
                     offset={8}
                   />
                 </Line>
