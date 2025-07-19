@@ -160,7 +160,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       </TableCell>
 
       {/* Copyright */}
-      <TableCell className="text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '50px', minWidth: '50px', maxWidth: '50px' }}>
+      <TableCell className="p-1 text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '50px', minWidth: '50px', maxWidth: '50px' }}>
         <Popover>
           <PopoverTrigger asChild>
             <div 
@@ -170,6 +170,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
                 story.copyright_status === 'S' ? 'bg-yellow-500' :
                 'bg-red-500'
               }`}
+              style={{ margin: '0 auto' }}
               title="Click to see copyright color key"
             >
               {story.copyright_status || '©'}
