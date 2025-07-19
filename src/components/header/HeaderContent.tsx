@@ -23,7 +23,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           <img 
             src="/lovable-uploads/27c4298b-582d-4de3-94d9-c1b9b177f6d0.png" 
             alt="Grandpa's beloved companion"
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover object-center"
+            className="w-15 h-15 sm:w-18 sm:h-18 rounded-full object-cover object-center"
           />
         </Link>
         <div className="text-left">
