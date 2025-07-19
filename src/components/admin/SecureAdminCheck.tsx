@@ -38,13 +38,13 @@ const SecureAdminCheck = ({ children }: SecureAdminCheckProps) => {
 
         console.log('🔐 SecureAdminCheck: Checking admin status for user:', session.user.id);
         
-        // Check admin status
-        const { data: isAdmin, error: adminCheckError } = await supabase.rpc('is_admin_safe');
+        // Check admin access (admin or viewer)
+        const { data: hasAccess, error: accessCheckError } = await supabase.rpc('has_admin_access');
         
-        console.log('🔐 SecureAdminCheck: Admin check result:', { isAdmin, adminCheckError });
+        console.log('🔐 SecureAdminCheck: Admin access check result:', { hasAccess, accessCheckError });
         
-        if (adminCheckError || !isAdmin) {
-          console.log('🔐 SecureAdminCheck: Admin check failed or user not admin');
+        if (accessCheckError || !hasAccess) {
+          console.log('🔐 SecureAdminCheck: Access check failed or user not authorized');
           if (isMounted) {
             setIsAuthorized(false);
             setIsLoading(false);
@@ -52,7 +52,7 @@ const SecureAdminCheck = ({ children }: SecureAdminCheckProps) => {
           return;
         }
 
-        console.log('🔐 SecureAdminCheck: User authorized as admin');
+        console.log('🔐 SecureAdminCheck: User authorized for admin access');
         if (isMounted) {
           setIsAuthorized(true);
           setIsLoading(false);

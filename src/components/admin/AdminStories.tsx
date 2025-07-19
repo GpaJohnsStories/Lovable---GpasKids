@@ -9,8 +9,10 @@ import AuthorBiosTable from "./AuthorBiosTable";
 import AuthorBioForm from "./AuthorBioForm";
 import AdminLayout from "./AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
+import { useUserRole } from "@/hooks/useUserRole";
 
 const AdminStories = () => {
+  const { isViewer } = useUserRole();
   const [searchParams] = useSearchParams();
   const [selectedStory, setSelectedStory] = useState(null);
   const [isCreatingStory, setIsCreatingStory] = useState(false);
@@ -130,18 +132,18 @@ const AdminStories = () => {
       <div className="space-y-0">
         
         {currentView === 'stories' ? (
-          <StoriesTable 
-            onEditStory={handleEditStory}
-            showActions={true}
+        <StoriesTable 
+            onEditStory={isViewer ? undefined : handleEditStory}
+            showActions={!isViewer}
             showPublishedColumn={true}
             groupByAuthor={groupByAuthor}
             onToggleGroupByAuthor={() => setGroupByAuthor(!groupByAuthor)}
-            onEditBio={handleEditBioByAuthorName}
+            onEditBio={isViewer ? undefined : handleEditBioByAuthorName}
           />
         ) : (
           <AuthorBiosTable
-            onEditBio={handleEditBio}
-            onCreateBio={handleCreateBio}
+            onEditBio={isViewer ? undefined : handleEditBio}
+            onCreateBio={isViewer ? undefined : handleCreateBio}
           />
         )}
       </div>

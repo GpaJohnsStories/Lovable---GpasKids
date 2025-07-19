@@ -6,6 +6,7 @@ import { Database } from "@/integrations/supabase/types";
 import CommentReplyForm from "@/components/CommentReplyForm";
 import CommentRepliesList from "@/components/CommentRepliesList";
 import DecryptedCommentContent from "./DecryptedCommentContent";
+import { useUserRole } from "@/hooks/useUserRole";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
@@ -17,6 +18,7 @@ interface AdminCommentDetailProps {
 }
 
 const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminCommentDetailProps) => {
+  const { isViewer } = useUserRole();
   if (!comment) return null;
 
   const isAnnouncement = comment.personal_id === '0000FF';
@@ -87,36 +89,38 @@ const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminC
           </div>
 
           {/* Admin Actions */}
-          <div className="flex gap-2 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <h3 className="font-semibold text-blue-900 mr-4">Admin Actions:</h3>
-            {comment.status !== 'approved' && (
-              <Button 
-                size="sm" 
-                className="bg-green-600 hover:bg-green-700 text-white" 
-                onClick={() => onUpdateStatus(comment.id, 'approved')}
-              >
-                Approve
-              </Button>
-            )}
-            {comment.status !== 'rejected' && (
-              <Button 
-                size="sm" 
-                variant="destructive" 
-                onClick={() => onUpdateStatus(comment.id, 'rejected')}
-              >
-                Reject
-              </Button>
-            )}
-            {comment.status !== 'archived' && (
-              <Button 
-                size="sm" 
-                variant="secondary" 
-                onClick={() => onUpdateStatus(comment.id, 'archived')}
-              >
-                Archive
-              </Button>
-            )}
-          </div>
+          {!isViewer && (
+            <div className="flex gap-2 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <h3 className="font-semibold text-blue-900 mr-4">Admin Actions:</h3>
+              {comment.status !== 'approved' && (
+                <Button 
+                  size="sm" 
+                  className="bg-green-600 hover:bg-green-700 text-white" 
+                  onClick={() => onUpdateStatus(comment.id, 'approved')}
+                >
+                  Approve
+                </Button>
+              )}
+              {comment.status !== 'rejected' && (
+                <Button 
+                  size="sm" 
+                  variant="destructive" 
+                  onClick={() => onUpdateStatus(comment.id, 'rejected')}
+                >
+                  Reject
+                </Button>
+              )}
+              {comment.status !== 'archived' && (
+                <Button 
+                  size="sm" 
+                  variant="secondary" 
+                  onClick={() => onUpdateStatus(comment.id, 'archived')}
+                >
+                  Archive
+                </Button>
+              )}
+            </div>
+          )}
 
           {/* Replies Section */}
           <div>
@@ -127,12 +131,14 @@ const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminC
           </div>
 
           {/* Reply Form */}
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Post Admin Reply
-            </h3>
-            <CommentReplyForm parentId={comment.id} parentSubject={comment.subject} />
-          </div>
+          {!isViewer && (
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Post Admin Reply
+              </h3>
+              <CommentReplyForm parentId={comment.id} parentSubject={comment.subject} />
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

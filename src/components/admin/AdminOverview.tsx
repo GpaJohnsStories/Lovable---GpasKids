@@ -6,11 +6,13 @@ import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
 import WebAuthnManager from "./WebAuthnManager";
 import { MonthlyVisitsCard } from "./MonthlyVisitsCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, Shield, Key, BookOpen, Eye, EyeOff, Tag, Video, Volume2 } from "lucide-react";
+import { Settings, Shield, Key, BookOpen, Eye, EyeOff, Tag, Video, Volume2, AlertTriangle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useUserRole } from "@/hooks/useUserRole";
 
 const AdminOverview = () => {
+  const { userRole, isViewer } = useUserRole();
   const { data: storyCounts } = useQuery({
     queryKey: ['story-counts'],
     queryFn: async () => {
@@ -52,9 +54,17 @@ const AdminOverview = () => {
   return (
     <AdminLayout>
       <div className="mb-0">
-        <h1 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          Admin Dashboard
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            Admin Dashboard
+          </h1>
+          {isViewer && (
+            <div className="flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-lg border border-blue-200">
+              <Eye className="h-4 w-4" />
+              <span className="text-sm font-medium">Read-Only Access</span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Security Audit - Wide box with green border */}
@@ -173,31 +183,51 @@ const AdminOverview = () => {
         </CardContent>
       </Card>
 
-      {/* Security Management - Wide box with orange border */}
-      <Card className="mb-6 border-orange-500 border-2">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-orange-700">
-            <Key className="h-5 w-5" />
-            Security Management
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <WebAuthnManager />
-        </CardContent>
-      </Card>
+      {!isViewer && (
+        <>
+          {/* Security Management - Wide box with orange border */}
+          <Card className="mb-6 border-orange-500 border-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-orange-700">
+                <Key className="h-5 w-5" />
+                Security Management
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <WebAuthnManager />
+            </CardContent>
+          </Card>
 
-      {/* System Tools - Wide box with blue border */}
-      <Card className="mb-6 border-blue-500 border-2">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-700">
-            <Settings className="h-5 w-5" />
-            System Tools
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <EmergencyAdminTools />
-        </CardContent>
-      </Card>
+          {/* System Tools - Wide box with blue border */}
+          <Card className="mb-6 border-blue-500 border-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-blue-700">
+                <Settings className="h-5 w-5" />
+                System Tools
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <EmergencyAdminTools />
+            </CardContent>
+          </Card>
+        </>
+      )}
+      
+      {isViewer && (
+        <Card className="mb-6 border-blue-500 border-2">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-blue-700">
+              <AlertTriangle className="h-5 w-5" />
+              Read-Only Access Notice
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-gray-700">
+              You have viewer access to the admin dashboard. You can view all data but cannot make changes to stories, comments, or system settings.
+            </p>
+          </CardContent>
+        </Card>
+      )}
     </AdminLayout>
   );
 };

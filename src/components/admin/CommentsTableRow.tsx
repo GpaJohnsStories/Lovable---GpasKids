@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { format } from 'date-fns';
 import { Database } from "@/integrations/supabase/types";
 import { Badge } from "@/components/ui/badge";
+import { useUserRole } from "@/hooks/useUserRole";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
@@ -14,6 +15,7 @@ interface CommentsTableRowProps {
 }
 
 const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTableRowProps) => {
+  const { isViewer } = useUserRole();
   const isAnnouncement = comment.personal_id === '0000FF';
 
   const getStatusBadge = (status: Comment['status']) => {
@@ -61,17 +63,21 @@ const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTa
       </TableCell>
       <TableCell className="w-28 text-center">{getStatusBadge(comment.status)}</TableCell>
       <TableCell className="w-36">
-        <div className="flex flex-row gap-1">
-          {comment.status !== 'approved' && (
-            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 min-w-fit" onClick={() => onUpdateStatus(comment.id, 'approved')}>Approve</Button>
-          )}
-          {comment.status !== 'rejected' && (
-            <Button size="sm" variant="destructive" className="text-xs px-2 py-1 min-w-fit" onClick={() => onUpdateStatus(comment.id, 'rejected')}>Reject</Button>
-          )}
-          {comment.status !== 'archived' && (
-            <Button size="sm" variant="secondary" className="text-xs px-2 py-1 min-w-fit" onClick={() => onUpdateStatus(comment.id, 'archived')}>Archive</Button>
-          )}
-        </div>
+        {!isViewer ? (
+          <div className="flex flex-row gap-1">
+            {comment.status !== 'approved' && (
+              <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 min-w-fit" onClick={() => onUpdateStatus(comment.id, 'approved')}>Approve</Button>
+            )}
+            {comment.status !== 'rejected' && (
+              <Button size="sm" variant="destructive" className="text-xs px-2 py-1 min-w-fit" onClick={() => onUpdateStatus(comment.id, 'rejected')}>Reject</Button>
+            )}
+            {comment.status !== 'archived' && (
+              <Button size="sm" variant="secondary" className="text-xs px-2 py-1 min-w-fit" onClick={() => onUpdateStatus(comment.id, 'archived')}>Archive</Button>
+            )}
+          </div>
+        ) : (
+          <div className="text-xs text-gray-500 text-center">Read-only</div>
+        )}
       </TableCell>
     </TableRow>
   );

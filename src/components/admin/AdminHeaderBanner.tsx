@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useUserRole } from "@/hooks/useUserRole";
 
 
 interface AdminNavButton {
@@ -22,6 +23,7 @@ interface AdminNavButton {
 }
 
 const AdminHeaderBanner = () => {
+  const { isViewer } = useUserRole();
   const location = useLocation();
   const navigate = useNavigate();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
@@ -223,7 +225,7 @@ const AdminHeaderBanner = () => {
 
                 // Special handling for Stories button with dropdown
                 if (button.name === 'Stories') {
-                  return [storiesButton, createStoryButton];
+                  return [storiesButton, ...(isViewer ? [] : [createStoryButton])];
                 }
 
                 return (
