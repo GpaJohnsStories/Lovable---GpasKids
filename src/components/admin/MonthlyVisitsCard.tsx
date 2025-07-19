@@ -76,10 +76,10 @@ export const MonthlyVisitsCard = () => {
   if (isLoading) {
     return (
       <Card>
-        <CardHeader className="pb-1">
+        <CardHeader className="pb-0">
           <CardTitle className="text-sm font-medium">Monthly Site Visits</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-2">
           <div className="animate-pulse">
             <div className="h-8 bg-muted rounded mb-2"></div>
             <div className="h-4 bg-muted rounded mb-4"></div>
@@ -116,7 +116,10 @@ export const MonthlyVisitsCard = () => {
         {chartData.length > 0 && (
           <div className="mt-4">
             <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={chartData}>
+              <LineChart 
+                data={chartData}
+                margin={{ left: 0, right: 20, top: 5, bottom: 5 }}
+              >
                 <CartesianGrid 
                   strokeDasharray="none" 
                   stroke="#6b7280" 
@@ -128,6 +131,7 @@ export const MonthlyVisitsCard = () => {
                   fontSize={12}
                   tickLine={false}
                   axisLine={false}
+                  tick={{ textAnchor: 'start' }}
                 />
                 <YAxis 
                   fontSize={12}
