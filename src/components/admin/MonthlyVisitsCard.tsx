@@ -9,6 +9,9 @@ interface MonthlyVisit {
   year: number;
   month: number;
   visit_count: number;
+  bot_visits_count: number;
+  admin_visits_count: number;
+  other_excluded_count: number;
   created_at: string;
   updated_at: string;
 }
@@ -36,8 +39,13 @@ export const MonthlyVisitsCard = () => {
     fullDate: new Date(visit.year, visit.month - 1, 1),
   })) || [];
 
-  // Calculate total visits and growth
-  const totalVisits = monthlyVisits?.reduce((sum, visit) => sum + visit.visit_count, 0) || 0;
+  // Calculate totals for different visit types
+  const totalApprovedVisits = monthlyVisits?.reduce((sum, visit) => sum + visit.visit_count, 0) || 0;
+  const totalBotVisits = monthlyVisits?.reduce((sum, visit) => sum + (visit.bot_visits_count || 0), 0) || 0;
+  const totalAdminVisits = monthlyVisits?.reduce((sum, visit) => sum + (visit.admin_visits_count || 0), 0) || 0;
+  const totalOtherExcluded = monthlyVisits?.reduce((sum, visit) => sum + (visit.other_excluded_count || 0), 0) || 0;
+  const totalAllVisits = totalApprovedVisits + totalBotVisits + totalAdminVisits + totalOtherExcluded;
+
   const currentMonth = chartData[chartData.length - 1];
   const previousMonth = chartData[chartData.length - 2];
   const growth = previousMonth && currentMonth 
@@ -69,13 +77,38 @@ export const MonthlyVisitsCard = () => {
         <Users className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent>
-        <div className="text-center">
-          <div className="text-2xl font-bold">{totalVisits.toLocaleString()}</div>
-          <div className="text-sm text-muted-foreground">
-            {new Date().toLocaleDateString('en-US', { month: 'short' })}
+        <div className="space-y-4">
+          {/* Approved Visitors (main metric) */}
+          <div className="text-center">
+            <div className="text-2xl font-bold">{totalApprovedVisits.toLocaleString()}</div>
+            <div className="text-sm text-muted-foreground">Approved Visitors</div>
           </div>
-          <div className="text-sm text-muted-foreground">
-            {new Date().getFullYear()}
+          
+          {/* Excluded Visits Breakdown */}
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="bg-orange-50 dark:bg-orange-950 p-2 rounded">
+              <div className="text-sm font-semibold text-orange-600 dark:text-orange-400">
+                {totalBotVisits.toLocaleString()}
+              </div>
+              <div className="text-xs text-orange-500">Bot Visits</div>
+            </div>
+            <div className="bg-blue-50 dark:bg-blue-950 p-2 rounded">
+              <div className="text-sm font-semibold text-blue-600 dark:text-blue-400">
+                {totalAdminVisits.toLocaleString()}
+              </div>
+              <div className="text-xs text-blue-500">Admin Visits</div>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-800 p-2 rounded">
+              <div className="text-sm font-semibold text-gray-600 dark:text-gray-400">
+                {totalOtherExcluded.toLocaleString()}
+              </div>
+              <div className="text-xs text-gray-500">Other Excluded</div>
+            </div>
+          </div>
+          
+          {/* Total All Visits */}
+          <div className="text-center text-xs text-muted-foreground">
+            Total All Visits: {totalAllVisits.toLocaleString()}
           </div>
         </div>
         

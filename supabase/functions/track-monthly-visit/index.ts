@@ -98,6 +98,61 @@ function getClientIP(req: Request): string | null {
   return null;
 }
 
+async function trackExcludedVisit(supabase: any, year: number, month: number, columnName: string) {
+  try {
+    // Get existing record
+    const { data: existingRecord } = await supabase
+      .from('monthly_visits')
+      .select('*')
+      .eq('year', year)
+      .eq('month', month)
+      .single()
+
+    if (existingRecord) {
+      // Update existing record
+      const updateData = {
+        [columnName]: existingRecord[columnName] + 1,
+        updated_at: new Date().toISOString()
+      };
+      
+      const { error: updateError } = await supabase
+        .from('monthly_visits')
+        .update(updateData)
+        .eq('year', year)
+        .eq('month', month)
+
+      if (updateError) {
+        console.error('Error updating excluded visit:', updateError)
+      } else {
+        console.log(`${columnName} updated: ${existingRecord[columnName]} -> ${existingRecord[columnName] + 1}`);
+      }
+    } else {
+      // Insert new record with this excluded visit
+      const insertData = {
+        year,
+        month,
+        visit_count: 0,
+        bot_visits_count: 0,
+        admin_visits_count: 0,
+        other_excluded_count: 0,
+        [columnName]: 1
+      };
+      
+      const { error: insertError } = await supabase
+        .from('monthly_visits')
+        .insert(insertData)
+
+      if (insertError) {
+        console.error('Error inserting new excluded visit record:', insertError)
+      } else {
+        console.log(`New monthly visit record created with ${columnName}: 1`);
+      }
+    }
+  } catch (error) {
+    console.error('Error in trackExcludedVisit:', error);
+  }
+}
+
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -125,9 +180,15 @@ Deno.serve(async (req) => {
     console.log('Client IP:', clientIP);
     console.log('User Agent:', userAgent);
 
+    // Get current year and month for tracking
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = now.getMonth() + 1
+
     // Check if IP should be excluded (your IP)
     if (clientIP && EXCLUDED_IPS.includes(clientIP)) {
       console.log(`Visit excluded: IP ${clientIP} is in exclusion list`);
+      await trackExcludedVisit(supabase, year, month, 'other_excluded_count');
       return new Response(
         JSON.stringify({ 
           success: true, 
@@ -145,6 +206,7 @@ Deno.serve(async (req) => {
     // Check if this is a bot
     if (detectBot(userAgent, req.headers)) {
       console.log('Visit excluded: Bot detected');
+      await trackExcludedVisit(supabase, year, month, 'bot_visits_count');
       return new Response(
         JSON.stringify({ 
           success: true, 
@@ -189,10 +251,11 @@ Deno.serve(async (req) => {
     // Skip tracking if user is admin
     if (isAdmin) {
       console.log('Visit excluded: Admin user')
+      await trackExcludedVisit(supabase, year, month, 'admin_visits_count');
       return new Response(
         JSON.stringify({ 
           success: true, 
-          message: 'Visit excluded - admin user',
+          message: 'Admin visit excluded from tracking',
           excluded_reason: 'admin'
         }),
         { 
@@ -201,11 +264,6 @@ Deno.serve(async (req) => {
         }
       )
     }
-
-    // Get current year and month
-    const now = new Date()
-    const year = now.getFullYear()
-    const month = now.getMonth() + 1 // JavaScript months are 0-indexed
 
     console.log(`=== TRACKING LEGITIMATE VISIT FOR ${year}-${month} ===`)
     console.log('Visit details:', {

@@ -159,25 +159,34 @@ export type Database = {
       }
       monthly_visits: {
         Row: {
+          admin_visits_count: number
+          bot_visits_count: number
           created_at: string
           id: string
           month: number
+          other_excluded_count: number
           updated_at: string
           visit_count: number
           year: number
         }
         Insert: {
+          admin_visits_count?: number
+          bot_visits_count?: number
           created_at?: string
           id?: string
           month: number
+          other_excluded_count?: number
           updated_at?: string
           visit_count?: number
           year: number
         }
         Update: {
+          admin_visits_count?: number
+          bot_visits_count?: number
           created_at?: string
           id?: string
           month?: number
+          other_excluded_count?: number
           updated_at?: string
           visit_count?: number
           year?: number
