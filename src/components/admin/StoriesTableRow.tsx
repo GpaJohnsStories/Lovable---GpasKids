@@ -148,7 +148,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       {/* Category */}
       <TableCell className="text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '100px', minWidth: '100px', maxWidth: '100px' }}>
         <Badge 
-          className={`text-xs w-full rounded-none text-center ${getCategoryColor(story.category)}`}
+          className={`text-xs w-full rounded-none justify-center ${getCategoryColor(story.category)}`}
           style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
         >
           {story.category === 'System' ? 'WebText' : story.category}
