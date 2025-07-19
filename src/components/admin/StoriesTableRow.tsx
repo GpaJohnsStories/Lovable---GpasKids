@@ -111,7 +111,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       {/* Title */}
       <TableCell className="w-[220px]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <div className="space-y-1">
-          <div className="font-medium text-base leading-tight line-clamp-2">
+          <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer text-sm truncate">
             {story.title}
           </div>
           {(story.tagline || story.excerpt) && (
