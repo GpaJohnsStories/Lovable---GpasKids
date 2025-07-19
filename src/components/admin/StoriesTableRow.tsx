@@ -125,20 +125,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       {/* Author */}
       {!hideAuthor && (
         <TableCell className="w-[120px]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          <div className="flex items-center gap-2">
-            <span className="text-base font-normal">{story.author}</span>
-            {onEditBio && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onEditBio(story.author)}
-                className="h-6 w-6 p-0 opacity-60 hover:opacity-100"
-                title={`Edit bio for ${story.author}`}
-              >
-                <User className="h-3 w-3" />
-              </Button>
-            )}
-          </div>
+          <span className="text-base font-normal">{story.author}</span>
         </TableCell>
       )}
 
