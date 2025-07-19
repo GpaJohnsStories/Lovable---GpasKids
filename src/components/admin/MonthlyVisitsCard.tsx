@@ -76,7 +76,7 @@ export const MonthlyVisitsCard = () => {
   if (isLoading) {
     return (
       <Card>
-        <CardHeader className="pb-2">
+        <CardHeader className="pb-0">
           {renderLegend()}
         </CardHeader>
         <CardContent className="pt-2">
@@ -92,7 +92,7 @@ export const MonthlyVisitsCard = () => {
 
   return (
     <Card>
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-0">
         {renderLegend()}
       </CardHeader>
       <CardContent className="pt-2">
