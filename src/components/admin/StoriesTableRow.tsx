@@ -104,7 +104,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
   return (
     <TableRow className="hover:bg-muted/50">
       {/* Story Code */}
-      <TableCell className="text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '110px', minWidth: '110px', maxWidth: '110px' }}>
+      <TableCell className="text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '80px', minWidth: '80px', maxWidth: '80px' }}>
         <span className="font-semibold text-base">{story.story_code}</span>
       </TableCell>
 
