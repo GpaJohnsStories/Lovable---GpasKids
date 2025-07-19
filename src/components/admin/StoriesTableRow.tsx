@@ -193,7 +193,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       </TableCell>
 
       {/* Updated */}
-      <TableCell className="w-20 text-center text-sm text-muted-foreground" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <TableCell className="text-center text-sm text-muted-foreground" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '80px', minWidth: '80px', maxWidth: '80px' }}>
         {formatDate(story.updated_at)}
       </TableCell>
 
