@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { BookOpen } from "lucide-react";
@@ -97,12 +97,7 @@ const AdminStories = () => {
     console.log('Edit story:', story);
   };
 
-  const handleCreateStory = () => {
-    // TODO: Implement create functionality
-    console.log('Create new story');
-  };
-
-  const handleEditBioByAuthorName = async (authorName: string) => {
+  const handleEditBio = (authorName: string) => {
     // TODO: Implement bio edit functionality
     console.log('Edit bio for author:', authorName);
   };
@@ -138,7 +133,7 @@ const AdminStories = () => {
               {!isViewer && (
                 <>
                   <Button
-                    onClick={handleCreateStory}
+                    onClick={() => console.log('Create new story')}
                     className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white"
                     style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                   >
@@ -204,7 +199,7 @@ const AdminStories = () => {
                                   onDelete={handleDeleteStory}
                                   onStatusChange={handleStatusChange}
                                   hideAuthor={true}
-                                  onEditBio={handleEditBioByAuthorName}
+                                  onEditBio={handleEditBio}
                                 />
                               ))}
                             </TableBody>
@@ -243,7 +238,7 @@ const AdminStories = () => {
                             onEdit={handleEditStory}
                             onDelete={handleDeleteStory}
                             onStatusChange={handleStatusChange}
-                            onEditBio={handleEditBioByAuthorName}
+                            onEditBio={handleEditBio}
                           />
                         ))}
                       </TableBody>
