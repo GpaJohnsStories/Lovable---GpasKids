@@ -19,12 +19,20 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-4">
         {/* Personal Photo */}
-        <Link to="/" onClick={scrollToTop} className="rounded-full shadow-lg hover:shadow-xl transition-shadow">
-          <img 
-            src="/lovable-uploads/0b25fc3f-c693-4ade-ab1c-f1d801ca25d7.png" 
-            alt="Grandpa's beloved companion"
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover object-center"
-          />
+        <Link to="/" onClick={scrollToTop} className="group block">
+          <div className="relative transform-gpu transition-all duration-300 hover:scale-110 hover:rotate-y-12 perspective-1000">
+            <img 
+              src="/lovable-uploads/0b25fc3f-c693-4ade-ab1c-f1d801ca25d7.png" 
+              alt="Grandpa's beloved companion"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover object-center shadow-2xl border-2 border-white/20 transform-gpu transition-all duration-300 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.3),_0_0_20px_rgba(255,165,0,0.4)] group-hover:border-orange-300/50"
+              style={{
+                filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.2)) drop-shadow(0 4px 8px rgba(0,0,0,0.1))',
+                transformStyle: 'preserve-3d'
+              }}
+            />
+            {/* 3D depth layer */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-orange-400/20 to-amber-600/20 transform translate-x-1 translate-y-1 -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300" />
+          </div>
         </Link>
         <div className="text-left">
           <div className="text-lg sm:text-2xl font-bold font-handwritten">
