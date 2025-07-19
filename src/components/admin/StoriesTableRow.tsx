@@ -81,13 +81,13 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'Fun': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-      case 'Life': return 'bg-green-100 text-green-800 border-green-300';
-      case 'North Pole': return 'bg-blue-100 text-blue-800 border-blue-300';  
-      case 'World Changers': return 'bg-purple-100 text-purple-800 border-purple-300';
+      case 'Fun': return 'bg-blue-500 text-white';
+      case 'Life': return 'bg-green-500 text-white';
+      case 'North Pole': return 'bg-red-600 text-white';  
+      case 'World Changers': return 'bg-amber-400 text-amber-900';
       case 'WebText': 
-      case 'System': return 'bg-gray-100 text-gray-800 border-gray-300';
-      default: return 'bg-gray-100 text-gray-800 border-gray-300';
+      case 'System': return 'bg-gray-500 text-white';
+      default: return 'bg-gray-500 text-white';
     }
   };
 
@@ -146,10 +146,9 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       )}
 
       {/* Category */}
-      <TableCell className="w-32 text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <TableCell className="text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '100px', minWidth: '100px', maxWidth: '100px' }}>
         <Badge 
-          variant="outline" 
-          className={`text-sm font-medium border ${getCategoryColor(story.category)}`}
+          className={`text-xs w-full rounded-none ${getCategoryColor(story.category)}`}
           style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
         >
           {story.category === 'System' ? 'WebText' : story.category}
