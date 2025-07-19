@@ -19,11 +19,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-4">
         {/* Personal Photo */}
-        <Link to="/" onClick={scrollToTop} className="group block">
+        <Link to="/" onClick={scrollToTop}>
           <img 
-            src="/lovable-uploads/0b25fc3f-c693-4ade-ab1c-f1d801ca25d7.png" 
+            src="/lovable-uploads/27c4298b-582d-4de3-94d9-c1b9b177f6d0.png" 
             alt="Grandpa's beloved companion"
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover object-center transform transition-all duration-300 hover:scale-110 hover:rotate-3 shadow-lg hover:shadow-2xl"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover object-center"
           />
         </Link>
         <div className="text-left">
