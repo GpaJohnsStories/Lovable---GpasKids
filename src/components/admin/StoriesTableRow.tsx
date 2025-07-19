@@ -181,30 +181,6 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
         </Popover>
       </TableCell>
 
-      {/* Published Status */}
-      {showPublishedColumn && (
-        <TableCell className="w-24 text-center">
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handlePublishToggle}
-              disabled={isChangingStatus}
-              className={`h-6 w-6 p-0 ${
-                story.published === 'Y' 
-                  ? 'text-green-600 hover:text-green-700' 
-                  : 'text-gray-400 hover:text-gray-600'
-              }`}
-              title={story.published === 'Y' ? 'Published - Click to unpublish' : 'Unpublished - Click to publish'}
-            >
-              {story.published === 'Y' ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-            </Button>
-            <span className="text-xs text-gray-600">
-              {story.published === 'Y' ? 'Pub' : 'Draft'}
-            </span>
-          </div>
-        </TableCell>
-      )}
 
       {/* Stats */}
       <TableCell className="w-20 text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
