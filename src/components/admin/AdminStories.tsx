@@ -1,6 +1,5 @@
+
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Plus, Users } from "lucide-react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import StoriesTable from "./StoriesTable";
 import AdminStoryForm from "./AdminStoryForm";
@@ -8,6 +7,7 @@ import AdminStoryPreview from "./AdminStoryPreview";
 import AuthorBiosTable from "./AuthorBiosTable";
 import AuthorBioForm from "./AuthorBioForm";
 import AdminLayout from "./AdminLayout";
+import AdminStoriesToolbar from "./AdminStoriesToolbar";
 import { supabase } from "@/integrations/supabase/client";
 import { useUserRole } from "@/hooks/useUserRole";
 
@@ -129,10 +129,18 @@ const AdminStories = () => {
 
   return (
     <AdminLayout>
-      <div className="space-y-0">
+      <div className="space-y-4">
+        <AdminStoriesToolbar
+          currentView={currentView}
+          onViewChange={setCurrentView}
+          onCreateStory={handleCreateStory}
+          onCreateBio={handleCreateBio}
+          groupByAuthor={groupByAuthor}
+          onToggleGroupByAuthor={() => setGroupByAuthor(!groupByAuthor)}
+        />
         
         {currentView === 'stories' ? (
-        <StoriesTable 
+          <StoriesTable 
             onEditStory={isViewer ? undefined : handleEditStory}
             showActions={!isViewer}
             showPublishedColumn={true}
