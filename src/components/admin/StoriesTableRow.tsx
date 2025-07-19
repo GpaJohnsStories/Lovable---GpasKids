@@ -104,7 +104,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
   return (
     <TableRow className="hover:bg-muted/50">
       {/* Story Code */}
-      <TableCell className="font-mono text-sm w-20" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <TableCell className="font-mono text-sm w-28" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <div className="flex flex-col">
           <span className="font-semibold">{story.story_code}</span>
           <span className="text-sm text-muted-foreground flex items-center gap-1 mt-1">

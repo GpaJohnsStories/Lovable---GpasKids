@@ -58,7 +58,7 @@ const StoriesTableHeader = ({
   return (
     <TableHeader>
       <TableRow className="bg-background hover:bg-background">
-        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
+        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '110px', minWidth: '110px', maxWidth: '110px' }}>
           <Button
             onClick={() => onSort('story_code')}
             className={`${getButtonColor('story_code')} w-full h-6 text-xs px-1 py-1`}
