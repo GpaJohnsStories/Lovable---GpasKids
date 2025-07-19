@@ -69,7 +69,7 @@ const StoriesTableHeader = ({
             {getSortIcon('story_code')}
           </Button>
         </TableHead>
-        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '220px', minWidth: '220px', maxWidth: '220px' }}>
+        <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '280px', minWidth: '280px', maxWidth: '280px' }}>
           <Button
             onClick={() => onSort('title')}
             className={`${getButtonColor('title')} w-full h-6 text-xs px-1 py-1`}
@@ -81,7 +81,7 @@ const StoriesTableHeader = ({
           </Button>
         </TableHead>
         {!hideAuthorColumn && (
-          <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '120px', minWidth: '120px', maxWidth: '120px' }}>
+          <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
             <Button
               onClick={onToggleGroupByAuthor || (() => onSort('author'))}
               className={`${groupByAuthor ? 'bg-green-600 hover:bg-green-700' : getButtonColor('author')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1`}
