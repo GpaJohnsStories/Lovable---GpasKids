@@ -3,17 +3,13 @@ import { Button } from "@/components/ui/button";
 import StoryCard from "./StoryCard";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { getCategoryHeader } from "@/utils/storySectionUtils";
 import { Link } from "react-router-dom";
-import { getNewestStories } from "@/utils/storiesData";
 
 const StorySection = () => {
   const { data: realStories = [], error: queryError, isLoading } = useQuery({
     queryKey: ['stories', 'published'],
     queryFn: async () => {
       try {
-        console.log('📚 StorySection: Fetching published stories...');
-        
         const { data, error } = await supabase
           .from('stories')
           .select('*')
@@ -30,8 +26,6 @@ const StorySection = () => {
           });
           throw error;
         }
-        
-        console.log('📚 StorySection: Successfully fetched', data?.length || 0, 'stories');
         
         // Filter stories based on visitor's local time
         const now = new Date();
@@ -51,18 +45,6 @@ const StorySection = () => {
     staleTime: 30000,
     refetchOnWindowFocus: false
   });
-
-  // Enhanced logging for debugging
-  console.log('📚 StorySection: Query state:', { 
-    isLoading, 
-    hasError: !!queryError, 
-    storiesCount: realStories?.length || 0,
-    error: queryError 
-  });
-  
-  if (queryError) {
-    console.error('📚 StorySection: Query error:', queryError);
-  }
 
   // Get the most read story (highest read_count)
   const mostReadStory = realStories.length > 0 

@@ -1,14 +1,8 @@
 
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const WelcomeText = () => {
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
-
-  console.log('WelcomeText - Current pathname:', location.pathname);
-  console.log('WelcomeText - Is home page:', isHomePage);
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -29,8 +23,6 @@ const WelcomeText = () => {
                       src="/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png" 
                       alt="Gpa John & Buddy working together on new stories"
                       className="w-64 h-64 rounded-xl object-cover shadow-lg mx-auto md:mx-0 cursor-pointer"
-                      onLoad={() => console.log('Image loaded successfully:', '/lovable-uploads/7877f657-a542-4479-a79d-5c919482ed36.png')}
-                      onError={(e) => console.log('Image failed to load:', e)}
                     />
                   </TooltipTrigger>
                   <TooltipContent>
