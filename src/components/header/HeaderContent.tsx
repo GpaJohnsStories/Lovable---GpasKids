@@ -21,9 +21,9 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
         {/* Personal Photo */}
         <Link to="/" onClick={scrollToTop} className="bg-white rounded-full p-1 shadow-lg hover:shadow-xl transition-shadow">
           <img 
-            src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png" 
+            src="/lovable-uploads/0b25fc3f-c693-4ade-ab1c-f1d801ca25d7.png" 
             alt="Grandpa's beloved companion"
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover object-top"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover object-center"
           />
         </Link>
         <div className="text-left">
