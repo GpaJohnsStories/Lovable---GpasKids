@@ -214,7 +214,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
             {/* WebText stories are managed directly like regular stories now */}
             {isWebText && (
               <div className="flex items-center">
-                <FileText className="h-3 w-3 text-blue-500 ml-1" title="WebText content - managed directly in stories table" />
+                <FileText className="h-3 w-3 text-blue-500 ml-1" />
               </div>
             )}
             
