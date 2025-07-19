@@ -59,7 +59,7 @@ export const MonthlyVisitsCard = () => {
         <span>Approved</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <div className="w-4 h-1 bg-blue-400 rounded-sm"></div>
+        <div className="w-4 h-1 bg-red-600 rounded-sm"></div>
         <span>Bots</span>
       </div>
       <div className="flex items-center gap-1.5">
@@ -77,7 +77,7 @@ export const MonthlyVisitsCard = () => {
     return (
       <Card>
         <CardHeader className="pb-2">
-          <div className="text-sm font-medium text-red-600">Monthly Site Visits</div>
+          {renderLegend()}
         </CardHeader>
         <CardContent className="pt-2">
           <div className="animate-pulse">
@@ -93,7 +93,6 @@ export const MonthlyVisitsCard = () => {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <div className="text-sm font-medium text-red-600">Monthly Site Visits</div>
         {renderLegend()}
       </CardHeader>
       <CardContent className="pt-2">
@@ -168,15 +167,15 @@ export const MonthlyVisitsCard = () => {
                   activeDot={{ r: 5, stroke: "#16a34a", strokeWidth: 2 }}
                 />
                 
-                {/* Bot visits line - Blue */}
+                {/* Bot visits line - Fire Engine Red */}
                 <Line 
                   type="monotone" 
                   dataKey="bots" 
                   name="Bots"
-                  stroke="#60a5fa" 
+                  stroke="#dc2626" 
                   strokeWidth={2}
-                  dot={{ fill: "#60a5fa", strokeWidth: 2, r: 3 }}
-                  activeDot={{ r: 5, stroke: "#60a5fa", strokeWidth: 2 }}
+                  dot={{ fill: "#dc2626", strokeWidth: 2, r: 3 }}
+                  activeDot={{ r: 5, stroke: "#dc2626", strokeWidth: 2 }}
                 />
                 
                 {/* Admin visits line - Blue */}
