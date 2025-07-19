@@ -31,6 +31,7 @@ interface Story {
   content?: string;
   tagline?: string;
   excerpt?: string;
+  copyright_status?: string;
 }
 
 interface StoriesTableRowProps {
@@ -193,6 +194,18 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
             <span>{story.thumbs_up_count}</span>
           </div>
         </div>
+      </TableCell>
+
+      {/* Copyright */}
+      <TableCell className="text-center" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '60px', minWidth: '60px', maxWidth: '60px' }}>
+        <span className={`text-2xl font-bold ${
+          story.copyright_status === '©' ? 'text-red-600' :
+          story.copyright_status === 'O' ? 'text-green-600' :
+          story.copyright_status === 'S' ? 'text-yellow-600' :
+          'text-red-600'
+        }`}>
+          {story.copyright_status || '©'}
+        </span>
       </TableCell>
 
       {/* Updated */}
