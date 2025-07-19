@@ -94,17 +94,6 @@ const AdminHeaderBanner = () => {
       description: 'Full comment list with edit and approval services'
     },
     {
-      name: 'Deploy',
-      path: '/buddys_admin/deployment',
-      icon: Globe,
-      bgColor: 'bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700',
-      hoverColor: 'hover:from-blue-600 hover:via-blue-700 hover:to-blue-800',
-      shadowColor: 'shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)]',
-      hoverShadow: 'hover:shadow-[0_4px_0_#1e40af,0_6px_12px_rgba(0,0,0,0.4)]',
-      textColor: 'text-white',
-      description: 'Deploy System stories to static web pages'
-    },
-    {
       name: 'Voices',
       path: '/buddys_admin/voice-preview',
       icon: Volume2,

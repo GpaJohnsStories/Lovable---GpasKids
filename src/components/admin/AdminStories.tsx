@@ -21,16 +21,18 @@ const AdminStories = () => {
   const [groupByAuthor, setGroupByAuthor] = useState(false);
   const [bioEditSource, setBioEditSource] = useState<'stories' | 'bios'>('bios');
 
-  // Check URL parameters for initial view and actions
+  // Check URL parameters for initial view only
   useEffect(() => {
     const viewParam = searchParams.get('view');
-    const actionParam = searchParams.get('action');
     
     if (viewParam === 'bios' || viewParam === 'stories') {
       setCurrentView(viewParam);
     }
     
-    if (actionParam === 'create') {
+    // Only trigger story creation if explicitly navigated to this URL
+    // Don't trigger on page refresh or Ctrl+R
+    const actionParam = searchParams.get('action');
+    if (actionParam === 'create' && document.referrer.includes('/buddys_admin')) {
       handleCreateStory();
     }
   }, [searchParams]);
