@@ -126,7 +126,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       {!hideAuthor && (
         <TableCell className="w-[120px]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <div className="flex flex-col items-start gap-1">
-            <span className="text-base font-normal">{story.author}</span>
+            <span className="text-sm font-medium text-muted-foreground">{story.author}</span>
             {/* Show Bio button if author has a bio - placeholder for now */}
             {story.author === 'Grandpa John' && (
               <Button
@@ -149,7 +149,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       <TableCell className="w-32" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <Badge 
           variant="outline" 
-          className={`text-sm border ${getCategoryColor(story.category)}`}
+          className={`text-sm font-medium border ${getCategoryColor(story.category)}`}
           style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
         >
           {story.category === 'System' ? 'WebText' : story.category}
@@ -183,7 +183,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
 
       {/* Stats */}
       <TableCell className="w-20" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-        <div className="flex flex-col gap-1 text-sm text-muted-foreground">
+        <div className="flex flex-col gap-1 text-sm font-medium text-muted-foreground">
           <div className="flex items-center gap-1">
             <BarChart3 className="h-3 w-3" />
             <span>{story.read_count}</span>
