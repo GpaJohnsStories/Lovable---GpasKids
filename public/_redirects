@@ -1,6 +1,0 @@
-# Static files should be served directly
-/sitemap.xml /sitemap.xml 200
-/robots.txt /robots.txt 200
-
-# All other routes should go to React app
-/* /index.html 200

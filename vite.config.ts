@@ -1,3 +1,4 @@
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -23,5 +24,13 @@ export default defineConfig(({ mode }) => ({
   publicDir: 'public',
   build: {
     copyPublicDir: true,
+    rollupOptions: {
+      // Ensure static files are included in the build
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+      },
+    },
   },
+  // Add explicit handling for static files
+  assetsInclude: ['**/*.xml', '**/*.txt'],
 }));
