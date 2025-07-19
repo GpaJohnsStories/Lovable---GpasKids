@@ -19,7 +19,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-4">
         {/* Personal Photo */}
-        <Link to="/" onClick={scrollToTop} className="bg-white rounded-full p-1 shadow-lg hover:shadow-xl transition-shadow">
+        <Link to="/" onClick={scrollToTop} className="rounded-full shadow-lg hover:shadow-xl transition-shadow">
           <img 
             src="/lovable-uploads/0b25fc3f-c693-4ade-ab1c-f1d801ca25d7.png" 
             alt="Grandpa's beloved companion"
