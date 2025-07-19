@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
+import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid, LabelList } from "recharts";
 import { TrendingUp, Users } from "lucide-react";
 
 interface MonthlyVisit {
@@ -168,7 +168,14 @@ export const MonthlyVisitsCard = () => {
                   strokeWidth={2}
                   dot={{ fill: "#16a34a", strokeWidth: 2, r: 3 }}
                   activeDot={{ r: 5, stroke: "#16a34a", strokeWidth: 2 }}
-                />
+                >
+                  <LabelList 
+                    dataKey="approved" 
+                    position="top" 
+                    style={{ fontSize: '12px', fontWeight: 'bold', fill: '#16a34a' }}
+                    offset={8}
+                  />
+                </Line>
                 
                 {/* Bot visits line - Fire Engine Red */}
                 <Line 
@@ -179,7 +186,14 @@ export const MonthlyVisitsCard = () => {
                   strokeWidth={2}
                   dot={{ fill: "#dc2626", strokeWidth: 2, r: 3 }}
                   activeDot={{ r: 5, stroke: "#dc2626", strokeWidth: 2 }}
-                />
+                >
+                  <LabelList 
+                    dataKey="bots" 
+                    position="top" 
+                    style={{ fontSize: '12px', fontWeight: 'bold', fill: '#dc2626' }}
+                    offset={8}
+                  />
+                </Line>
                 
                 {/* Admin visits line - Blue */}
                 <Line 
@@ -190,7 +204,14 @@ export const MonthlyVisitsCard = () => {
                   strokeWidth={2}
                   dot={{ fill: "#3b82f6", strokeWidth: 2, r: 3 }}
                   activeDot={{ r: 5, stroke: "#3b82f6", strokeWidth: 2 }}
-                />
+                >
+                  <LabelList 
+                    dataKey="admin" 
+                    position="top" 
+                    style={{ fontSize: '12px', fontWeight: 'bold', fill: '#3b82f6' }}
+                    offset={8}
+                  />
+                </Line>
                 
                 {/* Other excluded line - Orange */}
                 <Line 
@@ -201,7 +222,14 @@ export const MonthlyVisitsCard = () => {
                   strokeWidth={2}
                   dot={{ fill: "#f97316", strokeWidth: 2, r: 3 }}
                   activeDot={{ r: 5, stroke: "#f97316", strokeWidth: 2 }}
-                />
+                >
+                  <LabelList 
+                    dataKey="other" 
+                    position="top" 
+                    style={{ fontSize: '12px', fontWeight: 'bold', fill: '#f97316' }}
+                    offset={8}
+                  />
+                </Line>
               </LineChart>
             </ResponsiveContainer>
           </div>
