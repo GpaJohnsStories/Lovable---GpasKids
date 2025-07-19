@@ -115,7 +115,7 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       </TableCell>
 
       {/* Title */}
-      <TableCell className="max-w-xs" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <TableCell className="max-w-[220px]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <div className="space-y-1">
           <div className="font-medium text-base leading-tight line-clamp-2">
             {story.title}
