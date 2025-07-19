@@ -1,3 +1,4 @@
+
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0'
 
 const corsHeaders = {
@@ -25,8 +26,32 @@ Deno.serve(async (req) => {
 
     console.log('Processing monthly visit tracking request')
 
-    // Skip admin check for now to simplify
-    const isAdmin = false
+    // Check if user is authenticated and admin
+    let isAdmin = false
+    const authHeader = req.headers.get('Authorization')
+    
+    if (authHeader) {
+      try {
+        // Get the session from the auth header
+        const { data: { user }, error: authError } = await supabase.auth.getUser(
+          authHeader.replace('Bearer ', '')
+        )
+        
+        if (!authError && user) {
+          // Check if user is admin
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', user.id)
+            .single()
+          
+          isAdmin = profile?.role === 'admin'
+        }
+      } catch (error) {
+        console.log('Error checking admin status:', error)
+        // Continue with non-admin flow if auth check fails
+      }
+    }
 
     // Skip tracking if user is admin
     if (isAdmin) {
