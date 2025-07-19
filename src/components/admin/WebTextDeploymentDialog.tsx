@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
@@ -96,6 +96,33 @@ const WebTextDeploymentDialog = ({
   onSuccess 
 }: WebTextDeploymentDialogProps) => {
   const [isDeploying, setIsDeploying] = useState(false);
+  const [deploymentSuccess, setDeploymentSuccess] = useState(false);
+
+  // Force close dialog on successful deployment to bypass browser extension interference
+  useEffect(() => {
+    if (deploymentSuccess) {
+      console.log('🔄 useEffect: Forcing dialog close due to successful deployment');
+      const forceClose = () => {
+        setIsDeploying(false);
+        setDeploymentSuccess(false);
+        onClose();
+      };
+      
+      // Try multiple times to ensure closure
+      forceClose();
+      setTimeout(forceClose, 100);
+      setTimeout(forceClose, 300);
+      setTimeout(forceClose, 500);
+    }
+  }, [deploymentSuccess, onClose]);
+
+  // Reset state when dialog opens/closes
+  useEffect(() => {
+    if (!isOpen) {
+      setIsDeploying(false);
+      setDeploymentSuccess(false);
+    }
+  }, [isOpen]);
 
   if (!story) return null;
 
@@ -137,22 +164,19 @@ const WebTextDeploymentDialog = ({
         console.log('✅ SUCCESS! Deployment results:', results);
         console.log('✅ SUCCESS! Summary:', summary);
         
-        // Force close the dialog immediately
-        console.log('🔄 Force closing dialog...');
-        setIsDeploying(false);
-        onClose();
+        // Trigger the useEffect to force close
+        console.log('🔄 Setting deploymentSuccess to trigger force close...');
+        setDeploymentSuccess(true);
         
-        // Show success toast after closing
-        setTimeout(() => {
-          toast.success(
-            `Successfully deployed "${story.title}" to web page!`, 
-            { 
-              id: 'deploy',
-              duration: 4000,
-              description: `Content is now live and visible on the website.`
-            }
-          );
-        }, 100);
+        // Show success toast
+        toast.success(
+          `Successfully deployed "${story.title}" to web page!`, 
+          { 
+            id: 'deploy',
+            duration: 4000,
+            description: `Content is now live and visible on the website.`
+          }
+        );
         
         console.log('✅ Calling onSuccess callback...');
         if (onSuccess) {
