@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AuthorLink from "@/components/AuthorLink";
 import WebTextDeploymentDialog from "./WebTextDeploymentDialog";
 import { getCategoryShortName } from "@/utils/categoryUtils";
@@ -68,6 +68,35 @@ const StoriesTableRow = ({
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const [selectedVoice, setSelectedVoice] = useState(story.ai_voice_name || 'Nova');
   const [showDeployDialog, setShowDeployDialog] = useState(false);
+  const [isDeployed, setIsDeployed] = useState(false);
+
+  // Check deployment status for WebText stories
+  useEffect(() => {
+    const checkDeploymentStatus = async () => {
+      if (story.category === 'System' || story.category === 'WebText') {
+        try {
+          const { data, error } = await supabase
+            .from('deployed_content')
+            .select('id, is_active')
+            .eq('story_code', story.story_code)
+            .eq('is_active', true)
+            .maybeSingle();
+
+          if (error) {
+            console.error('Error checking deployment status:', error);
+            setIsDeployed(false);
+          } else {
+            setIsDeployed(!!data);
+          }
+        } catch (error) {
+          console.error('Error checking deployment status:', error);
+          setIsDeployed(false);
+        }
+      }
+    };
+
+    checkDeploymentStatus();
+  }, [story.story_code, story.category]);
 
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
@@ -316,6 +345,13 @@ const StoriesTableRow = ({
     }
   };
 
+  const handleDeploymentSuccess = () => {
+    setIsDeployed(true);
+    if (onStatusChange) {
+      onStatusChange();
+    }
+  };
+
   const firstPhoto = getFirstAvailablePhoto();
 
   return (
@@ -508,7 +544,7 @@ const StoriesTableRow = ({
                     {(story.category === 'System' || story.category === 'WebText') ? (
                       <Button
                         size="sm"
-                        className={story.published === 'Y' 
+                        className={isDeployed 
                           ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1' 
                           : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1'
                         }
@@ -614,7 +650,7 @@ const StoriesTableRow = ({
         story={story}
         isOpen={showDeployDialog}
         onClose={() => setShowDeployDialog(false)}
-        onSuccess={onStatusChange}
+        onSuccess={handleDeploymentSuccess}
       />
     </TableRow>
   );
