@@ -1,657 +1,235 @@
-import { Button } from "@/components/ui/button";
+
+import React, { useState } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volume2, Globe } from "lucide-react";
-import { Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { 
+  Edit, 
+  Trash2, 
+  User, 
+  Eye, 
+  EyeOff, 
+  ThumbsUp, 
+  BarChart3,
+  Calendar,
+  FileText
+} from "lucide-react";
 import { toast } from "sonner";
-import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
-import { useState, useEffect } from "react";
-import AuthorLink from "@/components/AuthorLink";
-import WebTextDeploymentDialog from "./WebTextDeploymentDialog";
-import { getCategoryShortName } from "@/utils/categoryUtils";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Story {
   id: string;
   story_code: string;
   title: string;
-  tagline?: string;
   author: string;
   category: string;
   published: string;
   read_count: number;
-  thumbs_up_count?: number;
-  thumbs_down_count?: number;
-  ok_count?: number;
-  created_at: string;
+  thumbs_up_count: number;
   updated_at: string;
-  photo_link_1?: string;
-  photo_link_2?: string;
-  photo_link_3?: string;
+  created_at: string;
   content?: string;
+  tagline?: string;
   excerpt?: string;
-  video_url?: string;
-  audio_url?: string;
-  audio_generated_at?: string;
-  audio_segments?: number;
-  audio_duration_seconds?: number;
-  ai_voice_name?: string;
-  ai_voice_model?: string;
-  copyright_status?: string;
 }
 
 interface StoriesTableRowProps {
   story: Story;
   showActions: boolean;
-  showPublishedColumn?: boolean;
+  showPublishedColumn: boolean;
   onEdit: (story: Story) => void;
   onDelete: (id: string) => void;
-  onStatusChange?: () => void;
+  onStatusChange: () => void;
   hideAuthor?: boolean;
   onEditBio?: (authorName: string) => void;
 }
 
-const StoriesTableRow = ({ 
-  story, 
-  showActions, 
-  showPublishedColumn = true, 
-  onEdit, 
+const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
+  story,
+  showActions,
+  showPublishedColumn,
+  onEdit,
   onDelete,
   onStatusChange,
   hideAuthor = false,
   onEditBio
-}: StoriesTableRowProps) => {
-  const [isEditingDate, setIsEditingDate] = useState(false);
-  const [editedDate, setEditedDate] = useState('');
-  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const [selectedVoice, setSelectedVoice] = useState(story.ai_voice_name || 'Nova');
-  const [showDeployDialog, setShowDeployDialog] = useState(false);
-  const [isDeployed, setIsDeployed] = useState(false);
+}) => {
+  const [isChangingStatus, setIsChangingStatus] = useState(false);
 
-  // Check deployment status for WebText stories
-  useEffect(() => {
-    const checkDeploymentStatus = async () => {
-      if (story.category === 'System' || story.category === 'WebText') {
-        try {
-          const { data, error } = await supabase
-            .from('deployed_content')
-            .select('id, is_active')
-            .eq('story_code', story.story_code)
-            .eq('is_active', true)
-            .maybeSingle();
+  const handlePublishToggle = async () => {
+    setIsChangingStatus(true);
+    
+    try {
+      const newStatus = story.published === 'Y' ? 'N' : 'Y';
+      
+      const { error } = await supabase
+        .from('stories')
+        .update({ published: newStatus })
+        .eq('id', story.id);
 
-          if (error) {
-            console.error('Error checking deployment status:', error);
-            setIsDeployed(false);
-          } else {
-            setIsDeployed(!!data);
-          }
-        } catch (error) {
-          console.error('Error checking deployment status:', error);
-          setIsDeployed(false);
-        }
-      }
-    };
+      if (error) throw error;
 
-    checkDeploymentStatus();
-  }, [story.story_code, story.category]);
-
-  const getCategoryBadgeColor = (category: string) => {
-    switch (category) {
-      case "Fun":
-        return "bg-blue-500";
-      case "Life":
-        return "bg-green-500";
-      case "North Pole":
-        return "bg-red-600";
-      case "World Changers":
-        return "bg-amber-400 text-amber-900";
-      default:
-        return "bg-amber-200 text-amber-800";
+      toast.success(`Story ${newStatus === 'Y' ? 'published' : 'unpublished'} successfully`);
+      onStatusChange();
+    } catch (error) {
+      console.error('Error updating story status:', error);
+      toast.error('Failed to update story status');
+    } finally {
+      setIsChangingStatus(false);
     }
   };
 
-  const getFirstAvailablePhoto = () => {
-    return story.photo_link_1 || story.photo_link_2 || story.photo_link_3;
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'Fun': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+      case 'Life': return 'bg-green-100 text-green-800 border-green-300';
+      case 'North Pole': return 'bg-blue-100 text-blue-800 border-blue-300';  
+      case 'World Changers': return 'bg-purple-100 text-purple-800 border-purple-300';
+      case 'WebText': 
+      case 'System': return 'bg-gray-100 text-gray-800 border-gray-300';
+      default: return 'bg-gray-100 text-gray-800 border-gray-300';
+    }
   };
 
-  const hasVideo = story.video_url && story.video_url.trim() !== '';
-  const videoIndicator = hasVideo ? '🎥' : '';
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
     });
   };
 
-  const handleTogglePublished = async () => {
-    const newStatus = story.published === 'Y' ? 'N' : 'Y';
-    
-    const { error } = await supabase
-      .from('stories')
-      .update({ published: newStatus })
-      .eq('id', story.id);
-
-    if (error) {
-      toast.error("Error updating story status");
-      console.error(error);
-    } else {
-      toast.success(`Story ${newStatus === 'Y' ? 'published' : 'unpublished'} successfully`);
-      if (onStatusChange) {
-        onStatusChange();
-      }
-    }
-  };
-
-  const handleEditDate = () => {
-    // Convert the stored UTC date to local datetime-local format
-    const utcDate = new Date(story.updated_at);
-    
-    // Format for datetime-local input (YYYY-MM-DDTHH:mm)
-    const year = utcDate.getFullYear();
-    const month = String(utcDate.getMonth() + 1).padStart(2, '0');
-    const day = String(utcDate.getDate()).padStart(2, '0');
-    const hours = String(utcDate.getHours()).padStart(2, '0');
-    const minutes = String(utcDate.getMinutes()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-    
-    console.log('Original UTC date:', story.updated_at);
-    console.log('Formatted for input:', formattedDate);
-    
-    setEditedDate(formattedDate);
-    setIsEditingDate(true);
-  };
-
-  const handleSaveDate = async () => {
-    if (!editedDate) {
-      toast.error("Please enter a valid date");
-      return;
-    }
-
-    try {
-      // Create a proper Date object from the datetime-local input
-      const inputDate = new Date(editedDate);
-      
-      // Check if the date is valid
-      if (isNaN(inputDate.getTime())) {
-        toast.error("Invalid date format");
-        return;
-      }
-
-      console.log('User entered:', editedDate);
-      console.log('Parsed date:', inputDate);
-      console.log('ISO string to store:', inputDate.toISOString());
-
-      const { error } = await supabase
-        .from('stories')
-        .update({ updated_at: inputDate.toISOString() })
-        .eq('id', story.id);
-
-      if (error) {
-        toast.error("Error updating date");
-        console.error(error);
-      } else {
-        toast.success("Updated date saved successfully");
-        setIsEditingDate(false);
-        if (onStatusChange) {
-          onStatusChange();
-        }
-      }
-    } catch (error) {
-      console.error('Date parsing error:', error);
-      toast.error("Invalid date format");
-    }
-  };
-
-  const handleCancelDateEdit = () => {
-    setIsEditingDate(false);
-    setEditedDate('');
-  };
-
-  const handleVoiceChange = async (newVoice: string) => {
-    setSelectedVoice(newVoice);
-    
-    // Update the story record with the selected voice
-    const { error } = await supabase
-      .from('stories')
-      .update({ 
-        ai_voice_name: newVoice,
-        ai_voice_model: 'tts-1'
-      })
-      .eq('id', story.id);
-
-    if (error) {
-      toast.error("Error updating voice selection");
-      console.error(error);
-    } else {
-      toast.success(`Voice updated to ${newVoice}`);
-      if (onStatusChange) {
-        onStatusChange();
-      }
-    }
-  };
-
-  const handleCopyrightStatusChange = async (newStatus: string) => {
-    const { error } = await supabase
-      .from('stories')
-      .update({ copyright_status: newStatus })
-      .eq('id', story.id);
-
-    if (error) {
-      toast.error("Error updating copyright status");
-      console.error(error);
-    } else {
-      const statusText = newStatus === '©' ? 'Full Copyright' : 
-                        newStatus === 'O' ? 'Open, No Copyright' : 
-                        'Limited Sharing, Gpa John\'s Copyright';
-      toast.success(`Copyright status updated to ${statusText}`);
-      if (onStatusChange) {
-        onStatusChange();
-      }
-    }
-  };
-
-  // Determine audio status based on timestamps
-  const getAudioStatus = () => {
-    if (!story.audio_url || !story.audio_generated_at) {
-      return 'none'; // No audio generated yet
-    }
-    
-    const storyUpdated = new Date(story.updated_at);
-    const audioGenerated = new Date(story.audio_generated_at);
-    
-    if (storyUpdated > audioGenerated) {
-      return 'outdated'; // Story updated after audio was generated
-    }
-    
-    return 'current'; // Audio is up to date
-  };
-
-  const audioStatus = getAudioStatus();
-
-  const getAudioButtonClasses = () => {
-    switch (audioStatus) {
-      case 'none':
-        return '!bg-gradient-to-b !from-red-400 !to-red-600 !text-white !border-red-700'; // Red for no audio
-      case 'outdated':
-        return '!bg-gradient-to-b !from-yellow-400 !to-yellow-600 !text-white !border-yellow-700'; // Yellow for outdated
-      case 'current':
-        return '!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700'; // Green for current
-      default:
-        return '!bg-gradient-to-b !from-red-400 !to-red-600 !text-white !border-red-700';
-    }
-  };
-
-  const getAudioButtonTitle = () => {
-    switch (audioStatus) {
-      case 'none':
-        return 'Generate audio';
-      case 'outdated':
-        return 'Story updated - regenerate audio';
-      case 'current':
-        return 'Audio up to date - regenerate if needed';
-      default:
-        return 'Generate audio';
-    }
-  };
-
-  const handleGenerateAudio = async () => {
-    setIsGeneratingAudio(true);
-    
-    try {
-      toast.loading(`Generating audio for "${story.title}" with ${selectedVoice} voice...`, {
-        id: `audio-${story.id}`,
-        duration: 60000, // Show for up to 1 minute
-      });
-
-      console.log('🎵 Calling generate-story-audio function with storyId:', story.id);
-      const { data, error } = await supabase.functions.invoke('generate-story-audio', {
-        body: { storyId: story.id }
-      });
-      console.log('🎵 Function response:', { data, error });
-
-      if (error) {
-        console.error('❌ Audio generation error:', error);
-        toast.error(`Failed to generate audio: ${error.message}`, {
-          id: `audio-${story.id}`,
-        });
-        return;
-      }
-
-      if (data?.success) {
-        toast.success(data.message || `Audio generated for "${story.title}"!`, {
-          id: `audio-${story.id}`,
-        });
-        
-        // Refresh the data to show updated audio status
-        if (onStatusChange) {
-          onStatusChange();
-        }
-      } else {
-        toast.error(data?.error || 'Failed to generate audio', {
-          id: `audio-${story.id}`,
-        });
-      }
-    } catch (error) {
-      console.error('❌ Audio generation error:', error);
-      toast.error('Failed to generate audio', {
-        id: `audio-${story.id}`,
-      });
-    } finally {
-      setIsGeneratingAudio(false);
-    }
-  };
-
-  const handleDeploymentSuccess = () => {
-    setIsDeployed(true);
-    if (onStatusChange) {
-      onStatusChange();
-    }
-  };
-
-  const firstPhoto = getFirstAvailablePhoto();
+  const isWebText = story.category === 'WebText' || story.category === 'System';
 
   return (
-    <TableRow>
-      <TableCell className="p-1 text-left" style={{ width: '80px', minWidth: '80px', maxWidth: '80px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        <span className="text-xs font-bold">{story.story_code}</span>
-      </TableCell>
-      <TableCell className="p-1" style={{ width: '280px', minWidth: '280px', maxWidth: '280px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        <div className="flex items-center space-x-2">
-          {firstPhoto && (
-            <div className="flex-shrink-0">
-              <img 
-                src={firstPhoto} 
-                alt={`${story.title} thumbnail`}
-                className="w-10 h-10 object-cover rounded border border-gray-400"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-            </div>
-          )}
-          <div className="flex-1 min-w-0">
-            <Link to={`/story/${story.id}`} onClick={scrollToTop}>
-              <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer text-sm truncate">
-                {story.title}
-              </div>
-            </Link>
-            {story.tagline && (
-              <div className="text-xs italic text-amber-700 truncate" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                {hasVideo && story.tagline.toUpperCase().includes('VIDEO') ? (
-                  <>🎥 {story.tagline}</>
-                ) : (
-                  story.tagline
-                )}
-              </div>
-            )}
-          </div>
+    <TableRow className="hover:bg-muted/50">
+      {/* Story Code */}
+      <TableCell className="font-mono text-xs w-20">
+        <div className="flex flex-col">
+          <span className="font-semibold">{story.story_code}</span>
+          <span className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+            <Calendar className="h-3 w-3" />
+            {formatDate(story.updated_at)}
+          </span>
         </div>
       </TableCell>
-      {!hideAuthor && (
-        <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-          <div className="flex flex-col items-center gap-1">
-            <span className="text-xs">{story.author}</span>
-            {onEditBio && (
-              <div 
-                className="inline-flex items-center h-auto py-1 px-2 text-xs border-2 border-amber-300 bg-white text-amber-700 hover:bg-amber-50 rounded-md cursor-pointer transition-colors font-bold shadow-sm hover:shadow-md"
-                onClick={() => onEditBio(story.author)}
-                title={`${showActions ? 'Edit' : 'View'} ${story.author}'s biography`}
-              >
-                Bio
-              </div>
-            )}
-          </div>
-        </TableCell>
-      )}
-      <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
-        <div className="flex justify-center">
-          <Badge className={`${getCategoryBadgeColor(story.category)} text-xs rounded-none w-full text-center`}>
-            {getCategoryShortName(story.category)}
-          </Badge>
-        </div>
-      </TableCell>
-      <TableCell className="p-1 text-center" style={{ width: '50px', minWidth: '50px', maxWidth: '50px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        <div className="flex justify-center">
-          {showActions ? (
-            <Select 
-              value={story.copyright_status || '©'} 
-              onValueChange={handleCopyrightStatusChange}
-            >
-              <SelectTrigger className={`w-full h-8 text-xs text-white font-bold border ${
-                (story.copyright_status || '©') === '©' ? 'bg-red-500 hover:bg-red-600 border-red-600' :
-                (story.copyright_status || '©') === 'O' ? 'bg-green-500 hover:bg-green-600 border-green-600' :
-                'bg-yellow-500 hover:bg-yellow-600 border-yellow-600'
-              }`}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="z-50 bg-white border shadow-lg">
-                <SelectItem value="©" className="text-xs text-red-600 font-bold">© Full Copyright</SelectItem>
-                <SelectItem value="O" className="text-xs text-green-600 font-bold">O Open, No Copyright</SelectItem>
-                <SelectItem value="S" className="text-xs text-yellow-600 font-bold">S Limited Sharing</SelectItem>
-              </SelectContent>
-            </Select>
-          ) : (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-help ${
-                    (story.copyright_status || '©') === '©' ? 'bg-red-500' :
-                    (story.copyright_status || '©') === 'O' ? 'bg-green-500' :
-                    'bg-yellow-500'
-                  }`}>
-                    {story.copyright_status || '©'}
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent className="bg-white border border-gray-300 shadow-lg p-2 z-50">
-                  <div className="text-xs font-medium text-gray-800">
-                    {(story.copyright_status || '©') === '©' && (
-                      <span className="text-red-600 font-bold">© Full Copyright - All rights reserved</span>
-                    )}
-                    {(story.copyright_status || '©') === 'O' && (
-                      <span className="text-green-600 font-bold">O Open, No Copyright - Free to share</span>
-                    )}
-                    {(story.copyright_status || '©') === 'S' && (
-                      <span className="text-yellow-600 font-bold">S Limited Sharing - Gpa John's Copyright</span>
-                    )}
-                  </div>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
-        </div>
-      </TableCell>
-      <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+
+      {/* Title */}
+      <TableCell className="max-w-xs">
         <div className="space-y-1">
-          <div className="text-xs text-amber-600">
-            {(() => {
-              const { readingTime, wordCount } = calculateReadingTimeWithWordCount(story.content || story.excerpt || '');
-              // Extract just the number from "About X minute to read" format
-              const minutes = readingTime.match(/\d+/)?.[0] || '1';
-              return (
-                <div>
-                  <div>{minutes} Minutes</div>
-                  <div className="text-gray-500">{wordCount} words</div>
-                </div>
-              );
-            })()}
+          <div className="font-medium text-sm leading-tight line-clamp-2">
+            {story.title}
           </div>
-          <div className="text-xs text-blue-600 font-medium text-center">
-            {story.read_count} Readers
-          </div>
-          <div className="flex items-center justify-center space-x-2">
-            <div className="flex items-center space-x-1 text-green-600">
-              <ThumbsUp className="h-3 w-3" />
-              <span className="text-xs">{story.thumbs_up_count || 0}</span>
+          {(story.tagline || story.excerpt) && (
+            <div className="text-xs text-muted-foreground line-clamp-1">
+              {story.tagline || story.excerpt}
             </div>
-            <div className="flex items-center space-x-1 text-yellow-600">
-              <span className="text-xs">👌</span>
-              <span className="text-xs">{story.ok_count || 0}</span>
-            </div>
-            <div className="flex items-center space-x-1 text-red-600">
-              <ThumbsDown className="h-3 w-3" />
-              <span className="text-xs">{story.thumbs_down_count || 0}</span>
-            </div>
-          </div>
-        </div>
-      </TableCell>
-      <TableCell className="p-1 text-center" style={{ width: '80px', minWidth: '80px', maxWidth: '80px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        <div className="flex flex-col items-center space-y-1">
-          {showActions ? (
-            <>
-              {isEditingDate ? (
-                <div className="flex items-center space-x-1">
-                  <input
-                    type="datetime-local"
-                    value={editedDate}
-                    onChange={(e) => setEditedDate(e.target.value)}
-                    className="text-xs border rounded px-1 py-1 w-full"
-                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                  />
-                  <div className="flex space-x-1">
-                    <Button
-                      size="sm"
-                      onClick={handleSaveDate}
-                      className="bg-green-600 hover:bg-green-700 text-white p-1 h-6 w-6"
-                    >
-                      <Check className="h-3 w-3" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={handleCancelDateEdit}
-                      className="bg-red-600 hover:bg-red-700 text-white p-1 h-6 w-6"
-                    >
-                      <X className="h-3 w-3" />
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <div className="flex items-center justify-center space-x-1">
-                    <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
-                    <Button
-                      size="sm"
-                      onClick={handleEditDate}
-                      className="bg-blue-600 hover:bg-blue-700 text-white p-1 h-6 w-6"
-                    >
-                      <Calendar className="h-3 w-3" />
-                    </Button>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    {(story.category === 'System' || story.category === 'WebText') ? (
-                      <Button
-                        size="sm"
-                        className={isDeployed 
-                          ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1' 
-                          : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1'
-                        }
-                        onClick={() => setShowDeployDialog(true)}
-                        title="Deploy this WebText to web page"
-                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                      >
-                        <Globe className="h-3 w-3" />
-                        <span className="text-xs font-bold">WT</span>
-                      </Button>
-                    ) : (
-                      showPublishedColumn && (
-                        <Button
-                          size="sm"
-                          onClick={handleTogglePublished}
-                          className={story.published === 'Y' 
-                            ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 w-12 rounded-full' 
-                            : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-12 rounded-full'
-                          }
-                          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                        >
-                          Pub
-                        </Button>
-                      )
-                    )}
-                  </div>
-                </>
-              )}
-            </>
-          ) : (
-            <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
           )}
         </div>
       </TableCell>
-      {showActions && (
-        <TableCell className="p-1" style={{ width: '170px', minWidth: '170px', maxWidth: '170px' }}>
-          <div className="flex flex-col space-y-1">
-            <div className="flex space-x-1 items-center">
+
+      {/* Author */}
+      {!hideAuthor && (
+        <TableCell className="w-32">
+          <div className="flex items-center gap-2">
+            <span className="text-sm">{story.author}</span>
+            {onEditBio && (
               <Button
+                variant="ghost"
                 size="sm"
-                className="!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700 !shadow-[0_6px_12px_rgba(34,197,94,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(34,197,94,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] h-6 w-8"
-                onClick={() => onEdit(story)}
+                onClick={() => onEditBio(story.author)}
+                className="h-6 w-6 p-0 opacity-60 hover:opacity-100"
+                title={`Edit bio for ${story.author}`}
               >
-                <Edit className="h-3 w-3" />
+                <User className="h-3 w-3" />
               </Button>
-              <Select value={selectedVoice} onValueChange={handleVoiceChange}>
-                <SelectTrigger className="w-24 h-6 text-xs">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Nova">Nova</SelectItem>
-                  <SelectItem value="Alloy">Alloy</SelectItem>
-                  <SelectItem value="Echo">Echo</SelectItem>
-                  <SelectItem value="Fable">Fable</SelectItem>
-                  <SelectItem value="Onyx">Onyx</SelectItem>
-                  <SelectItem value="Shimmer">Shimmer</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={() => onDelete(story.id)}
-                className="h-6 w-8"
-              >
-                <Trash2 className="h-3 w-3" />
-              </Button>
-            </div>
-            <div className="flex">
-              <div className="w-8"></div> {/* Space for edit button */}
-              <div className="w-1"></div> {/* Space for gap */}
-              <div className="w-24 flex justify-center"> {/* Align with voice dropdown width */}
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        size="sm"
-                        className={`${getAudioButtonClasses()} !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-24 h-6 text-xs`}
-                        onClick={handleGenerateAudio}
-                        disabled={isGeneratingAudio}
-                      >
-                        <Volume2 className="h-3 w-3" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent className="bg-gray-900 text-white p-3 rounded-lg shadow-lg border border-gray-700 max-w-xs">
-                      <div className="text-sm font-medium">
-                        {getAudioButtonTitle()}
-                      </div>
-                      <div className="text-xs text-gray-300 mt-1">
-                        {audioStatus === 'none' && 'Click to create audio narration'}
-                        {audioStatus === 'outdated' && 'Story content has changed since audio was generated'}
-                        {audioStatus === 'current' && 'Audio is synchronized with current story content'}
-                      </div>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-            </div>
+            )}
           </div>
         </TableCell>
       )}
-      
-      <WebTextDeploymentDialog
-        story={story}
-        isOpen={showDeployDialog}
-        onClose={() => setShowDeployDialog(false)}
-        onSuccess={handleDeploymentSuccess}
-      />
+
+      {/* Category */}
+      <TableCell className="w-32">
+        <Badge 
+          variant="outline" 
+          className={`text-xs border ${getCategoryColor(story.category)}`}
+        >
+          {story.category === 'System' ? 'WebText' : story.category}
+        </Badge>
+      </TableCell>
+
+      {/* Published Status */}
+      {showPublishedColumn && (
+        <TableCell className="w-24">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handlePublishToggle}
+              disabled={isChangingStatus}
+              className={`h-6 w-6 p-0 ${
+                story.published === 'Y' 
+                  ? 'text-green-600 hover:text-green-700' 
+                  : 'text-gray-400 hover:text-gray-600'
+              }`}
+              title={story.published === 'Y' ? 'Published - Click to unpublish' : 'Unpublished - Click to publish'}
+            >
+              {story.published === 'Y' ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+            </Button>
+            <span className="text-xs text-muted-foreground">
+              {story.published === 'Y' ? 'Pub' : 'Draft'}
+            </span>
+          </div>
+        </TableCell>
+      )}
+
+      {/* Stats */}
+      <TableCell className="w-20">
+        <div className="flex flex-col gap-1 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1">
+            <BarChart3 className="h-3 w-3" />
+            <span>{story.read_count}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <ThumbsUp className="h-3 w-3" />
+            <span>{story.thumbs_up_count}</span>
+          </div>
+        </div>
+      </TableCell>
+
+      {/* Actions */}
+      {showActions && (
+        <TableCell className="w-28">
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onEdit(story)}
+              className="h-7 w-7 p-0"
+              title={isWebText ? "Edit WebText content" : "Edit story"}
+            >
+              <Edit className="h-3 w-3" />
+            </Button>
+            
+            {/* WebText stories are managed directly like regular stories now */}
+            {isWebText && (
+              <div className="flex items-center">
+                <FileText className="h-3 w-3 text-blue-500 ml-1" title="WebText content - managed directly in stories table" />
+              </div>
+            )}
+            
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onDelete(story.id)}
+              className="h-7 w-7 p-0 text-red-600 hover:text-red-700"
+              title="Delete story"
+            >
+              <Trash2 className="h-3 w-3" />
+            </Button>
+          </div>
+        </TableCell>
+      )}
     </TableRow>
   );
 };

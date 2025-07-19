@@ -1,3 +1,4 @@
+
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
@@ -35,12 +36,12 @@ Deno.serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Fetch the selected stories
+    // Fetch the selected stories - exclude WebText/System stories as they're now managed directly
     const { data: stories, error: fetchError } = await supabase
       .from('stories')
       .select('*')
       .in('id', storyIds)
-      .in('category', ['System', 'WebText']);
+      .not('category', 'in', '(System,WebText)');
 
     if (fetchError) {
       console.error('Fetch error:', fetchError);
@@ -48,7 +49,13 @@ Deno.serve(async (req) => {
     }
 
     if (!stories || stories.length === 0) {
-      throw new Error('No System stories found with the provided IDs');
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'No deployable stories found with the provided IDs. WebText stories are now managed directly in the stories table.'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log(`📚 Found ${stories.length} stories to deploy`);
@@ -113,7 +120,7 @@ Deno.serve(async (req) => {
 
     return new Response(JSON.stringify({
       success: true,
-      message: `Successfully deployed ${successCount} stories to database`,
+      message: `Successfully deployed ${successCount} stories to database. Note: WebText stories are now managed directly in the stories table.`,
       results: deploymentResults,
       summary: {
         total: deploymentResults.length,

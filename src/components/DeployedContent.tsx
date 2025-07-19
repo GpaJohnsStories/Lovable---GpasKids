@@ -1,19 +1,20 @@
+
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { StoryCodeAudioControls } from '@/components/story-content/StoryCodeAudioControls';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-interface DeployedContentData {
+interface StoryData {
   id: string;
   story_code: string;
   content: string | null;
-  photo_url: string | null;
-  photo_alt_text?: string | null;
+  photo_link_1: string | null;
+  photo_alt_1?: string | null;
   audio_url: string | null;
   title: string | null;
   author: string | null;
-  deployed_at: string;
-  is_active: boolean;
+  updated_at: string;
+  category: string;
 }
 
 interface DeployedContentProps {
@@ -35,40 +36,41 @@ export const DeployedContent = ({
   hidePhotos = false,
   className = "" 
 }: DeployedContentProps) => {
-  const [content, setContent] = useState<DeployedContentData | null>(null);
+  const [content, setContent] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchDeployedContent = async () => {
+    const fetchStoryContent = async () => {
       try {
         setLoading(true);
         setError(null);
 
+        // Query the stories table directly for WebText content
         const { data, error: fetchError } = await supabase
-          .from('deployed_content')
+          .from('stories')
           .select('*')
           .eq('story_code', storyCode)
-          .eq('is_active', true)
+          .in('category', ['System', 'WebText'])
           .maybeSingle();
 
         if (fetchError) {
-          console.error(`Error fetching deployed content for ${storyCode}:`, fetchError);
+          console.error(`Error fetching story content for ${storyCode}:`, fetchError);
           setError('Failed to load content');
           return;
         }
 
-        console.log(`DeployedContent: fetched data for ${storyCode}:`, data);
+        console.log(`DeployedContent: fetched story data for ${storyCode}:`, data);
         setContent(data);
       } catch (err) {
-        console.error(`Error in fetchDeployedContent for ${storyCode}:`, err);
+        console.error(`Error in fetchStoryContent for ${storyCode}:`, err);
         setError('An unexpected error occurred');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDeployedContent();
+    fetchStoryContent();
   }, [storyCode]);
 
   if (loading) {
@@ -86,14 +88,14 @@ export const DeployedContent = ({
       <div className={className}>
         {fallbackContent || (
           <div className="text-muted-foreground">
-            Content not yet deployed for {storyCode}
+            Content not yet available for {storyCode}
           </div>
         )}
       </div>
     );
   }
 
-  console.log(`DeployedContent: Using deployed content for ${storyCode}:`, content);
+  console.log(`DeployedContent: Using story content for ${storyCode}:`, content);
 
   // If audioOnly mode, only return audio controls
   if (audioOnly && content.audio_url) {
@@ -127,20 +129,20 @@ export const DeployedContent = ({
       )}
 
       {/* Photo if available - positioned to float left with Tooltip */}
-      {!audioOnly && !hidePhotos && content.photo_url && (
+      {!audioOnly && !hidePhotos && content.photo_link_1 && (
         <div className="float-left mr-8 mb-6 w-full max-w-xs">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <img 
-                  src={content.photo_url} 
-                  alt={content.photo_alt_text || content.title || 'Story image'}
+                  src={content.photo_link_1} 
+                  alt={content.photo_alt_1 || content.title || 'Story image'}
                   className="w-full h-auto rounded-lg shadow-lg border-4 border-white cursor-pointer"
                 />
               </TooltipTrigger>
               <TooltipContent>
                 <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">
-                  {content.photo_alt_text || content.title || 'Story image'}
+                  {content.photo_alt_1 || content.title || 'Story image'}
                 </p>
               </TooltipContent>
             </Tooltip>
