@@ -19,4 +19,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Ensure static files like sitemap.xml are served correctly
+  publicDir: 'public',
+  build: {
+    copyPublicDir: true,
+  },
 }));
