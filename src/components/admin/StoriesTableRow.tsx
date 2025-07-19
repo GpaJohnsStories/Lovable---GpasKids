@@ -125,7 +125,23 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       {/* Author */}
       {!hideAuthor && (
         <TableCell className="w-[120px]" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          <span className="text-base font-normal">{story.author}</span>
+          <div className="flex flex-col items-start gap-1">
+            <span className="text-base font-normal">{story.author}</span>
+            {/* Show Bio button if author has a bio - placeholder for now */}
+            {story.author === 'Grandpa John' && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-6 px-2 text-xs bg-orange-100 text-orange-800 border-orange-300 hover:bg-orange-200"
+                onClick={() => {
+                  // TODO: Navigate to author bio or show bio modal
+                  console.log(`Show bio for ${story.author}`);
+                }}
+              >
+                Bio
+              </Button>
+            )}
+          </div>
         </TableCell>
       )}
 
