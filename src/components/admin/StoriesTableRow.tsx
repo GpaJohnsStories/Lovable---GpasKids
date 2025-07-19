@@ -104,10 +104,10 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
   return (
     <TableRow className="hover:bg-muted/50">
       {/* Story Code */}
-      <TableCell className="font-mono text-xs w-20">
+      <TableCell className="font-mono text-sm w-20" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <div className="flex flex-col">
           <span className="font-semibold">{story.story_code}</span>
-          <span className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+          <span className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
             <Calendar className="h-3 w-3" />
             {formatDate(story.updated_at)}
           </span>
@@ -115,13 +115,13 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       </TableCell>
 
       {/* Title */}
-      <TableCell className="max-w-xs">
+      <TableCell className="max-w-xs" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <div className="space-y-1">
-          <div className="font-medium text-sm leading-tight line-clamp-2">
+          <div className="font-medium text-base leading-tight line-clamp-2">
             {story.title}
           </div>
           {(story.tagline || story.excerpt) && (
-            <div className="text-xs text-muted-foreground line-clamp-1">
+            <div className="text-sm text-muted-foreground line-clamp-1">
               {story.tagline || story.excerpt}
             </div>
           )}
@@ -130,9 +130,9 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
 
       {/* Author */}
       {!hideAuthor && (
-        <TableCell className="w-32">
+        <TableCell className="w-32" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           <div className="flex items-center gap-2">
-            <span className="text-sm">{story.author}</span>
+            <span className="text-base font-normal">{story.author}</span>
             {onEditBio && (
               <Button
                 variant="ghost"
@@ -149,10 +149,11 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       )}
 
       {/* Category */}
-      <TableCell className="w-32">
+      <TableCell className="w-32" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <Badge 
           variant="outline" 
-          className={`text-xs border ${getCategoryColor(story.category)}`}
+          className={`text-sm border ${getCategoryColor(story.category)}`}
+          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
         >
           {story.category === 'System' ? 'WebText' : story.category}
         </Badge>
@@ -184,8 +185,8 @@ const StoriesTableRow: React.FC<StoriesTableRowProps> = ({
       )}
 
       {/* Stats */}
-      <TableCell className="w-20">
-        <div className="flex flex-col gap-1 text-xs text-muted-foreground">
+      <TableCell className="w-20" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <div className="flex flex-col gap-1 text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
             <BarChart3 className="h-3 w-3" />
             <span>{story.read_count}</span>
