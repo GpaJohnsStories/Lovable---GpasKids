@@ -8,7 +8,6 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useUserRole } from "@/hooks/useUserRole";
 
-
 interface AdminNavButton {
   name: string;
   path: string;
@@ -27,7 +26,6 @@ const AdminHeaderBanner = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
-
 
   const handleCreateStory = () => {
     navigate('/buddys_admin/stories?action=create');
@@ -74,7 +72,7 @@ const AdminHeaderBanner = () => {
       description: 'Website Dashboard with stats and security info'
     },
     {
-      name: 'Stories',
+      name: 'Library',
       path: '/buddys_admin/stories',
       icon: FileText,
       bgColor: 'bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700',
@@ -132,7 +130,7 @@ const AdminHeaderBanner = () => {
             <nav className="flex gap-2">
               {navButtons.map((button, index) => {
                 const isActive = location.pathname === button.path || 
-                  (button.name === 'Stories' && (location.pathname === '/buddys_admin/stories' || location.pathname.includes('/buddys_admin/stories')));
+                  (button.name === 'Library' && (location.pathname === '/buddys_admin/stories' || location.pathname.includes('/buddys_admin/stories')));
                 const Icon = button.icon;
                 
                 const handleButtonClick = () => {
@@ -143,8 +141,8 @@ const AdminHeaderBanner = () => {
                   }
                 };
 
-                // Render Stories button
-                const storiesButton = (
+                // Render Library button with dropdown
+                const libraryButton = (
                   <div 
                     key={button.name}
                     className="relative"
@@ -179,7 +177,7 @@ const AdminHeaderBanner = () => {
                             className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
                           >
                             <FileText className="h-4 w-4 mr-2" />
-                            Stories
+                            Full Library
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
@@ -189,7 +187,7 @@ const AdminHeaderBanner = () => {
                             className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
                           >
                             <Users className="h-4 w-4 mr-2" />
-                            Bios
+                            Author Bios
                           </Link>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -202,7 +200,7 @@ const AdminHeaderBanner = () => {
                   </div>
                 );
 
-                // Render + Story button after Stories button
+                // Render + Story button after Library button
                 const createStoryButton = (
                   <Button
                     key="create-story"
@@ -223,9 +221,9 @@ const AdminHeaderBanner = () => {
                   </Button>
                 );
 
-                // Special handling for Stories button with dropdown
-                if (button.name === 'Stories') {
-                  return [storiesButton, ...(isViewer ? [] : [createStoryButton])];
+                // Special handling for Library button with dropdown
+                if (button.name === 'Library') {
+                  return [libraryButton, ...(isViewer ? [] : [createStoryButton])];
                 }
 
                 return (
