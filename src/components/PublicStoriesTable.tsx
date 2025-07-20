@@ -144,7 +144,7 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Click to sort by Code</p>
+                          <p className="text-xs">Click to sort by Code</p>
                         </TooltipContent>
                       </Tooltip>
                     </TableHead>
