@@ -133,42 +133,6 @@ const AdminStories = () => {
   return (
     <AdminLayout>
       <div className="space-y-4">
-        {/* Toolbar */}
-        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg p-4">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap gap-2">
-              {!isViewer && (
-                <>
-                  <Button
-                    onClick={() => {
-                      console.log('🎯 Create New Story button clicked');
-                      handleCreateStory();
-                    }}
-                    className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white"
-                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                  >
-                    Create New Story
-                  </Button>
-                  <Button
-                    onClick={() => setGroupByAuthor(!groupByAuthor)}
-                    variant={groupByAuthor ? 'default' : 'outline'}
-                    className="flex items-center gap-2"
-                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                  >
-                    {groupByAuthor ? 'Ungroup Stories' : 'Group by Author'}
-                  </Button>
-                </>
-              )}
-            </div>
-            <div className="text-sm text-amber-700">
-              <p className="font-medium">Story Management</p>
-              <p className="text-xs mt-1">
-                {isViewer ? 'Viewing in read-only mode' : 'Full editing access available'}
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* Stories Table */}
         <Card>
           <CardContent>
@@ -197,6 +161,7 @@ const AdminStories = () => {
                               hideAuthorColumn={true}
                               groupByAuthor={groupByAuthor}
                               onToggleGroupByAuthor={() => setGroupByAuthor(!groupByAuthor)}
+                              onCreateStory={handleCreateStory}
                             />
                             <TableBody>
                               {authorStories.map((story) => (
@@ -232,6 +197,7 @@ const AdminStories = () => {
                         showPublishedColumn={true}
                         groupByAuthor={groupByAuthor}
                         onToggleGroupByAuthor={() => setGroupByAuthor(!groupByAuthor)}
+                        onCreateStory={handleCreateStory}
                       />
                     </Table>
                   </div>
