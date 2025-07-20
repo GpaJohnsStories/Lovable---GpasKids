@@ -120,12 +120,12 @@ const AdminHeaderBanner = () => {
       <div className="container mx-auto px-4 py-2">
         <div className="flex items-center justify-between relative">
           {/* Buddy's Photo - Fixed position aligned with left edge */}
-          <div className="absolute left-0 top-2 z-10">
+          <div className="absolute left-0 top-0 bottom-0 flex items-center z-10">
             <Link to="/" onClick={scrollToTop}>
               <img 
                 src="/lovable-uploads/27c4298b-582d-4de3-94d9-c1b9b177f6d0.png" 
                 alt="Grandpa's beloved companion"
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-center"
+                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover object-center"
               />
             </Link>
           </div>
