@@ -35,26 +35,8 @@ const StoriesTableHeader = ({
   };
 
   const getButtonColor = (field: SortField) => {
-    switch (field) {
-      case 'story_code':
-        return 'bg-cyan-500 hover:bg-cyan-600 text-white';
-      case 'title':
-        return 'bg-blue-500 hover:bg-blue-600 text-white';
-      case 'author':
-        return 'bg-green-500 hover:bg-green-600 text-white';
-      case 'category':
-        return 'bg-purple-500 hover:bg-purple-600 text-white';
-      case 'published':
-        return 'bg-indigo-500 hover:bg-indigo-600 text-white';
-      case 'read_count':
-        return 'bg-orange-500 hover:bg-orange-600 text-white';
-      case 'thumbs_up_count':
-        return 'bg-pink-500 hover:bg-pink-600 text-white';
-      case 'updated_at':
-        return 'bg-red-500 hover:bg-red-600 text-white';
-      default:
-        return 'bg-gray-500 hover:bg-gray-600 text-white';
-    }
+    // Use consistent green styling for all buttons
+    return 'bg-green-500 hover:bg-green-600 text-white';
   };
 
   return (
