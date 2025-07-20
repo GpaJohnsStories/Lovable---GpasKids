@@ -389,7 +389,7 @@ const StoriesTableRow = ({
                     type="datetime-local"
                     value={editedDate}
                     onChange={(e) => setEditedDate(e.target.value)}
-                    className="text-xs border rounded px-1 py-1 w-full"
+                    className="text-xs border rounded px-2 py-1 w-32 min-w-32"
                     style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                   />
                   <div className="flex space-x-1">
