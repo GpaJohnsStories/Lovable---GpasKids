@@ -1,7 +1,7 @@
 
 import { useNavigate } from "react-router-dom";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
-import StoriesTable from "@/components/admin/StoriesTable";
+import PublicStoriesTable from "@/components/PublicStoriesTable";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import ScrollToTop from "@/components/ScrollToTop";
 import ContentProtection from "@/components/ContentProtection";
@@ -9,10 +9,6 @@ import LibraryInstructions from "@/components/LibraryInstructions";
 
 const Library = () => {
   const navigate = useNavigate();
-  const handleEditStory = (story: any) => {
-    // For now, just log the story - you can implement editing later
-    console.log('Edit story:', story);
-  };
 
   const handleViewAuthorBio = (authorName: string) => {
     // Navigate to the public author bio page
@@ -33,13 +29,7 @@ const Library = () => {
           <LibraryInstructions />
           
           <div className="mb-8">
-            <StoriesTable 
-              onEditStory={handleEditStory} 
-              showActions={false} 
-              showPublishedOnly={true}
-              showPublishedColumn={false}
-              onEditBio={handleViewAuthorBio}
-            />
+            <PublicStoriesTable onEditBio={handleViewAuthorBio} />
           </div>
         </main>
         <CookieFreeFooter />
