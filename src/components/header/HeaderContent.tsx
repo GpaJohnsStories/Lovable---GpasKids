@@ -21,19 +21,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
       <div className="flex items-start gap-4">
         {/* Help Box with Buddy's Photo */}
         <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center w-20 sm:w-24">
-          <div className="relative mb-2">
-            <img 
-              src="/lovable-uploads/889a9b33-4d78-4144-b515-974cae550740.png"
-              alt="Grandpa's beloved companion"
-              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-center shadow-none"
-            />
-          </div>
-          <div className="text-white text-xs leading-tight">
-            <div>For Help</div>
-            <div>Click Here</div>
-            <div>Or</div>
-            <div>&lt;Ctrl-H&gt;</div>
-          </div>
+          <img 
+            src="/lovable-uploads/d8131e5d-f0df-4c43-8bca-ac90c2abe30b.png"
+            alt="For Help Click Here Or Ctrl-H"
+            className="w-full h-auto object-contain"
+          />
         </div>
         
         {/* Website Title and Subtitle */}
