@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'reading_time_minutes' | 'updated_at';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText';
 
@@ -17,6 +17,7 @@ interface StoriesTableHeaderProps {
   sortField: SortField;
   sortDirection: SortDirection;
   onSort: (field: SortField) => void;
+  onStatsSort?: (field: SortField, direction: SortDirection) => void;
   showActions: boolean;
   showPublishedColumn?: boolean;
   hideAuthorColumn?: boolean;
@@ -32,6 +33,7 @@ const StoriesTableHeader = ({
   sortField, 
   sortDirection, 
   onSort, 
+  onStatsSort,
   showActions, 
   showPublishedColumn = true,
   hideAuthorColumn = false,
@@ -111,61 +113,31 @@ const StoriesTableHeader = ({
   };
 
   // Stats dropdown helper functions
-  const getStatsOptions = (): SortField[] => {
-    return ['thumbs_up_count', 'thumbs_down_count', 'read_count', 'reading_time_minutes'];
+  interface StatsOption {
+    field: SortField;
+    direction: SortDirection;
+    label: string;
+    icon: React.ReactNode;
+    color: string;
+  }
+
+  const getStatsOptions = (): StatsOption[] => {
+    return [
+      { field: 'thumbs_up_count', direction: 'desc', label: 'Thumbs Up ↑', icon: <ThumbsUp className="h-3 w-3" />, color: 'text-green-600' },
+      { field: 'thumbs_up_count', direction: 'asc', label: 'Thumbs Up ↓', icon: <ThumbsUp className="h-3 w-3" />, color: 'text-green-600' },
+      { field: 'thumbs_down_count', direction: 'desc', label: 'Thumbs Down ↑', icon: <ThumbsDown className="h-3 w-3" />, color: 'text-red-600' },
+      { field: 'thumbs_down_count', direction: 'asc', label: 'Thumbs Down ↓', icon: <ThumbsDown className="h-3 w-3" />, color: 'text-red-600' },
+      { field: 'ok_count', direction: 'desc', label: '👌 Okay ↑', icon: <span className="text-xs">👌</span>, color: 'text-yellow-600' },
+      { field: 'ok_count', direction: 'asc', label: '👌 Okay ↓', icon: <span className="text-xs">👌</span>, color: 'text-yellow-600' },
+      { field: 'read_count', direction: 'desc', label: 'Readers ↑', icon: <BookOpen className="h-3 w-3" />, color: 'text-blue-600' },
+      { field: 'read_count', direction: 'asc', label: 'Readers ↓', icon: <BookOpen className="h-3 w-3" />, color: 'text-blue-600' },
+      { field: 'reading_time_minutes', direction: 'desc', label: 'Read Time ↑', icon: <Clock className="h-3 w-3" />, color: 'text-black' },
+      { field: 'reading_time_minutes', direction: 'asc', label: 'Read Time ↓', icon: <Clock className="h-3 w-3" />, color: 'text-black' },
+    ];
   };
 
-  const getStatsDisplayName = (field: SortField) => {
-    switch (field) {
-      case 'thumbs_up_count':
-        return 'Thumbs Up';
-      case 'thumbs_down_count':
-        return 'Thumbs Down';
-      case 'read_count':
-        return 'Readers';
-      case 'reading_time_minutes':
-        return 'Reading Time';
-      default:
-        return 'Stats';
-    }
-  };
-
-  const getStatsIcon = (field: SortField) => {
-    switch (field) {
-      case 'thumbs_up_count':
-        return <ThumbsUp className="h-3 w-3" />;
-      case 'thumbs_down_count':
-        return <ThumbsDown className="h-3 w-3" />;
-      case 'read_count':
-        return <BookOpen className="h-3 w-3" />;
-      case 'reading_time_minutes':
-        return <Clock className="h-3 w-3" />;
-      default:
-        return null;
-    }
-  };
-
-  const getStatsIconColor = (field: SortField) => {
-    switch (field) {
-      case 'thumbs_up_count':
-        return 'text-green-600';
-      case 'thumbs_down_count':
-        return 'text-red-600';
-      case 'read_count':
-        return 'text-blue-600';
-      case 'reading_time_minutes':
-        return 'text-black';
-      default:
-        return 'text-gray-600';
-    }
-  };
-
-  const getCurrentStatsDisplay = () => {
-    const statsFields = getStatsOptions();
-    if (statsFields.includes(sortField)) {
-      return getStatsDisplayName(sortField);
-    }
-    return 'Stats';
+  const isStatsOptionActive = (option: StatsOption): boolean => {
+    return sortField === option.field && sortDirection === option.direction;
   };
 
   return (
@@ -278,7 +250,7 @@ const StoriesTableHeader = ({
                 size="sm"
                 style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
               >
-                {getCurrentStatsDisplay()}
+                Stats
                 <ChevronDown className="h-3 w-3" />
               </Button>
             </DropdownMenuTrigger>
@@ -287,25 +259,27 @@ const StoriesTableHeader = ({
               className="bg-white border border-gray-200 shadow-lg rounded-md z-50"
               style={{ minWidth: '140px' }}
             >
-              {getStatsOptions().map((field) => (
+              {getStatsOptions().map((option, index) => (
                 <DropdownMenuItem
-                  key={field}
-                  onClick={() => onSort(field)}
+                  key={`${option.field}-${option.direction}-${index}`}
+                  onClick={() => {
+                    if (onStatsSort) {
+                      onStatsSort(option.field, option.direction);
+                    } else {
+                      onSort(option.field);
+                    }
+                  }}
                   className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100"
                   style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                 >
                   <div className="flex items-center gap-2 w-full">
-                    <div className={`flex items-center gap-1 ${getStatsIconColor(field)} font-bold`}>
-                      {getStatsIcon(field)}
-                      <span>{getStatsDisplayName(field)}</span>
+                    <div className={`flex items-center gap-1 ${option.color} font-bold`}>
+                      {option.icon}
+                      <span>{option.label}</span>
                     </div>
-                    <div className="flex items-center gap-1 ml-auto">
-                      {sortField === field && sortDirection === 'desc' && <ArrowDown className="h-3 w-3" />}
-                      {sortField === field && sortDirection === 'asc' && <ArrowUp className="h-3 w-3" />}
-                      {sortField === field && (
-                        <div className="text-green-600 font-bold">✓</div>
-                      )}
-                    </div>
+                    {isStatsOptionActive(option) && (
+                      <div className="text-green-600 font-bold ml-auto">✓</div>
+                    )}
                   </div>
                 </DropdownMenuItem>
               ))}

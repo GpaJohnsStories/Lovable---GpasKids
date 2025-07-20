@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'reading_time_minutes' | 'updated_at';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText';
@@ -113,6 +113,16 @@ const StoriesTable = ({
     }
   };
 
+  const handleStatsSort = (field: SortField, direction: SortDirection) => {
+    // Exit group by author view when sorting by other fields
+    if (groupByAuthor && field !== 'author' && onToggleGroupByAuthor) {
+      onToggleGroupByAuthor();
+    }
+    
+    setSortField(field);
+    setSortDirection(direction);
+  };
+
   const handleCategoryFilter = (filter: CategoryFilter) => {
     setCategoryFilter(filter);
     // Exit group by author view when filtering
@@ -187,6 +197,7 @@ const StoriesTable = ({
                           sortField={sortField}
                           sortDirection={sortDirection}
                           onSort={handleSort}
+                          onStatsSort={handleStatsSort}
                           showActions={showActions}
                           showPublishedColumn={showPublishedColumn}
                           hideAuthorColumn={true}
@@ -226,6 +237,7 @@ const StoriesTable = ({
                     sortField={sortField}
                     sortDirection={sortDirection}
                     onSort={handleSort}
+                    onStatsSort={handleStatsSort}
                     showActions={showActions}
                     showPublishedColumn={showPublishedColumn}
                     groupByAuthor={groupByAuthor}
