@@ -167,15 +167,22 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
                       </Tooltip>
                     </TableHead>
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-24">
-                      <Button
-                        onClick={() => handleSort('author')}
-                        className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
-                        size="sm"
-                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                      >
-                        Author
-                        {getSortIcon('author')}
-                      </Button>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            onClick={() => handleSort('author')}
+                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                            size="sm"
+                            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                          >
+                            Author
+                            {getSortIcon('author')}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="text-xs">Click to sort by Author</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </TableHead>
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-28">
                       <DropdownMenu>
