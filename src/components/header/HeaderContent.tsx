@@ -23,7 +23,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
         <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center w-20 sm:w-24">
           <div className="relative mb-2">
             <img 
-              src="/src/assets/buddy-original.png"
+              src="/lovable-uploads/889a9b33-4d78-4144-b515-974cae550740.png"
               alt="Grandpa's beloved companion"
               className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-center"
             />
