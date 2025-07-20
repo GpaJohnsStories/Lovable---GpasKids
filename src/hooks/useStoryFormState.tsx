@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useStoryData } from '@/hooks/useStoryData';
 import { supabase } from "@/integrations/supabase/client";
@@ -99,11 +98,6 @@ export const useStoryFormState = (storyId?: string) => {
   };
 
   const handleGenerateAudio = async () => {
-    if (!formData.id) {
-      console.log('🎯 useStoryFormState: Story must be saved before generating audio');
-      return;
-    }
-
     console.log('🎯 useStoryFormState: Starting audio generation for story:', formData.id);
     setIsGeneratingAudio(true);
     
@@ -123,6 +117,7 @@ export const useStoryFormState = (storyId?: string) => {
       
     } catch (error) {
       console.error('🎯 useStoryFormState: Error generating audio:', error);
+      throw error;
     } finally {
       setIsGeneratingAudio(false);
     }

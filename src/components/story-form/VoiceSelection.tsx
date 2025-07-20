@@ -63,18 +63,18 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
             )}
           </div>
 
-          {onStartRecording && (
-            <div className="pt-4 border-t border-orange-100">
-              <div className="flex items-center justify-between mb-3">
-                <div>
-                  <Label className="text-base font-medium text-gray-700">
-                    Generate Audio Narration
-                  </Label>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Create an AI-narrated audio version using the {selectedVoiceData?.name || 'selected'} voice
-                  </p>
-                </div>
+          <div className="pt-4 border-t border-orange-100">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <Label className="text-base font-medium text-gray-700">
+                  Generate Audio Narration
+                </Label>
+                <p className="text-sm text-gray-600 mt-1">
+                  Create an AI-narrated audio version using the {selectedVoiceData?.name || 'selected'} voice
+                </p>
               </div>
+            </div>
+            {onStartRecording && (
               <Button
                 type="button"
                 variant={isRecording ? "destructive" : "default"}
@@ -95,13 +95,13 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
                   </>
                 )}
               </Button>
-              {!selectedVoice && (
-                <p className="text-sm text-red-600 mt-2">
-                  Please select a voice before generating audio
-                </p>
-              )}
-            </div>
-          )}
+            )}
+            {!selectedVoice && (
+              <p className="text-sm text-red-600 mt-2">
+                Please select a voice before generating audio
+              </p>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>

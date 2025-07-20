@@ -2,7 +2,7 @@
 import React from 'react';
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Save, X, Mic, Volume2 } from "lucide-react";
+import { Save, X, Volume2 } from "lucide-react";
 import SplitViewEditor from "../editor/SplitViewEditor";
 import StoryFormFields from "../StoryFormFields";
 import StoryPhotoUpload from "../StoryPhotoUpload";
@@ -88,16 +88,9 @@ const StoryFormContent: React.FC<StoryFormContentProps> = ({
           selectedVoice={formData.ai_voice_name || 'Nova'}
           onVoiceChange={onVoiceChange || (() => {})}
           isRecording={isGeneratingAudio}
-          onStartRecording={formData.id && onGenerateAudio ? onGenerateAudio : undefined}
+          onStartRecording={onGenerateAudio}
           onStopRecording={undefined}
         />
-        {!formData.id && (
-          <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-            <p className="text-sm text-amber-700">
-              💡 <strong>Audio Generation:</strong> Save the story first to enable audio generation
-            </p>
-          </div>
-        )}
         {formData.audio_url && (
           <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
             <h4 className="text-green-800 font-medium mb-2 flex items-center">
