@@ -494,7 +494,8 @@ const StoriesTableRow = ({
                 </div>
               ) : (
                 <>
-                  <div className="flex items-center justify-center space-x-1">
+                  <div className="flex flex-col items-center space-y-1">
+                    <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
                     <Button
                       size="sm"
                       onClick={handleEditDate}
@@ -502,7 +503,6 @@ const StoriesTableRow = ({
                     >
                       <Calendar className="h-3 w-3" />
                     </Button>
-                    <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     {story.category === 'WebText' ? (
