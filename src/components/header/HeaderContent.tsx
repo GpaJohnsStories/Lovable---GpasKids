@@ -19,13 +19,19 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
     <div className="flex items-start justify-between relative">
       {/* Buddy's Photo - Positioned above "Grandpa John's" text */}
       <div className="flex flex-col items-start">
-        <Link to="/" onClick={scrollToTop} className="mb-2">
+        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center mb-2 w-20 sm:w-24">
           <img 
             src="/lovable-uploads/f2761901-60d7-4565-af04-7f39d5c22cb3.png" 
             alt="Grandpa's beloved companion"
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-center"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover object-center mb-2"
           />
-        </Link>
+          <div className="text-white text-xs leading-tight">
+            <div>For Help</div>
+            <div>Click Here</div>
+            <div>Or</div>
+            <div>&lt;Ctrl-H&gt;</div>
+          </div>
+        </div>
         
         <div className="text-left">
           <div className="text-lg sm:text-2xl font-bold font-handwritten">
