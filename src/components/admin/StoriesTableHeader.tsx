@@ -169,7 +169,7 @@ const StoriesTableHeader = ({
             </div>
           </TableHead>
         )}
-      </Row>
+      </TableRow>
     </TableHeader>
   );
 };
