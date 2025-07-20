@@ -185,9 +185,9 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
                       </Tooltip>
                     </TableHead>
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-28">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <DropdownMenu>
+                      <DropdownMenu>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
                             <DropdownMenuTrigger asChild>
                               <Button
                                 className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1"
@@ -198,25 +198,25 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
                                 <ChevronDown className="h-3 w-3" />
                               </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg rounded-md z-50">
-                              {categoryOptions.map((category) => (
-                                <DropdownMenuItem
-                                  key={category}
-                                  onClick={() => setCategoryFilter(category)}
-                                  className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100"
-                                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                                >
-                                  {getCategoryDisplayName(category)}
-                                  {categoryFilter === category && <span className="ml-2 text-green-600">✓</span>}
-                                </DropdownMenuItem>
-                              ))}
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-xs">Click to select Category</p>
-                        </TooltipContent>
-                      </Tooltip>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-xs">Click to select Category</p>
+                          </TooltipContent>
+                        </Tooltip>
+                        <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg rounded-md z-50">
+                          {categoryOptions.map((category) => (
+                            <DropdownMenuItem
+                              key={category}
+                              onClick={() => setCategoryFilter(category)}
+                              className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100"
+                              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                            >
+                              {getCategoryDisplayName(category)}
+                              {categoryFilter === category && <span className="ml-2 text-green-600">✓</span>}
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableHead>
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-20">
                       <Button
