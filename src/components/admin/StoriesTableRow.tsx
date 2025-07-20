@@ -432,22 +432,7 @@ const StoriesTableRow = ({
       </TableCell>
       <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="space-y-1">
-          <div className="text-xs text-amber-600">
-            {(() => {
-              const { readingTime, wordCount } = calculateReadingTimeWithWordCount(story.content || story.excerpt || '');
-              // Extract just the number from "About X minute to read" format
-              const minutes = readingTime.match(/\d+/)?.[0] || '1';
-              return (
-                <div>
-                  <div>{minutes} Minutes</div>
-                  <div className="text-gray-500">{wordCount} words</div>
-                </div>
-              );
-            })()}
-          </div>
-          <div className="text-xs text-blue-600 font-medium text-center">
-            {story.read_count} Readers
-          </div>
+          {/* Votes - First position */}
           <div className="flex items-center justify-center space-x-2">
             <div className="flex items-center space-x-1 text-green-600">
               <ThumbsUp className="h-3 w-3" />
@@ -461,6 +446,19 @@ const StoriesTableRow = ({
               <ThumbsDown className="h-3 w-3" />
               <span className="text-xs">{story.thumbs_down_count || 0}</span>
             </div>
+          </div>
+          {/* Readers - Second position */}
+          <div className="text-xs text-blue-600 font-medium text-center">
+            {story.read_count} Readers
+          </div>
+          {/* Time - Third position (without word count) */}
+          <div className="text-xs text-amber-600">
+            {(() => {
+              const { readingTime } = calculateReadingTimeWithWordCount(story.content || story.excerpt || '');
+              // Extract just the number from "About X minute to read" format
+              const minutes = readingTime.match(/\d+/)?.[0] || '1';
+              return `${minutes} Minutes`;
+            })()}
           </div>
         </div>
       </TableCell>
@@ -611,13 +609,6 @@ const StoriesTableRow = ({
           </div>
         </TableCell>
       )}
-      
-      {/* <WebTextDeploymentDialog
-        story={story}
-        isOpen={showDeployDialog}
-        onClose={() => setShowDeployDialog(false)}
-        onSuccess={onStatusChange}
-      /> */}
     </TableRow>
   );
 };
