@@ -384,79 +384,75 @@ const StoriesTableRow = ({
           {showActions ? (
             <>
               {isEditingDate ? (
-                <div className="flex flex-col items-center space-y-1">
-                  <div className="flex items-center space-x-1">
-                    <input
-                      type="datetime-local"
-                      value={editedDate}
-                      onChange={(e) => setEditedDate(e.target.value)}
-                      className="text-xs border rounded px-1 py-1 w-full"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                    />
-                    <div className="flex space-x-1">
-                      <Button
-                        size="sm"
-                        onClick={handleSaveDate}
-                        className="bg-green-600 hover:bg-green-700 text-white p-1 h-6 w-6"
-                      >
-                        <Check className="h-3 w-3" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        onClick={handleCancelDateEdit}
-                        className="bg-red-600 hover:bg-red-700 text-white p-1 h-6 w-6"
-                      >
-                        <X className="h-3 w-3" />
-                      </Button>
-                    </div>
+                <div className="flex flex-col items-center space-y-1 w-full">
+                  <input
+                    type="datetime-local"
+                    value={editedDate}
+                    onChange={(e) => setEditedDate(e.target.value)}
+                    className="text-xs border rounded px-1 py-1 w-full"
+                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  />
+                  <div className="flex space-x-1">
+                    <Button
+                      size="sm"
+                      onClick={handleSaveDate}
+                      className="bg-green-600 hover:bg-green-700 text-white p-1 h-6 w-6"
+                    >
+                      <Check className="h-3 w-3" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={handleCancelDateEdit}
+                      className="bg-red-600 hover:bg-red-700 text-white p-1 h-6 w-6"
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
                   </div>
                 </div>
               ) : (
                 <>
-                  <div className="flex flex-col items-center space-y-1">
-                    <Button
-                      size="sm"
-                      onClick={handleEditDate}
-                      className="bg-blue-600 hover:bg-blue-700 text-white p-1 h-6 w-6"
-                    >
-                      <Calendar className="h-3 w-3" />
-                    </Button>
-                    <span className="text-xs">{format(new Date(story.updated_at), "MMM d, yy")}</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    {story.category === 'WebText' ? (
-                      <Button
-                        size="sm"
-                        className={story.published === 'Y' 
-                          ? 'bg-gradient-to-b from-blue-500 to-blue-700 border-blue-800 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-blue-600 hover:to-blue-800 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1' 
-                          : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1'
-                        }
-                        onClick={() => setShowDeployDialog(true)}
-                        title="Deploy this WebText to web page"
-                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                      >
-                        <Globe className="h-3 w-3" />
-                        <span className="text-xs font-bold">WT</span>
-                      </Button>
-                    ) : (
-                      showPublishedColumn && (
-                        <Button
-                          size="sm"
-                          onClick={handleTogglePublished}
-                          className={story.published === 'Y' 
-                            ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1' 
-                            : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1'
-                          }
-                          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                        >
-                          <BookOpen className="h-3 w-3" />
-                          Pub
-                        </Button>
-                      )
-                    )}
-                  </div>
+                  <Button
+                    size="sm"
+                    onClick={handleEditDate}
+                    className="bg-blue-600 hover:bg-blue-700 text-white p-1 h-6 w-6"
+                  >
+                    <Calendar className="h-3 w-3" />
+                  </Button>
+                  <span className="text-xs">{format(new Date(story.updated_at), "MMM d, yy")}</span>
                 </>
               )}
+              <div className="flex items-center space-x-1">
+                {story.category === 'WebText' ? (
+                  <Button
+                    size="sm"
+                    className={story.published === 'Y' 
+                      ? 'bg-gradient-to-b from-blue-500 to-blue-700 border-blue-800 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-blue-600 hover:to-blue-800 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1' 
+                      : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1'
+                    }
+                    onClick={() => setShowDeployDialog(true)}
+                    title="Deploy this WebText to web page"
+                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  >
+                    <Globe className="h-3 w-3" />
+                    <span className="text-xs font-bold">WT</span>
+                  </Button>
+                ) : (
+                  showPublishedColumn && (
+                    <Button
+                      size="sm"
+                      onClick={handleTogglePublished}
+                      className={story.published === 'Y' 
+                        ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1' 
+                        : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1'
+                      }
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                    >
+                      <BookOpen className="h-3 w-3" />
+                      Pub
+                    </Button>
+                  )
+                )}
+              </div>
             </>
           ) : (
             <span className="text-xs">{format(new Date(story.updated_at), "MMM d, yy")}</span>
