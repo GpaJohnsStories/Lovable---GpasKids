@@ -184,7 +184,7 @@ const StoriesTableHeader = ({
                       onCategoryFilter?.(category);
                     }
                   }}
-                  className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100"
+                  className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100"
                   style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                 >
                   <div className="flex items-center gap-2 w-full">
