@@ -297,7 +297,8 @@ const AdminHeaderBanner = () => {
           <Button 
             onClick={handleLogout} 
             variant="ghost" 
-            className="text-white hover:bg-blue-400/20 border border-blue-300/30"
+            className="font-bold border border-red-300/30 hover:bg-red-600"
+            style={{ backgroundColor: '#FF0000', color: '#FFFF00' }}
           >
             <LogOut className="h-4 w-4 mr-2" />
             Logout
