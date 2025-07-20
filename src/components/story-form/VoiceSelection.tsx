@@ -39,68 +39,76 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
           <div>
             <Label className="text-base font-medium text-gray-700 mb-3 block flex items-center">
               <Volume2 className="h-5 w-5 mr-2 text-orange-600" />
-              Choose AI Voice for Audio Version
+              AI Voice & Audio Generation
             </Label>
-            <Select value={selectedVoice} onValueChange={onVoiceChange}>
-              <SelectTrigger className="w-full h-12 text-base">
-                <SelectValue placeholder="Select a voice for audio narration" />
-              </SelectTrigger>
-              <SelectContent>
-                {voices.map((voice) => (
-                  <SelectItem key={voice.id} value={voice.id} className="py-3">
-                    <div className="flex flex-col">
-                      <span className="font-medium text-base">{voice.name}</span>
-                      <span className="text-sm text-gray-500">{voice.description}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {selectedVoiceData && (
-              <p className="text-sm text-gray-600 mt-2">
-                Selected: <strong>{selectedVoiceData.name}</strong> - {selectedVoiceData.description}
-              </p>
-            )}
-          </div>
-
-          <div className="pt-4 border-t border-orange-100">
-            <div className="flex items-center justify-between mb-3">
-              <div>
-                <Label className="text-base font-medium text-gray-700">
-                  Generate Audio Narration
+            
+            {/* Two-column layout for voice selection and generation */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-end">
+              {/* Voice Selection Column */}
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-gray-600">
+                  Choose Voice
                 </Label>
-                <p className="text-sm text-gray-600 mt-1">
-                  Create an AI-narrated audio version using the {selectedVoiceData?.name || 'selected'} voice
-                </p>
+                <Select value={selectedVoice} onValueChange={onVoiceChange}>
+                  <SelectTrigger className="w-full h-12 text-base">
+                    <SelectValue placeholder="Select a voice for audio narration" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {voices.map((voice) => (
+                      <SelectItem key={voice.id} value={voice.id} className="py-3">
+                        <div className="flex flex-col">
+                          <span className="font-medium text-base">{voice.name}</span>
+                          <span className="text-sm text-gray-500">{voice.description}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Generate Button Column */}
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-gray-600">
+                  Generate Audio
+                </Label>
+                {onStartRecording && (
+                  <Button
+                    type="button"
+                    variant={isRecording ? "destructive" : "default"}
+                    size="lg"
+                    onClick={isRecording ? onStopRecording : onStartRecording}
+                    className={`w-full h-12 text-base font-medium ${isRecording ? "animate-pulse" : ""}`}
+                    disabled={!selectedVoice}
+                  >
+                    {isRecording ? (
+                      <>
+                        <Square className="h-5 w-5 mr-2" />
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <Mic className="h-5 w-5 mr-2" />
+                        Generate Audio
+                      </>
+                    )}
+                  </Button>
+                )}
               </div>
             </div>
-            {onStartRecording && (
-              <Button
-                type="button"
-                variant={isRecording ? "destructive" : "default"}
-                size="lg"
-                onClick={isRecording ? onStopRecording : onStartRecording}
-                className={`w-full h-12 text-base font-medium ${isRecording ? "animate-pulse" : ""}`}
-                disabled={!selectedVoice}
-              >
-                {isRecording ? (
-                  <>
-                    <Square className="h-5 w-5 mr-2" />
-                    Generating Audio...
-                  </>
-                ) : (
-                  <>
-                    <Mic className="h-5 w-5 mr-2" />
-                    Generate Audio Narration
-                  </>
-                )}
-              </Button>
-            )}
-            {!selectedVoice && (
-              <p className="text-sm text-red-600 mt-2">
-                Please select a voice before generating audio
-              </p>
-            )}
+
+            {/* Selected voice info and validation message */}
+            <div className="mt-3 space-y-2">
+              {selectedVoiceData && (
+                <p className="text-sm text-gray-600">
+                  Selected: <strong>{selectedVoiceData.name}</strong> - {selectedVoiceData.description}
+                </p>
+              )}
+              {!selectedVoice && (
+                <p className="text-sm text-red-600">
+                  Please select a voice before generating audio
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </CardContent>
