@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowUp, ArrowDown, Users, Plus, ChevronDown } from "lucide-react";
+import { ArrowUp, ArrowDown, Users, Plus, ChevronDown, ThumbsUp, ThumbsDown, BookOpen, Clock } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'updated_at';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'reading_time_minutes' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText';
 
@@ -108,6 +108,64 @@ const StoriesTableHeader = ({
       return 'Category';
     }
     return getCategoryDisplayName(categoryFilter);
+  };
+
+  // Stats dropdown helper functions
+  const getStatsOptions = (): SortField[] => {
+    return ['thumbs_up_count', 'thumbs_down_count', 'read_count', 'reading_time_minutes'];
+  };
+
+  const getStatsDisplayName = (field: SortField) => {
+    switch (field) {
+      case 'thumbs_up_count':
+        return 'Thumbs Up';
+      case 'thumbs_down_count':
+        return 'Thumbs Down';
+      case 'read_count':
+        return 'Readers';
+      case 'reading_time_minutes':
+        return 'Reading Time';
+      default:
+        return 'Stats';
+    }
+  };
+
+  const getStatsIcon = (field: SortField) => {
+    switch (field) {
+      case 'thumbs_up_count':
+        return <ThumbsUp className="h-3 w-3" />;
+      case 'thumbs_down_count':
+        return <ThumbsDown className="h-3 w-3" />;
+      case 'read_count':
+        return <BookOpen className="h-3 w-3" />;
+      case 'reading_time_minutes':
+        return <Clock className="h-3 w-3" />;
+      default:
+        return null;
+    }
+  };
+
+  const getStatsIconColor = (field: SortField) => {
+    switch (field) {
+      case 'thumbs_up_count':
+        return 'text-green-600';
+      case 'thumbs_down_count':
+        return 'text-red-600';
+      case 'read_count':
+        return 'text-blue-600';
+      case 'reading_time_minutes':
+        return 'text-black';
+      default:
+        return 'text-gray-600';
+    }
+  };
+
+  const getCurrentStatsDisplay = () => {
+    const statsFields = getStatsOptions();
+    if (statsFields.includes(sortField)) {
+      return getStatsDisplayName(sortField);
+    }
+    return 'Stats';
   };
 
   return (
@@ -213,15 +271,46 @@ const StoriesTableHeader = ({
           </div>
         </TableHead>
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
-          <Button
-            onClick={() => onSort('read_count')}
-            className={`${getButtonColor('read_count')} w-full h-6 text-xs px-1 py-1`}
-            size="sm"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-          >
-            Stats
-            {getSortIcon('read_count')}
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                className={`${getButtonColor('read_count')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1`}
+                size="sm"
+                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+              >
+                {getCurrentStatsDisplay()}
+                <ChevronDown className="h-3 w-3" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent 
+              align="center" 
+              className="bg-white border border-gray-200 shadow-lg rounded-md z-50"
+              style={{ minWidth: '140px' }}
+            >
+              {getStatsOptions().map((field) => (
+                <DropdownMenuItem
+                  key={field}
+                  onClick={() => onSort(field)}
+                  className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100"
+                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                >
+                  <div className="flex items-center gap-2 w-full">
+                    <div className={`flex items-center gap-1 ${getStatsIconColor(field)} font-bold`}>
+                      {getStatsIcon(field)}
+                      <span>{getStatsDisplayName(field)}</span>
+                    </div>
+                    <div className="flex items-center gap-1 ml-auto">
+                      {sortField === field && sortDirection === 'desc' && <ArrowDown className="h-3 w-3" />}
+                      {sortField === field && sortDirection === 'asc' && <ArrowUp className="h-3 w-3" />}
+                      {sortField === field && (
+                        <div className="text-green-600 font-bold">✓</div>
+                      )}
+                    </div>
+                  </div>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </TableHead>
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
           <Button

@@ -254,6 +254,7 @@ export type Database = {
           photo_link_3: string | null
           published: string
           read_count: number
+          reading_time_minutes: number | null
           story_code: string
           tagline: string | null
           thumbs_down_count: number
@@ -286,6 +287,7 @@ export type Database = {
           photo_link_3?: string | null
           published?: string
           read_count?: number
+          reading_time_minutes?: number | null
           story_code: string
           tagline?: string | null
           thumbs_down_count?: number
@@ -318,6 +320,7 @@ export type Database = {
           photo_link_3?: string | null
           published?: string
           read_count?: number
+          reading_time_minutes?: number | null
           story_code?: string
           tagline?: string | null
           thumbs_down_count?: number
@@ -421,6 +424,10 @@ export type Database = {
       armor: {
         Args: { "": string }
         Returns: string
+      }
+      calculate_reading_time: {
+        Args: { content_text: string }
+        Returns: number
       }
       dearmor: {
         Args: { "": string }

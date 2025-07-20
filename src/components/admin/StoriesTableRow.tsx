@@ -7,7 +7,7 @@ import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volum
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
+
 import { useState } from "react";
 import AuthorLink from "@/components/AuthorLink";
 // import WebTextDeploymentDialog from "./WebTextDeploymentDialog";
@@ -25,6 +25,7 @@ interface Story {
   thumbs_up_count?: number;
   thumbs_down_count?: number;
   ok_count?: number;
+  reading_time_minutes?: number;
   created_at: string;
   updated_at: string;
   photo_link_1?: string;
@@ -451,14 +452,9 @@ const StoriesTableRow = ({
           <div className="text-xs text-blue-600 font-bold text-center">
             {story.read_count} Readers
           </div>
-          {/* Time - Third position (without word count) */}
+          {/* Time - Third position (using database value) */}
           <div className="text-xs text-black font-bold">
-            {(() => {
-              const { readingTime } = calculateReadingTimeWithWordCount(story.content || story.excerpt || '');
-              // Extract just the number from "About X minute to read" format
-              const minutes = readingTime.match(/\d+/)?.[0] || '1';
-              return `About ${minutes} Min`;
-            })()}
+            About {story.reading_time_minutes || 1} Min
           </div>
         </div>
       </TableCell>
