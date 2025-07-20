@@ -384,29 +384,31 @@ const StoriesTableRow = ({
           {showActions ? (
             <>
               {isEditingDate ? (
-                <div className="flex items-center space-x-1">
-                  <input
-                    type="datetime-local"
-                    value={editedDate}
-                    onChange={(e) => setEditedDate(e.target.value)}
-                    className="text-xs border rounded px-1 py-1 w-full"
-                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                  />
-                  <div className="flex space-x-1">
-                    <Button
-                      size="sm"
-                      onClick={handleSaveDate}
-                      className="bg-green-600 hover:bg-green-700 text-white p-1 h-6 w-6"
-                    >
-                      <Check className="h-3 w-3" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={handleCancelDateEdit}
-                      className="bg-red-600 hover:bg-red-700 text-white p-1 h-6 w-6"
-                    >
-                      <X className="h-3 w-3" />
-                    </Button>
+                <div className="flex flex-col items-center space-y-1">
+                  <div className="flex items-center space-x-1">
+                    <input
+                      type="datetime-local"
+                      value={editedDate}
+                      onChange={(e) => setEditedDate(e.target.value)}
+                      className="text-xs border rounded px-1 py-1 w-full"
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                    />
+                    <div className="flex space-x-1">
+                      <Button
+                        size="sm"
+                        onClick={handleSaveDate}
+                        className="bg-green-600 hover:bg-green-700 text-white p-1 h-6 w-6"
+                      >
+                        <Check className="h-3 w-3" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={handleCancelDateEdit}
+                        className="bg-red-600 hover:bg-red-700 text-white p-1 h-6 w-6"
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ) : (
