@@ -435,24 +435,24 @@ const StoriesTableRow = ({
           {/* Votes - First position */}
           <div className="flex items-center justify-center space-x-2">
             <div className="flex items-center space-x-1 text-green-600">
-              <ThumbsUp className="h-3 w-3" />
-              <span className="text-xs">{story.thumbs_up_count || 0}</span>
+              <ThumbsUp className="h-3 w-3 font-bold" />
+              <span className="text-xs font-bold">{story.thumbs_up_count || 0}</span>
             </div>
             <div className="flex items-center space-x-1 text-yellow-600">
-              <span className="text-xs">👌</span>
-              <span className="text-xs">{story.ok_count || 0}</span>
+              <span className="text-xs font-bold">👌</span>
+              <span className="text-xs font-bold">{story.ok_count || 0}</span>
             </div>
             <div className="flex items-center space-x-1 text-red-600">
-              <ThumbsDown className="h-3 w-3" />
-              <span className="text-xs">{story.thumbs_down_count || 0}</span>
+              <ThumbsDown className="h-3 w-3 font-bold" />
+              <span className="text-xs font-bold">{story.thumbs_down_count || 0}</span>
             </div>
           </div>
           {/* Readers - Second position */}
-          <div className="text-xs text-blue-600 font-medium text-center">
+          <div className="text-xs text-blue-600 font-bold text-center">
             {story.read_count} Readers
           </div>
           {/* Time - Third position (without word count) */}
-          <div className="text-xs text-black">
+          <div className="text-xs text-black font-bold">
             {(() => {
               const { readingTime } = calculateReadingTimeWithWordCount(story.content || story.excerpt || '');
               // Extract just the number from "About X minute to read" format
