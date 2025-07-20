@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 
@@ -19,6 +20,9 @@ interface Story {
   photo_alt_3: string;
   video_url: string;
   published: string;
+  ai_voice_name?: string;
+  ai_voice_model?: string;
+  audio_url?: string;
 }
 
 export const useStoryData = (storyId?: string) => {

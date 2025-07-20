@@ -1,8 +1,9 @@
+
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import StoryFormContent from './StoryFormContent';
+import { toast } from "sonner";
 
 interface SimpleStoryFormProps {
   storyId?: string;
@@ -14,12 +15,15 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
   const {
     formData,
     isLoadingStory,
+    isGeneratingAudio,
     refetchStory,
     handleInputChange,
     handlePhotoUpload,
     handlePhotoRemove,
     handleVideoUpload,
-    handleVideoRemove
+    handleVideoRemove,
+    handleVoiceChange,
+    handleGenerateAudio
   } = useStoryFormState(storyId);
 
   const { handleSaveOnly, handleSubmit, isSaving } = useStoryFormActions(
@@ -28,48 +32,66 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
     onSave
   );
 
-  const onSubmitHandler = async (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await handleSubmit(formData);
   };
 
-  const onSaveOnlyHandler = async () => {
+  const onSaveOnly = async () => {
     await handleSaveOnly(formData);
+  };
+
+  const onGenerateAudio = async () => {
+    try {
+      await handleGenerateAudio();
+      toast.success("Audio generation started! Check back in a few moments.");
+    } catch (error) {
+      toast.error("Failed to generate audio. Please try again.");
+    }
   };
 
   if (isLoadingStory) {
     return (
-      <Card className="w-full mx-auto">
-        <CardContent className="p-8 text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600 mx-auto mb-4"></div>
-          <p>Loading story...</p>
-        </CardContent>
-      </Card>
+      <div className="flex items-center justify-center py-8">
+        <div className="text-lg">Loading story...</div>
+      </div>
     );
   }
 
   return (
-    <Card className="w-full mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl text-orange-800">
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">
           {storyId ? 'Edit Story' : 'Create New Story'}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+        </h1>
+        
         <StoryFormContent
           formData={formData}
           isSaving={isSaving}
+          isGeneratingAudio={isGeneratingAudio}
           onInputChange={handleInputChange}
           onPhotoUpload={handlePhotoUpload}
           onPhotoRemove={handlePhotoRemove}
           onVideoUpload={handleVideoUpload}
           onVideoRemove={handleVideoRemove}
-          onSubmit={onSubmitHandler}
+          onVoiceChange={handleVoiceChange}
+          onGenerateAudio={onGenerateAudio}
+          onSubmit={onSubmit}
           onCancel={onCancel}
-          onSaveOnly={onSaveOnlyHandler}
+          onSaveOnly={onSaveOnly}
         />
-      </CardContent>
-    </Card>
+
+        {formData.audio_url && (
+          <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <h3 className="text-green-800 font-medium mb-2">Audio Version Available</h3>
+            <audio controls className="w-full">
+              <source src={formData.audio_url} type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

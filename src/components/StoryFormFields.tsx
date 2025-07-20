@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,6 +23,9 @@ interface Story {
   photo_alt_3: string;
   video_url: string;
   published: string;
+  ai_voice_name?: string;
+  ai_voice_model?: string;
+  audio_url?: string;
   read_count?: number;
   thumbs_up_count?: number;
   thumbs_down_count?: number;
@@ -159,7 +163,6 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChan
           placeholder="Short description for story cards"
         />
       </div>
-
 
       {/* Story Statistics Display */}
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">

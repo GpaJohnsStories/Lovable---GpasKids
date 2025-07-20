@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,6 +21,9 @@ interface Story {
   photo_alt_3: string;
   video_url: string;
   published: string;
+  ai_voice_name?: string;
+  ai_voice_model?: string;
+  audio_url?: string;
 }
 
 export const useStorySave = () => {
@@ -84,15 +88,21 @@ export const useStorySave = () => {
     setIsSaving(true);
     
     try {
+      const saveData = {
+        ...formData,
+        ai_voice_name: formData.ai_voice_name || 'Nova',
+        ai_voice_model: formData.ai_voice_model || 'tts-1'
+      };
+
       if (formData.id) {
         // Update existing story
         console.log('Updating story with ID:', formData.id);
-        console.log('Update payload:', formData);
+        console.log('Update payload:', saveData);
         
         const { data, error } = await supabase
           .from('stories')
           .update({
-            ...formData,
+            ...saveData,
             updated_at: new Date().toISOString()
           })
           .eq('id', formData.id)
@@ -105,11 +115,11 @@ export const useStorySave = () => {
       } else {
         // Create new story
         console.log('Creating new story');
-        console.log('Insert payload:', formData);
+        console.log('Insert payload:', saveData);
         
         const { data, error } = await supabase
           .from('stories')
-          .insert([formData])
+          .insert([saveData])
           .select();
         
         console.log('Insert response - data:', data, 'error:', error);

@@ -1,5 +1,7 @@
+
 import { useState, useEffect } from 'react';
 import { useStoryData } from '@/hooks/useStoryData';
+import { supabase } from "@/integrations/supabase/client";
 
 export interface Story {
   id?: string;
@@ -19,6 +21,9 @@ export interface Story {
   photo_alt_3: string;
   video_url: string;
   published: string;
+  ai_voice_name: string;
+  ai_voice_model: string;
+  audio_url?: string;
 }
 
 const initialFormData: Story = {
@@ -37,17 +42,24 @@ const initialFormData: Story = {
   photo_alt_2: '',
   photo_alt_3: '',
   video_url: '',
-  published: 'N'
+  published: 'N',
+  ai_voice_name: 'Nova',
+  ai_voice_model: 'tts-1'
 };
 
 export const useStoryFormState = (storyId?: string) => {
   const [formData, setFormData] = useState<Story>(initialFormData);
+  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const { story, isLoading: isLoadingStory, refetch: refetchStory } = useStoryData(storyId);
 
   // Load story data into form when it's fetched
   useEffect(() => {
     if (story) {
-      setFormData(story);
+      setFormData({
+        ...story,
+        ai_voice_name: story.ai_voice_name || 'Nova',
+        ai_voice_model: story.ai_voice_model || 'tts-1'
+      });
     }
   }, [story]);
 
@@ -74,14 +86,50 @@ export const useStoryFormState = (storyId?: string) => {
     handleInputChange('video_url', '');
   };
 
+  const handleVoiceChange = (voice: string) => {
+    handleInputChange('ai_voice_name', voice);
+  };
+
+  const handleGenerateAudio = async () => {
+    if (!formData.id) {
+      console.log('Story must be saved before generating audio');
+      return;
+    }
+
+    setIsGeneratingAudio(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-story-audio', {
+        body: { storyId: formData.id }
+      });
+
+      if (error) throw error;
+
+      console.log('Audio generation started:', data);
+      
+      // Refresh the story data to get the updated audio URL
+      if (refetchStory) {
+        await refetchStory();
+      }
+      
+    } catch (error) {
+      console.error('Error generating audio:', error);
+    } finally {
+      setIsGeneratingAudio(false);
+    }
+  };
+
   return {
     formData,
     isLoadingStory,
+    isGeneratingAudio,
     refetchStory,
     handleInputChange,
     handlePhotoUpload,
     handlePhotoRemove,
     handleVideoUpload,
-    handleVideoRemove
+    handleVideoRemove,
+    handleVoiceChange,
+    handleGenerateAudio
   };
 };
