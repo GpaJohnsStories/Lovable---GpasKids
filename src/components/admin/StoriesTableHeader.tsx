@@ -256,7 +256,7 @@ const StoriesTableHeader = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent 
               align="center" 
-              className="bg-white border border-gray-200 shadow-lg rounded-md z-50"
+              className="bg-white border border-gray-200 shadow-lg rounded-md z-50 max-h-64 overflow-y-auto"
               style={{ minWidth: '140px' }}
             >
               {getStatsOptions().map((option, index) => (
