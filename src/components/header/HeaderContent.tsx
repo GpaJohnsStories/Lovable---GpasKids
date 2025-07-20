@@ -24,7 +24,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           <img 
             src="/lovable-uploads/027581df-e77f-4c61-b5d2-e24366b00ca9.png" 
             alt="Grandpa's beloved companion"
-            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover object-center mb-2"
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-center mb-2 scale-110"
           />
           <div className="text-white text-xs leading-tight">
             <div>For Help</div>
