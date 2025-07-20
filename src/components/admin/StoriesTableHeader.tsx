@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ArrowUp, ArrowDown, Users, Plus } from "lucide-react";
@@ -99,7 +98,7 @@ const StoriesTableHeader = ({
         </TableHead>
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '50px', minWidth: '50px', maxWidth: '50px' }}>
           <div
-            className="bg-red-500 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
+            className="bg-gradient-to-b from-red-500 to-orange-500 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '100%', borderRadius: '0px' }}
             title="Copyright Status: ©=Full Copyright, O=Open, S=Limited Sharing"
           >
