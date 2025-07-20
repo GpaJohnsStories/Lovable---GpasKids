@@ -31,8 +31,12 @@ export const useStoryData = (storyId?: string) => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchStory = async () => {
-    if (!storyId) return;
+    if (!storyId) {
+      console.log('🎯 useStoryData: No storyId provided, skipping fetch');
+      return;
+    }
     
+    console.log('🎯 useStoryData: Fetching story with ID:', storyId);
     setIsLoading(true);
     setError(null);
     
@@ -43,15 +47,21 @@ export const useStoryData = (storyId?: string) => {
         .eq('id', storyId)
         .single();
       
-      if (error) throw error;
+      if (error) {
+        console.error('🎯 useStoryData: Error fetching story:', error);
+        throw error;
+      }
+      
       // Convert any "System" categories to "WebText" for compatibility
       const processedData = {
         ...data,
         category: data.category === 'System' ? 'WebText' : data.category
       };
+      
+      console.log('🎯 useStoryData: Successfully fetched story:', processedData);
       setStory(processedData as Story);
     } catch (err: any) {
-      console.error('Error fetching story:', err);
+      console.error('🎯 useStoryData: Error fetching story:', err);
       setError(err.message);
     } finally {
       setIsLoading(false);

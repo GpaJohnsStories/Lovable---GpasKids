@@ -41,6 +41,13 @@ const StoryFormContent: React.FC<StoryFormContentProps> = ({
   onCancel,
   onSaveOnly
 }) => {
+  console.log('🎯 StoryFormContent: Rendering with formData:', {
+    id: formData.id,
+    title: formData.title,
+    hasAudio: !!formData.audio_url,
+    aiVoiceName: formData.ai_voice_name
+  });
+
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <StoryFormFields 
@@ -85,9 +92,11 @@ const StoryFormContent: React.FC<StoryFormContentProps> = ({
           onStopRecording={undefined}
         />
         {!formData.id && (
-          <p className="text-sm text-amber-600 mt-2">
-            💡 Save the story first to generate audio version
-          </p>
+          <div className="mt-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+            <p className="text-sm text-amber-700">
+              💡 <strong>Audio Generation:</strong> Save the story first to enable audio generation
+            </p>
+          </div>
         )}
         {formData.audio_url && (
           <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">

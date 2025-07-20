@@ -52,16 +52,24 @@ export const useStoryFormState = (storyId?: string) => {
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const { story, isLoading: isLoadingStory, refetch: refetchStory } = useStoryData(storyId);
 
+  console.log('🎯 useStoryFormState: Hook called with storyId:', storyId);
+  console.log('🎯 useStoryFormState: Story data:', story);
+  console.log('🎯 useStoryFormState: Loading state:', isLoadingStory);
+
   // Load story data into form when it's fetched
   useEffect(() => {
     if (story) {
+      console.log('🎯 useStoryFormState: Loading story data into form:', story);
       setFormData({
         ...story,
         ai_voice_name: story.ai_voice_name || 'Nova',
         ai_voice_model: story.ai_voice_model || 'tts-1'
       });
+    } else if (!storyId) {
+      console.log('🎯 useStoryFormState: No storyId provided, using initial form data');
+      setFormData(initialFormData);
     }
-  }, [story]);
+  }, [story, storyId]);
 
   const handleInputChange = (field: keyof Story, value: string) => {
     setFormData(prev => ({
@@ -92,10 +100,11 @@ export const useStoryFormState = (storyId?: string) => {
 
   const handleGenerateAudio = async () => {
     if (!formData.id) {
-      console.log('Story must be saved before generating audio');
+      console.log('🎯 useStoryFormState: Story must be saved before generating audio');
       return;
     }
 
+    console.log('🎯 useStoryFormState: Starting audio generation for story:', formData.id);
     setIsGeneratingAudio(true);
     
     try {
@@ -105,7 +114,7 @@ export const useStoryFormState = (storyId?: string) => {
 
       if (error) throw error;
 
-      console.log('Audio generation started:', data);
+      console.log('🎯 useStoryFormState: Audio generation started:', data);
       
       // Refresh the story data to get the updated audio URL
       if (refetchStory) {
@@ -113,7 +122,7 @@ export const useStoryFormState = (storyId?: string) => {
       }
       
     } catch (error) {
-      console.error('Error generating audio:', error);
+      console.error('🎯 useStoryFormState: Error generating audio:', error);
     } finally {
       setIsGeneratingAudio(false);
     }

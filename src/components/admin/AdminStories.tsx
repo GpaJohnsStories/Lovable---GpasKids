@@ -11,7 +11,7 @@ const AdminStories = () => {
 
   const handleCreateStory = () => {
     console.log('🎯 AdminStories: handleCreateStory called - navigating to create form');
-    navigate('/buddys_admin/stories/edit');
+    navigate('/buddys_admin/stories/new');
   };
 
   const handleEditStory = (story: any) => {

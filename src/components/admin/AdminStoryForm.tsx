@@ -14,12 +14,22 @@ const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ storyId: propStoryId, o
   const { id: paramStoryId } = useParams<{ id?: string }>();
   
   // Use prop storyId if provided, otherwise fall back to URL param
-  const storyId = propStoryId || paramStoryId;
+  // Validate that it's a proper UUID format or undefined for new stories
+  let validatedStoryId: string | undefined;
+  
+  const candidateId = propStoryId || paramStoryId;
+  
+  if (candidateId && candidateId !== ':id' && candidateId.length > 10) {
+    // Basic validation - should be a UUID-like string
+    validatedStoryId = candidateId;
+  }
+
+  console.log('🎯 AdminStoryForm: Route params:', { paramStoryId, propStoryId, validatedStoryId });
 
   return (
     <AdminLayout>
       <SimpleStoryForm
-        storyId={storyId}
+        storyId={validatedStoryId}
         onSave={onSave}
         onCancel={onCancel}
       />

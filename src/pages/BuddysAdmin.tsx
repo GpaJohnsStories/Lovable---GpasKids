@@ -8,15 +8,16 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import ContentProtection from "@/components/ContentProtection";
 import SecureAdminCheck from "@/components/admin/SecureAdminCheck";
 import { useAdminSession } from "@/hooks/useAdminSession";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
 // Protected admin content that requires authentication
 const BuddysAdminContent = () => {
   const { handleStoryFormSave } = useAdminSession();
+  const navigate = useNavigate();
 
   const handleStoryFormCancel = () => {
     // Navigate back to stories list and scroll to top
-    window.location.href = '/buddys_admin/stories';
+    navigate('/buddys_admin/stories');
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -28,7 +29,13 @@ const BuddysAdminContent = () => {
       <Route path="/" element={<Navigate to="/buddys_admin/dashboard" replace />} />
       <Route path="/dashboard" element={<AdminOverview />} />
       <Route path="/stories" element={<AdminStories />} />
-      <Route path="/stories/edit/:id?" element={
+      <Route path="/stories/new" element={
+        <AdminStoryForm
+          onSave={handleStoryFormSave}
+          onCancel={handleStoryFormCancel}
+        />
+      } />
+      <Route path="/stories/edit/:id" element={
         <AdminStoryForm
           onSave={handleStoryFormSave}
           onCancel={handleStoryFormCancel}
