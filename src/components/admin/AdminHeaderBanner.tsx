@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus } from "lucide-react";
@@ -28,8 +27,8 @@ const AdminHeaderBanner = () => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const handleCreateStoryClick = () => {
-    console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to create form');
-    navigate('/buddys_admin/stories/edit');
+    console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to new story form');
+    navigate('/buddys_admin/stories/new');
   };
 
   const handleLogout = async () => {
