@@ -7,6 +7,7 @@ import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volum
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { format } from "date-fns";
 
 import { useState } from "react";
 import AuthorLink from "@/components/AuthorLink";
@@ -491,7 +492,7 @@ const StoriesTableRow = ({
               ) : (
                 <>
                   <div className="flex flex-col items-center space-y-1">
-                    <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
+                    <span className="text-xs">{format(new Date(story.updated_at), "MMM d, yy")}</span>
                     <Button
                       size="sm"
                       onClick={handleEditDate}
@@ -535,7 +536,7 @@ const StoriesTableRow = ({
               )}
             </>
           ) : (
-            <span className="text-xs">{new Date(story.updated_at).toLocaleDateString()}</span>
+            <span className="text-xs">{format(new Date(story.updated_at), "MMM d, yy")}</span>
           )}
         </div>
       </TableCell>
