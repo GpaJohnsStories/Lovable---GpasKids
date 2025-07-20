@@ -325,7 +325,7 @@ const StoriesTableRow = ({
   return (
     <TableRow>
       <TableCell className="p-1 text-left" style={{ width: '70px', minWidth: '70px', maxWidth: '70px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
-        <span className="text-xs font-bold">{story.story_code}</span>
+        <span className="text-xs">{story.story_code}</span>
       </TableCell>
       <TableCell className="p-1" style={{ width: '280px', minWidth: '280px', maxWidth: '280px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="flex items-center space-x-2">
