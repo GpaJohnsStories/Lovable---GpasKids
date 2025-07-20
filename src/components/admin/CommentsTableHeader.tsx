@@ -21,18 +21,8 @@ const CommentsTableHeader = ({ sortField, sortDirection, onSort }: CommentsTable
   };
 
   const getButtonColor = (field: SortField) => {
-    switch (field) {
-      case 'personal_id':
-        return 'bg-cyan-500 hover:bg-cyan-600 text-white';
-      case 'subject':
-        return 'bg-blue-500 hover:bg-blue-600 text-white';
-      case 'status':
-        return 'bg-purple-500 hover:bg-purple-600 text-white';
-      case 'created_at':
-        return 'bg-red-500 hover:bg-red-600 text-white';
-      default:
-        return 'bg-gray-500 hover:bg-gray-600 text-white';
-    }
+    // Use consistent green styling for all buttons
+    return 'bg-green-500 hover:bg-green-600 text-white';
   };
 
   const headers: { label: string; field: SortField; isAction?: boolean; width?: string }[] = [
