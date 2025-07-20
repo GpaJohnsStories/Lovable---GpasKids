@@ -132,7 +132,7 @@ const AdminHeaderBanner = () => {
           {/* Main content area with reduced left margin to account for Buddy's space */}
           <div className="flex items-center gap-6 pl-14 sm:pl-16">
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold text-yellow-300" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <h1 className="text-2xl font-bold text-yellow-200" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 Buddy's Admin
               </h1>
               <div className="text-xs bg-green-500 rounded px-2 py-1 text-white font-semibold">
