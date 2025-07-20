@@ -541,7 +541,7 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       {showActions && (
-        <TableCell className="p-1" style={{ width: '170px', minWidth: '170px', maxWidth: '170px' }}>
+        <TableCell className="p-1" style={{ width: '120px', minWidth: '120px', maxWidth: '120px' }}>
           <div className="flex flex-col space-y-1">
             <div className="flex space-x-1 items-center">
               <Button
