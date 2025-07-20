@@ -1,4 +1,3 @@
-
 import { renderCategoryBadge } from "@/utils/categoryUtils";
 import { Play, Pause, Square, Loader } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -400,9 +399,9 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
         {renderCategoryBadge(category)}
       </div>
 
-      <div className="flex items-center justify-center mb-4 relative">
-        {/* Three separate audio control buttons */}
-        <div className="flex items-center gap-3 mr-4">
+      {/* Audio Controls Section - Separate from title */}
+      <div className="flex items-center justify-center mb-8">
+        <div className="flex items-center gap-3">
           {/* Play Button */}
           <button
             onClick={handlePlay}
@@ -452,8 +451,11 @@ const StoryHeader = ({ title, category, author, createdAt, tagline, storyCode, s
             Stop
           </button>
         </div>
+      </div>
 
-        <h1 className="text-3xl font-bold text-orange-800 text-center leading-tight">
+      {/* Story Title - Now properly centered */}
+      <div className="text-center mb-4">
+        <h1 className="text-3xl font-bold text-orange-800 leading-tight">
           {title}
         </h1>
       </div>
