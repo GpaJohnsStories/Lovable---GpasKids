@@ -56,12 +56,13 @@ const StoriesTableHeader = ({
   const getCategoryOptions = (): CategoryFilter[] => {
     const baseCategories: CategoryFilter[] = ['all', 'Fun', 'Life', 'North Pole', 'World Changers'];
     
-    // Include WebText for admin view, exclude for public library
-    if (!showPublishedOnly) {
-      return [...baseCategories, 'WebText'];
+    // Include WebText ONLY for admin view (when showPublishedOnly is false)
+    // Exclude WebText from public library (when showPublishedOnly is true)
+    if (showPublishedOnly) {
+      return baseCategories; // Public library - no WebText
     }
     
-    return baseCategories;
+    return [...baseCategories, 'WebText']; // Admin library - include WebText
   };
 
   const getCategoryDisplayName = (category: CategoryFilter) => {
