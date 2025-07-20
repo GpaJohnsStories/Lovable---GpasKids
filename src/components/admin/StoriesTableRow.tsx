@@ -463,7 +463,22 @@ const StoriesTableRow = ({
       </TableCell>
       {showActions && (
         <TableCell className="p-1" style={{ width: '120px', minWidth: '120px', maxWidth: '120px' }}>
-          <div className="flex space-x-2 items-center justify-center">
+          <div className="flex items-center justify-start">
+            <Button
+              size="sm"
+              className="!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700 !shadow-[0_6px_12px_rgba(34,197,94,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(34,197,94,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] h-7 w-10"
+              onClick={() => onEdit(story)}
+            >
+              <Edit className="h-3 w-3" />
+            </Button>
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={() => onDelete(story.id)}
+              className="h-6 w-8 ml-auto"
+            >
+              <Trash2 className="h-3 w-3" />
+            </Button>
             <Button
               size="sm"
               className="!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700 !shadow-[0_6px_12px_rgba(34,197,94,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(34,197,94,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] h-7 w-10"
