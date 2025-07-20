@@ -118,8 +118,20 @@ const AdminHeaderBanner = () => {
   return (
     <div className="sticky top-0 z-50 bg-gradient-to-r from-orange-500 to-orange-600 border-b border-orange-700 shadow-lg">
       <div className="container mx-auto px-4 py-2">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-6">
+        <div className="flex items-center justify-between relative">
+          {/* Buddy's Photo - Fixed position aligned with left edge */}
+          <div className="absolute left-0 top-2 z-10">
+            <Link to="/" onClick={scrollToTop}>
+              <img 
+                src="/lovable-uploads/27c4298b-582d-4de3-94d9-c1b9b177f6d0.png" 
+                alt="Grandpa's beloved companion"
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-center"
+              />
+            </Link>
+          </div>
+
+          {/* Main content area with left margin to account for Buddy's space */}
+          <div className="flex items-center gap-6 pl-20 sm:pl-24">
             <div className="flex items-center gap-3">
               <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 Buddy's Admin
@@ -282,6 +294,7 @@ const AdminHeaderBanner = () => {
               })}
             </nav>
           </div>
+          
           <Button 
             onClick={handleLogout} 
             variant="ghost" 
