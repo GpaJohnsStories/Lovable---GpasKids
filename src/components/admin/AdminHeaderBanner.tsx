@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus } from "lucide-react";
@@ -6,7 +7,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useUserRole } from "@/hooks/useUserRole";
-import { useAdminSession } from "@/hooks/useAdminSession";
 
 interface AdminNavButton {
   name: string;
@@ -26,17 +26,9 @@ const AdminHeaderBanner = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
-  
-  // Use the admin session hook for story creation
-  const { handleCreateStory } = useAdminSession();
 
   const handleCreateStoryClick = () => {
-    // Navigate to stories page first, then trigger create
-    navigate('/buddys_admin/stories');
-    // Small delay to ensure navigation completes
-    setTimeout(() => {
-      handleCreateStory();
-    }, 100);
+    navigate('/buddys_admin/stories/edit');
   };
 
   const handleLogout = async () => {

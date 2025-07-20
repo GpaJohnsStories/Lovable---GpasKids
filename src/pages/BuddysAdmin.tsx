@@ -8,36 +8,32 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import ContentProtection from "@/components/ContentProtection";
 import SecureAdminCheck from "@/components/admin/SecureAdminCheck";
 import { useAdminSession } from "@/hooks/useAdminSession";
-import { useUserRole } from "@/hooks/useUserRole";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 // Protected admin content that requires authentication
 const BuddysAdminContent = () => {
-  const { isViewer } = useUserRole();
-  const {
-    showStoryForm,
-    editingStory,
-    handleStoryFormSave,
-    handleStoryFormCancel,
-  } = useAdminSession();
+  const { handleStoryFormSave } = useAdminSession();
 
-  // Show story form when session state indicates it should be shown
-  // Don't allow viewers to access story form
-  if (showStoryForm && !isViewer) {
-    return (
-      <AdminStoryForm
-        editingStory={editingStory}
-        onSave={handleStoryFormSave}
-        onCancel={handleStoryFormCancel}
-      />
-    );
-  }
+  const handleStoryFormCancel = () => {
+    // Navigate back to stories list and scroll to top
+    window.location.href = '/buddys_admin/stories';
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/buddys_admin/dashboard" replace />} />
       <Route path="/dashboard" element={<AdminOverview />} />
       <Route path="/stories" element={<AdminStories />} />
+      <Route path="/stories/edit/:id?" element={
+        <AdminStoryForm
+          onSave={handleStoryFormSave}
+          onCancel={handleStoryFormCancel}
+        />
+      } />
       <Route path="/comments" element={<CommentsDashboard />} />
       <Route path="/voice-preview" element={
         <AdminLayout>

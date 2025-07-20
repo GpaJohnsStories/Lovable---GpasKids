@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -7,12 +7,11 @@ import { BookOpen } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
 import AdminLayout from "./AdminLayout";
 import { useUserRole } from "@/hooks/useUserRole";
-import { useAdminSession } from "@/hooks/useAdminSession";
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
@@ -33,25 +32,11 @@ interface GroupedStory extends Record<string, any> {
 
 const AdminStories = () => {
   const { isViewer } = useUserRole();
+  const navigate = useNavigate();
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [publishedFilter, setPublishedFilter] = useState<PublishedFilter>('all');
   const [groupByAuthor, setGroupByAuthor] = useState(false);
-  const [searchParams] = useSearchParams();
-  
-  // Use the admin session hook
-  const {
-    handleEditStory,
-    handleCreateStory,
-  } = useAdminSession();
-
-  // Check for URL parameters to auto-trigger story creation
-  useEffect(() => {
-    const action = searchParams.get('action');
-    if (action === 'create' && !isViewer) {
-      handleCreateStory();
-    }
-  }, [searchParams, handleCreateStory, isViewer]);
 
   const { data: stories, isLoading: storiesLoading, refetch } = useQuery({
     queryKey: ['admin-stories', sortField, sortDirection, publishedFilter],
@@ -86,6 +71,14 @@ const AdminStories = () => {
       setSortField(field);
       setSortDirection('asc');
     }
+  };
+
+  const handleCreateStory = () => {
+    navigate('/buddys_admin/stories/edit');
+  };
+
+  const handleEditStory = (story: any) => {
+    navigate(`/buddys_admin/stories/edit/${story.id}`);
   };
 
   const handleDeleteStory = async (id: string) => {
