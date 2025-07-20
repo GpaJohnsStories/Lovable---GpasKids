@@ -42,8 +42,8 @@ interface PublicStoriesTableProps {
 }
 
 const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
-  const [sortField, setSortField] = useState<SortField>('title');
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [sortField, setSortField] = useState<SortField>('read_count');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
 
   const { data: stories, isLoading } = useQuery({
@@ -79,7 +79,8 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
       setSortField(field);
-      setSortDirection('asc');
+      // Start with descending for read_count, ascending for others
+      setSortDirection(field === 'read_count' ? 'desc' : 'asc');
     }
   };
 
@@ -219,15 +220,22 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
                       </DropdownMenu>
                     </TableHead>
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-20">
-                      <Button
-                        onClick={() => handleSort('read_count')}
-                        className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
-                        size="sm"
-                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                      >
-                        Reads
-                        {getSortIcon('read_count')}
-                      </Button>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            onClick={() => handleSort('read_count')}
+                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                            size="sm"
+                            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                          >
+                            Reads
+                            {getSortIcon('read_count')}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="text-xs">Click to sort by Reader count.</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </TableHead>
                     <TableHead className="p-1 text-center bg-background w-24">
                       <Button
