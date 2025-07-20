@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,6 +26,7 @@ import AuthorBio from "./pages/AuthorBio";
 import HelpGpa from "./pages/HelpGpa";
 import RobotsTxt from "./pages/RobotsTxt";
 import SitemapXml from "./pages/SitemapXml";
+import GlobalHelpProvider from "@/components/GlobalHelpProvider";
 
 const queryClient = new QueryClient();
 
@@ -52,36 +52,38 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/story/:id" element={<Story />} />
-            <Route path="/library" element={<Library />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/make-comment" element={<MakeComment />} />
-            <Route path="/view-comments" element={<ViewComments />} />
-            <Route path="/comment/:id" element={<CommentDetail />} />
-            <Route path="/author/:authorName" element={<AuthorBio />} />
-            <Route path="/admin" element={<SimpleAdmin />} />
-            <Route path="/admin-access" element={<AdminAccess />} />
-            <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
-            <Route path="/simple-admin" element={<SimpleAdmin />} />
-            <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/writing" element={<Writing />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/help-gpa" element={<HelpGpa />} />
-            
-            {/* SEO Routes */}
-            <Route path="/robots.txt" element={<RobotsTxt />} />
-            <Route path="/sitemap.xml" element={<SitemapXml />} />
-            
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <ConditionalActivityTracker />
-        </BrowserRouter>
+        <GlobalHelpProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/story/:id" element={<Story />} />
+              <Route path="/library" element={<Library />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/make-comment" element={<MakeComment />} />
+              <Route path="/view-comments" element={<ViewComments />} />
+              <Route path="/comment/:id" element={<CommentDetail />} />
+              <Route path="/author/:authorName" element={<AuthorBio />} />
+              <Route path="/admin" element={<SimpleAdmin />} />
+              <Route path="/admin-access" element={<AdminAccess />} />
+              <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
+              <Route path="/simple-admin" element={<SimpleAdmin />} />
+              <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/writing" element={<Writing />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/help-gpa" element={<HelpGpa />} />
+              
+              {/* SEO Routes */}
+              <Route path="/robots.txt" element={<RobotsTxt />} />
+              <Route path="/sitemap.xml" element={<SitemapXml />} />
+              
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <ConditionalActivityTracker />
+          </BrowserRouter>
+        </GlobalHelpProvider>
       </TooltipProvider>
     </HelmetProvider>
   </QueryClientProvider>
