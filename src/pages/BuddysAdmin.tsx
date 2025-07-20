@@ -41,6 +41,7 @@ const BuddysAdminContent = () => {
           onCancel={handleStoryFormCancel}
         />
       } />
+      <Route path="/stories/edit" element={<Navigate to="/buddys_admin/stories" replace />} />
       <Route path="/comments" element={<CommentsDashboard />} />
       <Route path="/voice-preview" element={
         <AdminLayout>
