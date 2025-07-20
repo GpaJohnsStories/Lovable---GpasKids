@@ -189,7 +189,7 @@ const StoriesTableHeader = ({
                 >
                   <div className="flex items-center gap-2 w-full">
                     <div 
-                      className={`${getCategoryColor(category)} px-2 py-1 rounded text-xs font-medium border`}
+                      className={`${getCategoryColor(category)} px-3 py-1 rounded-full text-xs font-medium border shadow-sm hover:shadow-md transition-shadow`}
                       style={{ minWidth: '80px', textAlign: 'center' }}
                     >
                       {getCategoryDisplayName(category)}
