@@ -298,25 +298,12 @@ const StoriesTableHeader = ({
           </Button>
         </TableHead>
         {showActions && (
-          <TableHead className="p-1 text-center bg-background" style={{ width: '170px', minWidth: '170px', maxWidth: '170px' }}>
-            <div className="flex gap-1">
-              <div
-                className="bg-blue-500 text-white h-6 text-xs px-1 py-1 flex items-center justify-center flex-1"
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif', borderRadius: '0px' }}
-              >
-                Actions
-              </div>
-              {onCreateStory && (
-                <Button
-                  onClick={onCreateStory}
-                  className="bg-green-500 hover:bg-green-600 text-white h-6 text-xs px-1 py-1 flex items-center justify-center gap-1"
-                  size="sm"
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                  title="Create New Story"
-                >
-                  <Plus className="h-3 w-3" />
-                </Button>
-              )}
+          <TableHead className="p-1 text-center bg-background" style={{ width: '120px', minWidth: '120px', maxWidth: '120px' }}>
+            <div
+              className="bg-blue-500 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
+              style={{ fontFamily: 'system-ui, -apple-system, sans-serif', borderRadius: '0px' }}
+            >
+              Actions
             </div>
           </TableHead>
         )}
