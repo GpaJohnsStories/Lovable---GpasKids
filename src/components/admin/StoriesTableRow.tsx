@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
 import { useState } from "react";
 import AuthorLink from "@/components/AuthorLink";
-// import WebTextDeploymentDialog from "./WebTextDeploymentDialog";
+import WebTextDeploymentDialog from "./WebTextDeploymentDialog";
 import { getCategoryShortName } from "@/utils/categoryUtils";
 
 interface Story {
@@ -104,7 +104,7 @@ const StoriesTableRow = ({
     const { error } = await supabase
       .from('stories')
       .update({ published: newStatus })
-      .eq('id', story.id);
+      .eq('id', parseInt(story.id));
 
     if (error) {
       toast.error("Error updating story status");
@@ -159,7 +159,7 @@ const StoriesTableRow = ({
       const { error } = await supabase
         .from('stories')
         .update({ updated_at: inputDate.toISOString() })
-        .eq('id', story.id);
+        .eq('id', parseInt(story.id));
 
       if (error) {
         toast.error("Error updating date");
@@ -192,7 +192,7 @@ const StoriesTableRow = ({
         ai_voice_name: newVoice,
         ai_voice_model: 'tts-1'
       } as any)
-      .eq('id', story.id);
+      .eq('id', parseInt(story.id));
 
     if (error) {
       toast.error("Error updating voice selection");
@@ -209,7 +209,7 @@ const StoriesTableRow = ({
     const { error } = await supabase
       .from('stories')
       .update({ copyright_status: newStatus })
-      .eq('id', story.id);
+      .eq('id', parseInt(story.id));
 
     if (error) {
       toast.error("Error updating copyright status");
@@ -610,12 +610,12 @@ const StoriesTableRow = ({
         </TableCell>
       )}
       
-      {/* <WebTextDeploymentDialog
+      <WebTextDeploymentDialog
         story={story}
         isOpen={showDeployDialog}
         onClose={() => setShowDeployDialog(false)}
         onSuccess={onStatusChange}
-      /> */}
+      />
     </TableRow>
   );
 };
