@@ -84,6 +84,25 @@ const StoriesTableHeader = ({
     }
   };
 
+  const getCategoryColor = (category: CategoryFilter) => {
+    switch (category) {
+      case 'all':
+        return 'bg-gradient-to-b from-orange-400 to-orange-600 text-white border-orange-500';
+      case 'Fun':
+        return 'bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500';
+      case 'Life':
+        return 'bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500';
+      case 'North Pole':
+        return 'bg-gradient-to-b from-cyan-400 to-cyan-600 text-white border-cyan-500';
+      case 'World Changers':
+        return 'bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500';
+      case 'WebText':
+        return 'bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500';
+      default:
+        return 'bg-gray-100 text-gray-700 border-gray-300';
+    }
+  };
+
   const getCurrentCategoryDisplay = () => {
     if (categoryFilter === 'all') {
       return 'Category';
@@ -165,12 +184,20 @@ const StoriesTableHeader = ({
                       onCategoryFilter?.(category);
                     }
                   }}
-                  className={`px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 ${
-                    categoryFilter === category ? 'bg-green-50 text-green-700 font-medium' : 'text-gray-700'
-                  }`}
+                  className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100"
                   style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                 >
-                  {getCategoryDisplayName(category)}
+                  <div className="flex items-center gap-2 w-full">
+                    <div 
+                      className={`${getCategoryColor(category)} px-2 py-1 rounded text-xs font-medium border`}
+                      style={{ minWidth: '80px', textAlign: 'center' }}
+                    >
+                      {getCategoryDisplayName(category)}
+                    </div>
+                    {categoryFilter === category && (
+                      <div className="text-green-600 font-bold">✓</div>
+                    )}
+                  </div>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
