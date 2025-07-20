@@ -238,15 +238,22 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
                       </Tooltip>
                     </TableHead>
                     <TableHead className="p-1 text-center bg-background w-24">
-                      <Button
-                        onClick={() => handleSort('updated_at')}
-                        className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
-                        size="sm"
-                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                      >
-                        Updated
-                        {getSortIcon('updated_at')}
-                      </Button>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            onClick={() => handleSort('updated_at')}
+                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                            size="sm"
+                            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                          >
+                            Updated
+                            {getSortIcon('updated_at')}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="text-xs">Click to sort by Date & Time of last update</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </TableHead>
                   </TableRow>
                 </TableHeader>
