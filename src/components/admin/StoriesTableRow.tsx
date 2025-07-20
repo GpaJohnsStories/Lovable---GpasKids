@@ -4,11 +4,14 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volume2, Globe } from "lucide-react";
+import { Edit, Trash2, ThumbsUp, ThumbsDown, BookOpen, Calendar, Check, X, Volume2, Globe, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 
 import { useState } from "react";
 import AuthorLink from "@/components/AuthorLink";
@@ -67,7 +70,8 @@ const StoriesTableRow = ({
   onEditBio
 }: StoriesTableRowProps) => {
   const [isEditingDate, setIsEditingDate] = useState(false);
-  const [editedDate, setEditedDate] = useState('');
+  const [editedDate, setEditedDate] = useState<Date | undefined>();
+  const [editedTime, setEditedTime] = useState('');
   const [showDeployDialog, setShowDeployDialog] = useState(false);
 
   const getCategoryBadgeColor = (category: string) => {
@@ -121,47 +125,53 @@ const StoriesTableRow = ({
   };
 
   const handleEditDate = () => {
-    // Convert the stored UTC date to local datetime-local format
     const utcDate = new Date(story.updated_at);
+    setEditedDate(utcDate);
     
-    // Format for datetime-local input (YYYY-MM-DDTHH:mm)
-    const year = utcDate.getFullYear();
-    const month = String(utcDate.getMonth() + 1).padStart(2, '0');
-    const day = String(utcDate.getDate()).padStart(2, '0');
-    const hours = String(utcDate.getHours()).padStart(2, '0');
-    const minutes = String(utcDate.getMinutes()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+    // Format time for the time picker (HH:mm AM/PM)
+    const hours = utcDate.getHours();
+    const minutes = utcDate.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    const formattedTime = `${displayHours}:${String(minutes).padStart(2, '0')} ${ampm}`;
+    setEditedTime(formattedTime);
     
-    console.log('Original UTC date:', story.updated_at);
-    console.log('Formatted for input:', formattedDate);
-    
-    setEditedDate(formattedDate);
     setIsEditingDate(true);
   };
 
   const handleSaveDate = async () => {
-    if (!editedDate) {
-      toast.error("Please enter a valid date");
+    if (!editedDate || !editedTime) {
+      toast.error("Please select both date and time");
       return;
     }
 
     try {
-      // Create a proper Date object from the datetime-local input
-      const inputDate = new Date(editedDate);
-      
-      // Check if the date is valid
-      if (isNaN(inputDate.getTime())) {
-        toast.error("Invalid date format");
+      // Parse the time string (e.g., "1:30 PM")
+      const timeMatch = editedTime.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+      if (!timeMatch) {
+        toast.error("Invalid time format");
         return;
       }
 
-      console.log('User entered:', editedDate);
-      console.log('Parsed date:', inputDate);
-      console.log('ISO string to store:', inputDate.toISOString());
+      let [, hours, minutes, ampm] = timeMatch;
+      let hour24 = parseInt(hours);
+      
+      if (ampm.toUpperCase() === 'PM' && hour24 !== 12) {
+        hour24 += 12;
+      } else if (ampm.toUpperCase() === 'AM' && hour24 === 12) {
+        hour24 = 0;
+      }
+
+      // Combine date and time
+      const combinedDate = new Date(editedDate);
+      combinedDate.setHours(hour24, parseInt(minutes), 0, 0);
+
+      console.log('Combined date:', combinedDate);
+      console.log('ISO string to store:', combinedDate.toISOString());
 
       const { error } = await supabase
         .from('stories')
-        .update({ updated_at: inputDate.toISOString() })
+        .update({ updated_at: combinedDate.toISOString() })
         .eq('id', story.id);
 
       if (error) {
@@ -176,13 +186,14 @@ const StoriesTableRow = ({
       }
     } catch (error) {
       console.error('Date parsing error:', error);
-      toast.error("Invalid date format");
+      toast.error("Invalid date or time format");
     }
   };
 
   const handleCancelDateEdit = () => {
     setIsEditingDate(false);
-    setEditedDate('');
+    setEditedDate(undefined);
+    setEditedTime('');
   };
 
   const handleCopyrightStatusChange = async (newStatus: string) => {
@@ -384,15 +395,57 @@ const StoriesTableRow = ({
           {showActions ? (
             <>
               {isEditingDate ? (
-                <div className="flex flex-col items-center space-y-1 w-full">
-                  <input
-                    type="datetime-local"
-                    value={editedDate}
-                    onChange={(e) => setEditedDate(e.target.value)}
-                    step="60"
-                    className="text-xs border rounded px-2 py-1 w-48 min-w-48"
-                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                  />
+                <div className="flex flex-col items-center space-y-2 w-full">
+                  {/* Date Picker */}
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-44 justify-start text-left font-normal text-xs h-8",
+                          !editedDate && "text-muted-foreground"
+                        )}
+                      >
+                        <Calendar className="mr-2 h-3 w-3" />
+                        {editedDate ? format(editedDate, "MMM d, yyyy") : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <CalendarComponent
+                        mode="single"
+                        selected={editedDate}
+                        onSelect={setEditedDate}
+                        initialFocus
+                        className={cn("p-3 pointer-events-auto")}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  
+                  {/* Time Picker */}
+                  <div className="flex items-center space-x-2">
+                    <Clock className="h-3 w-3" />
+                    <Select value={editedTime} onValueChange={setEditedTime}>
+                      <SelectTrigger className="w-32 h-8 text-xs">
+                        <SelectValue placeholder="Select time" />
+                      </SelectTrigger>
+                      <SelectContent className="max-h-60">
+                        {Array.from({ length: 24 }, (_, hour) => {
+                          return Array.from({ length: 4 }, (_, quarterHour) => {
+                            const minutes = quarterHour * 15;
+                            const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+                            const ampm = hour < 12 ? 'AM' : 'PM';
+                            const timeString = `${displayHour}:${String(minutes).padStart(2, '0')} ${ampm}`;
+                            return (
+                              <SelectItem key={`${hour}-${minutes}`} value={timeString} className="text-xs">
+                                {timeString}
+                              </SelectItem>
+                            );
+                          });
+                        }).flat()}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
                   <div className="flex space-x-1">
                     <Button
                       size="sm"
