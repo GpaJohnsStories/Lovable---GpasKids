@@ -452,12 +452,12 @@ const StoriesTableRow = ({
             {story.read_count} Readers
           </div>
           {/* Time - Third position (without word count) */}
-          <div className="text-xs text-amber-600">
+          <div className="text-xs text-black">
             {(() => {
               const { readingTime } = calculateReadingTimeWithWordCount(story.content || story.excerpt || '');
               // Extract just the number from "About X minute to read" format
               const minutes = readingTime.match(/\d+/)?.[0] || '1';
-              return `${minutes} Minutes`;
+              return `About ${minutes} Min`;
             })()}
           </div>
         </div>
