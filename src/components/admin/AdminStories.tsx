@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -7,10 +7,12 @@ import { BookOpen } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
 import AdminLayout from "./AdminLayout";
 import { useUserRole } from "@/hooks/useUserRole";
+import { useAdminSession } from "@/hooks/useAdminSession";
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
@@ -35,6 +37,21 @@ const AdminStories = () => {
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [publishedFilter, setPublishedFilter] = useState<PublishedFilter>('all');
   const [groupByAuthor, setGroupByAuthor] = useState(false);
+  const [searchParams] = useSearchParams();
+  
+  // Use the admin session hook
+  const {
+    handleEditStory,
+    handleCreateStory,
+  } = useAdminSession();
+
+  // Check for URL parameters to auto-trigger story creation
+  useEffect(() => {
+    const action = searchParams.get('action');
+    if (action === 'create' && !isViewer) {
+      handleCreateStory();
+    }
+  }, [searchParams, handleCreateStory, isViewer]);
 
   const { data: stories, isLoading: storiesLoading, refetch } = useQuery({
     queryKey: ['admin-stories', sortField, sortDirection, publishedFilter],
@@ -92,11 +109,6 @@ const AdminStories = () => {
     refetch();
   };
 
-  const handleEditStory = (story: any) => {
-    // TODO: Implement edit functionality
-    console.log('Edit story:', story);
-  };
-
   const handleEditBio = (authorName: string) => {
     // TODO: Implement bio edit functionality
     console.log('Edit bio for author:', authorName);
@@ -133,7 +145,7 @@ const AdminStories = () => {
               {!isViewer && (
                 <>
                   <Button
-                    onClick={() => console.log('Create new story')}
+                    onClick={handleCreateStory}
                     className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white"
                     style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                   >

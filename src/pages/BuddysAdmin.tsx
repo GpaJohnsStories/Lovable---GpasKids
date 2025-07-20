@@ -17,12 +17,11 @@ const BuddysAdminContent = () => {
   const {
     showStoryForm,
     editingStory,
-    handleEditStory,
-    handleCreateStory,
     handleStoryFormSave,
     handleStoryFormCancel,
   } = useAdminSession();
 
+  // Show story form when session state indicates it should be shown
   // Don't allow viewers to access story form
   if (showStoryForm && !isViewer) {
     return (
