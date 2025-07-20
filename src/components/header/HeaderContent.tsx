@@ -27,7 +27,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               alt="Grandpa's beloved companion"
               className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-center scale-110"
             />
-            <div className="absolute -inset-1 rounded-full border-4 border-amber-400 pointer-events-none"></div>
+            <div className="absolute inset-0.5 rounded-full border-4 border-amber-400 pointer-events-none"></div>
           </div>
           <div className="text-white text-xs leading-tight">
             <div>For Help</div>
