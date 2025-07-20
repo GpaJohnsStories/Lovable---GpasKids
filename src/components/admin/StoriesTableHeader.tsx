@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowUp, ArrowDown, Users } from "lucide-react";
+import { ArrowUp, ArrowDown, Users, Plus } from "lucide-react";
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
@@ -15,6 +15,7 @@ interface StoriesTableHeaderProps {
   hideAuthorColumn?: boolean;
   groupByAuthor?: boolean;
   onToggleGroupByAuthor?: () => void;
+  onCreateStory?: () => void;
 }
 
 const StoriesTableHeader = ({ 
@@ -25,7 +26,8 @@ const StoriesTableHeader = ({
   showPublishedColumn = true,
   hideAuthorColumn = false,
   groupByAuthor = false,
-  onToggleGroupByAuthor
+  onToggleGroupByAuthor,
+  onCreateStory
 }: StoriesTableHeaderProps) => {
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) return null;
@@ -146,15 +148,28 @@ const StoriesTableHeader = ({
         </TableHead>
         {showActions && (
           <TableHead className="p-1 text-center bg-background" style={{ width: '170px', minWidth: '170px', maxWidth: '170px' }}>
-            <div
-              className="bg-blue-500 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '100%', borderRadius: '0px' }}
-            >
-              Actions
+            <div className="flex gap-1">
+              <div
+                className="bg-blue-500 text-white h-6 text-xs px-1 py-1 flex items-center justify-center flex-1"
+                style={{ fontFamily: 'system-ui, -apple-system, sans-serif', borderRadius: '0px' }}
+              >
+                Actions
+              </div>
+              {onCreateStory && (
+                <Button
+                  onClick={onCreateStory}
+                  className="bg-green-500 hover:bg-green-600 text-white h-6 text-xs px-1 py-1 flex items-center justify-center gap-1"
+                  size="sm"
+                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  title="Create New Story"
+                >
+                  <Plus className="h-3 w-3" />
+                </Button>
+              )}
             </div>
           </TableHead>
         )}
-      </TableRow>
+      </Row>
     </TableHeader>
   );
 };
