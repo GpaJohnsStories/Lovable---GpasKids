@@ -4,6 +4,7 @@ import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import StoryFormContent from './StoryFormContent';
 import { toast } from "sonner";
+import { Volume2 } from 'lucide-react';
 
 interface SimpleStoryFormProps {
   storyId?: string;
@@ -44,7 +45,9 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
   const onGenerateAudio = async () => {
     try {
       await handleGenerateAudio();
-      toast.success("Audio generation started! Check back in a few moments.");
+      toast.success("Audio generation started! Check back in a few moments.", {
+        duration: 5000,
+      });
     } catch (error) {
       toast.error("Failed to generate audio. Please try again.");
     }
@@ -61,9 +64,17 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">
-          {storyId ? 'Edit Story' : 'Create New Story'}
-        </h1>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold text-gray-800">
+            {storyId ? 'Edit Story' : 'Create New Story'}
+          </h1>
+          {formData.audio_url && (
+            <div className="flex items-center text-green-600 text-sm font-medium">
+              <Volume2 className="h-4 w-4 mr-1" />
+              Audio Available
+            </div>
+          )}
+        </div>
         
         <StoryFormContent
           formData={formData}
@@ -80,16 +91,6 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
           onCancel={onCancel}
           onSaveOnly={onSaveOnly}
         />
-
-        {formData.audio_url && (
-          <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <h3 className="text-green-800 font-medium mb-2">Audio Version Available</h3>
-            <audio controls className="w-full">
-              <source src={formData.audio_url} type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
-          </div>
-        )}
       </div>
     </div>
   );

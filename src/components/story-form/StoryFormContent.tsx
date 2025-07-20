@@ -75,22 +75,36 @@ const StoryFormContent: React.FC<StoryFormContentProps> = ({
         />
       </div>
 
-      {onVoiceChange && (
-        <div>
-          <VoiceSelection
-            selectedVoice={formData.ai_voice_name || 'Nova'}
-            onVoiceChange={onVoiceChange}
-            isRecording={isGeneratingAudio}
-            onStartRecording={formData.id ? onGenerateAudio : undefined}
-            onStopRecording={undefined}
-          />
-          {!formData.id && (
-            <p className="text-sm text-amber-600 mt-2">
-              💡 Save the story first to generate audio version
+      <div>
+        <Label className="text-base font-medium text-gray-700 mb-4 block">AI Voice & Audio Generation</Label>
+        <VoiceSelection
+          selectedVoice={formData.ai_voice_name || 'Nova'}
+          onVoiceChange={onVoiceChange || (() => {})}
+          isRecording={isGeneratingAudio}
+          onStartRecording={formData.id && onGenerateAudio ? onGenerateAudio : undefined}
+          onStopRecording={undefined}
+        />
+        {!formData.id && (
+          <p className="text-sm text-amber-600 mt-2">
+            💡 Save the story first to generate audio version
+          </p>
+        )}
+        {formData.audio_url && (
+          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <h4 className="text-green-800 font-medium mb-2 flex items-center">
+              <Volume2 className="h-4 w-4 mr-2" />
+              Audio Version Available
+            </h4>
+            <audio controls className="w-full">
+              <source src={formData.audio_url} type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+            <p className="text-xs text-green-600 mt-2">
+              Voice: {formData.ai_voice_name || 'Nova'}
             </p>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
 
       <div>
         <Label htmlFor="content">Story Content *</Label>
@@ -103,20 +117,7 @@ const StoryFormContent: React.FC<StoryFormContentProps> = ({
         />
       </div>
 
-      <div className="flex justify-center space-x-4">
-        {onGenerateAudio && formData.id && (
-          <Button 
-            type="button" 
-            variant="outline" 
-            onClick={onGenerateAudio}
-            disabled={isGeneratingAudio || isSaving}
-            className="border-orange-300 text-orange-600 hover:bg-orange-50"
-          >
-            <Mic className="h-4 w-4 mr-2" />
-            {isGeneratingAudio ? 'Generating Audio...' : 'Generate Audio'}
-          </Button>
-        )}
-        
+      <div className="flex justify-center space-x-4">        
         <Button type="button" variant="outline" onClick={onCancel}>
           <X className="h-4 w-4 mr-2" />
           Cancel

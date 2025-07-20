@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -67,8 +68,6 @@ const StoriesTableRow = ({
 }: StoriesTableRowProps) => {
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [editedDate, setEditedDate] = useState('');
-  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const [selectedVoice, setSelectedVoice] = useState(story.ai_voice_name || 'Nova');
   const [showDeployDialog, setShowDeployDialog] = useState(false);
 
   const getCategoryBadgeColor = (category: string) => {
@@ -186,29 +185,6 @@ const StoriesTableRow = ({
     setEditedDate('');
   };
 
-  const handleVoiceChange = async (newVoice: string) => {
-    setSelectedVoice(newVoice);
-    
-    // Update the story record with the selected voice
-    const { error } = await supabase
-      .from('stories')
-      .update({ 
-        ai_voice_name: newVoice,
-        ai_voice_model: 'tts-1'
-      } as any)
-      .eq('id', story.id);
-
-    if (error) {
-      toast.error("Error updating voice selection");
-      console.error(error);
-    } else {
-      toast.success(`Voice updated to ${newVoice}`);
-      if (onStatusChange) {
-        onStatusChange();
-      }
-    }
-  };
-
   const handleCopyrightStatusChange = async (newStatus: string) => {
     const { error } = await supabase
       .from('stories')
@@ -247,76 +223,16 @@ const StoriesTableRow = ({
 
   const audioStatus = getAudioStatus();
 
-  const getAudioButtonClasses = () => {
+  const getAudioStatusIndicator = () => {
     switch (audioStatus) {
       case 'none':
-        return '!bg-gradient-to-b !from-red-400 !to-red-600 !text-white !border-red-700'; // Red for no audio
+        return <span className="text-xs text-red-600">No Audio</span>;
       case 'outdated':
-        return '!bg-gradient-to-b !from-yellow-400 !to-yellow-600 !text-white !border-yellow-700'; // Yellow for outdated
+        return <span className="text-xs text-yellow-600">Audio Outdated</span>;
       case 'current':
-        return '!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700'; // Green for current
+        return <span className="text-xs text-green-600">Audio Current</span>;
       default:
-        return '!bg-gradient-to-b !from-red-400 !to-red-600 !text-white !border-red-700';
-    }
-  };
-
-  const getAudioButtonTitle = () => {
-    switch (audioStatus) {
-      case 'none':
-        return 'Generate audio';
-      case 'outdated':
-        return 'Story updated - regenerate audio';
-      case 'current':
-        return 'Audio up to date - regenerate if needed';
-      default:
-        return 'Generate audio';
-    }
-  };
-
-  const handleGenerateAudio = async () => {
-    setIsGeneratingAudio(true);
-    
-    try {
-      toast.loading(`Generating audio for "${story.title}" with ${selectedVoice} voice...`, {
-        id: `audio-${story.id}`,
-        duration: 60000, // Show for up to 1 minute
-      });
-
-      console.log('🎵 Calling generate-story-audio function with storyId:', story.id);
-      const { data, error } = await supabase.functions.invoke('generate-story-audio', {
-        body: { storyId: story.id }
-      });
-      console.log('🎵 Function response:', { data, error });
-
-      if (error) {
-        console.error('❌ Audio generation error:', error);
-        toast.error(`Failed to generate audio: ${error.message}`, {
-          id: `audio-${story.id}`,
-        });
-        return;
-      }
-
-      if (data?.success) {
-        toast.success(data.message || `Audio generated for "${story.title}"!`, {
-          id: `audio-${story.id}`,
-        });
-        
-        // Refresh the data to show updated audio status
-        if (onStatusChange) {
-          onStatusChange();
-        }
-      } else {
-        toast.error(data?.error || 'Failed to generate audio', {
-          id: `audio-${story.id}`,
-        });
-      }
-    } catch (error) {
-      console.error('❌ Audio generation error:', error);
-      toast.error('Failed to generate audio', {
-        id: `audio-${story.id}`,
-      });
-    } finally {
-      setIsGeneratingAudio(false);
+        return <span className="text-xs text-gray-500">Unknown</span>;
     }
   };
 
@@ -457,6 +373,10 @@ const StoriesTableRow = ({
           <div className="text-xs text-black font-bold">
             About {story.reading_time_minutes || 1} Min
           </div>
+          {/* Audio Status - Fourth position */}
+          <div className="text-center">
+            {getAudioStatusIndicator()}
+          </div>
         </div>
       </TableCell>
       <TableCell className="p-1 text-center" style={{ width: '80px', minWidth: '80px', maxWidth: '80px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
@@ -542,67 +462,22 @@ const StoriesTableRow = ({
       </TableCell>
       {showActions && (
         <TableCell className="p-1" style={{ width: '120px', minWidth: '120px', maxWidth: '120px' }}>
-          <div className="flex flex-col space-y-1">
-            <div className="flex space-x-1 items-center">
-              <Button
-                size="sm"
-                className="!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700 !shadow-[0_6px_12px_rgba(34,197,94,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(34,197,94,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] h-6 w-8"
-                onClick={() => onEdit(story)}
-              >
-                <Edit className="h-3 w-3" />
-              </Button>
-              <Select value={selectedVoice} onValueChange={handleVoiceChange}>
-                <SelectTrigger className="w-24 h-6 text-xs">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Nova">Nova</SelectItem>
-                  <SelectItem value="Alloy">Alloy</SelectItem>
-                  <SelectItem value="Echo">Echo</SelectItem>
-                  <SelectItem value="Fable">Fable</SelectItem>
-                  <SelectItem value="Onyx">Onyx</SelectItem>
-                  <SelectItem value="Shimmer">Shimmer</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={() => onDelete(story.id)}
-                className="h-6 w-8"
-              >
-                <Trash2 className="h-3 w-3" />
-              </Button>
-            </div>
-            <div className="flex">
-              <div className="w-8"></div> {/* Space for edit button */}
-              <div className="w-1"></div> {/* Space for gap */}
-              <div className="w-24 flex justify-center"> {/* Align with voice dropdown width */}
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        size="sm"
-                        className={`${getAudioButtonClasses()} !shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(147,51,234,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] w-24 h-6 text-xs`}
-                        onClick={handleGenerateAudio}
-                        disabled={isGeneratingAudio}
-                      >
-                        <Volume2 className="h-3 w-3" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent className="bg-gray-900 text-white p-3 rounded-lg shadow-lg border border-gray-700 max-w-xs">
-                      <div className="text-sm font-medium">
-                        {getAudioButtonTitle()}
-                      </div>
-                      <div className="text-xs text-gray-300 mt-1">
-                        {audioStatus === 'none' && 'Click to create audio narration'}
-                        {audioStatus === 'outdated' && 'Story content has changed since audio was generated'}
-                        {audioStatus === 'current' && 'Audio is synchronized with current story content'}
-                      </div>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-            </div>
+          <div className="flex space-x-1 items-center justify-center">
+            <Button
+              size="sm"
+              className="!bg-gradient-to-b !from-green-400 !to-green-600 !text-white !border-green-700 !shadow-[0_6px_12px_rgba(34,197,94,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] hover:!shadow-[0_8px_16px_rgba(34,197,94,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] h-6 w-8"
+              onClick={() => onEdit(story)}
+            >
+              <Edit className="h-3 w-3" />
+            </Button>
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={() => onDelete(story.id)}
+              className="h-6 w-8"
+            >
+              <Trash2 className="h-3 w-3" />
+            </Button>
           </div>
         </TableCell>
       )}
