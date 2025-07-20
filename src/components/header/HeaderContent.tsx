@@ -18,8 +18,9 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   return (
     <div className="flex items-start justify-between relative">
       {/* Buddy's Photo - Positioned above "Grandpa John's" text */}
-      <div className="flex flex-col items-start">
-        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center mb-2 w-20 sm:w-24">
+      <div className="flex items-start gap-4">
+        {/* Help Box with Buddy's Photo */}
+        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center w-20 sm:w-24">
           <img 
             src="/lovable-uploads/f2761901-60d7-4565-af04-7f39d5c22cb3.png" 
             alt="Grandpa's beloved companion"
@@ -33,6 +34,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           </div>
         </div>
         
+        {/* Website Title and Subtitle */}
         <div className="text-left">
           <div className="text-lg sm:text-2xl font-bold font-handwritten">
             <div className="text-blue-900">Grandpa John's</div>
