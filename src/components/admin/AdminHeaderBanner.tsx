@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus } from "lucide-react";
@@ -130,8 +129,8 @@ const AdminHeaderBanner = () => {
             </Link>
           </div>
 
-          {/* Main content area with left margin to account for Buddy's space */}
-          <div className="flex items-center gap-6 pl-20 sm:pl-24">
+          {/* Main content area with reduced left margin to account for Buddy's space */}
+          <div className="flex items-center gap-6 pl-14 sm:pl-16">
             <div className="flex items-center gap-3">
               <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 Buddy's Admin
