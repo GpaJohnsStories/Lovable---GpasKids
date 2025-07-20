@@ -1,4 +1,3 @@
-
 export const calculateReadingTime = (content: string): string => {
   if (!content) return "About 1 minute to read";
   
