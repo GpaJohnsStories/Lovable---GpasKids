@@ -12,6 +12,7 @@ import StoriesTableRow from "./StoriesTableRow";
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
+type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText';
 
 interface GroupedStory extends Record<string, any> {
   id: string;
@@ -48,9 +49,10 @@ const StoriesTable = ({
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [publishedFilter, setPublishedFilter] = useState<PublishedFilter>('all');
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
 
   const { data: stories, isLoading: storiesLoading, refetch } = useQuery({
-    queryKey: ['admin-stories', sortField, sortDirection, showPublishedOnly, publishedFilter],
+    queryKey: ['admin-stories', sortField, sortDirection, showPublishedOnly, publishedFilter, categoryFilter],
     queryFn: async () => {
       let query = supabase
         .from('stories')
@@ -66,25 +68,36 @@ const StoriesTable = ({
         
         // Filter stories based on visitor's local time for public library
         const now = new Date();
-        const filteredStories = data.filter(story => {
+        let filteredStories = data.filter(story => {
           const storyDate = new Date(story.updated_at);
           return storyDate <= now;
         });
         
+        // Apply category filter for public library
+        if (categoryFilter !== 'all') {
+          filteredStories = filteredStories.filter(story => story.category === categoryFilter);
+        }
+        
         return filteredStories;
-      } else if (publishedFilter === 'published') {
-        query = query.eq('published', 'Y');
-      } else if (publishedFilter === 'unpublished') {
-        query = query.eq('published', 'N');
+      } else {
+        if (publishedFilter === 'published') {
+          query = query.eq('published', 'Y');
+        } else if (publishedFilter === 'unpublished') {
+          query = query.eq('published', 'N');
+        }
+        
+        // Apply category filter for admin view
+        if (categoryFilter !== 'all') {
+          query = query.eq('category', categoryFilter);
+        }
+        
+        const { data, error } = await query;
+        
+        if (error) throw error;
+        return data;
       }
-      
-      const { data, error } = await query;
-      
-      if (error) throw error;
-      return data;
     },
   });
-
 
   const handleSort = (field: SortField) => {
     // Exit group by author view when sorting by other fields
@@ -97,6 +110,14 @@ const StoriesTable = ({
     } else {
       setSortField(field);
       setSortDirection('asc');
+    }
+  };
+
+  const handleCategoryFilter = (filter: CategoryFilter) => {
+    setCategoryFilter(filter);
+    // Exit group by author view when filtering
+    if (groupByAuthor && onToggleGroupByAuthor) {
+      onToggleGroupByAuthor();
     }
   };
 
@@ -171,6 +192,9 @@ const StoriesTable = ({
                           hideAuthorColumn={true}
                           groupByAuthor={groupByAuthor}
                           onToggleGroupByAuthor={onToggleGroupByAuthor}
+                          categoryFilter={categoryFilter}
+                          onCategoryFilter={handleCategoryFilter}
+                          showPublishedOnly={showPublishedOnly}
                         />
                         <TableBody>
                           {authorStories.map((story) => (
@@ -206,6 +230,9 @@ const StoriesTable = ({
                     showPublishedColumn={showPublishedColumn}
                     groupByAuthor={groupByAuthor}
                     onToggleGroupByAuthor={onToggleGroupByAuthor}
+                    categoryFilter={categoryFilter}
+                    onCategoryFilter={handleCategoryFilter}
+                    showPublishedOnly={showPublishedOnly}
                   />
                 </Table>
               </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -16,6 +15,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
+type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText';
 
 interface GroupedStory extends Record<string, any> {
   id: string;
@@ -37,9 +37,10 @@ const AdminStories = () => {
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [publishedFilter, setPublishedFilter] = useState<PublishedFilter>('all');
   const [groupByAuthor, setGroupByAuthor] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
 
   const { data: stories, isLoading: storiesLoading, refetch } = useQuery({
-    queryKey: ['admin-stories', sortField, sortDirection, publishedFilter],
+    queryKey: ['admin-stories', sortField, sortDirection, publishedFilter, categoryFilter],
     queryFn: async () => {
       let query = supabase
         .from('stories')
@@ -50,6 +51,11 @@ const AdminStories = () => {
         query = query.eq('published', 'Y');
       } else if (publishedFilter === 'unpublished') {
         query = query.eq('published', 'N');
+      }
+      
+      // Apply category filter
+      if (categoryFilter !== 'all') {
+        query = query.eq('category', categoryFilter);
       }
       
       const { data, error } = await query;
@@ -70,6 +76,14 @@ const AdminStories = () => {
     } else {
       setSortField(field);
       setSortDirection('asc');
+    }
+  };
+
+  const handleCategoryFilter = (filter: CategoryFilter) => {
+    setCategoryFilter(filter);
+    // Exit group by author view when filtering
+    if (groupByAuthor) {
+      setGroupByAuthor(false);
     }
   };
 
@@ -162,6 +176,9 @@ const AdminStories = () => {
                               groupByAuthor={groupByAuthor}
                               onToggleGroupByAuthor={() => setGroupByAuthor(!groupByAuthor)}
                               onCreateStory={handleCreateStory}
+                              categoryFilter={categoryFilter}
+                              onCategoryFilter={handleCategoryFilter}
+                              showPublishedOnly={false}
                             />
                             <TableBody>
                               {authorStories.map((story) => (
@@ -198,6 +215,9 @@ const AdminStories = () => {
                         groupByAuthor={groupByAuthor}
                         onToggleGroupByAuthor={() => setGroupByAuthor(!groupByAuthor)}
                         onCreateStory={handleCreateStory}
+                        categoryFilter={categoryFilter}
+                        onCategoryFilter={handleCategoryFilter}
+                        showPublishedOnly={false}
                       />
                     </Table>
                   </div>

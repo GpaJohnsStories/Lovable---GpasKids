@@ -1,9 +1,17 @@
+
 import { Button } from "@/components/ui/button";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowUp, ArrowDown, Users, Plus } from "lucide-react";
+import { ArrowUp, ArrowDown, Users, Plus, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
+type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText';
 
 interface StoriesTableHeaderProps {
   sortField: SortField;
@@ -15,6 +23,9 @@ interface StoriesTableHeaderProps {
   groupByAuthor?: boolean;
   onToggleGroupByAuthor?: () => void;
   onCreateStory?: () => void;
+  categoryFilter?: CategoryFilter;
+  onCategoryFilter?: (filter: CategoryFilter) => void;
+  showPublishedOnly?: boolean;
 }
 
 const StoriesTableHeader = ({ 
@@ -26,7 +37,10 @@ const StoriesTableHeader = ({
   hideAuthorColumn = false,
   groupByAuthor = false,
   onToggleGroupByAuthor,
-  onCreateStory
+  onCreateStory,
+  categoryFilter = 'all',
+  onCategoryFilter,
+  showPublishedOnly = false
 }: StoriesTableHeaderProps) => {
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) return null;
@@ -36,6 +50,44 @@ const StoriesTableHeader = ({
   const getButtonColor = (field: SortField) => {
     // Use consistent green styling for all buttons
     return 'bg-green-500 hover:bg-green-600 text-white';
+  };
+
+  // Define category options based on context
+  const getCategoryOptions = (): CategoryFilter[] => {
+    const baseCategories: CategoryFilter[] = ['all', 'Fun', 'Life', 'North Pole', 'World Changers'];
+    
+    // Include WebText for admin view, exclude for public library
+    if (!showPublishedOnly) {
+      return [...baseCategories, 'WebText'];
+    }
+    
+    return baseCategories;
+  };
+
+  const getCategoryDisplayName = (category: CategoryFilter) => {
+    switch (category) {
+      case 'all':
+        return 'Show All';
+      case 'Fun':
+        return 'Fun Stuff';
+      case 'Life':
+        return 'Life Lessons';
+      case 'North Pole':
+        return 'North Pole';
+      case 'World Changers':
+        return 'World Changers';
+      case 'WebText':
+        return 'WebText';
+      default:
+        return category;
+    }
+  };
+
+  const getCurrentCategoryDisplay = () => {
+    if (categoryFilter === 'all') {
+      return 'Category';
+    }
+    return getCategoryDisplayName(categoryFilter);
   };
 
   return (
@@ -86,15 +138,42 @@ const StoriesTableHeader = ({
           </TableHead>
         )}
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
-          <Button
-            onClick={() => onSort('category')}
-            className={`${getButtonColor('category')} w-full h-6 text-xs px-1 py-1`}
-            size="sm"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-          >
-            Category
-            {getSortIcon('category')}
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                className={`${getButtonColor('category')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1`}
+                size="sm"
+                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+              >
+                {getCurrentCategoryDisplay()}
+                <ChevronDown className="h-3 w-3" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent 
+              align="center" 
+              className="bg-white border border-gray-200 shadow-lg rounded-md z-50"
+              style={{ minWidth: '120px' }}
+            >
+              {getCategoryOptions().map((category) => (
+                <DropdownMenuItem
+                  key={category}
+                  onClick={() => {
+                    if (category === 'all') {
+                      onSort('category');
+                    } else {
+                      onCategoryFilter?.(category);
+                    }
+                  }}
+                  className={`px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 ${
+                    categoryFilter === category ? 'bg-green-50 text-green-700 font-medium' : 'text-gray-700'
+                  }`}
+                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                >
+                  {getCategoryDisplayName(category)}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </TableHead>
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '50px', minWidth: '50px', maxWidth: '50px' }}>
           <div
