@@ -99,7 +99,7 @@ const StoriesTableHeader = ({
         </TableHead>
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '50px', minWidth: '50px', maxWidth: '50px' }}>
           <div
-            className="bg-yellow-500 hover:bg-yellow-600 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
+            className="bg-red-500 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '100%', borderRadius: '0px' }}
             title="Copyright Status: ©=Full Copyright, O=Open, S=Limited Sharing"
           >
