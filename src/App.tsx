@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import ActivityTracker from "@/components/ActivityTracker";
-import ActivityTrackerDemo from "@/components/ActivityTrackerDemo";
 import { useVisitTracker } from "@/hooks/useVisitTracker";
 import Index from "./pages/Index";
 import Story from "./pages/Story";
@@ -26,31 +25,25 @@ import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
 import AuthorBio from "./pages/AuthorBio";
 import HelpGpa from "./pages/HelpGpa";
-import StoryContentTest from "./pages/StoryContentTest";
 import RobotsTxt from "./pages/RobotsTxt";
 import SitemapXml from "./pages/SitemapXml";
 
 const queryClient = new QueryClient();
 
-// Component to conditionally render activity trackers and visit tracking
-const ConditionalActivityTrackers = () => {
+// Component to conditionally render activity tracker and visit tracking
+const ConditionalActivityTracker = () => {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/buddys_admin');
   
   // Track visits for non-admin pages
   useVisitTracker();
   
-  // Don't show activity trackers on admin pages
+  // Don't show activity tracker on admin pages
   if (isAdminPage) {
     return null;
   }
   
-  return (
-    <>
-      <ActivityTracker />
-      <ActivityTrackerDemo />
-    </>
-  );
+  return <ActivityTracker />;
 };
 
 const App = () => (
@@ -79,7 +72,6 @@ const App = () => (
             <Route path="/writing" element={<Writing />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/help-gpa" element={<HelpGpa />} />
-            <Route path="/story-content-test" element={<StoryContentTest />} />
             
             {/* SEO Routes */}
             <Route path="/robots.txt" element={<RobotsTxt />} />
@@ -88,7 +80,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <ConditionalActivityTrackers />
+          <ConditionalActivityTracker />
         </BrowserRouter>
       </TooltipProvider>
     </HelmetProvider>
