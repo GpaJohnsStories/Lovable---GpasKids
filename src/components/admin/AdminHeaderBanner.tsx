@@ -115,7 +115,7 @@ const AdminHeaderBanner = () => {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-gradient-to-r from-orange-500 to-orange-600 border-b border-orange-700 shadow-lg">
+    <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 border-b border-blue-800 shadow-lg">
       <div className="container mx-auto px-4 py-2">
         <div className="flex items-center justify-between relative">
           {/* Buddy's Photo - Fixed position aligned with left edge */}
@@ -297,7 +297,7 @@ const AdminHeaderBanner = () => {
           <Button 
             onClick={handleLogout} 
             variant="ghost" 
-            className="text-white hover:bg-orange-400/20 border border-orange-300/30"
+            className="text-white hover:bg-blue-400/20 border border-blue-300/30"
           >
             <LogOut className="h-4 w-4 mr-2" />
             Logout
