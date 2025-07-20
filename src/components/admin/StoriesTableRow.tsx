@@ -390,7 +390,7 @@ const StoriesTableRow = ({
                     value={editedDate}
                     onChange={(e) => setEditedDate(e.target.value)}
                     step="60"
-                    className="text-xs border rounded px-2 py-1 w-40 min-w-40"
+                    className="text-xs border rounded px-2 py-1 w-48 min-w-48"
                     style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                   />
                   <div className="flex space-x-1">
