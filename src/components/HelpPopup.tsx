@@ -9,8 +9,10 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { HelpCircle, X, Keyboard } from "lucide-react";
 import StoryContentRenderer from "@/components/content/StoryContentRenderer";
+import buddyPhoto from "@/assets/buddy-original.png";
 
 interface HelpPopupProps {
   isOpen: boolean;
@@ -58,10 +60,16 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
       >
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b border-orange-200">
           <div className="flex items-center gap-3">
-            <HelpCircle className="h-6 w-6 text-orange-600" />
-            <DialogTitle className="text-xl font-bold text-orange-800">
-              Help: {getPageTitle(currentRoute)}
-            </DialogTitle>
+            <Avatar className="h-12 w-12 border-2 border-orange-300">
+              <AvatarImage src={buddyPhoto} alt="Buddy the Helper" />
+              <AvatarFallback className="bg-orange-100 text-orange-700">🐱</AvatarFallback>
+            </Avatar>
+            <div className="flex items-center gap-2">
+              <HelpCircle className="h-6 w-6 text-orange-600" />
+              <DialogTitle className="text-xl font-bold text-orange-800">
+                Help: {getPageTitle(currentRoute)}
+              </DialogTitle>
+            </div>
           </div>
           <div className="flex items-center gap-2 text-sm text-orange-600">
             <Keyboard className="h-4 w-4" />
