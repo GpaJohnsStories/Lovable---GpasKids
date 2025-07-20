@@ -74,10 +74,12 @@ const AdminStories = () => {
   };
 
   const handleCreateStory = () => {
+    console.log('🎯 AdminStories: handleCreateStory called - navigating to create form');
     navigate('/buddys_admin/stories/edit');
   };
 
   const handleEditStory = (story: any) => {
+    console.log('🎯 AdminStories: handleEditStory called with story:', story.id, story.title);
     navigate(`/buddys_admin/stories/edit/${story.id}`);
   };
 
@@ -138,7 +140,10 @@ const AdminStories = () => {
               {!isViewer && (
                 <>
                   <Button
-                    onClick={handleCreateStory}
+                    onClick={() => {
+                      console.log('🎯 Create New Story button clicked');
+                      handleCreateStory();
+                    }}
                     className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white"
                     style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                   >
@@ -240,7 +245,10 @@ const AdminStories = () => {
                             story={story}
                             showActions={!isViewer}
                             showPublishedColumn={true}
-                            onEdit={handleEditStory}
+                            onEdit={(story) => {
+                              console.log('🎯 StoriesTableRow: Edit button clicked for story:', story.id, story.title);
+                              handleEditStory(story);
+                            }}
                             onDelete={handleDeleteStory}
                             onStatusChange={handleStatusChange}
                             onEditBio={handleEditBio}

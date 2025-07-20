@@ -28,6 +28,7 @@ const AdminHeaderBanner = () => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const handleCreateStoryClick = () => {
+    console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to create form');
     navigate('/buddys_admin/stories/edit');
   };
 
@@ -204,7 +205,10 @@ const AdminHeaderBanner = () => {
                 const createStoryButton = (
                   <Button
                     key="create-story"
-                    onClick={handleCreateStoryClick}
+                    onClick={() => {
+                      console.log('🎯 + Story button clicked in header');
+                      handleCreateStoryClick();
+                    }}
                     variant="ghost"
                     className="
                       transition-all duration-200 border font-fun
