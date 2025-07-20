@@ -21,7 +21,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
       <div className="flex flex-col items-start">
         <Link to="/" onClick={scrollToTop} className="mb-2">
           <img 
-            src="/lovable-uploads/27c4298b-582d-4de3-94d9-c1b9b177f6d0.png" 
+            src="/lovable-uploads/f2761901-60d7-4565-af04-7f39d5c22cb3.png" 
             alt="Grandpa's beloved companion"
             className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover object-center"
           />
