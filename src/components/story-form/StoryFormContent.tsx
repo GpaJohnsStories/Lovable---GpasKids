@@ -2,7 +2,7 @@
 import React from 'react';
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Save, X, Mic } from "lucide-react";
+import { Save, X, Mic, Volume2 } from "lucide-react";
 import SplitViewEditor from "../editor/SplitViewEditor";
 import StoryFormFields from "../StoryFormFields";
 import StoryPhotoUpload from "../StoryPhotoUpload";
