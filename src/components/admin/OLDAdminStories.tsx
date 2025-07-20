@@ -14,7 +14,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 const AdminStories = () => {
   const { isViewer } = useUserRole();
   const [searchParams] = useSearchParams();
-  const [selectedStory, setSelectedStory] = useState(null);
+  const [selectedStoryId, setSelectedStoryId] = useState<string | null>(null);
   const [isCreatingStory, setIsCreatingStory] = useState(false);
   const [previewStory, setPreviewStory] = useState(null);
   const [currentView, setCurrentView] = useState<'stories' | 'bios'>('stories');
@@ -40,19 +40,19 @@ const AdminStories = () => {
   }, [searchParams]);
 
   const handleEditStory = (story: any) => {
-    setSelectedStory(story);
+    setSelectedStoryId(story.id);
     setIsCreatingStory(false);
     setPreviewStory(null);
   };
 
   const handleCreateStory = () => {
-    setSelectedStory(null);
+    setSelectedStoryId(null);
     setIsCreatingStory(true);
     setPreviewStory(null);
   };
 
   const handleBackToStories = () => {
-    setSelectedStory(null);
+    setSelectedStoryId(null);
     setIsCreatingStory(false);
     setPreviewStory(null);
     setSelectedBio(null);
@@ -61,7 +61,7 @@ const AdminStories = () => {
 
   const handlePreviewStory = (story: any) => {
     setPreviewStory(story);
-    setSelectedStory(null);
+    setSelectedStoryId(null);
     setIsCreatingStory(false);
   };
 
@@ -106,10 +106,10 @@ const AdminStories = () => {
     setIsCreatingBio(false);
   };
 
-  if (selectedStory || isCreatingStory) {
+  if (selectedStoryId || isCreatingStory) {
     return (
       <AdminStoryForm
-        editingStory={selectedStory}
+        storyId={selectedStoryId}
         onSave={handleBackToStories}
         onCancel={handleBackToStories}
       />
