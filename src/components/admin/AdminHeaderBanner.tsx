@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus } from "lucide-react";
@@ -129,180 +130,179 @@ const AdminHeaderBanner = () => {
             </Link>
           </div>
 
-          {/* Main content area with reduced left margin to account for Buddy's space */}
-          <div className="flex items-center gap-6 pl-14 sm:pl-16">
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#FFFF00' }}>
-                Buddy's Admin
-              </h1>
-              <div className="text-xs bg-green-500 rounded px-2 py-1 text-white font-semibold">
-                🔒 Secure
-              </div>
+          {/* Left section: Title, Secure notice, and Logout button */}
+          <div className="flex items-center gap-3 pl-14 sm:pl-16">
+            <h1 className="text-2xl font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#FFFF00' }}>
+              Buddy's Admin
+            </h1>
+            <div className="text-xs bg-green-500 rounded px-2 py-1 text-white font-semibold">
+              🔒 Secure
             </div>
-            <nav className="flex gap-2">
-              {navButtons.map((button, index) => {
-                const isActive = location.pathname === button.path || 
-                  (button.name === 'Library' && (location.pathname === '/buddys_admin/stories' || location.pathname.includes('/buddys_admin/stories')));
-                const Icon = button.icon;
-                
-                const handleButtonClick = () => {
-                  if (button.openInNewTab) {
-                    window.open(button.path, '_blank');
-                  } else {
-                    scrollToTop();
-                  }
-                };
-
-                // Render Library button with dropdown
-                const libraryButton = (
-                  <div 
-                    key={button.name}
-                    className="relative"
-                    onMouseEnter={() => setHoveredButton(button.name)}
-                    onMouseLeave={() => setHoveredButton(null)}
-                  >
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          className={`
-                            transition-all duration-200 border font-fun
-                            ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
-                            hover:transform hover:translate-y-1 active:translate-y-2 
-                            active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
-                            ${isActive 
-                              ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
-                              : button.hoverColor
-                            }
-                          `}
-                        >
-                          <Icon className="h-4 w-4 mr-2" />
-                          {button.name}
-                          <ChevronDown className="h-3 w-3 ml-1" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg">
-                        <DropdownMenuItem asChild>
-                          <Link 
-                            to="/buddys_admin/stories?view=stories" 
-                            onClick={scrollToTop}
-                            className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
-                          >
-                            <FileText className="h-4 w-4 mr-2" />
-                            Full Library
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link 
-                            to="/buddys_admin/stories?view=bios" 
-                            onClick={scrollToTop}
-                            className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
-                          >
-                            <Users className="h-4 w-4 mr-2" />
-                            Author Bios
-                          </Link>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                    {hoveredButton === button.name && (
-                      <div className="nav-bubble opacity-100 visible">
-                        {button.description}
-                      </div>
-                    )}
-                  </div>
-                );
-
-                // Render + Story button after Library button
-                const createStoryButton = (
-                  <Button
-                    key="create-story"
-                    onClick={() => {
-                      console.log('🎯 + Story button clicked in header');
-                      handleCreateStoryClick();
-                    }}
-                    variant="ghost"
-                    className="
-                      transition-all duration-200 border font-fun
-                      bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white
-                      shadow-[0_6px_0_#16a34a,0_8px_15px_rgba(0,0,0,0.3)]
-                      hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)]
-                      hover:transform hover:translate-y-1 active:translate-y-2 
-                      active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
-                      hover:from-green-500 hover:via-green-600 hover:to-green-700
-                    "
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Story
-                  </Button>
-                );
-
-                // Special handling for Library button with dropdown
-                if (button.name === 'Library') {
-                  return [libraryButton, ...(isViewer ? [] : [createStoryButton])];
+            <Button 
+              onClick={handleLogout} 
+              variant="ghost" 
+              className="font-bold border border-red-300/30 hover:bg-red-600"
+              style={{ backgroundColor: '#FF0000', color: '#FFFF00' }}
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
+          
+          {/* Right section: Navigation buttons */}
+          <nav className="flex gap-2">
+            {navButtons.map((button, index) => {
+              const isActive = location.pathname === button.path || 
+                (button.name === 'Library' && (location.pathname === '/buddys_admin/stories' || location.pathname.includes('/buddys_admin/stories')));
+              const Icon = button.icon;
+              
+              const handleButtonClick = () => {
+                if (button.openInNewTab) {
+                  window.open(button.path, '_blank');
+                } else {
+                  scrollToTop();
                 }
+              };
 
-                return (
-                  <div 
-                    key={button.name}
-                    className="relative"
-                    onMouseEnter={() => setHoveredButton(button.name)}
-                    onMouseLeave={() => setHoveredButton(null)}
-                  >
-                    {button.openInNewTab ? (
+              // Render Library button with dropdown
+              const libraryButton = (
+                <div 
+                  key={button.name}
+                  className="relative"
+                  onMouseEnter={() => setHoveredButton(button.name)}
+                  onMouseLeave={() => setHoveredButton(null)}
+                >
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
                       <Button
                         variant="ghost"
-                        onClick={handleButtonClick}
                         className={`
                           transition-all duration-200 border font-fun
                           ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
                           hover:transform hover:translate-y-1 active:translate-y-2 
                           active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
-                          ${button.hoverColor}
+                          ${isActive 
+                            ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
+                            : button.hoverColor
+                          }
+                        `}
+                      >
+                        <Icon className="h-4 w-4 mr-2" />
+                        {button.name}
+                        <ChevronDown className="h-3 w-3 ml-1" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg">
+                      <DropdownMenuItem asChild>
+                        <Link 
+                          to="/buddys_admin/stories?view=stories" 
+                          onClick={scrollToTop}
+                          className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
+                        >
+                          <FileText className="h-4 w-4 mr-2" />
+                          Full Library
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link 
+                          to="/buddys_admin/stories?view=bios" 
+                          onClick={scrollToTop}
+                          className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
+                        >
+                          <Users className="h-4 w-4 mr-2" />
+                          Author Bios
+                        </Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  {hoveredButton === button.name && (
+                    <div className="nav-bubble opacity-100 visible">
+                      {button.description}
+                    </div>
+                  )}
+                </div>
+              );
+
+              // Render + Story button after Library button
+              const createStoryButton = (
+                <Button
+                  key="create-story"
+                  onClick={() => {
+                    console.log('🎯 + Story button clicked in header');
+                    handleCreateStoryClick();
+                  }}
+                  variant="ghost"
+                  className="
+                    transition-all duration-200 border font-fun
+                    bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white
+                    shadow-[0_6px_0_#16a34a,0_8px_15px_rgba(0,0,0,0.3)]
+                    hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)]
+                    hover:transform hover:translate-y-1 active:translate-y-2 
+                    active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
+                    hover:from-green-500 hover:via-green-600 hover:to-green-700
+                  "
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Story
+                </Button>
+              );
+
+              // Special handling for Library button with dropdown
+              if (button.name === 'Library') {
+                return [libraryButton, ...(isViewer ? [] : [createStoryButton])];
+              }
+
+              return (
+                <div 
+                  key={button.name}
+                  className="relative"
+                  onMouseEnter={() => setHoveredButton(button.name)}
+                  onMouseLeave={() => setHoveredButton(null)}
+                >
+                  {button.openInNewTab ? (
+                    <Button
+                      variant="ghost"
+                      onClick={handleButtonClick}
+                      className={`
+                        transition-all duration-200 border font-fun
+                        ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
+                        hover:transform hover:translate-y-1 active:translate-y-2 
+                        active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
+                        ${button.hoverColor}
+                      `}
+                    >
+                      <Icon className="h-4 w-4 mr-2" />
+                      {button.name}
+                    </Button>
+                  ) : (
+                    <Link to={button.path} onClick={scrollToTop}>
+                      <Button
+                        variant="ghost"
+                        className={`
+                          transition-all duration-200 border font-fun
+                          ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
+                          hover:transform hover:translate-y-1 active:translate-y-2 
+                          active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
+                          ${isActive 
+                            ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
+                            : button.hoverColor
+                          }
                         `}
                       >
                         <Icon className="h-4 w-4 mr-2" />
                         {button.name}
                       </Button>
-                    ) : (
-                      <Link to={button.path} onClick={scrollToTop}>
-                        <Button
-                          variant="ghost"
-                          className={`
-                            transition-all duration-200 border font-fun
-                            ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
-                            hover:transform hover:translate-y-1 active:translate-y-2 
-                            active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
-                            ${isActive 
-                              ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
-                              : button.hoverColor
-                            }
-                          `}
-                        >
-                          <Icon className="h-4 w-4 mr-2" />
-                          {button.name}
-                        </Button>
-                      </Link>
-                    )}
-                    {hoveredButton === button.name && (
-                      <div className="nav-bubble opacity-100 visible">
-                        {button.description}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </nav>
-          </div>
-          
-          <Button 
-            onClick={handleLogout} 
-            variant="ghost" 
-            className="font-bold border border-red-300/30 hover:bg-red-600"
-            style={{ backgroundColor: '#FF0000', color: '#FFFF00' }}
-          >
-            <LogOut className="h-4 w-4 mr-2" />
-            Logout
-          </Button>
+                    </Link>
+                  )}
+                  {hoveredButton === button.name && (
+                    <div className="nav-bubble opacity-100 visible">
+                      {button.description}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
         </div>
       </div>
     </div>
