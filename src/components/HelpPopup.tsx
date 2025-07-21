@@ -59,7 +59,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-2xl max-h-[95vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col"
+        className="max-w-2xl h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col"
         style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}
       >
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b border-orange-200">
@@ -109,10 +109,10 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         <div className="flex justify-end items-center pt-2 border-t border-orange-200">
           <Button
             onClick={onClose}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium text-lg"
+            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-xl opacity-100 shadow-lg"
             size="lg"
           >
-            <X className="h-6 w-6 mr-2" />
+            <X className="h-10 w-10 mr-3 stroke-2" />
             Close Help
           </Button>
         </div>
