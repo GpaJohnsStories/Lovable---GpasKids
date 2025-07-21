@@ -49,7 +49,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               </div>
             </button>
           </TooltipTrigger>
-          <TooltipContent>
+          <TooltipContent className="bg-red-600 border-red-700 text-[#FFFF00] font-bold shadow-lg">
             <p>Click Here for Help!</p>
           </TooltipContent>
         </Tooltip>
