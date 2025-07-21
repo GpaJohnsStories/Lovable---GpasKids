@@ -20,7 +20,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
       {/* Buddy's Photo - Positioned above "Grandpa John's" text */}
       <div className="flex items-start gap-4">
         {/* Help Box with Buddy's Photo */}
-        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center w-20 sm:w-24">
+        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center w-20 sm:w-24 h-32 sm:h-36">
           <img 
             src="/lovable-uploads/0a15c652-64be-4521-baec-828c21828916.png"
             alt="Help? Click Here or Ctrl-H"
