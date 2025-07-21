@@ -10,9 +10,17 @@ interface SimpleStoryFormProps {
   storyId?: string;
   onSave: () => void;
   onCancel: () => void;
+  allowTextToSpeech?: boolean;
+  context?: string;
 }
 
-const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCancel }) => {
+const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ 
+  storyId, 
+  onSave, 
+  onCancel, 
+  allowTextToSpeech = false,
+  context = "default"
+}) => {
   const {
     formData,
     isLoadingStory,
@@ -90,6 +98,8 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({ storyId, onSave, onCa
           onSubmit={onSubmit}
           onCancel={onCancel}
           onSaveOnly={onSaveOnly}
+          allowTextToSpeech={allowTextToSpeech}
+          context={context}
         />
       </div>
     </div>

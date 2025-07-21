@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -6,7 +7,6 @@ import { formatDistanceToNow } from 'date-fns';
 import { ExternalLink } from "lucide-react";
 import StoryContentRenderer from "@/components/content/StoryContentRenderer";
 import StoryHeader from "@/components/StoryHeader";
-import CommentSection from "@/components/CommentSection";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -165,7 +165,10 @@ const Story = () => {
             </div>
           </main>
 
-          <CommentSection storyId={story.id} />
+          {/* Comment section will be added when the CommentSection component is available */}
+          <div className="mt-8 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
+            <p className="text-gray-500 text-center">Comments section coming soon...</p>
+          </div>
         </div>
         <CookieFreeFooter />
       </div>
