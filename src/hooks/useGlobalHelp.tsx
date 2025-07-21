@@ -46,7 +46,7 @@ export const useGlobalHelp = () => {
     console.log('🔍 Fetching help content for route:', route, 'with code:', helpCode);
     
     try {
-      const story = await lookupStoryByCode(helpCode);
+      const story = await lookupStoryByCode(helpCode, true); // Silent mode for help lookups
       
       if (story && story.content) {
         console.log('✅ Help content found:', story.title);
