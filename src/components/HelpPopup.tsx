@@ -29,6 +29,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   isLoading,
   currentRoute
 }) => {
+  console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
   const getPageTitle = (route: string): string => {
     if (route.startsWith('/story/')) return 'Story Page';
     if (route.startsWith('/author/')) return 'Author Bio';

@@ -67,6 +67,7 @@ export const useGlobalHelp = () => {
     console.log('🆘 Showing help for route:', route);
     setCurrentRoute(route);
     setIsHelpOpen(true);
+    console.log('🔓 Help popup state set to: true');
     fetchHelpContent(route);
   }, [fetchHelpContent]);
 
