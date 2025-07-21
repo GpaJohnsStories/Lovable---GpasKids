@@ -11,7 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { HelpCircle, X } from "lucide-react";
-import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
+import StoryContentRenderer from "@/components/content/StoryContentRenderer";
 import { StoryCodeAudioControls } from "@/components/story-content/StoryCodeAudioControls";
 import buddyPhoto from "@/assets/buddy-original.png";
 
@@ -99,12 +99,12 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             </div>
           ) : (
             <ScrollArea className="max-h-[75vh] w-full rounded-md border border-orange-200 bg-white/50 p-4">
-              <IsolatedStoryRenderer 
-                content={helpContent}
-                useRichCleaning={true}
-                category="WebText"
-                className="text-gray-800 leading-relaxed"
-              />
+              <div className="prose prose-orange max-w-none">
+                <StoryContentRenderer 
+                  content={helpContent}
+                  className="text-gray-800 leading-relaxed"
+                />
+              </div>
             </ScrollArea>
           )}
         </div>
