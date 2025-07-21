@@ -4,7 +4,7 @@ import { useStoryCodeLookup } from './useStoryCodeLookup';
 
 // Map routes to their corresponding story codes for help content
 const ROUTE_HELP_MAP: Record<string, string> = {
-  '/': 'HOME_HELP',
+  '/': 'HLP-HOM',
   '/library': 'LIBRARY_HELP',
   '/story': 'STORY_HELP',
   '/about': 'ABOUT_HELP',
@@ -49,7 +49,7 @@ export const useGlobalHelp = () => {
     if (route.startsWith('/comment/')) return 'COMMENT_HELP';
     if (route.startsWith('/buddys_admin')) return 'ADMIN_HELP';
     
-    return ROUTE_HELP_MAP[route] || 'HOME_HELP';
+    return ROUTE_HELP_MAP[route] || 'HLP-HOM';
   }, []);
 
   const fetchHelpContent = useCallback(async (route: string) => {
