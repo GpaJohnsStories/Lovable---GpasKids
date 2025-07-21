@@ -436,47 +436,63 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
         <Separator orientation="vertical" className="h-8 bg-blue-300" />
 
         {/* Volume Control */}
-        <div className={`flex items-center ${config.controlGap}`}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="p-1 rounded bg-green-500 text-white">
-                <Volume2 className={config.icon} />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Volume: {volume}%</p>
-            </TooltipContent>
-          </Tooltip>
-          <Slider
-            value={[volume]}
-            onValueChange={handleVolumeChange}
-            max={100}
-            min={0}
-            step={5}
-            className={`${config.slider} [&_[data-radix-slider-range]]:bg-green-500`}
-          />
+        <div className={`flex flex-col items-center ${config.controlGap}`}>
+          <div className={`flex items-center ${config.controlGap}`}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="p-1 rounded bg-green-500 text-white">
+                  <Volume2 className={config.icon} />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Volume: {volume}%</p>
+              </TooltipContent>
+            </Tooltip>
+            <Slider
+              value={[volume]}
+              onValueChange={handleVolumeChange}
+              max={100}
+              min={0}
+              step={5}
+              className={`${config.slider} [&_[data-radix-slider-range]]:bg-green-500`}
+            />
+          </div>
+          {/* Volume markers */}
+          <div className={`flex justify-between ${config.slider} relative`}>
+            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '50%', transform: 'translateX(-50%)' }}></div>
+            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '100%', transform: 'translateX(-50%)' }}></div>
+          </div>
         </div>
 
         {/* Speed Control */}
-        <div className={`flex items-center ${config.controlGap}`}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="p-1 rounded bg-blue-500 text-white">
-                <Gauge className={config.icon} />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Speed: {playbackRate}x</p>
-            </TooltipContent>
-          </Tooltip>
-          <Slider
-            value={[playbackRate]}
-            onValueChange={handleSpeedChange}
-            max={2.0}
-            min={0.5}
-            step={0.1}
-            className={`${config.slider} [&_[data-radix-slider-range]]:bg-blue-500`}
-          />
+        <div className={`flex flex-col items-center ${config.controlGap}`}>
+          <div className={`flex items-center ${config.controlGap}`}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="p-1 rounded bg-blue-500 text-white">
+                  <Gauge className={config.icon} />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Speed: {playbackRate}x</p>
+              </TooltipContent>
+            </Tooltip>
+            <Slider
+              value={[playbackRate]}
+              onValueChange={handleSpeedChange}
+              max={2.0}
+              min={0.5}
+              step={0.1}
+              className={`${config.slider} [&_[data-radix-slider-range]]:bg-blue-500`}
+            />
+          </div>
+          {/* Speed markers */}
+          <div className={`flex justify-between ${config.slider} relative`}>
+            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '0%', transform: 'translateX(-50%)' }}></div>
+            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '33.33%', transform: 'translateX(-50%)' }}></div>
+            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '66.67%', transform: 'translateX(-50%)' }}></div>
+            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '100%', transform: 'translateX(-50%)' }}></div>
+          </div>
         </div>
       </div>
     </TooltipProvider>
