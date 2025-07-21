@@ -50,9 +50,9 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             </button>
           </TooltipTrigger>
           <TooltipContent 
-            side="bottom" 
+            side="right" 
             align="center" 
-            sideOffset={-80}
+            sideOffset={-60}
             className="bg-red-600 border-red-700 text-[#FFFF00] font-bold shadow-lg"
           >
             <p>Click Here for Help!</p>
