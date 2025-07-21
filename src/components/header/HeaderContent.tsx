@@ -16,7 +16,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   };
 
   return (
-    <div className="flex items-start justify-between relative">
+    <div className="flex items-center justify-between relative">
       {/* Buddy's Photo - Positioned above "Grandpa John's" text */}
       <div className="flex items-start gap-4">
         {/* Help Box with Buddy's Photo */}
