@@ -29,6 +29,11 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
         return;
       }
 
+      // Only check if we haven't already authorized this user
+      if (isAuthorized === true) {
+        return;
+      }
+
       try {
         console.log('🔐 EnhancedSecureAdminCheck: Checking admin access for user:', session.user.id);
         setAuthCheckLoading(true);
@@ -65,12 +70,15 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
       }
     };
 
-    checkAdminAccess();
+    // Only run the check if we're not already loading or if we don't have a result yet
+    if (!authCheckLoading && isAuthorized === null) {
+      checkAdminAccess();
+    }
 
     return () => {
       isMounted = false;
     };
-  }, [session?.user]);
+  }, [session?.user?.id, isAuthorized, authCheckLoading]);
 
   // Handle session recovery
   const handleRecovery = async () => {
