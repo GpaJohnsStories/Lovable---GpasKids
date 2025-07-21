@@ -4,14 +4,14 @@ import { useStoryCodeLookup } from './useStoryCodeLookup';
 
 // Map routes to their corresponding story codes for help content
 const ROUTE_HELP_MAP: Record<string, string> = {
-  '/': 'HLP-HOM',
-  '/library': 'LIBRARY_HELP',
+  '/': 'HLP-HOME',
+  '/library': 'HLP-LIB',
   '/story': 'STORY_HELP',
-  '/about': 'ABOUT_HELP',
-  '/make-comment': 'COMMENT_HELP',
-  '/view-comments': 'VIEW_COMMENTS_HELP',
-  '/writing': 'WRITING_HELP',
-  '/privacy': 'PRIVACY_HELP',
+  '/about': 'HLP-ABT',
+  '/make-comment': 'HLP-COM1',
+  '/view-comments': 'HLP-COM2',
+  '/writing': 'HLP-WR',
+  '/privacy': 'HLP-PRV',
   '/help-gpa': 'HELP_GPA_HELP',
   '/author': 'AUTHOR_HELP',
   '/buddys_admin': 'ADMIN_HELP',
@@ -20,20 +20,7 @@ const ROUTE_HELP_MAP: Record<string, string> = {
   '/admin-access': 'ADMIN_ACCESS_HELP'
 };
 
-const DEFAULT_HELP_MESSAGE = `
-<div style="text-align: center; padding: 20px;">
-  <h3>Welcome to Grandpa's Stories!</h3>
-  <p>This is a safe place for children to read wonderful stories and share comments.</p>
-  <p>Use the navigation buttons at the top to explore different sections:</p>
-  <ul style="text-align: left; max-width: 300px; margin: 0 auto;">
-    <li><strong>Home</strong> - Return to the main page</li>
-    <li><strong>Library</strong> - Browse all available stories</li>
-    <li><strong>About</strong> - Learn more about this website</li>
-    <li><strong>Comments</strong> - Share your thoughts safely</li>
-  </ul>
-  <p>Press <kbd>Ctrl+H</kbd> anytime to see help for the current page!</p>
-</div>
-`;
+const DEFAULT_HELP_MESSAGE = "I'm sorry but Grandpa John has not yet written the help message for this page. You can, however, post a comment and he will see it and respond as soon as he can.\nEnjoy your visit to our website.\nYour friend,\nBuddy";
 
 export const useGlobalHelp = () => {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
@@ -49,7 +36,7 @@ export const useGlobalHelp = () => {
     if (route.startsWith('/comment/')) return 'COMMENT_HELP';
     if (route.startsWith('/buddys_admin')) return 'ADMIN_HELP';
     
-    return ROUTE_HELP_MAP[route] || 'HLP-HOM';
+    return ROUTE_HELP_MAP[route] || 'HLP-HOME';
   }, []);
 
   const fetchHelpContent = useCallback(async (route: string) => {
