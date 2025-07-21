@@ -56,7 +56,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-4xl max-h-[80vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200"
+        className="max-w-4xl max-h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col"
         style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}
       >
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b border-orange-200">
@@ -78,14 +78,14 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </div>
         </DialogHeader>
 
-        <div className="py-4">
+        <div className="py-4 flex-1 min-h-0">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
               <span className="ml-3 text-orange-700">Loading help content...</span>
             </div>
           ) : (
-            <ScrollArea className="h-[50vh] w-full rounded-md border border-orange-200 bg-white/50 p-4">
+            <ScrollArea className="max-h-[60vh] w-full rounded-md border border-orange-200 bg-white/50 p-4">
               <div className="prose prose-orange max-w-none">
                 <StoryContentRenderer 
                   content={helpContent}
@@ -107,16 +107,6 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </Button>
         </div>
 
-        <DialogClose asChild>
-          <Button
-            className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
-            variant="ghost"
-            size="sm"
-          >
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
-          </Button>
-        </DialogClose>
       </DialogContent>
     </Dialog>
   );
