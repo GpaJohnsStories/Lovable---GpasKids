@@ -24,7 +24,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           <img 
             src="/lovable-uploads/0a15c652-64be-4521-baec-828c21828916.png"
             alt="Help? Click Here or Ctrl-H"
-            className="w-full h-auto object-contain"
+            className="w-full h-full object-cover"
           />
         </div>
         
