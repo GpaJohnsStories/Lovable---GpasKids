@@ -132,6 +132,11 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
         const cleanContent = tempDiv.textContent || tempDiv.innerText || '';
         textToRead += ` ${cleanContent}`;
       }
+      
+      // Add OpenAI attribution for help content
+      if (context === 'help-popup') {
+        textToRead += `. Audio was read by Nova voice from OpenAI.`;
+      }
 
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
