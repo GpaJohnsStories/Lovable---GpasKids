@@ -16,7 +16,16 @@ const AdminStories = () => {
 
   const handleEditStory = (story: any) => {
     console.log('🎯 AdminStories: handleEditStory called with story:', story.id, story.title);
-    // Open edit page in a new tab instead of navigating in current tab
+    
+    // Store current context in sessionStorage for restoration
+    const currentContext = {
+      scrollPosition: window.pageYOffset,
+      timestamp: Date.now(),
+      returnUrl: window.location.pathname + window.location.search
+    };
+    sessionStorage.setItem('admin-edit-context', JSON.stringify(currentContext));
+    
+    // Open edit page in a new tab
     const editUrl = `/buddys_admin/stories/edit/${story.id}`;
     window.open(editUrl, '_blank');
   };

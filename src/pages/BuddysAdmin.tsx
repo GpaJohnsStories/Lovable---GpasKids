@@ -6,7 +6,7 @@ import CommentsDashboard from "@/components/admin/CommentsDashboard";
 import VoicePreview from "@/components/VoicePreview";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ContentProtection from "@/components/ContentProtection";
-import SecureAdminCheck from "@/components/admin/SecureAdminCheck";
+import EnhancedSecureAdminCheck from "@/components/admin/EnhancedSecureAdminCheck";
 import { useAdminSession } from "@/hooks/useAdminSession";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
@@ -52,13 +52,13 @@ const BuddysAdminContent = () => {
   );
 };
 
-// Main admin component - now with simple authentication
+// Main admin component - now with enhanced authentication
 const BuddysAdmin = () => {
   return (
     <ContentProtection enableProtection={false}>
-      <SecureAdminCheck>
+      <EnhancedSecureAdminCheck>
         <BuddysAdminContent />
-      </SecureAdminCheck>
+      </EnhancedSecureAdminCheck>
     </ContentProtection>
   );
 };
