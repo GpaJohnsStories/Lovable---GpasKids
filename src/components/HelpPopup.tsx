@@ -183,7 +183,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             <button
               onClick={handlePlaySpeech}
               disabled={isLoading || !helpContent}
-              className={`text-white text-xs px-3 py-1.5 rounded-md font-bold shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.2)] border border-green-700 transition-all duration-200 flex items-center gap-1.5 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_2px_0_#22c55e,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.2)] ${isLoading || !helpContent ? 'opacity-50 cursor-not-allowed' : ''} ${isPlaying ? 'animate-pulse' : ''}`}
+              className={`text-white text-xs px-3 py-1.5 rounded-md font-bold shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.2)] border border-green-700 transition-all duration-200 flex items-center gap-1.5 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_2px_0_#22c55e,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.2)] ${isLoading || !helpContent ? 'opacity-50 cursor-not-allowed' : ''}`}
               title="Start reading the help content"
             >
               <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
