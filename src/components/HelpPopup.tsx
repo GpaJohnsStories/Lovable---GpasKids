@@ -10,8 +10,9 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { HelpCircle, X, Keyboard } from "lucide-react";
+import { HelpCircle, X } from "lucide-react";
 import StoryContentRenderer from "@/components/content/StoryContentRenderer";
+import { StoryCodeAudioControls } from "@/components/story-content/StoryCodeAudioControls";
 import buddyPhoto from "@/assets/buddy-original.png";
 
 interface HelpPopupProps {
@@ -20,6 +21,7 @@ interface HelpPopupProps {
   helpContent: string;
   isLoading: boolean;
   currentRoute: string;
+  storyData?: any;
 }
 
 const HelpPopup: React.FC<HelpPopupProps> = ({
@@ -27,7 +29,8 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   onClose,
   helpContent,
   isLoading,
-  currentRoute
+  currentRoute,
+  storyData
 }) => {
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
   const getPageTitle = (route: string): string => {
@@ -72,11 +75,21 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               </DialogTitle>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-sm text-orange-600">
-            <Keyboard className="h-4 w-4" />
-            <span>Press Ctrl+H for help</span>
-          </div>
         </DialogHeader>
+
+        {/* Audio Controls */}
+        {storyData && (
+          <div className="py-2">
+            <StoryCodeAudioControls
+              audioUrl={storyData.audio_url}
+              title={storyData.title || `Help for ${getPageTitle(currentRoute)}`}
+              content={helpContent}
+              author={storyData.author || 'Buddy the Helper'}
+              description={storyData.description}
+              aiVoiceName={storyData.ai_voice_name}
+            />
+          </div>
+        )}
 
         <div className="py-4 flex-1 min-h-0">
           {isLoading ? (

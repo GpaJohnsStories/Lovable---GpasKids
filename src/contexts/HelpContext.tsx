@@ -27,6 +27,7 @@ interface HelpContextType {
   helpContent: string;
   isLoading: boolean;
   currentRoute: string;
+  storyData: any;
   showHelp: (route: string) => void;
   hideHelp: () => void;
 }
@@ -42,6 +43,7 @@ export const HelpProvider: React.FC<HelpProviderProps> = ({ children }) => {
   const [helpContent, setHelpContent] = useState<string>(DEFAULT_HELP_MESSAGE);
   const [isLoading, setIsLoading] = useState(false);
   const [currentRoute, setCurrentRoute] = useState<string>('/');
+  const [storyData, setStoryData] = useState<any>(null);
   const { lookupStoryByCode } = useStoryCodeLookup();
 
   const getHelpCodeForRoute = useCallback((route: string): string => {
@@ -66,13 +68,22 @@ export const HelpProvider: React.FC<HelpProviderProps> = ({ children }) => {
       if (story && story.content) {
         console.log('✅ Help content found:', story.title);
         setHelpContent(story.content);
+        setStoryData(story);
       } else {
         console.log('⚠️ No help content found, using default');
         setHelpContent(DEFAULT_HELP_MESSAGE);
+        // Try to get the default help story (HLP-HLP)
+        const defaultHelp = await lookupStoryByCode('HLP-HLP', true);
+        if (defaultHelp) {
+          setStoryData(defaultHelp);
+        } else {
+          setStoryData(null);
+        }
       }
     } catch (error) {
       console.error('❌ Error fetching help content:', error);
       setHelpContent(DEFAULT_HELP_MESSAGE);
+      setStoryData(null);
     } finally {
       setIsLoading(false);
     }
@@ -110,6 +121,7 @@ export const HelpProvider: React.FC<HelpProviderProps> = ({ children }) => {
     helpContent,
     isLoading,
     currentRoute,
+    storyData,
     showHelp,
     hideHelp
   };

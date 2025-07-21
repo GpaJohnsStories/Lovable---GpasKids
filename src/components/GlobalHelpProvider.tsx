@@ -13,6 +13,7 @@ const GlobalHelpProvider: React.FC<GlobalHelpProviderProps> = ({ children }) => 
     helpContent,
     isLoading,
     currentRoute,
+    storyData,
     hideHelp
   } = useHelp();
 
@@ -27,6 +28,7 @@ const GlobalHelpProvider: React.FC<GlobalHelpProviderProps> = ({ children }) => 
         helpContent={helpContent}
         isLoading={isLoading}
         currentRoute={currentRoute}
+        storyData={storyData}
       />
     </>
   );
