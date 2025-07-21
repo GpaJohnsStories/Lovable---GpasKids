@@ -458,9 +458,9 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
             />
           </div>
           {/* Volume markers */}
-          <div className={`${config.slider} relative`}>
-            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '50%', transform: 'translateX(-50%)' }}></div>
-            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ right: '0px' }}></div>
+          <div className={`${config.slider} relative h-2`}>
+            <div className="w-0.5 h-2 bg-gray-400 absolute top-0" style={{ left: 'calc(50% - 1px)' }}></div>
+            <div className="w-0.5 h-2 bg-gray-400 absolute top-0" style={{ left: 'calc(100% - 2px)' }}></div>
           </div>
         </div>
 
