@@ -453,7 +453,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
             max={100}
             min={0}
             step={5}
-            className={`${config.slider} [&>span:first-child]:bg-green-200 [&>span:last-child]:bg-green-500`}
+            className={`${config.slider} [&>span:first-child]:bg-green-500 [&>span:last-child]:bg-gray-200`}
           />
         </div>
 
@@ -475,7 +475,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
             max={2.0}
             min={0.5}
             step={0.1}
-            className={`${config.slider} [&>span:first-child]:bg-blue-200 [&>span:last-child]:bg-blue-500`}
+            className={`${config.slider} [&>span:first-child]:bg-blue-500 [&>span:last-child]:bg-gray-200`}
           />
         </div>
       </div>
