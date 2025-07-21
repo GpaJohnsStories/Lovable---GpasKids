@@ -16,7 +16,9 @@ const AdminStories = () => {
 
   const handleEditStory = (story: any) => {
     console.log('🎯 AdminStories: handleEditStory called with story:', story.id, story.title);
-    navigate(`/buddys_admin/stories/edit/${story.id}`);
+    // Open edit page in a new tab instead of navigating in current tab
+    const editUrl = `/buddys_admin/stories/edit/${story.id}`;
+    window.open(editUrl, '_blank');
   };
 
   const handleEditBio = (authorName: string) => {
