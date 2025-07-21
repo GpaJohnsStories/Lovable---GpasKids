@@ -11,7 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { HelpCircle, X } from "lucide-react";
-import StoryContentRenderer from "@/components/content/StoryContentRenderer";
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 import { StoryCodeAudioControls } from "@/components/story-content/StoryCodeAudioControls";
 import buddyPhoto from "@/assets/buddy-original.png";
 
@@ -59,7 +59,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-4xl max-h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col"
+        className="max-w-2xl max-h-[95vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col"
         style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}
       >
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b border-orange-200">
@@ -98,13 +98,13 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               <span className="ml-3 text-orange-700">Loading help content...</span>
             </div>
           ) : (
-            <ScrollArea className="max-h-[60vh] w-full rounded-md border border-orange-200 bg-white/50 p-4">
-              <div className="prose prose-orange max-w-none">
-                <StoryContentRenderer 
-                  content={helpContent}
-                  className="text-gray-800 leading-relaxed [&_p]:mb-3 [&_strong]:font-bold [&_em]:italic [&_br]:block"
-                />
-              </div>
+            <ScrollArea className="max-h-[75vh] w-full rounded-md border border-orange-200 bg-white/50 p-4">
+              <IsolatedStoryRenderer 
+                content={helpContent}
+                useRichCleaning={true}
+                category="WebText"
+                className="text-gray-800 leading-relaxed"
+              />
             </ScrollArea>
           )}
         </div>
