@@ -74,7 +74,7 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-800">
-            {storyId ? 'Edit Story' : 'Create New Story'}
+            {storyId ? 'Update Existing Story, WebText or Help Text' : 'Add New Story, WebText or Help Text'}
           </h1>
           {formData.audio_url && (
             <div className="flex items-center text-green-600 text-sm font-medium">
