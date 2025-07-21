@@ -24,6 +24,8 @@ interface StoryFormContentProps {
   onSubmit: (e: React.FormEvent) => void;
   onCancel: () => void;
   onSaveOnly: () => void;
+  allowTextToSpeech?: boolean;
+  context?: string;
 }
 
 const StoryFormContent: React.FC<StoryFormContentProps> = ({
@@ -39,7 +41,9 @@ const StoryFormContent: React.FC<StoryFormContentProps> = ({
   onGenerateAudio,
   onSubmit,
   onCancel,
-  onSaveOnly
+  onSaveOnly,
+  allowTextToSpeech = false,
+  context = "default"
 }) => {
   console.log('🎯 StoryFormContent: Rendering with formData:', {
     id: formData.id,
