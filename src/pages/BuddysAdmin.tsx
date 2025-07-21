@@ -4,7 +4,7 @@ import AdminStories from "@/components/admin/AdminStories";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
 import CommentsDashboard from "@/components/admin/CommentsDashboard";
 import VoicePreview from "@/components/VoicePreview";
-import AdminLayout from "@/components/admin/AdminLayout";
+import AdminLayoutWithHeaderBanner from "@/components/admin/AdminLayoutWithHeaderBanner";
 import ContentProtection from "@/components/ContentProtection";
 import EnhancedSecureAdminCheck from "@/components/admin/EnhancedSecureAdminCheck";
 import { useAdminSession } from "@/hooks/useAdminSession";
@@ -44,9 +44,9 @@ const BuddysAdminContent = () => {
       <Route path="/stories/edit" element={<Navigate to="/buddys_admin/stories" replace />} />
       <Route path="/comments" element={<CommentsDashboard />} />
       <Route path="/voice-preview" element={
-        <AdminLayout>
+        <AdminLayoutWithHeaderBanner>
           <VoicePreview />
-        </AdminLayout>
+        </AdminLayoutWithHeaderBanner>
       } />
     </Routes>
   );

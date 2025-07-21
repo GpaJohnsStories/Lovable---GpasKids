@@ -1,6 +1,5 @@
 
-
-import AdminLayout from "./AdminLayout";
+import AdminLayoutWithHeaderBanner from "./AdminLayoutWithHeaderBanner";
 import CommentsTable from "./CommentsTable";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -34,7 +33,7 @@ const CommentsDashboard = () => {
   });
 
   return (
-    <AdminLayout>
+    <AdminLayoutWithHeaderBanner>
       <div className="mt-8">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
@@ -60,7 +59,7 @@ const CommentsDashboard = () => {
       )}
       
       <CommentsTable />
-    </AdminLayout>
+    </AdminLayoutWithHeaderBanner>
   );
 };
 

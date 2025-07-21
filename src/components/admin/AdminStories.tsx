@@ -1,7 +1,7 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import AdminLayout from "./AdminLayout";
+import AdminLayoutWithHeaderBanner from "./AdminLayoutWithHeaderBanner";
 import AdminStoriesTable from "./AdminStoriesTable";
 import { useUserRole } from "@/hooks/useUserRole";
 
@@ -36,7 +36,7 @@ const AdminStories = () => {
   };
 
   return (
-    <AdminLayout>
+    <AdminLayoutWithHeaderBanner>
       <div className="space-y-4">
         <AdminStoriesTable
           onEditStory={handleEditStory}
@@ -45,7 +45,7 @@ const AdminStories = () => {
           onEditBio={handleEditBio}
         />
       </div>
-    </AdminLayout>
+    </AdminLayoutWithHeaderBanner>
   );
 };
 

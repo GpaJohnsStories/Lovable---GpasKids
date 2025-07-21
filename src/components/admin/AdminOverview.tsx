@@ -1,5 +1,4 @@
-
-import AdminLayout from "./AdminLayout";
+import AdminLayoutWithHeaderBanner from "./AdminLayoutWithHeaderBanner";
 import EmergencyAdminTools from "./EmergencyAdminTools";
 import SecurityAuditDashboard from "./SecurityAuditDashboard";
 import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
@@ -52,7 +51,7 @@ const AdminOverview = () => {
   });
 
   return (
-    <AdminLayout>
+    <AdminLayoutWithHeaderBanner>
       <div className="mb-0">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
@@ -228,7 +227,7 @@ const AdminOverview = () => {
           </CardContent>
         </Card>
       )}
-    </AdminLayout>
+    </AdminLayoutWithHeaderBanner>
   );
 };
 
