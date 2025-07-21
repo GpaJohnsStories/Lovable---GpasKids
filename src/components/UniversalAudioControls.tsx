@@ -439,7 +439,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
         <div className={`flex items-center ${config.controlGap}`}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Volume2 className={`${config.icon} text-blue-600 cursor-help`} />
+              <Volume2 className={`${config.icon} text-green-600 cursor-help`} />
             </TooltipTrigger>
             <TooltipContent>
               <p>Volume: {volume}%</p>
