@@ -66,7 +66,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             <img 
               src="/lovable-uploads/949dcec1-2a5d-481c-9ce6-aa0da5edb3d0.png"
               alt="Buddy the Helper Dog"
-              className="w-16 h-16 object-cover rounded-lg border-2 border-orange-300 shadow-lg"
+              className="w-16 h-16 object-cover rounded-lg border-2 border-green-600 shadow-lg"
             />
             <DialogTitle className="text-lg font-bold text-orange-800">
               {storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
