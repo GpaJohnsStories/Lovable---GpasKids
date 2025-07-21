@@ -65,11 +65,13 @@ export const useGlobalHelp = () => {
 
   const showHelp = useCallback((route: string) => {
     console.log('🆘 Showing help for route:', route);
+    console.log('🔍 Current help state before update:', isHelpOpen);
     setCurrentRoute(route);
     setIsHelpOpen(true);
     console.log('🔓 Help popup state set to: true');
+    alert('State update called! isHelpOpen should be true now');
     fetchHelpContent(route);
-  }, [fetchHelpContent]);
+  }, [fetchHelpContent, isHelpOpen]);
 
   const hideHelp = useCallback(() => {
     setIsHelpOpen(false);
