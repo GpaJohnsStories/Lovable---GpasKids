@@ -121,6 +121,23 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
     setCurrentUtterance(null);
   };
 
+  const handleStartOver = () => {
+    if (!speechSynthesis || !helpContent) return;
+
+    // Stop current playback
+    speechSynthesis.cancel();
+    
+    // Reset state
+    setIsPlaying(false);
+    setIsPaused(false);
+    setCurrentUtterance(null);
+    
+    // Start over immediately
+    setTimeout(() => {
+      handlePlaySpeech();
+    }, 100); // Small delay to ensure cleanup is complete
+  };
+
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
   
   const getPageTitle = (route: string): string => {
@@ -214,6 +231,18 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
                 <rect x="6" y="6" width="12" height="12"/>
               </svg>
               Stop
+            </button>
+
+            <button
+              onClick={handleStartOver}
+              disabled={isLoading || !helpContent}
+              className={`text-white text-xs px-2 py-1.5 rounded-md font-bold shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.2)] border border-purple-700 transition-all duration-200 flex items-center gap-1 bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 hover:shadow-[0_2px_0_#7c3aed,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.2)] ${isLoading || !helpContent ? 'opacity-50 cursor-not-allowed' : ''}`}
+              title="Stop and start reading from the beginning"
+            >
+              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9zm4.5-4.5v9l7-4.5-7-4.5z"/>
+              </svg>
+              Start Over
             </button>
           </div>
         </div>
