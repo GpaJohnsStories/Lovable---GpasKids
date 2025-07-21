@@ -20,7 +20,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
       {/* Buddy's Photo - Positioned above "Grandpa John's" text */}
       <div className="flex items-start gap-4">
         {/* Help Box with Buddy's Photo */}
-        <div className="bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center w-28 sm:w-32 h-32 sm:h-36 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border border-white/20 transform hover:scale-105 transition-transform duration-200">
+        <div className="bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center w-28 sm:w-32 h-40 sm:h-44 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border border-white/20 transform hover:scale-105 transition-transform duration-200">
           <img 
             src="/lovable-uploads/58384b36-a605-4f51-b242-cb44bffc266a.png"
             alt="Help? Click Here or Ctrl-H"
