@@ -24,9 +24,9 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           <img 
             src="/lovable-uploads/949dcec1-2a5d-481c-9ce6-aa0da5edb3d0.png"
             alt="Buddy the Helper Dog"
-            className="w-full h-16 sm:h-20 object-cover rounded-md mb-1"
+            className="w-full h-16 md:h-18 sm:h-20 object-cover rounded-md mb-1"
           />
-          <div className="text-yellow-200 text-[10px] sm:text-xs font-bold leading-tight">
+          <div className="text-yellow-200 text-[10px] md:text-[11px] sm:text-xs font-bold leading-tight">
             <div>Need Help?</div>
             <div>Click Here</div>
             <div>or Ctrl+H</div>
