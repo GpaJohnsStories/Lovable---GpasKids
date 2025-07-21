@@ -26,7 +26,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             alt="Buddy the Helper Dog"
             className="w-full h-20 object-cover rounded-md mb-1"
           />
-          <div className="text-orange-400 text-xs font-bold leading-tight">
+          <div className="text-yellow-200 text-xs font-bold leading-tight">
             <div>Need Help?</div>
             <div>Click Here</div>
             <div>or Ctrl+H</div>
