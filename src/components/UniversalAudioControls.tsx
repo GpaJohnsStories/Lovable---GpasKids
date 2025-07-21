@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Play, Pause, Square, Loader } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface UniversalAudioControlsProps {
   audioUrl?: string;
@@ -297,72 +298,98 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
   }
 
   return (
-    <div className={`flex items-center justify-center ${config.gap} ${config.container} bg-white/80 rounded-lg border border-blue-200 ${className}`}>
-      {/* Play Button */}
-      <button
-        onClick={handlePlay}
-        disabled={isLoading || isPlaying}
-        className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#22c55e,0_6px_12px_rgba(0,0,0,0.3)] border border-green-700 transition-all duration-200 flex items-center gap-2 ${
-          isLoading || isPlaying
-            ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.3)] hover:from-green-500 hover:via-green-600 hover:to-green-700'
-        }`}
-        title={isLoading ? "Loading..." : isPlaying ? "Currently playing" : "Start playing"}
-      >
-        {isLoading ? (
-          <Loader className={`${config.icon} animate-spin`} />
-        ) : (
-          <Play className={config.icon} />
-        )}
-        {size !== 'sm' && (isLoading ? "Loading..." : "Please, read it to me")}
-      </button>
+    <TooltipProvider>
+      <div className={`flex items-center justify-center ${config.gap} ${config.container} bg-white/80 rounded-lg border border-blue-200 ${className}`}>
+        {/* Play Button */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={handlePlay}
+              disabled={isLoading || isPlaying}
+              className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#22c55e,0_6px_12px_rgba(0,0,0,0.3)] border border-green-700 transition-all duration-200 flex items-center gap-2 ${
+                isLoading || isPlaying
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.3)] hover:from-green-500 hover:via-green-600 hover:to-green-700'
+              }`}
+            >
+              {isLoading ? (
+                <Loader className={`${config.icon} animate-spin`} />
+              ) : (
+                <Play className={config.icon} />
+              )}
+              {size !== 'sm' && (isLoading ? "Loading..." : "Please, read it to me")}
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{isLoading ? "Loading..." : isPlaying ? "Currently playing" : "Start playing"}</p>
+          </TooltipContent>
+        </Tooltip>
 
-      {/* Pause Button */}
-      <button
-        onClick={handlePause}
-        disabled={!isPlaying}
-        className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#f59e0b,0_6px_12px_rgba(0,0,0,0.3)] border border-amber-700 transition-all duration-200 flex items-center gap-2 ${
-          !isPlaying
-            ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 hover:shadow-[0_3px_0_#f59e0b,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#f59e0b,0_2px_4px_rgba(0,0,0,0.3)] hover:from-amber-500 hover:via-amber-600 hover:to-amber-700'
-        }`}
-        title={isPlaying ? "Pause playback" : "No audio playing"}
-      >
-        <Pause className={config.icon} />
-        {size === 'lg' && "Pause"}
-      </button>
+        {/* Pause Button */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={handlePause}
+              disabled={!isPlaying}
+              className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#f59e0b,0_6px_12px_rgba(0,0,0,0.3)] border border-amber-700 transition-all duration-200 flex items-center gap-2 ${
+                !isPlaying
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 hover:shadow-[0_3px_0_#f59e0b,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#f59e0b,0_2px_4px_rgba(0,0,0,0.3)] hover:from-amber-500 hover:via-amber-600 hover:to-amber-700'
+              }`}
+            >
+              <Pause className={config.icon} />
+              {size === 'lg' && "Pause"}
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{isPlaying ? "Pause playback" : "No audio playing"}</p>
+          </TooltipContent>
+        </Tooltip>
 
-      {/* Stop Button */}
-      <button
-        onClick={handleStop}
-        disabled={!audioGenerated}
-        className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#ef4444,0_6px_12px_rgba(0,0,0,0.3)] border border-red-700 transition-all duration-200 flex items-center gap-2 ${
-          !audioGenerated
-            ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-gradient-to-b from-red-400 via-red-500 to-red-600 hover:shadow-[0_3px_0_#ef4444,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#ef4444,0_2px_4px_rgba(0,0,0,0.3)] hover:from-red-500 hover:via-red-600 hover:to-red-700'
-        }`}
-        title={audioGenerated ? "Stop and reset audio" : "No audio to stop"}
-      >
-        <Square className={config.icon} />
-        {size === 'lg' && "Stop"}
-      </button>
+        {/* Stop Button */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={handleStop}
+              disabled={!audioGenerated}
+              className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#ef4444,0_6px_12px_rgba(0,0,0,0.3)] border border-red-700 transition-all duration-200 flex items-center gap-2 ${
+                !audioGenerated
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-gradient-to-b from-red-400 via-red-500 to-red-600 hover:shadow-[0_3px_0_#ef4444,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#ef4444,0_2px_4px_rgba(0,0,0,0.3)] hover:from-red-500 hover:via-red-600 hover:to-red-700'
+              }`}
+            >
+              <Square className={config.icon} />
+              {size === 'lg' && "Stop"}
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{audioGenerated ? "Stop and reset audio" : "No audio to stop"}</p>
+          </TooltipContent>
+        </Tooltip>
 
-      {/* Start Over Button */}
-      <button
-        onClick={handleStartOver}
-        disabled={isLoading || !audioGenerated}
-        className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.3)] border border-purple-700 transition-all duration-200 flex items-center gap-2 ${
-          isLoading || !audioGenerated
-            ? 'bg-gray-400 cursor-not-allowed' 
-            : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 hover:shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)] hover:from-purple-500 hover:via-purple-600 hover:to-purple-700'
-        }`}
-        title={audioGenerated ? "Stop and start from the beginning" : "No audio to restart"}
-      >
-        <svg className={config.icon} fill="currentColor" viewBox="0 0 24 24">
-          <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9zm4.5-4.5v9l7-4.5-7-4.5z"/>
-        </svg>
-        {size === 'lg' && "Start Over"}
-      </button>
-    </div>
+        {/* Start Over Button */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={handleStartOver}
+              disabled={isLoading || !audioGenerated}
+              className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.3)] border border-purple-700 transition-all duration-200 flex items-center gap-2 ${
+                isLoading || !audioGenerated
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 hover:shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)] hover:from-purple-500 hover:via-purple-600 hover:to-purple-700'
+              }`}
+            >
+              <svg className={config.icon} fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9zm4.5-4.5v9l7-4.5-7-4.5z"/>
+              </svg>
+              {size === 'lg' && "Start Over"}
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{audioGenerated ? "Stop and start from the beginning" : "No audio to restart"}</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    </TooltipProvider>
   );
 };
