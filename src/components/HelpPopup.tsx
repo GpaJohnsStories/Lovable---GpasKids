@@ -62,24 +62,27 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         className="max-w-2xl max-h-[95vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col"
         style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}
       >
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b border-orange-200">
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b border-orange-200">
           <div className="flex items-center gap-3">
             <Avatar className="h-12 w-12 border-2 border-orange-300">
               <AvatarImage src={buddyPhoto} alt="Buddy the Helper" />
               <AvatarFallback className="bg-orange-100 text-orange-700">🐱</AvatarFallback>
             </Avatar>
-            <div className="flex items-center gap-2">
-              <HelpCircle className="h-6 w-6 text-orange-600" />
-              <DialogTitle className="text-xl font-bold text-orange-800">
-                Help: {getPageTitle(currentRoute)}
-              </DialogTitle>
-            </div>
+            <DialogTitle className="text-xl font-bold text-orange-800">
+              {storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
+            </DialogTitle>
           </div>
+          <DialogClose asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-orange-100">
+              <X className="h-6 w-6 text-orange-600" />
+              <span className="sr-only">Close</span>
+            </Button>
+          </DialogClose>
         </DialogHeader>
 
         {/* Audio Controls */}
         {storyData && (
-          <div className="py-2">
+          <div className="py-1">
             <StoryCodeAudioControls
               audioUrl={storyData.audio_url}
               title={storyData.title || `Help for ${getPageTitle(currentRoute)}`}
@@ -91,14 +94,14 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </div>
         )}
 
-        <div className="py-4 flex-1 min-h-0">
+        <div className="flex-1 min-h-0 overflow-hidden">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
               <span className="ml-3 text-orange-700">Loading help content...</span>
             </div>
           ) : (
-            <ScrollArea className="max-h-[75vh] w-full rounded-md border border-orange-200 bg-white/50 p-4">
+            <ScrollArea className="h-full w-full rounded-md border border-orange-200 bg-white/50 p-4">
               <div className="prose prose-orange max-w-none">
                 <StoryContentRenderer 
                   content={helpContent}
@@ -109,13 +112,13 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           )}
         </div>
 
-        <div className="flex justify-end items-center pt-4 border-t border-orange-200">
+        <div className="flex justify-end items-center pt-2 border-t border-orange-200">
           <Button
             onClick={onClose}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium"
-            size="sm"
+            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium text-base"
+            size="default"
           >
-            <X className="h-4 w-4 mr-2" />
+            <X className="h-5 w-5 mr-2" />
             Close Help
           </Button>
         </div>
