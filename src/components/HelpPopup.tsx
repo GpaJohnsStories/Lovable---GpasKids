@@ -5,14 +5,12 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { HelpCircle, X } from "lucide-react";
+import { X } from "lucide-react";
 import StoryContentRenderer from "@/components/content/StoryContentRenderer";
-import { StoryCodeAudioControls } from "@/components/story-content/StoryCodeAudioControls";
 import buddyPhoto from "@/assets/buddy-original.png";
 
 interface HelpPopupProps {
@@ -33,6 +31,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   storyData
 }) => {
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
+  
   const getPageTitle = (route: string): string => {
     if (route.startsWith('/story/')) return 'Story Page';
     if (route.startsWith('/author/')) return 'Author Bio';
@@ -59,10 +58,11 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-2xl h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col p-4"
+        className="max-w-2xl h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col p-0"
         style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}
       >
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b border-orange-200">
+        {/* Header with Title and Close Button */}
+        <DialogHeader className="flex flex-row items-center justify-between p-4 pb-2 border-b border-orange-200 space-y-0">
           <div className="flex items-center gap-2">
             <Avatar className="h-10 w-10 border-2 border-orange-300">
               <AvatarImage src={buddyPhoto} alt="Buddy the Helper" />
@@ -72,11 +72,21 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               {storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
             </DialogTitle>
           </div>
+          
+          {/* Close Button - Top Right */}
+          <Button
+            onClick={onClose}
+            className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-lg shrink-0"
+            size="sm"
+          >
+            <X className="h-4 w-4 mr-1 stroke-2" />
+            Close
+          </Button>
         </DialogHeader>
 
-        {/* Compact Audio Controls */}
+        {/* Audio Controls - Below Title */}
         {storyData && (
-          <div className="py-1">
+          <div className="px-4 py-2 border-b border-orange-200">
             <div className="flex items-center justify-center gap-2 p-2 bg-white/80 rounded-lg border border-blue-200">
               <button
                 className="text-white text-xs px-3 py-1.5 rounded-md font-bold shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.2)] border border-green-700 transition-all duration-200 flex items-center gap-1.5 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_2px_0_#22c55e,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.2)]"
@@ -111,14 +121,15 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </div>
         )}
 
-        <div className="flex-1 min-h-0 py-1">
+        {/* Content Area - Expands to fill remaining space */}
+        <div className="flex-1 min-h-0 p-4">
           {isLoading ? (
-            <div className="flex items-center justify-center py-8">
+            <div className="flex items-center justify-center h-full">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
               <span className="ml-3 text-orange-700">Loading help content...</span>
             </div>
           ) : (
-            <ScrollArea className="h-full w-full rounded-md border border-orange-200 bg-white/50 p-3 help-scroll-area">
+            <ScrollArea className="h-full w-full rounded-md border border-orange-200 bg-white/50 p-4">
               <div className="prose prose-orange max-w-none">
                 <StoryContentRenderer 
                   content={helpContent}
@@ -128,18 +139,6 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             </ScrollArea>
           )}
         </div>
-
-        <div className="flex justify-end items-center pt-1 border-t border-orange-200">
-          <Button
-            onClick={onClose}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-bold text-base opacity-100 shadow-lg"
-            size="sm"
-          >
-            <X className="h-5 w-5 mr-2 stroke-2" />
-            Close Help
-          </Button>
-        </div>
-
       </DialogContent>
     </Dialog>
   );
