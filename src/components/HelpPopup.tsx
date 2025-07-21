@@ -58,7 +58,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-2xl h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col p-0"
+        className="max-w-2xl h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col p-0 [&>button]:hidden"
         style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}
       >
         {/* Header with Title and Close Button */}
@@ -86,7 +86,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
 
         {/* Audio Controls - Below Title */}
         {storyData && (
-          <div className="px-4 py-2 border-b border-orange-200">
+          <div className="px-4 pb-2">
             <div className="flex items-center justify-center gap-2 p-2 bg-white/80 rounded-lg border border-blue-200">
               <button
                 className="text-white text-xs px-3 py-1.5 rounded-md font-bold shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.2)] border border-green-700 transition-all duration-200 flex items-center gap-1.5 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_2px_0_#22c55e,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.2)]"
@@ -122,7 +122,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         )}
 
         {/* Content Area - Expands to fill remaining space */}
-        <div className="flex-1 min-h-0 p-4">
+        <div className="flex-1 min-h-0 px-4 pb-4">
           {isLoading ? (
             <div className="flex items-center justify-center h-full">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
