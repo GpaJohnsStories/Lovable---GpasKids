@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -28,6 +28,99 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   currentRoute,
   storyData
 }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [speechSynthesis, setSpeechSynthesis] = useState<SpeechSynthesis | null>(null);
+  const [currentUtterance, setCurrentUtterance] = useState<SpeechSynthesisUtterance | null>(null);
+
+  // Initialize speech synthesis when component mounts
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      setSpeechSynthesis(window.speechSynthesis);
+    }
+  }, []);
+
+  // Clean up speech when component unmounts or popup closes
+  useEffect(() => {
+    if (!isOpen && speechSynthesis && currentUtterance) {
+      speechSynthesis.cancel();
+      setIsPlaying(false);
+      setIsPaused(false);
+      setCurrentUtterance(null);
+    }
+  }, [isOpen, speechSynthesis, currentUtterance]);
+
+  // Extract text content from HTML for speech
+  const getTextContent = (htmlContent: string): string => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+    return tempDiv.textContent || tempDiv.innerText || '';
+  };
+
+  const handlePlaySpeech = () => {
+    if (!speechSynthesis || !helpContent) return;
+
+    // If currently paused, resume
+    if (isPaused && currentUtterance) {
+      speechSynthesis.resume();
+      setIsPlaying(true);
+      setIsPaused(false);
+      return;
+    }
+
+    // Stop any existing speech
+    speechSynthesis.cancel();
+
+    // Create new utterance
+    const textToSpeak = getTextContent(helpContent);
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    
+    // Configure voice settings for children
+    utterance.rate = 0.8; // Slightly slower for better comprehension
+    utterance.pitch = 1.1; // Slightly higher pitch for friendliness
+    utterance.volume = 0.9;
+
+    // Set up event handlers
+    utterance.onstart = () => {
+      setIsPlaying(true);
+      setIsPaused(false);
+    };
+
+    utterance.onend = () => {
+      setIsPlaying(false);
+      setIsPaused(false);
+      setCurrentUtterance(null);
+    };
+
+    utterance.onerror = () => {
+      setIsPlaying(false);
+      setIsPaused(false);
+      setCurrentUtterance(null);
+    };
+
+    setCurrentUtterance(utterance);
+    speechSynthesis.speak(utterance);
+  };
+
+  const handlePauseSpeech = () => {
+    if (!speechSynthesis) return;
+
+    if (isPlaying) {
+      speechSynthesis.pause();
+      setIsPlaying(false);
+      setIsPaused(true);
+    }
+  };
+
+  const handleStopSpeech = () => {
+    if (!speechSynthesis) return;
+
+    speechSynthesis.cancel();
+    setIsPlaying(false);
+    setIsPaused(false);
+    setCurrentUtterance(null);
+  };
+
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
   
   const getPageTitle = (route: string): string => {
@@ -85,41 +178,45 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         </DialogHeader>
 
         {/* Audio Controls - Below Title */}
-        {storyData && (
-          <div className="px-4 pb-2">
-            <div className="flex items-center justify-center gap-2 p-2 bg-white/80 rounded-lg border border-blue-200">
-              <button
-                className="text-white text-xs px-3 py-1.5 rounded-md font-bold shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.2)] border border-green-700 transition-all duration-200 flex items-center gap-1.5 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_2px_0_#22c55e,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.2)]"
-                title="Start reading the story"
-              >
-                <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-                Read to Me
-              </button>
-              
-              <button
-                className="text-white text-xs px-2 py-1.5 rounded-md font-bold shadow-[0_3px_0_#f59e0b,0_4px_8px_rgba(0,0,0,0.2)] border border-amber-700 transition-all duration-200 flex items-center gap-1 bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 hover:shadow-[0_2px_0_#f59e0b,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#f59e0b,0_2px_4px_rgba(0,0,0,0.2)]"
-                title="Pause audio playback"
-              >
-                <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                </svg>
-                Pause
-              </button>
+        <div className="px-4 pb-2">
+          <div className="flex items-center justify-center gap-2 p-2 bg-white/80 rounded-lg border border-blue-200">
+            <button
+              onClick={handlePlaySpeech}
+              disabled={isLoading || !helpContent}
+              className={`text-white text-xs px-3 py-1.5 rounded-md font-bold shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.2)] border border-green-700 transition-all duration-200 flex items-center gap-1.5 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_2px_0_#22c55e,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.2)] ${isLoading || !helpContent ? 'opacity-50 cursor-not-allowed' : ''} ${isPlaying ? 'animate-pulse' : ''}`}
+              title="Start reading the help content"
+            >
+              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              {isPlaying ? 'Playing...' : isPaused ? 'Resume' : 'Read to Me'}
+            </button>
+            
+            <button
+              onClick={handlePauseSpeech}
+              disabled={!isPlaying}
+              className={`text-white text-xs px-2 py-1.5 rounded-md font-bold shadow-[0_3px_0_#f59e0b,0_4px_8px_rgba(0,0,0,0.2)] border border-amber-700 transition-all duration-200 flex items-center gap-1 bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 hover:shadow-[0_2px_0_#f59e0b,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#f59e0b,0_2px_4px_rgba(0,0,0,0.2)] ${!isPlaying ? 'opacity-50 cursor-not-allowed' : ''}`}
+              title="Pause audio playback"
+            >
+              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+              </svg>
+              Pause
+            </button>
 
-              <button
-                className="text-white text-xs px-2 py-1.5 rounded-md font-bold shadow-[0_3px_0_#ef4444,0_4px_8px_rgba(0,0,0,0.2)] border border-red-700 transition-all duration-200 flex items-center gap-1 bg-gradient-to-b from-red-400 via-red-500 to-red-600 hover:shadow-[0_2px_0_#ef4444,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#ef4444,0_2px_4px_rgba(0,0,0,0.2)]"
-                title="Stop and reset audio"
-              >
-                <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
-                  <rect x="6" y="6" width="12" height="12"/>
-                </svg>
-                Stop
-              </button>
-            </div>
+            <button
+              onClick={handleStopSpeech}
+              disabled={!isPlaying && !isPaused}
+              className={`text-white text-xs px-2 py-1.5 rounded-md font-bold shadow-[0_3px_0_#ef4444,0_4px_8px_rgba(0,0,0,0.2)] border border-red-700 transition-all duration-200 flex items-center gap-1 bg-gradient-to-b from-red-400 via-red-500 to-red-600 hover:shadow-[0_2px_0_#ef4444,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#ef4444,0_2px_4px_rgba(0,0,0,0.2)] ${!isPlaying && !isPaused ? 'opacity-50 cursor-not-allowed' : ''}`}
+              title="Stop and reset audio"
+            >
+              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                <rect x="6" y="6" width="12" height="12"/>
+              </svg>
+              Stop
+            </button>
           </div>
-        )}
+        </div>
 
         {/* Content Area - Expands to fill remaining space */}
         <div className="flex-1 min-h-0 px-4 pb-4 pt-0">
