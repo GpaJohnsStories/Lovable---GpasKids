@@ -59,32 +59,55 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-2xl h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col"
+        className="max-w-2xl h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col p-4"
         style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}
       >
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b border-orange-200">
-          <div className="flex items-center gap-3">
-            <Avatar className="h-12 w-12 border-2 border-orange-300">
+          <div className="flex items-center gap-2">
+            <Avatar className="h-10 w-10 border-2 border-orange-300">
               <AvatarImage src={buddyPhoto} alt="Buddy the Helper" />
               <AvatarFallback className="bg-orange-100 text-orange-700">🐱</AvatarFallback>
             </Avatar>
-            <DialogTitle className="text-xl font-bold text-orange-800">
+            <DialogTitle className="text-lg font-bold text-orange-800">
               {storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
             </DialogTitle>
           </div>
         </DialogHeader>
 
-        {/* Audio Controls */}
+        {/* Compact Audio Controls */}
         {storyData && (
           <div className="py-1">
-            <StoryCodeAudioControls
-              audioUrl={storyData.audio_url}
-              title={storyData.title || `Help for ${getPageTitle(currentRoute)}`}
-              content={helpContent}
-              author={storyData.author || 'Buddy the Helper'}
-              description={storyData.description}
-              aiVoiceName={storyData.ai_voice_name}
-            />
+            <div className="flex items-center justify-center gap-2 p-2 bg-white/80 rounded-lg border border-blue-200">
+              <button
+                className="text-white text-xs px-3 py-1.5 rounded-md font-bold shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.2)] border border-green-700 transition-all duration-200 flex items-center gap-1.5 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_2px_0_#22c55e,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.2)]"
+                title="Start reading the story"
+              >
+                <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                Read to Me
+              </button>
+              
+              <button
+                className="text-white text-xs px-2 py-1.5 rounded-md font-bold shadow-[0_3px_0_#f59e0b,0_4px_8px_rgba(0,0,0,0.2)] border border-amber-700 transition-all duration-200 flex items-center gap-1 bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 hover:shadow-[0_2px_0_#f59e0b,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#f59e0b,0_2px_4px_rgba(0,0,0,0.2)]"
+                title="Pause audio playback"
+              >
+                <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                </svg>
+                Pause
+              </button>
+
+              <button
+                className="text-white text-xs px-2 py-1.5 rounded-md font-bold shadow-[0_3px_0_#ef4444,0_4px_8px_rgba(0,0,0,0.2)] border border-red-700 transition-all duration-200 flex items-center gap-1 bg-gradient-to-b from-red-400 via-red-500 to-red-600 hover:shadow-[0_2px_0_#ef4444,0_3px_6px_rgba(0,0,0,0.3)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_#ef4444,0_2px_4px_rgba(0,0,0,0.2)]"
+                title="Stop and reset audio"
+              >
+                <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                  <rect x="6" y="6" width="12" height="12"/>
+                </svg>
+                Stop
+              </button>
+            </div>
           </div>
         )}
 
@@ -95,7 +118,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               <span className="ml-3 text-orange-700">Loading help content...</span>
             </div>
           ) : (
-            <ScrollArea className="h-full w-full rounded-md border border-orange-200 bg-white/50 p-4">
+            <ScrollArea className="h-full w-full rounded-md border border-orange-200 bg-white/50 p-3 help-scroll-area">
               <div className="prose prose-orange max-w-none">
                 <StoryContentRenderer 
                   content={helpContent}
@@ -106,13 +129,13 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           )}
         </div>
 
-        <div className="flex justify-end items-center pt-2 border-t border-orange-200">
+        <div className="flex justify-end items-center pt-1 border-t border-orange-200">
           <Button
             onClick={onClose}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-xl opacity-100 shadow-lg"
-            size="lg"
+            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-bold text-base opacity-100 shadow-lg"
+            size="sm"
           >
-            <X className="h-10 w-10 mr-3 stroke-2" />
+            <X className="h-5 w-5 mr-2 stroke-2" />
             Close Help
           </Button>
         </div>
