@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { StoryCodeAudioControls } from './StoryCodeAudioControls';
+import { UniversalAudioControls } from '../UniversalAudioControls';
 import { StoryCodePhotoDisplay } from './StoryCodePhotoDisplay';
 import { useStoryCodeLookup } from '../../hooks/useStoryCodeLookup';
 
@@ -152,16 +153,18 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
         {storyData.title}
       </h3>
 
-      {/* Audio Controls - Only show if audio is available */}
-      {storyData.audio_url && (
+      {/* Audio Controls - Only show if audio is available or if we allow TTS */}
+      {(storyData.audio_url || storyData.content) && (
         <div className="mb-4">
-          <StoryCodeAudioControls 
-            audioUrl={storyData.audio_url}
+          <UniversalAudioControls 
+            audioUrl={storyData.audio_url || undefined}
             title={storyData.title}
             content={storyData.content}
             author={storyData.author}
             description={storyData.excerpt || storyData.tagline}
-            aiVoiceName={storyData.ai_voice_name}
+            allowTextToSpeech={true}
+            context="story-code"
+            size="md"
           />
         </div>
       )}

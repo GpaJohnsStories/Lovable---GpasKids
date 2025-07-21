@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from 'date-fns';
 import { ExternalLink } from "lucide-react";
-import StoryContentRenderer from "@/components/content/StoryContentRenderer";
+import { StoryContentRenderer } from "@/components/story-content/StoryContentRenderer";
 import StoryHeader from "@/components/StoryHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ContentProtection from "@/components/ContentProtection";

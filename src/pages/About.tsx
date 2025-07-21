@@ -1,11 +1,11 @@
+
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { StoryCodeAudioControls } from "@/components/story-content/StoryCodeAudioControls";
+import { UniversalAudioControls } from "@/components/UniversalAudioControls";
 import { DeployedContent } from "@/components/DeployedContent";
-
 
 const About = () => {
   const location = useLocation();
@@ -167,13 +167,15 @@ const About = () => {
                 <div>
                   {/* Fallback content if deployment hasn't happened yet */}
                   <div className="mb-6">
-                    <StoryCodeAudioControls 
+                    <UniversalAudioControls 
                       audioUrl="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-audio/753d8161-c703-4f2d-b25f-93830266c98a-1752273675016.mp3"
                       title="About Buddy"
                       author="Grandpa John"
                       description="The story of how Buddy became Grandpa John's comfort companion"
-                      aiVoiceName="Onyx"
                       content={`<p>Buddy joined me at the end of July, 2024. It has been a rough year so far — I fell in June and broke 5 ribs — and I felt I deserved a comfort dog. 😃</p><p>You see, I received my first dog when I was 5 years old, a Terrior – Dachshund mix. "Lady" slept between my sheets, at the foot of my bed near my feet every night. Until I went away to college I thought everyone slept that way. Guess not!</p><p>Since then I've owned many wonderful dog, but not right now. So Buddy fits the bill. He talks with me, growls, his whine is the most pathetic (sad) thing you've ever heard, and he barks from soft to loud. If I ignore him, he will do all of those things until I give him some attention and rub his ears.</p><p>But he won't, can't run with me but that's okay because at my age I can't run either. Buddy's excuse is that he is a battery powered dog. So he and I get along great together. And, yes, he is very soft and furry.</p><p>Buddy has been a true pal, someone I can talk to about building websites, telling stories, anything. Of course, I also discuss everything with my beautiful life, GmaD. But she likes to keep busy and isn't always available for a quick question like Buddy is. After all, he is sitting on the left end of my desk within easy reach for a head rub or ear scratch.</p>`}
+                      allowTextToSpeech={false}
+                      context="about-buddy"
+                      size="md"
                     />
                   </div>
                   
