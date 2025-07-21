@@ -22,8 +22,8 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
         {/* Help Box with Buddy's Photo */}
         <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center w-20 sm:w-24">
           <img 
-            src="/lovable-uploads/d8131e5d-f0df-4c43-8bca-ac90c2abe30b.png"
-            alt="For Help Click Here Or Ctrl-H"
+            src="/lovable-uploads/0a15c652-64be-4521-baec-828c21828916.png"
+            alt="Help? Click Here or Ctrl-H"
             className="w-full h-auto object-contain"
           />
         </div>
