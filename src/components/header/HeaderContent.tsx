@@ -14,6 +14,8 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
 
   const handleHelpClick = () => {
     console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
+    // Add visible feedback
+    alert('Buddy clicked! Help system triggered for: ' + location.pathname);
     showHelp(location.pathname);
   };
 
