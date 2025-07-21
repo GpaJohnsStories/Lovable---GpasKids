@@ -4,6 +4,7 @@ import { toast } from "@/hooks/use-toast";
 
 export const useStoryCodeLookup = () => {
   const lookupStoryByCode = useCallback(async (storyCode: string, silent: boolean = false) => {
+    console.log('🔧 lookupStoryByCode called with:', storyCode, 'silent mode:', silent);
     try {
       const { data, error } = await supabase
         .from('stories')
