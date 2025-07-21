@@ -16,6 +16,8 @@ const GlobalHelpProvider: React.FC<GlobalHelpProviderProps> = ({ children }) => 
     hideHelp
   } = useGlobalHelp();
 
+  console.log('🌐 GlobalHelpProvider render - isHelpOpen:', isHelpOpen);
+
   return (
     <>
       {children}
