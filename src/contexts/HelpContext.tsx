@@ -70,13 +70,14 @@ export const HelpProvider: React.FC<HelpProviderProps> = ({ children }) => {
         setHelpContent(story.content);
         setStoryData(story);
       } else {
-        console.log('⚠️ No help content found, using default');
-        setHelpContent(DEFAULT_HELP_MESSAGE);
-        // Try to get the default help story (HLP-HLP)
+        console.log('⚠️ No help content found, using default HLP-HLP');
+        // Try to get the default help story (HLP-HLP) with current content
         const defaultHelp = await lookupStoryByCode('HLP-HLP', true);
-        if (defaultHelp) {
+        if (defaultHelp && defaultHelp.content) {
+          setHelpContent(defaultHelp.content);
           setStoryData(defaultHelp);
         } else {
+          setHelpContent(DEFAULT_HELP_MESSAGE);
           setStoryData(null);
         }
       }
@@ -94,6 +95,9 @@ export const HelpProvider: React.FC<HelpProviderProps> = ({ children }) => {
     setCurrentRoute(route);
     setIsHelpOpen(true);
     console.log('🔓 Help popup state set to: true');
+    // Clear any cached content before fetching new content
+    setHelpContent('');
+    setStoryData(null);
     fetchHelpContent(route);
   }, [fetchHelpContent]);
 
