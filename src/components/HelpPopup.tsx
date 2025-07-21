@@ -206,7 +206,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z"/>
               </svg>
-              {isPlaying ? 'Playing...' : isPaused ? 'Resume' : 'Read to Me'}
+              {isPlaying ? 'Playing...' : isPaused ? 'Resume' : 'Please, read it to me'}
             </button>
             
             <button
