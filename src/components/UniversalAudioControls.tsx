@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, Square, Loader } from "lucide-react";
+import { Play, Pause, Square, Loader, Volume2, Gauge } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Slider } from "@/components/ui/slider";
+import { Separator } from "@/components/ui/separator";
 
 interface UniversalAudioControlsProps {
   audioUrl?: string;
@@ -37,6 +39,8 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
   const [audioGenerated, setAudioGenerated] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [volume, setVolume] = useState(100);
+  const [playbackRate, setPlaybackRate] = useState(1.0);
 
   // Cleanup audio resources when component unmounts
   useEffect(() => {
@@ -45,8 +49,25 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
         currentAudio.pause();
         setCurrentAudio(null);
       }
+      // Reset to defaults when component unmounts
+      setVolume(100);
+      setPlaybackRate(1.0);
     };
   }, [currentAudio]);
+
+  // Apply volume changes to current audio
+  useEffect(() => {
+    if (currentAudio) {
+      currentAudio.volume = volume / 100;
+    }
+  }, [volume, currentAudio]);
+
+  // Apply playback rate changes to current audio
+  useEffect(() => {
+    if (currentAudio) {
+      currentAudio.playbackRate = playbackRate;
+    }
+  }, [playbackRate, currentAudio]);
 
   // Check if we can proceed with audio playback
   const canPlayAudio = () => {
@@ -70,7 +91,8 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
       if (audioUrl) {
         setIsLoading(true);
         const audio = new Audio(audioUrl);
-        audio.volume = 1.0;
+        audio.volume = volume / 100;
+        audio.playbackRate = playbackRate;
         setCurrentAudio(audio);
         
         audio.onended = () => {
@@ -178,7 +200,8 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
       const generatedAudioUrl = URL.createObjectURL(audioBlob);
       
       const audio = new Audio(generatedAudioUrl);
-      audio.volume = 1.0;
+      audio.volume = volume / 100;
+      audio.playbackRate = playbackRate;
       setCurrentAudio(audio);
       
       audio.onended = () => {
@@ -269,25 +292,39 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
     }, 100);
   };
 
+  const handleVolumeChange = (value: number[]) => {
+    setVolume(value[0]);
+  };
+
+  const handleSpeedChange = (value: number[]) => {
+    setPlaybackRate(value[0]);
+  };
+
   // Size configurations
   const sizeConfig = {
     sm: {
       container: 'p-2',
       button: 'text-xs px-2 py-1',
       icon: 'h-3 w-3',
-      gap: 'gap-2'
+      gap: 'gap-2',
+      slider: 'w-16',
+      controlGap: 'gap-1'
     },
     md: {
       container: 'p-3',
       button: 'text-sm px-3 py-2',
       icon: 'h-4 w-4',
-      gap: 'gap-3'
+      gap: 'gap-3',
+      slider: 'w-20',
+      controlGap: 'gap-2'
     },
     lg: {
       container: 'p-4',
       button: 'text-base px-4 py-3',
       icon: 'h-5 w-5',
-      gap: 'gap-4'
+      gap: 'gap-4',
+      slider: 'w-24',
+      controlGap: 'gap-3'
     }
   };
 
@@ -394,6 +431,49 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
             <p>{audioGenerated ? "Stop and start from the beginning" : "No audio to restart"}</p>
           </TooltipContent>
         </Tooltip>
+
+        {/* Vertical Separator */}
+        <Separator orientation="vertical" className="h-8 bg-blue-300" />
+
+        {/* Volume Control */}
+        <div className={`flex items-center ${config.controlGap}`}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Volume2 className={`${config.icon} text-blue-600 cursor-help`} />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Volume: {volume}%</p>
+            </TooltipContent>
+          </Tooltip>
+          <Slider
+            value={[volume]}
+            onValueChange={handleVolumeChange}
+            max={100}
+            min={0}
+            step={5}
+            className={config.slider}
+          />
+        </div>
+
+        {/* Speed Control */}
+        <div className={`flex items-center ${config.controlGap}`}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Gauge className={`${config.icon} text-blue-600 cursor-help`} />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Speed: {playbackRate}x</p>
+            </TooltipContent>
+          </Tooltip>
+          <Slider
+            value={[playbackRate]}
+            onValueChange={handleSpeedChange}
+            max={2.0}
+            min={0.5}
+            step={0.1}
+            className={config.slider}
+          />
+        </div>
       </div>
     </TooltipProvider>
   );
