@@ -439,7 +439,9 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
         <div className={`flex items-center ${config.controlGap}`}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Volume2 className={`${config.icon} text-green-600 cursor-help`} />
+              <div className="p-1 rounded bg-green-500 text-white">
+                <Volume2 className={config.icon} />
+              </div>
             </TooltipTrigger>
             <TooltipContent>
               <p>Volume: {volume}%</p>
@@ -451,7 +453,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
             max={100}
             min={0}
             step={5}
-            className={config.slider}
+            className={`${config.slider} [&>span:first-child]:bg-green-200 [&>span:last-child]:bg-green-500`}
           />
         </div>
 
@@ -459,7 +461,9 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
         <div className={`flex items-center ${config.controlGap}`}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Gauge className={`${config.icon} text-blue-600 cursor-help`} />
+              <div className="p-1 rounded bg-blue-500 text-white">
+                <Gauge className={config.icon} />
+              </div>
             </TooltipTrigger>
             <TooltipContent>
               <p>Speed: {playbackRate}x</p>
@@ -471,7 +475,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
             max={2.0}
             min={0.5}
             step={0.1}
-            className={config.slider}
+            className={`${config.slider} [&>span:first-child]:bg-blue-200 [&>span:last-child]:bg-blue-500`}
           />
         </div>
       </div>
