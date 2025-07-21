@@ -1,233 +1,173 @@
-
-import { useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
-import WelcomeHeader from "@/components/WelcomeHeader";
-import CookieFreeFooter from "@/components/CookieFreeFooter";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { Badge } from "@/components/ui/badge";
+import { formatDistanceToNow } from 'date-fns';
+import { ExternalLink } from "lucide-react";
+import StoryContentRenderer from "@/components/content/StoryContentRenderer";
 import StoryHeader from "@/components/StoryHeader";
-import StoryPhotosGallery from "@/components/StoryPhotosGallery";
-import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
-import StoryVotingSection from "@/components/StoryVotingSection";
-import StoryVideoPlayer from "@/components/StoryVideoPlayer";
+import CommentSection from "@/components/CommentSection";
+import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
-import { getStoryPhotos } from "@/utils/storyUtils";
-import { useState, useEffect } from "react";
-import AuthorLink from "@/components/AuthorLink";
-import { Helmet } from "react-helmet-async";
+import { Button } from "@/components/ui/button";
+
+interface StoryData {
+  id: string;
+  title: string;
+  content: string | null;
+  category: string;
+  author: string;
+  created_at: string;
+  tagline?: string;
+  story_code: string;
+  excerpt: string;
+  photo_link_1: string | null;
+  photo_link_2: string | null;
+  photo_link_3: string | null;
+  audio_url: string | null;
+  audio_segments?: number;
+  audio_duration?: number;
+  ai_voice_name?: string;
+  ai_voice_model?: string;
+}
 
 const Story = () => {
-  const { id } = useParams();
-  const queryClient = useQueryClient();
-  const [currentVote, setCurrentVote] = useState<'thumbs_up' | 'thumbs_down' | 'ok' | null>(null);
+  const { storyCode } = useParams<{ storyCode: string }>();
+  const [story, setStory] = useState<StoryData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [showStoryCode, setShowStoryCode] = useState(false);
+  const navigate = useNavigate();
 
-  const { data: story, isLoading, error } = useQuery({
-    queryKey: ['story', id],
-    queryFn: async () => {
-      if (!id) return null;
-      
-      const { data, error } = await supabase
-        .from('stories')
-        .select('*')
-        .eq('id', id)
-        .maybeSingle();
-      
-      if (error) {
-        console.error('Error fetching story:', error);
-        throw error;
+  useEffect(() => {
+    const fetchStory = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const { data, error } = await supabase
+          .from('stories')
+          .select('*')
+          .eq('story_code', storyCode)
+          .single();
+
+        if (error) {
+          console.error("Error fetching story:", error);
+          setError("Failed to load story.");
+          return;
+        }
+
+        if (!data) {
+          console.warn(`Story with code ${storyCode} not found.`);
+          setError("Story not found.");
+          navigate('/library', { replace: true });
+          return;
+        }
+
+        setStory(data);
+
+        // Increment read_count
+        await supabase
+          .from('stories')
+          .update({ read_count: (data.read_count || 0) + 1 })
+          .eq('id', data.id);
+
+      } catch (err) {
+        console.error("Unexpected error fetching story:", err);
+        setError("An unexpected error occurred.");
+      } finally {
+        setLoading(false);
       }
-      
-      return data;
-    },
-  });
+    };
 
-  const handleVoteUpdate = (newCounts: { thumbs_up_count: number; thumbs_down_count: number; ok_count: number }, newVote: 'thumbs_up' | 'thumbs_down' | 'ok' | null) => {
-    // Update the query cache with new vote counts
-    queryClient.setQueryData(['story', id], (oldData: any) => {
-      if (!oldData) return oldData;
-      return {
-        ...oldData,
-        thumbs_up_count: newCounts.thumbs_up_count,
-        thumbs_down_count: newCounts.thumbs_down_count,
-        ok_count: newCounts.ok_count
-      };
-    });
-    
-    // Update current vote state
-    setCurrentVote(newVote);
+    if (storyCode) {
+      fetchStory();
+    }
+  }, [storyCode, navigate]);
+
+  const toggleStoryCode = () => {
+    setShowStoryCode(!showStoryCode);
   };
 
-  const storyPhotos = getStoryPhotos(story);
-
-  if (isLoading) {
+  if (loading) {
     return (
-      <ContentProtection enableProtection={true}>
-        <Helmet>
-          <title>Loading Story... | Grandpa John's Stories</title>
-          <meta name="robots" content="noindex" />
-        </Helmet>
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-          <WelcomeHeader />
-          <LoadingSpinner message="Loading your story..." />
-          <CookieFreeFooter />
-          <ScrollToTop />
-        </div>
-      </ContentProtection>
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+      </div>
     );
   }
 
-  if (error || !story) {
+  if (error) {
     return (
-      <ContentProtection enableProtection={true}>
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-          <WelcomeHeader />
-          <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 200px)' }}>
-            <div className="text-center">
-              <h1 className="text-2xl font-bold text-orange-800 mb-4">Story Not Found</h1>
-              <p className="text-orange-700 mb-6">The story you're looking for doesn't exist.</p>
-              <Link to="/">
-                <Button className="cozy-button">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Stories
-                </Button>
-              </Link>
-            </div>
-          </div>
-          <CookieFreeFooter />
-          <ScrollToTop />
-        </div>
-      </ContentProtection>
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-red-500">Error: {error}</div>
+      </div>
+    );
+  }
+
+  if (!story) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-gray-500">Story not found.</div>
+      </div>
     );
   }
 
   return (
     <ContentProtection enableProtection={true}>
-      <Helmet>
-        <title>{story.title} | Grandpa John's Stories for Kids</title>
-        <meta name="description" content={story.excerpt || `Read "${story.title}" by ${story.author} - A wonderful children's story from Grandpa John's collection.`} />
-        <meta name="keywords" content={`${story.title}, ${story.author}, ${story.category}, children story, kids story, grandpa john`} />
-        <link rel="canonical" href={`https://gpaskids.com/story/${story.id}`} />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content={`${story.title} | Grandpa John's Stories`} />
-        <meta property="og:description" content={story.excerpt || `Read "${story.title}" by ${story.author} - A wonderful children's story.`} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://gpaskids.com/story/${story.id}`} />
-        {storyPhotos[0] && <meta property="og:image" content={storyPhotos[0].url} />}
-        
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${story.title} | Grandpa John's Stories`} />
-        <meta name="twitter:description" content={story.excerpt || `Read "${story.title}" by ${story.author}`} />
-        {storyPhotos[0] && <meta name="twitter:image" content={storyPhotos[0].url} />}
-        
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": story.title,
-            "description": story.excerpt || story.tagline,
-            "author": {
-              "@type": "Person",
-              "name": story.author
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "Grandpa John's Stories"
-            },
-            "datePublished": story.created_at,
-            "dateModified": story.updated_at,
-            "genre": story.category,
-            "audience": {
-              "@type": "Audience",
-              "audienceType": "Children"
-            },
-            "url": `https://gpaskids.com/story/${story.id}`,
-            ...(storyPhotos[0] && {
-              "image": storyPhotos[0].url
-            })
-          })}
-        </script>
-      </Helmet>
+      <ScrollToTop />
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-        <WelcomeHeader />
-        
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto">
-            <StoryVotingSection
-              storyId={story.id}
-              storyCode={story.story_code}
-              storyTitle={story.title}
-              thumbsUpCount={story.thumbs_up_count || 0}
-              thumbsDownCount={story.thumbs_down_count || 0}
-              okCount={story.ok_count || 0}
-              currentVote={currentVote}
-              onVoteUpdate={handleVoteUpdate}
-            />
+        <div className="container mx-auto px-4 pt-0">
+          <StoryHeader
+            title={story.title}
+            category={story.category}
+            author={story.author}
+            createdAt={story.created_at}
+            tagline={story.tagline}
+            storyCode={story.story_code}
+            showStoryCode={showStoryCode}
+            content={story.content}
+            description={story.excerpt}
+            audioUrl={story.audio_url}
+            audioSegments={story.audio_segments}
+            audioDuration={story.audio_duration}
+            aiVoiceName={story.ai_voice_name}
+            aiVoiceModel={story.ai_voice_model}
+            allowTextToSpeech={false}
+          />
 
-            <Card className="mb-8">
-              <CardContent className="p-8">
-                <StoryHeader
-                  title={story.title}
-                  category={story.category}
-                  author={story.author}
-                  createdAt={story.created_at}
-                  tagline={story.tagline}
-                  storyCode={story.story_code}
-                  showStoryCode={true}
-                  content={story.content}
-                  description={story.excerpt}
-                  audioUrl={story.audio_url}
-                  audioSegments={story.audio_segments}
-                  audioDuration={story.audio_duration_seconds}
-                  aiVoiceName={story.ai_voice_name}
-                  aiVoiceModel={story.ai_voice_model}
+          <main className="mb-8">
+            {story.photo_link_1 && (
+              <div className="mb-6">
+                <img
+                  src={story.photo_link_1}
+                  alt={story.title}
+                  className="w-full rounded-lg shadow-lg border-4 border-white"
                 />
+              </div>
+            )}
 
+            <div
+              className="story-content"
+              style={{ fontFamily: 'Georgia, serif' }}
+            >
+              <StoryContentRenderer content={story.content || "No content available."} />
+            </div>
 
-                {story.video_url && (
-                  <div className="mb-8">
-                    <StoryVideoPlayer
-                      videoUrl={story.video_url}
-                      title={story.title}
-                      className="max-w-2xl mx-auto"
-                    />
-                  </div>
-                )}
+            <div className="mt-8 text-center">
+              <Button onClick={toggleStoryCode} variant="secondary" size="sm">
+                {showStoryCode ? "Hide Story Code" : "Show Story Code"}
+              </Button>
+              {showStoryCode && (
+                <div className="mt-2 text-gray-600">Story Code: {story.story_code}</div>
+              )}
+            </div>
+          </main>
 
-                <StoryPhotosGallery
-                  photos={storyPhotos}
-                  storyTitle={story.title}
-                />
-
-                <IsolatedStoryRenderer
-                  content={story.content}
-                  excerpt={story.excerpt}
-                  useRichCleaning={true}
-                />
-              </CardContent>
-            </Card>
-
-            <StoryVotingSection
-              storyId={story.id}
-              storyCode={story.story_code}
-              storyTitle={story.title}
-              thumbsUpCount={story.thumbs_up_count || 0}
-              thumbsDownCount={story.thumbs_down_count || 0}
-              okCount={story.ok_count || 0}
-              currentVote={currentVote}
-              onVoteUpdate={handleVoteUpdate}
-            />
-          </div>
+          <CommentSection storyId={story.id} />
         </div>
         <CookieFreeFooter />
-        <ScrollToTop />
       </div>
     </ContentProtection>
   );

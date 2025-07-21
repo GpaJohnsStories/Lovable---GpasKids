@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { StoryCodeAudioControls } from '@/components/story-content/StoryCodeAudioControls';
+import { UniversalAudioControls } from '@/components/UniversalAudioControls';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface StoryData {
@@ -25,6 +25,8 @@ interface DeployedContentProps {
   showInlineAudio?: boolean;
   hidePhotos?: boolean;
   className?: string;
+  allowTextToSpeech?: boolean;
+  context?: string;
 }
 
 export const DeployedContent = ({ 
@@ -34,7 +36,9 @@ export const DeployedContent = ({
   audioOnly = false,
   showInlineAudio = false,
   hidePhotos = false,
-  className = "" 
+  className = "",
+  allowTextToSpeech = false,
+  context = "default"
 }: DeployedContentProps) => {
   const [content, setContent] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -98,32 +102,35 @@ export const DeployedContent = ({
   console.log(`DeployedContent: Using story content for ${storyCode}:`, content);
 
   // If audioOnly mode, only return audio controls
-  if (audioOnly && content.audio_url) {
+  if (audioOnly) {
     return (
       <div className="flex-shrink-0">
-        <StoryCodeAudioControls 
-          audioUrl={content.audio_url}
+        <UniversalAudioControls 
+          audioUrl={content.audio_url || undefined}
           title={content.title || ''}
           author={content.author || ''}
+          content={content.content || undefined}
+          allowTextToSpeech={allowTextToSpeech}
+          context={context}
+          size="md"
         />
       </div>
     );
   }
 
-  // If audioOnly but no audio, return nothing
-  if (audioOnly) {
-    return null;
-  }
-
   return (
     <div className={className}>
       {/* Audio controls at the top if requested and available */}
-      {includeAudio && content.audio_url && (
+      {includeAudio && (
         <div className="mb-6">
-          <StoryCodeAudioControls 
-            audioUrl={content.audio_url}
+          <UniversalAudioControls 
+            audioUrl={content.audio_url || undefined}
             title={content.title || ''}
             author={content.author || ''}
+            content={content.content || undefined}
+            allowTextToSpeech={allowTextToSpeech}
+            context={context}
+            size="md"
           />
         </div>
       )}

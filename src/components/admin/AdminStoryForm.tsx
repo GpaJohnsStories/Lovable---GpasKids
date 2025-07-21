@@ -32,6 +32,8 @@ const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ storyId: propStoryId, o
         storyId={validatedStoryId}
         onSave={onSave}
         onCancel={onCancel}
+        allowTextToSpeech={true}
+        context="admin-story-form"
       />
     </AdminLayout>
   );
