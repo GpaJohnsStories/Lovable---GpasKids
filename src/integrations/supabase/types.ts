@@ -433,6 +433,10 @@ export type Database = {
         Args: { "": string }
         Returns: string
       }
+      debug_auth_context: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       emergency_admin_reset: {
         Args: Record<PropertyKey, never>
         Returns: string

@@ -51,6 +51,10 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
         setAuthCheckLoading(true);
         setAuthError(null);
 
+        // Debug auth context first
+        const { data: debugInfo } = await supabase.rpc('debug_auth_context');
+        console.log('🔍 Auth debug info:', debugInfo);
+
         // Check admin access (admin or viewer)
         const { data: hasAccess, error: accessCheckError } = await supabase.rpc('has_admin_access');
         
