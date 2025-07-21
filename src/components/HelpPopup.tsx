@@ -122,7 +122,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         )}
 
         {/* Content Area - Expands to fill remaining space */}
-        <div className="flex-1 min-h-0 px-4 pb-4">
+        <div className="flex-1 min-h-0 px-4 pb-4 pt-0">
           {isLoading ? (
             <div className="flex items-center justify-center h-full">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
