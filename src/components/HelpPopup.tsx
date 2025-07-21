@@ -96,11 +96,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           )}
         </div>
 
-        <div className="flex justify-between items-center pt-4 border-t border-orange-200">
-          <div className="text-sm text-orange-600 flex items-center gap-2">
-            <HelpCircle className="h-4 w-4" />
-            <span>Need more help? Contact us through the About page!</span>
-          </div>
+        <div className="flex justify-end items-center pt-4 border-t border-orange-200">
           <Button
             onClick={onClose}
             className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium"
