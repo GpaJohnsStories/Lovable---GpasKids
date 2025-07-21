@@ -69,7 +69,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               alt="Buddy the Helper Dog"
               className="w-16 h-16 object-cover rounded-lg border-2 border-green-600 shadow-lg"
             />
-            <DialogTitle className="text-xl font-bold text-orange-800">
+            <DialogTitle className="text-2xl font-bold text-orange-800">
               {storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
             </DialogTitle>
           </div>
