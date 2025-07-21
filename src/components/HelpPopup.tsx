@@ -85,16 +85,18 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </Button>
         </DialogHeader>
 
-        {/* Audio Controls - Below Title */}
-        <div className="px-4 pb-2">
-          <UniversalAudioControls 
-            title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
-            content={helpContent}
-            allowTextToSpeech={true}
-            context="help-popup"
-            size="sm"
-            className="!bg-white/80"
-          />
+        {/* Audio Controls - Aligned to the right */}
+        <div className="px-4 pb-2 flex justify-end">
+          <div className="w-fit">
+            <UniversalAudioControls 
+              title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
+              content={helpContent}
+              allowTextToSpeech={true}
+              context="help-popup"
+              size="sm"
+              className="!bg-white/80 !justify-start"
+            />
+          </div>
         </div>
 
         {/* Content Area - Expands to fill remaining space */}
