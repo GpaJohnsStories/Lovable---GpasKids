@@ -13,6 +13,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const { showHelp } = useGlobalHelp();
 
   const handleHelpClick = () => {
+    console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
     showHelp(location.pathname);
   };
 
