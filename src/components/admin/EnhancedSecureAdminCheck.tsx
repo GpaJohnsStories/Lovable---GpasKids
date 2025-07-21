@@ -32,18 +32,19 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
     let isMounted = true;
 
     const checkAdminAccess = async () => {
+      // Reset authorization state when session changes
       if (!session?.user) {
+        console.log('🔐 EnhancedSecureAdminCheck: No session, setting unauthorized');
         if (isMounted) {
           setIsAuthorized(false);
           setAuthError(null);
+          setAuthCheckLoading(false);
         }
         return;
       }
 
-      // Only check if we haven't already authorized this user
-      if (isAuthorized === true) {
-        return;
-      }
+      // Wait a moment to ensure session is fully established
+      await new Promise(resolve => setTimeout(resolve, 100));
 
       try {
         console.log('🔐 EnhancedSecureAdminCheck: Checking admin access for user:', session.user.id);
@@ -65,8 +66,9 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
         }
 
         if (isMounted) {
-          setIsAuthorized(hasAccess || false);
-          console.log('🔐 EnhancedSecureAdminCheck: User authorized:', hasAccess);
+          const authorized = hasAccess || false;
+          setIsAuthorized(authorized);
+          console.log('🔐 EnhancedSecureAdminCheck: User authorized:', authorized);
         }
       } catch (err) {
         console.error('🚨 EnhancedSecureAdminCheck: Auth check failed:', err);
@@ -81,16 +83,26 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
       }
     };
 
-    // Only run the check if we're not already loading or if we don't have a result yet
-    // Also, don't check if this is a new tab that's still waiting for sync
-    if (!authCheckLoading && isAuthorized === null && !(isNewTab && newTabWaitTime > 0)) {
-      checkAdminAccess();
+    // Reset state when session changes
+    if (session?.user?.id) {
+      setIsAuthorized(null);
+      setAuthError(null);
+      
+      // Don't check if this is a new tab that's still waiting for sync
+      if (!(isNewTab && newTabWaitTime > 0)) {
+        checkAdminAccess();
+      }
+    } else {
+      // No session, immediately set unauthorized
+      setIsAuthorized(false);
+      setAuthError(null);
+      setAuthCheckLoading(false);
     }
 
     return () => {
       isMounted = false;
     };
-  }, [session?.user?.id, isAuthorized, authCheckLoading, isNewTab, newTabWaitTime]);
+  }, [session?.user?.id, isNewTab, newTabWaitTime]);
 
   // Handle session recovery
   const handleRecovery = async () => {
