@@ -1,7 +1,7 @@
 
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useGlobalHelp } from "@/hooks/useGlobalHelp";
+import { useHelp } from "@/contexts/HelpContext";
 import NavigationMenu from "./NavigationMenu";
 
 interface HeaderContentProps {
@@ -10,12 +10,10 @@ interface HeaderContentProps {
 
 const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const location = useLocation();
-  const { showHelp } = useGlobalHelp();
+  const { showHelp } = useHelp();
 
   const handleHelpClick = () => {
     console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
-    // Add visible feedback
-    alert('Buddy clicked! Help system triggered for: ' + location.pathname);
     showHelp(location.pathname);
   };
 

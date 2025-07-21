@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useGlobalHelp } from '@/hooks/useGlobalHelp';
+import { useHelp } from '@/contexts/HelpContext';
 import HelpPopup from './HelpPopup';
 
 interface GlobalHelpProviderProps {
@@ -14,29 +14,13 @@ const GlobalHelpProvider: React.FC<GlobalHelpProviderProps> = ({ children }) => 
     isLoading,
     currentRoute,
     hideHelp
-  } = useGlobalHelp();
+  } = useHelp();
 
   console.log('🌐 GlobalHelpProvider render - isHelpOpen:', isHelpOpen);
 
   return (
     <>
       {children}
-      {/* Temporary debug indicator */}
-      {isHelpOpen && (
-        <div style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          background: 'red',
-          color: 'white',
-          padding: '20px',
-          zIndex: 9999,
-          border: '3px solid yellow'
-        }}>
-          HELP STATE IS OPEN! Current route: {currentRoute}
-        </div>
-      )}
       <HelpPopup
         isOpen={isHelpOpen}
         onClose={hideHelp}

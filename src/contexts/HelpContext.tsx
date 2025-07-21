@@ -1,6 +1,6 @@
 
-import { useState, useEffect, useCallback } from 'react';
-import { useStoryCodeLookup } from './useStoryCodeLookup';
+import React, { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
+import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 
 // Map routes to their corresponding story codes for help content
 const ROUTE_HELP_MAP: Record<string, string> = {
@@ -22,7 +22,22 @@ const ROUTE_HELP_MAP: Record<string, string> = {
 
 const DEFAULT_HELP_MESSAGE = "I'm sorry but Grandpa John has not yet written the help message for this page. You can, however, post a comment and he will see it and respond as soon as he can.\nEnjoy your visit to our website.\nYour friend,\nBuddy";
 
-export const useGlobalHelp = () => {
+interface HelpContextType {
+  isHelpOpen: boolean;
+  helpContent: string;
+  isLoading: boolean;
+  currentRoute: string;
+  showHelp: (route: string) => void;
+  hideHelp: () => void;
+}
+
+const HelpContext = createContext<HelpContextType | undefined>(undefined);
+
+interface HelpProviderProps {
+  children: ReactNode;
+}
+
+export const HelpProvider: React.FC<HelpProviderProps> = ({ children }) => {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [helpContent, setHelpContent] = useState<string>(DEFAULT_HELP_MESSAGE);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,11 +83,11 @@ export const useGlobalHelp = () => {
     setCurrentRoute(route);
     setIsHelpOpen(true);
     console.log('🔓 Help popup state set to: true');
-    alert('State update called! isHelpOpen should be true now');
     fetchHelpContent(route);
   }, [fetchHelpContent]);
 
   const hideHelp = useCallback(() => {
+    console.log('🔒 Closing help popup');
     setIsHelpOpen(false);
   }, []);
 
@@ -90,7 +105,7 @@ export const useGlobalHelp = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [showHelp]);
 
-  return {
+  const value: HelpContextType = {
     isHelpOpen,
     helpContent,
     isLoading,
@@ -98,4 +113,18 @@ export const useGlobalHelp = () => {
     showHelp,
     hideHelp
   };
+
+  return (
+    <HelpContext.Provider value={value}>
+      {children}
+    </HelpContext.Provider>
+  );
+};
+
+export const useHelp = (): HelpContextType => {
+  const context = useContext(HelpContext);
+  if (context === undefined) {
+    throw new Error('useHelp must be used within a HelpProvider');
+  }
+  return context;
 };

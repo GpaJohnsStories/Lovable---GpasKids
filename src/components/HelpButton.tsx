@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { HelpCircle } from "lucide-react";
-import { useGlobalHelp } from '@/hooks/useGlobalHelp';
+import { useHelp } from '@/contexts/HelpContext';
 
 interface HelpButtonProps {
   className?: string;
@@ -17,10 +17,11 @@ const HelpButton: React.FC<HelpButtonProps> = ({
   variant = "outline",
   showText = true
 }) => {
-  const { showHelp } = useGlobalHelp();
+  const { showHelp } = useHelp();
 
   const handleClick = () => {
     const currentPath = window.location.pathname;
+    console.log('🔘 HelpButton clicked for path:', currentPath);
     showHelp(currentPath);
   };
 

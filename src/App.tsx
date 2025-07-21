@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import ActivityTracker from "@/components/ActivityTracker";
 import { useVisitTracker } from "@/hooks/useVisitTracker";
+import { HelpProvider } from "@/contexts/HelpContext";
 import Index from "./pages/Index";
 import Story from "./pages/Story";
 import Library from "./pages/Library";
@@ -52,38 +54,40 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <GlobalHelpProvider>
+        <HelpProvider>
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/story/:id" element={<Story />} />
-              <Route path="/library" element={<Library />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/make-comment" element={<MakeComment />} />
-              <Route path="/view-comments" element={<ViewComments />} />
-              <Route path="/comment/:id" element={<CommentDetail />} />
-              <Route path="/author/:authorName" element={<AuthorBio />} />
-              <Route path="/admin" element={<SimpleAdmin />} />
-              <Route path="/admin-access" element={<AdminAccess />} />
-              <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
-              <Route path="/simple-admin" element={<SimpleAdmin />} />
-              <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/writing" element={<Writing />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/help-gpa" element={<HelpGpa />} />
-              
-              {/* SEO Routes */}
-              <Route path="/robots.txt" element={<RobotsTxt />} />
-              <Route path="/sitemap.xml" element={<SitemapXml />} />
-              
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <GlobalHelpProvider>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/story/:id" element={<Story />} />
+                <Route path="/library" element={<Library />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/make-comment" element={<MakeComment />} />
+                <Route path="/view-comments" element={<ViewComments />} />
+                <Route path="/comment/:id" element={<CommentDetail />} />
+                <Route path="/author/:authorName" element={<AuthorBio />} />
+                <Route path="/admin" element={<SimpleAdmin />} />
+                <Route path="/admin-access" element={<AdminAccess />} />
+                <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
+                <Route path="/simple-admin" element={<SimpleAdmin />} />
+                <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/writing" element={<Writing />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/help-gpa" element={<HelpGpa />} />
+                
+                {/* SEO Routes */}
+                <Route path="/robots.txt" element={<RobotsTxt />} />
+                <Route path="/sitemap.xml" element={<SitemapXml />} />
+                
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </GlobalHelpProvider>
             <ConditionalActivityTracker />
           </BrowserRouter>
-        </GlobalHelpProvider>
+        </HelpProvider>
       </TooltipProvider>
     </HelmetProvider>
   </QueryClientProvider>
