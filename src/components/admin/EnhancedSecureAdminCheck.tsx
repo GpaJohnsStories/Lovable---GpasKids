@@ -4,17 +4,28 @@ import { supabase } from "@/integrations/supabase/client";
 import SecureAdminLoginWithWebAuthn from "./SecureAdminLoginWithWebAuthn";
 import { useEnhancedAuth } from "@/hooks/useEnhancedAuth";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, AlertTriangle } from "lucide-react";
+import { RefreshCw, AlertTriangle, Clock } from "lucide-react";
 
 interface EnhancedSecureAdminCheckProps {
   children: React.ReactNode;
 }
 
 const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) => {
-  const { session, user, isLoading, isRecovering, forceRefresh, recoverSession } = useEnhancedAuth();
+  const { session, user, isLoading, isRecovering, isNewTab, forceRefresh, recoverSession } = useEnhancedAuth();
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
   const [authCheckLoading, setAuthCheckLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [newTabWaitTime, setNewTabWaitTime] = useState(3);
+
+  // New tab countdown timer
+  useEffect(() => {
+    if (isNewTab && newTabWaitTime > 0) {
+      const timer = setTimeout(() => {
+        setNewTabWaitTime(prev => prev - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isNewTab, newTabWaitTime]);
 
   // Check admin access when we have a session
   useEffect(() => {
@@ -71,14 +82,15 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
     };
 
     // Only run the check if we're not already loading or if we don't have a result yet
-    if (!authCheckLoading && isAuthorized === null) {
+    // Also, don't check if this is a new tab that's still waiting for sync
+    if (!authCheckLoading && isAuthorized === null && !(isNewTab && newTabWaitTime > 0)) {
       checkAdminAccess();
     }
 
     return () => {
       isMounted = false;
     };
-  }, [session?.user?.id, isAuthorized, authCheckLoading]);
+  }, [session?.user?.id, isAuthorized, authCheckLoading, isNewTab, newTabWaitTime]);
 
   // Handle session recovery
   const handleRecovery = async () => {
@@ -89,6 +101,27 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
       setAuthError('Unable to recover session. Please login again.');
     }
   };
+
+  // Show new tab waiting state
+  if (isNewTab && newTabWaitTime > 0) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-pulse">
+            <Clock className="h-12 w-12 text-blue-500 mx-auto" />
+          </div>
+          <div className="space-y-2">
+            <p className="text-lg font-medium">
+              Syncing authentication from parent tab...
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Waiting {newTabWaitTime} seconds for session sync
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Enhanced loading state with recovery options
   if (isLoading || authCheckLoading || isRecovering) {

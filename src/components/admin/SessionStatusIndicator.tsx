@@ -2,11 +2,11 @@
 import { useEnhancedAuth } from "@/hooks/useEnhancedAuth";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, Wifi, WifiOff, AlertTriangle } from "lucide-react";
+import { RefreshCw, Wifi, WifiOff, AlertTriangle, Clock } from "lucide-react";
 import { useState } from "react";
 
 const SessionStatusIndicator = () => {
-  const { session, isLoading, isRecovering, lastActiveTab, forceRefresh } = useEnhancedAuth();
+  const { session, isLoading, isRecovering, isNewTab, lastActiveTab, forceRefresh } = useEnhancedAuth();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const handleRefresh = async () => {
@@ -20,6 +20,15 @@ const SessionStatusIndicator = () => {
       <Badge variant="secondary" className="flex items-center gap-1">
         <div className="animate-spin rounded-full h-3 w-3 border border-current border-t-transparent" />
         Checking...
+      </Badge>
+    );
+  }
+
+  if (isNewTab) {
+    return (
+      <Badge variant="outline" className="flex items-center gap-1 text-blue-600 border-blue-200">
+        <Clock className="h-3 w-3 animate-pulse" />
+        Syncing Tab
       </Badge>
     );
   }

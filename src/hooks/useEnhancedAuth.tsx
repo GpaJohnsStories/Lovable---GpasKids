@@ -9,6 +9,7 @@ interface AuthState {
   isLoading: boolean;
   isRecovering: boolean;
   lastActiveTab: string | null;
+  isNewTab: boolean;
 }
 
 export const useEnhancedAuth = () => {
@@ -17,14 +18,16 @@ export const useEnhancedAuth = () => {
     user: null,
     isLoading: true,
     isRecovering: false,
-    lastActiveTab: null
+    lastActiveTab: null,
+    isNewTab: false
   });
 
   const tabId = useRef<string>(Math.random().toString(36));
   const recoveryAttempts = useRef<number>(0);
   const maxRecoveryAttempts = 3;
+  const newTabTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  // Cross-tab session synchronization
+  // Enhanced cross-tab session synchronization
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === 'supabase-session-sync') {
@@ -39,7 +42,8 @@ export const useEnhancedAuth = () => {
               session: syncData.session,
               user: syncData.session?.user || null,
               lastActiveTab: syncData.tabId,
-              isLoading: false
+              isLoading: false,
+              isRecovering: false
             }));
           }
         } catch (error) {
@@ -48,9 +52,82 @@ export const useEnhancedAuth = () => {
       }
     };
 
+    // Listen for session sync events
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    
+    // Check for existing session sync data on initialization
+    const checkExistingSync = () => {
+      try {
+        const existingSync = localStorage.getItem('supabase-session-sync');
+        if (existingSync) {
+          const syncData = JSON.parse(existingSync);
+          const timeDiff = Date.now() - syncData.timestamp;
+          
+          // If sync data is less than 30 seconds old and from another tab
+          if (timeDiff < 30000 && syncData.tabId !== tabId.current && syncData.session) {
+            console.log('🔄 Found recent session sync data, applying...');
+            setAuthState(prev => ({
+              ...prev,
+              session: syncData.session,
+              user: syncData.session?.user || null,
+              lastActiveTab: syncData.tabId,
+              isLoading: false,
+              isNewTab: true
+            }));
+            return true;
+          }
+        }
+      } catch (error) {
+        console.error('🚨 Error checking existing sync:', error);
+      }
+      return false;
+    };
+
+    // For new tabs, try to get session from sync first
+    if (window.opener || document.referrer) {
+      console.log('🎯 New tab detected, checking for session sync...');
+      const foundSync = checkExistingSync();
+      
+      if (!foundSync) {
+        // If no sync found, mark as new tab and set a timeout
+        setAuthState(prev => ({ ...prev, isNewTab: true }));
+        
+        newTabTimeout.current = setTimeout(() => {
+          console.log('🎯 New tab timeout reached, proceeding with normal auth check');
+          setAuthState(prev => ({ ...prev, isNewTab: false }));
+        }, 3000); // Wait 3 seconds for potential sync
+      }
+    }
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      if (newTabTimeout.current) {
+        clearTimeout(newTabTimeout.current);
+      }
+    };
   }, []);
+
+  // Proactive session sync to other tabs
+  const syncSessionToOtherTabs = (session: Session | null) => {
+    try {
+      const syncData = {
+        session,
+        tabId: tabId.current,
+        timestamp: Date.now()
+      };
+      localStorage.setItem('supabase-session-sync', JSON.stringify(syncData));
+      console.log('🔄 Session synced to other tabs');
+      
+      // Also trigger a storage event manually for same-origin tabs
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: 'supabase-session-sync',
+        newValue: JSON.stringify(syncData),
+        storageArea: localStorage
+      }));
+    } catch (error) {
+      console.error('🚨 Error syncing session to other tabs:', error);
+    }
+  };
 
   // Enhanced session recovery with retry logic
   const recoverSession = async (): Promise<boolean> => {
@@ -88,6 +165,7 @@ export const useEnhancedAuth = () => {
           isLoading: false
         }));
 
+        syncSessionToOtherTabs(sessionData.session);
         return true;
       }
 
@@ -101,7 +179,6 @@ export const useEnhancedAuth = () => {
           isLoading: false
         }));
 
-        // Sync to other tabs
         syncSessionToOtherTabs(data.session);
         return true;
       }
@@ -115,27 +192,18 @@ export const useEnhancedAuth = () => {
     }
   };
 
-  // Sync session to other tabs
-  const syncSessionToOtherTabs = (session: Session | null) => {
-    try {
-      const syncData = {
-        session,
-        tabId: tabId.current,
-        timestamp: Date.now()
-      };
-      localStorage.setItem('supabase-session-sync', JSON.stringify(syncData));
-      console.log('🔄 Session synced to other tabs');
-    } catch (error) {
-      console.error('🚨 Error syncing session to other tabs:', error);
-    }
-  };
-
   // Enhanced auth state management
   useEffect(() => {
     let isMounted = true;
 
     const initializeAuth = async () => {
       console.log('🔐 Enhanced auth initialization starting...');
+      
+      // If this is a new tab and we're still waiting for sync, don't proceed yet
+      if (authState.isNewTab && newTabTimeout.current) {
+        console.log('🎯 New tab waiting for session sync...');
+        return;
+      }
       
       try {
         // Get current session
@@ -245,14 +313,16 @@ export const useEnhancedAuth = () => {
       }
     );
 
-    // Initialize auth
-    initializeAuth();
+    // Initialize auth, but respect new tab timing
+    if (!authState.isNewTab || !newTabTimeout.current) {
+      initializeAuth();
+    }
 
     return () => {
       isMounted = false;
       subscription.unsubscribe();
     };
-  }, []);
+  }, [authState.isNewTab]);
 
   // Provide auth actions
   const signOut = async () => {
@@ -284,6 +354,7 @@ export const useEnhancedAuth = () => {
     isLoading: authState.isLoading,
     isRecovering: authState.isRecovering,
     lastActiveTab: authState.lastActiveTab,
+    isNewTab: authState.isNewTab,
     signOut,
     forceRefresh,
     recoverSession
