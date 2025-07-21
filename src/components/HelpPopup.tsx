@@ -72,12 +72,6 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               {storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
             </DialogTitle>
           </div>
-          <DialogClose asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-orange-100">
-              <X className="h-6 w-6 text-orange-600" />
-              <span className="sr-only">Close</span>
-            </Button>
-          </DialogClose>
         </DialogHeader>
 
         {/* Audio Controls */}
@@ -94,7 +88,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </div>
         )}
 
-        <div className="flex-1 min-h-0 overflow-hidden">
+        <div className="flex-1 min-h-0 py-1">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
@@ -115,10 +109,10 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         <div className="flex justify-end items-center pt-2 border-t border-orange-200">
           <Button
             onClick={onClose}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium text-base"
-            size="default"
+            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium text-lg"
+            size="lg"
           >
-            <X className="h-5 w-5 mr-2" />
+            <X className="h-6 w-6 mr-2" />
             Close Help
           </Button>
         </div>
