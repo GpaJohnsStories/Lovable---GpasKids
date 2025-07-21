@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, Square, Loader, Volume2, Gauge } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
 
 interface UniversalAudioControlsProps {
@@ -292,12 +290,12 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
     }, 100);
   };
 
-  const handleVolumeChange = (value: number[]) => {
-    setVolume(value[0]);
+  const handleVolumeChange = (newVolume: number) => {
+    setVolume(newVolume);
   };
 
-  const handleSpeedChange = (value: number[]) => {
-    setPlaybackRate(value[0]);
+  const handleSpeedChange = (newSpeed: number) => {
+    setPlaybackRate(newSpeed);
   };
 
   // Size configurations
@@ -307,7 +305,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
       button: 'text-xs px-2 py-1',
       icon: 'h-3 w-3',
       gap: 'gap-2',
-      slider: 'w-16',
+      controlButton: 'text-xs px-1 py-1',
       controlGap: 'gap-1'
     },
     md: {
@@ -315,7 +313,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
       button: 'text-sm px-3 py-2',
       icon: 'h-4 w-4',
       gap: 'gap-3',
-      slider: 'w-20',
+      controlButton: 'text-xs px-2 py-1',
       controlGap: 'gap-2'
     },
     lg: {
@@ -323,7 +321,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
       button: 'text-base px-4 py-3',
       icon: 'h-5 w-5',
       gap: 'gap-4',
-      slider: 'w-24',
+      controlButton: 'text-sm px-2 py-1',
       controlGap: 'gap-3'
     }
   };
@@ -448,19 +446,33 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                 <p>Volume: {volume}%</p>
               </TooltipContent>
             </Tooltip>
-            <Slider
-              value={[volume]}
-              onValueChange={handleVolumeChange}
-              max={100}
-              min={0}
-              step={5}
-              className={`${config.slider} [&_[data-radix-slider-range]]:bg-green-500`}
-            />
           </div>
-          {/* Volume markers */}
-          <div className={`${config.slider} relative h-2`}>
-            <div className="w-0.5 h-2 bg-gray-400 absolute top-0" style={{ left: 'calc(50% - 1px)' }}></div>
-            <div className="w-0.5 h-2 bg-gray-400 absolute top-0" style={{ left: 'calc(100% - 2px)' }}></div>
+          {/* Volume Buttons */}
+          <div className={`flex ${config.controlGap}`}>
+            {[25, 50, 75, 100].map((vol, index) => (
+              <Tooltip key={vol}>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => handleVolumeChange(vol)}
+                    className={`${config.controlButton} rounded font-bold border transition-all duration-200 ${
+                      volume === vol
+                        ? 'bg-green-600 text-white border-green-700 shadow-md'
+                        : `text-white border-green-600 hover:scale-105 ${
+                            index === 0 ? 'bg-green-300 hover:bg-green-400' :
+                            index === 1 ? 'bg-green-400 hover:bg-green-500' :
+                            index === 2 ? 'bg-green-500 hover:bg-green-600' :
+                            'bg-green-600 hover:bg-green-700'
+                          }`
+                    }`}
+                  >
+                    {vol}%
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Set volume to {vol}%</p>
+                </TooltipContent>
+              </Tooltip>
+            ))}
           </div>
         </div>
 
@@ -477,21 +489,38 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                 <p>Speed: {playbackRate}x</p>
               </TooltipContent>
             </Tooltip>
-            <Slider
-              value={[playbackRate]}
-              onValueChange={handleSpeedChange}
-              max={2.0}
-              min={0.5}
-              step={0.1}
-              className={`${config.slider} [&_[data-radix-slider-range]]:bg-blue-500`}
-            />
           </div>
-          {/* Speed markers */}
-          <div className={`flex justify-between ${config.slider} relative`}>
-            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '0%', transform: 'translateX(-50%)' }}></div>
-            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '33.33%', transform: 'translateX(-50%)' }}></div>
-            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '66.67%', transform: 'translateX(-50%)' }}></div>
-            <div className="w-0.5 h-2 bg-gray-400 absolute" style={{ left: '100%', transform: 'translateX(-50%)' }}></div>
+          {/* Speed Buttons */}
+          <div className={`flex ${config.controlGap}`}>
+            {[
+              { speed: 0.5, label: '0.5x' },
+              { speed: 1.0, label: '1x' },
+              { speed: 1.5, label: '1.5x' },
+              { speed: 2.0, label: '2x' }
+            ].map(({ speed, label }, index) => (
+              <Tooltip key={speed}>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => handleSpeedChange(speed)}
+                    className={`${config.controlButton} rounded font-bold border transition-all duration-200 ${
+                      playbackRate === speed
+                        ? 'bg-blue-600 text-white border-blue-700 shadow-md'
+                        : `text-white border-blue-600 hover:scale-105 ${
+                            index === 0 ? 'bg-blue-300 hover:bg-blue-400' :
+                            index === 1 ? 'bg-blue-400 hover:bg-blue-500' :
+                            index === 2 ? 'bg-blue-500 hover:bg-blue-600' :
+                            'bg-blue-600 hover:bg-blue-700'
+                          }`
+                    }`}
+                  >
+                    {label}
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Set speed to {label}</p>
+                </TooltipContent>
+              </Tooltip>
+            ))}
           </div>
         </div>
       </div>
