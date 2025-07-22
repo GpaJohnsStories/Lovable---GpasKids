@@ -84,8 +84,8 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
         control={props.form.control}
         name="story_code"
         render={({ field }) => (
-          <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
-            <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Story or WebText Code</FormLabel>
+           <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
+            <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Unique Story or WebText Code</FormLabel>
             <div className="sm:col-span-2">
               <FormControl>
                 <Input
@@ -95,9 +95,6 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
                   className="w-full sm:w-40 text-base md:text-sm"
                 />
               </FormControl>
-              <p className="text-sm text-orange-700 mt-1 font-fun">
-                Enter the unique code for this story or web text.
-              </p>
               <FormMessage />
             </div>
           </FormItem>
@@ -113,7 +110,7 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
   return (
     <div className="space-y-2">
       <Label htmlFor="story_code" className={`font-medium text-gray-700 ${labelSize}`}>
-        Story or WebText Code
+        Unique Story or WebText Code
       </Label>
       <Input
         id="story_code"
@@ -123,9 +120,6 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
         onBlur={() => handleStoryCodeLookup(value)}
         placeholder="e.g., A1B2"
       />
-      <p className="text-sm text-gray-600">
-        Enter the unique code for this story or web text.
-      </p>
     </div>
   );
 };
