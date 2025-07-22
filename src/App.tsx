@@ -18,7 +18,16 @@ import Writing from "./pages/Writing";
 import MakeComment from "./pages/MakeComment";
 import ViewComments from "./pages/ViewComments";
 import CommentDetail from "./pages/CommentDetail";
-import BuddysAdmin from "./pages/BuddysAdmin";
+import AdminOverview from "@/components/admin/AdminOverview";
+import AdminStories from "@/components/admin/AdminStories";
+import AdminStoryForm from "@/components/admin/AdminStoryForm";
+import AuthorBioManagement from "@/components/admin/AuthorBioManagement";
+import CommentsDashboard from "@/components/admin/CommentsDashboard";
+import AdminLayoutWithHeaderBanner from "@/components/admin/AdminLayoutWithHeaderBanner";
+import ContentProtection from "@/components/ContentProtection";
+import EnhancedSecureAdminCheck from "@/components/admin/EnhancedSecureAdminCheck";
+import UnifiedStoryPage from "@/components/unified-story/UnifiedStoryPage";
+import { useAdminSession } from "@/hooks/useAdminSession";
 import VoicePreview from "./pages/VoicePreview";
 import AdminAccess from "./pages/AdminAccess";
 import ResetPassword from "./pages/ResetPassword";
@@ -60,6 +69,35 @@ const ConditionalActivityTracker = () => {
   return <ActivityTracker showDebugInfo={true} />;
 };
 
+// Protected admin wrapper component
+const ProtectedAdminWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <ContentProtection enableProtection={false}>
+      <EnhancedSecureAdminCheck>
+        <AdminLayoutWithHeaderBanner>
+          {children}
+        </AdminLayoutWithHeaderBanner>
+      </EnhancedSecureAdminCheck>
+    </ContentProtection>
+  );
+};
+
+// Admin story form wrapper with session handling
+const AdminStoryFormWrapper = () => {
+  const { handleStoryFormSave } = useAdminSession();
+  
+  const handleStoryFormCancel = () => {
+    window.location.href = '/buddys_admin/stories';
+  };
+
+  return (
+    <AdminStoryForm
+      onSave={handleStoryFormSave}
+      onCancel={handleStoryFormCancel}
+    />
+  );
+};
+
 const App = () => {
   console.log('🔍 App: Component mounting');
   
@@ -94,7 +132,62 @@ const App = () => {
                     <Route path="/simple-admin" element={<Navigate to="/buddys_admin/dashboard" replace />} />
                     
                     <Route path="/admin-access" element={<AdminAccess />} />
-                    <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
+                    
+                    {/* Specific admin routes */}
+                    <Route path="/buddys_admin/dashboard" element={
+                      <ProtectedAdminWrapper>
+                        <AdminOverview />
+                      </ProtectedAdminWrapper>
+                    } />
+                    
+                    <Route path="/buddys_admin/stories" element={
+                      <ProtectedAdminWrapper>
+                        <AdminStories />
+                      </ProtectedAdminWrapper>
+                    } />
+                    
+                    <Route path="/buddys_admin/story" element={
+                      <ProtectedAdminWrapper>
+                        <AdminStoryFormWrapper />
+                      </ProtectedAdminWrapper>
+                    } />
+                    
+                    <Route path="/buddys_admin/story/:id" element={
+                      <ProtectedAdminWrapper>
+                        <AdminStoryFormWrapper />
+                      </ProtectedAdminWrapper>
+                    } />
+                    
+                    <Route path="/buddys_admin/author-bios/add" element={
+                      <ProtectedAdminWrapper>
+                        <AuthorBioManagement />
+                      </ProtectedAdminWrapper>
+                    } />
+                    
+                    <Route path="/buddys_admin/author-bios/edit/:id" element={
+                      <ProtectedAdminWrapper>
+                        <AuthorBioManagement />
+                      </ProtectedAdminWrapper>
+                    } />
+                    
+                    <Route path="/buddys_admin/unified_story_system/add" element={
+                      <ProtectedAdminWrapper>
+                        <UnifiedStoryPage mode="add" />
+                      </ProtectedAdminWrapper>
+                    } />
+                    
+                    <Route path="/buddys_admin/unified_story_system/update/:id" element={
+                      <ProtectedAdminWrapper>
+                        <UnifiedStoryPage mode="update" />
+                      </ProtectedAdminWrapper>
+                    } />
+                    
+                    <Route path="/buddys_admin/comments" element={
+                      <ProtectedAdminWrapper>
+                        <CommentsDashboard />
+                      </ProtectedAdminWrapper>
+                    } />
+                    
                     <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
