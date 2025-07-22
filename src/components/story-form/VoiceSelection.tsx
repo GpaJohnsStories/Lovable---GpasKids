@@ -60,12 +60,12 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
                     <SelectTrigger className="w-full h-12 text-base">
                       <SelectValue placeholder="Select a voice for audio narration" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="max-h-60 overflow-y-auto">
                       {voices.map((voice) => (
-                        <SelectItem key={voice.id} value={voice.id} className="py-3">
+                        <SelectItem key={voice.id} value={voice.id} className="py-2">
                           <div className="flex flex-col">
-                            <span className="font-medium text-base">{voice.name}</span>
-                            <span className="text-sm text-gray-500">{voice.description}</span>
+                            <span className="font-medium text-sm">{voice.name}</span>
+                            <span className="text-xs text-muted-foreground">{voice.description}</span>
                           </div>
                         </SelectItem>
                       ))}
