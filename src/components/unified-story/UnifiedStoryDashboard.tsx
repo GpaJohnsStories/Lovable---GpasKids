@@ -79,7 +79,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         </TabsList>
 
         <TabsContent value="content" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Story Details Card */}
             <Card className="lg:col-span-1">
               <CardHeader>
@@ -97,117 +97,120 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardContent>
             </Card>
 
-            {/* Publication Settings Card */}
-            <Card className="lg:col-span-1">
-              <CardHeader>
-                <CardTitle>Publication Settings</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="published">Published Status</Label>
-                    <select
-                      id="published"
-                      value={formData.published}
-                      onChange={(e) => onInputChange('published', e.target.value)}
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="N">Not Published</option>
-                      <option value="Y">Published</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="category">Category</Label>
-                    <select
-                      id="category"
-                      value={formData.category}
-                      onChange={(e) => onInputChange('category', e.target.value)}
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="Fun">Fun</option>
-                      <option value="Life">Life</option>
-                      <option value="North Pole">North Pole</option>
-                      <option value="World Changers">World Changers</option>
-                      <option value="WebText">WebText</option>
-                      <option value="STORY">STORY</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="google_drive_link">Google Drive Link</Label>
-                    <input
-                      id="google_drive_link"
-                      type="url"
-                      value={formData.google_drive_link}
-                      onChange={(e) => onInputChange('google_drive_link', e.target.value)}
-                      placeholder="https://drive.google.com/..."
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Quick Actions Card */}
-            <Card className="lg:col-span-1">
-              <CardHeader>
-                <CardTitle>Quick Actions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex flex-col space-y-2">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={onSaveOnly}
-                    disabled={isSaving}
-                    className="w-full"
-                  >
-                    <Save className="h-4 w-4 mr-2" />
-                    {isSaving ? 'Saving...' : 'Save Draft (Ctrl+S)'}
-                  </Button>
-                  
-                  <Button 
-                    type="submit" 
-                    disabled={isSaving || isGeneratingAudio} 
-                    className="w-full cozy-button"
-                  >
-                    <Save className="h-4 w-4 mr-2" />
-                    {isSaving ? 'Saving...' : 'Save & Return to List'}
-                  </Button>
-                  
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={onCancel}
-                    className="w-full"
-                  >
-                    <X className="h-4 w-4 mr-2" />
-                    Cancel
-                  </Button>
-                </div>
-
-                {/* Audio Status */}
-                {formData.audio_url && (
-                  <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-                    <div className="flex items-center text-green-800 text-sm font-medium mb-2">
-                      <Volume2 className="h-4 w-4 mr-2" />
-                      Audio Available
+            {/* Right Column - Publication Settings and Quick Actions */}
+            <div className="lg:col-span-1 space-y-6">
+              {/* Publication Settings Card */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Publication Settings</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="published">Published Status</Label>
+                      <select
+                        id="published"
+                        value={formData.published}
+                        onChange={(e) => onInputChange('published', e.target.value)}
+                        className="w-full p-2 border border-gray-300 rounded-md"
+                      >
+                        <option value="N">Not Published</option>
+                        <option value="Y">Published</option>
+                      </select>
                     </div>
-                    <UniversalAudioControls
-                      audioUrl={formData.audio_url}
-                      title={formData.title || 'Story Audio'}
-                      content={formData.content}
-                      author={formData.author}
-                      allowTextToSpeech={allowTextToSpeech}
-                      context={context}
-                      size="sm"
-                      className="w-full"
-                    />
+
+                    <div className="space-y-2">
+                      <Label htmlFor="category">Category</Label>
+                      <select
+                        id="category"
+                        value={formData.category}
+                        onChange={(e) => onInputChange('category', e.target.value)}
+                        className="w-full p-2 border border-gray-300 rounded-md"
+                      >
+                        <option value="Fun">Fun</option>
+                        <option value="Life">Life</option>
+                        <option value="North Pole">North Pole</option>
+                        <option value="World Changers">World Changers</option>
+                        <option value="WebText">WebText</option>
+                        <option value="STORY">STORY</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="google_drive_link">Google Drive Link</Label>
+                      <input
+                        id="google_drive_link"
+                        type="url"
+                        value={formData.google_drive_link}
+                        onChange={(e) => onInputChange('google_drive_link', e.target.value)}
+                        placeholder="https://drive.google.com/..."
+                        className="w-full p-2 border border-gray-300 rounded-md"
+                      />
+                    </div>
                   </div>
-                )}
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+
+              {/* Quick Actions Card */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Quick Actions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex flex-col space-y-2">
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={onSaveOnly}
+                      disabled={isSaving}
+                      className="w-full"
+                    >
+                      <Save className="h-4 w-4 mr-2" />
+                      {isSaving ? 'Saving...' : 'Save Draft (Ctrl+S)'}
+                    </Button>
+                    
+                    <Button 
+                      type="submit" 
+                      disabled={isSaving || isGeneratingAudio} 
+                      className="w-full cozy-button"
+                    >
+                      <Save className="h-4 w-4 mr-2" />
+                      {isSaving ? 'Saving...' : 'Save & Return to List'}
+                    </Button>
+                    
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={onCancel}
+                      className="w-full"
+                    >
+                      <X className="h-4 w-4 mr-2" />
+                      Cancel
+                    </Button>
+                  </div>
+
+                  {/* Audio Status */}
+                  {formData.audio_url && (
+                    <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                      <div className="flex items-center text-green-800 text-sm font-medium mb-2">
+                        <Volume2 className="h-4 w-4 mr-2" />
+                        Audio Available
+                      </div>
+                      <UniversalAudioControls
+                        audioUrl={formData.audio_url}
+                        title={formData.title || 'Story Audio'}
+                        content={formData.content}
+                        author={formData.author}
+                        allowTextToSpeech={allowTextToSpeech}
+                        context={context}
+                        size="sm"
+                        className="w-full"
+                      />
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
           {/* Story Editor */}
