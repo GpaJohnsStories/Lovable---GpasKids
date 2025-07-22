@@ -110,7 +110,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               <div className="prose prose-orange max-w-none">
                 <StoryContentRenderer 
                   content={helpContent}
-                  className="text-gray-800 leading-relaxed"
+                  className="text-gray-800 leading-relaxed text-lg"
                 />
               </div>
             </ScrollArea>
