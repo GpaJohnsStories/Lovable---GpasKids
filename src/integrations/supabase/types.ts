@@ -268,7 +268,10 @@ export type Database = {
           audio_segments: number | null
           audio_url: string | null
           author: string
+          book_title: string | null
           category: Database["public"]["Enums"]["story_category"]
+          chapter_number: number | null
+          chapter_title: string | null
           content: string | null
           copyright_status: string | null
           created_at: string
@@ -301,7 +304,10 @@ export type Database = {
           audio_segments?: number | null
           audio_url?: string | null
           author: string
+          book_title?: string | null
           category: Database["public"]["Enums"]["story_category"]
+          chapter_number?: number | null
+          chapter_title?: string | null
           content?: string | null
           copyright_status?: string | null
           created_at?: string
@@ -334,7 +340,10 @@ export type Database = {
           audio_segments?: number | null
           audio_url?: string | null
           author?: string
+          book_title?: string | null
           category?: Database["public"]["Enums"]["story_category"]
+          chapter_number?: number | null
+          chapter_title?: string | null
           content?: string | null
           copyright_status?: string | null
           created_at?: string

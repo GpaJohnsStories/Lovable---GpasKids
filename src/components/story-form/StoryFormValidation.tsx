@@ -16,6 +16,9 @@ interface Story {
   photo_link_2: string;
   photo_link_3: string;
   published: string;
+  book_title?: string;
+  chapter_number?: number;
+  chapter_title?: string;
 }
 
 export const validateStoryForm = (formData: Story): boolean => {
