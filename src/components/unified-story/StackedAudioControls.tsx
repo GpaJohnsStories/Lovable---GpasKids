@@ -298,34 +298,7 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
 
   return (
     <TooltipProvider>
-      <div className={`space-y-4 ${className}`}>
-        {/* Main "Please, read it to me" Button */}
-        <div className="flex justify-center">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={handlePlay}
-                disabled={isLoading || isPlaying}
-                className={`text-white px-8 py-4 text-lg rounded-xl font-bold shadow-[0_6px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.3)] border-2 border-green-600 transition-all duration-200 flex items-center gap-3 ${
-                  isLoading || isPlaying
-                    ? 'bg-gray-400 shadow-[0_3px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.2)] cursor-not-allowed' 
-                    : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#16a34a,0_3px_6px_rgba(0,0,0,0.3)]'
-                }`}
-              >
-                {isLoading ? (
-                  <Loader className="h-6 w-6 animate-spin" />
-                ) : (
-                  <Volume2 className="h-6 w-6" />
-                )}
-                {isLoading ? "Loading..." : "Please, read it to me"}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{isLoading ? "Loading..." : isPlaying ? "Currently playing" : "Start playing"}</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
-
+      <div className={`space-y-3 ${className}`}>
         {/* Control Buttons Row */}
         <div className="flex items-center justify-center gap-3">
           {/* Play Button */}
@@ -416,15 +389,24 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
         </div>
 
         {/* Volume Controls */}
-        <div className="flex flex-col items-center gap-3">
-          <div className="text-sm font-medium text-gray-700">Volume</div>
+        <div className="flex items-center gap-3">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="w-10 h-10 rounded-lg bg-green-500 text-white flex items-center justify-center">
+                <Volume2 className="h-5 w-5" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Volume: {volume}%</p>
+            </TooltipContent>
+          </Tooltip>
           <div className="flex gap-2">
             {[25, 50, 75, 100].map((vol, index) => (
               <Tooltip key={vol}>
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => handleVolumeChange(vol)}
-                    className={`px-4 py-2 rounded-lg font-bold border-2 transition-all duration-200 text-white ${
+                    className={`px-3 py-2 rounded-lg font-bold border-2 transition-all duration-200 text-white h-10 min-w-[50px] flex items-center justify-center ${
                       volume === vol
                         ? 'bg-green-600 border-green-700 shadow-[0_3px_0_#16a34a,0_4px_8px_rgba(0,0,0,0.3)] translate-y-1'
                         : `border-green-600 hover:translate-y-0.5 shadow-[0_3px_0_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_2px_0_rgba(0,0,0,0.2),0_3px_6px_rgba(0,0,0,0.3)] ${
@@ -447,8 +429,17 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
         </div>
 
         {/* Speed Controls */}
-        <div className="flex flex-col items-center gap-3">
-          <div className="text-sm font-medium text-gray-700">Speed</div>
+        <div className="flex items-center gap-3">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="w-10 h-10 rounded-lg bg-blue-500 text-white flex items-center justify-center">
+                <Gauge className="h-5 w-5" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Speed: {playbackRate}x</p>
+            </TooltipContent>
+          </Tooltip>
           <div className="flex gap-2">
             {[
               { speed: 0.5, label: '0.5x' },
@@ -460,7 +451,7 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => handleSpeedChange(speed)}
-                    className={`px-4 py-2 rounded-lg font-bold border-2 transition-all duration-200 text-white ${
+                    className={`px-3 py-2 rounded-lg font-bold border-2 transition-all duration-200 text-white h-10 min-w-[50px] flex items-center justify-center ${
                       playbackRate === speed
                         ? 'bg-blue-600 border-blue-700 shadow-[0_3px_0_#2563eb,0_4px_8px_rgba(0,0,0,0.3)] translate-y-1'
                         : `border-blue-600 hover:translate-y-0.5 shadow-[0_3px_0_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_2px_0_rgba(0,0,0,0.2),0_3px_6px_rgba(0,0,0,0.3)] ${
