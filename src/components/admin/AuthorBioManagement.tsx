@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import AdminLayoutWithHeaderBanner from "./AdminLayoutWithHeaderBanner";
 import AuthorBioForm from "./AuthorBioForm";
 import { supabase } from "@/integrations/supabase/client";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { toast } from "sonner";
 
 const AuthorBioManagement = () => {
