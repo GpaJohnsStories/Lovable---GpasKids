@@ -85,7 +85,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         </DialogHeader>
 
         {/* Audio Controls - Aligned to the right */}
-        <div className="px-4 pb-2 flex justify-end">
+        <div className="px-4 pb-0 flex justify-end">
           <div className="w-fit">
             <UniversalAudioControls 
               title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
