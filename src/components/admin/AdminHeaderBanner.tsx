@@ -212,26 +212,37 @@ const AdminHeaderBanner = () => {
 
               // Render + Story button after Library button
               const createStoryButton = (
-                <Button
+                <div 
                   key="create-story"
-                  onClick={() => {
-                    console.log('🎯 + Story button clicked in header');
-                    handleCreateStoryClick();
-                  }}
-                  variant="ghost"
-                  className="
-                    transition-all duration-200 border font-fun
-                    bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white
-                    shadow-[0_6px_0_#16a34a,0_8px_15px_rgba(0,0,0,0.3)]
-                    hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)]
-                    hover:transform hover:translate-y-1 active:translate-y-2 
-                    active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
-                    hover:from-green-500 hover:via-green-600 hover:to-green-700
-                  "
+                  className="relative"
+                  onMouseEnter={() => setHoveredButton('Story')}
+                  onMouseLeave={() => setHoveredButton(null)}
                 >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Story
-                </Button>
+                  <Button
+                    onClick={() => {
+                      console.log('🎯 + Story button clicked in header');
+                      handleCreateStoryClick();
+                    }}
+                    variant="ghost"
+                    className="
+                      transition-all duration-200 border font-fun
+                      bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white
+                      shadow-[0_6px_0_#16a34a,0_8px_15px_rgba(0,0,0,0.3)]
+                      hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)]
+                      hover:transform hover:translate-y-1 active:translate-y-2 
+                      active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
+                      hover:from-green-500 hover:via-green-600 hover:to-green-700
+                    "
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Story
+                  </Button>
+                  {hoveredButton === 'Story' && (
+                    <div className="nav-bubble opacity-100 visible">
+                      Create new story with unified editing system
+                    </div>
+                  )}
+                </div>
               );
 
               // Special handling for Library button with dropdown
