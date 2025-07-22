@@ -1,10 +1,11 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Eye, ArrowUp, ArrowDown, User, Globe, Calendar } from "lucide-react";
+import { Eye, ArrowUp, ArrowDown, User, Globe, Calendar, BookOpen } from "lucide-react";
 import { createSafeHtml } from "@/utils/xssProtection";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Tooltip,
   TooltipContent,
@@ -28,12 +29,58 @@ interface PublicAuthorBiosTableProps {
   isLoading?: boolean;
 }
 
+interface Story {
+  id: string;
+  title: string;
+  tagline?: string;
+  author: string;
+}
+
 type SortField = 'author_name' | 'native_country_name' | 'born_date';
 type SortDirection = 'asc' | 'desc';
 
 const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAuthorBiosTableProps) => {
   const [sortField, setSortField] = useState<SortField>('author_name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [storiesByAuthor, setStoriesByAuthor] = useState<Record<string, Story[]>>({});
+
+  // Fetch stories for all authors
+  useEffect(() => {
+    const fetchStoriesForAuthors = async () => {
+      if (bios.length === 0) return;
+
+      const authorNames = bios.map(bio => bio.author_name);
+      
+      try {
+        const { data: stories, error } = await supabase
+          .from('stories')
+          .select('id, title, tagline, author')
+          .in('author', authorNames)
+          .eq('published', 'Y')
+          .order('title', { ascending: true });
+
+        if (error) {
+          console.error('Error fetching stories:', error);
+          return;
+        }
+
+        // Group stories by author
+        const groupedStories: Record<string, Story[]> = {};
+        stories?.forEach(story => {
+          if (!groupedStories[story.author]) {
+            groupedStories[story.author] = [];
+          }
+          groupedStories[story.author].push(story);
+        });
+
+        setStoriesByAuthor(groupedStories);
+      } catch (error) {
+        console.error('Error fetching stories:', error);
+      }
+    };
+
+    fetchStoriesForAuthors();
+  }, [bios]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -75,6 +122,27 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
     const textContent = tempDiv.textContent || tempDiv.innerText || '';
     
     return textContent.substring(0, 100) + (textContent.length > 100 ? '...' : '');
+  };
+
+  const renderAuthorStories = (authorName: string) => {
+    const authorStories = storiesByAuthor[authorName] || [];
+    
+    if (authorStories.length === 0) {
+      return <div className="text-xs text-amber-600 italic">No published stories</div>;
+    }
+
+    return (
+      <div className="space-y-1">
+        {authorStories.map(story => (
+          <div key={story.id} className="text-xs">
+            <div className="font-medium text-amber-800">{story.title}</div>
+            {story.tagline && (
+              <div className="text-amber-600 italic">{story.tagline}</div>
+            )}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   const sortedBios = [...bios].sort((a, b) => {
@@ -155,6 +223,13 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                     </div>
                   </TableHead>
                   <TableHead className="p-1 text-center bg-background border-r border-gray-200">
+                    <div className="bg-green-500 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center rounded"
+                         style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                      <BookOpen className="h-3 w-3 mr-1" />
+                      Stories
+                    </div>
+                  </TableHead>
+                  <TableHead className="p-1 text-center bg-background border-r border-gray-200">
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button
@@ -216,6 +291,12 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                       <div className="text-sm text-amber-700 leading-relaxed">
                         {getBioPreview(bio.bio_content)}
                       </div>
+                    </TableCell>
+                    <TableCell 
+                      className="max-w-sm"
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
+                      {renderAuthorStories(bio.author_name)}
                     </TableCell>
                     <TableCell 
                       className="text-amber-700"
