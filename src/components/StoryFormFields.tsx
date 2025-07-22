@@ -110,7 +110,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           id="excerpt"
           value={formData.excerpt}
           onChange={(e) => onInputChange('excerpt', e.target.value)}
-          placeholder="Enter a brief excerpt or summary"
+          placeholder="Write a brief, engaging description that will make readers want to read your story..."
           rows={compact ? 2 : 3}
         />
       </div>
