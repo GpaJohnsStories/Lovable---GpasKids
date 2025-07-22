@@ -60,7 +60,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}
       >
         {/* Header with Title and Audio Controls */}
-        <DialogHeader className="flex flex-col lg:flex-row lg:items-center lg:justify-between p-4 pb-0 border-b border-orange-200 space-y-0">
+        <DialogHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 pb-0 border-b border-orange-200 space-y-0">
           <div className="flex items-center gap-3">
             {/* Buddy's Photo */}
             <img 
@@ -74,7 +74,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </div>
           
           {/* Audio Controls - Responsive positioning */}
-          <div className="w-fit mt-2 lg:mt-0 self-start lg:self-auto">
+          <div className="w-fit mt-2 sm:mt-0 self-start sm:self-auto">
             <UniversalAudioControls 
               title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
               content={helpContent}
