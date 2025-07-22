@@ -10,7 +10,6 @@ interface AuthorBio {
   died_date: string | null;
   native_country_name: string | null;
   native_language: string | null;
-  buddys_comments: string | null;
 }
 
 interface AuthorBioModalProps {
@@ -35,7 +34,37 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
     if (!bio.bio_content) return { __html: 'No biography content available.' };
     
     // Use safe HTML rendering for rich content
-    return createSafeHtml(bio.bio_content);
+    const safeHtml = createSafeHtml(bio.bio_content);
+    
+    // Check if content starts with "Buddy says:"
+    const htmlContent = safeHtml.__html;
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+    const textContent = tempDiv.textContent || tempDiv.innerText || '';
+    
+    if (textContent.trim().toLowerCase().startsWith('buddy says:')) {
+      // Find the first paragraph and style it differently
+      const buddyRegex = /(.*?buddy says:.*?)(<\/p>|$)/i;
+      const match = htmlContent.match(buddyRegex);
+      
+      if (match) {
+        const buddyParagraph = match[0];
+        const restContent = htmlContent.replace(buddyParagraph, '');
+        
+        return {
+          __html: `
+            <div class="bg-orange-100 p-4 rounded-lg border-2 border-orange-300 mb-4">
+              <div class="text-orange-700 font-bold text-xl leading-relaxed" style="font-family: 'Caveat', cursive;">
+                ${buddyParagraph.replace(/^<p[^>]*>/, '').replace(/<\/p>$/, '')}
+              </div>
+            </div>
+            ${restContent}
+          `
+        };
+      }
+    }
+    
+    return safeHtml;
   };
 
   return (
@@ -74,17 +103,6 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
                     <span className="text-amber-700">{formatLifeSpan()}</span>
                   </div>
                 )}
-              </div>
-            </div>
-          )}
-          
-          {bio.buddys_comments && (
-            <div className="bg-orange-100 p-4 rounded-lg border-2 border-orange-300 mb-4">
-              <div className="text-lg font-bold text-orange-800 mb-2 flex items-center">
-                🐕 Buddy says:
-              </div>
-              <div className="text-orange-700 font-medium italic text-lg leading-relaxed">
-                "{bio.buddys_comments}"
               </div>
             </div>
           )}
