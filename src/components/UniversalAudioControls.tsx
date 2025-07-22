@@ -154,7 +154,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
       
       // Add OpenAI attribution for help content
       if (context === 'help-popup') {
-        textToRead += `. Audio was read by Nova voice from OpenAI.`;
+        textToRead += `. This audio reading is provided by Nova voice from OpenAI.`;
       }
 
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
@@ -231,7 +231,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
 
       toast({
         title: "Now playing",
-        description: `Playing "${title}" with Nova voice`,
+        description: `This audio reading is provided by Nova voice from OpenAI`,
       });
 
     } catch (error) {

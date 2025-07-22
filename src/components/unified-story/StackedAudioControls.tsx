@@ -220,7 +220,7 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
 
       toast({
         title: "Now playing",
-        description: `Playing "${title}" with Nova voice`,
+        description: `This audio reading is provided by Nova voice from OpenAI`,
       });
 
     } catch (error) {
