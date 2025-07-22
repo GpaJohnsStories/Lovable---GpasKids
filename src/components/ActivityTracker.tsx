@@ -31,13 +31,13 @@ const ActivityTracker = ({ showDebugInfo = false }: ActivityTrackerProps) => {
           <Button
             variant="outline"
             size="sm"
-            className="rounded-full shadow-lg bg-white/90 hover:bg-white border-2 border-orange-200 hover:border-orange-300 transition-all duration-200 hover:scale-105"
+            className="rounded-full shadow-lg bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 border-2 border-purple-300 hover:border-purple-400 transition-all duration-200 hover:scale-105 text-white px-4 py-2"
           >
-            <Clock className="h-4 w-4 mr-2 text-orange-600" />
-            <span className="text-orange-700 font-medium">Activity</span>
+            <Clock className="h-4 w-4 mr-2" />
+            <span className="font-semibold">Activity</span>
             <div 
               className={`w-2 h-2 rounded-full ml-2 ${
-                isActive ? 'bg-green-500 animate-pulse' : 'bg-gray-400'
+                isActive ? 'bg-green-300 animate-pulse' : 'bg-gray-300'
               }`}
             />
           </Button>
