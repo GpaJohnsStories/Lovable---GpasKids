@@ -37,7 +37,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
   const [audioGenerated, setAudioGenerated] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [volume, setVolume] = useState(100);
-  const [playbackRate, setPlaybackRate] = useState(1.0);
+  const [playbackRate, setPlaybackRate] = useState(0.5);
 
   // Cleanup audio resources when component unmounts
   useEffect(() => {
@@ -48,7 +48,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
       }
       // Reset to defaults when component unmounts
       setVolume(100);
-      setPlaybackRate(1.0);
+      setPlaybackRate(0.5);
     };
   }, [currentAudio]);
 
@@ -444,7 +444,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                     className={`${config.buttonSize} rounded font-bold border transition-all duration-200 flex items-center justify-center ${config.fontSize} ${
                       volume === 25
                         ? 'bg-green-600 text-white border-green-700 shadow-md'
-                        : 'bg-green-300 text-white border-green-600 hover:bg-green-400 hover:scale-105'
+                        : 'bg-green-400 text-white border-green-600 hover:bg-green-500 hover:scale-105'
                     }`}
                   >
                     25%
@@ -481,7 +481,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                     className={`${config.buttonSize} rounded font-bold border transition-all duration-200 flex items-center justify-center ${config.fontSize} ${
                       volume === 75
                         ? 'bg-green-600 text-white border-green-700 shadow-md'
-                        : 'bg-green-500 text-white border-green-600 hover:bg-green-600 hover:scale-105'
+                        : 'bg-green-400 text-white border-green-600 hover:bg-green-500 hover:scale-105'
                     }`}
                   >
                     75%
@@ -531,7 +531,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                     className={`${config.buttonSize} rounded font-bold border transition-all duration-200 flex items-center justify-center ${config.fontSize} ${
                       playbackRate === 0.5
                         ? 'bg-blue-600 text-white border-blue-700 shadow-md'
-                        : 'bg-blue-300 text-white border-blue-600 hover:bg-blue-400 hover:scale-105'
+                        : 'bg-blue-400 text-white border-blue-600 hover:bg-blue-500 hover:scale-105'
                     }`}
                   >
                     0.5x
@@ -568,7 +568,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                     className={`${config.buttonSize} rounded font-bold border transition-all duration-200 flex items-center justify-center ${config.fontSize} ${
                       playbackRate === 1.5
                         ? 'bg-blue-600 text-white border-blue-700 shadow-md'
-                        : 'bg-blue-500 text-white border-blue-600 hover:bg-blue-600 hover:scale-105'
+                        : 'bg-blue-400 text-white border-blue-600 hover:bg-blue-500 hover:scale-105'
                     }`}
                   >
                     1.5x
