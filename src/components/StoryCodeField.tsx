@@ -1,6 +1,7 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   FormControl,
   FormField,
@@ -11,13 +12,25 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
-interface StoryCodeFieldProps {
+// Props for React Hook Form usage
+interface FormStoryCodeFieldProps {
   form: UseFormReturn<any>;
 }
 
-const StoryCodeField = ({ form }: StoryCodeFieldProps) => {
-  const handleStoryCodeLookup = async () => {
-    const storyCode = form.getValues("story_code");
+// Props for controlled component usage
+interface ControlledStoryCodeFieldProps {
+  value: string;
+  onChange: (value: string) => void;
+  compact?: boolean;
+}
+
+type StoryCodeFieldProps = FormStoryCodeFieldProps | ControlledStoryCodeFieldProps;
+
+const StoryCodeField = (props: StoryCodeFieldProps) => {
+  // Check if this is a form-based usage
+  const isFormBased = 'form' in props;
+
+  const handleStoryCodeLookup = async (storyCode: string) => {
     if (!storyCode || storyCode.trim() === "") {
       return;
     }
@@ -41,7 +54,9 @@ const StoryCodeField = ({ form }: StoryCodeFieldProps) => {
 
       if (story && story.title) {
         const newSubject = `${storyCode.trim()} - ${story.title}`;
-        form.setValue("subject", newSubject, { shouldValidate: true });
+        if (isFormBased) {
+          props.form.setValue("subject", newSubject, { shouldValidate: true });
+        }
         toast({
           title: "Story Found!",
           description: `Subject has been filled with "${newSubject}".`,
@@ -62,30 +77,56 @@ const StoryCodeField = ({ form }: StoryCodeFieldProps) => {
     }
   };
 
+  // Render for React Hook Form usage
+  if (isFormBased) {
+    return (
+      <FormField
+        control={props.form.control}
+        name="story_code"
+        render={({ field }) => (
+          <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
+            <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Story Code (Optional)</FormLabel>
+            <div className="sm:col-span-2">
+              <FormControl>
+                <Input
+                  placeholder="e.g., A1B2"
+                  {...field}
+                  onBlur={() => handleStoryCodeLookup(field.value)}
+                  className="w-full sm:w-40 text-base md:text-sm"
+                />
+              </FormControl>
+              <p className="text-sm text-orange-700 mt-1 font-fun">
+                Commenting on a specific story? Enter its code here.
+              </p>
+              <FormMessage />
+            </div>
+          </FormItem>
+        )}
+      />
+    );
+  }
+
+  // Render for controlled component usage
+  const { value, onChange, compact = false } = props as ControlledStoryCodeFieldProps;
+  const labelSize = compact ? "text-sm" : "text-base";
+
   return (
-    <FormField
-      control={form.control}
-      name="story_code"
-      render={({ field }) => (
-        <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
-          <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Story Code (Optional)</FormLabel>
-          <div className="sm:col-span-2">
-            <FormControl>
-              <Input
-                placeholder="e.g., A1B2"
-                {...field}
-                onBlur={handleStoryCodeLookup}
-                className="w-full sm:w-40 text-base md:text-sm"
-              />
-            </FormControl>
-            <p className="text-sm text-orange-700 mt-1 font-fun">
-              Commenting on a specific story? Enter its code here.
-            </p>
-            <FormMessage />
-          </div>
-        </FormItem>
-      )}
-    />
+    <div className="space-y-2">
+      <Label htmlFor="story_code" className={`font-medium text-gray-700 ${labelSize}`}>
+        Story Code (Optional)
+      </Label>
+      <Input
+        id="story_code"
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onBlur={() => handleStoryCodeLookup(value)}
+        placeholder="e.g., A1B2"
+      />
+      <p className="text-sm text-gray-600">
+        Commenting on a specific story? Enter its code here.
+      </p>
+    </div>
   );
 };
 
