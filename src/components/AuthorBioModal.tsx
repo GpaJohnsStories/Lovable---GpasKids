@@ -10,6 +10,7 @@ interface AuthorBio {
   died_date: string | null;
   native_country_name: string | null;
   native_language: string | null;
+  buddys_comments: string | null;
 }
 
 interface AuthorBioModalProps {
@@ -41,7 +42,12 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-amber-800 mb-4">
+          <DialogTitle className="flex items-center gap-4 text-2xl font-bold text-amber-800 mb-4">
+            <img 
+              src="/lovable-uploads/57b61432-e031-442a-b917-352de9166e1b.png"
+              alt="Buddy the dog"
+              className="w-16 h-16 rounded-full object-cover"
+            />
             About {bio.author_name}
           </DialogTitle>
         </DialogHeader>
@@ -68,6 +74,17 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
                     <span className="text-amber-700">{formatLifeSpan()}</span>
                   </div>
                 )}
+              </div>
+            </div>
+          )}
+          
+          {bio.buddys_comments && (
+            <div className="bg-orange-100 p-4 rounded-lg border-2 border-orange-300 mb-4">
+              <div className="text-lg font-bold text-orange-800 mb-2 flex items-center">
+                🐕 Buddy says:
+              </div>
+              <div className="text-orange-700 font-medium italic text-lg leading-relaxed">
+                "{bio.buddys_comments}"
               </div>
             </div>
           )}

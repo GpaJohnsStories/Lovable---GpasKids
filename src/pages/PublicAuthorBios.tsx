@@ -19,6 +19,7 @@ interface AuthorBio {
   died_date: string | null;
   native_country_name: string | null;
   native_language: string | null;
+  buddys_comments: string | null;
 }
 
 const PublicAuthorBios = () => {
