@@ -263,6 +263,22 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
     });
   };
 
+  const handleStartOver = async () => {
+    // Stop current audio if playing
+    if (currentAudio) {
+      currentAudio.pause();
+      setCurrentAudio(null);
+    }
+    setIsPlaying(false);
+    setIsPaused(false);
+    setAudioGenerated(false);
+    
+    // Wait a moment then start playing again
+    setTimeout(() => {
+      handlePlay();
+    }, 100);
+  };
+
   const handleVolumeChange = (newVolume: number) => {
     setVolume(newVolume);
   };
@@ -290,10 +306,10 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
               <button
                 onClick={handlePlay}
                 disabled={isLoading || isPlaying}
-                className={`text-white px-8 py-4 text-lg rounded-lg font-bold shadow-[0_4px_0_#22c55e,0_6px_12px_rgba(0,0,0,0.3)] border border-green-700 transition-all duration-200 flex items-center gap-3 ${
+                className={`text-white px-8 py-4 text-lg rounded-xl font-bold shadow-[0_6px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.3)] border-2 border-green-600 transition-all duration-200 flex items-center gap-3 ${
                   isLoading || isPlaying
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.3)] hover:from-green-500 hover:via-green-600 hover:to-green-700'
+                    ? 'bg-gray-400 shadow-[0_3px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.2)] cursor-not-allowed' 
+                    : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#16a34a,0_3px_6px_rgba(0,0,0,0.3)]'
                 }`}
               >
                 {isLoading ? (
@@ -318,10 +334,10 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
               <button
                 onClick={handlePlay}
                 disabled={isLoading || isPlaying}
-                className={`w-12 h-12 rounded-lg font-bold shadow-lg transition-all duration-200 flex items-center justify-center ${
+                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.3)] border-2 border-green-600 transition-all duration-200 flex items-center justify-center ${
                   isLoading || isPlaying
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-green-500 hover:bg-green-600 text-white border-2 border-green-600'
+                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_3px_6px_rgba(0,0,0,0.2)] cursor-not-allowed' 
+                    : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white hover:shadow-[0_3px_0_#16a34a,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#16a34a,0_2px_4px_rgba(0,0,0,0.3)]'
                 }`}
               >
                 {isLoading ? (
@@ -342,10 +358,10 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
               <button
                 onClick={handlePause}
                 disabled={!isPlaying}
-                className={`w-12 h-12 rounded-lg font-bold shadow-lg transition-all duration-200 flex items-center justify-center ${
+                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#d97706,0_6px_12px_rgba(0,0,0,0.3)] border-2 border-amber-600 transition-all duration-200 flex items-center justify-center ${
                   !isPlaying
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-amber-500 hover:bg-amber-600 text-white border-2 border-amber-600'
+                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_3px_6px_rgba(0,0,0,0.2)] cursor-not-allowed' 
+                    : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 text-white hover:shadow-[0_3px_0_#d97706,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#d97706,0_2px_4px_rgba(0,0,0,0.3)]'
                 }`}
               >
                 <Pause className="h-5 w-5" />
@@ -362,10 +378,10 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
               <button
                 onClick={handleStop}
                 disabled={!audioGenerated}
-                className={`w-12 h-12 rounded-lg font-bold shadow-lg transition-all duration-200 flex items-center justify-center ${
+                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.3)] border-2 border-red-600 transition-all duration-200 flex items-center justify-center ${
                   !audioGenerated
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-red-500 hover:bg-red-600 text-white border-2 border-red-600'
+                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_3px_6px_rgba(0,0,0,0.2)] cursor-not-allowed' 
+                    : 'bg-gradient-to-b from-red-400 via-red-500 to-red-600 text-white hover:shadow-[0_3px_0_#dc2626,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#dc2626,0_2px_4px_rgba(0,0,0,0.3)]'
                 }`}
               >
                 <Square className="h-5 w-5" />
@@ -375,10 +391,32 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
               <p>Stop</p>
             </TooltipContent>
           </Tooltip>
+
+          {/* Start Over Button */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                onClick={handleStartOver}
+                disabled={isLoading || !audioGenerated}
+                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.3)] border-2 border-purple-600 transition-all duration-200 flex items-center justify-center ${
+                  isLoading || !audioGenerated
+                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_3px_6px_rgba(0,0,0,0.2)] cursor-not-allowed' 
+                    : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white hover:shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)]'
+                }`}
+              >
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9zm4.5-4.5v9l7-4.5-7-4.5z"/>
+                </svg>
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Start Over</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         {/* Volume Controls */}
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-3">
           <div className="text-sm font-medium text-gray-700">Volume</div>
           <div className="flex gap-2">
             {[25, 50, 75, 100].map((vol, index) => (
@@ -386,14 +424,14 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => handleVolumeChange(vol)}
-                    className={`px-3 py-2 rounded font-bold border-2 transition-all duration-200 text-white ${
+                    className={`px-4 py-2 rounded-lg font-bold border-2 transition-all duration-200 text-white ${
                       volume === vol
-                        ? 'bg-green-600 border-green-700 shadow-md'
-                        : `border-green-600 hover:scale-105 ${
-                            index === 0 ? 'bg-green-300 hover:bg-green-400' :
-                            index === 1 ? 'bg-green-400 hover:bg-green-500' :
-                            index === 2 ? 'bg-green-500 hover:bg-green-600' :
-                            'bg-green-600 hover:bg-green-700'
+                        ? 'bg-green-600 border-green-700 shadow-[0_3px_0_#16a34a,0_4px_8px_rgba(0,0,0,0.3)] translate-y-1'
+                        : `border-green-600 hover:translate-y-0.5 shadow-[0_3px_0_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_2px_0_rgba(0,0,0,0.2),0_3px_6px_rgba(0,0,0,0.3)] ${
+                            index === 0 ? 'bg-gradient-to-b from-green-300 to-green-400' :
+                            index === 1 ? 'bg-gradient-to-b from-green-400 to-green-500' :
+                            index === 2 ? 'bg-gradient-to-b from-green-500 to-green-600' :
+                            'bg-gradient-to-b from-green-600 to-green-700'
                           }`
                     }`}
                   >
@@ -409,7 +447,7 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
         </div>
 
         {/* Speed Controls */}
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-3">
           <div className="text-sm font-medium text-gray-700">Speed</div>
           <div className="flex gap-2">
             {[
@@ -422,14 +460,14 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => handleSpeedChange(speed)}
-                    className={`px-3 py-2 rounded font-bold border-2 transition-all duration-200 text-white ${
+                    className={`px-4 py-2 rounded-lg font-bold border-2 transition-all duration-200 text-white ${
                       playbackRate === speed
-                        ? 'bg-blue-600 border-blue-700 shadow-md'
-                        : `border-blue-600 hover:scale-105 ${
-                            index === 0 ? 'bg-blue-300 hover:bg-blue-400' :
-                            index === 1 ? 'bg-blue-400 hover:bg-blue-500' :
-                            index === 2 ? 'bg-blue-500 hover:bg-blue-600' :
-                            'bg-blue-600 hover:bg-blue-700'
+                        ? 'bg-blue-600 border-blue-700 shadow-[0_3px_0_#2563eb,0_4px_8px_rgba(0,0,0,0.3)] translate-y-1'
+                        : `border-blue-600 hover:translate-y-0.5 shadow-[0_3px_0_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_2px_0_rgba(0,0,0,0.2),0_3px_6px_rgba(0,0,0,0.3)] ${
+                            index === 0 ? 'bg-gradient-to-b from-blue-300 to-blue-400' :
+                            index === 1 ? 'bg-gradient-to-b from-blue-400 to-blue-500' :
+                            index === 2 ? 'bg-gradient-to-b from-blue-500 to-blue-600' :
+                            'bg-gradient-to-b from-blue-600 to-blue-700'
                           }`
                     }`}
                   >
