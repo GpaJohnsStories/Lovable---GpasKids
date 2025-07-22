@@ -8,6 +8,7 @@ import StoryFormFields from "../StoryFormFields";
 import StoryPhotoUpload from "../StoryPhotoUpload";
 import StoryVideoUpload from "../StoryVideoUpload";
 import VoiceSelection from "./VoiceSelection";
+import { UniversalAudioControls } from "../UniversalAudioControls";
 import type { Story } from '@/hooks/useStoryFormState';
 
 interface StoryFormContentProps {
@@ -101,10 +102,16 @@ const StoryFormContent: React.FC<StoryFormContentProps> = ({
               <Volume2 className="h-4 w-4 mr-2" />
               Audio Version Available
             </h4>
-            <audio controls className="w-full">
-              <source src={formData.audio_url} type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
+            <UniversalAudioControls
+              audioUrl={formData.audio_url}
+              title={formData.title || 'Story Audio'}
+              content={formData.content}
+              author={formData.author}
+              allowTextToSpeech={allowTextToSpeech}
+              context={context}
+              size="md"
+              className="w-full"
+            />
             <p className="text-xs text-green-600 mt-2">
               Voice: {formData.ai_voice_name || 'Nova'}
             </p>
