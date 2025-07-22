@@ -273,13 +273,13 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                 {sortedBios.map((bio) => (
                   <TableRow key={bio.id} className="hover:bg-amber-50/50">
                     <TableCell 
-                      className="font-semibold text-amber-900"
+                      className="font-semibold text-amber-900 align-top"
                       style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
                     >
                       {bio.author_name}
                     </TableCell>
                     <TableCell 
-                      className="max-w-md"
+                      className="max-w-md align-top"
                       style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
                     >
                       <div className="space-y-3">
@@ -296,7 +296,7 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                       </div>
                     </TableCell>
                     <TableCell 
-                      className="text-amber-700"
+                      className="text-amber-700 align-top"
                       style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
                     >
                       <div className="text-sm">
@@ -304,14 +304,17 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                       </div>
                     </TableCell>
                     <TableCell 
-                      className="text-amber-700"
+                      className="text-amber-700 align-top"
                       style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
                     >
                       <div className="text-sm">
                         {formatLifeSpan(bio)}
                       </div>
                     </TableCell>
-                    <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+                    <TableCell 
+                      className="align-top"
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
                       <Button
                         size="sm"
                         onClick={() => onViewBio(bio)}
