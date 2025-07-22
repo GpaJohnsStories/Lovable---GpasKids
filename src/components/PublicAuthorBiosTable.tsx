@@ -57,6 +57,7 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
           .select('id, title, tagline, author')
           .in('author', authorNames)
           .eq('published', 'Y')
+          .not('category', 'eq', 'WebText')
           .order('title', { ascending: true });
 
         if (error) {
@@ -219,14 +220,7 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                   <TableHead className="p-1 text-center bg-background border-r border-gray-200">
                     <div className="bg-green-500 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center rounded"
                          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                      Biography Preview
-                    </div>
-                  </TableHead>
-                  <TableHead className="p-1 text-center bg-background border-r border-gray-200">
-                    <div className="bg-green-500 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center rounded"
-                         style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                      <BookOpen className="h-3 w-3 mr-1" />
-                      Stories
+                      Biography & Stories
                     </div>
                   </TableHead>
                   <TableHead className="p-1 text-center bg-background border-r border-gray-200">
@@ -288,15 +282,18 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                       className="max-w-md"
                       style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
                     >
-                      <div className="text-sm text-amber-700 leading-relaxed">
-                        {getBioPreview(bio.bio_content)}
+                      <div className="space-y-3">
+                        <div className="text-sm text-amber-700 leading-relaxed">
+                          {getBioPreview(bio.bio_content)}
+                        </div>
+                        <div className="border-t border-amber-200 pt-2">
+                          <div className="text-xs font-semibold text-amber-800 mb-1 flex items-center">
+                            <BookOpen className="h-3 w-3 mr-1" />
+                            Published Stories:
+                          </div>
+                          {renderAuthorStories(bio.author_name)}
+                        </div>
                       </div>
-                    </TableCell>
-                    <TableCell 
-                      className="max-w-sm"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
-                    >
-                      {renderAuthorStories(bio.author_name)}
                     </TableCell>
                     <TableCell 
                       className="text-amber-700"
