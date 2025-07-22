@@ -298,179 +298,285 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
   return (
     <TooltipProvider>
       <div className={`space-y-4 ${className}`}>
-        {/* Control Buttons Row - Precisely Centered */}
-        <div className="flex items-center justify-center gap-4">
-          {/* Play Button */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={handlePlay}
-                disabled={isLoading || isPlaying}
-                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-green-600 transition-all duration-300 ease-out flex items-center justify-center ${
-                  isLoading || isPlaying
-                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
-                    : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white hover:shadow-[0_6px_0_#16a34a,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#16a34a,0_2px_4px_rgba(0,0,0,0.3)]'
-                }`}
-              >
-                {isLoading ? (
-                  <Loader className="h-5 w-5 animate-spin" />
-                ) : (
-                  <Play className="h-5 w-5 ml-0.5" />
-                )}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Play</p>
-            </TooltipContent>
-          </Tooltip>
+        {/* Table Layout for Perfect Alignment */}
+        <table className="w-full border-spacing-4" style={{ borderCollapse: 'separate' }}>
+          <tbody>
+            {/* Row 1: Play Controls - Centered */}
+            <tr>
+              <td className="w-14"></td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handlePlay}
+                      disabled={isLoading || isPlaying}
+                      className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-green-600 transition-all duration-300 ease-out flex items-center justify-center ${
+                        isLoading || isPlaying
+                          ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
+                          : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white hover:shadow-[0_6px_0_#16a34a,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#16a34a,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      {isLoading ? (
+                        <Loader className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <Play className="h-5 w-5 ml-0.5" />
+                      )}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Play</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handlePause}
+                      disabled={!isPlaying}
+                      className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#d97706,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-amber-600 transition-all duration-300 ease-out flex items-center justify-center ${
+                        !isPlaying
+                          ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
+                          : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 text-white hover:shadow-[0_6px_0_#d97706,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#d97706,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      <Pause className="h-5 w-5" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Pause</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handleStop}
+                      disabled={!audioGenerated}
+                      className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#dc2626,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-red-600 transition-all duration-300 ease-out flex items-center justify-center ${
+                        !audioGenerated
+                          ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
+                          : 'bg-gradient-to-b from-red-400 via-red-500 to-red-600 text-white hover:shadow-[0_6px_0_#dc2626,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#dc2626,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      <Square className="h-5 w-5" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Stop</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handleStartOver}
+                      disabled={isLoading || !audioGenerated}
+                      className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#7c3aed,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-purple-600 transition-all duration-300 ease-out flex items-center justify-center ${
+                        isLoading || !audioGenerated
+                          ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
+                          : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white hover:shadow-[0_6px_0_#7c3aed,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9zm4.5-4.5v9l7-4.5-7-4.5z"/>
+                      </svg>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Start Over</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+            </tr>
 
-          {/* Pause Button */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={handlePause}
-                disabled={!isPlaying}
-                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#d97706,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-amber-600 transition-all duration-300 ease-out flex items-center justify-center ${
-                  !isPlaying
-                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
-                    : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 text-white hover:shadow-[0_6px_0_#d97706,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#d97706,0_2px_4px_rgba(0,0,0,0.3)]'
-                }`}
-              >
-                <Pause className="h-5 w-5" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Pause</p>
-            </TooltipContent>
-          </Tooltip>
+            {/* Row 2: Volume Controls */}
+            <tr>
+              <td className="text-left">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-b from-green-400 to-green-600 text-white flex items-center justify-center shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-green-600">
+                      <Volume2 className="h-5 w-5" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Volume: {volume}%</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleVolumeChange(25)}
+                      className={`w-14 h-14 rounded-xl font-bold border-2 transition-all duration-300 ease-out text-white flex items-center justify-center ${
+                        volume === 25
+                          ? 'bg-green-600 border-green-700 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(22,163,74,0.4)] translate-y-1 scale-105'
+                          : 'bg-gradient-to-b from-green-300 to-green-400 border-green-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#16a34a,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#16a34a,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      25%
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Set volume to 25%</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleVolumeChange(50)}
+                      className={`w-14 h-14 rounded-xl font-bold border-2 transition-all duration-300 ease-out text-white flex items-center justify-center ${
+                        volume === 50
+                          ? 'bg-green-600 border-green-700 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(22,163,74,0.4)] translate-y-1 scale-105'
+                          : 'bg-gradient-to-b from-green-400 to-green-500 border-green-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#16a34a,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#16a34a,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      50%
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Set volume to 50%</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleVolumeChange(75)}
+                      className={`w-14 h-14 rounded-xl font-bold border-2 transition-all duration-300 ease-out text-white flex items-center justify-center ${
+                        volume === 75
+                          ? 'bg-green-600 border-green-700 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(22,163,74,0.4)] translate-y-1 scale-105'
+                          : 'bg-gradient-to-b from-green-500 to-green-600 border-green-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#16a34a,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#16a34a,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      75%
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Set volume to 75%</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleVolumeChange(100)}
+                      className={`w-14 h-14 rounded-xl font-bold border-2 transition-all duration-300 ease-out text-white flex items-center justify-center ${
+                        volume === 100
+                          ? 'bg-green-600 border-green-700 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(22,163,74,0.4)] translate-y-1 scale-105'
+                          : 'bg-gradient-to-b from-green-600 to-green-700 border-green-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#16a34a,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#16a34a,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      100%
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Set volume to 100%</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+            </tr>
 
-          {/* Stop Button */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={handleStop}
-                disabled={!audioGenerated}
-                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#dc2626,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-red-600 transition-all duration-300 ease-out flex items-center justify-center ${
-                  !audioGenerated
-                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
-                    : 'bg-gradient-to-b from-red-400 via-red-500 to-red-600 text-white hover:shadow-[0_6px_0_#dc2626,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#dc2626,0_2px_4px_rgba(0,0,0,0.3)]'
-                }`}
-              >
-                <Square className="h-5 w-5" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Stop</p>
-            </TooltipContent>
-          </Tooltip>
-
-          {/* Start Over Button */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={handleStartOver}
-                disabled={isLoading || !audioGenerated}
-                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#7c3aed,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-purple-600 transition-all duration-300 ease-out flex items-center justify-center ${
-                  isLoading || !audioGenerated
-                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
-                    : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white hover:shadow-[0_6px_0_#7c3aed,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)]'
-                }`}
-              >
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9zm4.5-4.5v9l7-4.5-7-4.5z"/>
-                </svg>
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Start Over</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
-
-        {/* Volume Controls - Left Aligned with Play Button */}
-        <div className="flex items-center gap-4">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-b from-green-400 to-green-600 text-white flex items-center justify-center shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-green-600">
-                <Volume2 className="h-5 w-5" />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Volume: {volume}%</p>
-            </TooltipContent>
-          </Tooltip>
-          <div className="flex gap-4">
-            {[25, 50, 75, 100].map((vol, index) => (
-              <Tooltip key={vol}>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={() => handleVolumeChange(vol)}
-                    className={`w-14 h-14 rounded-xl font-bold border-2 transition-all duration-300 ease-out text-white flex items-center justify-center ${
-                      volume === vol
-                        ? 'bg-green-600 border-green-700 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(22,163,74,0.4)] translate-y-1 scale-105'
-                        : `border-green-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#16a34a,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#16a34a,0_2px_4px_rgba(0,0,0,0.3)] ${
-                            index === 0 ? 'bg-gradient-to-b from-green-300 to-green-400' :
-                            index === 1 ? 'bg-gradient-to-b from-green-400 to-green-500' :
-                            index === 2 ? 'bg-gradient-to-b from-green-500 to-green-600' :
-                            'bg-gradient-to-b from-green-600 to-green-700'
-                          }`
-                    }`}
-                  >
-                    {vol}%
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Set volume to {vol}%</p>
-                </TooltipContent>
-              </Tooltip>
-            ))}
-          </div>
-        </div>
-
-        {/* Speed Controls - Left Aligned with Play Button */}
-        <div className="flex items-center gap-4">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-b from-blue-400 to-blue-600 text-white flex items-center justify-center shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-blue-600">
-                <Gauge className="h-5 w-5" />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Speed: {playbackRate}x</p>
-            </TooltipContent>
-          </Tooltip>
-          <div className="flex gap-4">
-            {[
-              { speed: 0.5, label: '0.5x' },
-              { speed: 1.0, label: '1x' },
-              { speed: 1.5, label: '1.5x' },
-              { speed: 2.0, label: '2x' }
-            ].map(({ speed, label }, index) => (
-              <Tooltip key={speed}>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={() => handleSpeedChange(speed)}
-                    className={`w-14 h-14 rounded-xl font-bold border-2 transition-all duration-300 ease-out text-white flex items-center justify-center ${
-                      playbackRate === speed
-                        ? 'bg-blue-600 border-blue-700 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(37,99,235,0.4)] translate-y-1 scale-105'
-                        : `border-blue-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#2563eb,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#2563eb,0_2px_4px_rgba(0,0,0,0.3)] ${
-                            index === 0 ? 'bg-gradient-to-b from-blue-300 to-blue-400' :
-                            index === 1 ? 'bg-gradient-to-b from-blue-400 to-blue-500' :
-                            index === 2 ? 'bg-gradient-to-b from-blue-500 to-blue-600' :
-                            'bg-gradient-to-b from-blue-600 to-blue-700'
-                          }`
-                    }`}
-                  >
-                    {label}
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Set speed to {label}</p>
-                </TooltipContent>
-              </Tooltip>
-            ))}
-          </div>
-        </div>
+            {/* Row 3: Speed Controls */}
+            <tr>
+              <td className="text-left">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-b from-blue-400 to-blue-600 text-white flex items-center justify-center shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-blue-600">
+                      <Gauge className="h-5 w-5" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Speed: {playbackRate}x</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleSpeedChange(0.5)}
+                      className={`w-14 h-14 rounded-xl font-bold border-2 transition-all duration-300 ease-out text-white flex items-center justify-center ${
+                        playbackRate === 0.5
+                          ? 'bg-blue-600 border-blue-700 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(37,99,235,0.4)] translate-y-1 scale-105'
+                          : 'bg-gradient-to-b from-blue-300 to-blue-400 border-blue-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#2563eb,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#2563eb,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      0.5x
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Set speed to 0.5x</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleSpeedChange(1.0)}
+                      className={`w-14 h-14 rounded-xl font-bold border-2 transition-all duration-300 ease-out text-white flex items-center justify-center ${
+                        playbackRate === 1.0
+                          ? 'bg-blue-600 border-blue-700 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(37,99,235,0.4)] translate-y-1 scale-105'
+                          : 'bg-gradient-to-b from-blue-400 to-blue-500 border-blue-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#2563eb,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#2563eb,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      1x
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Set speed to 1x</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleSpeedChange(1.5)}
+                      className={`w-14 h-14 rounded-xl font-bold border-2 transition-all duration-300 ease-out text-white flex items-center justify-center ${
+                        playbackRate === 1.5
+                          ? 'bg-blue-600 border-blue-700 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(37,99,235,0.4)] translate-y-1 scale-105'
+                          : 'bg-gradient-to-b from-blue-500 to-blue-600 border-blue-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#2563eb,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#2563eb,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      1.5x
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Set speed to 1.5x</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleSpeedChange(2.0)}
+                      className={`w-14 h-14 rounded-xl font-bold border-2 transition-all duration-300 ease-out text-white flex items-center justify-center ${
+                        playbackRate === 2.0
+                          ? 'bg-blue-600 border-blue-700 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(37,99,235,0.4)] translate-y-1 scale-105'
+                          : 'bg-gradient-to-b from-blue-600 to-blue-700 border-blue-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#2563eb,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#2563eb,0_2px_4px_rgba(0,0,0,0.3)]'
+                      }`}
+                    >
+                      2x
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Set speed to 2x</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         {/* Voice Information */}
         {aiVoiceName && (
