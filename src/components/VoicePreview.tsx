@@ -1,12 +1,12 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import { WordLimitedTextarea } from "@/components/ui/word-limited-textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { Play, Square, Volume2, AlertCircle, CheckCircle } from "lucide-react";
 import LoadingSpinner from "./LoadingSpinner";
 import { toast } from "@/hooks/use-toast";
+import { truncateToWordLimit } from "@/utils/textUtils";
 
 const voices = [
   { id: 'alloy', name: 'Alloy', description: 'Neutral and balanced' },
@@ -42,15 +42,19 @@ const VoicePreview = () => {
 
       setLoadingVoice(voiceId);
       console.log(`🎵 Starting voice generation for voice: ${voiceId}`);
-      console.log(`📝 Text to convert: "${sampleText.substring(0, 50)}..."`);
+      
+      // Ensure text is within word limit before sending
+      const textToSend = truncateToWordLimit(sampleText, 200);
+      console.log(`📝 Text to convert: "${textToSend.substring(0, 50)}..."`);
 
       console.log('📡 Making request to text-to-speech function...');
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
-          text: sampleText,
+          text: textToSend,
           voice: voiceId
         }
       });
+
       console.log('📡 Raw function response:', { data, error });
 
       console.log('📡 Supabase function response:', { data, error });
@@ -156,6 +160,14 @@ const VoicePreview = () => {
     }
   };
 
+  const handleWordLimitExceeded = () => {
+    toast({
+      title: "Word limit reached",
+      description: "Voice preview is limited to 200 words to control costs.",
+      variant: "destructive",
+    });
+  };
+
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
@@ -191,7 +203,7 @@ const VoicePreview = () => {
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="block text-sm font-medium text-orange-800 font-fun">
-              Sample Text (edit to test with different content):
+              Sample Text (limited to 200 words):
             </label>
             <Button
               onClick={() => setSampleText('')}
@@ -202,11 +214,13 @@ const VoicePreview = () => {
               Clear Text
             </Button>
           </div>
-          <Textarea
+          <WordLimitedTextarea
             value={sampleText}
             onChange={(e) => setSampleText(e.target.value)}
+            wordLimit={200}
             className="min-h-[100px] font-fun"
             placeholder="Enter text to test with different voices..."
+            onWordLimitExceeded={handleWordLimitExceeded}
           />
         </div>
 
@@ -264,8 +278,8 @@ const VoicePreview = () => {
 
         <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
           <p className="text-yellow-800 font-fun text-sm">
-            🔧 <strong>Debugging Info:</strong> Check the browser console (F12) for detailed logs about the voice generation process. 
-            This will help identify any issues with API calls or audio playback.
+            🔧 <strong>Cost Control:</strong> Voice previews are limited to 200 words to help manage API costs. 
+            For longer content, the full story audio generation will process the complete text.
           </p>
         </div>
       </CardContent>

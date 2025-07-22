@@ -6,6 +6,44 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, x-client-type, apikey, content-type',
 }
 
+/**
+ * Counts words in a text string, ignoring HTML tags
+ * @param text - The text to count words in
+ * @returns The number of words
+ */
+const countWords = (text: string): number => {
+  if (!text || text.trim() === '') return 0;
+  
+  // Remove HTML tags using regex (simpler approach for server-side)
+  const plainText = text.replace(/<[^>]*>/g, '').trim();
+  
+  // Count words (split by whitespace and filter out empty strings)
+  const words = plainText.split(/\s+/).filter(word => word.length > 0);
+  return words.length;
+};
+
+/**
+ * Truncates text to a specified word limit
+ * @param text - The text to truncate
+ * @param wordLimit - Maximum number of words allowed
+ * @returns Truncated text
+ */
+const truncateToWordLimit = (text: string, wordLimit: number): string => {
+  if (!text || text.trim() === '') return text;
+  
+  // Remove HTML tags for word counting
+  const plainText = text.replace(/<[^>]*>/g, '').trim();
+  const words = plainText.split(/\s+/).filter(word => word.length > 0);
+  
+  if (words.length <= wordLimit) {
+    return text; // Return original text if within limit
+  }
+  
+  // Truncate to word limit
+  const truncatedWords = words.slice(0, wordLimit);
+  return truncatedWords.join(' ') + '...';
+};
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -19,7 +57,18 @@ serve(async (req) => {
       throw new Error('Text is required')
     }
 
-    console.log(`Generating speech for text: "${text.substring(0, 100)}..." with voice: ${voice} at speed: ${speed || 1.0}`)
+    // Server-side validation and truncation for cost control
+    const wordCount = countWords(text);
+    console.log(`📊 Text analysis: ${wordCount} words`);
+    
+    let processedText = text;
+    if (wordCount > 200) {
+      console.log(`⚠️ Text exceeds 200 words (${wordCount}), truncating for cost control`);
+      processedText = truncateToWordLimit(text, 200);
+      console.log(`✂️ Text truncated to ${countWords(processedText)} words`);
+    }
+
+    console.log(`Generating speech for text: "${processedText.substring(0, 100)}..." with voice: ${voice} at speed: ${speed || 1.0}`)
 
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY')
     
@@ -44,10 +93,10 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         model: 'tts-1',
-        input: text,
+        input: processedText,
         voice: voice || 'nova',
         response_format: 'mp3',
-        speed: speed || 1.0, // Support custom speed
+        speed: speed || 1.0,
       }),
     })
 
@@ -80,7 +129,11 @@ serve(async (req) => {
     console.log('Successfully generated speech audio, base64 length:', base64Audio.length)
 
     return new Response(
-      JSON.stringify({ audioContent: base64Audio }),
+      JSON.stringify({ 
+        audioContent: base64Audio,
+        wordCount: countWords(processedText),
+        wasTruncated: wordCount > 200
+      }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       },

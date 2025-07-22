@@ -2,11 +2,12 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import { WordLimitedTextarea } from "@/components/ui/word-limited-textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { Play, Square, Volume2, AlertCircle, CheckCircle } from "lucide-react";
 import LoadingSpinner from "../LoadingSpinner";
 import { toast } from "@/hooks/use-toast";
+import { truncateToWordLimit } from "@/utils/textUtils";
 
 const voices = [
   { id: 'alloy', name: 'Alloy', description: 'Neutral and balanced' },
@@ -41,10 +42,11 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
   // Auto-populate sample text from story content
   React.useEffect(() => {
     if (!sampleText && storyContent) {
-      // Extract first paragraph or first 200 characters
+      // Extract first paragraph or first 200 words, truncated safely
       const firstParagraph = storyContent.replace(/<[^>]*>/g, '').substring(0, 200);
       if (firstParagraph.trim()) {
-        setSampleText(firstParagraph.trim() + (firstParagraph.length >= 200 ? '...' : ''));
+        const truncatedText = truncateToWordLimit(firstParagraph.trim(), 200);
+        setSampleText(truncatedText);
       }
     }
   }, [storyContent, sampleText]);
@@ -64,10 +66,12 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
       console.log(`🎵 Testing voice: ${voiceId}`);
 
       const textToSpeak = sampleText || defaultSampleText;
+      // Ensure text is within word limit before sending
+      const textToSend = truncateToWordLimit(textToSpeak, 200);
       
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
-          text: textToSpeak,
+          text: textToSend,
           voice: voiceId
         }
       });
@@ -157,6 +161,14 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
     });
   };
 
+  const handleWordLimitExceeded = () => {
+    toast({
+      title: "Word limit reached",
+      description: "Voice preview is limited to 200 words to control costs.",
+      variant: "destructive",
+    });
+  };
+
   return (
     <Card className={`border-orange-200 ${className}`}>
       <CardContent className="p-4">
@@ -182,13 +194,15 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
           {isExpanded && (
             <div className="space-y-2">
               <label className="text-xs font-medium text-gray-600">
-                Test Text (will use story content if empty):
+                Test Text (limited to 200 words):
               </label>
-              <Textarea
+              <WordLimitedTextarea
                 value={sampleText}
                 onChange={(e) => setSampleText(e.target.value)}
+                wordLimit={200}
                 placeholder={defaultSampleText}
                 className="min-h-[60px] text-sm"
+                onWordLimitExceeded={handleWordLimitExceeded}
               />
             </div>
           )}
@@ -259,6 +273,11 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
             {voices.find(v => v.id === selectedVoice) && (
               <span className="ml-2">- {voices.find(v => v.id === selectedVoice)?.description}</span>
             )}
+          </div>
+
+          {/* Cost control notice */}
+          <div className="text-xs text-yellow-700 bg-yellow-50 p-2 rounded border border-yellow-200">
+            💰 <strong>Cost Control:</strong> Voice previews are limited to 200 words to manage API costs.
           </div>
         </div>
       </CardContent>
