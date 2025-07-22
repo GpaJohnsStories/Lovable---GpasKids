@@ -22,37 +22,96 @@ interface AuthorBio {
 }
 
 const PublicAuthorBios = () => {
+  console.log('🔍 PublicAuthorBios: Component mounting');
+  
   const [selectedBio, setSelectedBio] = useState<AuthorBio | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: bios, isLoading } = useQuery({
+  const { data: bios, isLoading, error } = useQuery({
     queryKey: ['public-author-bios'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('author_bios')
-        .select('*')
-        .order('author_name', { ascending: true });
+      console.log('🔍 PublicAuthorBios: Starting database query');
       
-      if (error) {
-        console.error('Error fetching author bios:', error);
-        throw error;
+      try {
+        const { data, error } = await supabase
+          .from('author_bios')
+          .select('*')
+          .order('author_name', { ascending: true });
+        
+        console.log('🔍 PublicAuthorBios: Query completed', { 
+          dataLength: data?.length, 
+          error: error?.message 
+        });
+        
+        if (error) {
+          console.error('🚨 PublicAuthorBios: Database error:', error);
+          throw error;
+        }
+        
+        return data || [];
+      } catch (err) {
+        console.error('🚨 PublicAuthorBios: Query catch block:', err);
+        throw err;
       }
-      
-      return data || [];
     },
+    retry: 2,
+    retryDelay: 1000
   });
 
   const handleViewBio = (bio: AuthorBio) => {
+    console.log('🔍 PublicAuthorBios: Opening bio modal for:', bio.author_name);
     setSelectedBio(bio);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
+    console.log('🔍 PublicAuthorBios: Closing bio modal');
     setIsModalOpen(false);
     setSelectedBio(null);
   };
 
+  console.log('🔍 PublicAuthorBios: Render state', { 
+    isLoading, 
+    hasError: !!error, 
+    biosCount: bios?.length 
+  });
+
+  if (error) {
+    console.error('🚨 PublicAuthorBios: Rendering error state:', error);
+    return (
+      <ContentProtection enableProtection={true}>
+        <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+          <WelcomeHeader />
+          <div className="container mx-auto px-4 py-8">
+            <Card className="max-w-2xl mx-auto">
+              <CardContent className="p-8">
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Authors</h2>
+                  <p className="text-gray-700 mb-4">
+                    We encountered an error while loading the author biographies.
+                  </p>
+                  <p className="text-sm text-gray-500 mb-4">
+                    Error: {error?.message || 'Unknown error'}
+                  </p>
+                  <button 
+                    onClick={() => window.location.reload()}
+                    className="bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700 transition-colors"
+                  >
+                    Refresh Page
+                  </button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          <CookieFreeFooter />
+          <ScrollToTop />
+        </div>
+      </ContentProtection>
+    );
+  }
+
   if (isLoading) {
+    console.log('🔍 PublicAuthorBios: Rendering loading state');
     return (
       <ContentProtection enableProtection={true}>
         <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
@@ -64,6 +123,8 @@ const PublicAuthorBios = () => {
       </ContentProtection>
     );
   }
+
+  console.log('🔍 PublicAuthorBios: Rendering success state with', bios?.length, 'bios');
 
   return (
     <ContentProtection enableProtection={true}>

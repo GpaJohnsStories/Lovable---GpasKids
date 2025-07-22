@@ -1,3 +1,4 @@
+
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
@@ -12,7 +13,7 @@ if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
 }
 
 // Log configuration for debugging (safely)
-console.log('🔧 Supabase Configuration (v4 - CACHE BUST):');
+console.log('🔧 Supabase Configuration (v5 - DEBUG MODE):');
 console.log('URL:', SUPABASE_URL);
 console.log('Key full:', SUPABASE_PUBLISHABLE_KEY);
 console.log('Key prefix:', SUPABASE_PUBLISHABLE_KEY?.substring(0, 20) + '...');
@@ -30,20 +31,27 @@ export const supabase = createClient<Database>(
     },
     global: {
       headers: {
-        'X-Client-Info': 'gpa-stories-frontend'
+        'X-Client-Info': 'gpa-stories-frontend-debug'
       }
+    },
+    db: {
+      schema: 'public'
     }
   }
 );
 
-// Test connection immediately on load
+// Enhanced connection test with more detailed logging
 const testConnection = async () => {
   try {
     console.log('🔗 Testing Supabase connection on client initialization...');
-    const { data, error } = await supabase
+    console.time('supabase-connection-test');
+    
+    const { data, error, count } = await supabase
       .from('stories')
       .select('id', { count: 'exact', head: true })
       .limit(1);
+    
+    console.timeEnd('supabase-connection-test');
     
     if (error) {
       console.error('🚨 Supabase connection test failed:', error);
@@ -55,11 +63,30 @@ const testConnection = async () => {
       });
     } else {
       console.log('✅ Supabase connection test successful');
+      console.log('📊 Stories count:', count);
     }
+    
+    // Test author_bios table specifically
+    console.log('🔗 Testing author_bios table...');
+    const { data: biosData, error: biosError } = await supabase
+      .from('author_bios')
+      .select('id', { count: 'exact', head: true })
+      .limit(1);
+    
+    if (biosError) {
+      console.error('🚨 Author bios table test failed:', biosError);
+    } else {
+      console.log('✅ Author bios table accessible');
+      console.log('📊 Author bios count:', biosData);
+    }
+    
   } catch (err) {
     console.error('🚨 Supabase connection test error:', err);
+    console.error('🚨 Error stack:', (err as Error)?.stack);
   }
 };
 
-// Run connection test
-testConnection();
+// Run connection test with error handling
+testConnection().catch(err => {
+  console.error('🚨 Failed to run connection test:', err);
+});

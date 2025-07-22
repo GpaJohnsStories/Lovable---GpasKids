@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import ActivityTracker from "@/components/ActivityTracker";
 import { useVisitTracker } from "@/hooks/useVisitTracker";
 import { HelpProvider } from "@/contexts/HelpContext";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import Story from "./pages/Story";
 import Library from "./pages/Library";
@@ -26,12 +26,23 @@ import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
 import AuthorBio from "./pages/AuthorBio";
 import PublicAuthorBios from "./pages/PublicAuthorBios";
+import PublicAuthorBiosSimple from "./pages/PublicAuthorBiosSimple";
 import HelpGpa from "./pages/HelpGpa";
 import RobotsTxt from "./pages/RobotsTxt";
 import SitemapXml from "./pages/SitemapXml";
 import GlobalHelpProvider from "@/components/GlobalHelpProvider";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: (failureCount, error) => {
+        console.log('🔍 Query retry attempt:', failureCount, error);
+        return failureCount < 2;
+      },
+      staleTime: 1000 * 60 * 5, // 5 minutes
+    },
+  },
+});
 
 // Component to conditionally render activity tracker and visit tracking
 const ConditionalActivityTracker = () => {
@@ -49,50 +60,70 @@ const ConditionalActivityTracker = () => {
   return <ActivityTracker showDebugInfo={true} />;
 };
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <HelmetProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <HelpProvider>
-          <BrowserRouter>
-            <GlobalHelpProvider>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/story/:id" element={<Story />} />
-                <Route path="/library" element={<Library />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/make-comment" element={<MakeComment />} />
-                <Route path="/view-comments" element={<ViewComments />} />
-                <Route path="/comment/:id" element={<CommentDetail />} />
-                <Route path="/author/:authorName" element={<AuthorBio />} />
-                <Route path="/authors" element={<PublicAuthorBios />} />
-                <Route path="/admin" element={<SimpleAdmin />} />
-                <Route path="/admin-access" element={<AdminAccess />} />
-                <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
-                <Route path="/simple-admin" element={<SimpleAdmin />} />
-                <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/writing" element={<Writing />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/help-gpa" element={<HelpGpa />} />
-                
-                {/* SEO Routes */}
-                <Route path="/robots.txt" element={<RobotsTxt />} />
-                <Route path="/sitemap.xml" element={<SitemapXml />} />
-                
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </GlobalHelpProvider>
-            <ConditionalActivityTracker />
-          </BrowserRouter>
-        </HelpProvider>
-      </TooltipProvider>
-    </HelmetProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  console.log('🔍 App: Component mounting');
+  
+  return (
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <HelmetProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <HelpProvider>
+              <BrowserRouter>
+                <GlobalHelpProvider>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/story/:id" element={<Story />} />
+                    <Route path="/library" element={<Library />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/make-comment" element={<MakeComment />} />
+                    <Route path="/view-comments" element={<ViewComments />} />
+                    <Route path="/comment/:id" element={<CommentDetail />} />
+                    <Route path="/author/:authorName" element={<AuthorBio />} />
+                    
+                    {/* Temporarily use simple version for debugging */}
+                    <Route path="/authors" element={
+                      <ErrorBoundary>
+                        <PublicAuthorBiosSimple />
+                      </ErrorBoundary>
+                    } />
+                    
+                    {/* Keep original route as backup */}
+                    <Route path="/authors-full" element={
+                      <ErrorBoundary>
+                        <PublicAuthorBios />
+                      </ErrorBoundary>
+                    } />
+                    
+                    <Route path="/admin" element={<SimpleAdmin />} />
+                    <Route path="/admin-access" element={<AdminAccess />} />
+                    <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
+                    <Route path="/simple-admin" element={<SimpleAdmin />} />
+                    <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/writing" element={<Writing />} />
+                    <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/help-gpa" element={<HelpGpa />} />
+                    
+                    {/* SEO Routes */}
+                    <Route path="/robots.txt" element={<RobotsTxt />} />
+                    <Route path="/sitemap.xml" element={<SitemapXml />} />
+                    
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </GlobalHelpProvider>
+                <ConditionalActivityTracker />
+              </BrowserRouter>
+            </HelpProvider>
+          </TooltipProvider>
+        </HelmetProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
+  );
+};
 
 export default App;
