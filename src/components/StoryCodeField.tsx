@@ -85,7 +85,7 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
         name="story_code"
         render={({ field }) => (
           <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
-            <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Story Code (Optional)</FormLabel>
+            <FormLabel className="text-orange-800 font-fun text-lg sm:text-left">Story or WebText Code</FormLabel>
             <div className="sm:col-span-2">
               <FormControl>
                 <Input
@@ -96,7 +96,7 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
                 />
               </FormControl>
               <p className="text-sm text-orange-700 mt-1 font-fun">
-                Commenting on a specific story? Enter its code here.
+                Enter the unique code for this story or web text.
               </p>
               <FormMessage />
             </div>
@@ -113,7 +113,7 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
   return (
     <div className="space-y-2">
       <Label htmlFor="story_code" className={`font-medium text-gray-700 ${labelSize}`}>
-        Story Code (Optional)
+        Story or WebText Code
       </Label>
       <Input
         id="story_code"
@@ -124,7 +124,7 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
         placeholder="e.g., A1B2"
       />
       <p className="text-sm text-gray-600">
-        Commenting on a specific story? Enter its code here.
+        Enter the unique code for this story or web text.
       </p>
     </div>
   );
