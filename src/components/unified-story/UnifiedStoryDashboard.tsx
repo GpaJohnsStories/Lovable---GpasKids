@@ -99,15 +99,14 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
 
             {/* Right Column - Publication Settings and Quick Actions */}
             <div className="lg:col-span-1 space-y-6">
-              {/* Publication Settings Card */}
+              {/* Publication Status Card */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Publication Settings</CardTitle>
+                  <CardTitle>Publication Status</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="published">Published Status</Label>
                       <select
                         id="published"
                         value={formData.published}
@@ -116,23 +115,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       >
                         <option value="N">Not Published</option>
                         <option value="Y">Published</option>
-                      </select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="category">Category</Label>
-                      <select
-                        id="category"
-                        value={formData.category}
-                        onChange={(e) => onInputChange('category', e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded-md"
-                      >
-                        <option value="Fun">Fun</option>
-                        <option value="Life">Life</option>
-                        <option value="North Pole">North Pole</option>
-                        <option value="World Changers">World Changers</option>
-                        <option value="WebText">WebText</option>
-                        <option value="STORY">STORY</option>
                       </select>
                     </div>
 
