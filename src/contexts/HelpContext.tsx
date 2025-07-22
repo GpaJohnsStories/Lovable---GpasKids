@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 
@@ -15,7 +14,6 @@ const ROUTE_HELP_MAP: Record<string, string> = {
   '/help-gpa': 'HELP_GPA_HELP',
   '/author': 'AUTHOR_HELP',
   '/buddys_admin': 'ADMIN_HELP',
-  '/simple-admin': 'ADMIN_HELP',
   '/admin': 'ADMIN_HELP',
   '/admin-access': 'ADMIN_ACCESS_HELP'
 };

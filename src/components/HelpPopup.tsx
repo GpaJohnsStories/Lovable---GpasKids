@@ -47,7 +47,6 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
       '/privacy': 'Privacy Policy',
       '/help-gpa': 'Help Grandpa',
       '/admin': 'Admin Panel',
-      '/simple-admin': 'Simple Admin',
       '/admin-access': 'Admin Access'
     };
     

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -129,7 +128,6 @@ const App = () => {
                     
                     {/* Redirect old admin routes to buddys_admin */}
                     <Route path="/admin" element={<Navigate to="/buddys_admin/dashboard" replace />} />
-                    <Route path="/simple-admin" element={<Navigate to="/buddys_admin/dashboard" replace />} />
                     
                     <Route path="/admin-access" element={<AdminAccess />} />
                     
