@@ -1,5 +1,6 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { createSafeHtml } from "@/utils/xssProtection";
 
 interface AuthorBio {
   id: string;
@@ -29,14 +30,18 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
     return `${born} - ${died}`;
   };
 
+  const getBioContent = () => {
+    if (!bio.bio_content) return 'No biography content available.';
+    
+    // Use safe HTML rendering for rich content
+    return createSafeHtml(bio.bio_content);
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle 
-            className="text-2xl font-bold text-amber-800 mb-4"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-          >
+          <DialogTitle className="text-2xl font-bold text-amber-800 mb-4">
             About {bio.author_name}
           </DialogTitle>
         </DialogHeader>
@@ -68,11 +73,9 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
           )}
           
           <div 
-            className="text-amber-700 leading-relaxed whitespace-pre-wrap"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontSize: '16px' }}
-          >
-            {bio.bio_content || 'No biography content available.'}
-          </div>
+            className="text-amber-700 leading-relaxed prose prose-amber max-w-none"
+            dangerouslySetInnerHTML={getBioContent()}
+          />
         </div>
       </DialogContent>
     </Dialog>

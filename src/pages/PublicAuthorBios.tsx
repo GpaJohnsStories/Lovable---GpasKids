@@ -9,7 +9,7 @@ import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
 import PublicAuthorBiosTable from "@/components/PublicAuthorBiosTable";
 import AuthorBioModal from "@/components/AuthorBioModal";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface AuthorBio {
   id: string;
@@ -110,22 +110,6 @@ const PublicAuthorBios = () => {
     );
   }
 
-  if (isLoading) {
-    console.log('🔍 PublicAuthorBios: Rendering loading state');
-    return (
-      <ContentProtection enableProtection={true}>
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-          <WelcomeHeader />
-          <LoadingSpinner message="Loading author biographies..." />
-          <CookieFreeFooter />
-          <ScrollToTop />
-        </div>
-      </ContentProtection>
-    );
-  }
-
-  console.log('🔍 PublicAuthorBios: Rendering success state with', bios?.length, 'bios');
-
   return (
     <ContentProtection enableProtection={true}>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
@@ -133,45 +117,11 @@ const PublicAuthorBios = () => {
         
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle 
-                  className="text-3xl font-bold text-amber-800 text-center"
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                >
-                  Meet Our Story Authors
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p 
-                  className="text-amber-700 text-center text-lg leading-relaxed"
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                >
-                  Discover the talented authors who bring Grandpa's stories to life. 
-                  Click "View Bio" to learn more about each author's background and journey.
-                </p>
-              </CardContent>
-            </Card>
-
-            {bios && bios.length > 0 ? (
-              <PublicAuthorBiosTable 
-                bios={bios} 
-                onViewBio={handleViewBio}
-              />
-            ) : (
-              <Card>
-                <CardContent className="p-8">
-                  <div className="text-center py-8">
-                    <p 
-                      className="text-amber-700 text-lg"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                    >
-                      No author biographies are currently available.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+            <PublicAuthorBiosTable 
+              bios={bios || []} 
+              onViewBio={handleViewBio}
+              isLoading={isLoading}
+            />
           </div>
         </div>
         
