@@ -66,7 +66,7 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
   // Check if we can proceed with audio playback
   const canPlayAudio = () => {
     if (audioUrl) return true;
-    if (allowTextToSpeech && content) return true;
+    if (allowTextToSpeech) return true; // Show controls if TTS is enabled, even without content
     return false;
   };
 
