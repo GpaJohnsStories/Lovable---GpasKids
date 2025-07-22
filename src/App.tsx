@@ -40,6 +40,7 @@ import GlobalHelpProvider from "./components/GlobalHelpProvider";
 import ContentProtection from "./components/ContentProtection";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
+import { HelpProvider } from "./contexts/HelpContext";
 
 const queryClient = new QueryClient();
 
@@ -50,49 +51,51 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <HelmetProvider>
-              <GlobalHelpProvider>
-                <Toaster />
-                <BrowserRouter>
-                  <ScrollToTop />
-                  <Routes>
-                    {/* Public Routes */}
-                    <Route path="/" element={<Index />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/story/:id" element={<Story />} />
-                    <Route path="/library" element={<Library />} />
-                    <Route path="/writing" element={<Writing />} />
-                    <Route path="/help" element={<HelpGpa />} />
-                    <Route path="/make-comment" element={<MakeComment />} />
-                    <Route path="/view-comments" element={<ViewComments />} />
-                    <Route path="/comment/:id" element={<CommentDetail />} />
-                    <Route path="/privacy" element={<Privacy />} />
-                    <Route path="/robots.txt" element={<RobotsTxt />} />
-                    <Route path="/sitemap.xml" element={<SitemapXml />} />
-                    <Route path="/voice-preview" element={<VoicePreview />} />
-                    <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/reset-password" element={<ResetPassword />} />
-                    <Route path="/author-bios" element={<PublicAuthorBios />} />
-                    <Route path="/author-bios-simple" element={<PublicAuthorBiosSimple />} />
-                    <Route path="/author/:id" element={<AuthorBio />} />
+              <HelpProvider>
+                <GlobalHelpProvider>
+                  <Toaster />
+                  <BrowserRouter>
+                    <ScrollToTop />
+                    <Routes>
+                      {/* Public Routes */}
+                      <Route path="/" element={<Index />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/story/:id" element={<Story />} />
+                      <Route path="/library" element={<Library />} />
+                      <Route path="/writing" element={<Writing />} />
+                      <Route path="/help" element={<HelpGpa />} />
+                      <Route path="/make-comment" element={<MakeComment />} />
+                      <Route path="/view-comments" element={<ViewComments />} />
+                      <Route path="/comment/:id" element={<CommentDetail />} />
+                      <Route path="/privacy" element={<Privacy />} />
+                      <Route path="/robots.txt" element={<RobotsTxt />} />
+                      <Route path="/sitemap.xml" element={<SitemapXml />} />
+                      <Route path="/voice-preview" element={<VoicePreview />} />
+                      <Route path="/forgot-password" element={<ForgotPassword />} />
+                      <Route path="/reset-password" element={<ResetPassword />} />
+                      <Route path="/author-bios" element={<PublicAuthorBios />} />
+                      <Route path="/author-bios-simple" element={<PublicAuthorBiosSimple />} />
+                      <Route path="/author/:id" element={<AuthorBio />} />
 
-                    {/* Admin Routes */}
-                    <Route path="/buddys_admin" element={<AdminLayout><AdminOverview /></AdminLayout>} />
-                    <Route path="/buddys_admin/stories" element={<AdminLayout><AdminStories /></AdminLayout>} />
-                    <Route path="/buddys_admin/comments" element={<AdminLayout><CommentsDashboard /></AdminLayout>} />
-                    <Route path="/buddys_admin/security" element={<AdminLayout><SecurityAuditDashboard /></AdminLayout>} />
-                    <Route path="/buddys_admin/author-bios" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
-                    <Route path="/buddys_admin/author-bios/add" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
-                    <Route path="/buddys_admin/author-bios/edit/:id" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
+                      {/* Admin Routes */}
+                      <Route path="/buddys_admin" element={<AdminLayout><AdminOverview /></AdminLayout>} />
+                      <Route path="/buddys_admin/stories" element={<AdminLayout><AdminStories /></AdminLayout>} />
+                      <Route path="/buddys_admin/comments" element={<AdminLayout><CommentsDashboard /></AdminLayout>} />
+                      <Route path="/buddys_admin/security" element={<AdminLayout><SecurityAuditDashboard /></AdminLayout>} />
+                      <Route path="/buddys_admin/author-bios" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
+                      <Route path="/buddys_admin/author-bios/add" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
+                      <Route path="/buddys_admin/author-bios/edit/:id" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
 
-                    {/* Unified Story System Routes - These are the only story management routes now */}
-                    <Route path="/buddys_admin/unified_story_system/add" element={<AdminLayout><UnifiedStoryPage mode="add" /></AdminLayout>} />
-                    <Route path="/buddys_admin/unified_story_system/update/:id" element={<AdminLayout><UnifiedStoryPage mode="update" /></AdminLayout>} />
+                      {/* Unified Story System Routes - These are the only story management routes now */}
+                      <Route path="/buddys_admin/unified_story_system/add" element={<AdminLayout><UnifiedStoryPage mode="add" /></AdminLayout>} />
+                      <Route path="/buddys_admin/unified_story_system/update/:id" element={<AdminLayout><UnifiedStoryPage mode="update" /></AdminLayout>} />
 
-                    {/* Catch-all route */}
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </BrowserRouter>
-              </GlobalHelpProvider>
+                      {/* Catch-all route */}
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </BrowserRouter>
+                </GlobalHelpProvider>
+              </HelpProvider>
             </HelmetProvider>
           </TooltipProvider>
         </QueryClientProvider>
