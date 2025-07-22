@@ -83,10 +83,10 @@ const App = () => {
                     <Route path="/comment/:id" element={<CommentDetail />} />
                     <Route path="/author/:authorName" element={<AuthorBio />} />
                     
-                    {/* Temporarily use simple version for debugging */}
+                    {/* Use full version with View Bio functionality */}
                     <Route path="/authors" element={
                       <ErrorBoundary>
-                        <PublicAuthorBiosSimple />
+                        <PublicAuthorBios />
                       </ErrorBoundary>
                     } />
                     
