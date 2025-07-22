@@ -56,9 +56,12 @@ export type Database = {
       author_bios: {
         Row: {
           author_name: string
+          bio_audio_duration_seconds: number | null
+          bio_audio_generated_at: string | null
+          bio_audio_segments: number | null
+          bio_audio_url: string | null
           bio_content: string | null
           born_date: string | null
-          buddys_comments: string | null
           created_at: string
           died_date: string | null
           id: string
@@ -68,9 +71,12 @@ export type Database = {
         }
         Insert: {
           author_name: string
+          bio_audio_duration_seconds?: number | null
+          bio_audio_generated_at?: string | null
+          bio_audio_segments?: number | null
+          bio_audio_url?: string | null
           bio_content?: string | null
           born_date?: string | null
-          buddys_comments?: string | null
           created_at?: string
           died_date?: string | null
           id?: string
@@ -80,9 +86,12 @@ export type Database = {
         }
         Update: {
           author_name?: string
+          bio_audio_duration_seconds?: number | null
+          bio_audio_generated_at?: string | null
+          bio_audio_segments?: number | null
+          bio_audio_url?: string | null
           bio_content?: string | null
           born_date?: string | null
-          buddys_comments?: string | null
           created_at?: string
           died_date?: string | null
           id?: string
