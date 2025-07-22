@@ -59,7 +59,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         className="max-w-2xl h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col p-0 [&>button]:hidden"
         style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}
       >
-        {/* Header with Title and Close Button */}
+        {/* Header with Title and Audio Controls */}
         <DialogHeader className="flex flex-row items-center justify-between p-4 pb-0 border-b border-orange-200 space-y-0">
           <div className="flex items-center gap-3">
             {/* Buddy's Photo */}
@@ -73,19 +73,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             </DialogTitle>
           </div>
           
-          {/* Close Button - Top Right */}
-          <Button
-            onClick={onClose}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-lg shrink-0"
-            size="sm"
-          >
-            <X className="h-4 w-4 mr-1 stroke-2" />
-            Close
-          </Button>
-        </DialogHeader>
-
-        {/* Audio Controls - Aligned to the right */}
-        <div className="px-4 py-0 flex justify-end">
+          {/* Audio Controls - Top Right */}
           <div className="w-fit">
             <UniversalAudioControls 
               title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
@@ -96,10 +84,10 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               className="!bg-white/80 !justify-start"
             />
           </div>
-        </div>
+        </DialogHeader>
 
         {/* Content Area - Expands to fill remaining space */}
-        <div className="flex-1 min-h-0 px-4 pb-4 pt-0">
+        <div className="flex-1 min-h-0 px-4 pb-4 pt-0 relative">
           {isLoading ? (
             <div className="flex items-center justify-center h-full">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
@@ -115,6 +103,16 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               </div>
             </ScrollArea>
           )}
+          
+          {/* Floating Close Button - Bottom Right */}
+          <Button
+            onClick={onClose}
+            className="absolute bottom-4 right-4 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-lg z-10"
+            size="sm"
+          >
+            <X className="h-4 w-4 mr-1 stroke-2" />
+            Close
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
