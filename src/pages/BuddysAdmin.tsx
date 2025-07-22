@@ -29,19 +29,19 @@ const BuddysAdminContent = () => {
       <Route path="/" element={<Navigate to="/buddys_admin/dashboard" replace />} />
       <Route path="/dashboard" element={<AdminOverview />} />
       <Route path="/stories" element={<AdminStories />} />
-      <Route path="/stories/new" element={
+      {/* Single unified story route - handles both new and edit */}
+      <Route path="/story" element={
         <AdminStoryForm
           onSave={handleStoryFormSave}
           onCancel={handleStoryFormCancel}
         />
       } />
-      <Route path="/stories/edit/:id" element={
+      <Route path="/story/:id" element={
         <AdminStoryForm
           onSave={handleStoryFormSave}
           onCancel={handleStoryFormCancel}
         />
       } />
-      <Route path="/stories/edit" element={<Navigate to="/buddys_admin/stories" replace />} />
       <Route path="/comments" element={<CommentsDashboard />} />
       <Route path="/voice-preview" element={
         <AdminLayoutWithHeaderBanner>

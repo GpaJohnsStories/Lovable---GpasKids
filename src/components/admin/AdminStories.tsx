@@ -10,8 +10,8 @@ const AdminStories = () => {
   const navigate = useNavigate();
 
   const handleCreateStory = () => {
-    console.log('🎯 AdminStories: handleCreateStory called - navigating to create form');
-    navigate('/buddys_admin/stories/new');
+    console.log('🎯 AdminStories: handleCreateStory called - navigating to unified story form');
+    navigate('/buddys_admin/story');
   };
 
   const handleEditStory = (story: any) => {
@@ -25,8 +25,8 @@ const AdminStories = () => {
     };
     sessionStorage.setItem('admin-edit-context', JSON.stringify(currentContext));
     
-    // Open edit page in a new tab
-    const editUrl = `/buddys_admin/stories/edit/${story.id}`;
+    // Open edit page in a new tab using the unified route
+    const editUrl = `/buddys_admin/story/${story.id}`;
     window.open(editUrl, '_blank');
   };
 

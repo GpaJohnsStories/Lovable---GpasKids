@@ -69,12 +69,17 @@ const SimpleStoryForm: React.FC<SimpleStoryFormProps> = ({
     );
   }
 
+  // Determine the form title based on whether we're editing or creating
+  const formTitle = storyId 
+    ? `Edit "${formData.title || 'Untitled Story'}"` 
+    : 'Create New Story, WebText or Help Text';
+
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-800">
-            {storyId ? 'Update Existing Story, WebText or Help Text' : 'Add New Story, WebText or Help Text'}
+            {formTitle}
           </h1>
           {formData.audio_url && (
             <div className="flex items-center text-green-600 text-sm font-medium">

@@ -5,27 +5,19 @@ import SimpleStoryForm from '@/components/story-form/SimpleStoryForm';
 import AdminLayout from './AdminLayout';
 
 interface AdminStoryFormProps {
-  storyId?: string;
   onSave: () => void;
   onCancel: () => void;
 }
 
-const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ storyId: propStoryId, onSave, onCancel }) => {
-  const { id: paramStoryId } = useParams<{ id?: string }>();
+const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ onSave, onCancel }) => {
+  const { id } = useParams<{ id?: string }>();
   const location = useLocation();
   
-  // Use prop storyId if provided, otherwise fall back to URL param
-  // Validate that it's a proper UUID format or undefined for new stories
-  let validatedStoryId: string | undefined;
-  
-  const candidateId = propStoryId || paramStoryId;
-  
-  if (candidateId && candidateId !== ':id' && candidateId.length > 10) {
-    // Basic validation - should be a UUID-like string
-    validatedStoryId = candidateId;
-  }
+  // Determine if we're editing (has id) or creating new (no id)
+  const isEditing = Boolean(id);
+  const storyId = isEditing ? id : undefined;
 
-  console.log('🎯 AdminStoryForm: Route params:', { paramStoryId, propStoryId, validatedStoryId });
+  console.log('🎯 AdminStoryForm: Route params:', { id, isEditing, storyId });
 
   // Enhanced context restoration for new tabs
   useEffect(() => {
@@ -39,7 +31,7 @@ const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ storyId: propStoryId, o
           
           // Store context for this new tab
           const editContext = {
-            editingStoryId: validatedStoryId,
+            editingStoryId: storyId,
             openedAt: Date.now(),
             parentTabOrigin: window.location.origin
           };
@@ -49,7 +41,7 @@ const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ storyId: propStoryId, o
           // Send message to parent tab that we're ready
           window.opener.postMessage({
             type: 'ADMIN_TAB_READY',
-            storyId: validatedStoryId,
+            storyId: storyId,
             timestamp: Date.now()
           }, window.location.origin);
         }
@@ -66,7 +58,7 @@ const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ storyId: propStoryId, o
     };
 
     handleNewTabSetup();
-  }, [validatedStoryId, location]);
+  }, [storyId, location]);
 
   const handleSaveWithContext = () => {
     console.log('🎯 AdminStoryForm: Save with enhanced context preservation');
@@ -80,7 +72,7 @@ const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ storyId: propStoryId, o
         // Communicate success to parent tab
         window.opener.postMessage({
           type: 'ADMIN_STORY_SAVED',
-          storyId: validatedStoryId,
+          storyId: storyId,
           timestamp: Date.now(),
           action: 'saved'
         }, window.location.origin);
@@ -108,7 +100,7 @@ const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ storyId: propStoryId, o
       try {
         window.opener.postMessage({
           type: 'ADMIN_STORY_CANCELLED',
-          storyId: validatedStoryId,
+          storyId: storyId,
           timestamp: Date.now(),
           action: 'cancelled'
         }, window.location.origin);
@@ -160,7 +152,7 @@ const AdminStoryForm: React.FC<AdminStoryFormProps> = ({ storyId: propStoryId, o
   return (
     <AdminLayout>
       <SimpleStoryForm
-        storyId={validatedStoryId}
+        storyId={storyId}
         onSave={handleSaveWithContext}
         onCancel={handleCancelWithContext}
         allowTextToSpeech={true}
