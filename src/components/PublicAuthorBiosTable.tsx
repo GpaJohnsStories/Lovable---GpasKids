@@ -3,8 +3,14 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Eye } from "lucide-react";
+import { Eye, ArrowUp, ArrowDown, User, Globe, Calendar } from "lucide-react";
 import { createSafeHtml } from "@/utils/xssProtection";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface AuthorBio {
   id: string;
@@ -39,8 +45,8 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
   };
 
   const getSortIcon = (field: SortField) => {
-    if (sortField !== field) return '↕️';
-    return sortDirection === 'asc' ? '↑' : '↓';
+    if (sortField !== field) return null;
+    return sortDirection === 'asc' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />;
   };
 
   const formatLifeSpan = (bio: AuthorBio) => {
@@ -107,91 +113,152 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-amber-800 text-center">
-          Meet Our Story Authors
-        </CardTitle>
-        <p className="text-amber-700 text-center text-lg leading-relaxed mt-2">
-          Discover the talented authors who bring Grandpa's stories to life. 
-          Click "View Bio" to learn more about each author's background and journey.
-        </p>
-      </CardHeader>
-      <CardContent className="p-6">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead 
-                className="cursor-pointer hover:bg-muted text-amber-800 font-semibold"
-                onClick={() => handleSort('author_name')}
-              >
-                Author Name {getSortIcon('author_name')}
-              </TableHead>
-              <TableHead className="text-amber-800 font-semibold">
-                Bio Preview
-              </TableHead>
-              <TableHead 
-                className="cursor-pointer hover:bg-muted text-amber-800 font-semibold"
-                onClick={() => handleSort('native_country_name')}
-              >
-                Country & Language {getSortIcon('native_country_name')}
-              </TableHead>
-              <TableHead 
-                className="cursor-pointer hover:bg-muted text-amber-800 font-semibold"
-                onClick={() => handleSort('born_date')}
-              >
-                Life Span {getSortIcon('born_date')}
-              </TableHead>
-              <TableHead className="text-amber-800 font-semibold">
-                Actions
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {sortedBios.map((bio) => (
-              <TableRow key={bio.id} className="hover:bg-amber-50/50">
-                <TableCell className="font-semibold text-amber-900">
-                  {bio.author_name}
-                </TableCell>
-                <TableCell className="max-w-md">
-                  <div className="text-sm text-amber-700 leading-relaxed">
-                    {getBioPreview(bio.bio_content)}
-                  </div>
-                </TableCell>
-                <TableCell className="text-amber-700">
-                  <div className="text-sm">
-                    {getCountryLanguageDisplay(bio)}
-                  </div>
-                </TableCell>
-                <TableCell className="text-amber-700">
-                  <div className="text-sm">
-                    {formatLifeSpan(bio)}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Button
-                    size="sm"
-                    onClick={() => onViewBio(bio)}
-                    className="cozy-button bg-amber-600 hover:bg-amber-700 text-white"
-                  >
-                    <Eye className="h-4 w-4 mr-2" />
-                    View Bio
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        
-        {sortedBios.length === 0 && (
-          <div className="text-center py-8">
-            <p className="text-amber-700 text-lg">
-              No author biographies are currently available.
-            </p>
+    <TooltipProvider>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-amber-800 text-center">
+            Meet Our Story Authors
+          </CardTitle>
+          <p className="text-amber-700 text-center text-lg leading-relaxed mt-2">
+            Discover the talented authors who bring Grandpa's stories to life. 
+            Click "View Bio" to learn more about each author's background and journey.
+          </p>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="border rounded-lg overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-background hover:bg-background">
+                  <TableHead className="p-1 text-center bg-background border-r border-gray-200">
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={() => handleSort('author_name')}
+                          className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                          size="sm"
+                          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                        >
+                          <User className="h-3 w-3 mr-1" />
+                          Author
+                          {getSortIcon('author_name')}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="text-xs">Click to sort by Author Name</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TableHead>
+                  <TableHead className="p-1 text-center bg-background border-r border-gray-200">
+                    <div className="bg-green-500 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center rounded"
+                         style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                      Biography Preview
+                    </div>
+                  </TableHead>
+                  <TableHead className="p-1 text-center bg-background border-r border-gray-200">
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={() => handleSort('native_country_name')}
+                          className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                          size="sm"
+                          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                        >
+                          <Globe className="h-3 w-3 mr-1" />
+                          Origin
+                          {getSortIcon('native_country_name')}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="text-xs">Click to sort by Country & Language</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TableHead>
+                  <TableHead className="p-1 text-center bg-background border-r border-gray-200">
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={() => handleSort('born_date')}
+                          className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                          size="sm"
+                          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                        >
+                          <Calendar className="h-3 w-3 mr-1" />
+                          Life Span
+                          {getSortIcon('born_date')}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="text-xs">Click to sort by Birth Date</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TableHead>
+                  <TableHead className="p-1 text-center bg-background">
+                    <div className="bg-green-500 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center rounded"
+                         style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                      Actions
+                    </div>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {sortedBios.map((bio) => (
+                  <TableRow key={bio.id} className="hover:bg-amber-50/50">
+                    <TableCell 
+                      className="font-semibold text-amber-900"
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
+                      {bio.author_name}
+                    </TableCell>
+                    <TableCell 
+                      className="max-w-md"
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
+                      <div className="text-sm text-amber-700 leading-relaxed">
+                        {getBioPreview(bio.bio_content)}
+                      </div>
+                    </TableCell>
+                    <TableCell 
+                      className="text-amber-700"
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
+                      <div className="text-sm">
+                        {getCountryLanguageDisplay(bio)}
+                      </div>
+                    </TableCell>
+                    <TableCell 
+                      className="text-amber-700"
+                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                    >
+                      <div className="text-sm">
+                        {formatLifeSpan(bio)}
+                      </div>
+                    </TableCell>
+                    <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+                      <Button
+                        size="sm"
+                        onClick={() => onViewBio(bio)}
+                        className="bg-amber-600 hover:bg-amber-700 text-white"
+                      >
+                        <Eye className="h-4 w-4 mr-2" />
+                        View Bio
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
-        )}
-      </CardContent>
-    </Card>
+          
+          {sortedBios.length === 0 && (
+            <div className="text-center py-8">
+              <p className="text-amber-700 text-lg">
+                No author biographies are currently available.
+              </p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </TooltipProvider>
   );
 };
 
