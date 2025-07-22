@@ -10,7 +10,6 @@ const RobotsTxt = () => {
   const robotsContent = `User-agent: *
 Allow: /
 Disallow: /buddys_admin/
-Disallow: /admin/
 Disallow: /make-comment
 Disallow: /forgot-password
 Disallow: /reset-password

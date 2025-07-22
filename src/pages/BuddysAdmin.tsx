@@ -54,8 +54,6 @@ const BuddysAdminContent = () => {
       } />
       
       <Route path="/comments" element={<CommentsDashboard />} />
-      
-      {/* Voice preview route removed - now integrated into media tab */}
     </Routes>
   );
 };
