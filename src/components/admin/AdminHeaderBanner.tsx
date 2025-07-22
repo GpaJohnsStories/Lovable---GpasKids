@@ -27,8 +27,8 @@ const AdminHeaderBanner = () => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const handleCreateStoryClick = () => {
-    console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to new story form');
-    navigate('/buddys_admin/stories/new');
+    console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
+    navigate('/buddys_admin/unified_story_system/add');
   };
 
   const handleLogout = async () => {
