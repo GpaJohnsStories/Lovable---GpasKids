@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -28,7 +29,6 @@ import EnhancedSecureAdminCheck from "@/components/admin/EnhancedSecureAdminChec
 import UnifiedStoryPage from "@/components/unified-story/UnifiedStoryPage";
 import { useAdminSession } from "@/hooks/useAdminSession";
 import VoicePreview from "./pages/VoicePreview";
-import AdminAccess from "./pages/AdminAccess";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
@@ -126,12 +126,7 @@ const App = () => {
                       </ErrorBoundary>
                     } />
                     
-                    {/* Redirect old admin routes to buddys_admin */}
-                    <Route path="/admin" element={<Navigate to="/buddys_admin/dashboard" replace />} />
-                    
-                    <Route path="/admin-access" element={<AdminAccess />} />
-                    
-                    {/* Specific admin routes */}
+                    {/* Specific admin routes - only accessible via direct URL */}
                     <Route path="/buddys_admin/dashboard" element={
                       <ProtectedAdminWrapper>
                         <AdminOverview />
@@ -186,7 +181,6 @@ const App = () => {
                       </ProtectedAdminWrapper>
                     } />
                     
-                    <Route path="/dashboard" element={<Navigate to="/buddys_admin/dashboard" replace />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/writing" element={<Writing />} />

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,8 +48,8 @@ const ForgotPassword = () => {
     }
   };
 
-  const handleBackToLogin = () => {
-    navigate('/buddys_admin');
+  const handleBackToHome = () => {
+    navigate('/');
   };
 
   if (emailSent) {
@@ -69,12 +70,12 @@ const ForgotPassword = () => {
               Check your email and click the reset link to set a new password.
             </p>
             <Button 
-              onClick={handleBackToLogin}
+              onClick={handleBackToHome}
               variant="outline"
               className="w-full"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Login
+              Back to Home
             </Button>
           </CardContent>
         </Card>
@@ -116,12 +117,12 @@ const ForgotPassword = () => {
             </Button>
             <Button 
               type="button"
-              onClick={handleBackToLogin}
+              onClick={handleBackToHome}
               variant="outline"
               className="w-full"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Login
+              Back to Home
             </Button>
           </form>
         </CardContent>

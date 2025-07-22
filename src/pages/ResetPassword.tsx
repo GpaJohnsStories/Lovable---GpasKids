@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -71,7 +72,7 @@ const ResetPassword = () => {
           if (error) {
             console.error('❌ Failed to set session:', error);
             toast.error("Invalid or expired reset link");
-            setTimeout(() => navigate('/buddys_admin'), 2000);
+            setTimeout(() => navigate('/'), 2000);
           } else {
             console.log('✅ Session set successfully');
             setSessionValid(true);
@@ -79,7 +80,7 @@ const ResetPassword = () => {
         } catch (error) {
           console.error('💥 Exception setting session:', error);
           toast.error("Failed to process reset link");
-          setTimeout(() => navigate('/buddys_admin'), 2000);
+          setTimeout(() => navigate('/'), 2000);
         }
       } else {
         console.log('❌ Missing required URL parameters for password reset');
@@ -93,7 +94,7 @@ const ResetPassword = () => {
         } else {
           console.log('❌ No session found');
           toast.error("Invalid reset link - missing parameters");
-          setTimeout(() => navigate('/buddys_admin'), 2000);
+          setTimeout(() => navigate('/'), 2000);
         }
       }
     };
@@ -125,7 +126,7 @@ const ResetPassword = () => {
         toast.error(error.message);
       } else {
         toast.success("Password updated successfully!");
-        navigate('/buddys_admin');
+        navigate('/');
       }
     } catch (error) {
       toast.error("Failed to update password");
@@ -164,7 +165,7 @@ const ResetPassword = () => {
             Set New Password
           </CardTitle>
           <p className="text-sm text-gray-600 text-center">
-            Enter your new admin password
+            Enter your new password
           </p>
         </CardHeader>
         <CardContent>
