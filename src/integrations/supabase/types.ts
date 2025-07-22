@@ -57,22 +57,34 @@ export type Database = {
         Row: {
           author_name: string
           bio_content: string | null
+          born_date: string | null
           created_at: string
+          died_date: string | null
           id: string
+          native_country_name: string | null
+          native_language: string | null
           updated_at: string
         }
         Insert: {
           author_name: string
           bio_content?: string | null
+          born_date?: string | null
           created_at?: string
+          died_date?: string | null
           id?: string
+          native_country_name?: string | null
+          native_language?: string | null
           updated_at?: string
         }
         Update: {
           author_name?: string
           bio_content?: string | null
+          born_date?: string | null
           created_at?: string
+          died_date?: string | null
           id?: string
+          native_country_name?: string | null
+          native_language?: string | null
           updated_at?: string
         }
         Relationships: []

@@ -90,14 +90,16 @@ const AuthorBiosTable = ({ onEditBio, onCreateBio }: AuthorBiosTableProps) => {
                 >
                   Author Name {getSortIcon('author_name')}
                 </TableHead>
-                <TableHead>Bio Preview</TableHead>
-                <TableHead 
-                  className="cursor-pointer hover:bg-muted"
-                  onClick={() => handleSort('updated_at')}
-                >
-                  Last Updated {getSortIcon('updated_at')}
-                </TableHead>
-                <TableHead>Actions</TableHead>
+                 <TableHead>Bio Preview</TableHead>
+                 <TableHead>Country/Language</TableHead>
+                 <TableHead>Life Span</TableHead>
+                 <TableHead 
+                   className="cursor-pointer hover:bg-muted"
+                   onClick={() => handleSort('updated_at')}
+                 >
+                   Last Updated {getSortIcon('updated_at')}
+                 </TableHead>
+                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -106,14 +108,28 @@ const AuthorBiosTable = ({ onEditBio, onCreateBio }: AuthorBiosTableProps) => {
                   <TableCell className="font-medium">
                     {bio.author_name}
                   </TableCell>
-                  <TableCell className="max-w-md">
-                    <div className="truncate">
-                      {bio.bio_content ? bio.bio_content.substring(0, 100) + (bio.bio_content.length > 100 ? '...' : '') : 'No bio content'}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {new Date(bio.updated_at).toLocaleDateString()}
-                  </TableCell>
+                   <TableCell className="max-w-md">
+                     <div className="truncate">
+                       {bio.bio_content ? bio.bio_content.substring(0, 100) + (bio.bio_content.length > 100 ? '...' : '') : 'No bio content'}
+                     </div>
+                   </TableCell>
+                   <TableCell>
+                     <div className="text-sm">
+                       {bio.native_country_name && <div>{bio.native_country_name}</div>}
+                       {bio.native_language && <div className="text-muted-foreground">{bio.native_language}</div>}
+                       {!bio.native_country_name && !bio.native_language && <span className="text-muted-foreground">—</span>}
+                     </div>
+                   </TableCell>
+                   <TableCell>
+                     <div className="text-sm">
+                       {bio.born_date && <div>{new Date(bio.born_date).getFullYear()}</div>}
+                       {bio.died_date && <div>- {new Date(bio.died_date).getFullYear()}</div>}
+                       {!bio.born_date && !bio.died_date && <span className="text-muted-foreground">—</span>}
+                     </div>
+                   </TableCell>
+                   <TableCell>
+                     {new Date(bio.updated_at).toLocaleDateString()}
+                   </TableCell>
                   <TableCell>
                     <div className="flex gap-2">
                       <Button

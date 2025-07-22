@@ -18,7 +18,11 @@ interface AuthorBioFormProps {
 const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }: AuthorBioFormProps) => {
   const [formData, setFormData] = useState({
     author_name: '',
-    bio_content: ''
+    bio_content: '',
+    born_date: '',
+    died_date: '',
+    native_country_name: '',
+    native_language: ''
   });
   const [isSaving, setIsSaving] = useState(false);
 
@@ -26,7 +30,11 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
     if (bio) {
       setFormData({
         author_name: bio.author_name || '',
-        bio_content: bio.bio_content || ''
+        bio_content: bio.bio_content || '',
+        born_date: bio.born_date || '',
+        died_date: bio.died_date || '',
+        native_country_name: bio.native_country_name || '',
+        native_language: bio.native_language || ''
       });
     }
   }, [bio]);
@@ -53,7 +61,11 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
           .from('author_bios')
           .update({
             author_name: formData.author_name.trim(),
-            bio_content: formData.bio_content.trim()
+            bio_content: formData.bio_content.trim(),
+            born_date: formData.born_date || null,
+            died_date: formData.died_date || null,
+            native_country_name: formData.native_country_name.trim() || null,
+            native_language: formData.native_language.trim() || null
           })
           .eq('id', bio.id);
 
@@ -65,7 +77,11 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
           .from('author_bios')
           .insert({
             author_name: formData.author_name.trim(),
-            bio_content: formData.bio_content.trim()
+            bio_content: formData.bio_content.trim(),
+            born_date: formData.born_date || null,
+            died_date: formData.died_date || null,
+            native_country_name: formData.native_country_name.trim() || null,
+            native_language: formData.native_language.trim() || null
           });
 
         if (error) throw error;
@@ -115,6 +131,48 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
               Author name cannot be changed for existing bios to maintain story links
             </p>
           )}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="born_date">Born Date</Label>
+            <Input
+              id="born_date"
+              type="date"
+              value={formData.born_date}
+              onChange={(e) => handleInputChange('born_date', e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="died_date">Died Date</Label>
+            <Input
+              id="died_date"
+              type="date"
+              value={formData.died_date}
+              onChange={(e) => handleInputChange('died_date', e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="native_country_name">Native Country</Label>
+            <Input
+              id="native_country_name"
+              value={formData.native_country_name}
+              onChange={(e) => handleInputChange('native_country_name', e.target.value)}
+              placeholder="e.g., United States"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="native_language">Native Language</Label>
+            <Input
+              id="native_language"
+              value={formData.native_language}
+              onChange={(e) => handleInputChange('native_language', e.target.value)}
+              placeholder="e.g., English"
+            />
+          </div>
         </div>
 
         <div className="space-y-2">
