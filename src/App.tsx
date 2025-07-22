@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -83,15 +84,7 @@ const App = () => {
                     <Route path="/comment/:id" element={<CommentDetail />} />
                     <Route path="/author/:authorName" element={<AuthorBio />} />
                     
-                    {/* Use full version with View Bio functionality */}
                     <Route path="/authors" element={
-                      <ErrorBoundary>
-                        <PublicAuthorBios />
-                      </ErrorBoundary>
-                    } />
-                    
-                    {/* Keep original route as backup */}
-                    <Route path="/authors-full" element={
                       <ErrorBoundary>
                         <PublicAuthorBios />
                       </ErrorBoundary>
