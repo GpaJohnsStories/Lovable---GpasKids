@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
+import ScrollToTop from "@/components/ScrollToTop";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { UniversalAudioControls } from "@/components/UniversalAudioControls";
 import { DeployedContent } from "@/components/DeployedContent";
@@ -341,6 +342,7 @@ const About = () => {
         </main>
         
         <CookieFreeFooter />
+        <ScrollToTop />
       </div>
     </TooltipProvider>
   );
