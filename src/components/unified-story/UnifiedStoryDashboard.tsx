@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Save, X, FileText, Image, Video, Volume2, Settings } from "lucide-react";
+import { Save, X, FileText, Image, Video, Volume2 } from "lucide-react";
 import StoryFormFields from "../StoryFormFields";
 import StoryPhotoUpload from "../StoryPhotoUpload";
 import StoryVideoUpload from "../StoryVideoUpload";
@@ -59,7 +59,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <Tabs defaultValue="content" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="content" className="flex items-center gap-2">
             <FileText className="h-4 w-4" />
             Content
@@ -76,16 +76,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             <Volume2 className="h-4 w-4" />
             Audio
           </TabsTrigger>
-          <TabsTrigger value="settings" className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            Settings
-          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="content" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Basic Info Card */}
-            <Card>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Story Details Card */}
+            <Card className="lg:col-span-1">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5" />
@@ -101,8 +97,60 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardContent>
             </Card>
 
+            {/* Publication Settings Card */}
+            <Card className="lg:col-span-1">
+              <CardHeader>
+                <CardTitle>Publication Settings</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="published">Published Status</Label>
+                    <select
+                      id="published"
+                      value={formData.published}
+                      onChange={(e) => onInputChange('published', e.target.value)}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="N">Not Published</option>
+                      <option value="Y">Published</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="category">Category</Label>
+                    <select
+                      id="category"
+                      value={formData.category}
+                      onChange={(e) => onInputChange('category', e.target.value)}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="Fun">Fun</option>
+                      <option value="Life">Life</option>
+                      <option value="North Pole">North Pole</option>
+                      <option value="World Changers">World Changers</option>
+                      <option value="WebText">WebText</option>
+                      <option value="STORY">STORY</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="google_drive_link">Google Drive Link</Label>
+                    <input
+                      id="google_drive_link"
+                      type="url"
+                      value={formData.google_drive_link}
+                      onChange={(e) => onInputChange('google_drive_link', e.target.value)}
+                      placeholder="https://drive.google.com/..."
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Quick Actions Card */}
-            <Card>
+            <Card className="lg:col-span-1">
               <CardHeader>
                 <CardTitle>Quick Actions</CardTitle>
               </CardHeader>
@@ -281,59 +329,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardContent>
             </Card>
           )}
-        </TabsContent>
-
-        <TabsContent value="settings" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Publication Settings</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="published">Published Status</Label>
-                  <select
-                    id="published"
-                    value={formData.published}
-                    onChange={(e) => onInputChange('published', e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                  >
-                    <option value="N">Not Published</option>
-                    <option value="Y">Published</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="category">Category</Label>
-                  <select
-                    id="category"
-                    value={formData.category}
-                    onChange={(e) => onInputChange('category', e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                  >
-                    <option value="Fun">Fun</option>
-                    <option value="Life">Life</option>
-                    <option value="North Pole">North Pole</option>
-                    <option value="World Changers">World Changers</option>
-                    <option value="WebText">WebText</option>
-                    <option value="STORY">STORY</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="google_drive_link">Google Drive Link</Label>
-                <input
-                  id="google_drive_link"
-                  type="url"
-                  value={formData.google_drive_link}
-                  onChange={(e) => onInputChange('google_drive_link', e.target.value)}
-                  placeholder="https://drive.google.com/..."
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                />
-              </div>
-            </CardContent>
-          </Card>
         </TabsContent>
       </Tabs>
     </form>
