@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, Square, Loader, Volume2, Gauge } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -299,8 +298,8 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
   return (
     <TooltipProvider>
       <div className={`space-y-3 ${className}`}>
-        {/* Control Buttons Row */}
-        <div className="flex items-center justify-center gap-3">
+        {/* Control Buttons Row - Left Aligned */}
+        <div className="flex items-center justify-start gap-3">
           {/* Play Button */}
           <Tooltip>
             <TooltipTrigger asChild>
@@ -388,8 +387,8 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
           </Tooltip>
         </div>
 
-        {/* Volume Controls */}
-        <div className="flex items-center gap-3">
+        {/* Volume Controls - Left Aligned */}
+        <div className="flex items-center justify-start gap-3">
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="w-10 h-10 rounded-lg bg-green-500 text-white flex items-center justify-center">
@@ -428,8 +427,8 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
           </div>
         </div>
 
-        {/* Speed Controls */}
-        <div className="flex items-center gap-3">
+        {/* Speed Controls - Left Aligned */}
+        <div className="flex items-center justify-start gap-3">
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="w-10 h-10 rounded-lg bg-blue-500 text-white flex items-center justify-center">
