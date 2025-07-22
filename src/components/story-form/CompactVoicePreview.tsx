@@ -37,7 +37,6 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
   const [loadingVoice, setLoadingVoice] = useState<string | null>(null);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
 
   // Auto-populate sample text from story content
   React.useEffect(() => {
@@ -173,39 +172,26 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
     <Card className={`border-orange-200 ${className}`}>
       <CardContent className="p-4">
         <div className="space-y-4">
-          {/* Header with expand/collapse */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Volume2 className="h-4 w-4 text-orange-600" />
-              <span className="font-medium text-sm">Voice Preview & Testing</span>
-            </div>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="text-xs"
-            >
-              {isExpanded ? 'Less' : 'More'}
-            </Button>
+          {/* Header */}
+          <div className="flex items-center gap-2">
+            <Volume2 className="h-4 w-4 text-orange-600" />
+            <span className="font-medium text-sm">Voice Preview & Testing</span>
           </div>
 
-          {/* Sample text input (collapsible) */}
-          {isExpanded && (
-            <div className="space-y-2">
-              <label className="text-xs font-medium text-gray-600">
-                Test Text (limited to 200 words):
-              </label>
-              <WordLimitedTextarea
-                value={sampleText}
-                onChange={(e) => setSampleText(e.target.value)}
-                wordLimit={200}
-                placeholder={defaultSampleText}
-                className="min-h-[60px] text-sm"
-                onWordLimitExceeded={handleWordLimitExceeded}
-              />
-            </div>
-          )}
+          {/* Sample text input - now always visible */}
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-gray-600">
+              Test Text (limited to 200 words):
+            </label>
+            <WordLimitedTextarea
+              value={sampleText}
+              onChange={(e) => setSampleText(e.target.value)}
+              wordLimit={200}
+              placeholder={defaultSampleText}
+              className="min-h-[60px] text-sm"
+              onWordLimitExceeded={handleWordLimitExceeded}
+            />
+          </div>
 
           {/* Voice grid */}
           <div className="grid grid-cols-2 gap-3">
