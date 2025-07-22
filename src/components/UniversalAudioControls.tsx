@@ -337,7 +337,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
     <TooltipProvider>
       <div className={`${config.padding} bg-white/80 rounded-lg border border-blue-200 ${className}`}>
         {/* Three-Section Horizontal Layout */}
-        <div className="flex justify-center space-x-4">
+        <div className="flex justify-center space-x-0">
           {/* Section 1: Audio Controls (2x2 Grid) */}
           <div className="flex flex-col space-y-1 p-2 bg-orange-100 rounded-lg border border-orange-200">
             <div className="flex space-x-1">
