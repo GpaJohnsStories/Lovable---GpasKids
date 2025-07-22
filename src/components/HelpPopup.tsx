@@ -88,7 +88,6 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         <div className="px-4 py-0 flex justify-end">
           <div className="w-fit">
             <UniversalAudioControls 
-              audioUrl={storyData?.audio_url}
               title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
               content={helpContent}
               allowTextToSpeech={true}
