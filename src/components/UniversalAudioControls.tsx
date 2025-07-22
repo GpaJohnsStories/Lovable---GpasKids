@@ -585,7 +585,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                     className={`${config.buttonSize} rounded font-bold border transition-all duration-200 flex items-center justify-center ${config.fontSize} ${
                       playbackRate === 2.0
                         ? 'bg-blue-600 text-white border-blue-700 shadow-md'
-                        : 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:scale-105'
+                        : 'bg-blue-400 text-white border-blue-600 hover:bg-blue-500 hover:scale-105'
                     }`}
                   >
                     2x
