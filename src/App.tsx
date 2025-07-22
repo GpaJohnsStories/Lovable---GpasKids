@@ -45,7 +45,7 @@ const ConditionalActivityTracker = () => {
     return null;
   }
   
-  return <ActivityTracker />;
+  return <ActivityTracker showDebugInfo={true} />;
 };
 
 const App = () => (
