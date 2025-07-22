@@ -88,14 +88,18 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
         <Label htmlFor="tagline" className={`font-medium text-gray-700 ${labelSize}`}>
           Tagline <span className="text-gray-500 font-normal">(Maximum 100 Characters)</span>
         </Label>
-        <Input
+        <Textarea
           id="tagline"
-          type="text"
           value={formData.tagline}
           onChange={(e) => onInputChange('tagline', e.target.value)}
           placeholder="Enter a brief tagline"
           maxLength={100}
+          rows={2}
+          className="resize-none"
         />
+        <div className="text-right text-sm text-gray-500">
+          {formData.tagline.length}/100
+        </div>
       </div>
 
       <div className="space-y-2">
