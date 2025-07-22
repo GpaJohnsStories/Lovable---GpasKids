@@ -2,7 +2,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -44,17 +44,29 @@ import { HelpProvider } from "./contexts/HelpContext";
 
 const queryClient = new QueryClient();
 
+// Component to handle conditional content protection based on route
+const ConditionalContentProtection = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/buddys_admin');
+  
+  return (
+    <ContentProtection enableProtection={!isAdminRoute}>
+      {children}
+    </ContentProtection>
+  );
+};
+
 function App() {
   return (
     <ErrorBoundary>
-      <ContentProtection>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <HelmetProvider>
-              <HelpProvider>
-                <GlobalHelpProvider>
-                  <Toaster />
-                  <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <HelmetProvider>
+            <HelpProvider>
+              <GlobalHelpProvider>
+                <Toaster />
+                <BrowserRouter>
+                  <ConditionalContentProtection>
                     <ScrollToTop />
                     <Routes>
                       {/* Public Routes */}
@@ -93,13 +105,13 @@ function App() {
                       {/* Catch-all route */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
-                  </BrowserRouter>
-                </GlobalHelpProvider>
-              </HelpProvider>
-            </HelmetProvider>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </ContentProtection>
+                  </ConditionalContentProtection>
+                </BrowserRouter>
+              </GlobalHelpProvider>
+            </HelpProvider>
+          </HelmetProvider>
+        </TooltipProvider>
+      </QueryClientProvider>
     </ErrorBoundary>
   );
 }
