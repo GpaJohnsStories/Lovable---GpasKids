@@ -71,7 +71,7 @@ const ActivityTracker = ({ showDebugInfo = false }: ActivityTrackerProps) => {
               <Info className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
               <div className="text-xs text-blue-800">
                 <p className="mb-1"><strong>What it does:</strong> Automatically tracks when you're actively reading and reminds you to take breaks every 30 minutes.</p>
-                <p><strong>Why it helps:</strong> Regular breaks reduce eye strain and improve focus, especially important for children's health.</p>
+                <p><strong>Why it helps:</strong> Regular breaks reduce eye strain and improve focus which is important for everyone.</p>
               </div>
             </div>
 
