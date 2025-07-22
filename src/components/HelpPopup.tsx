@@ -91,7 +91,6 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               audioUrl={storyData?.audio_url}
               title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
               content={helpContent}
-              author={storyData?.author}
               allowTextToSpeech={true}
               context="help-popup"
               size="sm"
