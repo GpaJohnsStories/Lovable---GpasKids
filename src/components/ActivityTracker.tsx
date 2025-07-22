@@ -50,7 +50,7 @@ const ActivityTracker = ({ showDebugInfo = false }: ActivityTrackerProps) => {
               Activity Timer
             </DialogTitle>
             <DialogDescription>
-              This timer helps track your reading time and suggests healthy breaks to protect your eyes and wellbeing.
+              This timer keeps track of your internet time on this site and suggests breaks to protect your eyes and wellbeing.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
