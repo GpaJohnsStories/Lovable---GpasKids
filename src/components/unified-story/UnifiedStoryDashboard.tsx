@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -234,7 +233,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
 
           {/* Audio Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* AI Voice Generation */}
+            {/* AI Voice Generation with Integrated Preview */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -249,6 +248,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   isRecording={isGeneratingAudio}
                   onStartRecording={onGenerateAudio}
                   onStopRecording={undefined}
+                  storyContent={formData.content}
+                  storyTitle={formData.title}
                 />
               </CardContent>
             </Card>

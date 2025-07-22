@@ -3,7 +3,6 @@ import AdminOverview from "@/components/admin/AdminOverview";
 import AdminStories from "@/components/admin/AdminStories";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
 import CommentsDashboard from "@/components/admin/CommentsDashboard";
-import VoicePreview from "@/components/VoicePreview";
 import AdminLayoutWithHeaderBanner from "@/components/admin/AdminLayoutWithHeaderBanner";
 import ContentProtection from "@/components/ContentProtection";
 import EnhancedSecureAdminCheck from "@/components/admin/EnhancedSecureAdminCheck";
@@ -50,11 +49,8 @@ const BuddysAdminContent = () => {
       } />
       
       <Route path="/comments" element={<CommentsDashboard />} />
-      <Route path="/voice-preview" element={
-        <AdminLayoutWithHeaderBanner>
-          <VoicePreview />
-        </AdminLayoutWithHeaderBanner>
-      } />
+      
+      {/* Voice preview route removed - now integrated into media tab */}
     </Routes>
   );
 };
