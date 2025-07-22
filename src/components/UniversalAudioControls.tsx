@@ -1,9 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, Square, Loader, Volume2, Gauge } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Separator } from "@/components/ui/separator";
 
 interface UniversalAudioControlsProps {
   audioUrl?: string;
@@ -301,28 +301,25 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
   // Size configurations
   const sizeConfig = {
     sm: {
-      container: 'p-2',
-      button: 'text-xs px-2 py-1',
-      icon: 'h-3 w-3',
-      gap: 'gap-2',
-      controlButton: 'text-xs px-1 py-1',
-      controlGap: 'gap-1'
+      buttonSize: 'w-8 h-8',
+      iconSize: 'h-3 w-3',
+      fontSize: 'text-xs',
+      padding: 'p-1',
+      gap: 'gap-1'
     },
     md: {
-      container: 'p-3',
-      button: 'text-sm px-3 py-2',
-      icon: 'h-4 w-4',
-      gap: 'gap-3',
-      controlButton: 'text-xs px-2 py-1',
-      controlGap: 'gap-2'
+      buttonSize: 'w-10 h-10',
+      iconSize: 'h-4 w-4',
+      fontSize: 'text-sm',
+      padding: 'p-2',
+      gap: 'gap-2'
     },
     lg: {
-      container: 'p-4',
-      button: 'text-base px-4 py-3',
-      icon: 'h-5 w-5',
-      gap: 'gap-4',
-      controlButton: 'text-sm px-2 py-1',
-      controlGap: 'gap-3'
+      buttonSize: 'w-12 h-12',
+      iconSize: 'h-5 w-5',
+      fontSize: 'text-base',
+      padding: 'p-2',
+      gap: 'gap-3'
     }
   };
 
@@ -331,7 +328,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
   // Show disabled state if no audio is available
   if (!canPlayAudio()) {
     return (
-      <div className={`flex items-center justify-center ${config.gap} ${config.container} bg-gray-100 rounded-lg border border-gray-200 ${className}`}>
+      <div className={`flex items-center justify-center ${config.gap} ${config.padding} bg-gray-100 rounded-lg border border-gray-200 ${className}`}>
         <span className="text-gray-500 text-sm">No audio available</span>
       </div>
     );
@@ -339,190 +336,198 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
 
   return (
     <TooltipProvider>
-      <div className={`flex items-center justify-center ${config.gap} ${config.container} bg-white/80 rounded-lg border border-blue-200 ${className}`}>
-        {/* Play Button */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              onClick={handlePlay}
-              disabled={isLoading || isPlaying}
-              className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#22c55e,0_6px_12px_rgba(0,0,0,0.3)] border border-green-700 transition-all duration-200 flex items-center gap-2 ${
-                isLoading || isPlaying
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:shadow-[0_3px_0_#22c55e,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#22c55e,0_2px_4px_rgba(0,0,0,0.3)] hover:from-green-500 hover:via-green-600 hover:to-green-700'
-              }`}
-            >
-              {isLoading ? (
-                <Loader className={`${config.icon} animate-spin`} />
-              ) : (
-                <Play className={config.icon} />
-              )}
-              {size !== 'sm' && (isLoading ? "Loading..." : "Please, read it to me")}
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{isLoading ? "Loading..." : isPlaying ? "Currently playing" : "Start playing"}</p>
-          </TooltipContent>
-        </Tooltip>
+      <div className={`${config.padding} bg-white/80 rounded-lg border border-blue-200 ${className}`}>
+        {/* Compact Table Layout - 2x3 Grid */}
+        <table className="w-full border-spacing-1" style={{ borderCollapse: 'separate' }}>
+          <tbody>
+            {/* Row 1: Audio Controls (Play, Pause) | Volume Controls */}
+            <tr>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handlePlay}
+                      disabled={isLoading || isPlaying}
+                      className={`${config.buttonSize} rounded-lg font-bold shadow-[0_2px_0_#22c55e] border border-green-600 transition-all duration-200 flex items-center justify-center ${
+                        isLoading || isPlaying
+                          ? 'bg-gray-400 cursor-not-allowed' 
+                          : 'bg-gradient-to-b from-green-400 to-green-600 text-white hover:translate-y-0.5 active:translate-y-1'
+                      }`}
+                    >
+                      {isLoading ? (
+                        <Loader className={`${config.iconSize} animate-spin`} />
+                      ) : (
+                        <Play className={`${config.iconSize} ml-0.5`} />
+                      )}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Play</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handlePause}
+                      disabled={!isPlaying}
+                      className={`${config.buttonSize} rounded-lg font-bold shadow-[0_2px_0_#f59e0b] border border-amber-600 transition-all duration-200 flex items-center justify-center ${
+                        !isPlaying
+                          ? 'bg-gray-400 cursor-not-allowed' 
+                          : 'bg-gradient-to-b from-amber-400 to-amber-600 text-white hover:translate-y-0.5 active:translate-y-1'
+                      }`}
+                    >
+                      <Pause className={config.iconSize} />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Pause</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className={`${config.buttonSize} rounded-lg bg-gradient-to-b from-green-400 to-green-600 text-white flex items-center justify-center shadow-[0_2px_0_#16a34a] border border-green-600`}>
+                      <Volume2 className={config.iconSize} />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Volume: {volume}%</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+            </tr>
 
-        {/* Pause Button */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              onClick={handlePause}
-              disabled={!isPlaying}
-              className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#f59e0b,0_6px_12px_rgba(0,0,0,0.3)] border border-amber-700 transition-all duration-200 flex items-center gap-2 ${
-                !isPlaying
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 hover:shadow-[0_3px_0_#f59e0b,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#f59e0b,0_2px_4px_rgba(0,0,0,0.3)] hover:from-amber-500 hover:via-amber-600 hover:to-amber-700'
-              }`}
-            >
-              <Pause className={config.icon} />
-              {size === 'lg' && "Pause"}
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{isPlaying ? "Pause playback" : "No audio playing"}</p>
-          </TooltipContent>
-        </Tooltip>
+            {/* Row 2: More Audio Controls (Stop, Start Over) | Speed Controls */}
+            <tr>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handleStop}
+                      disabled={!audioGenerated}
+                      className={`${config.buttonSize} rounded-lg font-bold shadow-[0_2px_0_#ef4444] border border-red-600 transition-all duration-200 flex items-center justify-center ${
+                        !audioGenerated
+                          ? 'bg-gray-400 cursor-not-allowed' 
+                          : 'bg-gradient-to-b from-red-400 to-red-600 text-white hover:translate-y-0.5 active:translate-y-1'
+                      }`}
+                    >
+                      <Square className={config.iconSize} />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Stop</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handleStartOver}
+                      disabled={isLoading || !audioGenerated}
+                      className={`${config.buttonSize} rounded-lg font-bold shadow-[0_2px_0_#7c3aed] border border-purple-600 transition-all duration-200 flex items-center justify-center ${
+                        isLoading || !audioGenerated
+                          ? 'bg-gray-400 cursor-not-allowed' 
+                          : 'bg-gradient-to-b from-purple-400 to-purple-600 text-white hover:translate-y-0.5 active:translate-y-1'
+                      }`}
+                    >
+                      <svg className={config.iconSize} fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9zm4.5-4.5v9l7-4.5-7-4.5z"/>
+                      </svg>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Start Over</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+              <td className="text-center">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className={`${config.buttonSize} rounded-lg bg-gradient-to-b from-blue-400 to-blue-600 text-white flex items-center justify-center shadow-[0_2px_0_#2563eb] border border-blue-600`}>
+                      <Gauge className={config.iconSize} />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Speed: {playbackRate}x</p>
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+            </tr>
 
-        {/* Stop Button */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              onClick={handleStop}
-              disabled={!audioGenerated}
-              className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#ef4444,0_6px_12px_rgba(0,0,0,0.3)] border border-red-700 transition-all duration-200 flex items-center gap-2 ${
-                !audioGenerated
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-gradient-to-b from-red-400 via-red-500 to-red-600 hover:shadow-[0_3px_0_#ef4444,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#ef4444,0_2px_4px_rgba(0,0,0,0.3)] hover:from-red-500 hover:via-red-600 hover:to-red-700'
-              }`}
-            >
-              <Square className={config.icon} />
-              {size === 'lg' && "Stop"}
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{audioGenerated ? "Stop and reset audio" : "No audio to stop"}</p>
-          </TooltipContent>
-        </Tooltip>
-
-        {/* Start Over Button */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              onClick={handleStartOver}
-              disabled={isLoading || !audioGenerated}
-              className={`text-white ${config.button} rounded-lg font-bold shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.3)] border border-purple-700 transition-all duration-200 flex items-center gap-2 ${
-                isLoading || !audioGenerated
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 hover:shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)] hover:from-purple-500 hover:via-purple-600 hover:to-purple-700'
-              }`}
-            >
-              <svg className={config.icon} fill="currentColor" viewBox="0 0 24 24">
-                <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9zm4.5-4.5v9l7-4.5-7-4.5z"/>
-              </svg>
-              {size === 'lg' && "Start Over"}
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{audioGenerated ? "Stop and start from the beginning" : "No audio to restart"}</p>
-          </TooltipContent>
-        </Tooltip>
-
-        {/* Vertical Separator */}
-        <Separator orientation="vertical" className="h-8 bg-blue-300" />
-
-        {/* Volume Control */}
-        <div className={`flex flex-col items-center ${config.controlGap}`}>
-          <div className={`flex items-center ${config.controlGap}`}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="p-1 rounded bg-green-500 text-white">
-                  <Volume2 className={config.icon} />
+            {/* Row 3: Volume Control Buttons */}
+            <tr>
+              <td className="text-center" colSpan={3}>
+                <div className={`flex justify-center ${config.gap} mt-1`}>
+                  {[25, 50, 75, 100].map((vol, index) => (
+                    <Tooltip key={vol}>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={() => handleVolumeChange(vol)}
+                          className={`${config.buttonSize} rounded font-bold border transition-all duration-200 flex items-center justify-center ${config.fontSize} ${
+                            volume === vol
+                              ? 'bg-green-600 text-white border-green-700 shadow-md'
+                              : `text-white border-green-600 hover:scale-105 ${
+                                  index === 0 ? 'bg-green-300 hover:bg-green-400' :
+                                  index === 1 ? 'bg-green-400 hover:bg-green-500' :
+                                  index === 2 ? 'bg-green-500 hover:bg-green-600' :
+                                  'bg-green-600 hover:bg-green-700'
+                                }`
+                          }`}
+                        >
+                          {vol}%
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Set volume to {vol}%</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ))}
                 </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Volume: {volume}%</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-          {/* Volume Buttons */}
-          <div className={`flex ${config.controlGap}`}>
-            {[25, 50, 75, 100].map((vol, index) => (
-              <Tooltip key={vol}>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={() => handleVolumeChange(vol)}
-                    className={`${config.controlButton} rounded font-bold border transition-all duration-200 ${
-                      volume === vol
-                        ? 'bg-green-600 text-white border-green-700 shadow-md'
-                        : `text-white border-green-600 hover:scale-105 ${
-                            index === 0 ? 'bg-green-300 hover:bg-green-400' :
-                            index === 1 ? 'bg-green-400 hover:bg-green-500' :
-                            index === 2 ? 'bg-green-500 hover:bg-green-600' :
-                            'bg-green-600 hover:bg-green-700'
-                          }`
-                    }`}
-                  >
-                    {vol}%
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Set volume to {vol}%</p>
-                </TooltipContent>
-              </Tooltip>
-            ))}
-          </div>
-        </div>
+              </td>
+            </tr>
 
-        {/* Speed Control */}
-        <div className={`flex flex-col items-center ${config.controlGap}`}>
-          <div className={`flex items-center ${config.controlGap}`}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="p-1 rounded bg-blue-500 text-white">
-                  <Gauge className={config.icon} />
+            {/* Row 4: Speed Control Buttons */}
+            <tr>
+              <td className="text-center" colSpan={3}>
+                <div className={`flex justify-center ${config.gap} mt-1`}>
+                  {[
+                    { speed: 0.5, label: '0.5x' },
+                    { speed: 1.0, label: '1x' },
+                    { speed: 1.5, label: '1.5x' },
+                    { speed: 2.0, label: '2x' }
+                  ].map(({ speed, label }, index) => (
+                    <Tooltip key={speed}>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={() => handleSpeedChange(speed)}
+                          className={`${config.buttonSize} rounded font-bold border transition-all duration-200 flex items-center justify-center ${config.fontSize} ${
+                            playbackRate === speed
+                              ? 'bg-blue-600 text-white border-blue-700 shadow-md'
+                              : `text-white border-blue-600 hover:scale-105 ${
+                                  index === 0 ? 'bg-blue-300 hover:bg-blue-400' :
+                                  index === 1 ? 'bg-blue-400 hover:bg-blue-500' :
+                                  index === 2 ? 'bg-blue-500 hover:bg-blue-600' :
+                                  'bg-blue-600 hover:bg-blue-700'
+                                }`
+                          }`}
+                        >
+                          {label}
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Set speed to {label}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ))}
                 </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Speed: {playbackRate}x</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-          {/* Speed Buttons */}
-          <div className={`flex ${config.controlGap}`}>
-            {[
-              { speed: 0.5, label: '0.5x' },
-              { speed: 1.0, label: '1x' },
-              { speed: 1.5, label: '1.5x' },
-              { speed: 2.0, label: '2x' }
-            ].map(({ speed, label }, index) => (
-              <Tooltip key={speed}>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={() => handleSpeedChange(speed)}
-                    className={`${config.controlButton} rounded font-bold border transition-all duration-200 ${
-                      playbackRate === speed
-                        ? 'bg-blue-600 text-white border-blue-700 shadow-md'
-                        : `text-white border-blue-600 hover:scale-105 ${
-                            index === 0 ? 'bg-blue-300 hover:bg-blue-400' :
-                            index === 1 ? 'bg-blue-400 hover:bg-blue-500' :
-                            index === 2 ? 'bg-blue-500 hover:bg-blue-600' :
-                            'bg-blue-600 hover:bg-blue-700'
-                          }`
-                    }`}
-                  >
-                    {label}
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Set speed to {label}</p>
-                </TooltipContent>
-              </Tooltip>
-            ))}
-          </div>
-        </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </TooltipProvider>
   );
