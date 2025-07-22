@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus } from "lucide-react";
@@ -162,7 +163,6 @@ const AdminHeaderBanner = () => {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
-                        variant="ghost"
                         className={`
                           transition-all duration-200 border font-fun
                           ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
@@ -259,7 +259,6 @@ const AdminHeaderBanner = () => {
                 >
                   {button.openInNewTab ? (
                     <Button
-                      variant="ghost"
                       onClick={handleButtonClick}
                       className={`
                         transition-all duration-200 border font-fun
@@ -275,7 +274,6 @@ const AdminHeaderBanner = () => {
                   ) : (
                     <Link to={button.path} onClick={scrollToTop}>
                       <Button
-                        variant="ghost"
                         className={`
                           transition-all duration-200 border font-fun
                           ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
