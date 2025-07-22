@@ -1,7 +1,6 @@
 
 import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import AdminLayoutWithHeaderBanner from "./AdminLayoutWithHeaderBanner";
 import AdminStoriesTable from "./AdminStoriesTable";
 import AuthorBiosTable from "./AuthorBiosTable";
 import { useUserRole } from "@/hooks/useUserRole";
@@ -44,23 +43,21 @@ const AdminStories = () => {
   };
 
   return (
-    <AdminLayoutWithHeaderBanner>
-      <div className="space-y-4">
-        {view === 'bios' ? (
-          <AuthorBiosTable
-            onEditBio={handleEditBio}
-            onCreateBio={handleCreateBio}
-          />
-        ) : (
-          <AdminStoriesTable
-            onEditStory={handleEditStory}
-            onCreateStory={handleCreateStory}
-            showActions={!isViewer}
-            onEditBio={handleEditBio}
-          />
-        )}
-      </div>
-    </AdminLayoutWithHeaderBanner>
+    <div className="space-y-4">
+      {view === 'bios' ? (
+        <AuthorBiosTable
+          onEditBio={handleEditBio}
+          onCreateBio={handleCreateBio}
+        />
+      ) : (
+        <AdminStoriesTable
+          onEditStory={handleEditStory}
+          onCreateStory={handleCreateStory}
+          showActions={!isViewer}
+          onEditBio={handleEditBio}
+        />
+      )}
+    </div>
   );
 };
 

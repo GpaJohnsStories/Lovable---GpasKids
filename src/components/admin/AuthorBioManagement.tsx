@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import AdminLayoutWithHeaderBanner from "./AdminLayoutWithHeaderBanner";
 import AuthorBioForm from "./AuthorBioForm";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -54,39 +53,33 @@ const AuthorBioManagement = () => {
 
   if (isEditing && isLoading) {
     return (
-      <AdminLayoutWithHeaderBanner>
-        <div className="flex justify-center items-center min-h-[400px]">
-          <LoadingSpinner />
-        </div>
-      </AdminLayoutWithHeaderBanner>
+      <div className="flex justify-center items-center min-h-[400px]">
+        <LoadingSpinner />
+      </div>
     );
   }
 
   if (isEditing && error) {
     return (
-      <AdminLayoutWithHeaderBanner>
-        <div className="text-center py-8">
-          <p className="text-red-600">Error loading author bio: {error.message}</p>
-          <button
-            onClick={handleBack}
-            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-          >
-            Back to Author Bios
-          </button>
-        </div>
-      </AdminLayoutWithHeaderBanner>
+      <div className="text-center py-8">
+        <p className="text-red-600">Error loading author bio: {error.message}</p>
+        <button
+          onClick={handleBack}
+          className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+        >
+          Back to Author Bios
+        </button>
+      </div>
     );
   }
 
   return (
-    <AdminLayoutWithHeaderBanner>
-      <AuthorBioForm
-        bio={bio}
-        onBack={handleBack}
-        onSave={handleSave}
-        backButtonText="Back to Author Bios"
-      />
-    </AdminLayoutWithHeaderBanner>
+    <AuthorBioForm
+      bio={bio}
+      onBack={handleBack}
+      onSave={handleSave}
+      backButtonText="Back to Author Bios"
+    />
   );
 };
 

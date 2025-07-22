@@ -1,5 +1,4 @@
 
-import AdminLayoutWithHeaderBanner from "./AdminLayoutWithHeaderBanner";
 import CommentsTable from "./CommentsTable";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -33,22 +32,20 @@ const CommentsDashboard = () => {
   });
 
   return (
-    <AdminLayoutWithHeaderBanner>
-      <div className="mt-8">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-            {isViewer ? 'View Comments' : 'Manage Comments'}
-          </h2>
-          {!isViewer && (
-            <Button 
-              onClick={() => setShowCreateForm(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Create New Comment
-            </Button>
-          )}
-        </div>
+    <div className="space-y-8">
+      <div className="flex justify-between items-center">
+        <h2 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          {isViewer ? 'View Comments' : 'Manage Comments'}
+        </h2>
+        {!isViewer && (
+          <Button 
+            onClick={() => setShowCreateForm(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Create New Comment
+          </Button>
+        )}
       </div>
       
       {showCreateForm && (
@@ -59,7 +56,7 @@ const CommentsDashboard = () => {
       )}
       
       <CommentsTable />
-    </AdminLayoutWithHeaderBanner>
+    </div>
   );
 };
 
