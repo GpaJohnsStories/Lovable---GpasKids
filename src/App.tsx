@@ -25,6 +25,7 @@ import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
 import AuthorBio from "./pages/AuthorBio";
+import PublicAuthorBios from "./pages/PublicAuthorBios";
 import HelpGpa from "./pages/HelpGpa";
 import RobotsTxt from "./pages/RobotsTxt";
 import SitemapXml from "./pages/SitemapXml";
@@ -66,6 +67,7 @@ const App = () => (
                 <Route path="/view-comments" element={<ViewComments />} />
                 <Route path="/comment/:id" element={<CommentDetail />} />
                 <Route path="/author/:authorName" element={<AuthorBio />} />
+                <Route path="/authors" element={<PublicAuthorBios />} />
                 <Route path="/admin" element={<SimpleAdmin />} />
                 <Route path="/admin-access" element={<AdminAccess />} />
                 <Route path="/buddys_admin/*" element={<BuddysAdmin />} />
