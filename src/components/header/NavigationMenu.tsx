@@ -50,7 +50,7 @@ const NavigationMenu = () => {
       textColor: 'text-white',
       description: 'Visit List of Stories or View a Story',
       subItems: [
-        { name: 'Stories', path: '/library' },
+        { name: 'Story Library', path: '/library' },
         { name: 'Currently Reading', path: currentStoryPath || '#', disabled: !currentStoryPath },
       ]
     },

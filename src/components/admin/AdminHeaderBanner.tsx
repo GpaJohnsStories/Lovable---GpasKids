@@ -187,7 +187,7 @@ const AdminHeaderBanner = () => {
                           className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
                         >
                           <FileText className="h-4 w-4 mr-2" />
-                          Full Libraries
+                          Story Library
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
