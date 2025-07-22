@@ -11,6 +11,7 @@ import VoiceSelection from "../story-form/VoiceSelection";
 import AudioUploadSection from "./AudioUploadSection";
 import SplitViewEditor from "../editor/SplitViewEditor";
 import { UniversalAudioControls } from "../UniversalAudioControls";
+import { StackedAudioControls } from "./StackedAudioControls";
 import type { Story } from '@/hooks/useStoryFormState';
 
 interface UnifiedStoryDashboardProps {
@@ -231,9 +232,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          {/* Audio Section */}
+          {/* Audio Section - New Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* AI Voice Generation with Integrated Preview */}
+            {/* AI Voice Generation */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -254,29 +255,26 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardContent>
             </Card>
 
-            {/* Current Audio Controls - New Standard Audio Buttons */}
+            {/* Stacked Audio Controls */}
             {formData.audio_url && (
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Volume2 className="h-5 w-5" />
-                    Current Audio Controls
+                    Audio Controls
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <UniversalAudioControls
+                  <StackedAudioControls
                     audioUrl={formData.audio_url}
                     title={formData.title || 'Story Audio'}
                     content={formData.content}
                     author={formData.author}
                     allowTextToSpeech={allowTextToSpeech}
                     context={context}
-                    size="lg"
+                    aiVoiceName={formData.ai_voice_name || 'Nova'}
                     className="w-full"
                   />
-                  <div className="mt-2 text-sm text-gray-600">
-                    Voice: {formData.ai_voice_name || 'Nova'}
-                  </div>
                 </CardContent>
               </Card>
             )}
