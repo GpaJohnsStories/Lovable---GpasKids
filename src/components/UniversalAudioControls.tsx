@@ -303,7 +303,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
       buttonSize: 'w-8 h-8',
       iconSize: 'h-3 w-3',
       fontSize: 'text-xs',
-      padding: 'p-1',
+      padding: 'p-0',
       gap: 'gap-1'
     },
     md: {
