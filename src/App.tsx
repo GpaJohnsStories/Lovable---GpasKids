@@ -36,9 +36,9 @@ import AuthorBioManagement from "./components/admin/AuthorBioManagement";
 import UnifiedStoryPage from "./components/unified-story/UnifiedStoryPage";
 
 // Security and Auth
-import { GlobalHelpProvider } from "./components/GlobalHelpProvider";
-import { ContentProtection } from "./components/ContentProtection";
-import { ErrorBoundary } from "./components/ErrorBoundary";
+import GlobalHelpProvider from "./components/GlobalHelpProvider";
+import ContentProtection from "./components/ContentProtection";
+import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
@@ -79,12 +79,10 @@ function App() {
                     <Route path="/buddys_admin" element={<AdminLayout><AdminOverview /></AdminLayout>} />
                     <Route path="/buddys_admin/stories" element={<AdminLayout><AdminStories /></AdminLayout>} />
                     <Route path="/buddys_admin/comments" element={<AdminLayout><CommentsDashboard /></AdminLayout>} />
-                    <Route path="/buddys_admin/comments/:id" element={<AdminLayout><AdminCommentDetail /></AdminLayout>} />
-                    <Route path="/buddys_admin/comments/create" element={<AdminLayout><CreateAdminComment /></AdminLayout>} />
                     <Route path="/buddys_admin/security" element={<AdminLayout><SecurityAuditDashboard /></AdminLayout>} />
                     <Route path="/buddys_admin/author-bios" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
-                    <Route path="/buddys_admin/author-bios/add" element={<AdminLayout><AuthorBioManagement mode="add" /></AdminLayout>} />
-                    <Route path="/buddys_admin/author-bios/edit/:id" element={<AdminLayout><AuthorBioManagement mode="edit" /></AdminLayout>} />
+                    <Route path="/buddys_admin/author-bios/add" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
+                    <Route path="/buddys_admin/author-bios/edit/:id" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
 
                     {/* Unified Story System Routes - These are the only story management routes now */}
                     <Route path="/buddys_admin/unified_story_system/add" element={<AdminLayout><UnifiedStoryPage mode="add" /></AdminLayout>} />
