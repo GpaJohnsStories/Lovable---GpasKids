@@ -162,26 +162,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       Cancel
                     </Button>
                   </div>
-
-                  {/* Audio Status */}
-                  {formData.audio_url && (
-                    <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-                      <div className="flex items-center text-green-800 text-sm font-medium mb-2">
-                        <Volume2 className="h-4 w-4 mr-2" />
-                        Audio Available
-                      </div>
-                      <UniversalAudioControls
-                        audioUrl={formData.audio_url}
-                        title={formData.title || 'Story Audio'}
-                        content={formData.content}
-                        author={formData.author}
-                        allowTextToSpeech={allowTextToSpeech}
-                        context={context}
-                        size="sm"
-                        className="w-full"
-                      />
-                    </div>
-                  )}
                 </CardContent>
               </Card>
             </div>
