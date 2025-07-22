@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -96,6 +97,7 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
         toast.success("Author bio created successfully");
       }
 
+      // Call the onSave callback which will handle navigation
       onSave();
     } catch (error: any) {
       console.error('Error saving author bio:', error);

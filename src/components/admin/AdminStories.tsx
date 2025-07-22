@@ -1,13 +1,16 @@
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import AdminLayoutWithHeaderBanner from "./AdminLayoutWithHeaderBanner";
 import AdminStoriesTable from "./AdminStoriesTable";
+import AuthorBiosTable from "./AuthorBiosTable";
 import { useUserRole } from "@/hooks/useUserRole";
 
 const AdminStories = () => {
   const { isViewer } = useUserRole();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const view = searchParams.get('view');
 
   const handleCreateStory = () => {
     console.log('🎯 AdminStories: handleCreateStory called - navigating to unified story system');
@@ -30,20 +33,32 @@ const AdminStories = () => {
     window.open(editUrl, '_blank');
   };
 
-  const handleEditBio = (authorName: string) => {
-    // TODO: Implement bio edit functionality
-    console.log('Edit bio for author:', authorName);
+  const handleCreateBio = () => {
+    console.log('🎯 AdminStories: handleCreateBio called');
+    navigate('/buddys_admin/author-bios/add');
+  };
+
+  const handleEditBio = (bio: any) => {
+    console.log('🎯 AdminStories: handleEditBio called with bio:', bio.id, bio.author_name);
+    navigate(`/buddys_admin/author-bios/edit/${bio.id}`);
   };
 
   return (
     <AdminLayoutWithHeaderBanner>
       <div className="space-y-4">
-        <AdminStoriesTable
-          onEditStory={handleEditStory}
-          onCreateStory={handleCreateStory}
-          showActions={!isViewer}
-          onEditBio={handleEditBio}
-        />
+        {view === 'bios' ? (
+          <AuthorBiosTable
+            onEditBio={handleEditBio}
+            onCreateBio={handleCreateBio}
+          />
+        ) : (
+          <AdminStoriesTable
+            onEditStory={handleEditStory}
+            onCreateStory={handleCreateStory}
+            showActions={!isViewer}
+            onEditBio={handleEditBio}
+          />
+        )}
       </div>
     </AdminLayoutWithHeaderBanner>
   );

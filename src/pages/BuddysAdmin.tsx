@@ -2,6 +2,7 @@
 import AdminOverview from "@/components/admin/AdminOverview";
 import AdminStories from "@/components/admin/AdminStories";
 import AdminStoryForm from "@/components/admin/AdminStoryForm";
+import AuthorBioManagement from "@/components/admin/AuthorBioManagement";
 import CommentsDashboard from "@/components/admin/CommentsDashboard";
 import AdminLayoutWithHeaderBanner from "@/components/admin/AdminLayoutWithHeaderBanner";
 import ContentProtection from "@/components/ContentProtection";
@@ -29,6 +30,10 @@ const BuddysAdminContent = () => {
       <Route path="/" element={<Navigate to="/buddys_admin/dashboard" replace />} />
       <Route path="/dashboard" element={<AdminOverview />} />
       <Route path="/stories" element={<AdminStories />} />
+      
+      {/* Author Bio Management Routes */}
+      <Route path="/author-bios/add" element={<AuthorBioManagement />} />
+      <Route path="/author-bios/edit/:id" element={<AuthorBioManagement />} />
       
       {/* Unified Story System Routes */}
       <Route path="/unified_story_system/add" element={<UnifiedStoryPage mode="add" />} />
