@@ -12,14 +12,14 @@ const AdminStories = () => {
   const view = searchParams.get('view');
 
   const handleCreateStory = () => {
-    console.log('🎯 AdminStories: handleCreateStory called - navigating to unified story system');
+    console.log('🎯 AdminStories: Creating new story - navigating to unified story system');
     navigate('/buddys_admin/unified_story_system/add');
   };
 
   const handleEditStory = (story: any) => {
-    console.log('🎯 AdminStories: handleEditStory called with story:', story.id, story.title);
+    console.log('🎯 AdminStories: Editing story via unified system:', story.id, story.title);
     
-    // Store current context in sessionStorage for restoration
+    // Store current context for potential restoration
     const currentContext = {
       scrollPosition: window.pageYOffset,
       timestamp: Date.now(),
@@ -27,18 +27,18 @@ const AdminStories = () => {
     };
     sessionStorage.setItem('admin-edit-context', JSON.stringify(currentContext));
     
-    // Open edit page in a new tab using the unified story system
+    // Navigate to unified story system for editing
     const editUrl = `/buddys_admin/unified_story_system/update/${story.id}`;
     window.open(editUrl, '_blank');
   };
 
   const handleCreateBio = () => {
-    console.log('🎯 AdminStories: handleCreateBio called');
+    console.log('🎯 AdminStories: Creating new author bio');
     navigate('/buddys_admin/author-bios/add');
   };
 
   const handleEditBio = (bio: any) => {
-    console.log('🎯 AdminStories: handleEditBio called with bio:', bio.id, bio.author_name);
+    console.log('🎯 AdminStories: Editing author bio:', bio.id, bio.author_name);
     navigate(`/buddys_admin/author-bios/edit/${bio.id}`);
   };
 
