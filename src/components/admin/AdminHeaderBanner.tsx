@@ -128,7 +128,6 @@ const AdminHeaderBanner = () => {
             </div>
             <Button 
               onClick={handleLogout} 
-              variant="ghost" 
               className="font-bold border border-red-300/30 hover:bg-red-600"
               style={{ backgroundColor: '#FF0000', color: '#FFFF00' }}
             >
