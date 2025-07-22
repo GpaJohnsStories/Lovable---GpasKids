@@ -41,7 +41,7 @@ const NavigationMenu = () => {
       description: 'Return to Home Screen'
     },
     { 
-      name: 'Library', 
+      name: 'Libraries', 
       path: '/library', 
       bgColor: 'bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700',
       hoverColor: 'hover:from-orange-600 hover:via-orange-700 hover:to-orange-800',

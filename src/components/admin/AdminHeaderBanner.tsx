@@ -72,7 +72,7 @@ const AdminHeaderBanner = () => {
       description: 'Website Dashboard with stats and security info'
     },
     {
-      name: 'Library',
+      name: 'Libraries',
       path: '/buddys_admin/stories',
       icon: FileText,
       bgColor: 'bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700',
@@ -140,7 +140,7 @@ const AdminHeaderBanner = () => {
           <nav className="flex gap-2">
             {navButtons.map((button, index) => {
               const isActive = location.pathname === button.path || 
-                (button.name === 'Library' && (location.pathname === '/buddys_admin/stories' || location.pathname.includes('/buddys_admin/stories')));
+                (button.name === 'Libraries' && (location.pathname === '/buddys_admin/stories' || location.pathname.includes('/buddys_admin/stories')));
               const Icon = button.icon;
               
               const handleButtonClick = () => {
@@ -152,7 +152,7 @@ const AdminHeaderBanner = () => {
               };
 
               // Render Library button with dropdown
-              const libraryButton = (
+              const librariesButton = (
                 <div 
                   key={button.name}
                   className="relative"
@@ -187,7 +187,7 @@ const AdminHeaderBanner = () => {
                           className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
                         >
                           <FileText className="h-4 w-4 mr-2" />
-                          Full Library
+                          Full Libraries
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
@@ -246,8 +246,8 @@ const AdminHeaderBanner = () => {
               );
 
               // Special handling for Library button with dropdown
-              if (button.name === 'Library') {
-                return [libraryButton, ...(isViewer ? [] : [createStoryButton])];
+              if (button.name === 'Libraries') {
+                return [librariesButton, ...(isViewer ? [] : [createStoryButton])];
               }
 
               return (
