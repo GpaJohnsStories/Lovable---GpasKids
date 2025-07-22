@@ -29,6 +29,13 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    
+    /* Tab colors for story editor */
+    --tab-content: 25 95% 53%; /* orange-500 base for Content tab */
+    --tab-content-hover: 20 90% 48%; /* orange-600 for hover */
+    --tab-media: 213 94% 68%; /* blue-500 base for Media tab */
+    --tab-media-hover: 217 91% 60%; /* blue-600 for hover */
+    
     --radius: 0.5rem;
   }
   .dark {
