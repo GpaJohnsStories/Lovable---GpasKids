@@ -297,25 +297,25 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
 
   return (
     <TooltipProvider>
-      <div className={`space-y-3 ${className}`}>
-        {/* Control Buttons Row - Left Aligned */}
-        <div className="flex items-center justify-start gap-3">
+      <div className={`space-y-4 ${className}`}>
+        {/* Control Buttons Row - Precisely Centered */}
+        <div className="flex items-center justify-center gap-4">
           {/* Play Button */}
           <Tooltip>
             <TooltipTrigger asChild>
               <button
                 onClick={handlePlay}
                 disabled={isLoading || isPlaying}
-                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.3)] border-2 border-green-600 transition-all duration-200 flex items-center justify-center ${
+                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-green-600 transition-all duration-300 ease-out flex items-center justify-center ${
                   isLoading || isPlaying
-                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_3px_6px_rgba(0,0,0,0.2)] cursor-not-allowed' 
-                    : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white hover:shadow-[0_3px_0_#16a34a,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#16a34a,0_2px_4px_rgba(0,0,0,0.3)]'
+                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
+                    : 'bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white hover:shadow-[0_6px_0_#16a34a,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#16a34a,0_2px_4px_rgba(0,0,0,0.3)]'
                 }`}
               >
                 {isLoading ? (
                   <Loader className="h-5 w-5 animate-spin" />
                 ) : (
-                  <Play className="h-5 w-5" />
+                  <Play className="h-5 w-5 ml-0.5" />
                 )}
               </button>
             </TooltipTrigger>
@@ -330,10 +330,10 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
               <button
                 onClick={handlePause}
                 disabled={!isPlaying}
-                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#d97706,0_6px_12px_rgba(0,0,0,0.3)] border-2 border-amber-600 transition-all duration-200 flex items-center justify-center ${
+                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#d97706,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-amber-600 transition-all duration-300 ease-out flex items-center justify-center ${
                   !isPlaying
-                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_3px_6px_rgba(0,0,0,0.2)] cursor-not-allowed' 
-                    : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 text-white hover:shadow-[0_3px_0_#d97706,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#d97706,0_2px_4px_rgba(0,0,0,0.3)]'
+                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
+                    : 'bg-gradient-to-b from-amber-400 via-amber-500 to-amber-600 text-white hover:shadow-[0_6px_0_#d97706,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#d97706,0_2px_4px_rgba(0,0,0,0.3)]'
                 }`}
               >
                 <Pause className="h-5 w-5" />
@@ -350,10 +350,10 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
               <button
                 onClick={handleStop}
                 disabled={!audioGenerated}
-                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.3)] border-2 border-red-600 transition-all duration-200 flex items-center justify-center ${
+                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#dc2626,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-red-600 transition-all duration-300 ease-out flex items-center justify-center ${
                   !audioGenerated
-                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_3px_6px_rgba(0,0,0,0.2)] cursor-not-allowed' 
-                    : 'bg-gradient-to-b from-red-400 via-red-500 to-red-600 text-white hover:shadow-[0_3px_0_#dc2626,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#dc2626,0_2px_4px_rgba(0,0,0,0.3)]'
+                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
+                    : 'bg-gradient-to-b from-red-400 via-red-500 to-red-600 text-white hover:shadow-[0_6px_0_#dc2626,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#dc2626,0_2px_4px_rgba(0,0,0,0.3)]'
                 }`}
               >
                 <Square className="h-5 w-5" />
@@ -370,10 +370,10 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
               <button
                 onClick={handleStartOver}
                 disabled={isLoading || !audioGenerated}
-                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.3)] border-2 border-purple-600 transition-all duration-200 flex items-center justify-center ${
+                className={`w-14 h-14 rounded-xl font-bold shadow-[0_4px_0_#7c3aed,0_8px_16px_rgba(0,0,0,0.25)] border-2 border-purple-600 transition-all duration-300 ease-out flex items-center justify-center ${
                   isLoading || !audioGenerated
-                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_3px_6px_rgba(0,0,0,0.2)] cursor-not-allowed' 
-                    : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white hover:shadow-[0_3px_0_#7c3aed,0_4px_8px_rgba(0,0,0,0.4)] hover:translate-y-1 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)]'
+                    ? 'bg-gray-400 shadow-[0_2px_0_#6b7280,0_4px_8px_rgba(0,0,0,0.15)] cursor-not-allowed opacity-60' 
+                    : 'bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 text-white hover:shadow-[0_6px_0_#7c3aed,0_12px_24px_rgba(0,0,0,0.35)] hover:translate-y-[-2px] hover:scale-105 active:translate-y-2 active:shadow-[0_1px_0_#7c3aed,0_2px_4px_rgba(0,0,0,0.3)]'
                 }`}
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -387,11 +387,11 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
           </Tooltip>
         </div>
 
-        {/* Volume Controls - Left Aligned */}
-        <div className="flex items-center justify-start gap-3">
+        {/* Volume Controls - Precisely Centered */}
+        <div className="flex items-center justify-center gap-4">
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="w-10 h-10 rounded-lg bg-green-500 text-white flex items-center justify-center">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-b from-green-400 to-green-600 text-white flex items-center justify-center shadow-md">
                 <Volume2 className="h-5 w-5" />
               </div>
             </TooltipTrigger>
@@ -399,16 +399,16 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
               <p>Volume: {volume}%</p>
             </TooltipContent>
           </Tooltip>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             {[25, 50, 75, 100].map((vol, index) => (
               <Tooltip key={vol}>
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => handleVolumeChange(vol)}
-                    className={`px-3 py-2 rounded-lg font-bold border-2 transition-all duration-200 text-white h-10 min-w-[50px] flex items-center justify-center ${
+                    className={`px-3 py-2 rounded-lg font-bold border-2 transition-all duration-300 ease-out text-white h-12 min-w-[56px] flex items-center justify-center ${
                       volume === vol
-                        ? 'bg-green-600 border-green-700 shadow-[0_3px_0_#16a34a,0_4px_8px_rgba(0,0,0,0.3)] translate-y-1'
-                        : `border-green-600 hover:translate-y-0.5 shadow-[0_3px_0_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_2px_0_rgba(0,0,0,0.2),0_3px_6px_rgba(0,0,0,0.3)] ${
+                        ? 'bg-green-600 border-green-700 shadow-[0_4px_0_#16a34a,0_8px_16px_rgba(22,163,74,0.4)] translate-y-1 scale-105'
+                        : `border-green-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_3px_0_rgba(22,163,74,0.3),0_6px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_0_rgba(22,163,74,0.4),0_8px_16px_rgba(0,0,0,0.25)] ${
                             index === 0 ? 'bg-gradient-to-b from-green-300 to-green-400' :
                             index === 1 ? 'bg-gradient-to-b from-green-400 to-green-500' :
                             index === 2 ? 'bg-gradient-to-b from-green-500 to-green-600' :
@@ -427,11 +427,11 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
           </div>
         </div>
 
-        {/* Speed Controls - Left Aligned */}
-        <div className="flex items-center justify-start gap-3">
+        {/* Speed Controls - Precisely Centered */}
+        <div className="flex items-center justify-center gap-4">
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="w-10 h-10 rounded-lg bg-blue-500 text-white flex items-center justify-center">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-b from-blue-400 to-blue-600 text-white flex items-center justify-center shadow-md">
                 <Gauge className="h-5 w-5" />
               </div>
             </TooltipTrigger>
@@ -439,7 +439,7 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
               <p>Speed: {playbackRate}x</p>
             </TooltipContent>
           </Tooltip>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             {[
               { speed: 0.5, label: '0.5x' },
               { speed: 1.0, label: '1x' },
@@ -450,10 +450,10 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => handleSpeedChange(speed)}
-                    className={`px-3 py-2 rounded-lg font-bold border-2 transition-all duration-200 text-white h-10 min-w-[50px] flex items-center justify-center ${
+                    className={`px-3 py-2 rounded-lg font-bold border-2 transition-all duration-300 ease-out text-white h-12 min-w-[56px] flex items-center justify-center ${
                       playbackRate === speed
-                        ? 'bg-blue-600 border-blue-700 shadow-[0_3px_0_#2563eb,0_4px_8px_rgba(0,0,0,0.3)] translate-y-1'
-                        : `border-blue-600 hover:translate-y-0.5 shadow-[0_3px_0_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.2)] hover:shadow-[0_2px_0_rgba(0,0,0,0.2),0_3px_6px_rgba(0,0,0,0.3)] ${
+                        ? 'bg-blue-600 border-blue-700 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(37,99,235,0.4)] translate-y-1 scale-105'
+                        : `border-blue-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_3px_0_rgba(37,99,235,0.3),0_6px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_0_rgba(37,99,235,0.4),0_8px_16px_rgba(0,0,0,0.25)] ${
                             index === 0 ? 'bg-gradient-to-b from-blue-300 to-blue-400' :
                             index === 1 ? 'bg-gradient-to-b from-blue-400 to-blue-500' :
                             index === 2 ? 'bg-gradient-to-b from-blue-500 to-blue-600' :
