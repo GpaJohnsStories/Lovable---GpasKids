@@ -37,7 +37,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
   const [audioGenerated, setAudioGenerated] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [volume, setVolume] = useState(100);
-  const [playbackRate, setPlaybackRate] = useState(0.5);
+  const [playbackRate, setPlaybackRate] = useState(1.0);
 
   // Cleanup audio resources when component unmounts
   useEffect(() => {
@@ -48,7 +48,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
       }
       // Reset to defaults when component unmounts
       setVolume(100);
-      setPlaybackRate(0.5);
+      setPlaybackRate(1.0);
     };
   }, [currentAudio]);
 
