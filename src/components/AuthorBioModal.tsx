@@ -10,6 +10,8 @@ interface AuthorBio {
   died_date: string | null;
   native_country_name: string | null;
   native_language: string | null;
+  photo_url: string | null;
+  photo_alt: string | null;
 }
 
 interface AuthorBioModalProps {
@@ -72,11 +74,19 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-4 text-2xl font-bold text-amber-800 mb-4">
-            <img 
-              src="/lovable-uploads/57b61432-e031-442a-b917-352de9166e1b.png"
-              alt="Buddy the dog"
-              className="w-16 h-16 rounded-full object-cover"
-            />
+            {bio.photo_url ? (
+              <img 
+                src={bio.photo_url}
+                alt={bio.photo_alt || `Photo of ${bio.author_name}`}
+                className="w-16 h-16 rounded-full object-cover border-2 border-amber-300"
+              />
+            ) : (
+              <img 
+                src="/lovable-uploads/57b61432-e031-442a-b917-352de9166e1b.png"
+                alt="Buddy the dog"
+                className="w-16 h-16 rounded-full object-cover"
+              />
+            )}
             About {bio.author_name}
           </DialogTitle>
         </DialogHeader>

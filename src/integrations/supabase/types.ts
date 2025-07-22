@@ -67,6 +67,8 @@ export type Database = {
           id: string
           native_country_name: string | null
           native_language: string | null
+          photo_alt: string | null
+          photo_url: string | null
           updated_at: string
         }
         Insert: {
@@ -82,6 +84,8 @@ export type Database = {
           id?: string
           native_country_name?: string | null
           native_language?: string | null
+          photo_alt?: string | null
+          photo_url?: string | null
           updated_at?: string
         }
         Update: {
@@ -97,6 +101,8 @@ export type Database = {
           id?: string
           native_country_name?: string | null
           native_language?: string | null
+          photo_alt?: string | null
+          photo_url?: string | null
           updated_at?: string
         }
         Relationships: []

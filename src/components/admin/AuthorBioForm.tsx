@@ -22,7 +22,9 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
     born_date: '',
     died_date: '',
     native_country_name: '',
-    native_language: ''
+    native_language: '',
+    photo_url: '',
+    photo_alt: ''
   });
   const [isSaving, setIsSaving] = useState(false);
 
@@ -34,7 +36,9 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
         born_date: bio.born_date || '',
         died_date: bio.died_date || '',
         native_country_name: bio.native_country_name || '',
-        native_language: bio.native_language || ''
+        native_language: bio.native_language || '',
+        photo_url: bio.photo_url || '',
+        photo_alt: bio.photo_alt || ''
       });
     }
   }, [bio]);
@@ -65,7 +69,9 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
             born_date: formData.born_date || null,
             died_date: formData.died_date || null,
             native_country_name: formData.native_country_name.trim() || null,
-            native_language: formData.native_language.trim() || null
+            native_language: formData.native_language.trim() || null,
+            photo_url: formData.photo_url.trim() || null,
+            photo_alt: formData.photo_alt.trim() || null
           })
           .eq('id', bio.id);
 
@@ -81,7 +87,9 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
             born_date: formData.born_date || null,
             died_date: formData.died_date || null,
             native_country_name: formData.native_country_name.trim() || null,
-            native_language: formData.native_language.trim() || null
+            native_language: formData.native_language.trim() || null,
+            photo_url: formData.photo_url.trim() || null,
+            photo_alt: formData.photo_alt.trim() || null
           });
 
         if (error) throw error;
@@ -171,6 +179,28 @@ const AuthorBioForm = ({ bio, onBack, onSave, backButtonText = "Back to Bios" }:
               value={formData.native_language}
               onChange={(e) => handleInputChange('native_language', e.target.value)}
               placeholder="e.g., English"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="photo_url">Photo URL</Label>
+            <Input
+              id="photo_url"
+              value={formData.photo_url}
+              onChange={(e) => handleInputChange('photo_url', e.target.value)}
+              placeholder="https://example.com/author-photo.jpg"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="photo_alt">Photo Description</Label>
+            <Input
+              id="photo_alt"
+              value={formData.photo_alt}
+              onChange={(e) => handleInputChange('photo_alt', e.target.value)}
+              placeholder="Description of the author's photo"
             />
           </div>
         </div>
