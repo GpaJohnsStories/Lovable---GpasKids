@@ -254,50 +254,50 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardContent>
             </Card>
 
-            {/* Audio Upload */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Volume2 className="h-5 w-5" />
-                  Audio Upload
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <AudioUploadSection
-                  audioUrl={formData.audio_url}
-                  onAudioUpload={(url) => onInputChange('audio_url', url)}
-                  onAudioRemove={() => onInputChange('audio_url', '')}
-                />
-              </CardContent>
-            </Card>
+            {/* Current Audio Controls - New Standard Audio Buttons */}
+            {formData.audio_url && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Volume2 className="h-5 w-5" />
+                    Current Audio Controls
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <UniversalAudioControls
+                    audioUrl={formData.audio_url}
+                    title={formData.title || 'Story Audio'}
+                    content={formData.content}
+                    author={formData.author}
+                    allowTextToSpeech={allowTextToSpeech}
+                    context={context}
+                    size="lg"
+                    className="w-full"
+                  />
+                  <div className="mt-2 text-sm text-gray-600">
+                    Voice: {formData.ai_voice_name || 'Nova'}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
-          {/* Current Audio Player */}
-          {formData.audio_url && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Volume2 className="h-5 w-5" />
-                  Current Audio
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <UniversalAudioControls
-                  audioUrl={formData.audio_url}
-                  title={formData.title || 'Story Audio'}
-                  content={formData.content}
-                  author={formData.author}
-                  allowTextToSpeech={allowTextToSpeech}
-                  context={context}
-                  size="lg"
-                  className="w-full"
-                />
-                <div className="mt-2 text-sm text-gray-600">
-                  Voice: {formData.ai_voice_name || 'Nova'}
-                </div>
-              </CardContent>
-            </Card>
-          )}
+          {/* Audio Upload */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Volume2 className="h-5 w-5" />
+                Audio Upload
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <AudioUploadSection
+                audioUrl={formData.audio_url}
+                onAudioUpload={(url) => onInputChange('audio_url', url)}
+                onAudioRemove={() => onInputChange('audio_url', '')}
+              />
+            </CardContent>
+          </Card>
 
           {/* Video Section */}
           <Card>
