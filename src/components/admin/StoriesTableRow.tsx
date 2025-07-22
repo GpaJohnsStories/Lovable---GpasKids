@@ -269,7 +269,7 @@ const StoriesTableRow = ({
             </div>
           )}
           <div className="flex-1 min-w-0">
-            <Link to={`/story/${story.id}`} onClick={scrollToTop}>
+            <Link to={`/story/${story.story_code}`} onClick={scrollToTop}>
               <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer text-sm truncate">
                 {story.title}
               </div>

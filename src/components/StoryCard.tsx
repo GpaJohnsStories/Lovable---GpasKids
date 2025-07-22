@@ -22,7 +22,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
       top: 0,
       behavior: 'smooth'
     });
-    navigate(`/story/${story.id}`);
+    navigate(`/story/${story.story_code}`);
   };
 
   const firstPhoto = getFirstAvailablePhoto();
@@ -36,7 +36,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
       >
         <CardContent className="p-3 text-center relative">
           <div className="mb-2">
-            {getCategoryButtonForStory(story.category, story.id)}
+            {getCategoryButtonForStory(story.category, story.story_code)}
           </div>
           
           <div className="flex items-center justify-center mb-2">

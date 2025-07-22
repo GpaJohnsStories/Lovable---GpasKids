@@ -74,7 +74,7 @@ const AuthorBio = () => {
 
   const handleEditStory = (story: any) => {
     // Navigate to the story page for public viewing
-    navigate(`/story/${story.id}`);
+    navigate(`/story/${story.story_code}`);
   };
 
   const handleViewAuthorBio = (authorName: string) => {

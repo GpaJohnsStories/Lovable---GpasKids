@@ -134,7 +134,7 @@ const AuthorStoriesTable = ({ stories }: AuthorStoriesTableProps) => {
                 <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
                   <div>
                     <Link 
-                      to={`/story/${story.id}`} 
+                      to={`/story/${story.story_code}`} 
                       className="hover:text-red-600 transition-colors duration-300 font-medium text-base"
                     >
                       {story.title}

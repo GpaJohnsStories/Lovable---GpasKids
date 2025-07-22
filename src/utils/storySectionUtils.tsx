@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 interface Story {
   id: string | number;
   category: string;
+  story_code?: string;
 }
 
 interface CategoryButtonProps {
@@ -37,7 +38,7 @@ export const getCategoryHeader = (category: string, stories?: Story[]) => {
 
   // Find a story from this category to link to
   const categoryStory = stories?.find(story => story.category === category);
-  const linkTo = categoryStory ? `/story/${categoryStory.id}` : '#';
+  const linkTo = categoryStory ? `/story/${categoryStory.story_code}` : '#';
 
   const categoryConfig = {
     "World Changers": {

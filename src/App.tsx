@@ -72,7 +72,7 @@ function App() {
                       {/* Public Routes */}
                       <Route path="/" element={<Index />} />
                       <Route path="/about" element={<About />} />
-                      <Route path="/story/:id" element={<Story />} />
+                      <Route path="/story/:storyCode" element={<Story />} />
                       <Route path="/library" element={<Library />} />
                       <Route path="/writing" element={<Writing />} />
                       <Route path="/help" element={<HelpGpa />} />
