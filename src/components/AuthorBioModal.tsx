@@ -31,7 +31,7 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
   };
 
   const getBioContent = () => {
-    if (!bio.bio_content) return 'No biography content available.';
+    if (!bio.bio_content) return { __html: 'No biography content available.' };
     
     // Use safe HTML rendering for rich content
     return createSafeHtml(bio.bio_content);
