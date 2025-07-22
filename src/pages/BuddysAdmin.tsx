@@ -7,6 +7,7 @@ import VoicePreview from "@/components/VoicePreview";
 import AdminLayoutWithHeaderBanner from "@/components/admin/AdminLayoutWithHeaderBanner";
 import ContentProtection from "@/components/ContentProtection";
 import EnhancedSecureAdminCheck from "@/components/admin/EnhancedSecureAdminCheck";
+import UnifiedStoryPage from "@/components/unified-story/UnifiedStoryPage";
 import { useAdminSession } from "@/hooks/useAdminSession";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
@@ -29,7 +30,12 @@ const BuddysAdminContent = () => {
       <Route path="/" element={<Navigate to="/buddys_admin/dashboard" replace />} />
       <Route path="/dashboard" element={<AdminOverview />} />
       <Route path="/stories" element={<AdminStories />} />
-      {/* Single unified story route - handles both new and edit */}
+      
+      {/* Unified Story System Routes */}
+      <Route path="/unified_story_system/add" element={<UnifiedStoryPage mode="add" />} />
+      <Route path="/unified_story_system/update/:id" element={<UnifiedStoryPage mode="update" />} />
+      
+      {/* Legacy story routes - kept for backward compatibility */}
       <Route path="/story" element={
         <AdminStoryForm
           onSave={handleStoryFormSave}
@@ -42,6 +48,7 @@ const BuddysAdminContent = () => {
           onCancel={handleStoryFormCancel}
         />
       } />
+      
       <Route path="/comments" element={<CommentsDashboard />} />
       <Route path="/voice-preview" element={
         <AdminLayoutWithHeaderBanner>

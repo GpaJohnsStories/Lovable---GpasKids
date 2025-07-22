@@ -1,199 +1,133 @@
 
 import React from 'react';
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { calculateReadingTimeWithWordCount } from "@/utils/readingTimeUtils";
-
-interface Story {
-  id?: string;
-  title: string;
-  author: string;
-  category: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "STORY";
-  content: string;
-  tagline: string;
-  excerpt: string;
-  story_code: string;
-  google_drive_link: string;
-  photo_link_1: string;
-  photo_link_2: string;
-  photo_link_3: string;
-  photo_alt_1: string;
-  photo_alt_2: string;
-  photo_alt_3: string;
-  video_url: string;
-  published: string;
-  ai_voice_name?: string;
-  ai_voice_model?: string;
-  audio_url?: string;
-  read_count?: number;
-  thumbs_up_count?: number;
-  thumbs_down_count?: number;
-  ok_count?: number;
-  copyright_status?: string;
-}
+import StoryCodeField from './StoryCodeField';
 
 interface StoryFormFieldsProps {
-  formData: Story;
-  onInputChange: (field: keyof Story, value: string) => void;
+  formData: {
+    title: string;
+    author: string;
+    category: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "STORY";
+    tagline: string;
+    excerpt: string;
+    story_code: string;
+    published: string;
+  };
+  onInputChange: (field: string, value: string) => void;
+  compact?: boolean;
 }
 
-const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ formData, onInputChange }) => {
+const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ 
+  formData, 
+  onInputChange,
+  compact = false 
+}) => {
+  const fieldSpacing = compact ? "space-y-3" : "space-y-4";
+  const labelSize = compact ? "text-sm" : "text-base";
+
   return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="title">Title *</Label>
-          <Input
-            id="title"
-            value={formData.title}
-            onChange={(e) => onInputChange('title', e.target.value)}
-            required
-            placeholder="Enter story title"
-          />
-        </div>
-        
-        <div>
-          <Label htmlFor="author">Author</Label>
-          <Input
-            id="author"
-            value={formData.author}
-            onChange={(e) => onInputChange('author', e.target.value)}
-            placeholder="Author name"
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div>
-          <Label htmlFor="category">Category</Label>
-          <Select
-            value={formData.category}
-            onValueChange={(value) => onInputChange('category', value as any)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Fun">Fun</SelectItem>
-              <SelectItem value="Life">Life</SelectItem>
-              <SelectItem value="North Pole">North Pole</SelectItem>
-              <SelectItem value="World Changers">World Changers</SelectItem>
-              <SelectItem value="WebText">WebText</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
-          <Label htmlFor="story_code">Story Code *</Label>
-          <Input
-            id="story_code"
-            value={formData.story_code}
-            onChange={(e) => onInputChange('story_code', e.target.value)}
-            required
-            placeholder="Enter unique story code"
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="copyright_status">Copyright Status</Label>
-          <Select
-            value={formData.copyright_status || '©'}
-            onValueChange={(value) => onInputChange('copyright_status', value)}
-          >
-            <SelectTrigger className={`text-white font-bold ${
-              (formData.copyright_status || '©') === '©' ? 'bg-red-500 hover:bg-red-600 border-red-600' :
-              (formData.copyright_status || '©') === 'O' ? 'bg-green-500 hover:bg-green-600 border-green-600' :
-              'bg-yellow-500 hover:bg-yellow-600 border-yellow-600'
-            }`}>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="z-50 bg-white border shadow-lg">
-              <SelectItem value="©" className="text-xs text-red-600 font-bold">© Full Copyright</SelectItem>
-              <SelectItem value="O" className="text-xs text-green-600 font-bold">O Open, No Copyright</SelectItem>
-              <SelectItem value="S" className="text-xs text-yellow-600 font-bold">S Limited Sharing</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
-          <Label htmlFor="published">Published Status</Label>
-          <Select
-            value={formData.published}
-            onValueChange={(value) => onInputChange('published', value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Y">Published (Y)</SelectItem>
-              <SelectItem value="N">Not Published (N)</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      <div>
-        <Label htmlFor="tagline">Tagline</Label>
-        <div className="relative">
-          <Input
-            id="tagline"
-            value={formData.tagline}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (value.length <= 100) {
-                onInputChange('tagline', value);
-              }
-            }}
-            placeholder="Brief tagline for the story (max 100 characters)"
-            maxLength={100}
-          />
-          <div className="text-xs text-gray-500 mt-1">
-            {formData.tagline.length}/100 characters
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <Label htmlFor="excerpt">Excerpt</Label>
+    <div className={fieldSpacing}>
+      <div className="space-y-2">
+        <Label htmlFor="title" className={`font-medium text-gray-700 ${labelSize}`}>
+          Title *
+        </Label>
         <Input
-          id="excerpt"
-          value={formData.excerpt}
-          onChange={(e) => onInputChange('excerpt', e.target.value)}
-          placeholder="Short description for story cards"
+          id="title"
+          type="text"
+          value={formData.title}
+          onChange={(e) => onInputChange('title', e.target.value)}
+          placeholder="Enter story title"
+          required
         />
       </div>
 
-      {/* Story Statistics Display */}
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-        <div className="text-amber-700 font-medium mb-3">Story Statistics</div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-          <div className="text-center">
-            <div className="text-amber-800 font-semibold text-lg">{formData.read_count || 0}</div>
-            <div className="text-amber-600">Reads</div>
-          </div>
-          <div className="text-center">
-            <div className="text-green-600 font-semibold text-lg">{formData.thumbs_up_count || 0}</div>
-            <div className="text-amber-600">👍 Thumbs Up</div>
-          </div>
-          <div className="text-center">
-            <div className="text-red-600 font-semibold text-lg">{formData.thumbs_down_count || 0}</div>
-            <div className="text-amber-600">👎 Thumbs Down</div>
-          </div>
-          <div className="text-center">
-            {(() => {
-              const { readingTime, wordCount } = calculateReadingTimeWithWordCount(formData.content || formData.excerpt || '');
-              return (
-                <div>
-                  <div className="text-amber-800 font-semibold">{readingTime}</div>
-                  <div className="text-amber-600">{wordCount} words</div>
-                </div>
-              );
-            })()}
-          </div>
-        </div>
+      <div className="space-y-2">
+        <Label htmlFor="author" className={`font-medium text-gray-700 ${labelSize}`}>
+          Author *
+        </Label>
+        <Input
+          id="author"
+          type="text"
+          value={formData.author}
+          onChange={(e) => onInputChange('author', e.target.value)}
+          placeholder="Enter author name"
+          required
+        />
       </div>
-    </>
+
+      <div className="space-y-2">
+        <Label htmlFor="category" className={`font-medium text-gray-700 ${labelSize}`}>
+          Category *
+        </Label>
+        <Select value={formData.category} onValueChange={(value) => onInputChange('category', value)}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select a category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Fun">Fun</SelectItem>
+            <SelectItem value="Life">Life</SelectItem>
+            <SelectItem value="North Pole">North Pole</SelectItem>
+            <SelectItem value="World Changers">World Changers</SelectItem>
+            <SelectItem value="WebText">WebText</SelectItem>
+            <SelectItem value="STORY">STORY</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <StoryCodeField
+          value={formData.story_code}
+          onChange={(value) => onInputChange('story_code', value)}
+          compact={compact}
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="tagline" className={`font-medium text-gray-700 ${labelSize}`}>
+          Tagline
+        </Label>
+        <Input
+          id="tagline"
+          type="text"
+          value={formData.tagline}
+          onChange={(e) => onInputChange('tagline', e.target.value)}
+          placeholder="Enter a brief tagline"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="excerpt" className={`font-medium text-gray-700 ${labelSize}`}>
+          Excerpt
+        </Label>
+        <Textarea
+          id="excerpt"
+          value={formData.excerpt}
+          onChange={(e) => onInputChange('excerpt', e.target.value)}
+          placeholder="Enter a brief excerpt or summary"
+          rows={compact ? 2 : 3}
+        />
+      </div>
+
+      {!compact && (
+        <div className="space-y-2">
+          <Label htmlFor="published" className={`font-medium text-gray-700 ${labelSize}`}>
+            Published Status
+          </Label>
+          <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select publish status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="N">Not Published</SelectItem>
+              <SelectItem value="Y">Published</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+    </div>
   );
 };
 
