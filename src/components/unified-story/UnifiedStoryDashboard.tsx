@@ -59,22 +59,14 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <Tabs defaultValue="content" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="content" className="flex items-center gap-2">
             <FileText className="h-4 w-4" />
             Content
           </TabsTrigger>
-          <TabsTrigger value="photos" className="flex items-center gap-2">
+          <TabsTrigger value="media" className="flex items-center gap-2">
             <Image className="h-4 w-4" />
-            Photos
-          </TabsTrigger>
-          <TabsTrigger value="video" className="flex items-center gap-2">
-            <Video className="h-4 w-4" />
-            Video
-          </TabsTrigger>
-          <TabsTrigger value="audio" className="flex items-center gap-2">
-            <Volume2 className="h-4 w-4" />
-            Audio
+            Media
           </TabsTrigger>
         </TabsList>
 
@@ -212,7 +204,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
         </TabsContent>
 
-        <TabsContent value="photos" className="space-y-6">
+        <TabsContent value="media" className="space-y-6">
+          {/* Photos Section */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -238,32 +231,16 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               />
             </CardContent>
           </Card>
-        </TabsContent>
 
-        <TabsContent value="video" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Video className="h-5 w-5" />
-                Story Video
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <StoryVideoUpload
-                videoUrl={formData.video_url}
-                onVideoUpload={onVideoUpload}
-                onVideoRemove={onVideoRemove}
-              />
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="audio" className="space-y-6">
+          {/* Audio Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* AI Voice Generation */}
             <Card>
               <CardHeader>
-                <CardTitle>AI Voice Generation</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Volume2 className="h-5 w-5" />
+                  AI Voice Generation
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <VoiceSelection
@@ -279,7 +256,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             {/* Audio Upload */}
             <Card>
               <CardHeader>
-                <CardTitle>Audio Upload</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Volume2 className="h-5 w-5" />
+                  Audio Upload
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <AudioUploadSection
@@ -295,7 +275,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           {formData.audio_url && (
             <Card>
               <CardHeader>
-                <CardTitle>Current Audio</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Volume2 className="h-5 w-5" />
+                  Current Audio
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <UniversalAudioControls
@@ -314,6 +297,23 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardContent>
             </Card>
           )}
+
+          {/* Video Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Video className="h-5 w-5" />
+                Story Video
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <StoryVideoUpload
+                videoUrl={formData.video_url}
+                onVideoUpload={onVideoUpload}
+                onVideoRemove={onVideoRemove}
+              />
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </form>
