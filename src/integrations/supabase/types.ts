@@ -58,6 +58,7 @@ export type Database = {
           author_name: string
           bio_content: string | null
           born_date: string | null
+          buddys_comments: string | null
           created_at: string
           died_date: string | null
           id: string
@@ -69,6 +70,7 @@ export type Database = {
           author_name: string
           bio_content?: string | null
           born_date?: string | null
+          buddys_comments?: string | null
           created_at?: string
           died_date?: string | null
           id?: string
@@ -80,6 +82,7 @@ export type Database = {
           author_name?: string
           bio_content?: string | null
           born_date?: string | null
+          buddys_comments?: string | null
           created_at?: string
           died_date?: string | null
           id?: string
