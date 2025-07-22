@@ -339,7 +339,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
         {/* Three-Section Horizontal Layout */}
         <div className="flex justify-center space-x-4">
           {/* Section 1: Audio Controls (2x2 Grid) */}
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 p-2 bg-orange-100 rounded-lg border border-orange-200">
             <div className="flex space-x-1">
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -425,7 +425,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
           </div>
 
           {/* Section 2: Volume Controls (2x3 Grid with empty bottom-left) */}
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 p-2 bg-green-100 rounded-lg border border-green-200">
             <div className="flex space-x-1">
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -512,7 +512,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
           </div>
 
           {/* Section 3: Speed Controls (2x3 Grid with empty bottom-left) */}
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 p-2 bg-blue-100 rounded-lg border border-blue-200">
             <div className="flex space-x-1">
               <Tooltip>
                 <TooltipTrigger asChild>
