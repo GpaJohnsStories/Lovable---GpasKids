@@ -11,7 +11,7 @@ export const useAdminSession = () => {
     queryClient.invalidateQueries({ queryKey: ['admin-stories'] });
     queryClient.invalidateQueries({ queryKey: ['story-counts'] });
     
-    // Navigate back to admin stories list
+    // Navigate back to admin stories list using the unified system
     navigate('/buddys_admin/stories');
     
     // Scroll to top when returning to admin stories list
@@ -20,7 +20,7 @@ export const useAdminSession = () => {
       behavior: 'smooth'
     });
     
-    console.log('=== STORIES CACHE INVALIDATED - DATA SHOULD REFRESH ===');
+    console.log('=== UNIFIED STORY SYSTEM: STORIES CACHE INVALIDATED - DATA SHOULD REFRESH ===');
   };
 
   return {
