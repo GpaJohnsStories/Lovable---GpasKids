@@ -89,7 +89,7 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
           className={getButtonClass('thumbs_up')}
         >
           <ThumbsUp className="h-5 w-5" />
-          <span className="text-base leading-tight text-center italic">I Really<br />Liked It!</span>
+          <span className="text-base leading-tight text-center italic font-bold">I Really<br />Liked It!</span>
           <span className="text-xs">({thumbsUpCount})</span>
         </Button>
 
