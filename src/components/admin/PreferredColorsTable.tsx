@@ -33,7 +33,7 @@ const PreferredColorsTable: React.FC = () => {
     <Card className="w-full bg-white shadow-lg rounded-2xl border-2 border-gray-200">
       <CardHeader>
         <CardTitle className="text-xl font-bold text-black">
-          Preferred Colors for Children's Stories
+          Gpas Kids Preferred Colors
         </CardTitle>
       </CardHeader>
       <CardContent>
