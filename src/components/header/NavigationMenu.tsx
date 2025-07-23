@@ -1,6 +1,6 @@
 
 import { useLocation } from "react-router-dom";
-import { Home, BookOpen, MessageCircle, Info, PenTool, Lightbulb, Lock } from "lucide-react";
+import { Home, BookOpen, MessageCircle, Info, Pen, Lightbulb, Lock } from "lucide-react";
 import {
   NavigationMenu as ShadcnNavigationMenu,
   NavigationMenuItem,
@@ -94,7 +94,7 @@ const NavigationMenu = () => {
       hoverShadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-white',
       description: 'Learn about copyright and writing your own stories',
-      icon: PenTool,
+      icon: Pen,
       subItems: [
         { name: 'What Copyright Means to You', path: '/writing' },
         { name: 'Write a Story for Gpa\'s Kids', path: '/writing#write-story' },
