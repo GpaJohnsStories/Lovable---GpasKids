@@ -92,12 +92,6 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               onLoad={() => console.log('New speech bubble image loaded successfully')}
               onError={(e) => console.log('New speech bubble image failed to load:', e)}
             />
-            {/* Top layer - "Hi" text */}
-            <div className="absolute top-6 left-8 pointer-events-none">
-              <span className="text-black font-bold text-lg" style={{ fontFamily: 'Georgia, serif' }}>
-                Hi
-              </span>
-            </div>
           </div>
           {/* Under Construction Image - Positioned at bottom of telescope */}
           <div className="absolute top-48 left-1/2 transform -translate-x-1/2">
