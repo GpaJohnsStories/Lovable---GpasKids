@@ -19,12 +19,102 @@ interface MenuButtonEditorProps {
 }
 
 const COLOR_PRESETS = [
-  { name: 'Blue', bg: 'bg-blue-500', hover: 'hover:bg-blue-600', text: 'text-white', shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]' },
-  { name: 'Green', bg: 'bg-green-500', hover: 'hover:bg-green-600', text: 'text-white', shadow: 'hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)]' },
-  { name: 'Purple', bg: 'bg-purple-500', hover: 'hover:bg-purple-600', text: 'text-white', shadow: 'hover:shadow-[0_4px_0_#9333ea,0_6px_12px_rgba(0,0,0,0.4)]' },
-  { name: 'Yellow', bg: 'bg-yellow-500', hover: 'hover:bg-yellow-600', text: 'text-green-800', shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]' },
-  { name: 'Red', bg: 'bg-red-500', hover: 'hover:bg-red-600', text: 'text-white', shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]' },
-  { name: 'Gray', bg: 'bg-gray-700', hover: 'hover:bg-gray-800', text: 'text-white', shadow: 'hover:shadow-[0_4px_0_#374151,0_6px_12px_rgba(0,0,0,0.4)]' },
+  { 
+    name: 'Ocean Blue', 
+    hex: '#3B82F6',
+    bg: 'bg-blue-500', 
+    hover: 'hover:bg-blue-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Forest Green', 
+    hex: '#10B981',
+    bg: 'bg-emerald-500', 
+    hover: 'hover:bg-emerald-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Royal Purple', 
+    hex: '#8B5CF6',
+    bg: 'bg-violet-500', 
+    hover: 'hover:bg-violet-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Sunset Orange', 
+    hex: '#F97316',
+    bg: 'bg-orange-500', 
+    hover: 'hover:bg-orange-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#ea580c,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Cherry Red', 
+    hex: '#EF4444',
+    bg: 'bg-red-500', 
+    hover: 'hover:bg-red-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Rose Pink', 
+    hex: '#EC4899',
+    bg: 'bg-pink-500', 
+    hover: 'hover:bg-pink-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#db2777,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Sunshine Yellow', 
+    hex: '#EAB308',
+    bg: 'bg-yellow-500', 
+    hover: 'hover:bg-yellow-600', 
+    text: 'text-yellow-900', 
+    shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Teal Aqua', 
+    hex: '#14B8A6',
+    bg: 'bg-teal-500', 
+    hover: 'hover:bg-teal-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#0d9488,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Indigo Night', 
+    hex: '#6366F1',
+    bg: 'bg-indigo-500', 
+    hover: 'hover:bg-indigo-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#4f46e5,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Slate Gray', 
+    hex: '#64748B',
+    bg: 'bg-slate-500', 
+    hover: 'hover:bg-slate-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#475569,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Lime Green', 
+    hex: '#84CC16',
+    bg: 'bg-lime-500', 
+    hover: 'hover:bg-lime-600', 
+    text: 'text-lime-900', 
+    shadow: 'hover:shadow-[0_4px_0_#65a30d,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Sky Blue', 
+    hex: '#0EA5E9',
+    bg: 'bg-sky-500', 
+    hover: 'hover:bg-sky-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#0284c7,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
 ];
 
 const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({ 
@@ -136,7 +226,7 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
     }
   };
 
-  const handleColorPresetSelect = (preset: typeof COLOR_PRESETS[0]) => {
+  const handleColorPresetSelect = (preset: (typeof COLOR_PRESETS)[0]) => {
     setFormData(prev => ({
       ...prev,
       bg_color: preset.bg,
@@ -311,16 +401,25 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
 
               <div>
                 <Label>Color Presets</Label>
-                <div className="grid grid-cols-3 gap-2 mt-2">
+                <div className="grid grid-cols-2 gap-3 mt-2 max-h-64 overflow-y-auto">
                   {COLOR_PRESETS.map((preset) => (
                     <Button
                       key={preset.name}
                       variant="outline"
                       size="sm"
                       onClick={() => handleColorPresetSelect(preset)}
-                      className={`${preset.bg} ${preset.text} hover:opacity-80`}
+                      className="h-auto p-3 flex items-center gap-3 text-left hover:shadow-md transition-all"
                     >
-                      {preset.name}
+                      {/* Color Swatch */}
+                      <div 
+                        className="w-8 h-8 rounded-md border-2 border-white shadow-sm flex-shrink-0"
+                        style={{ backgroundColor: preset.hex }}
+                      />
+                      {/* Color Info */}
+                      <div className="flex flex-col min-w-0">
+                        <div className="font-medium text-sm truncate">{preset.name}</div>
+                        <div className="text-xs text-muted-foreground font-mono">{preset.hex}</div>
+                      </div>
                     </Button>
                   ))}
                 </div>
