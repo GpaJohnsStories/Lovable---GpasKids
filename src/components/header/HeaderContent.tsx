@@ -5,6 +5,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem } from "@/components/ui/navigation-menu";
 import NavigationButton from "./NavigationButton";
 import NavigationDropdown from "./NavigationDropdown";
+import { supabase } from "@/integrations/supabase/client";
 
 interface HeaderContentProps {
   isHomePage: boolean;
@@ -17,6 +18,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   
   // Check if we're on an admin page
   const isAdminPage = location.pathname.startsWith('/buddys_admin');
+
+  // Function to get icon URL from Supabase storage
+  const getIconUrl = (filePath: string) => {
+    return supabase.storage.from('icons').getPublicUrl(filePath).data.publicUrl;
+  };
 
   const handleHelpClick = () => {
     console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
@@ -77,7 +83,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                          shadowColor: "shadow-lg",
                          hoverShadow: "hover:shadow-xl",
                          textColor: "text-white",
-                         customIcon: "https://yzpvsdqbtjpxdczkzpwh.supabase.co/storage/v1/object/public/icons/ICO-HOM.png"
+                         customIcon: getIconUrl('ICO-HOM.png')
                        }}
                        isActive={false}
                      />
@@ -235,7 +241,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                      shadowColor: "shadow-lg",
                      hoverShadow: "hover:shadow-xl",
                      textColor: "text-white",
-                     customIcon: "https://yzpvsdqbtjpxdczkzpwh.supabase.co/storage/v1/object/public/icons/ICO-HOM.png"
+                     customIcon: getIconUrl('ICO-HOM.png')
                    }}
                    isActive={false}
                  />
