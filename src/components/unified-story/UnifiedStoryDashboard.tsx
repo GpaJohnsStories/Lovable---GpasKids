@@ -120,7 +120,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <div className="space-y-2">
                       <Label htmlFor="published">Publication Status</Label>
                       <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
-                        <SelectTrigger className={`font-bold ${getPublishedColor(formData.published)}`}>
+                        <SelectTrigger className={`w-[70%] font-bold ${getPublishedColor(formData.published)}`}>
                           <SelectValue placeholder="Select publish status" />
                         </SelectTrigger>
                         <SelectContent className="z-50 bg-white border shadow-lg">
