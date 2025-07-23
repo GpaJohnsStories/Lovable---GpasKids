@@ -89,16 +89,17 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                      />
                    </NavigationMenuItem>
                    <NavigationMenuItem>
-                     <NavigationButton 
-                       item={{
-                         name: "Stories",
-                        path: "/library",
-                        bgColor: "bg-blue-500",
-                        hoverColor: "hover:bg-blue-600",
-                        shadowColor: "shadow-lg",
-                        hoverShadow: "hover:shadow-xl",
-                        textColor: "text-white"
-                      }}
+                      <NavigationButton 
+                        item={{
+                          name: "Stories",
+                         path: "/library",
+                         bgColor: "bg-blue-500",
+                         hoverColor: "hover:bg-blue-600",
+                         shadowColor: "shadow-lg",
+                         hoverShadow: "hover:shadow-xl",
+                         textColor: "text-white",
+                         customIcon: getIconUrl('ICO_BK1.png')
+                       }}
                       isActive={false}
                     />
                   </NavigationMenuItem>
@@ -247,16 +248,17 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                  />
                </NavigationMenuItem>
                <NavigationMenuItem>
-                 <NavigationButton 
-                   item={{
-                     name: "Stories",
-                    path: "/library",
-                    bgColor: "bg-blue-500",
-                    hoverColor: "hover:bg-blue-600",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white"
-                  }}
+                  <NavigationButton 
+                    item={{
+                      name: "Stories",
+                     path: "/library",
+                     bgColor: "bg-blue-500",
+                     hoverColor: "hover:bg-blue-600",
+                     shadowColor: "shadow-lg",
+                     hoverShadow: "hover:shadow-xl",
+                     textColor: "text-white",
+                     customIcon: getIconUrl('ICO_BK1.png')
+                   }}
                   isActive={false}
                 />
               </NavigationMenuItem>
