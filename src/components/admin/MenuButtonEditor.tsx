@@ -19,6 +19,15 @@ interface MenuButtonEditorProps {
 }
 
 const COLOR_PRESETS = [
+  // Row 1: Blues
+  { 
+    name: 'Banner Blue', 
+    hex: '#2563EB',
+    bg: 'bg-blue-600', 
+    hover: 'hover:bg-blue-700', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
   { 
     name: 'Ocean Blue', 
     hex: '#3B82F6',
@@ -28,21 +37,14 @@ const COLOR_PRESETS = [
     shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   { 
-    name: 'Forest Green', 
-    hex: '#10B981',
-    bg: 'bg-emerald-500', 
-    hover: 'hover:bg-emerald-600', 
+    name: 'Indigo Night', 
+    hex: '#6366F1',
+    bg: 'bg-indigo-500', 
+    hover: 'hover:bg-indigo-600', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#4f46e5,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
-  { 
-    name: 'Royal Purple', 
-    hex: '#8B5CF6',
-    bg: 'bg-violet-500', 
-    hover: 'hover:bg-violet-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
+  // Row 2: Warm colors
   { 
     name: 'Sunset Orange', 
     hex: '#F97316',
@@ -67,22 +69,7 @@ const COLOR_PRESETS = [
     text: 'text-white', 
     shadow: 'hover:shadow-[0_4px_0_#db2777,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
-  { 
-    name: 'Banner Blue', 
-    hex: '#2563EB',
-    bg: 'bg-blue-600', 
-    hover: 'hover:bg-blue-700', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
-  { 
-    name: 'Safety Green', 
-    hex: '#84CC16',
-    bg: 'bg-lime-500', 
-    hover: 'hover:bg-lime-600', 
-    text: 'text-lime-900', 
-    shadow: 'hover:shadow-[0_4px_0_#65a30d,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
+  // Row 3: Yellows/Golds
   { 
     name: 'Gold', 
     hex: '#EAB308',
@@ -92,6 +79,14 @@ const COLOR_PRESETS = [
     shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   { 
+    name: 'Royal Purple', 
+    hex: '#8B5CF6',
+    bg: 'bg-violet-500', 
+    hover: 'hover:bg-violet-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
     name: 'Yellow', 
     hex: '#FFFF00',
     bg: 'bg-yellow-400', 
@@ -99,13 +94,22 @@ const COLOR_PRESETS = [
     text: 'text-black', 
     shadow: 'hover:shadow-[0_4px_0_#eab308,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
+  // Row 4: Greens and Gray
   { 
-    name: 'Indigo Night', 
-    hex: '#6366F1',
-    bg: 'bg-indigo-500', 
-    hover: 'hover:bg-indigo-600', 
+    name: 'Forest Green', 
+    hex: '#10B981',
+    bg: 'bg-emerald-500', 
+    hover: 'hover:bg-emerald-600', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#4f46e5,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Safety Green', 
+    hex: '#84CC16',
+    bg: 'bg-lime-500', 
+    hover: 'hover:bg-lime-600', 
+    text: 'text-lime-900', 
+    shadow: 'hover:shadow-[0_4px_0_#65a30d,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   { 
     name: 'Slate Gray', 
