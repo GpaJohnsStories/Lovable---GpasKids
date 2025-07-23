@@ -64,7 +64,7 @@ const NavigationMenu = () => {
       hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-green-800',
       description: 'Make a Comment or View All Comments',
-      customIcon: '/src/assets/hi-speech-bubble-icon.png',
+      customIcon: '/lovable-uploads/hi-speech-bubble-white-black-border.png',
       subItems: [
         { name: 'Make Comment', path: '/make-comment' },
         { name: 'View Comments', path: '/view-comments' },
