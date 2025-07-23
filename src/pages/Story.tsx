@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -12,6 +13,7 @@ import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Button } from "@/components/ui/button";
 import StoryPhotosGallery from "@/components/StoryPhotosGallery";
+import StoryVotingSection from "@/components/StoryVotingSection";
 import { getStoryPhotos } from "@/utils/storyUtils";
 
 interface StoryData {
@@ -35,6 +37,9 @@ interface StoryData {
   audio_duration?: number;
   ai_voice_name?: string;
   ai_voice_model?: string;
+  thumbs_up_count: number;
+  thumbs_down_count: number;
+  ok_count: number;
 }
 
 const Story = () => {
@@ -42,7 +47,7 @@ const Story = () => {
   const [story, setStory] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showStoryCode, setShowStoryCode] = useState(false);
+  const [currentVote, setCurrentVote] = useState<'thumbs_up' | 'thumbs_down' | 'ok' | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -91,8 +96,16 @@ const Story = () => {
     }
   }, [storyCode, navigate]);
 
-  const toggleStoryCode = () => {
-    setShowStoryCode(!showStoryCode);
+  const handleVoteUpdate = (newCounts: { thumbs_up_count: number; thumbs_down_count: number; ok_count: number }, newVote: 'thumbs_up' | 'thumbs_down' | 'ok' | null) => {
+    if (story) {
+      setStory({
+        ...story,
+        thumbs_up_count: newCounts.thumbs_up_count,
+        thumbs_down_count: newCounts.thumbs_down_count,
+        ok_count: newCounts.ok_count
+      });
+      setCurrentVote(newVote);
+    }
   };
 
   if (loading) {
@@ -134,7 +147,7 @@ const Story = () => {
             createdAt={story.created_at}
             tagline={story.tagline}
             storyCode={story.story_code}
-            showStoryCode={showStoryCode}
+            showStoryCode={false}
             content={story.content}
             description={story.excerpt}
             audioUrl={story.audio_url}
@@ -143,6 +156,18 @@ const Story = () => {
             aiVoiceName={story.ai_voice_name}
             aiVoiceModel={story.ai_voice_model}
             allowTextToSpeech={false}
+          />
+
+          {/* Top Voting Section */}
+          <StoryVotingSection
+            storyId={story.id}
+            storyCode={story.story_code}
+            storyTitle={story.title}
+            thumbsUpCount={story.thumbs_up_count}
+            thumbsDownCount={story.thumbs_down_count}
+            okCount={story.ok_count}
+            currentVote={currentVote}
+            onVoteUpdate={handleVoteUpdate}
           />
 
           <main className="mb-8">
@@ -155,21 +180,19 @@ const Story = () => {
             >
               <StoryContentRenderer content={story.content || "No content available."} />
             </div>
-
-            <div className="mt-8 text-center">
-              <Button onClick={toggleStoryCode} variant="secondary" size="sm">
-                {showStoryCode ? "Hide Story Code" : "Show Story Code"}
-              </Button>
-              {showStoryCode && (
-                <div className="mt-2 text-gray-600">Story Code: {story.story_code}</div>
-              )}
-            </div>
           </main>
 
-          {/* Comment section will be added when the CommentSection component is available */}
-          <div className="mt-8 p-4 bg-white rounded-lg shadow-sm border border-gray-200">
-            <p className="text-gray-500 text-center">Comments section coming soon...</p>
-          </div>
+          {/* Bottom Voting Section */}
+          <StoryVotingSection
+            storyId={story.id}
+            storyCode={story.story_code}
+            storyTitle={story.title}
+            thumbsUpCount={story.thumbs_up_count}
+            thumbsDownCount={story.thumbs_down_count}
+            okCount={story.ok_count}
+            currentVote={currentVote}
+            onVoteUpdate={handleVoteUpdate}
+          />
         </div>
         <CookieFreeFooter />
       </div>
