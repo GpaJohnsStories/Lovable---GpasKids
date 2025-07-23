@@ -62,12 +62,12 @@ const COLOR_PRESETS = [
     shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   { 
-    name: 'Rose Pink', 
-    hex: '#EC4899',
-    bg: 'bg-pink-500', 
-    hover: 'hover:bg-pink-600', 
+    name: 'Fire Engine Red', 
+    hex: '#CE2029',
+    bg: 'bg-red-600', 
+    hover: 'hover:bg-red-700', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#db2777,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   // Row 3: Yellows/Golds
   { 
@@ -97,7 +97,7 @@ const COLOR_PRESETS = [
   // Row 4: Greens and Gray
   { 
     name: 'Forest Green', 
-    hex: '#10B981',
+    hex: '#16A34A',
     bg: 'bg-emerald-500', 
     hover: 'hover:bg-emerald-600', 
     text: 'text-white', 
