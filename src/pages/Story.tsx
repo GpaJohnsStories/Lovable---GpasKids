@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from 'date-fns';
 import { ExternalLink } from "lucide-react";
 import { StoryContentRenderer } from "@/components/story-content/StoryContentRenderer";
+import WelcomeHeader from "@/components/WelcomeHeader";
 import StoryHeader from "@/components/StoryHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ContentProtection from "@/components/ContentProtection";
@@ -116,8 +117,9 @@ const Story = () => {
 
   return (
     <ContentProtection enableProtection={true}>
-      <ScrollToTop />
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+        <WelcomeHeader />
+        <ScrollToTop />
         <div className="container mx-auto px-4 pt-0">
           <StoryHeader
             title={story.title}
