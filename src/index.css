@@ -36,6 +36,14 @@
     --tab-media: 213 94% 68%; /* blue-500 base for Media tab */
     --tab-media-hover: 217 91% 60%; /* blue-600 for hover */
     
+    /* Voting button colors */
+    --vote-thumbs-up: 134 61% 41%; /* forest green */
+    --vote-thumbs-up-hover: 134 61% 36%; /* darker forest green */
+    --vote-thumbs-down: 215 25% 50%; /* medium blue gray */
+    --vote-thumbs-down-hover: 215 25% 45%; /* darker blue gray */
+    --vote-ok: 45 93% 47%; /* keeping existing yellow/orange */
+    --vote-ok-hover: 45 93% 42%; /* darker yellow/orange */
+    
     --radius: 0.5rem;
   }
   .dark {

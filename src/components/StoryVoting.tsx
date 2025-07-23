@@ -66,14 +66,14 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
   };
 
   const getButtonClass = (voteType: 'thumbs_up' | 'thumbs_down' | 'ok') => {
-    const baseClass = "flex flex-col items-center space-y-1 h-auto py-3 px-4 transition-all duration-300";
+    const baseClass = "flex flex-col items-center justify-center space-y-1 h-24 w-24 transition-all duration-300 text-white";
     
     if (voteType === 'thumbs_up') {
-      return `${baseClass} bg-green-500 hover:bg-green-600 text-white`;
+      return `${baseClass} bg-[hsl(var(--vote-thumbs-up))] hover:bg-[hsl(var(--vote-thumbs-up-hover))]`;
     } else if (voteType === 'thumbs_down') {
-      return `${baseClass} bg-red-500 hover:bg-red-600 text-white`;
+      return `${baseClass} bg-[hsl(var(--vote-thumbs-down))] hover:bg-[hsl(var(--vote-thumbs-down-hover))]`;
     } else {
-      return `${baseClass} bg-yellow-500 hover:bg-yellow-600 text-white`;
+      return `${baseClass} bg-[hsl(var(--vote-ok))] hover:bg-[hsl(var(--vote-ok-hover))]`;
     }
   };
 
@@ -87,8 +87,8 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
           disabled={isVoting}
           className={getButtonClass('thumbs_up')}
         >
-          <ThumbsUp className="h-6 w-6" />
-          <span className="text-sm">Thumbs Up</span>
+          <ThumbsUp className="h-5 w-5" />
+          <span className="text-xs leading-tight text-center">Thumbs<br />Up</span>
           <span className="text-xs">({thumbsUpCount})</span>
         </Button>
 
@@ -97,8 +97,8 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
           disabled={isVoting}
           className={getButtonClass('ok')}
         >
-          <span className="text-2xl">—</span>
-          <span className="text-sm">OK</span>
+          <span className="text-xl">—</span>
+          <span className="text-xs">OK</span>
           <span className="text-xs">({okCount})</span>
         </Button>
 
@@ -107,8 +107,8 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
           disabled={isVoting}
           className={getButtonClass('thumbs_down')}
         >
-          <ThumbsDown className="h-6 w-6" />
-          <span className="text-sm">Thumbs Down</span>
+          <ThumbsDown className="h-5 w-5" />
+          <span className="text-xs leading-tight text-center">Thumbs<br />Down</span>
           <span className="text-xs">({thumbsDownCount})</span>
         </Button>
       </div>
