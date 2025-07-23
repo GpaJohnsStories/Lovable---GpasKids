@@ -123,7 +123,7 @@ const IconUploadForm = () => {
                 type="text"
                 value={iconCode}
                 onChange={(e) => setIconCode(e.target.value)}
-                placeholder="e.g., home_icon"
+                placeholder="e.g., ICO-BK, ICO-HOM"
                 className="mt-1"
               />
             </div>
