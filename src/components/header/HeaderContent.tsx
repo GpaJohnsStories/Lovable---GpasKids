@@ -2,7 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
 import { useUserRole } from "@/hooks/useUserRole";
-import DynamicNavigationMenu from "./DynamicNavigationMenu";
+import { NavigationMenu, NavigationMenuList, NavigationMenuItem } from "@/components/ui/navigation-menu";
+import NavigationButton from "./NavigationButton";
+import NavigationDropdown from "./NavigationDropdown";
 
 interface HeaderContentProps {
   isHomePage: boolean;
@@ -63,10 +65,102 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           {/* Navigation Menu - Show on home page, positioned below the text and left-aligned */}
           {isHomePage && (
             <div className="mt-4">
-              <DynamicNavigationMenu menuGroup="Public" />
+              <NavigationMenu>
+                <NavigationMenuList className="space-x-2">
+                  <NavigationMenuItem>
+                    <NavigationButton 
+                      item={{
+                        name: "Stories",
+                        path: "/library",
+                        bgColor: "bg-blue-500",
+                        hoverColor: "hover:bg-blue-600",
+                        shadowColor: "shadow-lg",
+                        hoverShadow: "hover:shadow-xl",
+                        textColor: "text-white"
+                      }}
+                      isActive={false}
+                    />
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationButton 
+                      item={{
+                        name: "About",
+                        path: "/about",
+                        bgColor: "bg-green-500",
+                        hoverColor: "hover:bg-green-600",
+                        shadowColor: "shadow-lg",
+                        hoverShadow: "hover:shadow-xl",
+                        textColor: "text-white"
+                      }}
+                      isActive={false}
+                    />
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationButton 
+                      item={{
+                        name: "Writing",
+                        path: "/writing",
+                        bgColor: "bg-purple-500",
+                        hoverColor: "hover:bg-purple-600",
+                        shadowColor: "shadow-lg",
+                        hoverShadow: "hover:shadow-xl",
+                        textColor: "text-white"
+                      }}
+                      isActive={false}
+                    />
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationDropdown 
+                      item={{
+                        name: "Comments",
+                        bgColor: "bg-orange-500",
+                        hoverColor: "hover:bg-orange-600",
+                        shadowColor: "shadow-lg",
+                        hoverShadow: "hover:shadow-xl",
+                        textColor: "text-white",
+                        subItems: [
+                          { name: "Make Comment", path: "/make-comment" },
+                          { name: "View Comments", path: "/view-comments" }
+                        ]
+                      }}
+                    />
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationButton 
+                      item={{
+                        name: "Help",
+                        path: "/help-gpa",
+                        bgColor: "bg-red-500",
+                        hoverColor: "hover:bg-red-600",
+                        shadowColor: "shadow-lg",
+                        hoverShadow: "hover:shadow-xl",
+                        textColor: "text-white"
+                      }}
+                      isActive={false}
+                    />
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
               {userRole && (userRole === 'admin' || userRole === 'viewer') && !isAdminPage && (
                 <div className="mt-2">
-                  <DynamicNavigationMenu menuGroup="Admin" />
+                  <NavigationMenu>
+                    <NavigationMenuList className="space-x-2">
+                      <NavigationMenuItem>
+                        <NavigationButton 
+                          item={{
+                            name: "Admin",
+                            path: "/buddys_admin",
+                            bgColor: "bg-gray-600",
+                            hoverColor: "hover:bg-gray-700",
+                            shadowColor: "shadow-lg",
+                            hoverShadow: "hover:shadow-xl",
+                            textColor: "text-white"
+                          }}
+                          isActive={false}
+                        />
+                      </NavigationMenuItem>
+                    </NavigationMenuList>
+                  </NavigationMenu>
                 </div>
               )}
             </div>
@@ -114,9 +208,101 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
       {/* Navigation Menu - Only show on non-home pages */}
       {!isHomePage && !isAdminPage && (
         <div className="flex items-center gap-4">
-          <DynamicNavigationMenu menuGroup="Public" />
+          <NavigationMenu>
+            <NavigationMenuList className="space-x-2">
+              <NavigationMenuItem>
+                <NavigationButton 
+                  item={{
+                    name: "Stories",
+                    path: "/library",
+                    bgColor: "bg-blue-500",
+                    hoverColor: "hover:bg-blue-600",
+                    shadowColor: "shadow-lg",
+                    hoverShadow: "hover:shadow-xl",
+                    textColor: "text-white"
+                  }}
+                  isActive={false}
+                />
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationButton 
+                  item={{
+                    name: "About",
+                    path: "/about",
+                    bgColor: "bg-green-500",
+                    hoverColor: "hover:bg-green-600",
+                    shadowColor: "shadow-lg",
+                    hoverShadow: "hover:shadow-xl",
+                    textColor: "text-white"
+                  }}
+                  isActive={false}
+                />
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationButton 
+                  item={{
+                    name: "Writing",
+                    path: "/writing",
+                    bgColor: "bg-purple-500",
+                    hoverColor: "hover:bg-purple-600",
+                    shadowColor: "shadow-lg",
+                    hoverShadow: "hover:shadow-xl",
+                    textColor: "text-white"
+                  }}
+                  isActive={false}
+                />
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationDropdown 
+                  item={{
+                    name: "Comments",
+                    bgColor: "bg-orange-500",
+                    hoverColor: "hover:bg-orange-600",
+                    shadowColor: "shadow-lg",
+                    hoverShadow: "hover:shadow-xl",
+                    textColor: "text-white",
+                    subItems: [
+                      { name: "Make Comment", path: "/make-comment" },
+                      { name: "View Comments", path: "/view-comments" }
+                    ]
+                  }}
+                />
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationButton 
+                  item={{
+                    name: "Help",
+                    path: "/help-gpa",
+                    bgColor: "bg-red-500",
+                    hoverColor: "hover:bg-red-600",
+                    shadowColor: "shadow-lg",
+                    hoverShadow: "hover:shadow-xl",
+                    textColor: "text-white"
+                  }}
+                  isActive={false}
+                />
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
           {userRole && (userRole === 'admin' || userRole === 'viewer') && (
-            <DynamicNavigationMenu menuGroup="Admin" />
+            <NavigationMenu>
+              <NavigationMenuList className="space-x-2">
+                <NavigationMenuItem>
+                  <NavigationButton 
+                    item={{
+                      name: "Admin",
+                      path: "/buddys_admin",
+                      bgColor: "bg-gray-600",
+                      hoverColor: "hover:bg-gray-700",
+                      shadowColor: "shadow-lg",
+                      hoverShadow: "hover:shadow-xl",
+                      textColor: "text-white"
+                    }}
+                    isActive={false}
+                  />
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           )}
         </div>
       )}

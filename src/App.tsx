@@ -24,7 +24,7 @@ import ResetPassword from "./pages/ResetPassword";
 import PublicAuthorBios from "./pages/PublicAuthorBios";
 import PublicAuthorBiosSimple from "./pages/PublicAuthorBiosSimple";
 import AuthorBio from "./pages/AuthorBio";
-import AdminMenuManager from "./pages/AdminMenuManager";
+
 import AdminReference from "./pages/AdminReference";
 
 // Admin components
@@ -101,7 +101,7 @@ function App() {
                       <Route path="/buddys_admin/author-bios" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
                       <Route path="/buddys_admin/author-bios/add" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
                       <Route path="/buddys_admin/author-bios/edit/:id" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
-                      <Route path="/buddys_admin/menu-manager" element={<AdminLayout><AdminMenuManager /></AdminLayout>} />
+                      
                       <Route path="/buddys_admin/reference" element={<AdminReference />} />
 
                       {/* Unified Story System Routes - These are the only story management routes now */}
