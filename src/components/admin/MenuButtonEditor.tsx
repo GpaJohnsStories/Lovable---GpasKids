@@ -454,11 +454,11 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
                       variant="outline"
                       size="sm"
                       onClick={() => handleColorPresetSelect(preset)}
-                      className="h-auto p-2 flex items-start gap-2 text-left hover:shadow-md transition-all"
+                      className="h-auto p-2 flex items-start gap-2 text-left hover:shadow-md transition-all justify-start"
                     >
-                      {/* Color Swatch */}
+                      {/* Color Swatch - Fixed position on left */}
                       <div 
-                        className="w-6 h-6 rounded-md border-2 border-white shadow-sm flex-shrink-0 mt-0.5"
+                        className="w-6 h-6 rounded-md border-2 border-white shadow-sm flex-shrink-0"
                         style={{ backgroundColor: preset.hex }}
                       />
                       {/* Color Info */}
