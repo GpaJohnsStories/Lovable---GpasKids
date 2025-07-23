@@ -78,13 +78,13 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               <img 
                 src="/lovable-uploads/85707d76-31c8-4dac-9fa7-c6752c4f8e74.png" 
                 alt="Speech bubble saying HURRY UP!!! We want to read!!!"
-                className="w-24 h-24 object-contain"
+                className="w-24 h-24 object-contain relative z-0"
                 onLoad={() => console.log('New speech bubble image loaded successfully')}
                 onError={(e) => console.log('New speech bubble image failed to load:', e)}
               />
-              {/* "Hi" text overlay - positioned in upper part of bubble */}
-              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
-                <span className="text-black font-bold text-xl font-georgia drop-shadow-sm">
+              {/* "Hi" text overlay - positioned above the bubble */}
+              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20">
+                <span className="text-black font-bold text-xl font-georgia drop-shadow-sm relative z-30">
                   Hi
                 </span>
               </div>
