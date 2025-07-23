@@ -78,9 +78,12 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-padding-top: 150px;
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
-    scroll-padding-top: 150px;
   }
 }
 
