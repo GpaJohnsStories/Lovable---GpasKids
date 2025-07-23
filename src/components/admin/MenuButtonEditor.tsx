@@ -137,30 +137,30 @@ const COLOR_PRESETS = {
     },
     { 
       name: 'Birch Wood', 
-      hex: '#D4A57A',
-      bg: 'bg-amber-300', 
-      hover: 'hover:bg-amber-400', 
-      text: 'text-amber-900', 
-      shadow: 'hover:shadow-[0_4px_0_#f59e0b,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Light wood warmth - evokes cozy reading nooks and classic furniture. — Ideal for: Library sections, classic story collections'
+      hex: '#A15C2A',
+      bg: 'bg-orange-700', 
+      hover: 'hover:bg-orange-800', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#9a3412,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Warm wood grain - perfect for cozy reading sections and welcoming spaces. — Ideal for: Library entrance, story collections'
     },
     { 
       name: 'Oak Wood', 
-      hex: '#8B4513',
-      bg: 'bg-yellow-800', 
-      hover: 'hover:bg-yellow-900', 
+      hex: '#814D2E',
+      bg: 'bg-amber-800', 
+      hover: 'hover:bg-amber-900', 
       text: 'text-white', 
       shadow: 'hover:shadow-[0_4px_0_#713f12,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Rich wood character - brings Grandpa\'s study atmosphere to life. — Ideal for: About page, wisdom sections, traditional content'
+      description: 'Classic study wood - brings authentic Grandpa\'s den atmosphere to life. — Ideal for: About page, wisdom sections, traditional content'
     },
     { 
       name: 'Mahogany Wood', 
-      hex: '#654321',
-      bg: 'bg-amber-900', 
-      hover: 'hover:bg-amber-950', 
+      hex: '#9C441A',
+      bg: 'bg-red-900', 
+      hover: 'hover:bg-red-950', 
       text: 'text-white', 
-      shadow: 'hover:shadow-[0_4px_0_#451a03,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Deep wood elegance - sophisticated warmth for storytelling heritage. — Ideal for: Premium content, featured author sections, legacy stories'
+      shadow: 'hover:shadow-[0_4px_0_#7f1d1d,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Rich heritage wood - sophisticated warmth for premium storytelling content. — Ideal for: Featured stories, author spotlights, legacy collections'
     },
   ]
 };
