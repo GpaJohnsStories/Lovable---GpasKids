@@ -112,7 +112,8 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         hoverColor: "hover:bg-green-600",
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
-                        textColor: "text-white"
+                        textColor: "text-white",
+                        customIcon: getIconUrl('ICO-INF.png')
                       }}
                       isActive={false}
                     />
@@ -262,17 +263,18 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                   isActive={false}
                 />
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationButton 
-                  item={{
-                    name: "About",
-                    path: "/about",
-                    bgColor: "bg-green-500",
-                    hoverColor: "hover:bg-green-600",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white"
-                  }}
+                <NavigationMenuItem>
+                  <NavigationButton 
+                    item={{
+                      name: "About",
+                      path: "/about",
+                      bgColor: "bg-green-500",
+                      hoverColor: "hover:bg-green-600",
+                      shadowColor: "shadow-lg",
+                      hoverShadow: "hover:shadow-xl",
+                      textColor: "text-white",
+                      customIcon: getIconUrl('ICO-INF.png')
+                    }}
                   isActive={false}
                 />
               </NavigationMenuItem>
