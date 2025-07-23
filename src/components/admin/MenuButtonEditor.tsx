@@ -86,23 +86,7 @@ const COLOR_PRESETS = [
     text: 'text-white', 
     shadow: 'hover:shadow-[0_4px_0_#4d7c0f,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
-  { 
-    name: 'Soft Pink', 
-    hex: '#EC4899',
-    bg: 'bg-pink-500', 
-    hover: 'hover:bg-pink-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#db2777,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
   // Row 4: Accent Colors
-  { 
-    name: 'Sky Blue', 
-    hex: '#0EA5E9',
-    bg: 'bg-sky-500', 
-    hover: 'hover:bg-sky-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#0284c7,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
   { 
     name: 'Cream', 
     hex: '#FEF3C7',
