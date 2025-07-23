@@ -134,9 +134,8 @@ const StoryVoting = ({
 
         {/* Comment Button */}
         <Link to={`/make-comment?storyCode=${encodedStoryCode}`}>
-          <Button className="bg-blue-500 hover:bg-blue-600 text-white h-24 w-24 flex flex-col items-center justify-center space-y-1 transition-all duration-300">
-            <MessageSquare className="h-5 w-5" />
-            <span className="text-xs leading-tight text-center font-bold">Please Tell Us<br />About Your Vote</span>
+          <Button className="bg-blue-500 hover:bg-blue-600 text-white h-24 w-24 flex flex-col items-center justify-center transition-all duration-300">
+            <span className="text-xs leading-tight text-center font-bold">Please Tell<br />Us About<br />Your Vote</span>
           </Button>
         </Link>
       </div>
