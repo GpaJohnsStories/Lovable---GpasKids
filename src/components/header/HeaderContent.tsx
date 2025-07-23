@@ -77,7 +77,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                          shadowColor: "shadow-lg",
                          hoverShadow: "hover:shadow-xl",
                          textColor: "text-white",
-                         customIcon: "/src/assets/ICO-HOM.png"
+                         customIcon: "https://yzpvsdqbtjpxdczkzpwh.supabase.co/storage/v1/object/public/icons/ICO-HOM.png"
                        }}
                        isActive={false}
                      />
@@ -235,7 +235,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                      shadowColor: "shadow-lg",
                      hoverShadow: "hover:shadow-xl",
                      textColor: "text-white",
-                     customIcon: "/src/assets/ICO-HOM.png"
+                     customIcon: "https://yzpvsdqbtjpxdczkzpwh.supabase.co/storage/v1/object/public/icons/ICO-HOM.png"
                    }}
                    isActive={false}
                  />
