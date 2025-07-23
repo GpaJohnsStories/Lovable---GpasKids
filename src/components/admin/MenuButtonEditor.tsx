@@ -54,6 +54,14 @@ const COLOR_PRESETS = [
     shadow: 'hover:shadow-[0_4px_0_#ea580c,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   { 
+    name: 'Banner Orange', 
+    hex: '#E27D09',
+    bg: 'bg-orange-600', 
+    hover: 'hover:bg-orange-700', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
     name: 'Cherry Red', 
     hex: '#EF4444',
     bg: 'bg-red-500', 
