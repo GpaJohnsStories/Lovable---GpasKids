@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import AdminLayout from '@/components/admin/AdminLayout';
 import IconLibraryDisplay from '@/components/admin/IconLibraryDisplay';
+import PreferredColorsTable from '@/components/admin/PreferredColorsTable';
 import { useUserRole } from '@/hooks/useUserRole';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
@@ -49,6 +50,8 @@ const AdminReference = () => {
             </p>
           </div>
 
+          <PreferredColorsTable />
+          
           <IconLibraryDisplay />
         </div>
       </AdminLayout>
