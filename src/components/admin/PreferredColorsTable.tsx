@@ -8,18 +8,10 @@ const PreferredColorsTable: React.FC = () => {
     { name: 'Warm Beige', hex: '#F5E6D3', description: 'Background warmth' },
     { name: 'Soft Gold', hex: '#E6C966', description: 'Accent highlights' },
     { name: 'Forest Green', hex: '#4A7C59', description: 'Nature elements' },
-    { name: 'Sky Blue', hex: '#87CEEB', description: 'Calming blue' },
     { name: 'Sunset Orange', hex: '#FF8C42', description: 'Warm accent' },
-    { name: 'Lavender', hex: '#E6E6FA', description: 'Gentle purple' },
-    { name: 'Rose Pink', hex: '#F4C2C2', description: 'Soft pink' },
     { name: 'Cream White', hex: '#FFFDD0', description: 'Light base' },
-    { name: 'Chocolate Brown', hex: '#8B4513', description: 'Earth tone' },
-    { name: 'Sage Green', hex: '#9CAF88', description: 'Muted green' },
-    { name: 'Dusty Blue', hex: '#6B8CAE', description: 'Calm blue' },
     { name: 'Peach', hex: '#FFCBA4', description: 'Warm tone' },
     { name: 'Ivory', hex: '#FFFFF0', description: 'Clean base' },
-    { name: 'Coral', hex: '#FF7F7F', description: 'Cheerful red' },
-    { name: 'Mint Green', hex: '#98FB98', description: 'Fresh accent' },
     { name: 'Soft Gray', hex: '#D3D3D3', description: 'Neutral tone' }
   ];
 
