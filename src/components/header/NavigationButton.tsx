@@ -1,4 +1,4 @@
-
+// Navigation button component
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
