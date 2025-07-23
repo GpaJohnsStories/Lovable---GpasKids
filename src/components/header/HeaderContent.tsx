@@ -171,16 +171,17 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                   <NavigationMenu>
                     <NavigationMenuList className="space-x-2">
                       <NavigationMenuItem>
-                        <NavigationButton 
-                          item={{
-                            name: "Admin",
-                            path: "/buddys_admin",
-                            bgColor: "bg-gray-600",
-                            hoverColor: "hover:bg-gray-700",
-                            shadowColor: "shadow-lg",
-                            hoverShadow: "hover:shadow-xl",
-                            textColor: "text-white"
-                          }}
+                         <NavigationButton 
+                           item={{
+                             name: "Admin",
+                             path: "/buddys_admin",
+                             bgColor: "bg-gray-600",
+                             hoverColor: "hover:bg-gray-700",
+                             shadowColor: "shadow-lg",
+                             hoverShadow: "hover:shadow-xl",
+                             textColor: "text-white",
+                             customIcon: getIconUrl('ICO-LKD.png')
+                           }}
                           isActive={false}
                         />
                       </NavigationMenuItem>
@@ -332,16 +333,17 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             <NavigationMenu>
               <NavigationMenuList className="space-x-2">
                 <NavigationMenuItem>
-                  <NavigationButton 
-                    item={{
-                      name: "Admin",
-                      path: "/buddys_admin",
-                      bgColor: "bg-gray-600",
-                      hoverColor: "hover:bg-gray-700",
-                      shadowColor: "shadow-lg",
-                      hoverShadow: "hover:shadow-xl",
-                      textColor: "text-white"
-                    }}
+                   <NavigationButton 
+                     item={{
+                       name: "Admin",
+                       path: "/buddys_admin",
+                       bgColor: "bg-gray-600",
+                       hoverColor: "hover:bg-gray-700",
+                       shadowColor: "shadow-lg",
+                       hoverShadow: "hover:shadow-xl",
+                       textColor: "text-white",
+                       customIcon: getIconUrl('ICO-LKD.png')
+                     }}
                     isActive={false}
                   />
                 </NavigationMenuItem>
