@@ -26,7 +26,8 @@ const COLOR_PRESETS = [
     bg: 'bg-emerald-500', 
     hover: 'hover:bg-emerald-600', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Nature & adventure - perfect for outdoor story themes'
   },
   { 
     name: 'Banner Blue', 
@@ -34,7 +35,8 @@ const COLOR_PRESETS = [
     bg: 'bg-blue-600', 
     hover: 'hover:bg-blue-700', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Trustworthy & calm - great for educational content'
   },
   { 
     name: 'Gold', 
@@ -42,7 +44,8 @@ const COLOR_PRESETS = [
     bg: 'bg-yellow-500', 
     hover: 'hover:bg-yellow-600', 
     text: 'text-yellow-900', 
-    shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Warm treasure feel - creates Grandpa\'s cozy atmosphere'
   },
   { 
     name: 'Bright Yellow', 
@@ -50,7 +53,8 @@ const COLOR_PRESETS = [
     bg: 'bg-yellow-400', 
     hover: 'hover:bg-yellow-500', 
     text: 'text-yellow-900', 
-    shadow: 'hover:shadow-[0_4px_0_#eab308,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#eab308,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Cheerful & energetic - draws children\'s attention safely'
   },
   // Row 2: Primary Colors (continued)
   { 
@@ -59,7 +63,8 @@ const COLOR_PRESETS = [
     bg: 'bg-orange-500', 
     hover: 'hover:bg-orange-600', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#ea580c,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#ea580c,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Storytelling warmth - evokes fireside tale moments'
   },
   { 
     name: 'Banner Orange', 
@@ -67,7 +72,8 @@ const COLOR_PRESETS = [
     bg: 'bg-orange-600', 
     hover: 'hover:bg-orange-700', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Welcoming comfort - matches living room atmosphere'
   },
   { 
     name: 'Cherry Red', 
@@ -75,7 +81,8 @@ const COLOR_PRESETS = [
     bg: 'bg-red-500', 
     hover: 'hover:bg-red-600', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Gentle excitement - not harsh, perfect for highlights'
   },
   { 
     name: 'Royal Purple', 
@@ -83,7 +90,8 @@ const COLOR_PRESETS = [
     bg: 'bg-violet-500', 
     hover: 'hover:bg-violet-600', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Magical wonder - sparks imagination in young minds'
   },
   // Row 3: Secondary Colors
   { 
@@ -92,7 +100,8 @@ const COLOR_PRESETS = [
     bg: 'bg-slate-500', 
     hover: 'hover:bg-slate-600', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#475569,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#475569,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Calm neutrality - accessible with good contrast'
   },
   { 
     name: 'Meadow Green', 
@@ -100,7 +109,8 @@ const COLOR_PRESETS = [
     bg: 'bg-lime-600', 
     hover: 'hover:bg-lime-700', 
     text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#4d7c0f,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#4d7c0f,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Fresh growth - encourages learning and discovery'
   },
   // Row 4: Accent Colors
   { 
@@ -109,7 +119,8 @@ const COLOR_PRESETS = [
     bg: 'bg-amber-100', 
     hover: 'hover:bg-amber-200', 
     text: 'text-amber-900', 
-    shadow: 'hover:shadow-[0_4px_0_#fbbf24,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#fbbf24,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Soft comfort - gentle on young eyes with high contrast'
   },
   { 
     name: 'Peach', 
@@ -117,7 +128,8 @@ const COLOR_PRESETS = [
     bg: 'bg-orange-300', 
     hover: 'hover:bg-orange-400', 
     text: 'text-orange-900', 
-    shadow: 'hover:shadow-[0_4px_0_#fb923c,0_6px_12px_rgba(0,0,0,0.4)]' 
+    shadow: 'hover:shadow-[0_4px_0_#fb923c,0_6px_12px_rgba(0,0,0,0.4)]',
+    description: 'Gentle warmth - creates welcoming child-friendly feel'
   },
 ];
 
@@ -447,24 +459,26 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
 
               <div>
                 <Label>Color Presets</Label>
-                <div className="grid grid-cols-3 gap-1 mt-2 max-h-64 overflow-y-auto max-w-[60%]">
+                <div className="grid grid-cols-2 gap-3 mt-2 max-h-80 overflow-y-auto">
                   {COLOR_PRESETS.map((preset) => (
                     <Button
                       key={preset.name}
                       variant="outline"
-                      size="sm"
                       onClick={() => handleColorPresetSelect(preset)}
-                      className="h-auto p-2 flex items-start gap-2 text-left hover:shadow-md transition-all justify-start"
+                      className="h-auto p-4 flex flex-col items-start gap-3 text-left hover:shadow-lg transition-all border-2 hover:border-primary/30"
                     >
-                      {/* Color Swatch - Fixed position on left */}
+                      {/* Color Swatch - Bigger */}
                       <div 
-                        className="w-6 h-6 rounded-md border-2 border-white shadow-sm flex-shrink-0"
+                        className="w-12 h-12 rounded-lg border-2 border-white shadow-md self-center"
                         style={{ backgroundColor: preset.hex }}
                       />
                       {/* Color Info */}
-                      <div className="flex flex-col min-w-0">
-                        <div className="font-medium text-xs truncate">{preset.name}</div>
+                      <div className="flex flex-col gap-1 w-full text-center">
+                        <div className="font-semibold text-sm">{preset.name}</div>
                         <div className="text-xs text-muted-foreground font-mono">{preset.hex}</div>
+                        <div className="text-xs text-muted-foreground leading-tight px-1">
+                          {preset.description}
+                        </div>
                       </div>
                     </Button>
                   ))}
