@@ -456,33 +456,28 @@ const StoriesTableRow = ({
               )}
               <div className="flex items-center space-x-1">
                 {story.category === 'WebText' ? (
-                  <Button
-                    size="sm"
+                  <div
                     className={story.published === 'Y' 
-                      ? 'bg-gradient-to-b from-blue-500 to-blue-700 border-blue-800 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-blue-600 hover:to-blue-800 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1' 
-                      : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1'
+                      ? 'bg-gradient-to-b from-blue-500 to-blue-700 border-blue-800 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded-full flex items-center justify-center gap-1' 
+                      : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded-full flex items-center justify-center gap-1'
                     }
-                    onClick={() => setShowDeployDialog(true)}
-                    title="Deploy this WebText to web page"
                     style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                   >
                     <Globe className="h-3 w-3" />
                     <span className="text-xs font-bold">WT</span>
-                  </Button>
+                  </div>
                 ) : (
                   showPublishedColumn && (
-                    <Button
-                      size="sm"
-                      onClick={handleTogglePublished}
+                    <div
                       className={story.published === 'Y' 
-                        ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-green-500 hover:to-green-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1' 
-                        : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold hover:bg-gradient-to-b hover:from-red-500 hover:to-red-700 cursor-pointer h-6 w-16 rounded-full flex items-center justify-center gap-1'
+                        ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded-full flex items-center justify-center gap-1' 
+                        : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded-full flex items-center justify-center gap-1'
                       }
                       style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                     >
                       <BookOpen className="h-3 w-3" />
-                      Pub
-                    </Button>
+                      {story.published === 'Y' ? 'Pub' : 'UnPub'}
+                    </div>
                   )
                 )}
               </div>
