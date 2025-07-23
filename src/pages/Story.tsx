@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -12,6 +11,8 @@ import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Button } from "@/components/ui/button";
+import StoryPhotosGallery from "@/components/StoryPhotosGallery";
+import { getStoryPhotos } from "@/utils/storyUtils";
 
 interface StoryData {
   id: string;
@@ -118,6 +119,8 @@ const Story = () => {
     );
   }
 
+  const photos = getStoryPhotos(story);
+
   return (
     <ContentProtection enableProtection={true}>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
@@ -143,47 +146,8 @@ const Story = () => {
           />
 
           <main className="mb-8">
-            {/* Photo Gallery */}
-            <div className="space-y-6 mb-8">
-              {story.photo_link_1 && (
-                <div>
-                  <img
-                    src={story.photo_link_1}
-                    alt={story.photo_alt_1 || story.title}
-                    className="w-full rounded-lg shadow-lg border-4 border-white"
-                  />
-                  {story.photo_alt_1 && (
-                    <p className="text-sm text-gray-600 italic mt-2 text-center">{story.photo_alt_1}</p>
-                  )}
-                </div>
-              )}
-              
-              {story.photo_link_2 && (
-                <div>
-                  <img
-                    src={story.photo_link_2}
-                    alt={story.photo_alt_2 || story.title}
-                    className="w-full rounded-lg shadow-lg border-4 border-white"
-                  />
-                  {story.photo_alt_2 && (
-                    <p className="text-sm text-gray-600 italic mt-2 text-center">{story.photo_alt_2}</p>
-                  )}
-                </div>
-              )}
-              
-              {story.photo_link_3 && (
-                <div>
-                  <img
-                    src={story.photo_link_3}
-                    alt={story.photo_alt_3 || story.title}
-                    className="w-full rounded-lg shadow-lg border-4 border-white"
-                  />
-                  {story.photo_alt_3 && (
-                    <p className="text-sm text-gray-600 italic mt-2 text-center">{story.photo_alt_3}</p>
-                  )}
-                </div>
-              )}
-            </div>
+            {/* Photo Gallery using StoryPhotosGallery component */}
+            <StoryPhotosGallery photos={photos} storyTitle={story.title} />
 
             <div
               className="story-content"
