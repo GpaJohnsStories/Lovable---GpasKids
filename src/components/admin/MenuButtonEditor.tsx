@@ -140,6 +140,8 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
     description: '',
   });
   const [subitems, setSubitems] = useState<MenuSubitem[]>([]);
+  const [customColorName, setCustomColorName] = useState('');
+  const [customColorHex, setCustomColorHex] = useState('');
 
   useEffect(() => {
     if (buttonCode) {
@@ -234,6 +236,46 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
       text_color: preset.text,
       hover_shadow: preset.shadow,
     }));
+  };
+
+  const isValidHex = (hex: string) => {
+    return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(hex);
+  };
+
+  const getContrastColor = (hex: string) => {
+    // Remove # if present
+    const cleanHex = hex.replace('#', '');
+    // Convert to RGB
+    const r = parseInt(cleanHex.substr(0, 2), 16);
+    const g = parseInt(cleanHex.substr(2, 2), 16);
+    const b = parseInt(cleanHex.substr(4, 2), 16);
+    // Calculate luminance
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.5 ? '#000000' : '#FFFFFF';
+  };
+
+  const handleApplyCustomColor = () => {
+    if (!customColorName.trim()) {
+      toast.error('Please enter a color name');
+      return;
+    }
+    
+    if (!isValidHex(customColorHex)) {
+      toast.error('Please enter a valid hex color code (e.g., #FF5733)');
+      return;
+    }
+
+    const textColor = getContrastColor(customColorHex);
+    
+    setFormData(prev => ({
+      ...prev,
+      bg_color: '',
+      hover_bg_color: '',
+      text_color: textColor === '#FFFFFF' ? 'text-white' : 'text-black',
+      hover_shadow: `hover:shadow-[0_4px_0_${customColorHex},0_6px_12px_rgba(0,0,0,0.4)]`,
+    }));
+
+    toast.success(`Applied custom color: ${customColorName}`);
   };
 
   const handleSave = async () => {
@@ -425,6 +467,64 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
                 </div>
               </div>
 
+              <div>
+                <Label>Custom Color</Label>
+                <div className="space-y-3 mt-2 p-4 border rounded-lg bg-muted/20">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <Label htmlFor="customColorName" className="text-sm">Color Name</Label>
+                      <Input
+                        id="customColorName"
+                        value={customColorName}
+                        onChange={(e) => setCustomColorName(e.target.value)}
+                        placeholder="e.g., Coral Pink"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="customColorHex" className="text-sm">Hex Code</Label>
+                      <Input
+                        id="customColorHex"
+                        value={customColorHex}
+                        onChange={(e) => setCustomColorHex(e.target.value)}
+                        placeholder="#FF5733"
+                        className="mt-1 font-mono"
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Color Preview */}
+                  <div className="flex items-center gap-3">
+                    <div 
+                      className="w-12 h-12 rounded-md border-2 border-white shadow-sm"
+                      style={{ 
+                        backgroundColor: isValidHex(customColorHex) ? customColorHex : '#f3f4f6' 
+                      }}
+                    />
+                    <div className="flex-1">
+                      {customColorName && (
+                        <div className="font-medium text-sm">{customColorName}</div>
+                      )}
+                      {isValidHex(customColorHex) && (
+                        <div className="text-xs text-muted-foreground font-mono">{customColorHex.toUpperCase()}</div>
+                      )}
+                      {customColorHex && !isValidHex(customColorHex) && (
+                        <div className="text-xs text-red-500">Invalid hex format</div>
+                      )}
+                    </div>
+                    <Button
+                      type="button"
+                      size="sm"
+                      onClick={handleApplyCustomColor}
+                      disabled={!customColorName.trim() || !isValidHex(customColorHex)}
+                      className="shrink-0"
+                    >
+                      Apply Color
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex items-center space-x-2">
                 <Switch
                   id="is_active"
@@ -443,9 +543,13 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
                   <div
                     className={`
                       px-6 py-3 rounded-lg font-semibold transition-all duration-200 border-2
-                      ${formData.bg_color} ${formData.text_color}
+                      ${formData.bg_color || 'border-2'} ${formData.text_color}
                       min-h-[48px] min-w-[48px]
                     `}
+                    style={{
+                      backgroundColor: !formData.bg_color && isValidHex(customColorHex) ? customColorHex : undefined,
+                      color: !formData.bg_color && isValidHex(customColorHex) ? getContrastColor(customColorHex) : undefined
+                    }}
                   >
                     <div className="flex items-center gap-2">
                       {formData.icon_url && (
