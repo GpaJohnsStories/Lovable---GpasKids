@@ -132,12 +132,16 @@ const MenuButtonList: React.FC<MenuButtonListProps> = ({
               {/* Actions */}
               <div className="flex items-center gap-2">
                 <Button
-                  variant="outline"
+                  variant={button.is_active ? "default" : "outline"}
                   size="sm"
                   onClick={() => handleToggleActive(button.button_code, button.is_active)}
                   title={button.is_active ? "Deactivate" : "Activate"}
+                  className={button.is_active 
+                    ? "bg-green-600 hover:bg-green-700 text-white border-green-600" 
+                    : "bg-red-600 hover:bg-red-700 text-white border-red-600"
+                  }
                 >
-                  {button.is_active ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {button.is_active ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                 </Button>
                 <Button
                   variant="outline"
