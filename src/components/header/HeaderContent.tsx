@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
-import NavigationMenu from "./NavigationMenu";
+import DynamicNavigationMenu from "./DynamicNavigationMenu";
 
 interface HeaderContentProps {
   isHomePage: boolean;
@@ -58,7 +58,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           {/* Navigation Menu - Show on home page, positioned below the text and left-aligned */}
           {isHomePage && (
             <div className="mt-4">
-              <NavigationMenu />
+              <DynamicNavigationMenu menuGroup="Public" />
             </div>
           )}
         </div>
@@ -108,7 +108,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
       )}
 
       {/* Navigation Menu - Only show on non-home pages */}
-      {!isHomePage && <NavigationMenu />}
+      {!isHomePage && <DynamicNavigationMenu menuGroup="Public" />}
     </div>
   );
 };
