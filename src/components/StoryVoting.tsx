@@ -99,8 +99,7 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
           disabled={isVoting}
           className={getButtonClass('ok')}
         >
-          <span className="text-xl">—</span>
-          <span className="text-base">OK</span>
+          <span className="text-base leading-tight text-center font-bold">It Was<br />Just Ok!</span>
           <span className="text-xs">({okCount})</span>
         </Button>
 
