@@ -22,6 +22,7 @@ interface Story {
   published: string;
   ai_voice_name?: string;
   ai_voice_model?: string;
+  copyright_status?: string;
   audio_url?: string;
 }
 
