@@ -54,11 +54,11 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   const getPublishedColor = (publishedStatus: string) => {
     switch (publishedStatus) {
       case 'Y':
-        return 'text-green-700 border-green-300 bg-green-50';
+        return 'text-white bg-green-600 border-green-700';
       case 'N':
-        return 'text-red-700 border-red-300 bg-red-50';
+        return 'text-white bg-red-600 border-red-700';
       default:
-        return 'text-gray-700 border-gray-300 bg-gray-50';
+        return 'text-white bg-red-600 border-red-700';
     }
   };
   console.log('🎯 UnifiedStoryDashboard: Rendering with formData:', {
