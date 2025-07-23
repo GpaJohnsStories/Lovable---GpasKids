@@ -190,9 +190,12 @@ export type Database = {
       menu_buttons: {
         Row: {
           bg_color: string
+          bottom_color: string | null
           button_code: string
+          button_height: number | null
           button_name: string | null
-          button_size: string
+          button_shape: string | null
+          button_width: number | null
           created_at: string
           description: string | null
           display_order: number
@@ -204,13 +207,17 @@ export type Database = {
           menu_group: string
           path: string | null
           text_color: string
+          top_color: string | null
           updated_at: string
         }
         Insert: {
           bg_color?: string
+          bottom_color?: string | null
           button_code: string
+          button_height?: number | null
           button_name?: string | null
-          button_size?: string
+          button_shape?: string | null
+          button_width?: number | null
           created_at?: string
           description?: string | null
           display_order?: number
@@ -222,13 +229,17 @@ export type Database = {
           menu_group?: string
           path?: string | null
           text_color?: string
+          top_color?: string | null
           updated_at?: string
         }
         Update: {
           bg_color?: string
+          bottom_color?: string | null
           button_code?: string
+          button_height?: number | null
           button_name?: string | null
-          button_size?: string
+          button_shape?: string | null
+          button_width?: number | null
           created_at?: string
           description?: string | null
           display_order?: number
@@ -240,6 +251,7 @@ export type Database = {
           menu_group?: string
           path?: string | null
           text_color?: string
+          top_color?: string | null
           updated_at?: string
         }
         Relationships: []

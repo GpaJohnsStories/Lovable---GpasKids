@@ -12,7 +12,11 @@ export interface MenuButton {
   hover_bg_color: string;
   text_color: string;
   hover_shadow: string | null;
-  button_size: string;
+  button_width: number;
+  button_height: number;
+  top_color: string;
+  bottom_color: string;
+  button_shape: string;
   is_active: boolean;
   path: string | null;
   description: string | null;

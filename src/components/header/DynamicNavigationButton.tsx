@@ -22,42 +22,49 @@ const DynamicNavigationButton: React.FC<DynamicNavigationButtonProps> = ({
     }
   };
 
-  const getDisplayName = () => {
-    if (button.button_name && button.button_name.trim()) {
-      return button.button_name;
-    }
-    // Fallback to capitalized button_code
-    return button.button_code.charAt(0).toUpperCase() + button.button_code.slice(1);
+  const getButtonStyle = () => {
+    const isGradient = button.top_color !== button.bottom_color;
+    const background = isGradient 
+      ? `linear-gradient(135deg, ${button.top_color}, ${button.bottom_color})`
+      : button.top_color;
+    
+    const borderRadius = button.button_shape === 'button' ? '8px' : '4px';
+    
+    return {
+      width: `${button.button_width}px`,
+      height: `${button.button_height}px`,
+      background,
+      borderRadius,
+      border: '2px solid rgba(255,255,255,0.2)',
+      minWidth: `${button.button_width}px`,
+      minHeight: `${button.button_height}px`,
+    };
   };
 
   return (
-    <Button
-      variant="outline"
-      size={button.button_size === 'large' ? 'lg' : button.button_size === 'small' ? 'sm' : 'default'}
+    <button
       onClick={handleClick}
+      style={getButtonStyle()}
       className={cn(
-        "min-h-[48px] min-w-[48px] px-6 py-3 rounded-lg font-semibold transition-all duration-200 border-2",
-        button.bg_color,
-        button.hover_bg_color,
-        button.text_color,
-        button.hover_shadow,
+        "flex items-center justify-center gap-2 font-semibold transition-all duration-200 text-white",
+        "hover:scale-105 hover:shadow-lg",
         isActive && "ring-2 ring-offset-2 ring-primary"
       )}
       title={button.description || undefined}
     >
-      <div className="flex items-center gap-2">
-        {button.icon_url && (
-          <img 
-            src={button.icon_url} 
-            alt="" 
-            className="w-5 h-5 object-contain"
-          />
-        )}
-        <span className="hidden sm:inline">
-          {getDisplayName()}
+      {button.icon_url && (
+        <img 
+          src={button.icon_url} 
+          alt="" 
+          className="w-5 h-5 object-contain"
+        />
+      )}
+      {button.button_name && (
+        <span className="hidden sm:inline text-sm">
+          {button.button_name}
         </span>
-      </div>
-    </Button>
+      )}
+    </button>
   );
 };
 
