@@ -12,6 +12,9 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const location = useLocation();
   const { showHelp } = useHelp();
   const { userRole } = useUserRole();
+  
+  // Check if we're on an admin page
+  const isAdminPage = location.pathname.startsWith('/buddys_admin');
 
   const handleHelpClick = () => {
     console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
@@ -61,7 +64,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           {isHomePage && (
             <div className="mt-4">
               <DynamicNavigationMenu menuGroup="Public" />
-              {userRole && (userRole === 'admin' || userRole === 'viewer') && (
+              {userRole && (userRole === 'admin' || userRole === 'viewer') && !isAdminPage && (
                 <div className="mt-2">
                   <DynamicNavigationMenu menuGroup="Admin" />
                 </div>
@@ -115,7 +118,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
       )}
 
       {/* Navigation Menu - Only show on non-home pages */}
-      {!isHomePage && (
+      {!isHomePage && !isAdminPage && (
         <div className="flex items-center gap-4">
           <DynamicNavigationMenu menuGroup="Public" />
           {userRole && (userRole === 'admin' || userRole === 'viewer') && (

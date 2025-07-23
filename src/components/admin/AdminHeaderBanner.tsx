@@ -63,7 +63,7 @@ const AdminHeaderBanner = () => {
   const navButtons: AdminNavButton[] = [
     {
       name: 'Dashboard',
-      path: '/buddys_admin/dashboard',
+      path: '/buddys_admin',
       icon: LayoutDashboard,
       bgColor: 'bg-gradient-to-b from-green-400 via-green-500 to-green-600',
       hoverColor: 'hover:from-green-500 hover:via-green-600 hover:to-green-700',
