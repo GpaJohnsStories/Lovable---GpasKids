@@ -117,7 +117,7 @@ const IconUploadForm = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="iconCode">Icon Code</Label>
+              <Label htmlFor="iconCode">Unique Icon Code (format AAA-BBB)</Label>
               <Input
                 id="iconCode"
                 type="text"
