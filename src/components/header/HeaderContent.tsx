@@ -66,11 +66,26 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           {isHomePage && (
             <div className="mt-4">
               <NavigationMenu>
-                <NavigationMenuList className="space-x-2">
-                  <NavigationMenuItem>
-                    <NavigationButton 
-                      item={{
-                        name: "Stories",
+                 <NavigationMenuList className="space-x-2">
+                   <NavigationMenuItem>
+                     <NavigationButton 
+                       item={{
+                         name: "Home",
+                         path: "/",
+                         bgColor: "bg-indigo-500",
+                         hoverColor: "hover:bg-indigo-600",
+                         shadowColor: "shadow-lg",
+                         hoverShadow: "hover:shadow-xl",
+                         textColor: "text-white",
+                         customIcon: "/src/assets/ICO-HOM.png"
+                       }}
+                       isActive={false}
+                     />
+                   </NavigationMenuItem>
+                   <NavigationMenuItem>
+                     <NavigationButton 
+                       item={{
+                         name: "Stories",
                         path: "/library",
                         bgColor: "bg-blue-500",
                         hoverColor: "hover:bg-blue-600",
@@ -209,11 +224,26 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
       {!isHomePage && !isAdminPage && (
         <div className="flex items-center gap-4">
           <NavigationMenu>
-            <NavigationMenuList className="space-x-2">
-              <NavigationMenuItem>
-                <NavigationButton 
-                  item={{
-                    name: "Stories",
+             <NavigationMenuList className="space-x-2">
+               <NavigationMenuItem>
+                 <NavigationButton 
+                   item={{
+                     name: "Home",
+                     path: "/",
+                     bgColor: "bg-indigo-500",
+                     hoverColor: "hover:bg-indigo-600",
+                     shadowColor: "shadow-lg",
+                     hoverShadow: "hover:shadow-xl",
+                     textColor: "text-white",
+                     customIcon: "/src/assets/ICO-HOM.png"
+                   }}
+                   isActive={false}
+                 />
+               </NavigationMenuItem>
+               <NavigationMenuItem>
+                 <NavigationButton 
+                   item={{
+                     name: "Stories",
                     path: "/library",
                     bgColor: "bg-blue-500",
                     hoverColor: "hover:bg-blue-600",
