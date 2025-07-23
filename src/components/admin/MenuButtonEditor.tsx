@@ -68,7 +68,23 @@ const COLOR_PRESETS = [
     shadow: 'hover:shadow-[0_4px_0_#db2777,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   { 
-    name: 'Sunshine Yellow', 
+    name: 'Banner Blue', 
+    hex: '#2563EB',
+    bg: 'bg-blue-600', 
+    hover: 'hover:bg-blue-700', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Safety Green', 
+    hex: '#84CC16',
+    bg: 'bg-lime-500', 
+    hover: 'hover:bg-lime-600', 
+    text: 'text-lime-900', 
+    shadow: 'hover:shadow-[0_4px_0_#65a30d,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Gold', 
     hex: '#EAB308',
     bg: 'bg-yellow-500', 
     hover: 'hover:bg-yellow-600', 
@@ -98,22 +114,6 @@ const COLOR_PRESETS = [
     hover: 'hover:bg-slate-600', 
     text: 'text-white', 
     shadow: 'hover:shadow-[0_4px_0_#475569,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
-  { 
-    name: 'Lime Green', 
-    hex: '#84CC16',
-    bg: 'bg-lime-500', 
-    hover: 'hover:bg-lime-600', 
-    text: 'text-lime-900', 
-    shadow: 'hover:shadow-[0_4px_0_#65a30d,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
-  { 
-    name: 'Sky Blue', 
-    hex: '#0EA5E9',
-    bg: 'bg-sky-500', 
-    hover: 'hover:bg-sky-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#0284c7,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
 ];
 
@@ -443,23 +443,23 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
 
               <div>
                 <Label>Color Presets</Label>
-                <div className="grid grid-cols-2 gap-3 mt-2 max-h-64 overflow-y-auto">
+                <div className="grid grid-cols-3 gap-2 mt-2 max-h-64 overflow-y-auto">
                   {COLOR_PRESETS.map((preset) => (
                     <Button
                       key={preset.name}
                       variant="outline"
                       size="sm"
                       onClick={() => handleColorPresetSelect(preset)}
-                      className="h-auto p-3 flex items-center gap-3 text-left hover:shadow-md transition-all"
+                      className="h-auto p-2 flex items-center gap-2 text-left hover:shadow-md transition-all"
                     >
                       {/* Color Swatch */}
                       <div 
-                        className="w-8 h-8 rounded-md border-2 border-white shadow-sm flex-shrink-0"
+                        className="w-6 h-6 rounded-md border-2 border-white shadow-sm flex-shrink-0"
                         style={{ backgroundColor: preset.hex }}
                       />
                       {/* Color Info */}
                       <div className="flex flex-col min-w-0">
-                        <div className="font-medium text-sm truncate">{preset.name}</div>
+                        <div className="font-medium text-xs truncate">{preset.name}</div>
                         <div className="text-xs text-muted-foreground font-mono">{preset.hex}</div>
                       </div>
                     </Button>
