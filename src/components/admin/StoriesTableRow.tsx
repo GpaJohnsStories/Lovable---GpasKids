@@ -458,8 +458,8 @@ const StoriesTableRow = ({
                 {story.category === 'WebText' ? (
                   <div
                     className={story.published === 'Y' 
-                      ? 'bg-gradient-to-b from-blue-500 to-blue-700 border-blue-800 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded-full flex items-center justify-center gap-1' 
-                      : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded-full flex items-center justify-center gap-1'
+                      ? 'bg-gradient-to-b from-blue-500 to-blue-700 border-blue-800 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded flex items-center justify-center gap-1' 
+                      : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded flex items-center justify-center gap-1'
                     }
                     style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                   >
@@ -470,8 +470,8 @@ const StoriesTableRow = ({
                   showPublishedColumn && (
                     <div
                       className={story.published === 'Y' 
-                        ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded-full flex items-center justify-center gap-1' 
-                        : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded-full flex items-center justify-center gap-1'
+                        ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded flex items-center justify-center gap-1' 
+                        : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded flex items-center justify-center gap-1'
                       }
                       style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                     >
