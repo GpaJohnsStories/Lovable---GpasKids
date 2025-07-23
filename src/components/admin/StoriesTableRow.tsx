@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -311,52 +310,32 @@ const StoriesTableRow = ({
       </TableCell>
       <TableCell className="p-1 text-center" style={{ width: '50px', minWidth: '50px', maxWidth: '50px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
         <div className="flex justify-center">
-          {showActions ? (
-            <Select 
-              value={story.copyright_status || '©'} 
-              onValueChange={handleCopyrightStatusChange}
-            >
-              <SelectTrigger className={`w-full h-8 text-xs text-white font-bold border ${
-                (story.copyright_status || '©') === '©' ? 'bg-red-500 hover:bg-red-600 border-red-600' :
-                (story.copyright_status || '©') === 'O' ? 'bg-green-500 hover:bg-green-600 border-green-600' :
-                'bg-yellow-500 hover:bg-yellow-600 border-yellow-600'
-              }`}>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="z-50 bg-white border shadow-lg">
-                <SelectItem value="©" className="text-xs text-red-600 font-bold">© Full Copyright</SelectItem>
-                <SelectItem value="O" className="text-xs text-green-600 font-bold">O Open, No Copyright</SelectItem>
-                <SelectItem value="S" className="text-xs text-yellow-600 font-bold">S Limited Sharing</SelectItem>
-              </SelectContent>
-            </Select>
-          ) : (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-help ${
-                    (story.copyright_status || '©') === '©' ? 'bg-red-500' :
-                    (story.copyright_status || '©') === 'O' ? 'bg-green-500' :
-                    'bg-yellow-500'
-                  }`}>
-                    {story.copyright_status || '©'}
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent className="bg-white border border-gray-300 shadow-lg p-2 z-50">
-                  <div className="text-xs font-medium text-gray-800">
-                    {(story.copyright_status || '©') === '©' && (
-                      <span className="text-red-600 font-bold">© Full Copyright - All rights reserved</span>
-                    )}
-                    {(story.copyright_status || '©') === 'O' && (
-                      <span className="text-green-600 font-bold">O Open, No Copyright - Free to share</span>
-                    )}
-                    {(story.copyright_status || '©') === 'S' && (
-                      <span className="text-yellow-600 font-bold">S Limited Sharing - Gpa John's Copyright</span>
-                    )}
-                  </div>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-help ${
+                  (story.copyright_status || '©') === '©' ? 'bg-red-500' :
+                  (story.copyright_status || '©') === 'O' ? 'bg-green-500' :
+                  'bg-yellow-500'
+                }`}>
+                  {story.copyright_status || '©'}
+                </span>
+              </TooltipTrigger>
+              <TooltipContent className="bg-white border border-gray-300 shadow-lg p-2 z-50">
+                <div className="text-xs font-medium text-gray-800">
+                  {(story.copyright_status || '©') === '©' && (
+                    <span className="text-red-600 font-bold">© Full Copyright - All rights reserved</span>
+                  )}
+                  {(story.copyright_status || '©') === 'O' && (
+                    <span className="text-green-600 font-bold">O Open, No Copyright - Free to share</span>
+                  )}
+                  {(story.copyright_status || '©') === 'S' && (
+                    <span className="text-yellow-600 font-bold">S Limited Sharing - Gpa John's Copyright</span>
+                  )}
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </TableCell>
       <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>

@@ -10,6 +10,7 @@ import StoryVideoUpload from "../StoryVideoUpload";
 import VoiceSelection from "../story-form/VoiceSelection";
 import AudioUploadSection from "./AudioUploadSection";
 import SplitViewEditor from "../editor/SplitViewEditor";
+import CopyrightControl from "../story-form/CopyrightControl";
 import { UniversalAudioControls } from "../UniversalAudioControls";
 import { StackedAudioControls } from "./StackedAudioControls";
 import type { Story } from '@/hooks/useStoryFormState';
@@ -97,14 +98,16 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
 
             {/* Right Column - Publication Settings and Quick Actions */}
             <div className="lg:col-span-1 space-y-6">
-              {/* Publication Status Card */}
+              {/* Publication & Copyright Status Card */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Publication Status</CardTitle>
+                  <CardTitle>Publication & Copyright</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Publication Status - 50% width */}
                     <div className="space-y-2">
+                      <Label htmlFor="published">Publication Status</Label>
                       <select
                         id="published"
                         value={formData.published}
@@ -116,17 +119,25 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       </select>
                     </div>
 
+                    {/* Copyright Status - 50% width */}
                     <div className="space-y-2">
-                      <Label htmlFor="google_drive_link">Google Drive Link</Label>
-                      <input
-                        id="google_drive_link"
-                        type="url"
-                        value={formData.google_drive_link}
-                        onChange={(e) => onInputChange('google_drive_link', e.target.value)}
-                        placeholder="https://drive.google.com/..."
-                        className="w-full p-2 border border-gray-300 rounded-md"
+                      <CopyrightControl
+                        value={formData.copyright_status || '©'}
+                        onChange={(value) => onInputChange('copyright_status', value)}
                       />
                     </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="google_drive_link">Google Drive Link</Label>
+                    <input
+                      id="google_drive_link"
+                      type="url"
+                      value={formData.google_drive_link}
+                      onChange={(e) => onInputChange('google_drive_link', e.target.value)}
+                      placeholder="https://drive.google.com/..."
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    />
                   </div>
                 </CardContent>
               </Card>

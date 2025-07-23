@@ -23,6 +23,7 @@ export interface Story {
   published: string;
   ai_voice_name: string;
   ai_voice_model: string;
+  copyright_status?: string;
   audio_url?: string;
 }
 
@@ -44,7 +45,8 @@ const initialFormData: Story = {
   video_url: '',
   published: 'N',
   ai_voice_name: 'Nova',
-  ai_voice_model: 'tts-1'
+  ai_voice_model: 'tts-1',
+  copyright_status: '©'
 };
 
 export const useStoryFormState = (storyId?: string) => {
@@ -63,7 +65,8 @@ export const useStoryFormState = (storyId?: string) => {
       setFormData({
         ...story,
         ai_voice_name: story.ai_voice_name || 'Nova',
-        ai_voice_model: story.ai_voice_model || 'tts-1'
+        ai_voice_model: story.ai_voice_model || 'tts-1',
+        copyright_status: story.copyright_status || '©'
       });
     } else if (!storyId) {
       console.log('🎯 useStoryFormState: No storyId provided, using initial form data');
