@@ -8,32 +8,32 @@ const PreferredColorsTable: React.FC = () => {
     {
       title: "Primary Website Colors",
       colors: [
-        { name: 'Bright Gold', hex: '#EAB308', description: 'Golden accent' },
-        { name: 'Fresh Green', hex: '#16a34a', description: 'Vibrant nature' },
-        { name: 'Sunset Orange', hex: '#FF8C42', description: 'Warm accent' },
-        { name: 'Vibrant Orange', hex: '#F97316', description: 'Energetic tone' },
-        { name: 'Warm Beige', hex: '#F5E6D3', description: 'Background warmth' },
-        { name: 'Cream White', hex: '#FFFDD0', description: 'Light base' }
+        { name: 'Bright Gold', hex: '#EAB308', description: 'Best Used for: Primary buttons, story titles, magical elements, treasure themes, and positive highlights. Creates warmth and excitement for children. Perfect for "Grandpa\'s special moments" and celebration scenes.' },
+        { name: 'Fresh Green', hex: '#16a34a', description: 'Best Used for: Nature stories, adventure themes, "go" buttons, positive feedback, and outdoor scenes. Represents growth, safety, and natural wonder. Ideal for forest adventures and garden tales.' },
+        { name: 'Sunset Orange', hex: '#FF8C42', description: 'Best Used for: Warm story backgrounds, cozy evening scenes, autumn themes, and friendly characters. Creates a comforting "Grandpa\'s living room" atmosphere. Perfect for bedtime stories and fireside moments.' },
+        { name: 'Vibrant Orange', hex: '#F97316', description: 'Best Used for: Action buttons, exciting moments, playful elements, and energetic characters. Captures children\'s attention without being overwhelming. Great for adventure calls-to-action and fun interactions.' },
+        { name: 'Warm Beige', hex: '#F5E6D3', description: 'Best Used for: Content backgrounds, reading areas, story text containers, and calm sections. Provides excellent readability while maintaining warmth. Perfect for extended reading comfort and accessibility.' },
+        { name: 'Cream White', hex: '#FFFDD0', description: 'Best Used for: Main page backgrounds, text overlays, clean sections, and peaceful story moments. Offers gentle contrast without harsh brightness. Ideal for creating safe, comfortable reading spaces.' }
       ]
     },
     {
       title: "Supporting Website Colors", 
       colors: [
-        { name: 'Forest Green', hex: '#4A7C59', description: 'Nature elements' },
-        { name: 'Soft Gold', hex: '#E6C966', description: 'Accent highlights' },
-        { name: 'Cherry Red', hex: '#DC2626', description: 'Bold accent' },
-        { name: 'Peach', hex: '#FFCBA4', description: 'Warm tone' }
+        { name: 'Forest Green', hex: '#4A7C59', description: 'Best Used for: Deep nature themes, mysterious forest scenes, secondary navigation, and wisdom elements. Represents depth and knowledge. Perfect for "Grandpa\'s deep thoughts" and contemplative moments.' },
+        { name: 'Soft Gold', hex: '#E6C966', description: 'Best Used for: Subtle highlights, gentle accents, story borders, and warm details. Provides golden warmth without overwhelming brightness. Great for decorative elements and gentle emphasis.' },
+        { name: 'Cherry Red', hex: '#DC2626', description: 'Best Used for: Important alerts, special announcements, love themes, and emergency buttons. Use sparingly to maintain impact. Perfect for "important messages from Grandpa" and safety notifications.' },
+        { name: 'Peach', hex: '#FFCBA4', description: 'Best Used for: Gentle backgrounds, soft character elements, caring themes, and nurturing content. Creates warmth and comfort. Ideal for family stories and tender moments between characters.' }
       ]
     },
     {
       title: "Other Colors - Use Sparingly",
       colors: [
-        { name: 'Deep Green', hex: '#15803d', description: 'Forest depth' },
-        { name: 'Rich Brown', hex: '#814d2e', description: 'Deep earth tone' },
-        { name: 'Caramel', hex: '#a15c2a', description: 'Sweet brown' },
-        { name: 'Rust Orange', hex: '#9c441a', description: 'Autumn warmth' },
-        { name: 'Soft Gray', hex: '#D3D3D3', description: 'Neutral tone' },
-        { name: 'Ivory', hex: '#FFFFF0', description: 'Clean base' }
+        { name: 'Deep Green', hex: '#15803d', description: 'Best Used for: Dark forest scenes, serious story moments, deep wisdom themes, and grounding elements. Use for dramatic contrast and depth. Perfect for mysterious or profound story sections.' },
+        { name: 'Rich Brown', hex: '#814d2e', description: 'Best Used for: Rustic elements, wooden textures, earth themes, and stable foundations. Represents reliability and natural comfort. Great for cabin settings and traditional story elements.' },
+        { name: 'Caramel', hex: '#a15c2a', description: 'Best Used for: Sweet story themes, autumn scenes, cozy details, and warm accents. Evokes comfort food and homey feelings. Perfect for kitchen scenes and nurturing story moments.' },
+        { name: 'Rust Orange', hex: '#9c441a', description: 'Best Used for: Autumn adventures, warm earth elements, vintage details, and traditional themes. Creates nostalgic warmth. Ideal for harvest stories and seasonal tale backgrounds.' },
+        { name: 'Soft Gray', hex: '#D3D3D3', description: 'Best Used for: Neutral borders, subtle dividers, quiet backgrounds, and calm elements. Provides gentle separation without distraction. Perfect for organizing content peacefully.' },
+        { name: 'Ivory', hex: '#FFFFF0', description: 'Best Used for: Clean text areas, pure backgrounds, fresh starts in stories, and peaceful moments. Offers the cleanest reading experience. Ideal for important text content and clarity.' }
       ]
     }
   ];
