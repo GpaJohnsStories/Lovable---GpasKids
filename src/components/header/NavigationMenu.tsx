@@ -113,7 +113,6 @@ const NavigationMenu = () => {
       shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-black',
-      icon: Lock,
       description: 'Details of our privacy and security and how we\'ve implemented it'
     }
   ];

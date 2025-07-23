@@ -38,9 +38,10 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
     item.textColor, 'px-5 py-2 rounded-lg font-semibold',
     'transition-all duration-200', 
     'hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]',
-    'flex items-center justify-center min-w-[100px]',
+    'flex items-center justify-center',
+    item.icon ? 'min-w-[100px] gap-1' : 'min-w-[80px]',
     'font-fun border-t border-white border-opacity-30',
-    'text-sm', item.icon ? 'gap-1' : '',
+    'text-sm',
     isDropdown ? "group cursor-pointer" : "cursor-pointer"
   );
 
