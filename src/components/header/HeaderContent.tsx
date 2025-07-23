@@ -117,7 +117,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                           { name: "About Grandpa John", path: "/about" },
                           { name: "About Buddy", path: "/about#buddy" },
                           { name: "About Authors", path: "/author-bios" },
-                          { name: "A Special Thank You", path: "/about#new-section" }
+                          { name: "A Special Thank You", path: "/about#special-thank-you" }
                         ]
                       }}
                     />
@@ -284,7 +284,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         { name: "About Grandpa John", path: "/about" },
                         { name: "About Buddy", path: "/about#buddy" },
                         { name: "About Authors", path: "/author-bios" },
-                        { name: "A Special Thank You", path: "/about#new-section" }
+                        { name: "A Special Thank You", path: "/about#special-thank-you" }
                       ]
                     }}
                   />

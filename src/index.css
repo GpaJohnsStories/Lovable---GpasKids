@@ -80,6 +80,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    scroll-padding-top: 150px;
   }
 }
 

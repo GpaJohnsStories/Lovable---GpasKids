@@ -1,6 +1,5 @@
 
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -9,38 +8,6 @@ import { UniversalAudioControls } from "@/components/UniversalAudioControls";
 import { DeployedContent } from "@/components/DeployedContent";
 
 const About = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    // Handle hash navigation when component mounts or hash changes
-    const scrollToHash = () => {
-      const hash = window.location.hash;
-      console.log('About page: handling hash navigation, hash:', hash);
-      if (hash) {
-        // Longer delay to ensure the page is fully rendered
-        setTimeout(() => {
-          const element = document.querySelector(hash);
-          console.log('About page: found element for hash', hash, element);
-          if (element) {
-            // Get the element's position and add some offset for the header
-            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-            const offsetPosition = elementPosition - 150; // Increased offset to show more of the section title
-            
-            console.log('About page: scrolling to position', offsetPosition);
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          } else {
-            console.log('About page: element not found for hash', hash);
-          }
-        }, 300); // Increased delay
-      }
-    };
-
-    // Run on mount and whenever the location changes (including hash)
-    scrollToHash();
-  }, [location]);
 
   return (
     <TooltipProvider>
@@ -233,7 +200,7 @@ const About = () => {
           </div>
 
           {/* Special Thanks Section - Light Purple with Gold Border */}
-          <div id="new-section" className="max-w-6xl mx-auto border-4 border-yellow-500 rounded-lg p-6 mt-8 bg-purple-100 relative">
+          <div id="special-thank-you" className="max-w-6xl mx-auto border-4 border-yellow-500 rounded-lg p-6 mt-8 bg-purple-100 relative">
             <h1 className="text-4xl font-bold text-purple-800 mb-6 text-center" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
               A Special "Thank You" to ...
             </h1>
