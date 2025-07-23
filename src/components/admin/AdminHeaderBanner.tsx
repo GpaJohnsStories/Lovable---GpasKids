@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus, Menu } from "lucide-react";
+import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus, BookOpen } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -95,15 +95,15 @@ const AdminHeaderBanner = () => {
       description: 'Full comment list with edit and approval services'
     },
     {
-      name: 'Menus',
-      path: '/buddys_admin/menu-manager',
-      icon: Menu,
+      name: 'Reference',
+      path: '/buddys_admin/reference',
+      icon: BookOpen,
       bgColor: 'bg-gradient-to-b from-cyan-400 via-cyan-500 to-cyan-600',
       hoverColor: 'hover:from-cyan-500 hover:via-cyan-600 hover:to-cyan-700',
       shadowColor: 'shadow-[0_6px_0_#0891b2,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#0891b2,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-white',
-      description: 'Create and manage navigation buttons for website menus'
+      description: 'Reference materials and resources for administration'
     },
   ];
 
