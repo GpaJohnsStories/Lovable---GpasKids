@@ -64,7 +64,7 @@ const NavigationMenu = () => {
       hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-green-800',
       description: 'Make a Comment or View All Comments',
-      customIcon: '/lovable-uploads/4786b45e-cb7c-4d56-bbfb-8a843a55b5b6.png',
+      customIcon: '/lovable-uploads/dbca2a2d-301a-44c1-8e94-775da7e5993d.png',
       subItems: [
         { name: 'Make Comment', path: '/make-comment' },
         { name: 'View Comments', path: '/view-comments' },
