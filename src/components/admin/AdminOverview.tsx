@@ -8,9 +8,11 @@ import { Settings, Shield, Key, BookOpen, Eye, EyeOff, Tag, Video, Volume2, Aler
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useUserRole } from "@/hooks/useUserRole";
+import { useNavigate } from "react-router-dom";
 
 const AdminOverview = () => {
   const { userRole, isViewer } = useUserRole();
+  const navigate = useNavigate();
   const { data: storyCounts } = useQuery({
     queryKey: ['story-counts'],
     queryFn: async () => {
@@ -183,6 +185,28 @@ const AdminOverview = () => {
 
       {!isViewer && (
         <>
+          {/* Menu Manager - Wide box with cyan border - Moved to top */}
+          <Card className="mb-6 border-cyan-500 border-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-cyan-700">
+                <Menu className="h-5 w-5" />
+                Navigation Menu Manager
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-700 mb-4">
+                Create and manage navigation buttons for the website menus.
+              </p>
+              <button 
+                onClick={() => navigate('/buddys_admin/menu-manager')}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
+              >
+                <Menu className="h-4 w-4" />
+                Open Menu Manager
+              </button>
+            </CardContent>
+          </Card>
+
           {/* Security Management - Wide box with orange border */}
           <Card className="mb-6 border-orange-500 border-2">
             <CardHeader>
@@ -206,28 +230,6 @@ const AdminOverview = () => {
             </CardHeader>
             <CardContent>
               <EmergencyAdminTools />
-            </CardContent>
-          </Card>
-
-          {/* Menu Manager - Wide box with cyan border */}
-          <Card className="mb-6 border-cyan-500 border-2">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-cyan-700">
-                <Menu className="h-5 w-5" />
-                Navigation Menu Manager
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 mb-4">
-                Create and manage navigation buttons for the website menus.
-              </p>
-              <a 
-                href="/buddys_admin/menu-manager"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
-              >
-                <Menu className="h-4 w-4" />
-                Open Menu Manager
-              </a>
             </CardContent>
           </Card>
         </>
