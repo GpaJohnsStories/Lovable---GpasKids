@@ -173,8 +173,8 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       <NavigationMenuItem>
                          <NavigationButton 
                            item={{
-                             name: "Admin",
-                             path: "/buddys_admin",
+                             name: "Privacy",
+                             path: "/privacy",
                              bgColor: "bg-gray-600",
                              hoverColor: "hover:bg-gray-700",
                              shadowColor: "shadow-lg",
@@ -335,8 +335,8 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                 <NavigationMenuItem>
                    <NavigationButton 
                      item={{
-                       name: "Admin",
-                       path: "/buddys_admin",
+                       name: "Privacy",
+                       path: "/privacy",
                        bgColor: "bg-gray-600",
                        hoverColor: "hover:bg-gray-700",
                        shadowColor: "shadow-lg",
