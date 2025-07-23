@@ -74,14 +74,14 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger 
             value="content" 
-            className="flex items-center gap-2 data-[state=active]:bg-[hsl(var(--tab-content))] data-[state=active]:text-white hover:bg-[hsl(var(--tab-content-hover))] hover:text-white"
+            className="flex items-center gap-2 font-bold data-[state=active]:bg-[hsl(var(--tab-content))] data-[state=active]:text-white hover:bg-[hsl(var(--tab-content-hover))] hover:text-white"
           >
             <FileText className="h-4 w-4" />
             Content
           </TabsTrigger>
           <TabsTrigger 
             value="media" 
-            className="flex items-center gap-2 data-[state=active]:bg-[hsl(var(--tab-media))] data-[state=active]:text-white hover:bg-[hsl(var(--tab-media-hover))] hover:text-white"
+            className="flex items-center gap-2 font-bold data-[state=active]:bg-[hsl(var(--tab-media))] data-[state=active]:text-white hover:bg-[hsl(var(--tab-media-hover))] hover:text-white"
           >
             <Image className="h-4 w-4" />
             Media
