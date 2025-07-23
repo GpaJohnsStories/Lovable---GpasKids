@@ -104,18 +104,22 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                     />
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <NavigationButton 
+                    <NavigationDropdown 
                       item={{
                         name: "About",
-                        path: "/about",
                         bgColor: "bg-green-500",
                         hoverColor: "hover:bg-green-600",
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
                         textColor: "text-white",
-                        customIcon: getIconUrl('ICO-INF.png')
+                        customIcon: getIconUrl('ICO-INF.png'),
+                        subItems: [
+                          { name: "About Grandpa John", path: "/about" },
+                          { name: "About Buddy", path: "/about#about-buddy" },
+                          { name: "About Authors", path: "/public-author-bios" },
+                          { name: "A Special Thank You", path: "/about#special-thank-you" }
+                        ]
                       }}
-                      isActive={false}
                     />
                   </NavigationMenuItem>
                   <NavigationMenuItem>
@@ -267,20 +271,24 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                 />
               </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationButton 
+                  <NavigationDropdown 
                     item={{
                       name: "About",
-                      path: "/about",
                       bgColor: "bg-green-500",
                       hoverColor: "hover:bg-green-600",
                       shadowColor: "shadow-lg",
                       hoverShadow: "hover:shadow-xl",
                       textColor: "text-white",
-                      customIcon: getIconUrl('ICO-INF.png')
+                      customIcon: getIconUrl('ICO-INF.png'),
+                      subItems: [
+                        { name: "About Grandpa John", path: "/about" },
+                        { name: "About Buddy", path: "/about#about-buddy" },
+                        { name: "About Authors", path: "/public-author-bios" },
+                        { name: "A Special Thank You", path: "/about#special-thank-you" }
+                      ]
                     }}
-                  isActive={false}
-                />
-              </NavigationMenuItem>
+                  />
+                </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationButton 
                   item={{
