@@ -88,7 +88,7 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
           className={getButtonClass('thumbs_up')}
         >
           <ThumbsUp className="h-5 w-5" />
-          <span className="text-xs leading-tight text-center">Thumbs<br />Up</span>
+          <span className="text-base leading-tight text-center">Thumbs<br />Up</span>
           <span className="text-xs">({thumbsUpCount})</span>
         </Button>
 
@@ -98,7 +98,7 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
           className={getButtonClass('ok')}
         >
           <span className="text-xl">—</span>
-          <span className="text-xs">OK</span>
+          <span className="text-base">OK</span>
           <span className="text-xs">({okCount})</span>
         </Button>
 
@@ -108,7 +108,7 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
           className={getButtonClass('thumbs_down')}
         >
           <ThumbsDown className="h-5 w-5" />
-          <span className="text-xs leading-tight text-center">Thumbs<br />Down</span>
+          <span className="text-base leading-tight text-center">Thumbs<br />Down</span>
           <span className="text-xs">({thumbsDownCount})</span>
         </Button>
       </div>
