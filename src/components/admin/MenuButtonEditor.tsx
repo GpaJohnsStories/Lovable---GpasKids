@@ -468,7 +468,7 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
                     >
                       {/* Color Swatch */}
                       <div 
-                        className="w-10 h-10 rounded-lg border-2 border-white shadow-md flex-shrink-0"
+                        className="w-[50px] h-[50px] rounded-lg border-2 border-white shadow-md flex-shrink-0"
                         style={{ backgroundColor: preset.hex }}
                       />
                       {/* Color Info */}
