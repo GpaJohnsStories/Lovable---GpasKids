@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
+import { useUserRole } from "@/hooks/useUserRole";
 import DynamicNavigationMenu from "./DynamicNavigationMenu";
 
 interface HeaderContentProps {
@@ -10,6 +11,7 @@ interface HeaderContentProps {
 const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const location = useLocation();
   const { showHelp } = useHelp();
+  const { userRole } = useUserRole();
 
   const handleHelpClick = () => {
     console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
@@ -59,6 +61,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           {isHomePage && (
             <div className="mt-4">
               <DynamicNavigationMenu menuGroup="Public" />
+              {userRole && (userRole === 'admin' || userRole === 'viewer') && (
+                <div className="mt-2">
+                  <DynamicNavigationMenu menuGroup="Admin" />
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -108,7 +115,14 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
       )}
 
       {/* Navigation Menu - Only show on non-home pages */}
-      {!isHomePage && <DynamicNavigationMenu menuGroup="Public" />}
+      {!isHomePage && (
+        <div className="flex items-center gap-4">
+          <DynamicNavigationMenu menuGroup="Public" />
+          {userRole && (userRole === 'admin' || userRole === 'viewer') && (
+            <DynamicNavigationMenu menuGroup="Admin" />
+          )}
+        </div>
+      )}
     </div>
   );
 };
