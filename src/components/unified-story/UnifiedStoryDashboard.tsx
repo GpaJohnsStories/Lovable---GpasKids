@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Save, X, FileText, Image, Video, Volume2 } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StoryFormFields from "../StoryFormFields";
 import StoryPhotoUpload from "../StoryPhotoUpload";
 import StoryVideoUpload from "../StoryVideoUpload";
@@ -50,6 +51,16 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   allowTextToSpeech = false,
   context = "unified-story-system"
 }) => {
+  const getPublishedColor = (publishedStatus: string) => {
+    switch (publishedStatus) {
+      case 'Y':
+        return 'text-green-700 border-green-300 bg-green-50';
+      case 'N':
+        return 'text-red-700 border-red-300 bg-red-50';
+      default:
+        return 'text-gray-700 border-gray-300 bg-gray-50';
+    }
+  };
   console.log('🎯 UnifiedStoryDashboard: Rendering with formData:', {
     id: formData.id,
     title: formData.title,
@@ -108,15 +119,15 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     {/* Publication Status - 50% width */}
                     <div className="space-y-2">
                       <Label htmlFor="published">Publication Status</Label>
-                      <select
-                        id="published"
-                        value={formData.published}
-                        onChange={(e) => onInputChange('published', e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded-md"
-                      >
-                        <option value="N">Not Published</option>
-                        <option value="Y">Published</option>
-                      </select>
+                      <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
+                        <SelectTrigger className={`font-bold ${getPublishedColor(formData.published)}`}>
+                          <SelectValue placeholder="Select publish status" />
+                        </SelectTrigger>
+                        <SelectContent className="z-50 bg-white border shadow-lg">
+                          <SelectItem value="N">Not Published</SelectItem>
+                          <SelectItem value="Y">Published</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     {/* Copyright Status - 50% width */}
