@@ -175,12 +175,12 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
           {/* Header */}
           <div className="flex items-center gap-2">
             <Volume2 className="h-4 w-4 text-orange-600" />
-            <span className="font-medium text-sm">Voice Preview & Testing</span>
+            <span className="font-bold text-sm">Voice Preview & Testing</span>
           </div>
 
           {/* Sample text input - now always visible */}
           <div className="space-y-2">
-            <label className="text-xs font-medium text-gray-600">
+            <label className="text-xs font-bold text-gray-600">
               Test Text (limited to 200 words):
             </label>
             <WordLimitedTextarea

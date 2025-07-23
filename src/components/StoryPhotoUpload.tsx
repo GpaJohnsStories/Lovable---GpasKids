@@ -143,7 +143,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
       <Card key={photoNumber} className="p-4">
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
-            <Label className="text-sm font-medium">Photo {photoNumber}</Label>
+            <Label className="text-sm font-bold">Photo {photoNumber}</Label>
             {photoUrl && (
               <Button
                 type="button"
