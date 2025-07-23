@@ -28,7 +28,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-emerald-600', 
       text: 'text-white', 
       shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Nature & adventure - perfect for outdoor story themes'
+      description: 'Nature & adventure - perfect for outdoor story themes\nIdeal for: Library/Stories, Nature Tales category'
     },
     { 
       name: 'Banner Blue', 
@@ -37,7 +37,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-blue-700', 
       text: 'text-white', 
       shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Trustworthy & calm - great for educational content'
+      description: 'Trustworthy & calm - great for educational content\nIdeal for: How-To guides, About page, main navigation'
     },
     { 
       name: 'Gold', 
@@ -46,7 +46,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-yellow-600', 
       text: 'text-yellow-900', 
       shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Warm treasure feel - creates Grandpa\'s cozy atmosphere'
+      description: 'Warm treasure feel - creates Grandpa\'s cozy atmosphere\nIdeal for: Featured stories, special announcements'
     },
     { 
       name: 'Sunset Orange', 
@@ -55,7 +55,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-orange-600', 
       text: 'text-white', 
       shadow: 'hover:shadow-[0_4px_0_#ea580c,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Storytelling warmth - evokes fireside tale moments'
+      description: 'Storytelling warmth - evokes fireside tale moments\nIdeal for: Story submission, writing tools, creative sections'
     },
   ],
   secondary: [
@@ -67,7 +67,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-red-600', 
       text: 'text-white', 
       shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Gentle excitement - not harsh, perfect for highlights'
+      description: 'Gentle excitement - not harsh, perfect for highlights\nIdeal for: Important alerts, featured content, call-to-action'
     },
     { 
       name: 'Royal Purple', 
@@ -76,7 +76,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-violet-600', 
       text: 'text-white', 
       shadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Magical wonder - sparks imagination in young minds'
+      description: 'Magical wonder - sparks imagination in young minds\nIdeal for: Fantasy stories, creative writing, imagination sections'
     },
     { 
       name: 'Slate Gray', 
@@ -85,7 +85,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-slate-600', 
       text: 'text-white', 
       shadow: 'hover:shadow-[0_4px_0_#475569,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Calm neutrality - accessible with good contrast'
+      description: 'Calm neutrality - accessible with good contrast\nIdeal for: Settings, admin tools, secondary navigation'
     },
   ],
   additional: [
@@ -97,7 +97,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-orange-700', 
       text: 'text-white', 
       shadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Welcoming comfort - matches living room atmosphere'
+      description: 'Welcoming comfort - matches living room atmosphere\nIdeal for: Home page, welcome sections, cozy story categories'
     },
     { 
       name: 'Bright Yellow', 
@@ -106,7 +106,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-yellow-500', 
       text: 'text-yellow-900', 
       shadow: 'hover:shadow-[0_4px_0_#eab308,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Cheerful & energetic - draws children\'s attention safely'
+      description: 'Cheerful & energetic - draws children\'s attention safely\nIdeal for: Games, interactive features, fun activities'
     },
     { 
       name: 'Meadow Green', 
@@ -115,7 +115,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-lime-700', 
       text: 'text-white', 
       shadow: 'hover:shadow-[0_4px_0_#4d7c0f,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Fresh growth - encourages learning and discovery'
+      description: 'Fresh growth - encourages learning and discovery\nIdeal for: Educational content, new features, learning tools'
     },
     { 
       name: 'Cream', 
@@ -124,7 +124,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-amber-200', 
       text: 'text-amber-900', 
       shadow: 'hover:shadow-[0_4px_0_#fbbf24,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Soft comfort - gentle on young eyes with high contrast'
+      description: 'Soft comfort - gentle on young eyes with high contrast\nIdeal for: Quiet reading sections, calm content areas'
     },
     { 
       name: 'Peach', 
@@ -133,7 +133,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-orange-400', 
       text: 'text-orange-900', 
       shadow: 'hover:shadow-[0_4px_0_#fb923c,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Gentle warmth - creates welcoming child-friendly feel'
+      description: 'Gentle warmth - creates welcoming child-friendly feel\nIdeal for: Comments section, community features, safe spaces'
     },
   ]
 };
