@@ -135,6 +135,33 @@ const COLOR_PRESETS = {
       shadow: 'hover:shadow-[0_4px_0_#fb923c,0_6px_12px_rgba(0,0,0,0.4)]',
       description: 'Gentle warmth - creates welcoming child-friendly feel. — Ideal for: Comments section, community features, safe spaces'
     },
+    { 
+      name: 'Birch Wood', 
+      hex: '#D4A57A',
+      bg: 'bg-amber-300', 
+      hover: 'hover:bg-amber-400', 
+      text: 'text-amber-900', 
+      shadow: 'hover:shadow-[0_4px_0_#f59e0b,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Light wood warmth - evokes cozy reading nooks and classic furniture. — Ideal for: Library sections, classic story collections'
+    },
+    { 
+      name: 'Oak Wood', 
+      hex: '#8B4513',
+      bg: 'bg-yellow-800', 
+      hover: 'hover:bg-yellow-900', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#713f12,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Rich wood character - brings Grandpa\'s study atmosphere to life. — Ideal for: About page, wisdom sections, traditional content'
+    },
+    { 
+      name: 'Mahogany Wood', 
+      hex: '#654321',
+      bg: 'bg-amber-900', 
+      hover: 'hover:bg-amber-950', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#451a03,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Deep wood elegance - sophisticated warmth for storytelling heritage. — Ideal for: Premium content, featured author sections, legacy stories'
+    },
   ]
 };
 
