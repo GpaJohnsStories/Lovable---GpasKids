@@ -61,9 +61,9 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
         </TooltipProvider>
       </div>
       
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex justify-center">
         <Select value={value || '©'} onValueChange={onChange}>
-          <SelectTrigger className="w-48">
+          <SelectTrigger className={`w-48 font-bold ${getCopyrightColor(value || '©')}`}>
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="z-50 bg-white border shadow-lg">
@@ -78,10 +78,6 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
             </SelectItem>
           </SelectContent>
         </Select>
-        
-        <div className={`px-4 py-3 rounded-lg border-2 text-center font-bold text-lg shadow-md ${getCopyrightColor(value || '©')}`}>
-          {value || '©'} - {getCopyrightLabel(value || '©')}
-        </div>
       </div>
     </div>
   );
