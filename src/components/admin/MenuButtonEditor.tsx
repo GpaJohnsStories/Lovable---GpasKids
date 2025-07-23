@@ -28,7 +28,7 @@ const COLOR_PRESETS = {
       hover: 'hover:bg-emerald-600', 
       text: 'text-white', 
       shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]',
-      description: 'Nature & adventure - perfect for outdoor story themes. <br>Ideal for: Library/Stories, Nature Tales category'
+      description: 'Nature & adventure - perfect for outdoor story themes. — Ideal for: Library/Stories, Nature Tales category'
     },
     { 
       name: 'Banner Blue', 
