@@ -465,7 +465,7 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
                       key={preset.name}
                       variant="outline"
                       onClick={() => handleColorPresetSelect(preset)}
-                      className="h-36 p-3 flex flex-col items-center gap-2 text-left hover:shadow-lg transition-all border-2 hover:border-primary/30"
+                      className="h-50 p-3 flex flex-col items-center gap-2 text-left hover:shadow-lg transition-all border-2 hover:border-primary/30"
                     >
                       {/* Color Swatch */}
                       <div 
