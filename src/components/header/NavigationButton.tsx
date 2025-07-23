@@ -1,7 +1,7 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { ChevronDown, LucideIcon } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 interface NavigationItem {
   name: string;
@@ -39,7 +39,7 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
     'transition-all duration-200', 
     'hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]',
     'flex items-center justify-center',
-    item.icon ? 'min-w-[100px] gap-1' : 'min-w-[80px]',
+    item.icon ? 'min-w-[90px] gap-1' : 'min-w-[70px]',
     'font-fun border-t border-white border-opacity-30',
     'text-sm',
     isDropdown ? "group cursor-pointer" : "cursor-pointer"
@@ -72,11 +72,6 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
       >
         <div className={buttonClasses} onClick={handleClick}>
           <span className={item.icon ? '' : 'text-center w-full'}>{item.name}</span>
-          <ChevronDown
-            className="relative top-[1px] ml-2 h-5 w-5 transition duration-200 group-data-[state=open]:rotate-180 drop-shadow-sm"
-            aria-hidden="true"
-            strokeWidth={2.5}
-          />
         </div>
         {item.description && isHovered && (
           <div className="nav-bubble opacity-100 visible">
