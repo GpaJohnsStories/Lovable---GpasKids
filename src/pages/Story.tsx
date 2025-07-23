@@ -26,6 +26,9 @@ interface StoryData {
   photo_link_1: string | null;
   photo_link_2: string | null;
   photo_link_3: string | null;
+  photo_alt_1: string | null;
+  photo_alt_2: string | null;
+  photo_alt_3: string | null;
   audio_url: string | null;
   audio_segments?: number;
   audio_duration?: number;
@@ -140,15 +143,47 @@ const Story = () => {
           />
 
           <main className="mb-8">
-            {story.photo_link_1 && (
-              <div className="mb-6">
-                <img
-                  src={story.photo_link_1}
-                  alt={story.title}
-                  className="w-full rounded-lg shadow-lg border-4 border-white"
-                />
-              </div>
-            )}
+            {/* Photo Gallery */}
+            <div className="space-y-6 mb-8">
+              {story.photo_link_1 && (
+                <div>
+                  <img
+                    src={story.photo_link_1}
+                    alt={story.photo_alt_1 || story.title}
+                    className="w-full rounded-lg shadow-lg border-4 border-white"
+                  />
+                  {story.photo_alt_1 && (
+                    <p className="text-sm text-gray-600 italic mt-2 text-center">{story.photo_alt_1}</p>
+                  )}
+                </div>
+              )}
+              
+              {story.photo_link_2 && (
+                <div>
+                  <img
+                    src={story.photo_link_2}
+                    alt={story.photo_alt_2 || story.title}
+                    className="w-full rounded-lg shadow-lg border-4 border-white"
+                  />
+                  {story.photo_alt_2 && (
+                    <p className="text-sm text-gray-600 italic mt-2 text-center">{story.photo_alt_2}</p>
+                  )}
+                </div>
+              )}
+              
+              {story.photo_link_3 && (
+                <div>
+                  <img
+                    src={story.photo_link_3}
+                    alt={story.photo_alt_3 || story.title}
+                    className="w-full rounded-lg shadow-lg border-4 border-white"
+                  />
+                  {story.photo_alt_3 && (
+                    <p className="text-sm text-gray-600 italic mt-2 text-center">{story.photo_alt_3}</p>
+                  )}
+                </div>
+              )}
+            </div>
 
             <div
               className="story-content"
