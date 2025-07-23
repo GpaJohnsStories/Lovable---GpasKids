@@ -35,11 +35,11 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
   const buttonClasses = cn(
     item.bgColor, item.hoverColor, item.shadowColor, item.hoverShadow,
     isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : '',
-    item.textColor, 'px-5 py-2 rounded-lg font-semibold',
+    item.textColor, 'px-4 py-3 rounded-lg font-semibold',
     'transition-all duration-200', 
     'hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]',
     'flex items-center justify-center',
-    item.icon ? 'min-w-[90px] gap-1' : 'min-w-[70px]',
+    'w-[60px] h-[60px]', // Fixed size for icon-only buttons
     'font-fun border-t border-white border-opacity-30',
     'text-sm',
     isDropdown ? "group cursor-pointer" : "cursor-pointer"
@@ -70,8 +70,8 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
         onMouseEnter={() => onHover?.(item.name)}
         onMouseLeave={() => onHover?.(null)}
       >
-        <div className={buttonClasses} onClick={handleClick}>
-          <span className={item.icon ? '' : 'text-center w-full'}>{item.name}</span>
+        <div className={buttonClasses} onClick={handleClick} aria-label={item.name}>
+          {item.icon && <item.icon size={24} />}
         </div>
         {item.description && isHovered && (
           <div className="nav-bubble opacity-100 visible">
@@ -89,11 +89,8 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
         onMouseEnter={() => onHover?.(item.name)}
         onMouseLeave={() => onHover?.(null)}
       >
-        <div className={buttonClasses}>
-          {item.icon && <item.icon size={16} />}
-          <span className={item.icon ? '' : 'text-center w-full'}>
-            {item.name}
-          </span>
+        <div className={buttonClasses} aria-label={item.name}>
+          {item.icon && <item.icon size={24} />}
         </div>
         {item.description && isHovered && (
           <div className="nav-bubble opacity-100 visible">
@@ -110,11 +107,8 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
       onMouseEnter={() => onHover?.(item.name)}
       onMouseLeave={() => onHover?.(null)}
     >
-      <div className={buttonClasses} onClick={handleClick}>
-        {item.icon && <item.icon size={16} />}
-        <span className={item.icon ? '' : 'text-center w-full'}>
-          {item.name}
-        </span>
+      <div className={buttonClasses} onClick={handleClick} aria-label={item.name}>
+        {item.icon && <item.icon size={24} />}
       </div>
       {item.description && isHovered && (
         <div className="nav-bubble opacity-100 visible">

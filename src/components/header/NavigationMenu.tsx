@@ -1,6 +1,6 @@
 
 import { useLocation } from "react-router-dom";
-import { Lock } from "lucide-react";
+import { Home, BookOpen, MessageCircle, Info, PenTool, Lightbulb, Lock } from "lucide-react";
 import {
   NavigationMenu as ShadcnNavigationMenu,
   NavigationMenuItem,
@@ -38,7 +38,8 @@ const NavigationMenu = () => {
       shadowColor: 'shadow-[0_6px_0_#7AB8C4,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-blue-900',
-      description: 'Return to Home Screen'
+      description: 'Return to Home Screen',
+      icon: Home
     },
     { 
       name: 'Libraries', 
@@ -49,6 +50,7 @@ const NavigationMenu = () => {
       hoverShadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-white',
       description: 'Visit List of Stories or View a Story',
+      icon: BookOpen,
       subItems: [
         { name: 'Story Library', path: '/library' },
         { name: 'Currently Reading', path: currentStoryPath || '#', disabled: !currentStoryPath },
@@ -62,6 +64,7 @@ const NavigationMenu = () => {
       hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-green-800',
       description: 'Make a Comment or View All Comments',
+      icon: MessageCircle,
       subItems: [
         { name: 'Make Comment', path: '/make-comment' },
         { name: 'View Comments', path: '/view-comments' },
@@ -75,6 +78,7 @@ const NavigationMenu = () => {
       hoverShadow: 'hover:shadow-[0_4px_0_#0369a1,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-blue-950',
       description: 'More about Grandpa John, Buddy, Authors, and Special Thanks',
+      icon: Info,
       subItems: [
         { name: 'About Grandpa John', path: '/about' },
         { name: 'About Buddy', path: '/about#buddy' },
@@ -90,6 +94,7 @@ const NavigationMenu = () => {
       hoverShadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-white',
       description: 'Learn about copyright and writing your own stories',
+      icon: PenTool,
       subItems: [
         { name: 'What Copyright Means to You', path: '/writing' },
         { name: 'Write a Story for Gpa\'s Kids', path: '/writing#write-story' },
@@ -103,7 +108,8 @@ const NavigationMenu = () => {
       shadowColor: 'shadow-[0_6px_0_#15803d,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#15803d,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-white',
-      description: 'How-to guides and instructions'
+      description: 'How-to guides and instructions',
+      icon: Lightbulb
     },
     { 
       name: 'Privacy', 
@@ -113,7 +119,8 @@ const NavigationMenu = () => {
       shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
       hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-black',
-      description: 'Details of our privacy and security and how we\'ve implemented it'
+      description: 'Details of our privacy and security and how we\'ve implemented it',
+      icon: Lock
     }
   ];
 
