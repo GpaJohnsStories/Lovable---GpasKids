@@ -499,7 +499,7 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
 
               <div>
                 <Label>Color Presets</Label>
-                <div className="mt-2 max-h-96 overflow-y-auto space-y-6">
+                <div className="mt-2 space-y-6">
                   {/* Primary Palette */}
                   <div className="p-4 border-2 border-primary/20 rounded-lg bg-primary/5">
                     <h4 className="font-semibold text-sm mb-3 text-primary">Primary Palette (Core Brand Colors)</h4>
