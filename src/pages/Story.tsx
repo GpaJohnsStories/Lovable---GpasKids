@@ -13,6 +13,7 @@ import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Button } from "@/components/ui/button";
 import StoryPhotosGallery from "@/components/StoryPhotosGallery";
+import StoryVideoPlayer from "@/components/StoryVideoPlayer";
 import StoryVotingSection from "@/components/StoryVotingSection";
 import { getStoryPhotos } from "@/utils/storyUtils";
 
@@ -32,6 +33,7 @@ interface StoryData {
   photo_alt_1: string | null;
   photo_alt_2: string | null;
   photo_alt_3: string | null;
+  video_url: string | null;
   audio_url: string | null;
   audio_segments?: number;
   audio_duration?: number;
@@ -147,7 +149,7 @@ const Story = () => {
             createdAt={story.created_at}
             tagline={story.tagline}
             storyCode={story.story_code}
-            showStoryCode={false}
+            showStoryCode={true}
             content={story.content}
             description={story.excerpt}
             audioUrl={story.audio_url}
@@ -173,6 +175,16 @@ const Story = () => {
           <main className="mb-8">
             {/* Photo Gallery using StoryPhotosGallery component */}
             <StoryPhotosGallery photos={photos} storyTitle={story.title} />
+
+            {/* Video Player - Show if video exists */}
+            {story.video_url && (
+              <div className="mb-8">
+                <StoryVideoPlayer
+                  videoUrl={story.video_url}
+                  title={story.title}
+                />
+              </div>
+            )}
 
             <div
               className="story-content"
