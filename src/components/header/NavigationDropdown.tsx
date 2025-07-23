@@ -17,6 +17,7 @@ interface NavigationItem {
   shadowColor: string;
   hoverShadow: string;
   textColor: string;
+  customIcon?: string;
   description?: string;
   subItems?: Array<{
     name: string;
