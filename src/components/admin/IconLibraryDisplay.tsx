@@ -62,7 +62,7 @@ const IconLibraryDisplay = () => {
   }
 
   const getIconUrl = (filePath: string) => {
-    return supabase.storage.from('menu-icons').getPublicUrl(filePath).data.publicUrl;
+    return supabase.storage.from('icons').getPublicUrl(filePath).data.publicUrl;
   };
 
   return (

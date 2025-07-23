@@ -25,7 +25,7 @@ const IconUploadForm = () => {
       const fileName = `${code}.${fileExt}`;
       
       const { error: uploadError } = await supabase.storage
-        .from('menu-icons')
+        .from('icons')
         .upload(fileName, file, {
           cacheControl: '3600',
           upsert: true
