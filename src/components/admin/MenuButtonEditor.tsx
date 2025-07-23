@@ -92,12 +92,12 @@ const COLOR_PRESETS = [
     shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   { 
-    name: 'Teal Aqua', 
-    hex: '#14B8A6',
-    bg: 'bg-teal-500', 
-    hover: 'hover:bg-teal-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#0d9488,0_6px_12px_rgba(0,0,0,0.4)]' 
+    name: 'Yellow', 
+    hex: '#FFFF00',
+    bg: 'bg-yellow-400', 
+    hover: 'hover:bg-yellow-500', 
+    text: 'text-black', 
+    shadow: 'hover:shadow-[0_4px_0_#eab308,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   { 
     name: 'Indigo Night', 
