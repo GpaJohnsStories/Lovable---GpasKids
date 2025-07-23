@@ -187,6 +187,33 @@ export type Database = {
         }
         Relationships: []
       }
+      icon_library: {
+        Row: {
+          created_at: string
+          file_path: string
+          icon_code: string
+          icon_name: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          file_path: string
+          icon_code: string
+          icon_name: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          file_path?: string
+          icon_code?: string
+          icon_name?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       menu_buttons: {
         Row: {
           bg_color: string
