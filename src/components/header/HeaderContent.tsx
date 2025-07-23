@@ -73,19 +73,21 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             className="w-72 h-48 rounded-full border-4 border-white shadow-[inset_0_12px_20px_rgba(0,0,0,0.5),inset_0_6px_12px_rgba(0,0,0,0.3),inset_0_2px_6px_rgba(0,0,0,0.2)] object-cover object-left"
           />
           {/* Speech Bubble Image */}
-          <div className="absolute -left-24 top-2 relative">
-            <img 
-              src="/lovable-uploads/85707d76-31c8-4dac-9fa7-c6752c4f8e74.png" 
-              alt="Speech bubble saying HURRY UP!!! We want to read!!!"
-              className="w-24 h-24 object-contain"
-              onLoad={() => console.log('New speech bubble image loaded successfully')}
-              onError={(e) => console.log('New speech bubble image failed to load:', e)}
-            />
-            {/* "Hi" text overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-black font-bold text-lg font-georgia">
-                Hi
-              </span>
+          <div className="absolute -left-24 top-2">
+            <div className="relative">
+              <img 
+                src="/lovable-uploads/85707d76-31c8-4dac-9fa7-c6752c4f8e74.png" 
+                alt="Speech bubble saying HURRY UP!!! We want to read!!!"
+                className="w-24 h-24 object-contain"
+                onLoad={() => console.log('New speech bubble image loaded successfully')}
+                onError={(e) => console.log('New speech bubble image failed to load:', e)}
+              />
+              {/* "Hi" text overlay - positioned in upper part of bubble */}
+              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+                <span className="text-black font-bold text-xl font-georgia drop-shadow-sm">
+                  Hi
+                </span>
+              </div>
             </div>
           </div>
           {/* Under Construction Image - Positioned at bottom of telescope */}
