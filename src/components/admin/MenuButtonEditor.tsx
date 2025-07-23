@@ -461,26 +461,25 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
                 <Label>Color Presets</Label>
                 <div className="grid grid-cols-4 gap-2 mt-2 max-h-80 overflow-y-auto">
                   {COLOR_PRESETS.map((preset) => (
-                    <Button
+                    <div
                       key={preset.name}
-                      variant="outline"
                       onClick={() => handleColorPresetSelect(preset)}
-                      className="h-50 p-3 flex flex-col items-center gap-2 text-left hover:shadow-lg transition-all border-2 hover:border-primary/30"
+                      className="min-h-48 p-3 flex flex-col items-center gap-2 border-2 border-border rounded-lg cursor-pointer hover:shadow-lg hover:border-primary/30 transition-all bg-card"
                     >
                       {/* Color Swatch */}
                       <div 
-                        className="w-10 h-10 rounded-lg border-2 border-white shadow-md"
+                        className="w-10 h-10 rounded-lg border-2 border-white shadow-md flex-shrink-0"
                         style={{ backgroundColor: preset.hex }}
                       />
                       {/* Color Info */}
-                      <div className="flex flex-col gap-1 w-full text-center">
+                      <div className="flex flex-col gap-1 w-full text-center flex-1 justify-center">
                         <div className="font-semibold text-xs">{preset.name}</div>
                         <div className="text-xs text-muted-foreground font-mono">{preset.hex}</div>
-                        <div className="text-xs text-muted-foreground leading-tight break-words">
+                        <div className="text-xs text-muted-foreground leading-tight break-words word-wrap hyphens-auto px-1">
                           {preset.description}
                         </div>
                       </div>
-                    </Button>
+                    </div>
                   ))}
                 </div>
               </div>
