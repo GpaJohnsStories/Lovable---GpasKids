@@ -447,7 +447,7 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
 
               <div>
                 <Label>Color Presets</Label>
-                <div className="grid grid-cols-3 gap-2 mt-2 max-h-64 overflow-y-auto">
+                <div className="grid grid-cols-3 gap-1 mt-2 max-h-64 overflow-y-auto max-w-[60%]">
                   {COLOR_PRESETS.map((preset) => (
                     <Button
                       key={preset.name}
