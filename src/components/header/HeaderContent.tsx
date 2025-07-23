@@ -74,20 +74,19 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           />
           {/* Speech Bubble Image */}
           <div className="absolute -left-24 top-2">
-            <div className="relative">
-              <img 
-                src="/lovable-uploads/85707d76-31c8-4dac-9fa7-c6752c4f8e74.png" 
-                alt="Speech bubble saying HURRY UP!!! We want to read!!!"
-                className="w-24 h-24 object-contain relative z-0"
-                onLoad={() => console.log('New speech bubble image loaded successfully')}
-                onError={(e) => console.log('New speech bubble image failed to load:', e)}
-              />
-              {/* "Hi" text overlay - positioned above the bubble */}
-              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20">
-                <span className="text-black font-bold text-xl font-georgia drop-shadow-sm relative z-30">
-                  Hi
-                </span>
-              </div>
+            {/* Bottom layer - Speech bubble image */}
+            <img 
+              src="/lovable-uploads/85707d76-31c8-4dac-9fa7-c6752c4f8e74.png" 
+              alt="Speech bubble"
+              className="w-24 h-24 object-contain"
+              onLoad={() => console.log('New speech bubble image loaded successfully')}
+              onError={(e) => console.log('New speech bubble image failed to load:', e)}
+            />
+            {/* Top layer - "Hi" text */}
+            <div className="absolute top-6 left-8 pointer-events-none">
+              <span className="text-black font-bold text-lg" style={{ fontFamily: 'Georgia, serif' }}>
+                Hi
+              </span>
             </div>
           </div>
           {/* Under Construction Image - Positioned at bottom of telescope */}
