@@ -26,13 +26,13 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
   const getCopyrightColor = (status: string) => {
     switch (status) {
       case '©':
-        return 'text-red-600 bg-red-50 border-red-200';
+        return 'text-white bg-red-600 border-red-700';
       case 'O':
-        return 'text-green-600 bg-green-50 border-green-200';
+        return 'text-white bg-green-600 border-green-700';
       case 'S':
-        return 'text-yellow-600 bg-yellow-50 border-yellow-200';
+        return 'text-black bg-orange-400 border-orange-500';
       default:
-        return 'text-red-600 bg-red-50 border-red-200';
+        return 'text-white bg-red-600 border-red-700';
     }
   };
 
@@ -61,7 +61,7 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
         </TooltipProvider>
       </div>
       
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col items-center gap-3">
         <Select value={value || '©'} onValueChange={onChange}>
           <SelectTrigger className="w-48">
             <SelectValue />
@@ -79,7 +79,7 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
           </SelectContent>
         </Select>
         
-        <div className={`px-3 py-2 rounded-md border text-sm font-medium ${getCopyrightColor(value || '©')}`}>
+        <div className={`px-4 py-3 rounded-lg border-2 text-center font-bold text-lg shadow-md ${getCopyrightColor(value || '©')}`}>
           {value || '©'} - {getCopyrightLabel(value || '©')}
         </div>
       </div>
