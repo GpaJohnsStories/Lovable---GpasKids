@@ -19,7 +19,15 @@ interface MenuButtonEditorProps {
 }
 
 const COLOR_PRESETS = [
-  // Row 1: Blues
+  // Row 1: Primary Colors
+  { 
+    name: 'Forest Green', 
+    hex: '#16A34A',
+    bg: 'bg-emerald-500', 
+    hover: 'hover:bg-emerald-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
   { 
     name: 'Banner Blue', 
     hex: '#2563EB',
@@ -29,22 +37,14 @@ const COLOR_PRESETS = [
     shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   { 
-    name: 'Ocean Blue', 
-    hex: '#3B82F6',
-    bg: 'bg-blue-500', 
-    hover: 'hover:bg-blue-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]' 
+    name: 'Gold', 
+    hex: '#EAB308',
+    bg: 'bg-yellow-500', 
+    hover: 'hover:bg-yellow-600', 
+    text: 'text-yellow-900', 
+    shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
-  { 
-    name: 'Indigo Night', 
-    hex: '#6366F1',
-    bg: 'bg-indigo-500', 
-    hover: 'hover:bg-indigo-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#4f46e5,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
-  // Row 2: Warm colors
+  // Row 2: Primary Colors (continued)
   { 
     name: 'Sunset Orange', 
     hex: '#F97316',
@@ -62,23 +62,6 @@ const COLOR_PRESETS = [
     shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
   { 
-    name: 'Fire Engine Red', 
-    hex: '#CE2029',
-    bg: 'bg-red-600', 
-    hover: 'hover:bg-red-700', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
-  // Row 3: Yellows/Golds
-  { 
-    name: 'Gold', 
-    hex: '#EAB308',
-    bg: 'bg-yellow-500', 
-    hover: 'hover:bg-yellow-600', 
-    text: 'text-yellow-900', 
-    shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
-  { 
     name: 'Royal Purple', 
     hex: '#8B5CF6',
     bg: 'bg-violet-500', 
@@ -86,31 +69,7 @@ const COLOR_PRESETS = [
     text: 'text-white', 
     shadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
-  { 
-    name: 'Yellow', 
-    hex: '#FFFF00',
-    bg: 'bg-yellow-400', 
-    hover: 'hover:bg-yellow-500', 
-    text: 'text-black', 
-    shadow: 'hover:shadow-[0_4px_0_#eab308,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
-  // Row 4: Greens and Gray
-  { 
-    name: 'Forest Green', 
-    hex: '#16A34A',
-    bg: 'bg-emerald-500', 
-    hover: 'hover:bg-emerald-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
-  { 
-    name: 'Safety Green', 
-    hex: '#84CC16',
-    bg: 'bg-lime-500', 
-    hover: 'hover:bg-lime-600', 
-    text: 'text-lime-900', 
-    shadow: 'hover:shadow-[0_4px_0_#65a30d,0_6px_12px_rgba(0,0,0,0.4)]' 
-  },
+  // Row 3: Secondary Colors
   { 
     name: 'Slate Gray', 
     hex: '#64748B',
@@ -118,6 +77,47 @@ const COLOR_PRESETS = [
     hover: 'hover:bg-slate-600', 
     text: 'text-white', 
     shadow: 'hover:shadow-[0_4px_0_#475569,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Meadow Green', 
+    hex: '#65A30D',
+    bg: 'bg-lime-600', 
+    hover: 'hover:bg-lime-700', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#4d7c0f,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Soft Pink', 
+    hex: '#EC4899',
+    bg: 'bg-pink-500', 
+    hover: 'hover:bg-pink-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#db2777,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  // Row 4: Accent Colors
+  { 
+    name: 'Sky Blue', 
+    hex: '#0EA5E9',
+    bg: 'bg-sky-500', 
+    hover: 'hover:bg-sky-600', 
+    text: 'text-white', 
+    shadow: 'hover:shadow-[0_4px_0_#0284c7,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Cream', 
+    hex: '#FEF3C7',
+    bg: 'bg-amber-100', 
+    hover: 'hover:bg-amber-200', 
+    text: 'text-amber-900', 
+    shadow: 'hover:shadow-[0_4px_0_#fbbf24,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
+  { 
+    name: 'Peach', 
+    hex: '#FDBA74',
+    bg: 'bg-orange-300', 
+    hover: 'hover:bg-orange-400', 
+    text: 'text-orange-900', 
+    shadow: 'hover:shadow-[0_4px_0_#fb923c,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
 ];
 
