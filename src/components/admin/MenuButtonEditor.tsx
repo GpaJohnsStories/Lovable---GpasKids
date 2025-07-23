@@ -18,120 +18,125 @@ interface MenuButtonEditorProps {
   onClose: () => void;
 }
 
-const COLOR_PRESETS = [
-  // Row 1: Primary Colors
-  { 
-    name: 'Forest Green', 
-    hex: '#16A34A',
-    bg: 'bg-emerald-500', 
-    hover: 'hover:bg-emerald-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Nature & adventure - perfect for outdoor story themes'
-  },
-  { 
-    name: 'Banner Blue', 
-    hex: '#2563EB',
-    bg: 'bg-blue-600', 
-    hover: 'hover:bg-blue-700', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Trustworthy & calm - great for educational content'
-  },
-  { 
-    name: 'Gold', 
-    hex: '#EAB308',
-    bg: 'bg-yellow-500', 
-    hover: 'hover:bg-yellow-600', 
-    text: 'text-yellow-900', 
-    shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Warm treasure feel - creates Grandpa\'s cozy atmosphere'
-  },
-  { 
-    name: 'Bright Yellow', 
-    hex: '#FACC15',
-    bg: 'bg-yellow-400', 
-    hover: 'hover:bg-yellow-500', 
-    text: 'text-yellow-900', 
-    shadow: 'hover:shadow-[0_4px_0_#eab308,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Cheerful & energetic - draws children\'s attention safely'
-  },
-  // Row 2: Primary Colors (continued)
-  { 
-    name: 'Sunset Orange', 
-    hex: '#F97316',
-    bg: 'bg-orange-500', 
-    hover: 'hover:bg-orange-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#ea580c,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Storytelling warmth - evokes fireside tale moments'
-  },
-  { 
-    name: 'Banner Orange', 
-    hex: '#E27D09',
-    bg: 'bg-orange-600', 
-    hover: 'hover:bg-orange-700', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Welcoming comfort - matches living room atmosphere'
-  },
-  { 
-    name: 'Cherry Red', 
-    hex: '#EF4444',
-    bg: 'bg-red-500', 
-    hover: 'hover:bg-red-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Gentle excitement - not harsh, perfect for highlights'
-  },
-  { 
-    name: 'Royal Purple', 
-    hex: '#8B5CF6',
-    bg: 'bg-violet-500', 
-    hover: 'hover:bg-violet-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Magical wonder - sparks imagination in young minds'
-  },
-  // Row 3: Secondary Colors
-  { 
-    name: 'Slate Gray', 
-    hex: '#64748B',
-    bg: 'bg-slate-500', 
-    hover: 'hover:bg-slate-600', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#475569,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Calm neutrality - accessible with good contrast'
-  },
-  { 
-    name: 'Meadow Green', 
-    hex: '#65A30D',
-    bg: 'bg-lime-600', 
-    hover: 'hover:bg-lime-700', 
-    text: 'text-white', 
-    shadow: 'hover:shadow-[0_4px_0_#4d7c0f,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Fresh growth - encourages learning and discovery'
-  },
-  // Row 4: Accent Colors
-  { 
-    name: 'Cream', 
-    hex: '#FEF3C7',
-    bg: 'bg-amber-100', 
-    hover: 'hover:bg-amber-200', 
-    text: 'text-amber-900', 
-    shadow: 'hover:shadow-[0_4px_0_#fbbf24,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Soft comfort - gentle on young eyes with high contrast'
-  },
-  { 
-    name: 'Peach', 
-    hex: '#FDBA74',
-    bg: 'bg-orange-300', 
-    hover: 'hover:bg-orange-400', 
-    text: 'text-orange-900', 
-    shadow: 'hover:shadow-[0_4px_0_#fb923c,0_6px_12px_rgba(0,0,0,0.4)]',
-    description: 'Gentle warmth - creates welcoming child-friendly feel'
-  },
-];
+const COLOR_PRESETS = {
+  primary: [
+    // Primary Palette (Core Brand Colors) - Top Row
+    { 
+      name: 'Forest Green', 
+      hex: '#16A34A',
+      bg: 'bg-emerald-500', 
+      hover: 'hover:bg-emerald-600', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#059669,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Nature & adventure - perfect for outdoor story themes'
+    },
+    { 
+      name: 'Banner Blue', 
+      hex: '#2563EB',
+      bg: 'bg-blue-600', 
+      hover: 'hover:bg-blue-700', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#1d4ed8,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Trustworthy & calm - great for educational content'
+    },
+    { 
+      name: 'Gold', 
+      hex: '#EAB308',
+      bg: 'bg-yellow-500', 
+      hover: 'hover:bg-yellow-600', 
+      text: 'text-yellow-900', 
+      shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Warm treasure feel - creates Grandpa\'s cozy atmosphere'
+    },
+    { 
+      name: 'Sunset Orange', 
+      hex: '#F97316',
+      bg: 'bg-orange-500', 
+      hover: 'hover:bg-orange-600', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#ea580c,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Storytelling warmth - evokes fireside tale moments'
+    },
+  ],
+  secondary: [
+    // Secondary Palette - Second Row
+    { 
+      name: 'Cherry Red', 
+      hex: '#EF4444',
+      bg: 'bg-red-500', 
+      hover: 'hover:bg-red-600', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#dc2626,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Gentle excitement - not harsh, perfect for highlights'
+    },
+    { 
+      name: 'Royal Purple', 
+      hex: '#8B5CF6',
+      bg: 'bg-violet-500', 
+      hover: 'hover:bg-violet-600', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#7c3aed,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Magical wonder - sparks imagination in young minds'
+    },
+    { 
+      name: 'Slate Gray', 
+      hex: '#64748B',
+      bg: 'bg-slate-500', 
+      hover: 'hover:bg-slate-600', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#475569,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Calm neutrality - accessible with good contrast'
+    },
+  ],
+  additional: [
+    // Additional Colors - Bottom Rows
+    { 
+      name: 'Banner Orange', 
+      hex: '#E27D09',
+      bg: 'bg-orange-600', 
+      hover: 'hover:bg-orange-700', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Welcoming comfort - matches living room atmosphere'
+    },
+    { 
+      name: 'Bright Yellow', 
+      hex: '#FACC15',
+      bg: 'bg-yellow-400', 
+      hover: 'hover:bg-yellow-500', 
+      text: 'text-yellow-900', 
+      shadow: 'hover:shadow-[0_4px_0_#eab308,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Cheerful & energetic - draws children\'s attention safely'
+    },
+    { 
+      name: 'Meadow Green', 
+      hex: '#65A30D',
+      bg: 'bg-lime-600', 
+      hover: 'hover:bg-lime-700', 
+      text: 'text-white', 
+      shadow: 'hover:shadow-[0_4px_0_#4d7c0f,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Fresh growth - encourages learning and discovery'
+    },
+    { 
+      name: 'Cream', 
+      hex: '#FEF3C7',
+      bg: 'bg-amber-100', 
+      hover: 'hover:bg-amber-200', 
+      text: 'text-amber-900', 
+      shadow: 'hover:shadow-[0_4px_0_#fbbf24,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Soft comfort - gentle on young eyes with high contrast'
+    },
+    { 
+      name: 'Peach', 
+      hex: '#FDBA74',
+      bg: 'bg-orange-300', 
+      hover: 'hover:bg-orange-400', 
+      text: 'text-orange-900', 
+      shadow: 'hover:shadow-[0_4px_0_#fb923c,0_6px_12px_rgba(0,0,0,0.4)]',
+      description: 'Gentle warmth - creates welcoming child-friendly feel'
+    },
+  ]
+};
 
 const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({ 
   buttonCode, 
@@ -244,7 +249,15 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
     }
   };
 
-  const handleColorPresetSelect = (preset: (typeof COLOR_PRESETS)[0]) => {
+  const handleColorPresetSelect = (preset: {
+    name: string;
+    hex: string;
+    bg: string;
+    hover: string;
+    text: string;
+    shadow: string;
+    description: string;
+  }) => {
     setFormData(prev => ({
       ...prev,
       bg_color: preset.bg,
@@ -459,28 +472,90 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
 
               <div>
                 <Label>Color Presets</Label>
-                <div className="grid grid-cols-4 gap-2 mt-2 max-h-80 overflow-y-auto">
-                  {COLOR_PRESETS.map((preset) => (
-                    <div
-                      key={preset.name}
-                      onClick={() => handleColorPresetSelect(preset)}
-                      className="min-h-48 p-3 flex flex-col items-center gap-2 border-2 border-border rounded-lg cursor-pointer hover:shadow-lg hover:border-primary/30 transition-all bg-card"
-                    >
-                      {/* Color Swatch */}
-                      <div 
-                        className="w-[50px] h-[50px] rounded-lg border-2 border-white shadow-md flex-shrink-0"
-                        style={{ backgroundColor: preset.hex }}
-                      />
-                      {/* Color Info */}
-                      <div className="flex flex-col gap-1 w-full text-center flex-1 justify-center">
-                        <div className="font-semibold text-xs">{preset.name}</div>
-                        <div className="text-xs text-muted-foreground font-mono">{preset.hex}</div>
-                        <div className="text-xs text-muted-foreground leading-tight break-words word-wrap hyphens-auto px-1">
-                          {preset.description}
+                <div className="mt-2 max-h-96 overflow-y-auto space-y-6">
+                  {/* Primary Palette */}
+                  <div className="p-4 border-2 border-primary/20 rounded-lg bg-primary/5">
+                    <h4 className="font-semibold text-sm mb-3 text-primary">Primary Palette (Core Brand Colors)</h4>
+                    <div className="grid grid-cols-4 gap-2">
+                      {COLOR_PRESETS.primary.map((preset) => (
+                        <div
+                          key={preset.name}
+                          onClick={() => handleColorPresetSelect(preset)}
+                          className="min-h-52 p-3 flex flex-col items-center gap-2 border-2 border-border rounded-lg cursor-pointer hover:shadow-lg hover:border-primary/30 transition-all bg-card"
+                        >
+                          {/* Color Swatch */}
+                          <div 
+                            className="w-[50px] h-[50px] rounded-lg border-2 border-white shadow-md flex-shrink-0"
+                            style={{ backgroundColor: preset.hex }}
+                          />
+                          {/* Color Info */}
+                          <div className="flex flex-col gap-1 w-full text-center flex-1 justify-center">
+                            <div className="font-semibold text-xs">{preset.name}</div>
+                            <div className="text-xs text-muted-foreground font-mono">{preset.hex}</div>
+                            <div className="text-xs text-muted-foreground leading-tight break-words word-wrap hyphens-auto px-1">
+                              {preset.description}
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Secondary Palette */}
+                  <div className="p-4 border-2 border-secondary/20 rounded-lg bg-secondary/5">
+                    <h4 className="font-semibold text-sm mb-3 text-secondary-foreground">Secondary Palette</h4>
+                    <div className="grid grid-cols-3 gap-2">
+                      {COLOR_PRESETS.secondary.map((preset) => (
+                        <div
+                          key={preset.name}
+                          onClick={() => handleColorPresetSelect(preset)}
+                          className="min-h-52 p-3 flex flex-col items-center gap-2 border-2 border-border rounded-lg cursor-pointer hover:shadow-lg hover:border-primary/30 transition-all bg-card"
+                        >
+                          {/* Color Swatch */}
+                          <div 
+                            className="w-[50px] h-[50px] rounded-lg border-2 border-white shadow-md flex-shrink-0"
+                            style={{ backgroundColor: preset.hex }}
+                          />
+                          {/* Color Info */}
+                          <div className="flex flex-col gap-1 w-full text-center flex-1 justify-center">
+                            <div className="font-semibold text-xs">{preset.name}</div>
+                            <div className="text-xs text-muted-foreground font-mono">{preset.hex}</div>
+                            <div className="text-xs text-muted-foreground leading-tight break-words word-wrap hyphens-auto px-1">
+                              {preset.description}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Additional Colors */}
+                  <div className="p-4 border-2 border-muted-foreground/20 rounded-lg bg-muted/5">
+                    <h4 className="font-semibold text-sm mb-3 text-muted-foreground">Additional Colors</h4>
+                    <div className="grid grid-cols-3 gap-2">
+                      {COLOR_PRESETS.additional.map((preset) => (
+                        <div
+                          key={preset.name}
+                          onClick={() => handleColorPresetSelect(preset)}
+                          className="min-h-52 p-3 flex flex-col items-center gap-2 border-2 border-border rounded-lg cursor-pointer hover:shadow-lg hover:border-primary/30 transition-all bg-card"
+                        >
+                          {/* Color Swatch */}
+                          <div 
+                            className="w-[50px] h-[50px] rounded-lg border-2 border-white shadow-md flex-shrink-0"
+                            style={{ backgroundColor: preset.hex }}
+                          />
+                          {/* Color Info */}
+                          <div className="flex flex-col gap-1 w-full text-center flex-1 justify-center">
+                            <div className="font-semibold text-xs">{preset.name}</div>
+                            <div className="text-xs text-muted-foreground font-mono">{preset.hex}</div>
+                            <div className="text-xs text-muted-foreground leading-tight break-words word-wrap hyphens-auto px-1">
+                              {preset.description}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
 
