@@ -61,7 +61,7 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
         </TooltipProvider>
       </div>
       
-      <div className="flex justify-center">
+      <div className="flex justify-start">
         <Select value={value || '©'} onValueChange={onChange}>
           <SelectTrigger className={`w-48 font-bold ${getCopyrightColor(value || '©')}`}>
             <SelectValue />
