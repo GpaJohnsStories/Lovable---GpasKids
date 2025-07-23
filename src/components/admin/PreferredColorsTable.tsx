@@ -15,7 +15,9 @@ const PreferredColorsTable: React.FC = () => {
     { name: 'Soft Gray', hex: '#D3D3D3', description: 'Neutral tone' },
     { name: 'Rich Brown', hex: '#814d2e', description: 'Deep earth tone' },
     { name: 'Caramel', hex: '#a15c2a', description: 'Sweet brown' },
-    { name: 'Rust Orange', hex: '#9c441a', description: 'Autumn warmth' }
+    { name: 'Rust Orange', hex: '#9c441a', description: 'Autumn warmth' },
+    { name: 'Fresh Green', hex: '#16a34a', description: 'Vibrant nature' },
+    { name: 'Deep Green', hex: '#15803d', description: 'Forest depth' }
   ];
 
   // Organize colors into 4x4 grid
