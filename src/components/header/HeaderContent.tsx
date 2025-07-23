@@ -142,6 +142,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
                         textColor: "text-white",
+                        customIcon: getIconUrl('ICO-HIC.png'),
                         subItems: [
                           { name: "Make Comment", path: "/make-comment" },
                           { name: "View Comments", path: "/view-comments" }
@@ -303,6 +304,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                     shadowColor: "shadow-lg",
                     hoverShadow: "hover:shadow-xl",
                     textColor: "text-white",
+                    customIcon: getIconUrl('ICO-HIC.png'),
                     subItems: [
                       { name: "Make Comment", path: "/make-comment" },
                       { name: "View Comments", path: "/view-comments" }
