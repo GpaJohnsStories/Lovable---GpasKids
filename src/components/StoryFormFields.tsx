@@ -28,6 +28,17 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
   const fieldSpacing = compact ? "space-y-3" : "space-y-4";
   const labelSize = compact ? "text-sm" : "text-base";
 
+  const getPublishedColor = (publishedStatus: string) => {
+    switch (publishedStatus) {
+      case 'Y':
+        return 'text-green-700 border-green-300 bg-green-50';
+      case 'N':
+        return 'text-red-700 border-red-300 bg-red-50';
+      default:
+        return 'text-gray-700 border-gray-300 bg-gray-50';
+    }
+  };
+
   return (
     <div className={fieldSpacing}>
       <div className="space-y-2">
@@ -121,7 +132,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
             Published Status
           </Label>
           <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
-            <SelectTrigger>
+            <SelectTrigger className={`font-bold ${getPublishedColor(formData.published)}`}>
               <SelectValue placeholder="Select publish status" />
             </SelectTrigger>
             <SelectContent>
