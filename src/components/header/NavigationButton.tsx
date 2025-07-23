@@ -71,7 +71,7 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
         onMouseLeave={() => onHover?.(null)}
       >
         <div className={buttonClasses} onClick={handleClick} aria-label={item.name}>
-          {item.icon && <item.icon size={36} stroke="white" fill={item.name === 'About' || item.name === 'Privacy' ? 'none' : 'white'} strokeWidth={item.name === 'About' || item.name === 'Privacy' ? 2 : 1} />}
+          {item.icon && <item.icon size={50} stroke="white" fill={item.name === 'About' || item.name === 'Privacy' ? 'none' : 'white'} strokeWidth={item.name === 'About' || item.name === 'Privacy' ? 2 : 1} />}
         </div>
         {item.description && isHovered && (
           <div className="nav-bubble opacity-100 visible">
@@ -90,7 +90,7 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
         onMouseLeave={() => onHover?.(null)}
       >
         <div className={buttonClasses} aria-label={item.name}>
-          {item.icon && <item.icon size={36} stroke="white" fill={item.name === 'About' || item.name === 'Privacy' ? 'none' : 'white'} strokeWidth={item.name === 'About' || item.name === 'Privacy' ? 2 : 1} />}
+          {item.icon && <item.icon size={50} stroke="white" fill={item.name === 'About' || item.name === 'Privacy' ? 'none' : 'white'} strokeWidth={item.name === 'About' || item.name === 'Privacy' ? 2 : 1} />}
         </div>
         {item.description && isHovered && (
           <div className="nav-bubble opacity-100 visible">
@@ -108,7 +108,7 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
       onMouseLeave={() => onHover?.(null)}
     >
       <div className={buttonClasses} onClick={handleClick} aria-label={item.name}>
-        {item.icon && <item.icon size={36} stroke="white" fill={item.name === 'About' || item.name === 'Privacy' ? 'none' : 'white'} strokeWidth={item.name === 'About' || item.name === 'Privacy' ? 2 : 1} />}
+        {item.icon && <item.icon size={50} stroke="white" fill={item.name === 'About' || item.name === 'Privacy' ? 'none' : 'white'} strokeWidth={item.name === 'About' || item.name === 'Privacy' ? 2 : 1} />}
       </div>
       {item.description && isHovered && (
         <div className="nav-bubble opacity-100 visible">
