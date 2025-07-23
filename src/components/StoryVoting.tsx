@@ -1,12 +1,15 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ThumbsUp, ThumbsDown } from "lucide-react";
+import { ThumbsUp, ThumbsDown, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 interface StoryVotingProps {
   storyId: string;
+  storyCode: string;
+  storyTitle: string;
   thumbsUpCount: number;
   thumbsDownCount: number;
   okCount: number;
@@ -14,7 +17,16 @@ interface StoryVotingProps {
   onVoteUpdate: (newCounts: { thumbs_up_count: number; thumbs_down_count: number; ok_count: number }, newVote: 'thumbs_up' | 'thumbs_down' | 'ok' | null) => void;
 }
 
-const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, currentVote, onVoteUpdate }: StoryVotingProps) => {
+const StoryVoting = ({ 
+  storyId, 
+  storyCode, 
+  storyTitle, 
+  thumbsUpCount, 
+  thumbsDownCount, 
+  okCount, 
+  currentVote, 
+  onVoteUpdate 
+}: StoryVotingProps) => {
   const [isVoting, setIsVoting] = useState(false);
 
   const handleVote = async (voteType: 'thumbs_up' | 'thumbs_down' | 'ok') => {
@@ -77,43 +89,56 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
     }
   };
 
+  const encodedStoryCode = encodeURIComponent(storyCode);
+
   return (
     <div className="flex flex-col items-center space-y-4 p-6 bg-amber-50 rounded-lg border border-amber-200">
       <h3 className="text-lg font-semibold text-orange-800 mb-2">How did you like this story?</h3>
       
-      <div className="flex space-x-4">
-        <Button
-          variant="ghost"
-          onClick={() => handleVote('thumbs_up')}
-          disabled={isVoting}
-          className={getButtonClass('thumbs_up')}
-        >
-          <ThumbsUp className="h-5 w-5" />
-          <span className="text-base leading-tight text-center italic font-bold">I Really<br />Liked It!</span>
-          <span className="text-xs">({thumbsUpCount})</span>
-        </Button>
+      <div className="flex flex-col lg:flex-row items-center gap-4">
+        {/* Voting Buttons */}
+        <div className="flex space-x-4">
+          <Button
+            variant="ghost"
+            onClick={() => handleVote('thumbs_up')}
+            disabled={isVoting}
+            className={getButtonClass('thumbs_up')}
+          >
+            <ThumbsUp className="h-5 w-5" />
+            <span className="text-base leading-tight text-center italic font-bold">I Really<br />Liked It!</span>
+            <span className="text-xs">({thumbsUpCount})</span>
+          </Button>
 
-        <Button
-          variant="ghost"
-          onClick={() => handleVote('ok')}
-          disabled={isVoting}
-          className={getButtonClass('ok')}
-        >
-          <div className="h-5 w-5"></div>
-          <span className="text-base leading-tight text-center font-bold text-blue-600">It Was<br />Just Ok!</span>
-          <span className="text-xs">({okCount})</span>
-        </Button>
+          <Button
+            variant="ghost"
+            onClick={() => handleVote('ok')}
+            disabled={isVoting}
+            className={getButtonClass('ok')}
+          >
+            <div className="h-5 w-5"></div>
+            <span className="text-base leading-tight text-center font-bold text-blue-600">It Was<br />Just Ok!</span>
+            <span className="text-xs">({okCount})</span>
+          </Button>
 
-        <Button
-          variant="ghost"
-          onClick={() => handleVote('thumbs_down')}
-          disabled={isVoting}
-          className={getButtonClass('thumbs_down')}
-        >
-          <ThumbsDown className="h-5 w-5" />
-          <span className="text-base leading-tight text-center font-bold text-black">I Didn't<br />Like It!</span>
-          <span className="text-xs">({thumbsDownCount})</span>
-        </Button>
+          <Button
+            variant="ghost"
+            onClick={() => handleVote('thumbs_down')}
+            disabled={isVoting}
+            className={getButtonClass('thumbs_down')}
+          >
+            <ThumbsDown className="h-5 w-5" />
+            <span className="text-base leading-tight text-center font-bold text-black">I Didn't<br />Like It!</span>
+            <span className="text-xs">({thumbsDownCount})</span>
+          </Button>
+        </div>
+
+        {/* Comment Button */}
+        <Link to={`/make-comment?storyCode=${encodedStoryCode}`}>
+          <Button className="bg-blue-500 hover:bg-blue-600 text-white h-24 w-24 flex flex-col items-center justify-center space-y-1 transition-all duration-300">
+            <MessageSquare className="h-5 w-5" />
+            <span className="text-xs leading-tight text-center font-bold">Please Tell Us<br />About Your Vote</span>
+          </Button>
+        </Link>
       </div>
     </div>
   );

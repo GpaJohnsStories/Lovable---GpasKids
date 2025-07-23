@@ -1,6 +1,5 @@
 
 import StoryVoting from "./StoryVoting";
-import CreateCommentButton from "./CreateCommentButton";
 
 interface StoryVotingSectionProps {
   storyId: string;
@@ -25,16 +24,17 @@ const StoryVotingSection = ({
 }: StoryVotingSectionProps) => {
   return (
     <div className="mb-8">
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-6">
+      <div className="flex items-center justify-center">
         <StoryVoting
           storyId={storyId}
+          storyCode={storyCode}
+          storyTitle={storyTitle}
           thumbsUpCount={thumbsUpCount}
           thumbsDownCount={thumbsDownCount}
           okCount={okCount}
           currentVote={currentVote}
           onVoteUpdate={onVoteUpdate}
         />
-        <CreateCommentButton storyCode={storyCode} storyTitle={storyTitle} />
       </div>
     </div>
   );
