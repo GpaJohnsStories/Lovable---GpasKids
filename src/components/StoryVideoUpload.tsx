@@ -101,7 +101,7 @@ const StoryVideoUpload: React.FC<StoryVideoUploadProps> = ({
 
   return (
     <div className="space-y-4">
-      <Label htmlFor="video-upload" className="text-base font-medium text-gray-700">
+      <Label htmlFor="video-upload" className="text-base font-bold text-gray-700">
         Story Video (Optional)
       </Label>
       

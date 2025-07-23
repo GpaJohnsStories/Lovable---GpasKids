@@ -42,7 +42,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
   return (
     <div className={fieldSpacing}>
       <div className="space-y-2">
-        <Label htmlFor="title" className={`font-medium text-gray-700 ${labelSize}`}>
+        <Label htmlFor="title" className={`font-bold text-gray-700 ${labelSize}`}>
           Title *
         </Label>
         <Input
@@ -56,7 +56,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="author" className={`font-medium text-gray-700 ${labelSize}`}>
+        <Label htmlFor="author" className={`font-bold text-gray-700 ${labelSize}`}>
           Author *
         </Label>
         <Input
@@ -70,7 +70,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="category" className={`font-medium text-gray-700 ${labelSize}`}>
+        <Label htmlFor="category" className={`font-bold text-gray-700 ${labelSize}`}>
           Category *
         </Label>
         <Select value={formData.category} onValueChange={(value) => onInputChange('category', value)}>
@@ -96,7 +96,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="tagline" className={`font-medium text-gray-700 ${labelSize}`}>
+        <Label htmlFor="tagline" className={`font-bold text-gray-700 ${labelSize}`}>
           Tagline <span className="text-gray-500 font-normal">(Maximum 100 Characters)</span>
         </Label>
         <Textarea
@@ -114,7 +114,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="excerpt" className={`font-medium text-gray-700 ${labelSize}`}>
+        <Label htmlFor="excerpt" className={`font-bold text-gray-700 ${labelSize}`}>
           Excerpt
         </Label>
         <Textarea
@@ -128,7 +128,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
 
       {!compact && (
         <div className="space-y-2">
-          <Label htmlFor="published" className={`font-medium text-gray-700 ${labelSize}`}>
+          <Label htmlFor="published" className={`font-bold text-gray-700 ${labelSize}`}>
             Published Status
           </Label>
           <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>

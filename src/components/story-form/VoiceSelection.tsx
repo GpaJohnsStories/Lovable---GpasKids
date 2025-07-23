@@ -44,7 +44,7 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
         <CardContent className="p-6">
           <div className="space-y-4">
             <div>
-              <Label className="text-base font-medium text-gray-700 mb-3 block flex items-center">
+              <Label className="text-base font-bold text-gray-700 mb-3 block flex items-center">
                 <Volume2 className="h-5 w-5 mr-2 text-orange-600" />
                 AI Voice & Audio Generation
               </Label>
@@ -53,7 +53,7 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-end">
                 {/* Voice Selection Column */}
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-600">
+                  <Label className="text-sm font-bold text-gray-600">
                     Choose Voice
                   </Label>
                   <Select value={selectedVoice} onValueChange={onVoiceChange}>
@@ -75,7 +75,7 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
 
                 {/* Generate Button Column */}
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-600">
+                  <Label className="text-sm font-bold text-gray-600">
                     Generate Audio
                   </Label>
                   {onStartRecording && (

@@ -118,7 +118,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   <div className="grid grid-cols-2 gap-4">
                     {/* Publication Status - 50% width */}
                     <div className="space-y-2">
-                      <Label htmlFor="published">Publication Status</Label>
+                      <Label htmlFor="published" className="font-bold text-gray-700">Publication Status</Label>
                       <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
                         <SelectTrigger className={`w-[70%] font-bold ${getPublishedColor(formData.published)}`}>
                           <SelectValue placeholder="Select publish status" />
@@ -129,7 +129,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                         </SelectContent>
                       </Select>
                     </div>
-
+                    
                     {/* Copyright Status - 50% width */}
                     <div className="space-y-2">
                       <CopyrightControl
@@ -140,7 +140,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="google_drive_link">Google Drive Link</Label>
+                    <Label htmlFor="google_drive_link" className="font-bold text-gray-700">Google Drive Link</Label>
                     <input
                       id="google_drive_link"
                       type="url"

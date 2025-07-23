@@ -109,7 +109,7 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
 
   return (
     <div className="space-y-2">
-      <Label htmlFor="story_code" className={`font-medium text-gray-700 ${labelSize}`}>
+      <Label htmlFor="story_code" className={`font-bold text-gray-700 ${labelSize}`}>
         Unique Story or WebText Code
       </Label>
       <Input
