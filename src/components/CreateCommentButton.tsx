@@ -15,7 +15,7 @@ const CreateCommentButton = ({ storyCode, storyTitle }: CreateCommentButtonProps
     <Link to={`/make-comment?storyCode=${encodedStoryCode}`}>
       <Button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 h-auto flex flex-col items-center space-y-1">
         <MessageSquare className="h-6 w-6" />
-        <span className="text-sm">Please Leave a Comment</span>
+        <span className="text-sm">Please Tell Us<br />About Your Vote</span>
       </Button>
     </Link>
   );
