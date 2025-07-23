@@ -37,10 +37,10 @@
     --tab-media-hover: 217 91% 60%; /* blue-600 for hover */
     
     /* Voting button colors */
-    --vote-thumbs-up: 120 60% 30%; /* forest green */
-    --vote-thumbs-up-hover: 120 60% 25%; /* darker forest green */
-    --vote-thumbs-down: 210 20% 50%; /* medium blue gray */
-    --vote-thumbs-down-hover: 210 20% 45%; /* darker blue gray */
+    --vote-thumbs-up: 120 100% 25%; /* deep forest green */
+    --vote-thumbs-up-hover: 120 100% 20%; /* darker forest green */
+    --vote-thumbs-down: 200 30% 40%; /* medium blue gray */
+    --vote-thumbs-down-hover: 200 30% 35%; /* darker blue gray */
     --vote-ok: 45 93% 47%; /* keeping existing yellow/orange */
     --vote-ok-hover: 45 93% 42%; /* darker yellow/orange */
     
