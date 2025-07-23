@@ -84,19 +84,26 @@ const PreferredColorsTable: React.FC = () => {
                     {row.colors.map((color, colIndex) => (
                       <TableCell 
                         key={colIndex}
-                        className="h-20 w-32 border border-gray-300 p-2 text-center"
+                        className="border border-gray-300 p-3 align-top"
                       >
-                        <div className="flex flex-col items-center gap-1">
-                          <div 
-                            className="w-12 h-12 rounded-lg border border-gray-400 shadow-sm"
-                            style={{ backgroundColor: color.hex }}
-                            title={`${color.name} - ${color.hex}`}
-                          />
-                          <div className="text-xs font-medium text-gray-700 leading-tight">
-                            {color.name}
+                        <div className="flex flex-col items-start gap-2">
+                          <div className="flex items-center gap-2 w-full">
+                            <div 
+                              className="w-8 h-8 rounded-lg border border-gray-400 shadow-sm flex-shrink-0"
+                              style={{ backgroundColor: color.hex }}
+                              title={`${color.name} - ${color.hex}`}
+                            />
+                            <div className="flex flex-col min-w-0 flex-1">
+                              <div className="text-xs font-bold text-gray-800 leading-tight">
+                                {color.name}
+                              </div>
+                              <div className="text-xs text-gray-600 font-mono">
+                                {color.hex}
+                              </div>
+                            </div>
                           </div>
-                          <div className="text-xs text-gray-500">
-                            {color.hex}
+                          <div className="text-xs text-gray-700 leading-relaxed text-left">
+                            {color.description}
                           </div>
                         </div>
                       </TableCell>
