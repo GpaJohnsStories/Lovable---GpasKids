@@ -44,6 +44,14 @@ const COLOR_PRESETS = [
     text: 'text-yellow-900', 
     shadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]' 
   },
+  { 
+    name: 'Bright Yellow', 
+    hex: '#FACC15',
+    bg: 'bg-yellow-400', 
+    hover: 'hover:bg-yellow-500', 
+    text: 'text-yellow-900', 
+    shadow: 'hover:shadow-[0_4px_0_#eab308,0_6px_12px_rgba(0,0,0,0.4)]' 
+  },
   // Row 2: Primary Colors (continued)
   { 
     name: 'Sunset Orange', 
