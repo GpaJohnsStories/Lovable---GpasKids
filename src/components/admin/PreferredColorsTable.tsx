@@ -18,7 +18,9 @@ const PreferredColorsTable: React.FC = () => {
     { name: 'Rust Orange', hex: '#9c441a', description: 'Autumn warmth' },
     { name: 'Fresh Green', hex: '#16a34a', description: 'Vibrant nature' },
     { name: 'Deep Green', hex: '#15803d', description: 'Forest depth' },
-    { name: 'Bright Gold', hex: '#EAB308', description: 'Golden accent' }
+    { name: 'Bright Gold', hex: '#EAB308', description: 'Golden accent' },
+    { name: 'Cherry Red', hex: '#DC2626', description: 'Bold accent' },
+    { name: 'Vibrant Orange', hex: '#F97316', description: 'Energetic tone' }
   ];
 
   // Organize colors into 4x4 grid
