@@ -459,24 +459,24 @@ const MenuButtonEditor: React.FC<MenuButtonEditorProps> = ({
 
               <div>
                 <Label>Color Presets</Label>
-                <div className="grid grid-cols-2 gap-3 mt-2 max-h-80 overflow-y-auto">
+                <div className="grid grid-cols-4 gap-2 mt-2 max-h-80 overflow-y-auto">
                   {COLOR_PRESETS.map((preset) => (
                     <Button
                       key={preset.name}
                       variant="outline"
                       onClick={() => handleColorPresetSelect(preset)}
-                      className="h-auto p-4 flex flex-col items-start gap-3 text-left hover:shadow-lg transition-all border-2 hover:border-primary/30"
+                      className="h-auto p-3 flex flex-col items-center gap-2 text-left hover:shadow-lg transition-all border-2 hover:border-primary/30"
                     >
-                      {/* Color Swatch - Bigger */}
+                      {/* Color Swatch */}
                       <div 
-                        className="w-12 h-12 rounded-lg border-2 border-white shadow-md self-center"
+                        className="w-10 h-10 rounded-lg border-2 border-white shadow-md"
                         style={{ backgroundColor: preset.hex }}
                       />
                       {/* Color Info */}
                       <div className="flex flex-col gap-1 w-full text-center">
-                        <div className="font-semibold text-sm">{preset.name}</div>
+                        <div className="font-semibold text-xs">{preset.name}</div>
                         <div className="text-xs text-muted-foreground font-mono">{preset.hex}</div>
-                        <div className="text-xs text-muted-foreground leading-tight px-1">
+                        <div className="text-xs text-muted-foreground leading-tight break-words">
                           {preset.description}
                         </div>
                       </div>
