@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Story from "./pages/Story";
 import Library from "./pages/Library";
 import Writing from "./pages/Writing";
+import HowTo from "./pages/HowTo";
 import HelpGpa from "./pages/HelpGpa";
 import MakeComment from "./pages/MakeComment";
 import ViewComments from "./pages/ViewComments";
@@ -75,6 +76,7 @@ function App() {
                       <Route path="/story/:storyCode" element={<Story />} />
                       <Route path="/library" element={<Library />} />
                       <Route path="/writing" element={<Writing />} />
+                      <Route path="/how-to" element={<HowTo />} />
                       <Route path="/help" element={<HelpGpa />} />
                       <Route path="/make-comment" element={<MakeComment />} />
                       <Route path="/view-comments" element={<ViewComments />} />

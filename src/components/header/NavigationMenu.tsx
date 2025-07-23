@@ -96,6 +96,16 @@ const NavigationMenu = () => {
       ]
     },
     { 
+      name: 'How-to', 
+      path: '/how-to', 
+      bgColor: 'bg-gradient-to-b from-green-400 via-green-500 to-green-600',
+      hoverColor: 'hover:from-green-500 hover:via-green-600 hover:to-green-700',
+      shadowColor: 'shadow-[0_6px_0_#16a34a,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-white',
+      description: 'How-to guides and instructions'
+    },
+    { 
       name: 'Privacy', 
       path: '/privacy', 
       bgColor: 'bg-gradient-to-b from-yellow-400 via-yellow-500 to-yellow-600',
