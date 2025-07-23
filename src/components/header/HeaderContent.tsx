@@ -157,13 +157,14 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                   <NavigationMenuItem>
                     <NavigationButton 
                       item={{
-                        name: "Help",
-                        path: "/help-gpa",
+                        name: "How To",
+                        path: "/how-to",
                         bgColor: "bg-red-500",
                         hoverColor: "hover:bg-red-600",
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
-                        textColor: "text-white"
+                        textColor: "text-white",
+                        customIcon: getIconUrl('ICO-HWT.png')
                       }}
                       isActive={false}
                     />
@@ -324,13 +325,14 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               <NavigationMenuItem>
                 <NavigationButton 
                   item={{
-                    name: "Help",
-                    path: "/help-gpa",
+                    name: "How To",
+                    path: "/how-to",
                     bgColor: "bg-red-500",
                     hoverColor: "hover:bg-red-600",
                     shadowColor: "shadow-lg",
                     hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white"
+                    textColor: "text-white",
+                    customIcon: getIconUrl('ICO-HWT.png')
                   }}
                   isActive={false}
                 />
