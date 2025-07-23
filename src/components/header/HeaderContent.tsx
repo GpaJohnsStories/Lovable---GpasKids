@@ -116,7 +116,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         subItems: [
                           { name: "About Grandpa John", path: "/about" },
                           { name: "About Buddy", path: "/about#about-buddy" },
-                          { name: "About Authors", path: "/public-author-bios" },
+                          { name: "About Authors", path: "/author-bios" },
                           { name: "A Special Thank You", path: "/about#special-thank-you" }
                         ]
                       }}
@@ -283,7 +283,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       subItems: [
                         { name: "About Grandpa John", path: "/about" },
                         { name: "About Buddy", path: "/about#about-buddy" },
-                        { name: "About Authors", path: "/public-author-bios" },
+                        { name: "About Authors", path: "/author-bios" },
                         { name: "A Special Thank You", path: "/about#special-thank-you" }
                       ]
                     }}
