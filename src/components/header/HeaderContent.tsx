@@ -38,7 +38,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             alt="Buddy the Helper Dog"
             className="w-full h-16 md:h-18 sm:h-20 object-cover rounded-md mb-1"
           />
-          <div className="text-yellow-200 group-hover:text-[#FFFF00] text-[10px] md:text-[11px] sm:text-xs font-bold leading-tight transition-colors duration-200">
+          <div className="text-yellow-200 group-hover:text-[#FFFF00] text-[11px] md:text-xs sm:text-sm font-bold leading-tight transition-colors duration-200">
             <div className="group-hover:hidden">Need Help?</div>
             <div className="group-hover:hidden">Click Here</div>
             <div className="group-hover:hidden">or Ctrl+H</div>
