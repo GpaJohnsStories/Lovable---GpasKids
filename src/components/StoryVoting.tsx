@@ -69,11 +69,11 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
     const baseClass = "flex flex-col items-center justify-center space-y-1 h-24 w-24 transition-all duration-300 text-white";
     
     if (voteType === 'thumbs_up') {
-      return `${baseClass} bg-[hsl(var(--vote-thumbs-up))] hover:bg-[hsl(var(--vote-thumbs-up-hover))]`;
+      return `${baseClass} !bg-[hsl(var(--vote-thumbs-up))] hover:!bg-[hsl(var(--vote-thumbs-up-hover))]`;
     } else if (voteType === 'thumbs_down') {
-      return `${baseClass} bg-[hsl(var(--vote-thumbs-down))] hover:bg-[hsl(var(--vote-thumbs-down-hover))]`;
+      return `${baseClass} !bg-[hsl(var(--vote-thumbs-down))] hover:!bg-[hsl(var(--vote-thumbs-down-hover))]`;
     } else {
-      return `${baseClass} bg-[hsl(var(--vote-ok))] hover:bg-[hsl(var(--vote-ok-hover))]`;
+      return `${baseClass} !bg-[hsl(var(--vote-ok))] hover:!bg-[hsl(var(--vote-ok-hover))]`;
     }
   };
 
@@ -83,6 +83,7 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
       
       <div className="flex space-x-4">
         <Button
+          variant="ghost"
           onClick={() => handleVote('thumbs_up')}
           disabled={isVoting}
           className={getButtonClass('thumbs_up')}
@@ -93,6 +94,7 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
         </Button>
 
         <Button
+          variant="ghost"
           onClick={() => handleVote('ok')}
           disabled={isVoting}
           className={getButtonClass('ok')}
@@ -103,6 +105,7 @@ const StoryVoting = ({ storyId, thumbsUpCount, thumbsDownCount, okCount, current
         </Button>
 
         <Button
+          variant="ghost"
           onClick={() => handleVote('thumbs_down')}
           disabled={isVoting}
           className={getButtonClass('thumbs_down')}
