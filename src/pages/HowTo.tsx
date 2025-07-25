@@ -1,8 +1,21 @@
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
+import { WebTextBox } from "@/components/WebTextBox";
 
 const HowTo = () => {
+  // Configuration for webtext boxes
+  const webtextBoxes = [
+    {
+      webtextCode: "SYS-K2N",
+      icon: "ICO-N2K",
+      borderColor: "#16a34a", // Fresh Green
+      backgroundColor: "bg-green-600/20",
+      title: "Getting Started"
+    }
+    // Future boxes can be added here
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
       <WelcomeHeader />
@@ -10,10 +23,22 @@ const HowTo = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-center text-orange-800 mb-8">
-            How-to
+            How To Use Gpa's Website for Kids
           </h1>
           
-          {/* Content will be added here */}
+          {/* Stack of WebText Boxes */}
+          <div className="space-y-0">
+            {webtextBoxes.map((box, index) => (
+              <WebTextBox
+                key={index}
+                webtextCode={box.webtextCode}
+                icon={box.icon}
+                borderColor={box.borderColor}
+                backgroundColor={box.backgroundColor}
+                title={box.title}
+              />
+            ))}
+          </div>
         </div>
       </main>
 
