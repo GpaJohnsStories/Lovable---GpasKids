@@ -75,7 +75,7 @@ const HowTo = () => {
           </h1>
           
           {/* Stack of WebText Boxes */}
-          <div className="space-y-0">
+          <div className="space-y-2">
             {webtextBoxes.map((box, index) => (
               <WebTextBox
                 key={index}
