@@ -123,21 +123,6 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                     />
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <NavigationButton 
-                      item={{
-                        name: "Writing",
-                        path: "/writing",
-                        bgColor: "bg-purple-500",
-                        hoverColor: "hover:bg-purple-600",
-                        shadowColor: "shadow-lg",
-                        hoverShadow: "hover:shadow-xl",
-                        textColor: "text-white",
-                        customIcon: getIconUrl('ICO-STY.png')
-                      }}
-                      isActive={false}
-                    />
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
                     <NavigationDropdown 
                       item={{
                         name: "Comments",
@@ -152,6 +137,21 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                           { name: "View Comments", path: "/view-comments" }
                         ]
                       }}
+                    />
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationButton 
+                      item={{
+                        name: "Writing",
+                        path: "/writing",
+                        bgColor: "bg-blue-900",
+                        hoverColor: "hover:bg-blue-800",
+                        shadowColor: "shadow-lg",
+                        hoverShadow: "hover:shadow-xl",
+                        textColor: "text-white",
+                        customIcon: getIconUrl('ICO-WRI.png')
+                      }}
+                      isActive={false}
                     />
                   </NavigationMenuItem>
                   <NavigationMenuItem>
@@ -291,21 +291,6 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                   />
                 </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationButton 
-                  item={{
-                    name: "Writing",
-                    path: "/writing",
-                    bgColor: "bg-purple-500",
-                    hoverColor: "hover:bg-purple-600",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white",
-                    customIcon: getIconUrl('ICO-STY.png')
-                  }}
-                  isActive={false}
-                />
-              </NavigationMenuItem>
-              <NavigationMenuItem>
                 <NavigationDropdown 
                   item={{
                     name: "Comments",
@@ -320,6 +305,21 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       { name: "View Comments", path: "/view-comments" }
                     ]
                   }}
+                />
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationButton 
+                  item={{
+                    name: "Writing",
+                    path: "/writing",
+                    bgColor: "bg-blue-900",
+                    hoverColor: "hover:bg-blue-800",
+                    shadowColor: "shadow-lg",
+                    hoverShadow: "hover:shadow-xl",
+                    textColor: "text-white",
+                    customIcon: getIconUrl('ICO-WRI.png')
+                  }}
+                  isActive={false}
                 />
               </NavigationMenuItem>
               <NavigationMenuItem>
