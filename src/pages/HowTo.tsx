@@ -12,8 +12,21 @@ const HowTo = () => {
       borderColor: "#16a34a", // Fresh Green
       backgroundColor: "bg-green-600/20",
       title: "Getting Started"
+    },
+    {
+      webtextCode: "",
+      icon: "ICO-HOM",
+      borderColor: "#F97316", // Vibrant Orange
+      backgroundColor: "bg-orange-600/20",
+      title: "Home Page"
+    },
+    {
+      webtextCode: "SYS-HOME",
+      icon: "ICO_BK1",
+      borderColor: "#3b82f6", // Admin Menu Blue
+      backgroundColor: "bg-blue-600/20",
+      title: "Story Library"
     }
-    // Future boxes can be added here
   ];
 
   return (
