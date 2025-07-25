@@ -37,9 +37,9 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   };
 
   return (
-    <div className="relative">
-      {/* Main header row */}
-      <div className="flex items-center justify-between">
+    <div>
+      {/* Top section with Buddy, title, and dancing GIF */}
+      <div className="flex items-center justify-between mb-4">
         {/* Buddy's Photo and Website Title */}
         <div className="flex items-start gap-4">
           <button 
@@ -243,11 +243,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
         )}
       </div>
 
-      {/* Home page centered navigation - positioned below header */}
+      {/* Home page navigation - positioned below the header content */}
       {isHomePage && (
-        <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 z-20">
+        <div className="flex justify-center">
           <NavigationMenu>
-            <NavigationMenuList className="space-x-2">
+            <NavigationMenuList className="flex flex-row flex-wrap justify-center gap-2">
               <NavigationMenuItem>
                 <NavigationButton 
                   item={{
