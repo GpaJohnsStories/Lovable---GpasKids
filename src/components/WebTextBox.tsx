@@ -84,14 +84,28 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         
         {/* Right: Audio Controls */}
         <div className="flex-shrink-0">
-          <UniversalAudioControls
-            title={webtext?.title || title}
-            content={getContent()}
-            author={webtext?.author}
-            allowTextToSpeech={true}
-            size="sm"
-            className="bg-transparent border-0"
-          />
+          <div 
+            className="border-2 rounded-lg p-3"
+            style={{ borderColor }}
+          >
+            <div 
+              className="text-center italic mb-2"
+              style={{ 
+                fontSize: '14pt',
+                color: borderColor 
+              }}
+            >
+              Shall I read it to you?
+            </div>
+            <UniversalAudioControls
+              title={webtext?.title || title}
+              content={getContent()}
+              author={webtext?.author}
+              allowTextToSpeech={true}
+              size="sm"
+              className="bg-transparent border-0"
+            />
+          </div>
         </div>
       </div>
 
