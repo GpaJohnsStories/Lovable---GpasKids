@@ -64,7 +64,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
 
   return (
     <div 
-      className={`rounded-lg border-4 p-6 mb-6 ${backgroundColor}`}
+      className={`rounded-lg border-4 p-6 ${backgroundColor}`}
       style={{ borderColor }}
     >
       {/* Top Row */}
