@@ -99,7 +99,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                          shadowColor: "shadow-lg",
                          hoverShadow: "hover:shadow-xl",
                          textColor: "text-white",
-                         customIcon: getIconUrl('ICO_BK1.png'),
+                          customIcon: getIconUrl('ICO-BK1.png'),
                          description: "Browse Story Library"
                        }}
                       isActive={location.pathname === '/library'}
@@ -114,7 +114,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
                         textColor: "text-white",
-                        customIcon: getIconUrl('ICO-COM.png'),
+                         customIcon: getIconUrl('ICO-HIC.png'),
                         description: "Comment on Stories",
                         subItems: [
                           { name: "Make Comment", path: "/make-comment" },
@@ -148,7 +148,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
                         textColor: "text-white",
-                        customIcon: getIconUrl('ICO-ABT.png'),
+                         customIcon: getIconUrl('ICO-INF.png'),
                         description: "About Our Site",
                         subItems: [
                           { name: "About Grandpa John", path: "/about" },
@@ -169,7 +169,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
                         textColor: "text-white",
-                        customIcon: getIconUrl('ICO-HWT.png'),
+                         customIcon: getIconUrl('ICO-N2K.png'),
                         description: "How to Use Site"
                       }}
                       isActive={location.pathname === '/how-to'}
@@ -191,7 +191,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               shadowColor: "shadow-lg",
                               hoverShadow: "hover:shadow-xl",
                               textColor: "text-white",
-                              customIcon: getIconUrl('ICO-PRI.png'),
+                               customIcon: getIconUrl('ICO-LKD.png'),
                               description: "Privacy & Safety"
                             }}
                            isActive={location.pathname === '/privacy'}
@@ -274,7 +274,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       shadowColor: "shadow-lg",
                       hoverShadow: "hover:shadow-xl",
                       textColor: "text-white",
-                      customIcon: getIconUrl('ICO_BK1.png'),
+                      customIcon: getIconUrl('ICO-BK1.png'),
                       description: "Browse Story Library"
                     }}
                    isActive={location.pathname === '/library'}
@@ -289,7 +289,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                      shadowColor: "shadow-lg",
                      hoverShadow: "hover:shadow-xl",
                      textColor: "text-white",
-                     customIcon: getIconUrl('ICO-COM.png'),
+                     customIcon: getIconUrl('ICO-HIC.png'),
                      description: "Comment on Stories",
                      subItems: [
                        { name: "Make Comment", path: "/make-comment" },
@@ -323,7 +323,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                      shadowColor: "shadow-lg",
                      hoverShadow: "hover:shadow-xl",
                      textColor: "text-white",
-                     customIcon: getIconUrl('ICO-ABT.png'),
+                     customIcon: getIconUrl('ICO-INF.png'),
                      description: "About Our Site",
                      subItems: [
                        { name: "About Grandpa John", path: "/about" },
@@ -344,7 +344,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                      shadowColor: "shadow-lg",
                      hoverShadow: "hover:shadow-xl",
                      textColor: "text-white",
-                     customIcon: getIconUrl('ICO-HWT.png'),
+                     customIcon: getIconUrl('ICO-N2K.png'),
                      description: "How to Use Site"
                    }}
                    isActive={location.pathname === '/how-to'}
@@ -365,7 +365,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
                         textColor: "text-white",
-                        customIcon: getIconUrl('ICO-PRI.png'),
+                        customIcon: getIconUrl('ICO-LKD.png'),
                         description: "Privacy & Safety"
                       }}
                      isActive={location.pathname === '/privacy'}
