@@ -89,7 +89,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             style={{ borderColor }}
           >
             <div 
-              className="text-center italic font-bold mb-1"
+              className="text-center italic font-bold mb-0"
               style={{ 
                 fontSize: '14pt',
                 color: borderColor 
