@@ -35,13 +35,18 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
 
   const buttonClasses = cn(
     item.bgColor, item.hoverColor, item.shadowColor, item.hoverShadow,
-    isActive ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1 shadow-[0_4px_0_#7AB8C4,0_6px_12px_rgba(0,0,0,0.4)]' : '',
-    item.textColor, 'rounded-lg font-semibold',
+    // 3D effect with gold border and enhanced shadows
+    'border-2 border-yellow-400 shadow-[0_6px_0_#B8860B,0_8px_16px_rgba(0,0,0,0.4)]',
+    // Active state with shine effect
+    isActive ? 'ring-4 ring-yellow-300 ring-opacity-70 transform translate-y-1 shadow-[0_4px_0_#B8860B,0_6px_12px_rgba(0,0,0,0.5)] before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white before:to-transparent before:opacity-30 before:animate-pulse before:rounded-lg' : '',
+    item.textColor, 'rounded-lg font-semibold relative overflow-hidden',
     'transition-all duration-200', 
-    'hover:transform hover:translate-y-1 active:translate-y-2 active:shadow-[0_2px_0_#7AB8C4,0_4px_8px_rgba(0,0,0,0.3)]',
+    // Enhanced 3D hover effects
+    'hover:transform hover:translate-y-1 hover:shadow-[0_4px_0_#B8860B,0_6px_12px_rgba(0,0,0,0.5)] hover:border-yellow-300',
+    'active:translate-y-2 active:shadow-[0_2px_0_#B8860B,0_4px_8px_rgba(0,0,0,0.3)]',
     'flex items-center justify-center',
     'w-[60px] h-[60px]', // Fixed size for icon-only buttons
-    'font-fun border-t border-white border-opacity-30',
+    'font-fun',
     'text-sm',
     isDropdown ? "group cursor-pointer" : "cursor-pointer"
   );
@@ -83,7 +88,7 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
            )}
         </div>
         {item.description && isHovered && (
-          <div className="nav-bubble opacity-100 visible">
+          <div className="nav-bubble opacity-100 visible z-50">
             {item.description}
           </div>
         )}
@@ -110,7 +115,7 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
            )}
         </div>
         {item.description && isHovered && (
-          <div className="nav-bubble opacity-100 visible">
+          <div className="nav-bubble opacity-100 visible z-50">
             {item.description}
           </div>
         )}
@@ -136,7 +141,7 @@ const NavigationButton = ({ item, isActive, isDropdown = false, onClick, onHover
          )}
       </div>
       {item.description && isHovered && (
-        <div className="nav-bubble opacity-100 visible">
+        <div className="nav-bubble opacity-100 visible z-50">
           {item.description}
         </div>
       )}

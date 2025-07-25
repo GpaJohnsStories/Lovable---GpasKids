@@ -71,67 +71,51 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           {/* Navigation Menu - Show on home page, positioned below the text and left-aligned */}
           {isHomePage && (
             <div className="mt-4">
-              <NavigationMenu>
+               <NavigationMenu>
                  <NavigationMenuList className="space-x-2">
                    <NavigationMenuItem>
                      <NavigationButton 
                        item={{
                          name: "Home",
                          path: "/",
-                         bgColor: "bg-indigo-500",
-                         hoverColor: "hover:bg-indigo-600",
+                         bgColor: "bg-green-600",
+                         hoverColor: "hover:bg-green-700",
                          shadowColor: "shadow-lg",
                          hoverShadow: "hover:shadow-xl",
                          textColor: "text-white",
-                         customIcon: getIconUrl('ICO-HOM.png')
+                         customIcon: getIconUrl('ICO-HOM.png'),
+                         description: "Go to Homepage"
                        }}
-                       isActive={false}
+                       isActive={location.pathname === '/'}
                      />
                    </NavigationMenuItem>
                    <NavigationMenuItem>
                       <NavigationButton 
                         item={{
-                          name: "Stories",
+                          name: "Library",
                          path: "/library",
-                         bgColor: "bg-blue-500",
-                         hoverColor: "hover:bg-blue-600",
+                         bgColor: "bg-blue-600",
+                         hoverColor: "hover:bg-blue-700",
                          shadowColor: "shadow-lg",
                          hoverShadow: "hover:shadow-xl",
                          textColor: "text-white",
-                         customIcon: getIconUrl('ICO_BK1.png')
+                         customIcon: getIconUrl('ICO_BK1.png'),
+                         description: "Browse Story Library"
                        }}
-                      isActive={false}
-                    />
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <NavigationDropdown 
-                      item={{
-                        name: "About",
-                        bgColor: "bg-green-500",
-                        hoverColor: "hover:bg-green-600",
-                        shadowColor: "shadow-lg",
-                        hoverShadow: "hover:shadow-xl",
-                        textColor: "text-white",
-                        customIcon: getIconUrl('ICO-INF.png'),
-                        subItems: [
-                          { name: "About Grandpa John", path: "/about" },
-                          { name: "About Buddy", path: "/about#buddy" },
-                          { name: "About Authors", path: "/author-bios" },
-                          { name: "A Special Thank You", path: "/about#special-thank-you" }
-                        ]
-                      }}
+                      isActive={location.pathname === '/library'}
                     />
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                     <NavigationDropdown 
                       item={{
                         name: "Comments",
-                        bgColor: "bg-orange-500",
-                        hoverColor: "hover:bg-orange-600",
+                        bgColor: "bg-yellow-600",
+                        hoverColor: "hover:bg-yellow-700",
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
                         textColor: "text-white",
-                        customIcon: getIconUrl('ICO-HIC.png'),
+                        customIcon: getIconUrl('ICO-COM.png'),
+                        description: "Comment on Stories",
                         subItems: [
                           { name: "Make Comment", path: "/make-comment" },
                           { name: "View Comments", path: "/view-comments" }
@@ -149,9 +133,30 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
                         textColor: "text-white",
-                        customIcon: getIconUrl('ICO-WRI.png')
+                        customIcon: getIconUrl('ICO-WRI.png'),
+                        description: "Write Your Story"
                       }}
-                      isActive={false}
+                      isActive={location.pathname === '/writing'}
+                    />
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationDropdown 
+                      item={{
+                        name: "About Us",
+                        bgColor: "bg-indigo-600",
+                        hoverColor: "hover:bg-indigo-700",
+                        shadowColor: "shadow-lg",
+                        hoverShadow: "hover:shadow-xl",
+                        textColor: "text-white",
+                        customIcon: getIconUrl('ICO-ABT.png'),
+                        description: "About Our Site",
+                        subItems: [
+                          { name: "About Grandpa John", path: "/about" },
+                          { name: "About Buddy", path: "/about#buddy" },
+                          { name: "About Authors", path: "/author-bios" },
+                          { name: "A Special Thank You", path: "/about#special-thank-you" }
+                        ]
+                      }}
                     />
                   </NavigationMenuItem>
                   <NavigationMenuItem>
@@ -159,14 +164,15 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       item={{
                         name: "How To",
                         path: "/how-to",
-                        bgColor: "bg-red-500",
-                        hoverColor: "hover:bg-red-600",
+                        bgColor: "bg-red-600",
+                        hoverColor: "hover:bg-red-700",
                         shadowColor: "shadow-lg",
                         hoverShadow: "hover:shadow-xl",
                         textColor: "text-white",
-                        customIcon: getIconUrl('ICO-HWT.png')
+                        customIcon: getIconUrl('ICO-HWT.png'),
+                        description: "How to Use Site"
                       }}
-                      isActive={false}
+                      isActive={location.pathname === '/how-to'}
                     />
                   </NavigationMenuItem>
                 </NavigationMenuList>
@@ -175,21 +181,22 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                 <div className="mt-2">
                   <NavigationMenu>
                     <NavigationMenuList className="space-x-2">
-                      <NavigationMenuItem>
-                         <NavigationButton 
-                           item={{
-                             name: "Privacy",
-                             path: "/privacy",
-                             bgColor: "bg-gray-600",
-                             hoverColor: "hover:bg-gray-700",
-                             shadowColor: "shadow-lg",
-                             hoverShadow: "hover:shadow-xl",
-                             textColor: "text-white",
-                             customIcon: getIconUrl('ICO-LKD.png')
-                           }}
-                          isActive={false}
-                        />
-                      </NavigationMenuItem>
+                       <NavigationMenuItem>
+                          <NavigationButton 
+                            item={{
+                              name: "Safe",
+                              path: "/privacy",
+                              bgColor: "bg-gray-600",
+                              hoverColor: "hover:bg-gray-700",
+                              shadowColor: "shadow-lg",
+                              hoverShadow: "hover:shadow-xl",
+                              textColor: "text-white",
+                              customIcon: getIconUrl('ICO-PRI.png'),
+                              description: "Privacy & Safety"
+                            }}
+                           isActive={location.pathname === '/privacy'}
+                         />
+                       </NavigationMenuItem>
                     </NavigationMenuList>
                   </NavigationMenu>
                 </div>
@@ -239,124 +246,131 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
       {/* Navigation Menu - Only show on non-home pages */}
       {!isHomePage && !isAdminPage && (
         <div className="flex items-center gap-4">
-          <NavigationMenu>
-             <NavigationMenuList className="space-x-2">
-               <NavigationMenuItem>
-                 <NavigationButton 
-                   item={{
-                     name: "Home",
-                     path: "/",
-                     bgColor: "bg-indigo-500",
-                     hoverColor: "hover:bg-indigo-600",
-                     shadowColor: "shadow-lg",
-                     hoverShadow: "hover:shadow-xl",
-                     textColor: "text-white",
-                     customIcon: getIconUrl('ICO-HOM.png')
-                   }}
-                   isActive={false}
-                 />
-               </NavigationMenuItem>
-               <NavigationMenuItem>
+           <NavigationMenu>
+              <NavigationMenuList className="space-x-2">
+                <NavigationMenuItem>
                   <NavigationButton 
                     item={{
-                      name: "Stories",
-                     path: "/library",
-                     bgColor: "bg-blue-500",
-                     hoverColor: "hover:bg-blue-600",
-                     shadowColor: "shadow-lg",
-                     hoverShadow: "hover:shadow-xl",
-                     textColor: "text-white",
-                     customIcon: getIconUrl('ICO_BK1.png')
-                   }}
-                  isActive={false}
-                />
-              </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationDropdown 
-                    item={{
-                      name: "About",
-                      bgColor: "bg-green-500",
-                      hoverColor: "hover:bg-green-600",
+                      name: "Home",
+                      path: "/",
+                      bgColor: "bg-green-600",
+                      hoverColor: "hover:bg-green-700",
                       shadowColor: "shadow-lg",
                       hoverShadow: "hover:shadow-xl",
                       textColor: "text-white",
-                      customIcon: getIconUrl('ICO-INF.png'),
-                      subItems: [
-                        { name: "About Grandpa John", path: "/about" },
-                        { name: "About Buddy", path: "/about#buddy" },
-                        { name: "About Authors", path: "/author-bios" },
-                        { name: "A Special Thank You", path: "/about#special-thank-you" }
-                      ]
+                      customIcon: getIconUrl('ICO-HOM.png'),
+                      description: "Go to Homepage"
                     }}
+                    isActive={location.pathname === '/'}
                   />
                 </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationDropdown 
-                  item={{
-                    name: "Comments",
-                    bgColor: "bg-orange-500",
-                    hoverColor: "hover:bg-orange-600",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white",
-                    customIcon: getIconUrl('ICO-HIC.png'),
-                    subItems: [
-                      { name: "Make Comment", path: "/make-comment" },
-                      { name: "View Comments", path: "/view-comments" }
-                    ]
-                  }}
-                />
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationButton 
-                  item={{
-                    name: "Writing",
-                    path: "/writing",
-                    bgColor: "bg-blue-900",
-                    hoverColor: "hover:bg-blue-800",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white",
-                    customIcon: getIconUrl('ICO-WRI.png')
-                  }}
-                  isActive={false}
-                />
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationButton 
-                  item={{
-                    name: "How To",
-                    path: "/how-to",
-                    bgColor: "bg-red-500",
-                    hoverColor: "hover:bg-red-600",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white",
-                    customIcon: getIconUrl('ICO-HWT.png')
-                  }}
-                  isActive={false}
-                />
-              </NavigationMenuItem>
+                <NavigationMenuItem>
+                   <NavigationButton 
+                     item={{
+                       name: "Library",
+                      path: "/library",
+                      bgColor: "bg-blue-600",
+                      hoverColor: "hover:bg-blue-700",
+                      shadowColor: "shadow-lg",
+                      hoverShadow: "hover:shadow-xl",
+                      textColor: "text-white",
+                      customIcon: getIconUrl('ICO_BK1.png'),
+                      description: "Browse Story Library"
+                    }}
+                   isActive={location.pathname === '/library'}
+                 />
+               </NavigationMenuItem>
+               <NavigationMenuItem>
+                 <NavigationDropdown 
+                   item={{
+                     name: "Comments",
+                     bgColor: "bg-yellow-600",
+                     hoverColor: "hover:bg-yellow-700",
+                     shadowColor: "shadow-lg",
+                     hoverShadow: "hover:shadow-xl",
+                     textColor: "text-white",
+                     customIcon: getIconUrl('ICO-COM.png'),
+                     description: "Comment on Stories",
+                     subItems: [
+                       { name: "Make Comment", path: "/make-comment" },
+                       { name: "View Comments", path: "/view-comments" }
+                     ]
+                   }}
+                 />
+               </NavigationMenuItem>
+               <NavigationMenuItem>
+                 <NavigationButton 
+                   item={{
+                     name: "Writing",
+                     path: "/writing",
+                     bgColor: "bg-blue-900",
+                     hoverColor: "hover:bg-blue-800",
+                     shadowColor: "shadow-lg",
+                     hoverShadow: "hover:shadow-xl",
+                     textColor: "text-white",
+                     customIcon: getIconUrl('ICO-WRI.png'),
+                     description: "Write Your Story"
+                   }}
+                   isActive={location.pathname === '/writing'}
+                 />
+               </NavigationMenuItem>
+               <NavigationMenuItem>
+                 <NavigationDropdown 
+                   item={{
+                     name: "About Us",
+                     bgColor: "bg-indigo-600",
+                     hoverColor: "hover:bg-indigo-700",
+                     shadowColor: "shadow-lg",
+                     hoverShadow: "hover:shadow-xl",
+                     textColor: "text-white",
+                     customIcon: getIconUrl('ICO-ABT.png'),
+                     description: "About Our Site",
+                     subItems: [
+                       { name: "About Grandpa John", path: "/about" },
+                       { name: "About Buddy", path: "/about#buddy" },
+                       { name: "About Authors", path: "/author-bios" },
+                       { name: "A Special Thank You", path: "/about#special-thank-you" }
+                     ]
+                   }}
+                 />
+               </NavigationMenuItem>
+               <NavigationMenuItem>
+                 <NavigationButton 
+                   item={{
+                     name: "How To",
+                     path: "/how-to",
+                     bgColor: "bg-red-600",
+                     hoverColor: "hover:bg-red-700",
+                     shadowColor: "shadow-lg",
+                     hoverShadow: "hover:shadow-xl",
+                     textColor: "text-white",
+                     customIcon: getIconUrl('ICO-HWT.png'),
+                     description: "How to Use Site"
+                   }}
+                   isActive={location.pathname === '/how-to'}
+                 />
+               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
           {userRole && (userRole === 'admin' || userRole === 'viewer') && (
             <NavigationMenu>
               <NavigationMenuList className="space-x-2">
-                <NavigationMenuItem>
-                   <NavigationButton 
-                     item={{
-                       name: "Privacy",
-                       path: "/privacy",
-                       bgColor: "bg-gray-600",
-                       hoverColor: "hover:bg-gray-700",
-                       shadowColor: "shadow-lg",
-                       hoverShadow: "hover:shadow-xl",
-                       textColor: "text-white",
-                       customIcon: getIconUrl('ICO-LKD.png')
-                     }}
-                    isActive={false}
-                  />
-                </NavigationMenuItem>
+                 <NavigationMenuItem>
+                    <NavigationButton 
+                      item={{
+                        name: "Safe",
+                        path: "/privacy",
+                        bgColor: "bg-gray-600",
+                        hoverColor: "hover:bg-gray-700",
+                        shadowColor: "shadow-lg",
+                        hoverShadow: "hover:shadow-xl",
+                        textColor: "text-white",
+                        customIcon: getIconUrl('ICO-PRI.png'),
+                        description: "Privacy & Safety"
+                      }}
+                     isActive={location.pathname === '/privacy'}
+                   />
+                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
           )}
