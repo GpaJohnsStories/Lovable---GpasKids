@@ -1,8 +1,10 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { RefreshCw } from 'lucide-react';
 
 interface IconLibraryItem {
   id: string;
@@ -14,18 +16,35 @@ interface IconLibraryItem {
 }
 
 const IconLibraryDisplay = () => {
-  const { data: icons, isLoading, error } = useQuery({
+  const queryClient = useQueryClient();
+  
+  const { data: icons, isLoading, error, refetch } = useQuery({
     queryKey: ['icon-library'],
     queryFn: async () => {
+      console.log('🔍 Fetching icon library data...');
       const { data, error } = await supabase
         .from('icon_library')
         .select('*')
         .order('icon_code', { ascending: true });
 
-      if (error) throw error;
+      if (error) {
+        console.error('❌ Error fetching icon library:', error);
+        throw error;
+      }
+      
+      console.log('✅ Icon library data fetched:', data);
+      console.log('📊 Total icons found:', data?.length || 0);
       return data as IconLibraryItem[];
     },
+    staleTime: 0, // Always refetch to get latest data
+    gcTime: 0, // Don't cache for debugging
   });
+
+  const handleRefresh = async () => {
+    console.log('🔄 Manual refresh triggered');
+    await queryClient.invalidateQueries({ queryKey: ['icon-library'] });
+    refetch();
+  };
 
   if (isLoading) {
     return (
@@ -62,7 +81,9 @@ const IconLibraryDisplay = () => {
   }
 
   const getIconUrl = (filePath: string) => {
-    return supabase.storage.from('icons').getPublicUrl(filePath).data.publicUrl;
+    const url = supabase.storage.from('icons').getPublicUrl(filePath).data.publicUrl;
+    console.log(`🖼️ Icon URL for ${filePath}:`, url);
+    return url;
   };
 
   return (
@@ -70,7 +91,18 @@ const IconLibraryDisplay = () => {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           Icon Library
-          <Badge variant="secondary">{icons?.length || 0} icons</Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="secondary">{icons?.length || 0} icons</Badge>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              className="h-8"
+            >
+              <RefreshCw className="h-4 w-4 mr-1" />
+              Refresh
+            </Button>
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
