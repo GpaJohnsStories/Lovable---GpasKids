@@ -26,6 +26,41 @@ const HowTo = () => {
       borderColor: "#3b82f6", // Admin Menu Blue
       backgroundColor: "bg-blue-600/20",
       title: "Story Library"
+    },
+    {
+      webtextCode: "SYS-STY",
+      icon: "ICO_BK1",
+      borderColor: "#E6C966", // Soft Gold
+      backgroundColor: "bg-yellow-600/20",
+      title: "Read A Story"
+    },
+    {
+      webtextCode: "SYS-ABT",
+      icon: "ICO-INF",
+      borderColor: "#16a34a", // Fresh Green
+      backgroundColor: "bg-green-600/20",
+      title: "About Us"
+    },
+    {
+      webtextCode: "SYS-COM",
+      icon: "ICO-HIC",
+      borderColor: "#FFCBA4", // Peach
+      backgroundColor: "bg-orange-300/20",
+      title: "Comments List Page"
+    },
+    {
+      webtextCode: "SYS-MCO",
+      icon: "ICO-HIC",
+      borderColor: "#E6A875", // Darker Peach
+      backgroundColor: "bg-orange-400/20",
+      title: "Write a Comment Page"
+    },
+    {
+      webtextCode: "SYS-SEC",
+      icon: "ICO-LKD",
+      borderColor: "#4A7C59", // Forest Green
+      backgroundColor: "bg-emerald-700/20",
+      title: "We Are Safe!"
     }
   ];
 
