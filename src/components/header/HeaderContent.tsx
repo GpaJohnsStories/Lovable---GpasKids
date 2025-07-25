@@ -106,9 +106,9 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
         </div>
       )}
       
-      {/* Navigation Menu - Show on home page, centered and aligned with bottom of Buddy box */}
+      {/* Navigation Menu - Show on home page, centered and aligned with bottom of Buddy's green box */}
       {isHomePage && (
-        <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0">
+        <div className="absolute left-1/2 transform -translate-x-1/2 top-40 sm:top-44">
           <NavigationMenu>
             <NavigationMenuList className="space-x-2 flex-wrap justify-center">
               <NavigationMenuItem>
