@@ -68,14 +68,14 @@ const HowTo = () => {
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
       <WelcomeHeader />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-4">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-center text-orange-800 mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-center text-orange-800 mb-4">
             How To Use Gpa's Website for Kids
           </h1>
           
           {/* Stack of WebText Boxes */}
-          <div className="space-y-2">
+          <div className="space-y-2 mb-2">
             {webtextBoxes.map((box, index) => (
               <WebTextBox
                 key={index}
