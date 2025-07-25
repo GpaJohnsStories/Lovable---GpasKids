@@ -38,9 +38,9 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
 
   return (
     <div>
-      {/* Top section with Buddy, title, and dancing GIF */}
-      <div className="flex items-center justify-between mb-4">
-        {/* Buddy's Photo and Website Title */}
+      {/* Main container with Buddy and navigation aligned */}
+      <div className="flex items-end justify-between">
+        {/* Left side: Buddy and Title */}
         <div className="flex items-start gap-4">
           <button 
             onClick={handleHelpClick}
@@ -71,8 +71,8 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story feels like a new adventure</p>
           </div>
         </div>
-        
-        {/* Dancing GIF with Speech Bubble - Only show on home page */}
+
+        {/* Center: Dancing GIF - Only show on home page */}
         {isHomePage && (
           <div className="relative hidden md:block">
             <img 
@@ -108,9 +108,10 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           </div>
         )}
 
-        {/* Non-home page navigation */}
-        {!isHomePage && !isAdminPage && (
-          <div className="flex items-center gap-4">
+        {/* Right side: Navigation - aligned to bottom */}
+        <div className="flex items-end">
+          {/* Non-home page navigation */}
+          {!isHomePage && !isAdminPage && (
             <NavigationMenu>
               <NavigationMenuList className="space-x-2">
                 <NavigationMenuItem>
@@ -217,38 +218,35 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
-            {userRole && (userRole === 'admin' || userRole === 'viewer') && (
-              <NavigationMenu>
-                <NavigationMenuList className="space-x-2">
-                  <NavigationMenuItem>
-                    <NavigationButton 
-                      item={{
-                        name: "Safe",
-                        path: "/privacy",
-                        bgColor: "bg-gray-600",
-                        hoverColor: "hover:bg-gray-700",
-                        shadowColor: "shadow-lg",
-                        hoverShadow: "hover:shadow-xl",
-                        textColor: "text-white",
-                        customIcon: getIconUrl('ICO-LKD.png'),
-                        description: "Privacy & Safety"
-                      }}
-                      isActive={location.pathname === '/privacy'}
-                    />
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
-            )}
-          </div>
-        )}
-      </div>
+          )}
+          {userRole && (userRole === 'admin' || userRole === 'viewer') && (
+            <NavigationMenu>
+              <NavigationMenuList className="space-x-2">
+                <NavigationMenuItem>
+                  <NavigationButton 
+                    item={{
+                      name: "Safe",
+                      path: "/privacy",
+                      bgColor: "bg-gray-600",
+                      hoverColor: "hover:bg-gray-700",
+                      shadowColor: "shadow-lg",
+                      hoverShadow: "hover:shadow-xl",
+                      textColor: "text-white",
+                      customIcon: getIconUrl('ICO-LKD.png'),
+                      description: "Privacy & Safety"
+                    }}
+                    isActive={location.pathname === '/privacy'}
+                  />
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          )}
 
-      {/* Home page navigation - positioned below the header content */}
-      {isHomePage && (
-        <div className="flex justify-center">
-          <NavigationMenu>
-            <NavigationMenuList className="flex flex-row flex-wrap justify-center gap-2">
-              <NavigationMenuItem>
+          {/* Home page navigation - aligned to bottom */}
+          {isHomePage && (
+            <NavigationMenu>
+              <NavigationMenuList className="flex flex-row flex-wrap justify-end gap-2">
+                <NavigationMenuItem>
                 <NavigationButton 
                   item={{
                     name: "Home",
@@ -368,10 +366,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                   />
                 </NavigationMenuItem>
               )}
-            </NavigationMenuList>
-          </NavigationMenu>
+              </NavigationMenuList>
+            </NavigationMenu>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
