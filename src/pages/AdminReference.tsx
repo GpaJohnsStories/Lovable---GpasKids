@@ -4,7 +4,6 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import IconLibraryDisplay from '@/components/admin/IconLibraryDisplay';
 import IconUploadForm from '@/components/admin/IconUploadForm';
 import PreferredColorsTable from '@/components/admin/PreferredColorsTable';
-import StorageFileRemover from '@/components/admin/StorageFileRemover';
 import { useUserRole } from '@/hooks/useUserRole';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
@@ -42,7 +41,6 @@ const AdminReference = () => {
       </Helmet>
       
       <AdminLayout>
-        <StorageFileRemover />
         <div className="space-y-6">
           <div>
             <h1 className="text-3xl font-bold text-black mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
