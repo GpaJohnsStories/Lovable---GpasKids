@@ -85,11 +85,11 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         {/* Right: Audio Controls */}
         <div className="flex-shrink-0">
           <div 
-            className="border-2 rounded-lg p-3"
+            className="border-2 rounded-lg"
             style={{ borderColor }}
           >
             <div 
-              className="text-center italic mb-2"
+              className="text-center italic font-bold mb-2"
               style={{ 
                 fontSize: '14pt',
                 color: borderColor 
