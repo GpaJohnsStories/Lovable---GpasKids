@@ -30,7 +30,7 @@ const HowTo = () => {
     {
       webtextCode: "SYS-STY",
       icon: "ICO_BK1",
-      borderColor: "#E6C966", // Soft Gold
+      borderColor: "#9c441a", // Rust Orange
       backgroundColor: "bg-yellow-600/20",
       title: "Read A Story"
     },
