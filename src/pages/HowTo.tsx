@@ -22,14 +22,14 @@ const HowTo = () => {
     },
     {
       webtextCode: "SYS-HOME",
-      icon: "ICO_BK1",
+      icon: "ICO-BK1",
       borderColor: "#3b82f6", // Admin Menu Blue
       backgroundColor: "bg-blue-600/20",
       title: "Story Library"
     },
     {
       webtextCode: "SYS-STY",
-      icon: "ICO_BK1",
+      icon: "ICO-BK1",
       borderColor: "#9c441a", // Rust Orange
       backgroundColor: "bg-yellow-600/20",
       title: "Read A Story"
