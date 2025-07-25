@@ -213,32 +213,26 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                   isActive={location.pathname === '/how-to'}
                 />
               </NavigationMenuItem>
+              {userRole && (userRole === 'admin' || userRole === 'viewer') && !isAdminPage && (
+                <NavigationMenuItem>
+                  <NavigationButton 
+                    item={{
+                      name: "Safe",
+                      path: "/privacy",
+                      bgColor: "bg-gray-600",
+                      hoverColor: "hover:bg-gray-700",
+                      shadowColor: "shadow-lg",
+                      hoverShadow: "hover:shadow-xl",
+                      textColor: "text-white",
+                      customIcon: getIconUrl('ICO-LKD.png'),
+                      description: "Privacy & Safety"
+                    }}
+                    isActive={location.pathname === '/privacy'}
+                  />
+                </NavigationMenuItem>
+              )}
             </NavigationMenuList>
           </NavigationMenu>
-          {userRole && (userRole === 'admin' || userRole === 'viewer') && !isAdminPage && (
-            <div className="mt-2">
-              <NavigationMenu>
-                <NavigationMenuList className="space-x-2">
-                  <NavigationMenuItem>
-                    <NavigationButton 
-                      item={{
-                        name: "Safe",
-                        path: "/privacy",
-                        bgColor: "bg-gray-600",
-                        hoverColor: "hover:bg-gray-700",
-                        shadowColor: "shadow-lg",
-                        hoverShadow: "hover:shadow-xl",
-                        textColor: "text-white",
-                        customIcon: getIconUrl('ICO-LKD.png'),
-                        description: "Privacy & Safety"
-                      }}
-                      isActive={location.pathname === '/privacy'}
-                    />
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
-          )}
         </div>
       )}
 
