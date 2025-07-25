@@ -75,7 +75,8 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             <img 
               src={iconUrl} 
               alt={icon}
-              className="w-8 h-8 object-contain border border-amber-300 rounded"
+              className="w-8 h-8 object-contain border rounded"
+              style={{ borderColor }}
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
               }}
