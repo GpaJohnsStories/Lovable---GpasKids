@@ -40,7 +40,11 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           .maybeSingle();
         
         if (!error && iconData) {
-          setIconUrl(iconData.file_path);
+          // Construct the full URL for the icon from the storage bucket
+          const { data: { publicUrl } } = supabase.storage
+            .from('icons')
+            .getPublicUrl(iconData.file_path);
+          setIconUrl(publicUrl);
         }
       } catch (error) {
         console.error('Error fetching icon:', error);
