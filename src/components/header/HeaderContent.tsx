@@ -38,10 +38,10 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
 
   return (
     <div>
-      {/* Main container with Buddy and navigation aligned */}
-      <div className="flex items-end justify-between">
+      {/* Main container with Buddy on left, navigation centered and bottom-aligned */}
+      <div className="flex items-end justify-center relative min-h-[180px]">
         {/* Left side: Buddy and Title */}
-        <div className="flex items-start gap-4">
+        <div className="absolute left-0 bottom-0 flex items-start gap-4">
           <button 
             onClick={handleHelpClick}
             onMouseDown={() => console.log('🐕 Buddy button mouse down!')}
@@ -74,302 +74,167 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
 
         {/* Center: Dancing GIF - Only show on home page */}
         {isHomePage && (
-          <div className="relative hidden md:block">
-            <img 
-              src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczNveHBjNDkxcDNwMG5mcHh2dmxvYXlycm4zZjF5a3BxaWRxb3VoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cMALqIjmb7ygw/giphy.gif"
-              alt="Fun dancing GIF"
-              className="w-72 h-48 rounded-full border-4 border-white shadow-[inset_0_12px_20px_rgba(0,0,0,0.5),inset_0_6px_12px_rgba(0,0,0,0.3),inset_0_2px_6px_rgba(0,0,0,0.2)] object-cover object-left"
-            />
-            {/* Speech Bubble Image */}
-            <div className="absolute -left-24 top-2">
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 hidden md:block">
+            <div className="relative">
               <img 
-                src="/lovable-uploads/85707d76-31c8-4dac-9fa7-c6752c4f8e74.png" 
-                alt="Speech bubble"
-                className="w-24 h-24 object-contain"
-                onLoad={() => console.log('New speech bubble image loaded successfully')}
-                onError={(e) => console.log('New speech bubble image failed to load:', e)}
+                src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczNveHBjNDkxcDNwMG5mcHh2dmxvYXlycm4zZjF5a3BxaWRxb3VoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cMALqIjmb7ygw/giphy.gif"
+                alt="Fun dancing GIF"
+                className="w-72 h-48 rounded-full border-4 border-white shadow-[inset_0_12px_20px_rgba(0,0,0,0.5),inset_0_6px_12px_rgba(0,0,0,0.3),inset_0_2px_6px_rgba(0,0,0,0.2)] object-cover object-left"
               />
-            </div>
-            {/* Under Construction Image - Positioned at bottom of telescope */}
-            <div className="absolute top-48 left-1/2 transform -translate-x-1/2">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <img 
-                    src="/lovable-uploads/3a1b5f78-6ca6-488d-90a3-369c6bc26b12.png"
-                    alt="Under Construction"
-                    className="w-36 h-36 object-contain cursor-pointer"
-                  />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>UC</p>
-                </TooltipContent>
-              </Tooltip>
+              {/* Speech Bubble Image */}
+              <div className="absolute -left-24 top-2">
+                <img 
+                  src="/lovable-uploads/85707d76-31c8-4dac-9fa7-c6752c4f8e74.png" 
+                  alt="Speech bubble"
+                  className="w-24 h-24 object-contain"
+                  onLoad={() => console.log('New speech bubble image loaded successfully')}
+                  onError={(e) => console.log('New speech bubble image failed to load:', e)}
+                />
+              </div>
+              {/* Under Construction Image - Positioned at bottom of telescope */}
+              <div className="absolute top-48 left-1/2 transform -translate-x-1/2">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <img 
+                      src="/lovable-uploads/3a1b5f78-6ca6-488d-90a3-369c6bc26b12.png"
+                      alt="Under Construction"
+                      className="w-36 h-36 object-contain cursor-pointer"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>UC</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Right side: Navigation - aligned to bottom */}
-        <div className="flex items-end">
-          {/* Non-home page navigation */}
-          {!isHomePage && !isAdminPage && (
-            <NavigationMenu>
-              <NavigationMenuList className="space-x-2">
-                <NavigationMenuItem>
-                  <NavigationButton 
-                    item={{
-                      name: "Home",
-                      path: "/",
-                      bgColor: "bg-green-600",
-                      hoverColor: "hover:bg-green-700",
-                      shadowColor: "shadow-lg",
-                      hoverShadow: "hover:shadow-xl",
-                      textColor: "text-white",
-                      customIcon: getIconUrl('ICO-HOM.png'),
-                      description: "Go to Homepage"
-                    }}
-                    isActive={location.pathname === '/'}
-                  />
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationButton 
-                    item={{
-                      name: "Library",
-                      path: "/library",
-                      bgColor: "bg-blue-600",
-                      hoverColor: "hover:bg-blue-700",
-                      shadowColor: "shadow-lg",
-                      hoverShadow: "hover:shadow-xl",
-                      textColor: "text-white",
-                      customIcon: getIconUrl('ICO-BK1.png'),
-                      description: "Browse Story Library"
-                    }}
-                    isActive={location.pathname === '/library'}
-                  />
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationDropdown 
-                    item={{
-                      name: "Comments",
-                      bgColor: "bg-yellow-600",
-                      hoverColor: "hover:bg-yellow-700",
-                      shadowColor: "shadow-lg",
-                      hoverShadow: "hover:shadow-xl",
-                      textColor: "text-white",
-                      customIcon: getIconUrl('ICO-HIC.png'),
-                      description: "Comment on Stories",
-                      subItems: [
-                        { name: "Make Comment", path: "/make-comment" },
-                        { name: "View Comments", path: "/view-comments" }
-                      ]
-                    }}
-                  />
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationButton 
-                    item={{
-                      name: "Writing",
-                      path: "/writing",
-                      bgColor: "bg-blue-900",
-                      hoverColor: "hover:bg-blue-800",
-                      shadowColor: "shadow-lg",
-                      hoverShadow: "hover:shadow-xl",
-                      textColor: "text-white",
-                      customIcon: getIconUrl('ICO-WRI.png'),
-                      description: "Write Your Story"
-                    }}
-                    isActive={location.pathname === '/writing'}
-                  />
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationDropdown 
-                    item={{
-                      name: "About Us",
-                      bgColor: "bg-indigo-600",
-                      hoverColor: "hover:bg-indigo-700",
-                      shadowColor: "shadow-lg",
-                      hoverShadow: "hover:shadow-xl",
-                      textColor: "text-white",
-                      customIcon: getIconUrl('ICO-INF.png'),
-                      description: "About Our Site",
-                      subItems: [
-                        { name: "About Grandpa John", path: "/about" },
-                        { name: "About Buddy", path: "/about#buddy" },
-                        { name: "About Authors", path: "/author-bios" },
-                        { name: "A Special Thank You", path: "/about#special-thank-you" }
-                      ]
-                    }}
-                  />
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationButton 
-                    item={{
-                      name: "How To",
-                      path: "/how-to",
-                      bgColor: "bg-red-600",
-                      hoverColor: "hover:bg-red-700",
-                      shadowColor: "shadow-lg",
-                      hoverShadow: "hover:shadow-xl",
-                      textColor: "text-white",
-                      customIcon: getIconUrl('ICO-N2K.png'),
-                      description: "How to Use Site"
-                    }}
-                    isActive={location.pathname === '/how-to'}
-                  />
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          )}
-          {userRole && (userRole === 'admin' || userRole === 'viewer') && (
-            <NavigationMenu>
-              <NavigationMenuList className="space-x-2">
-                <NavigationMenuItem>
-                  <NavigationButton 
-                    item={{
-                      name: "Safe",
-                      path: "/privacy",
-                      bgColor: "bg-gray-600",
-                      hoverColor: "hover:bg-gray-700",
-                      shadowColor: "shadow-lg",
-                      hoverShadow: "hover:shadow-xl",
-                      textColor: "text-white",
-                      customIcon: getIconUrl('ICO-LKD.png'),
-                      description: "Privacy & Safety"
-                    }}
-                    isActive={location.pathname === '/privacy'}
-                  />
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-          )}
-
-          {/* Home page navigation - aligned to bottom */}
-          {isHomePage && (
-            <NavigationMenu>
-              <NavigationMenuList className="flex flex-row flex-wrap justify-end gap-2">
-                <NavigationMenuItem>
-                <NavigationButton 
-                  item={{
-                    name: "Home",
-                    path: "/",
-                    bgColor: "bg-green-600",
-                    hoverColor: "hover:bg-green-700",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white",
-                    customIcon: getIconUrl('ICO-HOM.png'),
-                    description: "Go to Homepage"
-                  }}
-                  isActive={location.pathname === '/'}
-                />
-              </NavigationMenuItem>
+        {/* Center: Navigation - all buttons in one horizontal row, aligned to bottom */}
+        <NavigationMenu>
+          <NavigationMenuList className="flex flex-row gap-2 items-end">
+            <NavigationMenuItem>
+              <NavigationButton 
+                item={{
+                  name: "Home",
+                  path: "/",
+                  bgColor: "bg-green-600",
+                  hoverColor: "hover:bg-green-700",
+                  shadowColor: "shadow-lg",
+                  hoverShadow: "hover:shadow-xl",
+                  textColor: "text-white",
+                  customIcon: getIconUrl('ICO-HOM.png'),
+                  description: "Go to Homepage"
+                }}
+                isActive={location.pathname === '/'}
+              />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationButton 
+                item={{
+                  name: "Library",
+                  path: "/library",
+                  bgColor: "bg-blue-600",
+                  hoverColor: "hover:bg-blue-700",
+                  shadowColor: "shadow-lg",
+                  hoverShadow: "hover:shadow-xl",
+                  textColor: "text-white",
+                  customIcon: getIconUrl('ICO-BK1.png'),
+                  description: "Browse Story Library"
+                }}
+                isActive={location.pathname === '/library'}
+              />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationDropdown 
+                item={{
+                  name: "Comments",
+                  bgColor: "bg-yellow-600",
+                  hoverColor: "hover:bg-yellow-700",
+                  shadowColor: "shadow-lg",
+                  hoverShadow: "hover:shadow-xl",
+                  textColor: "text-white",
+                  customIcon: getIconUrl('ICO-HIC.png'),
+                  description: "Comment on Stories",
+                  subItems: [
+                    { name: "Make Comment", path: "/make-comment" },
+                    { name: "View Comments", path: "/view-comments" }
+                  ]
+                }}
+              />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationButton 
+                item={{
+                  name: "Writing",
+                  path: "/writing",
+                  bgColor: "bg-blue-900",
+                  hoverColor: "hover:bg-blue-800",
+                  shadowColor: "shadow-lg",
+                  hoverShadow: "hover:shadow-xl",
+                  textColor: "text-white",
+                  customIcon: getIconUrl('ICO-WRI.png'),
+                  description: "Write Your Story"
+                }}
+                isActive={location.pathname === '/writing'}
+              />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationDropdown 
+                item={{
+                  name: "About Us",
+                  bgColor: "bg-indigo-600",
+                  hoverColor: "hover:bg-indigo-700",
+                  shadowColor: "shadow-lg",
+                  hoverShadow: "hover:shadow-xl",
+                  textColor: "text-white",
+                  customIcon: getIconUrl('ICO-INF.png'),
+                  description: "About Our Site",
+                  subItems: [
+                    { name: "About Grandpa John", path: "/about" },
+                    { name: "About Buddy", path: "/about#buddy" },
+                    { name: "About Authors", path: "/author-bios" },
+                    { name: "A Special Thank You", path: "/about#special-thank-you" }
+                  ]
+                }}
+              />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationButton 
+                item={{
+                  name: "How To",
+                  path: "/how-to",
+                  bgColor: "bg-red-600",
+                  hoverColor: "hover:bg-red-700",
+                  shadowColor: "shadow-lg",
+                  hoverShadow: "hover:shadow-xl",
+                  textColor: "text-white",
+                  customIcon: getIconUrl('ICO-N2K.png'),
+                  description: "How to Use Site"
+                }}
+                isActive={location.pathname === '/how-to'}
+              />
+            </NavigationMenuItem>
+            {userRole && (userRole === 'admin' || userRole === 'viewer') && !isAdminPage && (
               <NavigationMenuItem>
                 <NavigationButton 
                   item={{
-                    name: "Library",
-                    path: "/library",
-                    bgColor: "bg-blue-600",
-                    hoverColor: "hover:bg-blue-700",
+                    name: "Safe",
+                    path: "/privacy",
+                    bgColor: "bg-gray-600",
+                    hoverColor: "hover:bg-gray-700",
                     shadowColor: "shadow-lg",
                     hoverShadow: "hover:shadow-xl",
                     textColor: "text-white",
-                    customIcon: getIconUrl('ICO-BK1.png'),
-                    description: "Browse Story Library"
+                    customIcon: getIconUrl('ICO-LKD.png'),
+                    description: "Privacy & Safety"
                   }}
-                  isActive={location.pathname === '/library'}
+                  isActive={location.pathname === '/privacy'}
                 />
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationDropdown 
-                  item={{
-                    name: "Comments",
-                    bgColor: "bg-yellow-600",
-                    hoverColor: "hover:bg-yellow-700",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white",
-                    customIcon: getIconUrl('ICO-HIC.png'),
-                    description: "Comment on Stories",
-                    subItems: [
-                      { name: "Make Comment", path: "/make-comment" },
-                      { name: "View Comments", path: "/view-comments" }
-                    ]
-                  }}
-                />
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationButton 
-                  item={{
-                    name: "Writing",
-                    path: "/writing",
-                    bgColor: "bg-blue-900",
-                    hoverColor: "hover:bg-blue-800",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white",
-                    customIcon: getIconUrl('ICO-WRI.png'),
-                    description: "Write Your Story"
-                  }}
-                  isActive={location.pathname === '/writing'}
-                />
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationDropdown 
-                  item={{
-                    name: "About Us",
-                    bgColor: "bg-indigo-600",
-                    hoverColor: "hover:bg-indigo-700",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white",
-                    customIcon: getIconUrl('ICO-INF.png'),
-                    description: "About Our Site",
-                    subItems: [
-                      { name: "About Grandpa John", path: "/about" },
-                      { name: "About Buddy", path: "/about#buddy" },
-                      { name: "About Authors", path: "/author-bios" },
-                      { name: "A Special Thank You", path: "/about#special-thank-you" }
-                    ]
-                  }}
-                />
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationButton 
-                  item={{
-                    name: "How To",
-                    path: "/how-to",
-                    bgColor: "bg-red-600",
-                    hoverColor: "hover:bg-red-700",
-                    shadowColor: "shadow-lg",
-                    hoverShadow: "hover:shadow-xl",
-                    textColor: "text-white",
-                    customIcon: getIconUrl('ICO-N2K.png'),
-                    description: "How to Use Site"
-                  }}
-                  isActive={location.pathname === '/how-to'}
-                />
-              </NavigationMenuItem>
-              {userRole && (userRole === 'admin' || userRole === 'viewer') && !isAdminPage && (
-                <NavigationMenuItem>
-                  <NavigationButton 
-                    item={{
-                      name: "Safe",
-                      path: "/privacy",
-                      bgColor: "bg-gray-600",
-                      hoverColor: "hover:bg-gray-700",
-                      shadowColor: "shadow-lg",
-                      hoverShadow: "hover:shadow-xl",
-                      textColor: "text-white",
-                      customIcon: getIconUrl('ICO-LKD.png'),
-                      description: "Privacy & Safety"
-                    }}
-                    isActive={location.pathname === '/privacy'}
-                  />
-                </NavigationMenuItem>
-              )}
-              </NavigationMenuList>
-            </NavigationMenu>
-          )}
-        </div>
+            )}
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
     </div>
   );
