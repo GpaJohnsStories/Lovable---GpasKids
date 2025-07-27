@@ -19,9 +19,19 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   // Check if we're on an admin page
   const isAdminPage = location.pathname.startsWith('/buddys_admin');
 
-  // Function to get icon URL from Supabase storage
+  // Function to get icon URL from Supabase storage with fallback to ICO-N2K
   const getIconUrl = (filePath: string) => {
     return supabase.storage.from('icons').getPublicUrl(filePath).data.publicUrl;
+  };
+
+  // Safe icon URL with fallback
+  const getSafeIconUrl = (filePath: string) => {
+    try {
+      return getIconUrl(filePath);
+    } catch (error) {
+      console.warn(`Failed to load icon ${filePath}, falling back to ICO-N2K.png`);
+      return getIconUrl('ICO-N2K.png');
+    }
   };
 
   const handleHelpClick = () => {
@@ -87,7 +97,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                     shadowColor: "shadow-lg",
                     hoverShadow: "hover:shadow-xl",
                     textColor: "text-white",
-                    customIcon: getIconUrl('ICO-HOM.png'),
+                    customIcon: getSafeIconUrl('ICO-HOM.png'),
                     description: "Go to Homepage"
                   }}
                   isActive={location.pathname === '/'}
@@ -103,7 +113,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                     shadowColor: "shadow-lg",
                     hoverShadow: "hover:shadow-xl",
                     textColor: "text-white",
-                    customIcon: getIconUrl('ICO-BK1.png'),
+                    customIcon: getSafeIconUrl('ICO-BK1.png'),
                     description: "Browse Story Library"
                   }}
                   isActive={location.pathname === '/library'}
@@ -118,7 +128,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                     shadowColor: "shadow-lg",
                     hoverShadow: "hover:shadow-xl",
                     textColor: "text-white",
-                    customIcon: getIconUrl('ICO-HIC.png'),
+                    customIcon: getSafeIconUrl('ICO-HIC.png'),
                     description: "Comment on Stories",
                     subItems: [
                       { name: "Make Comment", path: "/make-comment" },
@@ -137,7 +147,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                     shadowColor: "shadow-lg",
                     hoverShadow: "hover:shadow-xl",
                     textColor: "text-white",
-                    customIcon: getIconUrl('ICO-WRI.png'),
+                    customIcon: getSafeIconUrl('ICO-WRI.png'),
                     description: "Write Your Story"
                   }}
                   isActive={location.pathname === '/writing'}
@@ -152,7 +162,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                     shadowColor: "shadow-lg",
                     hoverShadow: "hover:shadow-xl",
                     textColor: "text-white",
-                    customIcon: getIconUrl('ICO-INF.png'),
+                    customIcon: getSafeIconUrl('ICO-INF.png'),
                     description: "About Our Site",
                     subItems: [
                       { name: "About Grandpa John", path: "/about" },
@@ -173,7 +183,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                     shadowColor: "shadow-lg",
                     hoverShadow: "hover:shadow-xl",
                     textColor: "text-white",
-                    customIcon: getIconUrl('ICO-N2K.png'),
+                    customIcon: getSafeIconUrl('ICO-N2K.png'),
                     description: "How to Use Site"
                   }}
                   isActive={location.pathname === '/how-to'}
@@ -190,7 +200,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       shadowColor: "shadow-lg",
                       hoverShadow: "hover:shadow-xl",
                       textColor: "text-white",
-                      customIcon: getIconUrl('ICO-LKD.png'),
+                      customIcon: getSafeIconUrl('ICO-LKD.png'),
                       description: "Privacy & Safety"
                     }}
                     isActive={location.pathname === '/privacy'}

@@ -210,6 +210,16 @@ const IconLibraryDisplay = () => {
     return url;
   };
 
+  // Safe icon URL with fallback to ICO-N2K
+  const getSafeIconUrl = (filePath: string) => {
+    try {
+      return getIconUrl(filePath);
+    } catch (error) {
+      console.warn(`Failed to load icon ${filePath}, falling back to ICO-N2K.png`);
+      return getIconUrl('ICO-N2K.png');
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -243,11 +253,12 @@ const IconLibraryDisplay = () => {
               >
                 <div className="flex justify-center items-center h-16 mb-3">
                   <img
-                    src={getIconUrl(icon.file_path)}
+                    src={getSafeIconUrl(icon.file_path)}
                     alt={icon.icon_name}
                     className="max-w-full max-h-full object-contain"
                     onError={(e) => {
-                      e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjZjNmNGY2Ii8+CjxwYXRoIGQ9Im0xMiAxNS01LTUtNSA1IiBzdHJva2U9IiM5Y2EzYWYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=';
+                      console.warn(`Failed to load icon ${icon.file_path}, setting fallback`);
+                      e.currentTarget.src = getSafeIconUrl('ICO-N2K.png');
                     }}
                   />
                 </div>
@@ -315,7 +326,7 @@ const IconLibraryDisplay = () => {
               <div className="space-y-4">
                 <div className="text-center">
                   <img
-                    src={getIconUrl(selectedIcon.file_path)}
+                    src={getSafeIconUrl(selectedIcon.file_path)}
                     alt={selectedIcon.icon_name}
                     className="max-w-20 max-h-20 object-contain mx-auto mb-2"
                   />
