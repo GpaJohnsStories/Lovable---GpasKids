@@ -33,7 +33,7 @@ const HelpButton: React.FC<HelpButtonProps> = ({
       variant={variant}
     >
       <HelpCircle className="h-4 w-4" />
-      {showText && <span className="ml-2">Help (Ctrl+H)</span>}
+      {showText && <span className="ml-2">Help</span>}
     </Button>
   );
 };
