@@ -57,12 +57,12 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             onClick={handleHelpClick}
             onMouseDown={() => console.log('🐕 Buddy button mouse down!')}
             onMouseUp={() => console.log('🐕 Buddy button mouse up!')}
-            className="group relative z-10 bg-gradient-to-br from-green-600/80 to-green-700/60 hover:from-red-600/80 hover:to-red-700/60 backdrop-blur-sm rounded-lg p-3 flex flex-col items-center text-center w-28 sm:w-32 h-40 sm:h-44 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-green-600 hover:border-red-600 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+            className="group relative z-10 bg-gradient-to-br from-green-600/80 to-green-700/60 hover:from-red-600/80 hover:to-red-700/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-28 sm:w-32 h-32 sm:h-36 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-green-600 hover:border-red-600 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
           >
             <img 
               src="/lovable-uploads/949dcec1-2a5d-481c-9ce6-aa0da5edb3d0.png"
               alt="Buddy the Helper Dog"
-              className="w-full h-16 md:h-18 sm:h-20 object-cover rounded-md mb-1"
+              className="w-full h-16 md:h-18 sm:h-20 object-cover rounded-md mb-0.5"
             />
             <div className="text-yellow-200 group-hover:text-[#FFFF00] text-xs md:text-sm sm:text-base font-bold leading-tight transition-colors duration-200">
               <div className="group-hover:hidden">Need Help?</div>
