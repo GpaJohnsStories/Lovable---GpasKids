@@ -67,7 +67,6 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             <div className="text-yellow-200 group-hover:text-[#FFFF00] text-xs md:text-sm sm:text-base font-bold leading-tight transition-colors duration-200">
               <div className="group-hover:hidden">Need Help?</div>
               <div className="group-hover:hidden">Click Here</div>
-              <div className="group-hover:hidden">or Ctrl+H</div>
               <div className="hidden group-hover:block">Click Here</div>
               <div className="hidden group-hover:block">for Help!</div>
             </div>
