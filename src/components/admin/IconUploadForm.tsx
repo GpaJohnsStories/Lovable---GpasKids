@@ -89,9 +89,9 @@ const IconUploadForm = () => {
     const file = e.target.files?.[0];
     if (file) {
       // Validate file type
-      const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
+      const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml', 'image/gif'];
       if (!validTypes.includes(file.type)) {
-        toast.error('Please select a valid image file (PNG, JPG, JPEG, or SVG)');
+        toast.error('Please select a valid image file (PNG, JPG, JPEG, SVG, or GIF)');
         return;
       }
       
