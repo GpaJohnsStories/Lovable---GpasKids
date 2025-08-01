@@ -106,8 +106,27 @@ export const useStoryFormState = (storyId?: string) => {
     setIsGeneratingAudio(true);
     
     try {
+      // First ensure the voice selection is saved to the database
+      if (formData.id) {
+        const { error: updateError } = await supabase
+          .from('stories')
+          .update({
+            ai_voice_name: formData.ai_voice_name || 'Nova',
+            ai_voice_model: formData.ai_voice_model || 'tts-1'
+          })
+          .eq('id', formData.id);
+
+        if (updateError) {
+          console.error('🎯 useStoryFormState: Error updating voice settings:', updateError);
+          throw updateError;
+        }
+      }
+
       const { data, error } = await supabase.functions.invoke('generate-story-audio', {
-        body: { storyId: formData.id }
+        body: { 
+          storyId: formData.id,
+          voiceName: formData.ai_voice_name || 'Nova'  // Pass voice as backup
+        }
       });
 
       if (error) throw error;

@@ -14,7 +14,7 @@ serve(async (req) => {
   }
 
   try {
-    const { storyId } = await req.json()
+    const { storyId, voiceName } = await req.json()
 
     if (!storyId) {
       throw new Error('Story ID is required')
@@ -124,7 +124,7 @@ serve(async (req) => {
         body: JSON.stringify({
           model: 'tts-1',
           input: chunk,
-          voice: story.ai_voice_name?.toLowerCase() || 'nova',
+          voice: (voiceName || story.ai_voice_name || 'nova').toLowerCase(),
           response_format: 'mp3',
           speed: 0.85,
         }),
