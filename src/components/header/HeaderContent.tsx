@@ -128,9 +128,26 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           )}
         </div>
 
-        {/* RIGHT COLUMN: Empty for future use */}
+        {/* RIGHT COLUMN: Primary Menu Button */}
         <div className="flex justify-end items-start">
-          {/* Space reserved for future functionality */}
+          {isHomePage && (
+            <button 
+              onClick={() => console.log('🎯 Primary Menu clicked!')}
+              className="group relative z-10 bg-gradient-to-br from-yellow-400/90 to-amber-500/80 hover:from-yellow-300/90 hover:to-yellow-400/80 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-28 sm:w-32 h-32 sm:h-36 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-400 hover:border-yellow-300 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+            >
+              <img 
+                src={getSafeIconUrl('ICO-MU2.gif')}
+                alt="Primary Menu"
+                className="w-full h-16 md:h-18 sm:h-20 object-cover rounded-md mb-0.5"
+              />
+              <div className="text-amber-900 group-hover:text-amber-800 text-xs md:text-sm sm:text-base font-bold leading-tight transition-colors duration-200">
+                <div className="group-hover:hidden">Primary</div>
+                <div className="group-hover:hidden">Menu</div>
+                <div className="hidden group-hover:block">Click for</div>
+                <div className="hidden group-hover:block">Main Menu</div>
+              </div>
+            </button>
+          )}
         </div>
         
       </div>
