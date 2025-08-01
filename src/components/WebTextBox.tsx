@@ -117,6 +117,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                     Shall I read it to you?
                   </div>
                   <UniversalAudioControls
+                    audioUrl={webtext?.audio_url}
                     title={webtext?.title || title}
                     content={getContent()}
                     author={webtext?.author}
@@ -190,6 +191,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               Shall I read it to you?
             </div>
             <UniversalAudioControls
+              audioUrl={webtext?.audio_url}
               title={webtext?.title || title}
               content={getContent()}
               author={webtext?.author}
