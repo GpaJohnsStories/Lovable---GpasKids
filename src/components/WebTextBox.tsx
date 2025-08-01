@@ -131,7 +131,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             {/* Content below title */}
             <div className="flex-1">
               <div 
-                className="font-handwritten text-lg text-blue-800 leading-relaxed"
+                className="font-handwritten text-blue-800 leading-relaxed [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>p]:text-lg [&>p]:mb-3"
                 dangerouslySetInnerHTML={{ __html: getContent() }}
               />
             </div>
