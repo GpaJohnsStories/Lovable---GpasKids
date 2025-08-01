@@ -1,6 +1,6 @@
 
 import WelcomeHeader from "@/components/WelcomeHeader";
-import WelcomeText from "@/components/WelcomeText";
+import { WebTextBox } from "@/components/WebTextBox";
 import StorySection from "@/components/StorySection";
 import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -14,7 +14,13 @@ const Index = () => {
         <WelcomeHeader />
         
         <main className="container mx-auto px-4 pt-0">
-          <WelcomeText />
+          <WebTextBox 
+            webtextCode="SYS-WEL"
+            icon="gpa-john-buddy"
+            borderColor="border-yellow-400"
+            backgroundColor="#ADD8E6"
+            title=""
+          />
           
           {/* GpaJohn's Recent Comments - Now positioned above stories */}
           <GpaJohnComments />
