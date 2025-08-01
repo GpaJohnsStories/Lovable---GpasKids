@@ -8,6 +8,7 @@ import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
 
 const Index = () => {
+  console.log('Index component loading with WebTextBox');
   return (
     <ContentProtection enableProtection={true}>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
