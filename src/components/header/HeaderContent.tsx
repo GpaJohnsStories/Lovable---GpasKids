@@ -82,13 +82,8 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           </div>
         </div>
 
-        {/* CENTER COLUMN: Empty for future use */}
-        <div className="flex justify-center items-end">
-          {/* Navigation menu removed - space reserved for future functionality */}
-        </div>
-
-        {/* RIGHT COLUMN: Dancing GIF and decorative elements */}
-        <div className="flex justify-end items-end">
+        {/* CENTER COLUMN: Dancing GIF and decorative elements */}
+        <div className="flex justify-center items-start">
           {isHomePage ? (
             <div className="relative hidden md:block">
               <img 
@@ -131,6 +126,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               </div>
             </div>
           )}
+        </div>
+
+        {/* RIGHT COLUMN: Empty for future use */}
+        <div className="flex justify-end items-start">
+          {/* Space reserved for future functionality */}
         </div>
         
       </div>
