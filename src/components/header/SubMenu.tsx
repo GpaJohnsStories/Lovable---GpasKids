@@ -17,32 +17,28 @@ interface SubMenuProps {
 const SubMenu = ({ items, isVisible, position, level }: SubMenuProps) => {
   if (!isVisible || items.length === 0) return null;
 
-  // Calculate positioning based on level and position
+  // Calculate positioning based on level and position (now using 4rem = 64px buttons)
   const getPositionClasses = () => {
     const baseClasses = "absolute z-50 animate-slide-in-right";
     
     if (position === 'left') {
-      // Submenus to the left with 1-2px spacing
-      if (level === 1) return `${baseClasses} right-[62px] top-0`; // 60px button + 2px spacing
-      if (level === 2) return `${baseClasses} right-[62px] top-0`; // 60px button + 2px spacing
+      // Submenus to the left with 2px spacing
+      if (level === 1) return `${baseClasses} right-[66px] top-0`; // 64px button + 2px spacing
+      if (level === 2) return `${baseClasses} right-[66px] top-0`; // 64px button + 2px spacing
     }
     
     if (position === 'below') {
       // Submenus below with small spacing
-      if (level === 3) return `${baseClasses} top-[62px] left-0`; // 60px button + 2px spacing
-      if (level === 4) return `${baseClasses} top-[62px] left-0`; // 60px button + 2px spacing
+      if (level === 3) return `${baseClasses} top-[66px] left-0`; // 64px button + 2px spacing
+      if (level === 4) return `${baseClasses} top-[66px] left-0`; // 64px button + 2px spacing
     }
     
     return baseClasses;
   };
 
-  // Calculate button size based on hierarchy: main = 60px, submenu = 45px, sub-submenu = 30px
+  // All submenu buttons same size as golden button on phone (4rem x 4rem)
   const getButtonSize = () => {
-    if (level === 1) return { width: '45px', height: '45px', iconSize: '40px' }; // 3/4 of main
-    if (level === 2) return { width: '30px', height: '30px', iconSize: '26px' }; // 1/2 of main
-    if (level === 3) return { width: '30px', height: '30px', iconSize: '26px' }; // 1/2 of main
-    if (level === 4) return { width: '30px', height: '30px', iconSize: '26px' }; // 1/2 of main
-    return { width: '45px', height: '45px', iconSize: '40px' };
+    return { width: '4rem', height: '4rem', iconSize: '3.5rem' }; // Same as main menu buttons
   };
 
   const buttonSize = getButtonSize();

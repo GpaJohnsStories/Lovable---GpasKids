@@ -10,11 +10,11 @@ interface VerticalMenuProps {
 const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
   if (!isVisible) return null;
 
-  // Define main menu button size (2/3 of golden button size)
+  // Define main menu button size (same as golden button on phone: 4rem x 4rem)
   const mainButtonSize = {
-    width: '2.75rem',   // Base: ~11 (16 * 2/3)
-    height: '2.75rem',  // Base: ~11 (16 * 2/3)
-    iconSize: '2.5rem'  // Slightly smaller than container
+    width: '4rem',     // 64px - same as golden button on phone
+    height: '4rem',    // 64px - same as golden button on phone  
+    iconSize: '3.5rem' // Slightly smaller than container for padding
   };
 
   // First menu item: HOME (no submenus)
