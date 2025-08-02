@@ -32,7 +32,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
   // Second menu item: STORIES (with submenus - example structure)
   const storiesMenuItem = {
     id: "stories",
-    icon: "ICO-ST1",
+    icon: "ICO-LB1.gif",
     text: "STORIES",
     color: "#F97316",
     onClick: () => {
@@ -43,7 +43,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
         items: [
           {
             id: "library",
-            icon: "ICO-LB1",
+            icon: "ICO-LB2.gif",
             text: "LIBRARY",
             onClick: () => {
               window.location.href = "/library";
@@ -58,7 +58,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
         items: [
           {
             id: "read-stories",
-            icon: "ICO-RD1",
+            icon: "ICO-LB3.gif",
             text: "READ",
             onClick: () => {
               console.log("Read stories clicked");
