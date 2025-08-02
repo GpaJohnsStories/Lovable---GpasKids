@@ -229,7 +229,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                       <div 
                         key={submenuItem.id}
                         className={`absolute top-0 z-40 animate-slide-in-right`}
-                        style={{ right: `${(index + 1) * 74}px` }}
+                        style={{ right: `${(index + 1) * 68}px` }}
                       >
                         <MenuButton
                           icon={submenuItem.icon}
