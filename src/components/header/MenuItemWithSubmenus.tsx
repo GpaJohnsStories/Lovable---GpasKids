@@ -22,6 +22,11 @@ interface MenuItemWithSubmenusProps {
   color: string;
   onClick?: () => void;
   submenus: SubMenuLevel[];
+  customSize?: {
+    width: string;
+    height: string;
+    iconSize: string;
+  };
 }
 
 const MenuItemWithSubmenus = ({ 
@@ -30,7 +35,8 @@ const MenuItemWithSubmenus = ({
   text, 
   color, 
   onClick, 
-  submenus 
+  submenus,
+  customSize 
 }: MenuItemWithSubmenusProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showSubmenus, setShowSubmenus] = useState(false);
@@ -68,6 +74,7 @@ const MenuItemWithSubmenus = ({
         text={text}
         color={color}
         onClick={handleClick}
+        customSize={customSize}
       />
       
       {/* Render all submenu levels */}

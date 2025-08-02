@@ -10,6 +10,13 @@ interface VerticalMenuProps {
 const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
   if (!isVisible) return null;
 
+  // Define main menu button size (2/3 of golden button size)
+  const mainButtonSize = {
+    width: '2.75rem',   // Base: ~11 (16 * 2/3)
+    height: '2.75rem',  // Base: ~11 (16 * 2/3)
+    iconSize: '2.5rem'  // Slightly smaller than container
+  };
+
   // First menu item: HOME (no submenus)
   const homeMenuItem = {
     id: "home",
@@ -73,9 +80,9 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
         onClick={onClose}
       />
       
-      {/* Waterfall Dropdown Menu Container - positioned absolutely relative to header */}
-      <div className="absolute top-full right-4 z-40 animate-slide-in-right">
-        <div className="flex flex-col gap-2">
+      {/* Waterfall Dropdown Menu Container - aligned with right edge of golden button */}
+      <div className="absolute top-full right-0 z-40 animate-slide-in-right">
+        <div className="flex flex-col gap-2 items-end">
           {/* First menu item: HOME (no submenus) */}
           <MenuButton
             key={homeMenuItem.id}
@@ -83,6 +90,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
             text={homeMenuItem.text}
             color={homeMenuItem.color}
             onClick={homeMenuItem.onClick}
+            customSize={mainButtonSize}
           />
           
           {/* Second menu item: STORIES (with submenus) */}
@@ -94,6 +102,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
             color={storiesMenuItem.color}
             onClick={storiesMenuItem.onClick}
             submenus={storiesMenuItem.submenus}
+            customSize={mainButtonSize}
           />
         </div>
       </div>
