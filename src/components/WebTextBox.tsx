@@ -104,8 +104,8 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                   content={getContent()}
                   author={webtext?.author}
                   allowTextToSpeech={true}
-                  size="sm"
-                  className="bg-transparent border-0"
+                  size="md"
+                  className="bg-transparent border-0 [&>div]:flex [&>div]:flex-wrap [&>div]:justify-center [&>div]:gap-1 md:[&>div]:flex-nowrap"
                 />
               </div>
             </div>
