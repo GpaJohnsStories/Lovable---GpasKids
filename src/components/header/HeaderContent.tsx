@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
@@ -5,6 +6,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem } from "@/components/ui/navigation-menu";
 import NavigationButton from "./NavigationButton";
 import NavigationDropdown from "./NavigationDropdown";
+import VerticalMenu from "./VerticalMenu";
 import { supabase } from "@/integrations/supabase/client";
 
 interface HeaderContentProps {
@@ -15,6 +17,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const location = useLocation();
   const { showHelp } = useHelp();
   const { userRole } = useUserRole();
+  const [isVerticalMenuVisible, setIsVerticalMenuVisible] = useState(false);
   
   // Check if we're on an admin page
   const isAdminPage = location.pathname.startsWith('/buddys_admin');
@@ -132,7 +135,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
         <div className="flex justify-end items-start">
           {isHomePage && (
             <button 
-              onClick={() => console.log('🎯 Primary Menu clicked!')}
+              onClick={() => setIsVerticalMenuVisible(!isVerticalMenuVisible)}
               className="group relative z-10 bg-gradient-to-br from-yellow-400/90 to-amber-500/80 hover:from-yellow-300/90 hover:to-yellow-400/80 backdrop-blur-sm rounded-lg p-2 flex items-center justify-center w-28 sm:w-32 h-32 sm:h-36 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-400 hover:border-yellow-300 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
             >
               <img 
@@ -145,6 +148,12 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
         </div>
         
       </div>
+
+      {/* Vertical Menu */}
+      <VerticalMenu 
+        isVisible={isVerticalMenuVisible} 
+        onClose={() => setIsVerticalMenuVisible(false)} 
+      />
     </div>
   );
 };
