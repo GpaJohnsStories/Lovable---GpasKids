@@ -406,6 +406,27 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Main Menu Button (no submenu) */}
+                    <Link
+                      to="/main-button"
+                      className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
+                      aria-label="Main Button"
+                    >
+                      <img 
+                        src={getSafeIconUrl('ICO-GU1.png')}
+                        alt="Main Button"
+                        className="w-full h-full object-cover rounded-md"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (target.src.includes('.png')) {
+                            target.src = getSafeIconUrl('ICO-GU1.jpg');
+                          } else if (target.src.includes('.jpg')) {
+                            target.src = getSafeIconUrl('ICO-GU1.gif');
+                          }
+                        }}
+                      />
+                    </Link>
                   </div>
                 </div>
               </div>
