@@ -173,23 +173,32 @@ const AdminHeaderBanner = () => {
                 </div>
               )}
             </div>
-            <div
-              onClick={handleLogout}
-              className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-orange-300/50 hover:scale-105 transition-transform cursor-pointer"
-              style={{ 
-                backgroundColor: '#ff8c00',
-                minWidth: '55px',
-                minHeight: '55px'
-              }}
-            >
-              {logoutIconUrl ? (
-                <img 
-                  src={logoutIconUrl} 
-                  alt="Logout"
-                  className="w-12 h-12 object-contain"
-                />
-              ) : (
-                <LogOut className="w-12 h-12 text-white" />
+            <div className="relative">
+              <div
+                onClick={handleLogout}
+                className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-orange-300/50 hover:scale-105 transition-transform cursor-pointer"
+                style={{ 
+                  backgroundColor: '#ff8c00',
+                  minWidth: '55px',
+                  minHeight: '55px'
+                }}
+                onMouseEnter={() => setHoveredButton('logout')}
+                onMouseLeave={() => setHoveredButton(null)}
+              >
+                {logoutIconUrl ? (
+                  <img 
+                    src={logoutIconUrl} 
+                    alt="Logout"
+                    className="w-12 h-12 object-contain"
+                  />
+                ) : (
+                  <LogOut className="w-12 h-12 text-white" />
+                )}
+              </div>
+              {hoveredButton === 'logout' && (
+                <div className="nav-bubble opacity-100 visible" style={{ color: '#FFFF00' }}>
+                  LOGOUT
+                </div>
               )}
             </div>
           </div>
