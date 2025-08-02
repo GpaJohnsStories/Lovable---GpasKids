@@ -6,9 +6,14 @@ interface MenuButtonProps {
   text: string;
   color: string;
   onClick: () => void;
+  customSize?: {
+    width: string;
+    height: string;
+    iconSize: string;
+  };
 }
 
-const MenuButton = ({ icon, text, color, onClick }: MenuButtonProps) => {
+const MenuButton = ({ icon, text, color, onClick, customSize }: MenuButtonProps) => {
   // Function to get icon URL from Supabase storage with fallback
   const getIconUrl = (filePath: string) => {
     return supabase.storage.from('icons').getPublicUrl(filePath).data.publicUrl;
@@ -33,15 +38,19 @@ const MenuButton = ({ icon, text, color, onClick }: MenuButtonProps) => {
             background: `linear-gradient(135deg, ${color}dd, ${color}bb)`,
             boxShadow: `0 8px 16px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)`,
             border: `2px solid ${color}`,
-            width: '60px',
-            height: '60px'
+            width: customSize?.width || '60px',
+            height: customSize?.height || '60px'
           }}
         >
-          {/* Icon - 55x55px centered in 60x60px button */}
+          {/* Icon - proportionally scaled to fit button with margin */}
           <img 
             src={getSafeIconUrl(`${icon}.png`)}
             alt={text}
-            className="w-[55px] h-[55px] object-contain"
+            style={{
+              width: customSize?.iconSize || '55px',
+              height: customSize?.iconSize || '55px'
+            }}
+            className="object-contain"
             onError={(e) => {
               // Fallback to jpg, then gif if png fails
               const target = e.target as HTMLImageElement;
