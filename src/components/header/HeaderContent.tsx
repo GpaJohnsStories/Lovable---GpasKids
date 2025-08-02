@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
+import { supabase } from "@/integrations/supabase/client";
 
 interface HeaderContentProps {
   isHomePage: boolean;
@@ -9,6 +10,16 @@ interface HeaderContentProps {
 const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const location = useLocation();
   const { showHelp } = useHelp();
+
+  // Helper function to get icon URL from Supabase storage
+  const getIconUrl = (iconName: string) => {
+    return supabase.storage.from('icons').getPublicUrl(iconName).data.publicUrl;
+  };
+
+  // Safe icon URL getter with fallback
+  const getSafeIconUrl = (iconCode: string) => {
+    return getIconUrl(`${iconCode}.gif`); // Start with GIF since we know ICO-HL2 is a GIF
+  };
 
   const handleHelpClick = () => {
     console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
@@ -30,9 +41,19 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           >
             {/* Buddy image - hidden on hover */}
             <img 
-              src="/lovable-uploads/ICO-HL2.png"
+              src={getSafeIconUrl("ICO-HL2")}
               alt="Buddy the Helper Dog"
               className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
+              onError={(e) => {
+                const img = e.currentTarget;
+                if (img.src.endsWith('.gif')) {
+                  img.src = getIconUrl('ICO-HL2.png');
+                } else if (img.src.endsWith('.png')) {
+                  img.src = getIconUrl('ICO-HL2.jpg');
+                } else {
+                  console.log('All fallback formats failed for ICO-HL2');
+                }
+              }}
             />
             
             {/* Help text - shown on hover */}
