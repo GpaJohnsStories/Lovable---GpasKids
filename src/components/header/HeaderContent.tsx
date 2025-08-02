@@ -280,17 +280,25 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                           style={{ backgroundColor: '#FFD65C' }}
                         >
                           <div className="flex flex-col p-2">
-                            {/* Placeholder for first submenu item - need icon code and label */}
+                            {/* Write to Gpa John or Buddy */}
                             <Link
-                              to="/comments/view"
+                              to="/comments/write"
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
-                              aria-label="Submenu Item 1"
+                              aria-label="Write to Gpa John or Buddy"
                             >
                               <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
-                                  src={getSafeIconUrl('ICO-PLACEHOLDER1.png')}
-                                  alt="Submenu Item 1"
+                                  src={getSafeIconUrl('ICO-CO2.png')}
+                                  alt="Write to Gpa John or Buddy"
                                   className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (target.src.includes('.png')) {
+                                      target.src = getSafeIconUrl('ICO-CO2.jpg');
+                                    } else if (target.src.includes('.jpg')) {
+                                      target.src = getSafeIconUrl('ICO-CO2.gif');
+                                    }
+                                  }}
                                 />
                               </div>
                             </Link>
