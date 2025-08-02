@@ -176,25 +176,52 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         }}
                       />
                     </Link>
-                    <Link
-                      to="/library"
-                      className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
-                      aria-label="Go to Library"
-                    >
-                      <img 
-                        src={getSafeIconUrl('ICO-LB1.png')}
-                        alt="Library"
-                        className="w-full h-full object-cover rounded-md"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          if (target.src.includes('.png')) {
-                            target.src = getSafeIconUrl('ICO-LB1.jpg');
-                          } else if (target.src.includes('.jpg')) {
-                            target.src = getSafeIconUrl('ICO-LB1.gif');
-                          }
-                        }}
-                      />
-                    </Link>
+                    <div className="group/library relative">
+                      <Link
+                        to="/library"
+                        className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
+                        aria-label="Go to Library"
+                      >
+                        <img 
+                          src={getSafeIconUrl('ICO-LB1.png')}
+                          alt="Library"
+                          className="w-full h-full object-cover rounded-md"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            if (target.src.includes('.png')) {
+                              target.src = getSafeIconUrl('ICO-LB1.jpg');
+                            } else if (target.src.includes('.jpg')) {
+                              target.src = getSafeIconUrl('ICO-LB1.gif');
+                            }
+                          }}
+                        />
+                      </Link>
+                      
+                      {/* Library Submenu */}
+                      <div className="absolute top-0 right-full mr-2 opacity-0 invisible group-hover/library:opacity-100 group-hover/library:visible transition-all duration-300 ease-in-out z-50">
+                        <div className="flex flex-col gap-2">
+                          <Link
+                            to="/library/stories"
+                            className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
+                            aria-label="Story List"
+                          >
+                            <img 
+                              src={getSafeIconUrl('ICO-LB2.png')}
+                              alt="Story List"
+                              className="w-full h-full object-cover rounded-md"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                if (target.src.includes('.png')) {
+                                  target.src = getSafeIconUrl('ICO-LB2.jpg');
+                                } else if (target.src.includes('.jpg')) {
+                                  target.src = getSafeIconUrl('ICO-LB2.gif');
+                                }
+                              }}
+                            />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
