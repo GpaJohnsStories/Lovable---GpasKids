@@ -159,24 +159,22 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                   <div className="flex flex-col p-2">
                     <Link
                       to="/"
-                      className="flex items-center justify-center p-2 rounded-md hover:bg-orange-200 transition-colors duration-200 focus:bg-orange-200 focus:outline-none"
+                      className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                       aria-label="Go to Home Page"
                     >
-                      <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md hover:scale-105 transition-transform duration-200">
-                        <img 
-                          src={getSafeIconUrl('ICO-HO2.png')}
-                          alt="Home"
-                          className="w-full h-full object-contain"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            if (target.src.includes('.png')) {
-                              target.src = getSafeIconUrl('ICO-HO2.jpg');
-                            } else if (target.src.includes('.jpg')) {
-                              target.src = getSafeIconUrl('ICO-HO2.gif');
-                            }
-                          }}
-                        />
-                      </div>
+                      <img 
+                        src={getSafeIconUrl('ICO-HO2.png')}
+                        alt="Home"
+                        className="w-full h-full object-cover rounded-md"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (target.src.includes('.png')) {
+                            target.src = getSafeIconUrl('ICO-HO2.jpg');
+                          } else if (target.src.includes('.jpg')) {
+                            target.src = getSafeIconUrl('ICO-HO2.gif');
+                          }
+                        }}
+                      />
                     </Link>
                   </div>
                 </div>
