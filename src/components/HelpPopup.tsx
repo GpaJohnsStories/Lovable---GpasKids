@@ -87,7 +87,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               <img 
                 src={getSafeIconUrl("ICO-GU1")}
                 alt="Guide icon - Click to go to guide"
-                className="w-16 h-16 object-cover rounded-lg border-2 border-green-600 shadow-lg hover:border-orange-600 hover:scale-105 transition-all duration-200 cursor-pointer"
+                className="w-8 h-8 object-cover rounded-lg border-2 border-green-600 shadow-lg hover:border-orange-600 hover:scale-105 transition-all duration-200 cursor-pointer"
                 onError={(e) => {
                   const img = e.currentTarget;
                   if (img.src.endsWith('.jpg')) {
