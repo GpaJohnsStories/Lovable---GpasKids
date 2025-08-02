@@ -17,20 +17,20 @@ interface SubMenuProps {
 const SubMenu = ({ items, isVisible, position, level }: SubMenuProps) => {
   if (!isVisible || items.length === 0) return null;
 
-  // Calculate positioning based on level and position (now using 4rem = 64px buttons)
+  // Calculate positioning based on level and position (using 10px gap standard)
   const getPositionClasses = () => {
     const baseClasses = "absolute z-50 animate-slide-in-right";
     
     if (position === 'left') {
-      // Submenus to the left with 10px gap to prevent overlap
+      // Submenus to the left with 10px gap standard
       if (level === 1) return `${baseClasses} right-[74px] top-0`; // 64px button + 10px gap
       if (level === 2) return `${baseClasses} right-[74px] top-0`; // 64px button + 10px gap
     }
     
     if (position === 'below') {
-      // Submenus below with 1px gap to prevent overlap
-      if (level === 3) return `${baseClasses} top-[65px] left-0`; // 64px button + 1px gap
-      if (level === 4) return `${baseClasses} top-[65px] left-0`; // 64px button + 1px gap
+      // Submenus below with 10px gap standard
+      if (level === 3) return `${baseClasses} top-[74px] left-0`; // 64px button + 10px gap
+      if (level === 4) return `${baseClasses} top-[74px] left-0`; // 64px button + 10px gap
     }
     
     return baseClasses;
