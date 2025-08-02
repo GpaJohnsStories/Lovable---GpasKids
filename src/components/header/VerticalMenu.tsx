@@ -202,6 +202,69 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
     }
   };
 
+  // Sixth menu item: ABOUT US (with submenus)
+  const aboutUsMenuItem = {
+    id: "about-us",
+    icon: "ICO-AB1.jpg",
+    text: "About Us",
+    color: "#F97316",
+    onClick: () => {
+      console.log("About Us menu clicked");
+    },
+    submenus: [
+      {
+        items: [
+          {
+            id: "grandpa-john",
+            icon: "", // No icon yet
+            text: "Grandpa John",
+            onClick: () => {
+              window.location.href = "/about";
+              onClose();
+            }
+          },
+          {
+            id: "3-helpers",
+            icon: "ICO-AB3.jpg",
+            text: "3 Helpers",
+            onClick: () => {
+              // TODO: Add route when page is created
+              console.log("3 Helpers clicked");
+              onClose();
+            }
+          }
+        ],
+        position: 'left' as const,
+        level: 1
+      },
+      {
+        items: [
+          {
+            id: "authors",
+            icon: "", // No icon yet
+            text: "Authors",
+            onClick: () => {
+              window.location.href = "/public-author-bios";
+              onClose();
+            }
+          },
+          {
+            id: "the-3-ais",
+            icon: "ICO-AB5.jpg",
+            text: "The 3 AI's",
+            onClick: () => {
+              // TODO: Add route when page is created
+              console.log("The 3 AI's clicked");
+              onClose();
+            }
+          }
+        ],
+        position: 'left' as const,
+        level: 2
+      }
+    ]
+  };
+
   return (
     <>
       {/* Backdrop to close menu when clicking outside */}
@@ -266,6 +329,18 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
             text={guideMenuItem.text}
             color={guideMenuItem.color}
             onClick={guideMenuItem.onClick}
+            customSize={mainButtonSize}
+          />
+          
+          {/* Sixth menu item: ABOUT US (with submenus) */}
+          <MenuItemWithSubmenus
+            key={aboutUsMenuItem.id}
+            id={aboutUsMenuItem.id}
+            icon={aboutUsMenuItem.icon}
+            text={aboutUsMenuItem.text}
+            color={aboutUsMenuItem.color}
+            onClick={aboutUsMenuItem.onClick}
+            submenus={aboutUsMenuItem.submenus}
             customSize={mainButtonSize}
           />
         </div>
