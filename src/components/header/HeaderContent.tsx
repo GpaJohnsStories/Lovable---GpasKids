@@ -493,30 +493,38 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 />
                               </div>
                             </Link>
-                            {/* Position 4 (bottom-left): Placeholder */}
+                            {/* Position 4 (bottom-left): Helpful AI's */}
                             <Link
-                              to="/about/item4"
+                              to="/about/ai"
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
-                              aria-label="About Item 4"
+                              aria-label="Helpful AI's"
                             >
                               <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
-                                  src={getSafeIconUrl('ICO-PLACEHOLDER4.png')}
-                                  alt="About Item 4"
+                                  src={getSafeIconUrl('ICO-AB5.png')}
+                                  alt="Helpful AI's"
                                   className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (target.src.includes('.png')) {
+                                      target.src = getSafeIconUrl('ICO-AB5.jpg');
+                                    } else if (target.src.includes('.jpg')) {
+                                      target.src = getSafeIconUrl('ICO-AB5.gif');
+                                    }
+                                  }}
                                 />
                               </div>
                             </Link>
-                            {/* Position 3 (bottom-right): Placeholder */}
+                            {/* Position 3 (bottom-right): Authors */}
                             <Link
-                              to="/about/item3"
+                              to="/about/authors"
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
-                              aria-label="About Item 3"
+                              aria-label="Authors"
                             >
                               <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
-                                  src={getSafeIconUrl('ICO-PLACEHOLDER3.png')}
-                                  alt="About Item 3"
+                                  src={getSafeIconUrl('ICO-PLACEHOLDER.png')}
+                                  alt="Authors"
                                   className="w-full h-full object-cover"
                                 />
                               </div>
