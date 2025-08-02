@@ -335,12 +335,12 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
 
   return (
     <TooltipProvider>
-      <div className={`${config.padding} bg-white/80 rounded-lg border border-blue-200 ${className}`}>
-        {/* Three-Section Horizontal Layout */}
-        <div className="flex justify-center space-x-0">
+      <div className={`${config.padding} bg-white/80 rounded-lg border border-blue-200 ${className} overflow-hidden`}>
+        {/* Responsive Layout - Stack vertically on mobile, horizontal on desktop */}
+        <div className="flex flex-col sm:flex-row justify-center gap-1 sm:gap-0">
           {/* Section 1: Audio Controls (2x2 Grid) */}
-          <div className="flex flex-col space-y-0 p-2 bg-orange-100 rounded-lg border border-orange-200">
-            <div className="flex space-x-1">
+          <div className="flex flex-col space-y-0 p-1 sm:p-2 bg-orange-100 rounded-lg border border-orange-200">
+            <div className="flex space-x-1 justify-center">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
@@ -382,7 +382,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                 </TooltipContent>
               </Tooltip>
             </div>
-            <div className="flex space-x-1">
+            <div className="flex space-x-1 justify-center">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
@@ -425,8 +425,8 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
           </div>
 
           {/* Section 2: Volume Controls (2x3 Grid with empty bottom-left) */}
-          <div className="flex flex-col space-y-0 p-2 bg-green-100 rounded-lg border border-green-200">
-            <div className="flex space-x-1">
+          <div className="flex flex-col space-y-0 p-1 sm:p-2 bg-green-100 rounded-lg border border-green-200">
+            <div className="flex space-x-1 justify-center">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className={`${config.buttonSize} rounded-lg bg-gradient-to-b from-green-400 to-green-600 text-white flex items-center justify-center shadow-[0_2px_0_#16a34a] border border-green-600`}>
@@ -472,7 +472,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                 </TooltipContent>
               </Tooltip>
             </div>
-            <div className="flex space-x-1">
+            <div className="flex space-x-1 justify-center">
               <div className={`${config.buttonSize}`}></div> {/* Empty cell */}
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -512,8 +512,8 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
           </div>
 
           {/* Section 3: Speed Controls (2x3 Grid with empty bottom-left) */}
-          <div className="flex flex-col space-y-0 p-2 bg-blue-100 rounded-lg border border-blue-200">
-            <div className="flex space-x-1">
+          <div className="flex flex-col space-y-0 p-1 sm:p-2 bg-blue-100 rounded-lg border border-blue-200">
+            <div className="flex space-x-1 justify-center">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className={`${config.buttonSize} rounded-lg bg-gradient-to-b from-blue-400 to-blue-600 text-white flex items-center justify-center shadow-[0_2px_0_#2563eb] border border-blue-600`}>
@@ -559,7 +559,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                 </TooltipContent>
               </Tooltip>
             </div>
-            <div className="flex space-x-1">
+            <div className="flex space-x-1 justify-center">
               <div className={`${config.buttonSize}`}></div> {/* Empty cell */}
               <Tooltip>
                 <TooltipTrigger asChild>

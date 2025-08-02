@@ -70,12 +70,12 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   // Special styling for SYS-WEL content
   if (isSysWel) {
     return (
-      <div className="bg-blue-100 border-4 border-blue-500 rounded-lg p-6 mb-8">
+      <div className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden">
         {/* Top section with photo and title */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="flex flex-col lg:flex-row gap-4 mb-6">
           {/* Photo in top left */}
           {mainPhoto && (
-            <div className="w-full md:w-64 flex-shrink-0">
+            <div className="w-full lg:w-64 flex-shrink-0">
               <div className="group relative">
                 <img
                   src={mainPhoto.url}
@@ -90,30 +90,33 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             </div>
           )}
 
-          {/* Title and audio controls section */}
-          <div className="flex-1 flex flex-col">
-            {/* Title aligned with top of photo */}
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
-              <div className="flex items-start gap-3">
-                {iconUrl && (
-                  <img 
-                    src={iconUrl} 
-                    alt={icon}
-                    className="w-10 h-10 object-contain border-2 border-blue-500 rounded mt-1"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                )}
-                <h1 className="text-2xl md:text-3xl font-handwritten font-bold text-blue-800 leading-tight">
-                  {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
-                </h1>
+          {/* Title and content section */}
+          <div className="flex-1 min-w-0 flex flex-col">
+            {/* Title and audio controls row */}
+            <div className="flex flex-col xl:flex-row xl:items-start gap-4 mb-4">
+              {/* Title section */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start gap-3">
+                  {iconUrl && (
+                    <img 
+                      src={iconUrl} 
+                      alt={icon}
+                      className="w-8 h-8 sm:w-10 sm:h-10 object-contain border-2 border-blue-500 rounded mt-1 flex-shrink-0"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  )}
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-handwritten font-bold text-blue-800 leading-tight break-words">
+                    {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
+                  </h1>
+                </div>
               </div>
               
               {/* Audio Controls */}
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 w-full xl:w-auto">
                 <div className="border-2 border-blue-500 rounded-lg bg-blue-200/50 p-2">
-                  <div className="text-center italic font-bold text-blue-800 text-sm mb-1">
+                  <div className="text-center italic font-bold text-blue-800 text-xs sm:text-sm mb-1">
                     Shall I read it to you?
                   </div>
                   <UniversalAudioControls
@@ -130,9 +133,9 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             </div>
 
             {/* Content below title */}
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               <div 
-                className="font-handwritten text-blue-800 leading-relaxed [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>p]:text-lg [&>p]:mb-3"
+                className="font-handwritten text-blue-800 leading-relaxed break-words [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>p]:text-base [&>p]:sm:text-lg [&>p]:mb-3 [&>p]:break-words"
                 dangerouslySetInnerHTML={{ __html: getContent() }}
               />
             </div>
