@@ -458,7 +458,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                     }}
                   />
                 )}
-                <h1 className="text-xl sm:text-2xl lg:text-3xl font-handwritten font-bold text-blue-800 leading-tight break-words text-left">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-blue-800 leading-tight break-words text-left">
                   {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
                 </h1>
               </div>
