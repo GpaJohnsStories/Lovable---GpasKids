@@ -209,7 +209,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Story List"
                             >
-                              <div className="w-14 h-14 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
                                   src={getSafeIconUrl('ICO-LB2.png')}
                                   alt="Story List"
@@ -230,7 +230,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                               aria-label="Read A Story"
                             >
-                              <div className="w-14 h-14 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
                                   src={getSafeIconUrl('ICO-LB3.png')}
                                   alt="Read A Story"
@@ -286,7 +286,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Write to Gpa John or Buddy"
                             >
-                              <div className="w-14 h-14 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
                                   src={getSafeIconUrl('ICO-CO2.png')}
                                   alt="Write to Gpa John or Buddy"
@@ -308,7 +308,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                               aria-label="View All Comments"
                             >
-                              <div className="w-14 h-14 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
                                   src={getSafeIconUrl('ICO-CO3.png')}
                                   alt="View All Comments"
@@ -364,7 +364,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Careful with Copyright"
                             >
-                              <div className="w-14 h-14 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
                                   src={getSafeIconUrl('ICO-WR2.png')}
                                   alt="Careful with Copyright"
@@ -386,7 +386,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                               aria-label="Share Your Story"
                             >
-                              <div className="w-14 h-14 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
                                   src={getSafeIconUrl('ICO-WR3.png')}
                                   alt="Share Your Story"
@@ -463,7 +463,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Grandpa's Partners"
                             >
-                              <div className="w-14 h-14 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
                                   src={getSafeIconUrl('ICO-AB3.png')}
                                   alt="Grandpa's Partners"
@@ -485,7 +485,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="About Grandpa John"
                             >
-                              <div className="w-14 h-14 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
                                   src={getSafeIconUrl('ICO-PLACEHOLDER.png')}
                                   alt="About Grandpa John"
@@ -499,7 +499,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Helpful AI's"
                             >
-                              <div className="w-14 h-14 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
                                   src={getSafeIconUrl('ICO-AB5.png')}
                                   alt="Helpful AI's"
@@ -521,7 +521,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Authors"
                             >
-                              <div className="w-14 h-14 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
                                   src={getSafeIconUrl('ICO-PLACEHOLDER.png')}
                                   alt="Authors"
