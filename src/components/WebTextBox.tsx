@@ -294,7 +294,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             <tr>
               <td colSpan={4} className="p-0 border-0">
                 <div className="w-full h-6 border-t border-gray-400 flex items-center justify-center" style={{ backgroundColor: '#9c441a' }}>
-                  <span className="text-white text-xs font-bold">Playback Speed Control</span>
+                  <span className="text-white text-xs font-bold">Select Playback Speed</span>
                 </div>
               </td>
             </tr>
