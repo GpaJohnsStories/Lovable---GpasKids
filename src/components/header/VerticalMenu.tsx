@@ -35,7 +35,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
   const homeMenuItem = {
     id: "home",
     icon: "ICO-HOX.jpg",
-    text: "HOME",
+    text: "Home",
     color: "#F97316",
     onClick: () => {
       window.location.href = "/";
@@ -73,7 +73,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
           {
             id: "read-stories",
             icon: "ICO-LB3.gif",
-            text: "READ",
+            text: "Read",
             onClick: hasSelectedStory ? () => {
               // If already on a story page, stay there, otherwise use stored path
               if (location.pathname.startsWith('/story/')) {
