@@ -20,12 +20,7 @@ const MenuButton = ({ icon, text, color, onClick, customSize }: MenuButtonProps)
   };
 
   const getSafeIconUrl = (filePath: string) => {
-    try {
-      return getIconUrl(filePath);
-    } catch (error) {
-      console.warn(`Failed to load icon ${filePath}, falling back to ICO-N2K.png`);
-      return getIconUrl('ICO-N2K.png');
-    }
+    return getIconUrl(filePath);
   };
 
   return (
@@ -44,22 +39,13 @@ const MenuButton = ({ icon, text, color, onClick, customSize }: MenuButtonProps)
         >
           {/* Icon - proportionally scaled to fit button with margin */}
           <img 
-            src={getSafeIconUrl(`${icon}.png`)}
+            src={getSafeIconUrl(icon)}
             alt={text}
             style={{
               width: customSize?.iconSize || '55px',
               height: customSize?.iconSize || '55px'
             }}
             className="object-contain"
-            onError={(e) => {
-              // Fallback to jpg, then gif if png fails
-              const target = e.target as HTMLImageElement;
-              if (target.src.includes('.png')) {
-                target.src = getSafeIconUrl(`${icon}.jpg`);
-              } else if (target.src.includes('.jpg')) {
-                target.src = getSafeIconUrl(`${icon}.gif`);
-              }
-            }}
           />
         </button>
       </TooltipTrigger>

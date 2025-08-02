@@ -13,7 +13,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
   // First menu item: HOME (no submenus)
   const homeMenuItem = {
     id: "home",
-    icon: "ICO-HO2",
+    icon: "ICO-HOX.jpg",
     text: "HOME",
     color: "#F97316",
     onClick: () => {
