@@ -236,7 +236,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                     <button
                       onClick={handlePause}
                       disabled={!isPlaying}
-                      className="w-full h-16 text-lg font-bold disabled:bg-gray-300 text-white border-r border-gray-400 transition-colors flex flex-col items-center justify-center"
+                      className="w-full h-16 text-lg font-bold text-white border-r border-gray-400 transition-colors flex flex-col items-center justify-center"
                       style={{ 
                         backgroundColor: '#E6C966',
                         minWidth: '80px'
