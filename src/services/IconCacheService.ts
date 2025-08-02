@@ -19,25 +19,25 @@ class IconCacheService {
     maxSize: 50 // max 50 icons
   };
 
-  // Public menu and header icons to preload
+  // Public menu and header icons to preload (using actual files in storage)
   private readonly PRIORITY_ICONS = [
-    'ICO-HOM.png',      // Home icon
-    'ICO-LIB.gif',      // Library main icon
-    'ICO-BR2.gif',      // Browse Stories submenu
-    'ICO-RE2.gif',      // Read Story submenu
-    'ICO-COM.gif',      // Comments main icon
-    'ICO-VC2.gif',      // View Comments submenu
-    'ICO-MC2.gif',      // Make Comment submenu
-    'ICO-WRI.gif',      // Writing main icon
-    'ICO-SU2.gif',      // Submit Story submenu
-    'ICO-HT2.gif',      // How To Write submenu
-    'ICO-GUI.gif',      // Guide main icon
-    'ICO-ABO.gif',      // About Us main icon
+    'ICO-HOX.jpg',      // Home icon
+    'ICO-LB1.gif',      // Library main icon
+    'ICO-LB2.gif',      // Browse Stories submenu
+    'ICO-LB3.gif',      // Read Story submenu
+    'ICO-CO1.gif',      // Comments main icon
+    'ICO-CO2.gif',      // View Comments submenu
+    'ICO-CO3.gif',      // Make Comment submenu
+    'ICO-WR2.gif',      // Writing main icon
+    'ICO-WR3.jpg',      // Submit Story submenu
+    'ICO-GU1.jpg',      // How To Write submenu / Guide main icon
+    'ICO-AB1.jpg',      // About Us main icon / Authors submenu
     'ICO-AB3.jpg',      // 3 Helpers submenu
     'ICO-AB5.jpg',      // The 3 AI's submenu
-    'ICO-SAF.gif',      // Safe & Secure main icon
+    'ICO-SA1.jpg',      // Safe & Secure main icon
     'ICO-MU2.gif',      // Menu button icon
     'ICO-HL2.gif',      // Buddy icon
+    'ICO-HO1.jpg',      // Grandpa John icon
   ];
 
   /**

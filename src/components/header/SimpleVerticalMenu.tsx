@@ -37,7 +37,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const mainMenuItems: MainMenuItem[] = [
     {
       id: "home",
-      icon: "ICO-HOM.png",
+      icon: "ICO-HOX.jpg", // Home icon (available in storage)
       text: "Home",
       color: "#F97316",
       onClick: () => {
@@ -47,13 +47,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "library",
-      icon: "ICO-LIB.gif",
+      icon: "ICO-LB1.gif", // Library icon (available in storage)
       text: "Library", 
       color: "#F97316",
       submenus: [
         {
           id: "browse-stories",
-          icon: "ICO-BR2.gif",
+          icon: "ICO-LB2.gif", // Browse Stories (available in storage)
           text: "Browse Stories",
           onClick: () => {
             window.location.href = "/library";
@@ -62,7 +62,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "read-story",
-          icon: "ICO-RE2.gif", 
+          icon: "ICO-LB3.gif", // Read Story (available in storage) 
           text: "Read Story",
           onClick: () => {
             console.log("Read Story clicked");
@@ -75,13 +75,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "comments",
-      icon: "ICO-COM.gif",
+      icon: "ICO-CO1.gif", // Comments icon (available in storage)
       text: "Comments",
       color: "#F97316", 
       submenus: [
         {
           id: "view-comments",
-          icon: "ICO-VC2.gif",
+          icon: "ICO-CO2.gif", // View Comments (available in storage)
           text: "View Comments",
           onClick: () => {
             window.location.href = "/view-comments";
@@ -90,7 +90,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "make-comment",
-          icon: "ICO-MC2.gif",
+          icon: "ICO-CO3.gif", // Make Comment (available in storage)
           text: "Make Comment", 
           onClick: () => {
             window.location.href = "/make-comment";
@@ -101,13 +101,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "writing",
-      icon: "ICO-WRI.gif", 
+      icon: "ICO-WR2.gif", // Writing icon (available in storage) 
       text: "Writing",
       color: "#F97316",
       submenus: [
         {
           id: "submit-story",
-          icon: "ICO-SU2.gif",
+          icon: "ICO-WR3.jpg", // Submit Story (available in storage)
           text: "Submit Story",
           onClick: () => {
             window.location.href = "/writing";
@@ -116,7 +116,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "how-to-write",
-          icon: "ICO-HT2.gif",
+          icon: "ICO-GU1.jpg", // How To Write (available in storage)
           text: "How To Write",
           onClick: () => {
             window.location.href = "/how-to";
@@ -127,7 +127,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "guide", 
-      icon: "ICO-GUI.gif",
+      icon: "ICO-GU1.jpg", // Guide icon (available in storage)
       text: "Guide",
       color: "#F97316",
       onClick: () => {
@@ -137,7 +137,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "about-us",
-      icon: "ICO-ABO.gif",
+      icon: "ICO-AB1.jpg", // About Us icon (available in storage)
       text: "About Us",
       color: "#F97316",
       submenus: [
@@ -181,7 +181,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "safe-secure",
-      icon: "ICO-SAF.gif",
+      icon: "ICO-SA1.jpg", // Safe & Secure icon (available in storage)
       text: "Safe & Secure", 
       color: "#F97316",
       onClick: () => {
