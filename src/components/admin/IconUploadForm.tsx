@@ -5,24 +5,31 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Upload, Plus } from 'lucide-react';
 
 const IconUploadForm = () => {
   const [iconCode, setIconCode] = useState('');
   const [iconName, setIconName] = useState('');
+  const [fileExtension, setFileExtension] = useState('png');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   
   const queryClient = useQueryClient();
 
+  // Generate filename based on icon code and extension
+  const generateFileName = () => {
+    if (!iconCode.trim()) return '';
+    return `${iconCode}.${fileExtension}`;
+  };
+
   const uploadMutation = useMutation({
     mutationFn: async ({ file, code, name }: { file: File, code: string, name: string }) => {
       setIsUploading(true);
       
-      // Upload file to storage
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${code}.${fileExt}`;
+      // Upload file to storage using the generated filename
+      const fileName = `${code}.${fileExtension}`;
       
       const { error: uploadError } = await supabase.storage
         .from('icons')
@@ -115,29 +122,51 @@ const IconUploadForm = () => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="iconCode">Unique Icon Code (format AAA-BBB)</Label>
+          {/* Top row: Icon Code (1/3 width) + File Extension + Generated Filename */}
+          <div className="flex items-end gap-4">
+            <div className="w-1/3">
+              <Label htmlFor="iconCode">Unique Icon Code</Label>
               <Input
                 id="iconCode"
                 type="text"
                 value={iconCode}
                 onChange={(e) => setIconCode(e.target.value)}
-                placeholder="e.g., ICO-BK, ICO-HOM"
+                placeholder="e.g., ICO-BK"
                 className="mt-1"
               />
             </div>
-            <div>
-              <Label htmlFor="iconName">Icon Name</Label>
-              <Input
-                id="iconName"
-                type="text"
-                value={iconName}
-                onChange={(e) => setIconName(e.target.value)}
-                placeholder="e.g., Home Icon"
-                className="mt-1"
-              />
+            <div className="w-32">
+              <Label htmlFor="fileExtension">File Extension</Label>
+              <Select value={fileExtension} onValueChange={setFileExtension}>
+                <SelectTrigger className="mt-1">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="png">png</SelectItem>
+                  <SelectItem value="jpg">jpg</SelectItem>
+                  <SelectItem value="gif">gif</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
+            <div className="flex-1">
+              <Label>Generated Filename</Label>
+              <div className="mt-1 px-3 py-2 bg-muted rounded-md text-sm text-muted-foreground">
+                {generateFileName() || 'Enter icon code to see filename'}
+              </div>
+            </div>
+          </div>
+
+          {/* Icon Name below on the left */}
+          <div className="w-1/2">
+            <Label htmlFor="iconName">Icon Name</Label>
+            <Input
+              id="iconName"
+              type="text"
+              value={iconName}
+              onChange={(e) => setIconName(e.target.value)}
+              placeholder="e.g., Home Icon"
+              className="mt-1"
+            />
           </div>
           
           <div>
