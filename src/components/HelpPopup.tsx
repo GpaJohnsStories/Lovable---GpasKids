@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -11,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { UniversalAudioControls } from "@/components/UniversalAudioControls";
 import StoryContentRenderer from "@/components/content/StoryContentRenderer";
+import { supabase } from "@/integrations/supabase/client";
 
 interface HelpPopupProps {
   isOpen: boolean;
@@ -30,6 +32,16 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   storyData
 }) => {
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
+  
+  // Helper function to get icon URL from Supabase storage
+  const getIconUrl = (iconName: string) => {
+    return supabase.storage.from('icons').getPublicUrl(iconName).data.publicUrl;
+  };
+
+  // Safe icon URL getter with fallback
+  const getSafeIconUrl = (iconCode: string) => {
+    return getIconUrl(`${iconCode}.jpg`);
+  };
   
   const getPageTitle = (route: string): string => {
     if (route.startsWith('/story/')) return 'Story Page';
@@ -62,12 +74,24 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         {/* Header with Title and Audio Controls */}
         <DialogHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 pb-0 border-b border-orange-200 space-y-0">
           <div className="flex items-center gap-3">
-            {/* Buddy's Photo */}
-            <img 
-              src="/lovable-uploads/949dcec1-2a5d-481c-9ce6-aa0da5edb3d0.png"
-              alt="Buddy the Helper Dog"
-              className="w-16 h-16 object-cover rounded-lg border-2 border-green-600 shadow-lg"
-            />
+            {/* Guide Photo - Now links to /guide */}
+            <Link to="/guide" onClick={onClose}>
+              <img 
+                src={getSafeIconUrl("ICO-GU1")}
+                alt="Guide icon - Click to go to guide"
+                className="w-16 h-16 object-cover rounded-lg border-2 border-green-600 shadow-lg hover:border-orange-600 hover:scale-105 transition-all duration-200 cursor-pointer"
+                onError={(e) => {
+                  const img = e.currentTarget;
+                  if (img.src.endsWith('.jpg')) {
+                    img.src = getIconUrl('ICO-GU1.png');
+                  } else if (img.src.endsWith('.png')) {
+                    img.src = getIconUrl('ICO-GU1.gif');
+                  } else {
+                    console.log('All fallback formats failed for ICO-GU1');
+                  }
+                }}
+              />
+            </Link>
             <DialogTitle className="text-2xl font-bold text-orange-800">
               {storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
             </DialogTitle>
