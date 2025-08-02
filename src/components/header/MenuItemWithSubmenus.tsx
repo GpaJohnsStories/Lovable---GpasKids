@@ -65,7 +65,7 @@ const MenuItemWithSubmenus = ({
     const timeout = setTimeout(() => {
       setShowSubmenus(false);
       setHideTimeout(null);
-    }, 500); // Increased delay to 500ms for better UX
+    }, 100); // Reduced delay to 100ms for faster submenu hiding
     
     setHideTimeout(timeout);
   };
