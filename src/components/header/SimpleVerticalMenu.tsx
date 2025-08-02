@@ -222,7 +222,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       />
       
       {/* Menu Container - positioned below gold button, scrolls with page */}
-      <div className="absolute top-full right-0 z-30 mt-2 max-h-[80vh] overflow-y-auto">
+      <div className="absolute top-full right-0 z-30 mt-2">
         <div className="relative">
           {/* Main Menu - 1x7 vertical layout */}
           <div className="flex flex-col gap-0">
