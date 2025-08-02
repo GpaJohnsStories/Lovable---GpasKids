@@ -196,6 +196,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
 
   // New table-based audio controls component
   const renderAudioControls = () => {
+    console.log('renderAudioControls called', { canPlayAudio: canPlayAudio(), webtext });
     if (!canPlayAudio()) {
       return (
         <div className="text-center text-gray-500 py-4">
