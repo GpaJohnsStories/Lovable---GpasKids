@@ -10,6 +10,9 @@ interface VerticalMenuProps {
 const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
   if (!isVisible) return null;
 
+  // Check if user has selected a story from the library
+  const hasSelectedStory = sessionStorage.getItem('currentStoryPath') !== null;
+
   // Define main menu button size (same as golden button on phone: 4rem x 4rem)
   const mainButtonSize = {
     width: '4rem',     // 64px - same as golden button on phone
@@ -60,10 +63,17 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
             id: "read-stories",
             icon: "ICO-LB3.gif",
             text: "READ",
-            onClick: () => {
-              console.log("Read stories clicked");
+            onClick: hasSelectedStory ? () => {
+              const storyPath = sessionStorage.getItem('currentStoryPath');
+              if (storyPath) {
+                window.location.href = storyPath;
+              }
               onClose();
-            }
+            } : () => {
+              // Do nothing if no story selected
+            },
+            disabled: !hasSelectedStory,
+            disabledMessage: "You have not yet selected a story to read from the Library List."
           }
         ],
         position: 'left' as const,

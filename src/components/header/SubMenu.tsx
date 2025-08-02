@@ -5,6 +5,8 @@ interface SubMenuItem {
   icon: string;
   text: string;
   onClick: () => void;
+  disabled?: boolean;
+  disabledMessage?: string;
 }
 
 interface SubMenuProps {
@@ -55,6 +57,8 @@ const SubMenu = ({ items, isVisible, position, level }: SubMenuProps) => {
             color="#F97316"
             onClick={item.onClick}
             customSize={buttonSize}
+            disabled={item.disabled}
+            disabledMessage={item.disabledMessage}
           />
         ))}
       </div>

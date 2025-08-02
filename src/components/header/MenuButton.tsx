@@ -11,9 +11,11 @@ interface MenuButtonProps {
     height: string;
     iconSize: string;
   };
+  disabled?: boolean;
+  disabledMessage?: string;
 }
 
-const MenuButton = ({ icon, text, color, onClick, customSize }: MenuButtonProps) => {
+const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, disabledMessage }: MenuButtonProps) => {
   // Function to get icon URL from Supabase storage with fallback
   const getIconUrl = (filePath: string) => {
     return supabase.storage.from('icons').getPublicUrl(filePath).data.publicUrl;
@@ -24,35 +26,66 @@ const MenuButton = ({ icon, text, color, onClick, customSize }: MenuButtonProps)
   };
 
   const freshGreen = "#16a34a";
+  const disabledColor = "#9CA3AF"; // Gray-400
+
+  const handleClick = () => {
+    if (!disabled) {
+      onClick();
+    }
+  };
+
+  const getButtonStyle = () => {
+    const baseColor = disabled ? disabledColor : color;
+    return {
+      background: `linear-gradient(135deg, ${baseColor}dd, ${baseColor}bb)`,
+      boxShadow: disabled 
+        ? `0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1)` 
+        : `0 8px 16px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)`,
+      border: `2px solid ${baseColor}`,
+      width: customSize?.width || '60px',
+      height: customSize?.height || '60px',
+      opacity: disabled ? 0.6 : 1,
+      cursor: disabled ? 'not-allowed' : 'pointer'
+    };
+  };
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!disabled) {
+      e.currentTarget.style.background = `linear-gradient(135deg, ${freshGreen}dd, ${freshGreen}bb)`;
+      e.currentTarget.style.border = `2px solid ${freshGreen}`;
+    }
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!disabled) {
+      const baseColor = color;
+      e.currentTarget.style.background = `linear-gradient(135deg, ${baseColor}dd, ${baseColor}bb)`;
+      e.currentTarget.style.border = `2px solid ${baseColor}`;
+    }
+  };
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <button
-          onClick={onClick}
-          className="group relative flex items-center justify-center rounded-lg hover:scale-105 transform transition-all duration-200 cursor-pointer active:scale-95"
-          style={{
-            background: `linear-gradient(135deg, ${color}dd, ${color}bb)`,
-            boxShadow: `0 8px 16px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)`,
-            border: `2px solid ${color}`,
-            width: customSize?.width || '60px',
-            height: customSize?.height || '60px'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = `linear-gradient(135deg, ${freshGreen}dd, ${freshGreen}bb)`;
-            e.currentTarget.style.border = `2px solid ${freshGreen}`;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = `linear-gradient(135deg, ${color}dd, ${color}bb)`;
-            e.currentTarget.style.border = `2px solid ${color}`;
-          }}
+          onClick={handleClick}
+          className={`group relative flex items-center justify-center rounded-lg transform transition-all duration-200 ${
+            disabled ? 'cursor-not-allowed' : 'hover:scale-105 cursor-pointer active:scale-95'
+          }`}
+          style={getButtonStyle()}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           onMouseDown={(e) => {
-            e.currentTarget.style.background = `linear-gradient(135deg, ${freshGreen}aa, ${freshGreen}99)`;
-            e.currentTarget.style.border = `2px solid ${freshGreen}`;
+            if (!disabled) {
+              e.currentTarget.style.background = `linear-gradient(135deg, ${freshGreen}aa, ${freshGreen}99)`;
+              e.currentTarget.style.border = `2px solid ${freshGreen}`;
+            }
           }}
           onMouseUp={(e) => {
-            e.currentTarget.style.background = `linear-gradient(135deg, ${freshGreen}dd, ${freshGreen}bb)`;
-            e.currentTarget.style.border = `2px solid ${freshGreen}`;
+            if (!disabled) {
+              e.currentTarget.style.background = `linear-gradient(135deg, ${freshGreen}dd, ${freshGreen}bb)`;
+              e.currentTarget.style.border = `2px solid ${freshGreen}`;
+            }
           }}
         >
           {/* Icon - proportionally scaled to fit button with margin */}
@@ -61,14 +94,15 @@ const MenuButton = ({ icon, text, color, onClick, customSize }: MenuButtonProps)
             alt={text}
             style={{
               width: customSize?.iconSize || '55px',
-              height: customSize?.iconSize || '55px'
+              height: customSize?.iconSize || '55px',
+              opacity: disabled ? 0.5 : 1
             }}
             className="object-contain"
           />
         </button>
       </TooltipTrigger>
       <TooltipContent side="bottom" className="bg-popover text-popover-foreground border shadow-md">
-        <p className="font-semibold">{text}</p>
+        <p className="font-semibold">{disabled && disabledMessage ? disabledMessage : text}</p>
       </TooltipContent>
     </Tooltip>
   );
