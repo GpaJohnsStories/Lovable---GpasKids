@@ -212,13 +212,13 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             <tbody>
             <tr>
               {/* Play Button */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/4">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={handlePlay}
                       disabled={isLoading || isPlaying}
-                      className="w-full h-16 text-lg font-bold bg-green-500 hover:bg-green-600 disabled:bg-gray-300 text-white border-r border-gray-400 first:rounded-l last:rounded-r transition-colors flex items-center justify-center"
+                      className="w-full h-16 text-lg font-bold bg-green-500 hover:bg-green-600 disabled:bg-gray-300 text-white border-r border-gray-400 rounded-tl transition-colors flex items-center justify-center"
                     >
                       ▶
                     </button>
@@ -228,7 +228,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
 
               {/* Pause Button */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/4">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
@@ -244,7 +244,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
 
               {/* Stop Button */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/4">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
@@ -260,13 +260,13 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
 
               {/* Start Over Button */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/4">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={handleStartOver}
                       disabled={isLoading}
-                      className="w-full h-16 text-lg font-bold bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white border-r border-gray-400 transition-colors flex items-center justify-center"
+                      className="w-full h-16 text-lg font-bold bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white rounded-tr transition-colors flex items-center justify-center"
                     >
                       ↻
                     </button>
@@ -274,14 +274,16 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                   <TooltipContent>Start Over</TooltipContent>
                 </Tooltip>
               </td>
+            </tr>
 
+            <tr>
               {/* Volume 25% */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/8">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => handleVolumeChange(0.25)}
-                      className={`w-full h-16 text-lg font-bold ${volume === 0.25 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r border-gray-400 transition-colors flex items-center justify-center`}
+                      className={`w-full h-16 text-lg font-bold ${volume === 0.25 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r border-gray-400 border-t border-gray-400 rounded-bl transition-colors flex items-center justify-center`}
                     >
                       25%
                     </button>
@@ -291,12 +293,12 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
 
               {/* Volume 50% */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/8">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => handleVolumeChange(0.5)}
-                      className={`w-full h-16 text-lg font-bold ${volume === 0.5 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r border-gray-400 transition-colors flex items-center justify-center`}
+                      className={`w-full h-16 text-lg font-bold ${volume === 0.5 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
                     >
                       50%
                     </button>
@@ -306,12 +308,12 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
 
               {/* Volume 75% */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/8">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => handleVolumeChange(0.75)}
-                      className={`w-full h-16 text-lg font-bold ${volume === 0.75 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r border-gray-400 transition-colors flex items-center justify-center`}
+                      className={`w-full h-16 text-lg font-bold ${volume === 0.75 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
                     >
                       75%
                     </button>
@@ -321,12 +323,12 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
 
               {/* Volume 100% */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/8">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => handleVolumeChange(1)}
-                      className={`w-full h-16 text-lg font-bold ${volume === 1 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r border-gray-400 transition-colors flex items-center justify-center`}
+                      className={`w-full h-16 text-lg font-bold ${volume === 1 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r-4 border-gray-600 border-t border-gray-400 transition-colors flex items-center justify-center`}
                     >
                       100%
                     </button>
@@ -336,12 +338,12 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
 
               {/* Speed 0.75x */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/8">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => handleSpeedChange(0.75)}
-                      className={`w-full h-16 text-lg font-bold ${playbackRate === 0.75 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 transition-colors flex items-center justify-center`}
+                      className={`w-full h-16 text-lg font-bold ${playbackRate === 0.75 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
                     >
                       0.75x
                     </button>
@@ -351,12 +353,12 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
 
               {/* Speed 1x */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/8">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => handleSpeedChange(1)}
-                      className={`w-full h-16 text-lg font-bold ${playbackRate === 1 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 transition-colors flex items-center justify-center`}
+                      className={`w-full h-16 text-lg font-bold ${playbackRate === 1 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
                     >
                       1x
                     </button>
@@ -366,12 +368,12 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
 
               {/* Speed 1.25x */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/8">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => handleSpeedChange(1.25)}
-                      className={`w-full h-16 text-lg font-bold ${playbackRate === 1.25 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 transition-colors flex items-center justify-center`}
+                      className={`w-full h-16 text-lg font-bold ${playbackRate === 1.25 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
                     >
                       1.25x
                     </button>
@@ -381,12 +383,12 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
 
               {/* Speed 1.5x */}
-              <td className="p-0 border-0">
+              <td className="p-0 border-0 w-1/8">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => handleSpeedChange(1.5)}
-                      className={`w-full h-16 text-lg font-bold ${playbackRate === 1.5 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white rounded-r transition-colors flex items-center justify-center`}
+                      className={`w-full h-16 text-lg font-bold ${playbackRate === 1.5 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-t border-gray-400 rounded-br transition-colors flex items-center justify-center`}
                     >
                       1.5x
                     </button>
@@ -394,7 +396,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                   <TooltipContent>Speed 1.5x</TooltipContent>
                 </Tooltip>
               </td>
-
             </tr>
           </tbody>
         </table>
