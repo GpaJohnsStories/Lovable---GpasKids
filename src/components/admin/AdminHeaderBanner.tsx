@@ -31,9 +31,10 @@ const AdminHeaderBanner = () => {
   // Determine if the system is secure (placeholder logic - adjust as needed)
   const isSecure = window.location.protocol === 'https:';
   
-  // Load the secure icon and logout icon
+  // Load the secure icon, logout icon, and dashboard icon
   const { iconUrl: secureIconUrl } = useCachedIcon(isSecure ? 'ICO-ADS.jpg' : null);
   const { iconUrl: logoutIconUrl } = useCachedIcon('ICO-ADX.png');
+  const { iconUrl: dashboardIconUrl } = useCachedIcon('ICO-AD1.gif');
 
   const handleCreateStoryClick = () => {
     console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
@@ -310,6 +311,47 @@ const AdminHeaderBanner = () => {
                   )}
                 </div>
               );
+
+              // Render Dashboard button as square icon button
+              const dashboardButton = (
+                <div 
+                  key={button.name}
+                  className="relative"
+                  onMouseEnter={() => setHoveredButton(button.name)}
+                  onMouseLeave={() => setHoveredButton(null)}
+                >
+                  <Link to={button.path} onClick={scrollToTop}>
+                    <div
+                      className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-blue-300/50 hover:scale-105 transition-transform cursor-pointer"
+                      style={{ 
+                        backgroundColor: '#00BFFF',
+                        minWidth: '55px',
+                        minHeight: '55px'
+                      }}
+                    >
+                      {dashboardIconUrl ? (
+                        <img 
+                          src={dashboardIconUrl} 
+                          alt="Dashboard"
+                          className="w-12 h-12 object-contain"
+                        />
+                      ) : (
+                        <LayoutDashboard className="w-12 h-12 text-white" />
+                      )}
+                    </div>
+                  </Link>
+                  {hoveredButton === button.name && (
+                    <div className="nav-bubble opacity-100 visible">
+                      <b>Dashboard</b>
+                    </div>
+                  )}
+                </div>
+              );
+
+              // Special handling for Dashboard button
+              if (button.name === 'Dashboard') {
+                return dashboardButton;
+              }
 
               // Special handling for Library button with dropdown
               if (button.name === 'Libraries') {
