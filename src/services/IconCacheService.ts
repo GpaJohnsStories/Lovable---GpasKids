@@ -28,9 +28,9 @@ class IconCacheService {
     'ICO-CO1.gif',      // Comments main icon
     'ICO-CO2.gif',      // View Comments submenu
     'ICO-CO3.gif',      // Make Comment submenu
-    'ICO-WR2.gif',      // Writing main icon
-    'ICO-WR3.jpg',      // Submit Story submenu
-    'ICO-GU1.jpg',      // How To Write submenu / Guide main icon
+    'ICO-WR3.jpg',      // Writing main icon
+    'ICO-WR2.gif',      // Submit Story submenu (tall & slender)
+    'ICO-WR3.jpg',      // How To Write submenu (same as main)
     'ICO-AB1.jpg',      // About Us main icon / Authors submenu
     'ICO-AB3.jpg',      // 3 Helpers submenu
     'ICO-AB5.jpg',      // The 3 AI's submenu
