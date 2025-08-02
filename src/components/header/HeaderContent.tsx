@@ -427,6 +427,96 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         }}
                       />
                     </Link>
+
+                    {/* All About Us Main Button with Submenu */}
+                    <div className="group/about relative">
+                      <Link
+                        to="/about"
+                        className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
+                        aria-label="All About Us"
+                      >
+                        <img 
+                          src={getSafeIconUrl('ICO-AB1.png')}
+                          alt="All About Us"
+                          className="w-full h-full object-cover rounded-md"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            if (target.src.includes('.png')) {
+                              target.src = getSafeIconUrl('ICO-AB1.jpg');
+                            } else if (target.src.includes('.jpg')) {
+                              target.src = getSafeIconUrl('ICO-AB1.gif');
+                            }
+                          }}
+                        />
+                      </Link>
+                      
+                      {/* All About Us Submenu - 2x2 Grid Layout */}
+                      <div className="absolute top-0 right-full mr-2 opacity-0 invisible group-hover/about:opacity-100 group-hover/about:visible transition-all duration-300 ease-in-out z-50">
+                        <div 
+                          className="rounded-lg shadow-lg border-2 border-orange-400 min-w-[140px]"
+                          style={{ backgroundColor: '#FFD65C' }}
+                        >
+                          <div className="grid grid-cols-2 gap-2 p-2">
+                            {/* Placeholder for first submenu item - need icon code and label */}
+                            <Link
+                              to="/about/item1"
+                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
+                              aria-label="About Item 1"
+                            >
+                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                                <img 
+                                  src={getSafeIconUrl('ICO-PLACEHOLDER1.png')}
+                                  alt="About Item 1"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            </Link>
+                            {/* Placeholder for second submenu item - need icon code and label */}
+                            <Link
+                              to="/about/item2"
+                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
+                              aria-label="About Item 2"
+                            >
+                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                                <img 
+                                  src={getSafeIconUrl('ICO-PLACEHOLDER2.png')}
+                                  alt="About Item 2"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            </Link>
+                            {/* Placeholder for third submenu item - need icon code and label */}
+                            <Link
+                              to="/about/item3"
+                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
+                              aria-label="About Item 3"
+                            >
+                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                                <img 
+                                  src={getSafeIconUrl('ICO-PLACEHOLDER3.png')}
+                                  alt="About Item 3"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            </Link>
+                            {/* Placeholder for fourth submenu item - need icon code and label */}
+                            <Link
+                              to="/about/item4"
+                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
+                              aria-label="About Item 4"
+                            >
+                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                                <img 
+                                  src={getSafeIconUrl('ICO-PLACEHOLDER4.png')}
+                                  alt="About Item 4"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
