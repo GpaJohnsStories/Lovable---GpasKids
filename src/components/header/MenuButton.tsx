@@ -109,11 +109,7 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
           {/* Always show content - prioritize text visibility */}
           {isLoading && (
             <div 
-              className="flex items-center justify-center text-white text-xs font-bold"
-              style={{
-                width: '56px',
-                height: '56px',
-              }}
+              className="flex items-center justify-center text-white text-xs font-bold w-full h-full"
             >
               <span className="text-center leading-tight break-words">
                 {text}
@@ -127,19 +123,15 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
               src={iconUrl}
               alt={text}
               style={{
-                width: '56px',
-                height: '56px',
+                width: '100%',
+                height: '100%',
                 opacity: disabled ? 0.5 : 1
               }}
               className="object-contain"
             />
           ) : !isLoading && (
             <div 
-              className="flex items-center justify-center text-white text-xs font-bold px-1"
-              style={{
-                width: '56px',
-                height: '56px',
-              }}
+              className="flex items-center justify-center text-white text-xs font-bold px-1 w-full h-full"
             >
               <span className="text-center leading-tight break-words hyphens-auto max-w-full">
                 {text}
