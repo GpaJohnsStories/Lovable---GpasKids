@@ -199,26 +199,33 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       
                       {/* Library Submenu */}
                       <div className="absolute top-0 right-full mr-2 opacity-0 invisible group-hover/library:opacity-100 group-hover/library:visible transition-all duration-300 ease-in-out z-50">
-                        <div className="flex flex-col gap-2">
-                          <Link
-                            to="/library/stories"
-                            className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
-                            aria-label="Story List"
-                          >
-                            <img 
-                              src={getSafeIconUrl('ICO-LB2.png')}
-                              alt="Story List"
-                              className="w-full h-full object-cover rounded-md"
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                if (target.src.includes('.png')) {
-                                  target.src = getSafeIconUrl('ICO-LB2.jpg');
-                                } else if (target.src.includes('.jpg')) {
-                                  target.src = getSafeIconUrl('ICO-LB2.gif');
-                                }
-                              }}
-                            />
-                          </Link>
+                        <div 
+                          className="rounded-lg shadow-lg border-2 border-orange-400 min-w-[120px]"
+                          style={{ backgroundColor: '#FFD65C' }}
+                        >
+                          <div className="flex flex-col p-2">
+                            <Link
+                              to="/library/stories"
+                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
+                              aria-label="Story List"
+                            >
+                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                                <img 
+                                  src={getSafeIconUrl('ICO-LB2.png')}
+                                  alt="Story List"
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (target.src.includes('.png')) {
+                                      target.src = getSafeIconUrl('ICO-LB2.jpg');
+                                    } else if (target.src.includes('.jpg')) {
+                                      target.src = getSafeIconUrl('ICO-LB2.gif');
+                                    }
+                                  }}
+                                />
+                              </div>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
