@@ -72,10 +72,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     return (
       <div className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden">
         {/* Top section with photo and title */}
-        <div className="flex flex-col lg:flex-row gap-4 mb-6">
-          {/* Photo in top left */}
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
+          {/* Photo in left column on tablets+ */}
           {mainPhoto && (
-            <div className="w-full lg:w-64 flex-shrink-0">
+            <div className="w-full md:w-80 lg:w-64 flex-shrink-0">
               <div className="group relative">
                 <img
                   src={mainPhoto.url}
