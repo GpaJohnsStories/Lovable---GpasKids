@@ -156,7 +156,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
         items: [
           {
             id: "copyright-info",
-            icon: "ICO-CO2.gif",
+            icon: "ICO-HO2.gif",
             text: "Copyright Info",
             onClick: () => {
               window.location.href = "/privacy";
