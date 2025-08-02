@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
-import VerticalMenu from "./VerticalMenu";
+import SimpleVerticalMenu from "./SimpleVerticalMenu";
 
 interface HeaderContentProps {
   isHomePage: boolean;
@@ -149,7 +149,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           </button>
           
           {/* Vertical Menu */}
-          <VerticalMenu 
+          <SimpleVerticalMenu 
             isVisible={isMenuOpen} 
             onClose={() => setIsMenuOpen(false)} 
           />
