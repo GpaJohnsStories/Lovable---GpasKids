@@ -159,11 +159,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       className="flex items-center justify-center p-2 rounded-md hover:bg-orange-200 transition-colors duration-200 focus:bg-orange-200 focus:outline-none"
                       aria-label="Go to Home Page"
                     >
-                      <div className="flex items-center justify-center w-28 sm:w-32 h-32 sm:h-36 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md hover:scale-105 transition-transform duration-200">
+                      <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md hover:scale-105 transition-transform duration-200">
                         <img 
                           src={getSafeIconUrl('ICO-HO2.png')}
                           alt="Home"
-                          className="w-full h-full object-contain"
+                          className="w-14 h-14 object-contain"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             if (target.src.includes('.png')) {
