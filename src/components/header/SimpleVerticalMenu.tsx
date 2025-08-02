@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import MenuButton from "./MenuButton";
-import { useCachedIcon } from "@/hooks/useCachedIcon";
 
 interface SimpleVerticalMenuProps {
   isVisible: boolean;
@@ -24,7 +23,6 @@ interface MainMenuItem {
   color: string;
   onClick?: () => void;
   submenus?: SubMenuItem[];
-  submenuLayout?: 'column' | 'grid';
 }
 
 const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => {
@@ -179,8 +177,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
             onClose();
           }
         }
-      ],
-      submenuLayout: 'grid'
+      ]
     },
     {
       id: "safe-secure",

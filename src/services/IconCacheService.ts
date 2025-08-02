@@ -21,12 +21,23 @@ class IconCacheService {
 
   // Public menu and header icons to preload
   private readonly PRIORITY_ICONS = [
-    'ICO-HOX.jpg',      // Home icon
-    'ICO-LB1.gif',      // Stories icon
-    'ICO-LB2.gif',      // Library icon
-    'ICO-LB3.gif',      // Read icon
-    'ICO-MU2.gif',      // Menu button icon (was ICO-N2K.png)
-    'ICO-HL2.gif',      // Buddy icon (was ICO-HOM.png)
+    'ICO-HOM.png',      // Home icon
+    'ICO-LIB.gif',      // Library main icon
+    'ICO-BR2.gif',      // Browse Stories submenu
+    'ICO-RE2.gif',      // Read Story submenu
+    'ICO-COM.gif',      // Comments main icon
+    'ICO-VC2.gif',      // View Comments submenu
+    'ICO-MC2.gif',      // Make Comment submenu
+    'ICO-WRI.gif',      // Writing main icon
+    'ICO-SU2.gif',      // Submit Story submenu
+    'ICO-HT2.gif',      // How To Write submenu
+    'ICO-GUI.gif',      // Guide main icon
+    'ICO-ABO.gif',      // About Us main icon
+    'ICO-AB3.jpg',      // 3 Helpers submenu
+    'ICO-AB5.jpg',      // The 3 AI's submenu
+    'ICO-SAF.gif',      // Safe & Secure main icon
+    'ICO-MU2.gif',      // Menu button icon
+    'ICO-HL2.gif',      // Buddy icon
   ];
 
   /**
