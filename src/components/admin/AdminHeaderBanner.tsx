@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus, BookOpen } from "lucide-react";
+import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus, BookOpen, Unlock } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -31,9 +31,8 @@ const AdminHeaderBanner = () => {
   // Determine if the system is secure (placeholder logic - adjust as needed)
   const isSecure = window.location.protocol === 'https:';
   
-  // Load the appropriate security icon
-  const securityIconPath = isSecure ? 'ICO-ADS.jpg' : 'ICO-ADU.gif';
-  const { iconUrl: securityIconUrl } = useCachedIcon(securityIconPath);
+  // Load the secure icon only (for secure state we'll use the cached icon)
+  const { iconUrl: secureIconUrl } = useCachedIcon(isSecure ? 'ICO-ADS.jpg' : null);
 
   const handleCreateStoryClick = () => {
     console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
@@ -142,15 +141,26 @@ const AdminHeaderBanner = () => {
             <h1 className="text-2xl font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#FFFF00' }}>
               Buddy's Admin
             </h1>
-            {securityIconUrl ? (
-              <img 
-                src={securityIconUrl} 
-                alt={isSecure ? "Secure" : "Not Secure"}
-                className="w-6 h-6 object-contain"
-              />
-            ) : (
-              <div className="w-6 h-6 bg-green-500 rounded"></div>
-            )}
+            <Button
+              className="w-[55px] h-[55px] p-0 rounded-md border-2 border-white/20 hover:scale-105 transition-transform"
+              style={{ 
+                backgroundColor: isSecure ? '#16a34a' : '#DC2626'
+              }}
+            >
+              {isSecure ? (
+                secureIconUrl ? (
+                  <img 
+                    src={secureIconUrl} 
+                    alt="Secure"
+                    className="w-8 h-8 object-contain"
+                  />
+                ) : (
+                  <div className="w-8 h-8 bg-white/20 rounded"></div>
+                )
+              ) : (
+                <Unlock className="w-8 h-8 text-white" />
+              )}
+            </Button>
             <Button 
               onClick={handleLogout} 
               className="font-bold border border-red-300/30 hover:bg-red-600"
