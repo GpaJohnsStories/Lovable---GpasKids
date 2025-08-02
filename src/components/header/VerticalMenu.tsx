@@ -215,21 +215,21 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
       {
         items: [
           {
+            id: "grandpa-john",
+            icon: "", // No icon yet
+            text: "Grandpa John",
+            onClick: () => {
+              window.location.href = "/about";
+              onClose();
+            }
+          },
+          {
             id: "3-helpers",
             icon: "ICO-AB3.jpg",
             text: "3 Helpers",
             onClick: () => {
               // TODO: Add route when page is created
               console.log("3 Helpers clicked");
-              onClose();
-            }
-          },
-          {
-            id: "grandpa-john",
-            icon: "", // No icon yet
-            text: "Grandpa John",
-            onClick: () => {
-              window.location.href = "/about";
               onClose();
             }
           }
@@ -240,21 +240,21 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
       {
         items: [
           {
+            id: "authors",
+            icon: "", // No icon yet
+            text: "Authors",
+            onClick: () => {
+              window.location.href = "/public-author-bios";
+              onClose();
+            }
+          },
+          {
             id: "the-3-ais",
             icon: "ICO-AB5.jpg",
             text: "The 3 AI's",
             onClick: () => {
               // TODO: Add route when page is created
               console.log("The 3 AI's clicked");
-              onClose();
-            }
-          },
-          {
-            id: "authors",
-            icon: "", // No icon yet
-            text: "Authors",
-            onClick: () => {
-              window.location.href = "/public-author-bios";
               onClose();
             }
           }
