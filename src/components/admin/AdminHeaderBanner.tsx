@@ -385,6 +385,31 @@ const AdminHeaderBanner = () => {
                 </div>
               );
             })}
+            
+            {/* BIO's Button */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setHoveredButton('bios')}
+              onMouseLeave={() => setHoveredButton(null)}
+            >
+              <Link to="/buddys_admin/stories?view=bios" onClick={scrollToTop}>
+                <div
+                  className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-yellow-300/50 hover:scale-105 transition-transform cursor-pointer"
+                  style={{ 
+                    backgroundColor: '#E6C966',
+                    minWidth: '55px',
+                    minHeight: '55px'
+                  }}
+                >
+                  <span className="text-sm font-bold text-black">BIO's</span>
+                </div>
+              </Link>
+              {hoveredButton === 'bios' && (
+                <div className="nav-bubble opacity-100 visible">
+                  <b>BIO's</b>
+                </div>
+              )}
+            </div>
           </nav>
         </div>
       </div>
