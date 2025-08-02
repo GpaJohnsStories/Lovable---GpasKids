@@ -55,21 +55,18 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               <div className="w-full h-12 sm:h-18 md:h-24 bg-green-300 animate-pulse rounded-md group-hover:hidden" />
             )}
             
-            {/* Error state for Buddy */}
-            {buddyError && !buddyLoading && (
+            {/* Show text if no icon available, otherwise show Buddy image - hidden on hover */}
+            {(buddyError || !buddyIconUrl) && !buddyLoading ? (
               <div className="w-full h-12 sm:h-18 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-md group-hover:hidden">
-                🐕
+                BUDDY
               </div>
-            )}
-            
-            {/* Buddy image - hidden on hover */}
-            {buddyIconUrl && !buddyLoading && !buddyError && (
+            ) : buddyIconUrl && !buddyLoading && !buddyError ? (
               <img 
                 src={buddyIconUrl}
                 alt="Buddy the Helper Dog"
                 className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
               />
-            )}
+            ) : null}
             
             {/* Help text - shown on hover */}
             <div className="hidden group-hover:flex items-center justify-center h-full text-[#EAB308] text-xs sm:text-sm md:text-base font-bold text-center">
@@ -135,21 +132,18 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-300 animate-pulse rounded-md" />
             )}
             
-            {/* Error state for Menu */}
-            {menuError && !menuLoading && (
+            {/* Show text if no icon available, otherwise show Menu image */}
+            {(menuError || !menuIconUrl) && !menuLoading ? (
               <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-200 flex items-center justify-center text-yellow-800 text-xs font-bold rounded-md">
-                ☰
+                MENU
               </div>
-            )}
-            
-            {/* Menu image */}
-            {menuIconUrl && !menuLoading && !menuError && (
+            ) : menuIconUrl && !menuLoading && !menuError ? (
               <img 
                 src={menuIconUrl}
                 alt="Main Menu"
                 className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md"
               />
-            )}
+            ) : null}
           </button>
           
           {/* Vertical Menu */}

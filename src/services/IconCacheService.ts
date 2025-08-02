@@ -124,8 +124,8 @@ class IconCacheService {
     } catch (error) {
       console.error(`Failed to load icon ${iconPath}:`, error);
       
-      // Return fallback placeholder
-      return this.createFallbackIcon();
+      // No fallback - let components handle missing icons by showing text
+      throw error;
     }
   }
 
