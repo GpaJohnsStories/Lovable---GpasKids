@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MenuButton from "./MenuButton";
 import SubMenu from "./SubMenu";
 
@@ -40,19 +40,44 @@ const MenuItemWithSubmenus = ({
 }: MenuItemWithSubmenusProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showSubmenus, setShowSubmenus] = useState(false);
+  const [hideTimeout, setHideTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
     setShowSubmenus(true);
+    
+    // Clear any pending hide timeout
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      setHideTimeout(null);
+    }
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    // Delay hiding to allow moving to submenu
-    setTimeout(() => {
+    
+    // Clear any existing timeout first
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+    }
+    
+    // Set a new timeout to hide submenus
+    const timeout = setTimeout(() => {
       setShowSubmenus(false);
-    }, 300);
+      setHideTimeout(null);
+    }, 500); // Increased delay to 500ms for better UX
+    
+    setHideTimeout(timeout);
   };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hideTimeout) {
+        clearTimeout(hideTimeout);
+      }
+    };
+  }, [hideTimeout]);
 
   const handleClick = () => {
     if (onClick) {
