@@ -31,7 +31,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
   const [audioGenerated, setAudioGenerated] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useState(1); // Always 100%
   const [playbackRate, setPlaybackRate] = useState(1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -194,220 +194,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     setPlaybackRate(newSpeed);
   }, []);
 
-  // New table-based audio controls component
-  const renderAudioControls = () => {
-    console.log('renderAudioControls called', { canPlayAudio: canPlayAudio(), webtext });
-    if (!canPlayAudio()) {
-      return (
-        <div className="text-center text-gray-500 py-4">
-          No audio available
-        </div>
-      );
-    }
-
-    return (
-      <TooltipProvider>
-        <div className="px-4">
-          <table className="w-full border-collapse border-0">
-            <tbody>
-            <tr>
-              {/* Play Button */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={handlePlay}
-                      disabled={isLoading || isPlaying}
-                      className="w-full h-16 text-lg font-bold bg-green-500 hover:bg-green-600 disabled:bg-gray-300 text-white border-r border-gray-400 rounded-tl transition-colors flex flex-col items-center justify-center"
-                      style={{ minWidth: '80px' }}
-                    >
-                      <div className="text-xl">▶</div>
-                      <div className="text-xs mt-1">Play</div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Play</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Pause Button */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={handlePause}
-                      disabled={!isPlaying}
-                      className="w-full h-16 text-lg font-bold bg-yellow-500 hover:bg-yellow-600 disabled:bg-gray-300 text-white border-r border-gray-400 transition-colors flex flex-col items-center justify-center"
-                      style={{ minWidth: '80px' }}
-                    >
-                      <div className="text-xl">⏸</div>
-                      <div className="text-xs mt-1">Pause</div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Pause</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Stop Button */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={handleStop}
-                      disabled={!currentAudio}
-                      className="w-full h-16 text-lg font-bold bg-red-500 hover:bg-red-600 disabled:bg-gray-300 text-white border-r border-gray-400 transition-colors flex flex-col items-center justify-center"
-                      style={{ minWidth: '80px' }}
-                    >
-                      <div className="text-xl">⏹</div>
-                      <div className="text-xs mt-1">Stop</div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Stop</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Start Over Button */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={handleStartOver}
-                      disabled={isLoading}
-                      className="w-full h-16 text-lg font-bold bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white rounded-tr transition-colors flex flex-col items-center justify-center"
-                      style={{ minWidth: '80px' }}
-                    >
-                      <div className="text-xl">↻</div>
-                      <div className="text-xs mt-1">Restart</div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Start Over</TooltipContent>
-                </Tooltip>
-              </td>
-            </tr>
-
-            <tr>
-              {/* Speed 0.75x */}
-              <td className="p-0 border-0" style={{ width: '12.5%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleSpeedChange(0.75)}
-                      className={`w-full h-12 text-sm font-bold ${playbackRate === 0.75 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 border-t border-gray-400 rounded-bl transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '50px' }}
-                    >
-                      0.75x
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Speed 0.75x</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Speed 1x */}
-              <td className="p-0 border-0" style={{ width: '12.5%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleSpeedChange(1)}
-                      className={`w-full h-12 text-sm font-bold ${playbackRate === 1 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '50px' }}
-                    >
-                      1x
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Speed 1x</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Speed 1.25x */}
-              <td className="p-0 border-0" style={{ width: '12.5%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleSpeedChange(1.25)}
-                      className={`w-full h-12 text-sm font-bold ${playbackRate === 1.25 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '50px' }}
-                    >
-                      1.25x
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Speed 1.25x</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Speed 1.5x */}
-              <td className="p-0 border-0" style={{ width: '12.5%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleSpeedChange(1.5)}
-                      className={`w-full h-12 text-sm font-bold ${playbackRate === 1.5 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '50px' }}
-                    >
-                      1.5x
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Speed 1.5x</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Volume 50% */}
-              <td className="p-0 border-0" style={{ width: '12.5%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleVolumeChange(0.5)}
-                      className={`w-full h-12 text-sm font-bold ${volume === 0.5 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '50px' }}
-                    >
-                      50%
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Volume 50%</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Volume 75% */}
-              <td className="p-0 border-0" style={{ width: '12.5%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleVolumeChange(0.75)}
-                      className={`w-full h-12 text-sm font-bold ${volume === 0.75 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '50px' }}
-                    >
-                      75%
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Volume 75%</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Volume 100% */}
-              <td className="p-0 border-0" style={{ width: '12.5%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleVolumeChange(1)}
-                      className={`w-full h-12 text-sm font-bold ${volume === 1 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '50px' }}
-                    >
-                      100%
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Volume 100%</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Empty cell to complete the row */}
-              <td className="p-0 border-0" style={{ width: '12.5%' }}>
-                <div className="w-full h-12 border-t border-gray-400 rounded-br"></div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      </TooltipProvider>
-    );
-  };
+  // Audio controls removed - auto-play at 100% volume
 
   useEffect(() => {
     const fetchData = async () => {
@@ -472,15 +259,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
 
           {/* Title and content section */}
           <div className="flex-1 min-w-0 flex flex-col">
-            {/* Audio Controls at top */}
-            <div className="flex justify-center mb-4">
-              <div className="rounded-lg bg-blue-200/50 p-3 border border-blue-400/60">
-                <div className="text-center italic font-bold text-blue-800 text-xs sm:text-sm mb-1">
-                  Audio Controls in case you prefer to listen.
-                </div>
-                {renderAudioControls()}
-              </div>
-            </div>
 
             {/* Title section below audio controls */}
             <div className="mb-4">
@@ -545,25 +323,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           <h3 className="text-xl font-bold text-amber-800">
             {webtext?.title || title}
           </h3>
-        </div>
-        
-        {/* Right: Audio Controls */}
-        <div className="flex-shrink-0 -mt-6 -mr-6">
-          <div 
-            className="border-2 rounded-lg"
-            style={{ borderColor }}
-          >
-            <div 
-              className="text-center italic font-bold mb-0"
-              style={{ 
-                fontSize: '14pt',
-                color: borderColor 
-              }}
-            >
-              Audio Controls in case you prefer to listen.
-            </div>
-            {renderAudioControls()}
-          </div>
         </div>
       </div>
 
