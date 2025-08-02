@@ -230,46 +230,26 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                   customSize={mainButtonSize}
                 />
                 
-                {/* Submenu positioning: both to the left of main menu button */}
+                {/* Submenu buttons arranged horizontally in a line going left */}
                 {item.submenus && activeSubmenu === item.id && (
                   <>
-                    {/* Top submenu (1st) goes right next to the main menu button */}
-                    <div className="absolute right-[74px] top-0 z-40 animate-slide-in-right">
-                      <div className={item.submenuLayout === 'grid' ? "grid grid-cols-2 gap-0" : "flex flex-col gap-0"}>
-                        {item.submenus.slice(0, item.submenuLayout === 'grid' ? 2 : item.submenus.length).map((submenuItem) => (
-                          <MenuButton
-                            key={submenuItem.id}
-                            icon={submenuItem.icon}
-                            text={submenuItem.text}
-                            color="#F97316"
-                            onClick={() => handleSubmenuItemClick(submenuItem.onClick)}
-                            customSize={submenuButtonSize}
-                            disabled={submenuItem.disabled}
-                            disabledMessage={submenuItem.disabledMessage}
-                          />
-                        ))}
+                    {item.submenus.map((submenuItem, index) => (
+                      <div 
+                        key={submenuItem.id}
+                        className={`absolute top-0 z-40 animate-slide-in-right`}
+                        style={{ right: `${(index + 1) * 74}px` }}
+                      >
+                        <MenuButton
+                          icon={submenuItem.icon}
+                          text={submenuItem.text}
+                          color="#F97316"
+                          onClick={() => handleSubmenuItemClick(submenuItem.onClick)}
+                          customSize={submenuButtonSize}
+                          disabled={submenuItem.disabled}
+                          disabledMessage={submenuItem.disabledMessage}
+                        />
                       </div>
-                    </div>
-                    
-                    {/* 2nd submenu goes to the left of the 1st submenu (side-by-side) */}
-                    {item.submenus.length > 2 && item.submenuLayout === 'grid' && (
-                      <div className="absolute right-[148px] top-0 z-40 animate-slide-in-right">
-                        <div className="grid grid-cols-2 gap-0">
-                          {item.submenus.slice(2).map((submenuItem) => (
-                            <MenuButton
-                              key={submenuItem.id}
-                              icon={submenuItem.icon}
-                              text={submenuItem.text}
-                              color="#F97316"
-                              onClick={() => handleSubmenuItemClick(submenuItem.onClick)}
-                              customSize={submenuButtonSize}
-                              disabled={submenuItem.disabled}
-                              disabledMessage={submenuItem.disabledMessage}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    ))}
                   </>
                 )}
               </div>
