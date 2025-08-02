@@ -225,12 +225,11 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
             }
           },
           {
-            id: "the-3-ais",
-            icon: "ICO-AB5.jpg",
-            text: "The 3 AI's",
+            id: "grandpa-john",
+            icon: "", // No icon yet
+            text: "Grandpa John",
             onClick: () => {
-              // TODO: Add route when page is created
-              console.log("The 3 AI's clicked");
+              window.location.href = "/about";
               onClose();
             }
           }
@@ -241,11 +240,12 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
       {
         items: [
           {
-            id: "grandpa-john",
-            icon: "", // No icon yet
-            text: "Grandpa John",
+            id: "the-3-ais",
+            icon: "ICO-AB5.jpg",
+            text: "The 3 AI's",
             onClick: () => {
-              window.location.href = "/about";
+              // TODO: Add route when page is created
+              console.log("The 3 AI's clicked");
               onClose();
             }
           },
