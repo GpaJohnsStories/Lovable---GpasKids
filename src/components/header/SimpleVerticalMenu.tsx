@@ -32,7 +32,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   // Check if we're on a story page for the Read button
   const isStorySelected = location.pathname.startsWith('/story/');
 
-  if (!isVisible) return null;
+  // Close submenu when menu becomes invisible
+  if (!isVisible) {
+    if (activeSubmenu) {
+      setActiveSubmenu(null);
+    }
+    return null;
+  }
 
   const mainMenuItems: MainMenuItem[] = [
     {
@@ -196,6 +202,8 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       setActiveSubmenu(activeSubmenu === item.id ? null : item.id);
     } else if (item.onClick) {
       item.onClick();
+      // Close any open submenu when clicking a non-submenu item
+      setActiveSubmenu(null);
     }
   };
 
@@ -204,12 +212,20 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     setActiveSubmenu(null);
   };
 
+  // Close submenu when clicking outside the menu area
+  const handleMenuContainerClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   // Button sizes are now hardcoded in MenuButton component (64x64px buttons, 56x56px icons)
 
   return (
     <>
       {/* Menu Container - positioned below gold button, scrolls with page */}
-      <div className="absolute top-full right-0 z-30 mt-2">
+      <div 
+        className="absolute top-full right-0 z-30 mt-2"
+        onClick={handleMenuContainerClick}
+      >
         <div className="relative">
           {/* Main Menu - 1x7 vertical layout with hardcoded sizing */}
           <div className="flex flex-col gap-0" style={{ width: '64px' }}>

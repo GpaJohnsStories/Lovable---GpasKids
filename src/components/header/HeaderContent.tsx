@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
@@ -14,10 +14,28 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const { showHelp } = useHelp();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuHovered, setIsMenuHovered] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   // Use cached icons for Buddy and Menu button - v2.0 with proper icon caching
   const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('ICO-HL2.gif');
   const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('ICO-MU2.gif');
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   const handleHelpClick = () => {
     console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
@@ -118,7 +136,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
         </div>
 
         {/* RIGHT SECTION: Gold Menu Button */}
-        <div className="flex justify-end relative">
+        <div className="flex justify-end relative" ref={menuRef}>
           <button 
             onClick={handleMenuClick}
             aria-label="Click for Menu"
