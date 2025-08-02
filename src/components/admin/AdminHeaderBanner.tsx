@@ -142,26 +142,35 @@ const AdminHeaderBanner = () => {
             <h1 className="text-2xl font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#FFFF00' }}>
               Buddy's Admin
             </h1>
-            <div
-              className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-white/20 hover:scale-105 transition-transform cursor-pointer"
-              style={{ 
-                backgroundColor: isSecure ? '#16a34a' : '#DC2626',
-                minWidth: '55px',
-                minHeight: '55px'
-              }}
-            >
-              {isSecure ? (
-                secureIconUrl ? (
-                  <img 
-                    src={secureIconUrl} 
-                    alt="Secure"
-                    className="w-8 h-8 object-contain"
-                  />
+            <div className="relative">
+              <div
+                className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-white/20 hover:scale-105 transition-transform cursor-pointer"
+                style={{ 
+                  backgroundColor: isSecure ? '#16a34a' : '#DC2626',
+                  minWidth: '55px',
+                  minHeight: '55px'
+                }}
+                onMouseEnter={() => setHoveredButton('security')}
+                onMouseLeave={() => setHoveredButton(null)}
+              >
+                {isSecure ? (
+                  secureIconUrl ? (
+                    <img 
+                      src={secureIconUrl} 
+                      alt="Secure"
+                      className="w-8 h-8 object-contain"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 bg-white/20 rounded"></div>
+                  )
                 ) : (
-                  <div className="w-8 h-8 bg-white/20 rounded"></div>
-                )
-              ) : (
-                <Unlock className="w-8 h-8 text-white" />
+                  <Unlock className="w-8 h-8 text-white" />
+                )}
+              </div>
+              {hoveredButton === 'security' && (
+                <div className="nav-bubble opacity-100 visible">
+                  {isSecure ? 'Secure' : 'OPEN'}
+                </div>
               )}
             </div>
             <div
