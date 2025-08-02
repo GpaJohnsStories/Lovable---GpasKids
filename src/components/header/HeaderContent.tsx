@@ -533,6 +533,27 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Safe and Sound (no submenu) */}
+                    <Link
+                      to="/safety"
+                      className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
+                      aria-label="Safe and Sound"
+                    >
+                      <img 
+                        src={getSafeIconUrl('ICO-SA1.png')}
+                        alt="Safe and Sound"
+                        className="w-full h-full object-cover rounded-md"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (target.src.includes('.png')) {
+                            target.src = getSafeIconUrl('ICO-SA1.jpg');
+                          } else if (target.src.includes('.jpg')) {
+                            target.src = getSafeIconUrl('ICO-SA1.gif');
+                          }
+                        }}
+                      />
+                    </Link>
                   </div>
                 </div>
               </div>
