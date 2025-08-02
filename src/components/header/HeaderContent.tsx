@@ -380,17 +380,25 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 />
                               </div>
                             </Link>
-                            {/* Placeholder for second submenu item - need icon code and label */}
+                            {/* Share Your Story */}
                             <Link
-                              to="/sharing/guidelines"
+                              to="/sharing/submit"
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
-                              aria-label="Submenu Item 2"
+                              aria-label="Share Your Story"
                             >
                               <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
-                                  src={getSafeIconUrl('ICO-PLACEHOLDER2.png')}
-                                  alt="Submenu Item 2"
+                                  src={getSafeIconUrl('ICO-WR3.png')}
+                                  alt="Share Your Story"
                                   className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (target.src.includes('.png')) {
+                                      target.src = getSafeIconUrl('ICO-WR3.jpg');
+                                    } else if (target.src.includes('.jpg')) {
+                                      target.src = getSafeIconUrl('ICO-WR3.gif');
+                                    }
+                                  }}
                                 />
                               </div>
                             </Link>
