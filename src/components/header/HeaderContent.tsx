@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
@@ -6,7 +5,6 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem } from "@/components/ui/navigation-menu";
 import NavigationButton from "./NavigationButton";
 import NavigationDropdown from "./NavigationDropdown";
-import VerticalMenu from "./VerticalMenu";
 import { supabase } from "@/integrations/supabase/client";
 
 interface HeaderContentProps {
@@ -17,7 +15,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const location = useLocation();
   const { showHelp } = useHelp();
   const { userRole } = useUserRole();
-  const [isVerticalMenuVisible, setIsVerticalMenuVisible] = useState(false);
+  
   
   // Check if we're on an admin page
   const isAdminPage = location.pathname.startsWith('/buddys_admin');
@@ -131,29 +129,60 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           )}
         </div>
 
-        {/* RIGHT COLUMN: Primary Menu Button */}
+        {/* RIGHT COLUMN: CSS-Only Dropdown Menu */}
         <div className="flex justify-end items-start">
           {isHomePage && (
-            <button 
-              onClick={() => setIsVerticalMenuVisible(!isVerticalMenuVisible)}
-              className="group relative z-10 bg-gradient-to-br from-yellow-400/90 to-amber-500/80 hover:from-yellow-300/90 hover:to-yellow-400/80 backdrop-blur-sm rounded-lg p-2 flex items-center justify-center w-28 sm:w-32 h-32 sm:h-36 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-400 hover:border-yellow-300 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
-            >
-              <img 
-                src={getSafeIconUrl('ICO-MU2.gif')}
-                alt="Primary Menu"
-                className="w-full h-full object-contain rounded-md"
-              />
-            </button>
+            <div className="group relative">
+              {/* Primary Menu Button */}
+              <button 
+                className="relative z-10 bg-gradient-to-br from-yellow-400/90 to-amber-500/80 hover:from-yellow-300/90 hover:to-yellow-400/80 backdrop-blur-sm rounded-lg p-2 flex items-center justify-center w-28 sm:w-32 h-32 sm:h-36 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-400 hover:border-yellow-300 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+                aria-label="Main Navigation Menu"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <img 
+                  src={getSafeIconUrl('ICO-MU2.gif')}
+                  alt="Primary Menu"
+                  className="w-full h-full object-contain rounded-md"
+                />
+              </button>
+
+              {/* CSS-Only Dropdown Menu */}
+              <div className="absolute top-full right-0 mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-300 ease-in-out z-50">
+                <div 
+                  className="rounded-lg shadow-lg border-2 border-orange-400 min-w-[120px]"
+                  style={{ backgroundColor: '#FFD65C' }}
+                >
+                  <div className="flex flex-col p-2">
+                    <Link
+                      to="/"
+                      className="flex items-center justify-center p-2 rounded-md hover:bg-orange-200 transition-colors duration-200 focus:bg-orange-200 focus:outline-none"
+                      aria-label="Go to Home Page"
+                    >
+                      <div className="flex items-center justify-center w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md hover:scale-105 transition-transform duration-200">
+                        <img 
+                          src={getSafeIconUrl('ICO-HO2.png')}
+                          alt="Home"
+                          className="w-14 h-14 object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            if (target.src.includes('.png')) {
+                              target.src = getSafeIconUrl('ICO-HO2.jpg');
+                            } else if (target.src.includes('.jpg')) {
+                              target.src = getSafeIconUrl('ICO-HO2.gif');
+                            }
+                          }}
+                        />
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
         
       </div>
-
-      {/* Vertical Menu */}
-      <VerticalMenu 
-        isVisible={isVerticalMenuVisible} 
-        onClose={() => setIsVerticalMenuVisible(false)} 
-      />
     </div>
   );
 };
