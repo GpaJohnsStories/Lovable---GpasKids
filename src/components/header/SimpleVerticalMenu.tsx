@@ -215,12 +215,6 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
 
   return (
     <>
-      {/* Backdrop */}
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-20"
-        onClick={onClose}
-      />
-      
       {/* Menu Container - positioned below gold button, scrolls with page */}
       <div className="absolute top-full right-0 z-30 mt-2">
         <div className="relative">
