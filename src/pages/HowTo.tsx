@@ -70,9 +70,16 @@ const HowTo = () => {
       
       <main className="container mx-auto px-4 py-4">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-center text-orange-800 mb-4">
-            Buddy's Guide to Gpa's Website
-          </h1>
+          <div className="flex items-start justify-center gap-4 mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-center text-orange-800">
+              Buddy's Guide to Gpa's Website
+            </h1>
+            <img 
+              src="/lovable-uploads/ICO-GU1.jpg"
+              alt="Guide icon"
+              className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] object-cover rounded-md shadow-lg border-2 border-orange-300"
+            />
+          </div>
           
           {/* Stack of WebText Boxes */}
           <div className="space-y-2 mb-1">
