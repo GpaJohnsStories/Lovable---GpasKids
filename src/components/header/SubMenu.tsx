@@ -45,7 +45,7 @@ const SubMenu = ({ items, isVisible, position, level }: SubMenuProps) => {
 
   return (
     <div className={getPositionClasses()}>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-0">
         {items.map((item) => (
           <MenuButton
             key={item.id}

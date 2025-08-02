@@ -82,7 +82,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
       
       {/* Waterfall Dropdown Menu Container - aligned with right edge of golden button */}
       <div className="absolute top-full right-0 z-40 animate-slide-in-right">
-        <div className="flex flex-col gap-2 items-end">
+        <div className="flex flex-col gap-0 items-end">
           {/* First menu item: HOME (no submenus) */}
           <MenuButton
             key={homeMenuItem.id}
