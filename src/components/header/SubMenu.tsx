@@ -27,8 +27,8 @@ const SubMenu = ({ items, isVisible, position, level }: SubMenuProps) => {
     if (position === 'left') {
       // Level 1: positioned relative to main menu button  
       if (level === 1) return `${baseClasses} right-[74px] top-0`; // 64px button + 10px gap
-      // Level 2: positioned relative to level 1 submenu button (cascading) with vertical offset
-      if (level === 2) return `${baseClasses} right-[148px] top-[74px]`; // 74px (from main) + 64px (level1 width) + 10px gap, offset down by 74px
+      // Level 2: positioned relative to level 1 submenu button (cascading)
+      if (level === 2) return `${baseClasses} right-[148px] top-0`; // 74px (from main) + 64px (level1 width) + 10px gap
     }
     
     if (position === 'below') {
