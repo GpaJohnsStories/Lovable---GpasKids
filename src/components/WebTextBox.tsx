@@ -433,7 +433,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             <div className="flex justify-center mb-4">
               <div className="rounded-lg bg-blue-200/50 p-3 border border-blue-400/60">
                 <div className="text-center italic font-bold text-blue-800 text-xs sm:text-sm mb-1">
-                  Audio Controls in case you prefer to listen.
+                  Audio controls in case you prefer to listen.
                 </div>
                 {renderAudioControls()}
               </div>
@@ -517,7 +517,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                 color: borderColor 
               }}
             >
-              Audio Controls in case you prefer to listen.
+              Audio controls in case you prefer to listen.
             </div>
             {renderAudioControls()}
           </div>
