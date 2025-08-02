@@ -152,7 +152,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "grandpa-john",
-          icon: "",
+          icon: "ICO-HO1.jpg", // Grandpa John icon (exists in storage)
           text: "Grandpa John",
           onClick: () => {
             window.location.href = "/about";
@@ -170,7 +170,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "authors",
-          icon: "",
+          icon: "ICO-AB1.jpg", // Authors icon (exists in storage)
           text: "Authors",
           onClick: () => {
             window.location.href = "/public-author-bios";
