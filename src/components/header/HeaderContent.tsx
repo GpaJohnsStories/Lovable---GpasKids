@@ -17,8 +17,8 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
 
   return (
     <div className="min-h-[180px]">
-      {/* Three-column grid layout */}
-      <div className="grid grid-cols-3 gap-4 h-full items-start pt-2">
+      {/* Single compartment layout */}
+      <div className="relative flex items-center h-full pt-2">
         
         {/* LEFT SECTION: Buddy + Title */}
         <div className="flex items-start gap-4 justify-start">
@@ -51,8 +51,8 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           </div>
         </div>
 
-        {/* CENTER SECTION: Dancing GIF - Centered across entire banner */}
-        <div className="flex justify-center items-center">
+        {/* CENTER SECTION: Dancing GIF - Absolutely centered */}
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
           {isHomePage ? (
             <div className="relative hidden md:flex md:justify-center md:items-center">
               <div className="relative">
@@ -82,11 +82,6 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               </div>
             </div>
           )}
-        </div>
-
-        {/* RIGHT SECTION: Empty for balance */}
-        <div className="flex justify-end items-center">
-          {/* Empty section for layout balance */}
         </div>
       </div>
     </div>
