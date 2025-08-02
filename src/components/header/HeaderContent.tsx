@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
-import { supabase } from "@/integrations/supabase/client";
+import { useCachedIcon } from "@/hooks/useCachedIcon";
 import VerticalMenu from "./VerticalMenu";
 
 interface HeaderContentProps {
@@ -15,15 +15,9 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuHovered, setIsMenuHovered] = useState(false);
 
-  // Helper function to get icon URL from Supabase storage
-  const getIconUrl = (iconName: string) => {
-    return supabase.storage.from('icons').getPublicUrl(iconName).data.publicUrl;
-  };
-
-  // Safe icon URL getter with fallback
-  const getSafeIconUrl = (iconCode: string) => {
-    return getIconUrl(`${iconCode}.gif`); // Start with GIF since we know ICO-HL2 is a GIF
-  };
+  // Use cached icons for Buddy and Menu button
+  const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('ICO-HL2.gif');
+  const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('ICO-MU2.gif');
 
   const handleHelpClick = () => {
     console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
@@ -56,22 +50,26 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             onMouseUp={() => console.log('🐕 Buddy button mouse up!')}
             className="group relative z-10 bg-gradient-to-br from-green-600/80 to-green-700/60 hover:from-red-600/80 hover:to-red-700/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-green-600 hover:border-red-600 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
           >
+            {/* Loading state for Buddy */}
+            {buddyLoading && (
+              <div className="w-full h-12 sm:h-18 md:h-24 bg-green-300 animate-pulse rounded-md group-hover:hidden" />
+            )}
+            
+            {/* Error state for Buddy */}
+            {buddyError && !buddyLoading && (
+              <div className="w-full h-12 sm:h-18 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-md group-hover:hidden">
+                🐕
+              </div>
+            )}
+            
             {/* Buddy image - hidden on hover */}
-            <img 
-              src={getSafeIconUrl("ICO-HL2")}
-              alt="Buddy the Helper Dog"
-              className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
-              onError={(e) => {
-                const img = e.currentTarget;
-                if (img.src.endsWith('.gif')) {
-                  img.src = getIconUrl('ICO-HL2.png');
-                } else if (img.src.endsWith('.png')) {
-                  img.src = getIconUrl('ICO-HL2.jpg');
-                } else {
-                  console.log('All fallback formats failed for ICO-HL2');
-                }
-              }}
-            />
+            {buddyIconUrl && !buddyLoading && !buddyError && (
+              <img 
+                src={buddyIconUrl}
+                alt="Buddy the Helper Dog"
+                className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
+              />
+            )}
             
             {/* Help text - shown on hover */}
             <div className="hidden group-hover:flex items-center justify-center h-full text-[#EAB308] text-xs sm:text-sm md:text-base font-bold text-center">
@@ -132,21 +130,26 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             onClick={handleMenuClick}
             className="group relative z-10 bg-gradient-to-br from-yellow-500/80 to-yellow-600/60 hover:from-yellow-400/80 hover:to-yellow-500/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-500 hover:border-yellow-400 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
           >
-            <img 
-              src={getSafeIconUrl("ICO-MU2")}
-              alt="Main Menu"
-              className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md"
-              onError={(e) => {
-                const img = e.currentTarget;
-                if (img.src.endsWith('.gif')) {
-                  img.src = getIconUrl('ICO-MU2.png');
-                } else if (img.src.endsWith('.png')) {
-                  img.src = getIconUrl('ICO-MU2.jpg');
-                } else {
-                  console.log('All fallback formats failed for ICO-MU2');
-                }
-              }}
-            />
+            {/* Loading state for Menu */}
+            {menuLoading && (
+              <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-300 animate-pulse rounded-md" />
+            )}
+            
+            {/* Error state for Menu */}
+            {menuError && !menuLoading && (
+              <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-200 flex items-center justify-center text-yellow-800 text-xs font-bold rounded-md">
+                ☰
+              </div>
+            )}
+            
+            {/* Menu image */}
+            {menuIconUrl && !menuLoading && !menuError && (
+              <img 
+                src={menuIconUrl}
+                alt="Main Menu"
+                className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md"
+              />
+            )}
           </button>
           
           {/* Vertical Menu */}

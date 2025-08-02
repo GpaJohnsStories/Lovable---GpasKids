@@ -1,5 +1,5 @@
-import { supabase } from "@/integrations/supabase/client";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useCachedIcon } from "@/hooks/useCachedIcon";
 
 interface MenuButtonProps {
   icon: string;
@@ -16,14 +16,7 @@ interface MenuButtonProps {
 }
 
 const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, disabledMessage }: MenuButtonProps) => {
-  // Function to get icon URL from Supabase storage with fallback
-  const getIconUrl = (filePath: string) => {
-    return supabase.storage.from('icons').getPublicUrl(filePath).data.publicUrl;
-  };
-
-  const getSafeIconUrl = (filePath: string) => {
-    return getIconUrl(filePath);
-  };
+  const { iconUrl, isLoading, error } = useCachedIcon(icon);
 
   const freshGreen = "#16a34a";
   const disabledColor = "#9CA3AF"; // Gray-400
@@ -88,17 +81,43 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
             }
           }}
         >
+          {/* Loading state */}
+          {isLoading && (
+            <div 
+              className="animate-pulse bg-orange-300 rounded"
+              style={{
+                width: customSize?.iconSize || '55px',
+                height: customSize?.iconSize || '55px',
+              }}
+            />
+          )}
+          
+          {/* Error state */}
+          {error && !isLoading && (
+            <div 
+              className="flex items-center justify-center bg-orange-200 rounded text-orange-800 text-xs font-bold"
+              style={{
+                width: customSize?.iconSize || '55px',
+                height: customSize?.iconSize || '55px',
+              }}
+            >
+              ?
+            </div>
+          )}
+          
           {/* Icon - proportionally scaled to fit button with margin */}
-          <img 
-            src={getSafeIconUrl(icon)}
-            alt={text}
-            style={{
-              width: customSize?.iconSize || '55px',
-              height: customSize?.iconSize || '55px',
-              opacity: disabled ? 0.5 : 1
-            }}
-            className="object-contain"
-          />
+          {iconUrl && !isLoading && !error && (
+            <img 
+              src={iconUrl}
+              alt={text}
+              style={{
+                width: customSize?.iconSize || '55px',
+                height: customSize?.iconSize || '55px',
+                opacity: disabled ? 0.5 : 1
+              }}
+              className="object-contain"
+            />
+          )}
         </button>
       </TooltipTrigger>
       <TooltipContent side="bottom" className="bg-popover text-popover-foreground border shadow-md">

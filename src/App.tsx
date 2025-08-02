@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { IconCacheProvider } from "@/contexts/IconCacheContext";
 import { HelmetProvider } from 'react-helmet-async';
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -66,9 +67,10 @@ function App() {
         <TooltipProvider>
           <HelmetProvider>
             <HelpProvider>
-              <Toaster />
-              <BrowserRouter>
-                <GlobalHelpProvider>
+              <IconCacheProvider>
+                <Toaster />
+                <BrowserRouter>
+                  <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
                     <Routes>
@@ -114,9 +116,10 @@ function App() {
                   </ConditionalContentProtection>
                 </GlobalHelpProvider>
               </BrowserRouter>
-            </HelpProvider>
-          </HelmetProvider>
-        </TooltipProvider>
+            </IconCacheProvider>
+          </HelpProvider>
+        </HelmetProvider>
+      </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );
