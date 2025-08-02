@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useUserRole } from "@/hooks/useUserRole";
+import { useCachedIcon } from "@/hooks/useCachedIcon";
 
 interface AdminNavButton {
   name: string;
@@ -26,6 +27,13 @@ const AdminHeaderBanner = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+  
+  // Determine if the system is secure (placeholder logic - adjust as needed)
+  const isSecure = window.location.protocol === 'https:';
+  
+  // Load the appropriate security icon
+  const securityIconPath = isSecure ? 'ICO-ADS.jpg' : 'ICO-ADU.gif';
+  const { iconUrl: securityIconUrl } = useCachedIcon(securityIconPath);
 
   const handleCreateStoryClick = () => {
     console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
@@ -134,9 +142,15 @@ const AdminHeaderBanner = () => {
             <h1 className="text-2xl font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#FFFF00' }}>
               Buddy's Admin
             </h1>
-            <div className="text-xs bg-green-500 rounded px-2 py-1 text-white font-semibold">
-              🔒 Secure
-            </div>
+            {securityIconUrl ? (
+              <img 
+                src={securityIconUrl} 
+                alt={isSecure ? "Secure" : "Not Secure"}
+                className="w-6 h-6 object-contain"
+              />
+            ) : (
+              <div className="w-6 h-6 bg-green-500 rounded"></div>
+            )}
             <Button 
               onClick={handleLogout} 
               className="font-bold border border-red-300/30 hover:bg-red-600"
