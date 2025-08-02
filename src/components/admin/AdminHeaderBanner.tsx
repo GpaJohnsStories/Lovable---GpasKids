@@ -141,10 +141,12 @@ const AdminHeaderBanner = () => {
             <h1 className="text-2xl font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#FFFF00' }}>
               Buddy's Admin
             </h1>
-            <Button
-              className="w-[55px] h-[55px] p-0 rounded-md border-2 border-white/20 hover:scale-105 transition-transform"
+            <div
+              className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-white/20 hover:scale-105 transition-transform cursor-pointer"
               style={{ 
-                backgroundColor: isSecure ? '#16a34a' : '#DC2626'
+                backgroundColor: isSecure ? '#16a34a' : '#DC2626',
+                minWidth: '55px',
+                minHeight: '55px'
               }}
             >
               {isSecure ? (
@@ -160,7 +162,7 @@ const AdminHeaderBanner = () => {
               ) : (
                 <Unlock className="w-8 h-8 text-white" />
               )}
-            </Button>
+            </div>
             <Button 
               onClick={handleLogout} 
               className="font-bold border border-red-300/30 hover:bg-red-600"
