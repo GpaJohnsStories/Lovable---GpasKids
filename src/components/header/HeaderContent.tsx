@@ -63,7 +63,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             <img 
               src="/lovable-uploads/949dcec1-2a5d-481c-9ce6-aa0da5edb3d0.png"
               alt="Buddy the Helper Dog"
-              className="w-full h-12 sm:h-16 md:h-20 object-cover rounded-md mb-0.5"
+              className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md mb-0.5"
             />
             <div className="text-yellow-200 group-hover:text-[#FFFF00] text-xs sm:text-sm md:text-base font-bold leading-tight transition-colors duration-200">
               <div className="group-hover:hidden">Need Help?</div>
