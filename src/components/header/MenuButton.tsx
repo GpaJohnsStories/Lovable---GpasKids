@@ -95,13 +95,15 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
           {/* Show text if no icon available, otherwise show icon */}
           {(error || !iconUrl) && !isLoading ? (
             <div 
-              className="flex items-center justify-center text-white text-xs font-bold"
+              className="flex items-center justify-center text-white text-xs font-bold px-1 overflow-hidden"
               style={{
                 width: customSize?.iconSize || '55px',
                 height: customSize?.iconSize || '55px',
               }}
             >
-              {text}
+              <span className="text-center leading-tight break-words hyphens-auto max-w-full">
+                {text}
+              </span>
             </div>
           ) : iconUrl && !isLoading && !error ? (
             <img 
