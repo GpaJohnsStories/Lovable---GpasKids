@@ -17,10 +17,10 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
 
   return (
     <div className="min-h-[180px]">
-      {/* Two-column grid layout */}
-      <div className="grid grid-cols-2 gap-4 h-full items-start pt-2">
+      {/* Three-column grid layout */}
+      <div className="grid grid-cols-3 gap-4 h-full items-start pt-2">
         
-        {/* LEFT COLUMN: Buddy + Title */}
+        {/* LEFT SECTION: Buddy + Title */}
         <div className="flex items-start gap-4 justify-start">
           <button 
             onClick={handleHelpClick}
@@ -51,7 +51,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Centered Dancing GIF */}
+        {/* CENTER SECTION: Dancing GIF - Centered across entire banner */}
         <div className="flex justify-center items-center">
           {isHomePage ? (
             <div className="relative hidden md:flex md:justify-center md:items-center">
@@ -82,6 +82,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               </div>
             </div>
           )}
+        </div>
+
+        {/* RIGHT SECTION: Empty for balance */}
+        <div className="flex justify-end items-center">
+          {/* Empty section for layout balance */}
         </div>
       </div>
     </div>
