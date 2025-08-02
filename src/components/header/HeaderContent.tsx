@@ -133,18 +133,23 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-300 animate-pulse rounded-md" />
             )}
             
-            {/* Show text if no icon available, otherwise show Menu image */}
+            {/* Show text if no icon available, otherwise show Menu image - hidden on hover */}
             {(menuError || !menuIconUrl) && !menuLoading ? (
-              <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-200 flex items-center justify-center text-yellow-800 text-xs font-bold rounded-md">
+              <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-200 flex items-center justify-center text-yellow-800 text-xs font-bold rounded-md group-hover:hidden">
                 MENU
               </div>
             ) : menuIconUrl && !menuLoading && !menuError ? (
               <img 
                 src={menuIconUrl}
                 alt="Main Menu"
-                className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md"
+                className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
               />
             ) : null}
+            
+            {/* Menu help text - shown on hover */}
+            <div className="hidden group-hover:flex items-center justify-center h-full text-white text-xs sm:text-sm md:text-base font-bold text-center">
+              Click for Menu
+            </div>
           </button>
           
           {/* Vertical Menu */}
