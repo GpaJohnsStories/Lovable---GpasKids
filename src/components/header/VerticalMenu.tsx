@@ -215,15 +215,6 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
       {
         items: [
           {
-            id: "grandpa-john",
-            icon: "", // No icon yet
-            text: "Grandpa John",
-            onClick: () => {
-              window.location.href = "/about";
-              onClose();
-            }
-          },
-          {
             id: "3-helpers",
             icon: "ICO-AB3.jpg",
             text: "3 Helpers",
@@ -232,19 +223,13 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
               console.log("3 Helpers clicked");
               onClose();
             }
-          }
-        ],
-        position: 'left' as const,
-        level: 1
-      },
-      {
-        items: [
+          },
           {
-            id: "authors",
+            id: "grandpa-john",
             icon: "", // No icon yet
-            text: "Authors",
+            text: "Grandpa John",
             onClick: () => {
-              window.location.href = "/public-author-bios";
+              window.location.href = "/about";
               onClose();
             }
           },
@@ -257,10 +242,20 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
               console.log("The 3 AI's clicked");
               onClose();
             }
+          },
+          {
+            id: "authors",
+            icon: "", // No icon yet
+            text: "Authors",
+            onClick: () => {
+              window.location.href = "/public-author-bios";
+              onClose();
+            }
           }
         ],
         position: 'left' as const,
-        level: 2
+        level: 1,
+        layout: 'grid' as const
       }
     ]
   };
