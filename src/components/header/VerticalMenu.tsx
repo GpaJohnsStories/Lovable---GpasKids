@@ -30,8 +30,8 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
         onClick={onClose}
       />
       
-      {/* Waterfall Dropdown Menu Container */}
-      <div className="fixed top-16 right-4 z-50 animate-slide-in-right">
+      {/* Waterfall Dropdown Menu Container - positioned below main menu button */}
+      <div className="fixed top-20 right-4 z-50 animate-slide-in-right">
         <div className="flex flex-col gap-2">
           {menuItems.map((item) => (
             <MenuButton
