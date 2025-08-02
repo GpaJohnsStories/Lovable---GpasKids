@@ -118,11 +118,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
         </div>
 
         {/* RIGHT SECTION: Gold Menu Button */}
-        <div 
-          className="flex justify-end relative"
-          onMouseEnter={handleMenuMouseEnter}
-          onMouseLeave={handleMenuMouseLeave}
-        >
+        <div className="flex justify-end relative">
           <button 
             onClick={handleMenuClick}
             aria-label="Click for Menu"
@@ -147,14 +143,14 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             ) : null}
             
             {/* Menu help text - shown on hover */}
-            <div className="hidden group-hover:flex items-center justify-center h-full text-white text-xs sm:text-sm md:text-base font-bold text-center">
+            <div className="hidden group-hover:flex items-center justify-center h-full text-blue-900 text-xs sm:text-sm md:text-base font-bold text-center">
               Click for Menu
             </div>
           </button>
           
           {/* Vertical Menu */}
           <VerticalMenu 
-            isVisible={isMenuOpen || isMenuHovered} 
+            isVisible={isMenuOpen} 
             onClose={() => setIsMenuOpen(false)} 
           />
         </div>
