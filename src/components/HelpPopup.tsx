@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -21,6 +20,7 @@ interface HelpPopupProps {
   isLoading: boolean;
   currentRoute: string;
   storyData?: any;
+  onNavigateToGuide?: () => void;
 }
 
 const HelpPopup: React.FC<HelpPopupProps> = ({
@@ -29,11 +29,10 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   helpContent,
   isLoading,
   currentRoute,
-  storyData
+  storyData,
+  onNavigateToGuide
 }) => {
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
-  
-  const navigate = useNavigate();
   
   // Helper function to get icon URL from Supabase storage
   const getIconUrl = (iconName: string) => {
@@ -69,7 +68,9 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
 
   const handleGuideClick = () => {
     onClose();
-    navigate('/guide');
+    if (onNavigateToGuide) {
+      onNavigateToGuide();
+    }
   };
 
   return (
