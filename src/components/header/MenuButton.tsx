@@ -78,10 +78,17 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
       <TooltipTrigger asChild>
         <button
           onClick={handleClick}
-          className={`group relative flex items-center justify-center rounded-lg transform transition-all duration-200 ${
+          className={`group relative flex items-center justify-center rounded-lg transform transition-all duration-200 flex-shrink-0 ${
             disabled ? 'cursor-not-allowed' : 'hover:scale-105 cursor-pointer active:scale-95'
           }`}
-          style={getButtonStyle()}
+          style={{
+            ...getButtonStyle(),
+            // FORCE exact dimensions - override any content-based sizing
+            boxSizing: 'border-box',
+            overflow: 'hidden',
+            flexShrink: 0,
+            flexGrow: 0
+          }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onMouseDown={(e) => {

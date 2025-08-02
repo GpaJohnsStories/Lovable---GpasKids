@@ -215,10 +215,10 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       {/* Menu Container - positioned below gold button, scrolls with page */}
       <div className="absolute top-full right-0 z-30 mt-2">
         <div className="relative">
-          {/* Main Menu - 1x7 vertical layout */}
-          <div className="flex flex-col gap-0">
+          {/* Main Menu - 1x7 vertical layout with fixed sizing */}
+          <div className="flex flex-col gap-0" style={{ width: '4rem' }}>
             {mainMenuItems.map((item) => (
-              <div key={item.id} className="relative">
+              <div key={item.id} className="relative" style={{ width: '4rem', height: '4rem', flexShrink: 0 }}>
                 <MenuButton
                   icon={item.icon}
                   text={item.text}
