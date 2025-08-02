@@ -13,6 +13,7 @@ interface SubMenuLevel {
   items: SubMenuItem[];
   position: 'left' | 'below';
   level: number;
+  layout?: 'column' | 'grid';
 }
 
 interface MenuItemWithSubmenusProps {
@@ -108,6 +109,7 @@ const MenuItemWithSubmenus = ({
           isVisible={showSubmenus}
           position={submenu.position}
           level={submenu.level}
+          layout={submenu.layout}
         />
       ))}
     </div>

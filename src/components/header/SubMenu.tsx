@@ -19,9 +19,10 @@ interface SubMenuProps {
   isVisible: boolean;
   position: 'left' | 'below';
   level: number; // 1, 2, 3, 4 for different submenu levels
+  layout?: 'column' | 'grid'; // Support for 2x2 grid layout
 }
 
-const SubMenu = ({ items, isVisible, position, level }: SubMenuProps) => {
+const SubMenu = ({ items, isVisible, position, level, layout = 'column' }: SubMenuProps) => {
   if (!isVisible || items.length === 0) return null;
 
   // Calculate positioning based on level and position (using 10px gap standard)
@@ -54,7 +55,7 @@ const SubMenu = ({ items, isVisible, position, level }: SubMenuProps) => {
 
   return (
     <div className={`${getPositionClasses()} level-${level}`}>
-      <div className="flex flex-col gap-0">
+      <div className={layout === 'grid' ? "grid grid-cols-2 gap-0" : "flex flex-col gap-0"}>
         {items.map((item) => (
           <MenuButton
             key={item.id}
