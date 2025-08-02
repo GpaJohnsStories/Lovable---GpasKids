@@ -30,7 +30,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           >
             {/* Buddy image - hidden on hover */}
             <img 
-              src="/lovable-uploads/949dcec1-2a5d-481c-9ce6-aa0da5edb3d0.png"
+              src="/lovable-uploads/ICO-HL2.png"
               alt="Buddy the Helper Dog"
               className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
             />
