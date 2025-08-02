@@ -207,8 +207,9 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
 
     return (
       <TooltipProvider>
-        <table className="w-full border-collapse border-0">
-          <tbody>
+        <div className="px-4">
+          <table className="w-full border-collapse border-0">
+            <tbody>
             <tr>
               {/* Play Button */}
               <td className="p-0 border-0">
@@ -397,6 +398,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             </tr>
           </tbody>
         </table>
+        </div>
       </TooltipProvider>
     );
   };
