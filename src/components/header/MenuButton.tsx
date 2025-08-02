@@ -33,15 +33,15 @@ const MenuButton = ({ icon, text, color, onClick }: MenuButtonProps) => {
             background: `linear-gradient(135deg, ${color}dd, ${color}bb)`,
             boxShadow: `0 8px 16px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)`,
             border: `2px solid ${color}`,
-            width: '60px',
-            height: '60px'
+            width: '15px',
+            height: '15px'
           }}
         >
-          {/* Icon - 55x55px centered in 60x60px button */}
+          {/* Icon - 12x12px centered in 15x15px button */}
           <img 
             src={getSafeIconUrl(`${icon}.png`)}
             alt={text}
-            className="w-[55px] h-[55px] object-contain"
+            className="w-3 h-3 object-contain"
             onError={(e) => {
               // Fallback to jpg, then gif if png fails
               const target = e.target as HTMLImageElement;
