@@ -232,7 +232,13 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
               console.log("3 Helpers clicked");
               onClose();
             }
-          },
+          }
+        ],
+        position: 'left' as const,
+        level: 1
+      },
+      {
+        items: [
           {
             id: "authors",
             icon: "", // No icon yet
@@ -254,8 +260,7 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
           }
         ],
         position: 'left' as const,
-        level: 1,
-        layout: 'grid' as const
+        level: 2
       }
     ]
   };
