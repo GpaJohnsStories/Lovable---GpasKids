@@ -148,6 +148,15 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       color: "#F97316",
       submenus: [
         {
+          id: "grandpa-john",
+          icon: "", // No icon - text only
+          text: "Grandpa John",
+          onClick: () => {
+            window.location.href = "/about";
+            onClose();
+          }
+        },
+        {
           id: "3-helpers",
           icon: "ICO-AB3.jpg",
           text: "3 Helpers", 
@@ -157,29 +166,20 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
           }
         },
         {
-          id: "grandpa-john",
-          icon: "ICO-HO1.jpg", // Grandpa John icon (exists in storage)
-          text: "Grandpa John",
+          id: "authors",
+          icon: "", // No icon - text only
+          text: "Authors",
           onClick: () => {
-            window.location.href = "/about";
+            window.location.href = "/public-author-bios";
             onClose();
           }
         },
         {
           id: "the-3-ais",
           icon: "ICO-AB5.jpg", 
-          text: "The 3 AI's",
+          text: "3 Helpful AI's",
           onClick: () => {
-            console.log("The 3 AI's clicked");
-            onClose();
-          }
-        },
-        {
-          id: "authors",
-          icon: "ICO-AB1.jpg", // Authors icon (exists in storage)
-          text: "Authors",
-          onClick: () => {
-            window.location.href = "/public-author-bios";
+            console.log("3 Helpful AI's clicked");
             onClose();
           }
         }
