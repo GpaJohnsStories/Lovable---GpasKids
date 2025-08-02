@@ -358,17 +358,25 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                           style={{ backgroundColor: '#FFD65C' }}
                         >
                           <div className="flex flex-col p-2">
-                            {/* Placeholder for first submenu item - need icon code and label */}
+                            {/* Careful with Copyright */}
                             <Link
-                              to="/sharing/submit"
+                              to="/sharing/copyright"
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
-                              aria-label="Submenu Item 1"
+                              aria-label="Careful with Copyright"
                             >
                               <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
-                                  src={getSafeIconUrl('ICO-PLACEHOLDER1.png')}
-                                  alt="Submenu Item 1"
+                                  src={getSafeIconUrl('ICO-WR2.png')}
+                                  alt="Careful with Copyright"
                                   className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (target.src.includes('.png')) {
+                                      target.src = getSafeIconUrl('ICO-WR2.jpg');
+                                    } else if (target.src.includes('.jpg')) {
+                                      target.src = getSafeIconUrl('ICO-WR2.gif');
+                                    }
+                                  }}
                                 />
                               </div>
                             </Link>
