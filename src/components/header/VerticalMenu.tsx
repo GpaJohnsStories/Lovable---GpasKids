@@ -99,6 +99,49 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
     ]
   };
 
+  // Third menu item: COMMENTS (with submenus)
+  const commentsMenuItem = {
+    id: "comments",
+    icon: "ICO-CO1.gif",
+    text: "Comments",
+    color: "#F97316",
+    onClick: () => {
+      console.log("Comments menu clicked");
+    },
+    submenus: [
+      {
+        items: [
+          {
+            id: "write-comment",
+            icon: "ICO-CO2.gif",
+            text: "Write a Comment",
+            onClick: () => {
+              window.location.href = "/make-comment";
+              onClose();
+            }
+          }
+        ],
+        position: 'left' as const,
+        level: 1
+      },
+      {
+        items: [
+          {
+            id: "all-comments",
+            icon: "ICO-CO3.gif",
+            text: "All Comments",
+            onClick: () => {
+              window.location.href = "/view-comments";
+              onClose();
+            }
+          }
+        ],
+        position: 'left' as const,
+        level: 2
+      }
+    ]
+  };
+
   return (
     <>
       {/* Backdrop to close menu when clicking outside */}
@@ -129,6 +172,18 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
             color={storiesMenuItem.color}
             onClick={storiesMenuItem.onClick}
             submenus={storiesMenuItem.submenus}
+            customSize={mainButtonSize}
+          />
+          
+          {/* Third menu item: COMMENTS (with submenus) */}
+          <MenuItemWithSubmenus
+            key={commentsMenuItem.id}
+            id={commentsMenuItem.id}
+            icon={commentsMenuItem.icon}
+            text={commentsMenuItem.text}
+            color={commentsMenuItem.color}
+            onClick={commentsMenuItem.onClick}
+            submenus={commentsMenuItem.submenus}
             customSize={mainButtonSize}
           />
         </div>
