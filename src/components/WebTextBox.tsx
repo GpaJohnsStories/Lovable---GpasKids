@@ -98,15 +98,17 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                 <div className="text-center italic font-bold text-blue-800 text-xs sm:text-sm mb-1">
                   Shall I read it to you?
                 </div>
-                <UniversalAudioControls
-                  audioUrl={webtext?.audio_url}
-                  title={webtext?.title || title}
-                  content={getContent()}
-                  author={webtext?.author}
-                  allowTextToSpeech={true}
-                  size="md"
-                  className="bg-transparent border-0 [&>div]:flex [&>div]:flex-wrap [&>div]:justify-center [&>div]:gap-1 md:[&>div]:flex-nowrap"
-                />
+                <div className="[&>div>div]:!grid [&>div>div]:!grid-cols-4 md:[&>div>div]:!grid-cols-8 [&>div>div]:!gap-1">
+                  <UniversalAudioControls
+                    audioUrl={webtext?.audio_url}
+                    title={webtext?.title || title}
+                    content={getContent()}
+                    author={webtext?.author}
+                    allowTextToSpeech={true}
+                    size="sm"
+                    className="bg-transparent border-0"
+                  />
+                </div>
               </div>
             </div>
 
