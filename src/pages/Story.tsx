@@ -78,6 +78,10 @@ const Story = () => {
         }
 
         setStory(data);
+        
+        // Store the current story path for the READ menu functionality
+        sessionStorage.setItem('currentStoryPath', `/story/${storyCode}`);
+        console.log('📖 Story loaded - stored currentStoryPath:', `/story/${storyCode}`);
 
         // Increment read_count
         await supabase
