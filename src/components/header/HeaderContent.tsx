@@ -73,7 +73,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
         </div>
 
         {/* CENTER SECTION: Dancing GIF - Horizontally centered, top aligned */}
-        <div className="absolute left-1/2 top-2 transform -translate-x-1/2">
+        <div className="absolute left-1/2 top-0 transform -translate-x-1/2">
           {isHomePage ? (
             <div className="relative hidden md:flex md:justify-center md:items-center">
               <div className="relative">
