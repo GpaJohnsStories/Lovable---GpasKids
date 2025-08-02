@@ -31,12 +31,12 @@ const MenuButton = ({ icon, text, color, onClick }: MenuButtonProps) => {
         boxShadow: `0 8px 16px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)`,
         border: `2px solid ${color}`,
         width: '60px',
-        height: '80px'
+        height: '60px'
       }}
     >
       {/* Icon Container */}
       <div 
-        className="w-[60px] h-[60px] flex items-center justify-center rounded-md overflow-hidden"
+        className="w-[40px] h-[40px] flex items-center justify-center rounded-md overflow-hidden"
         style={{ backgroundColor: color }}
       >
         <img 
@@ -44,15 +44,19 @@ const MenuButton = ({ icon, text, color, onClick }: MenuButtonProps) => {
           alt={text}
           className="w-full h-full object-contain"
           onError={(e) => {
-            // Fallback to gif if png fails
+            // Fallback to jpg, then gif if png fails
             const target = e.target as HTMLImageElement;
-            target.src = getSafeIconUrl(`${icon}.gif`);
+            if (target.src.includes('.png')) {
+              target.src = getSafeIconUrl(`${icon}.jpg`);
+            } else if (target.src.includes('.jpg')) {
+              target.src = getSafeIconUrl(`${icon}.gif`);
+            }
           }}
         />
       </div>
       
       {/* Text Label */}
-      <div className="text-white text-xs font-bold mt-1 text-center leading-tight drop-shadow-md">
+      <div className="text-white text-[10px] font-bold mt-1 text-center leading-tight drop-shadow-md">
         {text}
       </div>
     </button>

@@ -26,13 +26,13 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
     <>
       {/* Backdrop to close menu when clicking outside */}
       <div 
-        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
+        className="fixed inset-0 z-40 bg-black/20"
         onClick={onClose}
       />
       
-      {/* Vertical Menu Container */}
-      <div className="fixed top-20 right-4 z-50 bg-white/95 backdrop-blur-sm rounded-lg shadow-2xl border-2 border-orange-300 p-4 animate-scale-in">
-        <div className="flex flex-col gap-3">
+      {/* Waterfall Dropdown Menu Container */}
+      <div className="fixed top-16 right-4 z-50 animate-slide-in-right">
+        <div className="flex flex-col gap-2">
           {menuItems.map((item) => (
             <MenuButton
               key={item.id}
