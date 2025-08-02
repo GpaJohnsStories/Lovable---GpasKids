@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -32,6 +32,8 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   storyData
 }) => {
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
+  
+  const navigate = useNavigate();
   
   // Helper function to get icon URL from Supabase storage
   const getIconUrl = (iconName: string) => {
@@ -65,6 +67,11 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
     return titles[route] || 'Help';
   };
 
+  const handleGuideClick = () => {
+    onClose();
+    navigate('/guide');
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
@@ -75,7 +82,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         <DialogHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 pb-0 border-b border-orange-200 space-y-0">
           <div className="flex items-center gap-3">
             {/* Guide Photo - Now links to /guide */}
-            <Link to="/guide" onClick={onClose}>
+            <button onClick={handleGuideClick}>
               <img 
                 src={getSafeIconUrl("ICO-GU1")}
                 alt="Guide icon - Click to go to guide"
@@ -91,7 +98,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
                   }
                 }}
               />
-            </Link>
+            </button>
             <DialogTitle className="text-2xl font-bold text-orange-800">
               {storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
             </DialogTitle>
