@@ -228,10 +228,11 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                     {item.submenus.map((submenuItem, index) => (
                       <div 
                         key={submenuItem.id}
-                        className={`absolute top-0 z-40`}
+                        className="absolute top-0 z-40"
                         style={{ 
                           right: `${(index + 1) * 68}px`,
-                          animation: 'slide-in-left 0.3s ease-out'
+                          width: '64px',
+                          height: '64px'
                         }}
                       >
                         <MenuButton
