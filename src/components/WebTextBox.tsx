@@ -92,43 +92,40 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
 
           {/* Title and content section */}
           <div className="flex-1 min-w-0 flex flex-col">
-            {/* Title and audio controls row */}
-            <div className="flex flex-col xl:flex-row xl:items-start gap-4 mb-4">
-              {/* Title section */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start gap-3">
-                  {iconUrl && (
-                    <img 
-                      src={iconUrl} 
-                      alt={icon}
-                      className="w-8 h-8 sm:w-10 sm:h-10 object-contain border-2 border-blue-500 rounded mt-1 flex-shrink-0"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  )}
-                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-handwritten font-bold text-blue-800 leading-tight break-words">
-                    {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
-                  </h1>
+            {/* Audio Controls at top */}
+            <div className="flex justify-center mb-4">
+              <div className="border-2 border-blue-500 rounded-lg bg-blue-200/50 p-2">
+                <div className="text-center italic font-bold text-blue-800 text-xs sm:text-sm mb-1">
+                  Shall I read it to you?
                 </div>
+                <UniversalAudioControls
+                  audioUrl={webtext?.audio_url}
+                  title={webtext?.title || title}
+                  content={getContent()}
+                  author={webtext?.author}
+                  allowTextToSpeech={true}
+                  size="sm"
+                  className="bg-transparent border-0"
+                />
               </div>
-              
-              {/* Audio Controls */}
-              <div className="flex-shrink-0 w-full xl:w-auto">
-                <div className="border-2 border-blue-500 rounded-lg bg-blue-200/50 p-2">
-                  <div className="text-center italic font-bold text-blue-800 text-xs sm:text-sm mb-1">
-                    Shall I read it to you?
-                  </div>
-                  <UniversalAudioControls
-                    audioUrl={webtext?.audio_url}
-                    title={webtext?.title || title}
-                    content={getContent()}
-                    author={webtext?.author}
-                    allowTextToSpeech={true}
-                    size="sm"
-                    className="bg-transparent border-0"
+            </div>
+
+            {/* Title section below audio controls */}
+            <div className="mb-4">
+              <div className="flex items-start gap-3 justify-center">
+                {iconUrl && (
+                  <img 
+                    src={iconUrl} 
+                    alt={icon}
+                    className="w-8 h-8 sm:w-10 sm:h-10 object-contain border-2 border-blue-500 rounded mt-1 flex-shrink-0"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
                   />
-                </div>
+                )}
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-handwritten font-bold text-blue-800 leading-tight break-words text-center">
+                  {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
+                </h1>
               </div>
             </div>
 
