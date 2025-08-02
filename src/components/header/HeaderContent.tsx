@@ -135,7 +135,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             <div className="group relative">
               {/* Primary Menu Button */}
               <button 
-                className="relative z-10 bg-gradient-to-br from-yellow-400/90 to-amber-500/80 hover:from-yellow-300/90 hover:to-yellow-400/80 backdrop-blur-sm rounded-lg p-2 flex items-center justify-center w-28 sm:w-32 h-32 sm:h-36 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-400 hover:border-yellow-300 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+                className="relative z-10 bg-gradient-to-br from-yellow-400/90 to-amber-500/80 hover:from-yellow-300/90 hover:to-yellow-400/80 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-28 sm:w-32 h-32 sm:h-36 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-400 hover:border-yellow-300 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
                 aria-label="Main Navigation Menu"
                 aria-haspopup="true"
                 aria-expanded="false"
@@ -143,8 +143,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                 <img 
                   src={getSafeIconUrl('ICO-MU2.gif')}
                   alt="Primary Menu"
-                  className="w-full h-full object-contain rounded-md"
+                  className="w-full h-16 md:h-18 sm:h-20 object-contain rounded-md mb-0.5"
                 />
+                <div className="text-orange-800 text-xs md:text-sm sm:text-base font-bold leading-tight">
+                  <div>Menu</div>
+                </div>
               </button>
 
               {/* CSS-Only Dropdown Menu */}
