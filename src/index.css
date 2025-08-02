@@ -110,6 +110,44 @@
   border-left: 1px solid rgba(253 186 116 / 0.3) !important; /* orange-300/30 */
 }
 
+/* Menu container overflow styling */
+.menu-container {
+  overflow: visible !important;
+  position: relative;
+}
+
+.menu-item {
+  overflow: visible !important;
+  position: relative;
+}
+
+.menu-item-submenu {
+  overflow: visible !important;
+  position: relative;
+}
+
+/* Level-based tooltip z-index styling */
+.menu-item-tooltip {
+  position: absolute;
+  z-index: 1000;
+}
+
+.level-1 .menu-item-tooltip {
+  z-index: 1010;
+}
+
+.level-2 .menu-item-tooltip {
+  z-index: 1020;
+}
+
+.level-3 .menu-item-tooltip {
+  z-index: 1030;
+}
+
+.level-4 .menu-item-tooltip {
+  z-index: 1040;
+}
+
 /* Navigation bubble tooltips */
 .nav-bubble {
   position: absolute;
@@ -126,7 +164,7 @@
   white-space: nowrap;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border: 1px solid hsl(var(--border));
-  z-index: 50;
+  z-index: 1000;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease, visibility 0.2s ease;
