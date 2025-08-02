@@ -50,10 +50,8 @@ const MenuItemWithSubmenus = ({
     setIsHovered(false);
     // Delay hiding to allow moving to submenu
     setTimeout(() => {
-      if (!isHovered) {
-        setShowSubmenus(false);
-      }
-    }, 200);
+      setShowSubmenus(false);
+    }, 300);
   };
 
   const handleClick = () => {
