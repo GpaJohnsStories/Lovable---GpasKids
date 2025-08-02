@@ -447,7 +447,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
 
             {/* Title section below audio controls */}
             <div className="mb-4">
-              <div className="flex items-start gap-3 justify-center">
+              <div className="flex items-start gap-3 justify-start">
                 {iconUrl && (
                   <img 
                     src={iconUrl} 
@@ -458,7 +458,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                     }}
                   />
                 )}
-                <h1 className="text-xl sm:text-2xl lg:text-3xl font-handwritten font-bold text-blue-800 leading-tight break-words text-center">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-handwritten font-bold text-blue-800 leading-tight break-words text-left">
                   {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
                 </h1>
               </div>
