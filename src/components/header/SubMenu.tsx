@@ -60,7 +60,6 @@ const SubMenu = ({ items, isVisible, position, level }: SubMenuProps) => {
             customSize={buttonSize}
             disabled={item.disabled}
             disabledMessage={item.disabledMessage}
-            level={level}
           />
         ))}
       </div>
