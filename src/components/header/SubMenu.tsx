@@ -22,15 +22,15 @@ const SubMenu = ({ items, isVisible, position, level }: SubMenuProps) => {
     const baseClasses = "absolute z-50 animate-slide-in-right";
     
     if (position === 'left') {
-      // Submenus to the left touching the main button
-      if (level === 1) return `${baseClasses} right-[64px] top-0`; // Exactly 64px button width, no spacing
-      if (level === 2) return `${baseClasses} right-[64px] top-0`; // Exactly 64px button width, no spacing
+      // Submenus to the left with 1px gap to prevent overlap
+      if (level === 1) return `${baseClasses} right-[65px] top-0`; // 64px button + 1px gap
+      if (level === 2) return `${baseClasses} right-[65px] top-0`; // 64px button + 1px gap
     }
     
     if (position === 'below') {
-      // Submenus below touching the main button
-      if (level === 3) return `${baseClasses} top-[64px] left-0`; // Exactly 64px button height, no spacing
-      if (level === 4) return `${baseClasses} top-[64px] left-0`; // Exactly 64px button height, no spacing
+      // Submenus below with 1px gap to prevent overlap
+      if (level === 3) return `${baseClasses} top-[65px] left-0`; // 64px button + 1px gap
+      if (level === 4) return `${baseClasses} top-[65px] left-0`; // 64px button + 1px gap
     }
     
     return baseClasses;
