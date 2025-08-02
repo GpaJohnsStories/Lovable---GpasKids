@@ -407,15 +407,15 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       </div>
                     </div>
 
-                    {/* Main Menu Button (no submenu) */}
+                    {/* Your Guide to Gpa's Kids website */}
                     <Link
-                      to="/main-button"
+                      to="/guide"
                       className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
-                      aria-label="Main Button"
+                      aria-label="Your Guide to Gpa's Kids website"
                     >
                       <img 
                         src={getSafeIconUrl('ICO-GU1.png')}
-                        alt="Main Button"
+                        alt="Your Guide to Gpa's Kids website"
                         className="w-full h-full object-cover rounded-md"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
