@@ -166,7 +166,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         <img 
                           src={getSafeIconUrl('ICO-HO2.png')}
                           alt="Home"
-                          className="w-14 h-14 object-contain"
+                          className="w-full h-full object-contain"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             if (target.src.includes('.png')) {
