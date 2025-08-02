@@ -94,7 +94,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           <div className="flex-1 min-w-0 flex flex-col">
             {/* Audio Controls at top */}
             <div className="flex justify-center mb-4">
-              <div className="border-2 border-blue-500 rounded-lg bg-blue-200/50 p-2">
+              <div className="rounded-lg bg-blue-200/50 p-3 border border-blue-400/60">
                 <div className="text-center italic font-bold text-blue-800 text-xs sm:text-sm mb-1">
                   Shall I read it to you?
                 </div>
