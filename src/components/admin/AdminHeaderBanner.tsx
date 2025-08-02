@@ -31,8 +31,9 @@ const AdminHeaderBanner = () => {
   // Determine if the system is secure (placeholder logic - adjust as needed)
   const isSecure = window.location.protocol === 'https:';
   
-  // Load the secure icon only (for secure state we'll use the cached icon)
+  // Load the secure icon and logout icon
   const { iconUrl: secureIconUrl } = useCachedIcon(isSecure ? 'ICO-ADS.jpg' : null);
+  const { iconUrl: logoutIconUrl } = useCachedIcon('ICO-ADX.png');
 
   const handleCreateStoryClick = () => {
     console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
@@ -163,14 +164,25 @@ const AdminHeaderBanner = () => {
                 <Unlock className="w-8 h-8 text-white" />
               )}
             </div>
-            <Button 
-              onClick={handleLogout} 
-              className="font-bold border border-red-300/30 hover:bg-red-600"
-              style={{ backgroundColor: '#FF0000', color: '#FFFF00' }}
+            <div
+              onClick={handleLogout}
+              className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-orange-300/50 hover:scale-105 transition-transform cursor-pointer"
+              style={{ 
+                backgroundColor: '#ff8c00',
+                minWidth: '55px',
+                minHeight: '55px'
+              }}
             >
-              <LogOut className="h-4 w-4 mr-2" />
-              Logout
-            </Button>
+              {logoutIconUrl ? (
+                <img 
+                  src={logoutIconUrl} 
+                  alt="Logout"
+                  className="w-8 h-8 object-contain"
+                />
+              ) : (
+                <LogOut className="w-8 h-8 text-white" />
+              )}
+            </div>
           </div>
           
           {/* Right section: Navigation buttons */}
