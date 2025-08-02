@@ -225,6 +225,27 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 />
                               </div>
                             </Link>
+                            <Link
+                              to="/library/read"
+                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
+                              aria-label="Read A Story"
+                            >
+                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                                <img 
+                                  src={getSafeIconUrl('ICO-LB3.png')}
+                                  alt="Read A Story"
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (target.src.includes('.png')) {
+                                      target.src = getSafeIconUrl('ICO-LB3.jpg');
+                                    } else if (target.src.includes('.jpg')) {
+                                      target.src = getSafeIconUrl('ICO-LB3.gif');
+                                    }
+                                  }}
+                                />
+                              </div>
+                            </Link>
                           </div>
                         </div>
                       </div>
