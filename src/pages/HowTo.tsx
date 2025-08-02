@@ -71,7 +71,7 @@ const HowTo = () => {
       <main className="container mx-auto px-4 py-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-center text-orange-800 mb-4">
-            How To Use Gpa's Website for Kids
+            Buddy's Guide to Gpa's Website
           </h1>
           
           {/* Stack of WebText Boxes */}
