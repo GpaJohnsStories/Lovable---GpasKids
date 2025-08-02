@@ -196,7 +196,7 @@ const AdminHeaderBanner = () => {
                 )}
               </div>
               {hoveredButton === 'logout' && (
-                <div className="nav-bubble opacity-100 visible" style={{ color: '#FFFF00' }}>
+                <div className="nav-bubble opacity-100 visible" style={{ color: '#4A7C59' }}>
                   LOGOUT
                 </div>
               )}
