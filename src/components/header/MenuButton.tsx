@@ -119,7 +119,7 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
           ) : null}
         </button>
       </TooltipTrigger>
-      <TooltipContent side="top" sideOffset={-20} className="bg-popover text-popover-foreground border shadow-md">
+      <TooltipContent side="top" sideOffset={-20} className="z-90 bg-popover text-popover-foreground border shadow-md">
         <p className="font-semibold">{disabled && disabledMessage ? disabledMessage : text}</p>
       </TooltipContent>
     </Tooltip>

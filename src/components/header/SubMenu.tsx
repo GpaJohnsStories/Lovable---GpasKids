@@ -21,7 +21,7 @@ const SubMenu = ({ items, isVisible, position, level }: SubMenuProps) => {
 
   // Calculate positioning based on level and position (using 10px gap standard)
   const getPositionClasses = () => {
-    const zIndex = level === 1 ? "z-70" : "z-50"; // Level 1 submenus well above level 2
+    const zIndex = level === 1 ? "z-20" : "z-30"; // Level 1 at z-20, level 2+ at z-30
     const baseClasses = `absolute ${zIndex} animate-slide-in-right`;
     
     if (position === 'left') {
