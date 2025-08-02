@@ -146,7 +146,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                   className="w-full h-12 sm:h-16 md:h-20 object-contain rounded-md mb-0.5"
                 />
                 <div className="text-orange-800 text-xs sm:text-sm md:text-base font-bold leading-tight">
-                  <div>Menu</div>
+                  <div>Click Here</div>
                 </div>
               </button>
 
