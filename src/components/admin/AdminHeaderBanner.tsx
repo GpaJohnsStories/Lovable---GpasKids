@@ -168,7 +168,7 @@ const AdminHeaderBanner = () => {
                 )}
               </div>
               {hoveredButton === 'security' && (
-                <div className="nav-bubble opacity-100 visible">
+                <div className="nav-bubble opacity-100 visible font-bold">
                   {isSecure ? 'Secure' : 'OPEN'}
                 </div>
               )}
@@ -196,7 +196,7 @@ const AdminHeaderBanner = () => {
                 )}
               </div>
               {hoveredButton === 'logout' && (
-                <div className="nav-bubble opacity-100 visible" style={{ color: '#4A7C59' }}>
+                <div className="nav-bubble opacity-100 visible font-bold" style={{ color: '#4A7C59' }}>
                   LOGOUT
                 </div>
               )}
