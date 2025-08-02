@@ -385,7 +385,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => handleSpeedChange(1.5)}
-                      className={`w-full h-12 text-sm font-bold ${playbackRate === 1.5 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 transition-colors flex items-center justify-center`}
+                      className={`w-full h-12 text-sm font-bold ${playbackRate === 1.5 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white rounded-r transition-colors flex items-center justify-center`}
                     >
                       1.5x
                     </button>
@@ -394,39 +394,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                 </Tooltip>
               </td>
 
-              {/* Audio Type Info - REC or TTS */}
-              <td className="p-0 border-0">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      className="w-full h-12 text-sm font-bold bg-gray-600 text-white border-r border-gray-400 cursor-default flex items-center justify-center"
-                      disabled
-                    >
-                      {webtext?.audio_url ? 'REC' : 'TTS'}
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {webtext?.audio_url ? 'Pre-recorded Audio' : 'Text-to-Speech'}
-                  </TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Voice Info - Shows actual voice name */}
-              <td className="p-0 border-0">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      className="w-full h-12 text-sm font-bold bg-gray-600 text-white rounded-r cursor-default flex items-center justify-center"
-                      disabled
-                    >
-                      {webtext?.ai_voice_name?.toUpperCase() || 'ALLOY'}
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    Voice: {webtext?.ai_voice_name || 'Alloy'}
-                  </TooltipContent>
-                </Tooltip>
-              </td>
             </tr>
           </tbody>
         </table>
