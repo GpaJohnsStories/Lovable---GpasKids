@@ -230,13 +230,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                   customSize={mainButtonSize}
                 />
                 
-                {/* Submenu positioning logic */}
+                {/* Submenu positioning: both to the left of main menu button */}
                 {item.submenus && activeSubmenu === item.id && (
                   <>
-                    {/* Top submenu goes on the right, next to main menu button */}
-                    <div className="absolute left-[74px] top-0 z-40 animate-slide-in-right">
+                    {/* Top submenu (1st) goes right next to the main menu button */}
+                    <div className="absolute right-[74px] top-0 z-40 animate-slide-in-right">
                       <div className={item.submenuLayout === 'grid' ? "grid grid-cols-2 gap-0" : "flex flex-col gap-0"}>
-                        {item.submenus.slice(0, item.submenuLayout === 'grid' ? 2 : 1).map((submenuItem) => (
+                        {item.submenus.slice(0, item.submenuLayout === 'grid' ? 2 : item.submenus.length).map((submenuItem) => (
                           <MenuButton
                             key={submenuItem.id}
                             icon={submenuItem.icon}
@@ -251,9 +251,9 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                       </div>
                     </div>
                     
-                    {/* If there are more than 2 submenus, place remaining ones side-by-side to the left */}
+                    {/* 2nd submenu goes to the left of the 1st submenu (side-by-side) */}
                     {item.submenus.length > 2 && item.submenuLayout === 'grid' && (
-                      <div className="absolute right-[74px] top-0 z-40 animate-slide-in-right">
+                      <div className="absolute right-[148px] top-0 z-40 animate-slide-in-right">
                         <div className="grid grid-cols-2 gap-0">
                           {item.submenus.slice(2).map((submenuItem) => (
                             <MenuButton
