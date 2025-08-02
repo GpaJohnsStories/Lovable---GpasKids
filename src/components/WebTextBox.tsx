@@ -284,6 +284,15 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               </td>
             </tr>
 
+            {/* Speed Controls Banner */}
+            <tr>
+              <td colSpan={4} className="p-0 border-0">
+                <div className="w-full h-6 bg-gray-600 border-t border-gray-400 flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">Playback Speed Control</span>
+                </div>
+              </td>
+            </tr>
+
             <tr>
               {/* Speed 0.75x */}
               <td className="p-0 border-0" style={{ width: '25%' }}>
