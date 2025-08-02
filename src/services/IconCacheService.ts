@@ -25,9 +25,8 @@ class IconCacheService {
     'ICO-LB1.gif',      // Stories icon
     'ICO-LB2.gif',      // Library icon
     'ICO-LB3.gif',      // Read icon
-    'ICO-N2K.png',      // Menu button icon
-    'ICO-HOM.png',      // Header home icon
-    'buddy-with-background.png' // Buddy icon
+    'ICO-MU2.gif',      // Menu button icon (was ICO-N2K.png)
+    'ICO-HL2.gif',      // Buddy icon (was ICO-HOM.png)
   ];
 
   /**

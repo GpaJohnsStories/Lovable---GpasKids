@@ -15,7 +15,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuHovered, setIsMenuHovered] = useState(false);
 
-  // Use cached icons for Buddy and Menu button
+  // Use cached icons for Buddy and Menu button - v2.0 with proper icon caching
   const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('ICO-HL2.gif');
   const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('ICO-MU2.gif');
 
