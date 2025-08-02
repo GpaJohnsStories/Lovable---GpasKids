@@ -176,6 +176,25 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         }}
                       />
                     </Link>
+                    <Link
+                      to="/library"
+                      className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
+                      aria-label="Go to Library"
+                    >
+                      <img 
+                        src={getSafeIconUrl('ICO-LB1.png')}
+                        alt="Library"
+                        className="w-full h-full object-cover rounded-md"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (target.src.includes('.png')) {
+                            target.src = getSafeIconUrl('ICO-LB1.jpg');
+                          } else if (target.src.includes('.jpg')) {
+                            target.src = getSafeIconUrl('ICO-LB1.gif');
+                          }
+                        }}
+                      />
+                    </Link>
                   </div>
                 </div>
               </div>
