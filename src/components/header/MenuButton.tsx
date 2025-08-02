@@ -106,42 +106,46 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
             }
           }}
         >
-          {/* Loading state */}
+          {/* Always show content - prioritize text visibility */}
           {isLoading && (
             <div 
-              className="animate-pulse bg-orange-300 rounded"
+              className="flex items-center justify-center text-white text-xs font-bold"
               style={{
-                width: '56px', // Hardcoded icon size
-                height: '56px', // Hardcoded icon size
+                width: '56px',
+                height: '56px',
               }}
-            />
+            >
+              <span className="text-center leading-tight break-words">
+                {text}
+              </span>
+            </div>
           )}
           
-          {/* Show text if no icon available, otherwise show icon */}
-          {(error || !iconUrl) && !isLoading ? (
-            <div 
-              className="flex items-center justify-center text-white text-xs font-bold px-1 overflow-hidden"
+          {/* Show icon if available, otherwise always show text */}
+          {!isLoading && iconUrl && !error ? (
+            <img 
+              src={iconUrl}
+              alt={text}
               style={{
-                width: '56px', // Hardcoded icon size
-                height: '56px', // Hardcoded icon size
+                width: '56px',
+                height: '56px',
+                opacity: disabled ? 0.5 : 1
+              }}
+              className="object-contain"
+            />
+          ) : !isLoading && (
+            <div 
+              className="flex items-center justify-center text-white text-xs font-bold px-1"
+              style={{
+                width: '56px',
+                height: '56px',
               }}
             >
               <span className="text-center leading-tight break-words hyphens-auto max-w-full">
                 {text}
               </span>
             </div>
-          ) : iconUrl && !isLoading && !error ? (
-            <img 
-              src={iconUrl}
-              alt={text}
-              style={{
-                width: '56px', // Hardcoded icon size - ALL icons same size
-                height: '56px', // Hardcoded icon size - ALL icons same size
-                opacity: disabled ? 0.5 : 1
-              }}
-              className="object-contain" // This will fit the icon within the fixed dimensions
-            />
-          ) : null}
+          )}
         </button>
       </TooltipTrigger>
       <TooltipContent side="top" sideOffset={-20} className="z-[100] bg-popover text-popover-foreground border shadow-md">
