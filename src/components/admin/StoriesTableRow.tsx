@@ -268,11 +268,9 @@ const StoriesTableRow = ({
             </div>
           )}
           <div className="flex-1 min-w-0">
-            <Link to={`/story/${story.story_code}`} onClick={scrollToTop}>
-              <div className="font-bold text-black hover:text-orange-600 transition-colors cursor-pointer text-sm truncate">
-                {story.title}
-              </div>
-            </Link>
+            <div className="font-bold text-black text-sm truncate">
+              {story.title}
+            </div>
             {story.tagline && (
               <div className="text-xs italic text-amber-700 truncate" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                 {hasVideo && story.tagline.toUpperCase().includes('VIDEO') ? (
