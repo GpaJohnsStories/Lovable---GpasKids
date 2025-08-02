@@ -126,26 +126,26 @@
   position: relative;
 }
 
-/* Level-based tooltip z-index styling */
-.menu-item-tooltip {
-  position: absolute;
-  z-index: 1000;
+/* Tooltip z-index management for menu levels - prevent overlapping */
+[data-radix-tooltip-content] {
+  z-index: 100 !important;
 }
 
-.level-1 .menu-item-tooltip {
-  z-index: 1010;
+/* Higher z-index for deeper submenu levels to prevent overlapping */
+.level-1 [data-radix-tooltip-content] {
+  z-index: 110 !important;
 }
 
-.level-2 .menu-item-tooltip {
-  z-index: 1020;
+.level-2 [data-radix-tooltip-content] {
+  z-index: 120 !important;
 }
 
-.level-3 .menu-item-tooltip {
-  z-index: 1030;
+.level-3 [data-radix-tooltip-content] {
+  z-index: 130 !important;
 }
 
-.level-4 .menu-item-tooltip {
-  z-index: 1040;
+.level-4 [data-radix-tooltip-content] {
+  z-index: 140 !important;
 }
 
 /* Navigation bubble tooltips */
