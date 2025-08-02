@@ -66,9 +66,9 @@ function App() {
         <TooltipProvider>
           <HelmetProvider>
             <HelpProvider>
-              <GlobalHelpProvider>
-                <Toaster />
-                <BrowserRouter>
+              <Toaster />
+              <BrowserRouter>
+                <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
                     <Routes>
@@ -112,8 +112,8 @@ function App() {
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </ConditionalContentProtection>
-                </BrowserRouter>
-              </GlobalHelpProvider>
+                </GlobalHelpProvider>
+              </BrowserRouter>
             </HelpProvider>
           </HelmetProvider>
         </TooltipProvider>
