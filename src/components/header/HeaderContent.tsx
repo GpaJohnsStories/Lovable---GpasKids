@@ -162,7 +162,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                       aria-label="Go to Home Page"
                     >
-                      <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                      <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                         <img 
                           src={getSafeIconUrl('ICO-HO2.png')}
                           alt="Home"
@@ -184,7 +184,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                         aria-label="Go to Library"
                       >
-                        <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                        <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                           <img 
                             src={getSafeIconUrl('ICO-LB1.png')}
                             alt="Library"
@@ -213,7 +213,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Story List"
                             >
-                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                                 <img 
                                   src={getSafeIconUrl('ICO-LB2.png')}
                                   alt="Story List"
@@ -234,7 +234,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                               aria-label="Read A Story"
                             >
-                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                                 <img 
                                   src={getSafeIconUrl('ICO-LB3.png')}
                                   alt="Read A Story"
@@ -262,7 +262,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                         aria-label="Comments & Questions"
                       >
-                        <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                        <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                           <img 
                             src={getSafeIconUrl('ICO-CO1.png')}
                             alt="Comments & Questions"
@@ -292,7 +292,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Write to Gpa John or Buddy"
                             >
-                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                                 <img 
                                   src={getSafeIconUrl('ICO-CO2.png')}
                                   alt="Write to Gpa John or Buddy"
@@ -314,7 +314,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                               aria-label="View All Comments"
                             >
-                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                                 <img 
                                   src={getSafeIconUrl('ICO-CO3.png')}
                                   alt="View All Comments"
@@ -342,7 +342,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                         aria-label="Sharing Stories"
                       >
-                        <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                        <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                           <img 
                             src={getSafeIconUrl('ICO-WR3.png')}
                             alt="Sharing Stories"
@@ -372,7 +372,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Careful with Copyright"
                             >
-                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                                 <img 
                                   src={getSafeIconUrl('ICO-WR2.png')}
                                   alt="Careful with Copyright"
@@ -394,7 +394,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                               aria-label="Share Your Story"
                             >
-                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                                 <img 
                                   src={getSafeIconUrl('ICO-WR3.png')}
                                   alt="Share Your Story"
@@ -421,7 +421,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                       aria-label="Your Guide to Gpa's Kids website"
                     >
-                      <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                      <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                         <img 
                           src={getSafeIconUrl('ICO-GU1.png')}
                           alt="Your Guide to Gpa's Kids website"
@@ -445,7 +445,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                         aria-label="All About Us"
                       >
-                        <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                        <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                           <img 
                             src={getSafeIconUrl('ICO-AB1.png')}
                             alt="All About Us"
@@ -475,7 +475,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Grandpa's Partners"
                             >
-                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                                 <img 
                                   src={getSafeIconUrl('ICO-AB3.png')}
                                   alt="Grandpa's Partners"
@@ -497,7 +497,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="About Grandpa John"
                             >
-                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                                 <img 
                                   src={getSafeIconUrl('ICO-PLACEHOLDER.png')}
                                   alt="About Grandpa John"
@@ -511,7 +511,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Helpful AI's"
                             >
-                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                                 <img 
                                   src={getSafeIconUrl('ICO-AB5.png')}
                                   alt="Helpful AI's"
@@ -533,7 +533,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                               aria-label="Authors"
                             >
-                              <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                              <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                                 <img 
                                   src={getSafeIconUrl('ICO-PLACEHOLDER.png')}
                                   alt="Authors"
@@ -552,7 +552,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                       aria-label="Safe and Sound"
                     >
-                      <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                      <div className="rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden" style={{width: '15px', height: '15px'}}>
                         <img 
                           src={getSafeIconUrl('ICO-SA1.png')}
                           alt="Safe and Sound"
