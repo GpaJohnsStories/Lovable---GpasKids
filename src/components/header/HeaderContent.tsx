@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
 import { supabase } from "@/integrations/supabase/client";
+import VerticalMenu from "./VerticalMenu";
 
 interface HeaderContentProps {
   isHomePage: boolean;
@@ -10,6 +12,7 @@ interface HeaderContentProps {
 const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const location = useLocation();
   const { showHelp } = useHelp();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Helper function to get icon URL from Supabase storage
   const getIconUrl = (iconName: string) => {
@@ -24,6 +27,11 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
   const handleHelpClick = () => {
     console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
     showHelp(location.pathname);
+  };
+
+  const handleMenuClick = () => {
+    console.log('🎯 Menu button clicked, current state:', isMenuOpen);
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
@@ -105,12 +113,15 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           )}
         </div>
 
-        {/* RIGHT SECTION: Gold Box */}
-        <div className="flex justify-end">
-          <div className="group relative z-10 bg-gradient-to-br from-yellow-500/80 to-yellow-600/60 hover:from-yellow-400/80 hover:to-yellow-500/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-500 hover:border-yellow-400 transform hover:scale-105 transition-all duration-200">
+        {/* RIGHT SECTION: Gold Menu Button */}
+        <div className="flex justify-end relative">
+          <button 
+            onClick={handleMenuClick}
+            className="group relative z-10 bg-gradient-to-br from-yellow-500/80 to-yellow-600/60 hover:from-yellow-400/80 hover:to-yellow-500/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-500 hover:border-yellow-400 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+          >
             <img 
               src={getSafeIconUrl("ICO-MU2")}
-              alt="Music Box"
+              alt="Main Menu"
               className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md"
               onError={(e) => {
                 const img = e.currentTarget;
@@ -123,7 +134,13 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                 }
               }}
             />
-          </div>
+          </button>
+          
+          {/* Vertical Menu */}
+          <VerticalMenu 
+            isVisible={isMenuOpen} 
+            onClose={() => setIsMenuOpen(false)} 
+          />
         </div>
       </div>
     </div>
