@@ -250,6 +250,68 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Comments & Questions Main Button with Submenu */}
+                    <div className="group/comments relative">
+                      <Link
+                        to="/comments"
+                        className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
+                        aria-label="Comments & Questions"
+                      >
+                        <img 
+                          src={getSafeIconUrl('ICO-CO1.png')}
+                          alt="Comments & Questions"
+                          className="w-full h-full object-cover rounded-md"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            if (target.src.includes('.png')) {
+                              target.src = getSafeIconUrl('ICO-CO1.jpg');
+                            } else if (target.src.includes('.jpg')) {
+                              target.src = getSafeIconUrl('ICO-CO1.gif');
+                            }
+                          }}
+                        />
+                      </Link>
+                      
+                      {/* Comments & Questions Submenu */}
+                      <div className="absolute top-0 right-full mr-2 opacity-0 invisible group-hover/comments:opacity-100 group-hover/comments:visible transition-all duration-300 ease-in-out z-50">
+                        <div 
+                          className="rounded-lg shadow-lg border-2 border-orange-400 min-w-[120px]"
+                          style={{ backgroundColor: '#FFD65C' }}
+                        >
+                          <div className="flex flex-col p-2">
+                            {/* Placeholder for first submenu item - need icon code and label */}
+                            <Link
+                              to="/comments/view"
+                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
+                              aria-label="Submenu Item 1"
+                            >
+                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                                <img 
+                                  src={getSafeIconUrl('ICO-PLACEHOLDER1.png')}
+                                  alt="Submenu Item 1"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            </Link>
+                            {/* Placeholder for second submenu item - need icon code and label */}
+                            <Link
+                              to="/comments/make"
+                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
+                              aria-label="Submenu Item 2"
+                            >
+                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                                <img 
+                                  src={getSafeIconUrl('ICO-PLACEHOLDER2.png')}
+                                  alt="Submenu Item 2"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
