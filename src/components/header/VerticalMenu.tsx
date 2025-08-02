@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import MenuButton from "./MenuButton";
 import MenuItemWithSubmenus from "./MenuItemWithSubmenus";
 
@@ -10,8 +11,18 @@ interface VerticalMenuProps {
 const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
   if (!isVisible) return null;
 
-  // Check if user has selected a story from the library
-  const hasSelectedStory = sessionStorage.getItem('currentStoryPath') !== null;
+  const location = useLocation();
+  
+  // Check if user has selected a story - either currently viewing one or has one stored
+  const hasSelectedStory = location.pathname.startsWith('/story/') || 
+                          sessionStorage.getItem('currentStoryPath') !== null;
+  
+  // Debug logging
+  console.log('🔍 Menu state check:', {
+    currentPath: location.pathname,
+    sessionStoryPath: sessionStorage.getItem('currentStoryPath'),
+    hasSelectedStory
+  });
 
   // Define main menu button size (same as golden button on phone: 4rem x 4rem)
   const mainButtonSize = {
@@ -64,11 +75,17 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
             icon: "ICO-LB3.gif",
             text: "READ",
             onClick: hasSelectedStory ? () => {
-              const storyPath = sessionStorage.getItem('currentStoryPath');
-              if (storyPath) {
-                window.location.href = storyPath;
+              // If already on a story page, stay there, otherwise use stored path
+              if (location.pathname.startsWith('/story/')) {
+                // Already viewing a story, no need to navigate
+                onClose();
+              } else {
+                const storyPath = sessionStorage.getItem('currentStoryPath');
+                if (storyPath) {
+                  window.location.href = storyPath;
+                }
+                onClose();
               }
-              onClose();
             } : () => {
               // Do nothing if no story selected
             },
