@@ -1,5 +1,7 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
+import { useTooltipContext } from "@/contexts/TooltipContext";
+import { useEffect, useId } from "react";
 
 interface MenuButtonProps {
   icon: string;
@@ -17,6 +19,13 @@ interface MenuButtonProps {
 
 const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, disabledMessage }: MenuButtonProps) => {
   const { iconUrl, isLoading, error } = useCachedIcon(icon);
+  const { shouldShowTooltips, registerTooltip, unregisterTooltip } = useTooltipContext();
+  const tooltipId = useId();
+
+  useEffect(() => {
+    registerTooltip(tooltipId);
+    return () => unregisterTooltip(tooltipId);
+  }, [tooltipId, registerTooltip, unregisterTooltip]);
 
   const freshGreen = "#16a34a";
   const disabledColor = "#9CA3AF"; // Gray-400
@@ -58,7 +67,7 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
   };
 
   return (
-    <Tooltip>
+    <Tooltip open={shouldShowTooltips ? undefined : false}>
       <TooltipTrigger asChild>
         <button
           onClick={handleClick}

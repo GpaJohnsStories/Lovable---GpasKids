@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { IconCacheProvider } from "@/contexts/IconCacheContext";
+import { TooltipProvider as CustomTooltipProvider } from "@/contexts/TooltipContext";
 import { HelmetProvider } from 'react-helmet-async';
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -68,7 +69,8 @@ function App() {
           <HelmetProvider>
             <HelpProvider>
               <IconCacheProvider>
-                <Toaster />
+                <CustomTooltipProvider>
+                  <Toaster />
                 <BrowserRouter>
                   <GlobalHelpProvider>
                   <ConditionalContentProtection>
@@ -116,6 +118,7 @@ function App() {
                   </ConditionalContentProtection>
                 </GlobalHelpProvider>
               </BrowserRouter>
+                </CustomTooltipProvider>
             </IconCacheProvider>
           </HelpProvider>
         </HelmetProvider>
