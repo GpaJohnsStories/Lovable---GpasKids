@@ -78,11 +78,18 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
           }`}
           style={{
             ...getButtonStyle(),
-            // FORCE exact dimensions - override any content-based sizing
+            // AGGRESSIVE exact dimensions - override everything
+            width: '64px !important',
+            height: '64px !important',
+            minWidth: '64px !important',
+            maxWidth: '64px !important', 
+            minHeight: '64px !important',
+            maxHeight: '64px !important',
             boxSizing: 'border-box',
             overflow: 'hidden',
             flexShrink: 0,
-            flexGrow: 0
+            flexGrow: 0,
+            display: 'flex !important'
           }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
