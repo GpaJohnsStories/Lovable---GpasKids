@@ -31,10 +31,11 @@ const AdminHeaderBanner = () => {
   // Determine if the system is secure (placeholder logic - adjust as needed)
   const isSecure = window.location.protocol === 'https:';
   
-  // Load the secure icon, logout icon, and dashboard icon
+  // Load the secure icon, logout icon, dashboard icon, and libraries icon
   const { iconUrl: secureIconUrl } = useCachedIcon(isSecure ? 'ICO-ADS.jpg' : null);
   const { iconUrl: logoutIconUrl } = useCachedIcon('ICO-ADX.png');
   const { iconUrl: dashboardIconUrl } = useCachedIcon('ICO-AD1.gif');
+  const { iconUrl: librariesIconUrl } = useCachedIcon('ICO-LB1.gif');
 
   const handleCreateStoryClick = () => {
     console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
@@ -219,7 +220,7 @@ const AdminHeaderBanner = () => {
                 }
               };
 
-              // Render Library button with dropdown
+              // Render Library button as square icon button
               const librariesButton = (
                 <div 
                   key={button.name}
@@ -227,51 +228,29 @@ const AdminHeaderBanner = () => {
                   onMouseEnter={() => setHoveredButton(button.name)}
                   onMouseLeave={() => setHoveredButton(null)}
                 >
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        className={`
-                          transition-all duration-200 border font-fun
-                          ${button.bgColor} ${button.textColor} ${button.shadowColor} ${button.hoverShadow}
-                          hover:transform hover:translate-y-1 active:translate-y-2 
-                          active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
-                          ${isActive 
-                            ? 'ring-4 ring-white ring-opacity-50 transform translate-y-1' 
-                            : button.hoverColor
-                          }
-                        `}
-                      >
-                        <Icon className="h-4 w-4 mr-2" />
-                        {button.name}
-                        <ChevronDown className="h-3 w-3 ml-1" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg">
-                      <DropdownMenuItem asChild>
-                        <Link 
-                          to="/buddys_admin/stories?view=stories" 
-                          onClick={scrollToTop}
-                          className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
-                        >
-                          <FileText className="h-4 w-4 mr-2" />
-                          Story Library
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link 
-                          to="/buddys_admin/stories?view=bios" 
-                          onClick={scrollToTop}
-                          className="flex items-center w-full px-3 py-2 text-sm hover:bg-orange-50 cursor-pointer"
-                        >
-                          <Users className="h-4 w-4 mr-2" />
-                          Author Bios
-                        </Link>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Link to={button.path} onClick={scrollToTop}>
+                    <div
+                      className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-yellow-300/50 hover:scale-105 transition-transform cursor-pointer"
+                      style={{ 
+                        backgroundColor: '#FFD700',
+                        minWidth: '55px',
+                        minHeight: '55px'
+                      }}
+                    >
+                      {librariesIconUrl ? (
+                        <img 
+                          src={librariesIconUrl} 
+                          alt="Libraries"
+                          className="w-12 h-12 object-contain"
+                        />
+                      ) : (
+                        <FileText className="w-12 h-12 text-white" />
+                      )}
+                    </div>
+                  </Link>
                   {hoveredButton === button.name && (
                     <div className="nav-bubble opacity-100 visible">
-                      {button.description}
+                      <b>Libraries</b>
                     </div>
                   )}
                 </div>
