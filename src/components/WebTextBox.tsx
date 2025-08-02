@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { UniversalAudioControls } from '@/components/UniversalAudioControls';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { supabase } from '@/integrations/supabase/client';
 import { getStoryPhotos } from '@/utils/storyUtils';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { toast } from '@/hooks/use-toast';
 
 interface WebTextBoxProps {
   webtextCode: string;
@@ -23,6 +24,414 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [webtext, setWebtext] = useState<any>(null);
   const [iconUrl, setIconUrl] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  
+  // Audio control states
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+  const [audioGenerated, setAudioGenerated] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [volume, setVolume] = useState(1);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const getContent = () => {
+    if (loading) return "Loading...";
+    if (!webtext) return "Coming Soon";
+    return webtext.content || webtext.excerpt || "No content available";
+  };
+
+  // Audio cleanup effect
+  useEffect(() => {
+    return () => {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.src = '';
+      }
+    };
+  }, [currentAudio]);
+
+  // Apply volume and playback rate changes
+  useEffect(() => {
+    if (currentAudio) {
+      currentAudio.volume = volume;
+      currentAudio.playbackRate = playbackRate;
+    }
+  }, [currentAudio, volume, playbackRate]);
+
+  // Audio control functions
+  const canPlayAudio = () => {
+    return !!(webtext?.audio_url || getContent());
+  };
+
+  const handlePlay = useCallback(async () => {
+    if (isPaused && currentAudio) {
+      // Resume paused audio
+      setIsPaused(false);
+      setIsPlaying(true);
+      currentAudio.play();
+      return;
+    }
+
+    if (webtext?.audio_url) {
+      // Play existing audio URL
+      const audio = new Audio(webtext.audio_url);
+      audio.volume = volume;
+      audio.playbackRate = playbackRate;
+      
+      audio.onended = () => {
+        setIsPlaying(false);
+        setIsPaused(false);
+        setCurrentAudio(null);
+      };
+      
+      audio.onerror = () => {
+        setIsPlaying(false);
+        setIsPaused(false);
+        setCurrentAudio(null);
+        toast({
+          title: "Audio Error",
+          description: "Failed to play the audio file",
+          variant: "destructive",
+        });
+      };
+
+      setCurrentAudio(audio);
+      setIsPlaying(true);
+      setIsPaused(false);
+      audio.play();
+    } else if (getContent() && !audioGenerated) {
+      // Generate audio via text-to-speech
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase.functions.invoke('text-to-speech', {
+          body: {
+            text: getContent(),
+            voice: 'alloy',
+            title: webtext?.title || title,
+            author: webtext?.author
+          }
+        });
+
+        if (error) throw error;
+
+        if (data?.audioUrl) {
+          const audio = new Audio(data.audioUrl);
+          audio.volume = volume;
+          audio.playbackRate = playbackRate;
+          
+          audio.onended = () => {
+            setIsPlaying(false);
+            setIsPaused(false);
+            setCurrentAudio(null);
+          };
+          
+          audio.onerror = () => {
+            setIsPlaying(false);
+            setIsPaused(false);
+            setCurrentAudio(null);
+            toast({
+              title: "Audio Error",
+              description: "Failed to play the generated audio",
+              variant: "destructive",
+            });
+          };
+
+          setCurrentAudio(audio);
+          setIsPlaying(true);
+          setIsPaused(false);
+          setAudioGenerated(true);
+          audio.play();
+        }
+      } catch (error) {
+        console.error('Error generating audio:', error);
+        toast({
+          title: "Audio Generation Error",
+          description: "Failed to generate audio for this content",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [webtext?.audio_url, getContent, volume, playbackRate, isPaused, currentAudio, audioGenerated, webtext?.title, title, webtext?.author]);
+
+  const handlePause = useCallback(() => {
+    if (currentAudio && isPlaying) {
+      currentAudio.pause();
+      setIsPlaying(false);
+      setIsPaused(true);
+    }
+  }, [currentAudio, isPlaying]);
+
+  const handleStop = useCallback(() => {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      setIsPlaying(false);
+      setIsPaused(false);
+      setCurrentAudio(null);
+    }
+  }, [currentAudio]);
+
+  const handleStartOver = useCallback(() => {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      setIsPlaying(false);
+      setIsPaused(false);
+      setCurrentAudio(null);
+    }
+    // Restart playback
+    setTimeout(() => handlePlay(), 100);
+  }, [currentAudio, handlePlay]);
+
+  const handleVolumeChange = useCallback((newVolume: number) => {
+    setVolume(newVolume);
+  }, []);
+
+  const handleSpeedChange = useCallback((newSpeed: number) => {
+    setPlaybackRate(newSpeed);
+  }, []);
+
+  // New table-based audio controls component
+  const renderAudioControls = () => {
+    if (!canPlayAudio()) {
+      return (
+        <div className="text-center text-gray-500 py-4">
+          No audio available
+        </div>
+      );
+    }
+
+    return (
+      <TooltipProvider>
+        <table className="w-full border-collapse">
+          <tbody>
+            <tr>
+              {/* Play Button */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handlePlay}
+                      disabled={isLoading || isPlaying}
+                      className="w-full h-8 text-xs bg-green-500 hover:bg-green-600 disabled:bg-gray-300 text-white rounded transition-colors flex items-center justify-center"
+                    >
+                      ▶
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Play</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Pause Button */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handlePause}
+                      disabled={!isPlaying}
+                      className="w-full h-8 text-xs bg-yellow-500 hover:bg-yellow-600 disabled:bg-gray-300 text-white rounded transition-colors flex items-center justify-center"
+                    >
+                      ⏸
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Pause</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Stop Button */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handleStop}
+                      disabled={!currentAudio}
+                      className="w-full h-8 text-xs bg-red-500 hover:bg-red-600 disabled:bg-gray-300 text-white rounded transition-colors flex items-center justify-center"
+                    >
+                      ⏹
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Stop</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Start Over Button */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handleStartOver}
+                      disabled={isLoading}
+                      className="w-full h-8 text-xs bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white rounded transition-colors flex items-center justify-center"
+                    >
+                      ↻
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Start Over</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Volume 25% */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleVolumeChange(0.25)}
+                      className={`w-full h-8 text-xs ${volume === 0.25 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white rounded transition-colors flex items-center justify-center`}
+                    >
+                      25%
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Volume 25%</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Volume 50% */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleVolumeChange(0.5)}
+                      className={`w-full h-8 text-xs ${volume === 0.5 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white rounded transition-colors flex items-center justify-center`}
+                    >
+                      50%
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Volume 50%</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Volume 75% */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleVolumeChange(0.75)}
+                      className={`w-full h-8 text-xs ${volume === 0.75 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white rounded transition-colors flex items-center justify-center`}
+                    >
+                      75%
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Volume 75%</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Volume 100% */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleVolumeChange(1)}
+                      className={`w-full h-8 text-xs ${volume === 1 ? 'bg-purple-600' : 'bg-purple-500 hover:bg-purple-600'} text-white rounded transition-colors flex items-center justify-center`}
+                    >
+                      100%
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Volume 100%</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Speed 0.75x */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleSpeedChange(0.75)}
+                      className={`w-full h-8 text-xs ${playbackRate === 0.75 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white rounded transition-colors flex items-center justify-center`}
+                    >
+                      0.75x
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Speed 0.75x</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Speed 1x */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleSpeedChange(1)}
+                      className={`w-full h-8 text-xs ${playbackRate === 1 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white rounded transition-colors flex items-center justify-center`}
+                    >
+                      1x
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Speed 1x</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Speed 1.25x */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleSpeedChange(1.25)}
+                      className={`w-full h-8 text-xs ${playbackRate === 1.25 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white rounded transition-colors flex items-center justify-center`}
+                    >
+                      1.25x
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Speed 1.25x</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Speed 1.5x */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => handleSpeedChange(1.5)}
+                      className={`w-full h-8 text-xs ${playbackRate === 1.5 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white rounded transition-colors flex items-center justify-center`}
+                    >
+                      1.5x
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>Speed 1.5x</TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* TTS Info */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      className="w-full h-8 text-xs bg-gray-500 text-white rounded flex items-center justify-center cursor-default"
+                      disabled
+                    >
+                      {webtext?.audio_url ? 'REC' : 'TTS'}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {webtext?.audio_url ? 'Pre-recorded Audio' : 'Text-to-Speech'}
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+
+              {/* Voice Info */}
+              <td className="border border-gray-300 p-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      className="w-full h-8 text-xs bg-gray-500 text-white rounded flex items-center justify-center cursor-default"
+                      disabled
+                    >
+                      AI
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    Voice: {webtext?.ai_voice_name || 'Alloy'}
+                  </TooltipContent>
+                </Tooltip>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </TooltipProvider>
+    );
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,11 +466,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     fetchData();
   }, [webtextCode, icon, lookupStoryByCode]);
 
-  const getContent = () => {
-    if (loading) return "Loading...";
-    if (!webtext) return "Coming Soon";
-    return webtext.content || webtext.excerpt || "No content available";
-  };
 
   const isSysWel = webtextCode === "SYS-WEL";
   const photos = webtext ? getStoryPhotos(webtext) : [];
@@ -98,17 +502,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                 <div className="text-center italic font-bold text-blue-800 text-xs sm:text-sm mb-1">
                   Shall I read it to you?
                 </div>
-                <div className="[&>div>div]:!grid [&>div>div]:!grid-cols-4 md:[&>div>div]:!grid-cols-8 [&>div>div]:!gap-1">
-                  <UniversalAudioControls
-                    audioUrl={webtext?.audio_url}
-                    title={webtext?.title || title}
-                    content={getContent()}
-                    author={webtext?.author}
-                    allowTextToSpeech={true}
-                    size="sm"
-                    className="bg-transparent border-0"
-                  />
-                </div>
+                {renderAudioControls()}
               </div>
             </div>
 
@@ -192,15 +586,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             >
               Shall I read it to you?
             </div>
-            <UniversalAudioControls
-              audioUrl={webtext?.audio_url}
-              title={webtext?.title || title}
-              content={getContent()}
-              author={webtext?.author}
-              allowTextToSpeech={true}
-              size="sm"
-              className="bg-transparent border-0"
-            />
+            {renderAudioControls()}
           </div>
         </div>
       </div>
