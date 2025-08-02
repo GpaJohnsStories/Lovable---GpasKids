@@ -28,16 +28,16 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
             onMouseUp={() => console.log('🐕 Buddy button mouse up!')}
             className="group relative z-10 bg-gradient-to-br from-green-600/80 to-green-700/60 hover:from-red-600/80 hover:to-red-700/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-green-600 hover:border-red-600 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
           >
+            {/* Buddy image - hidden on hover */}
             <img 
               src="/lovable-uploads/949dcec1-2a5d-481c-9ce6-aa0da5edb3d0.png"
               alt="Buddy the Helper Dog"
-              className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md mb-0.5"
+              className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
             />
-            <div className="text-yellow-200 group-hover:text-[#FFFF00] text-xs sm:text-sm md:text-base font-bold leading-tight transition-colors duration-200">
-              <div className="group-hover:hidden">Need Help?</div>
-              <div className="group-hover:hidden">Click Here</div>
-              <div className="hidden group-hover:block">Click Here</div>
-              <div className="hidden group-hover:block">for Help!</div>
+            
+            {/* Help text - shown on hover */}
+            <div className="hidden group-hover:flex items-center justify-center h-full text-[#EAB308] text-xs sm:text-sm md:text-base font-bold text-center">
+              Click for Buddy's Help
             </div>
           </button>
           
