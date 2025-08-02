@@ -190,6 +190,18 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
     ]
   };
 
+  // Fifth menu item: GUIDE (no submenus)
+  const guideMenuItem = {
+    id: "guide",
+    icon: "ICO-GU1.jpg",
+    text: "Guide",
+    color: "#F97316",
+    onClick: () => {
+      window.location.href = "/help-gpa";
+      onClose();
+    }
+  };
+
   return (
     <>
       {/* Backdrop to close menu when clicking outside */}
@@ -244,6 +256,16 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
             color={writingMenuItem.color}
             onClick={writingMenuItem.onClick}
             submenus={writingMenuItem.submenus}
+            customSize={mainButtonSize}
+          />
+          
+          {/* Fifth menu item: GUIDE (no submenus) */}
+          <MenuButton
+            key={guideMenuItem.id}
+            icon={guideMenuItem.icon}
+            text={guideMenuItem.text}
+            color={guideMenuItem.color}
+            onClick={guideMenuItem.onClick}
             customSize={mainButtonSize}
           />
         </div>
