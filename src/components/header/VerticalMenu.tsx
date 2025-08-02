@@ -161,6 +161,11 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
             onClick: () => {
               window.location.href = "/privacy";
               onClose();
+            },
+            customSize: {
+              width: "5rem",
+              height: "3.75rem", 
+              iconSize: "4rem"
             }
           }
         ],
