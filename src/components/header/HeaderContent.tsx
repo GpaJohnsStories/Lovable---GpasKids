@@ -457,49 +457,43 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                           style={{ backgroundColor: '#FFD65C' }}
                         >
                           <div className="grid grid-cols-2 gap-2 p-2">
-                            {/* Placeholder for first submenu item - need icon code and label */}
+                            {/* Position 2 (top-left): Grandpa's Partners */}
                             <Link
-                              to="/about/item1"
+                              to="/about/partners"
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
-                              aria-label="About Item 1"
+                              aria-label="Grandpa's Partners"
                             >
                               <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
                                 <img 
-                                  src={getSafeIconUrl('ICO-PLACEHOLDER1.png')}
-                                  alt="About Item 1"
+                                  src={getSafeIconUrl('ICO-AB3.png')}
+                                  alt="Grandpa's Partners"
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (target.src.includes('.png')) {
+                                      target.src = getSafeIconUrl('ICO-AB3.jpg');
+                                    } else if (target.src.includes('.jpg')) {
+                                      target.src = getSafeIconUrl('ICO-AB3.gif');
+                                    }
+                                  }}
+                                />
+                              </div>
+                            </Link>
+                            {/* Position 1 (top-right): About Grandpa John */}
+                            <Link
+                              to="/about/grandpa"
+                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
+                              aria-label="About Grandpa John"
+                            >
+                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                                <img 
+                                  src={getSafeIconUrl('ICO-PLACEHOLDER.png')}
+                                  alt="About Grandpa John"
                                   className="w-full h-full object-cover"
                                 />
                               </div>
                             </Link>
-                            {/* Placeholder for second submenu item - need icon code and label */}
-                            <Link
-                              to="/about/item2"
-                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
-                              aria-label="About Item 2"
-                            >
-                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
-                                <img 
-                                  src={getSafeIconUrl('ICO-PLACEHOLDER2.png')}
-                                  alt="About Item 2"
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                            </Link>
-                            {/* Placeholder for third submenu item - need icon code and label */}
-                            <Link
-                              to="/about/item3"
-                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
-                              aria-label="About Item 3"
-                            >
-                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
-                                <img 
-                                  src={getSafeIconUrl('ICO-PLACEHOLDER3.png')}
-                                  alt="About Item 3"
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                            </Link>
-                            {/* Placeholder for fourth submenu item - need icon code and label */}
+                            {/* Position 4 (bottom-left): Placeholder */}
                             <Link
                               to="/about/item4"
                               className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
@@ -509,6 +503,20 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-PLACEHOLDER4.png')}
                                   alt="About Item 4"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            </Link>
+                            {/* Position 3 (bottom-right): Placeholder */}
+                            <Link
+                              to="/about/item3"
+                              className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
+                              aria-label="About Item 3"
+                            >
+                              <div className="w-16 h-16 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                                <img 
+                                  src={getSafeIconUrl('ICO-PLACEHOLDER3.png')}
+                                  alt="About Item 3"
                                   className="w-full h-full object-cover"
                                 />
                               </div>
