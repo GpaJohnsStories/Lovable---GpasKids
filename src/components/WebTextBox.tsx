@@ -236,8 +236,21 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                     <button
                       onClick={handlePause}
                       disabled={!isPlaying}
-                      className="w-full h-16 text-lg font-bold bg-yellow-500 hover:bg-yellow-600 disabled:bg-gray-300 text-white border-r border-gray-400 transition-colors flex flex-col items-center justify-center"
-                      style={{ minWidth: '80px' }}
+                      className="w-full h-16 text-lg font-bold disabled:bg-gray-300 text-white border-r border-gray-400 transition-colors flex flex-col items-center justify-center"
+                      style={{ 
+                        backgroundColor: !isPlaying ? '#9ca3af' : '#E6C966',
+                        minWidth: '80px'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!e.currentTarget.disabled) {
+                          e.currentTarget.style.backgroundColor = '#d4b347';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!e.currentTarget.disabled) {
+                          e.currentTarget.style.backgroundColor = '#E6C966';
+                        }
+                      }}
                     >
                       <div className="text-xl">⏸</div>
                       <div className="text-xs mt-1">Pause</div>
