@@ -61,10 +61,10 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                   alt="Fun dancing GIF"
                   className="w-48 lg:w-64 h-32 lg:h-40 rounded-full border-4 border-white shadow-[inset_0_12px_20px_rgba(0,0,0,0.5),inset_0_6px_12px_rgba(0,0,0,0.3),inset_0_2px_6px_rgba(0,0,0,0.2)] object-cover object-left"
                 />
-                {/* Speech Bubble Image - Centered above GIF */}
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                {/* Speech Bubble Image - Positioned to the right of GIF */}
+                <div className="absolute -right-8 top-1/2 transform -translate-y-1/2">
                   <img 
-                    src="/lovable-uploads/85707d76-31c8-4dac-9fa7-c6752c4f8e74.png" 
+                    src="/lovable-uploads/9b3a12df-2473-4574-9762-76224ff8b67d.png" 
                     alt="Speech bubble"
                     className="w-16 lg:w-20 h-16 lg:h-20 object-contain"
                     onLoad={() => console.log('New speech bubble image loaded successfully')}
