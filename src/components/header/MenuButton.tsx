@@ -23,6 +23,8 @@ const MenuButton = ({ icon, text, color, onClick, customSize }: MenuButtonProps)
     return getIconUrl(filePath);
   };
 
+  const freshGreen = "#16a34a";
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -35,6 +37,22 @@ const MenuButton = ({ icon, text, color, onClick, customSize }: MenuButtonProps)
             border: `2px solid ${color}`,
             width: customSize?.width || '60px',
             height: customSize?.height || '60px'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = `linear-gradient(135deg, ${freshGreen}dd, ${freshGreen}bb)`;
+            e.currentTarget.style.border = `2px solid ${freshGreen}`;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = `linear-gradient(135deg, ${color}dd, ${color}bb)`;
+            e.currentTarget.style.border = `2px solid ${color}`;
+          }}
+          onMouseDown={(e) => {
+            e.currentTarget.style.background = `linear-gradient(135deg, ${freshGreen}aa, ${freshGreen}99)`;
+            e.currentTarget.style.border = `2px solid ${freshGreen}`;
+          }}
+          onMouseUp={(e) => {
+            e.currentTarget.style.background = `linear-gradient(135deg, ${freshGreen}dd, ${freshGreen}bb)`;
+            e.currentTarget.style.border = `2px solid ${freshGreen}`;
           }}
         >
           {/* Icon - proportionally scaled to fit button with margin */}
