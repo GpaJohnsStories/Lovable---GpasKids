@@ -82,8 +82,8 @@ function App() {
                       <Route path="/story/:storyCode" element={<Story />} />
                       <Route path="/library" element={<Library />} />
                       <Route path="/writing" element={<Writing />} />
-                      <Route path="/guide" element={<HowTo />} />
-                      <Route path="/help" element={<HelpGpa />} />
+                      <Route path="/how-to" element={<HowTo />} />
+                      <Route path="/help-gpa" element={<HelpGpa />} />
                       <Route path="/make-comment" element={<MakeComment />} />
                       <Route path="/view-comments" element={<ViewComments />} />
                       <Route path="/comment/:id" element={<CommentDetail />} />
@@ -93,7 +93,7 @@ function App() {
                       <Route path="/voice-preview" element={<VoicePreview />} />
                       <Route path="/forgot-password" element={<ForgotPassword />} />
                       <Route path="/reset-password" element={<ResetPassword />} />
-                      <Route path="/author-bios" element={<PublicAuthorBios />} />
+                      <Route path="/public-author-bios" element={<PublicAuthorBios />} />
                       <Route path="/author-bios-simple" element={<PublicAuthorBiosSimple />} />
                       <Route path="/author/:id" element={<AuthorBio />} />
 
