@@ -204,27 +204,22 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     setActiveSubmenu(null);
   };
 
-  // Main menu button size (same as golden button on phone)
-  const mainButtonSize = { width: '4rem', height: '4rem', iconSize: '3.5rem' };
-  
-  // Submenu button size (same as main menu buttons)
-  const submenuButtonSize = { width: '4rem', height: '4rem', iconSize: '3.5rem' };
+  // Button sizes are now hardcoded in MenuButton component (64x64px buttons, 56x56px icons)
 
   return (
     <>
       {/* Menu Container - positioned below gold button, scrolls with page */}
       <div className="absolute top-full right-0 z-30 mt-2">
         <div className="relative">
-          {/* Main Menu - 1x7 vertical layout with fixed sizing */}
-          <div className="flex flex-col gap-0" style={{ width: '4rem' }}>
+          {/* Main Menu - 1x7 vertical layout with hardcoded sizing */}
+          <div className="flex flex-col gap-0" style={{ width: '64px' }}>
             {mainMenuItems.map((item) => (
-              <div key={item.id} className="relative" style={{ width: '4rem', height: '4rem', flexShrink: 0 }}>
+              <div key={item.id} className="relative" style={{ width: '64px', height: '64px', flexShrink: 0 }}>
                 <MenuButton
                   icon={item.icon}
                   text={item.text}
                   color={item.color}
                   onClick={() => handleMainMenuClick(item)}
-                  customSize={mainButtonSize}
                 />
                 
                 {/* Submenu buttons arranged horizontally in a line going left */}
@@ -241,7 +236,6 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                           text={submenuItem.text}
                           color="#F97316"
                           onClick={() => handleSubmenuItemClick(submenuItem.onClick)}
-                          customSize={submenuButtonSize}
                           disabled={submenuItem.disabled}
                           disabledMessage={submenuItem.disabledMessage}
                         />

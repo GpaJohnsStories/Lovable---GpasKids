@@ -39,20 +39,15 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
 
   const getButtonStyle = () => {
     const baseColor = disabled ? disabledColor : color;
-    // FORCE all buttons to be exactly the same size - 4rem x 4rem (64px x 64px)
-    const buttonSize = customSize?.width || '4rem';
+    // Hardcoded exact pixel dimensions - 64x64px
     return {
       background: `linear-gradient(135deg, ${baseColor}dd, ${baseColor}bb)`,
       boxShadow: disabled 
         ? `0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1)` 
         : `0 8px 16px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)`,
       border: `2px solid ${baseColor}`,
-      width: buttonSize,
-      height: buttonSize, // Always force height = width for perfect square
-      minWidth: buttonSize, // Prevent shrinking
-      maxWidth: buttonSize, // Prevent growing
-      minHeight: buttonSize, // Prevent shrinking
-      maxHeight: buttonSize, // Prevent growing
+      width: '64px',
+      height: '64px',
       opacity: disabled ? 0.6 : 1,
       cursor: disabled ? 'not-allowed' : 'pointer'
     };
@@ -109,8 +104,8 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
             <div 
               className="animate-pulse bg-orange-300 rounded"
               style={{
-                width: '3.5rem', // Fixed size for consistency
-                height: '3.5rem', // Fixed size for consistency
+                width: '56px', // Hardcoded icon size
+                height: '56px', // Hardcoded icon size
               }}
             />
           )}
@@ -120,8 +115,8 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
             <div 
               className="flex items-center justify-center text-white text-xs font-bold px-1 overflow-hidden"
               style={{
-                width: '3.5rem', // Fixed size for consistency
-                height: '3.5rem', // Fixed size for consistency
+                width: '56px', // Hardcoded icon size
+                height: '56px', // Hardcoded icon size
               }}
             >
               <span className="text-center leading-tight break-words hyphens-auto max-w-full">
@@ -133,8 +128,8 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
               src={iconUrl}
               alt={text}
               style={{
-                width: '3.5rem', // Fixed size for consistency - ALL icons same size
-                height: '3.5rem', // Fixed size for consistency - ALL icons same size
+                width: '56px', // Hardcoded icon size - ALL icons same size
+                height: '56px', // Hardcoded icon size - ALL icons same size
                 opacity: disabled ? 0.5 : 1
               }}
               className="object-contain" // This will fit the icon within the fixed dimensions
