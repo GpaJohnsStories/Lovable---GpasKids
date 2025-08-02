@@ -257,8 +257,11 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                     <button
                       onClick={handleStop}
                       disabled={!currentAudio}
-                      className="w-full h-16 text-lg font-bold bg-red-500 hover:bg-red-600 disabled:bg-gray-300 text-white border-r border-gray-400 transition-colors flex flex-col items-center justify-center"
-                      style={{ minWidth: '80px' }}
+                      className="w-full h-16 text-lg font-bold text-white border-r border-gray-400 transition-colors flex flex-col items-center justify-center"
+                      style={{ 
+                        backgroundColor: '#ef4444',
+                        minWidth: '80px'
+                      }}
                     >
                       <div className="text-xl">⏹</div>
                       <div className="text-xs mt-1">Stop</div>
