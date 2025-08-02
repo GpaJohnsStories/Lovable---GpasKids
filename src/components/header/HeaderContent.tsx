@@ -162,19 +162,21 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none"
                       aria-label="Go to Home Page"
                     >
-                      <img 
-                        src={getSafeIconUrl('ICO-HO2.png')}
-                        alt="Home"
-                        className="w-full h-full object-cover rounded-md"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          if (target.src.includes('.png')) {
-                            target.src = getSafeIconUrl('ICO-HO2.jpg');
-                          } else if (target.src.includes('.jpg')) {
-                            target.src = getSafeIconUrl('ICO-HO2.gif');
-                          }
-                        }}
-                      />
+                      <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                        <img 
+                          src={getSafeIconUrl('ICO-HO2.png')}
+                          alt="Home"
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            if (target.src.includes('.png')) {
+                              target.src = getSafeIconUrl('ICO-HO2.jpg');
+                            } else if (target.src.includes('.jpg')) {
+                              target.src = getSafeIconUrl('ICO-HO2.gif');
+                            }
+                          }}
+                        />
+                      </div>
                     </Link>
                     <div className="group/library relative">
                       <Link
@@ -182,19 +184,21 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                         aria-label="Go to Library"
                       >
-                        <img 
-                          src={getSafeIconUrl('ICO-LB1.png')}
-                          alt="Library"
-                          className="w-full h-full object-cover rounded-md"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            if (target.src.includes('.png')) {
-                              target.src = getSafeIconUrl('ICO-LB1.jpg');
-                            } else if (target.src.includes('.jpg')) {
-                              target.src = getSafeIconUrl('ICO-LB1.gif');
-                            }
-                          }}
-                        />
+                        <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                          <img 
+                            src={getSafeIconUrl('ICO-LB1.png')}
+                            alt="Library"
+                            className="w-full h-full object-contain"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              if (target.src.includes('.png')) {
+                                target.src = getSafeIconUrl('ICO-LB1.jpg');
+                              } else if (target.src.includes('.jpg')) {
+                                target.src = getSafeIconUrl('ICO-LB1.gif');
+                              }
+                            }}
+                          />
+                        </div>
                       </Link>
                       
                       {/* Library Submenu */}
@@ -213,7 +217,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-LB2.png')}
                                   alt="Story List"
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                   onError={(e) => {
                                     const target = e.target as HTMLImageElement;
                                     if (target.src.includes('.png')) {
@@ -234,7 +238,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-LB3.png')}
                                   alt="Read A Story"
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                   onError={(e) => {
                                     const target = e.target as HTMLImageElement;
                                     if (target.src.includes('.png')) {
@@ -258,19 +262,21 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                         aria-label="Comments & Questions"
                       >
-                        <img 
-                          src={getSafeIconUrl('ICO-CO1.png')}
-                          alt="Comments & Questions"
-                          className="w-full h-full object-cover rounded-md"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            if (target.src.includes('.png')) {
-                              target.src = getSafeIconUrl('ICO-CO1.jpg');
-                            } else if (target.src.includes('.jpg')) {
-                              target.src = getSafeIconUrl('ICO-CO1.gif');
-                            }
-                          }}
-                        />
+                        <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                          <img 
+                            src={getSafeIconUrl('ICO-CO1.png')}
+                            alt="Comments & Questions"
+                            className="w-full h-full object-contain"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              if (target.src.includes('.png')) {
+                                target.src = getSafeIconUrl('ICO-CO1.jpg');
+                              } else if (target.src.includes('.jpg')) {
+                                target.src = getSafeIconUrl('ICO-CO1.gif');
+                              }
+                            }}
+                          />
+                        </div>
                       </Link>
                       
                       {/* Comments & Questions Submenu */}
@@ -290,7 +296,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-CO2.png')}
                                   alt="Write to Gpa John or Buddy"
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                   onError={(e) => {
                                     const target = e.target as HTMLImageElement;
                                     if (target.src.includes('.png')) {
@@ -312,7 +318,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-CO3.png')}
                                   alt="View All Comments"
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                   onError={(e) => {
                                     const target = e.target as HTMLImageElement;
                                     if (target.src.includes('.png')) {
@@ -336,19 +342,21 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                         aria-label="Sharing Stories"
                       >
-                        <img 
-                          src={getSafeIconUrl('ICO-WR3.png')}
-                          alt="Sharing Stories"
-                          className="w-full h-full object-cover rounded-md"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            if (target.src.includes('.png')) {
-                              target.src = getSafeIconUrl('ICO-WR3.jpg');
-                            } else if (target.src.includes('.jpg')) {
-                              target.src = getSafeIconUrl('ICO-WR3.gif');
-                            }
-                          }}
-                        />
+                        <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                          <img 
+                            src={getSafeIconUrl('ICO-WR3.png')}
+                            alt="Sharing Stories"
+                            className="w-full h-full object-contain"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              if (target.src.includes('.png')) {
+                                target.src = getSafeIconUrl('ICO-WR3.jpg');
+                              } else if (target.src.includes('.jpg')) {
+                                target.src = getSafeIconUrl('ICO-WR3.gif');
+                              }
+                            }}
+                          />
+                        </div>
                       </Link>
                       
                       {/* Sharing Stories Submenu */}
@@ -368,7 +376,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-WR2.png')}
                                   alt="Careful with Copyright"
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                   onError={(e) => {
                                     const target = e.target as HTMLImageElement;
                                     if (target.src.includes('.png')) {
@@ -390,7 +398,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-WR3.png')}
                                   alt="Share Your Story"
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                   onError={(e) => {
                                     const target = e.target as HTMLImageElement;
                                     if (target.src.includes('.png')) {
@@ -413,19 +421,21 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                       aria-label="Your Guide to Gpa's Kids website"
                     >
-                      <img 
-                        src={getSafeIconUrl('ICO-GU1.png')}
-                        alt="Your Guide to Gpa's Kids website"
-                        className="w-full h-full object-cover rounded-md"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          if (target.src.includes('.png')) {
-                            target.src = getSafeIconUrl('ICO-GU1.jpg');
-                          } else if (target.src.includes('.jpg')) {
-                            target.src = getSafeIconUrl('ICO-GU1.gif');
-                          }
-                        }}
-                      />
+                      <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                        <img 
+                          src={getSafeIconUrl('ICO-GU1.png')}
+                          alt="Your Guide to Gpa's Kids website"
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            if (target.src.includes('.png')) {
+                              target.src = getSafeIconUrl('ICO-GU1.jpg');
+                            } else if (target.src.includes('.jpg')) {
+                              target.src = getSafeIconUrl('ICO-GU1.gif');
+                            }
+                          }}
+                        />
+                      </div>
                     </Link>
 
                     {/* All About Us Main Button with Submenu */}
@@ -435,19 +445,21 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                         className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                         aria-label="All About Us"
                       >
-                        <img 
-                          src={getSafeIconUrl('ICO-AB1.png')}
-                          alt="All About Us"
-                          className="w-full h-full object-cover rounded-md"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            if (target.src.includes('.png')) {
-                              target.src = getSafeIconUrl('ICO-AB1.jpg');
-                            } else if (target.src.includes('.jpg')) {
-                              target.src = getSafeIconUrl('ICO-AB1.gif');
-                            }
-                          }}
-                        />
+                        <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                          <img 
+                            src={getSafeIconUrl('ICO-AB1.png')}
+                            alt="All About Us"
+                            className="w-full h-full object-contain"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              if (target.src.includes('.png')) {
+                                target.src = getSafeIconUrl('ICO-AB1.jpg');
+                              } else if (target.src.includes('.jpg')) {
+                                target.src = getSafeIconUrl('ICO-AB1.gif');
+                              }
+                            }}
+                          />
+                        </div>
                       </Link>
                       
                       {/* All About Us Submenu - 2x2 Grid Layout */}
@@ -467,7 +479,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-AB3.png')}
                                   alt="Grandpa's Partners"
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                   onError={(e) => {
                                     const target = e.target as HTMLImageElement;
                                     if (target.src.includes('.png')) {
@@ -489,7 +501,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-PLACEHOLDER.png')}
                                   alt="About Grandpa John"
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                 />
                               </div>
                             </Link>
@@ -503,7 +515,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-AB5.png')}
                                   alt="Helpful AI's"
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                   onError={(e) => {
                                     const target = e.target as HTMLImageElement;
                                     if (target.src.includes('.png')) {
@@ -525,7 +537,7 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                                 <img 
                                   src={getSafeIconUrl('ICO-PLACEHOLDER.png')}
                                   alt="Authors"
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain"
                                 />
                               </div>
                             </Link>
@@ -540,19 +552,21 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
                       className="block rounded-md overflow-hidden hover:scale-105 transition-transform duration-200 focus:outline-none mt-2"
                       aria-label="Safe and Sound"
                     >
-                      <img 
-                        src={getSafeIconUrl('ICO-SA1.png')}
-                        alt="Safe and Sound"
-                        className="w-full h-full object-cover rounded-md"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          if (target.src.includes('.png')) {
-                            target.src = getSafeIconUrl('ICO-SA1.jpg');
-                          } else if (target.src.includes('.jpg')) {
-                            target.src = getSafeIconUrl('ICO-SA1.gif');
-                          }
-                        }}
-                      />
+                      <div className="w-15 h-15 rounded-lg bg-orange-500 border-2 border-orange-600 shadow-md overflow-hidden">
+                        <img 
+                          src={getSafeIconUrl('ICO-SA1.png')}
+                          alt="Safe and Sound"
+                          className="w-full h-full object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            if (target.src.includes('.png')) {
+                              target.src = getSafeIconUrl('ICO-SA1.jpg');
+                            } else if (target.src.includes('.jpg')) {
+                              target.src = getSafeIconUrl('ICO-SA1.gif');
+                            }
+                          }}
+                        />
+                      </div>
                     </Link>
                   </div>
                 </div>
