@@ -177,10 +177,10 @@ const AdminHeaderBanner = () => {
                 <img 
                   src={logoutIconUrl} 
                   alt="Logout"
-                  className="w-8 h-8 object-contain"
+                  className="w-12 h-12 object-contain"
                 />
               ) : (
-                <LogOut className="w-8 h-8 text-white" />
+                <LogOut className="w-12 h-12 text-white" />
               )}
             </div>
           </div>
