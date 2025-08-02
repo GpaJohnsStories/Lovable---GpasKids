@@ -142,6 +142,49 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
     ]
   };
 
+  // Fourth menu item: WRITING (with submenus)
+  const writingMenuItem = {
+    id: "writing",
+    icon: "ICO-WR3.jpg",
+    text: "Writing",
+    color: "#F97316",
+    onClick: () => {
+      console.log("Writing menu clicked");
+    },
+    submenus: [
+      {
+        items: [
+          {
+            id: "copyright-info",
+            icon: "ICO-CO2.gif",
+            text: "Copyright Info",
+            onClick: () => {
+              window.location.href = "/privacy";
+              onClose();
+            }
+          }
+        ],
+        position: 'left' as const,
+        level: 1
+      },
+      {
+        items: [
+          {
+            id: "write-your-story",
+            icon: "ICO-WR3.jpg",
+            text: "Write YOUR Story",
+            onClick: () => {
+              window.location.href = "/writing";
+              onClose();
+            }
+          }
+        ],
+        position: 'left' as const,
+        level: 2
+      }
+    ]
+  };
+
   return (
     <>
       {/* Backdrop to close menu when clicking outside */}
@@ -184,6 +227,18 @@ const VerticalMenu = ({ isVisible, onClose }: VerticalMenuProps) => {
             color={commentsMenuItem.color}
             onClick={commentsMenuItem.onClick}
             submenus={commentsMenuItem.submenus}
+            customSize={mainButtonSize}
+          />
+          
+          {/* Fourth menu item: WRITING (with submenus) */}
+          <MenuItemWithSubmenus
+            key={writingMenuItem.id}
+            id={writingMenuItem.id}
+            icon={writingMenuItem.icon}
+            text={writingMenuItem.text}
+            color={writingMenuItem.color}
+            onClick={writingMenuItem.onClick}
+            submenus={writingMenuItem.submenus}
             customSize={mainButtonSize}
           />
         </div>
