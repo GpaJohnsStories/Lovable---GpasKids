@@ -28,6 +28,7 @@ import PublicAuthorBiosSimple from "./pages/PublicAuthorBiosSimple";
 import AuthorBio from "./pages/AuthorBio";
 
 import AdminReference from "./pages/AdminReference";
+import AdminSiteMap from "./pages/AdminSiteMap";
 
 // Admin components
 import AdminLayout from "./components/admin/AdminLayout";
@@ -111,6 +112,7 @@ function App() {
                       <Route path="/buddys_admin/author-bios/edit/:id" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
                       
                       <Route path="/buddys_admin/reference" element={<AdminReference />} />
+                      <Route path="/buddys_admin/sitemap" element={<AdminSiteMap />} />
 
                       {/* Unified Story System Routes - These are the only story management routes now */}
                       <Route path="/buddys_admin/unified_story_system/add" element={<AdminLayout><UnifiedStoryPage mode="add" /></AdminLayout>} />

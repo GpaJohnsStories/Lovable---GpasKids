@@ -115,6 +115,17 @@ const AdminHeaderBanner = () => {
       textColor: 'text-white',
       description: 'Reference materials and resources for administration'
     },
+    {
+      name: 'Site Map',
+      path: '/buddys_admin/sitemap',
+      icon: Globe,
+      bgColor: 'bg-gradient-to-b from-teal-400 via-teal-500 to-teal-600',
+      hoverColor: 'hover:from-teal-500 hover:via-teal-600 hover:to-teal-700',
+      shadowColor: 'shadow-[0_6px_0_#0d9488,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#0d9488,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-white',
+      description: 'Visual map of all site pages and structure'
+    },
   ];
 
   const scrollToTop = () => {
