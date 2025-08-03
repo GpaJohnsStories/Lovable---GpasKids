@@ -411,6 +411,38 @@ const AdminHeaderBanner = () => {
                 return [librariesButton, ...(isViewer ? [] : [createStoryButton]), biosButton];
               }
 
+              // Special handling for Reference button as square icon button
+              if (button.name === 'Reference') {
+                const referenceButton = (
+                  <div 
+                    key={button.name}
+                    className="relative"
+                    onMouseEnter={() => setHoveredButton(button.name)}
+                    onMouseLeave={() => setHoveredButton(null)}
+                  >
+                    <Link to={button.path} onClick={scrollToTop}>
+                      <div
+                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-orange-300/50 hover:scale-105 transition-transform cursor-pointer"
+                        style={{ 
+                          backgroundColor: '#9c441a',
+                          minWidth: '55px',
+                          minHeight: '55px'
+                        }}
+                      >
+                        <span className="text-sm font-bold text-white">REF</span>
+                      </div>
+                    </Link>
+                    {hoveredButton === button.name && (
+                      <div className="nav-bubble opacity-100 visible">
+                        <b>Reference</b>
+                      </div>
+                    )}
+                  </div>
+                );
+                
+                return referenceButton;
+              }
+
               return (
                 <div 
                   key={button.name}
