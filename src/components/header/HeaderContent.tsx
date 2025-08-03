@@ -7,9 +7,10 @@ import SimpleVerticalMenu from "./SimpleVerticalMenu";
 
 interface HeaderContentProps {
   isHomePage: boolean;
+  isAdminPage?: boolean;
 }
 
-const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
+const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) => {
   const location = useLocation();
   const { showHelp } = useHelp();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -131,43 +132,45 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
           )}
         </div>
 
-        {/* RIGHT SECTION: Gold Menu Button */}
-        <div className="flex justify-end relative" ref={menuRef}>
-          <button 
-            onClick={handleMenuClick}
-            aria-label="Click for Menu"
-            className="group relative z-10 bg-gradient-to-br from-yellow-500/80 to-yellow-600/60 hover:from-yellow-400/80 hover:to-yellow-500/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-500 hover:border-yellow-400 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
-          >
-            {/* Loading state for Menu */}
-            {menuLoading && (
-              <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-300 animate-pulse rounded-md" />
-            )}
-            
-            {/* Show text if no icon available, otherwise show Menu image - hidden on hover */}
-            {(menuError || !menuIconUrl) && !menuLoading ? (
-              <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-200 flex items-center justify-center text-yellow-800 text-xs font-bold rounded-md group-hover:hidden">
-                MENU
+        {/* RIGHT SECTION: Gold Menu Button - Hidden on admin pages */}
+        {!isAdminPage && (
+          <div className="flex justify-end relative" ref={menuRef}>
+            <button 
+              onClick={handleMenuClick}
+              aria-label="Click for Menu"
+              className="group relative z-10 bg-gradient-to-br from-yellow-500/80 to-yellow-600/60 hover:from-yellow-400/80 hover:to-yellow-500/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-500 hover:border-yellow-400 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+            >
+              {/* Loading state for Menu */}
+              {menuLoading && (
+                <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-300 animate-pulse rounded-md" />
+              )}
+              
+              {/* Show text if no icon available, otherwise show Menu image - hidden on hover */}
+              {(menuError || !menuIconUrl) && !menuLoading ? (
+                <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-200 flex items-center justify-center text-yellow-800 text-xs font-bold rounded-md group-hover:hidden">
+                  MENU
+                </div>
+              ) : menuIconUrl && !menuLoading && !menuError ? (
+                <img 
+                  src={menuIconUrl}
+                  alt="Main Menu"
+                  className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
+                />
+              ) : null}
+              
+              {/* Menu help text - shown on hover */}
+              <div className="hidden group-hover:flex items-center justify-center h-full text-blue-900 text-xs sm:text-sm md:text-base font-bold text-center">
+                Click for Menu
               </div>
-            ) : menuIconUrl && !menuLoading && !menuError ? (
-              <img 
-                src={menuIconUrl}
-                alt="Main Menu"
-                className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
-              />
-            ) : null}
+            </button>
             
-            {/* Menu help text - shown on hover */}
-            <div className="hidden group-hover:flex items-center justify-center h-full text-blue-900 text-xs sm:text-sm md:text-base font-bold text-center">
-              Click for Menu
-            </div>
-          </button>
-          
-          {/* Vertical Menu */}
-          <SimpleVerticalMenu 
-            isVisible={isMenuOpen} 
-            onClose={() => setIsMenuOpen(false)} 
-          />
-        </div>
+            {/* Vertical Menu */}
+            <SimpleVerticalMenu 
+              isVisible={isMenuOpen} 
+              onClose={() => setIsMenuOpen(false)} 
+            />
+          </div>
+        )}
       </div>
     </div>
   );
