@@ -210,13 +210,12 @@ const About = () => {
             {/* Responsive layout: stacked on mobile, side-by-side on larger screens */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
               {/* ICZ-AB5 Photo - responsive sizing */}
-              <div className="w-full md:w-1/2 lg:w-2/3 overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm">
+              <div className="w-full md:w-1/2 lg:w-2/3 overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm flex items-center justify-center">
                 {ab5IconUrl && (
                   <img 
                     src={ab5IconUrl} 
                     alt="3 Helpful AI's Icon"
-                    className="w-full object-contain hover:scale-105 transition-transform duration-300"
-                    style={{ height: '200px', maxHeight: '300px' }}
+                    className="w-full h-48 md:h-96 lg:h-80 object-contain hover:scale-105 transition-transform duration-300"
                   />
                 )}
               </div>
