@@ -207,81 +207,85 @@ const About = () => {
               A Special "Thank You" to ...
             </h1>
             
-            {/* Photos arranged in 2x2 grid for tablet layout */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              {/* Top Left: ICZ-AB5 Photo */}
-              <div className="overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm">
+            {/* Left side: Large ICZ-AB5 photo, Right side: Stacked logos */}
+            <div className="flex gap-4 mb-6">
+              {/* Left: Large ICZ-AB5 Photo */}
+              <div className="flex-1 overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm">
                 {ab5IconUrl && (
                   <img 
                     src={ab5IconUrl} 
                     alt="3 Helpful AI's Icon"
-                    className="w-full h-32 object-contain hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
+                    style={{ minHeight: '400px' }}
                   />
                 )}
               </div>
               
-              {/* Top Right: Lovable (#1 AI Assistant) */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="overflow-hidden rounded-lg border-4 border-yellow-400 shadow-sm cursor-pointer">  {/* Gold for Lovable */}
-                    <img
-                      src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203773244-hhgj4xbfc.png"
-                      alt="#1 AI Assistant"
-                      className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
-                      onLoad={() => console.log('Photo 2 loaded successfully')}
-                      onError={(e) => {
-                        console.error('Photo 2 failed to load:', e.currentTarget.src);
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#1 AI Assistant</p>
-                </TooltipContent>
-              </Tooltip>
-              
-              {/* Second Row Left: CoPilot (#2 AI Assistant) */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="overflow-hidden rounded-lg border-4 border-gray-400 bg-gray-200 shadow-sm cursor-pointer">  {/* Silver border with lighter background for CoPilot */}
-                    <img
-                      src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203785267-p40ovhg84.png"
-                      alt="#2 AI Assistant"
-                      className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
-                      onLoad={() => console.log('Photo 3 loaded successfully')}
-                      onError={(e) => {
-                        console.error('Photo 3 failed to load:', e.currentTarget.src);
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#2 AI Assistant</p>
-                </TooltipContent>
-              </Tooltip>
-              
-              {/* Second Row Right: Gemini (#3 AI Assistant) */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="overflow-hidden rounded-lg border-4 border-amber-600 bg-amber-300 shadow-sm cursor-pointer">  {/* Bronze border with darker bronze background for Gemini */}
-                    <img
-                      src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
-                      alt="#3 AI Assistant"
-                      className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
-                      onLoad={() => console.log('Photo 1 loaded successfully')}
-                      onError={(e) => {
-                        console.error('Photo 1 failed to load:', e.currentTarget.src);
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#3 AI Assistant</p>
-                </TooltipContent>
-              </Tooltip>
+              {/* Right: Stacked logos */}
+              <div className="flex flex-col gap-4 w-48">
+                {/* Top: Lovable (#1 AI Assistant) */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="overflow-hidden rounded-lg border-4 border-yellow-400 shadow-sm cursor-pointer">
+                      <img
+                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203773244-hhgj4xbfc.png"
+                        alt="#1 AI Assistant"
+                        className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                        onLoad={() => console.log('Photo 2 loaded successfully')}
+                        onError={(e) => {
+                          console.error('Photo 2 failed to load:', e.currentTarget.src);
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#1 AI Assistant</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                {/* Middle: CoPilot (#2 AI Assistant) */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="overflow-hidden rounded-lg border-4 border-gray-400 bg-gray-200 shadow-sm cursor-pointer">
+                      <img
+                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203785267-p40ovhg84.png"
+                        alt="#2 AI Assistant"
+                        className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                        onLoad={() => console.log('Photo 3 loaded successfully')}
+                        onError={(e) => {
+                          console.error('Photo 3 failed to load:', e.currentTarget.src);
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#2 AI Assistant</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                {/* Bottom: Gemini (#3 AI Assistant) */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="overflow-hidden rounded-lg border-4 border-amber-600 bg-amber-300 shadow-sm cursor-pointer">
+                      <img
+                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
+                        alt="#3 AI Assistant"
+                        className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                        onLoad={() => console.log('Photo 1 loaded successfully')}
+                        onError={(e) => {
+                          console.error('Photo 1 failed to load:', e.currentTarget.src);
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#3 AI Assistant</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
             </div>
 
             {/* Deployable text content */}
