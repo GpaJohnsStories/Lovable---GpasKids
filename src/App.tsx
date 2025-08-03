@@ -87,7 +87,7 @@ function App() {
                       <Route path="/story/:storyCode" element={<Story />} />
                       <Route path="/library" element={<Library />} />
                       <Route path="/writing" element={<Writing />} />
-                      <Route path="/how-to" element={<HowTo />} />
+                      <Route path="/guide" element={<HowTo />} />
                       <Route path="/help-gpa" element={<HelpGpa />} />
                       <Route path="/make-comment" element={<MakeComment />} />
                       <Route path="/view-comments" element={<ViewComments />} />

@@ -137,7 +137,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       text: "Guide",
       color: "#F97316",
       onClick: () => {
-        window.location.href = "/help-gpa";
+        window.location.href = "/guide";
         onClose();
       }
     },
