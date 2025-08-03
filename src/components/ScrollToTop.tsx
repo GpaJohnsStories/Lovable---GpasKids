@@ -1,9 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const ScrollToTop = () => {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith('/buddys_admin');
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
@@ -22,7 +25,7 @@ const ScrollToTop = () => {
     });
   };
 
-  if (!showButton) return null;
+  if (!showButton || isAdminPage) return null;
 
   return (
     <div className="fixed bottom-20 right-4 z-50">
@@ -32,7 +35,7 @@ const ScrollToTop = () => {
         className="rounded-full shadow-lg bg-gradient-to-br from-yellow-500/80 to-yellow-600/60 hover:from-yellow-400/80 hover:to-yellow-500/60 text-orange-600 border-2 border-yellow-500 hover:border-yellow-400 transition-all duration-300 hover:scale-105 px-4 py-2"
         aria-label="Scroll to top"
       >
-        <span className="font-semibold font-fun">Menu</span>
+        <span className="font-semibold font-fun">Top</span>
         <ArrowUp className="h-4 w-4 ml-2" />
       </Button>
     </div>
