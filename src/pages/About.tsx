@@ -210,7 +210,7 @@ const About = () => {
             {/* Responsive layout: stacked on mobile, side-by-side on larger screens */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
               {/* ICZ-AB5 Photo - responsive sizing with wood frame */}
-              <div className="w-full md:w-1/2 lg:w-2/3 rounded-lg shadow-xl flex items-center justify-center p-2 md:p-4 bg-gradient-to-br from-amber-800 via-amber-700 to-amber-900 border-4 md:border-8 border-amber-800" style={{
+              <div className="w-full md:w-1/2 lg:w-3/5 rounded-lg shadow-xl flex items-center justify-center p-2 md:p-4 bg-gradient-to-br from-amber-800 via-amber-700 to-amber-900 border-4 md:border-8 border-amber-800" style={{
                 backgroundImage: 'linear-gradient(45deg, #92400e 25%, #a16207 25%, #a16207 50%, #92400e 50%, #92400e 75%, #a16207 75%)',
                 backgroundSize: '8px 8px',
                 boxShadow: 'inset 0 0 20px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.4)'
@@ -225,7 +225,7 @@ const About = () => {
               </div>
               
               {/* Right: Stacked logos - responsive sizing */}
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-3 w-full md:w-1/2 lg:w-1/3">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-3 w-full md:w-1/2 lg:w-2/5">
                 {/* Lovable (#1 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
