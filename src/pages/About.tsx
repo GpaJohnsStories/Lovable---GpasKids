@@ -209,13 +209,13 @@ const About = () => {
             
             {/* Photos arranged in 2x2 grid for tablet layout */}
             <div className="grid grid-cols-2 gap-4 mb-6">
-              {/* Top Left: ICO-AB5 Icon */}
-              <div className="flex items-center justify-center">
+              {/* Top Left: ICZ-AB5 Photo */}
+              <div className="overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm">
                 {ab5IconUrl && (
                   <img 
                     src={ab5IconUrl} 
                     alt="3 Helpful AI's Icon"
-                    className="w-16 h-16 object-contain"
+                    className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
                   />
                 )}
               </div>
