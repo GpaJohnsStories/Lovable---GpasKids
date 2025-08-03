@@ -110,26 +110,10 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       icon: "ICO-WR3.jpg", // Writing icon (main menu) 
       text: "Writing",
       color: "#F97316",
-      submenus: [
-        {
-          id: "submit-story",
-          icon: "ICO-WR2.gif", // Submit Story (1st/rightmost submenu - tall & slender)
-          text: "Submit Story",
-          onClick: () => {
-            window.location.href = "/writing";
-            onClose();
-          }
-        },
-        {
-          id: "how-to-write",
-          icon: "ICO-WR3.jpg", // How To Write (2nd/leftmost submenu - same as main)
-          text: "How To Write",
-          onClick: () => {
-            window.location.href = "/how-to";
-            onClose();
-          }
-        }
-      ]
+      onClick: () => {
+        window.location.href = "/writing";
+        onClose();
+      }
     },
     {
       id: "guide", 
