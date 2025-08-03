@@ -22,6 +22,7 @@ const PreferredColorsTable: React.FC = () => {
       title: "Supporting Website Colors", 
       colors: [
         { name: 'Forest Green', hex: '#4A7C59', description: 'Best Used for: Deep nature themes, mysterious forest scenes, secondary navigation, and wisdom elements. Represents depth and knowledge. Perfect for "Grandpa\'s deep thoughts" and contemplative moments.' },
+        { name: 'Forest Green Classic', hex: '#228B22', description: 'Best Used for: Traditional forest adventures, classic nature themes, woodsy characters, and natural elements. Creates a timeless outdoor feeling. Perfect for camping stories, hiking adventures, and classic nature tales.' },
         { name: 'Soft Gold', hex: '#E6C966', description: 'Best Used for: Subtle highlights, gentle accents, story borders, and warm details. Provides golden warmth without overwhelming brightness. Great for decorative elements and gentle emphasis.' },
         { name: 'Story Purple', hex: '#9333ea', description: 'Best Used for: Magical themes, fantasy stories, royal characters, and mystical elements. Creates wonder and imagination. Perfect for fairy tales, wizards, and enchanted adventures.' },
         { name: 'Cherry Red', hex: '#DC2626', description: 'Best Used for: Important alerts, special announcements, love themes, and emergency buttons. Use sparingly to maintain impact. Perfect for "important messages from Grandpa" and safety notifications.' },
