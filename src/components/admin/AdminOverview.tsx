@@ -185,27 +185,6 @@ const AdminOverview = () => {
 
       {!isViewer && (
         <>
-          {/* Menu Manager - Wide box with cyan border - Moved to top */}
-          <Card className="mb-6 border-cyan-500 border-2">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-cyan-700">
-                <BookOpen className="h-5 w-5" />
-                Reference Materials
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 mb-4">
-                Access reference materials, icon library, and administrative resources.
-              </p>
-              <button 
-                onClick={() => navigate('/buddys_admin/reference')}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
-              >
-                <BookOpen className="h-4 w-4" />
-                Open Reference
-              </button>
-            </CardContent>
-          </Card>
 
           {/* Security Management - Wide box with orange border */}
           <Card className="mb-6 border-orange-500 border-2">
