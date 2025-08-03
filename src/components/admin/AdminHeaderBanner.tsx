@@ -268,7 +268,7 @@ const AdminHeaderBanner = () => {
                 </div>
               );
 
-              // Render + Story button after Library button
+              // Render + Story button as square icon button
               const createStoryButton = (
                 <div 
                   key="create-story"
@@ -276,28 +276,23 @@ const AdminHeaderBanner = () => {
                   onMouseEnter={() => setHoveredButton('Story')}
                   onMouseLeave={() => setHoveredButton(null)}
                 >
-                  <Button
+                  <div
                     onClick={() => {
                       console.log('🎯 + Story button clicked in header');
                       handleCreateStoryClick();
                     }}
-                    variant="ghost"
-                    className="
-                      transition-all duration-200 border font-fun
-                      bg-gradient-to-b from-green-400 via-green-500 to-green-600 text-white
-                      shadow-[0_6px_0_#16a34a,0_8px_15px_rgba(0,0,0,0.3)]
-                      hover:shadow-[0_4px_0_#16a34a,0_6px_12px_rgba(0,0,0,0.4)]
-                      hover:transform hover:translate-y-1 active:translate-y-2 
-                      active:shadow-[0_2px_0_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.3)]
-                      hover:from-green-500 hover:via-green-600 hover:to-green-700
-                    "
+                    className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-purple-300/50 hover:scale-105 transition-transform cursor-pointer"
+                    style={{ 
+                      backgroundColor: '#9333ea',
+                      minWidth: '55px',
+                      minHeight: '55px'
+                    }}
                   >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Story
-                  </Button>
+                    <span className="text-2xl font-bold text-white">+</span>
+                  </div>
                   {hoveredButton === 'Story' && (
                     <div className="nav-bubble opacity-100 visible">
-                      Create new story with unified editing system
+                      <b>Add New Story</b>
                     </div>
                   )}
                 </div>
