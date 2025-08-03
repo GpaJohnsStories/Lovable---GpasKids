@@ -6,8 +6,10 @@ import ScrollToTop from "@/components/ScrollToTop";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { UniversalAudioControls } from "@/components/UniversalAudioControls";
 import { DeployedContent } from "@/components/DeployedContent";
+import { useCachedIcon } from "@/hooks/useCachedIcon";
 
 const About = () => {
+  const { iconUrl: ab5IconUrl } = useCachedIcon('ICO-AB5.jpg');
 
   return (
     <TooltipProvider>
@@ -209,11 +211,13 @@ const About = () => {
             <div className="grid grid-cols-2 gap-4 mb-6">
               {/* Top Left: ICO-AB5 Icon */}
               <div className="flex items-center justify-center">
-                <img 
-                  src="/lovable-uploads/ICO-AB5.jpg" 
-                  alt="3 Helpful AI's Icon"
-                  className="w-16 h-16 object-contain"
-                />
+                {ab5IconUrl && (
+                  <img 
+                    src={ab5IconUrl} 
+                    alt="3 Helpful AI's Icon"
+                    className="w-16 h-16 object-contain"
+                  />
+                )}
               </div>
               
               {/* Top Right: Lovable (#1 AI Assistant) */}
