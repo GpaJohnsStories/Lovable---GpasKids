@@ -215,7 +215,7 @@ const About = () => {
                   <img 
                     src={ab5IconUrl} 
                     alt="3 Helpful AI's Icon"
-                    className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                    className="w-full h-32 object-contain hover:scale-105 transition-transform duration-300"
                   />
                 )}
               </div>
