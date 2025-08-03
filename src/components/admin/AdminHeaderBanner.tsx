@@ -218,7 +218,7 @@ const AdminHeaderBanner = () => {
           </div>
           
           {/* Center section: Navigation buttons starting from center */}
-          <nav className="absolute left-1/2 transform -translate-x-1/2 flex gap-3">
+          <nav className="absolute left-1/2 flex gap-3">
             {navButtons.map((button, index) => {
               const isActive = location.pathname === button.path || 
                 (button.name === 'Libraries' && (location.pathname === '/buddys_admin/stories' || location.pathname.includes('/buddys_admin/stories')));
