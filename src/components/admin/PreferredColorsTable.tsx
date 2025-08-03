@@ -9,6 +9,7 @@ const PreferredColorsTable: React.FC = () => {
       title: "Primary Website Colors",
       colors: [
         { name: 'Brighter Gold', hex: '#F2BA15', description: 'Best Used for: Primary buttons, story titles, magical elements, treasure themes, and positive highlights. Creates warmth and excitement for children. Perfect for "Grandpa\'s special moments" and celebration scenes. Brighter gold — sunny and radiant, lighter for accents.' },
+        { name: 'Admin Blue', hex: '#2563eb', description: 'Best Used for: Administrative elements, headers, professional sections, and trusted content areas. Creates a sense of authority and reliability. Perfect for admin interfaces and important system messages.' },
         { name: 'Fresh Green', hex: '#16a34a', description: 'Best Used for: Nature stories, adventure themes, "go" buttons, positive feedback, and outdoor scenes. Represents growth, safety, and natural wonder. Ideal for forest adventures and garden tales.' },
         { name: 'Sunset Orange', hex: '#FF8C42', description: 'Best Used for: Warm story backgrounds, cozy evening scenes, autumn themes, and friendly characters. Creates a comforting "Grandpa\'s living room" atmosphere. Perfect for bedtime stories and fireside moments.' },
         { name: 'Vibrant Orange', hex: '#F97316', description: 'Best Used for: Action buttons, exciting moments, playful elements, and energetic characters. Captures children\'s attention without being overwhelming. Great for adventure calls-to-action and fun interactions.' },
