@@ -216,13 +216,13 @@ const About = () => {
                     src={ab5IconUrl} 
                     alt="3 Helpful AI's Icon"
                     className="w-full object-contain hover:scale-105 transition-transform duration-300"
-                    style={{ height: '280px' }}
+                    style={{ height: '200px' }}
                   />
                 )}
               </div>
               
               {/* Right: Stacked logos - responsive sizing */}
-              <div className="grid grid-cols-3 md:grid-cols-1 gap-2 md:gap-3 w-full md:w-2/5 lg:w-1/3">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-3 w-full md:w-2/5 lg:w-1/3">
                 {/* Lovable (#1 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -230,7 +230,7 @@ const About = () => {
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203773244-hhgj4xbfc.png"
                         alt="#1 AI Assistant"
-                        className="w-full h-20 md:h-24 lg:h-28 object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-16 md:h-24 lg:h-28 object-contain hover:scale-105 transition-transform duration-300"
                         onLoad={() => console.log('Photo 2 loaded successfully')}
                         onError={(e) => {
                           console.error('Photo 2 failed to load:', e.currentTarget.src);
@@ -251,7 +251,7 @@ const About = () => {
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203785267-p40ovhg84.png"
                         alt="#2 AI Assistant"
-                        className="w-full h-20 md:h-24 lg:h-28 object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-16 md:h-24 lg:h-28 object-contain hover:scale-105 transition-transform duration-300"
                         onLoad={() => console.log('Photo 3 loaded successfully')}
                         onError={(e) => {
                           console.error('Photo 3 failed to load:', e.currentTarget.src);
@@ -272,7 +272,7 @@ const About = () => {
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
                         alt="#3 AI Assistant"
-                        className="w-full h-20 md:h-24 lg:h-28 object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-16 md:h-24 lg:h-28 object-contain hover:scale-105 transition-transform duration-300"
                         onLoad={() => console.log('Photo 1 loaded successfully')}
                         onError={(e) => {
                           console.error('Photo 1 failed to load:', e.currentTarget.src);
