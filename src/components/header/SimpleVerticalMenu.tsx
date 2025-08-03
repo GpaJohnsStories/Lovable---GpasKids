@@ -88,7 +88,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         {
           id: "view-comments",
           icon: "ICO-CO2.gif", // View Comments (available in storage)
-          text: "View Comments",
+          text: "Make Comment",
           onClick: () => {
             window.location.href = "/make-comment";
             onClose();
@@ -97,7 +97,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         {
           id: "make-comment",
           icon: "ICO-CO3.gif", // Make Comment (available in storage)
-          text: "Make Comment", 
+          text: "View Comments", 
           onClick: () => {
             window.location.href = "/view-comments";
             onClose();
