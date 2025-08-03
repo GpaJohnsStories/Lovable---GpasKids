@@ -207,30 +207,30 @@ const About = () => {
               A Special "Thank You" to ...
             </h1>
             
-            {/* Left side: ICZ-AB5 photo (50% width), Right side: Stacked logos */}
-            <div className="flex gap-4 mb-6">
-              {/* Left: ICZ-AB5 Photo - 50% width, height matches 3 stacked icons */}
-              <div className="w-1/2 overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm">
+            {/* Responsive layout: stacked on mobile, side-by-side on larger screens */}
+            <div className="flex flex-col md:flex-row gap-4 mb-6">
+              {/* ICZ-AB5 Photo - responsive sizing */}
+              <div className="w-full md:w-3/5 lg:w-2/3 overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm">
                 {ab5IconUrl && (
                   <img 
                     src={ab5IconUrl} 
                     alt="3 Helpful AI's Icon"
                     className="w-full object-contain hover:scale-105 transition-transform duration-300"
-                    style={{ height: '416px' }}
+                    style={{ height: '280px' }}
                   />
                 )}
               </div>
               
-              {/* Right: Stacked logos */}
-              <div className="flex flex-col gap-4 w-48">
-                {/* Top: Lovable (#1 AI Assistant) */}
+              {/* Right: Stacked logos - responsive sizing */}
+              <div className="grid grid-cols-3 md:grid-cols-1 gap-2 md:gap-3 w-full md:w-2/5 lg:w-1/3">
+                {/* Lovable (#1 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="overflow-hidden rounded-lg border-4 border-yellow-400 shadow-sm cursor-pointer">
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203773244-hhgj4xbfc.png"
                         alt="#1 AI Assistant"
-                        className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-20 md:h-24 lg:h-28 object-cover hover:scale-105 transition-transform duration-300"
                         onLoad={() => console.log('Photo 2 loaded successfully')}
                         onError={(e) => {
                           console.error('Photo 2 failed to load:', e.currentTarget.src);
@@ -244,14 +244,14 @@ const About = () => {
                   </TooltipContent>
                 </Tooltip>
                 
-                {/* Middle: CoPilot (#2 AI Assistant) */}
+                {/* CoPilot (#2 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="overflow-hidden rounded-lg border-4 border-gray-400 bg-gray-200 shadow-sm cursor-pointer">
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203785267-p40ovhg84.png"
                         alt="#2 AI Assistant"
-                        className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-20 md:h-24 lg:h-28 object-cover hover:scale-105 transition-transform duration-300"
                         onLoad={() => console.log('Photo 3 loaded successfully')}
                         onError={(e) => {
                           console.error('Photo 3 failed to load:', e.currentTarget.src);
@@ -265,14 +265,14 @@ const About = () => {
                   </TooltipContent>
                 </Tooltip>
                 
-                {/* Bottom: Gemini (#3 AI Assistant) */}
+                {/* Gemini (#3 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="overflow-hidden rounded-lg border-4 border-amber-600 bg-amber-300 shadow-sm cursor-pointer">
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
                         alt="#3 AI Assistant"
-                        className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-20 md:h-24 lg:h-28 object-cover hover:scale-105 transition-transform duration-300"
                         onLoad={() => console.log('Photo 1 loaded successfully')}
                         onError={(e) => {
                           console.error('Photo 1 failed to load:', e.currentTarget.src);
