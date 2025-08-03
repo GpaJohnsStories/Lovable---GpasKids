@@ -42,7 +42,7 @@ const AdminSiteMap = () => {
     { name: 'About Grandpa John', path: '/about', icon: User, description: 'About the storyteller' },
     { name: 'Author Bios', path: '/author-bios', icon: User, description: 'Public author biographies' },
     { name: 'Author Bio Simple', path: '/author-bio/:id', icon: User, description: 'Individual author bio page' },
-    { name: 'Help from Grandpa', path: '/help-gpa', icon: HelpCircle, description: 'Help and instructions' },
+    { name: 'How to Help Gpa John', path: '/help-gpa', icon: HelpCircle, description: 'Learn how to help Grandpa John with his storytelling website' },
     { name: 'How To Use Site', path: '/how-to', icon: HelpCircle, description: 'Site usage instructions' },
     { name: 'Writing Stories', path: '/writing', icon: FileText, description: 'Story submission form' },
     { name: 'Voice Preview', path: '/voice-preview', icon: FileText, description: 'Preview story voices' },
