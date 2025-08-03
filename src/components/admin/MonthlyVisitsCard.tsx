@@ -35,7 +35,7 @@ export const MonthlyVisitsCard = () => {
 
   // Transform data for multi-line chart
   const chartData = monthlyVisits?.map((visit) => ({
-    period: `${visit.year}-${visit.month.toString().padStart(2, '0')}`,
+    period: `${visit.year}-${visit.month.toString().padStart(2, '0')} |`,
     approved: visit.visit_count,
     searchEngines: visit.search_engine_visits_count || 0,
     bots: visit.bot_visits_count || 0,
@@ -125,7 +125,6 @@ export const MonthlyVisitsCard = () => {
                   domain={['dataMin', 'dataMax']}
                   type="category"
                   interval={0}
-                  tickFormatter={(value) => `${value} |`}
                 />
                 <YAxis 
                   fontSize={12}
