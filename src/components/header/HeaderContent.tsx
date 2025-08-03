@@ -12,6 +12,7 @@ interface HeaderContentProps {
 
 const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) => {
   const location = useLocation();
+  console.log('🔍 HeaderContent: isAdminPage =', isAdminPage, 'pathname =', location.pathname);
   const { showHelp } = useHelp();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuHovered, setIsMenuHovered] = useState(false);

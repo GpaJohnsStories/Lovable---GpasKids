@@ -7,6 +7,8 @@ const WelcomeHeader = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   const isAdminPage = location.pathname.startsWith('/buddys_admin');
+  
+  console.log('🔍 WelcomeHeader: pathname =', location.pathname, 'isAdminPage =', isAdminPage);
 
   return (
     <TooltipProvider>
