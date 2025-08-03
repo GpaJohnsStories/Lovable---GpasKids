@@ -9,7 +9,7 @@ import { DeployedContent } from "@/components/DeployedContent";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 
 const About = () => {
-  const { iconUrl: ab5IconUrl } = useCachedIcon('ICO-AB5.jpg');
+  const { iconUrl: ab5IconUrl } = useCachedIcon('ICZ-AB5.png');
 
   return (
     <TooltipProvider>
