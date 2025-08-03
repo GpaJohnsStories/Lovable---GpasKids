@@ -205,28 +205,18 @@ const About = () => {
               A Special "Thank You" to ...
             </h1>
             
-            {/* Photos arranged side-by-side below title - Always visible */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="overflow-hidden rounded-lg border-4 border-amber-600 bg-amber-300 shadow-sm cursor-pointer">  {/* Bronze border with darker bronze background for Gemini */}
-                    <img
-                      src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
-                      alt="#3 AI Assistant"
-                      className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
-                      onLoad={() => console.log('Photo 1 loaded successfully')}
-                      onError={(e) => {
-                        console.error('Photo 1 failed to load:', e.currentTarget.src);
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#3 AI Assistant</p>
-                </TooltipContent>
-              </Tooltip>
+            {/* Photos arranged in 2x2 grid for tablet layout */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              {/* Top Left: ICO-AB5 Icon */}
+              <div className="flex items-center justify-center">
+                <img 
+                  src="/lovable-uploads/ICO-AB5.jpg" 
+                  alt="3 Helpful AI's Icon"
+                  className="w-16 h-16 object-contain"
+                />
+              </div>
               
+              {/* Top Right: Lovable (#1 AI Assistant) */}
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="overflow-hidden rounded-lg border-4 border-yellow-400 shadow-sm cursor-pointer">  {/* Gold for Lovable */}
@@ -247,6 +237,7 @@ const About = () => {
                 </TooltipContent>
               </Tooltip>
               
+              {/* Second Row Left: CoPilot (#2 AI Assistant) */}
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="overflow-hidden rounded-lg border-4 border-gray-400 bg-gray-200 shadow-sm cursor-pointer">  {/* Silver border with lighter background for CoPilot */}
@@ -264,6 +255,27 @@ const About = () => {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#2 AI Assistant</p>
+                </TooltipContent>
+              </Tooltip>
+              
+              {/* Second Row Right: Gemini (#3 AI Assistant) */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="overflow-hidden rounded-lg border-4 border-amber-600 bg-amber-300 shadow-sm cursor-pointer">  {/* Bronze border with darker bronze background for Gemini */}
+                    <img
+                      src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
+                      alt="#3 AI Assistant"
+                      className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                      onLoad={() => console.log('Photo 1 loaded successfully')}
+                      onError={(e) => {
+                        console.error('Photo 1 failed to load:', e.currentTarget.src);
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#3 AI Assistant</p>
                 </TooltipContent>
               </Tooltip>
             </div>
