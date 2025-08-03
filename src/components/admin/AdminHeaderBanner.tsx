@@ -31,11 +31,12 @@ const AdminHeaderBanner = () => {
   // Determine if the system is secure (placeholder logic - adjust as needed)
   const isSecure = window.location.protocol === 'https:';
   
-  // Load the secure icon, logout icon, dashboard icon, and libraries icon
+  // Load the secure icon, logout icon, dashboard icon, libraries icon, and comments icon
   const { iconUrl: secureIconUrl } = useCachedIcon(isSecure ? 'ICO-ADS.jpg' : null);
   const { iconUrl: logoutIconUrl } = useCachedIcon('ICO-ADX.png');
   const { iconUrl: dashboardIconUrl } = useCachedIcon('ICO-AD1.gif');
   const { iconUrl: librariesIconUrl } = useCachedIcon('ICO-LB1.gif');
+  const { iconUrl: commentsIconUrl } = useCachedIcon('ICO-CO3.gif');
 
   const handleCreateStoryClick = () => {
     console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
@@ -341,6 +342,46 @@ const AdminHeaderBanner = () => {
               // Special handling for Dashboard button
               if (button.name === 'Dashboard') {
                 return dashboardButton;
+              }
+
+              // Special handling for Comments button as square icon button
+              if (button.name === 'Comments') {
+                const commentsButton = (
+                  <div 
+                    key={button.name}
+                    className="relative"
+                    onMouseEnter={() => setHoveredButton(button.name)}
+                    onMouseLeave={() => setHoveredButton(null)}
+                  >
+                    <Link to={button.path} onClick={scrollToTop}>
+                      <div
+                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-yellow-300/50 hover:scale-105 transition-transform cursor-pointer"
+                        style={{ 
+                          backgroundColor: '#E6C966',
+                          minWidth: '55px',
+                          minHeight: '55px'
+                        }}
+                      >
+                        {commentsIconUrl ? (
+                          <img 
+                            src={commentsIconUrl} 
+                            alt="Comments List"
+                            className="w-12 h-12 object-contain"
+                          />
+                        ) : (
+                          <MessageSquare className="w-12 h-12 text-black" />
+                        )}
+                      </div>
+                    </Link>
+                    {hoveredButton === button.name && (
+                      <div className="nav-bubble opacity-100 visible">
+                        <b>Comments List</b>
+                      </div>
+                    )}
+                  </div>
+                );
+                
+                return commentsButton;
               }
 
               // Special handling for Library button with dropdown
