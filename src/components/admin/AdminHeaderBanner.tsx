@@ -443,6 +443,38 @@ const AdminHeaderBanner = () => {
                 return referenceButton;
               }
 
+              // Special handling for Site Map button as square icon button
+              if (button.name === 'Site Map') {
+                const siteMapButton = (
+                  <div 
+                    key={button.name}
+                    className="relative"
+                    onMouseEnter={() => setHoveredButton(button.name)}
+                    onMouseLeave={() => setHoveredButton(null)}
+                  >
+                    <Link to={button.path} onClick={scrollToTop}>
+                      <div
+                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-orange-300/50 hover:scale-105 transition-transform cursor-pointer"
+                        style={{ 
+                          backgroundColor: '#814d2e',
+                          minWidth: '55px',
+                          minHeight: '55px'
+                        }}
+                      >
+                        <Globe className="w-8 h-8 text-white" />
+                      </div>
+                    </Link>
+                    {hoveredButton === button.name && (
+                      <div className="nav-bubble opacity-100 visible">
+                        <b>Site Map</b>
+                      </div>
+                    )}
+                  </div>
+                );
+                
+                return siteMapButton;
+              }
+
               return (
                 <div 
                   key={button.name}
