@@ -207,16 +207,16 @@ const About = () => {
               A Special "Thank You" to ...
             </h1>
             
-            {/* Left side: Large ICZ-AB5 photo, Right side: Stacked logos */}
+            {/* Left side: ICZ-AB5 photo (50% width), Right side: Stacked logos */}
             <div className="flex gap-4 mb-6">
-              {/* Left: Large ICZ-AB5 Photo */}
-              <div className="flex-1 overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm">
+              {/* Left: ICZ-AB5 Photo - 50% width, height matches 3 stacked icons */}
+              <div className="w-1/2 overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm">
                 {ab5IconUrl && (
                   <img 
                     src={ab5IconUrl} 
                     alt="3 Helpful AI's Icon"
-                    className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
-                    style={{ minHeight: '400px' }}
+                    className="w-full object-contain hover:scale-105 transition-transform duration-300"
+                    style={{ height: '416px' }}
                   />
                 )}
               </div>
