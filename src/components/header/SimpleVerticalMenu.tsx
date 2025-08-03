@@ -179,7 +179,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
           icon: "ICO-AB5.jpg", 
           text: "3 Helpful AI's",
           onClick: () => {
-            console.log("3 Helpful AI's clicked");
+            window.location.href = "/about#special-thank-you";
             onClose();
           }
         }
