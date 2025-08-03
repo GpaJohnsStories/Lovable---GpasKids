@@ -8,7 +8,10 @@ const WelcomeHeader = () => {
   const isHomePage = location.pathname === '/';
   const isAdminPage = location.pathname.startsWith('/buddys_admin');
   
-  console.log('🔍 WelcomeHeader: pathname =', location.pathname, 'isAdminPage =', isAdminPage);
+  // Don't render WelcomeHeader at all on admin pages
+  if (isAdminPage) {
+    return null;
+  }
 
   return (
     <TooltipProvider>
