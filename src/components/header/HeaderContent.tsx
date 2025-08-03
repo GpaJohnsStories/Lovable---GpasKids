@@ -125,12 +125,8 @@ const HeaderContent = ({ isHomePage }: HeaderContentProps) => {
               </div>
             </div>
           ) : (
-            /* Placeholder for balanced layout on non-home pages */
+            /* Empty placeholder for balanced layout on non-home pages */
             <div className="w-48 lg:w-64 h-32 lg:h-40 flex items-center justify-center">
-              <div className="text-white/40 text-center">
-                <div className="text-lg font-bold">Welcome!</div>
-                <div className="text-sm">Enjoy your visit</div>
-              </div>
             </div>
           )}
         </div>
