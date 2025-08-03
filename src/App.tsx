@@ -46,6 +46,7 @@ import ContentProtection from "./components/ContentProtection";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import { HelpProvider } from "./contexts/HelpContext";
+import { useVisitTracker } from "./hooks/useVisitTracker";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +63,9 @@ const ConditionalContentProtection = ({ children }: { children: React.ReactNode 
 };
 
 function App() {
+  // Activate visit tracking for the entire app
+  useVisitTracker();
+  
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
