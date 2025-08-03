@@ -121,10 +121,11 @@ export const MonthlyVisitsCard = () => {
                   fontSize={12}
                   tickLine={false}
                   axisLine={false}
-                  tick={{ textAnchor: 'start' }}
+                  tick={{ textAnchor: 'middle' }}
                   domain={['dataMin', 'dataMax']}
                   type="category"
                   interval={0}
+                  tickFormatter={(value) => `${value} |`}
                 />
                 <YAxis 
                   fontSize={12}
