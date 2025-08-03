@@ -139,7 +139,7 @@ const AdminHeaderBanner = () => {
   return (
     <div className="sticky top-0 z-50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 border-b border-blue-800 shadow-lg">
       <div className="container mx-auto px-4 py-2">
-        <div className="flex items-center justify-between relative">
+        <div className="flex items-center relative">
           {/* Buddy's Photo - Fixed position aligned with left edge */}
           <div className="absolute left-0 top-0 bottom-0 flex items-center z-10">
             <Link to="/" onClick={scrollToTop}>
@@ -217,8 +217,8 @@ const AdminHeaderBanner = () => {
             </div>
           </div>
           
-          {/* Right section: Navigation buttons */}
-          <nav className="flex gap-2">
+          {/* Center section: Navigation buttons starting from center */}
+          <nav className="absolute left-1/2 transform -translate-x-1/2 flex gap-3">
             {navButtons.map((button, index) => {
               const isActive = location.pathname === button.path || 
                 (button.name === 'Libraries' && (location.pathname === '/buddys_admin/stories' || location.pathname.includes('/buddys_admin/stories')));
