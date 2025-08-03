@@ -14,7 +14,8 @@ const PreferredColorsTable: React.FC = () => {
         { name: 'Sunset Orange', hex: '#FF8C42', description: 'Best Used for: Warm story backgrounds, cozy evening scenes, autumn themes, and friendly characters. Creates a comforting "Grandpa\'s living room" atmosphere. Perfect for bedtime stories and fireside moments.' },
         { name: 'Vibrant Orange', hex: '#F97316', description: 'Best Used for: Action buttons, exciting moments, playful elements, and energetic characters. Captures children\'s attention without being overwhelming. Great for adventure calls-to-action and fun interactions.' },
         { name: 'Warm Beige', hex: '#F5E6D3', description: 'Best Used for: Content backgrounds, reading areas, story text containers, and calm sections. Provides excellent readability while maintaining warmth. Perfect for extended reading comfort and accessibility.' },
-        { name: 'Cream White', hex: '#FFFDD0', description: 'Best Used for: Main page backgrounds, text overlays, clean sections, and peaceful story moments. Offers gentle contrast without harsh brightness. Ideal for creating safe, comfortable reading spaces.' }
+        { name: 'Cream White', hex: '#FFFDD0', description: 'Best Used for: Main page backgrounds, text overlays, clean sections, and peaceful story moments. Offers gentle contrast without harsh brightness. Ideal for creating safe, comfortable reading spaces.' },
+        { name: 'Sky Blue', hex: '#169CF9', description: 'Best Used for: Interactive elements, links, call-to-action buttons, and sky themes. Creates trust and engagement. Perfect for "click here" elements and navigation highlights.' }
       ]
     },
     {
