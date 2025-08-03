@@ -210,19 +210,19 @@ const About = () => {
             {/* Responsive layout: stacked on mobile, side-by-side on larger screens */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
               {/* ICZ-AB5 Photo - responsive sizing */}
-              <div className="w-full md:w-3/5 lg:w-2/3 overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm">
+              <div className="w-full md:w-1/2 lg:w-2/3 overflow-hidden rounded-lg border-4 border-purple-500 shadow-sm">
                 {ab5IconUrl && (
                   <img 
                     src={ab5IconUrl} 
                     alt="3 Helpful AI's Icon"
                     className="w-full object-contain hover:scale-105 transition-transform duration-300"
-                    style={{ height: '200px' }}
+                    style={{ height: '200px', maxHeight: '300px' }}
                   />
                 )}
               </div>
               
               {/* Right: Stacked logos - responsive sizing */}
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-3 w-full md:w-2/5 lg:w-1/3">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-3 w-full md:w-1/2 lg:w-1/3">
                 {/* Lovable (#1 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
