@@ -40,42 +40,42 @@ const HowTo = () => {
     },
     {
       webtextCode: "SYS-G3B",
-      icon: "ICO-BK1",
+      icon: "ICO-LB3",
       borderColor: "#3b82f6", // Blue same as admin top banner
       backgroundColor: "bg-blue-600/20",
       title: "Read A Story"
     },
     {
       webtextCode: "SYS-G4A",
-      icon: "ICO-HIC",
+      icon: "ICO-CO3",
       borderColor: "#FFCBA4", // Peach - leave color alone
       backgroundColor: "bg-orange-300/20",
       title: "Comments List Page"
     },
     {
       webtextCode: "SYS-G4B",
-      icon: "ICO-HIC",
+      icon: "ICO-CO1",
       borderColor: "#E6A875", // Darker Peach - leave color alone
       backgroundColor: "bg-orange-400/20",
       title: "Write a Comment Page"
     },
     {
       webtextCode: "SYS-G5A",
-      icon: "ICO-WRI",
+      icon: "ICO-WR3",
       borderColor: "#F97316", // Orange to match menu icons
       backgroundColor: "bg-orange-600/20",
       title: "Writing"
     },
     {
       webtextCode: "SYS-G6A",
-      icon: "ICO-INF",
+      icon: "ICO-AB1",
       borderColor: "#60a5fa", // Light blue
       backgroundColor: "bg-blue-400/20",
       title: "About Us"
     },
     {
       webtextCode: "SYS-G7A",
-      icon: "ICO-LKD",
+      icon: "ICO-ADS",
       borderColor: "#4A7C59", // Forest Green - leave color alone
       backgroundColor: "bg-emerald-700/20",
       title: "We Are Safe!"
