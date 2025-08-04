@@ -59,14 +59,12 @@ const AuthorBio = () => {
 
   if (bioLoading || storiesLoading) {
     return (
-      <ContentProtection enableProtection={true}>
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-          <WelcomeHeader />
-          <LoadingSpinner message="Loading author information..." />
-          <CookieFreeFooter />
-          <ScrollToTop />
-        </div>
-      </ContentProtection>
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+        <WelcomeHeader />
+        <LoadingSpinner message="Loading author information..." />
+        <CookieFreeFooter />
+        <ScrollToTop />
+      </div>
     );
   }
 
@@ -83,7 +81,6 @@ const AuthorBio = () => {
   };
 
   return (
-    <ContentProtection enableProtection={true}>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
         <WelcomeHeader />
         
@@ -144,7 +141,6 @@ const AuthorBio = () => {
         <CookieFreeFooter />
         <ScrollToTop />
       </div>
-    </ContentProtection>
   );
 };
 

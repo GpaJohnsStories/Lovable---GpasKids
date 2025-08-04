@@ -42,48 +42,43 @@ const PublicAuthorBiosSimple = () => {
   if (error) {
     console.error('🚨 PublicAuthorBiosSimple: Rendering error state:', error);
     return (
-      <ContentProtection enableProtection={true}>
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-          <WelcomeHeader />
-          <div className="container mx-auto px-4 py-8">
-            <Card className="max-w-2xl mx-auto">
-              <CardContent className="p-8">
-                <div className="text-center">
-                  <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Authors</h2>
-                  <p className="text-gray-700 mb-4">
-                    We encountered an error while loading the author biographies.
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Error: {error?.message || 'Unknown error'}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          <CookieFreeFooter />
-          <ScrollToTop />
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+        <WelcomeHeader />
+        <div className="container mx-auto px-4 py-8">
+          <Card className="max-w-2xl mx-auto">
+            <CardContent className="p-8">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Authors</h2>
+                <p className="text-gray-700 mb-4">
+                  We encountered an error while loading the author biographies.
+                </p>
+                <p className="text-sm text-gray-500">
+                  Error: {error?.message || 'Unknown error'}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </ContentProtection>
+        <CookieFreeFooter />
+        <ScrollToTop />
+      </div>
     );
   }
 
   if (isLoading) {
     console.log('🔍 PublicAuthorBiosSimple: Rendering loading state');
     return (
-      <ContentProtection enableProtection={true}>
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-          <WelcomeHeader />
-          <LoadingSpinner message="Loading author biographies (simple)..." />
-          <CookieFreeFooter />
-          <ScrollToTop />
-        </div>
-      </ContentProtection>
+      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+        <WelcomeHeader />
+        <LoadingSpinner message="Loading author biographies (simple)..." />
+        <CookieFreeFooter />
+        <ScrollToTop />
+      </div>
     );
   }
 
   console.log('🔍 PublicAuthorBiosSimple: Rendering success state');
   return (
-    <ContentProtection enableProtection={true}>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
         <WelcomeHeader />
         
@@ -132,7 +127,6 @@ const PublicAuthorBiosSimple = () => {
         <CookieFreeFooter />
         <ScrollToTop />
       </div>
-    </ContentProtection>
   );
 };
 

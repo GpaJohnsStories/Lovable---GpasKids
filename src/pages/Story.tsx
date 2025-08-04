@@ -141,7 +141,6 @@ const Story = () => {
   const photos = getStoryPhotos(story);
 
   return (
-    <ContentProtection enableProtection={true}>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
         <WelcomeHeader />
         <ScrollToTop />
@@ -212,7 +211,6 @@ const Story = () => {
         </div>
         <CookieFreeFooter />
       </div>
-    </ContentProtection>
   );
 };
 
