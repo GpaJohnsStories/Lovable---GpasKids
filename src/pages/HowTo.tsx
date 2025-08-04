@@ -18,58 +18,65 @@ const HowTo = () => {
   // Configuration for webtext boxes
   const webtextBoxes = [
     {
-      webtextCode: "SYS-K2N",
+      webtextCode: "SYS-G1A",
       icon: "ICO-N2K",
       borderColor: "#16a34a", // Fresh Green
       backgroundColor: "bg-green-600/20",
       title: "Getting Started"
     },
     {
-      webtextCode: "",
+      webtextCode: "SYS-G2A",
       icon: "ICO-HOM",
-      borderColor: "#F97316", // Vibrant Orange
-      backgroundColor: "bg-orange-600/20",
+      borderColor: "#dc2626", // Red to match buddy's home roof
+      backgroundColor: "bg-red-600/20",
       title: "Home Page"
     },
     {
-      webtextCode: "SYS-HOME",
+      webtextCode: "SYS-G3A",
       icon: "ICO-BK1",
-      borderColor: "#3b82f6", // Admin Menu Blue
-      backgroundColor: "bg-blue-600/20",
+      borderColor: "#F97316", // Orange to match menu icons
+      backgroundColor: "bg-orange-600/20",
       title: "Story Library"
     },
     {
-      webtextCode: "SYS-STY",
+      webtextCode: "SYS-G3B",
       icon: "ICO-BK1",
-      borderColor: "#9c441a", // Rust Orange
-      backgroundColor: "bg-yellow-600/20",
+      borderColor: "#3b82f6", // Blue same as admin top banner
+      backgroundColor: "bg-blue-600/20",
       title: "Read A Story"
     },
     {
-      webtextCode: "SYS-ABT",
-      icon: "ICO-INF",
-      borderColor: "#16a34a", // Fresh Green
-      backgroundColor: "bg-green-600/20",
-      title: "About Us"
-    },
-    {
-      webtextCode: "SYS-COM",
+      webtextCode: "SYS-G4A",
       icon: "ICO-HIC",
-      borderColor: "#FFCBA4", // Peach
+      borderColor: "#FFCBA4", // Peach - leave color alone
       backgroundColor: "bg-orange-300/20",
       title: "Comments List Page"
     },
     {
-      webtextCode: "SYS-MCO",
+      webtextCode: "SYS-G4B",
       icon: "ICO-HIC",
-      borderColor: "#E6A875", // Darker Peach
+      borderColor: "#E6A875", // Darker Peach - leave color alone
       backgroundColor: "bg-orange-400/20",
       title: "Write a Comment Page"
     },
     {
-      webtextCode: "SYS-SEC",
+      webtextCode: "SYS-G5A",
+      icon: "ICO-WRI",
+      borderColor: "#F97316", // Orange to match menu icons
+      backgroundColor: "bg-orange-600/20",
+      title: "Writing"
+    },
+    {
+      webtextCode: "SYS-G6A",
+      icon: "ICO-INF",
+      borderColor: "#60a5fa", // Light blue
+      backgroundColor: "bg-blue-400/20",
+      title: "About Us"
+    },
+    {
+      webtextCode: "SYS-G7A",
       icon: "ICO-LKD",
-      borderColor: "#4A7C59", // Forest Green
+      borderColor: "#4A7C59", // Forest Green - leave color alone
       backgroundColor: "bg-emerald-700/20",
       title: "We Are Safe!"
     }
