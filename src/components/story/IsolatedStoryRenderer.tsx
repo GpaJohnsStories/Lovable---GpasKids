@@ -47,6 +47,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               font-family: ${baseFontFamily} !important;
               color: #000000 !important;
               line-height: 1.5 !important;
+              font-style: normal !important;
               /* Explicitly allow inline font-size to override default */
             }
             
@@ -63,11 +64,16 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             .isolated-story-content strong,
             .isolated-story-content b {
               font-weight: bold !important;
+              font-style: normal !important;
             }
             
             .isolated-story-content em,
             .isolated-story-content i {
               font-style: italic !important;
+              font-family: ${baseFontFamily} !important;
+              font-size: 18px !important;
+              color: #000000 !important;
+              line-height: 1.5 !important;
             }
             
             .isolated-story-content u {
