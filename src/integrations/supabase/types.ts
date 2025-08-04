@@ -585,8 +585,6 @@ export type Database = {
         | "Life"
         | "North Pole"
         | "World Changers"
-        | "System"
-        | "STORY"
         | "WebText"
     }
     CompositeTypes: {
@@ -721,8 +719,6 @@ export const Constants = {
         "Life",
         "North Pole",
         "World Changers",
-        "System",
-        "STORY",
         "WebText",
       ],
     },

@@ -53,11 +53,7 @@ export const useStoryData = (storyId?: string) => {
         throw error;
       }
       
-      // Convert any "System" categories to "WebText" for compatibility
-      const processedData = {
-        ...data,
-        category: data.category === 'System' ? 'WebText' : data.category
-      };
+      const processedData = data;
       
       console.log('🎯 useStoryData: Successfully fetched story:', processedData);
       setStory(processedData as Story);

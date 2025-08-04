@@ -55,7 +55,7 @@ export const DeployedContent = ({
           .from('stories')
           .select('*')
           .eq('story_code', storyCode)
-          .in('category', ['System', 'WebText'])
+          .eq('category', 'WebText')
           .maybeSingle();
 
         if (fetchError) {
