@@ -26,10 +26,10 @@ const AdminOverview = () => {
         supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N'),
         // Get all stories with categories
         supabase.from('stories').select('category'),
-        // Count stories with video URLs
-        supabase.from('stories').select('id', { count: 'exact', head: true }).not('video_url', 'is', null),
-        // Count stories with audio URLs
-        supabase.from('stories').select('id', { count: 'exact', head: true }).not('audio_url', 'is', null)
+        // Count stories with video URLs (non-null and non-empty)
+        supabase.from('stories').select('id', { count: 'exact', head: true }).not('video_url', 'is', null).neq('video_url', ''),
+        // Count stories with audio URLs (non-null and non-empty)
+        supabase.from('stories').select('id', { count: 'exact', head: true }).not('audio_url', 'is', null).neq('audio_url', '')
       ]);
 
       // Count stories by category
