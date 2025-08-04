@@ -99,7 +99,7 @@ const StoriesTableHeader = ({
       case 'World Changers':
         return 'bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500';
       case 'WebText':
-        return 'bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500';
+        return 'bg-gradient-to-b from-amber-700 to-amber-900 text-white border-amber-900';
       default:
         return 'bg-gray-100 text-gray-700 border-gray-300';
     }
