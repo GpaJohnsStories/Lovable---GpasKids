@@ -7,7 +7,6 @@ import { toast } from '@/hooks/use-toast';
 
 interface WebTextBoxProps {
   webtextCode: string;
-  icon: string;
   borderColor: string;
   backgroundColor: string;
   title: string;
@@ -15,7 +14,6 @@ interface WebTextBoxProps {
 
 export const WebTextBox: React.FC<WebTextBoxProps> = ({
   webtextCode,
-  icon,
   borderColor,
   backgroundColor,
   title
@@ -379,30 +377,19 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
       const webtextData = await lookupStoryByCode(webtextCode, true);
       setWebtext(webtextData);
       
-      // Fetch icon from icon library
-      try {
-        const { data: iconData, error } = await supabase
-          .from('icon_library')
-          .select('file_path')
-          .eq('icon_code', icon)
-          .maybeSingle();
-        
-        if (!error && iconData) {
-          // Construct the full URL for the icon from the storage bucket
-          const { data: { publicUrl } } = supabase.storage
-            .from('icons')
-            .getPublicUrl(iconData.file_path);
-          setIconUrl(publicUrl);
+      // Set icon URL from the webtext story photos
+      if (webtextData) {
+        const photos = getStoryPhotos(webtextData);
+        if (photos.length > 0) {
+          setIconUrl(photos[0].url);
         }
-      } catch (error) {
-        console.error('Error fetching icon:', error);
       }
       
       setLoading(false);
     };
 
     fetchData();
-  }, [webtextCode, icon, lookupStoryByCode]);
+  }, [webtextCode, lookupStoryByCode]);
 
 
   const isSysWel = webtextCode === "SYS-WEL";
@@ -451,7 +438,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                 {iconUrl && (
                   <img 
                     src={iconUrl} 
-                    alt={icon}
+                     alt="webtext icon"
                     className="w-8 h-8 sm:w-10 sm:h-10 object-contain border-2 border-blue-500 rounded mt-1 flex-shrink-0"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
@@ -497,7 +484,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           {iconUrl && (
             <img 
               src={iconUrl} 
-              alt={icon}
+              alt="webtext icon"
               className="w-auto h-16 md:h-24 lg:h-28 object-contain border rounded"
               style={{ borderColor }}
               onError={(e) => {

@@ -15,7 +15,6 @@ const Index = () => {
       <main className="container mx-auto px-4 pt-0">
         <WebTextBox 
           webtextCode="SYS-WEL"
-          icon="gpa-john-buddy"
           borderColor="border-yellow-400"
           backgroundColor="#ADD8E6"
           title=""

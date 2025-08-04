@@ -15,67 +15,57 @@ const HowTo = () => {
     return getIconUrl(`${iconCode}.jpg`);
   };
 
-  // Configuration for webtext boxes
   const webtextBoxes = [
     {
       webtextCode: "SYS-G1A",
-      icon: "ICO-GU1",
       borderColor: "#16a34a", // Fresh Green
       backgroundColor: "bg-green-600/20",
       title: "Getting Started"
     },
     {
       webtextCode: "SYS-G2A",
-      icon: "ICO-HO2",
       borderColor: "#dc2626", // Red to match buddy's home roof
       backgroundColor: "bg-red-600/20",
       title: "Home Page"
     },
     {
       webtextCode: "SYS-G3A",
-      icon: "ICO-LB1",
       borderColor: "#F97316", // Orange to match menu icons
       backgroundColor: "bg-orange-600/20",
       title: "Story Library"
     },
     {
       webtextCode: "SYS-G3B",
-      icon: "ICO-LB3",
       borderColor: "#3b82f6", // Blue same as admin top banner
       backgroundColor: "bg-blue-600/20",
       title: "Read A Story"
     },
     {
       webtextCode: "SYS-G4A",
-      icon: "ICO-CO3",
       borderColor: "#FFCBA4", // Peach - leave color alone
       backgroundColor: "bg-orange-300/20",
       title: "Comments List Page"
     },
     {
       webtextCode: "SYS-G4B",
-      icon: "ICO-CO1",
       borderColor: "#E6A875", // Darker Peach - leave color alone
       backgroundColor: "bg-orange-400/20",
       title: "Write a Comment Page"
     },
     {
       webtextCode: "SYS-G5A",
-      icon: "ICO-WR3",
       borderColor: "#F97316", // Orange to match menu icons
       backgroundColor: "bg-orange-600/20",
       title: "Writing"
     },
     {
       webtextCode: "SYS-G6A",
-      icon: "ICO-AB1",
       borderColor: "#60a5fa", // Light blue
       backgroundColor: "bg-blue-400/20",
       title: "About Us"
     },
     {
       webtextCode: "SYS-G7A",
-      icon: "ICO-ADS",
       borderColor: "#4A7C59", // Forest Green - leave color alone
       backgroundColor: "bg-emerald-700/20",
       title: "We Are Safe!"
@@ -117,7 +107,6 @@ const HowTo = () => {
               <WebTextBox
                 key={index}
                 webtextCode={box.webtextCode}
-                icon={box.icon}
                 borderColor={box.borderColor}
                 backgroundColor={box.backgroundColor}
                 title={box.title}
