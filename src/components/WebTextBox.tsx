@@ -442,7 +442,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                 {iconUrl && (
                   <img 
                     src={iconUrl} 
-                     alt="webtext icon"
+                    alt={mainPhoto?.alt || "webtext icon"}
                     className="w-8 h-8 sm:w-10 sm:h-10 object-contain border-2 border-blue-500 rounded mt-1 flex-shrink-0"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
@@ -488,7 +488,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           {iconUrl && (
             <img 
               src={iconUrl} 
-              alt="webtext icon"
+              alt={photos[0]?.alt || "webtext icon"}
               className="w-auto h-16 md:h-24 lg:h-28 object-contain border rounded"
               style={{ borderColor }}
               onError={(e) => {
