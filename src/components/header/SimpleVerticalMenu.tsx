@@ -52,6 +52,16 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       }
     },
     {
+      id: "guide", 
+      icon: "ICO-GU1.jpg", // Guide icon (available in storage)
+      text: "Guide",
+      color: "#F97316",
+      onClick: () => {
+        window.location.href = "/guide";
+        onClose();
+      }
+    },
+    {
       id: "library",
       icon: "ICO-LB1.gif", // Library icon (available in storage)
       text: "Library", 
@@ -130,16 +140,6 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
           }
         }
       ]
-    },
-    {
-      id: "guide", 
-      icon: "ICO-GU1.jpg", // Guide icon (available in storage)
-      text: "Guide",
-      color: "#F97316",
-      onClick: () => {
-        window.location.href = "/guide";
-        onClose();
-      }
     },
     {
       id: "about-us",
