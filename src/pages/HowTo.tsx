@@ -26,7 +26,7 @@ const HowTo = () => {
     },
     {
       webtextCode: "SYS-G2A",
-      icon: "ICO-HOM",
+      icon: "ICO-HO2",
       borderColor: "#dc2626", // Red to match buddy's home roof
       backgroundColor: "bg-red-600/20",
       title: "Home Page"
