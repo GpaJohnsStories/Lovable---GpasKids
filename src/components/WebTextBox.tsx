@@ -380,9 +380,13 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
       // Set icon URL from the webtext story photos
       if (webtextData) {
         const photos = getStoryPhotos(webtextData);
-        if (photos.length > 0) {
+        if (photos.length > 0 && photos[0].url) {
           setIconUrl(photos[0].url);
+        } else {
+          setIconUrl(''); // Explicitly set to empty if no photos
         }
+      } else {
+        setIconUrl(''); // Explicitly set to empty if no webtext data
       }
       
       setLoading(false);
