@@ -23,6 +23,8 @@ interface MainMenuItem {
   color: string;
   onClick?: () => void;
   submenus?: SubMenuItem[];
+  disabled?: boolean;
+  disabledMessage?: string;
 }
 
 const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => {
@@ -66,28 +68,22 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       icon: "ICO-LB1.gif", // Library icon (available in storage)
       text: "Library", 
       color: "#F97316",
-      submenus: [
-        {
-          id: "browse-stories",
-          icon: "ICO-LB2.gif", // Browse Stories (available in storage)
-          text: "Browse Stories",
-          onClick: () => {
-            window.location.href = "/library";
-            onClose();
-          }
-        },
-        {
-          id: "read-story",
-          icon: "ICO-LB3.gif", // Read Story (available in storage) 
-          text: "Read Story",
-          onClick: () => {
-            console.log("Read Story clicked");
-            onClose();
-          },
-          disabled: !isStorySelected,
-          disabledMessage: "Select a story first to read"
-        }
-      ]
+      onClick: () => {
+        window.location.href = "/library";
+        onClose();
+      }
+    },
+    {
+      id: "read-story",
+      icon: "ICO-LB3.gif", // Read Story icon (available in storage) 
+      text: "Read Story",
+      color: "#F97316",
+      onClick: () => {
+        console.log("Read Story clicked");
+        onClose();
+      },
+      disabled: !isStorySelected,
+      disabledMessage: "Select a story first to read"
     },
     {
       id: "comments",
@@ -236,6 +232,8 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                   text={item.text}
                   color={item.color}
                   onClick={() => handleMainMenuClick(item)}
+                  disabled={item.disabled}
+                  disabledMessage={item.disabledMessage}
                 />
                 
                 {/* Submenu buttons arranged horizontally in a line going left */}
