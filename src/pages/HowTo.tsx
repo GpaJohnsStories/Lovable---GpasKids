@@ -33,7 +33,7 @@ const HowTo = () => {
     },
     {
       webtextCode: "SYS-G3A",
-      icon: "ICO-BK1",
+      icon: "ICO-LB1",
       borderColor: "#F97316", // Orange to match menu icons
       backgroundColor: "bg-orange-600/20",
       title: "Story Library"
