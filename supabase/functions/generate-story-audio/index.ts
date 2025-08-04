@@ -53,7 +53,7 @@ serve(async (req) => {
     
     // Add AI voice attribution if available
     if (story.ai_voice_name) {
-      textToRead += `. Story is read by ${story.ai_voice_name} AI voice from OpenAI`
+      textToRead += `. Now read by ${story.ai_voice_name} AI voice from OpenAI`
     }
     
     // Add description/excerpt if available
