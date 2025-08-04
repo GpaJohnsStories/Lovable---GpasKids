@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import UnifiedStoryDashboard from './UnifiedStoryDashboard';
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
+import { useAdminSession } from '@/hooks/useAdminSession';
 import { toast } from "sonner";
 
 interface UnifiedStoryPageProps {
@@ -30,13 +31,12 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
     handleGenerateAudio
   } = useStoryFormState(storyId);
 
+  const { handleStoryFormSave } = useAdminSession();
+  
   const { handleSaveOnly, handleSubmit, isSaving } = useStoryFormActions(
     storyId,
     refetchStory,
-    () => {
-      toast.success("Story saved successfully!");
-      navigate('/buddys_admin/stories');
-    }
+    handleStoryFormSave
   );
 
   const handleCancel = () => {
