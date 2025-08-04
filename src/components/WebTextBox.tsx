@@ -458,7 +458,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             {/* Content below title */}
             <div className="flex-1 min-w-0">
               <div 
-                className="font-handwritten text-blue-800 leading-relaxed break-words [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>p]:text-base [&>p]:sm:text-lg [&>p]:mb-3 [&>p]:break-words [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>li]:text-base [&>li]:sm:text-lg [&>li]:mb-1"
+                className="font-handwritten text-blue-800 leading-relaxed break-words [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>h3]:font-handwritten [&>p]:text-base [&>p]:sm:text-lg [&>p]:mb-3 [&>p]:break-words [&>p]:font-handwritten [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:text-base [&>li]:sm:text-lg [&>li]:mb-1 [&>li]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
                 dangerouslySetInnerHTML={{ __html: getContent() }}
               />
             </div>
@@ -524,7 +524,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
       {/* Content */}
       <div className="mb-4">
         <div 
-          className="text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>li]:mb-1"
+          className="font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
           dangerouslySetInnerHTML={{ __html: getContent() }}
         />
       </div>
