@@ -91,7 +91,7 @@ const StoryHeader = ({
       {aiVoiceName && (
         <div className="text-center mb-6">
           <p className="text-sm text-orange-600 italic" style={{ fontFamily: 'Georgia, serif' }}>
-            Now read by {aiVoiceName} AI voice from OpenAI
+            Now being read by {aiVoiceName} AI voice from OpenAI
           </p>
         </div>
       )}
