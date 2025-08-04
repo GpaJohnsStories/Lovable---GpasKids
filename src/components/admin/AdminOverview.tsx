@@ -17,14 +17,14 @@ const AdminOverview = () => {
     queryKey: ['story-counts'],
     queryFn: async () => {
       const [allResult, publishedResult, newStoriesResult, unpublishedResult, categoriesResult, videosResult, audioResult] = await Promise.all([
-        // Exclude System category from all counts
-        supabase.from('stories').select('id', { count: 'exact', head: true }).not('category', 'eq', 'System'),
-        supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y').not('category', 'eq', 'System'),
+        // All stories count
+        supabase.from('stories').select('id', { count: 'exact', head: true }),
+        supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y'),
         // New stories created in the last 7 days
         supabase.from('stories').select('id', { count: 'exact', head: true }).gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
         // Unpublished stories count
         supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N'),
-        // Get all stories with categories (including System for category display)
+        // Get all stories with categories
         supabase.from('stories').select('category'),
         // Count stories with video URLs
         supabase.from('stories').select('id', { count: 'exact', head: true }).not('video_url', 'is', null),
