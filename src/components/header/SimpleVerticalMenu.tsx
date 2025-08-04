@@ -44,22 +44,22 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
 
   const mainMenuItems: MainMenuItem[] = [
     {
-      id: "home",
-      icon: "ICO-HOX.jpg", // Home icon (available in storage)
-      text: "Home",
-      color: "#F97316",
-      onClick: () => {
-        window.location.href = "/";
-        onClose();
-      }
-    },
-    {
       id: "guide", 
       icon: "ICO-GU1.jpg", // Guide icon (available in storage)
       text: "Guide",
       color: "#F97316",
       onClick: () => {
         window.location.href = "/guide";
+        onClose();
+      }
+    },
+    {
+      id: "home",
+      icon: "ICO-HOX.jpg", // Home icon (available in storage)
+      text: "Home",
+      color: "#F97316",
+      onClick: () => {
+        window.location.href = "/";
         onClose();
       }
     },
