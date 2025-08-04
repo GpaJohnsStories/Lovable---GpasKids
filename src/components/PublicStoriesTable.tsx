@@ -53,7 +53,7 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
         .from('stories')
         .select('*')
         .eq('published', 'Y')
-        .not('category', 'in', '(System,STORY,WebText)')
+        .not('category', 'eq', 'WebText')
         .order(sortField, { ascending: sortDirection === 'asc' });
       
       // Apply category filter

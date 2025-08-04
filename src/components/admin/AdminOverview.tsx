@@ -21,9 +21,9 @@ const AdminOverview = () => {
         supabase.from('stories').select('id', { count: 'exact', head: true }).not('category', 'eq', 'System'),
         supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'Y').not('category', 'eq', 'System'),
         // New stories created in the last 7 days
-        supabase.from('stories').select('id', { count: 'exact', head: true }).gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()).not('category', 'eq', 'System'),
-        // Include Story category in unpublished, exclude System
-        supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N').not('category', 'eq', 'System'),
+        supabase.from('stories').select('id', { count: 'exact', head: true }).gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
+        // Unpublished stories count
+        supabase.from('stories').select('id', { count: 'exact', head: true }).eq('published', 'N'),
         // Get all stories with categories (including System for category display)
         supabase.from('stories').select('category'),
         // Count stories with video URLs

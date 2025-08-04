@@ -60,7 +60,7 @@ const StoriesTable = ({
         .order(sortField, { ascending: sortDirection === 'asc' });
       
       if (showPublishedOnly) {
-        query = query.eq('published', 'Y').not('category', 'in', '(System,STORY,WebText)');
+        query = query.eq('published', 'Y').not('category', 'eq', 'WebText');
         
         const { data, error } = await query;
         
