@@ -115,6 +115,30 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
     }
   };
 
+  const getCategoryColor = (category: CategoryFilter) => {
+    switch (category) {
+      case 'all':
+        return 'bg-gradient-to-b from-orange-400 to-orange-600 text-white border-orange-500';
+      case 'Fun':
+        return 'bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500';
+      case 'Life':
+        return 'bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500';
+      case 'North Pole':
+        return 'bg-gradient-to-b from-cyan-400 to-cyan-600 text-white border-cyan-500';
+      case 'World Changers':
+        return 'bg-gradient-to-b from-amber-400 to-amber-600 text-white border-amber-500';
+      default:
+        return 'bg-gray-100 text-gray-700 border-gray-300';
+    }
+  };
+
+  const getCurrentCategoryDisplay = () => {
+    if (categoryFilter === 'all') {
+      return 'Category';
+    }
+    return getCategoryDisplayName(categoryFilter);
+  };
+
   const categoryOptions: CategoryFilter[] = ['all', 'Fun', 'Life', 'North Pole', 'World Changers'];
 
   return (
@@ -204,19 +228,32 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
                             <p className="text-xs">Click to select Category</p>
                           </TooltipContent>
                         </Tooltip>
-                        <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg rounded-md z-50">
-                          {categoryOptions.map((category) => (
-                            <DropdownMenuItem
-                              key={category}
-                              onClick={() => setCategoryFilter(category)}
-                              className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100"
-                              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                            >
-                              {getCategoryDisplayName(category)}
-                              {categoryFilter === category && <span className="ml-2 text-green-600">✓</span>}
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuContent>
+                         <DropdownMenuContent 
+                           align="center" 
+                           className="bg-white border border-gray-200 shadow-lg rounded-md z-50"
+                           style={{ minWidth: '120px' }}
+                         >
+                           {categoryOptions.map((category) => (
+                             <DropdownMenuItem
+                               key={category}
+                               onClick={() => setCategoryFilter(category)}
+                               className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100"
+                               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                             >
+                               <div className="flex items-center gap-2 w-full">
+                                 <div 
+                                   className={`${getCategoryColor(category)} px-3 py-1 rounded-full text-xs font-medium border shadow-sm hover:shadow-md transition-shadow`}
+                                   style={{ minWidth: '80px', textAlign: 'center' }}
+                                 >
+                                   {getCategoryDisplayName(category)}
+                                 </div>
+                                 {categoryFilter === category && (
+                                   <div className="text-green-600 font-bold">✓</div>
+                                 )}
+                               </div>
+                             </DropdownMenuItem>
+                           ))}
+                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableHead>
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-20">
