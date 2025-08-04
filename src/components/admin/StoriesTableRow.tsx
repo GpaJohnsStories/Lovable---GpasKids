@@ -84,7 +84,7 @@ const StoriesTableRow = ({
       case "World Changers":
         return "bg-gradient-to-b from-amber-400 to-amber-600 border-amber-700 shadow-[0_6px_12px_rgba(245,158,11,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] text-amber-900";
       case "WebText":
-        return "bg-gradient-to-b from-purple-400 to-purple-600 border-purple-700 shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] text-white";
+        return "bg-gradient-to-b from-amber-700 to-amber-900 border-amber-900 shadow-[0_6px_12px_rgba(129,77,46,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] text-white" + " " + `[background:linear-gradient(to_bottom,#a0722c,#814d2e)]`;
       default:
         return "bg-gradient-to-b from-gray-400 to-gray-600 border-gray-700 shadow-[0_6px_12px_rgba(75,85,99,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] text-white";
     }
