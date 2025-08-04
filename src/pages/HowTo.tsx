@@ -18,7 +18,7 @@ const HowTo = () => {
   // Configuration for webtext boxes
   const webtextBoxes = [
     {
-      webtextCode: "SYS-GU1",
+      webtextCode: "SYS-G1A",
       icon: "ICO-GU1",
       borderColor: "#16a34a", // Fresh Green
       backgroundColor: "bg-green-600/20",
