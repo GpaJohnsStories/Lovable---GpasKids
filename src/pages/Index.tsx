@@ -21,7 +21,7 @@ const Index = () => {
       <main className="container mx-auto px-4 pt-0">
         {/* Peppermint Audio Button - Top of page */}
         <div className="flex justify-center mb-8 pt-4">
-          <AudioButton onClick={() => setIsAudioPanelOpen(true)} />
+          <AudioButton code="SYS-WEL" onClick={() => setIsAudioPanelOpen(true)} />
         </div>
         
         <WebTextBox 
@@ -50,10 +50,7 @@ const Index = () => {
       <StandardAudioPanel
         isOpen={isAudioPanelOpen}
         onClose={() => setIsAudioPanelOpen(false)}
-        title="Grandpa's Story Time"
-        author="Grandpa John"
-        narrator="Grandpa John"
-        audioUrl="/lovable-uploads/sample-audio.mp3"
+        code="SYS-WEL"
       />
       
       <CookieFreeFooter />

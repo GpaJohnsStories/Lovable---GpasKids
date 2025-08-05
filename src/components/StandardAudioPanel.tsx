@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Square, RotateCcw, Volume2, VolumeX } from 'lucide-react';
+import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
+import { supabase } from '@/integrations/supabase/client';
 
 interface StandardAudioPanelProps {
   isOpen: boolean;
   onClose: () => void;
+  code?: string; // storyCode or webtextCode
   audioUrl?: string;
   title?: string;
   author?: string;
@@ -13,10 +16,11 @@ interface StandardAudioPanelProps {
 export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   isOpen,
   onClose,
-  audioUrl,
-  title = "Audio Player",
-  author,
-  narrator = "Grandpa John"
+  code,
+  audioUrl: providedAudioUrl,
+  title: providedTitle = "Audio Player",
+  author: providedAuthor,
+  narrator: providedNarrator = "Grandpa John"
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,8 +29,48 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   const [volume, setVolume] = useState(75);
   const [isMuted, setIsMuted] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1);
+  
+  // Data fetching states
+  const [fetchedData, setFetchedData] = useState<any>(null);
+  const [dataLoading, setDataLoading] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { lookupStoryByCode } = useStoryCodeLookup();
+
+  // Fetch data when code changes
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!code || !isOpen) return;
+      
+      setDataLoading(true);
+      console.log('🎵 StandardAudioPanel fetching data for code:', code);
+      
+      try {
+        // First check if it's a story code
+        const storyData = await lookupStoryByCode(code, true);
+        if (storyData) {
+          console.log('📖 Found story data:', storyData);
+          setFetchedData({
+            type: 'story',
+            title: storyData.title,
+            author: storyData.author,
+            narrator: storyData.ai_voice_name || "Grandpa John",
+            audioUrl: storyData.audio_url
+          });
+        } else {
+          console.log('❌ No data found for code:', code);
+          setFetchedData(null);
+        }
+      } catch (error) {
+        console.error('Error fetching data for code:', code, error);
+        setFetchedData(null);
+      } finally {
+        setDataLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [code, isOpen, lookupStoryByCode]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -35,6 +79,12 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
       audioRef.current.playbackRate = playbackRate;
     }
   }, [volume, isMuted, playbackRate]);
+
+  // Get display values (either provided props or fetched data)
+  const title = providedTitle !== "Audio Player" ? providedTitle : (fetchedData?.title || providedTitle);
+  const author = providedAuthor || fetchedData?.author;
+  const narrator = providedNarrator !== "Grandpa John" ? providedNarrator : (fetchedData?.narrator || providedNarrator);
+  const audioUrl = providedAudioUrl || fetchedData?.audioUrl;
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -110,6 +160,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   };
 
   const hasAudio = !!audioUrl;
+  const isLoadingData = dataLoading;
 
   if (!isOpen) return null;
 
@@ -214,9 +265,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
           {hasAudio ? (
             <div style={{ marginTop: '8px' }}>
               {/* Audio Element */}
-              {audioUrl && (
-                <audio ref={audioRef} src={audioUrl} preload="metadata" />
-              )}
+              <audio ref={audioRef} src={audioUrl} preload="metadata" />
 
               {/* Main Play/Pause Button */}
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
@@ -485,6 +534,24 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 </div>
               </div>
 
+            </div>
+          ) : isLoadingData ? (
+            <div style={{ 
+              textAlign: 'center', 
+              padding: '16px', 
+              backgroundColor: '#f3f4f6', 
+              borderRadius: '8px', 
+              border: '2px solid #d1d5db',
+              marginTop: '8px'
+            }}>
+              <p style={{ 
+                color: '#1f2937', 
+                fontSize: '18px', 
+                fontWeight: 'bold',
+                margin: '0'
+              }}>
+                Loading audio content...
+              </p>
             </div>
           ) : (
             <div style={{ 

@@ -2,11 +2,12 @@ import React from 'react';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 
 interface AudioButtonProps {
+  code: string; // storyCode or webtextCode
   onClick: () => void;
   className?: string;
 }
 
-export const AudioButton: React.FC<AudioButtonProps> = ({ onClick, className = "" }) => {
+export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, className = "" }) => {
   const { iconUrl, isLoading, error } = useCachedIcon('ICO-CDY.png');
 
   if (error) {
@@ -17,7 +18,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ onClick, className = "
     <div className={`relative group ${className}`}>
       <button
         onClick={onClick}
-        className="relative w-20 h-20 rounded-full overflow-hidden transform transition-all duration-500 ease-out hover:scale-110 hover:rotate-2 active:scale-90 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl"
+        className="relative w-20 h-20 rounded-full overflow-hidden transform transition-all duration-500 ease-out hover:scale-110 hover:rotate-[360deg] active:scale-90 active:rotate-12 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl"
       >
         {/* Loading state */}
         {isLoading && (
@@ -31,7 +32,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ onClick, className = "
           <img
             src={iconUrl}
             alt="Click if you prefer to listen."
-            className="w-full h-full object-cover rounded-full transition-transform duration-1000 group-hover:rotate-[360deg]"
+            className="w-full h-full object-cover rounded-full transition-transform duration-1000 group-hover:rotate-[720deg]"
           />
         )}
         
