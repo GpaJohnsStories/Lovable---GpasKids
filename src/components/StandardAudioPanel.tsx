@@ -122,7 +122,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
           {author && (
             <p className="text-base font-bold text-orange-800 mb-1">by {author}</p>
           )}
-          <p className="text-base font-black text-white bg-amber-600 rounded-full px-3 py-1 inline-block border-2 border-amber-700 shadow-md">
+          <p className="text-sm font-medium text-amber-700 bg-amber-100 rounded-full px-2 py-1 inline-block border border-amber-300">
             🎭 Read by {narrator}
           </p>
         </DialogHeader>
@@ -134,8 +134,8 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
               <audio ref={audioRef} src={audioUrl} preload="metadata" />
             )}
 
-            {/* Main Play/Pause Button */}
-            <div className="flex justify-center">
+            {/* Main Play/Pause Button with Label */}
+            <div className="flex flex-col items-center gap-1">
               <Button
                 size="lg"
                 onClick={handlePlayPause}
@@ -150,15 +150,17 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                   <Play className="h-6 w-6 text-white ml-0.5" />
                 )}
               </Button>
+              <span className="text-sm font-black text-green-800">
+                {isPlaying ? "PAUSE AUDIO" : "PLAY AUDIO"}
+              </span>
             </div>
 
-            {/* Control Buttons with Larger, Brighter Labels */}
+            {/* Control Buttons - Filled with proper colors */}
             <div className="grid grid-cols-2 gap-2">
               <Button
                 size="sm"
-                variant="outline"
                 onClick={handleStop}
-                className="flex flex-col items-center gap-1 h-14 bg-red-100 border-2 border-red-400 hover:bg-red-200 text-red-900 shadow-md"
+                className="flex flex-col items-center gap-1 h-14 bg-red-600 hover:bg-red-700 border-2 border-red-800 text-white shadow-md"
                 disabled={!audioUrl}
               >
                 <Square className="h-4 w-4" />
@@ -167,9 +169,8 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
 
               <Button
                 size="sm"
-                variant="outline"
                 onClick={handleRestart}
-                className="flex flex-col items-center gap-1 h-14 bg-blue-100 border-2 border-blue-400 hover:bg-blue-200 text-blue-900 shadow-md"
+                className="flex flex-col items-center gap-1 h-14 bg-blue-600 hover:bg-blue-700 border-2 border-blue-800 text-white shadow-md"
                 disabled={!audioUrl}
               >
                 <RotateCcw className="h-4 w-4" />
