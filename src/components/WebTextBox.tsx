@@ -4,6 +4,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { getStoryPhotos } from '@/utils/storyUtils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { toast } from '@/hooks/use-toast';
+import { AudioButton } from '@/components/AudioButton';
+import { StandardAudioPanel } from '@/components/StandardAudioPanel';
 
 interface WebTextBoxProps {
   webtextCode: string;
@@ -34,6 +36,9 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [volume, setVolume] = useState(1); // Always 100%
   const [playbackRate, setPlaybackRate] = useState(1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  
+  // Audio panel state for peppermint button
+  const [isAudioPanelOpen, setIsAudioPanelOpen] = useState(false);
 
   const getContent = () => {
     if (loading) return "Loading...";
@@ -405,7 +410,13 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   // Special styling for SYS-WEL content
   if (isSysWel) {
     return (
-      <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden">
+      <>
+        <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
+        {/* Peppermint Audio Button - Top Right Corner */}
+        <div className="absolute top-4 right-4 z-10">
+          <AudioButton code="SYS-WEL" onClick={() => setIsAudioPanelOpen(true)} />
+        </div>
+
         {/* Top section with photo and title */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           {/* Photo in left column on tablets+ */}
@@ -454,71 +465,86 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             {webtextCode}
           </div>
         </div>
-      </div>
+        </div>
+
+        <StandardAudioPanel
+          isOpen={isAudioPanelOpen}
+          onClose={() => setIsAudioPanelOpen(false)}
+          code="SYS-WEL"
+        />
+      </>
     );
   }
 
   // Generic styling for other webtext content
   return (
-    <div 
-      id={id}
-      className={`rounded-lg border-4 p-6 ${backgroundColor}`}
-      style={{ borderColor }}
-    >
-      {/* Top Row */}
-      <div className="flex justify-between items-start mb-4">
-        {/* Left: Icon and Title */}
-        <div className="flex items-center gap-3">
-          {iconUrl && (
-            <img 
-              src={iconUrl} 
-              alt={photos[0]?.alt || "webtext icon"}
-              className="w-auto h-16 md:h-24 lg:h-28 object-contain border rounded"
-              style={{ borderColor }}
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
-            />
-          )}
-          <h3 className="text-xl font-bold text-amber-800">
-            {webtext?.title || title}
-          </h3>
-        </div>
-        
-        {/* Right: Audio Controls */}
-        <div className="flex-shrink-0 -mt-6 -mr-6">
-          <div 
-            className="border-2 rounded-lg"
-            style={{ borderColor }}
-          >
+    <>
+      <div 
+        id={id}
+        className={`rounded-lg border-4 p-6 ${backgroundColor}`}
+        style={{ borderColor }}
+      >
+        {/* Top Row */}
+        <div className="flex justify-between items-start mb-4">
+          {/* Left: Icon and Title */}
+          <div className="flex items-center gap-3">
+            {iconUrl && (
+              <img 
+                src={iconUrl} 
+                alt={photos[0]?.alt || "webtext icon"}
+                className="w-auto h-16 md:h-24 lg:h-28 object-contain border rounded"
+                style={{ borderColor }}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            )}
+            <h3 className="text-xl font-bold text-amber-800">
+              {webtext?.title || title}
+            </h3>
+          </div>
+          
+          {/* Right: Audio Controls */}
+          <div className="flex-shrink-0 -mt-6 -mr-6">
             <div 
-              className="text-center italic font-bold mb-0"
-              style={{ 
-                fontSize: '14pt',
-                color: borderColor 
-              }}
+              className="border-2 rounded-lg"
+              style={{ borderColor }}
             >
-              Audio controls in case you prefer to listen.
+              <div 
+                className="text-center italic font-bold mb-0"
+                style={{ 
+                  fontSize: '14pt',
+                  color: borderColor 
+                }}
+              >
+                Audio controls in case you prefer to listen.
+              </div>
+              {renderAudioControls()}
             </div>
-            {renderAudioControls()}
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="mb-4">
+          <div 
+            className="font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
+            dangerouslySetInnerHTML={{ __html: getContent() }}
+          />
+        </div>
+
+        {/* Bottom Right: Webtext Code */}
+        <div className="flex justify-end">
+          <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
+            {webtextCode}
           </div>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="mb-4">
-        <div 
-          className="font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
-          dangerouslySetInnerHTML={{ __html: getContent() }}
-        />
-      </div>
-
-      {/* Bottom Right: Webtext Code */}
-      <div className="flex justify-end">
-        <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
-          {webtextCode}
-        </div>
-      </div>
-    </div>
+      <StandardAudioPanel
+        isOpen={isAudioPanelOpen}
+        onClose={() => setIsAudioPanelOpen(false)}
+        code={webtextCode}
+      />
+    </>
   );
 };
