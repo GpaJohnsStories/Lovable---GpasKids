@@ -504,23 +504,9 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             </h3>
           </div>
           
-          {/* Right: Audio Controls */}
-          <div className="flex-shrink-0 -mt-6 -mr-6">
-            <div 
-              className="border-2 rounded-lg"
-              style={{ borderColor }}
-            >
-              <div 
-                className="text-center italic font-bold mb-0"
-                style={{ 
-                  fontSize: '14pt',
-                  color: borderColor 
-                }}
-              >
-                Audio controls in case you prefer to listen.
-              </div>
-              {renderAudioControls()}
-            </div>
+          {/* Right: Peppermint Audio Button */}
+          <div className="flex-shrink-0">
+            <AudioButton code={webtextCode} onClick={() => setIsAudioPanelOpen(true)} />
           </div>
         </div>
 
