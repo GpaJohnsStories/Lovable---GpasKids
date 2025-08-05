@@ -22,7 +22,6 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
           border: 'none',
           padding: 0
         }}
-        title="Click if you prefer to listen."
       >
         <img
           src={candyIconUrl}
@@ -36,7 +35,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
         />
         
         {/* Visible tooltip for user to see what the button does */}
-        <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-10">
+        <div className="absolute top-full right-0 mt-3 px-4 py-2 bg-gray-900 text-white text-base font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20 shadow-lg border border-gray-700">
           Click if you prefer to listen.
         </div>
       </button>
