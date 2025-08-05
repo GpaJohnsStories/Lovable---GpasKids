@@ -1,5 +1,4 @@
-import React from 'react';
-import { useCachedIcon } from '@/hooks/useCachedIcon';
+import React, { useState } from 'react';
 
 interface AudioButtonProps {
   code: string; // storyCode or webtextCode
@@ -8,13 +7,9 @@ interface AudioButtonProps {
 }
 
 export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, className = "" }) => {
-  // Use the downloaded peppermint candy icon
+  // For now, let's create a beautiful CSS candy button instead of relying on image
+  const [imageError, setImageError] = useState(false);
   const candyIconUrl = "/icons/ICO-CDY.png";
-  const { iconUrl, isLoading, error } = useCachedIcon('ICO-CDY.png');
-
-  if (error) {
-    console.error('Failed to load candy icon:', error);
-  }
 
   return (
     <div className={`relative group ${className}`}>
@@ -23,38 +18,42 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
         className="relative w-20 h-20 rounded-full overflow-hidden transform transition-all duration-500 ease-out hover:scale-110 hover:rotate-[360deg] active:scale-90 active:rotate-12 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl"
       >
         {/* Loading state */}
-        {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-pink-200 to-red-200 rounded-full">
-            <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-          </div>
-        )}
-        
-        {/* Icon image */}
-        {(iconUrl || candyIconUrl) && (
-          <img
-            src={iconUrl || candyIconUrl}
-            alt="Click if you prefer to listen."
-            className="w-full h-full object-cover rounded-full transition-transform duration-1000 group-hover:rotate-[720deg]"
-          />
-        )}
-        
-        {/* Fallback if no icon */}
-        {!iconUrl && !candyIconUrl && !isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-pink-300 to-red-400 rounded-full">
-            <svg 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              className="text-white drop-shadow-sm"
-            >
-              <path 
-                d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" 
-                fill="currentColor"
-              />
-            </svg>
-          </div>
-        )}
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-400 via-pink-400 to-red-500 rounded-full">
+          {!imageError && (
+            <img
+              src={candyIconUrl}
+              alt="Click if you prefer to listen."
+              className="w-full h-full object-cover rounded-full transition-transform duration-1000 group-hover:rotate-[720deg]"
+              onError={() => setImageError(true)}
+              onLoad={() => setImageError(false)}
+            />
+          )}
+          
+          {/* CSS Peppermint Candy Fallback */}
+          {imageError && (
+            <div className="w-full h-full rounded-full relative overflow-hidden bg-gradient-to-br from-red-500 to-white"
+                 style={{
+                   background: `conic-gradient(
+                     from 0deg,
+                     #dc2626 0deg 30deg,
+                     white 30deg 60deg,
+                     #dc2626 60deg 90deg,
+                     white 90deg 120deg,
+                     #dc2626 120deg 150deg,
+                     white 150deg 180deg,
+                     #dc2626 180deg 210deg,
+                     white 210deg 240deg,
+                     #dc2626 240deg 270deg,
+                     white 270deg 300deg,
+                     #dc2626 300deg 330deg,
+                     white 330deg 360deg
+                   )`
+                 }}>
+              {/* Center hole */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-2 border-red-500"></div>
+            </div>
+          )}
+        </div>
         
         {/* Glossy highlight overlay */}
         <div 
