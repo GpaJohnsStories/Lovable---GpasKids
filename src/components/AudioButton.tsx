@@ -8,8 +8,8 @@ interface AudioButtonProps {
 }
 
 export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, className = "" }) => {
-  // Temporarily use a direct path until the proper candy icon is uploaded
-  const candyIconUrl = "/lovable-uploads/hi-speech-bubble-white-black-border.png";
+  // Use the downloaded peppermint candy icon
+  const candyIconUrl = "/icons/ICO-CDY.png";
   const { iconUrl, isLoading, error } = useCachedIcon('ICO-CDY.png');
 
   if (error) {
