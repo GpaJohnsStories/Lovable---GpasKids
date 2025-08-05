@@ -48,8 +48,8 @@ serve(async (req) => {
       textToRead += `. ${story.tagline}`
     }
     
-    // Add author information
-    textToRead += `. By ${story.author}`
+    // Add author information with m-dash separator
+    textToRead += `. By ${story.author} —`
     
     // Add AI voice attribution if available
     if (story.ai_voice_name) {
