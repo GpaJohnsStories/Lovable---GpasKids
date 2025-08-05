@@ -365,10 +365,9 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                     width: '100%',
                     height: '4px',
                     appearance: 'none',
-                    background: '#dcfce7',
+                    background: '#22c55e',
                     borderRadius: '2px',
-                    cursor: audioUrl ? 'pointer' : 'not-allowed',
-                    backgroundImage: `linear-gradient(to right, #15803d 0%, #15803d ${duration ? (currentTime / duration) * 100 : 0}%, #dcfce7 ${duration ? (currentTime / duration) * 100 : 0}%, #dcfce7 100%)`
+                    cursor: audioUrl ? 'pointer' : 'not-allowed'
                   }}
                   aria-label={`Audio progress: ${formatTime(currentTime)} of ${formatTime(duration)}`}
                 />
@@ -429,10 +428,9 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                       width: '100%',
                       height: '4px',
                       appearance: 'none',
-                      background: '#dbeafe',
+                      background: '#3b82f6',
                       borderRadius: '2px',
-                      cursor: 'pointer',
-                      backgroundImage: `linear-gradient(to right, #2563eb 0%, #2563eb ${isMuted ? 0 : volume}%, #dbeafe ${isMuted ? 0 : volume}%, #dbeafe 100%)`
+                      cursor: 'pointer'
                     }}
                     aria-label={`Volume: ${isMuted ? 0 : volume} percent`}
                   />
