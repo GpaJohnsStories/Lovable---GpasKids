@@ -8,8 +8,6 @@ interface StandardAudioPanelProps {
   title?: string;
   author?: string;
   narrator?: string;
-  content?: string;
-  allowTextToSpeech?: boolean;
 }
 
 export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
@@ -18,9 +16,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   audioUrl,
   title = "Audio Player",
   author,
-  narrator = "Grandpa John",
-  content,
-  allowTextToSpeech = false
+  narrator = "Grandpa John"
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -113,7 +109,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const hasAudio = audioUrl || (allowTextToSpeech && content);
+  const hasAudio = !!audioUrl;
 
   if (!isOpen) return null;
 
@@ -489,44 +485,6 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 </div>
               </div>
 
-              {/* Text-to-Speech Option */}
-              {allowTextToSpeech && !audioUrl && (
-                <div style={{ 
-                  textAlign: 'center', 
-                  padding: '12px', 
-                  border: '2px dashed #f59e0b', 
-                  borderRadius: '8px', 
-                  backgroundColor: '#fef3c7',
-                  marginTop: '8px'
-                }}>
-                  <p style={{ 
-                    fontSize: '14px', 
-                    fontWeight: 'bold', 
-                    color: '#92400e', 
-                    marginBottom: '8px',
-                    margin: '0 0 8px 0'
-                  }}>
-                    No audio available. Text-to-speech can be generated.
-                  </p>
-                  <button
-                    disabled
-                    style={{
-                      backgroundColor: '#fde68a',
-                      border: '2px solid #f59e0b',
-                      color: '#92400e',
-                      fontWeight: 'bold',
-                      padding: '4px 8px',
-                      borderRadius: '4px',
-                      fontSize: '14px',
-                      cursor: 'not-allowed',
-                      opacity: '0.6'
-                    }}
-                    aria-label="Text-to-speech generation feature coming soon"
-                  >
-                    Generate Audio (Coming Soon)
-                  </button>
-                </div>
-              )}
             </div>
           ) : (
             <div style={{ 
