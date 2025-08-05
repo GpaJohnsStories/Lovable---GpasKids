@@ -1,8 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Slider } from '@/components/ui/slider';
-import { Label } from '@/components/ui/label';
 import { Play, Pause, Square, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 
 interface StandardAudioPanelProps {
@@ -97,11 +93,18 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
     }
   };
 
-  const handleSeek = (value: number[]) => {
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
-      audioRef.current.currentTime = value[0];
-      setCurrentTime(value[0]);
+      const time = parseFloat(e.target.value);
+      audioRef.current.currentTime = time;
+      setCurrentTime(time);
     }
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const vol = parseInt(e.target.value);
+    setVolume(vol);
+    if (vol > 0) setIsMuted(false);
   };
 
   const formatTime = (time: number) => {
@@ -112,234 +115,477 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
 
   const hasAudio = audioUrl || (allowTextToSpeech && content);
 
+  if (!isOpen) return null;
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent 
-        className="max-w-xs p-3 bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 max-h-[85vh] overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="audio-panel-title"
-        aria-describedby="audio-panel-description"
+    <>
+      {/* Modal Backdrop */}
+      <div
+        style={{
+          position: 'fixed',
+          inset: '0',
+          zIndex: 50,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px'
+        }}
+        onClick={onClose}
       >
-        {/* Compact Header - Minimal spacing */}
-        <DialogHeader className="text-center pb-0">
-          <DialogTitle 
-            id="audio-panel-title"
-            className="text-xl font-black text-orange-900 leading-tight mb-1 text-center"
+        {/* Modal Content */}
+        <div
+          style={{
+            maxWidth: '20rem',
+            width: '100%',
+            padding: '12px',
+            background: 'linear-gradient(135deg, #fefdf8, #fef3c7)',
+            border: '2px solid #fed7aa',
+            borderRadius: '8px',
+            maxHeight: '85vh',
+            overflow: 'hidden',
+            position: 'relative',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+          }}
+          onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="audio-panel-title"
+          aria-describedby="audio-panel-description"
+        >
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            style={{
+              position: 'absolute',
+              right: '16px',
+              top: '16px',
+              borderRadius: '4px',
+              opacity: 0.7,
+              transition: 'opacity 0.2s',
+              background: 'transparent',
+              border: 'none',
+              padding: '4px',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = '1')}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.7')}
+            aria-label="Close"
           >
-            {title}
-          </DialogTitle>
-          {author && (
-            <p className="text-base font-bold text-orange-800 mb-1 text-center">by {author}</p>
-          )}
-          <p 
-            id="audio-panel-description"
-            className="text-sm text-gray-700 mb-0 text-center"
-          >
-            Read by {narrator}
-          </p>
-        </DialogHeader>
+            <span style={{ fontSize: '16px', fontWeight: 'bold' }}>✕</span>
+          </button>
 
-        {hasAudio ? (
-          <div className="space-y-2 mt-0.5">
-            {/* Audio Element */}
-            {audioUrl && (
-              <audio ref={audioRef} src={audioUrl} preload="metadata" />
+          {/* Header */}
+          <div style={{ textAlign: 'center', paddingBottom: '0' }}>
+            <h2
+              id="audio-panel-title"
+              style={{
+                fontSize: '20px',
+                fontWeight: '900',
+                color: '#7c2d12',
+                lineHeight: '1.2',
+                marginBottom: '4px',
+                margin: '0'
+              }}
+            >
+              {title}
+            </h2>
+            {author && (
+              <p style={{ 
+                fontSize: '16px', 
+                fontWeight: 'bold', 
+                color: '#9a3412', 
+                marginBottom: '4px',
+                margin: '0 0 4px 0'
+              }}>
+                by {author}
+              </p>
             )}
+            <p
+              id="audio-panel-description"
+              style={{
+                fontSize: '14px',
+                color: '#374151',
+                marginBottom: '0',
+                margin: '0'
+              }}
+            >
+              Read by {narrator}
+            </p>
+          </div>
 
-            {/* Main Play/Pause Button - Pill shaped with internal label */}
-            <div className="flex justify-center">
-              <Button
-                size="lg"
-                onClick={handlePlayPause}
-                disabled={isLoading || !audioUrl}
-                className="h-14 px-6 rounded-full bg-gradient-to-br from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 shadow-xl border-4 border-green-400 flex items-center gap-2 focus:ring-4 focus:ring-green-300 focus:ring-offset-2 transition-all duration-200"
-                aria-label={isLoading ? "Loading audio" : isPlaying ? "Pause audio playback" : "Play audio"}
-                aria-pressed={isPlaying}
-                aria-describedby={isLoading ? "loading-status" : undefined}
-              >
-                {isLoading ? (
-                  <div 
-                    className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"
-                    aria-hidden="true"
+          {hasAudio ? (
+            <div style={{ marginTop: '8px' }}>
+              {/* Audio Element */}
+              {audioUrl && (
+                <audio ref={audioRef} src={audioUrl} preload="metadata" />
+              )}
+
+              {/* Main Play/Pause Button */}
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
+                <button
+                  onClick={handlePlayPause}
+                  disabled={isLoading || !audioUrl}
+                  style={{
+                    height: '56px',
+                    padding: '0 24px',
+                    borderRadius: '28px',
+                    background: 'linear-gradient(135deg, #16a34a, #059669)',
+                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    border: '4px solid #4ade80',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    color: 'white',
+                    cursor: audioUrl && !isLoading ? 'pointer' : 'not-allowed',
+                    opacity: isLoading || !audioUrl ? '0.5' : '1',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (audioUrl && !isLoading) {
+                      e.currentTarget.style.background = 'linear-gradient(135deg, #15803d, #047857)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #16a34a, #059669)';
+                  }}
+                  aria-label={isLoading ? "Loading audio" : isPlaying ? "Pause audio playback" : "Play audio"}
+                  aria-pressed={isPlaying}
+                >
+                  {isLoading ? (
+                    <div 
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        border: '2px solid transparent',
+                        borderTop: '2px solid white',
+                        borderRadius: '50%',
+                        animation: 'spin 1s linear infinite'
+                      }}
+                    />
+                  ) : isPlaying ? (
+                    <>
+                      <Pause size={20} />
+                      <span style={{ fontSize: '14px', fontWeight: '900' }}>PAUSE AUDIO</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play size={20} style={{ marginLeft: '2px' }} />
+                      <span style={{ fontSize: '14px', fontWeight: '900' }}>PLAY AUDIO</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Control Buttons */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '8px' }}>
+                <button
+                  onClick={handleStop}
+                  disabled={!audioUrl}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    height: '28px',
+                    border: '2px solid #991b1b',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    borderRadius: '4px',
+                    backgroundColor: '#dc2626',
+                    color: 'white',
+                    cursor: audioUrl ? 'pointer' : 'not-allowed',
+                    opacity: !audioUrl ? '0.5' : '1',
+                    transition: 'all 0.15s'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (audioUrl) {
+                      e.currentTarget.style.backgroundColor = '#b91c1c';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#dc2626';
+                  }}
+                  aria-label="Stop audio playback and reset to beginning"
+                >
+                  <Square size={12} />
+                  <span style={{ fontSize: '12px', fontWeight: '900' }}>STOP</span>
+                </button>
+
+                <button
+                  onClick={handleRestart}
+                  disabled={!audioUrl}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    height: '28px',
+                    border: '2px solid #1e40af',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    borderRadius: '4px',
+                    backgroundColor: '#2563eb',
+                    color: 'white',
+                    cursor: audioUrl ? 'pointer' : 'not-allowed',
+                    opacity: !audioUrl ? '0.5' : '1',
+                    transition: 'all 0.15s'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (audioUrl) {
+                      e.currentTarget.style.backgroundColor = '#1d4ed8';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#2563eb';
+                  }}
+                  aria-label="Restart audio from the beginning"
+                >
+                  <RotateCcw size={12} />
+                  <span style={{ fontSize: '12px', fontWeight: '900' }}>RESTART</span>
+                </button>
+              </div>
+
+              {/* Progress Bar */}
+              <div style={{ 
+                backgroundColor: 'white', 
+                borderRadius: '8px', 
+                padding: '6px', 
+                border: '2px solid #86efac',
+                marginBottom: '8px'
+              }}>
+                <input
+                  type="range"
+                  min={0}
+                  max={duration || 100}
+                  step={1}
+                  value={currentTime}
+                  onChange={handleSeek}
+                  disabled={!audioUrl}
+                  style={{
+                    width: '100%',
+                    height: '4px',
+                    appearance: 'none',
+                    background: '#dcfce7',
+                    borderRadius: '2px',
+                    cursor: audioUrl ? 'pointer' : 'not-allowed',
+                    backgroundImage: `linear-gradient(to right, #16a34a 0%, #16a34a ${duration ? (currentTime / duration) * 100 : 0}%, #dcfce7 ${duration ? (currentTime / duration) * 100 : 0}%, #dcfce7 100%)`
+                  }}
+                  aria-label={`Audio progress: ${formatTime(currentTime)} of ${formatTime(duration)}`}
+                />
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  fontSize: '12px', 
+                  fontWeight: 'bold', 
+                  color: '#14532d',
+                  marginTop: '4px'
+                }}>
+                  <span>{formatTime(currentTime)}</span>
+                  <span>{formatTime(duration)}</span>
+                </div>
+              </div>
+
+              {/* Volume and Speed Controls */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                {/* Volume Control */}
+                <div style={{ 
+                  backgroundColor: 'white', 
+                  borderRadius: '8px', 
+                  padding: '8px', 
+                  border: '2px solid #93c5fd'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <label style={{ fontSize: '12px', fontWeight: '900', color: '#1e3a8a' }}>VOLUME</label>
+                    <button
+                      onClick={() => setIsMuted(!isMuted)}
+                      style={{
+                        padding: '2px',
+                        height: '20px',
+                        width: '20px',
+                        color: '#1e40af',
+                        backgroundColor: '#dbeafe',
+                        border: '1px solid #60a5fa',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#bfdbfe')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#dbeafe')}
+                      aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+                    >
+                      {isMuted || volume === 0 ? <VolumeX size={10} /> : <Volume2 size={10} />}
+                    </button>
+                  </div>
+                  <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    step={5}
+                    value={isMuted ? 0 : volume}
+                    onChange={handleVolumeChange}
+                    style={{
+                      width: '100%',
+                      height: '4px',
+                      appearance: 'none',
+                      background: '#dbeafe',
+                      borderRadius: '2px',
+                      cursor: 'pointer',
+                      backgroundImage: `linear-gradient(to right, #2563eb 0%, #2563eb ${isMuted ? 0 : volume}%, #dbeafe ${isMuted ? 0 : volume}%, #dbeafe 100%)`
+                    }}
+                    aria-label={`Volume: ${isMuted ? 0 : volume} percent`}
                   />
-                ) : isPlaying ? (
-                  <>
-                    <Pause className="h-5 w-5 text-white" aria-hidden="true" />
-                    <span className="text-sm font-black text-white">PAUSE AUDIO</span>
-                  </>
-                ) : (
-                  <>
-                    <Play className="h-5 w-5 text-white ml-0.5" aria-hidden="true" />
-                    <span className="text-sm font-black text-white">PLAY AUDIO</span>
-                  </>
-                )}
-              </Button>
-              {isLoading && (
-                <div id="loading-status" className="sr-only">
-                  Audio is loading, please wait
+                </div>
+
+                {/* Speed Control */}
+                <div style={{ 
+                  backgroundColor: 'white', 
+                  borderRadius: '8px', 
+                  padding: '8px', 
+                  border: '2px solid #c7d2fe'
+                }}>
+                  <label style={{ fontSize: '12px', fontWeight: '900', color: '#312e81', marginBottom: '4px', display: 'block' }}>
+                    SPEED: {playbackRate}x
+                  </label>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px' }}>
+                    {[0.75, 1, 1.25, 1.5].map((speed) => (
+                      <button
+                        key={speed}
+                        onClick={() => setPlaybackRate(speed)}
+                        style={{
+                          fontSize: '10px',
+                          fontWeight: '900',
+                          padding: '2px 4px',
+                          height: '20px',
+                          border: '1px solid',
+                          borderRadius: '2px',
+                          cursor: 'pointer',
+                          transition: 'all 0.15s',
+                          backgroundColor: playbackRate === speed ? '#4338ca' : '#e0e7ff',
+                          color: playbackRate === speed ? 'white' : '#312e81',
+                          borderColor: playbackRate === speed ? '#3730a3' : '#a5b4fc',
+                          boxShadow: playbackRate === speed ? '0 4px 6px -1px rgba(0, 0, 0, 0.1)' : 'none'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (playbackRate !== speed) {
+                            e.currentTarget.style.backgroundColor = '#c7d2fe';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (playbackRate !== speed) {
+                            e.currentTarget.style.backgroundColor = '#e0e7ff';
+                          }
+                        }}
+                        aria-label={`Set playback speed to ${speed} times normal`}
+                      >
+                        {speed}x
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Text-to-Speech Option */}
+              {allowTextToSpeech && !audioUrl && (
+                <div style={{ 
+                  textAlign: 'center', 
+                  padding: '12px', 
+                  border: '2px dashed #f59e0b', 
+                  borderRadius: '8px', 
+                  backgroundColor: '#fef3c7',
+                  marginTop: '8px'
+                }}>
+                  <p style={{ 
+                    fontSize: '14px', 
+                    fontWeight: 'bold', 
+                    color: '#92400e', 
+                    marginBottom: '8px',
+                    margin: '0 0 8px 0'
+                  }}>
+                    No audio available. Text-to-speech can be generated.
+                  </p>
+                  <button
+                    disabled
+                    style={{
+                      backgroundColor: '#fde68a',
+                      border: '2px solid #f59e0b',
+                      color: '#92400e',
+                      fontWeight: 'bold',
+                      padding: '4px 8px',
+                      borderRadius: '4px',
+                      fontSize: '14px',
+                      cursor: 'not-allowed',
+                      opacity: '0.6'
+                    }}
+                    aria-label="Text-to-speech generation feature coming soon"
+                  >
+                    Generate Audio (Coming Soon)
+                  </button>
                 </div>
               )}
             </div>
-
-            {/* Control Buttons - Half height, inline layout */}
-            <div className="grid grid-cols-2 gap-2" role="group" aria-label="Audio playback controls">
-              <button
-                onClick={handleStop}
-                disabled={!audioUrl}
-                style={{ 
-                  backgroundColor: '#dc2626',
-                  borderColor: '#991b1b',
-                  color: 'white'
-                }}
-                className="flex items-center justify-center gap-2 h-7 border-2 shadow-md rounded hover:bg-red-700 disabled:opacity-50 focus:ring-2 focus:ring-red-300 focus:ring-offset-1 transition-all duration-150"
-                aria-label="Stop audio playback and reset to beginning"
-              >
-                <Square className="h-3 w-3" aria-hidden="true" />
-                <span className="text-xs font-black">STOP</span>
-              </button>
-
-              <button
-                onClick={handleRestart}
-                disabled={!audioUrl}
-                style={{ 
-                  backgroundColor: '#2563eb',
-                  borderColor: '#1e40af',
-                  color: 'white'
-                }}
-                className="flex items-center justify-center gap-2 h-7 border-2 shadow-md rounded hover:bg-blue-700 disabled:opacity-50 focus:ring-2 focus:ring-blue-300 focus:ring-offset-1 transition-all duration-150"
-                aria-label="Restart audio from the beginning"
-              >
-                <RotateCcw className="h-3 w-3" aria-hidden="true" />
-                <span className="text-xs font-black">RESTART</span>
-              </button>
+          ) : (
+            <div style={{ 
+              textAlign: 'center', 
+              padding: '16px', 
+              backgroundColor: '#f3f4f6', 
+              borderRadius: '8px', 
+              border: '2px solid #d1d5db',
+              marginTop: '8px'
+            }}>
+              <p style={{ 
+                color: '#1f2937', 
+                fontSize: '18px', 
+                fontWeight: 'bold',
+                margin: '0'
+              }}>
+                No audio content available
+              </p>
             </div>
+          )}
+        </div>
+      </div>
 
-            {/* Progress Bar - Reduced height */}
-            <div className="space-y-1 bg-white rounded-lg p-1.5 border-2 border-green-300">
-              <Label htmlFor="audio-progress" className="sr-only">
-                Audio progress: {formatTime(currentTime)} of {formatTime(duration)}
-              </Label>
-              <Slider
-                id="audio-progress"
-                value={[currentTime]}
-                max={duration || 100}
-                step={1}
-                onValueChange={handleSeek}
-                style={{
-                  "--slider-track": "#dcfce7",
-                  "--slider-range": "#16a34a", 
-                  "--slider-thumb": "#16a34a"
-                } as React.CSSProperties}
-                className="w-full h-1 [&_[data-radix-slider-track]]:bg-green-200 [&_[data-radix-slider-range]]:bg-green-600 [&_[data-radix-slider-thumb]]:bg-green-600 [&_[data-radix-slider-thumb]]:border-green-600"
-                disabled={!audioUrl}
-                aria-label={`Audio progress: ${formatTime(currentTime)} of ${formatTime(duration)}`}
-                aria-valuemin={0}
-                aria-valuemax={duration || 100}
-                aria-valuenow={currentTime}
-                aria-valuetext={`${formatTime(currentTime)} of ${formatTime(duration)}`}
-              />
-              <div className="flex justify-between text-xs font-bold text-green-900" aria-live="polite">
-                <span aria-label="Current time">{formatTime(currentTime)}</span>
-                <span aria-label="Total duration">{formatTime(duration)}</span>
-              </div>
-            </div>
-
-            {/* Volume and Speed Controls - 50/50 split */}
-            <div className="grid grid-cols-2 gap-2">
-              {/* Volume Control - 50% width */}
-              <div className="bg-white rounded-lg p-2 space-y-1 border-2 border-blue-300" role="group" aria-labelledby="volume-label">
-                <div className="flex items-center justify-between">
-                  <Label id="volume-label" className="text-xs font-black text-blue-900">VOLUME</Label>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsMuted(!isMuted)}
-                    className="p-0.5 h-5 w-5 text-blue-800 hover:bg-blue-200 border border-blue-400 bg-blue-100 focus:ring-2 focus:ring-blue-300 focus:ring-offset-1"
-                    aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-                    aria-pressed={isMuted}
-                  >
-                    {isMuted || volume === 0 ? (
-                      <VolumeX className="h-2.5 w-2.5" aria-hidden="true" />
-                    ) : (
-                      <Volume2 className="h-2.5 w-2.5" aria-hidden="true" />
-                    )}
-                  </Button>
-                </div>
-                <Slider
-                  value={[isMuted ? 0 : volume]}
-                  max={100}
-                  step={5}
-                  onValueChange={(value) => {
-                    setVolume(value[0]);
-                    if (value[0] > 0) setIsMuted(false);
-                  }}
-                  style={{
-                    "--slider-track": "#dbeafe",
-                    "--slider-range": "#2563eb", 
-                    "--slider-thumb": "#2563eb"
-                  } as React.CSSProperties}
-                  className="w-full [&_[data-radix-slider-track]]:bg-blue-200 [&_[data-radix-slider-range]]:bg-blue-600 [&_[data-radix-slider-thumb]]:bg-blue-600 [&_[data-radix-slider-thumb]]:border-blue-600"
-                  aria-label={`Volume: ${isMuted ? 0 : volume} percent`}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-valuenow={isMuted ? 0 : volume}
-                  aria-valuetext={`${isMuted ? 0 : volume} percent volume`}
-                />
-              </div>
-
-              {/* Speed Control - 50% width */}
-              <div className="bg-white rounded-lg p-2 space-y-1 border-2 border-indigo-300" role="group" aria-labelledby="speed-label">
-                <Label id="speed-label" className="text-xs font-black text-indigo-900">SPEED: {playbackRate}x</Label>
-                <div className="grid grid-cols-2 gap-0.5" role="radiogroup" aria-labelledby="speed-label">
-                  {[0.75, 1, 1.25, 1.5].map((speed) => (
-                    <Button
-                      key={speed}
-                      variant={playbackRate === speed ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setPlaybackRate(speed)}
-                      className={`text-[10px] font-black py-0.5 h-5 px-1 border focus:ring-2 focus:ring-indigo-300 focus:ring-offset-1 transition-all duration-150 ${
-                        playbackRate === speed 
-                          ? "bg-indigo-700 text-white border-indigo-800 shadow-lg" 
-                          : "bg-indigo-100 text-indigo-900 border-indigo-400 hover:bg-indigo-200"
-                      }`}
-                      role="radio"
-                      aria-checked={playbackRate === speed}
-                      aria-label={`Set playback speed to ${speed} times normal`}
-                    >
-                      {speed}x
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Text-to-Speech Option */}
-            {allowTextToSpeech && !audioUrl && (
-              <div className="text-center p-3 border-2 border-dashed border-amber-400 rounded-lg bg-amber-100" role="status" aria-live="polite">
-                <p className="text-sm font-bold text-amber-900 mb-2">
-                  No audio available. Text-to-speech can be generated.
-                </p>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  disabled
-                  className="bg-amber-200 border-2 border-amber-500 text-amber-900 font-bold focus:ring-2 focus:ring-amber-300 focus:ring-offset-1"
-                  aria-label="Text-to-speech generation feature coming soon"
-                >
-                  Generate Audio (Coming Soon)
-                </Button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="text-center p-4 bg-gray-100 rounded-lg border-2 border-gray-300" role="status" aria-live="polite">
-            <p className="text-gray-800 text-lg font-bold">
-              No audio content available
-            </p>
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
+      {/* CSS Animation for spinner */}
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        /* Custom range input styling */
+        input[type="range"]::-webkit-slider-thumb {
+          appearance: none;
+          height: 16px;
+          width: 16px;
+          border-radius: 50%;
+          background: #16a34a;
+          border: 2px solid #16a34a;
+          cursor: pointer;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+          height: 16px;
+          width: 16px;
+          border-radius: 50%;
+          background: #16a34a;
+          border: 2px solid #16a34a;
+          cursor: pointer;
+          border: none;
+        }
+        
+        /* Volume slider styling */
+        input[type="range"]:nth-of-type(2)::-webkit-slider-thumb {
+          background: #2563eb;
+          border-color: #2563eb;
+        }
+        
+        input[type="range"]:nth-of-type(2)::-moz-range-thumb {
+          background: #2563eb;
+          border-color: #2563eb;
+        }
+      `}</style>
+    </>
   );
 };
