@@ -368,7 +368,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                     background: '#dcfce7',
                     borderRadius: '2px',
                     cursor: audioUrl ? 'pointer' : 'not-allowed',
-                    backgroundImage: `linear-gradient(to right, #16a34a 0%, #16a34a ${duration ? (currentTime / duration) * 100 : 0}%, #dcfce7 ${duration ? (currentTime / duration) * 100 : 0}%, #dcfce7 100%)`
+                    backgroundImage: `linear-gradient(to right, #15803d 0%, #15803d ${duration ? (currentTime / duration) * 100 : 0}%, #dcfce7 ${duration ? (currentTime / duration) * 100 : 0}%, #dcfce7 100%)`
                   }}
                   aria-label={`Audio progress: ${formatTime(currentTime)} of ${formatTime(duration)}`}
                 />
@@ -560,8 +560,8 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
           height: 16px;
           width: 16px;
           border-radius: 50%;
-          background: #16a34a;
-          border: 2px solid #16a34a;
+          background: #15803d;
+          border: 2px solid #15803d;
           cursor: pointer;
         }
         
@@ -569,8 +569,8 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
           height: 16px;
           width: 16px;
           border-radius: 50%;
-          background: #16a34a;
-          border: 2px solid #16a34a;
+          background: #15803d;
+          border: 2px solid #15803d;
           cursor: pointer;
           border: none;
         }
