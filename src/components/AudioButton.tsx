@@ -57,17 +57,15 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ onClick, className = "
           }}
         />
         
-        {/* Center highlight */}
+        {/* Large white center area for the speaker */}
         <div 
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center transition-all duration-300"
           style={{
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.8)'
           }}
-        />
-        
-        {/* Audio icon in center */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-600 group-hover:text-red-700 transition-colors duration-300">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+        >
+          {/* Audio icon in center */}
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" className="text-red-600 group-hover:text-red-700 transition-colors duration-300">
             <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
           </svg>
         </div>
