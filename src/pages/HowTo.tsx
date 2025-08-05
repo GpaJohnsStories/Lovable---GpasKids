@@ -69,10 +69,70 @@ const HowTo = () => {
       
       <main className="container mx-auto px-4 py-4">
         <div className="max-w-4xl mx-auto">
-          <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="flex items-center justify-center gap-4 mb-6">
             <h1 className="text-4xl md:text-5xl font-bold text-center text-orange-800">
               Buddy's Guide to Gpa's Website
             </h1>
+          </div>
+
+          {/* Navigation Menu */}
+          <div className="bg-gray-100 rounded-lg p-4 mb-6 shadow-sm">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+              <button 
+                onClick={() => document.getElementById('SYS-G1A')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+              >
+                Getting Started
+              </button>
+              <button 
+                onClick={() => document.getElementById('SYS-G2A')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+              >
+                Home Page
+              </button>
+              <button 
+                onClick={() => document.getElementById('SYS-G3A')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+              >
+                Story Library
+              </button>
+              <button 
+                onClick={() => document.getElementById('SYS-G3B')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+              >
+                Read A Story
+              </button>
+              <button 
+                onClick={() => document.getElementById('SYS-G4A')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+              >
+                Comments List
+              </button>
+              <button 
+                onClick={() => document.getElementById('SYS-G4B')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+              >
+                Write Comment
+              </button>
+              <button 
+                onClick={() => document.getElementById('SYS-G5A')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+              >
+                Writing
+              </button>
+              <button 
+                onClick={() => document.getElementById('SYS-G6A')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+              >
+                About Us
+              </button>
+              <button 
+                onClick={() => document.getElementById('SYS-G7A')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+              >
+                We Are Safe!
+              </button>
+            </div>
           </div>
           
           {/* Stack of WebText Boxes */}
@@ -84,6 +144,7 @@ const HowTo = () => {
                 borderColor={box.borderColor}
                 backgroundColor={box.backgroundColor}
                 title={box.title}
+                id={box.webtextCode}
               />
             ))}
           </div>

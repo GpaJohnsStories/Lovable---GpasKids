@@ -10,13 +10,15 @@ interface WebTextBoxProps {
   borderColor: string;
   backgroundColor: string;
   title: string;
+  id?: string;
 }
 
 export const WebTextBox: React.FC<WebTextBoxProps> = ({
   webtextCode,
   borderColor,
   backgroundColor,
-  title
+  title,
+  id
 }) => {
   const { lookupStoryByCode } = useStoryCodeLookup();
   const [webtext, setWebtext] = useState<any>(null);
@@ -403,7 +405,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   // Special styling for SYS-WEL content
   if (isSysWel) {
     return (
-      <div className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden">
+      <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden">
         {/* Top section with photo and title */}
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           {/* Photo in left column on tablets+ */}
@@ -478,6 +480,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   // Generic styling for other webtext content
   return (
     <div 
+      id={id}
       className={`rounded-lg border-4 p-6 ${backgroundColor}`}
       style={{ borderColor }}
     >
