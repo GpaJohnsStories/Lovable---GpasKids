@@ -282,10 +282,11 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
     }
   }, [isDragging, dragOffset]);
 
-  // Reset position when panel opens
+  // Reset position only when panel first opens
   useEffect(() => {
     if (isOpen) {
-      setPosition({ x: 0, y: 0 });
+      // Only reset if this is a fresh open (not already positioned)
+      setPosition(prev => prev.x === 0 && prev.y === 0 ? { x: 50, y: 50 } : prev);
     }
   }, [isOpen]);
 
