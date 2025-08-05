@@ -25,7 +25,6 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
       >
         <img
           src={candyIconUrl}
-          alt="Click if you prefer to listen."
           className="w-full h-full rounded-full"
           style={{ 
             backgroundColor: 'transparent',
