@@ -15,7 +15,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
     <div className={`relative group ${className}`}>
       <button
         onClick={onClick}
-        className="relative w-20 h-20 rounded-full overflow-hidden transform transition-all duration-1000 ease-out hover:scale-110 hover:rotate-[360deg] active:scale-90 active:rotate-12 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl bg-transparent"
+        className="relative w-20 h-20 rounded-full overflow-hidden transform transition-all duration-2000 ease-out hover:scale-110 hover:rotate-[360deg] active:scale-90 active:rotate-12 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl bg-transparent"
       >
         {/* Candy image */}
         {!imageError && (
