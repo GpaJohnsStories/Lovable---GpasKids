@@ -338,8 +338,10 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
         >
           {/* Close Button */}
           <button
-            onClick={onClose}
-            onMouseDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
             style={{
               position: 'absolute',
               right: '12px',
@@ -348,12 +350,18 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
               background: 'linear-gradient(135deg, #dc2626, #b91c1c)',
               border: '2px solid #f87171',
               color: 'white',
-              padding: '6px 12px',
+              padding: '8px 14px',
               cursor: 'pointer',
               fontSize: '12px',
               fontWeight: '900',
               transition: 'all 0.2s',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              zIndex: 10,
+              minWidth: '60px',
+              minHeight: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = 'linear-gradient(135deg, #b91c1c, #991b1b)';
