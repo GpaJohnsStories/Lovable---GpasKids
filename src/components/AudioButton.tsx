@@ -7,9 +7,9 @@ interface AudioButtonProps {
 }
 
 export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, className = "" }) => {
-  // For now, let's create a beautiful CSS candy button instead of relying on image
+  // Use the actual peppermint candy image you uploaded
   const [imageError, setImageError] = useState(false);
-  const candyIconUrl = "/icons/ICO-CDY.png";
+  const candyIconUrl = "/lovable-uploads/4f9b0ab3-9e17-4dab-91d9-a8fd5c350585.png";
 
   return (
     <div className={`relative group ${className}`}>
