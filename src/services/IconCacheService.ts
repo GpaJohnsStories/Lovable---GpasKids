@@ -38,6 +38,7 @@ class IconCacheService {
     'ICO-MU2.gif',      // Menu button icon
     'ICO-HL2.gif',      // Buddy icon
     'ICO-HO1.jpg',      // Grandpa John icon
+    'ICO-CDY.png',      // Peppermint candy audio button
   ];
 
   /**
