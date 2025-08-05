@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
 import { Play, Pause, Square, RotateCcw, Volume2, VolumeX } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface StandardAudioPanelProps {
   isOpen: boolean;
@@ -114,94 +113,72 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-sm p-6">
-        {/* Header */}
-        <DialogHeader className="text-center pb-4">
-          <DialogTitle className="text-lg font-bold text-primary leading-tight">
+      <DialogContent className="max-w-xs p-3 bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200">
+        {/* Compact Header */}
+        <DialogHeader className="text-center pb-2">
+          <DialogTitle className="text-base font-bold text-orange-700 leading-tight">
             {title}
           </DialogTitle>
           {author && (
-            <p className="text-sm text-muted-foreground">by {author}</p>
+            <p className="text-xs text-orange-600">by {author}</p>
           )}
-          <p className="text-sm text-muted-foreground font-medium">
+          <p className="text-xs text-amber-700 font-medium bg-amber-100 rounded-full px-2 py-1 inline-block">
             🎭 Read by {narrator}
           </p>
         </DialogHeader>
 
         {hasAudio ? (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Audio Element */}
             {audioUrl && (
               <audio ref={audioRef} src={audioUrl} preload="metadata" />
             )}
 
-            {/* Main Controls - Vertical Layout */}
-            <div className="flex flex-col items-center space-y-4">
-              {/* Primary Play/Pause Button */}
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      size="lg"
-                      onClick={handlePlayPause}
-                      disabled={isLoading || !audioUrl}
-                      className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg"
-                    >
-                      {isLoading ? (
-                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white" />
-                      ) : isPlaying ? (
-                        <Pause className="h-6 w-6 text-white" />
-                      ) : (
-                        <Play className="h-6 w-6 text-white ml-0.5" />
-                      )}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {isPlaying ? 'Pause' : 'Play'}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+            {/* Main Play/Pause Button */}
+            <div className="flex justify-center">
+              <Button
+                size="lg"
+                onClick={handlePlayPause}
+                disabled={isLoading || !audioUrl}
+                className="h-14 w-14 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg border-2 border-green-300"
+              >
+                {isLoading ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
+                ) : isPlaying ? (
+                  <Pause className="h-5 w-5 text-white" />
+                ) : (
+                  <Play className="h-5 w-5 text-white ml-0.5" />
+                )}
+              </Button>
+            </div>
 
-              {/* Secondary Controls */}
-              <div className="flex items-center gap-3">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={handleStop}
-                        className="h-10 w-10 rounded-full"
-                        disabled={!audioUrl}
-                      >
-                        <Square className="h-4 w-4" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Stop</TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+            {/* Control Buttons with Labels */}
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleStop}
+                className="flex flex-col items-center gap-1 h-12 bg-red-50 border-red-200 hover:bg-red-100 text-red-700"
+                disabled={!audioUrl}
+              >
+                <Square className="h-3 w-3" />
+                <span className="text-xs font-medium">Stop</span>
+              </Button>
 
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={handleRestart}
-                        className="h-10 w-10 rounded-full"
-                        disabled={!audioUrl}
-                      >
-                        <RotateCcw className="h-4 w-4" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Restart</TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleRestart}
+                className="flex flex-col items-center gap-1 h-12 bg-blue-50 border-blue-200 hover:bg-blue-100 text-blue-700"
+                disabled={!audioUrl}
+              >
+                <RotateCcw className="h-3 w-3" />
+                <span className="text-xs font-medium">Restart</span>
+              </Button>
             </div>
 
             {/* Progress Bar */}
-            <div className="space-y-2">
+            <div className="space-y-1 bg-white/70 rounded-lg p-2">
               <Slider
                 value={[currentTime]}
                 max={duration || 100}
@@ -210,28 +187,28 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 className="w-full"
                 disabled={!audioUrl}
               />
-              <div className="flex justify-between text-xs text-muted-foreground">
+              <div className="flex justify-between text-xs text-amber-700">
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(duration)}</span>
               </div>
             </div>
 
             {/* Volume Control */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
+            <div className="bg-white/70 rounded-lg p-2 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-purple-700">Volume</span>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsMuted(!isMuted)}
-                  className="p-1 h-8 w-8"
+                  className="p-1 h-6 w-6 text-purple-600 hover:bg-purple-100"
                 >
                   {isMuted || volume === 0 ? (
-                    <VolumeX className="h-4 w-4" />
+                    <VolumeX className="h-3 w-3" />
                   ) : (
-                    <Volume2 className="h-4 w-4" />
+                    <Volume2 className="h-3 w-3" />
                   )}
                 </Button>
-                <span className="text-xs font-medium">Volume</span>
               </div>
               <Slider
                 value={[isMuted ? 0 : volume]}
@@ -246,8 +223,8 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
             </div>
 
             {/* Speed Control */}
-            <div className="space-y-2">
-              <span className="text-xs font-medium">Speed: {playbackRate}x</span>
+            <div className="bg-white/70 rounded-lg p-2 space-y-2">
+              <span className="text-xs font-medium text-indigo-700">Speed: {playbackRate}x</span>
               <div className="grid grid-cols-4 gap-1">
                 {[0.75, 1, 1.25, 1.5].map((speed) => (
                   <Button
@@ -255,7 +232,11 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                     variant={playbackRate === speed ? "default" : "outline"}
                     size="sm"
                     onClick={() => setPlaybackRate(speed)}
-                    className="text-xs py-1 h-8"
+                    className={`text-xs py-1 h-7 ${
+                      playbackRate === speed 
+                        ? "bg-indigo-600 text-white border-indigo-600" 
+                        : "bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100"
+                    }`}
                   >
                     {speed}x
                   </Button>
@@ -265,19 +246,24 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
 
             {/* Text-to-Speech Option */}
             {allowTextToSpeech && !audioUrl && (
-              <div className="text-center p-4 border rounded-lg bg-muted/50">
-                <p className="text-xs text-muted-foreground mb-2">
+              <div className="text-center p-3 border-2 border-dashed border-amber-300 rounded-lg bg-amber-50">
+                <p className="text-xs text-amber-700 mb-2">
                   No audio available. Text-to-speech can be generated.
                 </p>
-                <Button variant="outline" size="sm" disabled>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  disabled
+                  className="bg-amber-100 border-amber-300 text-amber-700"
+                >
                   Generate Audio (Coming Soon)
                 </Button>
               </div>
             )}
           </div>
         ) : (
-          <div className="text-center p-6">
-            <p className="text-muted-foreground">
+          <div className="text-center p-4 bg-gray-50 rounded-lg">
+            <p className="text-gray-600 text-sm">
               No audio content available
             </p>
           </div>
