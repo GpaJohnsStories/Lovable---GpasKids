@@ -177,7 +177,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
       audio.removeEventListener('waiting', handleWaiting);
       audio.removeEventListener('canplaythrough', handleCanPlayThrough);
     };
-  }, [audioUrl, isMetadataLoaded]);
+  }, [audioUrl]); // Remove isMetadataLoaded from dependency array to prevent infinite loop
 
   const handlePlayPause = async () => {
     if (!audioRef.current) return;
