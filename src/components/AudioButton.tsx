@@ -11,7 +11,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ onClick, className = "
       {/* Peppermint Candy Button */}
       <button
         onClick={onClick}
-        className="relative w-18 h-18 rounded-full overflow-hidden transform transition-all duration-300 ease-out hover:scale-110 hover:rotate-12 active:scale-95 active:rotate-6 focus:outline-none focus:ring-4 focus:ring-red-300/50"
+        className="relative w-20 h-20 rounded-full overflow-hidden transform transition-all duration-300 ease-out hover:scale-110 hover:rotate-12 active:scale-95 active:rotate-6 focus:outline-none focus:ring-4 focus:ring-red-300/50"
         style={{
           background: `conic-gradient(
             from 0deg,
