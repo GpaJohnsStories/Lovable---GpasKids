@@ -97,7 +97,7 @@ const GpaJohnComments = () => {
                   className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-fun font-semibold transition-colors"
                 >
                   <MessageCircle className="h-4 w-4" />
-                  Read Full Comment & Replies
+                  Read or Listen to Full Announcement
                 </Link>
               </div>
             ))}
