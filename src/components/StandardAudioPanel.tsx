@@ -425,7 +425,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 margin: '0'
               }}
             >
-              Read by {narrator}
+              Read by {narrator} AI from OpenAI
             </p>
           </div>
 
