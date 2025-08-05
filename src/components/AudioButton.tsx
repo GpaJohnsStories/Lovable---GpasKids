@@ -15,22 +15,22 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
     <div className={`relative group ${className}`}>
       <button
         onClick={onClick}
-        className="relative w-20 h-20 rounded-full overflow-hidden transform transition-all duration-500 ease-out hover:scale-110 hover:rotate-[360deg] active:scale-90 active:rotate-12 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl"
+        className="relative w-20 h-20 rounded-full overflow-hidden transform transition-all duration-500 ease-out hover:scale-110 hover:rotate-[360deg] active:scale-90 active:rotate-12 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl bg-transparent"
       >
-        {/* Loading state */}
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-400 via-pink-400 to-red-500 rounded-full">
-          {!imageError && (
-            <img
-              src={candyIconUrl}
-              alt="Click if you prefer to listen."
-              className="w-full h-full object-cover rounded-full transition-transform duration-1000 group-hover:rotate-[720deg]"
-              onError={() => setImageError(true)}
-              onLoad={() => setImageError(false)}
-            />
-          )}
-          
-          {/* CSS Peppermint Candy Fallback */}
-          {imageError && (
+        {/* Candy image */}
+        {!imageError && (
+          <img
+            src={candyIconUrl}
+            alt="Click if you prefer to listen."
+            className="w-full h-full object-cover rounded-full transition-transform duration-1000 group-hover:rotate-[720deg]"
+            onError={() => setImageError(true)}
+            onLoad={() => setImageError(false)}
+          />
+        )}
+        
+        {/* CSS Peppermint Candy Fallback - only if image fails */}
+        {imageError && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-400 via-pink-400 to-red-500 rounded-full">
             <div className="w-full h-full rounded-full relative overflow-hidden bg-gradient-to-br from-red-500 to-white"
                  style={{
                    background: `conic-gradient(
@@ -52,8 +52,8 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
               {/* Center hole */}
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-2 border-red-500"></div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
         
         {/* Glossy highlight overlay */}
         <div 
