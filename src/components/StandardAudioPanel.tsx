@@ -226,7 +226,12 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 max={duration || 100}
                 step={1}
                 onValueChange={handleSeek}
-                className="w-full h-1 [&>[data-orientation=horizontal]>[data-radix-slider-track]]:bg-green-200 [&>[data-orientation=horizontal]>[data-radix-slider-track]>[data-radix-slider-range]]:bg-green-600 [&>[data-orientation=horizontal]>[data-radix-slider-thumb]]:border-green-600 [&>[data-orientation=horizontal]>[data-radix-slider-thumb]]:bg-green-600"
+                style={{
+                  "--slider-track": "#dcfce7",
+                  "--slider-range": "#16a34a", 
+                  "--slider-thumb": "#16a34a"
+                } as React.CSSProperties}
+                className="w-full h-1 [&_[data-radix-slider-track]]:bg-green-200 [&_[data-radix-slider-range]]:bg-green-600 [&_[data-radix-slider-thumb]]:bg-green-600 [&_[data-radix-slider-thumb]]:border-green-600"
                 disabled={!audioUrl}
                 aria-label={`Audio progress: ${formatTime(currentTime)} of ${formatTime(duration)}`}
                 aria-valuemin={0}
@@ -269,7 +274,12 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                     setVolume(value[0]);
                     if (value[0] > 0) setIsMuted(false);
                   }}
-                  className="w-full [&>[data-orientation=horizontal]>[data-radix-slider-track]]:bg-blue-200 [&>[data-orientation=horizontal]>[data-radix-slider-track]>[data-radix-slider-range]]:bg-blue-600 [&>[data-orientation=horizontal]>[data-radix-slider-thumb]]:border-blue-600 [&>[data-orientation=horizontal]>[data-radix-slider-thumb]]:bg-blue-600"
+                  style={{
+                    "--slider-track": "#dbeafe",
+                    "--slider-range": "#2563eb", 
+                    "--slider-thumb": "#2563eb"
+                  } as React.CSSProperties}
+                  className="w-full [&_[data-radix-slider-track]]:bg-blue-200 [&_[data-radix-slider-range]]:bg-blue-600 [&_[data-radix-slider-thumb]]:bg-blue-600 [&_[data-radix-slider-thumb]]:border-blue-600"
                   aria-label={`Volume: ${isMuted ? 0 : volume} percent`}
                   aria-valuemin={0}
                   aria-valuemax={100}
