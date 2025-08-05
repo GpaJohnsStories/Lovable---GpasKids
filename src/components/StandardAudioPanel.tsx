@@ -558,8 +558,8 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
           height: 16px;
           width: 16px;
           border-radius: 50%;
-          background: #15803d;
-          border: 2px solid #15803d;
+          background: #f59e0b;
+          border: 2px solid #f59e0b;
           cursor: pointer;
         }
         
@@ -567,21 +567,10 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
           height: 16px;
           width: 16px;
           border-radius: 50%;
-          background: #15803d;
-          border: 2px solid #15803d;
+          background: #f59e0b;
+          border: 2px solid #f59e0b;
           cursor: pointer;
           border: none;
-        }
-        
-        /* Volume slider styling */
-        input[type="range"]:nth-of-type(2)::-webkit-slider-thumb {
-          background: #2563eb;
-          border-color: #2563eb;
-        }
-        
-        input[type="range"]:nth-of-type(2)::-moz-range-thumb {
-          background: #2563eb;
-          border-color: #2563eb;
         }
       `}</style>
     </>
