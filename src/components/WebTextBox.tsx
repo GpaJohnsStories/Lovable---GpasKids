@@ -428,15 +428,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           {/* Title and content section */}
           <div className="flex-1 min-w-0 flex flex-col">
 
-            {/* Audio Controls at top */}
-            <div className="flex justify-center mb-4">
-              <div className="rounded-lg bg-blue-200/50 p-3 border border-blue-400/60">
-                <div className="text-center italic font-bold text-blue-800 text-xs sm:text-sm mb-1">
-                  Audio controls in case you prefer to listen.
-                </div>
-                {renderAudioControls()}
-              </div>
-            </div>
 
             {/* Title section below audio controls */}
             <div className="mb-4">

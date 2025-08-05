@@ -5,13 +5,8 @@ import StorySection from "@/components/StorySection";
 import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
-import { StandardAudioPanel } from '@/components/StandardAudioPanel';
-import { AudioButton } from '@/components/AudioButton';
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
 
 const Index = () => {
-  const [isAudioPanelOpen, setIsAudioPanelOpen] = useState(false);
   
   console.log('Index component loading with WebTextBox');
   return (
@@ -19,11 +14,6 @@ const Index = () => {
       <WelcomeHeader />
       
       <main className="container mx-auto px-4 pt-0">
-        {/* Peppermint Audio Button - Top of page */}
-        <div className="flex justify-center mb-8 pt-4">
-          <AudioButton code="SYS-WEL" onClick={() => setIsAudioPanelOpen(true)} />
-        </div>
-        
         <WebTextBox 
           webtextCode="SYS-WEL"
           borderColor="border-yellow-400"
@@ -35,23 +25,7 @@ const Index = () => {
         <GpaJohnComments />
         
         <StorySection />
-        
-        {/* Test Button for Standard Audio Panel */}
-        <div className="text-center my-8">
-          <Button 
-            onClick={() => setIsAudioPanelOpen(true)}
-            className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-white px-8 py-3 rounded-lg shadow-lg"
-          >
-            🎵 Test Standard Audio Panel
-          </Button>
-        </div>
       </main>
-      
-      <StandardAudioPanel
-        isOpen={isAudioPanelOpen}
-        onClose={() => setIsAudioPanelOpen(false)}
-        code="SYS-WEL"
-      />
       
       <CookieFreeFooter />
       <ScrollToTop />
