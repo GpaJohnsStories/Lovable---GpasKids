@@ -302,7 +302,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
         style={{
           position: 'fixed',
           inset: '0',
-          zIndex: 20,
+          zIndex: 10,
           backgroundColor: 'transparent',
           display: 'flex',
           alignItems: 'center',
