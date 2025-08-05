@@ -17,46 +17,44 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
       <button
         onClick={onClick}
         onMouseEnter={() => setIsRotated(true)}
-        className={`relative w-20 h-20 rounded-full overflow-hidden transform hover:scale-110 active:scale-90 active:rotate-12 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl bg-transparent ${isRotated ? 'rotate-[360deg]' : ''}`}
+        className={`relative w-20 h-20 rounded-full overflow-hidden transform hover:scale-110 active:scale-90 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl ${isRotated ? 'rotate-[360deg]' : 'rotate-0'}`}
         style={{
-          transition: isRotated ? 'all 4s ease-in-out' : 'transform 0.3s ease-out'
+          transition: 'transform 4s ease-in-out, scale 0.3s ease-out',
+          backgroundColor: 'transparent'
         }}
       >
         {/* Candy image */}
-        {!imageError && (
-          <img
-            src={candyIconUrl}
-            alt="Click if you prefer to listen."
-            className="w-full h-full object-cover rounded-full transition-transform duration-1000"
-            onError={() => setImageError(true)}
-            onLoad={() => setImageError(false)}
-          />
-        )}
+        <img
+          src={candyIconUrl}
+          alt="Click if you prefer to listen."
+          className="w-full h-full object-cover rounded-full"
+          onError={() => setImageError(true)}
+          onLoad={() => setImageError(false)}
+          style={{ backgroundColor: 'transparent' }}
+        />
         
         {/* CSS Peppermint Candy Fallback - only if image fails */}
         {imageError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-400 via-pink-400 to-red-500 rounded-full">
-            <div className="w-full h-full rounded-full relative overflow-hidden bg-gradient-to-br from-red-500 to-white"
-                 style={{
-                   background: `conic-gradient(
-                     from 0deg,
-                     #dc2626 0deg 30deg,
-                     white 30deg 60deg,
-                     #dc2626 60deg 90deg,
-                     white 90deg 120deg,
-                     #dc2626 120deg 150deg,
-                     white 150deg 180deg,
-                     #dc2626 180deg 210deg,
-                     white 210deg 240deg,
-                     #dc2626 240deg 270deg,
-                     white 270deg 300deg,
-                     #dc2626 300deg 330deg,
-                     white 330deg 360deg
-                   )`
-                 }}>
-              {/* Center hole */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-2 border-red-500"></div>
-            </div>
+          <div className="w-full h-full rounded-full relative overflow-hidden"
+               style={{
+                 background: `conic-gradient(
+                   from 0deg,
+                   #dc2626 0deg 30deg,
+                   white 30deg 60deg,
+                   #dc2626 60deg 90deg,
+                   white 90deg 120deg,
+                   #dc2626 120deg 150deg,
+                   white 150deg 180deg,
+                   #dc2626 180deg 210deg,
+                   white 210deg 240deg,
+                   #dc2626 240deg 270deg,
+                   white 270deg 300deg,
+                   #dc2626 300deg 330deg,
+                   white 330deg 360deg
+                 )`
+               }}>
+            {/* Center hole */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-2 border-red-500"></div>
           </div>
         )}
         
