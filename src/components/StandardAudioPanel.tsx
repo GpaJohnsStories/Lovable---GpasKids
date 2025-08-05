@@ -280,22 +280,30 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
             onClick={onClose}
             style={{
               position: 'absolute',
-              right: '16px',
-              top: '16px',
-              borderRadius: '4px',
-              opacity: 0.7,
-              transition: 'opacity 0.2s',
-              background: 'transparent',
-              border: 'none',
-              padding: '4px',
+              right: '12px',
+              top: '12px',
+              borderRadius: '6px',
+              background: 'linear-gradient(135deg, #dc2626, #b91c1c)',
+              border: '2px solid #f87171',
+              color: 'white',
+              padding: '6px 12px',
               cursor: 'pointer',
-              fontSize: '14px'
+              fontSize: '12px',
+              fontWeight: '900',
+              transition: 'all 0.2s',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = '1')}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.7')}
-            aria-label="Close"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, #b91c1c, #991b1b)';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, #dc2626, #b91c1c)';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+            aria-label="Close audio panel"
           >
-            <span style={{ fontSize: '16px', fontWeight: 'bold' }}>✕</span>
+            CLOSE
           </button>
 
           {/* Header */}
