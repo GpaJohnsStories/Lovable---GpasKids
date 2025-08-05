@@ -17,10 +17,12 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
       <button
         onClick={onClick}
         onMouseEnter={() => setIsRotated(true)}
-        className={`relative w-20 h-20 rounded-full overflow-hidden transform hover:scale-110 active:scale-90 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl ${isRotated ? 'rotate-[360deg]' : 'rotate-0'}`}
+        className="relative w-20 h-20 rounded-full overflow-hidden hover:scale-110 active:scale-90 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl"
         style={{
+          transform: isRotated ? 'rotate(360deg)' : 'rotate(0deg)',
           transition: 'transform 4s ease-in-out, scale 0.3s ease-out',
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
+          border: 'none'
         }}
       >
         {/* Candy image */}
@@ -30,7 +32,10 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
           className="w-full h-full object-cover rounded-full"
           onError={() => setImageError(true)}
           onLoad={() => setImageError(false)}
-          style={{ backgroundColor: 'transparent' }}
+          style={{ 
+            backgroundColor: 'transparent',
+            display: 'block'
+          }}
         />
         
         {/* CSS Peppermint Candy Fallback - only if image fails */}
@@ -57,34 +62,6 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-2 border-red-500"></div>
           </div>
         )}
-        
-        {/* Glossy highlight overlay */}
-        <div 
-          className="absolute inset-0 rounded-full opacity-40 pointer-events-none"
-          style={{
-            background: `
-              radial-gradient(ellipse at 25% 25%, rgba(255, 255, 255, 0.8) 0%, transparent 60%)
-            `
-          }}
-        />
-        
-        {/* Shimmer effect on hover */}
-        <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <div 
-            className="absolute inset-0 rounded-full"
-            style={{
-              background: `
-                linear-gradient(
-                  90deg,
-                  transparent 0%,
-                  rgba(255, 255, 255, 0.4) 50%,
-                  transparent 100%
-                )
-              `,
-              animation: 'shimmer 2s infinite linear'
-            }}
-          />
-        </div>
       </button>
       
       {/* Candy-themed message tooltip */}
