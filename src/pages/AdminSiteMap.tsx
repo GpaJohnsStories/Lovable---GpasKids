@@ -43,7 +43,7 @@ const AdminSiteMap = () => {
     { name: 'Author Bios', path: '/author-bios', icon: User, description: 'Public author biographies' },
     { name: 'Author Bio Simple', path: '/author-bio/:id', icon: User, description: 'Individual author bio page' },
     { name: 'How to Help Gpa John', path: '/help-gpa', icon: HelpCircle, description: 'Learn how to help Grandpa John with his storytelling website' },
-    { name: 'How To Use Site', path: '/how-to', icon: HelpCircle, description: 'Site usage instructions' },
+    { name: 'Guide to Use Site', path: '/guide', icon: HelpCircle, description: 'Site usage instructions' },
     { name: 'Writing Stories', path: '/writing', icon: FileText, description: 'Story submission form' },
     { name: 'Voice Preview', path: '/voice-preview', icon: FileText, description: 'Preview story voices' },
     { name: 'Privacy Policy', path: '/privacy', icon: Lock, description: 'Privacy policy and terms' },
@@ -158,7 +158,7 @@ const AdminSiteMap = () => {
                 <p><strong>Main Navigation:</strong> Home → Stories Library → Individual Stories → Comments</p>
                 <p><strong>Admin Flow:</strong> Dashboard → Stories Management → Comments Dashboard → Reference</p>
                 <p><strong>Content Creation:</strong> Writing → Story Submission → Admin Review → Publication</p>
-                <p><strong>User Journey:</strong> Home → Help/How-To → Stories → Comments → About</p>
+                <p><strong>User Journey:</strong> Home → Help/Guide → Stories → Comments → About</p>
               </div>
             </CardContent>
           </Card>

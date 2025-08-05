@@ -127,9 +127,9 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
           }
         },
         {
-          id: "how-to-write",
-          icon: "ICO-WR3.jpg", // How To Write (2nd/leftmost submenu - same as main)
-          text: "How To Write",
+          id: "guide-write",
+          icon: "ICO-WR3.jpg", // Guide Write (2nd/leftmost submenu - same as main)
+          text: "Guide Write",
           onClick: () => {
             window.location.href = "/writing";
             onClose();
