@@ -444,10 +444,15 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                   border: '2px solid #c7d2fe'
                 }}>
                   <label style={{ fontSize: '12px', fontWeight: '900', color: '#312e81', marginBottom: '4px', display: 'block' }}>
-                    Playback Speed: {playbackRate}x
+                    Playback Speed: {playbackRate === 0.75 ? 'Slow' : playbackRate === 1 ? 'Normal' : playbackRate === 1.25 ? 'Faster' : 'Fastest'}
                   </label>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px' }}>
-                    {[0.75, 1, 1.25, 1.5].map((speed) => (
+                    {[
+                      { speed: 0.75, label: 'Slow' },
+                      { speed: 1, label: 'Normal' },
+                      { speed: 1.25, label: 'Faster' },
+                      { speed: 1.5, label: 'Fastest' }
+                    ].map(({ speed, label }) => (
                       <button
                         key={speed}
                         onClick={() => setPlaybackRate(speed)}
@@ -475,9 +480,9 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                             e.currentTarget.style.backgroundColor = '#e0e7ff';
                           }
                         }}
-                        aria-label={`Set playback speed to ${speed} times normal`}
+                        aria-label={`Set playback speed to ${label}`}
                       >
-                        {speed}x
+                        {label}
                       </button>
                     ))}
                   </div>
