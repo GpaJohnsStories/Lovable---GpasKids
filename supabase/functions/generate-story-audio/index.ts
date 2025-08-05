@@ -51,9 +51,9 @@ serve(async (req) => {
     // Add author information with m-dash separator
     textToRead += `. By ${story.author} —`
     
-    // Add AI voice attribution if available
+    // Add AI voice attribution with m-dash separator if available
     if (story.ai_voice_name) {
-      textToRead += `. Now read by ${story.ai_voice_name} AI voice from OpenAI`
+      textToRead += `. Now read by ${story.ai_voice_name} AI voice from OpenAI —`
     }
     
     // Add description/excerpt if available
