@@ -10,6 +10,7 @@ export const useStoryCodeLookup = () => {
         .from('stories')
         .select('*')
         .ilike('story_code', storyCode.trim())
+        .eq('published', 'Y')
         .maybeSingle();
 
       if (error) {
