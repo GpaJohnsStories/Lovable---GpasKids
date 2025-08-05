@@ -76,59 +76,59 @@ const HowTo = () => {
           </div>
 
           {/* Navigation Menu */}
-          <div className="bg-gray-100 rounded-lg p-4 mb-6 shadow-sm">
+          <div className="bg-gray-100 rounded-lg p-3 mb-6 shadow-sm">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               <button 
                 onClick={() => document.getElementById('SYS-G1A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+                className="px-2 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors h-12 flex items-center justify-center text-center leading-tight"
               >
                 Getting Started
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G2A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+                className="px-2 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors h-12 flex items-center justify-center text-center leading-tight"
               >
                 Home Page
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G3A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+                className="px-2 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors h-12 flex items-center justify-center text-center leading-tight"
               >
                 Story Library
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G3B')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+                className="px-2 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors h-12 flex items-center justify-center text-center leading-tight"
               >
                 Read A Story
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G4A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+                className="px-2 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors h-12 flex items-center justify-center text-center leading-tight"
               >
                 Comments List
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G4B')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+                className="px-2 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors h-12 flex items-center justify-center text-center leading-tight"
               >
                 Write Comment
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G5A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+                className="px-2 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors h-12 flex items-center justify-center text-center leading-tight"
               >
                 Writing
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G6A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+                className="px-2 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors h-12 flex items-center justify-center text-center leading-tight"
               >
                 About Us
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G7A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-sm font-medium transition-colors"
+                className="px-2 py-1.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors h-12 flex items-center justify-center text-center leading-tight"
               >
                 We Are Safe!
               </button>
