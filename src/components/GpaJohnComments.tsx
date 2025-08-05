@@ -94,9 +94,8 @@ const GpaJohnComments = () => {
                 <Link 
                   to={`/comment/${comment.id}`} 
                   onClick={scrollToTop}
-                  className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-fun font-semibold transition-colors"
+                  className="inline-block bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 text-white font-fun font-semibold px-6 py-3 rounded-full shadow-[0_4px_0_#1e40af,0_6px_10px_rgba(0,0,0,0.3)] border border-blue-700 hover:shadow-[0_2px_0_#1e40af,0_4px_8px_rgba(0,0,0,0.3)] hover:translate-y-[2px] transition-all duration-150 active:shadow-[0_0_0_#1e40af,0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[4px]"
                 >
-                  <MessageCircle className="h-4 w-4" />
                   Read or Listen to Full Announcement
                 </Link>
               </div>
