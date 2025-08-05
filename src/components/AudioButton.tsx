@@ -16,31 +16,13 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
     <div className={`relative ${className}`}>
       <button
         onClick={onClick}
-        className="relative w-20 h-20 rounded-full focus:outline-none focus:ring-4 focus:ring-primary/20 overflow-hidden"
+        className="relative w-20 h-20 rounded-full focus:outline-none"
         style={{
           backgroundColor: 'transparent',
           border: 'none',
           padding: 0
         }}
       >
-        {/* Shimmer overlay */}
-        <div 
-          className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
-          style={{
-            background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%)',
-            transform: 'translateX(-100%)',
-            animation: 'shimmer-sweep 2s ease-in-out infinite'
-          }}
-        />
-        
-        {/* Keyframes for shimmer animation */}
-        <style>{`
-          @keyframes shimmer-sweep {
-            0% { transform: translateX(-100%); }
-            50% { transform: translateX(100%); }
-            100% { transform: translateX(100%); }
-          }
-        `}</style>
         <img
           src={candyIconUrl}
           alt="Click if you prefer to listen."
