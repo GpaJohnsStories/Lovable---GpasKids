@@ -8,6 +8,8 @@ interface AudioButtonProps {
 }
 
 export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, className = "" }) => {
+  // Temporarily use a direct path until the proper candy icon is uploaded
+  const candyIconUrl = "/lovable-uploads/hi-speech-bubble-white-black-border.png";
   const { iconUrl, isLoading, error } = useCachedIcon('ICO-CDY.png');
 
   if (error) {
@@ -28,16 +30,16 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
         )}
         
         {/* Icon image */}
-        {iconUrl && (
+        {(iconUrl || candyIconUrl) && (
           <img
-            src={iconUrl}
+            src={iconUrl || candyIconUrl}
             alt="Click if you prefer to listen."
             className="w-full h-full object-cover rounded-full transition-transform duration-1000 group-hover:rotate-[720deg]"
           />
         )}
         
         {/* Fallback if no icon */}
-        {!iconUrl && !isLoading && (
+        {!iconUrl && !candyIconUrl && !isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-pink-300 to-red-400 rounded-full">
             <svg 
               width="24" 
