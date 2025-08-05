@@ -16,8 +16,10 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
     <div className={`relative ${className}`}>
       <button
         onClick={onClick}
-        className="relative w-15 h-15 rounded-full focus:outline-none group"
+        className="relative rounded-full focus:outline-none group"
         style={{
+          width: '60px',
+          height: '60px',
           backgroundColor: 'transparent',
           border: 'none',
           padding: 0
