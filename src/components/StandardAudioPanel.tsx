@@ -32,6 +32,11 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   const [audioError, setAudioError] = useState<string | null>(null);
   const [isMetadataLoaded, setIsMetadataLoaded] = useState(false);
   
+  // Dragging state
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  
   // Data fetching states
   const [fetchedData, setFetchedData] = useState<any>(null);
   const [dataLoading, setDataLoading] = useState(false);
@@ -234,6 +239,56 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  // Drag handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    setDragOffset({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+    setIsDragging(true);
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging) return;
+    
+    const newX = e.clientX - dragOffset.x;
+    const newY = e.clientY - dragOffset.y;
+    
+    // Keep within viewport bounds
+    const maxX = window.innerWidth - 320; // panel width
+    const maxY = window.innerHeight - 400; // panel height
+    
+    setPosition({
+      x: Math.max(0, Math.min(newX, maxX)),
+      y: Math.max(0, Math.min(newY, maxY))
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Add global mouse listeners for dragging
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, dragOffset]);
+
+  // Reset position when panel opens
+  useEffect(() => {
+    if (isOpen) {
+      setPosition({ x: 0, y: 0 });
+    }
+  }, [isOpen]);
+
   const hasAudio = !!audioUrl;
   const isLoadingData = dataLoading;
 
@@ -257,17 +312,22 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
       >
         {/* Modal Content */}
         <div
+          onMouseDown={handleMouseDown}
           style={{
+            position: 'absolute',
+            left: `${position.x}px`,
+            top: `${position.y}px`,
             maxWidth: '20rem',
-            width: '100%',
+            width: '320px',
             padding: '12px',
             background: 'linear-gradient(135deg, #fefdf8, #fef3c7)',
             border: '2px solid #fed7aa',
             borderRadius: '8px',
             maxHeight: '85vh',
             overflow: 'hidden',
-            position: 'relative',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            cursor: isDragging ? 'grabbing' : 'grab',
+            userSelect: 'none'
           }}
           onClick={(e) => e.stopPropagation()}
           role="dialog"
@@ -306,8 +366,21 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
             CLOSE
           </button>
 
-          {/* Header */}
-          <div style={{ textAlign: 'center', paddingBottom: '0' }}>
+          {/* Header with drag indicator */}
+          <div style={{ textAlign: 'center', paddingBottom: '0', position: 'relative' }}>
+            {/* Drag indicator */}
+            <div style={{
+              position: 'absolute',
+              top: '4px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '40px',
+              height: '4px',
+              backgroundColor: '#d97706',
+              borderRadius: '2px',
+              opacity: 0.6
+            }} />
+            
             <h2
               id="audio-panel-title"
               style={{
@@ -316,7 +389,8 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 color: '#7c2d12',
                 lineHeight: '1.2',
                 marginBottom: '4px',
-                margin: '0'
+                margin: '0',
+                marginTop: '12px'
               }}
             >
               {title}
@@ -371,7 +445,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
               </p>
             </div>
           ) : hasAudio ? (
-            <div style={{ marginTop: '8px' }}>
+            <div style={{ marginTop: '8px' }} onMouseDown={(e) => e.stopPropagation()}>
               {/* Audio Element */}
               <audio ref={audioRef} src={audioUrl} preload="metadata" />
 
