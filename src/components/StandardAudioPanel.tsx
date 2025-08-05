@@ -113,7 +113,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-xs p-3 bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200">
+      <DialogContent className="max-w-xs p-3 bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 max-h-[85vh] overflow-hidden">
         {/* Compact Header - Minimal spacing */}
         <DialogHeader className="text-center pb-0">
           <DialogTitle className="text-xl font-black text-orange-900 leading-tight mb-1">
@@ -205,54 +205,57 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
               </div>
             </div>
 
-            {/* Volume Control */}
-            <div className="bg-white rounded-lg p-2 space-y-2 border-2 border-purple-300">
-              <div className="flex items-center justify-between">
-                <span className="text-base font-black text-purple-900">VOLUME</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsMuted(!isMuted)}
-                  className="p-1 h-8 w-8 text-purple-800 hover:bg-purple-200 border-2 border-purple-400 bg-purple-100"
-                >
-                  {isMuted || volume === 0 ? (
-                    <VolumeX className="h-4 w-4" />
-                  ) : (
-                    <Volume2 className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-              <Slider
-                value={[isMuted ? 0 : volume]}
-                max={100}
-                step={5}
-                onValueChange={(value) => {
-                  setVolume(value[0]);
-                  if (value[0] > 0) setIsMuted(false);
-                }}
-                className="w-full"
-              />
-            </div>
-
-            {/* Speed Control */}
-            <div className="bg-white rounded-lg p-2 space-y-2 border-2 border-indigo-300">
-              <span className="text-base font-black text-indigo-900">SPEED: {playbackRate}x</span>
-              <div className="grid grid-cols-4 gap-1">
-                {[0.75, 1, 1.25, 1.5].map((speed) => (
+            {/* Volume and Speed Controls - Side by side */}
+            <div className="grid grid-cols-3 gap-2">
+              {/* Volume Control - Takes 1/3 width */}
+              <div className="bg-white rounded-lg p-2 space-y-1 border-2 border-purple-300">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black text-purple-900">VOL</span>
                   <Button
-                    key={speed}
-                    variant={playbackRate === speed ? "default" : "outline"}
+                    variant="ghost"
                     size="sm"
-                    onClick={() => setPlaybackRate(speed)}
-                    className={`text-sm font-black py-1 h-8 border-2 ${
-                      playbackRate === speed 
-                        ? "bg-indigo-700 text-white border-indigo-800 shadow-lg" 
-                        : "bg-indigo-100 text-indigo-900 border-indigo-400 hover:bg-indigo-200"
-                    }`}
+                    onClick={() => setIsMuted(!isMuted)}
+                    className="p-0.5 h-6 w-6 text-purple-800 hover:bg-purple-200 border border-purple-400 bg-purple-100"
                   >
-                    {speed}x
+                    {isMuted || volume === 0 ? (
+                      <VolumeX className="h-3 w-3" />
+                    ) : (
+                      <Volume2 className="h-3 w-3" />
+                    )}
                   </Button>
-                ))}
+                </div>
+                <Slider
+                  value={[isMuted ? 0 : volume]}
+                  max={100}
+                  step={5}
+                  onValueChange={(value) => {
+                    setVolume(value[0]);
+                    if (value[0] > 0) setIsMuted(false);
+                  }}
+                  className="w-full"
+                />
+              </div>
+
+              {/* Speed Control - Takes 2/3 width */}
+              <div className="col-span-2 bg-white rounded-lg p-2 space-y-1 border-2 border-indigo-300">
+                <span className="text-xs font-black text-indigo-900">SPEED: {playbackRate}x</span>
+                <div className="grid grid-cols-2 gap-1">
+                  {[0.75, 1, 1.25, 1.5].map((speed) => (
+                    <Button
+                      key={speed}
+                      variant={playbackRate === speed ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setPlaybackRate(speed)}
+                      className={`text-xs font-black py-0.5 h-6 border ${
+                        playbackRate === speed 
+                          ? "bg-indigo-700 text-white border-indigo-800 shadow-lg" 
+                          : "bg-indigo-100 text-indigo-900 border-indigo-400 hover:bg-indigo-200"
+                      }`}
+                    >
+                      {speed}x
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
 
