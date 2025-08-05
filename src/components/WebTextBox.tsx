@@ -429,19 +429,9 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           <div className="flex-1 min-w-0 flex flex-col">
 
 
-            {/* Title section below audio controls */}
+            {/* Title section */}
             <div className="mb-4">
               <div className="flex items-start gap-3 justify-start">
-                {iconUrl && (
-                  <img 
-                    src={iconUrl} 
-                    alt={mainPhoto?.alt || "webtext icon"}
-                    className="w-8 h-8 sm:w-10 sm:h-10 object-contain border-2 border-blue-500 rounded mt-1 flex-shrink-0"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                )}
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-blue-800 leading-tight break-words text-left">
                   {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
                 </h1>
