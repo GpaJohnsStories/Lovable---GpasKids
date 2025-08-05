@@ -6,6 +6,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { toast } from '@/hooks/use-toast';
 import { AudioButton } from '@/components/AudioButton';
 import { StandardAudioPanel } from '@/components/StandardAudioPanel';
+import { ArrowRight } from 'lucide-react';
 
 interface WebTextBoxProps {
   webtextCode: string;
@@ -417,7 +418,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
             Click to listen
           </div>
-          <div className="text-green-800 text-lg">→</div>
+          <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
           <AudioButton code="SYS-WEL" onClick={() => setIsAudioPanelOpen(true)} />
         </div>
 
