@@ -247,7 +247,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
           position: 'fixed',
           inset: '0',
           zIndex: 50,
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          backgroundColor: 'transparent',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
