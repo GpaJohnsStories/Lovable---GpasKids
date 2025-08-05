@@ -46,6 +46,7 @@ const Index = () => {
         onClose={() => setIsAudioPanelOpen(false)}
         title="Grandpa's Story Time"
         author="Grandpa John"
+        narrator="Grandpa John"
         audioUrl="/lovable-uploads/sample-audio.mp3"
         allowTextToSpeech={true}
         content="This is a sample story content that could be converted to speech if no audio file is available."

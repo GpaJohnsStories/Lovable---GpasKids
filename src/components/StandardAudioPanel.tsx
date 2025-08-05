@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react';
+import { Play, Pause, Square, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface StandardAudioPanelProps {
@@ -11,6 +11,7 @@ interface StandardAudioPanelProps {
   audioUrl?: string;
   title?: string;
   author?: string;
+  narrator?: string;
   content?: string;
   allowTextToSpeech?: boolean;
 }
@@ -21,6 +22,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   audioUrl,
   title = "Audio Player",
   author,
+  narrator = "Grandpa John",
   content,
   allowTextToSpeech = false
 }) => {
@@ -76,22 +78,29 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
     }
   };
 
+  const handleStop = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsPlaying(false);
+      setCurrentTime(0);
+    }
+  };
+
+  const handleRestart = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      setCurrentTime(0);
+      if (isPlaying) {
+        audioRef.current.play();
+      }
+    }
+  };
+
   const handleSeek = (value: number[]) => {
     if (audioRef.current) {
       audioRef.current.currentTime = value[0];
       setCurrentTime(value[0]);
-    }
-  };
-
-  const handleSkipBack = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 10);
-    }
-  };
-
-  const handleSkipForward = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = Math.min(duration, audioRef.current.currentTime + 10);
     }
   };
 
@@ -105,42 +114,30 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl p-8">
-        <DialogHeader className="text-center mb-6">
-          <DialogTitle className="text-2xl font-bold text-primary">
+      <DialogContent className="max-w-sm p-6">
+        {/* Header */}
+        <DialogHeader className="text-center pb-4">
+          <DialogTitle className="text-lg font-bold text-primary leading-tight">
             {title}
           </DialogTitle>
           {author && (
-            <p className="text-lg text-muted-foreground mt-2">by {author}</p>
+            <p className="text-sm text-muted-foreground">by {author}</p>
           )}
+          <p className="text-sm text-muted-foreground font-medium">
+            🎭 Read by {narrator}
+          </p>
         </DialogHeader>
 
         {hasAudio ? (
-          <div className="space-y-8">
+          <div className="space-y-4">
             {/* Audio Element */}
             {audioUrl && (
               <audio ref={audioRef} src={audioUrl} preload="metadata" />
             )}
 
-            {/* Main Controls */}
-            <div className="flex items-center justify-center gap-4">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      onClick={handleSkipBack}
-                      className="h-14 w-14 rounded-full"
-                      disabled={!audioUrl}
-                    >
-                      <SkipBack className="h-6 w-6" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Skip back 10 seconds</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
+            {/* Main Controls - Vertical Layout */}
+            <div className="flex flex-col items-center space-y-4">
+              {/* Primary Play/Pause Button */}
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -148,14 +145,14 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                       size="lg"
                       onClick={handlePlayPause}
                       disabled={isLoading || !audioUrl}
-                      className="h-20 w-20 rounded-full bg-gradient-to-br from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg"
+                      className="h-16 w-16 rounded-full bg-gradient-to-br from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg"
                     >
                       {isLoading ? (
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white" />
+                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white" />
                       ) : isPlaying ? (
-                        <Pause className="h-8 w-8 text-white" />
+                        <Pause className="h-6 w-6 text-white" />
                       ) : (
-                        <Play className="h-8 w-8 text-white ml-1" />
+                        <Play className="h-6 w-6 text-white ml-0.5" />
                       )}
                     </Button>
                   </TooltipTrigger>
@@ -165,22 +162,42 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 </Tooltip>
               </TooltipProvider>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      onClick={handleSkipForward}
-                      className="h-14 w-14 rounded-full"
-                      disabled={!audioUrl}
-                    >
-                      <SkipForward className="h-6 w-6" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Skip forward 10 seconds</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              {/* Secondary Controls */}
+              <div className="flex items-center gap-3">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={handleStop}
+                        className="h-10 w-10 rounded-full"
+                        disabled={!audioUrl}
+                      >
+                        <Square className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Stop</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={handleRestart}
+                        className="h-10 w-10 rounded-full"
+                        disabled={!audioUrl}
+                      >
+                        <RotateCcw className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Restart</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             </div>
 
             {/* Progress Bar */}
@@ -193,77 +210,74 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 className="w-full"
                 disabled={!audioUrl}
               />
-              <div className="flex justify-between text-sm text-muted-foreground">
+              <div className="flex justify-between text-xs text-muted-foreground">
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(duration)}</span>
               </div>
             </div>
 
-            {/* Volume and Speed Controls */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Volume Control */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsMuted(!isMuted)}
-                    className="p-2"
-                  >
-                    {isMuted || volume === 0 ? (
-                      <VolumeX className="h-5 w-5" />
-                    ) : (
-                      <Volume2 className="h-5 w-5" />
-                    )}
-                  </Button>
-                  <span className="text-sm font-medium">Volume</span>
-                </div>
-                <Slider
-                  value={[isMuted ? 0 : volume]}
-                  max={100}
-                  step={5}
-                  onValueChange={(value) => {
-                    setVolume(value[0]);
-                    if (value[0] > 0) setIsMuted(false);
-                  }}
-                  className="w-full"
-                />
+            {/* Volume Control */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsMuted(!isMuted)}
+                  className="p-1 h-8 w-8"
+                >
+                  {isMuted || volume === 0 ? (
+                    <VolumeX className="h-4 w-4" />
+                  ) : (
+                    <Volume2 className="h-4 w-4" />
+                  )}
+                </Button>
+                <span className="text-xs font-medium">Volume</span>
               </div>
+              <Slider
+                value={[isMuted ? 0 : volume]}
+                max={100}
+                step={5}
+                onValueChange={(value) => {
+                  setVolume(value[0]);
+                  if (value[0] > 0) setIsMuted(false);
+                }}
+                className="w-full"
+              />
+            </div>
 
-              {/* Speed Control */}
-              <div className="space-y-3">
-                <span className="text-sm font-medium">Speed: {playbackRate}x</span>
-                <div className="grid grid-cols-4 gap-2">
-                  {[0.75, 1, 1.25, 1.5].map((speed) => (
-                    <Button
-                      key={speed}
-                      variant={playbackRate === speed ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setPlaybackRate(speed)}
-                      className="text-xs"
-                    >
-                      {speed}x
-                    </Button>
-                  ))}
-                </div>
+            {/* Speed Control */}
+            <div className="space-y-2">
+              <span className="text-xs font-medium">Speed: {playbackRate}x</span>
+              <div className="grid grid-cols-4 gap-1">
+                {[0.75, 1, 1.25, 1.5].map((speed) => (
+                  <Button
+                    key={speed}
+                    variant={playbackRate === speed ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setPlaybackRate(speed)}
+                    className="text-xs py-1 h-8"
+                  >
+                    {speed}x
+                  </Button>
+                ))}
               </div>
             </div>
 
             {/* Text-to-Speech Option */}
             {allowTextToSpeech && !audioUrl && (
-              <div className="text-center p-6 border rounded-lg bg-muted/50">
-                <p className="text-muted-foreground mb-4">
-                  No audio available. Text-to-speech can be generated for this content.
+              <div className="text-center p-4 border rounded-lg bg-muted/50">
+                <p className="text-xs text-muted-foreground mb-2">
+                  No audio available. Text-to-speech can be generated.
                 </p>
-                <Button variant="outline" disabled>
+                <Button variant="outline" size="sm" disabled>
                   Generate Audio (Coming Soon)
                 </Button>
               </div>
             )}
           </div>
         ) : (
-          <div className="text-center p-8">
-            <p className="text-muted-foreground text-lg">
+          <div className="text-center p-6">
+            <p className="text-muted-foreground">
               No audio content available
             </p>
           </div>
