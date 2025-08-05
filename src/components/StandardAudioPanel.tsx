@@ -160,27 +160,33 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
 
             {/* Control Buttons - Half height, inline layout */}
             <div className="grid grid-cols-2 gap-2">
-              <Button
-                variant="default"
-                size="sm"
+              <button
                 onClick={handleStop}
-                className="flex items-center justify-center gap-2 h-7 !bg-red-600 hover:!bg-red-700 !border-2 !border-red-800 !text-white shadow-md"
                 disabled={!audioUrl}
+                style={{ 
+                  backgroundColor: '#dc2626',
+                  borderColor: '#991b1b',
+                  color: 'white'
+                }}
+                className="flex items-center justify-center gap-2 h-7 border-2 shadow-md rounded hover:bg-red-700 disabled:opacity-50"
               >
                 <Square className="h-3 w-3" />
                 <span className="text-xs font-black">STOP</span>
-              </Button>
+              </button>
 
-              <Button
-                variant="default"
-                size="sm"
+              <button
                 onClick={handleRestart}
-                className="flex items-center justify-center gap-2 h-7 !bg-blue-600 hover:!bg-blue-700 !border-2 !border-blue-800 !text-white shadow-md"
                 disabled={!audioUrl}
+                style={{ 
+                  backgroundColor: '#2563eb',
+                  borderColor: '#1e40af',
+                  color: 'white'
+                }}
+                className="flex items-center justify-center gap-2 h-7 border-2 shadow-md rounded hover:bg-blue-700 disabled:opacity-50"
               >
                 <RotateCcw className="h-3 w-3" />
                 <span className="text-xs font-black">RESTART</span>
-              </Button>
+              </button>
             </div>
 
             {/* Progress Bar */}
