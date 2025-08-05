@@ -339,6 +339,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
           {/* Close Button */}
           <button
             onClick={onClose}
+            onMouseDown={(e) => e.stopPropagation()}
             style={{
               position: 'absolute',
               right: '12px',
