@@ -444,7 +444,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                   border: '2px solid #c7d2fe'
                 }}>
                   <label style={{ fontSize: '12px', fontWeight: '900', color: '#312e81', marginBottom: '4px', display: 'block' }}>
-                    SPEED: {playbackRate}x
+                    Playback Speed: {playbackRate}x
                   </label>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px' }}>
                     {[0.75, 1, 1.25, 1.5].map((speed) => (
