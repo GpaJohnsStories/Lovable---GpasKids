@@ -413,7 +413,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
       <>
         <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
         {/* Peppermint Audio Button - Top Right Corner */}
-        <div className="absolute top-4 right-4 z-10">
+        <div className="absolute top-4 right-4 z-[5]">
           <AudioButton code="SYS-WEL" onClick={() => setIsAudioPanelOpen(true)} />
         </div>
 
