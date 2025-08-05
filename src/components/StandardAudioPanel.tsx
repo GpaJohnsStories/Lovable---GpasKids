@@ -189,38 +189,38 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
               </button>
             </div>
 
-            {/* Progress Bar */}
-            <div className="space-y-1 bg-white rounded-lg p-2 border-2 border-amber-300">
+            {/* Progress Bar - Reduced height */}
+            <div className="space-y-1 bg-white rounded-lg p-1.5 border-2 border-amber-300">
               <Slider
                 value={[currentTime]}
                 max={duration || 100}
                 step={1}
                 onValueChange={handleSeek}
-                className="w-full"
+                className="w-full h-1"
                 disabled={!audioUrl}
               />
-              <div className="flex justify-between text-sm font-bold text-amber-900">
+              <div className="flex justify-between text-xs font-bold text-amber-900">
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(duration)}</span>
               </div>
             </div>
 
-            {/* Volume and Speed Controls - Side by side */}
-            <div className="grid grid-cols-3 gap-2">
-              {/* Volume Control - Takes 1/3 width */}
+            {/* Volume and Speed Controls - 50/50 split */}
+            <div className="grid grid-cols-2 gap-2">
+              {/* Volume Control - 50% width */}
               <div className="bg-white rounded-lg p-2 space-y-1 border-2 border-purple-300">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-black text-purple-900">VOL</span>
+                  <span className="text-xs font-black text-purple-900">VOLUME</span>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsMuted(!isMuted)}
-                    className="p-0.5 h-6 w-6 text-purple-800 hover:bg-purple-200 border border-purple-400 bg-purple-100"
+                    className="p-0.5 h-5 w-5 text-purple-800 hover:bg-purple-200 border border-purple-400 bg-purple-100"
                   >
                     {isMuted || volume === 0 ? (
-                      <VolumeX className="h-3 w-3" />
+                      <VolumeX className="h-2.5 w-2.5" />
                     ) : (
-                      <Volume2 className="h-3 w-3" />
+                      <Volume2 className="h-2.5 w-2.5" />
                     )}
                   </Button>
                 </div>
@@ -236,17 +236,17 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 />
               </div>
 
-              {/* Speed Control - Takes 2/3 width */}
-              <div className="col-span-2 bg-white rounded-lg p-2 space-y-1 border-2 border-indigo-300">
+              {/* Speed Control - 50% width */}
+              <div className="bg-white rounded-lg p-2 space-y-1 border-2 border-indigo-300">
                 <span className="text-xs font-black text-indigo-900">SPEED: {playbackRate}x</span>
-                <div className="grid grid-cols-2 gap-1">
+                <div className="grid grid-cols-2 gap-0.5">
                   {[0.75, 1, 1.25, 1.5].map((speed) => (
                     <Button
                       key={speed}
                       variant={playbackRate === speed ? "default" : "outline"}
                       size="sm"
                       onClick={() => setPlaybackRate(speed)}
-                      className={`text-xs font-black py-0.5 h-6 border ${
+                      className={`text-[10px] font-black py-0.5 h-5 px-1 border ${
                         playbackRate === speed 
                           ? "bg-indigo-700 text-white border-indigo-800 shadow-lg" 
                           : "bg-indigo-100 text-indigo-900 border-indigo-400 hover:bg-indigo-200"
