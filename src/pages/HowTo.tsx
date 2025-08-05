@@ -118,7 +118,7 @@ const HowTo = () => {
                 onClick={() => document.getElementById('SYS-G5A')?.scrollIntoView({ behavior: 'smooth' })}
                 className="w-20 h-8 px-1 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors flex items-center justify-center text-center leading-none break-words"
               >
-                Writing
+                Write a Story
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G6A')?.scrollIntoView({ behavior: 'smooth' })}
