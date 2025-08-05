@@ -115,44 +115,47 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-xs p-3 bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200">
         {/* Compact Header - Minimal spacing */}
-        <DialogHeader className="text-center pb-0 mb-1">
+        <DialogHeader className="text-center pb-0">
           <DialogTitle className="text-xl font-black text-orange-900 leading-tight mb-1">
             {title}
           </DialogTitle>
           {author && (
             <p className="text-base font-bold text-orange-800 mb-1">by {author}</p>
           )}
-          <p className="text-sm font-medium text-amber-700 bg-amber-100 rounded-full px-2 py-1 inline-block border border-amber-300">
+          <p className="text-sm text-gray-700 mb-0">
             🎭 Read by {narrator}
           </p>
         </DialogHeader>
 
         {hasAudio ? (
-          <div className="space-y-2 mt-1">
+          <div className="space-y-2 mt-0.5">
             {/* Audio Element */}
             {audioUrl && (
               <audio ref={audioRef} src={audioUrl} preload="metadata" />
             )}
 
-            {/* Main Play/Pause Button with Label */}
-            <div className="flex flex-col items-center gap-1">
+            {/* Main Play/Pause Button - Pill shaped with internal label */}
+            <div className="flex justify-center">
               <Button
                 size="lg"
                 onClick={handlePlayPause}
                 disabled={isLoading || !audioUrl}
-                className="h-16 w-16 rounded-full bg-gradient-to-br from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 shadow-xl border-4 border-green-400"
+                className="h-14 px-6 rounded-full bg-gradient-to-br from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 shadow-xl border-4 border-green-400 flex items-center gap-2"
               >
                 {isLoading ? (
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white" />
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
                 ) : isPlaying ? (
-                  <Pause className="h-6 w-6 text-white" />
+                  <>
+                    <Pause className="h-5 w-5 text-white" />
+                    <span className="text-sm font-black text-white">PAUSE AUDIO</span>
+                  </>
                 ) : (
-                  <Play className="h-6 w-6 text-white ml-0.5" />
+                  <>
+                    <Play className="h-5 w-5 text-white ml-0.5" />
+                    <span className="text-sm font-black text-white">PLAY AUDIO</span>
+                  </>
                 )}
               </Button>
-              <span className="text-sm font-black text-green-800">
-                {isPlaying ? "PAUSE AUDIO" : "PLAY AUDIO"}
-              </span>
             </div>
 
             {/* Control Buttons - Filled with proper colors */}
