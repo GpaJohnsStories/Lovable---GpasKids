@@ -216,7 +216,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
             </div>
 
             {/* Progress Bar - Reduced height */}
-            <div className="space-y-1 bg-white rounded-lg p-1.5 border-2 border-amber-300">
+            <div className="space-y-1 bg-white rounded-lg p-1.5 border-2 border-green-300">
               <Label htmlFor="audio-progress" className="sr-only">
                 Audio progress: {formatTime(currentTime)} of {formatTime(duration)}
               </Label>
@@ -226,7 +226,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 max={duration || 100}
                 step={1}
                 onValueChange={handleSeek}
-                className="w-full h-1"
+                className="w-full h-1 [&_.slider-track]:bg-green-200 [&_.slider-range]:bg-green-600 [&_.slider-thumb]:border-green-600 [&_.slider-thumb]:bg-green-600"
                 disabled={!audioUrl}
                 aria-label={`Audio progress: ${formatTime(currentTime)} of ${formatTime(duration)}`}
                 aria-valuemin={0}
@@ -234,7 +234,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                 aria-valuenow={currentTime}
                 aria-valuetext={`${formatTime(currentTime)} of ${formatTime(duration)}`}
               />
-              <div className="flex justify-between text-xs font-bold text-amber-900" aria-live="polite">
+              <div className="flex justify-between text-xs font-bold text-green-900" aria-live="polite">
                 <span aria-label="Current time">{formatTime(currentTime)}</span>
                 <span aria-label="Total duration">{formatTime(duration)}</span>
               </div>
@@ -243,14 +243,14 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
             {/* Volume and Speed Controls - 50/50 split */}
             <div className="grid grid-cols-2 gap-2">
               {/* Volume Control - 50% width */}
-              <div className="bg-white rounded-lg p-2 space-y-1 border-2 border-purple-300" role="group" aria-labelledby="volume-label">
+              <div className="bg-white rounded-lg p-2 space-y-1 border-2 border-blue-300" role="group" aria-labelledby="volume-label">
                 <div className="flex items-center justify-between">
-                  <Label id="volume-label" className="text-xs font-black text-purple-900">VOLUME</Label>
+                  <Label id="volume-label" className="text-xs font-black text-blue-900">VOLUME</Label>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsMuted(!isMuted)}
-                    className="p-0.5 h-5 w-5 text-purple-800 hover:bg-purple-200 border border-purple-400 bg-purple-100 focus:ring-2 focus:ring-purple-300 focus:ring-offset-1"
+                    className="p-0.5 h-5 w-5 text-blue-800 hover:bg-blue-200 border border-blue-400 bg-blue-100 focus:ring-2 focus:ring-blue-300 focus:ring-offset-1"
                     aria-label={isMuted ? "Unmute audio" : "Mute audio"}
                     aria-pressed={isMuted}
                   >
@@ -269,7 +269,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                     setVolume(value[0]);
                     if (value[0] > 0) setIsMuted(false);
                   }}
-                  className="w-full"
+                  className="w-full [&_.slider-track]:bg-blue-200 [&_.slider-range]:bg-blue-600 [&_.slider-thumb]:border-blue-600 [&_.slider-thumb]:bg-blue-600"
                   aria-label={`Volume: ${isMuted ? 0 : volume} percent`}
                   aria-valuemin={0}
                   aria-valuemax={100}
