@@ -444,7 +444,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                   border: '2px solid #c7d2fe'
                 }}>
                   <label style={{ fontSize: '12px', fontWeight: '900', color: '#312e81', marginBottom: '4px', display: 'block' }}>
-                    Playback Speed: {playbackRate === 0.75 ? 'Slow' : playbackRate === 1 ? 'Normal' : playbackRate === 1.25 ? 'Faster' : 'Fastest'}
+                    Playback Speed:
                   </label>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px' }}>
                     {[
