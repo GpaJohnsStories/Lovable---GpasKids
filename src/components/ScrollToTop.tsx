@@ -32,7 +32,7 @@ const ScrollToTop = () => {
       <Button
         onClick={scrollToTop}
         size="sm"
-        className="rounded-full shadow-lg bg-gradient-to-br from-orange-600 to-orange-700 hover:from-orange-500 hover:to-orange-600 text-white border-2 border-orange-700 hover:border-orange-600 transition-all duration-300 hover:scale-105 px-4 py-2"
+        className="rounded-full shadow-lg bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white border-2 border-orange-600 hover:border-orange-500 transition-all duration-300 hover:scale-105 px-4 py-2"
         aria-label="Scroll to top and menu"
       >
         <span className="font-bold font-fun">Top & Menu</span>
