@@ -6,6 +6,7 @@ import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 import { StandardAudioPanel } from '@/components/StandardAudioPanel';
+import { AudioButton } from '@/components/AudioButton';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
@@ -18,6 +19,11 @@ const Index = () => {
       <WelcomeHeader />
       
       <main className="container mx-auto px-4 pt-0">
+        {/* Peppermint Audio Button - Top of page */}
+        <div className="flex justify-center mb-8 pt-4">
+          <AudioButton onClick={() => setIsAudioPanelOpen(true)} />
+        </div>
+        
         <WebTextBox 
           webtextCode="SYS-WEL"
           borderColor="border-yellow-400"
