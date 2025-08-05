@@ -29,6 +29,8 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   const [volume, setVolume] = useState(75);
   const [isMuted, setIsMuted] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1);
+  const [audioError, setAudioError] = useState<string | null>(null);
+  const [isMetadataLoaded, setIsMetadataLoaded] = useState(false);
   
   // Data fetching states
   const [fetchedData, setFetchedData] = useState<any>(null);
@@ -86,23 +88,96 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   const narrator = providedNarrator !== "Grandpa John" ? providedNarrator : (fetchedData?.narrator || providedNarrator);
   const audioUrl = providedAudioUrl || fetchedData?.audioUrl;
 
+  // Enhanced audio event listeners with proper cleanup and error handling
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !audioUrl) return;
 
-    const updateTime = () => setCurrentTime(audio.currentTime);
-    const updateDuration = () => setDuration(audio.duration);
-    
-    audio.addEventListener('timeupdate', updateTime);
-    audio.addEventListener('loadedmetadata', updateDuration);
-    audio.addEventListener('ended', () => setIsPlaying(false));
+    // Reset states when audio source changes
+    setCurrentTime(0);
+    setDuration(0);
+    setIsPlaying(false);
+    setAudioError(null);
+    setIsMetadataLoaded(false);
+
+    const handleTimeUpdate = () => {
+      if (audio && !isNaN(audio.currentTime)) {
+        setCurrentTime(audio.currentTime);
+      }
+    };
+
+    const handleLoadedMetadata = () => {
+      if (audio && !isNaN(audio.duration) && audio.duration > 0) {
+        setDuration(audio.duration);
+        setIsMetadataLoaded(true);
+        console.log('🎵 Audio metadata loaded, duration:', audio.duration);
+      } else {
+        // Fallback for problematic audio files
+        setDuration(0);
+        setIsMetadataLoaded(false);
+        console.warn('⚠️ Audio duration is invalid or zero');
+      }
+    };
+
+    const handleLoadedData = () => {
+      // Additional metadata loading event for better compatibility
+      if (audio && !isNaN(audio.duration) && audio.duration > 0 && !isMetadataLoaded) {
+        setDuration(audio.duration);
+        setIsMetadataLoaded(true);
+      }
+    };
+
+    const handleEnded = () => {
+      setIsPlaying(false);
+      setCurrentTime(audio?.duration || 0);
+    };
+
+    const handleError = (e: Event) => {
+      console.error('🚨 Audio error:', e);
+      setAudioError('Failed to load audio');
+      setIsPlaying(false);
+      setIsLoading(false);
+    };
+
+    const handleCanPlay = () => {
+      setIsLoading(false);
+      setAudioError(null);
+    };
+
+    const handleWaiting = () => {
+      setIsLoading(true);
+    };
+
+    const handleCanPlayThrough = () => {
+      setIsLoading(false);
+    };
+
+    // Add all event listeners
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+    audio.addEventListener('loadeddata', handleLoadedData);
+    audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('error', handleError);
+    audio.addEventListener('canplay', handleCanPlay);
+    audio.addEventListener('waiting', handleWaiting);
+    audio.addEventListener('canplaythrough', handleCanPlayThrough);
+
+    // Initial load attempt
+    setIsLoading(true);
+    audio.load();
 
     return () => {
-      audio.removeEventListener('timeupdate', updateTime);
-      audio.removeEventListener('loadedmetadata', updateDuration);
-      audio.removeEventListener('ended', () => setIsPlaying(false));
+      // Clean up all event listeners
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.removeEventListener('loadeddata', handleLoadedData);
+      audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('error', handleError);
+      audio.removeEventListener('canplay', handleCanPlay);
+      audio.removeEventListener('waiting', handleWaiting);
+      audio.removeEventListener('canplaythrough', handleCanPlayThrough);
     };
-  }, []);
+  }, [audioUrl, isMetadataLoaded]);
 
   const handlePlayPause = async () => {
     if (!audioRef.current) return;
@@ -262,7 +337,32 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
             </p>
           </div>
 
-          {hasAudio ? (
+          {audioError ? (
+            <div style={{ 
+              textAlign: 'center', 
+              padding: '16px', 
+              backgroundColor: '#fef2f2', 
+              borderRadius: '8px', 
+              border: '2px solid #fca5a5',
+              marginTop: '8px'
+            }}>
+              <p style={{ 
+                color: '#dc2626', 
+                fontSize: '16px', 
+                fontWeight: 'bold',
+                margin: '0 0 8px 0'
+              }}>
+                Audio Error
+              </p>
+              <p style={{ 
+                color: '#7f1d1d', 
+                fontSize: '14px',
+                margin: '0'
+              }}>
+                {audioError}
+              </p>
+            </div>
+          ) : hasAudio ? (
             <div style={{ marginTop: '8px' }}>
               {/* Audio Element */}
               <audio ref={audioRef} src={audioUrl} preload="metadata" />
