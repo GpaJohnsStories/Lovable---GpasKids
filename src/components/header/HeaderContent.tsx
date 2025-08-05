@@ -57,9 +57,9 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   };
 
   return (
-    <div className="min-h-[180px]">
+    <div className="min-h-[140px]">
       {/* Single compartment layout */}
-      <div className="relative flex items-center justify-between h-full pt-2">
+      <div className="relative flex items-center justify-between h-full pt-1">
         
         {/* LEFT SECTION: Buddy + Title */}
         <div className="flex items-start gap-4 justify-start">
