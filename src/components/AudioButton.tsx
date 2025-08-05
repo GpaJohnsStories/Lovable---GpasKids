@@ -11,7 +11,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ onClick, className = "
       {/* Peppermint Candy Button */}
       <button
         onClick={onClick}
-        className="relative w-24 h-24 rounded-full overflow-hidden transform transition-all duration-300 ease-out hover:scale-110 hover:rotate-12 active:scale-95 active:rotate-6 focus:outline-none focus:ring-4 focus:ring-red-300/50"
+        className="relative w-18 h-18 rounded-full overflow-hidden transform transition-all duration-300 ease-out hover:scale-110 hover:rotate-12 active:scale-95 active:rotate-6 focus:outline-none focus:ring-4 focus:ring-red-300/50"
         style={{
           background: `conic-gradient(
             from 0deg,
@@ -67,7 +67,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ onClick, className = "
         
         {/* Audio icon in center */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-600 group-hover:text-red-700 transition-colors duration-300">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
             <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
           </svg>
         </div>
