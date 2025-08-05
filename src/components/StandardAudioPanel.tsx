@@ -116,14 +116,14 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
       <DialogContent className="max-w-xs p-3 bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 max-h-[85vh] overflow-hidden">
         {/* Compact Header - Minimal spacing */}
         <DialogHeader className="text-center pb-0">
-          <DialogTitle className="text-xl font-black text-orange-900 leading-tight mb-1">
+          <DialogTitle className="text-xl font-black text-orange-900 leading-tight mb-1 text-center">
             {title}
           </DialogTitle>
           {author && (
-            <p className="text-base font-bold text-orange-800 mb-1">by {author}</p>
+            <p className="text-base font-bold text-orange-800 mb-1 text-center">by {author}</p>
           )}
-          <p className="text-sm text-gray-700 mb-0">
-            🎭 Read by {narrator}
+          <p className="text-sm text-gray-700 mb-0 text-center">
+            Read by {narrator}
           </p>
         </DialogHeader>
 
