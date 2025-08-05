@@ -9,15 +9,17 @@ interface AudioButtonProps {
 export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, className = "" }) => {
   // Use the actual peppermint candy image you uploaded
   const [imageError, setImageError] = useState(false);
+  const [isRotated, setIsRotated] = useState(false);
   const candyIconUrl = "/lovable-uploads/4f9b0ab3-9e17-4dab-91d9-a8fd5c350585.png";
 
   return (
     <div className={`relative group ${className}`}>
       <button
         onClick={onClick}
-        className="relative w-20 h-20 rounded-full overflow-hidden transform hover:scale-110 hover:rotate-[360deg] active:scale-90 active:rotate-12 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl bg-transparent"
+        onMouseEnter={() => setIsRotated(true)}
+        className={`relative w-20 h-20 rounded-full overflow-hidden transform hover:scale-110 active:scale-90 active:rotate-12 focus:outline-none focus:ring-4 focus:ring-primary/20 hover:shadow-2xl bg-transparent ${isRotated ? 'rotate-[360deg]' : ''}`}
         style={{
-          transition: 'all 4s ease-in-out'
+          transition: isRotated ? 'all 4s ease-in-out' : 'transform 0.3s ease-out'
         }}
       >
         {/* Candy image */}
