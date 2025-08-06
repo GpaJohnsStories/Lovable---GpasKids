@@ -490,7 +490,55 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 onAudioRemove={() => onInputChange('audio_url', '')}
               />
             </CardContent>
-          </Card>
+              </Card>
+
+              {/* AI Voice Generation */}
+              <Card className="h-fit">
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-sm">
+                    <Volume2 className="h-4 w-4" />
+                    AI Voice & Audio Generation
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <div className="flex gap-3 items-end">
+                    {/* Choose Voice */}
+                    <div className="flex-1">
+                      <Label className="text-xs font-bold text-gray-700 mb-1 block">Choose Voice</Label>
+                      <Select 
+                        value={formData.ai_voice_name || 'Nova'} 
+                        onValueChange={(value) => onVoiceChange?.(value)}
+                      >
+                        <SelectTrigger className="w-full text-xs">
+                          <SelectValue placeholder="Select voice" />
+                        </SelectTrigger>
+                        <SelectContent className="z-50 bg-white border shadow-lg">
+                          <SelectItem value="Nova">Nova - Warm, friendly voice</SelectItem>
+                          <SelectItem value="Alloy">Alloy - Clear, neutral voice</SelectItem>
+                          <SelectItem value="Echo">Echo - Deep, resonant voice</SelectItem>
+                          <SelectItem value="Fable">Fable - British accent, storytelling</SelectItem>
+                          <SelectItem value="Onyx">Onyx - Deep, authoritative voice</SelectItem>
+                          <SelectItem value="Shimmer">Shimmer - Soft, gentle voice</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Generate Audio Button */}
+                    <div className="flex-1">
+                      <Label className="text-xs font-bold text-gray-700 mb-1 block">Generate Audio</Label>
+                      <button
+                        type="button"
+                        onClick={onGenerateAudio}
+                        disabled={isGeneratingAudio || !formData.content?.trim()}
+                        className="w-full h-9 text-sm font-bold text-white bg-orange-600 border-orange-700 hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-2"
+                      >
+                        <Volume2 className="h-4 w-4" />
+                        {isGeneratingAudio ? 'Generating...' : 'Generate Audio'}
+                      </button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
           {/* Video Section */}
           <Card>
