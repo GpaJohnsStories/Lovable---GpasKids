@@ -326,7 +326,14 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
       >
         {/* Modal Content */}
         <div
-          onMouseDown={handleMouseDown}
+          onMouseDown={(e) => {
+            // Don't start dragging if clicking on close button
+            if ((e.target as HTMLElement).closest('button[aria-label="Close audio panel"]')) {
+              console.log('🎵 Click on close button detected, preventing drag');
+              return;
+            }
+            handleMouseDown(e);
+          }}
           onClick={(e) => {
             console.log('🎵 Panel content clicked');
             e.stopPropagation(); // Prevent backdrop click from closing panel
@@ -355,8 +362,15 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
           {/* Close Button */}
           <button
             onClick={(e) => {
+              console.log('🎵 Close button clicked');
+              e.preventDefault();
               e.stopPropagation();
               onClose();
+            }}
+            onMouseDown={(e) => {
+              console.log('🎵 Close button mousedown');
+              e.preventDefault();
+              e.stopPropagation();
             }}
             style={{
               position: 'absolute',
