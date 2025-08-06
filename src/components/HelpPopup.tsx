@@ -128,6 +128,8 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
               onClick={() => {
                 console.log('🎵 Audio button clicked, opening panel for code:', audioCode);
                 setIsAudioPanelOpen(true);
+                // Close the help popup so audio panel can be interactive
+                onClose();
               }} 
             />
           </div>
@@ -182,6 +184,8 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         onClose={() => {
           console.log('🎵 Audio panel closing');
           setIsAudioPanelOpen(false);
+          // Note: Help popup remains closed after audio panel closes
+          // User can press Ctrl+H to reopen help if needed
         }}
         code={audioCode}
       />
