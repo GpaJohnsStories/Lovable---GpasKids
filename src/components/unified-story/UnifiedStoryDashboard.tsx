@@ -262,7 +262,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2 text-sm">
                     <Volume2 className="h-4 w-4" />
-                    Voice Selection
+                    Voice Previews
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-3">
