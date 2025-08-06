@@ -32,6 +32,7 @@ import AdminSiteMap from "./pages/AdminSiteMap";
 
 // Admin components
 import AdminLayout from "./components/admin/AdminLayout";
+import SecureAdminRoute from "./components/admin/SecureAdminRoute";
 import AdminOverview from "./components/admin/AdminOverview";
 import AdminStories from "./components/admin/AdminStories";
 import CommentsDashboard from "./components/admin/CommentsDashboard";
@@ -100,21 +101,57 @@ function App() {
                       <Route path="/author-bios-simple" element={<PublicAuthorBiosSimple />} />
                       <Route path="/author/:id" element={<AuthorBio />} />
 
-                      {/* Admin Routes */}
-                      <Route path="/buddys_admin" element={<AdminLayout><AdminOverview /></AdminLayout>} />
-                      <Route path="/buddys_admin/stories" element={<AdminLayout><AdminStories /></AdminLayout>} />
-                      <Route path="/buddys_admin/comments" element={<AdminLayout><CommentsDashboard /></AdminLayout>} />
-                      <Route path="/buddys_admin/security" element={<AdminLayout><SecurityAuditDashboard /></AdminLayout>} />
-                      <Route path="/buddys_admin/author-bios" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
-                      <Route path="/buddys_admin/author-bios/add" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
-                      <Route path="/buddys_admin/author-bios/edit/:id" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
+                      {/* Admin Routes - All secured with SecureAdminRoute */}
+                      <Route path="/buddys_admin" element={
+                        <SecureAdminRoute title="Admin Dashboard" description="Administrative dashboard overview">
+                          <AdminLayout><AdminOverview /></AdminLayout>
+                        </SecureAdminRoute>
+                      } />
+                      <Route path="/buddys_admin/stories" element={
+                        <SecureAdminRoute title="Admin Stories" description="Story management dashboard">
+                          <AdminLayout><AdminStories /></AdminLayout>
+                        </SecureAdminRoute>
+                      } />
+                      <Route path="/buddys_admin/comments" element={
+                        <SecureAdminRoute title="Admin Comments" description="Comment management dashboard">
+                          <AdminLayout><CommentsDashboard /></AdminLayout>
+                        </SecureAdminRoute>
+                      } />
+                      <Route path="/buddys_admin/security" element={
+                        <SecureAdminRoute title="Security Audit" description="Security audit and monitoring dashboard">
+                          <AdminLayout><SecurityAuditDashboard /></AdminLayout>
+                        </SecureAdminRoute>
+                      } />
+                      <Route path="/buddys_admin/author-bios" element={
+                        <SecureAdminRoute title="Author Bio Management" description="Manage author biographies">
+                          <AdminLayout><AuthorBioManagement /></AdminLayout>
+                        </SecureAdminRoute>
+                      } />
+                      <Route path="/buddys_admin/author-bios/add" element={
+                        <SecureAdminRoute title="Add Author Bio" description="Add new author biography">
+                          <AdminLayout><AuthorBioManagement /></AdminLayout>
+                        </SecureAdminRoute>
+                      } />
+                      <Route path="/buddys_admin/author-bios/edit/:id" element={
+                        <SecureAdminRoute title="Edit Author Bio" description="Edit author biography">
+                          <AdminLayout><AuthorBioManagement /></AdminLayout>
+                        </SecureAdminRoute>
+                      } />
                       
                       <Route path="/buddys_admin/reference" element={<AdminReference />} />
                       <Route path="/buddys_admin/sitemap" element={<AdminSiteMap />} />
 
                       {/* Unified Story System Routes - These are the only story management routes now */}
-                      <Route path="/buddys_admin/unified_story_system/add" element={<AdminLayout><UnifiedStoryPage mode="add" /></AdminLayout>} />
-                      <Route path="/buddys_admin/unified_story_system/update/:id" element={<AdminLayout><UnifiedStoryPage mode="update" /></AdminLayout>} />
+                      <Route path="/buddys_admin/unified_story_system/add" element={
+                        <SecureAdminRoute title="Add Story" description="Add new story to the system">
+                          <AdminLayout><UnifiedStoryPage mode="add" /></AdminLayout>
+                        </SecureAdminRoute>
+                      } />
+                      <Route path="/buddys_admin/unified_story_system/update/:id" element={
+                        <SecureAdminRoute title="Edit Story" description="Edit existing story">
+                          <AdminLayout><UnifiedStoryPage mode="update" /></AdminLayout>
+                        </SecureAdminRoute>
+                      } />
 
                       {/* Catch-all route */}
                       <Route path="*" element={<NotFound />} />
