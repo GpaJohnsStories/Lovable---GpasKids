@@ -13,7 +13,7 @@ const AdminStories = () => {
 
   const handleCreateStory = () => {
     console.log('🎯 AdminStories: Creating new story - navigating to unified story system');
-    navigate('/buddys_admin/story');
+    navigate('/buddys_admin/unified_story_system/add');
   };
 
   const handleEditStory = (story: any) => {
@@ -27,8 +27,8 @@ const AdminStories = () => {
     };
     sessionStorage.setItem('admin-edit-context', JSON.stringify(currentContext));
     
-    // Navigate to unified story system for editing with story code
-    const editUrl = `/buddys_admin/story?code=${story.story_code}`;
+    // Navigate to unified story system for editing
+    const editUrl = `/buddys_admin/unified_story_system/update/${story.id}`;
     window.open(editUrl, '_blank');
   };
 
