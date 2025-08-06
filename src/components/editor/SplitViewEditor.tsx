@@ -79,6 +79,12 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
       case 'u':
         wrapSelectedText('<u>', '</u>');
         break;
+      case 'h1':
+        wrapSelectedText('<h1>', '</h1>');
+        break;
+      case 'h2':
+        wrapSelectedText('<h2>', '</h2>');
+        break;
       case 'h3':
         wrapSelectedText('<h3>', '</h3>');
         break;
@@ -128,6 +134,16 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     }, 0);
   };
 
+  const handleClearAll = () => {
+    onChange('');
+    setTimeout(() => {
+      const textarea = editorRef.current;
+      if (textarea) {
+        textarea.focus();
+      }
+    }, 0);
+  };
+
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden bg-white relative">
       <StickyToolbar 
@@ -135,6 +151,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
         onInsertList={handleInsertList}
         onAlign={handleAlign}
         onClearHtml={handleClearHtml}
+        onClearAll={handleClearAll}
         onInsertText={insertTextAtCursor}
       />
       

@@ -1,17 +1,18 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2 } from "lucide-react";
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, X } from "lucide-react";
 
 interface StickyToolbarProps {
   onFormat: (tag: string) => void;
   onInsertList: (ordered: boolean) => void;
   onAlign: (alignment: string) => void;
   onClearHtml: () => void;
+  onClearAll: () => void;
   onInsertText: (text: string) => void;
 }
 
-const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, onAlign, onClearHtml, onInsertText }) => {
+const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, onAlign, onClearHtml, onClearAll, onInsertText }) => {
   return (
     <div className="sticky top-0 z-10 bg-white border-b border-gray-200 p-3 shadow-sm">
       <div className="flex items-center gap-2 flex-wrap">
@@ -111,6 +112,24 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             type="button"
             variant="outline"
             size="sm"
+            onClick={() => onFormat('h1')}
+            className="h-8 px-3 text-sm"
+          >
+            H1
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => onFormat('h2')}
+            className="h-8 px-3 text-sm"
+          >
+            H2
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
             onClick={() => onFormat('h3')}
             className="h-8 px-3 text-sm"
           >
@@ -154,16 +173,30 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
         </div>
 
         <Separator orientation="vertical" className="h-6" />
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={onClearHtml}
-          className="h-8 px-2"
-          title="Clear HTML from selection"
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+        
+        {/* Clear buttons */}
+        <div className="flex items-center gap-1">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={onClearHtml}
+            className="h-8 px-2"
+            title="Clear HTML from selection"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={onClearAll}
+            className="h-8 px-2"
+            title="Clear all content"
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );
