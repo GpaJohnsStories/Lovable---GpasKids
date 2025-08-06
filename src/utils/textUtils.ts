@@ -56,8 +56,8 @@ export const isWithinWordLimit = (text: string, wordLimit: number): boolean => {
 // Module-level cache for voice sample text
 let cachedSampleText: string = '';
 
-// US English alphabet fallback text for voice testing
-const FALLBACK_ALPHABET_TEXT = 'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z';
+// Educational alphabet fallback text for voice testing
+const FALLBACK_ALPHABET_TEXT = 'A is for Apple, B is for Boy, C is for Cat, D is for Dog, E is for Elephant, F is for Fish, G is for Girl, H is for Hat, I is for Ice cream, J is for Jump, K is for Kite, L is for Lion, M is for Mouse, N is for Nest, O is for Orange, P is for Pig, Q is for Queen, R is for Rabbit, S is for Sun, T is for Tree, U is for Umbrella, V is for Van, W is for Water, X is for X-ray, Y is for Yellow, Z is for Zebra.';
 
 /**
  * Generates and caches sample text for voice preview
