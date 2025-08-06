@@ -157,23 +157,23 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               <Card className="h-fit">
                 <CardContent className="pt-4">
                   <div className="flex gap-2">
-                    <Button 
+                    <button 
                       type="submit" 
                       disabled={isSaving || isGeneratingAudio} 
-                      className="flex-1 text-xs h-8 text-white bg-green-600 border-green-700 hover:bg-green-700"
+                      className="flex-1 text-xs h-8 text-white bg-green-600 border-green-700 hover:bg-green-700 rounded-md border flex items-center justify-center gap-1"
                     >
-                      <Save className="h-3 w-3 mr-1" />
+                      <Save className="h-3 w-3" />
                       {isSaving ? 'Saving...' : 'Save'}
-                    </Button>
+                    </button>
                     
-                    <Button 
+                    <button 
                       type="button" 
                       onClick={onCancel}
-                      className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700"
+                      className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1"
                     >
-                      <X className="h-3 w-3 mr-1" />
+                      <X className="h-3 w-3" />
                       Cancel
-                    </Button>
+                    </button>
                   </div>
                 </CardContent>
               </Card>
