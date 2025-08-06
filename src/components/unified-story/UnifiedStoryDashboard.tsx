@@ -150,13 +150,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       className="w-full p-2 text-xs border border-gray-300 rounded-md"
                     />
                   </div>
-                </CardContent>
-              </Card>
 
-              {/* Compact Quick Actions Card */}
-              <Card className="h-fit">
-                <CardContent className="pt-4">
-                  <div className="flex gap-2">
+                  {/* Save and Cancel Buttons */}
+                  <div className="flex gap-2 pt-2">
                     <button 
                       type="submit" 
                       disabled={isSaving || isGeneratingAudio} 
