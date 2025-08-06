@@ -155,15 +155,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
 
               {/* Compact Quick Actions Card */}
               <Card className="h-fit">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium">Quick Actions</CardTitle>
-                </CardHeader>
-                <CardContent>
+                <CardContent className="pt-4">
                   <div className="flex gap-2">
                     <Button 
                       type="submit" 
                       disabled={isSaving || isGeneratingAudio} 
-                      className="flex-1 cozy-button text-xs h-8"
+                      className="flex-1 text-xs h-8 bg-green-600 hover:bg-green-700 text-white"
                     >
                       <Save className="h-3 w-3 mr-1" />
                       {isSaving ? 'Saving...' : 'Save'}
@@ -171,9 +168,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     
                     <Button 
                       type="button" 
-                      variant="outline" 
                       onClick={onCancel}
-                      className="flex-1 text-xs h-8"
+                      className="flex-1 text-xs h-8 bg-red-600 hover:bg-red-700 text-white"
                     >
                       <X className="h-3 w-3 mr-1" />
                       Cancel
