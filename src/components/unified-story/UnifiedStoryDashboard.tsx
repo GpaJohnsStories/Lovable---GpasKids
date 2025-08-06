@@ -182,8 +182,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     Story Photos
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <table className="w-full">
+                <CardContent className="p-3">
+                  <table className="w-full table-fixed border-collapse">
                     <tbody>
                       {/* Photo Display Row */}
                       <tr>
