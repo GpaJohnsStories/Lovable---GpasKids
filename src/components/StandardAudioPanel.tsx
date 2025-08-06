@@ -185,18 +185,26 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   }, [audioUrl]); // Remove isMetadataLoaded from dependency array to prevent infinite loop
 
   const handlePlayPause = async () => {
-    if (!audioRef.current) return;
+    console.log('🎮 handlePlayPause called, isPlaying:', isPlaying, 'audioRef.current:', !!audioRef.current, 'audioUrl:', audioUrl);
+    if (!audioRef.current) {
+      console.error('🚨 No audio ref available');
+      return;
+    }
 
     try {
       if (isPlaying) {
+        console.log('⏸️ Pausing audio');
         audioRef.current.pause();
         setIsPlaying(false);
       } else {
+        console.log('▶️ Attempting to play audio');
         await audioRef.current.play();
+        console.log('✅ Audio play successful');
         setIsPlaying(true);
       }
     } catch (error) {
-      console.error('Audio playback error:', error);
+      console.error('🚨 Audio playback error:', error);
+      setAudioError(`Playback failed: ${error.message}`);
     }
   };
 
