@@ -160,36 +160,27 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 <CardHeader className="pb-3">
                   <CardTitle className="text-sm font-medium">Quick Actions</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-2">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={onSaveOnly}
-                    disabled={isSaving}
-                    className="w-full text-xs h-8"
-                  >
-                    <Save className="h-3 w-3 mr-1" />
-                    {isSaving ? 'Saving...' : 'Save Draft (Ctrl+S)'}
-                  </Button>
-                  
-                  <Button 
-                    type="submit" 
-                    disabled={isSaving || isGeneratingAudio} 
-                    className="w-full cozy-button text-xs h-8"
-                  >
-                    <Save className="h-3 w-3 mr-1" />
-                    {isSaving ? 'Saving...' : 'Save & Return to List'}
-                  </Button>
-                  
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={onCancel}
-                    className="w-full text-xs h-8"
-                  >
-                    <X className="h-3 w-3 mr-1" />
-                    Cancel
-                  </Button>
+                <CardContent>
+                  <div className="flex gap-2">
+                    <Button 
+                      type="submit" 
+                      disabled={isSaving || isGeneratingAudio} 
+                      className="flex-1 cozy-button text-xs h-8"
+                    >
+                      <Save className="h-3 w-3 mr-1" />
+                      {isSaving ? 'Saving...' : 'Save'}
+                    </Button>
+                    
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={onCancel}
+                      className="flex-1 text-xs h-8"
+                    >
+                      <X className="h-3 w-3 mr-1" />
+                      Cancel
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             </div>
