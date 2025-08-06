@@ -85,7 +85,7 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
         name="story_code"
         render={({ field }) => (
            <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
-            <FormLabel className="font-fun text-xl sm:text-left" style={{ color: '#F97316' }}>Enter Current or New Unique Story / Webtext Code</FormLabel>
+            <FormLabel className="font-fun text-xl sm:text-left" style={{ color: '#F97316' }}>Enter Current or New Unique Story / Webtext Code *</FormLabel>
             <div className="sm:col-span-2">
               <FormControl>
                 <Input
@@ -111,7 +111,7 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
   return (
     <div className="space-y-2">
       <Label htmlFor="story_code" className={`font-bold ${labelSize}`} style={{ color: '#F97316' }}>
-        Enter Current or New Unique Story / Webtext Code
+        Enter Current or New Unique Story / Webtext Code *
       </Label>
       <Input
         id="story_code"
