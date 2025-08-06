@@ -129,6 +129,19 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           ) : (
             <ScrollArea className="h-full w-full rounded-md border border-orange-200 bg-white/50 p-4">
               <div className="prose prose-orange max-w-none">
+                {/* Check if story data has photo 1 for the upper left corner */}
+                {storyData?.photo_link_1 && (
+                  <div className="float-left mr-4 mb-2">
+                    <img
+                      src={storyData.photo_link_1}
+                      alt={storyData.photo_alt_1 || `${storyData.title} - Photo 1`}
+                      className="w-auto h-16 md:h-24 lg:h-28 object-contain border rounded border-orange-300 shadow-sm"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
                 <StoryContentRenderer 
                   content={helpContent}
                   className="text-gray-800 leading-relaxed text-lg"
