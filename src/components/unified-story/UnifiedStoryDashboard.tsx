@@ -96,8 +96,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           {/* Story Photos Section */}
           <Card className="border-2" style={{ borderColor: '#814d2e' }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-sm">
-                <Image className="h-4 w-4" />
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#814d2e' }}>
+                <Image className="h-5 w-5" />
                 Story Photos
               </CardTitle>
             </CardHeader>
@@ -180,8 +180,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           {/* Audio Upload - Condensed */}
           <Card className="border-2" style={{ borderColor: '#4A7C59' }}>
             <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-sm">
-                <Volume2 className="h-4 w-4" />
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#4A7C59' }}>
+                <Volume2 className="h-5 w-5" />
                 Audio Upload
               </CardTitle>
             </CardHeader>
@@ -199,7 +199,13 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         <div className="flex-1 space-y-4">
           {/* Settings Card with side-by-side Copyright and Publication */}
           <Card className="h-fit" style={{ borderColor: '#F97316', borderWidth: '2px' }}>
-            <CardContent className="space-y-3 pt-6">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F97316' }}>
+                <FileText className="h-5 w-5" />
+                Story Status
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
               {/* Copyright Status and Publication Status side-by-side (switched positions) */}
               <div className="flex gap-3">
                 {/* Copyright Status - Now on left */}
@@ -266,8 +272,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           {/* Voice Selection - Simple Table */}
           <Card className="h-fit border-2" style={{ borderColor: '#2563eb' }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-sm">
-                <Volume2 className="h-4 w-4" />
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#2563eb' }}>
+                <Volume2 className="h-5 w-5" />
                 Voice Previews
               </CardTitle>
             </CardHeader>
@@ -415,8 +421,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           {/* AI Voice Generation */}
           <Card className="h-fit border-2" style={{ borderColor: '#F2BA15' }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-sm">
-                <Volume2 className="h-4 w-4" />
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F2BA15' }}>
+                <Volume2 className="h-5 w-5" />
                 AI Voice & Audio Generation
               </CardTitle>
             </CardHeader>
@@ -463,8 +469,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           {/* Story Video - Added to Content tab */}
           <Card className="h-fit border-2" style={{ borderColor: '#9333ea' }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-sm">
-                <Video className="h-4 w-4" />
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#9333ea' }}>
+                <Video className="h-5 w-5" />
                 Story Video
               </CardTitle>
             </CardHeader>
