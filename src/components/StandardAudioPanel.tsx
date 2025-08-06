@@ -301,7 +301,12 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   const hasAudio = !!audioUrl;
   const isLoadingData = dataLoading;
 
-  if (!isOpen) return null;
+  console.log('🎵 StandardAudioPanel render - isOpen:', isOpen, 'code:', code, 'hasAudio:', hasAudio, 'audioUrl:', audioUrl);
+
+  if (!isOpen) {
+    console.log('🎵 StandardAudioPanel not rendering - isOpen is false');
+    return null;
+  }
 
   return (
     <>
