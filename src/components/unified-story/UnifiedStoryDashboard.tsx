@@ -2,18 +2,13 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Save, X, FileText, Image, Video, Volume2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StoryFormFields from "../StoryFormFields";
-import StoryPhotoUpload from "../StoryPhotoUpload";
 import StoryVideoUpload from "../StoryVideoUpload";
-import VoiceSelection from "../story-form/VoiceSelection";
 import AudioUploadSection from "./AudioUploadSection";
 import SplitViewEditor from "../editor/SplitViewEditor";
 import CopyrightControl from "../story-form/CopyrightControl";
-import { UniversalAudioControls } from "../UniversalAudioControls";
-import { StackedAudioControls } from "./StackedAudioControls";
 import type { Story } from '@/hooks/useStoryFormState';
 
 interface UnifiedStoryDashboardProps {
