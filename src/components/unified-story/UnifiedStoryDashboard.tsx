@@ -198,7 +198,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         {/* Settings & Actions Column - Uses remaining space */}
         <div className="flex-1 space-y-4">
           {/* Settings Card with side-by-side Copyright and Publication */}
-          <Card className="h-fit">
+          <Card className="h-fit" style={{ borderColor: '#F97316', borderWidth: '2px' }}>
             <CardContent className="space-y-3 pt-6">
               {/* Copyright Status and Publication Status side-by-side (switched positions) */}
               <div className="flex gap-3">
