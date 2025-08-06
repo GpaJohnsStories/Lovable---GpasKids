@@ -71,7 +71,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       <div className="flex gap-6">
         {/* Story Details Card - 45% width */}
         <div className="w-[45%] space-y-4">
-          <Card className="border-2" style={{ borderColor: '#2563eb' }}>
+          <Card className="border-2" style={{ borderColor: '#16a34a' }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5" />
