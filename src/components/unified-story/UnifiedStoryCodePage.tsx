@@ -49,16 +49,19 @@ const UnifiedStoryCodePage: React.FC = () => {
       setStoryCode(codeParam);
       // Automatically trigger story lookup and bypass code entry form
       const performAutoLookup = async () => {
+        console.log('🔧 UnifiedStoryCodePage: Auto-looking up story with code:', codeParam);
         const story = await lookupStoryByCode(codeParam, true); // Silent mode
         if (story) {
+          console.log('🎯 UnifiedStoryCodePage: Auto-found existing story:', story.id, story.title);
           handleStoryFound(story);
         } else {
+          console.log('🎯 UnifiedStoryCodePage: Auto-creating new story with code:', codeParam);
           handleConfirmNew();
         }
       };
       performAutoLookup();
     }
-  }, [codeParam, storyCode, lookupStoryByCode]);
+  }, [codeParam]); // Removed problematic dependencies
 
   const handleStoryCodeChange = async (code: string) => {
     setStoryCode(code);
