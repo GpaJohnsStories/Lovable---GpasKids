@@ -174,7 +174,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 </CardContent>
               </Card>
 
-              {/* Photos Section - Compact */}
+              {/* Photos Section - Simple Table */}
               <Card className="h-fit">
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2 text-sm">
@@ -183,23 +183,78 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="scale-75 origin-top">
-                    <StoryPhotoUpload
-                      photoUrls={{
-                        photo_link_1: formData.photo_link_1,
-                        photo_link_2: formData.photo_link_2,
-                        photo_link_3: formData.photo_link_3,
-                      }}
-                      photoAlts={{
-                        photo_alt_1: formData.photo_alt_1,
-                        photo_alt_2: formData.photo_alt_2,
-                        photo_alt_3: formData.photo_alt_3,
-                      }}
-                      onPhotoUpload={onPhotoUpload}
-                      onPhotoRemove={onPhotoRemove}
-                      onAltTextChange={onInputChange}
-                    />
-                  </div>
+                  <table className="w-full">
+                    <tbody>
+                      {/* Photo Display Row */}
+                      <tr>
+                        <td className="p-2 border">
+                          {formData.photo_link_1 ? (
+                            <img src={formData.photo_link_1} alt="Photo 1" className="w-full h-20 object-cover rounded" />
+                          ) : (
+                            <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                          )}
+                        </td>
+                        <td className="p-2 border">
+                          {formData.photo_link_2 ? (
+                            <img src={formData.photo_link_2} alt="Photo 2" className="w-full h-20 object-cover rounded" />
+                          ) : (
+                            <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                          )}
+                        </td>
+                        <td className="p-2 border">
+                          {formData.photo_link_3 ? (
+                            <img src={formData.photo_link_3} alt="Photo 3" className="w-full h-20 object-cover rounded" />
+                          ) : (
+                            <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                          )}
+                        </td>
+                      </tr>
+                      
+                      {/* File Input Row */}
+                      <tr>
+                        <td className="p-2 border">
+                          <input type="file" accept="image/*" className="w-full text-xs" />
+                        </td>
+                        <td className="p-2 border">
+                          <input type="file" accept="image/*" className="w-full text-xs" />
+                        </td>
+                        <td className="p-2 border">
+                          <input type="file" accept="image/*" className="w-full text-xs" />
+                        </td>
+                      </tr>
+                      
+                      {/* Alt Text Row */}
+                      <tr>
+                        <td className="p-2 border">
+                          <input 
+                            type="text" 
+                            placeholder="Alt text" 
+                            value={formData.photo_alt_1 || ''} 
+                            onChange={(e) => onInputChange('photo_alt_1', e.target.value)}
+                            className="w-full text-xs p-1 border rounded"
+                          />
+                        </td>
+                        <td className="p-2 border">
+                          <input 
+                            type="text" 
+                            placeholder="Alt text" 
+                            value={formData.photo_alt_2 || ''} 
+                            onChange={(e) => onInputChange('photo_alt_2', e.target.value)}
+                            className="w-full text-xs p-1 border rounded"
+                          />
+                        </td>
+                        <td className="p-2 border">
+                          <input 
+                            type="text" 
+                            placeholder="Alt text" 
+                            value={formData.photo_alt_3 || ''} 
+                            onChange={(e) => onInputChange('photo_alt_3', e.target.value)}
+                            className="w-full text-xs p-1 border rounded"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </CardContent>
               </Card>
             </div>
