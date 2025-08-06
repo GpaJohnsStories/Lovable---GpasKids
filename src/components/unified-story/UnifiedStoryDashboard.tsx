@@ -160,7 +160,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <Button 
                       type="submit" 
                       disabled={isSaving || isGeneratingAudio} 
-                      className="flex-1 text-xs h-8 bg-green-600 hover:bg-green-700 text-white"
+                      className="flex-1 text-xs h-8 !bg-green-600 hover:!bg-green-700 !text-white !border-green-600"
                     >
                       <Save className="h-3 w-3 mr-1" />
                       {isSaving ? 'Saving...' : 'Save'}
@@ -169,7 +169,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <Button 
                       type="button" 
                       onClick={onCancel}
-                      className="flex-1 text-xs h-8 bg-red-600 hover:bg-red-700 text-white"
+                      className="flex-1 text-xs h-8 !bg-red-600 hover:!bg-red-700 !text-white !border-red-600"
                     >
                       <X className="h-3 w-3 mr-1" />
                       Cancel
