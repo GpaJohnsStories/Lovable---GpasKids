@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Save, X, FileText, Image, Video, Volume2, Play, Square } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StoryFormFields from "../StoryFormFields";
+import StoryCodeField from "../StoryCodeField";
 import StoryVideoUpload from "../StoryVideoUpload";
 import AudioUploadSection from "./AudioUploadSection";
 import SplitViewEditor from "../editor/SplitViewEditor";
@@ -187,12 +188,16 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+              <StoryCodeField 
+                value={formData.story_code}
+                onChange={(value) => onInputChange('story_code', value)}
+              />
               <StoryFormFields 
                 formData={formData} 
                 onInputChange={onInputChange}
                 compact={true}
                 context={context}
-                hideStoryCodeField={hideStoryCodeField}
+                hideStoryCodeField={true}
               />
             </CardContent>
           </Card>
