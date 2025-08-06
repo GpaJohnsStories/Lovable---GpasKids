@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -9,10 +9,45 @@ import { DeployedContent } from "@/components/DeployedContent";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
 import { StandardAudioPanel } from "@/components/StandardAudioPanel";
+import { supabase } from '@/integrations/supabase/client';
 
 const About = () => {
   const { iconUrl: ab5IconUrl } = useCachedIcon('ICZ-AB5.png');
   const [audioPanel, setAudioPanel] = useState<{isOpen: boolean, code?: string}>({isOpen: false});
+  const [sectionTitles, setSectionTitles] = useState<{[key: string]: string}>({
+    'SYS-AGJ': 'About Grandpa John',
+    'SYS-BDY': 'About Buddy', 
+    'SYS-THY': 'A Special "Thank You" to ...'
+  });
+
+  // Fetch dynamic titles from webtext data
+  useEffect(() => {
+    const fetchSectionTitles = async () => {
+      try {
+        const storyCodes = ['SYS-AGJ', 'SYS-BDY', 'SYS-THY'];
+        
+        for (const code of storyCodes) {
+          const { data, error } = await supabase
+            .from('stories')
+            .select('title')
+            .eq('story_code', code)
+            .eq('category', 'WebText')
+            .maybeSingle();
+
+          if (!error && data?.title) {
+            setSectionTitles(prev => ({
+              ...prev,
+              [code]: data.title
+            }));
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching section titles:', err);
+      }
+    };
+
+    fetchSectionTitles();
+  }, []);
 
   return (
     <TooltipProvider>
@@ -24,7 +59,7 @@ const About = () => {
             {/* Title on left, Audio Button on right */}
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-4xl font-bold text-amber-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                About Grandpa John
+                {sectionTitles['SYS-AGJ']}
               </h1>
               <AudioButton 
                 code="SYS-AGJ"
@@ -119,7 +154,7 @@ const About = () => {
             {/* Title on left, Audio Button on right */}
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-4xl font-bold text-amber-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                About Buddy
+                {sectionTitles['SYS-BDY']}
               </h1>
               <AudioButton 
                 code="SYS-BDY"
@@ -205,7 +240,7 @@ const About = () => {
             {/* Title on left, Audio Button on right */}
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-4xl font-bold text-purple-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                A Special "Thank You" to ...
+                {sectionTitles['SYS-THY']}
               </h1>
               <AudioButton 
                 code="SYS-THY"
