@@ -191,6 +191,23 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   </table>
                 </CardContent>
               </Card>
+
+              {/* Audio Upload - Condensed */}
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="flex items-center gap-2 text-sm">
+                    <Volume2 className="h-4 w-4" />
+                    Audio Upload
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <AudioUploadSection
+                    audioUrl={formData.audio_url}
+                    onAudioUpload={(url) => onInputChange('audio_url', url)}
+                    onAudioRemove={() => onInputChange('audio_url', '')}
+                  />
+                </CardContent>
+              </Card>
             </div>
 
             {/* Settings & Actions Column - Uses remaining space */}
