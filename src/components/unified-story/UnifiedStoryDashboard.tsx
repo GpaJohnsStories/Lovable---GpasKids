@@ -94,7 +94,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
 
           {/* Story Photos Section */}
-          <Card>
+          <Card className="border-2" style={{ borderColor: '#814d2e' }}>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-sm">
                 <Image className="h-4 w-4" />
