@@ -102,25 +102,25 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
-              <table className="w-full table-fixed border-collapse">
+              <table className="w-full table-fixed border-collapse border-2" style={{ borderColor: '#9c441a' }}>
                 <tbody>
                   {/* Photo Display Row */}
                   <tr>
-                    <td className="p-2 border">
+                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
                       {formData.photo_link_1 ? (
                         <img src={formData.photo_link_1} alt="Photo 1" className="w-full h-20 object-cover rounded" />
                       ) : (
                         <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
                       )}
                     </td>
-                    <td className="p-2 border">
+                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
                       {formData.photo_link_2 ? (
                         <img src={formData.photo_link_2} alt="Photo 2" className="w-full h-20 object-cover rounded" />
                       ) : (
                         <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
                       )}
                     </td>
-                    <td className="p-2 border">
+                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
                       {formData.photo_link_3 ? (
                         <img src={formData.photo_link_3} alt="Photo 3" className="w-full h-20 object-cover rounded" />
                       ) : (
@@ -131,20 +131,20 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   
                   {/* File Input Row */}
                   <tr>
-                    <td className="p-2 border">
+                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
                       <input type="file" accept="image/*" className="w-full text-xs" />
                     </td>
-                    <td className="p-2 border">
+                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
                       <input type="file" accept="image/*" className="w-full text-xs" />
                     </td>
-                    <td className="p-2 border">
+                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
                       <input type="file" accept="image/*" className="w-full text-xs" />
                     </td>
                   </tr>
                   
                   {/* Alt Text Row */}
                   <tr>
-                    <td className="p-2 border">
+                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
                       <input 
                         type="text" 
                         placeholder="Alt text" 
@@ -153,7 +153,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                         className="w-full text-xs p-1 border rounded"
                       />
                     </td>
-                    <td className="p-2 border">
+                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
                       <input 
                         type="text" 
                         placeholder="Alt text" 
@@ -162,7 +162,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                         className="w-full text-xs p-1 border rounded"
                       />
                     </td>
-                    <td className="p-2 border">
+                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
                       <input 
                         type="text" 
                         placeholder="Alt text" 
