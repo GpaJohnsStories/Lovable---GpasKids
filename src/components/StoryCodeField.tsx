@@ -111,6 +111,9 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
                       field.onBlur();
                       handleStoryCodeLookup(e.target.value);
                     }}
+                    onMouseLeave={(e) => {
+                      handleStoryCodeLookup((e.target as HTMLInputElement).value);
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -150,6 +153,12 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
             handleStoryCodeLookup(e.target.value);
             if (onCodeLookup) {
               onCodeLookup(e.target.value);
+            }
+          }}
+          onMouseLeave={(e) => {
+            handleStoryCodeLookup((e.target as HTMLInputElement).value);
+            if (onCodeLookup) {
+              onCodeLookup((e.target as HTMLInputElement).value);
             }
           }}
         />
