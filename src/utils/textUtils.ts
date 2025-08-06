@@ -57,7 +57,7 @@ export const isWithinWordLimit = (text: string, wordLimit: number): boolean => {
 let cachedSampleText: string = '';
 
 // US English alphabet fallback text for voice testing
-const FALLBACK_ALPHABET_TEXT = 'The quick brown fox jumps over the lazy dog. This pangram contains every letter of the English alphabet at least once. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump! Bright vixens jump; dozy fowl quack. Sphinx of black quartz, judge my vow. The five boxing wizards jump quickly.';
+const FALLBACK_ALPHABET_TEXT = 'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z';
 
 /**
  * Generates and caches sample text for voice preview

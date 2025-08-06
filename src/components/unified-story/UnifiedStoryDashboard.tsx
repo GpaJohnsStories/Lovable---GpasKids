@@ -378,12 +378,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Nova</div>
                       <div className="text-xs text-gray-600 mb-2">Warm, friendly voice</div>
                        <div className="flex gap-1 justify-center">
-                         <button 
-                           type="button"
-                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
-                           onClick={() => playVoice('nova')}
-                           disabled={loadingVoice === 'nova'}
-                         >
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                            onClick={() => currentlyPlaying === 'nova' ? stopAudio() : playVoice('nova')}
+                            disabled={loadingVoice === 'nova'}
+                          >
                            {loadingVoice === 'nova' ? (
                              <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
                            ) : currentlyPlaying === 'nova' ? (
@@ -409,12 +409,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Alloy</div>
                       <div className="text-xs text-gray-600 mb-2">Clear, neutral voice</div>
                        <div className="flex gap-1 justify-center">
-                         <button 
-                           type="button"
-                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
-                           onClick={() => playVoice('alloy')}
-                           disabled={loadingVoice === 'alloy'}
-                         >
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                            onClick={() => currentlyPlaying === 'alloy' ? stopAudio() : playVoice('alloy')}
+                            disabled={loadingVoice === 'alloy'}
+                          >
                            {loadingVoice === 'alloy' ? (
                              <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
                            ) : currentlyPlaying === 'alloy' ? (
@@ -440,12 +440,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Echo</div>
                       <div className="text-xs text-gray-600 mb-2">Deep, resonant voice</div>
                        <div className="flex gap-1 justify-center">
-                         <button 
-                           type="button"
-                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
-                           onClick={() => playVoice('echo')}
-                           disabled={loadingVoice === 'echo'}
-                         >
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                            onClick={() => currentlyPlaying === 'echo' ? stopAudio() : playVoice('echo')}
+                            disabled={loadingVoice === 'echo'}
+                          >
                            {loadingVoice === 'echo' ? (
                              <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
                            ) : currentlyPlaying === 'echo' ? (
@@ -475,12 +475,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Fable</div>
                       <div className="text-xs text-gray-600 mb-2">British accent, storytelling</div>
                        <div className="flex gap-1 justify-center">
-                         <button 
-                           type="button"
-                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
-                           onClick={() => playVoice('fable')}
-                           disabled={loadingVoice === 'fable'}
-                         >
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                            onClick={() => currentlyPlaying === 'fable' ? stopAudio() : playVoice('fable')}
+                            disabled={loadingVoice === 'fable'}
+                          >
                            {loadingVoice === 'fable' ? (
                              <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
                            ) : currentlyPlaying === 'fable' ? (
@@ -506,12 +506,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Onyx</div>
                       <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice</div>
                        <div className="flex gap-1 justify-center">
-                         <button 
-                           type="button"
-                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
-                           onClick={() => playVoice('onyx')}
-                           disabled={loadingVoice === 'onyx'}
-                         >
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                            onClick={() => currentlyPlaying === 'onyx' ? stopAudio() : playVoice('onyx')}
+                            disabled={loadingVoice === 'onyx'}
+                          >
                            {loadingVoice === 'onyx' ? (
                              <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
                            ) : currentlyPlaying === 'onyx' ? (
@@ -537,12 +537,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Shimmer</div>
                       <div className="text-xs text-gray-600 mb-2">Soft, gentle voice</div>
                        <div className="flex gap-1 justify-center">
-                         <button 
-                           type="button"
-                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
-                           onClick={() => playVoice('shimmer')}
-                           disabled={loadingVoice === 'shimmer'}
-                         >
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                            onClick={() => currentlyPlaying === 'shimmer' ? stopAudio() : playVoice('shimmer')}
+                            disabled={loadingVoice === 'shimmer'}
+                          >
                            {loadingVoice === 'shimmer' ? (
                              <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
                            ) : currentlyPlaying === 'shimmer' ? (
