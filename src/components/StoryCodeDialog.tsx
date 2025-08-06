@@ -17,8 +17,8 @@ interface StoryCodeDialogProps {
   storyTitle?: string;
   mode: 'found' | 'not-found';
   onEditExisting?: () => void;
-  onCreateNew: () => void;
-  onCreateWebtext?: () => void;
+  onYes: () => void;
+  onNo: () => void;
 }
 
 export const StoryCodeDialog: React.FC<StoryCodeDialogProps> = ({
@@ -28,8 +28,8 @@ export const StoryCodeDialog: React.FC<StoryCodeDialogProps> = ({
   storyTitle,
   mode,
   onEditExisting,
-  onCreateNew,
-  onCreateWebtext,
+  onYes,
+  onNo,
 }) => {
   const isFound = mode === 'found';
   return (
@@ -46,39 +46,24 @@ export const StoryCodeDialog: React.FC<StoryCodeDialogProps> = ({
                 <br />
                 <em>"{storyTitle}"</em>
                 <br /><br />
-                Would you like to edit the existing story or create a new one?
+                Would you like to edit the existing story?
               </>
             ) : (
               <>
                 The story code <strong>"{storyCode}"</strong> doesn't exist yet.
                 <br /><br />
-                Would you like to create a new story or webtext with this code?
+                Would you like to add a new story or webtext with this code?
               </>
             )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="gap-2">
-          {isFound ? (
-            <>
-              <AlertDialogCancel onClick={onCreateNew}>
-                Create New
-              </AlertDialogCancel>
-              <AlertDialogAction onClick={onEditExisting}>
-                Edit Existing
-              </AlertDialogAction>
-            </>
-          ) : (
-            <>
-              <AlertDialogCancel onClick={onCreateNew}>
-                Create Story
-              </AlertDialogCancel>
-              {onCreateWebtext && (
-                <AlertDialogAction onClick={onCreateWebtext}>
-                  Create Webtext
-                </AlertDialogAction>
-              )}
-            </>
-          )}
+          <AlertDialogCancel onClick={onNo}>
+            No
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={isFound ? onEditExisting : onYes}>
+            Yes
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

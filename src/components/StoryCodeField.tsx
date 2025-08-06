@@ -73,24 +73,14 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
     setFoundStory(null);
   };
 
-  const handleCreateNew = () => {
-    // For "Create Story" - just continue with current code and close dialog
+  const handleYes = () => {
+    // For new content - just continue with current code and close dialog
     setDialogOpen(false);
     setFoundStory(null);
   };
 
-  const handleCreateWebtext = () => {
-    // For "Create Webtext" - set category to WebText and continue
-    if (onChange) {
-      // Keep the current code but indicate this should be webtext
-      // The parent component should handle setting category to "WebText"
-    }
-    setDialogOpen(false);
-    setFoundStory(null);
-  };
-
-  const handleClearCode = () => {
-    // Clear the story code to let user enter a different one
+  const handleNo = () => {
+    // Clear the story code and close dialog
     if (onChange) {
       onChange('');
     }
@@ -135,8 +125,8 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
           storyTitle={foundStory?.title}
           mode={foundStory ? 'found' : 'not-found'}
           onEditExisting={handleEditExisting}
-          onCreateNew={foundStory ? handleClearCode : handleCreateNew}
-          onCreateWebtext={!foundStory ? handleCreateWebtext : undefined}
+          onYes={handleYes}
+          onNo={handleNo}
         />
       </>
     );
@@ -171,8 +161,8 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
         storyTitle={foundStory?.title}
         mode={foundStory ? 'found' : 'not-found'}
         onEditExisting={handleEditExisting}
-        onCreateNew={foundStory ? handleClearCode : handleCreateNew}
-        onCreateWebtext={!foundStory ? handleCreateWebtext : undefined}
+        onYes={handleYes}
+        onNo={handleNo}
       />
     </>
   );
