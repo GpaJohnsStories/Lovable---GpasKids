@@ -9,6 +9,7 @@ import StoryVideoUpload from "../StoryVideoUpload";
 import AudioUploadSection from "./AudioUploadSection";
 import SplitViewEditor from "../editor/SplitViewEditor";
 import CopyrightControl from "../story-form/CopyrightControl";
+import StoryCodeField from "../StoryCodeField";
 import type { Story } from '@/hooks/useStoryFormState';
 
 interface UnifiedStoryDashboardProps {
@@ -76,7 +77,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <StoryFormFields 
+              <StoryCodeField
+                value={formData.story_code}
+                onChange={(value) => onInputChange('story_code', value)}
+                compact={true}
+              />
+              <StoryFormFields
                 formData={formData} 
                 onInputChange={onInputChange}
                 compact={true}

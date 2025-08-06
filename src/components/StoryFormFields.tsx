@@ -4,7 +4,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import StoryCodeField from './StoryCodeField';
 
 interface StoryFormFieldsProps {
   formData: {
@@ -87,13 +86,6 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
         </Select>
       </div>
 
-      <div className="space-y-2">
-        <StoryCodeField
-          value={formData.story_code}
-          onChange={(value) => onInputChange('story_code', value)}
-          compact={compact}
-        />
-      </div>
 
       <div className="space-y-2">
         <Label htmlFor="tagline" className={`font-bold text-gray-700 ${labelSize}`}>
