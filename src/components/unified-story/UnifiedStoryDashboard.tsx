@@ -557,22 +557,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          {/* Video Section */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Video className="h-5 w-5" />
-                Story Video
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <StoryVideoUpload
-                videoUrl={formData.video_url}
-                onVideoUpload={onVideoUpload}
-                onVideoRemove={onVideoRemove}
-              />
-            </CardContent>
-          </Card>
         </TabsContent>
       </Tabs>
     </form>
