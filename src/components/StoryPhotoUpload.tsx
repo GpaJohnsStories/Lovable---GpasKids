@@ -9,12 +9,12 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 interface StoryPhotoUploadProps {
-  photoUrls: {
+  photoUrls?: {
     photo_link_1: string;
     photo_link_2: string;
     photo_link_3: string;
   };
-  photoAlts: {
+  photoAlts?: {
     photo_alt_1: string;
     photo_alt_2: string;
     photo_alt_3: string;
@@ -25,8 +25,16 @@ interface StoryPhotoUploadProps {
 }
 
 const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
-  photoUrls,
-  photoAlts,
+  photoUrls = {
+    photo_link_1: '',
+    photo_link_2: '',
+    photo_link_3: ''
+  },
+  photoAlts = {
+    photo_alt_1: '',
+    photo_alt_2: '',
+    photo_alt_3: ''
+  },
   onPhotoUpload,
   onPhotoRemove,
   onAltTextChange
@@ -135,8 +143,8 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
   };
 
   const renderPhotoSection = (photoNumber: 1 | 2 | 3) => {
-    const photoUrl = photoUrls[`photo_link_${photoNumber}` as keyof typeof photoUrls];
-    const photoAlt = photoAlts[`photo_alt_${photoNumber}` as keyof typeof photoAlts];
+    const photoUrl = photoUrls?.[`photo_link_${photoNumber}` as keyof typeof photoUrls] || '';
+    const photoAlt = photoAlts?.[`photo_alt_${photoNumber}` as keyof typeof photoAlts] || '';
     const isUploading = uploading[photoNumber];
 
     return (
