@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -9,10 +9,11 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { UniversalAudioControls } from "@/components/UniversalAudioControls";
 import StoryContentRenderer from "@/components/content/StoryContentRenderer";
 import { supabase } from "@/integrations/supabase/client";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
+import { AudioButton } from "@/components/AudioButton";
+import { StandardAudioPanel } from "@/components/StandardAudioPanel";
 
 interface HelpPopupProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   storyData,
   onNavigateToGuide
 }) => {
+  const [isAudioPanelOpen, setIsAudioPanelOpen] = useState(false);
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
   
   // Try to get cached icon for the story code (e.g., HLP-LIB -> HLP-LIB.jpg)
@@ -110,16 +112,11 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             </DialogTitle>
           </div>
           
-          {/* Audio Controls - Responsive positioning */}
-          <div className="w-fit mt-2 sm:mt-0 self-start sm:self-auto">
-            <UniversalAudioControls 
-              audioUrl={storyData?.audio_url}
-              title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
-              content={helpContent}
-              allowTextToSpeech={true}
-              context="help-popup"
-              size="sm"
-              className="!bg-white/80 !justify-start"
+          {/* Audio Button - Top Right */}
+          <div className="flex-shrink-0 mt-2 sm:mt-0">
+            <AudioButton 
+              code={storyData?.story_code || 'HELP'} 
+              onClick={() => setIsAudioPanelOpen(true)} 
             />
           </div>
         </DialogHeader>
@@ -166,6 +163,13 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </Button>
         </div>
       </DialogContent>
+      
+      {/* Audio Panel */}
+      <StandardAudioPanel
+        isOpen={isAudioPanelOpen}
+        onClose={() => setIsAudioPanelOpen(false)}
+        code={storyData?.story_code || 'HELP'}
+      />
     </Dialog>
   );
 };
