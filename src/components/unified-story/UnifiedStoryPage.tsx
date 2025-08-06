@@ -1,9 +1,10 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Volume2 } from 'lucide-react';
 import UnifiedStoryDashboard from './UnifiedStoryDashboard';
+import { AudioButton } from '@/components/AudioButton';
+import { UniversalAudioControls } from '@/components/UniversalAudioControls';
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useAdminSession } from '@/hooks/useAdminSession';
@@ -17,6 +18,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const storyId = mode === 'update' ? id : undefined;
+  const [showAudioControls, setShowAudioControls] = useState(false);
 
   const {
     formData,
@@ -53,15 +55,8 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
     await handleSaveOnly(formData);
   };
 
-  const onGenerateAudio = async () => {
-    try {
-      await handleGenerateAudio();
-      toast.success("Audio generation started! Check back in a few moments.", {
-        duration: 5000,
-      });
-    } catch (error) {
-      toast.error("Failed to generate audio. Please try again.");
-    }
+  const toggleAudioControls = () => {
+    setShowAudioControls(!showAudioControls);
   };
 
   if (isLoadingStory) {
@@ -82,22 +77,12 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
             {pageTitle}
           </h1>
           
-          {/* Red Candy Audio Button */}
-          <button
-            type="button"
-            onClick={onGenerateAudio}
-            disabled={isGeneratingAudio || !formData.content?.trim()}
-            className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-3 text-lg disabled:cursor-not-allowed disabled:transform-none"
-            style={{
-              background: isGeneratingAudio || !formData.content?.trim() 
-                ? 'linear-gradient(135deg, #9ca3af, #6b7280)' 
-                : 'linear-gradient(135deg, #ef4444, #dc2626, #b91c1c)',
-              boxShadow: '0 8px 20px rgba(239, 68, 68, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3)',
-            }}
-          >
-            <Volume2 className="h-6 w-6" />
-            {isGeneratingAudio ? 'Generating...' : 'Generate Audio'}
-          </button>
+          {/* Peppermint Candy Audio Button */}
+          <AudioButton
+            code={formData.story_code || ''}
+            onClick={toggleAudioControls}
+            className="ml-4"
+          />
         </div>
         
         <UnifiedStoryDashboard
@@ -110,7 +95,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           onVideoUpload={handleVideoUpload}
           onVideoRemove={handleVideoRemove}
           onVoiceChange={handleVoiceChange}
-          onGenerateAudio={onGenerateAudio}
+          onGenerateAudio={handleGenerateAudio}
           onSubmit={onSubmit}
           onCancel={handleCancel}
           onSaveOnly={onSaveOnly}
@@ -118,6 +103,29 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           context="unified-story-system"
         />
       </div>
+      
+      {/* Universal Audio Controls Popup */}
+      {showAudioControls && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 m-4 max-w-md w-full">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Audio Controls</h3>
+              <button 
+                onClick={() => setShowAudioControls(false)}
+                className="text-gray-500 hover:text-gray-700 text-xl font-bold"
+              >
+                ×
+              </button>
+            </div>
+            <UniversalAudioControls
+              content={formData.content || ''}
+              title={formData.title || ''}
+              allowTextToSpeech={true}
+              size="lg"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
