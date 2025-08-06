@@ -41,6 +41,7 @@ import CreateAdminComment from "./components/admin/CreateAdminComment";
 import SecurityAuditDashboard from "./components/admin/SecurityAuditDashboard";
 import AuthorBioManagement from "./components/admin/AuthorBioManagement";
 import UnifiedStoryPage from "./components/unified-story/UnifiedStoryPage";
+import UnifiedStoryCodePage from "./components/unified-story/UnifiedStoryCodePage";
 
 // Security and Auth
 import GlobalHelpProvider from "./components/GlobalHelpProvider";
@@ -142,6 +143,12 @@ function App() {
                       <Route path="/buddys_admin/sitemap" element={<AdminSiteMap />} />
 
                       {/* Unified Story System Routes - These are the only story management routes now */}
+                      <Route path="/buddys_admin/story" element={
+                        <SecureAdminRoute title="Story Management" description="Create or edit stories">
+                          <AdminLayout><UnifiedStoryCodePage /></AdminLayout>
+                        </SecureAdminRoute>
+                      } />
+                      {/* Legacy routes for backward compatibility */}
                       <Route path="/buddys_admin/unified_story_system/add" element={
                         <SecureAdminRoute title="Add Story" description="Add new story to the system">
                           <AdminLayout><UnifiedStoryPage mode="add" /></AdminLayout>

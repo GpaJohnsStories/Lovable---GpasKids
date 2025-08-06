@@ -18,12 +18,16 @@ interface StoryFormFieldsProps {
   };
   onInputChange: (field: string, value: string) => void;
   compact?: boolean;
+  context?: string;
+  hideStoryCodeField?: boolean;
 }
 
 const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ 
   formData, 
   onInputChange,
-  compact = false 
+  compact = false,
+  context = "",
+  hideStoryCodeField = false
 }) => {
   const fieldSpacing = compact ? "space-y-3" : "space-y-4";
   const labelSize = compact ? "text-sm" : "text-base";
@@ -87,13 +91,15 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
         </Select>
       </div>
 
-      <div className="space-y-2">
-        <StoryCodeField
-          value={formData.story_code}
-          onChange={(value) => onInputChange('story_code', value)}
-          compact={compact}
-        />
-      </div>
+      {!hideStoryCodeField && (
+        <div className="space-y-2">
+          <StoryCodeField
+            value={formData.story_code}
+            onChange={(value) => onInputChange('story_code', value)}
+            compact={compact}
+          />
+        </div>
+      )}
 
       <div className="space-y-2">
         <Label htmlFor="tagline" className={`font-bold text-gray-700 ${labelSize}`}>

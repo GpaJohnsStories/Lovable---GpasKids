@@ -30,6 +30,7 @@ interface UnifiedStoryDashboardProps {
   onSaveOnly: () => void;
   allowTextToSpeech?: boolean;
   context?: string;
+  hideStoryCodeField?: boolean;
 }
 
 const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
@@ -47,7 +48,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   onCancel,
   onSaveOnly,
   allowTextToSpeech = false,
-  context = "unified-story-system"
+  context = "unified-story-system",
+  hideStoryCodeField = false
 }) => {
   // Voice testing state
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
@@ -189,6 +191,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 formData={formData} 
                 onInputChange={onInputChange}
                 compact={true}
+                context={context}
+                hideStoryCodeField={hideStoryCodeField}
               />
             </CardContent>
           </Card>
