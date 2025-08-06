@@ -2,6 +2,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { Volume2 } from 'lucide-react';
 import UnifiedStoryDashboard from './UnifiedStoryDashboard';
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
@@ -76,9 +77,28 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   return (
     <div className="max-w-7xl mx-auto p-4">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">
-          {pageTitle}
-        </h1>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold text-gray-800">
+            {pageTitle}
+          </h1>
+          
+          {/* Red Candy Audio Button */}
+          <button
+            type="button"
+            onClick={onGenerateAudio}
+            disabled={isGeneratingAudio || !formData.content?.trim()}
+            className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-3 text-lg disabled:cursor-not-allowed disabled:transform-none"
+            style={{
+              background: isGeneratingAudio || !formData.content?.trim() 
+                ? 'linear-gradient(135deg, #9ca3af, #6b7280)' 
+                : 'linear-gradient(135deg, #ef4444, #dc2626, #b91c1c)',
+              boxShadow: '0 8px 20px rgba(239, 68, 68, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3)',
+            }}
+          >
+            <Volume2 className="h-6 w-6" />
+            {isGeneratingAudio ? 'Generating...' : 'Generate Audio'}
+          </button>
+        </div>
         
         <UnifiedStoryDashboard
           formData={formData}
