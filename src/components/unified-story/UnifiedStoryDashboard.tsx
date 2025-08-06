@@ -511,29 +511,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         </TabsContent>
 
         <TabsContent value="media" className="space-y-6">
-          {/* Audio Section - New Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* AI Voice Generation */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Volume2 className="h-5 w-5" />
-                  AI Voice Generation
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <VoiceSelection
-                  selectedVoice={formData.ai_voice_name || 'Nova'}
-                  onVoiceChange={onVoiceChange || (() => {})}
-                  isRecording={isGeneratingAudio}
-                  onStartRecording={onGenerateAudio}
-                  onStopRecording={undefined}
-                  storyContent={formData.content}
-                  storyTitle={formData.title}
-                />
-              </CardContent>
-            </Card>
-
+          {/* Empty Media Tab for now */}
+          <div className="flex items-center justify-center h-64 text-muted-foreground">
+            <p>Media section is being redesigned</p>
           </div>
 
 
