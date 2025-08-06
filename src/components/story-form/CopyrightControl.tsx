@@ -37,30 +37,7 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
   };
 
   return (
-    <div className="space-y-1">
-      <div className="flex items-center gap-2">
-        <Label htmlFor="copyright_status" className="text-xs font-bold text-gray-700">Copyright Status</Label>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Info className="h-3 w-3 text-gray-500 cursor-help" />
-            </TooltipTrigger>
-            <TooltipContent className="bg-white border border-gray-300 shadow-lg p-3 max-w-xs z-50">
-              <div className="space-y-2 text-sm">
-                <div className="font-semibold text-red-600">© Full Copyright</div>
-                <p className="text-gray-700">All rights reserved. Content cannot be shared without permission.</p>
-                
-                <div className="font-semibold text-green-600">O Open, No Copyright</div>
-                <p className="text-gray-700">Free to share and distribute without restrictions.</p>
-                
-                <div className="font-semibold text-yellow-600">S Limited Sharing</div>
-                <p className="text-gray-700">Gpa John's copyright - limited sharing allowed with attribution.</p>
-              </div>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
-      
+    <div className="flex items-center gap-2">
       <Select value={value || '©'} onValueChange={onChange}>
         <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getCopyrightColor(value || '©')}`}>
           <SelectValue />
@@ -77,6 +54,26 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
           </SelectItem>
         </SelectContent>
       </Select>
+      
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Info className="h-3 w-3 text-gray-500 cursor-help" />
+          </TooltipTrigger>
+          <TooltipContent className="bg-white border border-gray-300 shadow-lg p-3 max-w-xs z-50">
+            <div className="space-y-2 text-sm">
+              <div className="font-semibold text-red-600">© Full Copyright</div>
+              <p className="text-gray-700">All rights reserved. Content cannot be shared without permission.</p>
+              
+              <div className="font-semibold text-green-600">O Open, No Copyright</div>
+              <p className="text-gray-700">Free to share and distribute without restrictions.</p>
+              
+              <div className="font-semibold text-yellow-600">S Limited Sharing</div>
+              <p className="text-gray-700">Gpa John's copyright - limited sharing allowed with attribution.</p>
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   );
 };

@@ -116,6 +116,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   <div className="flex gap-3">
                     {/* Copyright Status - Now on left */}
                     <div className="space-y-1 flex-1">
+                      <Label className="text-xs font-bold text-gray-700">Copyright Status</Label>
                       <CopyrightControl
                         value={formData.copyright_status || '©'}
                         onChange={(value) => onInputChange('copyright_status', value)}
