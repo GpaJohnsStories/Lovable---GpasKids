@@ -71,9 +71,6 @@ const AudioUploadSection: React.FC<AudioUploadSectionProps> = ({
 
   return (
     <div className="space-y-4">
-      <Label htmlFor="audio-upload" className="text-base font-bold text-gray-700">
-        Story Audio (Optional)
-      </Label>
       
       {audioUrl ? (
         <div className="space-y-3">
@@ -120,7 +117,6 @@ const AudioUploadSection: React.FC<AudioUploadSectionProps> = ({
                     <p className="mb-2 text-sm text-gray-500">
                       <span className="font-semibold">Click to upload audio</span>
                     </p>
-                    <p className="text-xs text-gray-500">MP3, WAV, OGG, M4A (MAX. 50MB)</p>
                   </>
                 )}
               </div>
@@ -138,7 +134,7 @@ const AudioUploadSection: React.FC<AudioUploadSectionProps> = ({
           <div className="flex items-start space-x-2 p-3 rounded-lg" style={{ backgroundColor: '#f0f9f0' }}>
             <AlertCircle className="h-5 w-5 mt-0.5 flex-shrink-0" style={{ color: '#4A7C59' }} />
             <div className="text-sm" style={{ color: '#2d5a3d' }}>
-              <p className="font-medium mb-1">Audio Guidelines:</p>
+              <p className="font-bold mb-1">Audio Guidelines:</p>
               <ul className="text-xs space-y-1">
                 <li>• Maximum file size: 50MB</li>
                 <li>• Supported formats: MP3, WAV, OGG, M4A</li>
