@@ -114,7 +114,7 @@ function App() {
 
                       {/* Unified Story System Routes - These are the only story management routes now */}
                       <Route path="/buddys_admin/unified_story_system/add" element={<AdminLayout><UnifiedStoryPage mode="add" /></AdminLayout>} />
-                      <Route path="/buddys_admin/unified_story_system/update/:id" element={<AdminLayout><UnifiedStoryPage mode="update" /></AdminLayout>} />
+                      <Route path="/buddys_admin/unified_story_system/update/:id" element={<AdminLayout><ErrorBoundary><UnifiedStoryPage mode="update" /></ErrorBoundary></AdminLayout>} />
 
                       {/* Catch-all route */}
                       <Route path="*" element={<NotFound />} />

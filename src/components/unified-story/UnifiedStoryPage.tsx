@@ -20,6 +20,10 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   const storyId = mode === 'update' ? id : undefined;
   const [showAudioControls, setShowAudioControls] = useState(false);
 
+  console.log('🎯 UnifiedStoryPage: Rendering with mode:', mode);
+  console.log('🎯 UnifiedStoryPage: URL id param:', id);
+  console.log('🎯 UnifiedStoryPage: Computed storyId:', storyId);
+
   const {
     formData,
     isLoadingStory,
@@ -32,7 +36,8 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
     handleVideoUpload,
     handleVideoRemove,
     handleVoiceChange,
-    handleGenerateAudio
+    handleGenerateAudio,
+    error: storyError
   } = useStoryFormState(storyId);
 
   const { handleStoryFormSave } = useAdminSession();
@@ -59,6 +64,24 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   const toggleAudioControls = () => {
     setShowAudioControls(!showAudioControls);
   };
+
+  // Show error if we're in update mode but no ID is provided
+  if (mode === 'update' && !id) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <div className="text-lg text-red-600">Error: No story ID provided for update mode</div>
+      </div>
+    );
+  }
+
+  // Show error if story fetch failed
+  if (storyError) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <div className="text-lg text-red-600">Error loading story: {storyError}</div>
+      </div>
+    );
+  }
 
   if (isLoadingStory) {
     return (

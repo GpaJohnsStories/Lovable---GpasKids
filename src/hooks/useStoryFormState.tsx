@@ -52,7 +52,7 @@ const initialFormData: Story = {
 export const useStoryFormState = (storyId?: string) => {
   const [formData, setFormData] = useState<Story>(initialFormData);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const { story, isLoading: isLoadingStory, refetch: refetchStory } = useStoryData(storyId);
+  const { story, isLoading: isLoadingStory, refetch: refetchStory, error } = useStoryData(storyId);
 
   const populateFormWithStory = useCallback((storyData: Story) => {
     console.log('🎯 useStoryFormState: Populating form with story data:', storyData);
@@ -168,6 +168,7 @@ export const useStoryFormState = (storyId?: string) => {
     handleVideoUpload,
     handleVideoRemove,
     handleVoiceChange,
-    handleGenerateAudio
+    handleGenerateAudio,
+    error
   };
 };
