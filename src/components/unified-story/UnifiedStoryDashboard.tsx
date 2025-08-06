@@ -178,7 +178,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
 
           {/* Audio Upload - Condensed */}
-          <Card>
+          <Card className="border-2" style={{ borderColor: '#4A7C59' }}>
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2 text-sm">
                 <Volume2 className="h-4 w-4" />
