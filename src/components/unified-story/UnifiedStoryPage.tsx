@@ -68,14 +68,12 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
     );
   }
 
-  const pageTitle = mode === 'add' ? 'Add New Story' : `Edit "${formData.title || 'Untitled Story'}"`;
-
   return (
     <div className="max-w-7xl mx-auto p-4">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-800">
-            {pageTitle}
+            Add / Edit Stories & WebText
           </h1>
           
           {/* Peppermint Candy Audio Button */}
