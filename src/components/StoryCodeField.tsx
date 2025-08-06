@@ -92,7 +92,8 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
                   placeholder="e.g., A1B2"
                   {...field}
                   onBlur={() => handleStoryCodeLookup(field.value)}
-                  className="w-full sm:w-40 text-base md:text-sm"
+                  className="w-full sm:w-40 text-xl font-bold"
+                  style={{ color: '#2563eb' }}
                 />
               </FormControl>
               <FormMessage />
@@ -119,6 +120,8 @@ const StoryCodeField = (props: StoryCodeFieldProps) => {
         onChange={(e) => onChange(e.target.value)}
         onBlur={() => handleStoryCodeLookup(value)}
         placeholder="e.g., A1B2"
+        className={`${labelSize} font-bold`}
+        style={{ color: '#2563eb' }}
       />
     </div>
   );
