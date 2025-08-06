@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { Label } from "@/components/ui/label";
-import { Save, X, FileText, Image, Video, Volume2 } from "lucide-react";
+import { Save, X, FileText, Image, Video, Volume2, Play, Square } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StoryFormFields from "../StoryFormFields";
 import StoryVideoUpload from "../StoryVideoUpload";
 import AudioUploadSection from "./AudioUploadSection";
 import SplitViewEditor from "../editor/SplitViewEditor";
 import CopyrightControl from "../story-form/CopyrightControl";
+
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
+import { generateSampleTextForVoice, getCachedSampleText } from "@/utils/textUtils";
 import type { Story } from '@/hooks/useStoryFormState';
 
 interface UnifiedStoryDashboardProps {
@@ -46,6 +49,111 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   allowTextToSpeech = false,
   context = "unified-story-system"
 }) => {
+  // Voice testing state
+  const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
+  const [loadingVoice, setLoadingVoice] = useState<string | null>(null);
+  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+
+  // Generate and cache sample text from story content
+  useEffect(() => {
+    generateSampleTextForVoice(formData.content, 200);
+  }, [formData.content]);
+
+  const playVoice = async (voiceId: string) => {
+    try {
+      // Stop any currently playing audio
+      if (currentAudio) {
+        currentAudio.pause();
+        setCurrentlyPlaying(null);
+      }
+
+      setLoadingVoice(voiceId);
+      console.log(`🎵 Testing voice: ${voiceId}`);
+
+      const textToSpeak = getCachedSampleText();
+      
+      const { data, error } = await supabase.functions.invoke('text-to-speech', {
+        body: {
+          text: textToSpeak,
+          voice: voiceId.toLowerCase()
+        }
+      });
+
+      if (error) {
+        console.error('Voice generation error:', error);
+        toast({
+          title: "Voice Test Failed",
+          description: error.message || "Failed to generate voice preview",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!data?.audioContent) {
+        console.error('No audio content returned');
+        toast({
+          title: "Voice Test Failed",
+          description: "No audio content was generated",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      console.log('✅ Voice generated successfully');
+
+      // Convert base64 to audio blob and play
+      const audioBlob = new Blob(
+        [Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))],
+        { type: 'audio/mpeg' }
+      );
+      
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      
+      audio.onended = () => {
+        setCurrentlyPlaying(null);
+        URL.revokeObjectURL(audioUrl);
+      };
+      
+      audio.onerror = () => {
+        console.error('Audio playback error');
+        setCurrentlyPlaying(null);
+        URL.revokeObjectURL(audioUrl);
+        toast({
+          title: "Playback Error",
+          description: "Failed to play the generated audio",
+          variant: "destructive",
+        });
+      };
+
+      await audio.play();
+      setCurrentAudio(audio);
+      setCurrentlyPlaying(voiceId);
+
+      toast({
+        title: "Voice Preview",
+        description: `Playing preview with ${voiceId} voice`,
+      });
+
+    } catch (error) {
+      console.error('Voice test error:', error);
+      toast({
+        title: "Voice Test Error",
+        description: "An unexpected error occurred while testing the voice",
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingVoice(null);
+    }
+  };
+
+  const stopAudio = () => {
+    if (currentAudio) {
+      currentAudio.pause();
+      setCurrentlyPlaying(null);
+      setCurrentAudio(null);
+    }
+  };
   const getPublishedColor = (publishedStatus: string) => {
     switch (publishedStatus) {
       case 'Y':
@@ -269,65 +377,95 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <td className="p-2 border text-center">
                       <div className="text-xs font-bold mb-1">Nova</div>
                       <div className="text-xs text-gray-600 mb-2">Warm, friendly voice</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Nova')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Nova');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
+                       <div className="flex gap-1 justify-center">
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                           onClick={() => playVoice('nova')}
+                           disabled={loadingVoice === 'nova'}
+                         >
+                           {loadingVoice === 'nova' ? (
+                             <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                           ) : currentlyPlaying === 'nova' ? (
+                             <Square className="h-3 w-3" />
+                           ) : (
+                             <Play className="h-3 w-3" />
+                           )}
+                           {loadingVoice === 'nova' ? 'Loading...' : currentlyPlaying === 'nova' ? 'Stop' : 'Test'}
+                         </button>
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                           onClick={() => {
+                             onVoiceChange?.('Nova');
+                             onGenerateAudio?.();
+                           }}
+                         >
+                           Use
+                         </button>
+                       </div>
                     </td>
                     <td className="p-2 border text-center">
                       <div className="text-xs font-bold mb-1">Alloy</div>
                       <div className="text-xs text-gray-600 mb-2">Clear, neutral voice</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Alloy')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Alloy');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
+                       <div className="flex gap-1 justify-center">
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                           onClick={() => playVoice('alloy')}
+                           disabled={loadingVoice === 'alloy'}
+                         >
+                           {loadingVoice === 'alloy' ? (
+                             <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                           ) : currentlyPlaying === 'alloy' ? (
+                             <Square className="h-3 w-3" />
+                           ) : (
+                             <Play className="h-3 w-3" />
+                           )}
+                           {loadingVoice === 'alloy' ? 'Loading...' : currentlyPlaying === 'alloy' ? 'Stop' : 'Test'}
+                         </button>
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                           onClick={() => {
+                             onVoiceChange?.('Alloy');
+                             onGenerateAudio?.();
+                           }}
+                         >
+                           Use
+                         </button>
+                       </div>
                     </td>
                     <td className="p-2 border text-center">
                       <div className="text-xs font-bold mb-1">Echo</div>
                       <div className="text-xs text-gray-600 mb-2">Deep, resonant voice</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Echo')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Echo');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
+                       <div className="flex gap-1 justify-center">
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                           onClick={() => playVoice('echo')}
+                           disabled={loadingVoice === 'echo'}
+                         >
+                           {loadingVoice === 'echo' ? (
+                             <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                           ) : currentlyPlaying === 'echo' ? (
+                             <Square className="h-3 w-3" />
+                           ) : (
+                             <Play className="h-3 w-3" />
+                           )}
+                           {loadingVoice === 'echo' ? 'Loading...' : currentlyPlaying === 'echo' ? 'Stop' : 'Test'}
+                         </button>
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                           onClick={() => {
+                             onVoiceChange?.('Echo');
+                             onGenerateAudio?.();
+                           }}
+                         >
+                           Use
+                         </button>
+                       </div>
                     </td>
                   </tr>
                   
@@ -336,65 +474,95 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <td className="p-2 border text-center">
                       <div className="text-xs font-bold mb-1">Fable</div>
                       <div className="text-xs text-gray-600 mb-2">British accent, storytelling</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Fable')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Fable');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
+                       <div className="flex gap-1 justify-center">
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                           onClick={() => playVoice('fable')}
+                           disabled={loadingVoice === 'fable'}
+                         >
+                           {loadingVoice === 'fable' ? (
+                             <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                           ) : currentlyPlaying === 'fable' ? (
+                             <Square className="h-3 w-3" />
+                           ) : (
+                             <Play className="h-3 w-3" />
+                           )}
+                           {loadingVoice === 'fable' ? 'Loading...' : currentlyPlaying === 'fable' ? 'Stop' : 'Test'}
+                         </button>
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                           onClick={() => {
+                             onVoiceChange?.('Fable');
+                             onGenerateAudio?.();
+                           }}
+                         >
+                           Use
+                         </button>
+                       </div>
                     </td>
                     <td className="p-2 border text-center">
                       <div className="text-xs font-bold mb-1">Onyx</div>
                       <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Onyx')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Onyx');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
+                       <div className="flex gap-1 justify-center">
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                           onClick={() => playVoice('onyx')}
+                           disabled={loadingVoice === 'onyx'}
+                         >
+                           {loadingVoice === 'onyx' ? (
+                             <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                           ) : currentlyPlaying === 'onyx' ? (
+                             <Square className="h-3 w-3" />
+                           ) : (
+                             <Play className="h-3 w-3" />
+                           )}
+                           {loadingVoice === 'onyx' ? 'Loading...' : currentlyPlaying === 'onyx' ? 'Stop' : 'Test'}
+                         </button>
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                           onClick={() => {
+                             onVoiceChange?.('Onyx');
+                             onGenerateAudio?.();
+                           }}
+                         >
+                           Use
+                         </button>
+                       </div>
                     </td>
                     <td className="p-2 border text-center">
                       <div className="text-xs font-bold mb-1">Shimmer</div>
                       <div className="text-xs text-gray-600 mb-2">Soft, gentle voice</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Shimmer')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Shimmer');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
+                       <div className="flex gap-1 justify-center">
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-1"
+                           onClick={() => playVoice('shimmer')}
+                           disabled={loadingVoice === 'shimmer'}
+                         >
+                           {loadingVoice === 'shimmer' ? (
+                             <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                           ) : currentlyPlaying === 'shimmer' ? (
+                             <Square className="h-3 w-3" />
+                           ) : (
+                             <Play className="h-3 w-3" />
+                           )}
+                           {loadingVoice === 'shimmer' ? 'Loading...' : currentlyPlaying === 'shimmer' ? 'Stop' : 'Test'}
+                         </button>
+                         <button 
+                           type="button"
+                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                           onClick={() => {
+                             onVoiceChange?.('Shimmer');
+                             onGenerateAudio?.();
+                           }}
+                         >
+                           Use
+                         </button>
+                       </div>
                     </td>
                   </tr>
                 </tbody>
