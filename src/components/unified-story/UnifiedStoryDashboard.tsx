@@ -486,9 +486,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       </div>
 
       {/* Story Editor */}
-      <Card>
+      <Card className="border-2" style={{ borderColor: '#F97316' }}>
         <CardHeader>
-          <CardTitle>Story Content</CardTitle>
+          <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F97316' }}>
+            <FileText className="h-5 w-5" />
+            Story Content
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <SplitViewEditor
