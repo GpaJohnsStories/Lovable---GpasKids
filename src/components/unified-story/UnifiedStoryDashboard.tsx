@@ -534,27 +534,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardContent>
             </Card>
 
-            {/* Audio Controls - Always visible now */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Volume2 className="h-5 w-5" />
-                  Audio Controls
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <StackedAudioControls
-                  audioUrl={formData.audio_url}
-                  title={formData.title || 'Story Audio'}
-                  content={formData.content}
-                  author={formData.author}
-                  allowTextToSpeech={true}
-                  context={context}
-                  aiVoiceName={formData.ai_voice_name || 'Nova'}
-                  className="w-full"
-                />
-              </CardContent>
-            </Card>
           </div>
 
 
