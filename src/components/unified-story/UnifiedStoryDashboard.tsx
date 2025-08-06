@@ -235,7 +235,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   value={formData.google_drive_link}
                   onChange={(e) => onInputChange('google_drive_link', e.target.value)}
                   placeholder="https://drive.google.com/..."
-                  className="w-full p-2 text-xs border border-gray-300 rounded-md"
+                  className="w-full p-2 text-xs border rounded-md"
+                  style={{ borderColor: '#9c441a', borderWidth: '2px' }}
                 />
               </div>
 
