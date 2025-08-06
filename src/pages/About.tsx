@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -80,7 +79,7 @@ const About = () => {
               </div>
             )}
             
-            <DeployedContent
+            <DeployedContent 
               storyCode="SYS-AGJ"
               includeAudio={false}
               className="text-lg text-black leading-relaxed font-normal"
@@ -188,7 +187,7 @@ const About = () => {
               </div>
             )}
             
-            <DeployedContent
+            <DeployedContent 
               storyCode="SYS-BDY"
               includeAudio={false}
               className="text-lg text-black leading-relaxed font-normal"
@@ -348,17 +347,17 @@ const About = () => {
                   </TooltipContent>
                 </Tooltip>
                 
-                {/* Gemini (#3 AI Assistant) */}
+                {/* Claude (#3 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="overflow-hidden rounded-lg border-4 border-amber-600 bg-amber-300 shadow-sm cursor-pointer">
+                    <div className="overflow-hidden rounded-lg border-4 border-blue-400 bg-blue-100 shadow-sm cursor-pointer">
                       <img
-                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
+                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203797044-k7zd8tg1w.png"
                         alt="#3 AI Assistant"
                         className="w-full h-16 md:h-24 lg:h-28 object-contain hover:scale-105 transition-transform duration-300"
-                        onLoad={() => console.log('Photo 1 loaded successfully')}
+                        onLoad={() => console.log('Photo 4 loaded successfully')}
                         onError={(e) => {
-                          console.error('Photo 1 failed to load:', e.currentTarget.src);
+                          console.error('Photo 4 failed to load:', e.currentTarget.src);
                           e.currentTarget.style.display = 'none';
                         }}
                       />
@@ -370,25 +369,25 @@ const About = () => {
                 </Tooltip>
               </div>
             </div>
-
-            {/* Deployable text content */}
+            
             <DeployedContent 
               storyCode="SYS-THY"
               includeAudio={false}
-              hidePhotos={true}
-              className="text-lg text-purple-900 leading-relaxed font-normal"
+              className="text-lg text-purple-800 leading-relaxed font-normal"
               fallbackContent={
-                <div className="text-lg text-purple-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  <p className="mb-4">
-                    I want to say an unusual "Thank You!!!" to 3 special helpers. I've never done this before because these 3 special helpers are all Artificial Intelligence (AI's).
+                <div className="clear-both">
+                  <p className="text-lg text-purple-800 leading-relaxed mb-6 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                    None of this would have been possible without the incredible assistance of three amazing AI partners who have helped bring this vision to life. Each one has contributed their unique strengths to make this website a reality.
                   </p>
-                  <ul className="space-y-2 list-none ml-4 mb-4">
-                    <li><strong>#3</strong>: For general wording and some coding help, <strong>Google Gemini AI</strong> (<u><em>https://gemini.google.com/app</em></u>)</li>
-                    <li><strong>#2</strong>: For beautiful work on creating photos out of just ideas and a small photo, <strong>Microsoft CoPilot AI</strong> (<u><em>https://copilot.microsoft.com/</em></u>)</li>
-                    <li><strong>#1</strong>: For great work, unexpected super suggestions and all-around partner in building GpasKids.com, <strong>Lovable AI</strong> (<u><em>https://lovable.dev/</em></u>)</li>
-                  </ul>
-                  <p>
-                    Without the help of these 3 partners this and future Gpas website would not have been built.
+                  
+                  <h2 className="text-2xl font-bold text-purple-800 mb-3" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                    My AI Dream Team
+                  </h2>
+                  <p className="text-lg text-purple-800 leading-relaxed mb-4 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                    These three remarkable AI assistants have been my constant companions in creating, designing, and building this special place for children. Their patience, creativity, and technical expertise have made it possible to transform my ideas into the wonderful website you see today.
+                  </p>
+                  <p className="text-lg text-purple-800 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
+                    To my AI friends: Thank you for believing in this project and for helping an old storyteller share his love of stories with children around the world. You've made an old man's dream come true!
                   </p>
                 </div>
               }
