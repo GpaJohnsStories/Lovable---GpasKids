@@ -58,10 +58,16 @@ export const StoryCodeDialog: React.FC<StoryCodeDialogProps> = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="gap-2">
-          <AlertDialogCancel onClick={onNo}>
+          <AlertDialogCancel 
+            onClick={onNo}
+            className="bg-red-500 hover:bg-red-600 text-white border-red-500"
+          >
             No
           </AlertDialogCancel>
-          <AlertDialogAction onClick={isFound ? onEditExisting : onYes}>
+          <AlertDialogAction 
+            onClick={isFound ? onEditExisting : onYes}
+            className="bg-green-500 hover:bg-green-600 text-white"
+          >
             Yes
           </AlertDialogAction>
         </AlertDialogFooter>
