@@ -37,7 +37,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
   const [audioGenerated, setAudioGenerated] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [volume, setVolume] = useState(100);
-  const [playbackRate, setPlaybackRate] = useState(1.0);
+  const [playbackRate, setPlaybackRate] = useState(0.5);
 
   // Cleanup audio resources when component unmounts
   useEffect(() => {
@@ -48,7 +48,7 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
       }
       // Reset to defaults when component unmounts
       setVolume(100);
-      setPlaybackRate(1.0);
+      setPlaybackRate(0.5);
     };
   }, [currentAudio]);
 
@@ -534,11 +534,11 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                         : 'bg-blue-400 text-white border-blue-600 hover:bg-blue-500 hover:scale-105'
                     }`}
                   >
-                    0.5x
+                    Medium
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Set speed to 0.5x</p>
+                  <p>Set speed to Medium (0.5x)</p>
                 </TooltipContent>
               </Tooltip>
               <Tooltip>
@@ -551,11 +551,11 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                         : 'bg-blue-400 text-white border-blue-600 hover:bg-blue-500 hover:scale-105'
                     }`}
                   >
-                    1x
+                    Fast
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Set speed to 1x</p>
+                  <p>Set speed to Fast (1x)</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -571,11 +571,11 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                         : 'bg-blue-400 text-white border-blue-600 hover:bg-blue-500 hover:scale-105'
                     }`}
                   >
-                    1.5x
+                    Faster
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Set speed to 1.5x</p>
+                  <p>Set speed to Faster (1.5x)</p>
                 </TooltipContent>
               </Tooltip>
               <Tooltip>
@@ -588,11 +588,11 @@ export const UniversalAudioControls: React.FC<UniversalAudioControlsProps> = ({
                         : 'bg-blue-400 text-white border-blue-600 hover:bg-blue-500 hover:scale-105'
                     }`}
                   >
-                    2x
+                    Fastest
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Set speed to 2x</p>
+                  <p>Set speed to Fastest (2x)</p>
                 </TooltipContent>
               </Tooltip>
             </div>

@@ -28,7 +28,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(75);
   const [isMuted, setIsMuted] = useState(false);
-  const [playbackRate, setPlaybackRate] = useState(1);
+  const [playbackRate, setPlaybackRate] = useState(0.75);
   const [audioError, setAudioError] = useState<string | null>(null);
   const [isMetadataLoaded, setIsMetadataLoaded] = useState(false);
   
@@ -715,8 +715,8 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
                   </label>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px' }}>
                     {[
-                      { speed: 0.75, label: 'Slow' },
-                      { speed: 1, label: 'Normal' },
+                      { speed: 0.75, label: 'Medium' },
+                      { speed: 1, label: 'Fast' },
                       { speed: 1.25, label: 'Faster' },
                       { speed: 1.5, label: 'Fastest' }
                     ].map(({ speed, label }) => (

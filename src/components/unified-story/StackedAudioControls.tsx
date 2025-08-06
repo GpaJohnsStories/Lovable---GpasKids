@@ -35,7 +35,7 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
   const [audioGenerated, setAudioGenerated] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [volume, setVolume] = useState(100);
-  const [playbackRate, setPlaybackRate] = useState(1.0);
+  const [playbackRate, setPlaybackRate] = useState(0.5);
 
   // Cleanup audio resources when component unmounts
   useEffect(() => {
@@ -45,7 +45,7 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
         setCurrentAudio(null);
       }
       setVolume(100);
-      setPlaybackRate(1.0);
+      setPlaybackRate(0.5);
     };
   }, [currentAudio]);
 
@@ -509,11 +509,11 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
                           : 'bg-gradient-to-b from-blue-300 to-blue-400 border-blue-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#2563eb,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#2563eb,0_2px_4px_rgba(0,0,0,0.3)]'
                       }`}
                     >
-                      0.5x
+                      Medium
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Set speed to 0.5x</p>
+                    <p>Set speed to Medium (0.5x)</p>
                   </TooltipContent>
                 </Tooltip>
               </td>
@@ -528,11 +528,11 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
                           : 'bg-gradient-to-b from-blue-400 to-blue-500 border-blue-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#2563eb,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#2563eb,0_2px_4px_rgba(0,0,0,0.3)]'
                       }`}
                     >
-                      1x
+                      Fast
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Set speed to 1x</p>
+                    <p>Set speed to Fast (1x)</p>
                   </TooltipContent>
                 </Tooltip>
               </td>
@@ -547,11 +547,11 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
                           : 'bg-gradient-to-b from-blue-500 to-blue-600 border-blue-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#2563eb,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#2563eb,0_2px_4px_rgba(0,0,0,0.3)]'
                       }`}
                     >
-                      1.5x
+                      Faster
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Set speed to 1.5x</p>
+                    <p>Set speed to Faster (1.5x)</p>
                   </TooltipContent>
                 </Tooltip>
               </td>
@@ -566,11 +566,11 @@ export const StackedAudioControls: React.FC<StackedAudioControlsProps> = ({
                           : 'bg-gradient-to-b from-blue-600 to-blue-700 border-blue-600 hover:translate-y-[-2px] hover:scale-105 shadow-[0_4px_0_#2563eb,0_8px_16px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_0_#2563eb,0_12px_24px_rgba(0,0,0,0.35)] active:translate-y-2 active:shadow-[0_1px_0_#2563eb,0_2px_4px_rgba(0,0,0,0.3)]'
                       }`}
                     >
-                      2x
+                      Fastest
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Set speed to 2x</p>
+                    <p>Set speed to Fastest (2x)</p>
                   </TooltipContent>
                 </Tooltip>
               </td>
