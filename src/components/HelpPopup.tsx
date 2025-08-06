@@ -12,6 +12,7 @@ import { X } from "lucide-react";
 import { UniversalAudioControls } from "@/components/UniversalAudioControls";
 import StoryContentRenderer from "@/components/content/StoryContentRenderer";
 import { supabase } from "@/integrations/supabase/client";
+import { useCachedIcon } from "@/hooks/useCachedIcon";
 
 interface HelpPopupProps {
   isOpen: boolean;
@@ -33,6 +34,10 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   onNavigateToGuide
 }) => {
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
+  
+  // Try to get cached icon for the story code (e.g., HLP-LIB -> HLP-LIB.jpg)
+  const storyCode = storyData?.story_code;
+  const { iconUrl: cachedIconUrl } = useCachedIcon(storyCode ? `${storyCode}.jpg` : null);
   
   // Helper function to get icon URL from Supabase storage
   const getIconUrl = (iconName: string) => {
@@ -129,12 +134,12 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           ) : (
             <ScrollArea className="h-full w-full rounded-md border border-orange-200 bg-white/50 p-4">
               <div className="prose prose-orange max-w-none">
-                {/* Check if story data has photo 1 for the upper left corner */}
-                {storyData?.photo_link_1 && (
+                {/* Check for photo 1 or cached icon for the upper left corner */}
+                {(storyData?.photo_link_1 || cachedIconUrl) && (
                   <div className="float-left mr-4 mb-2">
                     <img
-                      src={storyData.photo_link_1}
-                      alt={storyData.photo_alt_1 || `${storyData.title} - Photo 1`}
+                      src={storyData?.photo_link_1 || cachedIconUrl}
+                      alt={storyData?.photo_alt_1 || `${storyData?.title || 'Help'} - Icon`}
                       className="w-auto h-16 md:h-24 lg:h-28 object-contain border rounded border-orange-300 shadow-sm"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
