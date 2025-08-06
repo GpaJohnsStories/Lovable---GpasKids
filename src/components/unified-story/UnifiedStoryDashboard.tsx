@@ -277,6 +277,154 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 </CardContent>
               </Card>
 
+              {/* Voice Selection - Simple Table */}
+              <Card className="h-fit">
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-sm">
+                    <Volume2 className="h-4 w-4" />
+                    Voice Previews
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <table className="w-full table-fixed border-collapse">
+                    <tbody>
+                      {/* Top Row - First 3 Voices */}
+                      <tr>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Nova</div>
+                          <div className="text-xs text-gray-600 mb-2">Warm, friendly voice</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Nova')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Nova');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Alloy</div>
+                          <div className="text-xs text-gray-600 mb-2">Clear, neutral voice</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Alloy')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Alloy');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Echo</div>
+                          <div className="text-xs text-gray-600 mb-2">Deep, resonant voice</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Echo')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Echo');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      {/* Bottom Row - Next 3 Voices */}
+                      <tr>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Fable</div>
+                          <div className="text-xs text-gray-600 mb-2">British accent, storytelling</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Fable')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Fable');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Onyx</div>
+                          <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Onyx')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Onyx');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Shimmer</div>
+                          <div className="text-xs text-gray-600 mb-2">Soft, gentle voice</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Shimmer')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Shimmer');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </CardContent>
+              </Card>
 
               {/* AI Voice Generation */}
               <Card className="h-fit">
