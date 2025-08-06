@@ -1,9 +1,8 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Save, X, FileText, Image, Video, Volume2 } from "lucide-react";
+import { Save, X, FileText, Image, Volume2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StoryFormFields from "../StoryFormFields";
 import StoryPhotoUpload from "../StoryPhotoUpload";
@@ -70,24 +69,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
-      <Tabs defaultValue="content" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger 
-            value="content" 
-            className="flex items-center gap-2 font-bold data-[state=active]:bg-[hsl(var(--tab-content))] data-[state=active]:text-white hover:bg-[hsl(var(--tab-content-hover))] hover:text-white"
-          >
-            <FileText className="h-4 w-4" />
-          </TabsTrigger>
-          <TabsTrigger 
-            value="media" 
-            className="flex items-center gap-2 font-bold data-[state=active]:bg-[hsl(var(--tab-media))] data-[state=active]:text-white hover:bg-[hsl(var(--tab-media-hover))] hover:text-white"
-          >
-            <Image className="h-4 w-4" />
-            Media
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="content" className="space-y-6">
+      <div className="space-y-6">
           <div className="flex gap-6">
             {/* Story Details Card - 45% width */}
             <div className="w-[45%] space-y-4">
@@ -473,90 +455,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               />
             </CardContent>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="media" className="space-y-6">
-          {/* Audio Section - New Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* AI Voice Generation */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Volume2 className="h-5 w-5" />
-                  AI Voice Generation
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <VoiceSelection
-                  selectedVoice={formData.ai_voice_name || 'Nova'}
-                  onVoiceChange={onVoiceChange || (() => {})}
-                  isRecording={isGeneratingAudio}
-                  onStartRecording={onGenerateAudio}
-                  onStopRecording={undefined}
-                  storyContent={formData.content}
-                  storyTitle={formData.title}
-                />
-              </CardContent>
-            </Card>
-
-            {/* Audio Controls - Always visible now */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Volume2 className="h-5 w-5" />
-                  Audio Controls
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <StackedAudioControls
-                  audioUrl={formData.audio_url}
-                  title={formData.title || 'Story Audio'}
-                  content={formData.content}
-                  author={formData.author}
-                  allowTextToSpeech={true}
-                  context={context}
-                  aiVoiceName={formData.ai_voice_name || 'Nova'}
-                  className="w-full"
-                />
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Audio Upload */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Volume2 className="h-5 w-5" />
-                Audio Upload
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <AudioUploadSection
-                audioUrl={formData.audio_url}
-                onAudioUpload={(url) => onInputChange('audio_url', url)}
-                onAudioRemove={() => onInputChange('audio_url', '')}
-              />
-            </CardContent>
-          </Card>
-
-          {/* Video Section */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Video className="h-5 w-5" />
-                Story Video
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <StoryVideoUpload
-                videoUrl={formData.video_url}
-                onVideoUpload={onVideoUpload}
-                onVideoRemove={onVideoRemove}
-              />
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+        </div>
+      </div>
     </form>
   );
 };
