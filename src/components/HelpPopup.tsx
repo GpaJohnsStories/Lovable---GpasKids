@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -35,12 +35,20 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   onNavigateToGuide
 }) => {
   const [isAudioPanelOpen, setIsAudioPanelOpen] = useState(false);
+  const [audioCode, setAudioCode] = useState<string>('HELP');
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
-  console.log('🎵 Audio panel state - isAudioPanelOpen:', isAudioPanelOpen, 'storyCode:', storyData?.story_code);
+  console.log('🎵 Audio panel state - isAudioPanelOpen:', isAudioPanelOpen, 'storyCode:', storyData?.story_code, 'audioCode:', audioCode);
   
   // Try to get cached icon for the story code (e.g., HLP-LIB -> HLP-LIB.jpg)
   const storyCode = storyData?.story_code;
   const { iconUrl: cachedIconUrl } = useCachedIcon(storyCode ? `${storyCode}.jpg` : null);
+  
+  // Update audioCode when storyData changes
+  useEffect(() => {
+    if (storyData?.story_code) {
+      setAudioCode(storyData.story_code);
+    }
+  }, [storyData]);
   
   // Helper function to get icon URL from Supabase storage
   const getIconUrl = (iconName: string) => {
@@ -116,9 +124,9 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           {/* Audio Button - Top Right */}
           <div className="flex-shrink-0 mt-2 sm:mt-0">
             <AudioButton 
-              code={storyData?.story_code || 'HELP'} 
+              code={audioCode} 
               onClick={() => {
-                console.log('🎵 Audio button clicked, opening panel for code:', storyData?.story_code);
+                console.log('🎵 Audio button clicked, opening panel for code:', audioCode);
                 setIsAudioPanelOpen(true);
               }} 
             />
@@ -175,7 +183,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           console.log('🎵 Audio panel closing');
           setIsAudioPanelOpen(false);
         }}
-        code={storyData?.story_code || 'HELP'}
+        code={audioCode}
       />
     </Dialog>
   );
