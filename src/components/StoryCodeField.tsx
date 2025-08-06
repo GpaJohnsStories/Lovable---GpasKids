@@ -107,6 +107,7 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
                     placeholder="Enter story code..."
                     className="w-full px-3 py-2 text-base border rounded-md font-bold"
                     style={{ borderColor: '#F97316' }}
+                    autoComplete="off"
                     onBlur={(e) => {
                       field.onBlur();
                       handleStoryCodeLookup(e.target.value);
@@ -149,6 +150,7 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
           placeholder="Enter story code..."
           className="w-full px-3 py-2 text-base border rounded-md font-bold"
           style={{ borderColor: '#F97316' }}
+          autoComplete="off"
           onBlur={(e) => {
             handleStoryCodeLookup(e.target.value);
             if (onCodeLookup) {
