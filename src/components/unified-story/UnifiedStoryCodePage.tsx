@@ -8,7 +8,6 @@ import { UniversalAudioControls } from '@/components/UniversalAudioControls';
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useAdminSession } from '@/hooks/useAdminSession';
-import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 
 const UnifiedStoryCodePage: React.FC = () => {
   const navigate = useNavigate();
@@ -35,7 +34,6 @@ const UnifiedStoryCodePage: React.FC = () => {
   } = useStoryFormState(currentStoryId);
 
   const { handleStoryFormSave } = useAdminSession();
-  const { lookupStoryByCode } = useStoryCodeLookup();
   
   const { handleSaveOnly, handleSubmit, isSaving } = useStoryFormActions(
     currentStoryId,
@@ -43,25 +41,14 @@ const UnifiedStoryCodePage: React.FC = () => {
     handleStoryFormSave
   );
 
-  // Pre-fill story code and auto-trigger lookup if provided in URL
+  // Pre-fill story code on load if provided in URL
   React.useEffect(() => {
     if (codeParam && codeParam !== storyCode) {
       setStoryCode(codeParam);
-      // Automatically trigger story lookup and bypass code entry form
-      const performAutoLookup = async () => {
-        console.log('🔧 UnifiedStoryCodePage: Auto-looking up story with code:', codeParam);
-        const story = await lookupStoryByCode(codeParam, true); // Silent mode
-        if (story) {
-          console.log('🎯 UnifiedStoryCodePage: Auto-found existing story:', story.id, story.title);
-          handleStoryFound(story);
-        } else {
-          console.log('🎯 UnifiedStoryCodePage: Auto-creating new story with code:', codeParam);
-          handleConfirmNew();
-        }
-      };
-      performAutoLookup();
+      // Auto-trigger lookup for the provided code
+      handleStoryCodeChange(codeParam);
     }
-  }, [codeParam]); // Removed problematic dependencies
+  }, [codeParam]);
 
   const handleStoryCodeChange = async (code: string) => {
     setStoryCode(code);
