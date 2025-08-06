@@ -37,13 +37,13 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1">
       <div className="flex items-center gap-2">
-        <Label htmlFor="copyright_status">Copyright Status</Label>
+        <Label htmlFor="copyright_status" className="text-xs font-bold text-gray-700">Copyright Status</Label>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Info className="h-4 w-4 text-gray-500 cursor-help" />
+              <Info className="h-3 w-3 text-gray-500 cursor-help" />
             </TooltipTrigger>
             <TooltipContent className="bg-white border border-gray-300 shadow-lg p-3 max-w-xs z-50">
               <div className="space-y-2 text-sm">
@@ -61,24 +61,22 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
         </TooltipProvider>
       </div>
       
-      <div className="flex justify-start">
-        <Select value={value || '©'} onValueChange={onChange}>
-          <SelectTrigger className={`w-48 font-bold ${getCopyrightColor(value || '©')}`}>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="z-50 bg-white border shadow-lg">
-            <SelectItem value="©" className="text-red-600 font-bold">
-              © Full Copyright
-            </SelectItem>
-            <SelectItem value="O" className="text-green-600 font-bold">
-              O Open, No Copyright
-            </SelectItem>
-            <SelectItem value="S" className="text-yellow-600 font-bold">
-              S Limited Sharing
-            </SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <Select value={value || '©'} onValueChange={onChange}>
+        <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getCopyrightColor(value || '©')}`}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent className="z-50 bg-white border shadow-lg">
+          <SelectItem value="©" className="text-red-600 font-bold">
+            © Full Copyright
+          </SelectItem>
+          <SelectItem value="O" className="text-green-600 font-bold">
+            O Open, No Copyright
+          </SelectItem>
+          <SelectItem value="S" className="text-yellow-600 font-bold">
+            S Limited Sharing
+          </SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   );
 };

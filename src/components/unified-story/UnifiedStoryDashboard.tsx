@@ -89,9 +89,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         </TabsList>
 
         <TabsContent value="content" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Story Details Card - Takes up 2/3 width */}
-            <Card className="lg:col-span-2">
+          <div className="flex gap-6">
+            {/* Story Details Card - 45% width */}
+            <Card className="w-[45%]">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5" />
@@ -107,34 +107,37 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardContent>
             </Card>
 
-            {/* Compact Settings & Actions Column - Takes up 1/3 width */}
-            <div className="lg:col-span-1 space-y-4">
-              {/* Compact Publication & Copyright Card */}
+            {/* Settings & Actions Column - Uses remaining space */}
+            <div className="flex-1 space-y-4">
+              {/* Settings Card with side-by-side Publication and Copyright */}
               <Card className="h-fit">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-sm font-medium">Settings</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {/* Publication Status */}
-                  <div className="space-y-1">
-                    <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
-                    <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
-                      <SelectTrigger className={`w-full text-xs font-bold ${getPublishedColor(formData.published)}`}>
-                        <SelectValue placeholder="Select status" />
-                      </SelectTrigger>
-                      <SelectContent className="z-50 bg-white border shadow-lg">
-                        <SelectItem value="N">Not Published</SelectItem>
-                        <SelectItem value="Y">Published</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  {/* Copyright Status */}
-                  <div className="space-y-1">
-                    <CopyrightControl
-                      value={formData.copyright_status || '©'}
-                      onChange={(value) => onInputChange('copyright_status', value)}
-                    />
+                  {/* Publication Status and Copyright Status side-by-side */}
+                  <div className="flex gap-3">
+                    {/* Publication Status */}
+                    <div className="space-y-1 flex-1">
+                      <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
+                      <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
+                        <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor(formData.published)}`}>
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent className="z-50 bg-white border shadow-lg">
+                          <SelectItem value="N">Not Published</SelectItem>
+                          <SelectItem value="Y">Published</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    {/* Copyright Status */}
+                    <div className="space-y-1 flex-1">
+                      <CopyrightControl
+                        value={formData.copyright_status || '©'}
+                        onChange={(value) => onInputChange('copyright_status', value)}
+                      />
+                    </div>
                   </div>
 
                   {/* Google Drive Link */}
