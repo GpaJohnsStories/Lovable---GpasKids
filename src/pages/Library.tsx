@@ -4,7 +4,6 @@ import CookieFreeFooter from "@/components/CookieFreeFooter";
 import PublicStoriesTable from "@/components/PublicStoriesTable";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import ScrollToTop from "@/components/ScrollToTop";
-import LibraryInstructions from "@/components/LibraryInstructions";
 
 const Library = () => {
   const navigate = useNavigate();
@@ -23,8 +22,6 @@ const Library = () => {
             Library of Stories, Videos and Audio Files
           </h1>
         </div>
-        
-        <LibraryInstructions />
         
         <div className="mb-8">
           <PublicStoriesTable onEditBio={handleViewAuthorBio} />
