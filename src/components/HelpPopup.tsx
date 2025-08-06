@@ -36,6 +36,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
 }) => {
   const [isAudioPanelOpen, setIsAudioPanelOpen] = useState(false);
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
+  console.log('🎵 Audio panel state - isAudioPanelOpen:', isAudioPanelOpen, 'storyCode:', storyData?.story_code);
   
   // Try to get cached icon for the story code (e.g., HLP-LIB -> HLP-LIB.jpg)
   const storyCode = storyData?.story_code;
@@ -116,7 +117,10 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           <div className="flex-shrink-0 mt-2 sm:mt-0">
             <AudioButton 
               code={storyData?.story_code || 'HELP'} 
-              onClick={() => setIsAudioPanelOpen(true)} 
+              onClick={() => {
+                console.log('🎵 Audio button clicked, opening panel for code:', storyData?.story_code);
+                setIsAudioPanelOpen(true);
+              }} 
             />
           </div>
         </DialogHeader>
@@ -167,7 +171,10 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
       {/* Audio Panel */}
       <StandardAudioPanel
         isOpen={isAudioPanelOpen}
-        onClose={() => setIsAudioPanelOpen(false)}
+        onClose={() => {
+          console.log('🎵 Audio panel closing');
+          setIsAudioPanelOpen(false);
+        }}
         code={storyData?.story_code || 'HELP'}
       />
     </Dialog>
