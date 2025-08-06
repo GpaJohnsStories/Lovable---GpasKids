@@ -52,3 +52,43 @@ export const isWithinWordLimit = (text: string, wordLimit: number): boolean => {
   const wordCount = countWords(text);
   return wordCount <= wordLimit;
 };
+
+// Module-level cache for voice sample text
+let cachedSampleText: string = '';
+
+// US English alphabet fallback text for voice testing
+const FALLBACK_ALPHABET_TEXT = 'The quick brown fox jumps over the lazy dog. This pangram contains every letter of the English alphabet at least once. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump! Bright vixens jump; dozy fowl quack. Sphinx of black quartz, judge my vow. The five boxing wizards jump quickly.';
+
+/**
+ * Generates and caches sample text for voice preview
+ * @param storyContent - The story content to extract text from
+ * @param wordLimit - Maximum number of words to extract (default: 200)
+ */
+export const generateSampleTextForVoice = (storyContent?: string, wordLimit: number = 200): void => {
+  if (storyContent && storyContent.trim()) {
+    // Remove HTML tags
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = storyContent;
+    const plainText = tempDiv.textContent || tempDiv.innerText || '';
+    
+    // Extract first ~200 words
+    const words = plainText.trim().split(/\s+/).filter(word => word.length > 0);
+    
+    if (words.length > 0) {
+      const truncatedWords = words.slice(0, wordLimit);
+      cachedSampleText = truncatedWords.join(' ');
+      return;
+    }
+  }
+  
+  // Use fallback alphabet text if no valid story content
+  cachedSampleText = FALLBACK_ALPHABET_TEXT;
+};
+
+/**
+ * Retrieves the cached sample text for voice preview
+ * @returns The cached sample text
+ */
+export const getCachedSampleText = (): string => {
+  return cachedSampleText || FALLBACK_ALPHABET_TEXT;
+};
