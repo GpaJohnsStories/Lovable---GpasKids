@@ -191,10 +191,10 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             variant="outline"
             size="sm"
             onClick={onClearAll}
-            className="h-8 px-2"
+            className="h-8 px-2 bg-[#DC2626] hover:bg-[#B91C1C] border-[#DC2626] hover:border-[#B91C1C] text-white"
             title="Clear all content"
           >
-            <Trash2 className="h-4 w-4 text-[#DC2626]" />
+            <Trash2 className="h-4 w-4" />
           </Button>
         </div>
       </div>
