@@ -2,12 +2,11 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { WordLimitedTextarea } from "@/components/ui/word-limited-textarea";
 import { supabase } from "@/integrations/supabase/client";
-import { Play, Square, Volume2, AlertCircle, CheckCircle } from "lucide-react";
+import { Play, Square, Volume2 } from "lucide-react";
 import LoadingSpinner from "../LoadingSpinner";
 import { toast } from "@/hooks/use-toast";
-import { truncateToWordLimit } from "@/utils/textUtils";
+import { generateSampleTextForVoice, getCachedSampleText } from "@/utils/textUtils";
 
 const voices = [
   { id: 'alloy', name: 'Alloy', description: 'Neutral and balanced' },
@@ -33,24 +32,14 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
   storyTitle = '',
   className = ''
 }) => {
-  const [sampleText, setSampleText] = useState('');
   const [currentlyPlaying, setCurrentlyPlaying] = useState<string | null>(null);
   const [loadingVoice, setLoadingVoice] = useState<string | null>(null);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
 
-  // Auto-populate sample text from story content
+  // Generate and cache sample text from story content
   React.useEffect(() => {
-    if (!sampleText && storyContent) {
-      // Extract first paragraph or first 100 words, truncated safely
-      const firstParagraph = storyContent.replace(/<[^>]*>/g, '').substring(0, 200);
-      if (firstParagraph.trim()) {
-        const truncatedText = truncateToWordLimit(firstParagraph.trim(), 100);
-        setSampleText(truncatedText);
-      }
-    }
-  }, [storyContent, sampleText]);
-
-  const defaultSampleText = `Hello! Welcome to ${storyTitle || "GpaJohn's Stories"}. This is how I sound when reading your favorite stories aloud.`;
+    generateSampleTextForVoice(storyContent, 200);
+  }, [storyContent]);
 
   const playVoice = async (voiceId: string) => {
     try {
@@ -64,13 +53,11 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
       setLoadingVoice(voiceId);
       console.log(`🎵 Testing voice: ${voiceId}`);
 
-      const textToSpeak = sampleText || defaultSampleText;
-      // Ensure text is within word limit before sending
-      const textToSend = truncateToWordLimit(textToSpeak, 100);
+      const textToSpeak = getCachedSampleText();
       
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
-          text: textToSend,
+          text: textToSpeak,
           voice: voiceId
         }
       });
@@ -160,13 +147,6 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
     });
   };
 
-  const handleWordLimitExceeded = () => {
-    toast({
-      title: "Word limit reached",
-      description: "Voice preview is limited to 100 words to control costs.",
-      variant: "destructive",
-    });
-  };
 
   return (
     <Card className={`border-orange-200 ${className}`}>
@@ -178,19 +158,14 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
             <span className="font-bold text-sm">Voice Preview & Testing</span>
           </div>
 
-          {/* Sample text input - now always visible */}
+          {/* Sample text display */}
           <div className="space-y-2">
             <label className="text-xs font-bold text-gray-600">
-              Test Text (limited to 100 words):
+              Test Text (first ~200 words of story):
             </label>
-            <WordLimitedTextarea
-              value={sampleText}
-              onChange={(e) => setSampleText(e.target.value)}
-              wordLimit={100}
-              placeholder={defaultSampleText}
-              className="min-h-[60px] text-sm"
-              onWordLimitExceeded={handleWordLimitExceeded}
-            />
+            <div className="p-2 bg-gray-50 rounded text-xs text-gray-700 min-h-[60px] border">
+              {getCachedSampleText()}
+            </div>
           </div>
 
           {/* Voice grid */}
@@ -263,7 +238,7 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
 
           {/* Cost control notice */}
           <div className="text-xs text-yellow-700 bg-yellow-50 p-2 rounded border border-yellow-200">
-            💰 <strong>Cost Control:</strong> Voice previews are limited to 100 words to manage API costs.
+            💰 <strong>Cost Control:</strong> Voice previews use the first ~200 words of your story or fallback text to manage API costs.
           </div>
         </div>
       </CardContent>
