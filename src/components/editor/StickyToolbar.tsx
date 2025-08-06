@@ -180,8 +180,8 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             type="button"
             size="sm"
             onClick={onClearHtml}
-            className="h-8 px-2 border text-black"
-            style={{ backgroundColor: '#F2BA15', borderColor: '#F2BA15' }}
+            className="h-8 px-2 text-black border-0 hover:opacity-90"
+            style={{ backgroundColor: '#F2BA15' }}
             title="Clear HTML from selection"
           >
             <span className="text-sm font-bold">&lt;X&gt;</span>
@@ -190,8 +190,8 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             type="button"
             size="sm"
             onClick={onClearAll}
-            className="h-8 px-2 border text-white"
-            style={{ backgroundColor: '#DC2626', borderColor: '#DC2626' }}
+            className="h-8 px-2 text-white border-0 hover:opacity-90"
+            style={{ backgroundColor: '#DC2626' }}
             title="Clear all content"
           >
             <Trash2 className="h-4 w-4" />
