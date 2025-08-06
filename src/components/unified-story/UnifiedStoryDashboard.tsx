@@ -176,24 +176,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </div>
           </div>
 
-          {/* Story Editor */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Story Content</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <SplitViewEditor
-                content={formData.content}
-                onChange={(content) => onInputChange('content', content)}
-                placeholder="Write your story here..."
-                onSave={onSaveOnly}
-                category={formData.category}
-              />
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="media" className="space-y-6">
           {/* Photos Section */}
           <Card>
             <CardHeader>
@@ -221,6 +203,24 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
+          {/* Story Editor */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Story Content</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <SplitViewEditor
+                content={formData.content}
+                onChange={(content) => onInputChange('content', content)}
+                placeholder="Write your story here..."
+                onSave={onSaveOnly}
+                category={formData.category}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="media" className="space-y-6">
           {/* Audio Section - New Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* AI Voice Generation */}
