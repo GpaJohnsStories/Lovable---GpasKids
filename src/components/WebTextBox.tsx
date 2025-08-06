@@ -5,7 +5,7 @@ import { getStoryPhotos } from '@/utils/storyUtils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { toast } from '@/hooks/use-toast';
 import { AudioButton } from '@/components/AudioButton';
-import { StandardAudioPanel } from '@/components/StandardAudioPanel';
+import { UniversalAudioControls } from '@/components/UniversalAudioControls';
 import { ArrowRight } from 'lucide-react';
 
 interface WebTextBoxProps {
@@ -38,8 +38,8 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [playbackRate, setPlaybackRate] = useState(1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
-  // Audio panel state for peppermint button
-  const [isAudioPanelOpen, setIsAudioPanelOpen] = useState(false);
+  // Audio controls state for peppermint button
+  const [showAudioControls, setShowAudioControls] = useState(false);
 
   const getContent = () => {
     if (loading) return "Loading...";
@@ -419,7 +419,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             Click to listen
           </div>
           <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
-          <AudioButton code="SYS-WEL" onClick={() => setIsAudioPanelOpen(true)} />
+          <AudioButton code="SYS-WEL" onClick={() => setShowAudioControls(!showAudioControls)} />
         </div>
 
         {/* Top section with photo and title */}
@@ -470,13 +470,20 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             {webtextCode}
           </div>
         </div>
+        
+        {/* Audio Controls - Show when activated */}
+        {showAudioControls && (
+          <div className="mt-4 p-3 bg-blue-50 border border-blue-300 rounded-lg">
+            <UniversalAudioControls
+              content={getContent()}
+              title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
+              allowTextToSpeech={true}
+              size="sm"
+              className="w-full"
+            />
+          </div>
+        )}
         </div>
-
-        <StandardAudioPanel
-          isOpen={isAudioPanelOpen}
-          onClose={() => setIsAudioPanelOpen(false)}
-          code="SYS-WEL"
-        />
       </>
     );
   }
@@ -511,7 +518,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           
           {/* Right: Peppermint Audio Button */}
           <div className="flex-shrink-0">
-            <AudioButton code={webtextCode} onClick={() => setIsAudioPanelOpen(true)} />
+            <AudioButton code={webtextCode} onClick={() => setShowAudioControls(!showAudioControls)} />
           </div>
         </div>
 
@@ -523,6 +530,19 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           />
         </div>
 
+        {/* Audio Controls - Show when activated */}
+        {showAudioControls && (
+          <div className="mb-4 p-3 bg-amber-50 border border-amber-300 rounded-lg">
+            <UniversalAudioControls
+              content={getContent()}
+              title={webtext?.title || title}
+              allowTextToSpeech={true}
+              size="sm"
+              className="w-full"
+            />
+          </div>
+        )}
+
         {/* Bottom Right: Webtext Code */}
         <div className="flex justify-end">
           <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
@@ -530,12 +550,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           </div>
         </div>
       </div>
-
-      <StandardAudioPanel
-        isOpen={isAudioPanelOpen}
-        onClose={() => setIsAudioPanelOpen(false)}
-        code={webtextCode}
-      />
     </>
   );
 };

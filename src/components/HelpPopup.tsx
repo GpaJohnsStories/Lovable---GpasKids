@@ -13,7 +13,7 @@ import StoryContentRenderer from "@/components/content/StoryContentRenderer";
 import { supabase } from "@/integrations/supabase/client";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
-import { StandardAudioPanel } from "@/components/StandardAudioPanel";
+import { UniversalAudioControls } from "@/components/UniversalAudioControls";
 
 interface HelpPopupProps {
   isOpen: boolean;
@@ -34,10 +34,10 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   storyData,
   onNavigateToGuide
 }) => {
-  const [isAudioPanelOpen, setIsAudioPanelOpen] = useState(false);
+  const [showAudioControls, setShowAudioControls] = useState(false);
   const [audioCode, setAudioCode] = useState<string>('HELP');
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
-  console.log('🎵 Audio panel state - isAudioPanelOpen:', isAudioPanelOpen, 'storyCode:', storyData?.story_code, 'audioCode:', audioCode);
+  console.log('🎵 Audio controls state - showAudioControls:', showAudioControls, 'storyCode:', storyData?.story_code, 'audioCode:', audioCode);
   
   // Try to get cached icon for the story code (e.g., HLP-LIB -> HLP-LIB.jpg)
   const storyCode = storyData?.story_code;
@@ -126,8 +126,8 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             <AudioButton 
               code={audioCode} 
               onClick={() => {
-                console.log('🎵 Audio button clicked, opening panel for code:', audioCode);
-                setIsAudioPanelOpen(true);
+                console.log('🎵 Audio button clicked, showing controls for code:', audioCode);
+                setShowAudioControls(!showAudioControls);
               }} 
             />
           </div>
@@ -135,6 +135,19 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
 
         {/* Content Area - Expands to fill remaining space */}
         <div className="flex-1 min-h-0 px-4 pb-4 pt-0 relative">
+          {/* Audio Controls - Show when activated */}
+          {showAudioControls && (
+            <div className="mb-4 p-3 bg-orange-100 border border-orange-300 rounded-lg">
+              <UniversalAudioControls
+                content={helpContent}
+                title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
+                allowTextToSpeech={true}
+                size="sm"
+                className="w-full"
+              />
+            </div>
+          )}
+          
           {isLoading ? (
             <div className="flex items-center justify-center h-full">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
@@ -183,16 +196,6 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             Close
           </Button>
         </div>
-        
-        {/* Audio Panel rendered INSIDE the Dialog */}
-        <StandardAudioPanel
-          isOpen={isAudioPanelOpen}
-          onClose={() => {
-            console.log('🎵 Audio panel closing');
-            setIsAudioPanelOpen(false);
-          }}
-          code={audioCode}
-        />
       </DialogContent>
     </Dialog>
   );

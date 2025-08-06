@@ -8,12 +8,11 @@ import { UniversalAudioControls } from "@/components/UniversalAudioControls";
 import { DeployedContent } from "@/components/DeployedContent";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
-import { StandardAudioPanel } from "@/components/StandardAudioPanel";
 import { supabase } from '@/integrations/supabase/client';
 
 const About = () => {
   const { iconUrl: ab5IconUrl } = useCachedIcon('ICZ-AB5.png');
-  const [audioPanel, setAudioPanel] = useState<{isOpen: boolean, code?: string}>({isOpen: false});
+  const [showAudioControls, setShowAudioControls] = useState<{[key: string]: boolean}>({});
   const [sectionTitles, setSectionTitles] = useState<{[key: string]: string}>({
     'SYS-AGJ': 'About Grandpa John',
     'SYS-BDY': 'About Buddy', 
@@ -63,12 +62,25 @@ const About = () => {
               </h1>
               <AudioButton 
                 code="SYS-AGJ"
-                onClick={() => setAudioPanel({isOpen: true, code: 'SYS-AGJ'})}
+                onClick={() => setShowAudioControls(prev => ({...prev, 'SYS-AGJ': !prev['SYS-AGJ']}))}
                 className="flex-shrink-0"
               />
             </div>
+
+            {/* Audio Controls - Show when activated */}
+            {showAudioControls['SYS-AGJ'] && (
+              <div className="mb-4 p-3 bg-blue-50 border border-blue-300 rounded-lg">
+                <UniversalAudioControls
+                  content="About Grandpa John content"
+                  title={sectionTitles['SYS-AGJ']}
+                  allowTextToSpeech={true}
+                  size="sm"
+                  className="w-full"
+                />
+              </div>
+            )}
             
-            <DeployedContent 
+            <DeployedContent
               storyCode="SYS-AGJ"
               includeAudio={false}
               className="text-lg text-black leading-relaxed font-normal"
@@ -158,12 +170,25 @@ const About = () => {
               </h1>
               <AudioButton 
                 code="SYS-BDY"
-                onClick={() => setAudioPanel({isOpen: true, code: 'SYS-BDY'})}
+                onClick={() => setShowAudioControls(prev => ({...prev, 'SYS-BDY': !prev['SYS-BDY']}))}
                 className="flex-shrink-0"
               />
             </div>
+
+            {/* Audio Controls - Show when activated */}
+            {showAudioControls['SYS-BDY'] && (
+              <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg">
+                <UniversalAudioControls
+                  content="About Buddy content"
+                  title={sectionTitles['SYS-BDY']}
+                  allowTextToSpeech={true}
+                  size="sm"
+                  className="w-full"
+                />
+              </div>
+            )}
             
-            <DeployedContent 
+            <DeployedContent
               storyCode="SYS-BDY"
               includeAudio={false}
               className="text-lg text-black leading-relaxed font-normal"
@@ -244,10 +269,23 @@ const About = () => {
               </h1>
               <AudioButton 
                 code="SYS-THY"
-                onClick={() => setAudioPanel({isOpen: true, code: 'SYS-THY'})}
+                onClick={() => setShowAudioControls(prev => ({...prev, 'SYS-THY': !prev['SYS-THY']}))}
                 className="flex-shrink-0"
               />
             </div>
+
+            {/* Audio Controls - Show when activated */}
+            {showAudioControls['SYS-THY'] && (
+              <div className="mb-4 p-3 bg-purple-50 border border-purple-300 rounded-lg">
+                <UniversalAudioControls
+                  content="Special thank you content"
+                  title={sectionTitles['SYS-THY']}
+                  allowTextToSpeech={true}
+                  size="sm"
+                  className="w-full"
+                />
+              </div>
+            )}
             
             {/* Responsive layout: stacked on mobile, side-by-side on larger screens */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -375,13 +413,6 @@ const About = () => {
         
         <CookieFreeFooter />
         <ScrollToTop />
-        
-        {/* Audio Panel */}
-        <StandardAudioPanel
-          isOpen={audioPanel.isOpen}
-          onClose={() => setAudioPanel({isOpen: false})}
-          code={audioPanel.code}
-        />
       </div>
     </TooltipProvider>
   );
