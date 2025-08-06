@@ -77,7 +77,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             className="flex items-center gap-2 font-bold data-[state=active]:bg-[hsl(var(--tab-content))] data-[state=active]:text-white hover:bg-[hsl(var(--tab-content-hover))] hover:text-white"
           >
             <FileText className="h-4 w-4" />
-            Content
           </TabsTrigger>
           <TabsTrigger 
             value="media" 
