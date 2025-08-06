@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Mic, Square, Volume2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import CompactVoicePreview from "./CompactVoicePreview";
+
 
 interface VoiceSelectionProps {
   selectedVoice: string;
@@ -121,13 +121,6 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
         </CardContent>
       </Card>
 
-      {/* Integrated Voice Preview */}
-      <CompactVoicePreview
-        selectedVoice={selectedVoice}
-        onVoiceSelect={onVoiceChange}
-        storyContent={storyContent}
-        storyTitle={storyTitle}
-      />
     </div>
   );
 };
