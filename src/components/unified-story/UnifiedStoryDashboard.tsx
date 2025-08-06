@@ -173,35 +173,37 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Photos Section - Compact */}
+              <Card className="h-fit">
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-sm">
+                    <Image className="h-4 w-4" />
+                    Story Photos
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="scale-75 origin-top">
+                    <StoryPhotoUpload
+                      photoUrls={{
+                        photo_link_1: formData.photo_link_1,
+                        photo_link_2: formData.photo_link_2,
+                        photo_link_3: formData.photo_link_3,
+                      }}
+                      photoAlts={{
+                        photo_alt_1: formData.photo_alt_1,
+                        photo_alt_2: formData.photo_alt_2,
+                        photo_alt_3: formData.photo_alt_3,
+                      }}
+                      onPhotoUpload={onPhotoUpload}
+                      onPhotoRemove={onPhotoRemove}
+                      onAltTextChange={onInputChange}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
-
-          {/* Photos Section */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Image className="h-5 w-5" />
-                Story Photos
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <StoryPhotoUpload
-                photoUrls={{
-                  photo_link_1: formData.photo_link_1,
-                  photo_link_2: formData.photo_link_2,
-                  photo_link_3: formData.photo_link_3,
-                }}
-                photoAlts={{
-                  photo_alt_1: formData.photo_alt_1,
-                  photo_alt_2: formData.photo_alt_2,
-                  photo_alt_3: formData.photo_alt_3,
-                }}
-                onPhotoUpload={onPhotoUpload}
-                onPhotoRemove={onPhotoRemove}
-                onAltTextChange={onInputChange}
-              />
-            </CardContent>
-          </Card>
 
           {/* Story Editor */}
           <Card>
