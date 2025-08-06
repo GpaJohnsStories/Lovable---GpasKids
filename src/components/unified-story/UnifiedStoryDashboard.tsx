@@ -272,11 +272,11 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
-              <table className="w-full table-fixed border-collapse">
+              <table className="w-full table-fixed border-collapse" style={{ borderColor: '#9c441a' }}>
                 <tbody>
                   {/* Top Row - First 3 Voices */}
                   <tr>
-                    <td className="p-2 border text-center">
+                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a' }}>
                       <div className="text-xs font-bold mb-1">Nova</div>
                       <div className="text-xs text-gray-600 mb-2">Warm, friendly voice</div>
                       <div className="flex gap-1 justify-center">
@@ -297,7 +297,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                         </button>
                       </div>
                     </td>
-                    <td className="p-2 border text-center">
+                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a' }}>
                       <div className="text-xs font-bold mb-1">Alloy</div>
                       <div className="text-xs text-gray-600 mb-2">Clear, neutral voice</div>
                       <div className="flex gap-1 justify-center">
@@ -318,7 +318,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                         </button>
                       </div>
                     </td>
-                    <td className="p-2 border text-center">
+                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a' }}>
                       <div className="text-xs font-bold mb-1">Echo</div>
                       <div className="text-xs text-gray-600 mb-2">Deep, resonant voice</div>
                       <div className="flex gap-1 justify-center">
@@ -343,7 +343,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   
                   {/* Bottom Row - Next 3 Voices */}
                   <tr>
-                    <td className="p-2 border text-center">
+                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a' }}>
                       <div className="text-xs font-bold mb-1">Fable</div>
                       <div className="text-xs text-gray-600 mb-2">British accent, storytelling</div>
                       <div className="flex gap-1 justify-center">
@@ -364,7 +364,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                         </button>
                       </div>
                     </td>
-                    <td className="p-2 border text-center">
+                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a' }}>
                       <div className="text-xs font-bold mb-1">Onyx</div>
                       <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice</div>
                       <div className="flex gap-1 justify-center">
@@ -385,7 +385,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                         </button>
                       </div>
                     </td>
-                    <td className="p-2 border text-center">
+                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a' }}>
                       <div className="text-xs font-bold mb-1">Shimmer</div>
                       <div className="text-xs text-gray-600 mb-2">Soft, gentle voice</div>
                       <div className="flex gap-1 justify-center">
