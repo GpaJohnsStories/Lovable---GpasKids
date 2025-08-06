@@ -89,9 +89,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         </TabsList>
 
         <TabsContent value="content" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Story Details Card */}
-            <Card className="lg:col-span-1">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Story Details Card - Takes up 2/3 width */}
+            <Card className="lg:col-span-2">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5" />
@@ -107,89 +107,86 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardContent>
             </Card>
 
-            {/* Right Column - Publication Settings and Quick Actions */}
-            <div className="lg:col-span-1 space-y-6">
-              {/* Publication & Copyright Status Card */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Publication & Copyright</CardTitle>
+            {/* Compact Settings & Actions Column - Takes up 1/3 width */}
+            <div className="lg:col-span-1 space-y-4">
+              {/* Compact Publication & Copyright Card */}
+              <Card className="h-fit">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium">Settings</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    {/* Publication Status - 50% width */}
-                    <div className="space-y-2">
-                      <Label htmlFor="published" className="font-bold text-gray-700">Publication Status</Label>
-                      <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
-                        <SelectTrigger className={`w-[70%] font-bold ${getPublishedColor(formData.published)}`}>
-                          <SelectValue placeholder="Select publish status" />
-                        </SelectTrigger>
-                        <SelectContent className="z-50 bg-white border shadow-lg">
-                          <SelectItem value="N">Not Published</SelectItem>
-                          <SelectItem value="Y">Published</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    {/* Copyright Status - 50% width */}
-                    <div className="space-y-2">
-                      <CopyrightControl
-                        value={formData.copyright_status || '©'}
-                        onChange={(value) => onInputChange('copyright_status', value)}
-                      />
-                    </div>
+                <CardContent className="space-y-3">
+                  {/* Publication Status */}
+                  <div className="space-y-1">
+                    <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
+                    <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
+                      <SelectTrigger className={`w-full text-xs font-bold ${getPublishedColor(formData.published)}`}>
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent className="z-50 bg-white border shadow-lg">
+                        <SelectItem value="N">Not Published</SelectItem>
+                        <SelectItem value="Y">Published</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  {/* Copyright Status */}
+                  <div className="space-y-1">
+                    <CopyrightControl
+                      value={formData.copyright_status || '©'}
+                      onChange={(value) => onInputChange('copyright_status', value)}
+                    />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="google_drive_link" className="font-bold text-gray-700">Google Drive Link</Label>
+                  {/* Google Drive Link */}
+                  <div className="space-y-1">
+                    <Label htmlFor="google_drive_link" className="text-xs font-bold text-gray-700">Google Drive Link</Label>
                     <input
                       id="google_drive_link"
                       type="url"
                       value={formData.google_drive_link}
                       onChange={(e) => onInputChange('google_drive_link', e.target.value)}
                       placeholder="https://drive.google.com/..."
-                      className="w-full p-2 border border-gray-300 rounded-md"
+                      className="w-full p-2 text-xs border border-gray-300 rounded-md"
                     />
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Quick Actions Card */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Quick Actions</CardTitle>
+              {/* Compact Quick Actions Card */}
+              <Card className="h-fit">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium">Quick Actions</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex flex-col space-y-2">
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      onClick={onSaveOnly}
-                      disabled={isSaving}
-                      className="w-full"
-                    >
-                      <Save className="h-4 w-4 mr-2" />
-                      {isSaving ? 'Saving...' : 'Save Draft (Ctrl+S)'}
-                    </Button>
-                    
-                    <Button 
-                      type="submit" 
-                      disabled={isSaving || isGeneratingAudio} 
-                      className="w-full cozy-button"
-                    >
-                      <Save className="h-4 w-4 mr-2" />
-                      {isSaving ? 'Saving...' : 'Save & Return to List'}
-                    </Button>
-                    
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      onClick={onCancel}
-                      className="w-full"
-                    >
-                      <X className="h-4 w-4 mr-2" />
-                      Cancel
-                    </Button>
-                  </div>
+                <CardContent className="space-y-2">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={onSaveOnly}
+                    disabled={isSaving}
+                    className="w-full text-xs h-8"
+                  >
+                    <Save className="h-3 w-3 mr-1" />
+                    {isSaving ? 'Saving...' : 'Save Draft (Ctrl+S)'}
+                  </Button>
+                  
+                  <Button 
+                    type="submit" 
+                    disabled={isSaving || isGeneratingAudio} 
+                    className="w-full cozy-button text-xs h-8"
+                  >
+                    <Save className="h-3 w-3 mr-1" />
+                    {isSaving ? 'Saving...' : 'Save & Return to List'}
+                  </Button>
+                  
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={onCancel}
+                    className="w-full text-xs h-8"
+                  >
+                    <X className="h-3 w-3 mr-1" />
+                    Cancel
+                  </Button>
                 </CardContent>
               </Card>
             </div>
