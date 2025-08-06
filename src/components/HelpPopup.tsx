@@ -130,7 +130,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             </div>
           ) : (
             <ScrollArea className="h-full w-full rounded-md border border-orange-200 bg-white/50 p-4">
-              <div className="prose prose-orange max-w-none">
+              <div className="prose prose-orange max-w-none prose-headings:font-handwritten prose-p:font-handwritten prose-li:font-handwritten prose-h3:text-orange-800 prose-h3:text-xl prose-h3:font-bold prose-p:text-gray-800 prose-p:leading-relaxed prose-ul:list-disc prose-ol:list-decimal prose-li:text-gray-800">
                 {/* Check for photo 1 or cached icon for the upper left corner */}
                 {(storyData?.photo_link_1 || cachedIconUrl) && (
                   <div className="float-left mr-4 mb-2">
@@ -144,9 +144,9 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
                     />
                   </div>
                 )}
-                <StoryContentRenderer 
-                  content={helpContent}
-                  className="text-gray-800 leading-relaxed text-lg"
+                <div 
+                  className="font-handwritten text-gray-800 leading-relaxed [&>h3]:text-xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:text-orange-800 [&>h3]:font-handwritten [&>p]:text-base [&>p]:mb-3 [&>p]:font-handwritten [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>strong]:font-handwritten [&>em]:font-handwritten" 
+                  dangerouslySetInnerHTML={{ __html: helpContent }}
                 />
               </div>
             </ScrollArea>
