@@ -53,12 +53,16 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
     }
     
     if (result.found && result.story) {
-      // Story found - show dialog
+      // Story found - show dialog for existing story
       setFoundStory(result.story);
       setCurrentCode(storyCode);
       setDialogOpen(true);
+    } else {
+      // Story not found - show dialog for new content
+      setFoundStory(null);
+      setCurrentCode(storyCode);
+      setDialogOpen(true);
     }
-    // If not found, do nothing (user can continue with new story)
   };
 
   const handleEditExisting = () => {
@@ -70,6 +74,22 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
   };
 
   const handleCreateNew = () => {
+    // For "Create Story" - just continue with current code and close dialog
+    setDialogOpen(false);
+    setFoundStory(null);
+  };
+
+  const handleCreateWebtext = () => {
+    // For "Create Webtext" - set category to WebText and continue
+    if (onChange) {
+      // Keep the current code but indicate this should be webtext
+      // The parent component should handle setting category to "WebText"
+    }
+    setDialogOpen(false);
+    setFoundStory(null);
+  };
+
+  const handleClearCode = () => {
     // Clear the story code to let user enter a different one
     if (onChange) {
       onChange('');
@@ -112,9 +132,11 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
           open={dialogOpen}
           onOpenChange={setDialogOpen}
           storyCode={currentCode}
-          storyTitle={foundStory?.title || ''}
+          storyTitle={foundStory?.title}
+          mode={foundStory ? 'found' : 'not-found'}
           onEditExisting={handleEditExisting}
-          onCreateNew={handleCreateNew}
+          onCreateNew={foundStory ? handleClearCode : handleCreateNew}
+          onCreateWebtext={!foundStory ? handleCreateWebtext : undefined}
         />
       </>
     );
@@ -146,9 +168,11 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         storyCode={currentCode}
-        storyTitle={foundStory?.title || ''}
+        storyTitle={foundStory?.title}
+        mode={foundStory ? 'found' : 'not-found'}
         onEditExisting={handleEditExisting}
-        onCreateNew={handleCreateNew}
+        onCreateNew={foundStory ? handleClearCode : handleCreateNew}
+        onCreateWebtext={!foundStory ? handleCreateWebtext : undefined}
       />
     </>
   );
