@@ -83,8 +83,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <div className="space-y-6">
+        {/* Two Column Layout */}
         <div className="flex gap-6">
-          {/* Story Details Card - 45% width */}
+          {/* Left Column - Story Details - 45% width */}
           <div className="w-[45%] space-y-4">
             <Card>
               <CardHeader>
@@ -152,7 +153,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 />
               </CardContent>
             </Card>
+          </div>
 
+          {/* Right Column - Voice & Media - 55% width */}
+          <div className="w-[55%] space-y-4">
             {/* Voice Previews Section */}
             <Card>
               <CardHeader className="pb-3">
@@ -267,115 +271,112 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardContent>
             </Card>
 
-            {/* AI Voice & Audio Generation Section */}
-            <div className="grid grid-cols-1 gap-4">
-              {/* Audio Controls - Always visible now */}
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-sm">
-                    <Volume2 className="h-4 w-4" />
-                    Audio Controls
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <StackedAudioControls
-                    audioUrl={formData.audio_url}
-                    title={formData.title || 'Story Audio'}
-                    content={formData.content}
-                    author={formData.author}
-                    allowTextToSpeech={true}
-                    context={context}
-                    aiVoiceName={formData.ai_voice_name || 'Nova'}
-                    className="w-full"
-                  />
-                </CardContent>
-              </Card>
-
-              {/* Audio Upload */}
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-sm">
-                    <Volume2 className="h-4 w-4" />
-                    Audio Upload
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <AudioUploadSection
-                    audioUrl={formData.audio_url}
-                    onAudioUpload={(url) => onInputChange('audio_url', url)}
-                    onAudioRemove={() => onInputChange('audio_url', '')}
-                  />
-                </CardContent>
-              </Card>
-
-              {/* Video Section */}
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-sm">
-                    <Volume2 className="h-4 w-4" />
-                    Story Video
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <StoryVideoUpload
-                    videoUrl={formData.video_url}
-                    onVideoUpload={onVideoUpload}
-                    onVideoRemove={onVideoRemove}
-                  />
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          {/* Story Content Editor - 55% width */}
-          <Card className="w-[55%]">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  Story Content
+            {/* Audio Controls */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-sm">
+                  <Volume2 className="h-4 w-4" />
+                  Audio Controls
                 </CardTitle>
-                <div className="flex gap-2">
-                  {onSaveOnly && (
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      size="sm"
-                      onClick={onSaveOnly}
-                    >
-                      <Save className="h-4 w-4 mr-1" />
-                      Save Draft
-                    </Button>
-                  )}
-                  <Button type="submit" size="sm">
-                    <Save className="h-4 w-4 mr-1" />
-                    {context === 'edit' ? 'Update Story' : 'Submit Story'}
-                  </Button>
-                  {onCancel && (
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      size="sm"
-                      onClick={onCancel}
-                    >
-                      <X className="h-4 w-4 mr-1" />
-                      Cancel
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <SplitViewEditor
-                content={formData.content}
-                onChange={(content) => onInputChange('content', content)}
-                placeholder="Write your story here..."
-                onSave={onSaveOnly}
-                category={formData.category}
-              />
-            </CardContent>
-          </Card>
+              </CardHeader>
+              <CardContent>
+                <StackedAudioControls
+                  audioUrl={formData.audio_url}
+                  title={formData.title || 'Story Audio'}
+                  content={formData.content}
+                  author={formData.author}
+                  allowTextToSpeech={true}
+                  context={context}
+                  aiVoiceName={formData.ai_voice_name || 'Nova'}
+                  className="w-full"
+                />
+              </CardContent>
+            </Card>
+
+            {/* Audio Upload */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-sm">
+                  <Volume2 className="h-4 w-4" />
+                  Audio Upload
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <AudioUploadSection
+                  audioUrl={formData.audio_url}
+                  onAudioUpload={(url) => onInputChange('audio_url', url)}
+                  onAudioRemove={() => onInputChange('audio_url', '')}
+                />
+              </CardContent>
+            </Card>
+
+            {/* Video Section */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-sm">
+                  <Volume2 className="h-4 w-4" />
+                  Story Video
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <StoryVideoUpload
+                  videoUrl={formData.video_url}
+                  onVideoUpload={onVideoUpload}
+                  onVideoRemove={onVideoRemove}
+                />
+              </CardContent>
+            </Card>
+          </div>
         </div>
+
+        {/* Full Width Story Content Editor Below Both Columns */}
+        <Card className="w-full">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                Story Content
+              </CardTitle>
+              <div className="flex gap-2">
+                {onSaveOnly && (
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm"
+                    onClick={onSaveOnly}
+                  >
+                    <Save className="h-4 w-4 mr-1" />
+                    Save Draft
+                  </Button>
+                )}
+                <Button type="submit" size="sm">
+                  <Save className="h-4 w-4 mr-1" />
+                  {context === 'edit' ? 'Update Story' : 'Submit Story'}
+                </Button>
+                {onCancel && (
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm"
+                    onClick={onCancel}
+                  >
+                    <X className="h-4 w-4 mr-1" />
+                    Cancel
+                  </Button>
+                )}
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <SplitViewEditor
+              content={formData.content}
+              onChange={(content) => onInputChange('content', content)}
+              placeholder="Write your story here..."
+              onSave={onSaveOnly}
+              category={formData.category}
+            />
+          </CardContent>
+        </Card>
       </div>
     </form>
   );
