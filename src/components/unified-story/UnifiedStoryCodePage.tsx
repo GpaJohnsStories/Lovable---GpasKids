@@ -8,6 +8,7 @@ import { UniversalAudioControls } from '@/components/UniversalAudioControls';
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useAdminSession } from '@/hooks/useAdminSession';
+import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 
 const UnifiedStoryCodePage: React.FC = () => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const UnifiedStoryCodePage: React.FC = () => {
   } = useStoryFormState(currentStoryId);
 
   const { handleStoryFormSave } = useAdminSession();
+  const { lookupStoryByCode } = useStoryCodeLookup();
   
   const { handleSaveOnly, handleSubmit, isSaving } = useStoryFormActions(
     currentStoryId,
@@ -41,14 +43,22 @@ const UnifiedStoryCodePage: React.FC = () => {
     handleStoryFormSave
   );
 
-  // Pre-fill story code on load if provided in URL
+  // Pre-fill story code and auto-trigger lookup if provided in URL
   React.useEffect(() => {
     if (codeParam && codeParam !== storyCode) {
       setStoryCode(codeParam);
-      // Auto-trigger lookup for the provided code
-      handleStoryCodeChange(codeParam);
+      // Automatically trigger story lookup and bypass code entry form
+      const performAutoLookup = async () => {
+        const story = await lookupStoryByCode(codeParam, true); // Silent mode
+        if (story) {
+          handleStoryFound(story);
+        } else {
+          handleConfirmNew();
+        }
+      };
+      performAutoLookup();
     }
-  }, [codeParam]);
+  }, [codeParam, storyCode, lookupStoryByCode]);
 
   const handleStoryCodeChange = async (code: string) => {
     setStoryCode(code);
