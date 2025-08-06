@@ -461,7 +461,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
 
           {/* Story Video - Added to Content tab */}
-          <Card className="h-fit">
+          <Card className="h-fit border-2" style={{ borderColor: '#9333ea' }}>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-sm">
                 <Video className="h-4 w-4" />
