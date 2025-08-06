@@ -383,11 +383,11 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
       
       // Fetch webtext content
       const webtextData = await lookupStoryByCode(webtextCode, true);
-      setWebtext(webtextData);
+      setWebtext(webtextData.story);
       
       // Set icon URL from the webtext story photos
-      if (webtextData) {
-        const photos = getStoryPhotos(webtextData);
+      if (webtextData.story) {
+        const photos = getStoryPhotos(webtextData.story);
         if (photos.length > 0 && photos[0].url) {
           setIconUrl(photos[0].url);
         } else {
