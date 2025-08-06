@@ -15,7 +15,12 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
   return (
     <div className={`relative ${className}`} style={{ zIndex: 5 }}>
       <button
-        onClick={onClick}
+        onClick={(e) => {
+          console.log('🎵 AudioButton clicked! Code:', code);
+          e.preventDefault();
+          e.stopPropagation();
+          onClick();
+        }}
         className="relative rounded-full focus:outline-none group"
         style={{
           width: '60px',
