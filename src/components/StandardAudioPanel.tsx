@@ -315,7 +315,7 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
         style={{
           position: 'fixed',
           inset: '0',
-          zIndex: 50,
+          zIndex: 9999, // Higher than dialog z-index
           backgroundColor: 'transparent',
           display: 'flex',
           alignItems: 'center',
