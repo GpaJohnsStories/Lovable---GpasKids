@@ -132,13 +132,13 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   {/* File Input Row */}
                   <tr>
                     <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input type="file" accept="image/*" className="w-full text-xs" />
+                      <input type="file" accept="image/*" className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
                     </td>
                     <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input type="file" accept="image/*" className="w-full text-xs" />
+                      <input type="file" accept="image/*" className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
                     </td>
                     <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input type="file" accept="image/*" className="w-full text-xs" />
+                      <input type="file" accept="image/*" className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
                     </td>
                   </tr>
                   
