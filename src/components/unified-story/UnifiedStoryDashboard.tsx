@@ -109,15 +109,20 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
 
             {/* Settings & Actions Column - Uses remaining space */}
             <div className="flex-1 space-y-4">
-              {/* Settings Card with side-by-side Publication and Copyright */}
+              {/* Settings Card with side-by-side Copyright and Publication */}
               <Card className="h-fit">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium">Settings</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {/* Publication Status and Copyright Status side-by-side */}
+                <CardContent className="space-y-3 pt-6">
+                  {/* Copyright Status and Publication Status side-by-side (switched positions) */}
                   <div className="flex gap-3">
-                    {/* Publication Status */}
+                    {/* Copyright Status - Now on left */}
+                    <div className="space-y-1 flex-1">
+                      <CopyrightControl
+                        value={formData.copyright_status || '©'}
+                        onChange={(value) => onInputChange('copyright_status', value)}
+                      />
+                    </div>
+                    
+                    {/* Publication Status - Now on right */}
                     <div className="space-y-1 flex-1">
                       <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
                       <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
@@ -129,14 +134,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                           <SelectItem value="Y">Published</SelectItem>
                         </SelectContent>
                       </Select>
-                    </div>
-                    
-                    {/* Copyright Status */}
-                    <div className="space-y-1 flex-1">
-                      <CopyrightControl
-                        value={formData.copyright_status || '©'}
-                        onChange={(value) => onInputChange('copyright_status', value)}
-                      />
                     </div>
                   </div>
 
