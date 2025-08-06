@@ -80,9 +80,9 @@ const HowTo = () => {
             <div className="flex flex-wrap justify-center gap-1.5">
               <button 
                 onClick={() => document.getElementById('SYS-G1A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-8 px-1 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-bold transition-colors flex items-center justify-center text-center leading-none break-words"
+                className="w-20 h-8 px-1 py-1 bg-green-600/20 hover:bg-green-600/30 text-green-800 border border-green-600 rounded text-xs font-bold transition-colors flex items-center justify-center text-center leading-none break-words"
               >
-                Getting Started
+                Start Here
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G2A')?.scrollIntoView({ behavior: 'smooth' })}
