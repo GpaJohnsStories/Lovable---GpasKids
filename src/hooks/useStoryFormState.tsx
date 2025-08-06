@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useStoryData } from '@/hooks/useStoryData';
 import { supabase } from "@/integrations/supabase/client";
 
@@ -53,6 +53,16 @@ export const useStoryFormState = (storyId?: string) => {
   const [formData, setFormData] = useState<Story>(initialFormData);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const { story, isLoading: isLoadingStory, refetch: refetchStory } = useStoryData(storyId);
+
+  const populateFormWithStory = useCallback((storyData: Story) => {
+    console.log('🎯 useStoryFormState: Populating form with story data:', storyData);
+    setFormData({
+      ...storyData,
+      ai_voice_name: storyData.ai_voice_name || 'Nova',
+      ai_voice_model: storyData.ai_voice_model || 'tts-1',
+      copyright_status: storyData.copyright_status || '©'
+    });
+  }, []);
 
   console.log('🎯 useStoryFormState: Hook called with storyId:', storyId);
   console.log('🎯 useStoryFormState: Story data:', story);
@@ -151,6 +161,7 @@ export const useStoryFormState = (storyId?: string) => {
     isLoadingStory,
     isGeneratingAudio,
     refetchStory,
+    populateFormWithStory,
     handleInputChange,
     handlePhotoUpload,
     handlePhotoRemove,

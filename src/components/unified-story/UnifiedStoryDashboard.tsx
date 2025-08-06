@@ -28,6 +28,7 @@ interface UnifiedStoryDashboardProps {
   onSaveOnly: () => void;
   allowTextToSpeech?: boolean;
   context?: string;
+  onStoryFound?: (story: Story) => void;
 }
 
 const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
@@ -45,7 +46,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   onCancel,
   onSaveOnly,
   allowTextToSpeech = false,
-  context = "unified-story-system"
+  context = "unified-story-system",
+  onStoryFound
 }) => {
   const getPublishedColor = (publishedStatus: string) => {
     switch (publishedStatus) {
@@ -77,11 +79,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <StoryCodeField
-                value={formData.story_code}
-                onChange={(value) => onInputChange('story_code', value)}
-                compact={true}
-              />
+            <StoryCodeField
+              value={formData.story_code}
+              onChange={(value) => onInputChange('story_code', value)}
+              onStoryFound={onStoryFound}
+              compact={true}
+            />
               <StoryFormFields
                 formData={formData} 
                 onInputChange={onInputChange}

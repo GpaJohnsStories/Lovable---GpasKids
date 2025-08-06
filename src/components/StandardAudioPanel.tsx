@@ -54,15 +54,15 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
       
       try {
         // First check if it's a story code
-        const storyData = await lookupStoryByCode(code, true);
-        if (storyData) {
-          console.log('📖 Found story data:', storyData);
+        const storyResult = await lookupStoryByCode(code, true);
+        if (storyResult.found && storyResult.story) {
+          console.log('📖 Found story data:', storyResult.story);
           setFetchedData({
             type: 'story',
-            title: storyData.title,
-            author: storyData.author,
-            narrator: storyData.ai_voice_name || "Grandpa John",
-            audioUrl: storyData.audio_url
+            title: storyResult.story.title,
+            author: storyResult.story.author,
+            narrator: storyResult.story.ai_voice_name || "Grandpa John",
+            audioUrl: storyResult.story.audio_url
           });
         } else {
           console.log('❌ No data found for code:', code);

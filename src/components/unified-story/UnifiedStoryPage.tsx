@@ -25,6 +25,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
     isLoadingStory,
     isGeneratingAudio,
     refetchStory,
+    populateFormWithStory,
     handleInputChange,
     handlePhotoUpload,
     handlePhotoRemove,
@@ -101,6 +102,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           onSaveOnly={onSaveOnly}
           allowTextToSpeech={true}
           context="unified-story-system"
+          onStoryFound={populateFormWithStory}
         />
       </div>
       
