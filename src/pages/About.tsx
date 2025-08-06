@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -7,9 +7,12 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { UniversalAudioControls } from "@/components/UniversalAudioControls";
 import { DeployedContent } from "@/components/DeployedContent";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
+import { AudioButton } from "@/components/AudioButton";
+import { StandardAudioPanel } from "@/components/StandardAudioPanel";
 
 const About = () => {
   const { iconUrl: ab5IconUrl } = useCachedIcon('ICZ-AB5.png');
+  const [audioPanel, setAudioPanel] = useState<{isOpen: boolean, code?: string}>({isOpen: false});
 
   return (
     <TooltipProvider>
@@ -18,18 +21,16 @@ const About = () => {
         
         <main className="container mx-auto px-4 pt-8 pb-12">
           <div className="max-w-6xl mx-auto border-4 border-blue-500 rounded-lg p-6 relative" style={{backgroundColor: '#ADD8E6'}}>
-            {/* Title and Audio Controls on same line */}
+            {/* Title on left, Audio Button on right */}
             <div className="flex items-center justify-between mb-6">
-              {/* Audio controls for this section */}
-              <div className="flex-shrink-0">
-                <DeployedContent 
-                  storyCode="SYS-AGJ"
-                  audioOnly={true}
-                />
-              </div>
               <h1 className="text-4xl font-bold text-amber-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 About Grandpa John
               </h1>
+              <AudioButton 
+                code="SYS-AGJ"
+                onClick={() => setAudioPanel({isOpen: true, code: 'SYS-AGJ'})}
+                className="flex-shrink-0"
+              />
             </div>
             
             <DeployedContent 
@@ -115,18 +116,16 @@ const About = () => {
 
           {/* About Buddy Section */}
           <div id="buddy" className="max-w-6xl mx-auto border-4 border-yellow-400 rounded-lg p-6 mt-8 bg-[hsl(var(--grass-green))] relative">
-            {/* Title and Audio Controls on same line */}
+            {/* Title on left, Audio Button on right */}
             <div className="flex items-center justify-between mb-6">
-              {/* Audio controls for this section */}
-              <div className="flex-shrink-0">
-                <DeployedContent 
-                  storyCode="SYS-BDY"
-                  audioOnly={true}
-                />
-              </div>
               <h1 className="text-4xl font-bold text-amber-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
                 About Buddy
               </h1>
+              <AudioButton 
+                code="SYS-BDY"
+                onClick={() => setAudioPanel({isOpen: true, code: 'SYS-BDY'})}
+                className="flex-shrink-0"
+              />
             </div>
             
             <DeployedContent 
@@ -203,9 +202,17 @@ const About = () => {
 
           {/* Special Thanks Section - Light Purple with Gold Border */}
           <div id="special-thank-you" className="max-w-6xl mx-auto border-4 border-yellow-500 rounded-lg p-6 mt-8 bg-purple-100 relative">
-            <h1 className="text-4xl font-bold text-purple-800 mb-6 text-center" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-              A Special "Thank You" to ...
-            </h1>
+            {/* Title on left, Audio Button on right */}
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-4xl font-bold text-purple-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+                A Special "Thank You" to ...
+              </h1>
+              <AudioButton 
+                code="SYS-THY"
+                onClick={() => setAudioPanel({isOpen: true, code: 'SYS-THY'})}
+                className="flex-shrink-0"
+              />
+            </div>
             
             {/* Responsive layout: stacked on mobile, side-by-side on larger screens */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -333,6 +340,13 @@ const About = () => {
         
         <CookieFreeFooter />
         <ScrollToTop />
+        
+        {/* Audio Panel */}
+        <StandardAudioPanel
+          isOpen={audioPanel.isOpen}
+          onClose={() => setAudioPanel({isOpen: false})}
+          code={audioPanel.code}
+        />
       </div>
     </TooltipProvider>
   );
