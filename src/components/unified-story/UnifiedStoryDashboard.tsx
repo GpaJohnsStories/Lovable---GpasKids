@@ -160,10 +160,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <Button 
                       type="submit" 
                       disabled={isSaving || isGeneratingAudio} 
-                      className="flex-1 text-xs h-8"
-                      style={{ backgroundColor: '#16a34a', borderColor: '#16a34a', color: 'white' }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#15803d'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#16a34a'}
+                      className="flex-1 text-xs h-8 text-white bg-green-600 border-green-700 hover:bg-green-700"
                     >
                       <Save className="h-3 w-3 mr-1" />
                       {isSaving ? 'Saving...' : 'Save'}
@@ -172,10 +169,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <Button 
                       type="button" 
                       onClick={onCancel}
-                      className="flex-1 text-xs h-8"
-                      style={{ backgroundColor: '#dc2626', borderColor: '#dc2626', color: 'white' }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#b91c1c'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#dc2626'}
+                      className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700"
                     >
                       <X className="h-3 w-3 mr-1" />
                       Cancel
