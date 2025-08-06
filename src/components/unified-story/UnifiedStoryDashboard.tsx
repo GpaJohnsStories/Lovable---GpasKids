@@ -75,7 +75,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
           text: textToSpeak,
-          voice: voiceId.toLowerCase()
+          voice: voiceId.toLowerCase(),
+          speed: 0.5  // 50% speed for testing
         }
       });
 
