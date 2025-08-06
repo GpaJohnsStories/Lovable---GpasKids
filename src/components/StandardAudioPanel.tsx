@@ -327,6 +327,10 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
         {/* Modal Content */}
         <div
           onMouseDown={handleMouseDown}
+          onClick={(e) => {
+            console.log('🎵 Panel content clicked');
+            e.stopPropagation(); // Prevent backdrop click from closing panel
+          }}
           style={{
             position: 'absolute',
             left: `${position.x}px`,
@@ -343,7 +347,6 @@ export const StandardAudioPanel: React.FC<StandardAudioPanelProps> = ({
             cursor: isDragging ? 'grabbing' : 'grab',
             userSelect: 'none'
           }}
-          onClick={(e) => e.stopPropagation()}
           role="dialog"
           aria-modal="true"
           aria-labelledby="audio-panel-title"
