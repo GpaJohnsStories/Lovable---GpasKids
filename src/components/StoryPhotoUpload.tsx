@@ -9,12 +9,12 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 interface StoryPhotoUploadProps {
-  photoUrls?: {
+  photoUrls: {
     photo_link_1: string;
     photo_link_2: string;
     photo_link_3: string;
   };
-  photoAlts?: {
+  photoAlts: {
     photo_alt_1: string;
     photo_alt_2: string;
     photo_alt_3: string;
@@ -25,16 +25,8 @@ interface StoryPhotoUploadProps {
 }
 
 const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
-  photoUrls = {
-    photo_link_1: '',
-    photo_link_2: '',
-    photo_link_3: ''
-  },
-  photoAlts = {
-    photo_alt_1: '',
-    photo_alt_2: '',
-    photo_alt_3: ''
-  },
+  photoUrls,
+  photoAlts,
   onPhotoUpload,
   onPhotoRemove,
   onAltTextChange
@@ -143,8 +135,8 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
   };
 
   const renderPhotoSection = (photoNumber: 1 | 2 | 3) => {
-    const photoUrl = photoUrls?.[`photo_link_${photoNumber}` as keyof typeof photoUrls] || '';
-    const photoAlt = photoAlts?.[`photo_alt_${photoNumber}` as keyof typeof photoAlts] || '';
+    const photoUrl = photoUrls[`photo_link_${photoNumber}` as keyof typeof photoUrls];
+    const photoAlt = photoAlts[`photo_alt_${photoNumber}` as keyof typeof photoAlts];
     const isUploading = uploading[photoNumber];
 
     return (
@@ -192,9 +184,12 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
                </div>
             </div>
           ) : (
-             <div className="space-y-3">
-               <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                 <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+            <div className="space-y-3">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                <p className="text-sm text-gray-600 mb-3">
+                  Upload an image (will be automatically resized to prevent cropping)
+                </p>
                 
                 <div className="space-y-3">
                   <div>

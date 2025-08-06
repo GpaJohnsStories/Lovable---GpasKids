@@ -81,19 +81,9 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
         </h1>
         
         <UnifiedStoryDashboard
-          formData={{
-            ...formData,
-            subcategory: '',
-            age_group: '',
-            reading_time: 0,
-            story_status: 'draft',
-            approval_status: 'pending',
-            copyright_status: formData.copyright_status || '',
-            photo_one_url: formData.photo_link_1,
-            photo_two_url: formData.photo_link_2,
-            photo_three_url: formData.photo_link_3,
-            video_url: formData.video_url || ''
-          }}
+          formData={formData}
+          isSaving={isSaving}
+          isGeneratingAudio={isGeneratingAudio}
           onInputChange={handleInputChange}
           onPhotoUpload={handlePhotoUpload}
           onPhotoRemove={handlePhotoRemove}
@@ -104,7 +94,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           onSubmit={onSubmit}
           onCancel={handleCancel}
           onSaveOnly={onSaveOnly}
-          isGeneratingAudio={isGeneratingAudio}
+          allowTextToSpeech={true}
           context="unified-story-system"
         />
       </div>
