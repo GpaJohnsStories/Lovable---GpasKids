@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { getStoryPhotos } from '@/utils/storyUtils';
 import { AudioButton } from '@/components/AudioButton';
-import { UniversalAudioControls } from '@/components/UniversalAudioControls';
+
 import { SuperAudio } from '@/components/SuperAudio';
 import { ArrowRight } from 'lucide-react';
 
@@ -27,7 +27,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [loading, setLoading] = useState(true);
   
   // Audio controls state for peppermint button
-  const [showAudioControls, setShowAudioControls] = useState(false);
   const [showSuperAudio, setShowSuperAudio] = useState(false);
 
   const getContent = () => {
@@ -174,7 +173,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           
           {/* Right: Peppermint Audio Button */}
           <div className="flex-shrink-0">
-            <AudioButton code={webtextCode} onClick={() => setShowAudioControls(!showAudioControls)} />
+            <AudioButton code={webtextCode} onClick={() => setShowSuperAudio(true)} />
           </div>
         </div>
 
@@ -186,19 +185,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           />
         </div>
 
-        {/* Audio Controls - Show when activated */}
-        {showAudioControls && (
-          <div className="mb-4 p-3 bg-amber-50 border border-amber-300 rounded-lg">
-            <UniversalAudioControls
-              content={getContent()}
-              title={webtext?.title || title}
-              allowTextToSpeech={true}
-              size="sm"
-              className="w-full"
-            />
-          </div>
-        )}
-
         {/* Bottom Right: Webtext Code */}
         <div className="flex justify-end">
           <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
@@ -206,6 +192,19 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           </div>
         </div>
       </div>
+
+      {/* SuperAudio Floating Popup */}
+      <SuperAudio
+        isOpen={showSuperAudio}
+        onClose={() => setShowSuperAudio(false)}
+        content={getContent()}
+        title={webtext?.title || title}
+        author={webtext?.author}
+        voiceName={webtext?.ai_voice_name}
+        showAuthor={false}
+        audioUrl={webtext?.audio_url}
+        audioDuration={webtext?.audio_duration_seconds}
+      />
     </>
   );
 };
