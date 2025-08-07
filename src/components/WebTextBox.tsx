@@ -3,6 +3,7 @@ import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { getStoryPhotos } from '@/utils/storyUtils';
 import { AudioButton } from '@/components/AudioButton';
 import { UniversalAudioControls } from '@/components/UniversalAudioControls';
+import { SuperAudio } from '@/components/SuperAudio';
 import { ArrowRight } from 'lucide-react';
 
 interface WebTextBoxProps {
@@ -27,6 +28,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   
   // Audio controls state for peppermint button
   const [showAudioControls, setShowAudioControls] = useState(false);
+  const [showSuperAudio, setShowSuperAudio] = useState(false);
 
   const getContent = () => {
     if (loading) return "Loading...";
@@ -75,7 +77,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               Click to listen
             </div>
             <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
-            <AudioButton code="SYS-WEL" onClick={() => setShowAudioControls(!showAudioControls)} />
+            <AudioButton code="SYS-WEL" onClick={() => setShowSuperAudio(true)} />
           </div>
 
           {/* Top section with photo and title */}
@@ -125,18 +127,14 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             </div>
           </div>
           
-          {/* Audio Controls - Show when activated */}
-          {showAudioControls && (
-            <div className="mt-4 p-3 bg-blue-50 border border-blue-300 rounded-lg">
-              <UniversalAudioControls
-                content={getContent()}
-                title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
-                allowTextToSpeech={true}
-                size="sm"
-                className="w-full"
-              />
-            </div>
-          )}
+          {/* SuperAudio Floating Popup */}
+          <SuperAudio
+            isOpen={showSuperAudio}
+            onClose={() => setShowSuperAudio(false)}
+            content={getContent()}
+            title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
+            allowTextToSpeech={true}
+          />
         </div>
       </>
     );
