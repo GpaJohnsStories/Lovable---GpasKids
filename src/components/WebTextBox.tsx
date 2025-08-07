@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { getStoryPhotos } from '@/utils/storyUtils';
 import { AudioButton } from '@/components/AudioButton';
-import { UniversalAudioControls } from '@/components/UniversalAudioControls';
+import { StackedAudioControls } from '@/components/unified-story/StackedAudioControls';
 import { ArrowRight } from 'lucide-react';
 
 interface WebTextBoxProps {
@@ -128,12 +128,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           {/* Audio Controls - Show when activated */}
           {showAudioControls && (
             <div className="mt-4 p-3 bg-blue-50 border border-blue-300 rounded-lg">
-              <UniversalAudioControls
+              <StackedAudioControls
                 content={getContent()}
                 title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
                 allowTextToSpeech={true}
-                size="sm"
-                className="w-full"
               />
             </div>
           )}
@@ -187,12 +185,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         {/* Audio Controls - Show when activated */}
         {showAudioControls && (
           <div className="mb-4 p-3 bg-amber-50 border border-amber-300 rounded-lg">
-            <UniversalAudioControls
+            <StackedAudioControls
               content={getContent()}
               title={webtext?.title || title}
               allowTextToSpeech={true}
-              size="sm"
-              className="w-full"
             />
           </div>
         )}
