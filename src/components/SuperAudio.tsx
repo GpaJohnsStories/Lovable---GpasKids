@@ -8,6 +8,7 @@ interface SuperAudioProps {
   content: string;
   title: string;
   author?: string;
+  voiceName?: string;
 }
 
 export const SuperAudio: React.FC<SuperAudioProps> = ({
@@ -15,7 +16,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   onClose,
   content,
   title,
-  author
+  author,
+  voiceName
 }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -84,6 +86,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               <h3 className="text-xl font-bold text-gray-800">{title}</h3>
               {author && (
                 <p className="text-sm text-gray-600 mt-1">by {author}</p>
+              )}
+              {voiceName && (
+                <p className="text-xs text-gray-500 mt-1">Being read by {voiceName} from OpenAI</p>
               )}
             </div>
             {/* Content will go here when ready */}
