@@ -31,7 +31,7 @@ import AdminReference from "./pages/AdminReference";
 import AdminSiteMap from "./pages/AdminSiteMap";
 
 // Admin components
-import AdminLayout from "./components/admin/AdminLayout";
+import SecureAdminRoute from "./components/admin/SecureAdminRoute";
 import AdminOverview from "./components/admin/AdminOverview";
 import AdminStories from "./components/admin/AdminStories";
 import CommentsDashboard from "./components/admin/CommentsDashboard";
@@ -101,20 +101,20 @@ function App() {
                       <Route path="/author/:id" element={<AuthorBio />} />
 
                       {/* Admin Routes */}
-                      <Route path="/buddys_admin" element={<AdminLayout><AdminOverview /></AdminLayout>} />
-                      <Route path="/buddys_admin/stories" element={<AdminLayout><AdminStories /></AdminLayout>} />
-                      <Route path="/buddys_admin/comments" element={<AdminLayout><CommentsDashboard /></AdminLayout>} />
-                      <Route path="/buddys_admin/security" element={<AdminLayout><SecurityAuditDashboard /></AdminLayout>} />
-                      <Route path="/buddys_admin/author-bios" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
-                      <Route path="/buddys_admin/author-bios/add" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
-                      <Route path="/buddys_admin/author-bios/edit/:id" element={<AdminLayout><AuthorBioManagement /></AdminLayout>} />
+                      <Route path="/buddys_admin" element={<SecureAdminRoute><AdminOverview /></SecureAdminRoute>} />
+                      <Route path="/buddys_admin/stories" element={<SecureAdminRoute><AdminStories /></SecureAdminRoute>} />
+                      <Route path="/buddys_admin/comments" element={<SecureAdminRoute><CommentsDashboard /></SecureAdminRoute>} />
+                      <Route path="/buddys_admin/security" element={<SecureAdminRoute><SecurityAuditDashboard /></SecureAdminRoute>} />
+                      <Route path="/buddys_admin/author-bios" element={<SecureAdminRoute><AuthorBioManagement /></SecureAdminRoute>} />
+                      <Route path="/buddys_admin/author-bios/add" element={<SecureAdminRoute><AuthorBioManagement /></SecureAdminRoute>} />
+                      <Route path="/buddys_admin/author-bios/edit/:id" element={<SecureAdminRoute><AuthorBioManagement /></SecureAdminRoute>} />
                       
                       <Route path="/buddys_admin/reference" element={<AdminReference />} />
                       <Route path="/buddys_admin/sitemap" element={<AdminSiteMap />} />
 
                       {/* Unified Story System Routes - These are the only story management routes now */}
-                      <Route path="/buddys_admin/unified_story_system/add" element={<AdminLayout><UnifiedStoryPage mode="add" /></AdminLayout>} />
-                      <Route path="/buddys_admin/unified_story_system/update/:id" element={<AdminLayout><ErrorBoundary><UnifiedStoryPage mode="update" /></ErrorBoundary></AdminLayout>} />
+                      <Route path="/buddys_admin/unified_story_system/add" element={<SecureAdminRoute><UnifiedStoryPage mode="add" /></SecureAdminRoute>} />
+                      <Route path="/buddys_admin/unified_story_system/update/:id" element={<SecureAdminRoute><ErrorBoundary><UnifiedStoryPage mode="update" /></ErrorBoundary></SecureAdminRoute>} />
 
                       {/* Catch-all route */}
                       <Route path="*" element={<NotFound />} />
