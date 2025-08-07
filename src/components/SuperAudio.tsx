@@ -165,8 +165,11 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     <div className="w-full h-2 bg-gray-300/50 rounded-full relative overflow-hidden">
                       {/* Progress fill */}
                       <div 
-                        className="h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full transition-all duration-300"
-                        style={{ width: '35%' }}
+                        className="h-full rounded-full transition-all duration-300"
+                        style={{ 
+                          width: '35%',
+                          background: 'linear-gradient(to right, #4ade80, #22c55e)'
+                        }}
                       ></div>
                       {/* Progress handle */}
                       <div 
