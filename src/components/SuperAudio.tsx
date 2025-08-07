@@ -77,9 +77,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
         {/* Close button - Top Right Corner */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
+          className="absolute top-4 right-4 z-10 px-3 py-1 hover:bg-white/30 rounded-lg transition-colors font-bold text-sm"
+          style={{ backgroundColor: '#3b82f6', color: 'white' }}
         >
-          <X className="h-6 w-6 text-gray-600" />
+          Close
         </button>
 
         {/* Content Area - Full popup */}
