@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { X, Play, Pause, RotateCcw, Square } from 'lucide-react';
+import { Play, Pause, RotateCcw, Square } from 'lucide-react';
 
 interface SuperAudioProps {
   isOpen: boolean;
   onClose: () => void;
-  content: string;
   title: string;
   author?: string;
   voiceName?: string;
@@ -17,7 +16,6 @@ interface SuperAudioProps {
 export const SuperAudio: React.FC<SuperAudioProps> = ({
   isOpen,
   onClose,
-  content,
   title,
   author,
   voiceName,

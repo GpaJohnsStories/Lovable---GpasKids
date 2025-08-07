@@ -19,6 +19,8 @@ const About = () => {
     title: string;
     author: string;
     audioUrl?: string;
+    ai_voice_name?: string;
+    audio_duration?: number;
   } | null>(null);
   const [sectionTitles, setSectionTitles] = useState<{[key: string]: string}>({
     'SYS-AGJ': 'About Grandpa John',
@@ -65,7 +67,9 @@ const About = () => {
         content: story.content || `Content for ${storyCode}`,
         title: story.title || sectionTitles[storyCode] || 'Story',
         author: story.author || 'Grandpa John',
-        audioUrl: story.audio_url || undefined
+        audioUrl: story.audio_url || undefined,
+        ai_voice_name: story.ai_voice_name,
+        audio_duration: story.audio_duration_seconds
       });
       setSuperAudioOpen(true);
     } else {
@@ -90,7 +94,9 @@ const About = () => {
         setCurrentAudioData({
           content: fallback.content,
           title: fallback.title,
-          author: 'Grandpa John'
+          author: 'Grandpa John',
+          ai_voice_name: undefined,
+          audio_duration: undefined
         });
         setSuperAudioOpen(true);
       }
@@ -423,10 +429,11 @@ const About = () => {
               setSuperAudioOpen(false);
               setCurrentAudioData(null);
             }}
-            content={currentAudioData.content}
             title={currentAudioData.title}
             author={currentAudioData.author}
+            voiceName={currentAudioData.ai_voice_name}
             audioUrl={currentAudioData.audioUrl}
+            audioDuration={currentAudioData.audio_duration}
             showAuthor={true}
           />
         )}

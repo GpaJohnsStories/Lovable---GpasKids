@@ -188,7 +188,6 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
       <SuperAudio
         isOpen={isSuperAudioOpen}
         onClose={() => setIsSuperAudioOpen(false)}
-        content={helpContent}
         title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
         author={storyData?.author}
         voiceName={storyData?.ai_voice_name}

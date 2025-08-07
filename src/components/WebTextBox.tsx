@@ -132,7 +132,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           <SuperAudio
             isOpen={showSuperAudio}
             onClose={() => setShowSuperAudio(false)}
-            content={getContent()}
             title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
             author={webtext?.author}
             voiceName={webtext?.ai_voice_name}
@@ -201,7 +200,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
       <SuperAudio
         isOpen={showSuperAudio}
         onClose={() => setShowSuperAudio(false)}
-        content={getContent()}
         title={webtext?.title || title}
         author={webtext?.author}
         voiceName={webtext?.ai_voice_name}
