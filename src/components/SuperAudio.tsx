@@ -90,7 +90,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 <p className="text-sm text-gray-600 mt-1">by {author}</p>
               )}
               {voiceName && (
-                <p className="text-xs text-gray-500 mt-1">Being read by {voiceName} from OpenAI</p>
+                <p className="text-xs text-gray-500 mt-1"><br />Being read by {voiceName} from OpenAI</p>
               )}
             </div>
             
