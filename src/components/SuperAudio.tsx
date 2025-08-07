@@ -158,11 +158,29 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
                 </button>
 
-                {/* Row 2: Placeholder buttons for future features */}
-                <button className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg bg-gray-300/50"></button>
-                <button className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg bg-gray-300/50"></button>
-                <button className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg bg-gray-300/50"></button>
-                <button className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg bg-gray-300/50"></button>
+                {/* Row 2: Progress bar spanning all 4 columns */}
+                <div className="col-span-4 bg-white/20 border-2 border-white/40 rounded-lg shadow-lg flex items-center justify-center p-3">
+                  <div className="w-full max-w-[180px] relative">
+                    {/* Progress track */}
+                    <div className="w-full h-2 bg-gray-300/50 rounded-full relative overflow-hidden">
+                      {/* Progress fill */}
+                      <div 
+                        className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-300"
+                        style={{ width: '35%' }}
+                      ></div>
+                      {/* Progress handle */}
+                      <div 
+                        className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white border-2 border-blue-500 rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform"
+                        style={{ left: 'calc(35% - 8px)' }}
+                      ></div>
+                    </div>
+                    {/* Time labels */}
+                    <div className="flex justify-between mt-1 text-xs text-gray-600">
+                      <span>2:15</span>
+                      <span>6:42</span>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Row 3: Merged cell spanning all 4 columns, half height */}
                 <div className="col-span-4 bg-white/30 border-2 border-white/40 rounded-lg shadow-lg flex items-center justify-center">
