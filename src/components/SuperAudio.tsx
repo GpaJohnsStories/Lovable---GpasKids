@@ -181,7 +181,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       ></div>
                     </div>
                     {/* Time labels */}
-                    <div className="flex justify-between mt-1 text-xs text-gray-600">
+                    <div className="flex justify-between mt-1 text-xs text-white font-bold">
                       <span>2:15</span>
                       <span>6:42</span>
                     </div>
