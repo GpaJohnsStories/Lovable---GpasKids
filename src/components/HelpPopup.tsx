@@ -13,7 +13,7 @@ import StoryContentRenderer from "@/components/content/StoryContentRenderer";
 import { supabase } from "@/integrations/supabase/client";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
-import { UniversalAudioControls } from "@/components/UniversalAudioControls";
+import { SuperAudio } from "@/components/SuperAudio";
 
 interface HelpPopupProps {
   isOpen: boolean;
@@ -34,10 +34,10 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   storyData,
   onNavigateToGuide
 }) => {
-  const [showAudioControls, setShowAudioControls] = useState(false);
+  const [isSuperAudioOpen, setIsSuperAudioOpen] = useState(false);
   const [audioCode, setAudioCode] = useState<string>('HELP');
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
-  console.log('🎵 Audio controls state - showAudioControls:', showAudioControls, 'storyCode:', storyData?.story_code, 'audioCode:', audioCode);
+  console.log('🎵 SuperAudio state - isSuperAudioOpen:', isSuperAudioOpen, 'storyCode:', storyData?.story_code, 'audioCode:', audioCode);
   
   // Try to get cached icon for the story code (e.g., HLP-LIB -> HLP-LIB.jpg)
   const storyCode = storyData?.story_code;
@@ -126,8 +126,8 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             <AudioButton 
               code={audioCode} 
               onClick={() => {
-                console.log('🎵 Audio button clicked, showing controls for code:', audioCode);
-                setShowAudioControls(!showAudioControls);
+                console.log('🎵 Audio button clicked, opening SuperAudio for code:', audioCode);
+                setIsSuperAudioOpen(true);
               }} 
             />
           </div>
@@ -135,18 +135,6 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
 
         {/* Content Area - Expands to fill remaining space */}
         <div className="flex-1 min-h-0 px-4 pb-4 pt-0 relative">
-          {/* Audio Controls - Show when activated */}
-          {showAudioControls && (
-            <div className="mb-4 p-3 bg-orange-100 border border-orange-300 rounded-lg">
-              <UniversalAudioControls
-                content={helpContent}
-                title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
-                allowTextToSpeech={true}
-                size="sm"
-                className="w-full"
-              />
-            </div>
-          )}
           
           {isLoading ? (
             <div className="flex items-center justify-center h-full">
@@ -197,6 +185,16 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </Button>
         </div>
       </DialogContent>
+      <SuperAudio
+        isOpen={isSuperAudioOpen}
+        onClose={() => setIsSuperAudioOpen(false)}
+        content={helpContent}
+        title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
+        author={storyData?.author}
+        voiceName={storyData?.ai_voice_name}
+        audioUrl={storyData?.audio_url}
+        audioDuration={storyData?.audio_duration || storyData?.audio_duration_seconds}
+      />
     </Dialog>
   );
 };
