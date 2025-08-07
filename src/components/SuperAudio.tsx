@@ -159,6 +159,19 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 </button>
               </div>
             </div>
+
+            {/* Two Equal Sections Below Buttons */}
+            <div className="mt-4 flex-1 flex flex-col gap-2">
+              {/* Top Half */}
+              <div className="flex-1 bg-white/30 rounded-lg border border-orange-200 p-2">
+                <p className="text-xs text-gray-600 text-center">Top Section</p>
+              </div>
+              
+              {/* Bottom Half */}
+              <div className="flex-1 bg-white/30 rounded-lg border border-orange-200 p-2">
+                <p className="text-xs text-gray-600 text-center">Bottom Section</p>
+              </div>
+            </div>
           </div>
         </div>
       </DialogContent>
