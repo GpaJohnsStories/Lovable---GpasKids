@@ -187,7 +187,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
 
                 {/* Row 3: Speed Controls Header */}
                 <div 
-                  className="col-span-4 border-2 border-white/40 rounded-lg shadow-lg flex items-center justify-center"
+                  className="col-span-4 border-2 border-white/40 shadow-lg flex items-center justify-center"
                   style={{ backgroundColor: '#814d2e' }}
                 >
                   <span className="text-white text-sm font-medium">Speed Controls</span>
