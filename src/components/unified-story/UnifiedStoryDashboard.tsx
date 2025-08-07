@@ -83,6 +83,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               value={formData.story_code}
               onChange={(value) => onInputChange('story_code', value)}
               onStoryFound={onStoryFound}
+              currentStoryId={formData.id}
               compact={true}
             />
               <StoryFormFields

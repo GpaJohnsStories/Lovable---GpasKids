@@ -15,6 +15,7 @@ interface FormStoryCodeFieldProps {
   onStoryFound?: never;
   value?: never;
   onChange?: never;
+  currentStoryId?: string;
 }
 
 // Props for controlled component usage
@@ -25,6 +26,7 @@ interface ControlledStoryCodeFieldProps {
   onStoryFound?: (story: Story) => void;
   value: string;
   onChange: (value: string) => void;
+  currentStoryId?: string;
 }
 
 // Union type for props
@@ -36,7 +38,8 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
   onCodeLookup,
   onStoryFound,
   value,
-  onChange 
+  onChange,
+  currentStoryId
 }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [foundStory, setFoundStory] = useState<Story | null>(null);
@@ -46,6 +49,7 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
   const handleStoryCodeLookup = async (storyCode: string) => {
     if (!storyCode?.trim()) return;
     
+    console.log('Looking up story code:', storyCode);
     const result = await lookupStoryByCode(storyCode, true);
     
     if (result.error) {
@@ -53,12 +57,18 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
     }
     
     if (result.found && result.story) {
-      // Story found - show dialog for existing story
+      // Skip dialog if the found story is the current story being edited
+      if (currentStoryId && result.story.id === currentStoryId) {
+        console.log('Found story is the current story being edited, skipping dialog');
+        return;
+      }
+      
+      console.log('Story found, opening dialog');
       setFoundStory(result.story);
       setCurrentCode(storyCode);
       setDialogOpen(true);
     } else {
-      // Story not found - show dialog for new content
+      console.log('No story found, opening not-found dialog');
       setFoundStory(null);
       setCurrentCode(storyCode);
       setDialogOpen(true);
