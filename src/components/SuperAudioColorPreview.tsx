@@ -2,31 +2,31 @@ import React from 'react';
 import { Play, Pause, RotateCcw, Square } from 'lucide-react';
 
 export const SuperAudioColorPreview: React.FC = () => {
-  // Perfect colors that complement the warm orange/amber theme
+  // User's perfect color choices
   const buttonColors = {
     play: {
       name: 'Play',
-      color: 'from-emerald-400 to-emerald-600', // Warm, friendly green
-      icon: Play,
-      shadow: 'shadow-emerald-300/50'
+      bgColor: '#16a34a', // Fresh Green
+      shadowColor: '#16a34a40',
+      icon: Play
     },
     pause: {
-      name: 'Pause', 
-      color: 'from-amber-400 to-amber-600', // Matches your theme perfectly
-      icon: Pause,
-      shadow: 'shadow-amber-300/50'
+      name: 'Pause',
+      bgColor: '#F2BA15', // Brighter Gold
+      shadowColor: '#F2BA1540', 
+      icon: Pause
     },
     restart: {
       name: 'Restart',
-      color: 'from-sky-400 to-sky-600', // Cool blue for refresh
-      icon: RotateCcw,
-      shadow: 'shadow-sky-300/50'
+      bgColor: '#169CF9', // Sky Blue
+      shadowColor: '#169CF940',
+      icon: RotateCcw
     },
     stop: {
       name: 'Stop',
-      color: 'from-rose-400 to-rose-600', // Warm red, not harsh
-      icon: Square,
-      shadow: 'shadow-rose-300/50'
+      bgColor: '#DC2626', // Cherry Red
+      shadowColor: '#DC262640',
+      icon: Square
     }
   };
 
@@ -42,16 +42,19 @@ export const SuperAudioColorPreview: React.FC = () => {
           return (
             <div key={key} className="text-center">
               <div className="mb-2">
-                <button className={`
-                  w-20 h-20 rounded-full bg-gradient-to-b ${button.color}
-                  border-4 border-white/30 ${button.shadow} shadow-lg
-                  transform hover:scale-105 hover:shadow-xl
-                  transition-all duration-200 active:scale-95
-                  flex items-center justify-center
-                  relative
-                  before:absolute before:inset-1 before:rounded-full 
-                  before:bg-white/20 before:blur-sm
-                `}>
+                <button 
+                  className="w-20 h-20 rounded-full border-4 border-white/30 shadow-lg
+                    transform hover:scale-105 hover:shadow-xl
+                    transition-all duration-200 active:scale-95
+                    flex items-center justify-center
+                    relative
+                    before:absolute before:inset-1 before:rounded-full 
+                    before:bg-white/20 before:blur-sm"
+                  style={{
+                    background: `linear-gradient(to bottom, ${button.bgColor}, ${button.bgColor}dd)`,
+                    boxShadow: `0 10px 25px ${button.shadowColor}, 0 4px 10px rgba(0,0,0,0.1)`
+                  }}
+                >
                   <IconComponent 
                     className="w-8 h-8 text-white drop-shadow-sm" 
                     fill="white"
@@ -60,7 +63,7 @@ export const SuperAudioColorPreview: React.FC = () => {
               </div>
               <p className="text-sm font-semibold text-gray-700">{button.name}</p>
               <p className="text-xs text-gray-500 mt-1">
-                {button.color.replace('from-', '').replace(' to-', ' → ').replace('-', ' ')}
+                {button.bgColor}
               </p>
             </div>
           );
