@@ -1,44 +1,15 @@
 import React, { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
+import { WebTextBox } from "@/components/WebTextBox";
 import StorySubmissionForm from "@/components/story-submission/StorySubmissionForm";
-import { supabase } from "@/integrations/supabase/client";
 import copyrightSign from "@/assets/copyright-sign.jpg";
 
 const Writing = () => {
   const location = useLocation();
   
-  const { data: copyrightStory } = useQuery({
-    queryKey: ['story', 'SYS-CPR'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('stories')
-        .select('content')
-        .eq('story_code', 'SYS-CPR')
-        .maybeSingle();
-      
-      if (error) throw error;
-      return data;
-    },
-  });
-
-  const { data: writingStory } = useQuery({
-    queryKey: ['story', 'SYS-WAS'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('stories')
-        .select('content')
-        .eq('story_code', 'SYS-WAS')
-        .maybeSingle();
-      
-      if (error) throw error;
-      return data;
-    },
-  });
 
   useEffect(() => {
     // Handle hash navigation when component mounts or hash changes
@@ -73,79 +44,23 @@ const Writing = () => {
         
         <main className="container mx-auto px-4 pt-8 pb-12">
           {/* Copyright Section */}
-          <div id="copyright" className="max-w-6xl mx-auto border-4 border-purple-500 rounded-lg p-6 bg-purple-50 relative">
-            <div className="flex items-start mb-6">
-              <div className="flex items-center">
-                <span className="text-red-600 text-6xl font-bold mr-4">©</span>
-                <span className="text-purple-800 text-4xl font-bold mr-4">—</span>
-                <h1 className="text-4xl font-bold text-purple-800" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                  Copyright and What It Means for You
-                </h1>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              {copyrightStory?.content ? (
-                <IsolatedStoryRenderer
-                  content={copyrightStory.content}
-                  useRichCleaning={true}
-                />
-              ) : (
-                <p className="text-lg text-purple-900 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  Loading copyright information...
-                </p>
-              )}
-            </div>
-            
-            {/* Web-text code indicator */}
-            <div style={{ 
-              position: 'absolute',
-              bottom: '8px',
-              right: '12px',
-              fontSize: '12px',
-              color: '#666',
-              fontFamily: 'monospace',
-              fontWeight: 'normal',
-              opacity: 0.7
-            }}>
-              SYS-CPR
-            </div>
+          <div id="copyright" className="max-w-6xl mx-auto">
+            <WebTextBox
+              webtextCode="SYS-CPR"
+              borderColor="border-purple-500"
+              backgroundColor="bg-purple-50"
+              title="Copyright and What It Means for You"
+            />
           </div>
 
           {/* Write a Story Section */}
-          <div id="write-story" className="max-w-6xl mx-auto border-4 border-orange-500 rounded-lg p-6 bg-white mt-8 relative">
-            <div className="flex items-center justify-center mb-6">
-              <h1 className="text-4xl font-bold text-orange-600 italic" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
-                Write a Story for Gpa's Kids
-              </h1>
-            </div>
-            
-            <div className="space-y-6">
-              {writingStory?.content ? (
-                <IsolatedStoryRenderer
-                  content={writingStory.content}
-                  useRichCleaning={true}
-                />
-              ) : (
-                <p className="text-lg text-gray-700 leading-relaxed font-normal" style={{ fontFamily: 'Georgia, serif' }}>
-                  Loading story content...
-                </p>
-              )}
-              
-              {/* Web-text code indicator */}
-              <div style={{ 
-                position: 'absolute',
-                bottom: '8px',
-                right: '12px',
-                fontSize: '12px',
-                color: '#666',
-                fontFamily: 'monospace',
-                fontWeight: 'normal',
-                opacity: 0.7
-              }}>
-                SYS-WAS
-              </div>
-            </div>
+          <div id="write-story" className="max-w-6xl mx-auto mt-8">
+            <WebTextBox
+              webtextCode="SYS-WAS"
+              borderColor="border-orange-500"
+              backgroundColor="bg-white"
+              title="Write a Story for Gpa's Kids"
+            />
           </div>
 
           {/* Story Submission Release Form - Separate Box */}
