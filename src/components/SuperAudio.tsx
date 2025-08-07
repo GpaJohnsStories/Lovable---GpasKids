@@ -168,8 +168,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               </div>
               
               {/* Bottom Half - Speed Controls */}
-              <div className="flex-1 bg-white/30 border-t border-orange-200 flex items-end justify-center pb-2">
-                <div className="grid grid-cols-4 gap-2 max-w-[244px]">
+              <div className="flex-1 bg-white/30 border-t border-orange-200 flex items-end justify-center">
+                <div className="grid grid-cols-4 gap-2 max-w-[244px] mb-1">
                   {/* Normal Speed - 100% */}
                   <button 
                     className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
