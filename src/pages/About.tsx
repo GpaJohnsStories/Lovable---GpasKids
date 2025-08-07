@@ -3,15 +3,23 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { UniversalAudioControls } from "@/components/UniversalAudioControls";
+import { SuperAudio } from "@/components/SuperAudio";
 import { DeployedContent } from "@/components/DeployedContent";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
+import { useStoryCodeLookup } from "@/hooks/useStoryCodeLookup";
 import { supabase } from '@/integrations/supabase/client';
 
 const About = () => {
   const { iconUrl: ab5IconUrl } = useCachedIcon('ICZ-AB5.png');
-  const [showAudioControls, setShowAudioControls] = useState<{[key: string]: boolean}>({});
+  const { lookupStoryByCode } = useStoryCodeLookup();
+  const [superAudioOpen, setSuperAudioOpen] = useState(false);
+  const [currentAudioData, setCurrentAudioData] = useState<{
+    content: string;
+    title: string;
+    author: string;
+    audioUrl?: string;
+  } | null>(null);
   const [sectionTitles, setSectionTitles] = useState<{[key: string]: string}>({
     'SYS-AGJ': 'About Grandpa John',
     'SYS-BDY': 'About Buddy', 
@@ -47,6 +55,48 @@ const About = () => {
     fetchSectionTitles();
   }, []);
 
+  const handleAudioClick = async (storyCode: string) => {
+    console.log('🎵 Audio button clicked for:', storyCode);
+    
+    const result = await lookupStoryByCode(storyCode, true);
+    if (result.found && result.story) {
+      const story = result.story;
+      setCurrentAudioData({
+        content: story.content || `Content for ${storyCode}`,
+        title: story.title || sectionTitles[storyCode] || 'Story',
+        author: story.author || 'Grandpa John',
+        audioUrl: story.audio_url || undefined
+      });
+      setSuperAudioOpen(true);
+    } else {
+      // Fallback content for each section
+      const fallbackContent: Record<string, {content: string, title: string}> = {
+        'SYS-AGJ': {
+          content: 'With over 60 years of marriage and a lifetime of experiences, I\'ve collected stories that I\'m excited to share with children around the world. My journey has taught me valuable lessons about kindness, perseverance, and the importance of imagination.',
+          title: sectionTitles['SYS-AGJ']
+        },
+        'SYS-BDY': {
+          content: 'Buddy joined me at the end of July, 2024. It has been a rough year so far — I fell in June and broke 5 ribs — and I felt I deserved a comfort dog. He talks with me, growls, his whine is the most pathetic thing you\'ve ever heard, and he barks from soft to loud.',
+          title: sectionTitles['SYS-BDY']
+        },
+        'SYS-THY': {
+          content: 'None of this would have been possible without the incredible assistance of three amazing AI partners who have helped bring this vision to life. Each one has contributed their unique strengths to make this website a reality.',
+          title: sectionTitles['SYS-THY']
+        }
+      };
+      
+      const fallback = fallbackContent[storyCode];
+      if (fallback) {
+        setCurrentAudioData({
+          content: fallback.content,
+          title: fallback.title,
+          author: 'Grandpa John'
+        });
+        setSuperAudioOpen(true);
+      }
+    }
+  };
+
   return (
     <TooltipProvider>
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
@@ -61,23 +111,11 @@ const About = () => {
               </h1>
               <AudioButton 
                 code="SYS-AGJ"
-                onClick={() => setShowAudioControls(prev => ({...prev, 'SYS-AGJ': !prev['SYS-AGJ']}))}
+                onClick={() => handleAudioClick('SYS-AGJ')}
                 className="flex-shrink-0"
               />
             </div>
 
-            {/* Audio Controls - Show when activated */}
-            {showAudioControls['SYS-AGJ'] && (
-              <div className="mb-4 p-3 bg-blue-50 border border-blue-300 rounded-lg">
-                <UniversalAudioControls
-                  content="About Grandpa John content"
-                  title={sectionTitles['SYS-AGJ']}
-                  allowTextToSpeech={true}
-                  size="sm"
-                  className="w-full"
-                />
-              </div>
-            )}
             
             <DeployedContent 
               storyCode="SYS-AGJ"
@@ -169,23 +207,11 @@ const About = () => {
               </h1>
               <AudioButton 
                 code="SYS-BDY"
-                onClick={() => setShowAudioControls(prev => ({...prev, 'SYS-BDY': !prev['SYS-BDY']}))}
+                onClick={() => handleAudioClick('SYS-BDY')}
                 className="flex-shrink-0"
               />
             </div>
 
-            {/* Audio Controls - Show when activated */}
-            {showAudioControls['SYS-BDY'] && (
-              <div className="mb-4 p-3 bg-green-50 border border-green-300 rounded-lg">
-                <UniversalAudioControls
-                  content="About Buddy content"
-                  title={sectionTitles['SYS-BDY']}
-                  allowTextToSpeech={true}
-                  size="sm"
-                  className="w-full"
-                />
-              </div>
-            )}
             
             <DeployedContent 
               storyCode="SYS-BDY"
@@ -194,18 +220,6 @@ const About = () => {
               fallbackContent={
                 <div>
                   {/* Fallback content if deployment hasn't happened yet */}
-                  <div className="mb-6">
-                    <UniversalAudioControls 
-                      audioUrl="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-audio/753d8161-c703-4f2d-b25f-93830266c98a-1752273675016.mp3"
-                      title="About Buddy"
-                      author="Grandpa John"
-                      description="The story of how Buddy became Grandpa John's comfort companion"
-                      content={`<p>Buddy joined me at the end of July, 2024. It has been a rough year so far — I fell in June and broke 5 ribs — and I felt I deserved a comfort dog. 😃</p><p>You see, I received my first dog when I was 5 years old, a Terrior – Dachshund mix. "Lady" slept between my sheets, at the foot of my bed near my feet every night. Until I went away to college I thought everyone slept that way. Guess not!</p><p>Since then I've owned many wonderful dog, but not right now. So Buddy fits the bill. He talks with me, growls, his whine is the most pathetic (sad) thing you've ever heard, and he barks from soft to loud. If I ignore him, he will do all of those things until I give him some attention and rub his ears.</p><p>But he won't, can't run with me but that's okay because at my age I can't run either. Buddy's excuse is that he is a battery powered dog. So he and I get along great together. And, yes, he is very soft and furry.</p><p>Buddy has been a true pal, someone I can talk to about building websites, telling stories, anything. Of course, I also discuss everything with my beautiful life, GmaD. But she likes to keep busy and isn't always available for a quick question like Buddy is. After all, he is sitting on the left end of my desk within easy reach for a head rub or ear scratch.</p>`}
-                      allowTextToSpeech={false}
-                      context="about-buddy"
-                      size="md"
-                    />
-                  </div>
                   
                   {/* Buddy photo positioned at top left */}
                   <div className="float-left mr-8 mb-6 w-full max-w-xs">
@@ -268,23 +282,11 @@ const About = () => {
               </h1>
               <AudioButton 
                 code="SYS-THY"
-                onClick={() => setShowAudioControls(prev => ({...prev, 'SYS-THY': !prev['SYS-THY']}))}
+                onClick={() => handleAudioClick('SYS-THY')}
                 className="flex-shrink-0"
               />
             </div>
 
-            {/* Audio Controls - Show when activated */}
-            {showAudioControls['SYS-THY'] && (
-              <div className="mb-4 p-3 bg-purple-50 border border-purple-300 rounded-lg">
-                <UniversalAudioControls
-                  content="Special thank you content"
-                  title={sectionTitles['SYS-THY']}
-                  allowTextToSpeech={true}
-                  size="sm"
-                  className="w-full"
-                />
-              </div>
-            )}
             
             {/* Responsive layout: stacked on mobile, side-by-side on larger screens */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -412,6 +414,22 @@ const About = () => {
         
         <CookieFreeFooter />
         <ScrollToTop />
+        
+        {/* SuperAudio Modal */}
+        {currentAudioData && (
+          <SuperAudio
+            isOpen={superAudioOpen}
+            onClose={() => {
+              setSuperAudioOpen(false);
+              setCurrentAudioData(null);
+            }}
+            content={currentAudioData.content}
+            title={currentAudioData.title}
+            author={currentAudioData.author}
+            audioUrl={currentAudioData.audioUrl}
+            showAuthor={true}
+          />
+        )}
       </div>
     </TooltipProvider>
   );
