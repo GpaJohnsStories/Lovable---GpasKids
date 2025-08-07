@@ -88,13 +88,6 @@ const StoryHeader = ({
         )}
       </div>
 
-      {aiVoiceName && (
-        <div className="text-center mb-6">
-          <p className="text-sm text-orange-600 italic" style={{ fontFamily: 'Georgia, serif' }}>
-            Now being read by {aiVoiceName} AI voice from OpenAI
-          </p>
-        </div>
-      )}
 
       {description && (
         <p className="text-lg text-orange-700 text-center mb-6 italic" style={{ fontFamily: 'Georgia, serif' }}>
