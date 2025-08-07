@@ -81,8 +81,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
         </button>
 
         {/* Content Area - Full popup */}
-        <div className="h-full p-1">
-          <div className="h-[98%] w-[98%] mx-auto bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-orange-200 flex flex-col">
+        <div className="h-full p-1 flex flex-col">
+          <div className="flex-1 w-[98%] mx-auto bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-orange-200 flex flex-col">
             {/* Title and Author at top center - More space for author */}
             <div className="text-center mb-4">
               <h3 className="text-lg font-bold text-gray-800">{title}</h3>
