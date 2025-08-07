@@ -56,7 +56,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
         ref={dialogRef}
-        className="fixed w-[80vw] h-[90vh] max-w-none max-h-none p-0 bg-gradient-to-b from-amber-50 to-orange-100 border-4 border-orange-300 rounded-2xl shadow-2xl"
+        className="fixed w-80 h-96 max-w-none max-h-none p-0 bg-gradient-to-b from-amber-50 to-orange-100 border-4 border-orange-300 rounded-2xl shadow-2xl"
         style={{
           left: `calc(10% + ${position.x}px)`,
           top: `calc(5% + ${position.y}px)`,
