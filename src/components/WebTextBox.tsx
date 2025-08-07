@@ -70,14 +70,16 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     return (
       <>
         <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
-          {/* Peppermint Audio Button - Top Right Corner */}
-          <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
-            <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
-              Click to listen
+          {/* Peppermint Audio Button - Top Right Corner - only show if audio is available */}
+          {webtext?.audio_url && (
+            <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
+              <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
+                Click to listen
+              </div>
+              <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
+              <AudioButton code="SYS-WEL" onClick={() => setShowSuperAudio(true)} />
             </div>
-            <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
-            <AudioButton code="SYS-WEL" onClick={() => setShowSuperAudio(true)} />
-          </div>
+          )}
 
           {/* Top section with photo and title */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -171,10 +173,12 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             </h3>
           </div>
           
-          {/* Right: Peppermint Audio Button */}
-          <div className="flex-shrink-0">
-            <AudioButton code={webtextCode} onClick={() => setShowSuperAudio(true)} />
-          </div>
+          {/* Right: Peppermint Audio Button - only show if audio is available */}
+          {webtext?.audio_url && (
+            <div className="flex-shrink-0">
+              <AudioButton code={webtextCode} onClick={() => setShowSuperAudio(true)} />
+            </div>
+          )}
         </div>
 
         {/* Content */}
