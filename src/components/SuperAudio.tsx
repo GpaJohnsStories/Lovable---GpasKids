@@ -4,6 +4,8 @@ import { AudioControlButtons } from './AudioControlButtons';
 import { AudioProgressBar } from './AudioProgressBar';
 import { AudioSpeedControls } from './AudioSpeedControls';
 
+// Refactored SuperAudio component
+
 interface SuperAudioProps {
   isOpen: boolean;
   onClose: () => void;
