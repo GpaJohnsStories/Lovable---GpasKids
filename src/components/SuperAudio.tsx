@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X, Play, Pause, RotateCcw, Square } from 'lucide-react';
 
 interface SuperAudioProps {
@@ -59,19 +59,21 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   }, [isDragging, dragStart]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent 
-        ref={dialogRef}
-        className="fixed max-w-none max-h-none p-0 bg-gradient-to-b from-amber-50 to-orange-100 border-4 border-orange-300 rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing"
-        style={{
-          width: '288px',
-          height: '330px',
-          left: `calc(10% + ${position.x}px)`,
-          top: `calc(5% + ${position.y}px)`,
-          cursor: isDragging ? 'grabbing' : 'grab'
-        }}
-        onMouseDown={handleMouseDown}
-      >
+    <DialogPrimitive.Root open={isOpen} onOpenChange={onClose}>
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Content 
+          ref={dialogRef}
+          className="fixed max-w-none max-h-none p-0 bg-gradient-to-b from-amber-50 to-orange-100 border-4 border-orange-300 rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing z-50"
+          style={{
+            width: '288px',
+            height: '330px',
+            left: `calc(10% + ${position.x}px)`,
+            top: `calc(5% + ${position.y}px)`,
+            cursor: isDragging ? 'grabbing' : 'grab'
+          }}
+          onMouseDown={handleMouseDown}
+          onInteractOutside={(e) => e.preventDefault()}
+        >
         {/* Close button - Top Right Corner */}
         <button
           onClick={onClose}
@@ -268,7 +270,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             </div>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
   );
 };
