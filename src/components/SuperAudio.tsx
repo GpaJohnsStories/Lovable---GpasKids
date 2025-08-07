@@ -83,9 +83,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
         {/* Content Area - Full popup */}
         <div className="h-full p-1">
           <div className="h-[98%] w-[98%] mx-auto bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-orange-200">
-            {/* Title and Author at top center */}
-            <div className="text-center mb-2">
-              <h3 className="text-xl font-bold text-gray-800">{title}</h3>
+            {/* Title and Author at top center - More space for author */}
+            <div className="text-center mb-4">
+              <h3 className="text-lg font-bold text-gray-800">{title}</h3>
               {showAuthor && author && (
                 <p className="text-sm text-gray-600 mt-1">by {author}</p>
               )}
@@ -94,9 +94,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               )}
             </div>
             
-            {/* 4x4 Button Grid - Fills remaining space */}
-            <div className="mt-4 h-[240px]">
-              <div className="grid grid-rows-4 grid-cols-4 gap-2 max-w-[244px] mx-auto h-full">
+            {/* 4x4 Button Grid - No gaps, fits exactly */}
+            <div className="h-[220px]">
+              <div className="grid grid-rows-4 grid-cols-4 max-w-[220px] mx-auto h-full">
                 {/* Row 1: Main Audio Controls */}
                 <button 
                   className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
