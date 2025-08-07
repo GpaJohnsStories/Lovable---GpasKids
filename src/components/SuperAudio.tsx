@@ -81,10 +81,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
         </button>
 
         {/* Content Area - Full popup */}
-        <div className="h-full p-1 flex flex-col">
-          <div className="flex-1 w-[98%] mx-auto bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-orange-200 flex flex-col">
-            {/* Title and Author at top center - More space for author */}
-            <div className="text-center mb-4">
+        <div className="h-full p-1">
+          <div className="h-[98%] w-[98%] mx-auto bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-orange-200">
+            {/* Title and Author at top - 40% */}
+            <div className="text-center h-[40%] flex flex-col justify-center">
               <h3 className="text-lg font-bold text-gray-800">{title}</h3>
               {showAuthor && author && (
                 <p className="text-sm text-gray-600 mt-1">by {author}</p>
@@ -94,9 +94,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               )}
             </div>
             
-            {/* 4x4 Button Grid - Row 2 very short, Row 3 is half height and merged */}
-            <div className="flex-1 flex items-end pb-2">
-              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-[200px]" style={{ gridTemplateRows: '1fr 0.35fr 0.5fr 1fr' }}>
+            {/* 4x4 Button Grid - Bottom 60% */}
+            <div className="h-[60%]">
+              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '1fr 0.35fr 0.5fr 1fr' }}>
                 {/* Row 1: Main Audio Controls */}
                 <button 
                   className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
