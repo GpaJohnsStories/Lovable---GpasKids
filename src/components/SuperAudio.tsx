@@ -84,14 +84,16 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
         <div className="h-full p-1">
           <div className="h-[98%] w-[98%] mx-auto bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-orange-200">
             {/* Title and Author at top - 40% */}
-            <div className="text-center h-[40%] flex flex-col justify-center">
+            <div className="text-center h-[40%] pt-2">
               <h3 className="text-lg font-bold text-gray-800">{title}</h3>
               {showAuthor && author && (
                 <p className="text-sm text-gray-600 mt-1">by {author}</p>
               )}
-              {voiceName && (
-                <p className="text-xs text-gray-500 mt-1">Being read by {voiceName} from OpenAI</p>
-              )}
+              <div className="flex-1 flex items-end justify-center pb-1">
+                {voiceName && (
+                  <p className="text-xs text-gray-500">Being read by {voiceName} from OpenAI</p>
+                )}
+              </div>
             </div>
             
             {/* 4x4 Button Grid - Bottom 60% */}
