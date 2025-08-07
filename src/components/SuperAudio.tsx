@@ -197,8 +197,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     transition-all duration-200 flex flex-col items-center justify-center
                     relative overflow-hidden group"
                   style={{
-                    background: `linear-gradient(135deg, #6b7280 0%, #4b5563 100%)`,
-                    boxShadow: `0 8px 20px rgba(107, 114, 128, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
+                    background: `linear-gradient(135deg, hsl(120, 40%, 70%) 0%, hsl(120, 40%, 60%) 100%)`,
+                    boxShadow: `0 8px 20px rgba(34, 139, 34, 0.3), inset 0 2px 4px rgba(255,255,255,0.3)`
                   }}
                   onClick={(e) => {e.stopPropagation(); console.log('Normal speed clicked');}}
                 >
@@ -212,8 +212,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     transition-all duration-200 flex flex-col items-center justify-center
                     relative overflow-hidden group"
                   style={{
-                    background: `linear-gradient(135deg, #059669 0%, #047857 100%)`,
-                    boxShadow: `0 8px 20px rgba(5, 150, 105, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
+                    background: `linear-gradient(135deg, hsl(120, 50%, 55%) 0%, hsl(120, 50%, 45%) 100%)`,
+                    boxShadow: `0 8px 20px rgba(34, 139, 34, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
                   }}
                   onClick={(e) => {e.stopPropagation(); console.log('Fast speed clicked');}}
                 >
@@ -227,8 +227,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     transition-all duration-200 flex flex-col items-center justify-center
                     relative overflow-hidden group"
                   style={{
-                    background: `linear-gradient(135deg, #ea580c 0%, #c2410c 100%)`,
-                    boxShadow: `0 8px 20px rgba(234, 88, 12, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
+                    background: `linear-gradient(135deg, hsl(120, 55%, 45%) 0%, hsl(120, 55%, 35%) 100%)`,
+                    boxShadow: `0 8px 20px rgba(34, 139, 34, 0.5), inset 0 2px 4px rgba(255,255,255,0.3)`
                   }}
                   onClick={(e) => {e.stopPropagation(); console.log('Faster speed clicked');}}
                 >
@@ -242,8 +242,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     transition-all duration-200 flex flex-col items-center justify-center
                     relative overflow-hidden group"
                   style={{
-                    background: `linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)`,
-                    boxShadow: `0 8px 20px rgba(220, 38, 38, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
+                    background: `linear-gradient(135deg, #228B22 0%, #1e7a1e 100%)`,
+                    boxShadow: `0 8px 20px rgba(34, 139, 34, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)`
                   }}
                   onClick={(e) => {e.stopPropagation(); console.log('Fastest speed clicked');}}
                 >
