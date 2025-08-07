@@ -94,9 +94,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               )}
             </div>
             
-            {/* 4x4 Button Grid - Row 2 much shorter, Row 3 is half height and merged */}
+            {/* 4x4 Button Grid - Row 2 very short, Row 3 is half height and merged */}
             <div className="h-[200px]">
-              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '1fr 0.4fr 0.5fr 1fr' }}>
+              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '1fr 0.35fr 0.5fr 1fr' }}>
                 {/* Row 1: Main Audio Controls */}
                 <button 
                   className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
