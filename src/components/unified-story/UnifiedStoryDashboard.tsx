@@ -1,15 +1,19 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Save, X, FileText, Image, Video, Volume2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StoryFormFields from "../StoryFormFields";
+import StoryPhotoUpload from "../StoryPhotoUpload";
 import StoryVideoUpload from "../StoryVideoUpload";
+import VoiceSelection from "../story-form/VoiceSelection";
 import AudioUploadSection from "./AudioUploadSection";
 import SplitViewEditor from "../editor/SplitViewEditor";
 import CopyrightControl from "../story-form/CopyrightControl";
-import StoryCodeField from "../StoryCodeField";
+import { UniversalAudioControls } from "../UniversalAudioControls";
+import { StackedAudioControls } from "./StackedAudioControls";
 import type { Story } from '@/hooks/useStoryFormState';
 
 interface UnifiedStoryDashboardProps {
@@ -28,7 +32,6 @@ interface UnifiedStoryDashboardProps {
   onSaveOnly: () => void;
   allowTextToSpeech?: boolean;
   context?: string;
-  onStoryFound?: (story: Story) => void;
 }
 
 const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
@@ -46,8 +49,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   onCancel,
   onSaveOnly,
   allowTextToSpeech = false,
-  context = "unified-story-system",
-  onStoryFound
+  context = "unified-story-system"
 }) => {
   const getPublishedColor = (publishedStatus: string) => {
     switch (publishedStatus) {
@@ -68,124 +70,485 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
-      <div className="flex gap-6">
-        {/* Story Details Card - 45% width */}
-        <div className="w-[45%] space-y-4">
-          <Card className="border-2" style={{ borderColor: '#16a34a' }}>
+      <Tabs defaultValue="content" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger 
+            value="content" 
+            className="flex items-center gap-2 font-bold data-[state=active]:bg-[hsl(var(--tab-content))] data-[state=active]:text-white hover:bg-[hsl(var(--tab-content-hover))] hover:text-white"
+          >
+            <FileText className="h-4 w-4" />
+            Content
+          </TabsTrigger>
+          <TabsTrigger 
+            value="media" 
+            className="flex items-center gap-2 font-bold data-[state=active]:bg-[hsl(var(--tab-media))] data-[state=active]:text-white hover:bg-[hsl(var(--tab-media-hover))] hover:text-white"
+          >
+            <Image className="h-4 w-4" />
+            Media
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="content" className="space-y-6">
+          <div className="flex gap-6">
+            {/* Story Details Card - 45% width */}
+            <div className="w-[45%] space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileText className="h-5 w-5" />
+                    Story Details
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <StoryFormFields 
+                    formData={formData} 
+                    onInputChange={onInputChange}
+                    compact={true}
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Story Photos Section */}
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-sm">
+                    <Image className="h-4 w-4" />
+                    Story Photos
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <table className="w-full table-fixed border-collapse">
+                    <tbody>
+                      {/* Photo Display Row */}
+                      <tr>
+                        <td className="p-2 border">
+                          {formData.photo_link_1 ? (
+                            <img src={formData.photo_link_1} alt="Photo 1" className="w-full h-20 object-cover rounded" />
+                          ) : (
+                            <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                          )}
+                        </td>
+                        <td className="p-2 border">
+                          {formData.photo_link_2 ? (
+                            <img src={formData.photo_link_2} alt="Photo 2" className="w-full h-20 object-cover rounded" />
+                          ) : (
+                            <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                          )}
+                        </td>
+                        <td className="p-2 border">
+                          {formData.photo_link_3 ? (
+                            <img src={formData.photo_link_3} alt="Photo 3" className="w-full h-20 object-cover rounded" />
+                          ) : (
+                            <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                          )}
+                        </td>
+                      </tr>
+                      
+                      {/* File Input Row */}
+                      <tr>
+                        <td className="p-2 border">
+                          <input type="file" accept="image/*" className="w-full text-xs" />
+                        </td>
+                        <td className="p-2 border">
+                          <input type="file" accept="image/*" className="w-full text-xs" />
+                        </td>
+                        <td className="p-2 border">
+                          <input type="file" accept="image/*" className="w-full text-xs" />
+                        </td>
+                      </tr>
+                      
+                      {/* Alt Text Row */}
+                      <tr>
+                        <td className="p-2 border">
+                          <input 
+                            type="text" 
+                            placeholder="Alt text" 
+                            value={formData.photo_alt_1 || ''} 
+                            onChange={(e) => onInputChange('photo_alt_1', e.target.value)}
+                            className="w-full text-xs p-1 border rounded"
+                          />
+                        </td>
+                        <td className="p-2 border">
+                          <input 
+                            type="text" 
+                            placeholder="Alt text" 
+                            value={formData.photo_alt_2 || ''} 
+                            onChange={(e) => onInputChange('photo_alt_2', e.target.value)}
+                            className="w-full text-xs p-1 border rounded"
+                          />
+                        </td>
+                        <td className="p-2 border">
+                          <input 
+                            type="text" 
+                            placeholder="Alt text" 
+                            value={formData.photo_alt_3 || ''} 
+                            onChange={(e) => onInputChange('photo_alt_3', e.target.value)}
+                            className="w-full text-xs p-1 border rounded"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Settings & Actions Column - Uses remaining space */}
+            <div className="flex-1 space-y-4">
+              {/* Settings Card with side-by-side Copyright and Publication */}
+              <Card className="h-fit">
+                <CardContent className="space-y-3 pt-6">
+                  {/* Copyright Status and Publication Status side-by-side (switched positions) */}
+                  <div className="flex gap-3">
+                    {/* Copyright Status - Now on left */}
+                    <div className="space-y-1 flex-1">
+                      <Label className="text-xs font-bold text-gray-700">Copyright Status</Label>
+                      <CopyrightControl
+                        value={formData.copyright_status || '©'}
+                        onChange={(value) => onInputChange('copyright_status', value)}
+                      />
+                    </div>
+                    
+                    {/* Publication Status - Now on right */}
+                    <div className="space-y-1 flex-1">
+                      <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
+                      <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
+                        <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor(formData.published)}`}>
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent className="z-50 bg-white border shadow-lg">
+                          <SelectItem value="N">Not Published</SelectItem>
+                          <SelectItem value="Y">Published</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {/* Google Drive Link */}
+                  <div className="space-y-1">
+                    <Label htmlFor="google_drive_link" className="text-xs font-bold text-gray-700">Google Drive Link</Label>
+                    <input
+                      id="google_drive_link"
+                      type="url"
+                      value={formData.google_drive_link}
+                      onChange={(e) => onInputChange('google_drive_link', e.target.value)}
+                      placeholder="https://drive.google.com/..."
+                      className="w-full p-2 text-xs border border-gray-300 rounded-md"
+                    />
+                  </div>
+
+                  {/* Save and Cancel Buttons */}
+                  <div className="flex gap-2 pt-2">
+                    <button 
+                      type="submit" 
+                      disabled={isSaving || isGeneratingAudio} 
+                      className="flex-1 text-xs h-8 text-white bg-green-600 border-green-700 hover:bg-green-700 rounded-md border flex items-center justify-center gap-1"
+                    >
+                      <Save className="h-3 w-3" />
+                      {isSaving ? 'Saving...' : 'Save'}
+                    </button>
+                    
+                    <button 
+                      type="button" 
+                      onClick={onCancel}
+                      className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1"
+                    >
+                      <X className="h-3 w-3" />
+                      Cancel
+                    </button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Voice Selection - Simple Table */}
+              <Card className="h-fit">
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-sm">
+                    <Volume2 className="h-4 w-4" />
+                    Voice Previews
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <table className="w-full table-fixed border-collapse">
+                    <tbody>
+                      {/* Top Row - First 3 Voices */}
+                      <tr>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Nova</div>
+                          <div className="text-xs text-gray-600 mb-2">Warm, friendly voice</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Nova')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Nova');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Alloy</div>
+                          <div className="text-xs text-gray-600 mb-2">Clear, neutral voice</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Alloy')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Alloy');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Echo</div>
+                          <div className="text-xs text-gray-600 mb-2">Deep, resonant voice</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Echo')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Echo');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      {/* Bottom Row - Next 3 Voices */}
+                      <tr>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Fable</div>
+                          <div className="text-xs text-gray-600 mb-2">British accent, storytelling</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Fable')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Fable');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Onyx</div>
+                          <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Onyx')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Onyx');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center">
+                          <div className="text-xs font-bold mb-1">Shimmer</div>
+                          <div className="text-xs text-gray-600 mb-2">Soft, gentle voice</div>
+                          <div className="flex gap-1 justify-center">
+                            <button 
+                              className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              onClick={() => onVoiceChange?.('Shimmer')}
+                            >
+                              Test
+                            </button>
+                            <button 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                              onClick={() => {
+                                onVoiceChange?.('Shimmer');
+                                onGenerateAudio?.();
+                              }}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </CardContent>
+              </Card>
+
+              {/* AI Voice Generation */}
+              <Card className="h-fit">
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-sm">
+                    <Volume2 className="h-4 w-4" />
+                    AI Voice & Audio Generation
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <div className="flex gap-3 items-end">
+                    {/* Choose Voice */}
+                    <div className="flex-1">
+                      <Label className="text-xs font-bold text-gray-700 mb-1 block">Choose Voice</Label>
+                      <Select 
+                        value={formData.ai_voice_name || 'Nova'} 
+                        onValueChange={(value) => onVoiceChange?.(value)}
+                      >
+                        <SelectTrigger className="w-full text-xs">
+                          <SelectValue placeholder="Select voice" />
+                        </SelectTrigger>
+                        <SelectContent className="z-50 bg-white border shadow-lg">
+                          <SelectItem value="Nova">Nova - Warm, friendly voice</SelectItem>
+                          <SelectItem value="Alloy">Alloy - Clear, neutral voice</SelectItem>
+                          <SelectItem value="Echo">Echo - Deep, resonant voice</SelectItem>
+                          <SelectItem value="Fable">Fable - British accent, storytelling</SelectItem>
+                          <SelectItem value="Onyx">Onyx - Deep, authoritative voice</SelectItem>
+                          <SelectItem value="Shimmer">Shimmer - Soft, gentle voice</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Generate Audio Button */}
+                    <div className="flex-1">
+                      <Label className="text-xs font-bold text-gray-700 mb-1 block">Generate Audio</Label>
+                      <button
+                        type="button"
+                        onClick={onGenerateAudio}
+                        disabled={isGeneratingAudio || !formData.content?.trim()}
+                        className="w-full h-9 text-sm font-bold text-white bg-orange-600 border-orange-700 hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-2"
+                      >
+                        <Volume2 className="h-4 w-4" />
+                        {isGeneratingAudio ? 'Generating...' : 'Generate Audio'}
+                      </button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Story Video - Added to Content tab */}
+              <Card className="h-fit">
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-sm">
+                    <Video className="h-4 w-4" />
+                    Story Video
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <StoryVideoUpload
+                    videoUrl={formData.video_url}
+                    onVideoUpload={onVideoUpload}
+                    onVideoRemove={onVideoRemove}
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* Story Editor */}
+          <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Story Details
-              </CardTitle>
+              <CardTitle>Story Content</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-            <StoryCodeField
-              value={formData.story_code}
-              onChange={(value) => onInputChange('story_code', value)}
-              onStoryFound={onStoryFound}
-              compact={true}
-            />
-              <StoryFormFields
-                formData={formData} 
-                onInputChange={onInputChange}
-                compact={true}
+            <CardContent>
+              <SplitViewEditor
+                content={formData.content}
+                onChange={(content) => onInputChange('content', content)}
+                placeholder="Write your story here..."
+                onSave={onSaveOnly}
+                category={formData.category}
               />
             </CardContent>
           </Card>
+        </TabsContent>
 
-          {/* Story Photos Section */}
-          <Card className="border-2" style={{ borderColor: '#814d2e' }}>
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#814d2e' }}>
-                <Image className="h-5 w-5" />
-                Story Photos
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3">
-              <table className="w-full table-fixed border-collapse border-2" style={{ borderColor: '#9c441a' }}>
-                <tbody>
-                  {/* Photo Display Row */}
-                  <tr>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      {formData.photo_link_1 ? (
-                        <img src={formData.photo_link_1} alt="Photo 1" className="w-full h-20 object-cover rounded" />
-                      ) : (
-                        <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
-                      )}
-                    </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      {formData.photo_link_2 ? (
-                        <img src={formData.photo_link_2} alt="Photo 2" className="w-full h-20 object-cover rounded" />
-                      ) : (
-                        <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
-                      )}
-                    </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      {formData.photo_link_3 ? (
-                        <img src={formData.photo_link_3} alt="Photo 3" className="w-full h-20 object-cover rounded" />
-                      ) : (
-                        <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
-                      )}
-                    </td>
-                  </tr>
-                  
-                  {/* File Input Row */}
-                  <tr>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input type="file" accept="image/*" className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
-                    </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input type="file" accept="image/*" className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
-                    </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input type="file" accept="image/*" className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
-                    </td>
-                  </tr>
-                  
-                  {/* Alt Text Row */}
-                  <tr>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input 
-                        type="text" 
-                        placeholder="Alt text" 
-                        value={formData.photo_alt_1 || ''} 
-                        onChange={(e) => onInputChange('photo_alt_1', e.target.value)}
-                        className="w-full text-xs p-1 border rounded"
-                      />
-                    </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input 
-                        type="text" 
-                        placeholder="Alt text" 
-                        value={formData.photo_alt_2 || ''} 
-                        onChange={(e) => onInputChange('photo_alt_2', e.target.value)}
-                        className="w-full text-xs p-1 border rounded"
-                      />
-                    </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input 
-                        type="text" 
-                        placeholder="Alt text" 
-                        value={formData.photo_alt_3 || ''} 
-                        onChange={(e) => onInputChange('photo_alt_3', e.target.value)}
-                        className="w-full text-xs p-1 border rounded"
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </CardContent>
-          </Card>
+        <TabsContent value="media" className="space-y-6">
+          {/* Audio Section - New Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* AI Voice Generation */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Volume2 className="h-5 w-5" />
+                  AI Voice Generation
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <VoiceSelection
+                  selectedVoice={formData.ai_voice_name || 'Nova'}
+                  onVoiceChange={onVoiceChange || (() => {})}
+                  isRecording={isGeneratingAudio}
+                  onStartRecording={onGenerateAudio}
+                  onStopRecording={undefined}
+                  storyContent={formData.content}
+                  storyTitle={formData.title}
+                />
+              </CardContent>
+            </Card>
 
-          {/* Audio Upload - Condensed */}
-          <Card className="border-2" style={{ borderColor: '#4A7C59' }}>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#4A7C59' }}>
+            {/* Audio Controls - Always visible now */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Volume2 className="h-5 w-5" />
+                  Audio Controls
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <StackedAudioControls
+                  audioUrl={formData.audio_url}
+                  title={formData.title || 'Story Audio'}
+                  content={formData.content}
+                  author={formData.author}
+                  allowTextToSpeech={true}
+                  context={context}
+                  aiVoiceName={formData.ai_voice_name || 'Nova'}
+                  className="w-full"
+                />
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Audio Upload */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
                 <Volume2 className="h-5 w-5" />
                 Audio Upload
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-3">
+            <CardContent>
               <AudioUploadSection
                 audioUrl={formData.audio_url}
                 onAudioUpload={(url) => onInputChange('audio_url', url)}
@@ -193,288 +556,16 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               />
             </CardContent>
           </Card>
-        </div>
 
-        {/* Settings & Actions Column - Uses remaining space */}
-        <div className="flex-1 space-y-4">
-          {/* Settings Card with side-by-side Copyright and Publication */}
-          <Card className="h-fit" style={{ borderColor: '#F97316', borderWidth: '2px' }}>
+          {/* Video Section */}
+          <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F97316' }}>
-                <FileText className="h-5 w-5" />
-                Story Status
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {/* Copyright Status and Publication Status side-by-side (switched positions) */}
-              <div className="flex gap-3">
-                {/* Copyright Status - Now on left */}
-                <div className="space-y-1 flex-1">
-                  <Label className="text-xs font-bold text-gray-700">Copyright Status</Label>
-                  <CopyrightControl
-                    value={formData.copyright_status || '©'}
-                    onChange={(value) => onInputChange('copyright_status', value)}
-                  />
-                </div>
-                
-                {/* Publication Status - Now on right */}
-                <div className="space-y-1 flex-1">
-                  <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
-                  <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
-                    <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor(formData.published)}`}>
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent className="z-50 bg-white border shadow-lg">
-                      <SelectItem value="N">Not Published</SelectItem>
-                      <SelectItem value="Y">Published</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              {/* Google Drive Link */}
-              <div className="space-y-1">
-                <Label htmlFor="google_drive_link" className="text-xs font-bold text-gray-700">Google Drive Link</Label>
-                <input
-                  id="google_drive_link"
-                  type="url"
-                  value={formData.google_drive_link}
-                  onChange={(e) => onInputChange('google_drive_link', e.target.value)}
-                  placeholder="https://drive.google.com/..."
-                  className="w-full p-2 text-xs border rounded-md"
-                  style={{ borderColor: '#9c441a', borderWidth: '2px' }}
-                />
-              </div>
-
-              {/* Save and Cancel Buttons */}
-              <div className="flex gap-2 pt-2">
-                <button 
-                  type="submit" 
-                  disabled={isSaving || isGeneratingAudio} 
-                  className="flex-1 text-xs h-8 text-white bg-green-600 border-green-700 hover:bg-green-700 rounded-md border flex items-center justify-center gap-1"
-                >
-                  <Save className="h-3 w-3" />
-                  {isSaving ? 'Saving...' : 'Save'}
-                </button>
-                
-                <button 
-                  type="button" 
-                  onClick={onCancel}
-                  className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1"
-                >
-                  <X className="h-3 w-3" />
-                  Cancel
-                </button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Voice Selection - Simple Table */}
-          <Card className="h-fit border-2" style={{ borderColor: '#2563eb' }}>
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#2563eb' }}>
-                <Volume2 className="h-5 w-5" />
-                Voice Previews
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3">
-              <table className="w-full table-fixed border-collapse" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
-                <tbody>
-                  {/* Top Row - First 3 Voices */}
-                  <tr>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
-                      <div className="text-xs font-bold mb-1">Nova</div>
-                      <div className="text-xs text-gray-600 mb-2">Warm, friendly voice</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Nova')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Nova');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
-                    </td>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
-                      <div className="text-xs font-bold mb-1">Alloy</div>
-                      <div className="text-xs text-gray-600 mb-2">Clear, neutral voice</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Alloy')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Alloy');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
-                    </td>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
-                      <div className="text-xs font-bold mb-1">Echo</div>
-                      <div className="text-xs text-gray-600 mb-2">Deep, resonant voice</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Echo')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Echo');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  
-                  {/* Bottom Row - Next 3 Voices */}
-                  <tr>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
-                      <div className="text-xs font-bold mb-1">Fable</div>
-                      <div className="text-xs text-gray-600 mb-2">British accent, storytelling</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Fable')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Fable');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
-                    </td>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
-                      <div className="text-xs font-bold mb-1">Onyx</div>
-                      <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Onyx')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Onyx');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
-                    </td>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
-                      <div className="text-xs font-bold mb-1">Shimmer</div>
-                      <div className="text-xs text-gray-600 mb-2">Soft, gentle voice</div>
-                      <div className="flex gap-1 justify-center">
-                        <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Shimmer')}
-                        >
-                          Test
-                        </button>
-                        <button 
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Shimmer');
-                            onGenerateAudio?.();
-                          }}
-                        >
-                          Use
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </CardContent>
-          </Card>
-
-          {/* AI Voice Generation */}
-          <Card className="h-fit border-2" style={{ borderColor: '#F2BA15' }}>
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F2BA15' }}>
-                <Volume2 className="h-5 w-5" />
-                AI Voice & Audio Generation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3">
-              <div className="flex gap-3 items-end">
-                {/* Choose Voice */}
-                <div className="flex-1">
-                  <Label className="text-xs font-bold text-gray-700 mb-1 block">Choose Voice</Label>
-                  <Select 
-                    value={formData.ai_voice_name || 'Nova'} 
-                    onValueChange={(value) => onVoiceChange?.(value)}
-                  >
-                    <SelectTrigger className="w-full text-xs">
-                      <SelectValue placeholder="Select voice" />
-                    </SelectTrigger>
-                    <SelectContent className="z-50 bg-white border shadow-lg">
-                      <SelectItem value="Nova">Nova - Warm, friendly voice</SelectItem>
-                      <SelectItem value="Alloy">Alloy - Clear, neutral voice</SelectItem>
-                      <SelectItem value="Echo">Echo - Deep, resonant voice</SelectItem>
-                      <SelectItem value="Fable">Fable - British accent, storytelling</SelectItem>
-                      <SelectItem value="Onyx">Onyx - Deep, authoritative voice</SelectItem>
-                      <SelectItem value="Shimmer">Shimmer - Soft, gentle voice</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Generate Audio Button */}
-                <div className="flex-1">
-                  <Label className="text-xs font-bold text-gray-700 mb-1 block">Generate Audio</Label>
-                  <button
-                    type="button"
-                    onClick={onGenerateAudio}
-                    disabled={isGeneratingAudio || !formData.content?.trim()}
-                    className="w-full h-9 text-sm font-bold text-white bg-orange-600 border-orange-700 hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-2"
-                  >
-                    <Volume2 className="h-4 w-4" />
-                    {isGeneratingAudio ? 'Generating...' : 'Generate Audio'}
-                  </button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Story Video - Added to Content tab */}
-          <Card className="h-fit border-2" style={{ borderColor: '#9333ea' }}>
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#9333ea' }}>
+              <CardTitle className="flex items-center gap-2">
                 <Video className="h-5 w-5" />
                 Story Video
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-3">
+            <CardContent>
               <StoryVideoUpload
                 videoUrl={formData.video_url}
                 onVideoUpload={onVideoUpload}
@@ -482,27 +573,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               />
             </CardContent>
           </Card>
-        </div>
-      </div>
-
-      {/* Story Editor */}
-      <Card className="border-2" style={{ borderColor: '#F97316' }}>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F97316' }}>
-            <FileText className="h-5 w-5" />
-            Story Content
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <SplitViewEditor
-            content={formData.content}
-            onChange={(content) => onInputChange('content', content)}
-            placeholder="Write your story here..."
-            onSave={onSaveOnly}
-            category={formData.category}
-          />
-        </CardContent>
-      </Card>
+        </TabsContent>
+      </Tabs>
     </form>
   );
 };

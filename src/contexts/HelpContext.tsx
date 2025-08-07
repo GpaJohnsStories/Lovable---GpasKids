@@ -61,19 +61,19 @@ export const HelpProvider: React.FC<HelpProviderProps> = ({ children }) => {
     console.log('🔍 Fetching help content for route:', route, 'with code:', helpCode);
     
     try {
-      const storyResult = await lookupStoryByCode(helpCode, true); // Silent mode for help lookups
+      const story = await lookupStoryByCode(helpCode, true); // Silent mode for help lookups
       
-      if (storyResult.found && storyResult.story && storyResult.story.content) {
-        console.log('✅ Help content found:', storyResult.story.title);
-        setHelpContent(storyResult.story.content);
-        setStoryData(storyResult.story);
+      if (story && story.content) {
+        console.log('✅ Help content found:', story.title);
+        setHelpContent(story.content);
+        setStoryData(story);
       } else {
         console.log('⚠️ No help content found, using default HLP-HLP');
         // Try to get the default help story (HLP-HLP) with current content
-        const defaultHelpResult = await lookupStoryByCode('HLP-HLP', true);
-        if (defaultHelpResult.found && defaultHelpResult.story && defaultHelpResult.story.content) {
-          setHelpContent(defaultHelpResult.story.content);
-          setStoryData(defaultHelpResult.story);
+        const defaultHelp = await lookupStoryByCode('HLP-HLP', true);
+        if (defaultHelp && defaultHelp.content) {
+          setHelpContent(defaultHelp.content);
+          setStoryData(defaultHelp);
         } else {
           setHelpContent(DEFAULT_HELP_MESSAGE);
           setStoryData(null);

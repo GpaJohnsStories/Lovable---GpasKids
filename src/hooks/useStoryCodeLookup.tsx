@@ -10,6 +10,7 @@ export const useStoryCodeLookup = () => {
         .from('stories')
         .select('*')
         .ilike('story_code', storyCode.trim())
+        .eq('published', 'Y')
         .maybeSingle();
 
       if (error) {
@@ -21,16 +22,23 @@ export const useStoryCodeLookup = () => {
             variant: "destructive",
           });
         }
-        return { found: false, story: null, error: true };
+        return null;
       }
 
       if (!data) {
         console.log('No story found for code:', storyCode);
-        return { found: false, story: null, error: false };
+        if (!silent) {
+          toast({
+            title: "Story not found",
+            description: `No story found with code: ${storyCode}`,
+            variant: "destructive",
+          });
+        }
+        return null;
       }
 
       console.log('Story found for code:', storyCode, data);
-      return { found: true, story: data, error: false };
+      return data;
     } catch (error) {
       console.error('Error in lookupStoryByCode:', error);
       if (!silent) {
@@ -40,7 +48,7 @@ export const useStoryCodeLookup = () => {
           variant: "destructive",
         });
       }
-      return { found: false, story: null, error: true };
+      return null;
     }
   }, []);
 

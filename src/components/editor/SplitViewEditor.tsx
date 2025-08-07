@@ -3,7 +3,6 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/componen
 import StickyToolbar from './StickyToolbar';
 import HTMLEditor from './HTMLEditor';
 import IsolatedStoryRenderer from '@/components/story/IsolatedStoryRenderer';
-import StoryContentScrollToTop from '@/components/StoryContentScrollToTop';
 
 interface SplitViewEditorProps {
   content: string;
@@ -21,7 +20,6 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   category
 }) => {
   const editorRef = useRef<HTMLTextAreaElement>(null);
-  const storyContentRef = useRef<HTMLDivElement>(null);
 
   const insertTextAtCursor = (text: string) => {
     const textarea = editorRef.current;
@@ -79,12 +77,6 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
       case 'u':
         wrapSelectedText('<u>', '</u>');
         break;
-      case 'h1':
-        wrapSelectedText('<h1>', '</h1>');
-        break;
-      case 'h2':
-        wrapSelectedText('<h2>', '</h2>');
-        break;
       case 'h3':
         wrapSelectedText('<h3>', '</h3>');
         break;
@@ -134,24 +126,13 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     }, 0);
   };
 
-  const handleClearAll = () => {
-    onChange('');
-    setTimeout(() => {
-      const textarea = editorRef.current;
-      if (textarea) {
-        textarea.focus();
-      }
-    }, 0);
-  };
-
   return (
-    <div className="border border-gray-300 rounded-lg overflow-hidden bg-white relative">
+    <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
       <StickyToolbar 
         onFormat={handleFormat}
         onInsertList={handleInsertList}
         onAlign={handleAlign}
         onClearHtml={handleClearHtml}
-        onClearAll={handleClearAll}
         onInsertText={insertTextAtCursor}
       />
       
@@ -170,21 +151,17 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
         <ResizableHandle withHandle />
         
         <ResizablePanel defaultSize={50} minSize={30}>
-          <div className="h-full flex flex-col relative">
+          <div className="h-full flex flex-col">
             <div className="bg-gray-50 px-3 py-2 border-b border-gray-200">
               <span className="text-sm font-medium text-gray-600">Live Preview</span>
             </div>
-            <div 
-              ref={storyContentRef}
-              className="flex-1 p-4 overflow-auto bg-white"
-            >
+            <div className="flex-1 p-4 overflow-auto bg-white">
               <IsolatedStoryRenderer
                 content={content}
                 useRichCleaning={true}
                 category={category}
               />
             </div>
-            <StoryContentScrollToTop scrollContainerRef={storyContentRef} />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

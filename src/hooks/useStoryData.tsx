@@ -34,8 +34,6 @@ export const useStoryData = (storyId?: string) => {
   const fetchStory = async () => {
     if (!storyId) {
       console.log('🎯 useStoryData: No storyId provided, skipping fetch');
-      setStory(null);
-      setIsLoading(false);
       return;
     }
     
@@ -62,11 +60,6 @@ export const useStoryData = (storyId?: string) => {
     } catch (err: any) {
       console.error('🎯 useStoryData: Error fetching story:', err);
       setError(err.message);
-      
-      // Show toast for user-friendly error
-      if (err.message?.includes('No rows')) {
-        setError('Story not found with the provided ID');
-      }
     } finally {
       setIsLoading(false);
     }

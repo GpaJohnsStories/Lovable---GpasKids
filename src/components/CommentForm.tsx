@@ -327,7 +327,7 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
             setExistingPersonalIdError={setExistingPersonalIdError}
           />
 
-          <StoryCodeField control={form.control} />
+          <StoryCodeField form={form} />
 
           <CommentFormFields form={form} />
 

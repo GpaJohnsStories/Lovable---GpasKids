@@ -101,6 +101,9 @@ const StoryVideoUpload: React.FC<StoryVideoUploadProps> = ({
 
   return (
     <div className="space-y-4">
+      <Label htmlFor="video-upload" className="text-base font-bold text-gray-700">
+        Story Video (Optional)
+      </Label>
       
       {videoUrl ? (
         <div className="space-y-3">
@@ -152,6 +155,7 @@ const StoryVideoUpload: React.FC<StoryVideoUploadProps> = ({
                     <p className="mb-2 text-sm text-gray-500">
                       <span className="font-semibold">Click to upload video</span>
                     </p>
+                    <p className="text-xs text-gray-500">MP4, WebM, MOV, or AVI (MAX. 100MB)</p>
                   </>
                 )}
               </div>
@@ -169,7 +173,7 @@ const StoryVideoUpload: React.FC<StoryVideoUploadProps> = ({
           <div className="flex items-start space-x-2 p-3 bg-blue-50 rounded-lg">
             <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
             <div className="text-sm text-blue-800">
-              <p className="font-bold mb-1">Video Guidelines:</p>
+              <p className="font-medium mb-1">Video Guidelines:</p>
               <ul className="text-xs space-y-1">
                 <li>• Maximum file size: 100MB</li>
                 <li>• Supported formats: MP4, WebM, MOV, AVI</li>
