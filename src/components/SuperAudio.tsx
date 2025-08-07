@@ -93,9 +93,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 <p className="text-xs text-gray-500 mt-1">Being read by {voiceName} from OpenAI</p>
               )}
             </div>
-            {/* 2x2 Audio Control Buttons */}
+            {/* 1x4 Audio Control Buttons */}
             <div className="mt-4">
-              <div className="grid grid-cols-2 gap-2 max-w-[120px] mx-auto">
+              <div className="grid grid-cols-4 gap-2 max-w-[244px] mx-auto">
                 {/* Top Row: Play and Pause */}
                 <button 
                   className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
