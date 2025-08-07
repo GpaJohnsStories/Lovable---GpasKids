@@ -94,9 +94,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               )}
             </div>
             
-            {/* 4x4 Button Grid - No gaps, fits exactly */}
+            {/* 4x4 Button Grid - Row 3 is half height and merged */}
             <div className="h-[220px]">
-              <div className="grid grid-rows-4 grid-cols-4 max-w-[220px] mx-auto h-full">
+              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '1fr 1fr 0.5fr 1fr' }}>
                 {/* Row 1: Main Audio Controls */}
                 <button 
                   className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
@@ -164,11 +164,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 <button className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg bg-gray-300/50"></button>
                 <button className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg bg-gray-300/50"></button>
 
-                {/* Row 3: Placeholder buttons for future features */}
-                <button className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg bg-gray-300/50"></button>
-                <button className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg bg-gray-300/50"></button>
-                <button className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg bg-gray-300/50"></button>
-                <button className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg bg-gray-300/50"></button>
+                {/* Row 3: Merged cell spanning all 4 columns, half height */}
+                <div className="col-span-4 bg-white/30 border-2 border-white/40 rounded-lg shadow-lg flex items-center justify-center">
+                  <span className="text-gray-600 text-sm font-medium">Speed Controls</span>
+                </div>
 
                 {/* Row 4: Speed Controls */}
                 <button 
