@@ -75,10 +75,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
         </button>
 
         {/* Content Area - Full popup */}
-        <div className="h-full p-6">
-          <div className="h-full bg-white/50 rounded-xl p-6 backdrop-blur-sm border border-orange-200">
+        <div className="h-full p-1">
+          <div className="h-[98%] w-[98%] mx-auto bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-orange-200">
             {/* Title at top center */}
-            <div className="text-center mb-4">
+            <div className="text-center mb-2">
               <h3 className="text-xl font-bold text-gray-800">{title}</h3>
             </div>
             {/* Content will go here when ready */}
