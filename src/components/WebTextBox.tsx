@@ -135,6 +135,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
             author={webtext?.author}
             voiceName={webtext?.ai_voice_name}
+            showAuthor={false}
           />
         </div>
       </>

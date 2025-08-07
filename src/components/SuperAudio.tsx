@@ -9,6 +9,7 @@ interface SuperAudioProps {
   title: string;
   author?: string;
   voiceName?: string;
+  showAuthor?: boolean;
 }
 
 export const SuperAudio: React.FC<SuperAudioProps> = ({
@@ -17,7 +18,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   content,
   title,
   author,
-  voiceName
+  voiceName,
+  showAuthor = true
 }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -84,7 +86,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             {/* Title and Author at top center */}
             <div className="text-center mb-2">
               <h3 className="text-xl font-bold text-gray-800">{title}</h3>
-              {author && (
+              {showAuthor && author && (
                 <p className="text-sm text-gray-600 mt-1">by {author}</p>
               )}
               {voiceName && (
