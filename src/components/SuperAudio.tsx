@@ -197,7 +197,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     transition-all duration-200 flex flex-col items-center justify-center
                     relative overflow-hidden group"
                   style={{
-                    background: `linear-gradient(135deg, hsl(120, 40%, 70%) 0%, hsl(120, 40%, 60%) 100%)`,
+                    background: `linear-gradient(135deg, hsl(120, 50%, 60%) 0%, hsl(120, 50%, 50%) 100%)`,
                     boxShadow: `0 8px 20px rgba(34, 139, 34, 0.3), inset 0 2px 4px rgba(255,255,255,0.3)`
                   }}
                   onClick={(e) => {e.stopPropagation(); console.log('Normal speed clicked');}}
