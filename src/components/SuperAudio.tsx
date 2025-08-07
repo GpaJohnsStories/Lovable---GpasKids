@@ -56,33 +56,26 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
         ref={dialogRef}
-        className="fixed max-w-none max-h-none p-0 bg-gradient-to-b from-amber-50 to-orange-100 border-4 border-orange-300 rounded-2xl shadow-2xl"
+        className="fixed max-w-none max-h-none p-0 bg-gradient-to-b from-amber-50 to-orange-100 border-4 border-orange-300 rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing"
         style={{
           width: '288px',
           height: '330px',
           left: `calc(10% + ${position.x}px)`,
           top: `calc(5% + ${position.y}px)`,
-          cursor: isDragging ? 'grabbing' : 'default'
+          cursor: isDragging ? 'grabbing' : 'grab'
         }}
+        onMouseDown={handleMouseDown}
       >
-        {/* Header - Draggable */}
-        <DialogHeader 
-          className="relative p-6 pb-4 bg-gradient-to-r from-orange-400 to-amber-400 rounded-t-xl cursor-grab active:cursor-grabbing"
-          onMouseDown={handleMouseDown}
+        {/* Close button - Top Right Corner */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
         >
-          <DialogTitle className="text-2xl font-bold text-white text-center pr-10">
-            {title}
-          </DialogTitle>
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
-          >
-            <X className="h-6 w-6 text-white" />
-          </button>
-        </DialogHeader>
+          <X className="h-6 w-6 text-gray-600" />
+        </button>
 
-        {/* Empty Content Area - Ready for future features */}
-        <div className="flex-1 p-6">
+        {/* Content Area - Full popup */}
+        <div className="h-full p-6">
           <div className="h-full bg-white/50 rounded-xl p-6 backdrop-blur-sm border border-orange-200">
             {/* Content will go here when ready */}
           </div>
