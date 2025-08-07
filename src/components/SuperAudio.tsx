@@ -7,13 +7,15 @@ interface SuperAudioProps {
   onClose: () => void;
   content: string;
   title: string;
+  author?: string;
 }
 
 export const SuperAudio: React.FC<SuperAudioProps> = ({
   isOpen,
   onClose,
   content,
-  title
+  title,
+  author
 }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -77,9 +79,12 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
         {/* Content Area - Full popup */}
         <div className="h-full p-1">
           <div className="h-[98%] w-[98%] mx-auto bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-orange-200">
-            {/* Title at top center */}
+            {/* Title and Author at top center */}
             <div className="text-center mb-2">
               <h3 className="text-xl font-bold text-gray-800">{title}</h3>
+              {author && (
+                <p className="text-sm text-gray-600 mt-1">by {author}</p>
+              )}
             </div>
             {/* Content will go here when ready */}
           </div>
