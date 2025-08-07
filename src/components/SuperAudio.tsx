@@ -95,7 +95,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             </div>
             {/* 2x2 Audio Control Buttons */}
             <div className="mt-4">
-              <div className="grid grid-cols-2 gap-3 max-w-[140px] mx-auto">
+              <div className="grid grid-cols-2 gap-2 max-w-[120px] mx-auto">
                 {/* Top Row: Play and Pause */}
                 <button 
                   className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
