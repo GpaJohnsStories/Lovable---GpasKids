@@ -20,18 +20,24 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   const storyId = mode === 'update' ? id : undefined;
   const [showAudioControls, setShowAudioControls] = useState(false);
 
+  console.log('🎯 UnifiedStoryPage: Rendering with mode:', mode);
+  console.log('🎯 UnifiedStoryPage: URL id param:', id);
+  console.log('🎯 UnifiedStoryPage: Computed storyId:', storyId);
+
   const {
     formData,
     isLoadingStory,
     isGeneratingAudio,
     refetchStory,
+    populateFormWithStory,
     handleInputChange,
     handlePhotoUpload,
     handlePhotoRemove,
     handleVideoUpload,
     handleVideoRemove,
     handleVoiceChange,
-    handleGenerateAudio
+    handleGenerateAudio,
+    error: storyError
   } = useStoryFormState(storyId);
 
   const { handleStoryFormSave } = useAdminSession();
@@ -59,6 +65,24 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
     setShowAudioControls(!showAudioControls);
   };
 
+  // Show error if we're in update mode but no ID is provided
+  if (mode === 'update' && !id) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <div className="text-lg text-red-600">Error: No story ID provided for update mode</div>
+      </div>
+    );
+  }
+
+  // Show error if story fetch failed
+  if (storyError) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <div className="text-lg text-red-600">Error loading story: {storyError}</div>
+      </div>
+    );
+  }
+
   if (isLoadingStory) {
     return (
       <div className="flex items-center justify-center py-8">
@@ -67,14 +91,12 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
     );
   }
 
-  const pageTitle = mode === 'add' ? 'Add New Story' : `Edit "${formData.title || 'Untitled Story'}"`;
-
   return (
     <div className="max-w-7xl mx-auto p-4">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-800">
-            {pageTitle}
+            Add / Edit Stories & WebText
           </h1>
           
           {/* Peppermint Candy Audio Button */}
@@ -101,6 +123,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           onSaveOnly={onSaveOnly}
           allowTextToSpeech={true}
           context="unified-story-system"
+          onStoryFound={populateFormWithStory}
         />
       </div>
       

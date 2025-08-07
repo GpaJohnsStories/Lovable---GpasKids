@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
-import { supabase } from '@/integrations/supabase/client';
 import { getStoryPhotos } from '@/utils/storyUtils';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { toast } from '@/hooks/use-toast';
 import { AudioButton } from '@/components/AudioButton';
 import { UniversalAudioControls } from '@/components/UniversalAudioControls';
 import { ArrowRight } from 'lucide-react';
@@ -28,16 +25,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [iconUrl, setIconUrl] = useState<string>('');
   const [loading, setLoading] = useState(true);
   
-  // Audio control states
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
-  const [audioGenerated, setAudioGenerated] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [volume, setVolume] = useState(1); // Always 100%
-  const [playbackRate, setPlaybackRate] = useState(1);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  
   // Audio controls state for peppermint button
   const [showAudioControls, setShowAudioControls] = useState(false);
 
@@ -47,347 +34,17 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     return webtext.content || webtext.excerpt || "No content available";
   };
 
-  // Audio cleanup effect
-  useEffect(() => {
-    return () => {
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.src = '';
-      }
-    };
-  }, [currentAudio]);
-
-  // Apply volume and playback rate changes
-  useEffect(() => {
-    if (currentAudio) {
-      currentAudio.volume = volume;
-      currentAudio.playbackRate = playbackRate;
-    }
-  }, [currentAudio, volume, playbackRate]);
-
-  // Audio control functions
-  const canPlayAudio = () => {
-    return !!(webtext?.audio_url || getContent());
-  };
-
-  const handlePlay = useCallback(async () => {
-    if (isPaused && currentAudio) {
-      // Resume paused audio
-      setIsPaused(false);
-      setIsPlaying(true);
-      currentAudio.play();
-      return;
-    }
-
-    if (webtext?.audio_url) {
-      // Play existing audio URL
-      const audio = new Audio(webtext.audio_url);
-      audio.volume = volume;
-      audio.playbackRate = playbackRate;
-      
-      audio.onended = () => {
-        setIsPlaying(false);
-        setIsPaused(false);
-        setCurrentAudio(null);
-      };
-      
-      audio.onerror = () => {
-        setIsPlaying(false);
-        setIsPaused(false);
-        setCurrentAudio(null);
-        toast({
-          title: "Audio Error",
-          description: "Failed to play the audio file",
-          variant: "destructive",
-        });
-      };
-
-      setCurrentAudio(audio);
-      setIsPlaying(true);
-      setIsPaused(false);
-      audio.play();
-    } else if (getContent() && !audioGenerated) {
-      // Generate audio via text-to-speech
-      setIsLoading(true);
-      try {
-        const { data, error } = await supabase.functions.invoke('text-to-speech', {
-          body: {
-            text: getContent(),
-            voice: 'alloy',
-            title: webtext?.title || title,
-            author: webtext?.author
-          }
-        });
-
-        if (error) throw error;
-
-        if (data?.audioUrl) {
-          const audio = new Audio(data.audioUrl);
-          audio.volume = volume;
-          audio.playbackRate = playbackRate;
-          
-          audio.onended = () => {
-            setIsPlaying(false);
-            setIsPaused(false);
-            setCurrentAudio(null);
-          };
-          
-          audio.onerror = () => {
-            setIsPlaying(false);
-            setIsPaused(false);
-            setCurrentAudio(null);
-            toast({
-              title: "Audio Error",
-              description: "Failed to play the generated audio",
-              variant: "destructive",
-            });
-          };
-
-          setCurrentAudio(audio);
-          setIsPlaying(true);
-          setIsPaused(false);
-          setAudioGenerated(true);
-          audio.play();
-        }
-      } catch (error) {
-        console.error('Error generating audio:', error);
-        toast({
-          title: "Audio Generation Error",
-          description: "Failed to generate audio for this content",
-          variant: "destructive",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  }, [webtext?.audio_url, getContent, volume, playbackRate, isPaused, currentAudio, audioGenerated, webtext?.title, title, webtext?.author]);
-
-  const handlePause = useCallback(() => {
-    if (currentAudio && isPlaying) {
-      currentAudio.pause();
-      setIsPlaying(false);
-      setIsPaused(true);
-    }
-  }, [currentAudio, isPlaying]);
-
-  const handleStop = useCallback(() => {
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-      setIsPlaying(false);
-      setIsPaused(false);
-      setCurrentAudio(null);
-    }
-  }, [currentAudio]);
-
-  const handleStartOver = useCallback(() => {
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-      setIsPlaying(false);
-      setIsPaused(false);
-      setCurrentAudio(null);
-    }
-    // Restart playback
-    setTimeout(() => handlePlay(), 100);
-  }, [currentAudio, handlePlay]);
-
-  const handleVolumeChange = useCallback((newVolume: number) => {
-    setVolume(newVolume);
-  }, []);
-
-  const handleSpeedChange = useCallback((newSpeed: number) => {
-    setPlaybackRate(newSpeed);
-  }, []);
-
-  // Audio controls with primary and speed controls only
-  const renderAudioControls = () => {
-    console.log('renderAudioControls called', { canPlayAudio: canPlayAudio(), webtext });
-    if (!canPlayAudio()) {
-      return (
-        <div className="text-center text-gray-500 py-4">
-          No audio available
-        </div>
-      );
-    }
-
-    return (
-      <TooltipProvider>
-        <div className="px-4">
-          <table className="w-full border-collapse border-0">
-            <tbody>
-            <tr>
-              {/* Play Button */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={handlePlay}
-                      disabled={isLoading || isPlaying}
-                      className="w-full h-16 text-lg font-bold bg-green-500 hover:bg-green-600 disabled:bg-gray-300 text-white border-r border-gray-400 rounded-tl transition-colors flex flex-col items-center justify-center"
-                      style={{ minWidth: '80px' }}
-                    >
-                      <div className="text-xl">▶</div>
-                      <div className="text-xs mt-1">Play</div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Play</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Pause Button */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={handlePause}
-                      disabled={!isPlaying}
-                      className="w-full h-16 text-lg font-bold text-white border-r border-gray-400 transition-colors flex flex-col items-center justify-center"
-                      style={{ 
-                        backgroundColor: '#E6C966',
-                        minWidth: '80px'
-                      }}
-                    >
-                      <div className="text-xl">⏸</div>
-                      <div className="text-xs mt-1">Pause</div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Pause</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Stop Button */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={handleStop}
-                      disabled={!currentAudio}
-                      className="w-full h-16 text-lg font-bold text-white border-r border-gray-400 transition-colors flex flex-col items-center justify-center"
-                      style={{ 
-                        backgroundColor: '#ef4444',
-                        minWidth: '80px'
-                      }}
-                    >
-                      <div className="text-xl">⏹</div>
-                      <div className="text-xs mt-1">Stop</div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Stop</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Start Over Button */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={handleStartOver}
-                      disabled={isLoading}
-                      className="w-full h-16 text-lg font-bold bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white rounded-tr transition-colors flex flex-col items-center justify-center"
-                      style={{ minWidth: '80px' }}
-                    >
-                      <div className="text-xl">↻</div>
-                      <div className="text-xs mt-1">Restart</div>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Start Over</TooltipContent>
-                </Tooltip>
-              </td>
-            </tr>
-
-            {/* Speed Controls Banner */}
-            <tr>
-              <td colSpan={4} className="p-0 border-0">
-                <div className="w-full h-6 border-t border-gray-400 flex items-center justify-center" style={{ backgroundColor: '#9c441a' }}>
-                  <span className="text-white text-xs font-bold">Select Playback Speed</span>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              {/* Speed 0.75x */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleSpeedChange(0.75)}
-                      className={`w-full h-12 text-sm font-bold ${playbackRate === 0.75 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 border-t border-gray-400 rounded-bl transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '80px' }}
-                    >
-                      0.75x
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Speed 0.75x</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Speed 1x */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleSpeedChange(1)}
-                      className={`w-full h-12 text-sm font-bold ${playbackRate === 1 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '80px' }}
-                    >
-                      1x
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Speed 1x</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Speed 1.25x */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleSpeedChange(1.25)}
-                      className={`w-full h-12 text-sm font-bold ${playbackRate === 1.25 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-r border-gray-400 border-t border-gray-400 transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '80px' }}
-                    >
-                      1.25x
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Speed 1.25x</TooltipContent>
-                </Tooltip>
-              </td>
-
-              {/* Speed 1.5x */}
-              <td className="p-0 border-0" style={{ width: '25%' }}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => handleSpeedChange(1.5)}
-                      className={`w-full h-12 text-sm font-bold ${playbackRate === 1.5 ? 'bg-orange-600' : 'bg-orange-500 hover:bg-orange-600'} text-white border-t border-gray-400 rounded-br transition-colors flex items-center justify-center`}
-                      style={{ minWidth: '80px' }}
-                    >
-                      1.5x
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Speed 1.5x</TooltipContent>
-                </Tooltip>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      </TooltipProvider>
-    );
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       
       // Fetch webtext content
       const webtextData = await lookupStoryByCode(webtextCode, true);
-      setWebtext(webtextData);
+      setWebtext(webtextData.story);
       
       // Set icon URL from the webtext story photos
-      if (webtextData) {
-        const photos = getStoryPhotos(webtextData);
+      if (webtextData.story) {
+        const photos = getStoryPhotos(webtextData.story);
         if (photos.length > 0 && photos[0].url) {
           setIconUrl(photos[0].url);
         } else {
@@ -403,7 +60,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     fetchData();
   }, [webtextCode, lookupStoryByCode]);
 
-
   const isSysWel = webtextCode === "SYS-WEL";
   const photos = webtext ? getStoryPhotos(webtext) : [];
   const mainPhoto = photos[0];
@@ -413,76 +69,74 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     return (
       <>
         <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
-        {/* Peppermint Audio Button - Top Right Corner */}
-        <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
-          <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
-            Click to listen
+          {/* Peppermint Audio Button - Top Right Corner */}
+          <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
+            <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
+              Click to listen
+            </div>
+            <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
+            <AudioButton code="SYS-WEL" onClick={() => setShowAudioControls(!showAudioControls)} />
           </div>
-          <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
-          <AudioButton code="SYS-WEL" onClick={() => setShowAudioControls(!showAudioControls)} />
-        </div>
 
-        {/* Top section with photo and title */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          {/* Photo in left column on tablets+ */}
-          {mainPhoto && (
-            <div className="w-fit flex-shrink-0">
-              <div className="group relative">
-                <img
-                  src={mainPhoto.url}
-                  alt={mainPhoto.alt}
-                  className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded-lg border-2 border-blue-500 shadow-lg cursor-pointer transition-transform hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 rounded-lg"></div>
-                <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-xs text-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {mainPhoto.alt}
+          {/* Top section with photo and title */}
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
+            {/* Photo in left column on tablets+ */}
+            {mainPhoto && (
+              <div className="w-fit flex-shrink-0">
+                <div className="group relative">
+                  <img
+                    src={mainPhoto.url}
+                    alt={mainPhoto.alt}
+                    className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded-lg border-2 border-blue-500 shadow-lg cursor-pointer transition-transform hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 rounded-lg"></div>
+                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-xs text-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {mainPhoto.alt}
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Title and content section */}
-          <div className="flex-1 min-w-0 flex flex-col">
+            {/* Title and content section */}
+            <div className="flex-1 min-w-0 flex flex-col">
+              {/* Title section */}
+              <div className="mb-4">
+                <div className="flex items-start gap-3 justify-start">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-blue-800 leading-tight break-words text-left">
+                    {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
+                  </h1>
+                </div>
+              </div>
 
-
-            {/* Title section */}
-            <div className="mb-4">
-              <div className="flex items-start gap-3 justify-start">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-blue-800 leading-tight break-words text-left">
-                  {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
-                </h1>
+              {/* Content below title */}
+              <div className="flex-1 min-w-0">
+                <div 
+                  className="font-handwritten text-blue-800 leading-relaxed break-words [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>h3]:font-handwritten [&>p]:text-base [&>p]:sm:text-lg [&>p]:mb-3 [&>p]:break-words [&>p]:font-handwritten [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:text-base [&>li]:sm:text-lg [&>li]:mb-1 [&>li]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
+                  dangerouslySetInnerHTML={{ __html: getContent() }}
+                />
               </div>
             </div>
+          </div>
 
-            {/* Content below title */}
-            <div className="flex-1 min-w-0">
-              <div 
-                className="font-handwritten text-blue-800 leading-relaxed break-words [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>h3]:font-handwritten [&>p]:text-base [&>p]:sm:text-lg [&>p]:mb-3 [&>p]:break-words [&>p]:font-handwritten [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:text-base [&>li]:sm:text-lg [&>li]:mb-1 [&>li]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
-                dangerouslySetInnerHTML={{ __html: getContent() }}
-              />
+          {/* Bottom right: Webtext code */}
+          <div className="flex justify-end">
+            <div className="bg-blue-200/70 rounded px-3 py-1 text-sm font-mono text-blue-700 border border-blue-400">
+              {webtextCode}
             </div>
           </div>
-        </div>
-
-        {/* Bottom right: Webtext code */}
-        <div className="flex justify-end">
-          <div className="bg-blue-200/70 rounded px-3 py-1 text-sm font-mono text-blue-700 border border-blue-400">
-            {webtextCode}
-          </div>
-        </div>
-        
-        {/* Audio Controls - Show when activated */}
-        {showAudioControls && (
-          <div className="mt-4 p-3 bg-blue-50 border border-blue-300 rounded-lg">
-            <UniversalAudioControls
-              content={getContent()}
-              title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
-              allowTextToSpeech={true}
-              size="sm"
-              className="w-full"
-            />
-          </div>
-        )}
+          
+          {/* Audio Controls - Show when activated */}
+          {showAudioControls && (
+            <div className="mt-4 p-3 bg-blue-50 border border-blue-300 rounded-lg">
+              <UniversalAudioControls
+                content={getContent()}
+                title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
+                allowTextToSpeech={true}
+                size="sm"
+                className="w-full"
+              />
+            </div>
+          )}
         </div>
       </>
     );

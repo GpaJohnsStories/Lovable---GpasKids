@@ -4,7 +4,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import StoryCodeField from './StoryCodeField';
 
 interface StoryFormFieldsProps {
   formData: {
@@ -51,6 +50,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           value={formData.title}
           onChange={(e) => onInputChange('title', e.target.value)}
           placeholder="Enter story title"
+          style={{ borderColor: '#9c441a', borderWidth: '2px' }}
           required
         />
       </div>
@@ -65,6 +65,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           value={formData.author}
           onChange={(e) => onInputChange('author', e.target.value)}
           placeholder="Enter author name"
+          style={{ borderColor: '#9c441a', borderWidth: '2px' }}
           required
         />
       </div>
@@ -74,7 +75,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           Category *
         </Label>
         <Select value={formData.category} onValueChange={(value) => onInputChange('category', value)}>
-          <SelectTrigger>
+          <SelectTrigger style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
@@ -87,13 +88,6 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
         </Select>
       </div>
 
-      <div className="space-y-2">
-        <StoryCodeField
-          value={formData.story_code}
-          onChange={(value) => onInputChange('story_code', value)}
-          compact={compact}
-        />
-      </div>
 
       <div className="space-y-2">
         <Label htmlFor="tagline" className={`font-bold text-gray-700 ${labelSize}`}>
@@ -107,6 +101,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           maxLength={100}
           rows={2}
           className="resize-none"
+          style={{ borderColor: '#9c441a', borderWidth: '2px' }}
         />
         <div className="text-right text-sm text-gray-500">
           {formData.tagline.length}/100
@@ -123,6 +118,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           onChange={(e) => onInputChange('excerpt', e.target.value)}
           placeholder="Write a brief, engaging description that will make readers want to read your story..."
           rows={compact ? 2 : 3}
+          style={{ borderColor: '#9c441a', borderWidth: '2px' }}
         />
       </div>
 
