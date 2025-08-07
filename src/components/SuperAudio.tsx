@@ -182,7 +182,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     }}
                     onClick={(e) => {e.stopPropagation(); console.log('Normal speed clicked');}}
                   >
-                    <span className="text-white font-bold text-xs drop-shadow-sm">1x</span>
+                    <span className="text-white font-bold text-xs drop-shadow-sm">Normal</span>
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
                   </button>
 
@@ -198,7 +198,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     }}
                     onClick={(e) => {e.stopPropagation(); console.log('Fast speed clicked');}}
                   >
-                    <span className="text-white font-bold text-xs drop-shadow-sm">1.25x</span>
+                    <span className="text-white font-bold text-xs drop-shadow-sm">Fast</span>
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
                   </button>
 
@@ -214,7 +214,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     }}
                     onClick={(e) => {e.stopPropagation(); console.log('Faster speed clicked');}}
                   >
-                    <span className="text-white font-bold text-xs drop-shadow-sm">1.5x</span>
+                    <span className="text-white font-bold text-xs drop-shadow-sm">Faster</span>
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
                   </button>
 
@@ -230,7 +230,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     }}
                     onClick={(e) => {e.stopPropagation(); console.log('Fastest speed clicked');}}
                   >
-                    <span className="text-white font-bold text-xs drop-shadow-sm">2x</span>
+                    <span className="text-white font-bold text-xs drop-shadow-sm">Fastest</span>
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
                   </button>
                 </div>
