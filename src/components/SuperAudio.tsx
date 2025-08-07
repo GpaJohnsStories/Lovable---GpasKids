@@ -170,8 +170,11 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       ></div>
                       {/* Progress handle */}
                       <div 
-                        className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white border-2 border-blue-500 rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform"
-                        style={{ left: 'calc(35% - 8px)' }}
+                        className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 border-2 border-blue-500 rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform"
+                        style={{ 
+                          left: 'calc(35% - 8px)',
+                          background: '#F2BA15'
+                        }}
                       ></div>
                     </div>
                     {/* Time labels */}
