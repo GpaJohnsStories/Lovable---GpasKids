@@ -31,13 +31,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
           </button>
         </DialogHeader>
 
-        {/* Content Area */}
-        <div className="flex-1 p-6 overflow-auto">
+        {/* Empty Content Area - Ready for future features */}
+        <div className="flex-1 p-6">
           <div className="h-full bg-white/50 rounded-xl p-6 backdrop-blur-sm border border-orange-200">
-            <div 
-              className="font-handwritten text-lg leading-relaxed text-blue-800 [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>p]:mb-3 [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>li]:mb-1"
-              dangerouslySetInnerHTML={{ __html: content }}
-            />
+            {/* Content will go here when ready */}
           </div>
         </div>
       </DialogContent>
