@@ -167,9 +167,73 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 <p className="text-xs text-gray-600 text-center p-2">Top Section</p>
               </div>
               
-              {/* Bottom Half */}
-              <div className="flex-1 bg-white/30 border-t border-orange-200">
-                <p className="text-xs text-gray-600 text-center p-2">Bottom Section</p>
+              {/* Bottom Half - Speed Controls */}
+              <div className="flex-1 bg-white/30 border-t border-orange-200 flex items-center justify-center">
+                <div className="grid grid-cols-4 gap-2 max-w-[244px]">
+                  {/* Normal Speed - 100% */}
+                  <button 
+                    className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
+                      transform hover:scale-105 hover:shadow-xl active:scale-95
+                      transition-all duration-200 flex flex-col items-center justify-center
+                      relative overflow-hidden group"
+                    style={{
+                      background: `linear-gradient(135deg, #6b7280 0%, #4b5563 100%)`,
+                      boxShadow: `0 8px 20px rgba(107, 114, 128, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
+                    }}
+                    onClick={(e) => {e.stopPropagation(); console.log('Normal speed clicked');}}
+                  >
+                    <span className="text-white font-bold text-xs drop-shadow-sm">1x</span>
+                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
+                  </button>
+
+                  {/* Fast Speed - 125% */}
+                  <button 
+                    className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
+                      transform hover:scale-105 hover:shadow-xl active:scale-95
+                      transition-all duration-200 flex flex-col items-center justify-center
+                      relative overflow-hidden group"
+                    style={{
+                      background: `linear-gradient(135deg, #059669 0%, #047857 100%)`,
+                      boxShadow: `0 8px 20px rgba(5, 150, 105, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
+                    }}
+                    onClick={(e) => {e.stopPropagation(); console.log('Fast speed clicked');}}
+                  >
+                    <span className="text-white font-bold text-xs drop-shadow-sm">1.25x</span>
+                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
+                  </button>
+
+                  {/* Faster Speed - 150% */}
+                  <button 
+                    className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
+                      transform hover:scale-105 hover:shadow-xl active:scale-95
+                      transition-all duration-200 flex flex-col items-center justify-center
+                      relative overflow-hidden group"
+                    style={{
+                      background: `linear-gradient(135deg, #ea580c 0%, #c2410c 100%)`,
+                      boxShadow: `0 8px 20px rgba(234, 88, 12, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
+                    }}
+                    onClick={(e) => {e.stopPropagation(); console.log('Faster speed clicked');}}
+                  >
+                    <span className="text-white font-bold text-xs drop-shadow-sm">1.5x</span>
+                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
+                  </button>
+
+                  {/* Fastest Speed - 200% */}
+                  <button 
+                    className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
+                      transform hover:scale-105 hover:shadow-xl active:scale-95
+                      transition-all duration-200 flex flex-col items-center justify-center
+                      relative overflow-hidden group"
+                    style={{
+                      background: `linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)`,
+                      boxShadow: `0 8px 20px rgba(220, 38, 38, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
+                    }}
+                    onClick={(e) => {e.stopPropagation(); console.log('Fastest speed clicked');}}
+                  >
+                    <span className="text-white font-bold text-xs drop-shadow-sm">2x</span>
+                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
