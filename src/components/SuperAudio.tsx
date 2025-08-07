@@ -59,7 +59,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
         className="fixed max-w-none max-h-none p-0 bg-gradient-to-b from-amber-50 to-orange-100 border-4 border-orange-300 rounded-2xl shadow-2xl"
         style={{
           width: '288px',
-          height: '307px',
+          height: '330px',
           left: `calc(10% + ${position.x}px)`,
           top: `calc(5% + ${position.y}px)`,
           cursor: isDragging ? 'grabbing' : 'default'
