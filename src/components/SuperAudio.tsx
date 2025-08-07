@@ -36,7 +36,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(audioDuration || 0);
+  const [duration, setDuration] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -132,40 +132,98 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     setPlaybackRate(speed);
   }, []);
 
-  // Audio event handlers
+  // Audio event handlers and initialization
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !audioUrl) return;
 
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
-    const handleDurationChange = () => setDuration(audio.duration);
-    const handleLoadStart = () => setIsLoading(true);
-    const handleCanPlay = () => setIsLoading(false);
+    // Reset state when audio URL changes
+    setCurrentTime(0);
+    setDuration(0);
+    setIsPlaying(false);
+    setError(null);
+    setIsLoading(true);
+
+    const handleTimeUpdate = () => {
+      if (audio.currentTime !== undefined) {
+        setCurrentTime(audio.currentTime);
+      }
+    };
+
+    const handleDurationChange = () => {
+      if (audio.duration && !isNaN(audio.duration) && isFinite(audio.duration)) {
+        setDuration(audio.duration);
+        console.log('Audio duration updated:', audio.duration);
+      }
+    };
+
+    const handleLoadedMetadata = () => {
+      if (audio.duration && !isNaN(audio.duration) && isFinite(audio.duration)) {
+        setDuration(audio.duration);
+        console.log('Audio metadata loaded, duration:', audio.duration);
+      }
+      // Use audioDuration prop as fallback if audio duration is not available
+      else if (audioDuration && audioDuration > 0) {
+        setDuration(audioDuration);
+        console.log('Using prop duration as fallback:', audioDuration);
+      }
+    };
+
+    const handleLoadStart = () => {
+      setIsLoading(true);
+      console.log('Audio loading started');
+    };
+
+    const handleCanPlay = () => {
+      setIsLoading(false);
+      console.log('Audio can play');
+    };
+
     const handleEnded = () => {
       setIsPlaying(false);
       setCurrentTime(0);
     };
-    const handleError = () => {
+
+    const handleError = (e: Event) => {
+      console.error('Audio error:', e);
       setError('Failed to load audio');
       setIsLoading(false);
     };
 
+    const handleWaiting = () => {
+      setIsLoading(true);
+    };
+
+    const handlePlaying = () => {
+      setIsLoading(false);
+    };
+
+    // Add all event listeners
     audio.addEventListener('timeupdate', handleTimeUpdate);
     audio.addEventListener('durationchange', handleDurationChange);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
     audio.addEventListener('loadstart', handleLoadStart);
     audio.addEventListener('canplay', handleCanPlay);
     audio.addEventListener('ended', handleEnded);
     audio.addEventListener('error', handleError);
+    audio.addEventListener('waiting', handleWaiting);
+    audio.addEventListener('playing', handlePlaying);
+
+    // Force load metadata
+    audio.load();
 
     return () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('durationchange', handleDurationChange);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
       audio.removeEventListener('loadstart', handleLoadStart);
       audio.removeEventListener('canplay', handleCanPlay);
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('error', handleError);
+      audio.removeEventListener('waiting', handleWaiting);
+      audio.removeEventListener('playing', handlePlaying);
     };
-  }, [audioUrl]);
+  }, [audioUrl, audioDuration]);
 
   // Cleanup audio when component unmounts or modal closes
   useEffect(() => {
@@ -209,6 +267,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             ref={audioRef}
             src={audioUrl}
             preload="metadata"
+            crossOrigin="anonymous"
           />
         )}
         {/* Close button - Top Right Corner */}
