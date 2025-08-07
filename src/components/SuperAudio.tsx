@@ -93,7 +93,19 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 <p className="text-xs text-gray-500 mt-1">Being read by {voiceName} from OpenAI</p>
               )}
             </div>
-            {/* Content will go here when ready */}
+            {/* Color Preview for Design Discussion */}
+            <div className="mt-4">
+              <div className="text-center">
+                <p className="text-sm text-gray-600 mb-2">Proposed Button Colors:</p>
+                <div className="flex justify-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-b from-emerald-400 to-emerald-600 border-2 border-white/30"></div>
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-b from-amber-400 to-amber-600 border-2 border-white/30"></div>
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-b from-sky-400 to-sky-600 border-2 border-white/30"></div>
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-b from-rose-400 to-rose-600 border-2 border-white/30"></div>
+                </div>
+                <p className="text-xs text-gray-500 mt-1">Play • Pause • Restart • Stop</p>
+              </div>
+            </div>
           </div>
         </div>
       </DialogContent>
