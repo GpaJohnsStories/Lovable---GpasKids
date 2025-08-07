@@ -190,7 +190,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   className="col-span-4 border-t-2 border-l-2 border-r-2 border-white/40 shadow-lg flex items-center justify-center rounded-t-lg"
                   style={{ backgroundColor: '#814d2e' }}
                 >
-                  <span className="text-white text-sm font-bold">Playback Speed</span>
+                  <span className="text-white text-sm font-bold font-fun">Playback Speed</span>
                 </div>
 
                 {/* Row 4: Speed Controls */}
@@ -206,7 +206,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     }}
                     onClick={(e) => {e.stopPropagation(); console.log('Normal speed clicked');}}
                   >
-                    <span className="font-bold text-xs drop-shadow-sm" style={{ color: '#814d2e' }}>Normal</span>
+                    <span className="font-bold text-xs drop-shadow-sm font-fun" style={{ color: '#814d2e' }}>Normal</span>
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
                   </button>
                 </div>
@@ -223,7 +223,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     }}
                     onClick={(e) => {e.stopPropagation(); console.log('Fast speed clicked');}}
                   >
-                    <span className="font-bold text-xs drop-shadow-sm" style={{ color: '#814d2e' }}>Fast</span>
+                    <span className="font-bold text-xs drop-shadow-sm font-fun" style={{ color: '#814d2e' }}>Fast</span>
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
                   </button>
                 </div>
@@ -240,7 +240,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     }}
                     onClick={(e) => {e.stopPropagation(); console.log('Faster speed clicked');}}
                   >
-                    <span className="font-bold text-xs drop-shadow-sm" style={{ color: '#814d2e' }}>Faster</span>
+                    <span className="font-bold text-xs drop-shadow-sm font-fun" style={{ color: '#814d2e' }}>Faster</span>
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
                   </button>
                 </div>
@@ -257,7 +257,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     }}
                     onClick={(e) => {e.stopPropagation(); console.log('Fastest speed clicked');}}
                   >
-                    <span className="font-bold text-xs drop-shadow-sm" style={{ color: '#814d2e' }}>Fastest</span>
+                    <span className="font-bold text-xs drop-shadow-sm font-fun" style={{ color: '#814d2e' }}>Fastest</span>
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
                   </button>
                 </div>
