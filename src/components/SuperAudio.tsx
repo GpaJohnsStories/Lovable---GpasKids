@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { Play, Pause, RotateCcw, Square } from 'lucide-react';
+import { AudioControlButtons } from './AudioControlButtons';
+import { AudioProgressBar } from './AudioProgressBar';
+import { AudioSpeedControls } from './AudioSpeedControls';
 
 interface SuperAudioProps {
   isOpen: boolean;
@@ -181,7 +183,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     }
   }, [isDragging, dragStart]);
 
-  const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
+  
 
   return (
     <DialogPrimitive.Root open={isOpen} onOpenChange={onClose}>
@@ -234,199 +236,32 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             <div className="h-[50%]">
               <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '1fr 0.35fr 0.5fr 1fr' }}>
                 {/* Row 1: Main Audio Controls */}
-                <button 
-                  className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
-                    transform hover:scale-105 hover:shadow-xl active:scale-95
-                    transition-all duration-200 flex items-center justify-center
-                    relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    background: `linear-gradient(135deg, #16a34a 0%, #15803d 100%)`,
-                    boxShadow: `0 8px 20px rgba(22, 163, 74, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
-                  }}
-                  onClick={(e) => {e.stopPropagation(); handlePlay();}}
-                  disabled={!audioUrl || isLoading || isPlaying}
-                >
-                  <Play className="w-6 h-6 text-white drop-shadow-sm" fill="white" />
-                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
-                </button>
-
-                <button 
-                  className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
-                    transform hover:scale-105 hover:shadow-xl active:scale-95
-                    transition-all duration-200 flex items-center justify-center
-                    relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    background: `linear-gradient(135deg, #F2BA15 0%, #d39e00 100%)`,
-                    boxShadow: `0 8px 20px rgba(242, 186, 21, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
-                  }}
-                  onClick={(e) => {e.stopPropagation(); handlePause();}}
-                  disabled={!audioUrl || !isPlaying}
-                >
-                  <Pause className="w-6 h-6 text-white drop-shadow-sm" fill="white" />
-                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
-                </button>
-
-                <button 
-                  className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
-                    transform hover:scale-105 hover:shadow-xl active:scale-95
-                    transition-all duration-200 flex items-center justify-center
-                    relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    background: `linear-gradient(135deg, #169CF9 0%, #0284c7 100%)`,
-                    boxShadow: `0 8px 20px rgba(22, 156, 249, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
-                  }}
-                  onClick={(e) => {e.stopPropagation(); handleRestart();}}
-                  disabled={!audioUrl}
-                >
-                  <RotateCcw className="w-6 h-6 text-white drop-shadow-sm" />
-                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
-                </button>
-
-                <button 
-                  className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
-                    transform hover:scale-105 hover:shadow-xl active:scale-95
-                    transition-all duration-200 flex items-center justify-center
-                    relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    background: `linear-gradient(135deg, #DC2626 0%, #b91c1c 100%)`,
-                    boxShadow: `0 8px 20px rgba(220, 38, 38, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
-                  }}
-                  onClick={(e) => {e.stopPropagation(); handleStop();}}
-                  disabled={!audioUrl}
-                >
-                  <Square className="w-5 h-5 text-white drop-shadow-sm" fill="white" />
-                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
-                </button>
+                <AudioControlButtons
+                  onPlay={handlePlay}
+                  onPause={handlePause}
+                  onRestart={handleRestart}
+                  onStop={handleStop}
+                  isPlaying={isPlaying}
+                  isLoading={isLoading}
+                  audioUrl={audioUrl}
+                />
 
                 {/* Row 2: Progress bar spanning all 4 columns */}
-                <div className="col-span-4 border-2 border-white/40 rounded-lg shadow-lg flex items-center justify-center p-1" style={{ backgroundColor: '#3b82f6' }}>
-                  <div className="w-full max-w-[180px] relative">
-                    {/* Progress track */}
-                    <div 
-                      className="w-full h-2 bg-gray-300/50 rounded-full relative overflow-hidden cursor-pointer"
-                      onClick={handleSeek}
-                    >
-                      {/* Progress fill */}
-                      <div 
-                        className="h-full rounded-full transition-all duration-300"
-                        style={{ 
-                          width: `${progressPercentage}%`,
-                          background: 'linear-gradient(to right, #4ade80, #22c55e)'
-                        }}
-                      ></div>
-                      {/* Progress handle */}
-                      <div 
-                        className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 border-2 border-blue-500 rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform"
-                        style={{ 
-                          left: `calc(${progressPercentage}% - 8px)`,
-                          background: '#F2BA15'
-                        }}
-                      ></div>
-                    </div>
-                    {/* Time labels */}
-                    <div className="flex justify-between mt-1 text-xs text-white font-bold">
-                      <span>{formatTime(currentTime)}</span>
-                      <span>{formatTime(duration)}</span>
-                    </div>
-                    {/* Error display */}
-                    {error && (
-                      <div className="text-red-200 text-xs text-center mt-1">
-                        {error}
-                      </div>
-                    )}
-                    {/* Loading indicator */}
-                    {isLoading && (
-                      <div className="text-white text-xs text-center mt-1">
-                        Loading...
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <AudioProgressBar
+                  currentTime={currentTime}
+                  duration={duration}
+                  onSeek={handleSeek}
+                  formatTime={formatTime}
+                  error={error}
+                  isLoading={isLoading}
+                />
 
-                {/* Row 3: Speed Controls Header */}
-                <div 
-                  className="col-span-4 border-t-2 border-l-2 border-r-2 border-white/40 shadow-lg flex items-center justify-center rounded-t-lg"
-                  style={{ backgroundColor: '#814d2e' }}
-                >
-                  <span className="text-white text-sm font-bold font-fun">Playback Speed</span>
-                </div>
-
-                {/* Row 4: Speed Controls */}
-                <div className="flex items-center justify-center rounded-bl-lg" style={{ backgroundColor: '#814d2e' }}>
-                  <button 
-                    className={`w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
-                      transform hover:scale-105 hover:shadow-xl active:scale-95
-                      transition-all duration-200 flex flex-col items-center justify-center
-                      relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed
-                      ${playbackRate === 1 ? 'ring-2 ring-yellow-400' : ''}`}
-                    style={{
-                      background: `linear-gradient(135deg, hsl(120, 50%, 60%) 0%, hsl(120, 50%, 50%) 100%)`,
-                      boxShadow: `0 8px 20px rgba(34, 139, 34, 0.3), inset 0 2px 4px rgba(255,255,255,0.3)`
-                    }}
-                    onClick={(e) => {e.stopPropagation(); handleSpeedChange(1);}}
-                    disabled={!audioUrl}
-                  >
-                    <span className="font-bold text-xs drop-shadow-sm font-fun" style={{ color: '#814d2e' }}>Normal</span>
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-center" style={{ backgroundColor: '#814d2e' }}>
-                  <button 
-                    className={`w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
-                      transform hover:scale-105 hover:shadow-xl active:scale-95
-                      transition-all duration-200 flex flex-col items-center justify-center
-                      relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed
-                      ${playbackRate === 1.25 ? 'ring-2 ring-yellow-400' : ''}`}
-                    style={{
-                      background: `linear-gradient(135deg, hsl(120, 50%, 55%) 0%, hsl(120, 50%, 45%) 100%)`,
-                      boxShadow: `0 8px 20px rgba(34, 139, 34, 0.4), inset 0 2px 4px rgba(255,255,255,0.3)`
-                    }}
-                    onClick={(e) => {e.stopPropagation(); handleSpeedChange(1.25);}}
-                    disabled={!audioUrl}
-                  >
-                    <span className="font-bold text-xs drop-shadow-sm font-fun" style={{ color: '#FFFDD0' }}>Fast</span>
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-center" style={{ backgroundColor: '#814d2e' }}>
-                  <button 
-                    className={`w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
-                      transform hover:scale-105 hover:shadow-xl active:scale-95
-                      transition-all duration-200 flex flex-col items-center justify-center
-                      relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed
-                      ${playbackRate === 1.5 ? 'ring-2 ring-yellow-400' : ''}`}
-                    style={{
-                      background: `linear-gradient(135deg, hsl(120, 55%, 45%) 0%, hsl(120, 55%, 35%) 100%)`,
-                      boxShadow: `0 8px 20px rgba(34, 139, 34, 0.5), inset 0 2px 4px rgba(255,255,255,0.3)`
-                    }}
-                    onClick={(e) => {e.stopPropagation(); handleSpeedChange(1.5);}}
-                    disabled={!audioUrl}
-                  >
-                    <span className="font-bold text-xs drop-shadow-sm font-fun" style={{ color: '#E6C966' }}>Faster</span>
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-center rounded-br-lg" style={{ backgroundColor: '#814d2e' }}>
-                  <button 
-                    className={`w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
-                      transform hover:scale-105 hover:shadow-xl active:scale-95
-                      transition-all duration-200 flex flex-col items-center justify-center
-                      relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed
-                      ${playbackRate === 2 ? 'ring-2 ring-yellow-400' : ''}`}
-                    style={{
-                      background: `linear-gradient(135deg, #228B22 0%, #1e7a1e 100%)`,
-                      boxShadow: `0 8px 20px rgba(34, 139, 34, 0.6), inset 0 2px 4px rgba(255,255,255,0.3)`
-                    }}
-                    onClick={(e) => {e.stopPropagation(); handleSpeedChange(2);}}
-                    disabled={!audioUrl}
-                  >
-                    <span className="font-bold text-xs drop-shadow-sm font-fun" style={{ color: '#F2BA15' }}>Fastest</span>
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
-                  </button>
-                </div>
+                {/* Rows 3-4: Speed Controls */}
+                <AudioSpeedControls
+                  playbackRate={playbackRate}
+                  onSpeedChange={handleSpeedChange}
+                  audioUrl={audioUrl}
+                />
               </div>
             </div>
           </div>
