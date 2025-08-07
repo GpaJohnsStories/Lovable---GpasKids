@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import UnifiedStoryDashboard from './UnifiedStoryDashboard';
 import { AudioButton } from '@/components/AudioButton';
-import { UniversalAudioControls } from '@/components/UniversalAudioControls';
+import { SuperAudio } from '@/components/SuperAudio';
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useAdminSession } from '@/hooks/useAdminSession';
@@ -18,7 +18,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const storyId = mode === 'update' ? id : undefined;
-  const [showAudioControls, setShowAudioControls] = useState(false);
+  const [showSuperAudio, setShowSuperAudio] = useState(false);
 
   console.log('🎯 UnifiedStoryPage: Rendering with mode:', mode);
   console.log('🎯 UnifiedStoryPage: URL id param:', id);
@@ -62,7 +62,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   };
 
   const toggleAudioControls = () => {
-    setShowAudioControls(!showAudioControls);
+    setShowSuperAudio(!showSuperAudio);
   };
 
   // Show error if we're in update mode but no ID is provided
@@ -127,27 +127,17 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
         />
       </div>
       
-      {/* Universal Audio Controls Popup */}
-      {showAudioControls && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 m-4 max-w-md w-full">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Audio Controls</h3>
-              <button 
-                onClick={() => setShowAudioControls(false)}
-                className="text-gray-500 hover:text-gray-700 text-xl font-bold"
-              >
-                ×
-              </button>
-            </div>
-            <UniversalAudioControls
-              content={formData.content || ''}
-              title={formData.title || ''}
-              allowTextToSpeech={true}
-              size="lg"
-            />
-          </div>
-        </div>
+      {/* SuperAudio Player */}
+      {showSuperAudio && (
+        <SuperAudio
+          isOpen={showSuperAudio}
+          onClose={() => setShowSuperAudio(false)}
+          title={formData.title || 'Story'}
+          author={formData.author}
+          voiceName={formData.ai_voice_name}
+          audioUrl={formData.audio_url}
+          showAuthor={true}
+        />
       )}
     </div>
   );
