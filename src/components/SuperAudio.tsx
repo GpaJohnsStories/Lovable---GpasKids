@@ -257,7 +257,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     }}
                     onClick={(e) => {e.stopPropagation(); console.log('Fastest speed clicked');}}
                   >
-                    <span className="font-bold text-xs drop-shadow-sm font-fun" style={{ color: '#814d2e' }}>Fastest</span>
+                    <span className="font-bold text-xs drop-shadow-sm font-fun" style={{ color: '#F2BA15' }}>Fastest</span>
                     <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"></div>
                   </button>
                 </div>
