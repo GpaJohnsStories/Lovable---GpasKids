@@ -159,7 +159,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 </button>
 
                 {/* Row 2: Progress bar spanning all 4 columns */}
-                <div className="col-span-4 border-2 border-white/40 rounded-lg shadow-lg flex items-center justify-center p-1" style={{ background: 'linear-gradient(to right, #4ade80, #22c55e)' }}>
+                <div className="col-span-4 border-2 border-white/40 rounded-lg shadow-lg flex items-center justify-center p-1" style={{ backgroundColor: '#3b82f6' }}>
                   <div className="w-full max-w-[180px] relative">
                     {/* Progress track */}
                     <div className="w-full h-2 bg-gray-300/50 rounded-full relative overflow-hidden">
