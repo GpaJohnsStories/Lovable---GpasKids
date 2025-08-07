@@ -42,7 +42,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
     <div className={fieldSpacing}>
       <div className="space-y-2">
         <Label htmlFor="title" className={`font-bold text-gray-700 ${labelSize}`}>
-          Title * <span className="text-gray-500 font-normal">(Maximum 50 Characters)</span>
+          Title * <span className="text-gray-500 font-normal">(Maximum 40 Characters)</span>
         </Label>
         <Input
           id="title"
@@ -50,12 +50,12 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           value={formData.title}
           onChange={(e) => onInputChange('title', e.target.value)}
           placeholder="Enter story title"
-          maxLength={50}
+          maxLength={40}
           style={{ borderColor: '#9c441a', borderWidth: '2px' }}
           required
         />
         <div className="text-right text-sm text-gray-500">
-          {formData.title.length}/50
+          {formData.title.length}/40
         </div>
       </div>
 
