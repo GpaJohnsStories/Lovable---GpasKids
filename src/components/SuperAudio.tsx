@@ -187,14 +187,14 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
 
                 {/* Row 3: Speed Controls Header */}
                 <div 
-                  className="col-span-4 border-2 border-white/40 shadow-lg flex items-center justify-center"
+                  className="col-span-4 border-2 border-white/40 shadow-lg flex items-center justify-center rounded-t-lg"
                   style={{ backgroundColor: '#814d2e' }}
                 >
                   <span className="text-white text-sm font-medium">Speed Controls</span>
                 </div>
 
                 {/* Row 4: Speed Controls */}
-                <div className="flex items-center justify-center" style={{ backgroundColor: '#814d2e' }}>
+                <div className="flex items-center justify-center rounded-bl-lg" style={{ backgroundColor: '#814d2e' }}>
                   <button 
                     className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
                       transform hover:scale-105 hover:shadow-xl active:scale-95
@@ -245,7 +245,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   </button>
                 </div>
 
-                <div className="flex items-center justify-center" style={{ backgroundColor: '#814d2e' }}>
+                <div className="flex items-center justify-center rounded-br-lg" style={{ backgroundColor: '#814d2e' }}>
                   <button 
                     className="w-[55px] h-[55px] rounded-lg border-4 border-white/40 shadow-lg
                       transform hover:scale-105 hover:shadow-xl active:scale-95
