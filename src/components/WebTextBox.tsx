@@ -133,7 +133,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             onClose={() => setShowSuperAudio(false)}
             content={getContent()}
             title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
-            allowTextToSpeech={true}
           />
         </div>
       </>
