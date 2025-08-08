@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { AudioControlButtons } from './AudioControlButtons';
-import { AudioProgressBar } from './AudioProgressBar';
 import { AudioSpeedControls } from './AudioSpeedControls';
 
 // Refactored SuperAudio component
@@ -121,18 +120,6 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
       handlePlay();
     }
   }, [isPlaying, handlePlay]);
-
-  const handleSeek = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!audioRef.current || !duration) return;
-    
-    const rect = e.currentTarget.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const percentage = clickX / rect.width;
-    const newTime = percentage * duration;
-    
-    audioRef.current.currentTime = newTime;
-    setCurrentTime(newTime);
-  }, [duration]);
 
   const handleSpeedChange = useCallback((speed: number) => {
     if (!audioRef.current) return;
@@ -308,9 +295,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               )}
             </div>
             
-            {/* 4x4 Button Grid - Bottom 50% */}
+            {/* 2x4 Button Grid - Bottom 50% */}
             <div className="h-[50%]">
-              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '1fr 0.35fr 0.5fr 1fr' }}>
+              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '1fr 1fr' }}>
                 {/* Row 1: Main Audio Controls */}
                 <AudioControlButtons
                   onPlay={handlePlay}
@@ -322,22 +309,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   audioUrl={audioUrl}
                 />
 
-                {/* Row 2: Progress bar spanning all 4 columns */}
-                <AudioProgressBar
-                  currentTime={currentTime}
-                  duration={duration}
-                  onSeek={handleSeek}
-                  formatTime={formatTime}
-                  error={error}
-                  isLoading={isLoading}
-                />
-
-                {/* Debug info */}
-                <div className="col-span-4 text-xs text-center text-gray-600">
-                  Debug: {currentTime.toFixed(1)}s / {duration.toFixed(1)}s - Playing: {isPlaying ? 'Yes' : 'No'}
-                </div>
-
-                {/* Rows 3-4: Speed Controls */}
+                {/* Row 2: Speed Controls */}
                 <AudioSpeedControls
                   playbackRate={playbackRate}
                   onSpeedChange={handleSpeedChange}
