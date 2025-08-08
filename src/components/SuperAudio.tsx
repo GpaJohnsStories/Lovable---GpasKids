@@ -302,38 +302,34 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             <div className="h-[50%]">
               <table className="w-full max-w-[220px] mx-auto h-full border-collapse">
                 <tbody>
-                  {/* Row 1: Playback Button Labels (blue background) - Small height */}
-                  <tr style={{ height: '15%' }}>
-                    <td 
-                      colSpan={4} 
-                      className="rounded-t-lg text-center" 
-                      style={{ backgroundColor: '#2563eb' }}
-                    >
-                      <div className="grid grid-cols-4 h-full">
-                        <div className="flex items-center justify-center text-white text-xs font-bold">
-                          Play
-                        </div>
-                        <div className="flex items-center justify-center text-white text-xs font-bold">
-                          Pause
-                        </div>
-                        <div className="flex items-center justify-center text-white text-xs font-bold">
-                          Restart
-                        </div>
-                        <div className="flex items-center justify-center text-white text-xs font-bold">
-                          STOP
-                        </div>
+                  {/* Row 1: 4 cells, 1/2 height, blue fill - Labels */}
+                  <tr style={{ height: '27.5px' }}>
+                    <td className="text-center border border-blue-600" style={{ backgroundColor: '#2563eb', width: '25%' }}>
+                      <div className="flex items-center justify-center text-white text-xs font-bold h-full">
+                        Play
+                      </div>
+                    </td>
+                    <td className="text-center border border-blue-600" style={{ backgroundColor: '#2563eb', width: '25%' }}>
+                      <div className="flex items-center justify-center text-white text-xs font-bold h-full">
+                        Pause
+                      </div>
+                    </td>
+                    <td className="text-center border border-blue-600" style={{ backgroundColor: '#2563eb', width: '25%' }}>
+                      <div className="flex items-center justify-center text-white text-xs font-bold h-full">
+                        Restart
+                      </div>
+                    </td>
+                    <td className="text-center border border-blue-600" style={{ backgroundColor: '#2563eb', width: '25%' }}>
+                      <div className="flex items-center justify-center text-white text-xs font-bold h-full">
+                        STOP
                       </div>
                     </td>
                   </tr>
 
-                  {/* Row 2: Playback Buttons (blue background) - Large height */}
-                  <tr style={{ height: '30%' }}>
-                    <td 
-                      colSpan={4} 
-                      className="text-center" 
-                      style={{ backgroundColor: '#2563eb' }}
-                    >
-                      <div className="grid grid-cols-4 h-full">
+                  {/* Row 2: 4 cells, full height (55px), blue fill - Control Buttons */}
+                  <tr style={{ height: '55px' }}>
+                    <td className="text-center border border-blue-600" style={{ backgroundColor: '#2563eb', width: '25%' }}>
+                      <div className="flex items-center justify-center h-full">
                         <AudioControlButtons
                           onPlay={handlePlay}
                           onPause={handlePause}
@@ -345,38 +341,35 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                         />
                       </div>
                     </td>
+                    <td className="text-center border border-blue-600" style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
+                    <td className="text-center border border-blue-600" style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
+                    <td className="text-center border border-blue-600" style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
                   </tr>
 
-                  {/* Row 3: Spacer for gap between blue and brown sections - Small height */}
-                  <tr style={{ height: '15%' }}>
-                    <td colSpan={4} className="h-full"></td>
+                  {/* Row 3: 1 cell, 1/2 height, no borders, transparent - Spacer */}
+                  <tr style={{ height: '27.5px' }}>
+                    <td colSpan={4} className="h-full" style={{ backgroundColor: 'transparent' }}></td>
                   </tr>
 
-                  {/* Row 4: Speed Controls Header (brown background) - Small height */}
-                  <tr style={{ height: '15%' }}>
-                    <td 
-                      colSpan={4} 
-                      className="text-center" 
-                      style={{ backgroundColor: '#8B4513' }}
-                    >
+                  {/* Row 4: 1 cell, 1/2 height, brown fill - Speed Label */}
+                  <tr style={{ height: '27.5px' }}>
+                    <td colSpan={4} className="text-center border border-amber-800" style={{ backgroundColor: '#8B4513' }}>
                       <div className="flex items-center justify-center text-white text-xs font-bold h-full">
                         Playback Speed
                       </div>
                     </td>
                   </tr>
 
-                  {/* Row 5: Speed Control Buttons (brown background) - Large height */}
-                  <tr style={{ height: '25%' }}>
-                    <td 
-                      colSpan={4} 
-                      className="text-center rounded-b-lg" 
-                      style={{ backgroundColor: '#8B4513' }}
-                    >
-                      <AudioSpeedControls
-                        playbackRate={playbackRate}
-                        onSpeedChange={handleSpeedChange}
-                        audioUrl={audioUrl}
-                      />
+                  {/* Row 5: 4 cells, full height, brown fill - Speed Controls */}
+                  <tr style={{ height: '55px' }}>
+                    <td colSpan={4} className="text-center border border-amber-800" style={{ backgroundColor: '#8B4513' }}>
+                      <div className="flex items-center justify-center h-full">
+                        <AudioSpeedControls
+                          playbackRate={playbackRate}
+                          onSpeedChange={handleSpeedChange}
+                          audioUrl={audioUrl}
+                        />
+                      </div>
                     </td>
                   </tr>
                 </tbody>
