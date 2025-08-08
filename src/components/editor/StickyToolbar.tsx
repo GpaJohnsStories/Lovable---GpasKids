@@ -50,7 +50,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           </Button>
         </div>
 
-        <Separator orientation="vertical" className="h-6" />
+        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
 
         {/* Text Alignment */}
         <div className="flex items-center gap-1">
@@ -86,7 +86,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           </Button>
         </div>
 
-        <Separator orientation="vertical" className="h-6" />
+        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
 
         {/* Lists */}
         <div className="flex items-center gap-1">
@@ -112,7 +112,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           </Button>
         </div>
 
-        <Separator orientation="vertical" className="h-6" />
+        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
 
         {/* Quick Tags */}
         <div className="flex items-center gap-1">
@@ -158,7 +158,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           </Button>
         </div>
 
-        <Separator orientation="vertical" className="h-6" />
+        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
 
         {/* Dash buttons for audio pauses */}
         <div className="flex items-center gap-1">
@@ -186,7 +186,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           </Button>
         </div>
 
-        <Separator orientation="vertical" className="h-6" />
+        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
         
         {/* Clear buttons */}
         <div className="flex items-center gap-1">
