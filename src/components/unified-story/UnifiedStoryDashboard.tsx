@@ -357,7 +357,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F2BA15' }}>
                 <Volume2 className="h-5 w-5" />
-                AI Voice & Audio Generation
+                Create AI Voice File
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
