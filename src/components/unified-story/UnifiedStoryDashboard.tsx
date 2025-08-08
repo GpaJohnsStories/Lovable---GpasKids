@@ -373,10 +373,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <SelectValue placeholder="Select voice" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white border shadow-lg">
-                      <SelectItem value="Nova">Nova - Warm, friendly voice</SelectItem>
                       <SelectItem value="Alloy">Alloy - Clear, neutral voice</SelectItem>
                       <SelectItem value="Echo">Echo - Deep, resonant voice</SelectItem>
                       <SelectItem value="Fable">Fable - British accent, storytelling</SelectItem>
+                      <SelectItem value="Nova">Nova - Warm, friendly voice</SelectItem>
                       <SelectItem value="Onyx">Onyx - Deep, authoritative voice</SelectItem>
                       <SelectItem value="Shimmer">Shimmer - Soft, gentle voice</SelectItem>
                     </SelectContent>
