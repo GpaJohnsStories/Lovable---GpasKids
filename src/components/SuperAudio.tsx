@@ -101,15 +101,15 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
           onInteractOutside={(e) => e.preventDefault()}
         >
         
-        {/* Close button - Top Right Corner */}
+        {/* Close button - Bottom Right Corner */}
         <button
           onClick={onClose}
           style={{
             all: 'unset',
             boxSizing: 'border-box',
             position: 'absolute',
-            top: '8px',
-            right: '16px',
+            bottom: '8px',
+            right: '8px',
             zIndex: 10,
             paddingLeft: '12px',
             paddingRight: '12px',
