@@ -329,7 +329,7 @@ const AdminHeaderBanner = () => {
                         <img 
                           src={dashboardIconUrl} 
                           alt="Dashboard"
-                          className="w-12 h-12 object-contain"
+                          className="w-full h-full object-contain p-1"
                         />
                       ) : (
                         <LayoutDashboard className="w-12 h-12 text-white" />
