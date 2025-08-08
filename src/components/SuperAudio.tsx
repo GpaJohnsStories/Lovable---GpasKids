@@ -40,7 +40,6 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   const [playbackRate, setPlaybackRate] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const animationFrameRef = useRef<number>();
 
   // Debug logging
   console.log('SuperAudio props:', { audioUrl, audioDuration, title });
@@ -102,10 +101,6 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     console.log('Pausing audio');
     audioRef.current.pause();
     setIsPlaying(false);
-    // Stop manual time tracking
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
   }, []);
 
   const handleStop = useCallback(() => {
@@ -115,10 +110,6 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     audioRef.current.currentTime = 0;
     setIsPlaying(false);
     setCurrentTime(0);
-    // Stop manual time tracking
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
   }, []);
 
   const handleRestart = useCallback(() => {
@@ -150,16 +141,6 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     setPlaybackRate(speed);
   }, []);
 
-  // Manual time update using requestAnimationFrame
-  const updateCurrentTime = useCallback(() => {
-    if (audioRef.current && !audioRef.current.paused && !audioRef.current.ended) {
-      const time = audioRef.current.currentTime;
-      setCurrentTime(time);
-      console.log('Manual time update:', time);
-      animationFrameRef.current = requestAnimationFrame(updateCurrentTime);
-    }
-  }, []);
-
   // Audio event handlers and initialization
   useEffect(() => {
     const audio = audioRef.current;
@@ -175,9 +156,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     setIsLoading(true);
 
     const handleTimeUpdate = () => {
-      if (audio.currentTime !== undefined && !isNaN(audio.currentTime)) {
-        setCurrentTime(audio.currentTime);
-        console.log('Time update:', audio.currentTime, '/', audio.duration);
+      const time = audio.currentTime;
+      if (time !== undefined && !isNaN(time)) {
+        setCurrentTime(time);
       }
     };
 
@@ -214,10 +195,6 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     const handleEnded = () => {
       setIsPlaying(false);
       setCurrentTime(0);
-      // Stop manual time tracking
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
     };
 
     const handleError = (e: Event) => {
@@ -233,8 +210,6 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     const handlePlaying = () => {
       setIsLoading(false);
       console.log('Audio is now playing');
-      // Start manual time tracking when audio starts playing
-      updateCurrentTime();
     };
 
     // Add event listeners
@@ -253,9 +228,6 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     console.log('Audio element loaded, initial duration:', audio.duration, 'readyState:', audio.readyState);
 
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('durationchange', handleDurationChange);
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
