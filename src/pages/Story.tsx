@@ -141,7 +141,7 @@ const Story = () => {
   const photos = getStoryPhotos(story);
 
   return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+      <div className="min-h-screen bg-white">
         <WelcomeHeader />
         <ScrollToTop />
         <div className="container mx-auto px-4 pt-0">
