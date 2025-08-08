@@ -405,12 +405,108 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   </td>
                 </tr>
 
-                {/* Row 5: 4 cells, 55px height, brown fill */}
+                {/* Row 5: 4 speed control buttons with gradients */}
                 <tr>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}></td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}></td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}></td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}></td>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
+                    <div style={{
+                      width: '55px',
+                      height: '55px',
+                      background: 'linear-gradient(145deg, #22c55e, #16a34a)',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      transform: 'scale(1)'
+                    }} 
+                    role="button" 
+                    aria-label="Normal Speed" 
+                    title="Normal Speed"
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                    onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
+                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '12px', color: '#065f46'}}>Normal</span>
+                    </div>
+                  </td>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
+                    <div style={{
+                      width: '55px',
+                      height: '55px',
+                      background: 'linear-gradient(145deg, #22c55e, #16a34a)',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      transform: 'scale(1)'
+                    }} 
+                    role="button" 
+                    aria-label="Fast Speed" 
+                    title="Fast Speed"
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                    onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
+                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '12px', color: 'white'}}>Fast</span>
+                    </div>
+                  </td>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
+                    <div style={{
+                      width: '55px',
+                      height: '55px',
+                      background: 'linear-gradient(145deg, #22c55e, #16a34a)',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      transform: 'scale(1)'
+                    }} 
+                    role="button" 
+                    aria-label="Faster Speed" 
+                    title="Faster Speed"
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                    onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
+                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '12px', color: 'white'}}>Faster</span>
+                    </div>
+                  </td>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
+                    <div style={{
+                      width: '55px',
+                      height: '55px',
+                      background: 'linear-gradient(145deg, #22c55e, #16a34a)',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      transform: 'scale(1)'
+                    }} 
+                    role="button" 
+                    aria-label="Fastest Speed" 
+                    title="Fastest Speed"
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                    onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                    onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
+                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '12px', color: '#f97316'}}>Fastest</span>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
