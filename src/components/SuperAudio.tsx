@@ -4,6 +4,9 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 // Simplified SuperAudio component - Audio functionality removed
 
+// Font constant from tailwind.config.ts font-fun definition
+const FONT_FUN = 'Kalam, "Comic Sans MS", Arial, sans-serif';
+
 interface SuperAudioProps {
   isOpen: boolean;
   onClose: () => void;
@@ -89,7 +92,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             cursor: isDragging ? 'grabbing' : 'grab',
             
             // Font reset
-            fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            fontFamily: FONT_FUN,
             fontSize: '14px',
             lineHeight: '1.5',
             color: '#000000',
@@ -165,6 +168,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 fontSize: '20px',
                 fontWeight: 'bold',
                 fontStyle: 'italic',
+                fontFamily: FONT_FUN,
                 color: '#F97316',
                 margin: '0',
                 padding: '0',
@@ -176,6 +180,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   boxSizing: 'border-box',
                   display: 'block',
                   fontSize: '14px',
+                  fontFamily: FONT_FUN,
                   color: '#6b7280',
                   marginTop: '4px',
                   margin: '4px 0 0 0',
@@ -188,6 +193,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   boxSizing: 'border-box',
                   display: 'block',
                   fontSize: '12px',
+                  fontFamily: FONT_FUN,
                   color: '#9ca3af',
                   marginTop: '4px',
                   margin: '4px 0 0 0',
@@ -203,16 +209,16 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 {/* Row 1: 4 cells, 27px height, blue fill, labeled */}
                 <tr>
                   <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Play" title="Play" align="center" valign="middle">
-                    <b style={{color: 'white', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'}}>Play</b>
+                    <b style={{color: 'white', fontFamily: FONT_FUN}}>Play</b>
                   </td>
                   <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Pause" title="Pause" align="center" valign="middle">
-                    <b style={{color: 'white', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'}}>Pause</b>
+                    <b style={{color: 'white', fontFamily: FONT_FUN}}>Pause</b>
                   </td>
                   <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Restart" title="Restart" align="center" valign="middle">
-                    <b style={{color: 'white', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'}}>Restart</b>
+                    <b style={{color: 'white', fontFamily: FONT_FUN}}>Restart</b>
                   </td>
                   <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Stop" title="Stop" align="center" valign="middle">
-                    <b style={{color: 'white', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'}}>STOP</b>
+                    <b style={{color: 'white', fontFamily: FONT_FUN}}>STOP</b>
                   </td>
                 </tr>
 
@@ -232,7 +238,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 {/* Row 4: 1 cell, 27px height, brown fill, centered text */}
                 <tr>
                   <td colSpan={4} height={27} style={{backgroundColor: '#814d2e'}} align="center" valign="middle">
-                    <b style={{color: 'white', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'}} aria-label="Playback Speed">Playback Speed</b>
+                    <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
                   </td>
                 </tr>
 
