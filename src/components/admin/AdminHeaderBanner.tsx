@@ -282,9 +282,9 @@ const AdminHeaderBanner = () => {
                       console.log('🎯 + Story button clicked in header');
                       handleCreateStoryClick();
                     }}
-                    className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-purple-300/50 hover:scale-105 transition-transform cursor-pointer"
+                    className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-orange-300/50 hover:scale-105 transition-transform cursor-pointer"
                     style={{ 
-                      backgroundColor: '#9333ea',
+                      backgroundColor: '#9c441a',
                       minWidth: '55px',
                       minHeight: '55px'
                     }}
