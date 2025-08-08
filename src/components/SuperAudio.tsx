@@ -75,15 +75,20 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   const handlePlay = useCallback(() => {
     if (!audioRef.current || !audioUrl) return;
     
+    console.log('Play button clicked, audio ready state:', audioRef.current.readyState);
     setIsLoading(true);
+    setError(null);
+    
     audioRef.current.play()
       .then(() => {
         setIsPlaying(true);
         setError(null);
+        console.log('Audio playing successfully');
       })
       .catch((err) => {
         console.error('Audio play failed:', err);
         setError('Failed to play audio');
+        setIsPlaying(false);
       })
       .finally(() => {
         setIsLoading(false);
@@ -93,6 +98,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   const handlePause = useCallback(() => {
     if (!audioRef.current) return;
     
+    console.log('Pausing audio');
     audioRef.current.pause();
     setIsPlaying(false);
   }, []);
@@ -150,8 +156,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     setIsLoading(true);
 
     const handleTimeUpdate = () => {
-      if (audio.currentTime !== undefined) {
+      if (audio.currentTime !== undefined && !isNaN(audio.currentTime)) {
         setCurrentTime(audio.currentTime);
+        console.log('Time update:', audio.currentTime, '/', audio.duration);
       }
     };
 
