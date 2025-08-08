@@ -298,54 +298,89 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             {/* Spacer to position grid - reduced to move table up */}
             <div className="h-[10%]"></div>
             
-            {/* 5-Row Button Grid - 50% height to accommodate moved position */}
+            {/* 5-Row Button Table - 50% height to accommodate moved position */}
             <div className="h-[50%]">
-              <div className="grid grid-rows-5 max-w-[220px] mx-auto h-full">
-                {/* Row 1: Playback Button Labels (blue background) */}
-                <div className="rounded-t-lg" style={{ backgroundColor: '#2563eb' }}>
-                  <div className="grid grid-cols-4 h-full">
-                    <div className="flex items-center justify-center text-white text-xs font-bold">
-                      Play
-                    </div>
-                    <div className="flex items-center justify-center text-white text-xs font-bold">
-                      Pause
-                    </div>
-                    <div className="flex items-center justify-center text-white text-xs font-bold">
-                      Restart
-                    </div>
-                    <div className="flex items-center justify-center text-white text-xs font-bold">
-                      STOP
-                    </div>
-                  </div>
-                </div>
+              <table className="w-full max-w-[220px] mx-auto h-full border-collapse">
+                <tbody>
+                  {/* Row 1: Playback Button Labels (blue background) - Small height */}
+                  <tr style={{ height: '15%' }}>
+                    <td 
+                      colSpan={4} 
+                      className="rounded-t-lg text-center" 
+                      style={{ backgroundColor: '#2563eb' }}
+                    >
+                      <div className="grid grid-cols-4 h-full">
+                        <div className="flex items-center justify-center text-white text-xs font-bold">
+                          Play
+                        </div>
+                        <div className="flex items-center justify-center text-white text-xs font-bold">
+                          Pause
+                        </div>
+                        <div className="flex items-center justify-center text-white text-xs font-bold">
+                          Restart
+                        </div>
+                        <div className="flex items-center justify-center text-white text-xs font-bold">
+                          STOP
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
 
-                {/* Row 2: Playback Buttons (blue background) */}
-                <div style={{ backgroundColor: '#2563eb' }}>
-                  <div className="grid grid-cols-4 h-full">
-                    <AudioControlButtons
-                      onPlay={handlePlay}
-                      onPause={handlePause}
-                      onRestart={handleRestart}
-                      onStop={handleStop}
-                      isPlaying={isPlaying}
-                      isLoading={isLoading}
-                      audioUrl={audioUrl}
-                    />
-                  </div>
-                </div>
+                  {/* Row 2: Playback Buttons (blue background) - Large height */}
+                  <tr style={{ height: '30%' }}>
+                    <td 
+                      colSpan={4} 
+                      className="text-center" 
+                      style={{ backgroundColor: '#2563eb' }}
+                    >
+                      <div className="grid grid-cols-4 h-full">
+                        <AudioControlButtons
+                          onPlay={handlePlay}
+                          onPause={handlePause}
+                          onRestart={handleRestart}
+                          onStop={handleStop}
+                          isPlaying={isPlaying}
+                          isLoading={isLoading}
+                          audioUrl={audioUrl}
+                        />
+                      </div>
+                    </td>
+                  </tr>
 
-                {/* Row 3: Spacer for gap between blue and brown sections */}
-                <div className="h-full"></div>
+                  {/* Row 3: Spacer for gap between blue and brown sections - Small height */}
+                  <tr style={{ height: '15%' }}>
+                    <td colSpan={4} className="h-full"></td>
+                  </tr>
 
-                {/* Row 4-5: Speed Controls (brown background - AudioSpeedControls handles both label and buttons) */}
-                <div className="row-span-2">
-                  <AudioSpeedControls
-                    playbackRate={playbackRate}
-                    onSpeedChange={handleSpeedChange}
-                    audioUrl={audioUrl}
-                  />
-                </div>
-              </div>
+                  {/* Row 4: Speed Controls Header (brown background) - Small height */}
+                  <tr style={{ height: '15%' }}>
+                    <td 
+                      colSpan={4} 
+                      className="text-center" 
+                      style={{ backgroundColor: '#8B4513' }}
+                    >
+                      <div className="flex items-center justify-center text-white text-xs font-bold h-full">
+                        Playback Speed
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* Row 5: Speed Control Buttons (brown background) - Large height */}
+                  <tr style={{ height: '25%' }}>
+                    <td 
+                      colSpan={4} 
+                      className="text-center rounded-b-lg" 
+                      style={{ backgroundColor: '#8B4513' }}
+                    >
+                      <AudioSpeedControls
+                        playbackRate={playbackRate}
+                        onSpeedChange={handleSpeedChange}
+                        audioUrl={audioUrl}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
