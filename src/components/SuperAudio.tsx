@@ -229,7 +229,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     <div style={{
                       width: '55px',
                       height: '55px',
-                      background: '#2563eb',
+                      background: 'linear-gradient(145deg, #22c55e, #16a34a)',
                       borderRadius: '12px',
                       display: 'flex',
                       alignItems: 'center',
@@ -269,7 +269,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     <div style={{
                       width: '55px',
                       height: '55px',
-                      background: '#2563eb',
+                      background: 'linear-gradient(145deg, #fbbf24, #f59e0b)',
                       borderRadius: '12px',
                       display: 'flex',
                       alignItems: 'center',
@@ -305,7 +305,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     <div style={{
                       width: '55px',
                       height: '55px',
-                      background: '#2563eb',
+                      background: 'linear-gradient(145deg, #3b82f6, #2563eb)',
                       borderRadius: '12px',
                       display: 'flex',
                       alignItems: 'center',
@@ -357,7 +357,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     <div style={{
                       width: '55px',
                       height: '55px',
-                      background: '#2563eb',
+                      background: 'linear-gradient(145deg, #ef4444, #dc2626)',
                       borderRadius: '12px',
                       display: 'flex',
                       alignItems: 'center',
