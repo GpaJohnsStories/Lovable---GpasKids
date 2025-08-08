@@ -21,6 +21,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('ICO-HL2.gif');
   const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('ICO-MU2.gif');
   const { iconUrl: safeForKidsIconUrl, isLoading: sfkLoading, error: sfkError } = useCachedIcon('ICO-SFK.gif');
+  const { iconUrl: hgjIconUrl, isLoading: hgjLoading, error: hgjError } = useCachedIcon('ICO-HGJ.gif');
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -141,7 +142,25 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                     />
                   ) : null}
                 </div>
-              </div>
+                </div>
+                
+                {/* ICO-HGJ Icon - Positioned between Safe for Kids and Menu button */}
+                <div className="absolute -right-14 lg:-right-16 top-1/2 transform -translate-y-1/2">
+                  {hgjLoading && (
+                    <div className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 bg-gray-300 animate-pulse rounded-full border-2 border-gray-500" />
+                  )}
+                  {(hgjError || !hgjIconUrl) && !hgjLoading ? (
+                    <div className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 bg-gray-200 flex items-center justify-center text-gray-800 text-xs font-bold rounded-full border-2 border-gray-500">
+                      HGJ
+                    </div>
+                  ) : hgjIconUrl && !hgjLoading && !hgjError ? (
+                    <img 
+                      src={hgjIconUrl}
+                      alt="HGJ Icon"
+                      className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 object-contain"
+                    />
+                  ) : null}
+                </div>
             </div>
           ) : (
             /* Safe For Kids Shield for non-home pages - centered */
