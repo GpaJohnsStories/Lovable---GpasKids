@@ -148,13 +148,13 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
               <TooltipTrigger asChild>
                 <button 
                   onClick={handleHgjClick}
-                  className="group relative z-10 bg-transparent hover:bg-transparent rounded-full p-1 flex flex-col items-center justify-center text-center w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 min-w-14 sm:min-w-16 md:min-w-20 flex-shrink-0 transform hover:scale-105 hover:-translate-y-1 transition-all duration-200 cursor-pointer active:scale-95 active:translate-y-1"
+                  className="group relative z-10 bg-transparent hover:bg-transparent p-1 flex flex-col items-center justify-center text-center w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 min-w-14 sm:min-w-16 md:min-w-20 flex-shrink-0 transform hover:scale-105 hover:-translate-y-1 transition-all duration-200 cursor-pointer active:scale-95 active:translate-y-1"
                 >
                   {hgjLoading && (
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-orange-300 animate-pulse rounded-full group-hover:hidden" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-transparent animate-pulse group-hover:hidden" />
                   )}
                   {(hgjError || !hgjIconUrl) && !hgjLoading ? (
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-orange-200 flex items-center justify-center text-orange-800 text-xs font-bold rounded-full group-hover:hidden">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-transparent flex items-center justify-center text-orange-800 text-xs font-bold group-hover:hidden">
                       HGJ
                     </div>
                   ) : hgjIconUrl && !hgjLoading && !hgjError ? (
