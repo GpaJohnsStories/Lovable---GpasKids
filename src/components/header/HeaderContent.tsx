@@ -20,6 +20,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   // Use cached icons for Buddy and Menu button - v2.0 with proper icon caching
   const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('ICO-HL2.gif');
   const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('ICO-MU2.gif');
+  const { iconUrl: safeForKidsIconUrl, isLoading: sfkLoading, error: sfkError } = useCachedIcon('ICO-SFK.gif');
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -103,7 +104,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
           </div>
         </div>
 
-        {/* CENTER SECTION: Dancing GIF - Horizontally centered, top aligned */}
+        {/* CENTER SECTION: Dancing GIF + Safe For Kids - Horizontally centered, top aligned */}
         <div className="absolute left-1/2 top-0 transform -translate-x-1/2">
           {isHomePage ? (
             <div className="relative hidden md:flex md:justify-center md:items-center">
@@ -123,11 +124,44 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                     onError={(e) => console.log('New speech bubble image failed to load:', e)}
                   />
                 </div>
+                {/* Safe For Kids Shield - Positioned to the right of speech bubble */}
+                <div className="absolute -right-20 lg:-right-24 top-1/2 transform -translate-y-1/2">
+                  {sfkLoading && (
+                    <div className="w-12 lg:w-16 h-12 lg:h-16 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
+                  )}
+                  {(sfkError || !safeForKidsIconUrl) && !sfkLoading ? (
+                    <div className="w-12 lg:w-16 h-12 lg:h-16 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-full border-2 border-green-500">
+                      SAFE
+                    </div>
+                  ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
+                    <img 
+                      src={safeForKidsIconUrl}
+                      alt="Safe For Kids Shield"
+                      className="w-12 lg:w-16 h-12 lg:h-16 object-contain"
+                    />
+                  ) : null}
+                </div>
               </div>
             </div>
           ) : (
-            /* Empty placeholder for balanced layout on non-home pages */
+            /* Safe For Kids Shield for non-home pages - centered */
             <div className="w-48 lg:w-64 h-32 lg:h-40 flex items-center justify-center">
+              <div className="flex items-center justify-center">
+                {sfkLoading && (
+                  <div className="w-16 lg:w-20 h-16 lg:h-20 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
+                )}
+                {(sfkError || !safeForKidsIconUrl) && !sfkLoading ? (
+                  <div className="w-16 lg:w-20 h-16 lg:h-20 bg-green-200 flex items-center justify-center text-green-800 text-sm font-bold rounded-full border-2 border-green-500">
+                    SAFE
+                  </div>
+                ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
+                  <img 
+                    src={safeForKidsIconUrl}
+                    alt="Safe For Kids Shield"
+                    className="w-16 lg:w-20 h-16 lg:h-20 object-contain"
+                  />
+                ) : null}
+              </div>
             </div>
           )}
         </div>
