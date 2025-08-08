@@ -14,7 +14,7 @@ interface StickyToolbarProps {
 
 const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, onAlign, onClearHtml, onClearAll, onInsertText }) => {
   return (
-    <div className="sticky top-0 z-10 bg-white border-b border-gray-200 p-3 shadow-sm">
+    <div className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{ backgroundColor: '#16a34a' }}>
       <div className="flex items-center gap-2 flex-wrap">
         {/* Text Formatting */}
         <div className="flex items-center gap-1">
@@ -24,6 +24,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onFormat('strong')}
             className="h-8 px-2"
+            style={{ borderColor: '#9c441a' }}
           >
             <Bold className="h-4 w-4" />
           </Button>
@@ -33,6 +34,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onFormat('em')}
             className="h-8 px-2"
+            style={{ borderColor: '#9c441a' }}
           >
             <Italic className="h-4 w-4" />
           </Button>
@@ -42,6 +44,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onFormat('u')}
             className="h-8 px-2"
+            style={{ borderColor: '#9c441a' }}
           >
             <Underline className="h-4 w-4" />
           </Button>
@@ -57,6 +60,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onAlign('left')}
             className="h-8 px-2"
+            style={{ borderColor: '#9c441a' }}
           >
             <AlignLeft className="h-4 w-4" />
           </Button>
@@ -66,6 +70,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onAlign('center')}
             className="h-8 px-2"
+            style={{ borderColor: '#9c441a' }}
           >
             <AlignCenter className="h-4 w-4" />
           </Button>
@@ -75,6 +80,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onAlign('right')}
             className="h-8 px-2"
+            style={{ borderColor: '#9c441a' }}
           >
             <AlignRight className="h-4 w-4" />
           </Button>
@@ -90,6 +96,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onInsertList(false)}
             className="h-8 px-2"
+            style={{ borderColor: '#9c441a' }}
           >
             <List className="h-4 w-4" />
           </Button>
@@ -99,6 +106,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onInsertList(true)}
             className="h-8 px-2"
+            style={{ borderColor: '#9c441a' }}
           >
             <ListOrdered className="h-4 w-4" />
           </Button>
@@ -114,6 +122,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onFormat('h1')}
             className="h-8 px-3 text-sm"
+            style={{ borderColor: '#9c441a' }}
           >
             H1
           </Button>
@@ -123,6 +132,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onFormat('h2')}
             className="h-8 px-3 text-sm"
+            style={{ borderColor: '#9c441a' }}
           >
             H2
           </Button>
@@ -132,6 +142,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onFormat('h3')}
             className="h-8 px-3 text-sm"
+            style={{ borderColor: '#9c441a' }}
           >
             H3
           </Button>
@@ -141,6 +152,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onFormat('p')}
             className="h-8 px-3 text-sm"
+            style={{ borderColor: '#9c441a' }}
           >
             P
           </Button>
@@ -156,6 +168,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onInsertText('–')}
             className="h-8 px-3 text-sm font-bold"
+            style={{ borderColor: '#9c441a' }}
             title="Insert N-dash (short pause for audio)"
           >
             –
@@ -166,6 +179,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             size="sm"
             onClick={() => onInsertText('—')}
             className="h-8 px-3 text-sm font-bold"
+            style={{ borderColor: '#9c441a' }}
             title="Insert M-dash (long pause for audio)"
           >
             —
