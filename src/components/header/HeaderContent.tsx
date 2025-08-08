@@ -125,7 +125,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                   />
                 </div>
                 {/* Safe For Kids Shield - Positioned to the right of speech bubble */}
-                <div className="absolute -right-20 lg:-right-24 top-1/2 transform -translate-y-1/2">
+                <div className="absolute -right-28 lg:-right-32 top-1/2 transform -translate-y-1/2">
                   {sfkLoading && (
                     <div className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
                   )}
