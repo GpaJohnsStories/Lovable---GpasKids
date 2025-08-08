@@ -284,8 +284,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
         {/* Content Area - Full popup */}
         <div className="h-full p-1">
           <div className="h-[98%] w-[98%] mx-auto bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-orange-200">
-            {/* Title and Author at top - 50% */}
-            <div className="text-center h-[50%] pt-2">
+            {/* Title and Author at top - 40% */}
+            <div className="text-center h-[40%] pt-2">
               <h3 className="text-xl font-bold font-fun" style={{ color: '#F97316' }}>{title}</h3>
               {showAuthor && author && (
                 <p className="text-sm text-gray-600 mt-1">by {author}</p>
@@ -295,9 +295,12 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               )}
             </div>
             
-            {/* 2x4 Button Grid - Bottom 50% */}
-            <div className="h-[50%]">
-              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '1fr 1fr' }}>
+            {/* Spacer to push grid to bottom - 20% */}
+            <div className="h-[20%]"></div>
+            
+            {/* 2x4 Button Grid - Bottom 40% */}
+            <div className="h-[40%]">
+              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '1fr 0.67fr' }}>
                 {/* Row 1: Main Audio Controls */}
                 <AudioControlButtons
                   onPlay={handlePlay}
@@ -309,7 +312,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   audioUrl={audioUrl}
                 />
 
-                {/* Row 2: Speed Controls */}
+                {/* Row 2: Speed Controls - reduced by 1/3 */}
                 <AudioSpeedControls
                   playbackRate={playbackRate}
                   onSpeedChange={handleSpeedChange}
