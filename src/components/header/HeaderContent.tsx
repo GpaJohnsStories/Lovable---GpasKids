@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
@@ -12,6 +12,7 @@ interface HeaderContentProps {
 
 const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { showHelp } = useHelp();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuHovered, setIsMenuHovered] = useState(false);
@@ -56,6 +57,11 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
 
   const handleMenuMouseLeave = () => {
     setIsMenuHovered(false);
+  };
+
+  const handleHgjClick = () => {
+    console.log('🤝 Help Grandpa John button clicked! Navigating to /help-gpa');
+    navigate('/help-gpa');
   };
 
   return (
@@ -137,23 +143,38 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
         {/* RIGHT SECTION: ICO-HGJ + Safe For Kids + Gold Menu Button - Hidden on admin pages */}
         {!isAdminPage && (
           <div className="flex items-center gap-4 justify-end relative" ref={menuRef}>
-            {/* ICO-HGJ Icon */}
-            <div className="flex items-center">
-              {hgjLoading && (
-                <div className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] bg-gray-300 animate-pulse rounded-lg" />
-              )}
-              {(hgjError || !hgjIconUrl) && !hgjLoading ? (
-                <div className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] bg-gray-200 flex items-center justify-center text-gray-800 text-xs font-bold rounded-lg border-2 border-gray-400">
-                  HGJ
-                </div>
-              ) : hgjIconUrl && !hgjLoading && !hgjError ? (
-                <img 
-                  src={hgjIconUrl}
-                  alt="HGJ Icon"
-                  className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] object-contain"
-                />
-              ) : null}
-            </div>
+            {/* ICO-HGJ Button - Help Grandpa John */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button 
+                  onClick={handleHgjClick}
+                  className="group relative z-10 bg-gradient-to-br from-orange-500/80 to-orange-600/60 hover:from-orange-400/80 hover:to-orange-500/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-orange-500 hover:border-orange-400 transform hover:scale-105 hover:-translate-y-1 transition-all duration-200 cursor-pointer active:scale-95 active:translate-y-1"
+                >
+                  {hgjLoading && (
+                    <div className="w-full h-12 sm:h-18 md:h-24 bg-orange-300 animate-pulse rounded-md group-hover:hidden" />
+                  )}
+                  {(hgjError || !hgjIconUrl) && !hgjLoading ? (
+                    <div className="w-full h-12 sm:h-18 md:h-24 bg-orange-200 flex items-center justify-center text-orange-800 text-xs font-bold rounded-md group-hover:hidden">
+                      HGJ
+                    </div>
+                  ) : hgjIconUrl && !hgjLoading && !hgjError ? (
+                    <img 
+                      src={hgjIconUrl}
+                      alt="Help Grandpa John"
+                      className="w-full h-12 sm:h-18 md:h-24 object-contain rounded-md group-hover:hidden"
+                    />
+                  ) : null}
+                  
+                  {/* Help text - shown on hover */}
+                  <div className="hidden group-hover:flex items-center justify-center h-full text-white text-xs sm:text-sm md:text-base font-bold text-center">
+                    Help Grandpa John
+                  </div>
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Click to help support Grandpa John's stories</p>
+              </TooltipContent>
+            </Tooltip>
             
             {/* Safe For Kids Icon */}
             <div className="flex items-center">
