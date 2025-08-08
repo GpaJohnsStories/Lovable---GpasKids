@@ -60,7 +60,11 @@ export const StoryCodeDialog: React.FC<StoryCodeDialogProps> = ({
         <AlertDialogFooter className="gap-2">
           <AlertDialogCancel 
             onClick={onNo}
-            className="!text-white !bg-red-600 !border-red-700 hover:!bg-red-700"
+            style={{ 
+              background: '#dc2626 !important', 
+              color: 'white !important', 
+              borderColor: '#b91c1c !important' 
+            }}
           >
             No
           </AlertDialogCancel>
