@@ -302,7 +302,7 @@ const AdminHeaderBanner = () => {
                   </div>
                   {hoveredButton === 'Story' && (
                     <div className="nav-bubble opacity-100 visible">
-                      <b>Add New Story</b>
+                      <b>Add / Edit Story/Webtext</b>
                     </div>
                   )}
                 </div>
