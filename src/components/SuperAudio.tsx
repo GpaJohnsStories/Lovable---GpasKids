@@ -225,7 +225,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
 
                 {/* Row 2: 4 beautiful buttons with gradients and icons */}
                 <tr>
-                  <td width={60} height={55} style={{padding: '0 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 0 12px', textAlign: 'center'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 0 12px', textAlign: 'center'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -265,7 +265,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       }}></div>
                     </div>
                   </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -301,7 +301,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       </div>
                     </div>
                   </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -353,7 +353,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       </div>
                     </div>
                   </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 12px 0', textAlign: 'center'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 12px 0', textAlign: 'center'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
