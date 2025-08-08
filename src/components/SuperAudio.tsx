@@ -173,7 +173,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             all: 'unset',
             boxSizing: 'border-box',
             position: 'absolute',
-            bottom: '20px',
+            bottom: '8px',
             right: '20px',
             zIndex: 10,
             paddingLeft: '12px',
