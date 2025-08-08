@@ -1,15 +1,17 @@
-import { useState, useRef, useEffect } from 'react';
-import { useHelp } from '@/contexts/HelpContext';
-import { useCachedIcon } from '@/hooks/useCachedIcon';
-import SimpleVerticalMenu from './SimpleVerticalMenu';
+import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useHelp } from "@/contexts/HelpContext";
+import { useCachedIcon } from "@/hooks/useCachedIcon";
+import SimpleVerticalMenu from "./SimpleVerticalMenu";
 
 interface HeaderContentProps {
   isHomePage: boolean;
   isAdminPage?: boolean;
 }
 
-const HeaderContent = ({ isHomePage, isAdminPage }: HeaderContentProps) => {
-  // State Management
+const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) => {
+  const location = useLocation();
   const { showHelp } = useHelp();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuHovered, setIsMenuHovered] = useState(false);
@@ -19,7 +21,6 @@ const HeaderContent = ({ isHomePage, isAdminPage }: HeaderContentProps) => {
   const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('ICO-HL2.gif');
   const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('ICO-MU2.gif');
   const { iconUrl: safeForKidsIconUrl, isLoading: sfkLoading, error: sfkError } = useCachedIcon('ICO-SFK.gif');
-  const { iconUrl: hgjIconUrl, isLoading: hgjLoading, error: hgjError } = useCachedIcon('ICO-HGJ.gif');
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -38,13 +39,13 @@ const HeaderContent = ({ isHomePage, isAdminPage }: HeaderContentProps) => {
     };
   }, [isMenuOpen]);
 
-  // Event Handlers
   const handleHelpClick = () => {
-    console.log('Help button clicked');
-    showHelp('/');
+    console.log('🐕 Buddy clicked! Showing help for:', location.pathname);
+    showHelp(location.pathname);
   };
 
   const handleMenuClick = () => {
+    console.log('🎯 Menu button clicked, current state:', isMenuOpen);
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -57,54 +58,54 @@ const HeaderContent = ({ isHomePage, isAdminPage }: HeaderContentProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between w-full relative">
-      {/* Buddy Help Button - Left Side */}
-      <div className="flex items-center">
-        <button
-          onClick={handleHelpClick}
-          className="group flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-white/10 transition-all duration-200"
-          aria-label="Get help from Buddy"
-        >
-          {/* Buddy Icon */}
-          <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
+    <div className="min-h-[140px]">
+      {/* Single compartment layout */}
+      <div className="relative flex items-center justify-between h-full pt-1">
+        
+        {/* LEFT SECTION: Buddy + Title */}
+        <div className="flex items-start gap-4 justify-start">
+          <button 
+            onClick={handleHelpClick}
+            onMouseDown={() => console.log('🐕 Buddy button mouse down!')}
+            onMouseUp={() => console.log('🐕 Buddy button mouse up!')}
+            className="group relative z-10 bg-gradient-to-br from-green-600/80 to-green-700/60 hover:from-red-600/80 hover:to-red-700/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-green-600 hover:border-red-600 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+          >
+            {/* Loading state for Buddy */}
             {buddyLoading && (
-              <div className="w-8 h-8 md:w-12 md:h-12 bg-blue-300 animate-pulse rounded-full border-2 border-blue-500" />
+              <div className="w-full h-12 sm:h-18 md:h-24 bg-green-300 animate-pulse rounded-md group-hover:hidden" />
             )}
+            
+            {/* Show text if no icon available, otherwise show Buddy image - hidden on hover */}
             {(buddyError || !buddyIconUrl) && !buddyLoading ? (
-              <div className="w-8 h-8 md:w-12 md:h-12 bg-blue-200 flex items-center justify-center text-blue-800 text-sm font-bold rounded-full border-2 border-blue-500">
-                ?
+              <div className="w-full h-12 sm:h-18 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-md group-hover:hidden">
+                BUDDY
               </div>
             ) : buddyIconUrl && !buddyLoading && !buddyError ? (
               <img 
                 src={buddyIconUrl}
-                alt="Buddy Help Assistant"
-                className="w-8 h-8 md:w-12 md:h-12 object-contain"
+                alt="Buddy the Helper Dog"
+                className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
               />
             ) : null}
-          </div>
+            
+            {/* Help text - shown on hover */}
+            <div className="hidden group-hover:flex items-center justify-center h-full text-[#EAB308] text-xs sm:text-sm md:text-base font-bold text-center">
+              Click for Buddy's Help
+            </div>
+          </button>
           
-          {/* Help Text */}
-          <div className="hidden sm:block text-white">
-            <div className="text-sm font-semibold">Buddy</div>
-            <div className="text-xs opacity-90">Click for help</div>
+          {/* Website Title and Subtitle */}
+          <div className="text-left self-end">
+            <div className="text-lg sm:text-2xl font-bold font-handwritten">
+              <div className="text-blue-900">Grandpa John's</div>
+              <div className="text-left text-white text-xl sm:text-3xl">Stories for Kids</div>
+            </div>
+            <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story feels like a new adventure</p>
           </div>
-        </button>
-      </div>
-
-      {/* Center Content - Title and Dancing GIF or Safe for Kids */}
-      <div className="flex-1 flex flex-col items-center">
-        {/* Title and Subtitle */}
-        <div className="text-center">
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg font-handwritten">
-            Grandpa John's Stories
-          </h1>
-          <p className="text-sm md:text-lg text-white/90 drop-shadow-md font-georgia mt-1">
-            Where every story feels like home
-          </p>
         </div>
 
-        {/* Dancing GIF with Speech Bubble and Icons OR Safe For Kids Shield */}
-        <div className="mt-2">
+        {/* CENTER SECTION: Dancing GIF + Safe For Kids - Horizontally centered, top aligned */}
+        <div className="absolute left-1/2 top-0 transform -translate-x-1/2">
           {isHomePage ? (
             <div className="relative hidden md:flex md:justify-center md:items-center">
               <div className="relative">
@@ -124,104 +125,87 @@ const HeaderContent = ({ isHomePage, isAdminPage }: HeaderContentProps) => {
                   />
                 </div>
                 {/* Safe For Kids Shield - Positioned to the right of speech bubble */}
-                <div className="absolute -right-28 lg:-right-32 top-1/2 transform -translate-y-1/2">
+                <div className="absolute -right-20 lg:-right-24 top-1/2 transform -translate-y-1/2">
                   {sfkLoading && (
-                    <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
+                    <div className="w-12 lg:w-16 h-12 lg:h-16 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
                   )}
                   {(sfkError || !safeForKidsIconUrl) && !sfkLoading ? (
-                    <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-full border-2 border-green-500">
+                    <div className="w-12 lg:w-16 h-12 lg:h-16 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-full border-2 border-green-500">
                       SAFE
                     </div>
                   ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
                     <img 
                       src={safeForKidsIconUrl}
                       alt="Safe For Kids Shield"
-                      className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 object-contain"
-                    />
-                  ) : null}
-                </div>
-                
-                {/* ICO-HGJ Icon - Positioned between Safe for Kids and Menu button */}
-                <div className="absolute -right-10 lg:-right-12 top-1/2 transform -translate-y-1/2">
-                  {hgjLoading && (
-                    <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-gray-300 animate-pulse rounded-full border-2 border-gray-500" />
-                  )}
-                  {(hgjError || !hgjIconUrl) && !hgjLoading ? (
-                    <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-gray-200 flex items-center justify-center text-gray-800 text-xs font-bold rounded-full border-2 border-gray-500">
-                      HGJ
-                    </div>
-                  ) : hgjIconUrl && !hgjLoading && !hgjError ? (
-                    <img 
-                      src={hgjIconUrl}
-                      alt="HGJ Icon"
-                      className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 object-contain"
+                      className="w-12 lg:w-16 h-12 lg:h-16 object-contain"
                     />
                   ) : null}
                 </div>
               </div>
             </div>
           ) : (
+            /* Safe For Kids Shield for non-home pages - centered */
             <div className="w-48 lg:w-64 h-32 lg:h-40 flex items-center justify-center">
               <div className="flex items-center justify-center">
                 {sfkLoading && (
-                  <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
+                  <div className="w-16 lg:w-20 h-16 lg:h-20 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
                 )}
                 {(sfkError || !safeForKidsIconUrl) && !sfkLoading ? (
-                  <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-sm font-bold rounded-full border-2 border-green-500">
+                  <div className="w-16 lg:w-20 h-16 lg:h-20 bg-green-200 flex items-center justify-center text-green-800 text-sm font-bold rounded-full border-2 border-green-500">
                     SAFE
                   </div>
                 ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
                   <img 
                     src={safeForKidsIconUrl}
                     alt="Safe For Kids Shield"
-                    className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 object-contain"
+                    className="w-16 lg:w-20 h-16 lg:h-20 object-contain"
                   />
                 ) : null}
               </div>
             </div>
           )}
         </div>
-      </div>
 
-      {/* Menu Button - Right Side */}
-      {!isAdminPage && (
-        <div className="relative flex items-center" ref={menuRef}>
-          <button
-            onClick={handleMenuClick}
-            onMouseEnter={handleMenuMouseEnter}
-            onMouseLeave={handleMenuMouseLeave}
-            className="w-16 h-16 sm:w-20 sm:h-20 md:w-7rem md:h-7rem bg-gradient-to-br from-amber-400 via-yellow-500 to-orange-500 hover:from-amber-300 hover:via-yellow-400 hover:to-orange-400 rounded-xl border-4 border-amber-300 shadow-[0_8px_20px_rgba(0,0,0,0.3),inset_0_4px_8px_rgba(255,255,255,0.3)] hover:shadow-[0_12px_25px_rgba(0,0,0,0.4),inset_0_4px_12px_rgba(255,255,255,0.4)] transform hover:scale-105 transition-all duration-200 flex items-center justify-center group relative overflow-hidden"
-            aria-label="Open main menu"
-          >
-            {/* 3D shine effect */}
-            <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/30 via-transparent to-transparent pointer-events-none" />
-            
-            {/* Menu Icon */}
-            <div className="w-full h-12 sm:h-16 md:h-24 flex items-center justify-center">
+        {/* RIGHT SECTION: Gold Menu Button - Hidden on admin pages */}
+        {!isAdminPage && (
+          <div className="flex justify-end relative" ref={menuRef}>
+            <button 
+              onClick={handleMenuClick}
+              aria-label="Click for Menu"
+              className="group relative z-10 bg-gradient-to-br from-yellow-500/80 to-yellow-600/60 hover:from-yellow-400/80 hover:to-yellow-500/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-yellow-500 hover:border-yellow-400 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+            >
+              {/* Loading state for Menu */}
               {menuLoading && (
-                <div className="w-8 h-8 md:w-12 md:h-12 bg-orange-300 animate-pulse rounded-full border-2 border-orange-500" />
+                <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-300 animate-pulse rounded-md" />
               )}
+              
+              {/* Show text if no icon available, otherwise show Menu image - hidden on hover */}
               {(menuError || !menuIconUrl) && !menuLoading ? (
-                <div className="w-8 h-8 md:w-12 md:h-12 bg-orange-200 flex items-center justify-center text-orange-800 text-xs font-bold rounded-full border-2 border-orange-500">
+                <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-200 flex items-center justify-center text-yellow-800 text-xs font-bold rounded-md group-hover:hidden">
                   MENU
                 </div>
               ) : menuIconUrl && !menuLoading && !menuError ? (
                 <img 
                   src={menuIconUrl}
-                  alt="Menu Button Icon"
-                  className="w-full h-full object-contain"
+                  alt="Main Menu"
+                  className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
                 />
               ) : null}
-            </div>
-          </button>
-
-          {/* Vertical Menu */}
-          <SimpleVerticalMenu 
-            isVisible={isMenuOpen} 
-            onClose={() => setIsMenuOpen(false)}
-          />
-        </div>
-      )}
+              
+              {/* Menu help text - shown on hover */}
+              <div className="hidden group-hover:flex items-center justify-center h-full text-blue-900 text-xs sm:text-sm md:text-base font-bold text-center">
+                Click for Menu
+              </div>
+            </button>
+            
+            {/* Vertical Menu */}
+            <SimpleVerticalMenu 
+              isVisible={isMenuOpen} 
+              onClose={() => setIsMenuOpen(false)} 
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
