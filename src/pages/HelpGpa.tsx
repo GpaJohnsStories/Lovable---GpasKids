@@ -2,6 +2,8 @@ import { Helmet } from 'react-helmet-async';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
+import { WebTextBox } from "@/components/WebTextBox";
+import DonationForm from "@/components/DonationForm";
 
 const HelpGpa = () => {
   return (
@@ -15,17 +17,17 @@ const HelpGpa = () => {
         <WelcomeHeader />
         
         <main className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold text-center mb-8 text-orange-800">
-              How to Help Gpa John
-            </h1>
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* WebTextBox for main content */}
+            <WebTextBox
+              webtextCode="WEB-HGJ"
+              borderColor="border-blue-300"
+              backgroundColor="bg-blue-50/70"
+              title="Help Grandpa John"
+            />
             
-            {/* Content will be added later */}
-            <div className="bg-white/50 rounded-lg p-8 shadow-lg">
-              <p className="text-lg text-gray-700 text-center">
-                Content coming soon...
-              </p>
-            </div>
+            {/* Donation Form Section */}
+            <DonationForm />
           </div>
         </main>
 
