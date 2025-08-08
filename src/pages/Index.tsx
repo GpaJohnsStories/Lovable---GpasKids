@@ -5,7 +5,6 @@ import StorySection from "@/components/StorySection";
 import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
-import PureTable from "@/components/PureTable";
 
 const Index = () => {
   
@@ -21,8 +20,6 @@ const Index = () => {
           backgroundColor="#ADD8E6"
           title=""
         />
-        
-        <PureTable />
         
         {/* GpaJohn's Recent Comments - Now positioned above stories */}
         <GpaJohnComments />
