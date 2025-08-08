@@ -145,6 +145,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
             height: 'calc(100% - 8px)',
             width: 'calc(100% - 8px)',
             margin: '0 auto',
