@@ -1,6 +1,8 @@
 
+import React, { useState } from 'react';
 import { renderCategoryBadge } from "@/utils/categoryUtils";
-import { UniversalAudioControls } from "@/components/UniversalAudioControls";
+import { AudioButton } from "@/components/AudioButton";
+import { SuperAudio } from "@/components/SuperAudio";
 import AuthorLink from "@/components/AuthorLink";
 
 interface StoryHeaderProps {
@@ -38,6 +40,7 @@ const StoryHeader = ({
   aiVoiceModel,
   allowTextToSpeech = false
 }: StoryHeaderProps) => {
+  const [showSuperAudio, setShowSuperAudio] = useState(false);
 
   return (
     <>
@@ -45,19 +48,15 @@ const StoryHeader = ({
         {renderCategoryBadge(category)}
       </div>
 
-      {/* Audio Controls Section - Separate from title */}
-      <div className="flex items-center justify-center mb-8">
-        <UniversalAudioControls 
-          audioUrl={audioUrl}
-          title={title}
-          author={author}
-          content={content}
-          description={description || tagline}
-          allowTextToSpeech={allowTextToSpeech}
-          context="story-page"
-          size="md"
-        />
-      </div>
+      {/* Audio Controls Section - Only show if audio is available */}
+      {audioUrl && (
+        <div className="flex items-center justify-center mb-8">
+          <AudioButton 
+            code={storyCode || 'STORY'}
+            onClick={() => setShowSuperAudio(true)}
+          />
+        </div>
+      )}
 
       {/* Story Title - Now properly centered */}
       <div className="text-center mb-4">
@@ -95,6 +94,16 @@ const StoryHeader = ({
         </p>
       )}
 
+      {/* SuperAudio Player */}
+      <SuperAudio
+        isOpen={showSuperAudio}
+        onClose={() => setShowSuperAudio(false)}
+        title={title}
+        author={author}
+        voiceName={aiVoiceName}
+        showAuthor={true}
+        audioUrl={audioUrl}
+      />
     </>
   );
 };
