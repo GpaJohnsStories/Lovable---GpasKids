@@ -298,11 +298,11 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             {/* Spacer to position grid - reduced to move table up */}
             <div className="h-[10%]"></div>
             
-            {/* 3x4 Button Grid - 50% height to accommodate moved position */}
+            {/* 5-Row Button Grid - 50% height to accommodate moved position */}
             <div className="h-[50%]">
-              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '0.4fr 1fr 0.67fr' }}>
-                {/* Row 1: Button Labels with background box */}
-                <div className="col-span-4 rounded-t-lg" style={{ backgroundColor: '#2563eb' }}>
+              <div className="grid grid-rows-5 max-w-[220px] mx-auto h-full">
+                {/* Row 1: Playback Button Labels (blue background) */}
+                <div className="rounded-t-lg" style={{ backgroundColor: '#2563eb' }}>
                   <div className="grid grid-cols-4 h-full">
                     <div className="flex items-center justify-center text-white text-xs font-bold">
                       Play
@@ -319,8 +319,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   </div>
                 </div>
 
-                {/* Row 2: Main Audio Controls with blue background */}
-                <div className="col-span-4" style={{ backgroundColor: '#2563eb' }}>
+                {/* Row 2: Playback Buttons (blue background) */}
+                <div style={{ backgroundColor: '#2563eb' }}>
                   <div className="grid grid-cols-4 h-full">
                     <AudioControlButtons
                       onPlay={handlePlay}
@@ -334,8 +334,11 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   </div>
                 </div>
 
-                {/* Row 3: Speed Controls */}
-                <div className="mt-1">
+                {/* Row 3: Spacer for gap between blue and brown sections */}
+                <div className="h-full"></div>
+
+                {/* Row 4-5: Speed Controls (brown background - AudioSpeedControls handles both label and buttons) */}
+                <div className="row-span-2">
                   <AudioSpeedControls
                     playbackRate={playbackRate}
                     onSpeedChange={handleSpeedChange}
