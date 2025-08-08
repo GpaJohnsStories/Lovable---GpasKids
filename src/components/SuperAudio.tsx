@@ -225,7 +225,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
 
                 {/* Row 2: 4 beautiful buttons with gradients and icons */}
                 <tr>
-                  <td width={55} height={55} style={{padding: '0'}}>
+                  <td width={55} height={55} style={{padding: '0', backgroundColor: '#2563eb'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -265,7 +265,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       }}></div>
                     </div>
                   </td>
-                  <td width={55} height={55} style={{padding: '0'}}>
+                  <td width={55} height={55} style={{padding: '0', backgroundColor: '#2563eb'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -301,7 +301,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       </div>
                     </div>
                   </td>
-                  <td width={55} height={55} style={{padding: '0'}}>
+                  <td width={55} height={55} style={{padding: '0', backgroundColor: '#2563eb'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -353,7 +353,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       </div>
                     </div>
                   </td>
-                  <td width={55} height={55} style={{padding: '0'}}>
+                  <td width={55} height={55} style={{padding: '0', backgroundColor: '#2563eb'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
