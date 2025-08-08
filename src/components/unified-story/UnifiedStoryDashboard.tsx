@@ -60,6 +60,25 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         return 'text-white bg-red-600 border-red-700';
     }
   };
+
+  // Helper function to get audio status styling
+  const getAudioStatusStyle = () => {
+    const audioDate = formData.audio_generated_at;
+    const updateDate = formData.updated_at;
+    
+    // If no audio generated, treat as outdated
+    if (!audioDate) {
+      return { backgroundColor: '#DC2626', color: '#FFFF00' };
+    }
+    
+    // If audio is older than or equal to last update, it's outdated
+    if (new Date(audioDate) <= new Date(updateDate)) {
+      return { backgroundColor: '#DC2626', color: '#FFFF00' };
+    }
+    
+    // If audio is newer than last update, it's current
+    return { backgroundColor: '#16a34a', color: 'white' };
+  };
   console.log('🎯 UnifiedStoryDashboard: Rendering with formData:', {
     id: formData.id,
     title: formData.title,
@@ -218,7 +237,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #F97316', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
                       Original Upload
                     </td>
-                    <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1">
+                    <td colSpan={2} className="text-center font-bold px-1 py-1" style={getAudioStatusStyle()}>
                       Last Audio Gen
                     </td>
                   </tr>
@@ -235,10 +254,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
                       {formatTime(formData.created_at)}
                     </td>
-                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316' }}>
+                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', ...getAudioStatusStyle() }}>
                       {formatDate(formData.audio_generated_at)}
                     </td>
-                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderTop: '1px solid #F97316' }}>
+                    <td className="text-center font-bold px-1 py-1" style={{ borderTop: '1px solid #F97316', ...getAudioStatusStyle() }}>
                       {formatTime(formData.audio_generated_at)}
                     </td>
                   </tr>
