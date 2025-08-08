@@ -79,6 +79,31 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
     // If audio is newer than last update, it's current
     return { backgroundColor: '#16a34a', color: 'white' };
   };
+
+  // Helper function to get last update styling
+  const getLastUpdateStyle = () => {
+    const updateDate = formData.updated_at;
+    
+    if (!updateDate) {
+      return { backgroundColor: '#F2BA15', color: 'black' };
+    }
+    
+    // Get today's date (ignoring time)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Get update date (ignoring time)
+    const update = new Date(updateDate);
+    update.setHours(0, 0, 0, 0);
+    
+    // If updated today, use green background with white text
+    if (update.getTime() === today.getTime()) {
+      return { backgroundColor: '#228B22', color: 'white' };
+    }
+    
+    // Otherwise use gold background with black text
+    return { backgroundColor: '#F2BA15', color: 'black' };
+  };
   console.log('🎯 UnifiedStoryDashboard: Rendering with formData:', {
     id: formData.id,
     title: formData.title,
@@ -231,7 +256,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               <table className="w-full text-xs" style={{ border: '2px solid #F97316' }}>
                 <tbody>
                   <tr>
-                    <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #F97316' }}>
+                    <td colSpan={2} className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', ...getLastUpdateStyle() }}>
                       Last Update
                     </td>
                     <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #F97316', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
@@ -242,10 +267,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   <tr>
-                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316' }}>
+                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', ...getLastUpdateStyle() }}>
                       {formatDate(formData.updated_at)}
                     </td>
-                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316' }}>
+                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', ...getLastUpdateStyle() }}>
                       {formatTime(formData.updated_at)}
                     </td>
                     <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
