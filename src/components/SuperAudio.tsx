@@ -205,7 +205,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             
             
             {/* Table */}
-            <table width={244} cellSpacing={0} cellPadding={0} border={0} style={{margin: '0 auto'}}>
+            <div style={{textAlign: 'center'}}>
+              <table width={244} cellSpacing={0} cellPadding={0} border={0} style={{display: 'inline-block'}}>
               <tbody>
                 {/* Row 1: 4 cells, 27px height, blue fill, labeled */}
                 <tr>
@@ -510,6 +511,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
         </DialogPrimitive.Content>
