@@ -295,11 +295,11 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               )}
             </div>
             
-            {/* Spacer to push grid to bottom - 20% */}
-            <div className="h-[20%]"></div>
+            {/* Spacer to position grid - reduced to move table up */}
+            <div className="h-[10%]"></div>
             
-            {/* 3x4 Button Grid - Bottom 40% */}
-            <div className="h-[40%]">
+            {/* 3x4 Button Grid - 50% height to accommodate moved position */}
+            <div className="h-[50%]">
               <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '0.4fr 1fr 0.67fr' }}>
                 {/* Row 1: Button Labels */}
                 <div className="flex items-center justify-center text-white text-xs font-bold rounded-md" style={{ backgroundColor: '#2563eb' }}>
