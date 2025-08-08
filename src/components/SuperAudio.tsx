@@ -283,7 +283,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   <td width={60} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Pause" title="Pause" align="center" valign="middle">
                     <b style={{color: 'white', fontFamily: FONT_FUN}}>Pause</b>
                   </td>
-                  <td width={60} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Restart" title="Restart" align="center" valign="middle">
+                  <td width={60} height={27} style={{backgroundColor: '#F97316'}} role="button" aria-label="Restart" title="Restart" align="center" valign="middle">
                     <b style={{color: 'white', fontFamily: FONT_FUN}}>Restart</b>
                   </td>
                   <td width={60} height={27} style={{backgroundColor: '#2563eb', borderRadius: '0 12px 0 0'}} role="button" aria-label="Stop" title="Stop" align="center" valign="middle">
