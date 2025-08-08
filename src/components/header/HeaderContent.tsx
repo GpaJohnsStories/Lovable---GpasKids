@@ -21,6 +21,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('ICO-HL2.gif');
   const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('ICO-MU2.gif');
   const { iconUrl: safeForKidsIconUrl, isLoading: sfkLoading, error: sfkError } = useCachedIcon('ICO-SFK.gif');
+  const { iconUrl: hgjIconUrl, isLoading: hgjLoading, error: hgjError } = useCachedIcon('ICO-HGJ.gif');
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -166,9 +167,28 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
           )}
         </div>
 
-        {/* RIGHT SECTION: Gold Menu Button - Hidden on admin pages */}
+        {/* RIGHT SECTION: ICO-HGJ + Gold Menu Button - Hidden on admin pages */}
         {!isAdminPage && (
-          <div className="flex justify-end relative" ref={menuRef}>
+          <div className="flex items-center gap-4 justify-end relative" ref={menuRef}>
+            {/* ICO-HGJ Icon */}
+            <div className="flex items-center">
+              {hgjLoading && (
+                <div className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] bg-gray-300 animate-pulse rounded-lg" />
+              )}
+              {(hgjError || !hgjIconUrl) && !hgjLoading ? (
+                <div className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] bg-gray-200 flex items-center justify-center text-gray-800 text-xs font-bold rounded-lg border-2 border-gray-400">
+                  HGJ
+                </div>
+              ) : hgjIconUrl && !hgjLoading && !hgjError ? (
+                <img 
+                  src={hgjIconUrl}
+                  alt="HGJ Icon"
+                  className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] object-contain"
+                />
+              ) : null}
+            </div>
+            
+            {/* Gold Menu Button */}
             <button 
               onClick={handleMenuClick}
               aria-label="Click for Menu"
