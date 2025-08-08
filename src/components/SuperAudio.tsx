@@ -301,18 +301,22 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             {/* 3x4 Button Grid - 50% height to accommodate moved position */}
             <div className="h-[50%]">
               <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '0.4fr 1fr 0.67fr' }}>
-                {/* Row 1: Button Labels */}
-                <div className="flex items-center justify-center text-white text-xs font-bold rounded-md" style={{ backgroundColor: '#2563eb' }}>
-                  Play
-                </div>
-                <div className="flex items-center justify-center text-white text-xs font-bold rounded-md" style={{ backgroundColor: '#2563eb' }}>
-                  Pause
-                </div>
-                <div className="flex items-center justify-center text-white text-xs font-bold rounded-md" style={{ backgroundColor: '#2563eb' }}>
-                  Restart
-                </div>
-                <div className="flex items-center justify-center text-white text-xs font-bold rounded-md" style={{ backgroundColor: '#2563eb' }}>
-                  STOP
+                {/* Row 1: Button Labels with background box */}
+                <div className="col-span-4 relative rounded-t-lg" style={{ backgroundColor: '#2563eb' }}>
+                  <div className="grid grid-cols-4 h-full">
+                    <div className="flex items-center justify-center text-white text-xs font-bold">
+                      Play
+                    </div>
+                    <div className="flex items-center justify-center text-white text-xs font-bold">
+                      Pause
+                    </div>
+                    <div className="flex items-center justify-center text-white text-xs font-bold">
+                      Restart
+                    </div>
+                    <div className="flex items-center justify-center text-white text-xs font-bold">
+                      STOP
+                    </div>
+                  </div>
                 </div>
 
                 {/* Row 2: Main Audio Controls */}
