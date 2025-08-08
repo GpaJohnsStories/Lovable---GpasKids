@@ -223,68 +223,153 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   </td>
                 </tr>
 
-                {/* Row 2: 4 cells, 55px x 55px, colored buttons with icons */}
+                {/* Row 2: 4 beautiful buttons with gradients and icons */}
                 <tr>
-                  <td width={55} height={55} style={{backgroundColor: '#22c55e', position: 'relative'}} role="button" aria-label="Play" title="Play">
+                  <td width={55} height={55} style={{padding: '3px'}}>
                     <div style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      width: '0',
-                      height: '0',
-                      borderLeft: '12px solid white',
-                      borderTop: '8px solid transparent',
-                      borderBottom: '8px solid transparent'
-                    }}></div>
-                  </td>
-                  <td width={55} height={55} style={{backgroundColor: '#fbbf24', position: 'relative'}} role="button" aria-label="Pause" title="Pause">
-                    <div style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
+                      width: '49px',
+                      height: '49px',
+                      background: 'linear-gradient(145deg, #22c55e, #16a34a)',
+                      borderRadius: '12px',
                       display: 'flex',
-                      gap: '4px'
-                    }}>
-                      <div style={{width: '4px', height: '16px', backgroundColor: 'white'}}></div>
-                      <div style={{width: '4px', height: '16px', backgroundColor: 'white'}}></div>
-                    </div>
-                  </td>
-                  <td width={55} height={55} style={{backgroundColor: '#3b82f6', position: 'relative'}} role="button" aria-label="Restart" title="Restart">
-                    <div style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      width: '16px',
-                      height: '16px',
-                      border: '3px solid white',
-                      borderRadius: '50%',
-                      borderTopColor: 'transparent'
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      border: '1px solid rgba(255,255,255,0.2)'
+                    }} 
+                    role="button" 
+                    aria-label="Play" 
+                    title="Play"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)';
                     }}>
                       <div style={{
-                        position: 'absolute',
-                        top: '-2px',
-                        right: '-2px',
                         width: '0',
                         height: '0',
-                        borderLeft: '6px solid white',
-                        borderTop: '3px solid transparent',
-                        borderBottom: '3px solid transparent'
+                        borderLeft: '14px solid white',
+                        borderTop: '10px solid transparent',
+                        borderBottom: '10px solid transparent',
+                        marginLeft: '3px'
                       }}></div>
                     </div>
                   </td>
-                  <td width={55} height={55} style={{backgroundColor: '#ef4444', position: 'relative'}} role="button" aria-label="Stop" title="Stop">
+                  <td width={55} height={55} style={{padding: '3px'}}>
                     <div style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      width: '14px',
-                      height: '14px',
-                      backgroundColor: 'white'
-                    }}></div>
+                      width: '49px',
+                      height: '49px',
+                      background: 'linear-gradient(145deg, #fbbf24, #f59e0b)',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      border: '1px solid rgba(255,255,255,0.2)'
+                    }} 
+                    role="button" 
+                    aria-label="Pause" 
+                    title="Pause"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)';
+                    }}>
+                      <div style={{display: 'flex', gap: '4px'}}>
+                        <div style={{width: '5px', height: '18px', backgroundColor: 'white', borderRadius: '1px'}}></div>
+                        <div style={{width: '5px', height: '18px', backgroundColor: 'white', borderRadius: '1px'}}></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td width={55} height={55} style={{padding: '3px'}}>
+                    <div style={{
+                      width: '49px',
+                      height: '49px',
+                      background: 'linear-gradient(145deg, #3b82f6, #2563eb)',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      border: '1px solid rgba(255,255,255,0.2)'
+                    }} 
+                    role="button" 
+                    aria-label="Restart" 
+                    title="Restart"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)';
+                    }}>
+                      <div style={{
+                        width: '18px',
+                        height: '18px',
+                        border: '3px solid white',
+                        borderRadius: '50%',
+                        borderTopColor: 'transparent',
+                        borderRightColor: 'transparent',
+                        position: 'relative'
+                      }}>
+                        <div style={{
+                          position: 'absolute',
+                          top: '-3px',
+                          right: '-6px',
+                          width: '0',
+                          height: '0',
+                          borderLeft: '8px solid white',
+                          borderTop: '4px solid transparent',
+                          borderBottom: '4px solid transparent'
+                        }}></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td width={55} height={55} style={{padding: '3px'}}>
+                    <div style={{
+                      width: '49px',
+                      height: '49px',
+                      background: 'linear-gradient(145deg, #ef4444, #dc2626)',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      border: '1px solid rgba(255,255,255,0.2)'
+                    }} 
+                    role="button" 
+                    aria-label="Stop" 
+                    title="Stop"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-1px)';
+                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)';
+                    }}>
+                      <div style={{
+                        width: '16px',
+                        height: '16px',
+                        backgroundColor: 'white',
+                        borderRadius: '2px'
+                      }}></div>
+                    </div>
                   </td>
                 </tr>
 
