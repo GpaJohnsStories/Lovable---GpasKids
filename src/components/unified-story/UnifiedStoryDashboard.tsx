@@ -215,7 +215,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #F97316' }}>
                       Last Update
                     </td>
-                    <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #F97316', backgroundColor: '#169CF9' }}>
+                    <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #F97316', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
                       Original Upload
                     </td>
                     <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1">
@@ -229,10 +229,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316' }}>
                       {formatTime(formData.updated_at)}
                     </td>
-                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', backgroundColor: '#169CF9' }}>
+                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
                       {formatDate(formData.created_at)}
                     </td>
-                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', backgroundColor: '#169CF9' }}>
+                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
                       {formatTime(formData.created_at)}
                     </td>
                     <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316' }}>
