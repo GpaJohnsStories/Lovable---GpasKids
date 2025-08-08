@@ -369,7 +369,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     value={formData.ai_voice_name || 'Nova'} 
                     onValueChange={(value) => onVoiceChange?.(value)}
                   >
-                    <SelectTrigger className="w-full text-xs" style={{ borderColor: '#2563eb' }}>
+                    <SelectTrigger className="w-full text-xs" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
                       <SelectValue placeholder="Select voice" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white border shadow-lg">
