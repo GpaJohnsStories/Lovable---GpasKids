@@ -209,7 +209,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               <tbody>
                 {/* Row 1: 4 cells, 27px height, blue fill, labeled */}
                 <tr>
-                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Play" title="Play" align="center" valign="middle">
+                  <td width={55} height={27} style={{backgroundColor: '#2563eb', borderRadius: '12px 0 0 0'}} role="button" aria-label="Play" title="Play" align="center" valign="middle">
                     <b style={{color: 'white', fontFamily: FONT_FUN}}>Play</b>
                   </td>
                   <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Pause" title="Pause" align="center" valign="middle">
@@ -218,14 +218,14 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Restart" title="Restart" align="center" valign="middle">
                     <b style={{color: 'white', fontFamily: FONT_FUN}}>Restart</b>
                   </td>
-                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Stop" title="Stop" align="center" valign="middle">
+                  <td width={55} height={27} style={{backgroundColor: '#2563eb', borderRadius: '0 12px 0 0'}} role="button" aria-label="Stop" title="Stop" align="center" valign="middle">
                     <b style={{color: 'white', fontFamily: FONT_FUN}}>STOP</b>
                   </td>
                 </tr>
 
                 {/* Row 2: 4 beautiful buttons with gradients and icons */}
                 <tr>
-                  <td width={55} height={55} style={{padding: '0', backgroundColor: '#2563eb'}}>
+                  <td width={55} height={55} style={{padding: '0', backgroundColor: '#2563eb', borderRadius: '0 0 0 12px'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -353,7 +353,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       </div>
                     </div>
                   </td>
-                  <td width={55} height={55} style={{padding: '0', backgroundColor: '#2563eb'}}>
+                  <td width={55} height={55} style={{padding: '0', backgroundColor: '#2563eb', borderRadius: '0 0 12px 0'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
