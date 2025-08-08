@@ -300,7 +300,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             
             {/* 3x4 Button Grid - 50% height to accommodate moved position */}
             <div className="h-[50%]">
-              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '0.4fr 1fr 0.3fr 0.67fr' }}>
+              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '0.4fr 1fr 0.67fr' }}>
                 {/* Row 1: Button Labels with background box */}
                 <div className="col-span-4 rounded-t-lg" style={{ backgroundColor: '#2563eb' }}>
                   <div className="grid grid-cols-4 h-full">
@@ -334,15 +334,14 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   </div>
                 </div>
 
-                {/* Row 3: Spacer - invisible 2px gap */}
-                <div className="col-span-4"></div>
-
-                {/* Row 4: Speed Controls */}
-                <AudioSpeedControls
-                  playbackRate={playbackRate}
-                  onSpeedChange={handleSpeedChange}
-                  audioUrl={audioUrl}
-                />
+                {/* Row 3: Speed Controls with top margin for separation */}
+                <div className="col-span-4 mt-1">
+                  <AudioSpeedControls
+                    playbackRate={playbackRate}
+                    onSpeedChange={handleSpeedChange}
+                    audioUrl={audioUrl}
+                  />
+                </div>
               </div>
             </div>
           </div>
