@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { AudioControlButtons } from './AudioControlButtons';
 import { AudioSpeedControls } from './AudioSpeedControls';
-import PureTable from './PureTable';
 
 // Refactored SuperAudio component
 
@@ -296,12 +295,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               )}
             </div>
             
-            {/* Spacer to position grid - reduced to move table up */}
-            <div className="h-[10%]"></div>
-            
-            {/* 5-Row Button Table - 50% height to accommodate moved position */}
+            {/* Ready for your table code */}
             <div className="h-[50%]">
-              <PureTable />
+              {/* Table code will go here */}
             </div>
           </div>
         </div>
