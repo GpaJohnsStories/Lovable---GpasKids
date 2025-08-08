@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { RefreshCw } from "lucide-react";
 
 // Simplified SuperAudio component - Audio functionality removed
 
@@ -401,27 +402,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                        e.currentTarget.style.transform = 'scale(1.1)';
                      }}
                      onClick={handleRestart}>
-                       <div style={{
-                         width: '18px',
-                         height: '18px',
-                         border: '3px solid white',
-                         borderRadius: '50%',
-                         borderTopColor: 'transparent',
-                         borderRightColor: 'transparent',
-                         position: 'relative'
-                       }}>
-                         <div style={{
-                           position: 'absolute',
-                           top: '-3px',
-                           right: '-6px',
-                           width: '0',
-                           height: '0',
-                           borderLeft: '8px solid white',
-                           borderTop: '4px solid transparent',
-                           borderBottom: '4px solid transparent'
-                         }}></div>
-                       </div>
-                     </div>
+                        <RefreshCw size={20} color="white" strokeWidth={2.5} />
+                      </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 12px 0', textAlign: 'center'}}>
                     <div style={{
