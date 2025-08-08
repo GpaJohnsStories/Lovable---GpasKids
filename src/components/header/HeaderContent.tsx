@@ -142,7 +142,7 @@ const HeaderContent = ({ isHomePage, isAdminPage }: HeaderContentProps) => {
                 </div>
                 
                 {/* ICO-HGJ Icon - Positioned between Safe for Kids and Menu button */}
-                <div className="absolute -right-14 lg:-right-16 top-1/2 transform -translate-y-1/2">
+                <div className="absolute -right-10 lg:-right-12 top-1/2 transform -translate-y-1/2">
                   {hgjLoading && (
                     <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-gray-300 animate-pulse rounded-full border-2 border-gray-500" />
                   )}
