@@ -400,14 +400,14 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
 
                 {/* Row 4: 1 cell, 27px height, brown fill, centered text */}
                 <tr>
-                  <td colSpan={4} height={27} style={{backgroundColor: '#814d2e'}} align="center" valign="middle">
+                  <td colSpan={4} height={27} style={{backgroundColor: '#814d2e', borderRadius: '12px 12px 0 0'}} align="center" valign="middle">
                     <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
                   </td>
                 </tr>
 
                 {/* Row 5: 4 speed control buttons with gradients */}
                 <tr>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 0 12px'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -482,7 +482,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: 'white'}}>Faster</span>
                     </div>
                   </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 12px 0'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
