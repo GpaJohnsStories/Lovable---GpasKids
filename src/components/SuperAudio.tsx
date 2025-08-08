@@ -209,9 +209,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
 
     const handlePlaying = () => {
       setIsLoading(false);
+      console.log('Audio is now playing');
     };
 
-    // Add all event listeners
+    // Add event listeners
     audio.addEventListener('timeupdate', handleTimeUpdate);
     audio.addEventListener('durationchange', handleDurationChange);
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
@@ -222,8 +223,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     audio.addEventListener('waiting', handleWaiting);
     audio.addEventListener('playing', handlePlaying);
 
-    // Force load metadata
+    // Force load metadata and check initial state
     audio.load();
+    console.log('Audio element loaded, initial duration:', audio.duration, 'readyState:', audio.readyState);
 
     return () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
@@ -329,6 +331,11 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   error={error}
                   isLoading={isLoading}
                 />
+
+                {/* Debug info */}
+                <div className="col-span-4 text-xs text-center text-gray-600">
+                  Debug: {currentTime.toFixed(1)}s / {duration.toFixed(1)}s - Playing: {isPlaying ? 'Yes' : 'No'}
+                </div>
 
                 {/* Rows 3-4: Speed Controls */}
                 <AudioSpeedControls

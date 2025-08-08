@@ -18,6 +18,9 @@ export const AudioProgressBar: React.FC<AudioProgressBarProps> = ({
   isLoading
 }) => {
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
+  
+  // Debug logging
+  console.log('AudioProgressBar render:', { currentTime, duration, progressPercentage });
 
   return (
     <div className="col-span-4 border-2 border-white/40 rounded-lg shadow-lg flex items-center justify-center p-1" style={{ backgroundColor: '#3b82f6' }}>
