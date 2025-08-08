@@ -223,12 +223,69 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   </td>
                 </tr>
 
-                {/* Row 2: 4 cells, 55px x 55px, blue fill */}
+                {/* Row 2: 4 cells, 55px x 55px, colored buttons with icons */}
                 <tr>
-                  <td width={55} height={55} style={{backgroundColor: '#2563eb'}}></td>
-                  <td width={55} height={55} style={{backgroundColor: '#2563eb'}}></td>
-                  <td width={55} height={55} style={{backgroundColor: '#2563eb'}}></td>
-                  <td width={55} height={55} style={{backgroundColor: '#2563eb'}}></td>
+                  <td width={55} height={55} style={{backgroundColor: '#22c55e', position: 'relative'}} role="button" aria-label="Play" title="Play">
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '0',
+                      height: '0',
+                      borderLeft: '12px solid white',
+                      borderTop: '8px solid transparent',
+                      borderBottom: '8px solid transparent'
+                    }}></div>
+                  </td>
+                  <td width={55} height={55} style={{backgroundColor: '#fbbf24', position: 'relative'}} role="button" aria-label="Pause" title="Pause">
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      display: 'flex',
+                      gap: '4px'
+                    }}>
+                      <div style={{width: '4px', height: '16px', backgroundColor: 'white'}}></div>
+                      <div style={{width: '4px', height: '16px', backgroundColor: 'white'}}></div>
+                    </div>
+                  </td>
+                  <td width={55} height={55} style={{backgroundColor: '#3b82f6', position: 'relative'}} role="button" aria-label="Restart" title="Restart">
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '16px',
+                      height: '16px',
+                      border: '3px solid white',
+                      borderRadius: '50%',
+                      borderTopColor: 'transparent'
+                    }}>
+                      <div style={{
+                        position: 'absolute',
+                        top: '-2px',
+                        right: '-2px',
+                        width: '0',
+                        height: '0',
+                        borderLeft: '6px solid white',
+                        borderTop: '3px solid transparent',
+                        borderBottom: '3px solid transparent'
+                      }}></div>
+                    </div>
+                  </td>
+                  <td width={55} height={55} style={{backgroundColor: '#ef4444', position: 'relative'}} role="button" aria-label="Stop" title="Stop">
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '14px',
+                      height: '14px',
+                      backgroundColor: 'white'
+                    }}></div>
+                  </td>
                 </tr>
 
                 {/* Row 3: 1 cell, 27px height, transparent */}
