@@ -253,13 +253,13 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardHeader>
             <CardContent className="space-y-3">
               {/* Timestamp Information Table */}
-              <table className="w-full text-xs" style={{ border: '2px solid #F97316' }}>
+              <table className="w-full text-xs" style={{ border: '2px solid #9c441a' }}>
                 <tbody>
                   <tr>
-                    <td colSpan={2} className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', ...getLastUpdateStyle() }}>
+                    <td colSpan={2} className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', ...getLastUpdateStyle() }}>
                       Last Update
                     </td>
-                    <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #F97316', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
+                    <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #9c441a', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
                       Original Upload
                     </td>
                     <td colSpan={2} className="text-center font-bold px-1 py-1" style={getAudioStatusStyle()}>
@@ -267,22 +267,22 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   <tr>
-                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', ...getLastUpdateStyle() }}>
+                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', borderTop: '1px solid #9c441a', ...getLastUpdateStyle() }}>
                       {formatDate(formData.updated_at)}
                     </td>
-                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', ...getLastUpdateStyle() }}>
+                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', borderTop: '1px solid #9c441a', ...getLastUpdateStyle() }}>
                       {formatTime(formData.updated_at)}
                     </td>
-                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
+                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', borderTop: '1px solid #9c441a', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
                       {formatDate(formData.created_at)}
                     </td>
-                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
+                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', borderTop: '1px solid #9c441a', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
                       {formatTime(formData.created_at)}
                     </td>
-                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316', ...getAudioStatusStyle() }}>
+                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', borderTop: '1px solid #9c441a', ...getAudioStatusStyle() }}>
                       {formatDate(formData.audio_generated_at)}
                     </td>
-                    <td className="text-center font-bold px-1 py-1" style={{ borderTop: '1px solid #F97316', ...getAudioStatusStyle() }}>
+                    <td className="text-center font-bold px-1 py-1" style={{ borderTop: '1px solid #9c441a', ...getAudioStatusStyle() }}>
                       {formatTime(formData.audio_generated_at)}
                     </td>
                   </tr>
