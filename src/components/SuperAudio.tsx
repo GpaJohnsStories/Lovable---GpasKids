@@ -429,7 +429,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
-                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '12px', color: '#228B22'}}>Normal</span>
+                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#228B22'}}>Normal</span>
                     </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
@@ -454,7 +454,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
-                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '12px', color: 'white'}}>Fast</span>
+                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: 'white'}}>Fast</span>
                     </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
@@ -479,7 +479,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
-                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '12px', color: 'white'}}>Faster</span>
+                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: 'white'}}>Faster</span>
                     </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
@@ -504,7 +504,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
-                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '12px', color: '#f97316'}}>Fastest</span>
+                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#f97316'}}>Fastest</span>
                     </div>
                   </td>
                 </tr>
