@@ -31,12 +31,13 @@ const AdminHeaderBanner = () => {
   // Determine if the system is secure (placeholder logic - adjust as needed)
   const isSecure = window.location.protocol === 'https:';
   
-  // Load the secure icon, logout icon, dashboard icon, libraries icon, and comments icon
+  // Load the secure icon, logout icon, dashboard icon, libraries icon, comments icon, and story creation icon
   const { iconUrl: secureIconUrl } = useCachedIcon(isSecure ? 'ICO-ADS.jpg' : null);
   const { iconUrl: logoutIconUrl } = useCachedIcon('ICO-ADX.png');
   const { iconUrl: dashboardIconUrl } = useCachedIcon('ICO-AD1.gif');
   const { iconUrl: librariesIconUrl } = useCachedIcon('ICO-LB1.gif');
   const { iconUrl: commentsIconUrl } = useCachedIcon('ICO-CO3.gif');
+  const { iconUrl: storyCreateIconUrl } = useCachedIcon('ICO-CO2');
 
   const handleCreateStoryClick = () => {
     console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
@@ -287,8 +288,16 @@ const AdminHeaderBanner = () => {
                       minWidth: '55px',
                       minHeight: '55px'
                     }}
-                  >
-                    <span className="text-2xl font-bold text-white">+</span>
+                   >
+                     {storyCreateIconUrl ? (
+                       <img 
+                         src={storyCreateIconUrl} 
+                         alt="Add New Story"
+                         className="w-12 h-12 object-contain"
+                       />
+                     ) : (
+                       <span className="text-2xl font-bold text-white">+</span>
+                     )}
                   </div>
                   {hoveredButton === 'Story' && (
                     <div className="nav-bubble opacity-100 visible">
