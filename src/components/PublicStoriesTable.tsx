@@ -184,8 +184,11 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                 placeholder="Search stories by title, content, author, or keywords..."
                 value={localSearchTerm}
                 onChange={(e) => setLocalSearchTerm(e.target.value)}
-                className="pl-10 pr-10 py-2 text-sm border-2 border-orange-200 focus:border-orange-400 rounded-lg"
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                className="pl-10 pr-10 py-2 text-sm border-2 focus:border-orange-400 rounded-lg placeholder:font-bold"
+                style={{ 
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  borderColor: '#9c441a'
+                }}
               />
               {searchTerm && (
                 <Button
