@@ -486,7 +486,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     <div style={{
                       width: '55px',
                       height: '55px',
-                      background: 'linear-gradient(145deg, #22c55e, #16a34a)',
+                      background: 'linear-gradient(145deg, #065f46, #064e3b)',
                       borderRadius: '12px',
                       display: 'flex',
                       alignItems: 'center',
