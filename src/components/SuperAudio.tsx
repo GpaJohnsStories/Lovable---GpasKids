@@ -41,6 +41,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Debug logging
+  console.log('SuperAudio props:', { audioUrl, audioDuration, title });
+
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     setDragStart({
@@ -137,9 +140,11 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
     const audio = audioRef.current;
     if (!audio || !audioUrl) return;
 
+    console.log('Setting up audio with URL:', audioUrl, 'prop duration:', audioDuration);
+
     // Reset state when audio URL changes
     setCurrentTime(0);
-    setDuration(0);
+    setDuration(audioDuration || 0); // Initialize with prop duration if available
     setIsPlaying(false);
     setError(null);
     setIsLoading(true);
@@ -167,6 +172,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
         setDuration(audioDuration);
         console.log('Using prop duration as fallback:', audioDuration);
       }
+      setIsLoading(false);
     };
 
     const handleLoadStart = () => {
