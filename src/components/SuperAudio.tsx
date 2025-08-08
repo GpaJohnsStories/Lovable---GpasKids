@@ -296,33 +296,31 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             </div>
             
             {/* Ready for your table code */}
-            <div className="h-[50%]">
-              <table>
-                <tbody>
-                  <tr style={{ height: '27.5px' }}>
-                    <td style={{ backgroundColor: '#2563eb' }}></td>
-                    <td style={{ backgroundColor: '#2563eb' }}></td>
-                    <td style={{ backgroundColor: '#2563eb' }}></td>
-                    <td style={{ backgroundColor: '#2563eb' }}></td>
-                  </tr>
-                  <tr style={{ height: '55px' }}>
-                    <td style={{ backgroundColor: '#2563eb' }}></td>
-                    <td style={{ backgroundColor: '#2563eb' }}></td>
-                    <td style={{ backgroundColor: '#2563eb' }}></td>
-                    <td style={{ backgroundColor: '#2563eb' }}></td>
-                  </tr>
-                  <tr style={{ height: '27.5px' }}>
-                    <td colSpan={4} style={{ backgroundColor: 'transparent', border: 'none' }}></td>
-                  </tr>
-                  <tr style={{ height: '27.5px' }}>
-                    <td colSpan={4} style={{ backgroundColor: '#8B4513' }}></td>
-                  </tr>
-                  <tr style={{ height: '55px' }}>
-                    <td colSpan={4} style={{ backgroundColor: '#8B4513' }}></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <table>
+              <tbody>
+                <tr style={{ height: '27.5px' }}>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                </tr>
+                <tr style={{ height: '55px' }}>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                </tr>
+                <tr style={{ height: '27.5px' }}>
+                  <td colSpan={4} style={{ backgroundColor: 'transparent', border: 'none' }}></td>
+                </tr>
+                <tr style={{ height: '27.5px' }}>
+                  <td colSpan={4} style={{ backgroundColor: '#8B4513' }}></td>
+                </tr>
+                <tr style={{ height: '55px' }}>
+                  <td colSpan={4} style={{ backgroundColor: '#8B4513' }}></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
         </DialogPrimitive.Content>
