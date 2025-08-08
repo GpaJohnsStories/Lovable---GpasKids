@@ -395,7 +395,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
 
                 {/* Row 3: 1 cell, 27px height, transparent */}
                 <tr>
-                  <td colSpan={4} height={27} style={{backgroundColor: 'transparent', border: 'none'}}></td>
+                  <td colSpan={4} height={10} style={{backgroundColor: 'transparent', border: 'none'}}></td>
                 </tr>
 
                 {/* Row 4: 1 cell, 27px height, brown fill, centered text */}
