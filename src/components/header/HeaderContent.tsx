@@ -41,7 +41,7 @@ const HeaderContent = ({ isHomePage, isAdminPage }: HeaderContentProps) => {
   // Event Handlers
   const handleHelpClick = () => {
     console.log('Help button clicked');
-    showHelp();
+    showHelp('/');
   };
 
   const handleMenuClick = () => {
@@ -126,17 +126,17 @@ const HeaderContent = ({ isHomePage, isAdminPage }: HeaderContentProps) => {
                 {/* Safe For Kids Shield - Positioned to the right of speech bubble */}
                 <div className="absolute -right-28 lg:-right-32 top-1/2 transform -translate-y-1/2">
                   {sfkLoading && (
-                    <div className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
+                    <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
                   )}
                   {(sfkError || !safeForKidsIconUrl) && !sfkLoading ? (
-                    <div className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-full border-2 border-green-500">
+                    <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-full border-2 border-green-500">
                       SAFE
                     </div>
                   ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
                     <img 
                       src={safeForKidsIconUrl}
                       alt="Safe For Kids Shield"
-                      className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 object-contain"
+                      className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 object-contain"
                     />
                   ) : null}
                 </div>
@@ -144,38 +144,37 @@ const HeaderContent = ({ isHomePage, isAdminPage }: HeaderContentProps) => {
                 {/* ICO-HGJ Icon - Positioned between Safe for Kids and Menu button */}
                 <div className="absolute -right-14 lg:-right-16 top-1/2 transform -translate-y-1/2">
                   {hgjLoading && (
-                    <div className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 bg-gray-300 animate-pulse rounded-full border-2 border-gray-500" />
+                    <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-gray-300 animate-pulse rounded-full border-2 border-gray-500" />
                   )}
                   {(hgjError || !hgjIconUrl) && !hgjLoading ? (
-                    <div className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 bg-gray-200 flex items-center justify-center text-gray-800 text-xs font-bold rounded-full border-2 border-gray-500">
+                    <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-gray-200 flex items-center justify-center text-gray-800 text-xs font-bold rounded-full border-2 border-gray-500">
                       HGJ
                     </div>
                   ) : hgjIconUrl && !hgjLoading && !hgjError ? (
                     <img 
                       src={hgjIconUrl}
                       alt="HGJ Icon"
-                      className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 object-contain"
+                      className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 object-contain"
                     />
                   ) : null}
                 </div>
               </div>
             </div>
           ) : (
-            {/* Safe For Kids Shield for non-home pages - centered */}
             <div className="w-48 lg:w-64 h-32 lg:h-40 flex items-center justify-center">
               <div className="flex items-center justify-center">
                 {sfkLoading && (
-                  <div className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
+                  <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
                 )}
                 {(sfkError || !safeForKidsIconUrl) && !sfkLoading ? (
-                  <div className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-sm font-bold rounded-full border-2 border-green-500">
+                  <div className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-sm font-bold rounded-full border-2 border-green-500">
                     SAFE
                   </div>
                 ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
                   <img 
                     src={safeForKidsIconUrl}
                     alt="Safe For Kids Shield"
-                    className="w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 object-contain"
+                    className="w-12 sm:w-16 md:w-24 h-12 sm:h-16 md:h-24 object-contain"
                   />
                 ) : null}
               </div>
@@ -218,7 +217,7 @@ const HeaderContent = ({ isHomePage, isAdminPage }: HeaderContentProps) => {
 
           {/* Vertical Menu */}
           <SimpleVerticalMenu 
-            isOpen={isMenuOpen} 
+            isVisible={isMenuOpen} 
             onClose={() => setIsMenuOpen(false)}
           />
         </div>
