@@ -318,18 +318,18 @@ const AdminHeaderBanner = () => {
                 >
                   <Link to={button.path} onClick={scrollToTop}>
                     <div
-                      className="w-[70px] h-[70px] flex items-center justify-center rounded-md border-2 border-blue-300/50 hover:scale-105 transition-transform cursor-pointer"
+                      className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-blue-300/50 hover:scale-105 transition-transform cursor-pointer"
                       style={{ 
                         backgroundColor: '#00BFFF',
-                        minWidth: '70px',
-                        minHeight: '70px'
+                        minWidth: '55px',
+                        minHeight: '55px'
                       }}
                     >
                       {dashboardIconUrl ? (
                         <img 
                           src={dashboardIconUrl} 
                           alt="Dashboard"
-                          className="w-full h-full"
+                          className="w-16 h-16"
                         />
                       ) : (
                         <LayoutDashboard className="w-12 h-12 text-white" />
