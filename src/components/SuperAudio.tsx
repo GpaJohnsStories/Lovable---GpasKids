@@ -298,10 +298,24 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             {/* Spacer to push grid to bottom - 20% */}
             <div className="h-[20%]"></div>
             
-            {/* 2x4 Button Grid - Bottom 40% */}
+            {/* 3x4 Button Grid - Bottom 40% */}
             <div className="h-[40%]">
-              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '1fr 0.67fr' }}>
-                {/* Row 1: Main Audio Controls */}
+              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full" style={{ gridTemplateRows: '0.4fr 1fr 0.67fr' }}>
+                {/* Row 1: Button Labels */}
+                <div className="flex items-center justify-center text-white text-xs font-bold rounded-md" style={{ backgroundColor: '#2563eb' }}>
+                  Play
+                </div>
+                <div className="flex items-center justify-center text-white text-xs font-bold rounded-md" style={{ backgroundColor: '#2563eb' }}>
+                  Pause
+                </div>
+                <div className="flex items-center justify-center text-white text-xs font-bold rounded-md" style={{ backgroundColor: '#2563eb' }}>
+                  Restart
+                </div>
+                <div className="flex items-center justify-center text-white text-xs font-bold rounded-md" style={{ backgroundColor: '#2563eb' }}>
+                  STOP
+                </div>
+
+                {/* Row 2: Main Audio Controls */}
                 <AudioControlButtons
                   onPlay={handlePlay}
                   onPause={handlePause}
@@ -312,7 +326,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   audioUrl={audioUrl}
                 />
 
-                {/* Row 2: Speed Controls - reduced by 1/3 */}
+                {/* Row 3: Speed Controls - reduced by 1/3 */}
                 <AudioSpeedControls
                   playbackRate={playbackRate}
                   onSpeedChange={handleSpeedChange}
