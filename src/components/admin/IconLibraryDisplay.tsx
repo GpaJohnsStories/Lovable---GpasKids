@@ -267,7 +267,7 @@ const IconLibraryDisplay = () => {
                     {icon.icon_code}
                   </p>
                   <p className="text-sm text-foreground">
-                    {icon.icon_name}
+                    {icon.file_path}
                   </p>
                 </div>
                 
