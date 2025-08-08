@@ -48,7 +48,7 @@ const StoryHeader = ({
       <div className="relative">
         {/* Audio Button - Top Right Corner - only show if audio is available */}
         {audioUrl && (
-          <div className="absolute top-0 right-0 z-10">
+          <div className="absolute top-0 right-0 z-5">
             <AudioButton 
               code={storyCode || 'STORY'}
               onClick={() => setShowSuperAudio(true)}
