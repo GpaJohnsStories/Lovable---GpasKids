@@ -197,42 +197,42 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             
             
             {/* Table */}
-            <table width="220" cellSpacing="0" cellPadding="0" border="0">
+            <table width={220} cellSpacing={0} cellPadding={0} border={0}>
               <tbody>
                 {/* Row 1: 4 cells, 27px height, blue fill, labeled */}
                 <tr>
-                  <td width="55" height="27" style={{backgroundColor: '#2563eb'}} role="button" aria-label="Play" title="Play"></td>
-                  <td width="55" height="27" style={{backgroundColor: '#2563eb'}} role="button" aria-label="Pause" title="Pause"></td>
-                  <td width="55" height="27" style={{backgroundColor: '#2563eb'}} role="button" aria-label="Restart" title="Restart"></td>
-                  <td width="55" height="27" style={{backgroundColor: '#2563eb'}} role="button" aria-label="Stop" title="Stop"></td>
+                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Play" title="Play"></td>
+                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Pause" title="Pause"></td>
+                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Restart" title="Restart"></td>
+                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Stop" title="Stop"></td>
                 </tr>
 
                 {/* Row 2: 4 cells, 55px x 55px, blue fill */}
                 <tr>
-                  <td width="55" height="55" style={{backgroundColor: '#2563eb'}}></td>
-                  <td width="55" height="55" style={{backgroundColor: '#2563eb'}}></td>
-                  <td width="55" height="55" style={{backgroundColor: '#2563eb'}}></td>
-                  <td width="55" height="55" style={{backgroundColor: '#2563eb'}}></td>
+                  <td width={55} height={55} style={{backgroundColor: '#2563eb'}}></td>
+                  <td width={55} height={55} style={{backgroundColor: '#2563eb'}}></td>
+                  <td width={55} height={55} style={{backgroundColor: '#2563eb'}}></td>
+                  <td width={55} height={55} style={{backgroundColor: '#2563eb'}}></td>
                 </tr>
 
                 {/* Row 3: 1 cell, 27px height, transparent */}
                 <tr>
-                  <td colSpan="4" height="27" style={{backgroundColor: 'transparent', border: 'none'}}></td>
+                  <td colSpan={4} height={27} style={{backgroundColor: 'transparent', border: 'none'}}></td>
                 </tr>
 
                 {/* Row 4: 1 cell, 27px height, brown fill, centered text */}
                 <tr>
-                  <td colSpan="4" height="27" style={{backgroundColor: '#814d2e'}} align="center" valign="middle">
+                  <td colSpan={4} height={27} style={{backgroundColor: '#814d2e'}} align="center" valign="middle">
                     <span style={{color: 'white'}} aria-label="Playback Speed">Playback Speed</span>
                   </td>
                 </tr>
 
                 {/* Row 5: 4 cells, 55px height, brown fill */}
                 <tr>
-                  <td width="55" height="55" style={{backgroundColor: '#814d2e'}}></td>
-                  <td width="55" height="55" style={{backgroundColor: '#814d2e'}}></td>
-                  <td width="55" height="55" style={{backgroundColor: '#814d2e'}}></td>
-                  <td width="55" height="55" style={{backgroundColor: '#814d2e'}}></td>
+                  <td width={55} height={55} style={{backgroundColor: '#814d2e'}}></td>
+                  <td width={55} height={55} style={{backgroundColor: '#814d2e'}}></td>
+                  <td width={55} height={55} style={{backgroundColor: '#814d2e'}}></td>
+                  <td width={55} height={55} style={{backgroundColor: '#814d2e'}}></td>
                 </tr>
               </tbody>
             </table>
