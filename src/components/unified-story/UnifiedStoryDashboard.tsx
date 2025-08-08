@@ -209,13 +209,13 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardHeader>
             <CardContent className="space-y-3">
               {/* Timestamp Information Table */}
-              <table className="w-full text-xs border border-border">
+              <table className="w-full text-xs" style={{ border: '2px solid #F97316' }}>
                 <tbody>
                   <tr>
-                    <td colSpan={2} className="text-center font-bold text-gray-700 border-r border-border px-1 py-1">
+                    <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #F97316' }}>
                       Last Update
                     </td>
-                    <td colSpan={2} className="text-center font-bold text-gray-700 border-r border-border px-1 py-1">
+                    <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #F97316' }}>
                       Original Upload
                     </td>
                     <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1">
@@ -223,22 +223,22 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   <tr>
-                    <td className="text-center text-gray-600 border-r border-t border-border px-1 py-1">
+                    <td className="text-center text-gray-600 px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316' }}>
                       {formatDate(formData.updated_at)}
                     </td>
-                    <td className="text-center text-gray-600 border-r border-t border-border px-1 py-1">
+                    <td className="text-center text-gray-600 px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316' }}>
                       {formatTime(formData.updated_at)}
                     </td>
-                    <td className="text-center text-gray-600 border-r border-t border-border px-1 py-1">
+                    <td className="text-center text-gray-600 px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316' }}>
                       {formatDate(formData.created_at)}
                     </td>
-                    <td className="text-center text-gray-600 border-r border-t border-border px-1 py-1">
+                    <td className="text-center text-gray-600 px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316' }}>
                       {formatTime(formData.created_at)}
                     </td>
-                    <td className="text-center text-gray-600 border-r border-t border-border px-1 py-1">
+                    <td className="text-center text-gray-600 px-1 py-1" style={{ borderRight: '1px solid #F97316', borderTop: '1px solid #F97316' }}>
                       {formatDate(formData.audio_generated_at)}
                     </td>
-                    <td className="text-center text-gray-600 border-t border-border px-1 py-1">
+                    <td className="text-center text-gray-600 px-1 py-1" style={{ borderTop: '1px solid #F97316' }}>
                       {formatTime(formData.audio_generated_at)}
                     </td>
                   </tr>
