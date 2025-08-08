@@ -196,19 +196,19 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             
             
             {/* Table */}
-            <table>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <tbody>
                 <tr style={{ height: '27.5px' }}>
-                  <td style={{ backgroundColor: '#2563eb' }}></td>
-                  <td style={{ backgroundColor: '#2563eb' }}></td>
-                  <td style={{ backgroundColor: '#2563eb' }}></td>
-                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
+                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
+                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
+                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
                 </tr>
                 <tr style={{ height: '55px' }}>
-                  <td style={{ backgroundColor: '#2563eb' }}></td>
-                  <td style={{ backgroundColor: '#2563eb' }}></td>
-                  <td style={{ backgroundColor: '#2563eb' }}></td>
-                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
+                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
+                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
+                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
                 </tr>
                 <tr style={{ height: '27.5px' }}>
                   <td colSpan={4} style={{ backgroundColor: 'transparent', border: 'none' }}></td>
