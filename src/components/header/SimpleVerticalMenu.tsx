@@ -31,8 +31,9 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const location = useLocation();
   
-  // Check if we're on a story page for the Read button
-  const isStorySelected = location.pathname.startsWith('/story/');
+  // Check if we have a stored story path or if we're currently on a story page
+  const currentStoryPath = sessionStorage.getItem('currentStoryPath');
+  const isStorySelected = location.pathname.startsWith('/story/') || currentStoryPath;
 
   // Close submenu when menu becomes invisible
   if (!isVisible) {
@@ -80,6 +81,16 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       color: "#F97316",
       onClick: () => {
         console.log("Read Story clicked");
+        // If we're already on a story page, just close the menu
+        if (location.pathname.startsWith('/story/')) {
+          onClose();
+          return;
+        }
+        // Otherwise, navigate to the stored story path
+        const storedPath = sessionStorage.getItem('currentStoryPath');
+        if (storedPath) {
+          window.location.href = storedPath;
+        }
         onClose();
       },
       disabled: !isStorySelected,
