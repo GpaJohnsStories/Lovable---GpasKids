@@ -334,8 +334,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   </div>
                 </div>
 
-                {/* Row 3: Speed Controls with top margin for separation */}
-                <div className="col-span-4 mt-1">
+                {/* Row 3: Speed Controls */}
+                <div className="mt-1">
                   <AudioSpeedControls
                     playbackRate={playbackRate}
                     onSpeedChange={handleSpeedChange}
