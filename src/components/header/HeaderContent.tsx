@@ -148,25 +148,25 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
               <TooltipTrigger asChild>
                 <button 
                   onClick={handleHgjClick}
-                  className="group relative z-10 bg-gradient-to-br from-orange-500/80 to-orange-600/60 hover:from-orange-400/80 hover:to-orange-500/60 backdrop-blur-sm rounded-full p-1 flex flex-col items-center justify-center text-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 min-w-12 sm:min-w-14 md:min-w-16 flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-orange-500 hover:border-orange-400 transform hover:scale-105 hover:-translate-y-1 transition-all duration-200 cursor-pointer active:scale-95 active:translate-y-1"
+                  className="group relative z-10 bg-gradient-to-br from-orange-500/80 to-orange-600/60 hover:from-orange-400/80 hover:to-orange-500/60 backdrop-blur-sm rounded-full p-1 flex flex-col items-center justify-center text-center w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 min-w-14 sm:min-w-16 md:min-w-20 flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border border-orange-500 hover:border-orange-400 transform hover:scale-105 hover:-translate-y-1 transition-all duration-200 cursor-pointer active:scale-95 active:translate-y-1"
                 >
                   {hgjLoading && (
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-orange-300 animate-pulse rounded-full group-hover:hidden" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-orange-300 animate-pulse rounded-full group-hover:hidden" />
                   )}
                   {(hgjError || !hgjIconUrl) && !hgjLoading ? (
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-orange-200 flex items-center justify-center text-orange-800 text-xs font-bold rounded-full group-hover:hidden">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-orange-200 flex items-center justify-center text-orange-800 text-xs font-bold rounded-full group-hover:hidden">
                       HGJ
                     </div>
                   ) : hgjIconUrl && !hgjLoading && !hgjError ? (
                     <img 
                       src={hgjIconUrl}
                       alt="Help Grandpa John"
-                      className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain rounded-full group-hover:hidden"
+                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain rounded-full group-hover:hidden"
                     />
                   ) : null}
                   
                   {/* Help text - shown on hover */}
-                  <div className="hidden group-hover:flex items-center justify-center h-full text-white text-[10px] sm:text-xs md:text-sm font-bold text-center px-1">
+                  <div className="hidden group-hover:flex items-center justify-center h-full text-white text-xs sm:text-sm md:text-base font-bold text-center px-1">
                     Help Grandpa John
                   </div>
                 </button>
