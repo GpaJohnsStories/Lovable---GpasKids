@@ -293,7 +293,7 @@ const AdminHeaderBanner = () => {
                      {storyCreateIconUrl ? (
                        <img 
                          src={storyCreateIconUrl} 
-                         alt="Add New Story"
+                         alt="Add / Edit Story/Webtext"
                          className="w-12 h-12 object-contain"
                        />
                      ) : (
