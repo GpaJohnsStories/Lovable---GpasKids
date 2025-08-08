@@ -13,6 +13,7 @@ import Library from "./pages/Library";
 import Writing from "./pages/Writing";
 import HowTo from "./pages/HowTo";
 import HelpGpa from "./pages/HelpGpa";
+import Donations from "./pages/Donations";
 import MakeComment from "./pages/MakeComment";
 import ViewComments from "./pages/ViewComments";
 import CommentDetail from "./pages/CommentDetail";
@@ -87,6 +88,7 @@ function App() {
                       <Route path="/writing" element={<Writing />} />
                       <Route path="/guide" element={<HowTo />} />
                       <Route path="/help-gpa" element={<HelpGpa />} />
+                      <Route path="/donations" element={<Donations />} />
                       <Route path="/make-comment" element={<MakeComment />} />
                       <Route path="/view-comments" element={<ViewComments />} />
                       <Route path="/comment/:id" element={<CommentDetail />} />
