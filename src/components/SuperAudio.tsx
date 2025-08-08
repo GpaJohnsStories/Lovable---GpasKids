@@ -145,7 +145,6 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
             height: 'calc(100% - 8px)',
             width: 'calc(100% - 8px)',
             margin: '0 auto',
@@ -208,7 +207,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             
             
             {/* Table */}
-            <table width={244} cellSpacing={0} cellPadding={0} border={0}>
+            <div style={{flex: 1, display: 'flex', alignItems: 'center'}}>
+              <table width={244} cellSpacing={0} cellPadding={0} border={0}>
               <tbody>
                 {/* Row 1: 4 cells, 27px height, blue fill, labeled */}
                 <tr>
@@ -513,6 +513,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
         </DialogPrimitive.Content>
