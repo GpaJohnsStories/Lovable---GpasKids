@@ -14,7 +14,7 @@ const DonationForm = () => {
   const [message, setMessage] = useState<string>('');
   const [showThankYou, setShowThankYou] = useState(false);
 
-  const predefinedAmounts = ['5', '10', '25', '50', '100'];
+  const predefinedAmounts = ['1', '5', '10', '20'];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,7 +48,7 @@ const DonationForm = () => {
             {/* Amount Selection */}
             <div className="space-y-4">
               <Label className="text-lg font-semibold text-gray-800">Choose an amount:</Label>
-              <RadioGroup value={selectedAmount} onValueChange={setSelectedAmount} className="grid grid-cols-3 md:grid-cols-6 gap-3">
+              <RadioGroup value={selectedAmount} onValueChange={setSelectedAmount} className="grid grid-cols-2 md:grid-cols-5 gap-3">
                 {predefinedAmounts.map((amount) => (
                   <div key={amount} className="flex items-center space-x-2">
                     <RadioGroupItem value={amount} id={`amount-${amount}`} />
@@ -56,7 +56,7 @@ const DonationForm = () => {
                       htmlFor={`amount-${amount}`} 
                       className="cursor-pointer bg-green-100 hover:bg-green-200 px-4 py-2 rounded-lg border border-green-300 text-center font-semibold text-green-800 transition-colors"
                     >
-                      ${amount}
+                      ${parseFloat(amount).toFixed(2)}
                     </Label>
                   </div>
                 ))}
