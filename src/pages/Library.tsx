@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import PublicStoriesTable from "@/components/PublicStoriesTable";
@@ -7,6 +8,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Library = () => {
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleViewAuthorBio = (authorName: string) => {
     // Navigate to the public author bio page
@@ -24,7 +26,11 @@ const Library = () => {
         </div>
         
         <div className="mb-8">
-          <PublicStoriesTable onEditBio={handleViewAuthorBio} />
+          <PublicStoriesTable 
+            onEditBio={handleViewAuthorBio} 
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+          />
         </div>
       </main>
       <CookieFreeFooter />

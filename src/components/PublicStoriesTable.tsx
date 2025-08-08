@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { BookOpen, ArrowUp, ArrowDown, ChevronDown } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { BookOpen, ArrowUp, ArrowDown, ChevronDown, Search, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -39,15 +40,29 @@ interface Story {
 
 interface PublicStoriesTableProps {
   onEditBio?: (authorName: string) => void;
+  searchTerm?: string;
+  onSearchChange?: (value: string) => void;
 }
 
-const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
+const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: PublicStoriesTableProps) => {
   const [sortField, setSortField] = useState<SortField>('read_count');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+
+  // Debounced search effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (onSearchChange) {
+        onSearchChange(localSearchTerm);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [localSearchTerm, onSearchChange]);
 
   const { data: stories, isLoading } = useQuery({
-    queryKey: ['public-stories', sortField, sortDirection, categoryFilter],
+    queryKey: ['public-stories', sortField, sortDirection, categoryFilter, searchTerm],
     queryFn: async () => {
       let query = supabase
         .from('stories')
@@ -59,6 +74,14 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
       // Apply category filter
       if (categoryFilter !== 'all') {
         query = query.eq('category', categoryFilter);
+      }
+
+      // Apply search filter
+      if (searchTerm && searchTerm.trim() !== '') {
+        const searchQuery = `%${searchTerm.trim()}%`;
+        query = query.or(
+          `title.ilike.${searchQuery},content.ilike.${searchQuery},excerpt.ilike.${searchQuery},tagline.ilike.${searchQuery},author.ilike.${searchQuery}`
+        );
       }
       
       const { data, error } = await query;
@@ -141,10 +164,58 @@ const PublicStoriesTable = ({ onEditBio }: PublicStoriesTableProps) => {
 
   const categoryOptions: CategoryFilter[] = ['all', 'Fun', 'Life', 'North Pole', 'World Changers'];
 
+  const handleClearSearch = () => {
+    setLocalSearchTerm('');
+    if (onSearchChange) {
+      onSearchChange('');
+    }
+  };
+
   return (
     <TooltipProvider>
       <Card>
         <CardContent className="p-6">
+          {/* Search Input */}
+          <div className="mb-6">
+            <div className="relative max-w-md mx-auto">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                type="text"
+                placeholder="Search stories by title, content, author, or keywords..."
+                value={localSearchTerm}
+                onChange={(e) => setLocalSearchTerm(e.target.value)}
+                className="pl-10 pr-10 py-2 text-sm border-2 border-orange-200 focus:border-orange-400 rounded-lg"
+                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+              />
+              {searchTerm && (
+                <Button
+                  onClick={handleClearSearch}
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+            
+            {/* Search Results Counter */}
+            {searchTerm && searchTerm.trim() !== '' && (
+              <div className="text-center mt-3">
+                <p className="text-sm text-orange-700" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  Found {stories?.length || 0} stories matching '{searchTerm}'
+                </p>
+                <Button
+                  onClick={handleClearSearch}
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 border-orange-300 text-orange-700 hover:bg-orange-50"
+                >
+                  Clear Search Results
+                </Button>
+              </div>
+            )}
+          </div>
           {isLoading ? (
             <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
               <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
