@@ -38,6 +38,7 @@ const AdminHeaderBanner = () => {
   const { iconUrl: librariesIconUrl } = useCachedIcon('ICO-LB1.gif');
   const { iconUrl: commentsIconUrl } = useCachedIcon('ICO-CO3.gif');
   const { iconUrl: storyCreateIconUrl } = useCachedIcon('ICO-CO2.gif');
+  const { iconUrl: biosIconUrl } = useCachedIcon('ICO-AB1.jpg');
 
   const handleCreateStoryClick = () => {
     console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
@@ -399,14 +400,22 @@ const AdminHeaderBanner = () => {
                   >
                     <Link to="/buddys_admin/stories?view=bios" onClick={scrollToTop}>
                       <div
-                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-yellow-300/50 hover:scale-105 transition-transform cursor-pointer"
+                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-brown-300/50 hover:scale-105 transition-transform cursor-pointer"
                         style={{ 
-                          backgroundColor: '#E6C966',
+                          backgroundColor: '#814d2e',
                           minWidth: '55px',
                           minHeight: '55px'
                         }}
                       >
-                        <span className="text-sm font-bold text-black">BIO's</span>
+                        {biosIconUrl ? (
+                          <img 
+                            src={biosIconUrl} 
+                            alt="BIO's"
+                            className="w-12 h-12 object-contain"
+                          />
+                        ) : (
+                          <span className="text-sm font-bold text-white">BIO's</span>
+                        )}
                       </div>
                     </Link>
                     {hoveredButton === 'bios' && (
