@@ -14,6 +14,7 @@ interface SuperAudioProps {
   author?: string;
   voiceName?: string;
   showAuthor?: boolean;
+  audioUrl?: string;
 }
 
 export const SuperAudio: React.FC<SuperAudioProps> = ({
@@ -23,10 +24,14 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   author,
   voiceName,
   showAuthor = true,
+  audioUrl,
 }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -51,6 +56,45 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   };
 
 
+  // Audio control functions
+  const handlePlay = () => {
+    if (audioRef.current && audioUrl) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const handlePause = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const handleRestart = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      if (isPlaying) {
+        audioRef.current.play();
+      }
+    }
+  };
+
+  const handleStop = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsPlaying(false);
+    }
+  };
+
+  const handleSpeedChange = (speed: number) => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = speed;
+      setPlaybackRate(speed);
+    }
+  };
+
   React.useEffect(() => {
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
@@ -61,6 +105,26 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
       };
     }
   }, [isDragging, dragStart]);
+
+  // Audio event handlers
+  React.useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      const handleEnded = () => setIsPlaying(false);
+      const handlePause = () => setIsPlaying(false);
+      const handlePlay = () => setIsPlaying(true);
+      
+      audio.addEventListener('ended', handleEnded);
+      audio.addEventListener('pause', handlePause);
+      audio.addEventListener('play', handlePlay);
+      
+      return () => {
+        audio.removeEventListener('ended', handleEnded);
+        audio.removeEventListener('pause', handlePause);
+        audio.removeEventListener('play', handlePlay);
+      };
+    }
+  }, [audioUrl]);
 
   
 
@@ -255,18 +319,19 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseDown={(e) => {
                       e.currentTarget.style.transform = 'scale(0.95)';
                     }}
-                    onMouseUp={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.1)';
-                    }}>
-                      <div style={{
-                        width: '0',
-                        height: '0',
-                        borderLeft: '14px solid white',
-                        borderTop: '10px solid transparent',
-                        borderBottom: '10px solid transparent',
-                        marginLeft: '3px'
-                      }}></div>
-                    </div>
+                     onMouseUp={(e) => {
+                       e.currentTarget.style.transform = 'scale(1.1)';
+                     }}
+                     onClick={handlePlay}>
+                       <div style={{
+                         width: '0',
+                         height: '0',
+                         borderLeft: '14px solid white',
+                         borderTop: '10px solid transparent',
+                         borderBottom: '10px solid transparent',
+                         marginLeft: '3px'
+                       }}></div>
+                     </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
                     <div style={{
@@ -295,14 +360,15 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseDown={(e) => {
                       e.currentTarget.style.transform = 'scale(0.95)';
                     }}
-                    onMouseUp={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.1)';
-                    }}>
-                      <div style={{display: 'flex', gap: '4px'}}>
-                        <div style={{width: '5px', height: '18px', backgroundColor: 'white', borderRadius: '1px'}}></div>
-                        <div style={{width: '5px', height: '18px', backgroundColor: 'white', borderRadius: '1px'}}></div>
-                      </div>
-                    </div>
+                     onMouseUp={(e) => {
+                       e.currentTarget.style.transform = 'scale(1.1)';
+                     }}
+                     onClick={handlePause}>
+                       <div style={{display: 'flex', gap: '4px'}}>
+                         <div style={{width: '5px', height: '18px', backgroundColor: 'white', borderRadius: '1px'}}></div>
+                         <div style={{width: '5px', height: '18px', backgroundColor: 'white', borderRadius: '1px'}}></div>
+                       </div>
+                     </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
                     <div style={{
@@ -331,30 +397,31 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseDown={(e) => {
                       e.currentTarget.style.transform = 'scale(0.95)';
                     }}
-                    onMouseUp={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.1)';
-                    }}>
-                      <div style={{
-                        width: '18px',
-                        height: '18px',
-                        border: '3px solid white',
-                        borderRadius: '50%',
-                        borderTopColor: 'transparent',
-                        borderRightColor: 'transparent',
-                        position: 'relative'
-                      }}>
-                        <div style={{
-                          position: 'absolute',
-                          top: '-3px',
-                          right: '-6px',
-                          width: '0',
-                          height: '0',
-                          borderLeft: '8px solid white',
-                          borderTop: '4px solid transparent',
-                          borderBottom: '4px solid transparent'
-                        }}></div>
-                      </div>
-                    </div>
+                     onMouseUp={(e) => {
+                       e.currentTarget.style.transform = 'scale(1.1)';
+                     }}
+                     onClick={handleRestart}>
+                       <div style={{
+                         width: '18px',
+                         height: '18px',
+                         border: '3px solid white',
+                         borderRadius: '50%',
+                         borderTopColor: 'transparent',
+                         borderRightColor: 'transparent',
+                         position: 'relative'
+                       }}>
+                         <div style={{
+                           position: 'absolute',
+                           top: '-3px',
+                           right: '-6px',
+                           width: '0',
+                           height: '0',
+                           borderLeft: '8px solid white',
+                           borderTop: '4px solid transparent',
+                           borderBottom: '4px solid transparent'
+                         }}></div>
+                       </div>
+                     </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 12px 0', textAlign: 'center'}}>
                     <div style={{
@@ -383,16 +450,17 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseDown={(e) => {
                       e.currentTarget.style.transform = 'scale(0.95)';
                     }}
-                    onMouseUp={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.1)';
-                    }}>
-                      <div style={{
-                        width: '16px',
-                        height: '16px',
-                        backgroundColor: 'white',
-                        borderRadius: '2px'
-                      }}></div>
-                    </div>
+                     onMouseUp={(e) => {
+                       e.currentTarget.style.transform = 'scale(1.1)';
+                     }}
+                     onClick={handleStop}>
+                       <div style={{
+                         width: '16px',
+                         height: '16px',
+                         backgroundColor: 'white',
+                         borderRadius: '2px'
+                       }}></div>
+                     </div>
                   </td>
                 </tr>
 
@@ -431,9 +499,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                    onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
-                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#814d2e'}}>Normal</span>
-                    </div>
+                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                     onClick={() => handleSpeedChange(1)}>
+                       <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#814d2e'}}>Normal</span>
+                     </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
                     <div style={{
@@ -456,9 +525,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                    onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
-                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: 'white'}}>Fast</span>
-                    </div>
+                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                     onClick={() => handleSpeedChange(1.25)}>
+                       <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: 'white'}}>Fast</span>
+                     </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
                     <div style={{
@@ -481,9 +551,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                    onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
-                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: 'white'}}>Faster</span>
-                    </div>
+                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                     onClick={() => handleSpeedChange(1.5)}>
+                       <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: 'white'}}>Faster</span>
+                     </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 12px 0'}}>
                     <div style={{
@@ -506,18 +577,30 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                    onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
-                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#F2BA15'}}>Fastest</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div>
-          </div>
-        </div>
-        </DialogPrimitive.Content>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                     onClick={() => handleSpeedChange(2)}>
+                       <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#F2BA15'}}>Fastest</span>
+                     </div>
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+             </div>
+           </div>
+         </div>
+         
+         {/* Hidden audio element */}
+         {audioUrl && (
+           <audio ref={audioRef} preload="metadata">
+             <source src={audioUrl} type="audio/mpeg" />
+             <source src={audioUrl} type="audio/mp3" />
+             <source src={audioUrl} type="audio/wav" />
+             Your browser does not support the audio element.
+           </audio>
+         )}
+         
+         </DialogPrimitive.Content>
+       </DialogPrimitive.Portal>
+     </DialogPrimitive.Root>
   );
 };
