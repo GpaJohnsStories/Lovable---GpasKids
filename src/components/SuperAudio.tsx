@@ -201,10 +201,18 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
               <tbody>
                 {/* Row 1: 4 cells, 27px height, blue fill, labeled */}
                 <tr>
-                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Play" title="Play">Play</td>
-                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Pause" title="Pause">Pause</td>
-                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Restart" title="Restart">Restart</td>
-                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Stop" title="Stop">STOP</td>
+                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Play" title="Play">
+                    <b style={{color: 'white', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'}}>Play</b>
+                  </td>
+                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Pause" title="Pause">
+                    <b style={{color: 'white', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'}}>Pause</b>
+                  </td>
+                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Restart" title="Restart">
+                    <b style={{color: 'white', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'}}>Restart</b>
+                  </td>
+                  <td width={55} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Stop" title="Stop">
+                    <b style={{color: 'white', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'}}>STOP</b>
+                  </td>
                 </tr>
 
                 {/* Row 2: 4 cells, 55px x 55px, blue fill */}
