@@ -25,6 +25,9 @@ export interface Story {
   ai_voice_model: string;
   copyright_status?: string;
   audio_url?: string;
+  created_at?: string;
+  updated_at?: string;
+  audio_generated_at?: string;
 }
 
 const initialFormData: Story = {

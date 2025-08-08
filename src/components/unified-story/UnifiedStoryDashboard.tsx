@@ -11,6 +11,7 @@ import SplitViewEditor from "../editor/SplitViewEditor";
 import CopyrightControl from "../story-form/CopyrightControl";
 import StoryCodeField from "../StoryCodeField";
 import type { Story } from '@/hooks/useStoryFormState';
+import { formatDateTime } from '@/utils/dateUtils';
 
 interface UnifiedStoryDashboardProps {
   formData: Story;
@@ -207,6 +208,22 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
+              {/* Timestamp Information Row */}
+              <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                <div>
+                  <div className="font-bold text-gray-700 mb-1">Last Update</div>
+                  <div className="text-gray-600">{formatDateTime(formData.updated_at)}</div>
+                </div>
+                <div>
+                  <div className="font-bold text-gray-700 mb-1">Original Upload</div>
+                  <div className="text-gray-600">{formatDateTime(formData.created_at)}</div>
+                </div>
+                <div>
+                  <div className="font-bold text-gray-700 mb-1">Last Audio Generation</div>
+                  <div className="text-gray-600">{formatDateTime(formData.audio_generated_at)}</div>
+                </div>
+              </div>
+              
               {/* Copyright Status and Publication Status side-by-side (switched positions) */}
               <div className="flex gap-3">
                 {/* Copyright Status - Now on left */}
