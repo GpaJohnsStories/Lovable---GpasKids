@@ -136,6 +136,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           author={formData.author}
           voiceName={formData.ai_voice_name}
           showAuthor={true}
+          audioUrl={formData.audio_url}
         />
       )}
     </div>

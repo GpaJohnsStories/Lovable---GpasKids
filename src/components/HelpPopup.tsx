@@ -191,6 +191,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
         author={storyData?.author}
         voiceName={storyData?.ai_voice_name}
+        audioUrl={storyData?.audio_url}
       />
     </Dialog>
   );

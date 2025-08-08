@@ -433,6 +433,7 @@ const About = () => {
             author={currentAudioData.author}
             voiceName={currentAudioData.ai_voice_name}
             showAuthor={true}
+            audioUrl={currentAudioData.audioUrl}
           />
         )}
       </div>
