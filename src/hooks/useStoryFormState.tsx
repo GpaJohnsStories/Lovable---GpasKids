@@ -55,7 +55,8 @@ const initialFormData: Story = {
 export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
   const [formData, setFormData] = useState<Story>(initialFormData);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const { story, isLoading: isLoadingStory, refetch: refetchStory, error } = useStoryData(skipDataFetch ? undefined : storyId);
+  const [currentStoryId, setCurrentStoryId] = useState<string | undefined>(storyId);
+  const { story, isLoading: isLoadingStory, refetch: refetchStory, error } = useStoryData(skipDataFetch ? undefined : currentStoryId);
 
   const populateFormWithStory = useCallback((storyData: Story, fromCodeLookup = false) => {
     console.log('🎯 useStoryFormState: Populating form with story data:', storyData, 'fromCodeLookup:', fromCodeLookup);
@@ -65,6 +66,11 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
       ai_voice_model: storyData.ai_voice_model || 'tts-1',
       copyright_status: storyData.copyright_status || '©'
     });
+    
+    // If this is from a code lookup, update the current story ID so refetchStory works
+    if (fromCodeLookup && storyData.id) {
+      setCurrentStoryId(storyData.id);
+    }
   }, []);
 
   console.log('🎯 useStoryFormState: Hook called with storyId:', storyId);
