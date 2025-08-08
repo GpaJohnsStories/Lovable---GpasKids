@@ -194,6 +194,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   display: 'block',
                   fontSize: '12px',
                   fontFamily: FONT_FUN,
+                  fontWeight: 'bold',
                   color: '#9ca3af',
                   marginTop: '4px',
                   margin: '4px 0 0 0',
