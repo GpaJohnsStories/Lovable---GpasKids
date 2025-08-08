@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Label } from "@/components/ui/label";
-import { Save, X, FileText, Image, Video, Volume2 } from "lucide-react";
+import { Save, X, FileText, Image, Video, Volume2, Play, Square } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StoryFormFields from "../StoryFormFields";
 import StoryVideoUpload from "../StoryVideoUpload";
@@ -12,6 +12,8 @@ import CopyrightControl from "../story-form/CopyrightControl";
 import StoryCodeField from "../StoryCodeField";
 import type { Story } from '@/hooks/useStoryFormState';
 import { formatDate, formatTime } from '@/utils/dateUtils';
+import { useVoiceTesting } from '@/hooks/useVoiceTesting';
+import LoadingSpinner from "../LoadingSpinner";
 
 interface UnifiedStoryDashboardProps {
   formData: Story;
@@ -50,6 +52,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   context = "unified-story-system",
   onStoryFound
 }) => {
+  const { currentlyPlaying, loadingVoice, playVoice, stopAudio } = useVoiceTesting();
   const getPublishedColor = (publishedStatus: string) => {
     switch (publishedStatus) {
       case 'Y':
@@ -417,18 +420,34 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Alloy</div>
                       <div className="text-xs text-gray-600 mb-2">Clear, neutral voice</div>
                       <div className="flex gap-1 justify-center">
+                        {loadingVoice === 'alloy' ? (
+                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                            <LoadingSpinner />
+                            <span>Testing...</span>
+                          </div>
+                        ) : currentlyPlaying === 'alloy' ? (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
+                            onClick={stopAudio}
+                          >
+                            <Square className="h-3 w-3" />
+                            Stop
+                          </button>
+                        ) : (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
+                            onClick={() => playVoice('alloy', formData.content, formData.title)}
+                          >
+                            <Play className="h-3 w-3" />
+                            Test
+                          </button>
+                        )}
                         <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Alloy')}
-                        >
-                          Test
-                        </button>
-                        <button 
+                          type="button"
                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Alloy');
-                            onGenerateAudio?.();
-                          }}
+                          onClick={() => onVoiceChange?.('Alloy')}
                         >
                           Use
                         </button>
@@ -438,18 +457,34 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Echo</div>
                       <div className="text-xs text-gray-600 mb-2">Deep, resonant voice</div>
                       <div className="flex gap-1 justify-center">
+                        {loadingVoice === 'echo' ? (
+                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                            <LoadingSpinner />
+                            <span>Testing...</span>
+                          </div>
+                        ) : currentlyPlaying === 'echo' ? (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
+                            onClick={stopAudio}
+                          >
+                            <Square className="h-3 w-3" />
+                            Stop
+                          </button>
+                        ) : (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
+                            onClick={() => playVoice('echo', formData.content, formData.title)}
+                          >
+                            <Play className="h-3 w-3" />
+                            Test
+                          </button>
+                        )}
                         <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Echo')}
-                        >
-                          Test
-                        </button>
-                        <button 
+                          type="button"
                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Echo');
-                            onGenerateAudio?.();
-                          }}
+                          onClick={() => onVoiceChange?.('Echo')}
                         >
                           Use
                         </button>
@@ -459,18 +494,34 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Fable</div>
                       <div className="text-xs text-gray-600 mb-2">British accent, storytelling</div>
                       <div className="flex gap-1 justify-center">
+                        {loadingVoice === 'fable' ? (
+                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                            <LoadingSpinner />
+                            <span>Testing...</span>
+                          </div>
+                        ) : currentlyPlaying === 'fable' ? (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
+                            onClick={stopAudio}
+                          >
+                            <Square className="h-3 w-3" />
+                            Stop
+                          </button>
+                        ) : (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
+                            onClick={() => playVoice('fable', formData.content, formData.title)}
+                          >
+                            <Play className="h-3 w-3" />
+                            Test
+                          </button>
+                        )}
                         <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Fable')}
-                        >
-                          Test
-                        </button>
-                        <button 
+                          type="button"
                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Fable');
-                            onGenerateAudio?.();
-                          }}
+                          onClick={() => onVoiceChange?.('Fable')}
                         >
                           Use
                         </button>
@@ -484,18 +535,34 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Nova</div>
                       <div className="text-xs text-gray-600 mb-2">Warm, friendly voice</div>
                       <div className="flex gap-1 justify-center">
+                        {loadingVoice === 'nova' ? (
+                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                            <LoadingSpinner />
+                            <span>Testing...</span>
+                          </div>
+                        ) : currentlyPlaying === 'nova' ? (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
+                            onClick={stopAudio}
+                          >
+                            <Square className="h-3 w-3" />
+                            Stop
+                          </button>
+                        ) : (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
+                            onClick={() => playVoice('nova', formData.content, formData.title)}
+                          >
+                            <Play className="h-3 w-3" />
+                            Test
+                          </button>
+                        )}
                         <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Nova')}
-                        >
-                          Test
-                        </button>
-                        <button 
+                          type="button"
                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Nova');
-                            onGenerateAudio?.();
-                          }}
+                          onClick={() => onVoiceChange?.('Nova')}
                         >
                           Use
                         </button>
@@ -505,18 +572,34 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Onyx</div>
                       <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice</div>
                       <div className="flex gap-1 justify-center">
+                        {loadingVoice === 'onyx' ? (
+                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                            <LoadingSpinner />
+                            <span>Testing...</span>
+                          </div>
+                        ) : currentlyPlaying === 'onyx' ? (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
+                            onClick={stopAudio}
+                          >
+                            <Square className="h-3 w-3" />
+                            Stop
+                          </button>
+                        ) : (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
+                            onClick={() => playVoice('onyx', formData.content, formData.title)}
+                          >
+                            <Play className="h-3 w-3" />
+                            Test
+                          </button>
+                        )}
                         <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Onyx')}
-                        >
-                          Test
-                        </button>
-                        <button 
+                          type="button"
                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Onyx');
-                            onGenerateAudio?.();
-                          }}
+                          onClick={() => onVoiceChange?.('Onyx')}
                         >
                           Use
                         </button>
@@ -526,18 +609,34 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <div className="text-xs font-bold mb-1">Shimmer</div>
                       <div className="text-xs text-gray-600 mb-2">Soft, gentle voice</div>
                       <div className="flex gap-1 justify-center">
+                        {loadingVoice === 'shimmer' ? (
+                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                            <LoadingSpinner />
+                            <span>Testing...</span>
+                          </div>
+                        ) : currentlyPlaying === 'shimmer' ? (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
+                            onClick={stopAudio}
+                          >
+                            <Square className="h-3 w-3" />
+                            Stop
+                          </button>
+                        ) : (
+                          <button 
+                            type="button"
+                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
+                            onClick={() => playVoice('shimmer', formData.content, formData.title)}
+                          >
+                            <Play className="h-3 w-3" />
+                            Test
+                          </button>
+                        )}
                         <button 
-                          className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                          onClick={() => onVoiceChange?.('Shimmer')}
-                        >
-                          Test
-                        </button>
-                        <button 
+                          type="button"
                           className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => {
-                            onVoiceChange?.('Shimmer');
-                            onGenerateAudio?.();
-                          }}
+                          onClick={() => onVoiceChange?.('Shimmer')}
                         >
                           Use
                         </button>
