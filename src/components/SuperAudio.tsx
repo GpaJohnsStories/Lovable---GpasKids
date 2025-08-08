@@ -205,7 +205,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             
             
             {/* Table */}
-            <table width={230} cellSpacing={0} cellPadding={0} border={0}>
+            <table width={240} cellSpacing={0} cellPadding={0} border={0}>
               <tbody>
                 {/* Row 1: 4 cells, 27px height, blue fill, labeled */}
                 <tr>
