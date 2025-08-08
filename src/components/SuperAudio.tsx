@@ -225,10 +225,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
 
                 {/* Row 2: 4 beautiful buttons with gradients and icons */}
                 <tr>
-                  <td width={55} height={55} style={{padding: '3px'}}>
+                  <td width={55} height={55} style={{padding: '0'}}>
                     <div style={{
-                      width: '49px',
-                      height: '49px',
+                      width: '55px',
+                      height: '55px',
                       background: 'linear-gradient(145deg, #22c55e, #16a34a)',
                       borderRadius: '12px',
                       display: 'flex',
@@ -236,19 +236,24 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       justifyContent: 'center',
                       boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
                       cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      border: '1px solid rgba(255,255,255,0.2)'
+                      transition: 'all 0.15s ease',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      transform: 'scale(1)'
                     }} 
                     role="button" 
                     aria-label="Play" 
                     title="Play"
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-1px)';
-                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.3)';
+                      e.currentTarget.style.transform = 'scale(1.1)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                    onMouseDown={(e) => {
+                      e.currentTarget.style.transform = 'scale(0.95)';
+                    }}
+                    onMouseUp={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.1)';
                     }}>
                       <div style={{
                         width: '0',
@@ -260,10 +265,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       }}></div>
                     </div>
                   </td>
-                  <td width={55} height={55} style={{padding: '3px'}}>
+                  <td width={55} height={55} style={{padding: '0'}}>
                     <div style={{
-                      width: '49px',
-                      height: '49px',
+                      width: '55px',
+                      height: '55px',
                       background: 'linear-gradient(145deg, #fbbf24, #f59e0b)',
                       borderRadius: '12px',
                       display: 'flex',
@@ -271,19 +276,24 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       justifyContent: 'center',
                       boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
                       cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      border: '1px solid rgba(255,255,255,0.2)'
+                      transition: 'all 0.15s ease',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      transform: 'scale(1)'
                     }} 
                     role="button" 
                     aria-label="Pause" 
                     title="Pause"
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-1px)';
-                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.3)';
+                      e.currentTarget.style.transform = 'scale(1.1)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                    onMouseDown={(e) => {
+                      e.currentTarget.style.transform = 'scale(0.95)';
+                    }}
+                    onMouseUp={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.1)';
                     }}>
                       <div style={{display: 'flex', gap: '4px'}}>
                         <div style={{width: '5px', height: '18px', backgroundColor: 'white', borderRadius: '1px'}}></div>
@@ -291,10 +301,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       </div>
                     </div>
                   </td>
-                  <td width={55} height={55} style={{padding: '3px'}}>
+                  <td width={55} height={55} style={{padding: '0'}}>
                     <div style={{
-                      width: '49px',
-                      height: '49px',
+                      width: '55px',
+                      height: '55px',
                       background: 'linear-gradient(145deg, #3b82f6, #2563eb)',
                       borderRadius: '12px',
                       display: 'flex',
@@ -302,19 +312,24 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       justifyContent: 'center',
                       boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
                       cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      border: '1px solid rgba(255,255,255,0.2)'
+                      transition: 'all 0.15s ease',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      transform: 'scale(1)'
                     }} 
                     role="button" 
                     aria-label="Restart" 
                     title="Restart"
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-1px)';
-                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.3)';
+                      e.currentTarget.style.transform = 'scale(1.1)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                    onMouseDown={(e) => {
+                      e.currentTarget.style.transform = 'scale(0.95)';
+                    }}
+                    onMouseUp={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.1)';
                     }}>
                       <div style={{
                         width: '18px',
@@ -338,10 +353,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       </div>
                     </div>
                   </td>
-                  <td width={55} height={55} style={{padding: '3px'}}>
+                  <td width={55} height={55} style={{padding: '0'}}>
                     <div style={{
-                      width: '49px',
-                      height: '49px',
+                      width: '55px',
+                      height: '55px',
                       background: 'linear-gradient(145deg, #ef4444, #dc2626)',
                       borderRadius: '12px',
                       display: 'flex',
@@ -349,19 +364,24 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                       justifyContent: 'center',
                       boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
                       cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      border: '1px solid rgba(255,255,255,0.2)'
+                      transition: 'all 0.15s ease',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      transform: 'scale(1)'
                     }} 
                     role="button" 
                     aria-label="Stop" 
                     title="Stop"
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-1px)';
-                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.3)';
+                      e.currentTarget.style.transform = 'scale(1.1)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
+                    onMouseDown={(e) => {
+                      e.currentTarget.style.transform = 'scale(0.95)';
+                    }}
+                    onMouseUp={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.1)';
                     }}>
                       <div style={{
                         width: '16px',
