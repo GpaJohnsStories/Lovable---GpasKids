@@ -52,13 +52,13 @@ const initialFormData: Story = {
   copyright_status: '©'
 };
 
-export const useStoryFormState = (storyId?: string) => {
+export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
   const [formData, setFormData] = useState<Story>(initialFormData);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
-  const { story, isLoading: isLoadingStory, refetch: refetchStory, error } = useStoryData(storyId);
+  const { story, isLoading: isLoadingStory, refetch: refetchStory, error } = useStoryData(skipDataFetch ? undefined : storyId);
 
-  const populateFormWithStory = useCallback((storyData: Story) => {
-    console.log('🎯 useStoryFormState: Populating form with story data:', storyData);
+  const populateFormWithStory = useCallback((storyData: Story, fromCodeLookup = false) => {
+    console.log('🎯 useStoryFormState: Populating form with story data:', storyData, 'fromCodeLookup:', fromCodeLookup);
     setFormData({
       ...storyData,
       ai_voice_name: storyData.ai_voice_name || 'Nova',

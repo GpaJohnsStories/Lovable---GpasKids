@@ -123,7 +123,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           onSaveOnly={onSaveOnly}
           allowTextToSpeech={true}
           context="unified-story-system"
-          onStoryFound={populateFormWithStory}
+          onStoryFound={(story) => populateFormWithStory(story, true)}
         />
       </div>
       
