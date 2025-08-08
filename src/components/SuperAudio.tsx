@@ -504,7 +504,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}>
-                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#f97316'}}>Fastest</span>
+                      <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#F2BA15'}}>Fastest</span>
                     </div>
                   </td>
                 </tr>
