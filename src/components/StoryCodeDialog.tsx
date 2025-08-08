@@ -9,6 +9,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 interface StoryCodeDialogProps {
   open: boolean;
@@ -60,11 +62,7 @@ export const StoryCodeDialog: React.FC<StoryCodeDialogProps> = ({
         <AlertDialogFooter className="gap-2">
           <AlertDialogCancel 
             onClick={onNo}
-            style={{ 
-              background: '#dc2626 !important', 
-              color: 'white !important', 
-              borderColor: '#b91c1c !important' 
-            }}
+            className={cn(buttonVariants({ variant: "destructive" }), "mt-2 sm:mt-0")}
           >
             No
           </AlertDialogCancel>
