@@ -196,119 +196,28 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             
             
             {/* Table */}
-            <table style={{
-              all: 'unset',
-              boxSizing: 'border-box',
-              display: 'table',
-              width: '100%',
-              borderCollapse: 'collapse',
-            }}>
-              <tbody style={{
-                all: 'unset',
-                boxSizing: 'border-box',
-                display: 'table-row-group',
-              }}>
-                <tr style={{ 
-                  all: 'unset',
-                  boxSizing: 'border-box',
-                  display: 'table-row',
-                  height: '27.5px' 
-                }}>
-                  <td style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: '#2563eb' 
-                  }}></td>
-                  <td style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: '#2563eb' 
-                  }}></td>
-                  <td style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: '#2563eb' 
-                  }}></td>
-                  <td style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: '#2563eb' 
-                  }}></td>
+            <table>
+              <tbody>
+                <tr style={{ height: '27.5px' }}>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
                 </tr>
-                <tr style={{ 
-                  all: 'unset',
-                  boxSizing: 'border-box',
-                  display: 'table-row',
-                  height: '55px' 
-                }}>
-                  <td style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: '#2563eb' 
-                  }}></td>
-                  <td style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: '#2563eb' 
-                  }}></td>
-                  <td style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: '#2563eb' 
-                  }}></td>
-                  <td style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: '#2563eb' 
-                  }}></td>
+                <tr style={{ height: '55px' }}>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
+                  <td style={{ backgroundColor: '#2563eb' }}></td>
                 </tr>
-                <tr style={{ 
-                  all: 'unset',
-                  boxSizing: 'border-box',
-                  display: 'table-row',
-                  height: '27.5px' 
-                }}>
-                  <td colSpan={4} style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: 'transparent', 
-                    border: 'none' 
-                  }}></td>
+                <tr style={{ height: '27.5px' }}>
+                  <td colSpan={4} style={{ backgroundColor: 'transparent', border: 'none' }}></td>
                 </tr>
-                <tr style={{ 
-                  all: 'unset',
-                  boxSizing: 'border-box',
-                  display: 'table-row',
-                  height: '27.5px' 
-                }}>
-                  <td colSpan={4} style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: '#8B4513' 
-                  }}></td>
+                <tr style={{ height: '27.5px' }}>
+                  <td colSpan={4} style={{ backgroundColor: '#8B4513' }}></td>
                 </tr>
-                <tr style={{ 
-                  all: 'unset',
-                  boxSizing: 'border-box',
-                  display: 'table-row',
-                  height: '55px' 
-                }}>
-                  <td colSpan={4} style={{ 
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'table-cell',
-                    backgroundColor: '#8B4513' 
-                  }}></td>
+                <tr style={{ height: '55px' }}>
+                  <td colSpan={4} style={{ backgroundColor: '#8B4513' }}></td>
                 </tr>
               </tbody>
             </table>
