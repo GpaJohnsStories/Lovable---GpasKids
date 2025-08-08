@@ -136,8 +136,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             author={webtext?.author}
             voiceName={webtext?.ai_voice_name}
             showAuthor={false}
-            audioUrl={webtext?.audio_url}
-            audioDuration={webtext?.audio_duration_seconds}
           />
         </div>
       </>
@@ -204,8 +202,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         author={webtext?.author}
         voiceName={webtext?.ai_voice_name}
         showAuthor={false}
-        audioUrl={webtext?.audio_url}
-        audioDuration={webtext?.audio_duration_seconds}
       />
     </>
   );
