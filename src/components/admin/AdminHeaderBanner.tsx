@@ -360,9 +360,9 @@ const AdminHeaderBanner = () => {
                   >
                     <Link to={button.path} onClick={scrollToTop}>
                       <div
-                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-yellow-300/50 hover:scale-105 transition-transform cursor-pointer"
+                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-green-300/50 hover:scale-105 transition-transform cursor-pointer"
                         style={{ 
-                          backgroundColor: '#E6C966',
+                          backgroundColor: '#4A7C59',
                           minWidth: '55px',
                           minHeight: '55px'
                         }}
