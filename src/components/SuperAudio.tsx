@@ -407,10 +407,10 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
 
                 {/* Row 5: 4 cells, 55px height, brown fill */}
                 <tr>
-                  <td width={60} height={55} style={{backgroundColor: '#814d2e'}}></td>
-                  <td width={60} height={55} style={{backgroundColor: '#814d2e'}}></td>
-                  <td width={60} height={55} style={{backgroundColor: '#814d2e'}}></td>
-                  <td width={60} height={55} style={{backgroundColor: '#814d2e'}}></td>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}></td>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}></td>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}></td>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}></td>
                 </tr>
               </tbody>
             </table>
