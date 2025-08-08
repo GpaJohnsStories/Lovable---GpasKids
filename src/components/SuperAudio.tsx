@@ -231,7 +231,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 {/* Row 4: 1 cell, 27px height, brown fill, centered text */}
                 <tr>
                   <td colSpan={4} height={27} style={{backgroundColor: '#814d2e'}} align="center" valign="middle">
-                    <span style={{color: 'white'}} aria-label="Playback Speed">Playback Speed</span>
+                    <b style={{color: 'white', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'}} aria-label="Playback Speed">Playback Speed</b>
                   </td>
                 </tr>
 
