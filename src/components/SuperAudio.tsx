@@ -196,31 +196,43 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             
             
             {/* Table */}
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <tbody>
-                <tr style={{ height: '27.5px' }}>
-                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
-                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
-                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
-                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
-                </tr>
-                <tr style={{ height: '55px' }}>
-                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
-                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
-                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
-                  <td style={{ backgroundColor: '#2563eb', width: '25%' }}></td>
-                </tr>
-                <tr style={{ height: '27.5px' }}>
-                  <td colSpan={4} style={{ backgroundColor: 'transparent', border: 'none' }}></td>
-                </tr>
-                <tr style={{ height: '27.5px' }}>
-                  <td colSpan={4} style={{ backgroundColor: '#8B4513' }}></td>
-                </tr>
-                <tr style={{ height: '55px' }}>
-                  <td colSpan={4} style={{ backgroundColor: '#8B4513' }}></td>
-                </tr>
-              </tbody>
-            </table>
+          <table width="220" cellspacing="0" cellpadding="0" border="0">
+  <!-- Row 1: 4 cells, 27px height, blue fill, labeled -->
+  <tr>
+    <td width="55" height="27" bgcolor="#2563eb" role="button" aria-label="Play" title="Play"></td>
+    <td width="55" height="27" bgcolor="#2563eb" role="button" aria-label="Pause" title="Pause"></td>
+    <td width="55" height="27" bgcolor="#2563eb" role="button" aria-label="Restart" title="Restart"></td>
+    <td width="55" height="27" bgcolor="#2563eb" role="button" aria-label="Stop" title="Stop"></td>
+  </tr>
+
+  <!-- Row 2: 4 cells, 55px x 55px, blue fill -->
+  <tr>
+    <td width="55" height="55" bgcolor="#2563eb"></td>
+    <td width="55" height="55" bgcolor="#2563eb"></td>
+    <td width="55" height="55" bgcolor="#2563eb"></td>
+    <td width="55" height="55" bgcolor="#2563eb"></td>
+  </tr>
+
+  <!-- Row 3: 1 cell, 27px height, transparent -->
+  <tr>
+    <td colspan="4" height="27" style="background-color:transparent; border:none;"></td>
+  </tr>
+
+  <!-- Row 4: 1 cell, 27px height, brown fill, centered text -->
+  <tr>
+    <td colspan="4" height="27" bgcolor="#814d2e" align="center" valign="middle">
+      <span style="color:white;" aria-label="Playback Speed">Playback Speed</span>
+    </td>
+  </tr>
+
+  <!-- Row 5: 4 cells, 55px height, brown fill -->
+  <tr>
+    <td width="55" height="55" bgcolor="#814d2e"></td>
+    <td width="55" height="55" bgcolor="#814d2e"></td>
+    <td width="55" height="55" bgcolor="#814d2e"></td>
+    <td width="55" height="55" bgcolor="#814d2e"></td>
+  </tr>
+</table>
           </div>
         </div>
         </DialogPrimitive.Content>
