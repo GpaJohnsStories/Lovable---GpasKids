@@ -127,17 +127,17 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                 {/* Safe For Kids Shield - Positioned to the right of speech bubble */}
                 <div className="absolute -right-20 lg:-right-24 top-1/2 transform -translate-y-1/2">
                   {sfkLoading && (
-                    <div className="w-12 lg:w-16 h-12 lg:h-16 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
+                    <div className="w-18 lg:w-24 h-18 lg:h-24 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
                   )}
                   {(sfkError || !safeForKidsIconUrl) && !sfkLoading ? (
-                    <div className="w-12 lg:w-16 h-12 lg:h-16 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-full border-2 border-green-500">
+                    <div className="w-18 lg:w-24 h-18 lg:h-24 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-full border-2 border-green-500">
                       SAFE
                     </div>
                   ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
                     <img 
                       src={safeForKidsIconUrl}
                       alt="Safe For Kids Shield"
-                      className="w-12 lg:w-16 h-12 lg:h-16 object-contain"
+                      className="w-18 lg:w-24 h-18 lg:h-24 object-contain"
                     />
                   ) : null}
                 </div>
@@ -148,17 +148,17 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
             <div className="w-48 lg:w-64 h-32 lg:h-40 flex items-center justify-center">
               <div className="flex items-center justify-center">
                 {sfkLoading && (
-                  <div className="w-16 lg:w-20 h-16 lg:h-20 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
+                  <div className="w-24 lg:w-30 h-24 lg:h-30 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
                 )}
                 {(sfkError || !safeForKidsIconUrl) && !sfkLoading ? (
-                  <div className="w-16 lg:w-20 h-16 lg:h-20 bg-green-200 flex items-center justify-center text-green-800 text-sm font-bold rounded-full border-2 border-green-500">
+                  <div className="w-24 lg:w-30 h-24 lg:h-30 bg-green-200 flex items-center justify-center text-green-800 text-sm font-bold rounded-full border-2 border-green-500">
                     SAFE
                   </div>
                 ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
                   <img 
                     src={safeForKidsIconUrl}
                     alt="Safe For Kids Shield"
-                    className="w-16 lg:w-20 h-16 lg:h-20 object-contain"
+                    className="w-24 lg:w-30 h-24 lg:h-30 object-contain"
                   />
                 ) : null}
               </div>
