@@ -319,16 +319,18 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   </div>
                 </div>
 
-                {/* Row 2: Main Audio Controls */}
-                <AudioControlButtons
-                  onPlay={handlePlay}
-                  onPause={handlePause}
-                  onRestart={handleRestart}
-                  onStop={handleStop}
-                  isPlaying={isPlaying}
-                  isLoading={isLoading}
-                  audioUrl={audioUrl}
-                />
+                {/* Row 2: Main Audio Controls with blue background */}
+                <div className="col-span-4 grid grid-cols-4 gap-0" style={{ backgroundColor: '#2563eb' }}>
+                  <AudioControlButtons
+                    onPlay={handlePlay}
+                    onPause={handlePause}
+                    onRestart={handleRestart}
+                    onStop={handleStop}
+                    isPlaying={isPlaying}
+                    isLoading={isLoading}
+                    audioUrl={audioUrl}
+                  />
+                </div>
 
                 {/* Row 3: Speed Controls - reduced by 1/3 */}
                 <AudioSpeedControls
