@@ -300,9 +300,9 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
             
             {/* 3x4 Button Grid - 50% height to accommodate moved position */}
             <div className="h-[50%]">
-              <div className="grid grid-cols-4 max-w-[220px] mx-auto h-full gap-y-0.5" style={{ gridTemplateRows: '0.4fr 1fr 0.67fr' }}>
+              <div className="max-w-[220px] mx-auto h-full space-y-0.5">
                 {/* Row 1: Button Labels with background box */}
-                <div className="col-span-4 relative rounded-t-lg" style={{ backgroundColor: '#2563eb' }}>
+                <div className="rounded-t-lg" style={{ backgroundColor: '#2563eb', height: '20%' }}>
                   <div className="grid grid-cols-4 h-full">
                     <div className="flex items-center justify-center text-white text-xs font-bold">
                       Play
@@ -320,7 +320,7 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                 </div>
 
                 {/* Row 2: Main Audio Controls with blue background */}
-                <div className="col-span-4 grid grid-cols-4 gap-0" style={{ backgroundColor: '#2563eb' }}>
+                <div className="grid grid-cols-4" style={{ backgroundColor: '#2563eb', height: '50%' }}>
                   <AudioControlButtons
                     onPlay={handlePlay}
                     onPause={handlePause}
@@ -332,8 +332,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                   />
                 </div>
 
-                {/* Row 3: Speed Controls - with top margin for gap */}
-                <div className="col-span-4 mt-0.5">
+                {/* Row 3: Speed Controls */}
+                <div style={{ height: '30%' }}>
                   <AudioSpeedControls
                     playbackRate={playbackRate}
                     onSpeedChange={handleSpeedChange}
