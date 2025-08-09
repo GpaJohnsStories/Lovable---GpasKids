@@ -81,51 +81,80 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
   };
 
   const handleFileUpload = async (file: File, photoNumber: 1 | 2 | 3) => {
-    if (!file) return;
+    console.log('🖼️ Photo upload started for photo', photoNumber, 'with file:', file);
+    if (!file) {
+      console.log('❌ No file provided');
+      return;
+    }
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
+      console.log('❌ Invalid file type:', file.type);
       toast.error('Please select an image file');
       return;
     }
 
     // Validate file size (max 10MB for original, will be reduced after resize)
     if (file.size > 10 * 1024 * 1024) {
+      console.log('❌ File too large:', file.size);
       toast.error('Image size must be less than 10MB');
       return;
     }
 
+    console.log('✅ File validation passed, starting upload process');
+
     setUploading(prev => ({ ...prev, [photoNumber]: true }));
 
     try {
+      // Check admin status first
+      const { data: session } = await supabase.auth.getSession();
+      console.log('📝 Current session:', session?.session?.user?.id ? 'User logged in' : 'No user');
+      
+      const { data: isAdmin, error: adminError } = await supabase.rpc('is_admin_safe');
+      console.log('👑 Admin status check:', isAdmin, 'Error:', adminError);
+      
       // Resize the image to prevent cropping and reduce file size
+      console.log('🔄 Starting image resize...');
       toast.info('Resizing image...');
       const resizedFile = await resizeImage(file, 800, 600, 0.85);
+      console.log('✅ Image resized:', {
+        originalSize: (file.size / 1024 / 1024).toFixed(2) + 'MB',
+        resizedSize: (resizedFile.size / 1024 / 1024).toFixed(2) + 'MB'
+      });
       
       // Generate unique filename
       const fileExt = resizedFile.name.split('.').pop();
       const fileName = `story-photos/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+      console.log('📝 Generated filename:', fileName);
 
       // Upload resized file to Supabase storage
+      console.log('☁️ Starting upload to Supabase storage...');
       const { data, error } = await supabase.storage
         .from('story-photos')
         .upload(fileName, resizedFile);
 
+      console.log('📤 Upload response:', { data, error });
+
       if (error) {
+        console.error('❌ Upload failed:', error);
         throw error;
       }
 
       // Get public URL
+      console.log('🔗 Getting public URL...');
       const { data: { publicUrl } } = supabase.storage
         .from('story-photos')
         .getPublicUrl(fileName);
 
+      console.log('✅ Public URL generated:', publicUrl);
       onPhotoUpload(photoNumber, publicUrl);
       toast.success(`Photo resized and uploaded successfully! Original: ${(file.size / 1024 / 1024).toFixed(1)}MB → Resized: ${(resizedFile.size / 1024 / 1024).toFixed(1)}MB`);
     } catch (error) {
-      console.error('Upload error:', error);
-      toast.error('Failed to upload photo. Please try again.');
+      console.error('❌ Upload error details:', error);
+      console.error('Error message:', error instanceof Error ? error.message : error);
+      toast.error(`Failed to upload photo: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
+      console.log('🏁 Upload process completed');
       setUploading(prev => ({ ...prev, [photoNumber]: false }));
     }
   };
@@ -197,8 +226,15 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
                       type="file"
                       accept="image/*"
                       onChange={(e) => {
+                        console.log('📁 File input change event triggered');
                         const file = e.target.files?.[0];
-                        if (file) handleFileUpload(file, photoNumber);
+                        console.log('📁 Selected file:', file ? file.name : 'No file selected');
+                        if (file) {
+                          console.log('📁 Starting file upload process for:', file.name);
+                          handleFileUpload(file, photoNumber);
+                        } else {
+                          console.log('❌ No file was selected');
+                        }
                       }}
                       className="mb-2"
                       disabled={isUploading}
