@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, DollarSign } from "lucide-react";
+import { Heart, DollarSign, ExternalLink, Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import ThankYouModal from "./ThankYouModal";
 
@@ -16,6 +17,7 @@ const VenmoDonationForm = () => {
   const [showThankYou, setShowThankYou] = useState(false);
   const [finalAmount, setFinalAmount] = useState<string>('');
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const presetAmounts = [
     { value: '1.00', label: '$1.00' },
@@ -64,10 +66,39 @@ const VenmoDonationForm = () => {
     return selectedAmount === 'other' ? customAmount : selectedAmount;
   };
 
-  const generateVenmoLink = (amount: string): string => {
+  const generateVenmoLink = (amount: string): { url: string; type: 'app' | 'web' | 'manual' } => {
     const venmoUsername = 'GpaJohn-Buddy';
     const note = encodeURIComponent('Donation for Gpa\'s Kids Stories');
-    return `venmo://paycharge?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${note}`;
+    
+    if (isMobile) {
+      // Try Venmo app first on mobile
+      return {
+        url: `venmo://paycharge?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${note}`,
+        type: 'app'
+      };
+    } else {
+      // Desktop users go to Venmo web interface
+      return {
+        url: `https://venmo.com/${venmoUsername}`,
+        type: 'web'
+      };
+    }
+  };
+
+  const copyToClipboard = async (text: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: "Copied to clipboard",
+        description: `${label} copied successfully`,
+      });
+    } catch (error) {
+      toast({
+        title: "Copy failed",
+        description: `Please manually copy: ${text}`,
+        variant: "destructive",
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -99,8 +130,24 @@ const VenmoDonationForm = () => {
       }
 
       // Generate and open Venmo link
-      const venmoLink = generateVenmoLink(amount);
-      window.open(venmoLink, '_blank');
+      const { url, type } = generateVenmoLink(amount);
+      
+      if (type === 'app') {
+        // Try to open the app, with fallback
+        const linkOpened = window.open(url, '_blank');
+        
+        // If app fails to open, provide fallback instructions
+        if (!linkOpened) {
+          toast({
+            title: "Venmo App Not Found",
+            description: "Please install the Venmo app or use venmo.com",
+            variant: "destructive",
+          });
+        }
+      } else {
+        // Open web version for desktop
+        window.open(url, '_blank');
+      }
 
       // Show thank you modal
       setShowThankYou(true);
@@ -188,13 +235,44 @@ const VenmoDonationForm = () => {
               disabled={isSubmitting || !selectedAmount}
               className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50"
             >
-              {isSubmitting ? 'Processing...' : 'Donate with Venmo'}
+              {isSubmitting ? 'Processing...' : (
+                <div className="flex items-center justify-center gap-2">
+                  {isMobile ? 'Open Venmo App' : 'Visit Venmo.com'}
+                  <ExternalLink className="h-4 w-4" />
+                </div>
+              )}
             </Button>
 
-            <div className="text-center">
+            <div className="text-center space-y-2">
               <p className="text-xs text-gray-500">
-                You'll be redirected to the Venmo app to complete your donation
+                {isMobile 
+                  ? "You'll be redirected to the Venmo app or website"
+                  : "You'll be redirected to Venmo.com to complete your donation"
+                }
               </p>
+              
+              {!isMobile && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 space-y-2">
+                  <p className="text-xs font-medium text-blue-800">
+                    For desktop users:
+                  </p>
+                  <div className="flex items-center justify-between bg-white rounded border px-2 py-1">
+                    <span className="text-xs font-mono text-gray-700">@GpaJohn-Buddy</span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => copyToClipboard('@GpaJohn-Buddy', 'Username')}
+                      className="h-6 px-2 text-xs"
+                    >
+                      <Copy className="h-3 w-3" />
+                    </Button>
+                  </div>
+                  <p className="text-xs text-blue-600">
+                    Search for this username on Venmo.com or in the app
+                  </p>
+                </div>
+              )}
             </div>
           </form>
         </CardContent>
