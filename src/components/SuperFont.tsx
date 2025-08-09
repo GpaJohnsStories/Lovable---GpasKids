@@ -205,105 +205,73 @@ export const SuperFont: React.FC<SuperFontProps> = ({
             
             {/* Font Control Table */}
             <div style={{flex: 1, display: 'flex', alignItems: 'center'}}>
-              <table width={244} cellSpacing={0} cellPadding={0} border={0}>
-              <tbody>
-                {/* Row 1: Empty for user's idea */}
-                <tr>
-                  <td colSpan={2} height={27} style={{backgroundColor: 'transparent', borderRadius: '12px 12px 0 0'}} align="center" valign="middle">
-                    {/* Left empty for user's special idea */}
-                  </td>
-                </tr>
-
-                {/* Row 2: Two font size control buttons */}
-                <tr>
-                  <td width={122} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 0 12px', textAlign: 'center'}}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: 'transparent',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: isMinSize ? 'not-allowed' : 'pointer',
-                      transition: 'all 0.15s ease',
-                      transform: 'scale(1)',
-                      opacity: isMinSize ? 0.5 : 1,
-                      margin: '0 auto'
-                    }} 
-                    role="button" 
-                    aria-label="Decrease font size" 
-                    title="Decrease font size"
-                    onMouseEnter={(e) => {
-                      if (!isMinSize) e.currentTarget.style.transform = 'scale(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isMinSize) e.currentTarget.style.transform = 'scale(1)';
-                    }}
-                    onMouseDown={(e) => {
-                      if (!isMinSize) e.currentTarget.style.transform = 'scale(0.95)';
-                    }}
-                     onMouseUp={(e) => {
-                       if (!isMinSize) e.currentTarget.style.transform = 'scale(1.1)';
-                     }}
-                     onClick={isMinSize ? undefined : handleDecrease}>
-                        <img 
-                          src="/lovable-uploads/ICO-CCM.png" 
-                          alt="Decrease font size"
-                          style={{
-                            width: '55px',
-                            height: '55px',
-                            objectFit: 'contain',
-                            pointerEvents: 'none'
-                          }}
-                        />
-                     </div>
-                   </td>
-                  <td width={122} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 12px 0', textAlign: 'center'}}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: 'transparent',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: isMaxSize ? 'not-allowed' : 'pointer',
-                      transition: 'all 0.15s ease',
-                      transform: 'scale(1)',
-                      opacity: isMaxSize ? 0.5 : 1,
-                      margin: '0 auto'
-                    }} 
-                    role="button" 
-                    aria-label="Increase font size" 
-                    title="Increase font size"
-                    onMouseEnter={(e) => {
-                      if (!isMaxSize) e.currentTarget.style.transform = 'scale(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isMaxSize) e.currentTarget.style.transform = 'scale(1)';
-                    }}
-                    onMouseDown={(e) => {
-                      if (!isMaxSize) e.currentTarget.style.transform = 'scale(0.95)';
-                    }}
-                     onMouseUp={(e) => {
-                       if (!isMaxSize) e.currentTarget.style.transform = 'scale(1.1)';
-                     }}
-                     onClick={isMaxSize ? undefined : handleIncrease}>
-                        <img 
-                          src="/lovable-uploads/ICO-CCP.png" 
-                          alt="Increase font size"
-                          style={{
-                            width: '55px',
-                            height: '55px',
-                            objectFit: 'contain',
-                            pointerEvents: 'none'
-                          }}
-                        />
-                     </div>
-                   </td>
-                </tr>
-              </tbody>
+              <table 
+                style={{
+                  borderCollapse: 'separate',
+                  borderSpacing: '0',
+                  border: '2px solid gold',
+                  margin: '10px auto',
+                  width: '110px',
+                  height: '83px'
+                }}
+              >
+                <tbody>
+                  <tr>
+                    <td colSpan={2} width={110} height={28} style={{padding: '0'}}>
+                      {/* Empty top row */}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width={55} height={55} style={{padding: '0', textAlign: 'center'}}>
+                      <img 
+                        src="/lovable-uploads/ICO-CCM.png"
+                        alt="Decrease font size"
+                        style={{
+                          width: '55px',
+                          height: '55px',
+                          objectFit: 'contain',
+                          cursor: isMinSize ? 'not-allowed' : 'pointer',
+                          opacity: isMinSize ? 0.5 : 1
+                        }}
+                        onClick={!isMinSize ? handleDecrease : undefined}
+                        role="button"
+                        tabIndex={isMinSize ? -1 : 0}
+                        aria-label="Decrease font size"
+                        aria-disabled={isMinSize}
+                        onKeyDown={(e) => {
+                          if ((e.key === 'Enter' || e.key === ' ') && !isMinSize) {
+                            e.preventDefault();
+                            handleDecrease();
+                          }
+                        }}
+                      />
+                    </td>
+                    <td width={55} height={55} style={{padding: '0', textAlign: 'center'}}>
+                      <img 
+                        src="/lovable-uploads/ICO-CCP.png"
+                        alt="Increase font size"
+                        style={{
+                          width: '55px',
+                          height: '55px',
+                          objectFit: 'contain',
+                          cursor: isMaxSize ? 'not-allowed' : 'pointer',
+                          opacity: isMaxSize ? 0.5 : 1
+                        }}
+                        onClick={!isMaxSize ? handleIncrease : undefined}
+                        role="button"
+                        tabIndex={isMaxSize ? -1 : 0}
+                        aria-label="Increase font size"
+                        aria-disabled={isMaxSize}
+                        onKeyDown={(e) => {
+                          if ((e.key === 'Enter' || e.key === ' ') && !isMaxSize) {
+                            e.preventDefault();
+                            handleIncrease();
+                          }
+                        }}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
