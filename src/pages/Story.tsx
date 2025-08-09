@@ -18,6 +18,7 @@ import StoryVotingSection from "@/components/StoryVotingSection";
 import { getStoryPhotos } from "@/utils/storyUtils";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAudio } from "@/components/SuperAudio";
+import { FontSizeControls } from "@/components/FontSizeControls";
 
 interface StoryData {
   id: string;
@@ -53,6 +54,7 @@ const Story = () => {
   const [error, setError] = useState<string | null>(null);
   const [currentVote, setCurrentVote] = useState<'thumbs_up' | 'thumbs_down' | 'ok' | null>(null);
   const [showSuperAudio, setShowSuperAudio] = useState(false);
+  const [fontSize, setFontSize] = useState(18);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -115,6 +117,14 @@ const Story = () => {
       });
       setCurrentVote(newVote);
     }
+  };
+
+  const increaseFontSize = () => {
+    setFontSize(prev => Math.min(prev + 2, 30));
+  };
+
+  const decreaseFontSize = () => {
+    setFontSize(prev => Math.max(prev - 2, 9));
   };
 
   if (loading) {
@@ -192,8 +202,18 @@ const Story = () => {
               </div>
             )}
 
-            {/* Audio Button positioned above top right corner of story box */}
+            {/* Font Size and Audio Controls positioned above story box */}
             <div className="relative">
+              {/* Font Size Controls - positioned on left */}
+              <div className="absolute top-0 left-0 -mt-8 z-10">
+                <FontSizeControls
+                  fontSize={fontSize}
+                  onIncrease={increaseFontSize}
+                  onDecrease={decreaseFontSize}
+                />
+              </div>
+              
+              {/* Audio Button - positioned on right */}
               <div className="absolute top-0 right-0 -mt-8 z-10">
                 <AudioButton
                   code={story.story_code}
@@ -209,7 +229,7 @@ const Story = () => {
               >
                 <div
                   className="story-content"
-                  style={{ fontFamily: 'Georgia, serif' }}
+                  style={{ fontFamily: 'Georgia, serif', fontSize: `${fontSize}px` }}
                 >
                   <StoryContentRenderer content={story.content || "No content available."} />
                 </div>
