@@ -25,16 +25,18 @@ const StoryVotingSection = ({
   return (
     <div className="mb-8">
       <div className="flex items-center justify-center">
-        <StoryVoting
-          storyId={storyId}
-          storyCode={storyCode}
-          storyTitle={storyTitle}
-          thumbsUpCount={thumbsUpCount}
-          thumbsDownCount={thumbsDownCount}
-          okCount={okCount}
-          currentVote={currentVote}
-          onVoteUpdate={onVoteUpdate}
-        />
+        <div className="border-2 border-[#9c441a] rounded-lg p-4 bg-white shadow-sm">
+          <StoryVoting
+            storyId={storyId}
+            storyCode={storyCode}
+            storyTitle={storyTitle}
+            thumbsUpCount={thumbsUpCount}
+            thumbsDownCount={thumbsDownCount}
+            okCount={okCount}
+            currentVote={currentVote}
+            onVoteUpdate={onVoteUpdate}
+          />
+        </div>
       </div>
     </div>
   );
