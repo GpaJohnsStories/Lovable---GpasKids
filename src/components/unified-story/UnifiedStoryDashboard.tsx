@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
-import { Save, X, FileText, Image, Video, Volume2, Play, Square } from "lucide-react";
+import { Save, X, FileText, Image, Video, Volume2, Play, Square, Trash2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StoryFormFields from "../StoryFormFields";
 import StoryVideoUpload from "../StoryVideoUpload";
@@ -53,6 +54,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   onStoryFound
 }) => {
   const { currentlyPlaying, loadingVoice, playVoice, stopAudio } = useVoiceTesting();
+  const [uploading, setUploading] = useState<{ [key: number]: boolean }>({});
   const getPublishedColor = (publishedStatus: string) => {
     switch (publishedStatus) {
       case 'Y':
@@ -107,6 +109,127 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
     // Otherwise use gold background with black text
     return { backgroundColor: '#F2BA15', color: 'black' };
   };
+  // Resize image helper function
+  const resizeImage = (file: File, maxWidth = 800, maxHeight = 600, quality = 0.85): Promise<File> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d')!;
+      const img = document.createElement('img');
+      
+      img.onload = () => {
+        const { width, height } = img;
+        let { width: newWidth, height: newHeight } = img;
+        
+        if (width > height) {
+          if (newWidth > maxWidth) {
+            newHeight = (newHeight * maxWidth) / newWidth;
+            newWidth = maxWidth;
+          }
+        } else {
+          if (newHeight > maxHeight) {
+            newWidth = (newWidth * maxHeight) / newHeight;
+            newHeight = maxHeight;
+          }
+        }
+        
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+        
+        canvas.toBlob((blob) => {
+          const resizedFile = new File([blob!], file.name, {
+            type: file.type,
+            lastModified: Date.now(),
+          });
+          resolve(resizedFile);
+        }, file.type, quality);
+      };
+      
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  // Handle photo upload
+  const handlePhotoUpload = async (file: File, photoNumber: 1 | 2 | 3) => {
+    console.log('🖼️ Photo upload started for photo', photoNumber, 'with file:', file);
+    if (!file) {
+      console.log('❌ No file provided');
+      return;
+    }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      console.log('❌ Invalid file type:', file.type);
+      toast.error('Please select an image file');
+      return;
+    }
+
+    // Validate file size (max 10MB for original, will be reduced after resize)
+    if (file.size > 10 * 1024 * 1024) {
+      console.log('❌ File too large:', file.size);
+      toast.error('Image size must be less than 10MB');
+      return;
+    }
+
+    console.log('✅ File validation passed, starting upload process');
+
+    setUploading(prev => ({ ...prev, [photoNumber]: true }));
+
+    try {
+      // Check admin status first
+      const { data: session } = await supabase.auth.getSession();
+      console.log('📝 Current session:', session?.session?.user?.id ? 'User logged in' : 'No user');
+      
+      const { data: isAdmin, error: adminError } = await supabase.rpc('is_admin_safe');
+      console.log('👑 Admin status check:', isAdmin, 'Error:', adminError);
+      
+      // Resize the image to prevent cropping and reduce file size
+      console.log('🔄 Starting image resize...');
+      toast.info('Resizing image...');
+      const resizedFile = await resizeImage(file, 800, 600, 0.85);
+      console.log('✅ Image resized:', {
+        originalSize: (file.size / 1024 / 1024).toFixed(2) + 'MB',
+        resizedSize: (resizedFile.size / 1024 / 1024).toFixed(2) + 'MB'
+      });
+      
+      // Generate unique filename
+      const fileExt = resizedFile.name.split('.').pop();
+      const fileName = `story-photos/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+      console.log('📝 Generated filename:', fileName);
+
+      // Upload resized file to Supabase storage
+      console.log('☁️ Starting upload to Supabase storage...');
+      const { data, error } = await supabase.storage
+        .from('story-photos')
+        .upload(fileName, resizedFile);
+
+      console.log('📤 Upload response:', { data, error });
+
+      if (error) {
+        console.error('❌ Upload failed:', error);
+        throw error;
+      }
+
+      // Get public URL
+      console.log('🔗 Getting public URL...');
+      const { data: { publicUrl } } = supabase.storage
+        .from('story-photos')
+        .getPublicUrl(fileName);
+
+      console.log('✅ Public URL generated:', publicUrl);
+      onPhotoUpload(photoNumber, publicUrl);
+      toast.success(`Photo resized and uploaded successfully! Original: ${(file.size / 1024 / 1024).toFixed(1)}MB → Resized: ${(resizedFile.size / 1024 / 1024).toFixed(1)}MB`);
+    } catch (error) {
+      console.error('❌ Upload error details:', error);
+      console.error('Error message:', error instanceof Error ? error.message : error);
+      toast.error(`Failed to upload photo: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      console.log('🏁 Upload process completed');
+      setUploading(prev => ({ ...prev, [photoNumber]: false }));
+    }
+  };
+
   console.log('🎯 UnifiedStoryDashboard: Rendering with formData:', {
     id: formData.id,
     title: formData.title,
@@ -156,38 +279,125 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   {/* Photo Display Row */}
                   <tr>
                     <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      {formData.photo_link_1 ? (
-                        <img src={formData.photo_link_1} alt="Photo 1" className="w-full h-20 object-cover rounded" />
-                      ) : (
-                        <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
-                      )}
+                      <div className="relative">
+                        {formData.photo_link_1 ? (
+                          <>
+                            <img src={formData.photo_link_1} alt="Photo 1" className="w-full h-20 object-cover rounded" />
+                            <button
+                              type="button"
+                              onClick={() => onPhotoRemove(1)}
+                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </button>
+                          </>
+                        ) : (
+                          <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                        )}
+                      </div>
                     </td>
                     <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      {formData.photo_link_2 ? (
-                        <img src={formData.photo_link_2} alt="Photo 2" className="w-full h-20 object-cover rounded" />
-                      ) : (
-                        <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
-                      )}
+                      <div className="relative">
+                        {formData.photo_link_2 ? (
+                          <>
+                            <img src={formData.photo_link_2} alt="Photo 2" className="w-full h-20 object-cover rounded" />
+                            <button
+                              type="button"
+                              onClick={() => onPhotoRemove(2)}
+                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </button>
+                          </>
+                        ) : (
+                          <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                        )}
+                      </div>
                     </td>
                     <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      {formData.photo_link_3 ? (
-                        <img src={formData.photo_link_3} alt="Photo 3" className="w-full h-20 object-cover rounded" />
-                      ) : (
-                        <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
-                      )}
+                      <div className="relative">
+                        {formData.photo_link_3 ? (
+                          <>
+                            <img src={formData.photo_link_3} alt="Photo 3" className="w-full h-20 object-cover rounded" />
+                            <button
+                              type="button"
+                              onClick={() => onPhotoRemove(3)}
+                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </button>
+                          </>
+                        ) : (
+                          <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                        )}
+                      </div>
                     </td>
                   </tr>
                   
                   {/* File Input Row */}
                   <tr>
                     <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input type="file" accept="image/*" className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={(e) => {
+                          console.log('📁 File input change event triggered for photo 1');
+                          const file = e.target.files?.[0];
+                          console.log('📁 Selected file:', file ? file.name : 'No file selected');
+                          if (file) {
+                            console.log('📁 Starting file upload process for:', file.name);
+                            handlePhotoUpload(file, 1);
+                          } else {
+                            console.log('❌ No file was selected');
+                          }
+                          e.target.value = ''; // Reset input
+                        }}
+                        disabled={uploading[1]}
+                        className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" 
+                      />
+                      {uploading[1] && <div className="text-xs text-blue-600 mt-1">Uploading...</div>}
                     </td>
                     <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input type="file" accept="image/*" className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={(e) => {
+                          console.log('📁 File input change event triggered for photo 2');
+                          const file = e.target.files?.[0];
+                          console.log('📁 Selected file:', file ? file.name : 'No file selected');
+                          if (file) {
+                            console.log('📁 Starting file upload process for:', file.name);
+                            handlePhotoUpload(file, 2);
+                          } else {
+                            console.log('❌ No file was selected');
+                          }
+                          e.target.value = ''; // Reset input
+                        }}
+                        disabled={uploading[2]}
+                        className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" 
+                      />
+                      {uploading[2] && <div className="text-xs text-blue-600 mt-1">Uploading...</div>}
                     </td>
                     <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input type="file" accept="image/*" className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={(e) => {
+                          console.log('📁 File input change event triggered for photo 3');
+                          const file = e.target.files?.[0];
+                          console.log('📁 Selected file:', file ? file.name : 'No file selected');
+                          if (file) {
+                            console.log('📁 Starting file upload process for:', file.name);
+                            handlePhotoUpload(file, 3);
+                          } else {
+                            console.log('❌ No file was selected');
+                          }
+                          e.target.value = ''; // Reset input
+                        }}
+                        disabled={uploading[3]}
+                        className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" 
+                      />
+                      {uploading[3] && <div className="text-xs text-blue-600 mt-1">Uploading...</div>}
                     </td>
                   </tr>
                   
