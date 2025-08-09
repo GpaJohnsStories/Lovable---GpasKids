@@ -65,7 +65,7 @@ const VenmoDonationForm = () => {
   };
 
   const generateVenmoLink = (amount: string): string => {
-    const venmoUsername = 'GpaJohn'; // Replace with actual Venmo username
+    const venmoUsername = 'GpaJohn-Buddy'; // Replace with actual Venmo username
     const note = encodeURIComponent('Donation for Gpa\'s Kids Stories');
     return `venmo://paycharge?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${note}`;
   };
