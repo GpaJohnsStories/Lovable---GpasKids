@@ -151,11 +151,18 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         className={`rounded-lg border-4 p-6 ${backgroundColor}`}
         style={{ borderColor }}
       >
-        {/* Top Row */}
-        <div className="flex justify-between items-start mb-4">
-          {/* Left: Icon and Title */}
-          <div className="flex items-center gap-3">
-            {iconUrl && (
+        {/* Title at the top */}
+        <div className="mb-6">
+          <h3 className="text-2xl sm:text-3xl font-bold text-amber-800">
+            {webtext?.title || title}
+          </h3>
+        </div>
+
+        {/* Photo and Content Section */}
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* Photo on the left */}
+          {iconUrl && (
+            <div className="w-fit flex-shrink-0">
               <div className="group relative">
                 <img 
                   src={iconUrl} 
@@ -172,32 +179,32 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                   </div>
                 )}
               </div>
-            )}
-            <h3 className="text-xl font-bold text-amber-800">
-              {webtext?.title || title}
-            </h3>
-          </div>
+            </div>
+          )}
           
-          {/* Right: Peppermint Audio Button - only show if audio is available */}
+          {/* Content wrapping around photo */}
+          <div className="flex-1 min-w-0">
+            <div 
+              className="font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
+              dangerouslySetInnerHTML={{ __html: getContent() }}
+            />
+          </div>
+        </div>
+
+        {/* Audio Button and Webtext Code Row */}
+        <div className="flex justify-between items-center mt-6">
+          {/* Left: Audio Button - only show if audio is available */}
           {webtext?.audio_url && (
             <div className="flex-shrink-0">
               <AudioButton code={webtextCode} onClick={() => setShowSuperAudio(true)} />
             </div>
           )}
-        </div>
-
-        {/* Content */}
-        <div className="mb-4">
-          <div 
-            className="font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
-            dangerouslySetInnerHTML={{ __html: getContent() }}
-          />
-        </div>
-
-        {/* Bottom Right: Webtext Code */}
-        <div className="flex justify-end">
-          <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
-            {webtextCode}
+          
+          {/* Right: Webtext Code */}
+          <div className="flex justify-end">
+            <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
+              {webtextCode}
+            </div>
           </div>
         </div>
       </div>
