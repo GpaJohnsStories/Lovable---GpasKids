@@ -76,12 +76,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       return { backgroundColor: '#DC2626', color: '#FFFF00' };
     }
     
-    // If audio is older than or equal to last update, it's outdated
-    if (new Date(audioDate) <= new Date(updateDate)) {
+    // If audio is older than last update, it's outdated
+    if (new Date(audioDate) < new Date(updateDate)) {
       return { backgroundColor: '#DC2626', color: '#FFFF00' };
     }
     
-    // If audio is newer than last update, it's current
+    // If audio is equal to or newer than last update, it's current
     return { backgroundColor: '#16a34a', color: 'white' };
   };
 
