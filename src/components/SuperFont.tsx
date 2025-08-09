@@ -205,26 +205,32 @@ export const SuperFont: React.FC<SuperFontProps> = ({
             
             {/* Font Control Table */}
             <div style={{flex: 1, display: 'flex', alignItems: 'center'}}>
-              <table 
-                style={{
-                  borderCollapse: 'separate',
-                  borderSpacing: '0',
-                  border: '2px solid gold',
-                  margin: '10px auto',
-                  width: '110px',
-                  height: '83px'
-                }}
-              >
+              <table style={{
+                width: '110px',
+                height: '83px',
+                border: '2px solid gold',
+                borderCollapse: 'collapse',
+                margin: '0 auto'
+              }}>
                 <tbody>
                   <tr>
-                    <td colSpan={2} width={110} height={28} style={{padding: '0'}}>
-                      {/* Empty top row */}
+                    <td colSpan={2} style={{
+                      height: '28px',
+                      padding: '0',
+                      border: 'none'
+                    }}>
                     </td>
                   </tr>
                   <tr>
-                    <td width={55} height={55} style={{padding: '0', textAlign: 'center'}}>
+                    <td style={{
+                      width: '55px',
+                      height: '55px',
+                      padding: '0',
+                      border: 'none',
+                      textAlign: 'center'
+                    }}>
                       <img 
-                        src="/lovable-uploads/ICO-CCM.png"
+                        src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png"
                         alt="Decrease font size"
                         style={{
                           width: '55px',
@@ -234,21 +240,17 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                           opacity: isMinSize ? 0.5 : 1
                         }}
                         onClick={!isMinSize ? handleDecrease : undefined}
-                        role="button"
-                        tabIndex={isMinSize ? -1 : 0}
-                        aria-label="Decrease font size"
-                        aria-disabled={isMinSize}
-                        onKeyDown={(e) => {
-                          if ((e.key === 'Enter' || e.key === ' ') && !isMinSize) {
-                            e.preventDefault();
-                            handleDecrease();
-                          }
-                        }}
                       />
                     </td>
-                    <td width={55} height={55} style={{padding: '0', textAlign: 'center'}}>
+                    <td style={{
+                      width: '55px',
+                      height: '55px',
+                      padding: '0',
+                      border: 'none',
+                      textAlign: 'center'
+                    }}>
                       <img 
-                        src="/lovable-uploads/ICO-CCP.png"
+                        src="/lovable-uploads/c123cf14-65c8-44b5-9dc1-10d4e5636d1a.png"
                         alt="Increase font size"
                         style={{
                           width: '55px',
@@ -258,16 +260,6 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                           opacity: isMaxSize ? 0.5 : 1
                         }}
                         onClick={!isMaxSize ? handleIncrease : undefined}
-                        role="button"
-                        tabIndex={isMaxSize ? -1 : 0}
-                        aria-label="Increase font size"
-                        aria-disabled={isMaxSize}
-                        onKeyDown={(e) => {
-                          if ((e.key === 'Enter' || e.key === ' ') && !isMaxSize) {
-                            e.preventDefault();
-                            handleIncrease();
-                          }
-                        }}
                       />
                     </td>
                   </tr>
