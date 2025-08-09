@@ -89,8 +89,7 @@ const VenmoDonationForm = () => {
     try {
       await navigator.clipboard.writeText(text);
       toast({
-        title: "Information Copies",
-        description: `${label} copied successfully`,
+        title: "Information Copied Successfully",
       });
     } catch (error) {
       toast({
