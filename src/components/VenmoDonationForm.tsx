@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import ThankYouModal from "./ThankYouModal";
-import { QRCodeSVG as QRCode } from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
 
 const VenmoDonationForm = () => {
   const [selectedAmount, setSelectedAmount] = useState<string>('');
@@ -306,7 +306,7 @@ const VenmoDonationForm = () => {
                   </div>
                   
                   <div className="flex flex-col items-center space-y-2">
-                    <QRCode 
+                    <QRCodeSVG 
                       value={getAppStoreLink()!} 
                       size={100}
                       level="M"
