@@ -566,10 +566,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   type="button" 
                   onClick={onSaveOnly}
                   disabled={isSaving || isGeneratingAudio} 
-                  className="flex-1 text-xs h-8 text-white bg-green-600 border-green-700 hover:bg-green-700 rounded-md border flex items-center justify-center gap-1"
+                  className="flex-1 text-xs h-8 text-[#2563eb] font-bold bg-green-600 border-green-700 hover:bg-green-700 rounded-md border flex items-center justify-center gap-1"
                 >
                   <Save className="h-3 w-3" />
-                  {isSaving ? 'Saving...' : 'Save & Stay'}
+                  {isSaving ? 'Saving...' : 'Save Details & Text Before Audio'}
                 </button>
                 
                 <button 
