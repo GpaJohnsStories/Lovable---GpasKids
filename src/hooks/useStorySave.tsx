@@ -30,9 +30,12 @@ export const useStorySave = () => {
   const [isSaving, setIsSaving] = useState(false);
 
   const saveStory = async (formData: Story, onSuccess?: () => void) => {
-    console.log('=== STARTING SAVE OPERATION ===');
+    const timestamp = new Date().toISOString();
+    console.log(`=== STARTING SAVE OPERATION AT ${timestamp} ===`);
+    console.log('❗ SAVE TRIGGERED - Check if this is being called repeatedly every 5 seconds');
     console.log('Form data received:', formData);
     console.log('Story ID:', formData.id);
+    console.log('Story Code:', formData.story_code);
     console.log('Supabase client:', supabase);
     
     // Check admin session and RLS function
