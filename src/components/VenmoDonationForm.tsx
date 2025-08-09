@@ -258,6 +258,16 @@ const VenmoDonationForm = () => {
             >
               {isSubmitting ? 'Processing...' : (
                 <div className="flex items-center justify-center gap-2">
+                  {/* Venmo Logo SVG */}
+                  <svg 
+                    width="16" 
+                    height="16" 
+                    viewBox="0 0 24 24" 
+                    fill="currentColor" 
+                    className="text-white"
+                  >
+                    <path d="M19.83 4.17c1.58 1.58 2.17 3.83 2.17 6.08 0 6.25-7.42 13.75-10.08 13.75-1.92 0-2.67-1.17-2.67-2.42 0-1.33.42-2.83 1.17-4.75L12 5.25h3.25L13.5 17.08c2.08-2.83 5.25-7.33 5.25-10.58 0-1.25-.25-2.08-.92-2.33z"/>
+                  </svg>
                   {isMobile ? 'Open Venmo App' : 'Visit Venmo.com'}
                   <ExternalLink className="h-4 w-4" />
                 </div>
