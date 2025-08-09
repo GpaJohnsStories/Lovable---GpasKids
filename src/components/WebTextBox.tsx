@@ -156,15 +156,22 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           {/* Left: Icon and Title */}
           <div className="flex items-center gap-3">
             {iconUrl && (
-              <img 
-                src={iconUrl} 
-                alt={photos[0]?.alt || "webtext icon"}
-                className="w-auto h-48 md:h-64 lg:h-80 object-contain border rounded"
-                style={{ borderColor }}
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
+              <div className="group relative">
+                <img 
+                  src={iconUrl} 
+                  alt={photos[0]?.alt || "webtext icon"}
+                  className="w-auto h-48 md:h-64 lg:h-80 object-contain border rounded transition-transform hover:scale-105"
+                  style={{ borderColor }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+                {photos[0]?.alt && (
+                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-xs text-amber-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {photos[0].alt}
+                  </div>
+                )}
+              </div>
             )}
             <h3 className="text-xl font-bold text-amber-800">
               {webtext?.title || title}
