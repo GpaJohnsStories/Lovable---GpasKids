@@ -189,11 +189,15 @@ const Story = () => {
               </div>
             )}
 
-            <div
-              className="story-content"
-              style={{ fontFamily: 'Georgia, serif' }}
+            <div 
+              className="bg-[#F5E6D3] border border-[#E6D3B7] rounded-lg p-6 md:p-8 shadow-sm"
             >
-              <StoryContentRenderer content={story.content || "No content available."} />
+              <div
+                className="story-content"
+                style={{ fontFamily: 'Georgia, serif' }}
+              >
+                <StoryContentRenderer content={story.content || "No content available."} />
+              </div>
             </div>
           </main>
 
