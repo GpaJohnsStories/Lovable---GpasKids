@@ -17,6 +17,7 @@ import StoryVideoPlayer from "@/components/StoryVideoPlayer";
 import StoryVotingSection from "@/components/StoryVotingSection";
 import { getStoryPhotos } from "@/utils/storyUtils";
 import { AudioButton } from "@/components/AudioButton";
+import { SuperAudio } from "@/components/SuperAudio";
 
 interface StoryData {
   id: string;
@@ -51,6 +52,7 @@ const Story = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentVote, setCurrentVote] = useState<'thumbs_up' | 'thumbs_down' | 'ok' | null>(null);
+  const [showSuperAudio, setShowSuperAudio] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -197,7 +199,7 @@ const Story = () => {
                   code={story.story_code}
                   onClick={() => {
                     console.log('Audio button clicked for story:', story.story_code);
-                    // Audio functionality will be implemented here
+                    setShowSuperAudio(true);
                   }}
                 />
               </div>
@@ -227,6 +229,17 @@ const Story = () => {
             onVoteUpdate={handleVoteUpdate}
           />
         </div>
+        
+        {/* SuperAudio Player */}
+        <SuperAudio
+          isOpen={showSuperAudio}
+          onClose={() => setShowSuperAudio(false)}
+          title={story.title}
+          author={story.author}
+          voiceName={story.ai_voice_name}
+          audioUrl={story.audio_url}
+        />
+        
         <CookieFreeFooter />
       </div>
   );
