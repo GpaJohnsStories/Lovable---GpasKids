@@ -20,7 +20,7 @@ const HelpGpa = () => {
           <div className="max-w-4xl mx-auto space-y-8">
             {/* WebTextBox for main content */}
             <WebTextBox
-              webtextCode="WEB-HGJ"
+              webtextCode="SYS-HGJ"
               borderColor="border-blue-300"
               backgroundColor="bg-blue-50/70"
               title="Help Grandpa John"
