@@ -249,13 +249,15 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                        if (!isMinSize) e.currentTarget.style.transform = 'scale(1.1)';
                      }}
                      onClick={isMinSize ? undefined : handleDecrease}>
-                       {/* Placeholder minus symbol - will be replaced with chocolate bar image */}
-                       <div style={{
-                         width: '20px',
-                         height: '4px',
-                         backgroundColor: 'white',
-                         borderRadius: '2px'
-                       }}></div>
+                        <img 
+                          src="/lovable-uploads/ICO-CCM.png" 
+                          alt="Decrease font size"
+                          style={{
+                            width: '55px',
+                            height: '55px',
+                            objectFit: 'contain'
+                          }}
+                        />
                      </div>
                   </td>
                   <td width={122} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 12px 0', textAlign: 'center'}}>
@@ -291,27 +293,15 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                        if (!isMaxSize) e.currentTarget.style.transform = 'scale(1.1)';
                      }}
                      onClick={isMaxSize ? undefined : handleIncrease}>
-                       {/* Placeholder plus symbol - will be replaced with chocolate bar image */}
-                       <div style={{position: 'relative', width: '20px', height: '20px'}}>
-                         <div style={{
-                           position: 'absolute',
-                           top: '8px',
-                           left: '0',
-                           width: '20px',
-                           height: '4px',
-                           backgroundColor: 'white',
-                           borderRadius: '2px'
-                         }}></div>
-                         <div style={{
-                           position: 'absolute',
-                           top: '0',
-                           left: '8px',
-                           width: '4px',
-                           height: '20px',
-                           backgroundColor: 'white',
-                           borderRadius: '2px'
-                         }}></div>
-                       </div>
+                        <img 
+                          src="/lovable-uploads/ICO-CCP.png" 
+                          alt="Increase font size"
+                          style={{
+                            width: '55px',
+                            height: '55px',
+                            objectFit: 'contain'
+                          }}
+                        />
                      </div>
                   </td>
                 </tr>
