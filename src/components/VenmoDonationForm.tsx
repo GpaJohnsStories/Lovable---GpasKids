@@ -166,7 +166,7 @@ const VenmoDonationForm = () => {
               {selectedAmount === 'other' && (
                 <div className="mt-4">
                   <Label htmlFor="customAmount" className="text-sm font-medium text-gray-700 mb-2 block">
-                    Enter amount (max $50.00):
+                    Enter amount (Minimum $ 1.00, Maximum $ 50.00):
                   </Label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
