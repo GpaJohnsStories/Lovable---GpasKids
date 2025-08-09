@@ -122,35 +122,54 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
 
   const handleGenerateAudio = async () => {
     console.log('🎯 useStoryFormState: Starting audio generation for story:', formData.id);
+    
+    if (!formData.id) {
+      throw new Error('Story must be saved before generating audio. Please save your story first.');
+    }
+    
+    if (!formData.content?.trim()) {
+      throw new Error('Story content is required to generate audio.');
+    }
+    
     setIsGeneratingAudio(true);
     
     try {
       // First ensure the voice selection is saved to the database
-      if (formData.id) {
-        const { error: updateError } = await supabase
-          .from('stories')
-          .update({
-            ai_voice_name: formData.ai_voice_name || 'Nova',
-            ai_voice_model: formData.ai_voice_model || 'tts-1'
-          })
-          .eq('id', formData.id);
+      const { error: updateError } = await supabase
+        .from('stories')
+        .update({
+          ai_voice_name: formData.ai_voice_name || 'Nova',
+          ai_voice_model: formData.ai_voice_model || 'tts-1'
+        })
+        .eq('id', formData.id);
 
-        if (updateError) {
-          console.error('🎯 useStoryFormState: Error updating voice settings:', updateError);
-          throw updateError;
-        }
+      if (updateError) {
+        console.error('🎯 useStoryFormState: Error updating voice settings:', updateError);
+        throw new Error(`Failed to update voice settings: ${updateError.message}`);
       }
+
+      console.log('🎯 useStoryFormState: Calling generate-story-audio with:', {
+        storyId: formData.id,
+        voiceName: formData.ai_voice_name || 'Nova'
+      });
 
       const { data, error } = await supabase.functions.invoke('generate-story-audio', {
         body: { 
           storyId: formData.id,
-          voiceName: formData.ai_voice_name || 'Nova'  // Pass voice as backup
+          voiceName: formData.ai_voice_name || 'Nova'
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('🎯 useStoryFormState: Edge function error:', error);
+        throw new Error(`Audio generation failed: ${error.message}`);
+      }
 
-      console.log('🎯 useStoryFormState: Audio generation started:', data);
+      console.log('🎯 useStoryFormState: Audio generation response:', data);
+      
+      if (data?.error) {
+        throw new Error(data.error);
+      }
       
       // Refresh the story data to get the updated audio URL
       if (refetchStory) {

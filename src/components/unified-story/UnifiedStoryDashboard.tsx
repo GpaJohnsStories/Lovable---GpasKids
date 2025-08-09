@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
 import { Save, X, FileText, Image, Video, Volume2, Play, Square, Trash2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -161,14 +161,22 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
     // Validate file type
     if (!file.type.startsWith('image/')) {
       console.log('❌ Invalid file type:', file.type);
-      toast.error('Please select an image file');
+      toast({
+        title: "Invalid File Type",
+        description: "Please select an image file",
+        variant: "destructive",
+      });
       return;
     }
 
     // Validate file size (max 10MB for original, will be reduced after resize)
     if (file.size > 10 * 1024 * 1024) {
       console.log('❌ File too large:', file.size);
-      toast.error('Image size must be less than 10MB');
+      toast({
+        title: "File Too Large",
+        description: "Image size must be less than 10MB",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -186,7 +194,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       
       // Resize the image to prevent cropping and reduce file size
       console.log('🔄 Starting image resize...');
-      toast.info('Resizing image...');
+      toast({
+        title: "Processing Image",
+        description: "Resizing image...",
+      });
       const resizedFile = await resizeImage(file, 800, 600, 0.85);
       console.log('✅ Image resized:', {
         originalSize: (file.size / 1024 / 1024).toFixed(2) + 'MB',
@@ -219,11 +230,18 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
 
       console.log('✅ Public URL generated:', publicUrl);
       onPhotoUpload(photoNumber, publicUrl);
-      toast.success(`Photo resized and uploaded successfully! Original: ${(file.size / 1024 / 1024).toFixed(1)}MB → Resized: ${(resizedFile.size / 1024 / 1024).toFixed(1)}MB`);
+      toast({
+        title: "Photo Uploaded Successfully",
+        description: `Photo resized and uploaded! Original: ${(file.size / 1024 / 1024).toFixed(1)}MB → Resized: ${(resizedFile.size / 1024 / 1024).toFixed(1)}MB`,
+      });
     } catch (error) {
       console.error('❌ Upload error details:', error);
       console.error('Error message:', error instanceof Error ? error.message : error);
-      toast.error(`Failed to upload photo: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      toast({
+        title: "Upload Failed",
+        description: `Failed to upload photo: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        variant: "destructive",
+      });
     } finally {
       console.log('🏁 Upload process completed');
       setUploading(prev => ({ ...prev, [photoNumber]: false }));
@@ -602,12 +620,28 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   <Label className="text-xs font-bold text-gray-700 mb-1 block">Generate Audio</Label>
                   <button
                     type="button"
-                    onClick={onGenerateAudio}
-                    disabled={isGeneratingAudio || !formData.content?.trim()}
+                    onClick={async () => {
+                      try {
+                        console.log('🎵 UnifiedStoryDashboard: Generate audio clicked for story:', formData.id);
+                        await onGenerateAudio();
+                        toast({
+                          title: "Audio Generation Started",
+                          description: "Your story audio is being generated. This may take a few minutes.",
+                        });
+                      } catch (error) {
+                        console.error('🎵 UnifiedStoryDashboard: Audio generation error:', error);
+                        toast({
+                          title: "Audio Generation Failed",
+                          description: error instanceof Error ? error.message : "Failed to generate audio. Please try again.",
+                          variant: "destructive",
+                        });
+                      }
+                    }}
+                    disabled={isGeneratingAudio || !formData.content?.trim() || !formData.id}
                     className="w-full h-9 text-sm font-bold text-white bg-orange-600 border-orange-700 hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-2"
                   >
                     <Volume2 className="h-4 w-4" />
-                    {isGeneratingAudio ? 'Generating...' : 'Generate Audio'}
+                    {isGeneratingAudio ? 'Generating...' : formData.id ? 'Generate Audio' : 'Save Story First'}
                   </button>
                 </div>
               </div>
