@@ -160,7 +160,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                   ) : hgjIconUrl && !hgjLoading && !hgjError ? (
                     <img 
                       src={hgjIconUrl}
-                      alt="Help Grandpa John"
+                      alt="Click to Help Grandpa John"
                       className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain rounded-full group-hover:hidden"
                     />
                   ) : null}
