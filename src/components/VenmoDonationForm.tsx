@@ -130,10 +130,10 @@ const VenmoDonationForm = () => {
           </div>
           <CardTitle className="text-2xl font-bold text-orange-800 flex items-center justify-center gap-2">
             <DollarSign className="h-6 w-6" />
-            Support Grandpa John
+            Help Grandpa John With A Gift
           </CardTitle>
           <p className="text-gray-600 text-sm">
-            Help keep these wonderful stories free for all children
+            Grandpa John's Stories is NOT a non-profit organization so please mark your gift as a donation.
           </p>
         </CardHeader>
 
