@@ -128,8 +128,7 @@ const VenmoDonationForm = () => {
           <div className="mx-auto w-16 h-16 bg-gradient-to-b from-yellow-200 to-orange-200 rounded-full flex items-center justify-center border-4 border-orange-300 mb-3">
             <Heart className="h-8 w-8 text-red-500" />
           </div>
-          <CardTitle className="text-2xl font-bold text-orange-800 flex items-center justify-center gap-2">
-            <DollarSign className="h-6 w-6" />
+          <CardTitle className="text-2xl font-bold text-orange-800">
             Help Grandpa John With A Gift
           </CardTitle>
           <p className="text-gray-600 text-sm">
