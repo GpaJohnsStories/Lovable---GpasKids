@@ -158,11 +158,11 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           </h3>
         </div>
 
-        {/* Photo and Content Section */}
-        <div className="flex flex-col md:flex-row gap-6">
-          {/* Photo on the left */}
+        {/* Photo and Content Section with true text wrapping */}
+        <div className="relative">
+          {/* Photo floated to the left */}
           {iconUrl && (
-            <div className="w-fit flex-shrink-0">
+            <div className="float-left mr-6 mb-4">
               <div className="group relative">
                 <img 
                   src={iconUrl} 
@@ -182,13 +182,14 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             </div>
           )}
           
-          {/* Content wrapping around photo */}
-          <div className="flex-1 min-w-0">
-            <div 
-              className="font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
-              dangerouslySetInnerHTML={{ __html: getContent() }}
-            />
-          </div>
+          {/* Content that wraps around the floated photo */}
+          <div 
+            className="font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
+            dangerouslySetInnerHTML={{ __html: getContent() }}
+          />
+          
+          {/* Clear the float */}
+          <div className="clear-both"></div>
         </div>
 
         {/* Audio Button and Webtext Code Row */}
