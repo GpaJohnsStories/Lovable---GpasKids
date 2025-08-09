@@ -190,7 +190,7 @@ const Story = () => {
             )}
 
             <div 
-              className="bg-[#F5E6D3] border border-[#E6D3B7] rounded-lg p-6 md:p-8 shadow-sm"
+              className="bg-[#F5E6D3] border-2 border-[#9c441a] rounded-lg p-6 md:p-8 shadow-sm"
             >
               <div
                 className="story-content"
