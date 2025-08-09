@@ -16,6 +16,7 @@ import StoryPhotosGallery from "@/components/StoryPhotosGallery";
 import StoryVideoPlayer from "@/components/StoryVideoPlayer";
 import StoryVotingSection from "@/components/StoryVotingSection";
 import { getStoryPhotos } from "@/utils/storyUtils";
+import { AudioButton } from "@/components/AudioButton";
 
 interface StoryData {
   id: string;
@@ -189,14 +190,27 @@ const Story = () => {
               </div>
             )}
 
-            <div 
-              className="bg-[#F5E6D3] border-2 border-[#9c441a] rounded-lg p-6 md:p-8 shadow-sm"
-            >
-              <div
-                className="story-content"
-                style={{ fontFamily: 'Georgia, serif' }}
+            {/* Audio Button positioned above top right corner of story box */}
+            <div className="relative">
+              <div className="absolute top-0 right-0 -mt-8 z-10">
+                <AudioButton
+                  code={story.story_code}
+                  onClick={() => {
+                    console.log('Audio button clicked for story:', story.story_code);
+                    // Audio functionality will be implemented here
+                  }}
+                />
+              </div>
+              
+              <div 
+                className="bg-[#F5E6D3] border-2 border-[#9c441a] rounded-lg p-6 md:p-8 shadow-sm"
               >
-                <StoryContentRenderer content={story.content || "No content available."} />
+                <div
+                  className="story-content"
+                  style={{ fontFamily: 'Georgia, serif' }}
+                >
+                  <StoryContentRenderer content={story.content || "No content available."} />
+                </div>
               </div>
             </div>
           </main>
