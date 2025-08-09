@@ -4,11 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, DollarSign, ExternalLink, Copy } from "lucide-react";
+import { Heart, DollarSign, ExternalLink, Copy, Smartphone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import ThankYouModal from "./ThankYouModal";
+import { QRCodeSVG as QRCode } from 'qrcode.react';
 
 const VenmoDonationForm = () => {
   const [selectedAmount, setSelectedAmount] = useState<string>('');
@@ -18,6 +19,25 @@ const VenmoDonationForm = () => {
   const [finalAmount, setFinalAmount] = useState<string>('');
   const { toast } = useToast();
   const isMobile = useIsMobile();
+
+  // Device detection
+  const getDeviceType = () => {
+    const userAgent = navigator.userAgent;
+    if (/iPad|iPhone|iPod/.test(userAgent)) return 'ios';
+    if (/Android/.test(userAgent)) return 'android';
+    return 'unknown';
+  };
+
+  const deviceType = getDeviceType();
+
+  const getAppStoreLink = () => {
+    if (deviceType === 'ios') {
+      return 'https://apps.apple.com/us/app/venmo/id351727428';
+    } else if (deviceType === 'android') {
+      return 'https://play.google.com/store/apps/details?id=com.venmo';
+    }
+    return null;
+  };
 
   const presetAmounts = [
     { value: '1.00', label: '$1.00' },
@@ -135,14 +155,16 @@ const VenmoDonationForm = () => {
         // Try to open the app, with fallback
         const linkOpened = window.open(url, '_blank');
         
-        // If app fails to open, provide fallback instructions
-        if (!linkOpened) {
-          toast({
-            title: "Venmo App Not Found",
-            description: "Please install the Venmo app or use venmo.com",
-            variant: "destructive",
-          });
-        }
+        // If app fails to open, show app store QR code
+        setTimeout(() => {
+          const appStoreLink = getAppStoreLink();
+          if (appStoreLink) {
+            toast({
+              title: "Venmo App Not Found",
+              description: "Scan the QR code below to download Venmo from your app store",
+            });
+          }
+        }, 1000);
       } else {
         // Open web version for desktop
         window.open(url, '_blank');
@@ -270,6 +292,30 @@ const VenmoDonationForm = () => {
                   <p className="text-xs text-blue-600">
                     Search for this username on Venmo.com or in the app
                   </p>
+                </div>
+              )}
+
+              {/* Mobile App Store QR Code */}
+              {isMobile && getAppStoreLink() && (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="h-4 w-4 text-green-600" />
+                    <p className="text-xs font-medium text-green-800">
+                      Don't have the Venmo app?
+                    </p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center space-y-2">
+                    <QRCode 
+                      value={getAppStoreLink()!} 
+                      size={100}
+                      level="M"
+                      includeMargin={true}
+                    />
+                    <p className="text-xs text-green-600 text-center">
+                      Scan to download Venmo from your app store
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
