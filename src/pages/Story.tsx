@@ -19,6 +19,8 @@ import { getStoryPhotos } from "@/utils/storyUtils";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAudio } from "@/components/SuperAudio";
 import { FontSizeControls } from "@/components/FontSizeControls";
+import { FontButton } from "@/components/FontButton";
+import { SuperFont } from "@/components/SuperFont";
 
 interface StoryData {
   id: string;
@@ -54,6 +56,7 @@ const Story = () => {
   const [error, setError] = useState<string | null>(null);
   const [currentVote, setCurrentVote] = useState<'thumbs_up' | 'thumbs_down' | 'ok' | null>(null);
   const [showSuperAudio, setShowSuperAudio] = useState(false);
+  const [showSuperFont, setShowSuperFont] = useState(false);
   const [fontSize, setFontSize] = useState(18);
   const navigate = useNavigate();
 
@@ -202,14 +205,15 @@ const Story = () => {
               </div>
             )}
 
-            {/* Font Size and Audio Controls positioned above story box */}
+            {/* Font and Audio Controls positioned above story box */}
             <div className="relative">
-              {/* Font Size Controls - positioned on left */}
-              <div className="absolute top-0 left-0 -mt-8 z-10">
-                <FontSizeControls
-                  fontSize={fontSize}
-                  onIncrease={increaseFontSize}
-                  onDecrease={decreaseFontSize}
+              {/* Font Button - positioned on left side of top border */}
+              <div className="absolute top-0 left-4 -mt-5 z-10">
+                <FontButton
+                  onClick={() => {
+                    console.log('Font button clicked for story:', story.story_code);
+                    setShowSuperFont(true);
+                  }}
                 />
               </div>
               
@@ -258,6 +262,16 @@ const Story = () => {
           author={story.author}
           voiceName={story.ai_voice_name}
           audioUrl={story.audio_url}
+        />
+        
+        {/* SuperFont Player */}
+        <SuperFont
+          isOpen={showSuperFont}
+          onClose={() => setShowSuperFont(false)}
+          title={story.title}
+          author={story.author}
+          fontSize={fontSize}
+          onFontSizeChange={setFontSize}
         />
         
         <CookieFreeFooter />
