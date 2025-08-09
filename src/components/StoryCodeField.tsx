@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -44,11 +44,19 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [foundStory, setFoundStory] = useState<Story | null>(null);
   const [currentCode, setCurrentCode] = useState('');
+  const [lastLookupCode, setLastLookupCode] = useState(''); // Track last looked up code
   const { lookupStoryByCode } = useStoryCodeLookup();
   
-  const handleStoryCodeLookup = async (storyCode: string) => {
+  const handleStoryCodeLookup = useCallback(async (storyCode: string) => {
     if (!storyCode?.trim()) return;
     
+    // Prevent duplicate lookups for the same code
+    if (storyCode === lastLookupCode) {
+      console.log('Skipping duplicate lookup for code:', storyCode);
+      return;
+    }
+    
+    setLastLookupCode(storyCode);
     console.log('Looking up story code:', storyCode);
     const result = await lookupStoryByCode(storyCode, true);
     
@@ -73,7 +81,7 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
       setCurrentCode(storyCode);
       setDialogOpen(true);
     }
-  };
+  }, [lookupStoryByCode, currentStoryId, lastLookupCode]);
 
   const handleEditExisting = () => {
     if (foundStory && onStoryFound) {
@@ -85,12 +93,16 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
 
   const handleYes = () => {
     // For new content - just continue with current code and close dialog
+    // Reset the last lookup code so future changes can trigger lookups again
+    setLastLookupCode('');
     setDialogOpen(false);
     setFoundStory(null);
   };
 
   const handleNo = () => {
     // Clear the story code and close dialog
+    // Reset the last lookup code
+    setLastLookupCode('');
     if (onChange) {
       onChange('');
     }
@@ -121,9 +133,6 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
                     onBlur={(e) => {
                       field.onBlur();
                       handleStoryCodeLookup(e.target.value);
-                    }}
-                    onMouseLeave={(e) => {
-                      handleStoryCodeLookup((e.target as HTMLInputElement).value);
                     }}
                   />
                 </FormControl>
@@ -165,12 +174,6 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
             handleStoryCodeLookup(e.target.value);
             if (onCodeLookup) {
               onCodeLookup(e.target.value);
-            }
-          }}
-          onMouseLeave={(e) => {
-            handleStoryCodeLookup((e.target as HTMLInputElement).value);
-            if (onCodeLookup) {
-              onCodeLookup((e.target as HTMLInputElement).value);
             }
           }}
         />
