@@ -237,6 +237,7 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                           width: '55px',
                           height: '55px',
                           objectFit: 'contain',
+                          objectPosition: 'center',
                           cursor: isMinSize ? 'not-allowed' : 'pointer',
                           opacity: isMinSize ? 0.5 : 1
                         }}
@@ -257,6 +258,7 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                           width: '55px',
                           height: '55px',
                           objectFit: 'contain',
+                          objectPosition: 'center',
                           cursor: isMaxSize ? 'not-allowed' : 'pointer',
                           opacity: isMaxSize ? 0.5 : 1
                         }}
