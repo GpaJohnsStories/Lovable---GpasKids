@@ -431,6 +431,8 @@ const AdminHeaderBanner = () => {
 
               // Special handling for Reference button as square icon button
               if (button.name === 'Reference') {
+                const { iconUrl: refIconUrl, isLoading: refLoading, error: refError } = useCachedIcon('ICO-LTB.gif');
+                
                 const referenceButton = (
                   <div 
                     key={button.name}
@@ -447,7 +449,18 @@ const AdminHeaderBanner = () => {
                           minHeight: '55px'
                         }}
                       >
-                        <span className="text-sm font-bold text-white">REF</span>
+                        {refLoading && (
+                          <div className="w-10 h-10 bg-orange-300 animate-pulse rounded" />
+                        )}
+                        {(refError || !refIconUrl) && !refLoading ? (
+                          <span className="text-sm font-bold text-white">REF</span>
+                        ) : refIconUrl && !refLoading && !refError ? (
+                          <img 
+                            src={refIconUrl}
+                            alt="Reference"
+                            className="w-10 h-10 object-contain"
+                          />
+                        ) : null}
                       </div>
                     </Link>
                     {hoveredButton === button.name && (
