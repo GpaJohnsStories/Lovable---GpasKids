@@ -3,7 +3,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 import { WebTextBox } from "@/components/WebTextBox";
-import DonationForm from "@/components/DonationForm";
+
 
 const HelpGpa = () => {
   return (
@@ -26,8 +26,6 @@ const HelpGpa = () => {
               title="Help Grandpa John"
             />
             
-            {/* Donation Form Section */}
-            <DonationForm />
           </div>
         </main>
 
