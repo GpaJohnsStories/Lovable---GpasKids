@@ -151,11 +151,18 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         className={`rounded-lg border-4 p-6 ${backgroundColor}`}
         style={{ borderColor }}
       >
-        {/* Title at the top */}
-        <div className="mb-6">
+        {/* Title and Audio Button Row */}
+        <div className="flex justify-between items-start mb-6">
           <h3 className="text-2xl sm:text-3xl font-bold text-amber-800">
             {webtext?.title || title}
           </h3>
+          
+          {/* Audio Button in top right */}
+          {webtext?.audio_url && (
+            <div className="flex-shrink-0">
+              <AudioButton code={webtextCode} onClick={() => setShowSuperAudio(true)} />
+            </div>
+          )}
         </div>
 
         {/* Photo and Content Section with true text wrapping */}
@@ -192,20 +199,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           <div className="clear-both"></div>
         </div>
 
-        {/* Audio Button and Webtext Code Row */}
-        <div className="flex justify-between items-center mt-6">
-          {/* Left: Audio Button - only show if audio is available */}
-          {webtext?.audio_url && (
-            <div className="flex-shrink-0">
-              <AudioButton code={webtextCode} onClick={() => setShowSuperAudio(true)} />
-            </div>
-          )}
-          
-          {/* Right: Webtext Code */}
-          <div className="flex justify-end">
-            <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
-              {webtextCode}
-            </div>
+        {/* Bottom Right: Webtext Code */}
+        <div className="flex justify-end mt-6">
+          <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
+            {webtextCode}
           </div>
         </div>
       </div>
