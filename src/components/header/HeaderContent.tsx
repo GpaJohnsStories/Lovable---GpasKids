@@ -167,7 +167,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                 </button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Click to help support Grandpa John's stories</p>
+                <p>Click to Help Grandpa John</p>
               </TooltipContent>
             </Tooltip>
             
