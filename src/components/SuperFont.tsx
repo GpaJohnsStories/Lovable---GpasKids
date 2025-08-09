@@ -220,15 +220,13 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                     <div style={{
                       width: '55px',
                       height: '55px',
-                      background: isMinSize ? 'linear-gradient(145deg, #9ca3af, #6b7280)' : 'linear-gradient(145deg, #a16207, #92400e)',
+                      background: 'transparent',
                       borderRadius: '12px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
                       cursor: isMinSize ? 'not-allowed' : 'pointer',
                       transition: 'all 0.15s ease',
-                      border: '1px solid rgba(255,255,255,0.2)',
                       transform: 'scale(1)',
                       opacity: isMinSize ? 0.5 : 1,
                       margin: '0 auto'
@@ -255,24 +253,23 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                           style={{
                             width: '55px',
                             height: '55px',
-                            objectFit: 'contain'
+                            objectFit: 'contain',
+                            pointerEvents: 'none'
                           }}
                         />
                      </div>
-                  </td>
+                   </td>
                   <td width={122} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 12px 0', textAlign: 'center'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
-                      background: isMaxSize ? 'linear-gradient(145deg, #9ca3af, #6b7280)' : 'linear-gradient(145deg, #a16207, #92400e)',
+                      background: 'transparent',
                       borderRadius: '12px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
                       cursor: isMaxSize ? 'not-allowed' : 'pointer',
                       transition: 'all 0.15s ease',
-                      border: '1px solid rgba(255,255,255,0.2)',
                       transform: 'scale(1)',
                       opacity: isMaxSize ? 0.5 : 1,
                       margin: '0 auto'
@@ -299,11 +296,12 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                           style={{
                             width: '55px',
                             height: '55px',
-                            objectFit: 'contain'
+                            objectFit: 'contain',
+                            pointerEvents: 'none'
                           }}
                         />
                      </div>
-                  </td>
+                   </td>
                 </tr>
               </tbody>
               </table>
