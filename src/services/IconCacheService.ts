@@ -217,6 +217,20 @@ class IconCacheService {
   }
 
   /**
+   * Clear specific icons from cache (useful for updated icons)
+   */
+  clearSpecificIcons(iconPaths: string[]): void {
+    iconPaths.forEach(iconPath => {
+      const cached = this.cache.get(iconPath);
+      if (cached) {
+        URL.revokeObjectURL(cached.url);
+        this.cache.delete(iconPath);
+        console.log(`🗑️ Cleared cached icon: ${iconPath}`);
+      }
+    });
+  }
+
+  /**
    * Get cache statistics
    */
   getCacheStats() {

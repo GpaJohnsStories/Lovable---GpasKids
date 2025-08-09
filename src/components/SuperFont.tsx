@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { supabase } from '@/integrations/supabase/client';
+import { iconCacheService } from '@/services/IconCacheService';
 
 // Font constant from tailwind.config.ts font-fun definition
 const FONT_FUN = 'Kalam, "Comic Sans MS", Arial, sans-serif';
@@ -76,6 +77,11 @@ export const SuperFont: React.FC<SuperFontProps> = ({
       };
     }
   }, [isDragging, dragStart]);
+
+  // Clear cache for chocolate cookie icons when component mounts to ensure fresh icons
+  React.useEffect(() => {
+    iconCacheService.clearSpecificIcons(['ICO-CCM.png', 'ICO-CCP.png']);
+  }, []);
 
   return (
     <DialogPrimitive.Root open={isOpen} onOpenChange={onClose}>
