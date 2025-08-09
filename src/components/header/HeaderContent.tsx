@@ -148,13 +148,13 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
               <TooltipTrigger asChild>
                 <button 
                   onClick={handleHgjClick}
-                  className="group relative z-10 bg-transparent border-0 p-0 m-0 cursor-pointer"
+                  className="bg-transparent border-0 p-0 m-0 cursor-pointer hover:opacity-80 transition-opacity duration-200"
                 >
                   {hgjLoading && (
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-transparent animate-pulse group-hover:hidden" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-transparent animate-pulse" />
                   )}
                   {(hgjError || !hgjIconUrl) && !hgjLoading ? (
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-transparent flex items-center justify-center text-orange-800 text-xs font-bold group-hover:hidden">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-transparent flex items-center justify-center text-orange-800 text-xs font-bold">
                       HGJ
                     </div>
                   ) : hgjIconUrl && !hgjLoading && !hgjError ? (
@@ -164,11 +164,6 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                       className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain"
                     />
                   ) : null}
-                  
-                  {/* Help text - shown on hover */}
-                  <div className="hidden group-hover:flex items-center justify-center h-full text-white text-xs sm:text-sm md:text-base font-bold text-center px-1">
-                    Help Grandpa John
-                  </div>
                 </button>
               </TooltipTrigger>
               <TooltipContent>
