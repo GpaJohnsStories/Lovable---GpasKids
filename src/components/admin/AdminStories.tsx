@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import AdminStoriesTable from "./AdminStoriesTable";
 import AuthorBiosTable from "./AuthorBiosTable";
@@ -10,6 +10,7 @@ const AdminStories = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const view = searchParams.get('view');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleCreateStory = () => {
     console.log('🎯 AdminStories: Creating new story - navigating to unified story system');
@@ -55,6 +56,8 @@ const AdminStories = () => {
           onCreateStory={handleCreateStory}
           showActions={!isViewer}
           onEditBio={handleEditBio}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
         />
       )}
     </div>

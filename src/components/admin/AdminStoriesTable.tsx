@@ -1,8 +1,10 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
-import { BookOpen } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { BookOpen, Search, X } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -32,19 +34,40 @@ interface AdminStoriesTableProps {
   onCreateStory: () => void;
   showActions?: boolean;
   onEditBio?: (authorName: string) => void;
+  searchTerm?: string;
+  onSearchChange?: (value: string) => void;
 }
 
 const AdminStoriesTable = ({ 
   onEditStory, 
   onCreateStory,
   showActions = true,
-  onEditBio
+  onEditBio,
+  searchTerm = '',
+  onSearchChange
 }: AdminStoriesTableProps) => {
   const [sortField, setSortField] = useState<SortField>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [publishedFilter, setPublishedFilter] = useState<PublishedFilter>('all');
   const [groupByAuthor, setGroupByAuthor] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+
+  // Sync local search term with parent prop
+  useEffect(() => {
+    setLocalSearchTerm(searchTerm);
+  }, [searchTerm]);
+
+  // Debounced search effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (onSearchChange) {
+        onSearchChange(localSearchTerm);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [localSearchTerm, onSearchChange]);
 
   const { data: stories, isLoading, refetch } = useQuery({
     queryKey: ['admin-stories', sortField, sortDirection, publishedFilter, categoryFilter],
@@ -71,6 +94,22 @@ const AdminStoriesTable = ({
       return data;
     },
   });
+
+  // Filter stories based on search term
+  const filteredStories = React.useMemo(() => {
+    if (!stories || !searchTerm.trim()) return stories;
+    
+    const searchLower = searchTerm.toLowerCase();
+    return stories.filter(story => 
+      story.title?.toLowerCase().includes(searchLower) ||
+      story.author?.toLowerCase().includes(searchLower) ||
+      story.content?.toLowerCase().includes(searchLower) ||
+      story.story_code?.toLowerCase().includes(searchLower) ||
+      story.tagline?.toLowerCase().includes(searchLower) ||
+      story.excerpt?.toLowerCase().includes(searchLower) ||
+      story.category?.toLowerCase().includes(searchLower)
+    );
+  }, [stories, searchTerm]);
 
   const handleSort = (field: SortField) => {
     // Exit group by author view when sorting by other fields
@@ -127,9 +166,9 @@ const AdminStoriesTable = ({
 
   // Group stories by author when needed
   const groupedStories = React.useMemo(() => {
-    if (!groupByAuthor || !stories) return null;
+    if (!groupByAuthor || !filteredStories) return null;
     
-    const grouped = stories.reduce((acc: Record<string, GroupedStory[]>, story) => {
+    const grouped = filteredStories.reduce((acc: Record<string, GroupedStory[]>, story) => {
       const author = story.author;
       if (!acc[author]) {
         acc[author] = [];
@@ -144,11 +183,45 @@ const AdminStoriesTable = ({
     });
     
     return grouped;
-  }, [stories, groupByAuthor]);
+  }, [filteredStories, groupByAuthor]);
+
+  const handleClearSearch = () => {
+    setLocalSearchTerm('');
+    if (onSearchChange) {
+      onSearchChange('');
+    }
+  };
 
   return (
     <Card>
-      <CardContent>
+      <CardContent className="p-6">
+        {/* Search Input */}
+        <div className="mb-6">
+          <div className="relative max-w-md mx-auto">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Input
+              type="text"
+              placeholder="Search stories by title, content, author, or keywords..."
+              value={localSearchTerm}
+              onChange={(e) => setLocalSearchTerm(e.target.value)}
+              className="pl-10 pr-10 py-2 text-sm border-2 focus:border-orange-400 rounded-lg placeholder:font-bold"
+              style={{ 
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+                borderColor: '#9c441a'
+              }}
+            />
+            {searchTerm && (
+              <Button
+                onClick={handleClearSearch}
+                variant="ghost"
+                size="sm"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+        </div>
         <div className="relative">
           {isLoading ? (
             <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
@@ -226,7 +299,7 @@ const AdminStoriesTable = ({
               <div className="max-h-[calc(100vh-140px)] overflow-y-auto">
                 <Table className="table-fixed w-full">
                   <TableBody>
-                    {stories?.map((story) => (
+                    {filteredStories?.map((story) => (
                       <StoriesTableRow
                         key={story.id}
                         story={story}
