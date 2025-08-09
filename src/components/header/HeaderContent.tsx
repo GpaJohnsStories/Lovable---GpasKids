@@ -161,7 +161,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                     <img 
                       src={hgjIconUrl}
                       alt="Click to Help Grandpa John"
-                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain group-hover:scale-110 group-active:scale-95 transition-transform duration-200"
+                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain"
                     />
                   ) : null}
                   
