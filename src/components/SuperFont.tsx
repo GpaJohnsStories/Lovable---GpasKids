@@ -230,7 +230,7 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                       textAlign: 'center'
                     }}>
                       <img 
-                        src="/lovable-uploads/d05b3b1c-686e-4f7b-9844-38a790c9b067.png"
+                        src="/lovable-uploads/ICO-CCM.png"
                         alt="Decrease font size"
                         style={{
                           width: '55px',
@@ -250,7 +250,7 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                       textAlign: 'center'
                     }}>
                       <img 
-                        src="/lovable-uploads/c123cf14-65c8-44b5-9dc1-10d4e5636d1a.png"
+                        src="/lovable-uploads/ICO-CCP.png"
                         alt="Increase font size"
                         style={{
                           width: '55px',
