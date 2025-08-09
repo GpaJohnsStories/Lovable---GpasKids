@@ -13,8 +13,8 @@ export const FontSizeControls: React.FC<FontSizeControlsProps> = ({
   onDecrease, 
   className = "" 
 }) => {
-  const minusPlusIconUrl = "/lovable-uploads/ICO-CCM.png";
-  const plusIconUrl = "/lovable-uploads/ICO-CCP.png";
+  const minusPlusIconUrl = "/lovable-uploads/ICO-CCM.jpg";
+  const plusIconUrl = "/lovable-uploads/ICO-CCP.jpg";
   
   const isMinSize = fontSize <= 9;
   const isMaxSize = fontSize >= 30;
