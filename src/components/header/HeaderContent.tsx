@@ -22,7 +22,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('ICO-HL2.gif');
   const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('ICO-MU2.gif');
   const { iconUrl: safeForKidsIconUrl, isLoading: sfkLoading, error: sfkError } = useCachedIcon('ICO-SFK.gif');
-  const { iconUrl: hgjIconUrl, isLoading: hgjLoading, error: hgjError } = useCachedIcon('ICO-HGJ.png');
+  const { iconUrl: hgjIconUrl, isLoading: hgjLoading, error: hgjError } = useCachedIcon('ICO-HGJ.gif');
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -148,7 +148,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
               <TooltipTrigger asChild>
                 <button 
                   onClick={handleHgjClick}
-                  className="group relative z-10 bg-transparent border-0 p-0 m-0 cursor-pointer"
+                  className="group relative z-10 bg-gradient-to-br from-orange-500/80 to-orange-600/60 hover:from-orange-400/80 hover:to-orange-500/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 min-w-12 sm:min-w-14 md:min-w-16 flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-orange-500 hover:border-orange-400 transform hover:scale-105 hover:-translate-y-1 transition-all duration-200 cursor-pointer active:scale-95 active:translate-y-1"
                 >
                   {hgjLoading && (
                     <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-transparent animate-pulse group-hover:hidden" />
