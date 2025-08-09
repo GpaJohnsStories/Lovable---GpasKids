@@ -76,8 +76,14 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       return { backgroundColor: '#DC2626', color: '#FFFF00' };
     }
     
+    // Create dates and truncate to minutes (ignore seconds)
+    const audioDateTime = new Date(audioDate);
+    const updateDateTime = new Date(updateDate);
+    audioDateTime.setSeconds(0, 0); // Remove seconds and milliseconds
+    updateDateTime.setSeconds(0, 0); // Remove seconds and milliseconds
+    
     // If audio is older than last update, it's outdated
-    if (new Date(audioDate) < new Date(updateDate)) {
+    if (audioDateTime < updateDateTime) {
       return { backgroundColor: '#DC2626', color: '#FFFF00' };
     }
     
