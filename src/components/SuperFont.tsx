@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { supabase } from '@/integrations/supabase/client';
 
 // Font constant from tailwind.config.ts font-fun definition
 const FONT_FUN = 'Kalam, "Comic Sans MS", Arial, sans-serif';
@@ -230,7 +231,7 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                       textAlign: 'center'
                     }}>
                       <img 
-                        src="/lovable-uploads/ICO-CCM.png"
+                        src={supabase.storage.from('icons').getPublicUrl('ICO-CCM.png').data.publicUrl}
                         alt="Decrease font size"
                         style={{
                           width: '55px',
@@ -250,7 +251,7 @@ export const SuperFont: React.FC<SuperFontProps> = ({
                       textAlign: 'center'
                     }}>
                       <img 
-                        src="/lovable-uploads/ICO-CCP.png"
+                        src={supabase.storage.from('icons').getPublicUrl('ICO-CCP.png').data.publicUrl}
                         alt="Increase font size"
                         style={{
                           width: '55px',
