@@ -25,7 +25,7 @@ const StoryPhotosGallery = ({ photos, storyTitle }: StoryPhotosGalleryProps) => 
           {photos.map((photo, index) => (
             <Tooltip key={index}>
               <TooltipTrigger asChild>
-                <div className="overflow-hidden rounded-lg border border-orange-200 shadow-sm cursor-pointer">
+                <div className="overflow-hidden rounded-lg border-2 border-[#9c441a] shadow-sm cursor-pointer">
                   <img
                     src={photo.url}
                     alt={photo.alt}
