@@ -3,6 +3,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 import { WebTextBox } from "@/components/WebTextBox";
+import VenmoDonationForm from "@/components/VenmoDonationForm";
 
 
 const HelpGpa = () => {
@@ -25,6 +26,9 @@ const HelpGpa = () => {
               backgroundColor="bg-blue-50/70"
               title="Help Grandpa John"
             />
+            
+            {/* Donation Form Section */}
+            <VenmoDonationForm />
             
           </div>
         </main>

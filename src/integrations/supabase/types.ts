@@ -187,6 +187,36 @@ export type Database = {
         }
         Relationships: []
       }
+      donations_monthly: {
+        Row: {
+          created_at: string
+          donation_count: number
+          id: string
+          month: number
+          total_amount: number
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          created_at?: string
+          donation_count?: number
+          id?: string
+          month: number
+          total_amount?: number
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          created_at?: string
+          donation_count?: number
+          id?: string
+          month?: number
+          total_amount?: number
+          updated_at?: string
+          year?: number
+        }
+        Relationships: []
+      }
       icon_library: {
         Row: {
           created_at: string
