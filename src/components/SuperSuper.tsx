@@ -168,6 +168,15 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
   return (
     <DialogPrimitive.Root open={isOpen} onOpenChange={onClose}>
       <DialogPrimitive.Portal>
+        {/* Custom overlay that allows specific clicks to pass through */}
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 49,
+            pointerEvents: 'none', // Allow clicks to pass through
+          }}
+        />
         <DialogPrimitive.Content 
           ref={dialogRef}
           style={{
@@ -199,14 +208,6 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
             color: '#000000',
           }}
           onMouseDown={handleMouseDown}
-          onInteractOutside={(e) => {
-            // Allow interactions with menu button and scroll-to-top button
-            const target = e.target as Element;
-            const hasPassthrough = target.closest('[data-allow-supersuper-passthrough="true"]');
-            if (!hasPassthrough) {
-              e.preventDefault();
-            }
-          }}
         >
         
         {/* Close button positioned at bottom after font size buttons */}
