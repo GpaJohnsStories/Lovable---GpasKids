@@ -199,7 +199,14 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
             color: '#000000',
           }}
           onMouseDown={handleMouseDown}
-          onInteractOutside={(e) => e.preventDefault()}
+          onInteractOutside={(e) => {
+            // Allow interactions with menu button and scroll-to-top button
+            const target = e.target as Element;
+            const hasPassthrough = target.closest('[data-allow-supersuper-passthrough="true"]');
+            if (!hasPassthrough) {
+              e.preventDefault();
+            }
+          }}
         >
         
         {/* Close button positioned at bottom after font size buttons */}
