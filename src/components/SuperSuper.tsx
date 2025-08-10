@@ -646,7 +646,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                    color: 'white',
                    borderRadius: '8px',
                    fontWeight: 'bold',
-                    fontSize: '15px',
+                    fontSize: '17px',
                    fontFamily: FONT_FUN,
                    cursor: 'pointer',
                    transition: 'background-color 0.2s ease',
