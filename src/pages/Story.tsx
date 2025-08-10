@@ -17,7 +17,7 @@ import StoryVideoPlayer from "@/components/StoryVideoPlayer";
 import StoryVotingSection from "@/components/StoryVotingSection";
 import { getStoryPhotos } from "@/utils/storyUtils";
 import { AudioButton } from "@/components/AudioButton";
-import { SuperSuper } from "@/components/SuperSuper";
+import { SuperAV } from "@/components/SuperAV";
 
 
 interface StoryData {
@@ -53,7 +53,7 @@ const Story = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentVote, setCurrentVote] = useState<'thumbs_up' | 'thumbs_down' | 'ok' | null>(null);
-  const [showSuperSuper, setShowSuperSuper] = useState(false);
+  const [showSuperAV, setShowSuperAV] = useState(false);
   
   const [fontSize, setFontSize] = useState(18);
   const navigate = useNavigate();
@@ -205,7 +205,7 @@ const Story = () => {
                   code={story.story_code}
                   onClick={() => {
                     console.log('Audio button clicked for story:', story.story_code);
-                    setShowSuperSuper(true);
+                    setShowSuperAV(true);
                   }}
                 />
               </div>
@@ -236,10 +236,10 @@ const Story = () => {
           />
         </div>
         
-        {/* SuperSuper Player */}
-        <SuperSuper
-          isOpen={showSuperSuper}
-          onClose={() => setShowSuperSuper(false)}
+        {/* SuperAV Player */}
+        <SuperAV
+          isOpen={showSuperAV}
+          onClose={() => setShowSuperAV(false)}
           title={story.title}
           author={story.author}
           voiceName={story.ai_voice_name}

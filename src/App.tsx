@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { IconCacheProvider } from "@/contexts/IconCacheContext";
 import { TooltipProvider as CustomTooltipProvider } from "@/contexts/TooltipContext";
-import { SuperSuperProvider } from '@/contexts/SuperSuperContext';
+import { SuperAVProvider } from '@/contexts/SuperAVContext';
 import { HelmetProvider } from 'react-helmet-async';
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -79,7 +79,7 @@ function App() {
                     <Toaster />
                     <ShadcnToaster />
                   <BrowserRouter>
-                    <SuperSuperProvider>
+                    <SuperAVProvider>
                       <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
@@ -127,7 +127,7 @@ function App() {
                     </Routes>
                    </ConditionalContentProtection>
                  </GlobalHelpProvider>
-                   </SuperSuperProvider>
+                   </SuperAVProvider>
                </BrowserRouter>
                  </CustomTooltipProvider>
              </IconCacheProvider>

@@ -2,14 +2,14 @@
 import React, { useState, useRef, useEffect, useId } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RefreshCw } from "lucide-react";
-import { useSuperSuperContext } from '@/contexts/SuperSuperContext';
+import { useSuperAVContext } from '@/contexts/SuperAVContext';
 
-// SuperSuper component - Unified audio and font controls
+// SuperAV component - Unified audio and font controls
 
 // Font constant from tailwind.config.ts font-fun definition
 const FONT_FUN = 'Kalam, "Comic Sans MS", Arial, sans-serif';
 
-interface SuperSuperProps {
+interface SuperAVProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
@@ -21,7 +21,7 @@ interface SuperSuperProps {
   onFontSizeChange?: (newSize: number) => void;
 }
 
-export const SuperSuper: React.FC<SuperSuperProps> = ({
+export const SuperAV: React.FC<SuperAVProps> = ({
   isOpen,
   onClose,
   title,
@@ -33,7 +33,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
   onFontSizeChange,
 }) => {
   const instanceId = useId();
-  const superSuperContext = useSuperSuperContext();
+  const superAVContext = useSuperAVContext();
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -45,15 +45,15 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
   // Register/unregister with context when isOpen changes
   useEffect(() => {
     if (isOpen) {
-      superSuperContext.registerInstance(instanceId, onClose);
+      superAVContext.registerInstance(instanceId, onClose);
     } else {
-      superSuperContext.unregisterInstance(instanceId);
+      superAVContext.unregisterInstance(instanceId);
     }
 
     return () => {
-      superSuperContext.unregisterInstance(instanceId);
+      superAVContext.unregisterInstance(instanceId);
     };
-  }, [isOpen, instanceId, onClose, superSuperContext]);
+  }, [isOpen, instanceId, onClose, superAVContext]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -173,18 +173,18 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
       const target = e.target as Element;
       const dialogElement = dialogRef.current;
       
-      // Check if click is inside SuperSuper dialog
+      // Check if click is inside SuperAV dialog
       if (dialogElement && dialogElement.contains(target)) {
-        return; // Let SuperSuper handle its own clicks
+        return; // Let SuperAV handle its own clicks
       }
       
       // Check if click is on a passthrough element
-      const passthroughElement = target.closest('[data-allow-supersuper-passthrough="true"]');
+      const passthroughElement = target.closest('[data-allow-superav-passthrough="true"]');
       
       if (passthroughElement) {
         console.log('🎯 Passthrough element clicked:', passthroughElement);
         
-        // Close SuperSuper
+        // Close SuperAV
         onClose();
         
         // Handle specific actions based on aria-label
@@ -230,7 +230,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
             }}
           />
-          {/* SuperSuper Dialog */}
+          {/* SuperAV Dialog */}
           <div 
             ref={dialogRef}
             style={{

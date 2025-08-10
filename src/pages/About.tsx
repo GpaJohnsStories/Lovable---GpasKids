@@ -3,7 +3,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { SuperSuper } from "@/components/SuperSuper";
+import { SuperAV } from "@/components/SuperAV";
 import { DeployedContent } from "@/components/DeployedContent";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
@@ -13,7 +13,7 @@ import { supabase } from '@/integrations/supabase/client';
 const About = () => {
   const { iconUrl: ab5IconUrl } = useCachedIcon('ICZ-AB5.png');
   const { lookupStoryByCode } = useStoryCodeLookup();
-  const [superSuperOpen, setSuperSuperOpen] = useState(false);
+  const [superAVOpen, setSuperAVOpen] = useState(false);
   const [fontSize, setFontSize] = useState(16);
   const [currentAudioData, setCurrentAudioData] = useState<{
     content: string;
@@ -72,7 +72,7 @@ const About = () => {
         ai_voice_name: story.ai_voice_name,
         audio_duration: story.audio_duration_seconds
       });
-        setSuperSuperOpen(true);
+        setSuperAVOpen(true);
     } else {
       // Fallback content for each section
       const fallbackContent: Record<string, {content: string, title: string}> = {
@@ -99,7 +99,7 @@ const About = () => {
           ai_voice_name: undefined,
           audio_duration: undefined
         });
-        setSuperSuperOpen(true);
+        setSuperAVOpen(true);
       }
     }
   };
@@ -422,12 +422,12 @@ const About = () => {
         <CookieFreeFooter />
         <ScrollToTop />
         
-        {/* SuperSuper Modal */}
+        {/* SuperAV Modal */}
         {currentAudioData && (
-          <SuperSuper
-            isOpen={superSuperOpen}
+          <SuperAV
+            isOpen={superAVOpen}
             onClose={() => {
-              setSuperSuperOpen(false);
+              setSuperAVOpen(false);
               setCurrentAudioData(null);
             }}
             title={currentAudioData.title}

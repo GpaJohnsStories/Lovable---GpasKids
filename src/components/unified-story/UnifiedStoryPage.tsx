@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import UnifiedStoryDashboard from './UnifiedStoryDashboard';
 import { AudioButton } from '@/components/AudioButton';
-import { SuperSuper } from '@/components/SuperSuper';
+import { SuperAV } from '@/components/SuperAV';
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useAdminSession } from '@/hooks/useAdminSession';
@@ -18,7 +18,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const storyId = mode === 'update' ? id : undefined;
-  const [showSuperSuper, setShowSuperSuper] = useState(false);
+  const [showSuperAV, setShowSuperAV] = useState(false);
   const [fontSize, setFontSize] = useState(16);
 
   console.log('🎯 UnifiedStoryPage: Rendering with mode:', mode);
@@ -63,7 +63,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   };
 
   const toggleAudioControls = () => {
-    setShowSuperSuper(!showSuperSuper);
+    setShowSuperAV(!showSuperAV);
   };
 
   // Show error if we're in update mode but no ID is provided
@@ -128,11 +128,11 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
         />
       </div>
       
-      {/* SuperSuper Player */}
-      {showSuperSuper && (
-        <SuperSuper
-          isOpen={showSuperSuper}
-          onClose={() => setShowSuperSuper(false)}
+      {/* SuperAV Player */}
+      {showSuperAV && (
+        <SuperAV
+          isOpen={showSuperAV}
+          onClose={() => setShowSuperAV(false)}
           title={formData.title || 'Story'}
           author={formData.author}
           voiceName={formData.ai_voice_name}

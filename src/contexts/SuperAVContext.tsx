@@ -1,22 +1,22 @@
 import React, { createContext, useContext, useRef, useCallback } from 'react';
 
-interface SuperSuperContextType {
+interface SuperAVContextType {
   registerInstance: (id: string, closeHandler: () => void) => void;
   unregisterInstance: (id: string) => void;
   closeAllInstances: () => void;
 }
 
-const SuperSuperContext = createContext<SuperSuperContextType | null>(null);
+const SuperAVContext = createContext<SuperAVContextType | null>(null);
 
-export const useSuperSuperContext = () => {
-  const context = useContext(SuperSuperContext);
+export const useSuperAVContext = () => {
+  const context = useContext(SuperAVContext);
   if (!context) {
-    throw new Error('useSuperSuperContext must be used within a SuperSuperProvider');
+    throw new Error('useSuperAVContext must be used within a SuperAVProvider');
   }
   return context;
 };
 
-export const SuperSuperProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const SuperAVProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const instancesRef = useRef<Map<string, () => void>>(new Map());
 
   const registerInstance = useCallback((id: string, closeHandler: () => void) => {
@@ -41,8 +41,8 @@ export const SuperSuperProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   };
 
   return (
-    <SuperSuperContext.Provider value={value}>
+    <SuperAVContext.Provider value={value}>
       {children}
-    </SuperSuperContext.Provider>
+    </SuperAVContext.Provider>
   );
 };

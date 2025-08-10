@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { SuperSuper } from '@/components/SuperSuper';
+import { SuperAV } from '@/components/SuperAV';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface StoryData {
@@ -47,7 +47,7 @@ export const DeployedContent = ({
   const [content, setContent] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showSuperSuper, setShowSuperSuper] = useState(false);
+  const [showSuperAV, setShowSuperAV] = useState(false);
 
   useEffect(() => {
     const fetchStoryContent = async () => {
@@ -111,15 +111,15 @@ export const DeployedContent = ({
     return (
       <div className="flex-shrink-0">
         <button
-          onClick={() => setShowSuperSuper(true)}
+          onClick={() => setShowSuperAV(true)}
           className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
         >
           Play Audio
         </button>
-        {showSuperSuper && (
-          <SuperSuper
-            isOpen={showSuperSuper}
-            onClose={() => setShowSuperSuper(false)}
+        {showSuperAV && (
+          <SuperAV
+            isOpen={showSuperAV}
+            onClose={() => setShowSuperAV(false)}
             title={content.title || ''}
             author={content.author || ''}
             voiceName="Default"
@@ -138,15 +138,15 @@ export const DeployedContent = ({
       {includeAudio && (
         <div className="mb-6">
           <button
-            onClick={() => setShowSuperSuper(true)}
+            onClick={() => setShowSuperAV(true)}
             className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
           >
             Play Audio
           </button>
-          {showSuperSuper && (
-            <SuperSuper
-              isOpen={showSuperSuper}
-              onClose={() => setShowSuperSuper(false)}
+          {showSuperAV && (
+            <SuperAV
+              isOpen={showSuperAV}
+              onClose={() => setShowSuperAV(false)}
               title={content.title || ''}
               author={content.author || ''}
               voiceName="Default"

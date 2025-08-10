@@ -3,7 +3,7 @@ import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { getStoryPhotos } from '@/utils/storyUtils';
 import { AudioButton } from '@/components/AudioButton';
 
-import { SuperSuper } from '@/components/SuperSuper';
+import { SuperAV } from '@/components/SuperAV';
 import { ArrowRight } from 'lucide-react';
 
 interface WebTextBoxProps {
@@ -28,7 +28,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [fontSize, setFontSize] = useState(16);
   
   // Audio controls state for peppermint button
-  const [showSuperSuper, setShowSuperSuper] = useState(false);
+  const [showSuperAV, setShowSuperAV] = useState(false);
 
   const getContent = () => {
     if (loading) return "Loading...";
@@ -78,7 +78,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                 Click to listen or change word size
               </div>
               <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
-              <AudioButton code="SYS-WEL" onClick={() => setShowSuperSuper(true)} />
+              <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
             </div>
           )}
 
@@ -130,10 +130,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             </div>
           </div>
           
-          {/* SuperSuper Floating Popup */}
-          <SuperSuper
-            isOpen={showSuperSuper}
-            onClose={() => setShowSuperSuper(false)}
+          {/* SuperAV Floating Popup */}
+          <SuperAV
+            isOpen={showSuperAV}
+            onClose={() => setShowSuperAV(false)}
             title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
             author={webtext?.author}
             voiceName={webtext?.ai_voice_name}
@@ -164,7 +164,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           {/* Audio Button in top right */}
           {webtext?.audio_url && (
             <div className="flex-shrink-0">
-              <AudioButton code={webtextCode} onClick={() => setShowSuperSuper(true)} />
+              <AudioButton code={webtextCode} onClick={() => setShowSuperAV(true)} />
             </div>
           )}
         </div>
@@ -212,10 +212,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         </div>
       </div>
 
-      {/* SuperSuper Floating Popup */}
-      <SuperSuper
-        isOpen={showSuperSuper}
-        onClose={() => setShowSuperSuper(false)}
+      {/* SuperAV Floating Popup */}
+      <SuperAV
+        isOpen={showSuperAV}
+        onClose={() => setShowSuperAV(false)}
         title={webtext?.title || title}
         author={webtext?.author}
         voiceName={webtext?.ai_voice_name}

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { renderCategoryBadge } from "@/utils/categoryUtils";
 import { AudioButton } from "@/components/AudioButton";
-import { SuperSuper } from "@/components/SuperSuper";
+import { SuperAV } from "@/components/SuperAV";
 import AuthorLink from "@/components/AuthorLink";
 
 interface StoryHeaderProps {
@@ -40,7 +40,7 @@ const StoryHeader = ({
   aiVoiceModel,
   allowTextToSpeech = false
 }: StoryHeaderProps) => {
-  const [showSuperSuper, setShowSuperSuper] = useState(false);
+  const [showSuperAV, setShowSuperAV] = useState(false);
   const [fontSize, setFontSize] = useState(16);
 
   return (
@@ -52,7 +52,7 @@ const StoryHeader = ({
           <div className="absolute top-0 right-0 z-5">
             <AudioButton 
               code={storyCode || 'STORY'}
-              onClick={() => setShowSuperSuper(true)}
+              onClick={() => setShowSuperAV(true)}
             />
           </div>
         )}
@@ -97,10 +97,10 @@ const StoryHeader = ({
         )}
       </div>
 
-      {/* SuperSuper Player */}
-      <SuperSuper
-        isOpen={showSuperSuper}
-        onClose={() => setShowSuperSuper(false)}
+      {/* SuperAV Player */}
+      <SuperAV
+        isOpen={showSuperAV}
+        onClose={() => setShowSuperAV(false)}
         title={title}
         author={author}
         voiceName={aiVoiceName}

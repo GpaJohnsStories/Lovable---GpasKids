@@ -13,7 +13,7 @@ import StoryContentRenderer from "@/components/content/StoryContentRenderer";
 import { supabase } from "@/integrations/supabase/client";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
-import { SuperSuper } from "@/components/SuperSuper";
+import { SuperAV } from "@/components/SuperAV";
 
 interface HelpPopupProps {
   isOpen: boolean;
@@ -34,11 +34,11 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   storyData,
   onNavigateToGuide
 }) => {
-  const [isSuperSuperOpen, setIsSuperSuperOpen] = useState(false);
+  const [isSuperAVOpen, setIsSuperAVOpen] = useState(false);
   const [fontSize, setFontSize] = useState(16);
   const [audioCode, setAudioCode] = useState<string>('HELP');
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
-  console.log('🎵 SuperSuper state - isSuperSuperOpen:', isSuperSuperOpen, 'storyCode:', storyData?.story_code, 'audioCode:', audioCode);
+  console.log('🎵 SuperAV state - isSuperAVOpen:', isSuperAVOpen, 'storyCode:', storyData?.story_code, 'audioCode:', audioCode);
   
   // Try to get cached icon for the story code (e.g., HLP-LIB -> HLP-LIB.jpg)
   const storyCode = storyData?.story_code;
@@ -127,8 +127,8 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             <AudioButton 
               code={audioCode} 
               onClick={() => {
-                console.log('🎵 Audio button clicked, opening SuperSuper for code:', audioCode);
-                setIsSuperSuperOpen(true);
+                console.log('🎵 Audio button clicked, opening SuperAV for code:', audioCode);
+                setIsSuperAVOpen(true);
               }} 
             />
           </div>
@@ -186,9 +186,9 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </Button>
         </div>
       </DialogContent>
-      <SuperSuper
-        isOpen={isSuperSuperOpen}
-        onClose={() => setIsSuperSuperOpen(false)}
+      <SuperAV
+        isOpen={isSuperAVOpen}
+        onClose={() => setIsSuperAVOpen(false)}
         title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
         author={storyData?.author}
         voiceName={storyData?.ai_voice_name}
