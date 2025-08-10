@@ -162,7 +162,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
             // Position and size
             position: 'fixed',
             width: '288px',
-            height: '460px',
+            height: '490px',
             left: `calc(10% + ${position.x}px)`,
             top: `calc(5% + ${position.y}px)`,
             zIndex: 50,
