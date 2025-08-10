@@ -11,6 +11,7 @@ import AudioUploadSection from "./AudioUploadSection";
 import SplitViewEditor from "../editor/SplitViewEditor";
 import CopyrightControl from "../story-form/CopyrightControl";
 import StoryCodeField from "../StoryCodeField";
+import XSSTestComponent from "../debug/XSSTestComponent";
 import type { Story } from '@/hooks/useStoryFormState';
 import { formatDate, formatTime } from '@/utils/dateUtils';
 import { useVoiceTesting } from '@/hooks/useVoiceTesting';
@@ -257,6 +258,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   console.log('🎯 UnifiedStoryDashboard: Rendering with formData:', {
     id: formData.id,
     title: formData.title,
+    content: formData.content ? `"${formData.content.substring(0, 100)}..."` : 'undefined/empty',
+    contentLength: formData.content?.length || 0,
     hasAudio: !!formData.audio_url,
     aiVoiceName: formData.ai_voice_name
   });
@@ -917,6 +920,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
         </div>
       </div>
+
+      {/* XSS Debug Test */}
+      <XSSTestComponent />
 
       {/* Story Editor */}
       <Card className="border-2" style={{ borderColor: '#F97316' }}>

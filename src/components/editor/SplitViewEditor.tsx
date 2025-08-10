@@ -20,6 +20,11 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   onSave,
   category
 }) => {
+  console.log('🎯 SplitViewEditor: Rendering with content:', {
+    content: content ? `"${content.substring(0, 100)}..."` : 'undefined/empty',
+    contentLength: content?.length || 0,
+    category
+  });
   const editorRef = useRef<HTMLTextAreaElement>(null);
   const storyContentRef = useRef<HTMLDivElement>(null);
 
