@@ -162,7 +162,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
             // Position and size
             position: 'fixed',
             width: '288px',
-            height: '380px',
+            height: '460px',
             left: `calc(10% + ${position.x}px)`,
             top: `calc(5% + ${position.y}px)`,
             zIndex: 50,
@@ -186,35 +186,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
           onInteractOutside={(e) => e.preventDefault()}
         >
         
-        {/* Close button - Bottom Right Corner */}
-        <button
-          onClick={onClose}
-          style={{
-            all: 'unset',
-            boxSizing: 'border-box',
-            position: 'absolute',
-            bottom: '8px',
-            right: '20px',
-            zIndex: 10,
-            paddingLeft: '12px',
-            paddingRight: '12px',
-            paddingTop: '4px',
-            paddingBottom: '4px',
-            backgroundColor: '#3b82f6',
-            color: 'white',
-            borderRadius: '8px',
-            fontWeight: 'bold',
-            fontSize: '14px',
-            cursor: 'pointer',
-            transition: 'background-color 0.2s ease',
-            border: 'none',
-            outline: 'none',
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#3b82f6'}
-        >
-          Close
-        </button>
+        {/* Close button positioned at bottom after font size buttons */}
 
         {/* Content Area - Full popup */}
         <div style={{
@@ -650,6 +622,42 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                   </tr>
                 </tbody>
              </table>
+             </div>
+             
+             {/* Close button positioned below font size buttons */}
+             <div style={{
+               all: 'unset',
+               boxSizing: 'border-box',
+               display: 'flex',
+               justifyContent: 'center',
+               marginTop: '12px',
+               marginBottom: '8px'
+             }}>
+               <button
+                 onClick={onClose}
+                 style={{
+                   all: 'unset',
+                   boxSizing: 'border-box',
+                   paddingLeft: '20px',
+                   paddingRight: '20px',
+                   paddingTop: '8px',
+                   paddingBottom: '8px',
+                   backgroundColor: '#3b82f6',
+                   color: 'white',
+                   borderRadius: '8px',
+                   fontWeight: 'bold',
+                   fontSize: '14px',
+                   fontFamily: FONT_FUN,
+                   cursor: 'pointer',
+                   transition: 'background-color 0.2s ease',
+                   border: 'none',
+                   outline: 'none',
+                 }}
+                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
+                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#3b82f6'}
+               >
+                 Close
+               </button>
              </div>
            </div>
          </div>
