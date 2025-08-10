@@ -638,8 +638,8 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                  style={{
                    all: 'unset',
                    boxSizing: 'border-box',
-                   paddingLeft: '20px',
-                   paddingRight: '20px',
+                   paddingLeft: '40px',
+                   paddingRight: '40px',
                    paddingTop: '8px',
                    paddingBottom: '8px',
                    backgroundColor: '#3b82f6',
