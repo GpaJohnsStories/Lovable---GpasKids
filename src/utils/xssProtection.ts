@@ -69,37 +69,8 @@ export function createSafeHtml(content: string): { __html: string } {
     return '';
   });
   
-  // For attributes, allow safe style attributes for text formatting
-  sanitized = sanitized.replace(/<([^>]+)\s+([^>]*)>/g, (match, tagContent, attributes) => {
-    if (!attributes) return match;
-    
-    // Keep style attributes that contain safe CSS properties
-    const styleMatch = attributes.match(/style\s*=\s*["']([^"']*)["']/i);
-    if (styleMatch) {
-      const styleValue = styleMatch[1];
-      // Allow common text styling and safe layout properties
-      const allowedStyleProps = [
-        'font-size', 'font-weight', 'font-style', 'text-align', 'font-family',
-        'margin', 'margin-top', 'margin-bottom', 'margin-left', 'margin-right',
-        'padding', 'padding-top', 'padding-bottom', 'padding-left', 'padding-right',
-        'color', 'background-color', 'line-height', 'text-decoration'
-      ];
-      
-      // Parse CSS properties and filter allowed ones
-      const cssProps = styleValue.split(';').filter(prop => prop.trim());
-      const filteredProps = cssProps.filter(prop => {
-        const propName = prop.split(':')[0].trim().toLowerCase();
-        return allowedStyleProps.includes(propName);
-      });
-      
-      if (filteredProps.length > 0) {
-        const filteredStyle = filteredProps.join('; ');
-        return `<${tagContent} style="${filteredStyle}">`;
-      }
-    }
-    
-    return `<${tagContent}>`;
-  });
+  // Remove ALL style attributes completely for unified story system
+  sanitized = sanitized.replace(/\s+style\s*=\s*["'][^"']*["']/gi, '');
 
   return { __html: sanitized };
 }
