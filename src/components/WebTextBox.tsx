@@ -74,10 +74,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           {/* Compact Audio Control Box - Top Right Corner - only show if audio is available */}
           {webtext?.audio_url && (
             <div className="absolute top-0 right-0 z-[5] bg-[#F5F5DC] border-4 border-blue-500 border-t-0 rounded-bl-lg px-2 py-1 flex items-center gap-2 h-16">
-              <div className="flex flex-col text-base font-handwritten font-bold leading-tight" style={{ color: '#228B22' }}>
-                <span>Click to listen</span>
+              <div className="flex flex-col font-handwritten font-bold leading-tight" style={{ color: '#228B22' }}>
+                <span className="text-base">Click to listen</span>
                 <div className="flex items-center gap-1">
-                  <span>or change word size</span>
+                  <span className="text-base">or change word size</span>
                   <ArrowRight size={14} strokeWidth={3} />
                 </div>
               </div>
