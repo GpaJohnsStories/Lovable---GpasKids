@@ -165,91 +165,104 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
 
   
 
+  // Custom click handler for document to handle passthrough elements
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleDocumentClick = (e: MouseEvent) => {
+      const target = e.target as Element;
+      const dialogElement = dialogRef.current;
+      
+      // Check if click is inside SuperSuper dialog
+      if (dialogElement && dialogElement.contains(target)) {
+        return; // Let SuperSuper handle its own clicks
+      }
+      
+      // Check if click is on a passthrough element
+      const passthroughElement = target.closest('[data-allow-supersuper-passthrough="true"]');
+      
+      if (passthroughElement) {
+        console.log('🎯 Passthrough element clicked:', passthroughElement);
+        
+        // Close SuperSuper
+        onClose();
+        
+        // Handle specific actions based on aria-label
+        const ariaLabel = passthroughElement.getAttribute('aria-label') || '';
+        
+        if (ariaLabel.includes('Scroll')) {
+          console.log('📜 Triggering scroll to top');
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }, 100);
+        } else if (ariaLabel.includes('Menu')) {
+          console.log('🎮 Triggering menu click');
+          setTimeout(() => {
+            // Find the button and trigger its click handler
+            const button = passthroughElement as HTMLButtonElement;
+            button.click();
+          }, 100);
+        }
+      } else {
+        // Normal click outside - close dialog
+        onClose();
+      }
+    };
+
+    // Add event listener to document
+    document.addEventListener('click', handleDocumentClick, true);
+    
+    return () => {
+      document.removeEventListener('click', handleDocumentClick, true);
+    };
+  }, [isOpen, onClose]);
+
   return (
-    <DialogPrimitive.Root open={isOpen} onOpenChange={onClose}>
-      <DialogPrimitive.Portal>
-        {/* Click-through overlay to handle passthrough elements */}
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 49,
-            pointerEvents: 'auto'
-          }}
-          onClick={(e) => {
-            const target = e.target as Element;
-            const passthroughElement = target.closest('[data-allow-supersuper-passthrough="true"]');
-            
-            if (passthroughElement) {
-              console.log('🎯 Passthrough element clicked:', passthroughElement);
+    <div>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 49,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            }}
+          />
+          {/* SuperSuper Dialog */}
+          <div 
+            ref={dialogRef}
+            style={{
+              // CSS Reset for complete isolation
+              all: 'unset',
+              boxSizing: 'border-box',
               
-              // Close SuperSuper
-              onClose();
+              // Position and size
+              position: 'fixed',
+              width: '288px',
+              height: '490px',
+              left: `calc(10% + ${position.x}px)`,
+              top: `calc(5% + ${position.y}px)`,
+              zIndex: 50,
+              maxWidth: 'none',
+              maxHeight: 'none',
               
-              // Handle specific actions based on aria-label
-              const ariaLabel = passthroughElement.getAttribute('aria-label') || '';
+              // Appearance
+              background: 'linear-gradient(to bottom, #fffbeb, #fed7aa)',
+              border: '4px solid #fdba74',
+              borderRadius: '16px',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              cursor: isDragging ? 'grabbing' : 'grab',
               
-              if (ariaLabel.includes('Scroll')) {
-                console.log('📜 Triggering scroll to top');
-                setTimeout(() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 100);
-              } else if (ariaLabel.includes('Menu')) {
-                console.log('🎮 Triggering menu click');
-                setTimeout(() => {
-                  // Find the actual button and trigger its onClick
-                  const button = passthroughElement as HTMLButtonElement;
-                  if (button.onclick) {
-                    button.onclick(e as any);
-                  } else {
-                    // Manual event dispatch
-                    const clickEvent = new MouseEvent('click', {
-                      view: window,
-                      bubbles: true,
-                      cancelable: true
-                    });
-                    button.dispatchEvent(clickEvent);
-                  }
-                }, 100);
-              }
-            } else {
-              // Normal click outside - close dialog
-              onClose();
-            }
-          }}
-        />
-        <DialogPrimitive.Content 
-          ref={dialogRef}
-          style={{
-            // CSS Reset for complete isolation
-            all: 'unset',
-            boxSizing: 'border-box',
-            
-            // Position and size
-            position: 'fixed',
-            width: '288px',
-            height: '490px',
-            left: `calc(10% + ${position.x}px)`,
-            top: `calc(5% + ${position.y}px)`,
-            zIndex: 50,
-            maxWidth: 'none',
-            maxHeight: 'none',
-            
-            // Appearance
-            background: 'linear-gradient(to bottom, #fffbeb, #fed7aa)',
-            border: '4px solid #fdba74',
-            borderRadius: '16px',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-            cursor: isDragging ? 'grabbing' : 'grab',
-            
-            // Font reset
-            fontFamily: FONT_FUN,
-            fontSize: '14px',
-            lineHeight: '1.5',
-            color: '#000000',
-          }}
-          onMouseDown={handleMouseDown}
-        >
+              // Font reset
+              fontFamily: FONT_FUN,
+              fontSize: '14px',
+              lineHeight: '1.5',
+              color: '#000000',
+            }}
+            onMouseDown={handleMouseDown}
+          >
         
         {/* Close button positioned at bottom after font size buttons */}
 
@@ -734,11 +747,12 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
              <source src={audioUrl} type="audio/mp3" />
              <source src={audioUrl} type="audio/wav" />
              Your browser does not support the audio element.
-           </audio>
-         )}
-         
-         </DialogPrimitive.Content>
-       </DialogPrimitive.Portal>
-     </DialogPrimitive.Root>
-   );
+            </audio>
+          )}
+          
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
