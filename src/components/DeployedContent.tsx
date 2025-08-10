@@ -47,7 +47,7 @@ export const DeployedContent = ({
   const [content, setContent] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showSuperAudio, setShowSuperAudio] = useState(false);
+  const [showSuperSuper, setShowSuperSuper] = useState(false);
 
   useEffect(() => {
     const fetchStoryContent = async () => {
@@ -111,15 +111,15 @@ export const DeployedContent = ({
     return (
       <div className="flex-shrink-0">
         <button
-          onClick={() => setShowSuperAudio(true)}
+          onClick={() => setShowSuperSuper(true)}
           className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
         >
           Play Audio
         </button>
-        {showSuperAudio && (
+        {showSuperSuper && (
           <SuperSuper
-            isOpen={showSuperAudio}
-            onClose={() => setShowSuperAudio(false)}
+            isOpen={showSuperSuper}
+            onClose={() => setShowSuperSuper(false)}
             title={content.title || ''}
             author={content.author || ''}
             voiceName="Default"
@@ -138,15 +138,15 @@ export const DeployedContent = ({
       {includeAudio && (
         <div className="mb-6">
           <button
-            onClick={() => setShowSuperAudio(true)}
+            onClick={() => setShowSuperSuper(true)}
             className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
           >
             Play Audio
           </button>
-          {showSuperAudio && (
+          {showSuperSuper && (
             <SuperSuper
-              isOpen={showSuperAudio}
-              onClose={() => setShowSuperAudio(false)}
+              isOpen={showSuperSuper}
+              onClose={() => setShowSuperSuper(false)}
               title={content.title || ''}
               author={content.author || ''}
               voiceName="Default"

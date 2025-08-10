@@ -27,7 +27,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [loading, setLoading] = useState(true);
   
   // Audio controls state for peppermint button
-  const [showSuperAudio, setShowSuperAudio] = useState(false);
+  const [showSuperSuper, setShowSuperSuper] = useState(false);
 
   const getContent = () => {
     if (loading) return "Loading...";
@@ -77,7 +77,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                 Click to listen
               </div>
               <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
-              <AudioButton code="SYS-WEL" onClick={() => setShowSuperAudio(true)} />
+              <AudioButton code="SYS-WEL" onClick={() => setShowSuperSuper(true)} />
             </div>
           )}
 
@@ -128,10 +128,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             </div>
           </div>
           
-          {/* SuperAudio Floating Popup */}
+          {/* SuperSuper Floating Popup */}
           <SuperSuper
-            isOpen={showSuperAudio}
-            onClose={() => setShowSuperAudio(false)}
+            isOpen={showSuperSuper}
+            onClose={() => setShowSuperSuper(false)}
             title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
             author={webtext?.author}
             voiceName={webtext?.ai_voice_name}
@@ -162,7 +162,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           {/* Audio Button in top right */}
           {webtext?.audio_url && (
             <div className="flex-shrink-0">
-              <AudioButton code={webtextCode} onClick={() => setShowSuperAudio(true)} />
+              <AudioButton code={webtextCode} onClick={() => setShowSuperSuper(true)} />
             </div>
           )}
         </div>
@@ -209,10 +209,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         </div>
       </div>
 
-      {/* SuperAudio Floating Popup */}
+      {/* SuperSuper Floating Popup */}
       <SuperSuper
-        isOpen={showSuperAudio}
-        onClose={() => setShowSuperAudio(false)}
+        isOpen={showSuperSuper}
+        onClose={() => setShowSuperSuper(false)}
         title={webtext?.title || title}
         author={webtext?.author}
         voiceName={webtext?.ai_voice_name}

@@ -40,7 +40,7 @@ const StoryHeader = ({
   aiVoiceModel,
   allowTextToSpeech = false
 }: StoryHeaderProps) => {
-  const [showSuperAudio, setShowSuperAudio] = useState(false);
+  const [showSuperSuper, setShowSuperSuper] = useState(false);
 
   return (
     <>
@@ -51,7 +51,7 @@ const StoryHeader = ({
           <div className="absolute top-0 right-0 z-5">
             <AudioButton 
               code={storyCode || 'STORY'}
-              onClick={() => setShowSuperAudio(true)}
+              onClick={() => setShowSuperSuper(true)}
             />
           </div>
         )}
@@ -96,10 +96,10 @@ const StoryHeader = ({
         )}
       </div>
 
-      {/* SuperAudio Player */}
+      {/* SuperSuper Player */}
       <SuperSuper
-        isOpen={showSuperAudio}
-        onClose={() => setShowSuperAudio(false)}
+        isOpen={showSuperSuper}
+        onClose={() => setShowSuperSuper(false)}
         title={title}
         author={author}
         voiceName={aiVoiceName}

@@ -95,7 +95,7 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
   const [storyData, setStoryData] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
-  const [showSuperAudio, setShowSuperAudio] = React.useState(false);
+  const [showSuperSuper, setShowSuperSuper] = React.useState(false);
   const [fontSize, setFontSize] = React.useState(16);
 
   React.useEffect(() => {
@@ -159,15 +159,15 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
       {(storyData.audio_url || storyData.content) && (
         <div className="mb-4">
           <button
-            onClick={() => setShowSuperAudio(true)}
+            onClick={() => setShowSuperSuper(true)}
             className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
           >
             Play Audio
           </button>
-          {showSuperAudio && (
+          {showSuperSuper && (
             <SuperSuper
-              isOpen={showSuperAudio}
-              onClose={() => setShowSuperAudio(false)}
+              isOpen={showSuperSuper}
+              onClose={() => setShowSuperSuper(false)}
               title={storyData.title}
               author={storyData.author}
               voiceName="Default"

@@ -13,7 +13,7 @@ import { supabase } from '@/integrations/supabase/client';
 const About = () => {
   const { iconUrl: ab5IconUrl } = useCachedIcon('ICZ-AB5.png');
   const { lookupStoryByCode } = useStoryCodeLookup();
-  const [superAudioOpen, setSuperAudioOpen] = useState(false);
+  const [superSuperOpen, setSuperSuperOpen] = useState(false);
   const [currentAudioData, setCurrentAudioData] = useState<{
     content: string;
     title: string;
@@ -71,7 +71,7 @@ const About = () => {
         ai_voice_name: story.ai_voice_name,
         audio_duration: story.audio_duration_seconds
       });
-      setSuperAudioOpen(true);
+        setSuperSuperOpen(true);
     } else {
       // Fallback content for each section
       const fallbackContent: Record<string, {content: string, title: string}> = {
@@ -98,7 +98,7 @@ const About = () => {
           ai_voice_name: undefined,
           audio_duration: undefined
         });
-        setSuperAudioOpen(true);
+        setSuperSuperOpen(true);
       }
     }
   };
@@ -421,12 +421,12 @@ const About = () => {
         <CookieFreeFooter />
         <ScrollToTop />
         
-        {/* SuperAudio Modal */}
+        {/* SuperSuper Modal */}
         {currentAudioData && (
           <SuperSuper
-            isOpen={superAudioOpen}
+            isOpen={superSuperOpen}
             onClose={() => {
-              setSuperAudioOpen(false);
+              setSuperSuperOpen(false);
               setCurrentAudioData(null);
             }}
             title={currentAudioData.title}

@@ -55,7 +55,7 @@ const Story = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentVote, setCurrentVote] = useState<'thumbs_up' | 'thumbs_down' | 'ok' | null>(null);
-  const [showSuperAudio, setShowSuperAudio] = useState(false);
+  const [showSuperSuper, setShowSuperSuper] = useState(false);
   const [showSuperFont, setShowSuperFont] = useState(false);
   const [fontSize, setFontSize] = useState(18);
   const navigate = useNavigate();
@@ -223,7 +223,7 @@ const Story = () => {
                   code={story.story_code}
                   onClick={() => {
                     console.log('Audio button clicked for story:', story.story_code);
-                    setShowSuperAudio(true);
+                    setShowSuperSuper(true);
                   }}
                 />
               </div>
@@ -254,10 +254,10 @@ const Story = () => {
           />
         </div>
         
-        {/* SuperAudio Player */}
+        {/* SuperSuper Player */}
         <SuperSuper
-          isOpen={showSuperAudio}
-          onClose={() => setShowSuperAudio(false)}
+          isOpen={showSuperSuper}
+          onClose={() => setShowSuperSuper(false)}
           title={story.title}
           author={story.author}
           voiceName={story.ai_voice_name}
