@@ -70,7 +70,7 @@ const IconUploadSection = () => {
   });
 
   const generateFileName = (code: string, extension: string) => {
-    return `ICO-${code.toUpperCase()}.${extension}`;
+    return `${code.toUpperCase()}.${extension}`;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -85,10 +85,10 @@ const IconUploadSection = () => {
       return;
     }
 
-    if (!/^[A-Z0-9]{3}$/.test(iconCode.toUpperCase())) {
+    if (!/^[A-Z]{3}-[A-Z0-9]{3}$/.test(iconCode.toUpperCase())) {
       toast({
         title: "Invalid icon code",
-        description: "Icon code must be exactly 3 characters (letters and numbers only).",
+        description: "Icon code must follow AAA-BBB format (3 capital letters, dash, 3 letters/numbers).",
         variant: "destructive",
       });
       return;
@@ -142,13 +142,13 @@ const IconUploadSection = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="iconCode">Icon Code (3 characters)</Label>
+              <Label htmlFor="iconCode">Icon Code (AAA-BBB format)</Label>
               <Input
                 id="iconCode"
                 value={iconCode}
                 onChange={(e) => setIconCode(e.target.value.toUpperCase())}
-                placeholder="e.g., HOM, STR, etc."
-                maxLength={3}
+                placeholder="e.g., HOM-BTN, STR-ICO"
+                maxLength={7}
                 className="uppercase"
               />
             </div>
