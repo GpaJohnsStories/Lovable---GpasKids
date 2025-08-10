@@ -26,7 +26,24 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
     : "Georgia, serif";
 
   if (content) {
-    const safeHtml = createSafeHtml(content);
+    console.log('🎯 IsolatedStoryRenderer: Raw content received:', content);
+    
+    // Preprocess content to handle quote-wrapped strings
+    let processedContent = content;
+    if (typeof content === 'string' && content.startsWith('"') && content.endsWith('"')) {
+      try {
+        // Remove the wrapping quotes and unescape the content
+        processedContent = JSON.parse(content);
+        console.log('🎯 IsolatedStoryRenderer: Processed content after quote removal:', processedContent);
+      } catch (e) {
+        console.warn('🎯 IsolatedStoryRenderer: Failed to parse quoted content, using as-is:', e);
+      }
+    }
+    
+    console.log('🎯 IsolatedStoryRenderer: Final content for createSafeHtml:', processedContent);
+    const safeHtml = createSafeHtml(processedContent);
+    console.log('🎯 IsolatedStoryRenderer: safeHtml result:', safeHtml);
+    
     return (
       <div 
         className={className}
