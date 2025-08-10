@@ -27,8 +27,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [loading, setLoading] = useState(true);
   const [fontSize, setFontSize] = useState(16);
   
-  console.log('📝 WebTextBox fontSize state:', fontSize);
-  
   // Audio controls state for peppermint button
   const [showSuperSuper, setShowSuperSuper] = useState(false);
 
@@ -73,16 +71,13 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     return (
       <>
         <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
-          {/* Compact Audio Control Box - Top Right Corner - only show if audio is available */}
+          {/* Peppermint Audio Button - Top Right Corner - only show if audio is available */}
           {webtext?.audio_url && (
-            <div className="absolute top-0 right-0 z-[5] bg-[#F5F5DC] border-4 border-blue-500 border-t-0 rounded-bl-lg px-2 py-1 flex items-center gap-2 h-16">
-              <div className="flex flex-col font-handwritten font-bold leading-tight" style={{ color: '#228B22' }}>
-                <span className="text-base">Click to listen</span>
-                <div className="flex items-center gap-1">
-                  <span className="text-base">or change word size</span>
-                  <ArrowRight size={14} strokeWidth={3} />
-                </div>
+            <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
+              <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
+                Click to listen or change word size
               </div>
+              <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
               <AudioButton code="SYS-WEL" onClick={() => setShowSuperSuper(true)} />
             </div>
           )}
@@ -121,7 +116,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               <div className="flex-1 min-w-0">
                 <div 
                   className="font-handwritten text-blue-800 leading-relaxed break-words [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>h3]:font-handwritten [&>p]:text-base [&>p]:sm:text-lg [&>p]:mb-3 [&>p]:break-words [&>p]:font-handwritten [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:text-base [&>li]:sm:text-lg [&>li]:mb-1 [&>li]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
-                  style={{ fontSize: `${fontSize}px` }}
                   dangerouslySetInnerHTML={{ __html: getContent() }}
                 />
               </div>

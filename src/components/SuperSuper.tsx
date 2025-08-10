@@ -118,17 +118,13 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
 
   // Font size control functions
   const handleIncrease = () => {
-    console.log('🔤 Font size increase clicked, current:', fontSize, 'onFontSizeChange:', !!onFontSizeChange);
     if (onFontSizeChange && fontSize < 30) {
-      console.log('🔤 Calling onFontSizeChange with:', fontSize + 1);
       onFontSizeChange(fontSize + 1);
     }
   };
 
   const handleDecrease = () => {
-    console.log('🔤 Font size decrease clicked, current:', fontSize, 'onFontSizeChange:', !!onFontSizeChange);
     if (onFontSizeChange && fontSize > 10) {
-      console.log('🔤 Calling onFontSizeChange with:', fontSize - 1);
       onFontSizeChange(fontSize - 1);
     }
   };
