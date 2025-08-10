@@ -125,15 +125,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                     fontSize: `${fontSize}px`
                   }}
                   dangerouslySetInnerHTML={{ 
-                    __html: getContent()
-                      .replace(
-                        /<(h[1-6])([^>]*)>/g, 
-                        `<$1$2 style="font-size: ${Math.round(fontSize * 1.4)}px; font-family: inherit; font-weight: bold;">`
-                      )
-                      .replace(
-                        /<(p|span|div|li|strong|em|b|i)([^>]*)>/g, 
-                        `<$1$2 style="font-size: ${fontSize}px; font-family: inherit;">`
-                      )
+                    __html: getContent().replace(
+                      /<(p|span|div|h[1-6]|li|strong|em|b|i)([^>]*)>/g, 
+                      `<$1$2 style="font-size: ${fontSize}px; font-family: inherit;">`
+                    )
                   }}
                 />
               </div>
