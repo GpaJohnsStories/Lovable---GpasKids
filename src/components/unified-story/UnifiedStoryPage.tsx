@@ -18,7 +18,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const storyId = mode === 'update' ? id : undefined;
-  const [showSuperAudio, setShowSuperAudio] = useState(false);
+  const [showSuperSuper, setShowSuperSuper] = useState(false);
 
   console.log('🎯 UnifiedStoryPage: Rendering with mode:', mode);
   console.log('🎯 UnifiedStoryPage: URL id param:', id);
@@ -62,7 +62,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   };
 
   const toggleAudioControls = () => {
-    setShowSuperAudio(!showSuperAudio);
+    setShowSuperSuper(!showSuperSuper);
   };
 
   // Show error if we're in update mode but no ID is provided
@@ -127,11 +127,11 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
         />
       </div>
       
-      {/* SuperAudio Player */}
-      {showSuperAudio && (
+      {/* SuperSuper Player */}
+      {showSuperSuper && (
         <SuperSuper
-          isOpen={showSuperAudio}
-          onClose={() => setShowSuperAudio(false)}
+          isOpen={showSuperSuper}
+          onClose={() => setShowSuperSuper(false)}
           title={formData.title || 'Story'}
           author={formData.author}
           voiceName={formData.ai_voice_name}

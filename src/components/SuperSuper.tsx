@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RefreshCw } from "lucide-react";
 
-// Simplified SuperAudio component - Audio functionality removed
+// SuperSuper component - Unified audio and font controls
 
 // Font constant from tailwind.config.ts font-fun definition
 const FONT_FUN = 'Kalam, "Comic Sans MS", Arial, sans-serif';
