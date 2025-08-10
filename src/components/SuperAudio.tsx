@@ -16,6 +16,8 @@ interface SuperAudioProps {
   voiceName?: string;
   showAuthor?: boolean;
   audioUrl?: string;
+  fontSize?: number;
+  onFontSizeChange?: (newSize: number) => void;
 }
 
 export const SuperAudio: React.FC<SuperAudioProps> = ({
@@ -26,6 +28,8 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
   voiceName,
   showAuthor = true,
   audioUrl,
+  fontSize = 16,
+  onFontSizeChange,
 }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -95,6 +99,22 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
       setPlaybackRate(speed);
     }
   };
+
+  // Font size control functions
+  const handleIncrease = () => {
+    if (onFontSizeChange && fontSize < 30) {
+      onFontSizeChange(fontSize + 1);
+    }
+  };
+
+  const handleDecrease = () => {
+    if (onFontSizeChange && fontSize > 10) {
+      onFontSizeChange(fontSize - 1);
+    }
+  };
+
+  const isMinSize = fontSize <= 10;
+  const isMaxSize = fontSize >= 30;
 
   React.useEffect(() => {
     if (isDragging) {
@@ -563,9 +583,79 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
                      onClick={() => handleSpeedChange(2)}>
                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#F2BA15'}}>Fastest</span>
                      </div>
-                   </td>
-                 </tr>
-               </tbody>
+                    </td>
+                  </tr>
+
+                  {/* Row 6: Font Size Header Row */}
+                  <tr>
+                    <td colSpan={4} height={10} style={{backgroundColor: 'transparent', border: 'none'}}></td>
+                  </tr>
+
+                  {/* Row 7: Font Size Header */}
+                  <tr>
+                    <td colSpan={4} height={27} style={{backgroundColor: '#814d2e', borderRadius: '12px 12px 0 0'}} align="center" valign="middle">
+                      <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Font Size">Font Size</b>
+                    </td>
+                  </tr>
+
+                  {/* Row 8: Font Size Control Buttons */}
+                  <tr>
+                    <td colSpan={2} width={120} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 0 12px'}}>
+                      <div style={{
+                        width: '115px',
+                        height: '55px',
+                        background: isMinSize ? 'linear-gradient(145deg, #9ca3af, #6b7280)' : 'linear-gradient(145deg, #a855f7, #9333ea)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                        cursor: isMinSize ? 'not-allowed' : 'pointer',
+                        transition: 'all 0.15s ease',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        transform: 'scale(1)',
+                        opacity: isMinSize ? 0.6 : 1
+                      }} 
+                      role="button" 
+                      aria-label="Decrease Font Size" 
+                      title="Decrease Font Size"
+                      onMouseEnter={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1.05)')}
+                      onMouseLeave={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1)')}
+                      onMouseDown={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(0.95)')}
+                      onMouseUp={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1.05)')}
+                      onClick={!isMinSize ? handleDecrease : undefined}>
+                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '24px', color: 'white'}}>-</span>
+                      </div>
+                    </td>
+                    <td colSpan={2} width={120} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 12px 0'}}>
+                      <div style={{
+                        width: '115px',
+                        height: '55px',
+                        background: isMaxSize ? 'linear-gradient(145deg, #9ca3af, #6b7280)' : 'linear-gradient(145deg, #06b6d4, #0891b2)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                        cursor: isMaxSize ? 'not-allowed' : 'pointer',
+                        transition: 'all 0.15s ease',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        transform: 'scale(1)',
+                        opacity: isMaxSize ? 0.6 : 1
+                      }} 
+                      role="button" 
+                      aria-label="Increase Font Size" 
+                      title="Increase Font Size"
+                      onMouseEnter={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
+                      onMouseLeave={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1)')}
+                      onMouseDown={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(0.95)')}
+                      onMouseUp={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
+                      onClick={!isMaxSize ? handleIncrease : undefined}>
+                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '20px', color: 'white'}}>+</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
              </table>
              </div>
            </div>
