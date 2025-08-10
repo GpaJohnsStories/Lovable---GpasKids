@@ -202,15 +202,15 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           break;
         case '1':
           e.preventDefault();
-          wrapSelectedText('<h1>', '</h1>');
+          wrapSelectedText('<p style="font-size: 32px; font-weight: bold; margin: 16px 0;">', '</p>');
           break;
         case '2':
           e.preventDefault();
-          wrapSelectedText('<h2>', '</h2>');
+          wrapSelectedText('<p style="font-size: 24px; font-weight: bold; margin: 12px 0;">', '</p>');
           break;
         case '3':
           e.preventDefault();
-          wrapSelectedText('<h3>', '</h3>');
+          wrapSelectedText('<p style="font-size: 20px; font-weight: bold; margin: 8px 0;">', '</p>');
           break;
         case 'f':
           e.preventDefault();
@@ -263,9 +263,9 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + X', action: 'Cut' },
     { key: 'Ctrl + Y', action: 'Paste' },
     { key: 'Ctrl + #', action: 'Numbered List' },
-    { key: 'Ctrl + 1', action: 'H1 Heading' },
-    { key: 'Ctrl + 2', action: 'H2 Heading' },
-    { key: 'Ctrl + 3', action: 'H3 Heading' },
+    { key: 'Ctrl + 1', action: 'Big Text' },
+    { key: 'Ctrl + 2', action: 'Med Text' },
+    { key: 'Ctrl + 3', action: 'Large Text' },
   ];
 
   return (

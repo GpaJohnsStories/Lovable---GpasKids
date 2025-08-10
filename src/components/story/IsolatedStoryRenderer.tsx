@@ -32,7 +32,6 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
         <style dangerouslySetInnerHTML={{
           __html: `
             .isolated-story-content,
-            .isolated-story-content p,
             .isolated-story-content div {
               font-family: ${baseFontFamily} !important;
               font-size: 18px !important;
@@ -40,6 +39,21 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               line-height: 1.5 !important;
               font-weight: normal !important;
               font-style: normal !important;
+            }
+            
+            /* Regular paragraphs get default styling */
+            .isolated-story-content p {
+              font-family: ${baseFontFamily} !important;
+              font-size: 18px !important;
+              color: #000000 !important;
+              line-height: 1.5 !important;
+              font-weight: normal !important;
+              font-style: normal !important;
+            }
+            
+            /* Allow paragraphs with inline font-size to override default */
+            .isolated-story-content p[style*="font-size"] {
+              font-size: inherit !important;
             }
             
             /* Allow spans to inherit or use inline styles for font-size */
