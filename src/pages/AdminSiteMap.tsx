@@ -1,7 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import AdminLayout from '@/components/admin/AdminLayout';
 import { useUserRole } from '@/hooks/useUserRole';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -110,60 +109,58 @@ const AdminSiteMap = () => {
         <meta name="description" content="Complete map of all site pages and navigation" />
       </Helmet>
       
-      <AdminLayout>
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold text-black mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-              Site Map
-            </h1>
-            <p className="text-muted-foreground">
-              Complete overview of all pages and navigation structure
-            </p>
-            {userRole === 'viewer' && (
-              <Alert className="mt-4">
-                <Eye className="h-4 w-4" />
-                <AlertDescription>
-                  You are viewing in read-only mode as a viewer.
-                </AlertDescription>
-              </Alert>
-            )}
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-2">
-            <PageCard 
-              pages={publicPages} 
-              title="Public Pages" 
-              borderColor="border-green-500"
-            />
-            
-            <PageCard 
-              pages={adminPages} 
-              title="Admin Pages" 
-              borderColor="border-red-500"
-            />
-          </div>
-
-          <PageCard 
-            pages={utilityPages} 
-            title="Utility & Error Pages" 
-            borderColor="border-yellow-500"
-          />
-
-          <Card className="border-blue-500 border-2">
-            <CardHeader>
-              <CardTitle className="text-xl font-bold">Navigation Flow</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-sm space-y-2">
-                <p><strong>Main Navigation:</strong> Home → Stories Library → Individual Stories → Comments</p>
-                <p><strong>Admin Flow:</strong> Dashboard → Stories Management → Comments Dashboard → Reference</p>
-                <p><strong>Content Creation:</strong> Writing → Story Submission → Admin Review → Publication</p>
-                <p><strong>User Journey:</strong> Home → Help/Guide → Stories → Comments → About</p>
-              </div>
-            </CardContent>
-          </Card>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold text-black mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            Site Map
+          </h1>
+          <p className="text-muted-foreground">
+            Complete overview of all pages and navigation structure
+          </p>
+          {userRole === 'viewer' && (
+            <Alert className="mt-4">
+              <Eye className="h-4 w-4" />
+              <AlertDescription>
+                You are viewing in read-only mode as a viewer.
+              </AlertDescription>
+            </Alert>
+          )}
         </div>
-      </AdminLayout>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          <PageCard 
+            pages={publicPages} 
+            title="Public Pages" 
+            borderColor="border-green-500"
+          />
+          
+          <PageCard 
+            pages={adminPages} 
+            title="Admin Pages" 
+            borderColor="border-red-500"
+          />
+        </div>
+
+        <PageCard 
+          pages={utilityPages} 
+          title="Utility & Error Pages" 
+          borderColor="border-yellow-500"
+        />
+
+        <Card className="border-blue-500 border-2">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold">Navigation Flow</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-sm space-y-2">
+              <p><strong>Main Navigation:</strong> Home → Stories Library → Individual Stories → Comments</p>
+              <p><strong>Admin Flow:</strong> Dashboard → Stories Management → Comments Dashboard → Reference</p>
+              <p><strong>Content Creation:</strong> Writing → Story Submission → Admin Review → Publication</p>
+              <p><strong>User Journey:</strong> Home → Help/Guide → Stories → Comments → About</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 };

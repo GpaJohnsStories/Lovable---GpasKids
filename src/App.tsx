@@ -114,7 +114,7 @@ function App() {
                       <Route path="/buddys_admin/author-bios/edit/:id" element={<SecureAdminRoute><AuthorBioManagement /></SecureAdminRoute>} />
                       
                       <Route path="/buddys_admin/reference" element={<SecureAdminRoute><AdminReference /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/sitemap" element={<AdminSiteMap />} />
+                      <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMap /></SecureAdminRoute>} />
 
                       {/* Unified Story System Routes - These are the only story management routes now */}
                       <Route path="/buddys_admin/unified_story_system/add" element={<SecureAdminRoute><UnifiedStoryPage mode="add" /></SecureAdminRoute>} />
