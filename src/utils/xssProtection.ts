@@ -77,8 +77,13 @@ export function createSafeHtml(content: string): { __html: string } {
     const styleMatch = attributes.match(/style\s*=\s*["']([^"']*)["']/i);
     if (styleMatch) {
       const styleValue = styleMatch[1];
-      // Allow common text styling properties
-      const allowedStyleProps = ['font-size', 'font-weight', 'font-style', 'text-align', 'font-family'];
+      // Allow common text styling and safe layout properties
+      const allowedStyleProps = [
+        'font-size', 'font-weight', 'font-style', 'text-align', 'font-family',
+        'margin', 'margin-top', 'margin-bottom', 'margin-left', 'margin-right',
+        'padding', 'padding-top', 'padding-bottom', 'padding-left', 'padding-right',
+        'color', 'background-color', 'line-height', 'text-decoration'
+      ];
       const hasAllowedStyle = allowedStyleProps.some(prop => styleValue.includes(prop));
       
       if (hasAllowedStyle) {
