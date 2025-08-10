@@ -617,7 +617,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                       onMouseDown={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(0.95)')}
                       onMouseUp={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
                       onClick={!isMaxSize ? handleIncrease : undefined}>
-                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '20px', color: '#ffff00'}}>+</span>
+                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '24px', color: '#ffff00'}}>Make Words Bigger Size</span>
                       </div>
                     </td>
                     <td colSpan={2} width={120} height={55} style={{padding: '0 2.5px 2px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 12px 0'}}>
@@ -644,7 +644,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                       onMouseDown={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(0.95)')}
                       onMouseUp={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1.05)')}
                       onClick={!isMinSize ? handleDecrease : undefined}>
-                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '24px', color: '#ffff00'}}>-</span>
+                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '28px', color: '#ffff00'}}>Make Words Smaller Size</span>
                       </div>
                     </td>
                   </tr>
