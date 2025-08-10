@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import UnifiedStoryDashboard from './UnifiedStoryDashboard';
 import { AudioButton } from '@/components/AudioButton';
-import { SuperAudio } from '@/components/SuperAudio';
+import { SuperSuper } from '@/components/SuperSuper';
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useAdminSession } from '@/hooks/useAdminSession';
@@ -129,7 +129,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
       
       {/* SuperAudio Player */}
       {showSuperAudio && (
-        <SuperAudio
+        <SuperSuper
           isOpen={showSuperAudio}
           onClose={() => setShowSuperAudio(false)}
           title={formData.title || 'Story'}

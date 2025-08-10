@@ -3,7 +3,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { SuperAudio } from "@/components/SuperAudio";
+import { SuperSuper } from "@/components/SuperSuper";
 import { DeployedContent } from "@/components/DeployedContent";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
@@ -423,7 +423,7 @@ const About = () => {
         
         {/* SuperAudio Modal */}
         {currentAudioData && (
-          <SuperAudio
+          <SuperSuper
             isOpen={superAudioOpen}
             onClose={() => {
               setSuperAudioOpen(false);

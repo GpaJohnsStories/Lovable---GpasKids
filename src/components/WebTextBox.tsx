@@ -3,7 +3,7 @@ import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { getStoryPhotos } from '@/utils/storyUtils';
 import { AudioButton } from '@/components/AudioButton';
 
-import { SuperAudio } from '@/components/SuperAudio';
+import { SuperSuper } from '@/components/SuperSuper';
 import { ArrowRight } from 'lucide-react';
 
 interface WebTextBoxProps {
@@ -129,7 +129,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           </div>
           
           {/* SuperAudio Floating Popup */}
-          <SuperAudio
+          <SuperSuper
             isOpen={showSuperAudio}
             onClose={() => setShowSuperAudio(false)}
             title={webtext?.title || "Welcome to Grandpa John's Story Corner!"}
@@ -208,7 +208,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
       </div>
 
       {/* SuperAudio Floating Popup */}
-      <SuperAudio
+      <SuperSuper
         isOpen={showSuperAudio}
         onClose={() => setShowSuperAudio(false)}
         title={webtext?.title || title}

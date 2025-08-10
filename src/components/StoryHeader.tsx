@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { renderCategoryBadge } from "@/utils/categoryUtils";
 import { AudioButton } from "@/components/AudioButton";
-import { SuperAudio } from "@/components/SuperAudio";
+import { SuperSuper } from "@/components/SuperSuper";
 import AuthorLink from "@/components/AuthorLink";
 
 interface StoryHeaderProps {
@@ -97,7 +97,7 @@ const StoryHeader = ({
       </div>
 
       {/* SuperAudio Player */}
-      <SuperAudio
+      <SuperSuper
         isOpen={showSuperAudio}
         onClose={() => setShowSuperAudio(false)}
         title={title}

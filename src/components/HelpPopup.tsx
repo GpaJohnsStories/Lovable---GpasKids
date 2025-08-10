@@ -13,7 +13,7 @@ import StoryContentRenderer from "@/components/content/StoryContentRenderer";
 import { supabase } from "@/integrations/supabase/client";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
-import { SuperAudio } from "@/components/SuperAudio";
+import { SuperSuper } from "@/components/SuperSuper";
 
 interface HelpPopupProps {
   isOpen: boolean;
@@ -185,7 +185,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
           </Button>
         </div>
       </DialogContent>
-      <SuperAudio
+      <SuperSuper
         isOpen={isSuperAudioOpen}
         onClose={() => setIsSuperAudioOpen(false)}
         title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}

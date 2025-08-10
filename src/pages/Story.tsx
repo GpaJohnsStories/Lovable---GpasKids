@@ -17,7 +17,7 @@ import StoryVideoPlayer from "@/components/StoryVideoPlayer";
 import StoryVotingSection from "@/components/StoryVotingSection";
 import { getStoryPhotos } from "@/utils/storyUtils";
 import { AudioButton } from "@/components/AudioButton";
-import { SuperAudio } from "@/components/SuperAudio";
+import { SuperSuper } from "@/components/SuperSuper";
 import { FontSizeControls } from "@/components/FontSizeControls";
 import { FontButton } from "@/components/FontButton";
 import { SuperFont } from "@/components/SuperFont";
@@ -255,7 +255,7 @@ const Story = () => {
         </div>
         
         {/* SuperAudio Player */}
-        <SuperAudio
+        <SuperSuper
           isOpen={showSuperAudio}
           onClose={() => setShowSuperAudio(false)}
           title={story.title}

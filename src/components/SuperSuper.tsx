@@ -8,7 +8,7 @@ import { RefreshCw } from "lucide-react";
 // Font constant from tailwind.config.ts font-fun definition
 const FONT_FUN = 'Kalam, "Comic Sans MS", Arial, sans-serif';
 
-interface SuperAudioProps {
+interface SuperSuperProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
@@ -20,7 +20,7 @@ interface SuperAudioProps {
   onFontSizeChange?: (newSize: number) => void;
 }
 
-export const SuperAudio: React.FC<SuperAudioProps> = ({
+export const SuperSuper: React.FC<SuperSuperProps> = ({
   isOpen,
   onClose,
   title,
@@ -674,5 +674,5 @@ export const SuperAudio: React.FC<SuperAudioProps> = ({
          </DialogPrimitive.Content>
        </DialogPrimitive.Portal>
      </DialogPrimitive.Root>
-  );
+   );
 };
