@@ -1,7 +1,8 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RefreshCw } from "lucide-react";
+import { useSuperSuperContext } from '@/contexts/SuperSuperContext';
 
 // SuperSuper component - Unified audio and font controls
 
@@ -31,6 +32,8 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
   fontSize = 16,
   onFontSizeChange,
 }) => {
+  const instanceId = useId();
+  const superSuperContext = useSuperSuperContext();
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -38,6 +41,19 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
   const [playbackRate, setPlaybackRate] = useState(1);
   const audioRef = useRef<HTMLAudioElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
+
+  // Register/unregister with context when isOpen changes
+  useEffect(() => {
+    if (isOpen) {
+      superSuperContext.registerInstance(instanceId, onClose);
+    } else {
+      superSuperContext.unregisterInstance(instanceId);
+    }
+
+    return () => {
+      superSuperContext.unregisterInstance(instanceId);
+    };
+  }, [isOpen, instanceId, onClose, superSuperContext]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);

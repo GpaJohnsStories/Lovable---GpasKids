@@ -4,6 +4,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { useHelp } from "@/contexts/HelpContext";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import SimpleVerticalMenu from "./SimpleVerticalMenu";
+import { useSuperSuperContext } from '@/contexts/SuperSuperContext';
 
 interface HeaderContentProps {
   isHomePage: boolean;
@@ -14,6 +15,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   const location = useLocation();
   const navigate = useNavigate();
   const { showHelp } = useHelp();
+  const { closeAllInstances } = useSuperSuperContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuHovered, setIsMenuHovered] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -48,6 +50,8 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
 
   const handleMenuClick = () => {
     console.log('🎯 Menu button clicked, current state:', isMenuOpen);
+    // Close all SuperSuper instances before opening menu
+    closeAllInstances();
     setIsMenuOpen(!isMenuOpen);
   };
 

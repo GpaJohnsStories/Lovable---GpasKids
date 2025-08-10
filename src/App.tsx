@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { IconCacheProvider } from "@/contexts/IconCacheContext";
 import { TooltipProvider as CustomTooltipProvider } from "@/contexts/TooltipContext";
+import { SuperSuperProvider } from '@/contexts/SuperSuperContext';
 import { HelmetProvider } from 'react-helmet-async';
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -75,10 +76,11 @@ function App() {
             <HelpProvider>
               <IconCacheProvider>
                 <CustomTooltipProvider>
-                  <Toaster />
-                  <ShadcnToaster />
-                <BrowserRouter>
-                  <GlobalHelpProvider>
+                  <SuperSuperProvider>
+                    <Toaster />
+                    <ShadcnToaster />
+                  <BrowserRouter>
+                    <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
                     <Routes>
@@ -124,10 +126,11 @@ function App() {
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </ConditionalContentProtection>
-                </GlobalHelpProvider>
-              </BrowserRouter>
-                </CustomTooltipProvider>
-            </IconCacheProvider>
+                 </GlobalHelpProvider>
+               </BrowserRouter>
+                   </SuperSuperProvider>
+                 </CustomTooltipProvider>
+             </IconCacheProvider>
           </HelpProvider>
         </HelmetProvider>
       </TooltipProvider>
