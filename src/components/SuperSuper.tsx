@@ -168,6 +168,56 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
   return (
     <DialogPrimitive.Root open={isOpen} onOpenChange={onClose}>
       <DialogPrimitive.Portal>
+        {/* Click-through overlay to handle passthrough elements */}
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 49,
+            pointerEvents: 'auto'
+          }}
+          onClick={(e) => {
+            const target = e.target as Element;
+            const passthroughElement = target.closest('[data-allow-supersuper-passthrough="true"]');
+            
+            if (passthroughElement) {
+              console.log('🎯 Passthrough element clicked:', passthroughElement);
+              
+              // Close SuperSuper
+              onClose();
+              
+              // Handle specific actions based on aria-label
+              const ariaLabel = passthroughElement.getAttribute('aria-label') || '';
+              
+              if (ariaLabel.includes('Scroll')) {
+                console.log('📜 Triggering scroll to top');
+                setTimeout(() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 100);
+              } else if (ariaLabel.includes('Menu')) {
+                console.log('🎮 Triggering menu click');
+                setTimeout(() => {
+                  // Find the actual button and trigger its onClick
+                  const button = passthroughElement as HTMLButtonElement;
+                  if (button.onclick) {
+                    button.onclick(e as any);
+                  } else {
+                    // Manual event dispatch
+                    const clickEvent = new MouseEvent('click', {
+                      view: window,
+                      bubbles: true,
+                      cancelable: true
+                    });
+                    button.dispatchEvent(clickEvent);
+                  }
+                }, 100);
+              }
+            } else {
+              // Normal click outside - close dialog
+              onClose();
+            }
+          }}
+        />
         <DialogPrimitive.Content 
           ref={dialogRef}
           style={{
@@ -199,42 +249,6 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
             color: '#000000',
           }}
           onMouseDown={handleMouseDown}
-          onInteractOutside={(e) => {
-            const target = e.target as Element;
-            const passthroughElement = target.closest('[data-allow-supersuper-passthrough="true"]');
-            
-            if (passthroughElement) {
-              // Prevent the default behavior to stop the dialog from closing immediately
-              e.preventDefault();
-              
-              // Close SuperSuper manually
-              onClose();
-              
-              // Then trigger the underlying action after a small delay to ensure SuperSuper closes
-              setTimeout(() => {
-                // Check if it's a scroll-to-top button by aria-label
-                const ariaLabel = passthroughElement.getAttribute('aria-label');
-                if (ariaLabel?.includes('Scroll')) {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-                // Check if it's a menu button by aria-label
-                else if (ariaLabel?.includes('Menu')) {
-                  // Simulate a click event on the menu button
-                  const clickEvent = new MouseEvent('click', {
-                    view: window,
-                    bubbles: true,
-                    cancelable: true
-                  });
-                  passthroughElement.dispatchEvent(clickEvent);
-                }
-                // Fallback - trigger a click
-                else {
-                  (passthroughElement as HTMLElement).click();
-                }
-              }, 50);
-            }
-            // For other elements, allow normal dialog closing behavior
-          }}
         >
         
         {/* Close button positioned at bottom after font size buttons */}
