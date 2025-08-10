@@ -29,8 +29,7 @@ import PublicAuthorBios from "./pages/PublicAuthorBios";
 import PublicAuthorBiosSimple from "./pages/PublicAuthorBiosSimple";
 import AuthorBio from "./pages/AuthorBio";
 
-import AdminReference from "./pages/AdminReference";
-import AdminSiteMap from "./pages/AdminSiteMap";
+import ReferenceDashboard from "./components/admin/ReferenceDashboard";
 
 // Admin components
 import SecureAdminRoute from "./components/admin/SecureAdminRoute";
@@ -113,8 +112,7 @@ function App() {
                       <Route path="/buddys_admin/author-bios/add" element={<SecureAdminRoute><AuthorBioManagement /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/author-bios/edit/:id" element={<SecureAdminRoute><AuthorBioManagement /></SecureAdminRoute>} />
                       
-                      <Route path="/buddys_admin/reference" element={<SecureAdminRoute><AdminReference /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMap /></SecureAdminRoute>} />
+                      <Route path="/buddys_admin/reference" element={<SecureAdminRoute><ReferenceDashboard /></SecureAdminRoute>} />
 
                       {/* Unified Story System Routes - These are the only story management routes now */}
                       <Route path="/buddys_admin/unified_story_system/add" element={<SecureAdminRoute><UnifiedStoryPage mode="add" /></SecureAdminRoute>} />
