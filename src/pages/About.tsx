@@ -434,6 +434,8 @@ const About = () => {
             voiceName={currentAudioData.ai_voice_name}
             showAuthor={true}
             audioUrl={currentAudioData.audioUrl}
+            fontSize={16}
+            onFontSizeChange={() => {}}
           />
         )}
       </div>

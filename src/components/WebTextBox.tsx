@@ -137,6 +137,8 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             voiceName={webtext?.ai_voice_name}
             showAuthor={false}
             audioUrl={webtext?.audio_url}
+            fontSize={16}
+            onFontSizeChange={() => {}}
           />
         </div>
       </>
@@ -216,6 +218,8 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         voiceName={webtext?.ai_voice_name}
         showAuthor={false}
         audioUrl={webtext?.audio_url}
+        fontSize={16}
+        onFontSizeChange={() => {}}
       />
     </>
   );

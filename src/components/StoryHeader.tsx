@@ -105,6 +105,8 @@ const StoryHeader = ({
         voiceName={aiVoiceName}
         showAuthor={true}
         audioUrl={audioUrl}
+        fontSize={16}
+        onFontSizeChange={() => {}}
       />
     </>
   );

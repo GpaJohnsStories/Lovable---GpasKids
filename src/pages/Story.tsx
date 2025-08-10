@@ -262,6 +262,8 @@ const Story = () => {
           author={story.author}
           voiceName={story.ai_voice_name}
           audioUrl={story.audio_url}
+          fontSize={16}
+          onFontSizeChange={() => {}}
         />
         
         {/* SuperFont Player */}
