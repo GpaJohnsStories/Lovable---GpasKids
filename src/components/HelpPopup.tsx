@@ -34,10 +34,10 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   storyData,
   onNavigateToGuide
 }) => {
-  const [isSuperAudioOpen, setIsSuperAudioOpen] = useState(false);
+  const [isSuperSuperOpen, setIsSuperSuperOpen] = useState(false);
   const [audioCode, setAudioCode] = useState<string>('HELP');
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
-  console.log('🎵 SuperAudio state - isSuperAudioOpen:', isSuperAudioOpen, 'storyCode:', storyData?.story_code, 'audioCode:', audioCode);
+  console.log('🎵 SuperSuper state - isSuperSuperOpen:', isSuperSuperOpen, 'storyCode:', storyData?.story_code, 'audioCode:', audioCode);
   
   // Try to get cached icon for the story code (e.g., HLP-LIB -> HLP-LIB.jpg)
   const storyCode = storyData?.story_code;
@@ -126,8 +126,8 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             <AudioButton 
               code={audioCode} 
               onClick={() => {
-                console.log('🎵 Audio button clicked, opening SuperAudio for code:', audioCode);
-                setIsSuperAudioOpen(true);
+                console.log('🎵 Audio button clicked, opening SuperSuper for code:', audioCode);
+                setIsSuperSuperOpen(true);
               }} 
             />
           </div>
@@ -186,12 +186,14 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         </div>
       </DialogContent>
       <SuperSuper
-        isOpen={isSuperAudioOpen}
-        onClose={() => setIsSuperAudioOpen(false)}
+        isOpen={isSuperSuperOpen}
+        onClose={() => setIsSuperSuperOpen(false)}
         title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
         author={storyData?.author}
         voiceName={storyData?.ai_voice_name}
         audioUrl={storyData?.audio_url}
+        fontSize={16}
+        onFontSizeChange={() => {}}
       />
     </Dialog>
   );
