@@ -27,6 +27,8 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [loading, setLoading] = useState(true);
   const [fontSize, setFontSize] = useState(16);
   
+  console.log('📝 WebTextBox fontSize state:', fontSize);
+  
   // Audio controls state for peppermint button
   const [showSuperSuper, setShowSuperSuper] = useState(false);
 
