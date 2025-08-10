@@ -565,7 +565,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
 
                   {/* Row 8: Font Size Control Buttons */}
                   <tr>
-                    <td colSpan={2} width={120} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '12px 0 0 12px'}}>
+                    <td colSpan={2} width={120} height={55} style={{padding: '8px 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '12px 0 0 12px'}}>
                       <div style={{
                         width: '115px',
                         height: '55px',
@@ -592,7 +592,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                         <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '14px', color: '#ffff00', textAlign: 'center', display: 'block'}}>Make Words Bigger Size</span>
                       </div>
                     </td>
-                    <td colSpan={2} width={120} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 12px 12px 0'}}>
+                    <td colSpan={2} width={120} height={55} style={{padding: '8px 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 12px 12px 0'}}>
                       <div style={{
                         width: '115px',
                         height: '55px',
