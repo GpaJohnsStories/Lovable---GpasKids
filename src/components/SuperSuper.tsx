@@ -168,15 +168,6 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
   return (
     <DialogPrimitive.Root open={isOpen} onOpenChange={onClose}>
       <DialogPrimitive.Portal>
-        {/* Custom overlay that allows specific clicks to pass through */}
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 49,
-            pointerEvents: 'none', // Allow clicks to pass through
-          }}
-        />
         <DialogPrimitive.Content 
           ref={dialogRef}
           style={{
@@ -208,6 +199,42 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
             color: '#000000',
           }}
           onMouseDown={handleMouseDown}
+          onInteractOutside={(e) => {
+            const target = e.target as Element;
+            const passthroughElement = target.closest('[data-allow-supersuper-passthrough="true"]');
+            
+            if (passthroughElement) {
+              // Prevent the default behavior to stop the dialog from closing immediately
+              e.preventDefault();
+              
+              // Close SuperSuper manually
+              onClose();
+              
+              // Then trigger the underlying action after a small delay to ensure SuperSuper closes
+              setTimeout(() => {
+                // Check if it's a scroll-to-top button by aria-label
+                const ariaLabel = passthroughElement.getAttribute('aria-label');
+                if (ariaLabel?.includes('Scroll')) {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+                // Check if it's a menu button by aria-label
+                else if (ariaLabel?.includes('Menu')) {
+                  // Simulate a click event on the menu button
+                  const clickEvent = new MouseEvent('click', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true
+                  });
+                  passthroughElement.dispatchEvent(clickEvent);
+                }
+                // Fallback - trigger a click
+                else {
+                  (passthroughElement as HTMLElement).click();
+                }
+              }, 50);
+            }
+            // For other elements, allow normal dialog closing behavior
+          }}
         >
         
         {/* Close button positioned at bottom after font size buttons */}
