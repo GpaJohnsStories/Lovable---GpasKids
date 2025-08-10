@@ -642,7 +642,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                    paddingRight: '40px',
                    paddingTop: '8px',
                    paddingBottom: '8px',
-                   backgroundColor: '#3b82f6',
+                   backgroundColor: '#F97316',
                    color: 'white',
                    borderRadius: '8px',
                    fontWeight: 'bold',
@@ -653,8 +653,8 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                    border: 'none',
                    outline: 'none',
                  }}
-                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
-                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#3b82f6'}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e35507'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#F97316'}
                >
                  Close
                </button>
