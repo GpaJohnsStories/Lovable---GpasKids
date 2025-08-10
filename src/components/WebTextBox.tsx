@@ -75,7 +75,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           {webtext?.audio_url && (
             <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
               <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
-                Click to listen
+                Click to listen or change word size
               </div>
               <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
               <AudioButton code="SYS-WEL" onClick={() => setShowSuperSuper(true)} />
