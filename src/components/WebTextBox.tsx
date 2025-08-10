@@ -71,13 +71,13 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     return (
       <>
         <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
-          {/* Peppermint Audio Button - Top Right Corner - only show if audio is available */}
+          {/* Compact Audio Control Box - Top Right Corner - only show if audio is available */}
           {webtext?.audio_url && (
-            <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
-              <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
-                Click to listen or change word size
+            <div className="absolute top-0 right-0 z-[5] bg-[#F5F5DC] border-4 border-blue-500 border-l-0 border-t-0 rounded-bl-lg p-2 flex items-center gap-2">
+              <div className="text-sm font-handwritten font-bold text-blue-800 leading-tight">
+                Click to listen<br />
+                or change word size --&gt;
               </div>
-              <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
               <AudioButton code="SYS-WEL" onClick={() => setShowSuperSuper(true)} />
             </div>
           )}
