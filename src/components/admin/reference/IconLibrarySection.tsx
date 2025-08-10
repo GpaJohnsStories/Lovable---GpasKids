@@ -63,7 +63,7 @@ const IconLibrarySection = () => {
       const { data, error } = await supabase
         .from("icon_library")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("icon_code", { ascending: true });
 
       if (error) {
         throw new Error(`Failed to fetch icons: ${error.message}`);
