@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { UniversalAudioControls } from '@/components/UniversalAudioControls';
+import { SuperSuper } from '@/components/SuperSuper';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface StoryData {
@@ -27,6 +27,8 @@ interface DeployedContentProps {
   className?: string;
   allowTextToSpeech?: boolean;
   context?: string;
+  fontSize?: number;
+  onFontSizeChange?: (size: number) => void;
 }
 
 export const DeployedContent = ({ 
@@ -38,11 +40,14 @@ export const DeployedContent = ({
   hidePhotos = false,
   className = "",
   allowTextToSpeech = false,
-  context = "default"
+  context = "default",
+  fontSize = 16,
+  onFontSizeChange
 }: DeployedContentProps) => {
   const [content, setContent] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showSuperAudio, setShowSuperAudio] = useState(false);
 
   useEffect(() => {
     const fetchStoryContent = async () => {
@@ -105,15 +110,24 @@ export const DeployedContent = ({
   if (audioOnly) {
     return (
       <div className="flex-shrink-0">
-        <UniversalAudioControls 
-          audioUrl={content.audio_url || undefined}
-          title={content.title || ''}
-          author={content.author || ''}
-          content={content.content || undefined}
-          allowTextToSpeech={allowTextToSpeech}
-          context={context}
-          size="md"
-        />
+        <button
+          onClick={() => setShowSuperAudio(true)}
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
+        >
+          Play Audio
+        </button>
+        {showSuperAudio && (
+          <SuperSuper
+            isOpen={showSuperAudio}
+            onClose={() => setShowSuperAudio(false)}
+            title={content.title || ''}
+            author={content.author || ''}
+            voiceName="Default"
+            audioUrl={content.audio_url || ''}
+            fontSize={fontSize}
+            onFontSizeChange={onFontSizeChange || (() => {})}
+          />
+        )}
       </div>
     );
   }
@@ -123,15 +137,24 @@ export const DeployedContent = ({
       {/* Audio controls at the top if requested and available */}
       {includeAudio && (
         <div className="mb-6">
-          <UniversalAudioControls 
-            audioUrl={content.audio_url || undefined}
-            title={content.title || ''}
-            author={content.author || ''}
-            content={content.content || undefined}
-            allowTextToSpeech={allowTextToSpeech}
-            context={context}
-            size="md"
-          />
+          <button
+            onClick={() => setShowSuperAudio(true)}
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
+          >
+            Play Audio
+          </button>
+          {showSuperAudio && (
+            <SuperSuper
+              isOpen={showSuperAudio}
+              onClose={() => setShowSuperAudio(false)}
+              title={content.title || ''}
+              author={content.author || ''}
+              voiceName="Default"
+              audioUrl={content.audio_url || ''}
+              fontSize={fontSize}
+              onFontSizeChange={onFontSizeChange || (() => {})}
+            />
+          )}
         </div>
       )}
 

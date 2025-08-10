@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { UniversalAudioControls } from '../UniversalAudioControls';
+import { SuperSuper } from '../SuperSuper';
 import { StoryCodePhotoDisplay } from './StoryCodePhotoDisplay';
 import { useStoryCodeLookup } from '../../hooks/useStoryCodeLookup';
 
@@ -95,6 +95,8 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
   const [storyData, setStoryData] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
+  const [showSuperAudio, setShowSuperAudio] = React.useState(false);
+  const [fontSize, setFontSize] = React.useState(16);
 
   React.useEffect(() => {
     let isMounted = true;
@@ -156,16 +158,24 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
       {/* Audio Controls - Only show if audio is available or if we allow TTS */}
       {(storyData.audio_url || storyData.content) && (
         <div className="mb-4">
-          <UniversalAudioControls 
-            audioUrl={storyData.audio_url || undefined}
-            title={storyData.title}
-            content={storyData.content}
-            author={storyData.author}
-            description={storyData.excerpt || storyData.tagline}
-            allowTextToSpeech={true}
-            context="story-code"
-            size="md"
-          />
+          <button
+            onClick={() => setShowSuperAudio(true)}
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
+          >
+            Play Audio
+          </button>
+          {showSuperAudio && (
+            <SuperSuper
+              isOpen={showSuperAudio}
+              onClose={() => setShowSuperAudio(false)}
+              title={storyData.title}
+              author={storyData.author}
+              voiceName="Default"
+              audioUrl={storyData.audio_url || ''}
+              fontSize={fontSize}
+              onFontSizeChange={setFontSize}
+            />
+          )}
         </div>
       )}
 
