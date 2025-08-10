@@ -19,6 +19,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   const navigate = useNavigate();
   const storyId = mode === 'update' ? id : undefined;
   const [showSuperSuper, setShowSuperSuper] = useState(false);
+  const [fontSize, setFontSize] = useState(16);
 
   console.log('🎯 UnifiedStoryPage: Rendering with mode:', mode);
   console.log('🎯 UnifiedStoryPage: URL id param:', id);
@@ -137,8 +138,8 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           voiceName={formData.ai_voice_name}
           showAuthor={true}
           audioUrl={formData.audio_url}
-          fontSize={16}
-          onFontSizeChange={() => {}}
+          fontSize={fontSize}
+          onFontSizeChange={setFontSize}
         />
       )}
     </div>

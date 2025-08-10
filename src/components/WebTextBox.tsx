@@ -25,6 +25,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [webtext, setWebtext] = useState<any>(null);
   const [iconUrl, setIconUrl] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  const [fontSize, setFontSize] = useState(16);
   
   // Audio controls state for peppermint button
   const [showSuperSuper, setShowSuperSuper] = useState(false);
@@ -137,8 +138,8 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             voiceName={webtext?.ai_voice_name}
             showAuthor={false}
             audioUrl={webtext?.audio_url}
-            fontSize={16}
-            onFontSizeChange={() => {}}
+            fontSize={fontSize}
+            onFontSizeChange={setFontSize}
           />
         </div>
       </>
@@ -218,8 +219,8 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         voiceName={webtext?.ai_voice_name}
         showAuthor={false}
         audioUrl={webtext?.audio_url}
-        fontSize={16}
-        onFontSizeChange={() => {}}
+        fontSize={fontSize}
+        onFontSizeChange={setFontSize}
       />
     </>
   );

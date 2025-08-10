@@ -41,6 +41,7 @@ const StoryHeader = ({
   allowTextToSpeech = false
 }: StoryHeaderProps) => {
   const [showSuperSuper, setShowSuperSuper] = useState(false);
+  const [fontSize, setFontSize] = useState(16);
 
   return (
     <>
@@ -105,8 +106,8 @@ const StoryHeader = ({
         voiceName={aiVoiceName}
         showAuthor={true}
         audioUrl={audioUrl}
-        fontSize={16}
-        onFontSizeChange={() => {}}
+        fontSize={fontSize}
+        onFontSizeChange={setFontSize}
       />
     </>
   );

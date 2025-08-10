@@ -14,6 +14,7 @@ const About = () => {
   const { iconUrl: ab5IconUrl } = useCachedIcon('ICZ-AB5.png');
   const { lookupStoryByCode } = useStoryCodeLookup();
   const [superSuperOpen, setSuperSuperOpen] = useState(false);
+  const [fontSize, setFontSize] = useState(16);
   const [currentAudioData, setCurrentAudioData] = useState<{
     content: string;
     title: string;
@@ -434,8 +435,8 @@ const About = () => {
             voiceName={currentAudioData.ai_voice_name}
             showAuthor={true}
             audioUrl={currentAudioData.audioUrl}
-            fontSize={16}
-            onFontSizeChange={() => {}}
+            fontSize={fontSize}
+            onFontSizeChange={setFontSize}
           />
         )}
       </div>

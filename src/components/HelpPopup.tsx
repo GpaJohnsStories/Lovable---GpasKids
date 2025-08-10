@@ -35,6 +35,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   onNavigateToGuide
 }) => {
   const [isSuperSuperOpen, setIsSuperSuperOpen] = useState(false);
+  const [fontSize, setFontSize] = useState(16);
   const [audioCode, setAudioCode] = useState<string>('HELP');
   console.log('🔍 HelpPopup render - isOpen:', isOpen, 'currentRoute:', currentRoute);
   console.log('🎵 SuperSuper state - isSuperSuperOpen:', isSuperSuperOpen, 'storyCode:', storyData?.story_code, 'audioCode:', audioCode);
@@ -192,8 +193,8 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         author={storyData?.author}
         voiceName={storyData?.ai_voice_name}
         audioUrl={storyData?.audio_url}
-        fontSize={16}
-        onFontSizeChange={() => {}}
+        fontSize={fontSize}
+        onFontSizeChange={setFontSize}
       />
     </Dialog>
   );
