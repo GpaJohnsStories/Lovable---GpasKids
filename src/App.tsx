@@ -76,11 +76,11 @@ function App() {
             <HelpProvider>
               <IconCacheProvider>
                 <CustomTooltipProvider>
-                  <SuperSuperProvider>
                     <Toaster />
                     <ShadcnToaster />
                   <BrowserRouter>
-                    <GlobalHelpProvider>
+                    <SuperSuperProvider>
+                      <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
                     <Routes>
@@ -125,10 +125,10 @@ function App() {
                       {/* Catch-all route */}
                       <Route path="*" element={<NotFound />} />
                     </Routes>
-                  </ConditionalContentProtection>
+                   </ConditionalContentProtection>
                  </GlobalHelpProvider>
-               </BrowserRouter>
                    </SuperSuperProvider>
+               </BrowserRouter>
                  </CustomTooltipProvider>
              </IconCacheProvider>
           </HelpProvider>
