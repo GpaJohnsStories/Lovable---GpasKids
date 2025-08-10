@@ -128,6 +128,10 @@ const IconUploadSection = () => {
       }
 
       setSelectedFile(file);
+      
+      // Auto-populate icon name from filename (without extension)
+      const fileNameWithoutExtension = file.name.split('.').slice(0, -1).join('.');
+      setIconName(fileNameWithoutExtension);
     }
   };
 
