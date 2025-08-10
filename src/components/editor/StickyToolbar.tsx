@@ -120,31 +120,31 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => onFormat('h1')}
+            onClick={() => onFormat('big')}
             className="h-8 px-3 text-sm"
             style={{ borderColor: '#9c441a' }}
           >
-            H1
+            Big
           </Button>
           <Button
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => onFormat('h2')}
+            onClick={() => onFormat('med')}
             className="h-8 px-3 text-sm"
             style={{ borderColor: '#9c441a' }}
           >
-            H2
+            Med
           </Button>
           <Button
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => onFormat('h3')}
+            onClick={() => onFormat('large')}
             className="h-8 px-3 text-sm"
             style={{ borderColor: '#9c441a' }}
           >
-            H3
+            Large
           </Button>
           <Button
             type="button"

@@ -79,14 +79,14 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
       case 'u':
         wrapSelectedText('<u>', '</u>');
         break;
-      case 'h1':
-        wrapSelectedText('<h1>', '</h1>');
+      case 'big':
+        wrapSelectedText('<p style="font-size: 32px; font-weight: bold; margin: 16px 0;">', '</p>');
         break;
-      case 'h2':
-        wrapSelectedText('<h2>', '</h2>');
+      case 'med':
+        wrapSelectedText('<p style="font-size: 24px; font-weight: bold; margin: 12px 0;">', '</p>');
         break;
-      case 'h3':
-        wrapSelectedText('<h3>', '</h3>');
+      case 'large':
+        wrapSelectedText('<p style="font-size: 20px; font-weight: bold; margin: 8px 0;">', '</p>');
         break;
       case 'p':
         wrapSelectedText('<p>', '</p>');
