@@ -12,7 +12,6 @@ import { useToast } from "@/hooks/use-toast";
 const IconUploadSection = () => {
   const [iconCode, setIconCode] = useState("");
   const [iconName, setIconName] = useState("");
-  const [fileExtension, setFileExtension] = useState("png");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -69,7 +68,9 @@ const IconUploadSection = () => {
     },
   });
 
-  const generateFileName = (code: string, extension: string) => {
+  const generateFileName = (code: string, file: File | null) => {
+    if (!file) return '';
+    const extension = file.name.split('.').pop()?.toLowerCase() || '';
     return `${code.toUpperCase()}.${extension}`;
   };
 
@@ -94,7 +95,7 @@ const IconUploadSection = () => {
       return;
     }
 
-    const fileName = generateFileName(iconCode, fileExtension);
+    const fileName = generateFileName(iconCode, selectedFile);
     uploadMutation.mutate({ 
       file: selectedFile, 
       fileName, 
@@ -153,21 +154,6 @@ const IconUploadSection = () => {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="fileExtension">File Extension</Label>
-              <Select value={fileExtension} onValueChange={setFileExtension}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="png">PNG</SelectItem>
-                  <SelectItem value="jpg">JPG</SelectItem>
-                  <SelectItem value="jpeg">JPEG</SelectItem>
-                  <SelectItem value="svg">SVG</SelectItem>
-                  <SelectItem value="gif">GIF</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
           </div>
 
           <div className="space-y-2">
@@ -190,10 +176,10 @@ const IconUploadSection = () => {
             />
           </div>
 
-          {iconCode && (
+          {iconCode && selectedFile && (
             <div className="p-3 bg-muted rounded-md">
               <p className="text-sm font-medium">Generated filename:</p>
-              <p className="text-sm text-muted-foreground">{generateFileName(iconCode, fileExtension)}</p>
+              <p className="text-sm text-muted-foreground">{generateFileName(iconCode, selectedFile)}</p>
             </div>
           )}
 
