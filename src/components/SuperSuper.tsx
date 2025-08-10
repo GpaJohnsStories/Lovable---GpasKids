@@ -594,13 +594,40 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                   {/* Row 7: Font Size Header */}
                   <tr>
                     <td colSpan={4} height={27} style={{backgroundColor: '#814d2e', borderRadius: '12px 12px 0 0'}} align="center" valign="middle">
-                      <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Font Size">Font Size</b>
+                      <b style={{color: '#ffff00', fontFamily: FONT_FUN}} aria-label="Font Size">Font Size</b>
                     </td>
                   </tr>
 
                   {/* Row 8: Font Size Control Buttons */}
                   <tr>
-                    <td colSpan={2} width={120} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 0 12px'}}>
+                    <td colSpan={2} width={120} height={55} style={{padding: '0 2.5px 2px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 0 12px'}}>
+                      <div style={{
+                        width: '115px',
+                        height: '55px',
+                        background: isMaxSize ? 'linear-gradient(145deg, #9ca3af, #6b7280)' : 'linear-gradient(145deg, #3b82f6, #2563eb)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                        cursor: isMaxSize ? 'not-allowed' : 'pointer',
+                        transition: 'all 0.15s ease',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        transform: 'scale(1)',
+                        opacity: isMaxSize ? 0.6 : 1
+                      }} 
+                      role="button" 
+                      aria-label="Increase Font Size" 
+                      title="Increase Font Size"
+                      onMouseEnter={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
+                      onMouseLeave={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1)')}
+                      onMouseDown={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(0.95)')}
+                      onMouseUp={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
+                      onClick={!isMaxSize ? handleIncrease : undefined}>
+                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '20px', color: '#ffff00'}}>+</span>
+                      </div>
+                    </td>
+                    <td colSpan={2} width={120} height={55} style={{padding: '0 2.5px 2px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 12px 0'}}>
                       <div style={{
                         width: '115px',
                         height: '55px',
@@ -624,34 +651,7 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                       onMouseDown={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(0.95)')}
                       onMouseUp={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1.05)')}
                       onClick={!isMinSize ? handleDecrease : undefined}>
-                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '24px', color: 'white'}}>-</span>
-                      </div>
-                    </td>
-                    <td colSpan={2} width={120} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 12px 0'}}>
-                      <div style={{
-                        width: '115px',
-                        height: '55px',
-                        background: isMaxSize ? 'linear-gradient(145deg, #9ca3af, #6b7280)' : 'linear-gradient(145deg, #06b6d4, #0891b2)',
-                        borderRadius: '12px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                        cursor: isMaxSize ? 'not-allowed' : 'pointer',
-                        transition: 'all 0.15s ease',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        transform: 'scale(1)',
-                        opacity: isMaxSize ? 0.6 : 1
-                      }} 
-                      role="button" 
-                      aria-label="Increase Font Size" 
-                      title="Increase Font Size"
-                      onMouseEnter={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
-                      onMouseLeave={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1)')}
-                      onMouseDown={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(0.95)')}
-                      onMouseUp={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
-                      onClick={!isMaxSize ? handleIncrease : undefined}>
-                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '20px', color: 'white'}}>+</span>
+                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '24px', color: '#ffff00'}}>-</span>
                       </div>
                     </td>
                   </tr>
