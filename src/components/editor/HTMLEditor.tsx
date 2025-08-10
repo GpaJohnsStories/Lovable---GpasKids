@@ -158,15 +158,15 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
       switch (e.key.toLowerCase()) {
         case 'b':
           e.preventDefault();
-          wrapSelectedText('<strong>', '</strong>');
+          wrapSelectedText('<span style="font-weight: bold;">', '</span>');
           break;
         case 'i':
           e.preventDefault();
-          wrapSelectedText('<em>', '</em>');
+          wrapSelectedText('<span style="font-style: italic;">', '</span>');
           break;
         case 'u':
           e.preventDefault();
-          wrapSelectedText('<u>', '</u>');
+          wrapSelectedText('<span style="text-decoration: underline;">', '</span>');
           break;
         case 'c':
           e.preventDefault();
