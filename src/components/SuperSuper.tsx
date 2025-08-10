@@ -591,13 +591,6 @@ export const SuperSuper: React.FC<SuperSuperProps> = ({
                     <td colSpan={4} height={10} style={{backgroundColor: 'transparent', border: 'none'}}></td>
                   </tr>
 
-                  {/* Row 7: Font Size Header */}
-                  <tr>
-                    <td colSpan={4} height={27} style={{backgroundColor: '#814d2e', borderRadius: '12px 12px 0 0'}} align="center" valign="middle">
-                      <b style={{color: '#ffff00', fontFamily: FONT_FUN}} aria-label="Font Size">Font Size</b>
-                    </td>
-                  </tr>
-
                   {/* Row 8: Font Size Control Buttons */}
                   <tr>
                     <td colSpan={2} width={120} height={55} style={{padding: '0 2.5px 2px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 0 12px'}}>
