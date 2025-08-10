@@ -11,7 +11,6 @@ import AudioUploadSection from "./AudioUploadSection";
 import SplitViewEditor from "../editor/SplitViewEditor";
 import CopyrightControl from "../story-form/CopyrightControl";
 import StoryCodeField from "../StoryCodeField";
-import XSSTestComponent from "../debug/XSSTestComponent";
 import type { Story } from '@/hooks/useStoryFormState';
 import { formatDate, formatTime } from '@/utils/dateUtils';
 import { useVoiceTesting } from '@/hooks/useVoiceTesting';
@@ -920,9 +919,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
         </div>
       </div>
-
-      {/* XSS Debug Test */}
-      <XSSTestComponent />
 
       {/* Story Editor */}
       <Card className="border-2" style={{ borderColor: '#F97316' }}>

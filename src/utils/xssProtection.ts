@@ -84,12 +84,17 @@ export function createSafeHtml(content: string): { __html: string } {
         'padding', 'padding-top', 'padding-bottom', 'padding-left', 'padding-right',
         'color', 'background-color', 'line-height', 'text-decoration'
       ];
-      const hasAllowedStyle = allowedStyleProps.some(prop => styleValue.includes(prop));
       
-      if (hasAllowedStyle) {
-        // Sanitize the style value to only allow safe properties
-        const cleanStyle = styleValue.replace(/[^a-zA-Z0-9:\-\.\s;]/g, '');
-        return `<${tagContent} style="${cleanStyle}">`;
+      // Parse CSS properties and filter allowed ones
+      const cssProps = styleValue.split(';').filter(prop => prop.trim());
+      const filteredProps = cssProps.filter(prop => {
+        const propName = prop.split(':')[0].trim().toLowerCase();
+        return allowedStyleProps.includes(propName);
+      });
+      
+      if (filteredProps.length > 0) {
+        const filteredStyle = filteredProps.join('; ');
+        return `<${tagContent} style="${filteredStyle}">`;
       }
     }
     
