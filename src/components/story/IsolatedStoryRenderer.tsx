@@ -31,8 +31,10 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
       <div 
         className={className}
         style={{
-          // Complete CSS reset like SuperAV
-          all: 'unset',
+          // Targeted resets that preserve HTML element defaults
+          margin: 0,
+          padding: 0,
+          border: 0,
           boxSizing: 'border-box',
           display: 'block',
           fontFamily: baseFontFamily,
@@ -50,8 +52,10 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
       <div 
         className={className}
         style={{
-          // Complete CSS reset like SuperAV
-          all: 'unset',
+          // Targeted resets that preserve HTML element defaults
+          margin: 0,
+          padding: 0,
+          border: 0,
           boxSizing: 'border-box',
           display: 'block',
           fontFamily: baseFontFamily,
