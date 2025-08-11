@@ -4,6 +4,7 @@ import { useState } from "react";
 
 const CssLibrarySection = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | 'none'>('none');
 
   const cssClasses = [
     // Typography
@@ -389,9 +390,32 @@ const CssLibrarySection = () => {
 
   // Extract unique categories and create filtered data
   const categories = Array.from(new Set(cssClasses.map(cls => cls.category))).sort();
-  const filteredCssClasses = selectedCategory === "all" 
+  
+  // Filter by category first
+  const categoryFilteredClasses = selectedCategory === "all" 
     ? cssClasses 
     : cssClasses.filter(cls => cls.category === selectedCategory);
+    
+  // Then apply sorting
+  const filteredCssClasses = [...categoryFilteredClasses].sort((a, b) => {
+    if (sortDirection === 'none') return 0;
+    const compare = a.name.localeCompare(b.name);
+    return sortDirection === 'asc' ? compare : -compare;
+  });
+
+  const handleSort = () => {
+    setSortDirection(current => {
+      if (current === 'none') return 'asc';
+      if (current === 'asc') return 'desc';
+      return 'none';
+    });
+  };
+
+  const getSortIcon = () => {
+    if (sortDirection === 'asc') return ' ↑';
+    if (sortDirection === 'desc') return ' ↓';
+    return ' ↕';
+  };
 
   const renderPreview = (cssClass: any) => {
     // Custom CSS classes
@@ -478,7 +502,12 @@ const CssLibrarySection = () => {
         <table className="table-fixed border-2 border-blue-500 border-collapse w-full">
           <thead>
             <tr>
-              <th className="w-80 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Class Name</th>
+              <th 
+                className="w-80 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0 cursor-pointer hover:bg-amber-50 select-none"
+                onClick={handleSort}
+              >
+                Class Name{getSortIcon()}
+              </th>
               <th className="w-96 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Description</th>
               <th className="w-64 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Used On</th>
               <th className="w-32 border border-amber-800 p-1 text-left break-words whitespace-normal max-w-0">
