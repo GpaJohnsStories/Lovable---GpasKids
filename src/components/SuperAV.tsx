@@ -24,16 +24,16 @@ const FONT_FUN = 'Kalam, "Comic Sans MS", Arial, sans-serif';
 const CustomArrowIcon: React.FC = () => {
   const { iconUrl, isLoading, error } = useCachedIcon('ICO-ARR.gif');
   
-  if (isLoading) return <div style={{ width: '18px', height: '18px' }} />;
-  if (error || !iconUrl) return <div style={{ width: '18px', height: '18px', background: '#814d2e' }} />;
+  if (isLoading) return <div style={{ width: '40px', height: '40px' }} />;
+  if (error || !iconUrl) return <div style={{ width: '40px', height: '40px', background: '#814d2e' }} />;
   
   return (
     <img 
       src={iconUrl} 
       alt="Arrow" 
       style={{ 
-        height: '18px', 
-        width: 'auto',
+        height: '40px', 
+        width: '40px',
         objectFit: 'contain'
       }} 
     />
