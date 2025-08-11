@@ -5,7 +5,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Search, X, ChevronDown, ChevronUp } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
 
 const CssLibrarySection = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -13,6 +15,17 @@ const CssLibrarySection = () => {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [editingClass, setEditingClass] = useState<any>(null);
   const [editNotes, setEditNotes] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [localSearchTerm, setLocalSearchTerm] = useState<string>("");
+
+  // Debounced search effect
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      setSearchTerm(localSearchTerm);
+    }, 300);
+
+    return () => clearTimeout(debounceTimer);
+  }, [localSearchTerm]);
 
   const cssClasses = [
     // Typography
@@ -504,20 +517,45 @@ const CssLibrarySection = () => {
   const categories = Array.from(new Set(cssClasses.map(cls => cls.category))).sort();
   const statuses = Array.from(new Set(cssClasses.map(cls => cls.status))).sort();
   
-  // Filter by category and status
-  const categoryFilteredClasses = selectedCategory === "all" 
-    ? cssClasses 
-    : cssClasses.filter(cls => cls.category === selectedCategory);
+  // Apply all filters: search, category, and status
+  const filteredCssClasses = useMemo(() => {
+    let filtered = cssClasses;
     
-  const statusFilteredClasses = selectedStatus === "all"
-    ? categoryFilteredClasses
-    : categoryFilteredClasses.filter(cls => cls.status === selectedStatus);
+    // Apply search filter
+    if (searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase();
+      filtered = filtered.filter(cls => 
+        cls.name.toLowerCase().includes(searchLower) ||
+        cls.description.toLowerCase().includes(searchLower) ||
+        cls.usage.toLowerCase().includes(searchLower) ||
+        cls.category.toLowerCase().includes(searchLower) ||
+        cls.status.toLowerCase().includes(searchLower) ||
+        (cls.notes && cls.notes.toLowerCase().includes(searchLower))
+      );
+    }
     
-  // Then apply sorting
-  const filteredCssClasses = [...statusFilteredClasses].sort((a, b) => {
-    const compare = a.name.localeCompare(b.name);
-    return sortDirection === 'asc' ? compare : -compare;
-  });
+    // Apply category filter
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter(cls => cls.category === selectedCategory);
+    }
+    
+    // Apply status filter
+    if (selectedStatus !== "all") {
+      filtered = filtered.filter(cls => cls.status === selectedStatus);
+    }
+    
+    // Apply sorting
+    return [...filtered].sort((a, b) => {
+      const compare = a.name.localeCompare(b.name);
+      return sortDirection === 'asc' ? compare : -compare;
+    });
+  }, [cssClasses, searchTerm, selectedCategory, selectedStatus, sortDirection]);
+
+  // Clear search function
+  const clearSearch = () => {
+    setLocalSearchTerm("");
+    setSearchTerm("");
+  };
 
   const handleSort = () => {
     setSortDirection(current => current === 'asc' ? 'desc' : 'asc');
@@ -630,10 +668,52 @@ const CssLibrarySection = () => {
           <CardTitle>CSS Library</CardTitle>
         </CardHeader>
         <CardContent>
+          {/* Search Input */}
+          <div className="mb-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search classes by name, description, usage, category, or notes..."
+                value={localSearchTerm}
+                onChange={(e) => setLocalSearchTerm(e.target.value)}
+                className="pl-10 pr-10 border-2 border-orange-200 focus:border-orange-400 text-black font-sans"
+              />
+              {searchTerm && (
+                <button
+                  onClick={clearSearch}
+                  className="absolute right-3 top-3 h-4 w-4 text-muted-foreground hover:text-foreground"
+                  title="Clear search"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Results Counter */}
           <div className="mb-2 text-sm text-muted-foreground">
-            Showing {filteredCssClasses.length} of {cssClasses.length} classes
-            {selectedStatus !== "all" && ` (${selectedStatus} status)`}
-            {selectedCategory !== "all" && ` (${selectedCategory} category)`}
+            {searchTerm ? (
+              <div className="flex items-center gap-2">
+                <span>Found {filteredCssClasses.length} classes matching "{searchTerm}"</span>
+                {searchTerm && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={clearSearch}
+                    className="h-6 px-2 text-xs"
+                  >
+                    Clear Search
+                  </Button>
+                )}
+              </div>
+            ) : (
+              <span>
+                Showing {filteredCssClasses.length} of {cssClasses.length} classes
+                {selectedStatus !== "all" && ` (${selectedStatus} status)`}
+                {selectedCategory !== "all" && ` (${selectedCategory} category)`}
+              </span>
+            )}
           </div>
 
         <table className="table-fixed border-2 border-blue-500 border-collapse w-full">
