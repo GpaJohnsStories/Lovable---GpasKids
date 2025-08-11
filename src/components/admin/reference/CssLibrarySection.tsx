@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Search, X, ChevronDown, ChevronUp, AlertTriangle, Code, FileText } from "lucide-react";
+import { Search, X, ChevronDown, ChevronUp, AlertTriangle, Code, FileText, Settings } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 
 const CssLibrarySection = () => {
@@ -902,11 +902,66 @@ const CssLibrarySection = () => {
               </TableRow>
               
               <TableRow>
-                <TableCell>Inline padding and margin styles</TableCell>
+                <TableCell>
+                  <div>
+                    <div className="font-medium">Inline style objects in components</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="outline" className="text-xs">438 occurrences</Badge>
+                    </div>
+                  </div>
+                </TableCell>
                 <TableCell className="font-mono text-xs">
-                  {"style={{padding: '10px', margin: '5px auto'}}"}
+                  {"style={{backgroundColor: '#f3f4f6', padding: '16px'}}"}
                 </TableCell>
                 <TableCell>Multiple components</TableCell>
+                <TableCell>
+                  <Badge variant="outline" className="text-xs">
+                    <FileText className="w-3 h-3 mr-1" />
+                    Performance
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Needs Migration</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>
+                  <div>
+                    <div className="font-medium">Color specifications (hardcoded)</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="outline" className="text-xs">395 occurrences</Badge>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{color: '#1f2937', backgroundColor: '#f59e0b'}}"}
+                </TableCell>
+                <TableCell>Text and background styling</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="text-xs">
+                    <Code className="w-3 h-3 mr-1" />
+                    Maintainability
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Needs Migration</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>
+                  <div>
+                    <div className="font-medium">Font family overrides in components</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="outline" className="text-xs">234 occurrences</Badge>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{fontFamily: 'monospace', fontSize: '12px'}}"}
+                </TableCell>
+                <TableCell>Code display components</TableCell>
                 <TableCell>
                   <Badge variant="secondary" className="text-xs">
                     <Code className="w-3 h-3 mr-1" />
@@ -915,6 +970,174 @@ const CssLibrarySection = () => {
                 </TableCell>
                 <TableCell>
                   <Badge variant="warning" className="text-xs">Review Required</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>
+                  <div>
+                    <div className="font-medium">Background color specifications</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="outline" className="text-xs">94 occurrences</Badge>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{backgroundColor: '#fbbf24', color: '#000'}}"}
+                </TableCell>
+                <TableCell>Button and banner components</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="text-xs">
+                    <Code className="w-3 h-3 mr-1" />
+                    Maintainability
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Needs Migration</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>
+                  <div>
+                    <div className="font-medium">Custom spacing (padding/margin)</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="outline" className="text-xs">50+ occurrences</Badge>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{padding: '12px 16px', margin: '8px 0'}}"}
+                </TableCell>
+                <TableCell>Layout and container components</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="text-xs">
+                    <Code className="w-3 h-3 mr-1" />
+                    Maintainability
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Needs Migration</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>
+                  <div>
+                    <div className="font-medium">Border styling customizations</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="outline" className="text-xs">24 occurrences</Badge>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{borderColor: '#d97706', borderWidth: '2px'}}"}
+                </TableCell>
+                <TableCell>Form and input components</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="text-xs">
+                    <Code className="w-3 h-3 mr-1" />
+                    Maintainability
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Needs Migration</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>
+                  <div>
+                    <div className="font-medium">Absolute positioning layouts</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="outline" className="text-xs">21 occurrences</Badge>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{position: 'absolute', top: '10px', right: '10px'}}"}
+                </TableCell>
+                <TableCell>Overlay and tooltip components</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="text-xs">
+                    <Code className="w-3 h-3 mr-1" />
+                    Maintainability
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Review Required</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>
+                  <div>
+                    <div className="font-medium">Direct dangerouslySetInnerHTML usage</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="destructive" className="text-xs">20 occurrences</Badge>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"dangerouslySetInnerHTML={{__html: content}}"}
+                </TableCell>
+                <TableCell>Story content rendering</TableCell>
+                <TableCell>
+                  <Badge variant="destructive" className="text-xs">
+                    <AlertTriangle className="w-3 h-3 mr-1" />
+                    Critical
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="destructive" className="text-xs">Security Review</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>
+                  <div>
+                    <div className="font-medium">Transform and transition effects</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="outline" className="text-xs">12 occurrences</Badge>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{transform: 'rotate(45deg)', transition: 'all 0.3s'}}"}
+                </TableCell>
+                <TableCell>Animation components</TableCell>
+                <TableCell>
+                  <Badge variant="outline" className="text-xs">
+                    <FileText className="w-3 h-3 mr-1" />
+                    Performance
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Review Required</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>
+                  <div>
+                    <div className="font-medium">Z-index layering controls</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="outline" className="text-xs">4 occurrences</Badge>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{zIndex: 9999, position: 'fixed'}}"}
+                </TableCell>
+                <TableCell>Modal and overlay components</TableCell>
+                <TableCell>
+                  <Badge variant="default" className="text-xs">
+                    <Settings className="w-3 h-3 mr-1" />
+                    Intentional
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="default" className="text-xs">Approved Exception</Badge>
                 </TableCell>
               </TableRow>
               
