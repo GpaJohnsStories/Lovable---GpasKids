@@ -756,7 +756,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                           gap: '5px'
                         }}>
                           <div 
-                            className={`button-3d-base button-3d-standard button-3d-text-yellow ${isMaxSize ? 'button-3d-gray' : 'button-3d-blue'}`}
+                            className={`button-3d-base button-3d-standard ${isMaxSize ? 'opacity-60' : ''}`}
                             role="button" 
                             aria-label="Increase Font Size" 
                             title="Increase Font Size"
