@@ -3,9 +3,10 @@ import IconLibrarySection from "./reference/IconLibrarySection";
 import PreferredColorsSection from "./reference/PreferredColorsSection";
 import IconUploadSection from "./reference/IconUploadSection";
 import CssLibrarySection from "./reference/CssLibrarySection";
+import CssExceptionsSection from "./reference/CssExceptionsSection";
 import { Button } from "@/components/ui/button";
 
-type SectionType = "colors" | "upload" | "icons" | "css" | "all";
+type SectionType = "colors" | "upload" | "icons" | "css" | "cssxx" | "all";
 
 const ReferenceDashboard = () => {
   const [activeSection, setActiveSection] = useState<SectionType>("all");
@@ -15,6 +16,7 @@ const ReferenceDashboard = () => {
     { id: "upload" as const, label: "Upload Icon", component: <IconUploadSection /> },
     { id: "icons" as const, label: "Icon Library", component: <IconLibrarySection /> },
     { id: "css" as const, label: "CSS Library", component: <CssLibrarySection /> },
+    { id: "cssxx" as const, label: "CSS XX", component: <CssExceptionsSection /> },
   ];
 
   const handleSectionChange = (sectionId: SectionType) => {
