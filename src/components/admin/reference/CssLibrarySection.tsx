@@ -7,9 +7,25 @@ const CssLibrarySection = () => {
         <CardTitle>CSS Library</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-muted-foreground">
-          CSS documentation and reference will be displayed here.
-        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Class Name</th>
+              <th>Description</th>
+              <th>Used On</th>
+              <th>Preview</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>.trust-badge</td>
+              <td>Rounded badge with blue background</td>
+              <td>Footer, About page</td>
+              <td><div className="trust-badge">Preview</div></td>
+            </tr>
+            {/* Add more rows here */}
+          </tbody>
+        </table>
       </CardContent>
     </Card>
   );
