@@ -19,6 +19,26 @@ export default {
 			}
 		},
 		extend: {
+			fontSize: {
+				// Typography scale for proportional font sizing
+				'story-xs': ['0.75rem', { lineHeight: '1.2' }],
+				'story-sm': ['0.875rem', { lineHeight: '1.3' }],
+				'story-base': ['1rem', { lineHeight: '1.5' }],
+				'story-lg': ['1.125rem', { lineHeight: '1.5' }],
+				'story-xl': ['1.25rem', { lineHeight: '1.6' }],
+				'story-2xl': ['1.5rem', { lineHeight: '1.6' }],
+				'story-3xl': ['1.875rem', { lineHeight: '1.7' }],
+				'story-4xl': ['2.25rem', { lineHeight: '1.8' }],
+				// Heading typography scale for h3 elements
+				'story-h3-xs': ['1rem', { lineHeight: '1.3' }],
+				'story-h3-sm': ['1.125rem', { lineHeight: '1.4' }],
+				'story-h3-base': ['1.25rem', { lineHeight: '1.5' }],
+				'story-h3-lg': ['1.5rem', { lineHeight: '1.5' }],
+				'story-h3-xl': ['1.875rem', { lineHeight: '1.6' }],
+				'story-h3-2xl': ['2.25rem', { lineHeight: '1.7' }],
+				'story-h3-3xl': ['2.625rem', { lineHeight: '1.7' }],
+				'story-h3-4xl': ['3rem', { lineHeight: '1.8' }],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

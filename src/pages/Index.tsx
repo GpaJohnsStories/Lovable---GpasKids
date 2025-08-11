@@ -1,6 +1,6 @@
 
 import WelcomeHeader from "@/components/WelcomeHeader";
-import { WebTextBox } from "@/components/WebTextBox";
+import { ProportionalWebTextBox } from "@/components/ProportionalWebTextBox";
 import StorySection from "@/components/StorySection";
 import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -14,7 +14,7 @@ const Index = () => {
       <WelcomeHeader />
       
       <main className="container mx-auto px-4 pt-0">
-        <WebTextBox 
+        <ProportionalWebTextBox 
           webtextCode="SYS-WEL"
           borderColor="border-yellow-400"
           backgroundColor="#ADD8E6"

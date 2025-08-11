@@ -3,6 +3,16 @@ import React, { useState, useRef, useEffect, useId } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RefreshCw } from "lucide-react";
 import { useSuperAVContext } from '@/contexts/SuperAVContext';
+import { 
+  FontScaleStep, 
+  DEFAULT_FONT_SCALE, 
+  getNextLargerScale, 
+  getNextSmallerScale, 
+  isMinScale, 
+  isMaxScale,
+  getScaleDisplayName,
+  pixelSizeToScale
+} from '@/utils/fontScaleUtils';
 
 // SuperAV component - Unified audio and font controls
 
@@ -19,6 +29,8 @@ interface SuperAVProps {
   audioUrl?: string;
   fontSize?: number;
   onFontSizeChange?: (newSize: number) => void;
+  fontScale?: FontScaleStep;
+  onFontScaleChange?: (newScale: FontScaleStep) => void;
 }
 
 export const SuperAV: React.FC<SuperAVProps> = ({
@@ -31,7 +43,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   audioUrl,
   fontSize = 16,
   onFontSizeChange,
+  fontScale,
+  onFontScaleChange,
 }) => {
+  // Convert legacy fontSize to scale if using old system
+  const [currentScale, setCurrentScale] = useState<FontScaleStep>(() => {
+    if (fontScale) return fontScale;
+    return pixelSizeToScale(fontSize);
+  });
   const instanceId = useId();
   const superAVContext = useSuperAVContext();
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -116,21 +135,46 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     }
   };
 
-  // Font size control functions
-  const handleIncrease = () => {
-    if (onFontSizeChange && fontSize < 30) {
-      onFontSizeChange(fontSize + 1);
+  // Font scale control functions
+  const handleScaleIncrease = () => {
+    const nextScale = getNextLargerScale(currentScale);
+    setCurrentScale(nextScale);
+    
+    // Call both callbacks for backward compatibility
+    if (onFontScaleChange) {
+      onFontScaleChange(nextScale);
+    }
+    if (onFontSizeChange) {
+      // Convert scale to approximate pixel size for legacy components
+      const pixelSizes = { xs: 12, sm: 14, base: 16, lg: 18, xl: 20, '2xl': 24, '3xl': 30, '4xl': 36 };
+      onFontSizeChange(pixelSizes[nextScale] || 16);
     }
   };
 
-  const handleDecrease = () => {
-    if (onFontSizeChange && fontSize > 10) {
-      onFontSizeChange(fontSize - 1);
+  const handleScaleDecrease = () => {
+    const nextScale = getNextSmallerScale(currentScale);
+    setCurrentScale(nextScale);
+    
+    // Call both callbacks for backward compatibility
+    if (onFontScaleChange) {
+      onFontScaleChange(nextScale);
+    }
+    if (onFontSizeChange) {
+      // Convert scale to approximate pixel size for legacy components
+      const pixelSizes = { xs: 12, sm: 14, base: 16, lg: 18, xl: 20, '2xl': 24, '3xl': 30, '4xl': 36 };
+      onFontSizeChange(pixelSizes[nextScale] || 16);
     }
   };
 
-  const isMinSize = fontSize <= 10;
-  const isMaxSize = fontSize >= 30;
+  // Update current scale when fontScale prop changes
+  useEffect(() => {
+    if (fontScale && fontScale !== currentScale) {
+      setCurrentScale(fontScale);
+    }
+  }, [fontScale, currentScale]);
+
+  const isMinSize = isMinScale(currentScale);
+  const isMaxSize = isMaxScale(currentScale);
 
   React.useEffect(() => {
     if (isDragging) {
@@ -666,8 +710,11 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                       onMouseLeave={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1)')}
                       onMouseDown={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(0.95)')}
                       onMouseUp={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
-                      onClick={!isMaxSize ? handleIncrease : undefined}>
-                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '14px', color: '#ffff00', textAlign: 'center', display: 'block'}}>Make Words Bigger Size</span>
+                      onClick={!isMaxSize ? handleScaleIncrease : undefined}>
+                         <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '14px', color: '#ffff00', textAlign: 'center', display: 'block'}}>
+                           Make Words Bigger Size<br />
+                           <span style={{fontSize: '11px', opacity: 0.8}}>({getScaleDisplayName(currentScale)})</span>
+                         </span>
                       </div>
                     </td>
                     <td colSpan={2} width={120} height={55} style={{padding: '8px 2.5px 8px 2.5px', backgroundColor: '#F2BA15', borderRadius: '0 12px 12px 0'}}>
@@ -693,8 +740,11 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                       onMouseLeave={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1)')}
                       onMouseDown={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(0.95)')}
                       onMouseUp={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1.05)')}
-                      onClick={!isMinSize ? handleDecrease : undefined}>
-                        <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '14px', color: '#ffff00', textAlign: 'center', display: 'block'}}>Make Words Smaller Size</span>
+                      onClick={!isMinSize ? handleScaleDecrease : undefined}>
+                         <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '14px', color: '#ffff00', textAlign: 'center', display: 'block'}}>
+                           Make Words Smaller Size<br />
+                           <span style={{fontSize: '11px', opacity: 0.8}}>({getScaleDisplayName(currentScale)})</span>
+                         </span>
                       </div>
                     </td>
                   </tr>
