@@ -7,21 +7,21 @@ const CssLibrarySection = () => {
         <CardTitle>CSS Library</CardTitle>
       </CardHeader>
       <CardContent>
-        <table>
+        <table className="border-2 border-blue-500 border-collapse w-full">
           <thead>
             <tr>
-              <th>Class Name</th>
-              <th>Description</th>
-              <th>Used On</th>
-              <th>Preview</th>
+              <th className="border border-amber-800 p-2 text-left break-words whitespace-normal">Class Name</th>
+              <th className="border border-amber-800 p-2 text-left break-words whitespace-normal">Description</th>
+              <th className="border border-amber-800 p-2 text-left break-words whitespace-normal">Used On</th>
+              <th className="border border-amber-800 p-2 text-left break-words whitespace-normal">Preview</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>.trust-badge</td>
-              <td>Rounded badge with blue background</td>
-              <td>Footer, About page</td>
-              <td><div className="trust-badge">Preview</div></td>
+              <td className="border border-amber-800 p-2 break-words whitespace-normal">.trust-badge</td>
+              <td className="border border-amber-800 p-2 break-words whitespace-normal">Rounded badge with blue background</td>
+              <td className="border border-amber-800 p-2 break-words whitespace-normal">Footer, About page</td>
+              <td className="border border-amber-800 p-2 break-words whitespace-normal"><div className="trust-badge">Preview</div></td>
             </tr>
             {/* Add more rows here */}
           </tbody>
