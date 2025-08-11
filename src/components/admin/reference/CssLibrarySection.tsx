@@ -6,7 +6,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Search, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Search, X, ChevronDown, ChevronUp, AlertTriangle, Code, FileText } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 
 const CssLibrarySection = () => {
@@ -864,6 +865,219 @@ const CssLibrarySection = () => {
             )}
           </DialogContent>
         </Dialog>
+
+        {/* CSS Exceptions Section */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold mb-4 text-orange-800">CSS Exceptions</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Inline styles and CSS exceptions found throughout the codebase that should be reviewed for migration to the CSS library.
+          </p>
+          
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-1/5">Description</TableHead>
+                <TableHead className="w-1/3">Code Example</TableHead>
+                <TableHead className="w-1/6">Location</TableHead>
+                <TableHead className="w-1/8">Type</TableHead>
+                <TableHead className="w-1/8">Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>Font family override in Input component</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{fontFamily: 'Arial, sans-serif', fontStyle: 'normal', color: 'black'}}"}
+                </TableCell>
+                <TableCell>src/components/ui/input.tsx:15</TableCell>
+                <TableCell>
+                  <Badge variant="destructive" className="text-xs">
+                    <AlertTriangle className="w-3 h-3 mr-1" />
+                    Critical
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Needs Migration</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>Inline padding and margin styles</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{padding: '10px', margin: '5px auto'}}"}
+                </TableCell>
+                <TableCell>Multiple components</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="text-xs">
+                    <Code className="w-3 h-3 mr-1" />
+                    Maintainability
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Review Required</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>Background color overrides</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{backgroundColor: '#f59e0b'}}"}
+                </TableCell>
+                <TableCell>Story components</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="text-xs">
+                    <Code className="w-3 h-3 mr-1" />
+                    Maintainability
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Needs Migration</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>Fixed positioning for modals</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{position: 'fixed', zIndex: 9999}}"}
+                </TableCell>
+                <TableCell>Modal components</TableCell>
+                <TableCell>
+                  <Badge variant="outline" className="text-xs">
+                    <FileText className="w-3 h-3 mr-1" />
+                    Performance
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="default" className="text-xs">Approved Exception</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>DangerouslySetInnerHTML usage</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"dangerouslySetInnerHTML={{__html: content}}"}
+                </TableCell>
+                <TableCell>Story content renderers</TableCell>
+                <TableCell>
+                  <Badge variant="destructive" className="text-xs">
+                    <AlertTriangle className="w-3 h-3 mr-1" />
+                    Critical
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="destructive" className="text-xs">Security Review</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>Custom border styles</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{border: '2px solid #f59e0b', borderRadius: '8px'}}"}
+                </TableCell>
+                <TableCell>Card components</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="text-xs">
+                    <Code className="w-3 h-3 mr-1" />
+                    Maintainability
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Needs Migration</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>Transform and transition effects</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{transform: 'scale(1.05)', transition: 'all 0.2s'}}"}
+                </TableCell>
+                <TableCell>Interactive elements</TableCell>
+                <TableCell>
+                  <Badge variant="outline" className="text-xs">
+                    <FileText className="w-3 h-3 mr-1" />
+                    Performance
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Review Required</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>Width and height constraints</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{width: '100%', maxWidth: '800px', height: 'auto'}}"}
+                </TableCell>
+                <TableCell>Layout components</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="text-xs">
+                    <Code className="w-3 h-3 mr-1" />
+                    Maintainability
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Needs Migration</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>Text color and font overrides</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{color: '#1f2937', fontSize: '14px', fontWeight: 'bold'}}"}
+                </TableCell>
+                <TableCell>Text components</TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="text-xs">
+                    <Code className="w-3 h-3 mr-1" />
+                    Maintainability
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Needs Migration</Badge>
+                </TableCell>
+              </TableRow>
+              
+              <TableRow>
+                <TableCell>Box shadow customizations</TableCell>
+                <TableCell className="font-mono text-xs">
+                  {"style={{boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'}}"}
+                </TableCell>
+                <TableCell>Card and button components</TableCell>
+                <TableCell>
+                  <Badge variant="outline" className="text-xs">
+                    <FileText className="w-3 h-3 mr-1" />
+                    Performance
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <Badge variant="warning" className="text-xs">Review Required</Badge>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          
+          <div className="mt-4 text-sm text-muted-foreground">
+            <p className="mb-2">
+              <strong>Exception Types:</strong>
+            </p>
+            <ul className="space-y-1 ml-4">
+              <li>• <strong>Critical:</strong> Security risks or functionality breaking changes</li>
+              <li>• <strong>Performance:</strong> Inline styles affecting render performance</li>
+              <li>• <strong>Maintainability:</strong> Hardcoded values that should use design system</li>
+              <li>• <strong>Legacy:</strong> Old patterns pending migration</li>
+            </ul>
+            
+            <p className="mt-4 mb-2">
+              <strong>Status Classifications:</strong>
+            </p>
+            <ul className="space-y-1 ml-4">
+              <li>• <strong>Needs Migration:</strong> Should be converted to CSS classes</li>
+              <li>• <strong>Review Required:</strong> Needs evaluation for best approach</li>
+              <li>• <strong>Approved Exception:</strong> Justified for technical reasons</li>
+              <li>• <strong>Security Review:</strong> Requires immediate security assessment</li>
+            </ul>
+          </div>
+        </div>
       </CardContent>
     </Card>
     </TooltipProvider>
