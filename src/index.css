@@ -101,6 +101,45 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Proportional typography scaling classes */
+  .proportional-content h3 {
+    font-size: var(--h3-size);
+    line-height: var(--h3-line-height);
+    font-weight: bold;
+    margin-bottom: 1rem;
+    font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
+  }
+  
+  .proportional-content p,
+  .proportional-content span,
+  .proportional-content em,
+  .proportional-content strong,
+  .proportional-content i,
+  .proportional-content b {
+    font-size: var(--p-size);
+    line-height: var(--p-line-height);
+    font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
+  }
+  
+  .proportional-content li {
+    font-size: var(--p-size);
+    line-height: var(--p-line-height);
+    margin-bottom: 0.25rem;
+    font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
+  }
+  
+  .proportional-content ul {
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-bottom: 0.75rem;
+  }
+  
+  .proportional-content ol {
+    list-style-type: decimal;
+    list-style-position: inside;
+    margin-bottom: 0.75rem;
+  }
 }
 
 /* Enhanced scrollbar visibility for help popup */

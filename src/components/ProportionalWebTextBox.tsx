@@ -68,6 +68,28 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
 
   // Get typography classes for current scale
   const typographyClasses = getTypographyClasses(fontScale);
+  
+  // CSS custom properties for proportional scaling
+  const getScaleStyles = () => {
+    const scaleMap = {
+      'xs': { h3: '1rem', h3Line: '1.3', p: '0.75rem', pLine: '1.2' },
+      'sm': { h3: '1.125rem', h3Line: '1.4', p: '0.875rem', pLine: '1.3' },
+      'base': { h3: '1.25rem', h3Line: '1.5', p: '1rem', pLine: '1.5' },
+      'lg': { h3: '1.5rem', h3Line: '1.5', p: '1.125rem', pLine: '1.5' },
+      'xl': { h3: '1.875rem', h3Line: '1.6', p: '1.25rem', pLine: '1.6' },
+      '2xl': { h3: '2.25rem', h3Line: '1.7', p: '1.5rem', pLine: '1.6' },
+      '3xl': { h3: '2.625rem', h3Line: '1.7', p: '1.875rem', pLine: '1.7' },
+      '4xl': { h3: '3rem', h3Line: '1.8', p: '2.25rem', pLine: '1.8' },
+    };
+    
+    const scale = scaleMap[fontScale];
+    return {
+      '--h3-size': scale.h3,
+      '--h3-line-height': scale.h3Line,
+      '--p-size': scale.p,
+      '--p-line-height': scale.pLine,
+    } as React.CSSProperties;
+  };
 
   // Special styling for SYS-WEL content
   if (isSysWel) {
@@ -118,20 +140,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
               {/* Content below title with proportional scaling */}
               <div className="flex-1 min-w-0">
                 <div 
-                  className={`
-                    font-handwritten text-blue-800 leading-relaxed break-words
-                    ${typographyClasses.base}
-                    [&>h3]:${typographyClasses.h3} [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>h3]:font-handwritten
-                    [&>p]:${typographyClasses.p} [&>p]:mb-3 [&>p]:break-words [&>p]:font-handwritten
-                    [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten
-                    [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten
-                    [&>li]:${typographyClasses.li} [&>li]:mb-1 [&>li]:font-handwritten
-                    [&>span]:${typographyClasses.span} [&>span]:font-handwritten
-                    [&>em]:${typographyClasses.em} [&>em]:font-handwritten
-                    [&>strong]:${typographyClasses.strong} [&>strong]:font-handwritten
-                    [&>i]:${typographyClasses.i} [&>i]:font-handwritten
-                    [&>b]:${typographyClasses.b} [&>b]:font-handwritten
-                  `}
+                  className="proportional-content text-blue-800 leading-relaxed break-words"
+                  style={getScaleStyles()}
                   dangerouslySetInnerHTML={{ __html: getContent() }}
                 />
               </div>
@@ -210,20 +220,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           
           {/* Content that wraps around the floated photo with proportional scaling */}
           <div 
-            className={`
-              font-handwritten text-amber-900 leading-relaxed
-              ${typographyClasses.base}
-              [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten
-              [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten
-              [&>li]:${typographyClasses.li} [&>li]:mb-1 [&>li]:font-handwritten
-              [&>p]:${typographyClasses.p} [&>p]:font-handwritten
-              [&>h3]:${typographyClasses.h3} [&>h3]:font-handwritten
-              [&>span]:${typographyClasses.span} [&>span]:font-handwritten
-              [&>em]:${typographyClasses.em} [&>em]:font-handwritten
-              [&>strong]:${typographyClasses.strong} [&>strong]:font-handwritten
-              [&>i]:${typographyClasses.i} [&>i]:font-handwritten
-              [&>b]:${typographyClasses.b} [&>b]:font-handwritten
-            `}
+            className="proportional-content text-amber-900 leading-relaxed"
+            style={getScaleStyles()}
             dangerouslySetInnerHTML={{ __html: getContent() }}
           />
           

@@ -158,4 +158,11 @@ export default {
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
+	safelist: [
+		// Ensure all typography scale classes are compiled
+		'text-story-xs', 'text-story-sm', 'text-story-base', 'text-story-lg', 
+		'text-story-xl', 'text-story-2xl', 'text-story-3xl', 'text-story-4xl',
+		'text-story-h3-xs', 'text-story-h3-sm', 'text-story-h3-base', 'text-story-h3-lg',
+		'text-story-h3-xl', 'text-story-h3-2xl', 'text-story-h3-3xl', 'text-story-h3-4xl',
+	],
 } satisfies Config;
