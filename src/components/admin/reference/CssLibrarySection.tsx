@@ -1,6 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState } from "react";
 
 const CssLibrarySection = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+
   const cssClasses = [
     // Typography
     {
@@ -383,6 +387,12 @@ const CssLibrarySection = () => {
     }
   ];
 
+  // Extract unique categories and create filtered data
+  const categories = Array.from(new Set(cssClasses.map(cls => cls.category))).sort();
+  const filteredCssClasses = selectedCategory === "all" 
+    ? cssClasses 
+    : cssClasses.filter(cls => cls.category === selectedCategory);
+
   const renderPreview = (cssClass: any) => {
     // Custom CSS classes
     if (cssClass.name === ".trust-badge") {
@@ -461,6 +471,31 @@ const CssLibrarySection = () => {
         <CardTitle>CSS Library</CardTitle>
       </CardHeader>
       <CardContent>
+        {/* Category Filter */}
+        <div className="mb-6 flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <label htmlFor="category-filter" className="text-sm font-medium text-orange-800">
+              Filter by Category:
+            </label>
+            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+              <SelectTrigger className="w-48 border-amber-300">
+                <SelectValue placeholder="All Categories" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {categories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            Showing {filteredCssClasses.length} of {cssClasses.length} classes
+          </div>
+        </div>
+
         <table className="table-fixed border-2 border-blue-500 border-collapse w-full">
           <thead>
             <tr>
@@ -472,7 +507,7 @@ const CssLibrarySection = () => {
             </tr>
           </thead>
           <tbody>
-            {cssClasses.map((cssClass, index) => (
+            {filteredCssClasses.map((cssClass, index) => (
               <tr key={index}>
                 <td className="border border-amber-800 p-2 break-words whitespace-normal font-mono text-xs max-w-0">
                   {cssClass.name}
