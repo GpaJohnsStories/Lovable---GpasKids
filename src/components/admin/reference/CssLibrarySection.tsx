@@ -461,34 +461,34 @@ const CssLibrarySection = () => {
         <CardTitle>CSS Library</CardTitle>
       </CardHeader>
       <CardContent>
-        <table className="border-2 border-blue-500 border-collapse w-full">
+        <table className="table-fixed border-2 border-blue-500 border-collapse w-full">
           <thead>
             <tr>
-              <th className="border border-amber-800 p-2 text-left break-words whitespace-normal">Class Name</th>
-              <th className="border border-amber-800 p-2 text-left break-words whitespace-normal">Description</th>
-              <th className="border border-amber-800 p-2 text-left break-words whitespace-normal">Used On</th>
-              <th className="border border-amber-800 p-2 text-left break-words whitespace-normal">Category</th>
-              <th className="border border-amber-800 p-2 text-left break-words whitespace-normal">Preview</th>
+              <th className="w-80 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Class Name</th>
+              <th className="w-96 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Description</th>
+              <th className="w-64 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Used On</th>
+              <th className="w-32 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Category</th>
+              <th className="w-48 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Preview</th>
             </tr>
           </thead>
           <tbody>
             {cssClasses.map((cssClass, index) => (
               <tr key={index}>
-                <td className="border border-amber-800 p-2 break-words whitespace-normal font-mono text-sm">
+                <td className="border border-amber-800 p-2 break-words whitespace-normal font-mono text-xs max-w-0">
                   {cssClass.name}
                 </td>
-                <td className="border border-amber-800 p-2 break-words whitespace-normal">
+                <td className="border border-amber-800 p-2 break-words whitespace-normal max-w-0">
                   {cssClass.description}
                 </td>
-                <td className="border border-amber-800 p-2 break-words whitespace-normal">
+                <td className="border border-amber-800 p-2 break-words whitespace-normal max-w-0">
                   {cssClass.usage}
                 </td>
-                <td className="border border-amber-800 p-2 break-words whitespace-normal">
+                <td className="border border-amber-800 p-2 break-words whitespace-normal max-w-0">
                   <span className="px-2 py-1 bg-gray-100 rounded text-xs">
                     {cssClass.category}
                   </span>
                 </td>
-                <td className="border border-amber-800 p-2 break-words whitespace-normal">
+                <td className="border border-amber-800 p-2 break-words whitespace-normal max-w-0">
                   {renderPreview(cssClass)}
                 </td>
               </tr>
