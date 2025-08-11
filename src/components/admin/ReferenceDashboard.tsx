@@ -19,6 +19,10 @@ const ReferenceDashboard = () => {
 
   const handleSectionChange = (sectionId: SectionType) => {
     setActiveSection(sectionId);
+    handleScrollToTop();
+  };
+
+  const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -71,6 +75,16 @@ const ReferenceDashboard = () => {
       <div className="space-y-8">
         {renderSections()}
       </div>
+
+      {/* Floating Top Button */}
+      <Button
+        onClick={handleScrollToTop}
+        className="fixed bottom-6 right-6 z-50 rounded-full w-12 h-12 shadow-lg hover-scale"
+        size="icon"
+        title="Scroll to top"
+      >
+        Top
+      </Button>
     </div>
   );
 };
