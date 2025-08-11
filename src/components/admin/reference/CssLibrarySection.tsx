@@ -471,29 +471,8 @@ const CssLibrarySection = () => {
         <CardTitle>CSS Library</CardTitle>
       </CardHeader>
       <CardContent>
-        {/* Category Filter */}
-        <div className="mb-6 flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <label htmlFor="category-filter" className="text-sm font-medium text-orange-800">
-              Filter by Category:
-            </label>
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-48 border-amber-300">
-                <SelectValue placeholder="All Categories" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                {categories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="text-sm text-muted-foreground">
-            Showing {filteredCssClasses.length} of {cssClasses.length} classes
-          </div>
+        <div className="mb-2 text-sm text-muted-foreground">
+          Showing {filteredCssClasses.length} of {cssClasses.length} classes
         </div>
 
         <table className="table-fixed border-2 border-blue-500 border-collapse w-full">
@@ -502,7 +481,21 @@ const CssLibrarySection = () => {
               <th className="w-80 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Class Name</th>
               <th className="w-96 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Description</th>
               <th className="w-64 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Used On</th>
-              <th className="w-32 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Category</th>
+              <th className="w-32 border border-amber-800 p-1 text-left break-words whitespace-normal max-w-0">
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger className="w-full border-amber-300 text-xs h-8">
+                    <SelectValue placeholder="Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    {categories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </th>
               <th className="w-48 border border-amber-800 p-2 text-left break-words whitespace-normal max-w-0">Preview</th>
             </tr>
           </thead>
