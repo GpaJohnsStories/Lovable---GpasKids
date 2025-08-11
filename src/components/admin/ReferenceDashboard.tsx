@@ -1,6 +1,7 @@
 import IconLibrarySection from "./reference/IconLibrarySection";
 import PreferredColorsSection from "./reference/PreferredColorsSection";
 import IconUploadSection from "./reference/IconUploadSection";
+import CssLibrarySection from "./reference/CssLibrarySection";
 
 const ReferenceDashboard = () => {
   return (
@@ -19,6 +20,8 @@ const ReferenceDashboard = () => {
       <IconUploadSection />
       
       <IconLibrarySection />
+      
+      <CssLibrarySection />
     </div>
   );
 };
