@@ -1,8 +1,9 @@
 
 import React, { useState, useRef, useEffect, useId } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { RefreshCw, ArrowRight } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { useSuperAVContext } from '@/contexts/SuperAVContext';
+import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { 
   FontScaleStep, 
   DEFAULT_FONT_SCALE, 
@@ -18,6 +19,26 @@ import {
 
 // Font constant from tailwind.config.ts font-fun definition
 const FONT_FUN = 'Kalam, "Comic Sans MS", Arial, sans-serif';
+
+// Custom Arrow Icon Component
+const CustomArrowIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('ICO-ARR.gif');
+  
+  if (isLoading) return <div style={{ width: '18px', height: '18px' }} />;
+  if (error || !iconUrl) return <div style={{ width: '18px', height: '18px', background: '#814d2e' }} />;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Arrow" 
+      style={{ 
+        height: '18px', 
+        width: 'auto',
+        objectFit: 'contain'
+      }} 
+    />
+  );
+};
 
 interface SuperAVProps {
   isOpen: boolean;
@@ -706,7 +727,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                           color: '#814d2e'
                         }}>
                           <span>Change word size</span>
-                          <ArrowRight size={14} color="#814d2e" />
+                          <CustomArrowIcon />
                         </div>
                         
                         {/* Right side: Two 55x55 buttons */}
