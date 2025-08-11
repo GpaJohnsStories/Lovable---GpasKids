@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const CssLibrarySection = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc' | 'none'>('none');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   const cssClasses = [
     // Typography
@@ -398,23 +398,16 @@ const CssLibrarySection = () => {
     
   // Then apply sorting
   const filteredCssClasses = [...categoryFilteredClasses].sort((a, b) => {
-    if (sortDirection === 'none') return 0;
     const compare = a.name.localeCompare(b.name);
     return sortDirection === 'asc' ? compare : -compare;
   });
 
   const handleSort = () => {
-    setSortDirection(current => {
-      if (current === 'none') return 'asc';
-      if (current === 'asc') return 'desc';
-      return 'none';
-    });
+    setSortDirection(current => current === 'asc' ? 'desc' : 'asc');
   };
 
   const getSortIcon = () => {
-    if (sortDirection === 'asc') return ' ↑';
-    if (sortDirection === 'desc') return ' ↓';
-    return ' ↕';
+    return sortDirection === 'asc' ? ' ↑' : ' ↓';
   };
 
   const renderPreview = (cssClass: any) => {
