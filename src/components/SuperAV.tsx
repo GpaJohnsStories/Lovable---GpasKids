@@ -711,7 +711,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                       onMouseDown={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(0.95)')}
                       onMouseUp={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
                       onClick={!isMaxSize ? handleScaleIncrease : undefined}>
-                         <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '14px', color: '#ffff00', textAlign: 'center', display: 'block'}}>
+                         <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', color: '#ffff00', textAlign: 'center', display: 'block'}}>
                            Make Words Bigger Size<br />
                            <span style={{fontSize: '11px', opacity: 0.8}}>({getScaleDisplayName(currentScale)})</span>
                          </span>
@@ -741,7 +741,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                       onMouseDown={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(0.95)')}
                       onMouseUp={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1.05)')}
                       onClick={!isMinSize ? handleScaleDecrease : undefined}>
-                         <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '14px', color: '#ffff00', textAlign: 'center', display: 'block'}}>
+                         <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', color: '#ffff00', textAlign: 'center', display: 'block'}}>
                            Make Words Smaller Size<br />
                            <span style={{fontSize: '11px', opacity: 0.8}}>({getScaleDisplayName(currentScale)})</span>
                          </span>
