@@ -773,11 +773,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            alignItems: 'center',
                            gap: '6px'
                          }}>
-                           <span style={{
-                             fontSize: '18px',
-                             color: '#814d2e',
-                             fontWeight: 'bold'
-                           }}>Aa</span>
+                           <img 
+                             src="/lovable-uploads/ICO-CFH.gif" 
+                             alt="Change font size"
+                             style={{
+                               width: '24px',
+                               height: '24px'
+                             }}
+                           />
                            <CustomArrowIcon />
                          </div>
                         
