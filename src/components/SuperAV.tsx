@@ -60,6 +60,26 @@ const CustomCCPIcon: React.FC = () => {
   );
 };
 
+// Custom CCM Icon Component for smaller size button
+const CustomCCMIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('ICO-CCM.png');
+  
+  if (isLoading) return <div style={{ width: '45px', height: '45px' }} />;
+  if (error || !iconUrl) return <span>smaller</span>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Make Smaller" 
+      style={{ 
+        height: '45px', 
+        width: '45px',
+        objectFit: 'contain'
+      }} 
+    />
+  );
+};
+
 interface SuperAVProps {
   isOpen: boolean;
   onClose: () => void;
@@ -780,7 +800,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                               pointerEvents: isMinSize ? 'none' : 'auto'
                             }}
                             onClick={!isMinSize ? handleScaleDecrease : undefined}>
-                            <CustomCCPIcon />
+                             <CustomCCMIcon />
                           </div>
                         </div>
                       </div>
