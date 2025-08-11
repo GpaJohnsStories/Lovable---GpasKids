@@ -64,7 +64,7 @@ const PreferredColorsSection = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Preferred Colors for Children's Story Website</CardTitle>
+        <CardTitle className="text-xl font-semibold">Color Library</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
