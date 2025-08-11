@@ -767,19 +767,22 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                             height: '100%',
                             width: '100%'
                            }}>
-                            {/* Left side: Text + Arrow */}
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          fontFamily: FONT_FUN,
-                          fontWeight: 'bold',
-                          fontSize: '14px',
-                          color: '#814d2e'
-                        }}>
-                          <span>Change word size</span>
-                          <CustomArrowIcon />
-                        </div>
+                             {/* Left side: Icon + Arrow */}
+                         <div style={{
+                           display: 'flex',
+                           alignItems: 'center',
+                           gap: '6px'
+                         }}>
+                           <img 
+                             src="/lovable-uploads/ICO-CFH.gif" 
+                             alt="Change font size"
+                             style={{
+                               width: '24px',
+                               height: '24px'
+                             }}
+                           />
+                           <CustomArrowIcon />
+                         </div>
                         
                         {/* Right side: Two 55x55 buttons */}
                         <div style={{
