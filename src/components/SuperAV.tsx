@@ -770,7 +770,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                           </div>
                           
                           <div 
-                            className={`button-3d-base button-3d-standard button-3d-text-yellow ${isMinSize ? 'button-3d-gray' : 'button-3d-purple'}`}
+                            className={`button-3d-base button-3d-standard ${isMinSize ? 'opacity-60' : ''}`}
                             role="button" 
                             aria-label="Decrease Font Size" 
                             title="Decrease Font Size"
@@ -780,7 +780,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                               pointerEvents: isMinSize ? 'none' : 'auto'
                             }}
                             onClick={!isMinSize ? handleScaleDecrease : undefined}>
-                            smaller
+                            <CustomCCPIcon />
                           </div>
                         </div>
                       </div>
