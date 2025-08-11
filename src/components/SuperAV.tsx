@@ -748,15 +748,26 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
                   {/* Row 7: Font Size Control Section - New Flex Layout */}
                   <tr>
-                    <td colSpan={4} height={55} style={{padding: '8px', backgroundColor: 'white', border: '2px solid orange', borderRadius: '12px'}}>
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        height: '100%',
-                        width: '100%'
-                      }}>
-                        {/* Left side: Text + Arrow */}
+                     <td colSpan={4} height={55} style={{
+                       padding: '3px', 
+                       background: 'linear-gradient(145deg, #814d2e, #6b3f24)',
+                       borderRadius: '12px',
+                       boxShadow: '0 4px 8px rgba(129, 77, 46, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
+                     }}>
+                       <div style={{
+                         padding: '8px',
+                         backgroundColor: 'white',
+                         borderRadius: '9px',
+                         height: '100%'
+                        }}>
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            height: '100%',
+                            width: '100%'
+                           }}>
+                            {/* Left side: Text + Arrow */}
                         <div style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -802,9 +813,10 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                             onClick={!isMinSize ? handleScaleDecrease : undefined}>
                              <CustomCCMIcon />
                           </div>
+                         </div>
+                       </div>
                         </div>
-                      </div>
-                    </td>
+                     </td>
                   </tr>
                 </tbody>
              </table>
