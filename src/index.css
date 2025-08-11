@@ -261,3 +261,84 @@
   border-bottom: 7px solid hsl(var(--border));
   margin-bottom: -1px;
 }
+
+/* 3D Button System for SuperAV and site-wide use */
+.button-3d-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid rgba(255,255,255,0.2);
+  transform: scale(1);
+  font-family: 'Kalam', 'Comic Sans MS', Arial, sans-serif;
+  font-weight: bold;
+  text-align: center;
+}
+
+.button-3d-base:hover {
+  transform: scale(1.05);
+}
+
+.button-3d-base:active {
+  transform: scale(0.95);
+}
+
+.button-3d-standard {
+  width: 55px;
+  height: 55px;
+}
+
+.button-3d-green {
+  background: linear-gradient(145deg, #22c55e, #16a34a);
+}
+
+.button-3d-amber {
+  background: linear-gradient(145deg, #fbbf24, #f59e0b);
+}
+
+.button-3d-orange {
+  background: linear-gradient(145deg, #fb923c, #F97316);
+}
+
+.button-3d-red {
+  background: linear-gradient(145deg, #ef4444, #dc2626);
+}
+
+.button-3d-light-green {
+  background: linear-gradient(145deg, #86efac, #65d997);
+}
+
+.button-3d-dark-green {
+  background: linear-gradient(145deg, #16a34a, #15803d);
+}
+
+.button-3d-blue {
+  background: linear-gradient(145deg, #3b82f6, #2563eb);
+}
+
+.button-3d-purple {
+  background: linear-gradient(145deg, #a855f7, #9333ea);
+}
+
+.button-3d-gray {
+  background: linear-gradient(145deg, #9ca3af, #6b7280);
+}
+
+.button-3d-text-white {
+  color: white;
+}
+
+.button-3d-text-brown {
+  color: #814d2e;
+}
+
+.button-3d-text-gold {
+  color: #F2BA15;
+}
+
+.button-3d-text-yellow {
+  color: #ffff00;
+}

@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect, useId } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, ArrowRight } from "lucide-react";
 import { useSuperAVContext } from '@/contexts/SuperAVContext';
 import { 
   FontScaleStep, 
@@ -680,71 +680,68 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                     </td>
                   </tr>
 
-                  {/* Row 6: Font Size Header Row */}
+                  {/* Row 6: Font Size Section Gap */}
                   <tr>
                     <td colSpan={4} height={10} style={{backgroundColor: 'transparent', border: 'none'}}></td>
                   </tr>
 
-                  {/* Row 8: Font Size Control Buttons */}
+                  {/* Row 7: Font Size Control Section - New Flex Layout */}
                   <tr>
-                    <td colSpan={2} width={120} height={55} style={{padding: '8px 2.5px 8px 2.5px', backgroundColor: '#F2BA15', borderRadius: '12px 0 0 12px'}}>
+                    <td colSpan={4} height={55} style={{padding: '8px', backgroundColor: '#F2BA15', borderRadius: '12px'}}>
                       <div style={{
-                        width: '115px',
-                        height: '55px',
-                        background: isMaxSize ? 'linear-gradient(145deg, #9ca3af, #6b7280)' : 'linear-gradient(145deg, #3b82f6, #2563eb)',
-                        borderRadius: '12px',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                        cursor: isMaxSize ? 'not-allowed' : 'pointer',
-                        transition: 'all 0.15s ease',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        transform: 'scale(1)',
-                        opacity: isMaxSize ? 0.6 : 1
-                      }} 
-                      role="button" 
-                      aria-label="Increase Font Size" 
-                      title="Increase Font Size"
-                      onMouseEnter={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
-                      onMouseLeave={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1)')}
-                      onMouseDown={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(0.95)')}
-                      onMouseUp={(e) => !isMaxSize && (e.currentTarget.style.transform = 'scale(1.05)')}
-                      onClick={!isMaxSize ? handleScaleIncrease : undefined}>
-                         <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', color: '#ffff00', textAlign: 'center', display: 'block'}}>
-                           Make Words Bigger Size<br />
-                           <span style={{fontSize: '11px', opacity: 0.8}}>({getScaleDisplayName(currentScale)})</span>
-                         </span>
-                      </div>
-                    </td>
-                    <td colSpan={2} width={120} height={55} style={{padding: '8px 2.5px 8px 2.5px', backgroundColor: '#F2BA15', borderRadius: '0 12px 12px 0'}}>
-                      <div style={{
-                        width: '115px',
-                        height: '55px',
-                        background: isMinSize ? 'linear-gradient(145deg, #9ca3af, #6b7280)' : 'linear-gradient(145deg, #a855f7, #9333ea)',
-                        borderRadius: '12px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                        cursor: isMinSize ? 'not-allowed' : 'pointer',
-                        transition: 'all 0.15s ease',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        transform: 'scale(1)',
-                        opacity: isMinSize ? 0.6 : 1
-                      }} 
-                      role="button" 
-                      aria-label="Decrease Font Size" 
-                      title="Decrease Font Size"
-                      onMouseEnter={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1.05)')}
-                      onMouseLeave={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1)')}
-                      onMouseDown={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(0.95)')}
-                      onMouseUp={(e) => !isMinSize && (e.currentTarget.style.transform = 'scale(1.05)')}
-                      onClick={!isMinSize ? handleScaleDecrease : undefined}>
-                         <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', color: '#ffff00', textAlign: 'center', display: 'block'}}>
-                           Make Words Smaller Size<br />
-                           <span style={{fontSize: '11px', opacity: 0.8}}>({getScaleDisplayName(currentScale)})</span>
-                         </span>
+                        justifyContent: 'space-between',
+                        height: '100%',
+                        width: '100%'
+                      }}>
+                        {/* Left side: Text + Arrow */}
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          fontFamily: FONT_FUN,
+                          fontWeight: 'bold',
+                          fontSize: '14px',
+                          color: '#814d2e'
+                        }}>
+                          <span>Change word size</span>
+                          <ArrowRight size={14} color="#814d2e" />
+                        </div>
+                        
+                        {/* Right side: Two 55x55 buttons */}
+                        <div style={{
+                          display: 'flex',
+                          gap: '5px'
+                        }}>
+                          <div 
+                            className={`button-3d-base button-3d-standard button-3d-text-yellow ${isMaxSize ? 'button-3d-gray' : 'button-3d-blue'}`}
+                            role="button" 
+                            aria-label="Increase Font Size" 
+                            title="Increase Font Size"
+                            style={{
+                              cursor: isMaxSize ? 'not-allowed' : 'pointer',
+                              opacity: isMaxSize ? 0.6 : 1,
+                              pointerEvents: isMaxSize ? 'none' : 'auto'
+                            }}
+                            onClick={!isMaxSize ? handleScaleIncrease : undefined}>
+                            BIGGER
+                          </div>
+                          
+                          <div 
+                            className={`button-3d-base button-3d-standard button-3d-text-yellow ${isMinSize ? 'button-3d-gray' : 'button-3d-purple'}`}
+                            role="button" 
+                            aria-label="Decrease Font Size" 
+                            title="Decrease Font Size"
+                            style={{
+                              cursor: isMinSize ? 'not-allowed' : 'pointer',
+                              opacity: isMinSize ? 0.6 : 1,
+                              pointerEvents: isMinSize ? 'none' : 'auto'
+                            }}
+                            onClick={!isMinSize ? handleScaleDecrease : undefined}>
+                            smaller
+                          </div>
+                        </div>
                       </div>
                     </td>
                   </tr>
