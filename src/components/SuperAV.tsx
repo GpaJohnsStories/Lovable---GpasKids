@@ -40,6 +40,26 @@ const CustomArrowIcon: React.FC = () => {
   );
 };
 
+// Custom CCP Icon Component for bigger size button
+const CustomCCPIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('ICO-CCP.png');
+  
+  if (isLoading) return <div style={{ width: '45px', height: '45px' }} />;
+  if (error || !iconUrl) return <span>BIGGER</span>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Make Bigger" 
+      style={{ 
+        height: '45px', 
+        width: '45px',
+        objectFit: 'contain'
+      }} 
+    />
+  );
+};
+
 interface SuperAVProps {
   isOpen: boolean;
   onClose: () => void;
@@ -746,7 +766,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                               pointerEvents: isMaxSize ? 'none' : 'auto'
                             }}
                             onClick={!isMaxSize ? handleScaleIncrease : undefined}>
-                            BIGGER
+                             <CustomCCPIcon />
                           </div>
                           
                           <div 
