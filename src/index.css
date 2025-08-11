@@ -44,6 +44,14 @@
     --vote-ok: 45 93% 47%; /* keeping existing yellow/orange */
     --vote-ok-hover: 45 93% 42%; /* darker yellow/orange */
     
+    /* Status indicator colors */
+    --success: 142 76% 36%; /* green-600 for active status */
+    --success-foreground: 0 0% 100%; /* white text */
+    --warning: 45 93% 47%; /* amber-500 for review status */
+    --warning-foreground: 0 0% 100%; /* white text */
+    --info: 217 91% 60%; /* blue-600 for consolidate status */
+    --info-foreground: 0 0% 100%; /* white text */
+
     --radius: 0.5rem;
   }
   .dark {
@@ -71,6 +79,14 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    
+    /* Status indicator colors - dark mode */
+    --success: 142 76% 36%; /* same green for dark mode */
+    --success-foreground: 0 0% 100%; /* white text */
+    --warning: 45 93% 47%; /* same amber for dark mode */
+    --warning-foreground: 0 0% 100%; /* white text */
+    --info: 217 91% 60%; /* same blue for dark mode */
+    --info-foreground: 0 0% 100%; /* white text */
   }
 }
 

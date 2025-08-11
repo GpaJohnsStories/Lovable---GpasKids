@@ -529,9 +529,9 @@ const CssLibrarySection = () => {
 
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
-      case "active": return "default";
-      case "review": return "secondary";
-      case "consolidate": return "outline";
+      case "active": return "success";
+      case "review": return "warning";
+      case "consolidate": return "info";
       case "deprecated": return "destructive";
       case "redundant": return "destructive";
       default: return "default";

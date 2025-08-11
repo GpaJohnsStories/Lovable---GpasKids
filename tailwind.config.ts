@@ -68,6 +68,19 @@ export default {
 					text: 'hsl(var(--story-text))',
 					'text-muted': 'hsl(var(--story-text-muted))',
 					background: 'hsl(var(--story-background))'
+				},
+				// Status indicator colors
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				info: {
+					DEFAULT: 'hsl(var(--info))',
+					foreground: 'hsl(var(--info-foreground))'
 				}
 			},
 			fontFamily: {
