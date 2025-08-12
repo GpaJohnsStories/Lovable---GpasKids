@@ -44,6 +44,27 @@ const CustomArrowIcon: React.FC = () => {
   );
 };
 
+// Custom Play Icon Component
+const CustomPlayIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('ICA-PL1.jpg');
+  
+  if (isLoading) return <div style={{ width: '55px', height: '55px' }} />;
+  if (error || !iconUrl) return <div style={{ width: '55px', height: '55px', background: '#814d2e' }} />;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Play" 
+      style={{ 
+        height: '55px', 
+        width: '55px',
+        objectFit: 'contain',
+        borderRadius: '12px'
+      }} 
+    />
+  );
+};
+
 // Custom CCP Icon Component for bigger size button
 const CustomCCPIcon: React.FC = () => {
   const { iconUrl, isLoading, error } = useCachedIcon('ICO-CCP.png');
@@ -481,9 +502,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                      <div style={{
                        width: '55px',
                        height: '55px',
-                       backgroundImage: 'url(/public/lovable-uploads/ICA-PL1.jpg)',
-                       backgroundSize: 'contain',
-                       backgroundPosition: 'center',
                        borderRadius: '12px',
                        display: 'flex',
                        alignItems: 'center',
@@ -509,8 +527,9 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                       onMouseUp={(e) => {
                         e.currentTarget.style.transform = 'scale(1.1)';
                       }}
-                      onClick={handlePlay}>
-                      </div>
+                       onClick={handlePlay}>
+                         <CustomPlayIcon />
+                       </div>
                    </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
                     <div style={{

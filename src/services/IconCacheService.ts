@@ -235,6 +235,14 @@ class IconCacheService {
   }
 
   /**
+   * Force refresh a specific icon by clearing it from cache
+   */
+  refreshIcon(iconPath: string): void {
+    this.clearSpecificIcons([iconPath]);
+    console.log(`🔄 Icon ${iconPath} will be reloaded on next access`);
+  }
+
+  /**
    * Get cache statistics
    */
   getCacheStats() {
