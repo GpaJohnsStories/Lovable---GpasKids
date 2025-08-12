@@ -652,14 +652,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
                 {/* Row 4: 1 cell, 27px height, brown fill, centered text */}
                 <tr>
-                  <td colSpan={4} height={27} style={{backgroundColor: 'white', borderRadius: '12px 12px 0 0', border: '2px solid #D2691E', borderBottom: 'none'}} align="center" valign="middle">
+                  <td colSpan={4} height={27} style={{backgroundColor: 'white', borderRadius: '15px 15px 0 0', border: '2px solid #D2691E', borderBottom: 'none'}} align="center" valign="middle">
                     <b style={{color: '#D2691E', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
                   </td>
                 </tr>
 
                 {/* Row 5: 4 speed control buttons with gradients */}
                 <tr>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white', borderRadius: '0 0 0 12px', borderLeft: '2px solid #D2691E', borderBottom: '2px solid #D2691E'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white', borderRadius: '0 0 0 15px', borderLeft: '2px solid #D2691E', borderBottom: '2px solid #D2691E'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -761,7 +761,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        />
                      </div>
                   </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white', borderRadius: '0 0 12px 0', borderRight: '2px solid #D2691E', borderBottom: '2px solid #D2691E'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white', borderRadius: '0 0 15px 0', borderRight: '2px solid #D2691E', borderBottom: '2px solid #D2691E'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
