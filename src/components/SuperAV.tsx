@@ -650,152 +650,177 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                   <td colSpan={4} height={10} style={{backgroundColor: 'transparent', border: 'none'}}></td>
                 </tr>
 
-                {/* Row 4: 1 cell, 27px height, brown fill, centered text */}
+                {/* Row 4 & 5: Playbook Speed Section - Using same style as word size controls */}
                 <tr>
-                  <td colSpan={4} height={27} style={{backgroundColor: 'white', borderRadius: '15px 15px 0 0', border: '2px solid #D2691E', borderBottom: 'none'}} align="center" valign="middle">
-                    <b style={{color: '#D2691E', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
-                  </td>
-                </tr>
-
-                {/* Row 5: 4 speed control buttons with gradients */}
-                <tr>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white', borderRadius: '0 0 0 15px', borderLeft: '2px solid #D2691E', borderBottom: '2px solid #D2691E'}}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: 'linear-gradient(145deg, #86efac, #65d997)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      transform: 'scale(1)'
-                    }} 
-                    role="button" 
-                    aria-label="Normal Speed" 
-                    title="Normal Speed"
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                    onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                     onClick={() => handleSpeedChange(1)}>
-                       <img 
-                         src={speedNormalIcon} 
-                         alt="Normal speed"
-                         style={{
-                           width: '45px',
-                           height: '45px',
-                           objectFit: 'contain'
-                         }}
-                       />
-                     </div>
-                  </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white', borderBottom: '2px solid #D2691E'}}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: 'linear-gradient(145deg, #4ade80, #22c55e)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      transform: 'scale(1)'
-                    }} 
-                    role="button" 
-                    aria-label="Fast Speed" 
-                    title="Fast Speed"
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                    onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                     onClick={() => handleSpeedChange(1.25)}>
-                       <img 
-                         src={speedFastIcon} 
-                         alt="Fast speed"
-                         style={{
-                           width: '45px',
-                           height: '45px',
-                           objectFit: 'contain'
-                         }}
-                       />
-                     </div>
-                  </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white', borderBottom: '2px solid #D2691E'}}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: 'linear-gradient(145deg, #22c55e, #16a34a)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      transform: 'scale(1)'
-                    }} 
-                    role="button" 
-                    aria-label="Faster Speed" 
-                    title="Faster Speed"
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                    onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                     onClick={() => handleSpeedChange(1.5)}>
-                       <img 
-                         src={speedFasterIcon} 
-                         alt="Faster speed"
-                         style={{
-                           width: '45px',
-                           height: '45px',
-                           objectFit: 'contain'
-                         }}
-                       />
-                     </div>
-                  </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white', borderRadius: '0 0 15px 0', borderRight: '2px solid #D2691E', borderBottom: '2px solid #D2691E'}}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: 'linear-gradient(145deg, #16a34a, #15803d)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      transform: 'scale(1)'
-                    }} 
-                    role="button" 
-                    aria-label="Fastest Speed" 
-                    title="Fastest Speed"
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                    onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                     onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                     onClick={() => handleSpeedChange(2)}>
-                       <img 
-                         src={speedFastestIcon} 
-                         alt="Fastest speed"
-                         style={{
-                           width: '45px',
-                           height: '45px',
-                           objectFit: 'contain'
-                         }}
-                       />
-                     </div>
-                    </td>
-                  </tr>
+                   <td colSpan={4} style={{
+                     padding: '3px', 
+                     background: 'linear-gradient(145deg, #D2691E, #B8641A)',
+                     borderRadius: '12px',
+                     boxShadow: '0 4px 8px rgba(210, 105, 30, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
+                   }}>
+                     <div style={{
+                       backgroundColor: 'white',
+                       borderRadius: '9px',
+                       height: '100%'
+                      }}>
+                        {/* Header */}
+                        <div style={{
+                          height: '27px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderBottom: '1px solid #f3f4f6'
+                        }}>
+                          <b style={{color: '#D2691E', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
+                        </div>
+                        
+                        {/* Speed buttons row */}
+                        <div style={{
+                          height: '55px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-around',
+                          padding: '8px'
+                        }}>
+                          {/* Normal Speed */}
+                          <div style={{
+                            width: '55px',
+                            height: '55px',
+                            background: 'linear-gradient(145deg, #86efac, #65d997)',
+                            borderRadius: '12px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            transform: 'scale(1)'
+                          }} 
+                          role="button" 
+                          aria-label="Normal Speed" 
+                          title="Normal Speed"
+                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                          onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                           onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                           onClick={() => handleSpeedChange(1)}>
+                             <img 
+                               src={speedNormalIcon} 
+                               alt="Normal speed"
+                               style={{
+                                 width: '45px',
+                                 height: '45px',
+                                 objectFit: 'contain'
+                               }}
+                             />
+                           </div>
+                          
+                          {/* Fast Speed */}
+                          <div style={{
+                            width: '55px',
+                            height: '55px',
+                            background: 'linear-gradient(145deg, #4ade80, #22c55e)',
+                            borderRadius: '12px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            transform: 'scale(1)'
+                          }} 
+                          role="button" 
+                          aria-label="Fast Speed" 
+                          title="Fast Speed"
+                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                          onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                           onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                           onClick={() => handleSpeedChange(1.25)}>
+                             <img 
+                               src={speedFastIcon} 
+                               alt="Fast speed"
+                               style={{
+                                 width: '45px',
+                                 height: '45px',
+                                 objectFit: 'contain'
+                               }}
+                             />
+                           </div>
+                          
+                          {/* Faster Speed */}
+                          <div style={{
+                            width: '55px',
+                            height: '55px',
+                            background: 'linear-gradient(145deg, #22c55e, #16a34a)',
+                            borderRadius: '12px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            transform: 'scale(1)'
+                          }} 
+                          role="button" 
+                          aria-label="Faster Speed" 
+                          title="Faster Speed"
+                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                          onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                           onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                           onClick={() => handleSpeedChange(1.5)}>
+                             <img 
+                               src={speedFasterIcon} 
+                               alt="Faster speed"
+                               style={{
+                                 width: '45px',
+                                 height: '45px',
+                                 objectFit: 'contain'
+                               }}
+                             />
+                           </div>
+                          
+                          {/* Fastest Speed */}
+                          <div style={{
+                            width: '55px',
+                            height: '55px',
+                            background: 'linear-gradient(145deg, #16a34a, #15803d)',
+                            borderRadius: '12px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            transform: 'scale(1)'
+                          }} 
+                          role="button" 
+                          aria-label="Fastest Speed" 
+                          title="Fastest Speed"
+                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                          onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                           onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                           onClick={() => handleSpeedChange(2)}>
+                             <img 
+                               src={speedFastestIcon} 
+                               alt="Fastest speed"
+                               style={{
+                                 width: '45px',
+                                 height: '45px',
+                                 objectFit: 'contain'
+                               }}
+                             />
+                           </div>
+                        </div>
+                      </div>
+                     </td>
+                   </tr>
 
                   {/* Row 6: Font Size Section Gap */}
                   <tr>
