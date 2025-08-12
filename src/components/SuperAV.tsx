@@ -512,13 +512,12 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                    <td colSpan={4} className="playback-controls-section">
                       <div className="playback-controls-inner">
                          {/* Header */}
-                         <div style={{
-                           height: '27px',
-                           display: 'flex',
-                           alignItems: 'center',
-                           justifyContent: 'center',
-                           borderBottom: '1px solid rgba(255,255,255,0.2)'
-                         }}>
+                          <div style={{
+                            height: '27px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}>
                            <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Controls">Playbook Controls</b>
                          </div>
                          
