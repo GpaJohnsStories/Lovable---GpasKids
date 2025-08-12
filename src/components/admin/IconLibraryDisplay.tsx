@@ -272,7 +272,7 @@ const IconLibraryDisplay = () => {
                 </div>
                 
                 {/* Action buttons - visible on hover */}
-                <div className="flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex justify-center gap-2 transition-opacity">
                   <Button
                     variant="outline"
                     size="sm"
