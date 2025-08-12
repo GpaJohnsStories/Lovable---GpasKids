@@ -507,19 +507,10 @@ export const SuperAV: React.FC<SuperAVProps> = ({
               <table width={244} cellSpacing={0} cellPadding={0} border={0}>
               <tbody>
 
-                {/* Row 1: Playback Controls Header */}
+                {/* Row 1 & 2: Playback Controls Header and Buttons - Merged */}
                 <tr>
-                   <td colSpan={4} style={{
-                     padding: '3px', 
-                     background: 'linear-gradient(145deg, #D2691E, #B8641A)',
-                     borderRadius: '12px',
-                     boxShadow: '0 4px 8px rgba(210, 105, 30, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
-                   }}>
-                      <div style={{
-                        backgroundColor: '#D2691E',
-                        borderRadius: '9px',
-                        height: '100%'
-                       }}>
+                   <td colSpan={4} className="playback-controls-section">
+                      <div className="playback-controls-inner">
                          {/* Header */}
                          <div style={{
                            height: '27px',
@@ -528,113 +519,76 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            justifyContent: 'center',
                            borderBottom: '1px solid rgba(255,255,255,0.2)'
                          }}>
-                           <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Controls">Playback Controls</b>
+                           <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Controls">Playbook Controls</b>
+                         </div>
+                         
+                         {/* Control buttons row */}
+                         <div style={{
+                           height: '65px',
+                           display: 'flex',
+                           alignItems: 'center',
+                           justifyContent: 'space-between',
+                           padding: '4px 2.5px 8px 2.5px'
+                         }}>
+                           {/* Play Button */}
+                           <div 
+                             className="button-3d-base button-3d-standard button-3d-green"
+                             role="button" 
+                             aria-label="Play Audio" 
+                             title="Play Audio"
+                             style={{
+                               cursor: 'pointer'
+                             }}
+                             onClick={handlePlay}>
+                               <CustomPlayIcon />
+                             </div>
+                           
+                           {/* Pause Button */}
+                           <div 
+                             className="button-3d-base button-3d-standard button-3d-amber"
+                             role="button" 
+                             aria-label="Pause Audio" 
+                             title="Pause Audio"
+                             style={{
+                               cursor: 'pointer'
+                             }}
+                             onClick={handlePause}>
+                               <CustomPauseIcon />
+                             </div>
+                           
+                           {/* Restart Button */}
+                           <div 
+                             className="button-3d-base button-3d-standard button-3d-orange"
+                             role="button" 
+                             aria-label="Restart Audio" 
+                             title="Restart Audio"
+                             style={{
+                               cursor: 'pointer'
+                             }}
+                             onClick={handleRestart}>
+                               <RefreshCw size={20} color="white" strokeWidth={2.5} />
+                             </div>
+                           
+                           {/* Stop Button */}
+                           <div 
+                             className="button-3d-base button-3d-standard button-3d-red"
+                             role="button" 
+                             aria-label="Stop Audio" 
+                             title="Stop Audio"
+                             style={{
+                               cursor: 'pointer'
+                             }}
+                             onClick={handleStop}>
+                               <div style={{
+                                 width: '16px',
+                                 height: '16px',
+                                 backgroundColor: 'white',
+                                 borderRadius: '2px'
+                               }}></div>
+                             </div>
                          </div>
                        </div>
                    </td>
-                </tr>
-
-                {/* Row 2: 4 beautiful buttons with gradients and icons */}
-                <tr>
-                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', borderRadius: '0 0 0 12px', textAlign: 'center'}}>
-                      <div 
-                        className="button-3d-base button-3d-standard button-3d-green"
-                        role="button" 
-                        aria-label="Play Audio" 
-                        title="Play Audio"
-                        style={{
-                          cursor: 'pointer'
-                        }}
-                        onClick={handlePlay}>
-                          <CustomPlayIcon />
-                        </div>
-                   </td>
-                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', textAlign: 'center'}}>
-                       <div 
-                         className="button-3d-base button-3d-standard button-3d-yellow"
-                         role="button" 
-                         aria-label="Pause Audio" 
-                         title="Pause Audio"
-                         style={{
-                           cursor: 'pointer'
-                         }}
-                         onClick={handlePause}>
-                           <CustomPauseIcon />
-                         </div>
-                   </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: 'linear-gradient(145deg, #fb923c, #F97316)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      transform: 'scale(1)'
-                    }} 
-                    role="button" 
-                    aria-label="Restart" 
-                    title="Restart"
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                    }}
-                    onMouseDown={(e) => {
-                      e.currentTarget.style.transform = 'scale(0.95)';
-                    }}
-                     onMouseUp={(e) => {
-                       e.currentTarget.style.transform = 'scale(1.1)';
-                     }}
-                     onClick={handleRestart}>
-                        <RefreshCw size={20} color="white" strokeWidth={2.5} />
-                      </div>
-                  </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 12px 0', textAlign: 'center'}}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: 'linear-gradient(145deg, #ef4444, #dc2626)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      transform: 'scale(1)'
-                    }} 
-                    role="button" 
-                    aria-label="Stop" 
-                    title="Stop"
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                    }}
-                    onMouseDown={(e) => {
-                      e.currentTarget.style.transform = 'scale(0.95)';
-                    }}
-                     onMouseUp={(e) => {
-                       e.currentTarget.style.transform = 'scale(1.1)';
-                     }}
-                     onClick={handleStop}>
-                       <div style={{
-                         width: '16px',
-                         height: '16px',
-                         backgroundColor: 'white',
-                         borderRadius: '2px'
-                       }}></div>
-                     </div>
-                  </td>
                 </tr>
 
                 {/* Row 3: 1 cell, 27px height, transparent */}
