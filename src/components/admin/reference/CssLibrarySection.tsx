@@ -472,6 +472,49 @@ const CssLibrarySection = () => {
     });
   }, [searchTerm, selectedCategory, selectedStatus, sortDirection]);
 
+  // Helper functions
+  const clearSearch = () => {
+    setLocalSearchTerm("");
+    setSearchTerm("");
+  };
+
+  const handleSort = () => {
+    setSortDirection(current => current === 'asc' ? 'desc' : 'asc');
+  };
+
+  const getSortIcon = () => {
+    return sortDirection === 'asc' ? ' ↑' : ' ↓';
+  };
+
+  const getStatusBadgeVariant = (status: string) => {
+    switch (status) {
+      case "active": return "default";
+      case "review": return "secondary";
+      case "consolidate": return "outline";
+      case "deprecated": return "destructive";
+      case "redundant": return "destructive";
+      default: return "outline";
+    }
+  };
+
+  const renderPreview = (cssClass: any) => {
+    // Typography classes
+    if (cssClass.name.startsWith("font-")) {
+      return <div className={`${cssClass.name} text-center text-base`}>{cssClass.previewContent}</div>;
+    }
+
+    // Semantic color classes
+    if (cssClass.name.includes("text-orange-accent") || cssClass.name.includes("text-bright-yellow")) {
+      return <div className={`${cssClass.name} text-center text-base font-semibold`}>{cssClass.previewContent}</div>;
+    }
+    if (cssClass.name.includes("bg-") && !cssClass.name.includes("hover")) {
+      return <div className={`${cssClass.name} text-white p-2 rounded text-center text-sm`}>{cssClass.previewContent}</div>;
+    }
+
+    // Default fallback
+    return <div className="text-sm text-center p-1 bg-gray-50 rounded">{cssClass.previewContent}</div>;
+  };
+
   return (
     <TooltipProvider>
       <Card>
