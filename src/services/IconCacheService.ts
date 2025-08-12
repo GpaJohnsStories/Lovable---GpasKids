@@ -42,6 +42,7 @@ class IconCacheService {
     'ICO-CSZ.jpg',      // SuperAV change word size icon
     'ICO-CCP.png',      // SuperAV chocolate plus (increase font) icon
     'ICO-CCM.png',      // SuperAV chocolate minus (decrease font) icon
+    'ICA-PL1.jpg',      // SuperAV play button icon
   ];
 
   /**
