@@ -816,27 +816,27 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                          borderRadius: '9px',
                          height: '100%'
                         }}>
+                           <div style={{
+                             display: 'flex',
+                             alignItems: 'center',
+                             justifyContent: 'space-evenly',
+                             height: '100%',
+                             width: '100%',
+                             gap: '8px'
+                            }}>
+                              {/* Left: Change Word Size Icon */}
                           <div style={{
                             display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            height: '100%',
-                            width: '100%'
-                           }}>
-                             {/* Left side: Icon + Arrow */}
+                            alignItems: 'center'
+                          }}>
+                            <CustomCWSIcon />
+                          </div>
+                        
+                         {/* Center and Right: Two chocolate buttons */}
                          <div style={{
                            display: 'flex',
-                           alignItems: 'center',
-                           gap: '6px'
+                           gap: '8px'
                          }}>
-                           <CustomCWSIcon />
-                         </div>
-                        
-                        {/* Right side: Two 55x55 buttons */}
-                        <div style={{
-                          display: 'flex',
-                          gap: '5px'
-                        }}>
                           <div 
                             className={`button-3d-base button-3d-standard ${isMaxSize ? 'opacity-60' : ''}`}
                             role="button" 
