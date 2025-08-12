@@ -1,5 +1,5 @@
 import { useState } from "react";
-import IconLibrarySection from "./reference/IconLibrarySection";
+import IconLibraryDisplay from "./IconLibraryDisplay";
 import PreferredColorsSection from "./reference/PreferredColorsSection";
 import IconUploadSection from "./reference/IconUploadSection";
 import CssLibrarySection from "./reference/CssLibrarySection";
@@ -14,7 +14,7 @@ const ReferenceDashboard = () => {
   const sections = [
     { id: "colors" as const, label: "Color Library", component: <PreferredColorsSection /> },
     { id: "upload" as const, label: "Upload Icon", component: <IconUploadSection /> },
-    { id: "icons" as const, label: "Icon Library", component: <IconLibrarySection /> },
+    { id: "icons" as const, label: "Icon Library", component: <IconLibraryDisplay /> },
     { id: "css" as const, label: "CSS Library", component: <CssLibrarySection /> },
     { id: "cssxx" as const, label: "CSS XX", component: <CssExceptionsSection /> },
   ];
