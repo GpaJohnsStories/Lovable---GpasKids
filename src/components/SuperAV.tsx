@@ -493,20 +493,22 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 {/* Row 2: 4 beautiful buttons with gradients and icons */}
                 <tr>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', borderRadius: '0 0 0 12px', textAlign: 'center'}}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: 'linear-gradient(145deg, #22c55e, #16a34a)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      transform: 'scale(1)'
-                    }} 
+                     <div style={{
+                       width: '55px',
+                       height: '55px',
+                       backgroundImage: 'url(/public/lovable-uploads/ICA-PL1.jpg)',
+                       backgroundSize: 'cover',
+                       backgroundPosition: 'center',
+                       borderRadius: '12px',
+                       display: 'flex',
+                       alignItems: 'center',
+                       justifyContent: 'center',
+                       boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
+                       cursor: 'pointer',
+                       transition: 'all 0.15s ease',
+                       border: '1px solid rgba(255,255,255,0.2)',
+                       transform: 'scale(1)'
+                     }}
                     role="button" 
                     aria-label="Play" 
                     title="Play"
