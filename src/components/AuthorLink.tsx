@@ -15,8 +15,7 @@ const AuthorLink = ({ authorName, variant = "button", size = "sm" }: AuthorLinkP
     return (
       <Link 
         to={`/author/${encodedAuthorName}`}
-        className="text-amber-600 hover:text-amber-800 underline text-sm font-medium"
-        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+        className="font-system text-green-600 hover:text-green-800 hover:underline transition-colors duration-200"
       >
         by {authorName}
       </Link>

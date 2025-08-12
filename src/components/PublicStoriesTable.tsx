@@ -205,7 +205,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
             {/* Search Results Counter */}
             {searchTerm && searchTerm.trim() !== '' && (
               <div className="text-center mt-3">
-                <p className="text-sm text-orange-700" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <p className="text-sm text-orange-700 font-system">
                   Found {stories?.length || 0} stories matching '{searchTerm}'
                 </p>
                 <Button
@@ -220,7 +220,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
             )}
           </div>
           {isLoading ? (
-            <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+            <div className="text-center py-8 text-black-system">
               <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
               <p>Loading stories...</p>
             </div>
@@ -304,8 +304,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         </Tooltip>
                          <DropdownMenuContent 
                            align="center" 
-                           className="bg-white border border-gray-200 shadow-lg rounded-md z-50"
-                           style={{ minWidth: '120px' }}
+                           className="bg-white border border-gray-200 shadow-lg rounded-md z-50 min-w-120"
                          >
                            {categoryOptions.map((category) => (
                              <DropdownMenuItem
@@ -315,10 +314,9 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                              >
                                <div className="flex items-center gap-2 w-full">
-                                 <div 
-                                   className={`${getCategoryColor(category)} px-3 py-1 rounded-full text-xs font-medium border shadow-sm hover:shadow-md transition-shadow`}
-                                   style={{ minWidth: '80px', textAlign: 'center' }}
-                                 >
+                                  <div 
+                                    className={`${getCategoryColor(category)} px-3 py-1 rounded-full text-xs font-medium border shadow-sm hover:shadow-md transition-shadow min-w-80 text-center-inline`}
+                                  >
                                    {getCategoryDisplayName(category)}
                                  </div>
                                  {categoryFilter === category && (

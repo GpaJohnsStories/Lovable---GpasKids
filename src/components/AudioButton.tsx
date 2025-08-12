@@ -13,7 +13,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
   const candyIconUrl = "/lovable-uploads/4f9b0ab3-9e17-4dab-91d9-a8fd5c350585.png";
 
   return (
-    <div className={`relative ${className}`} style={{ zIndex: 5 }}>
+    <div className={`relative z-5 ${className}`}>
       <button
         onClick={(e) => {
           console.log('🎵 AudioButton clicked! Code:', code);

@@ -86,37 +86,32 @@ const AuthorStoriesTable = ({ stories }: AuthorStoriesTableProps) => {
           <TableHeader>
             <TableRow>
               <TableHead 
-                className="cursor-pointer hover:bg-muted"
+                className="cursor-pointer hover:bg-muted text-black-system"
                 onClick={() => handleSort('story_code')}
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
               >
                 Story Code {getSortIcon('story_code')}
               </TableHead>
               <TableHead 
-                className="cursor-pointer hover:bg-muted"
+                className="cursor-pointer hover:bg-muted text-black-system"
                 onClick={() => handleSort('title')}
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
               >
                 Title {getSortIcon('title')}
               </TableHead>
               <TableHead 
-                className="cursor-pointer hover:bg-muted"
+                className="cursor-pointer hover:bg-muted text-black-system"
                 onClick={() => handleSort('category')}
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
               >
                 Category {getSortIcon('category')}
               </TableHead>
               <TableHead 
-                className="cursor-pointer hover:bg-muted"
+                className="cursor-pointer hover:bg-muted text-black-system"
                 onClick={() => handleSort('read_count')}
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
               >
                 Reads {getSortIcon('read_count')}
               </TableHead>
               <TableHead 
-                className="cursor-pointer hover:bg-muted"
+                className="cursor-pointer hover:bg-muted text-black-system"
                 onClick={() => handleSort('updated_at')}
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
               >
                 Updated {getSortIcon('updated_at')}
               </TableHead>
@@ -126,12 +121,11 @@ const AuthorStoriesTable = ({ stories }: AuthorStoriesTableProps) => {
             {sortedStories.map((story) => (
               <TableRow key={story.id}>
                 <TableCell 
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
-                  className="font-mono"
+                  className="font-mono text-black-system"
                 >
                   {story.story_code}
                 </TableCell>
-                <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+                <TableCell className="text-black-system">
                   <div>
                     <Link 
                       to={`/story/${story.story_code}`} 
@@ -151,17 +145,17 @@ const AuthorStoriesTable = ({ stories }: AuthorStoriesTableProps) => {
                     )}
                   </div>
                 </TableCell>
-                <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+                <TableCell className="text-black-system">
                   <Badge 
                     className={`${getCategoryBadgeColor(story.category)} text-white w-full text-center`}
                   >
                     {getCategoryShortName(story.category)}
                   </Badge>
                 </TableCell>
-                <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+                <TableCell className="text-black-system">
                   {story.read_count}
                 </TableCell>
-                <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+                <TableCell className="text-black-system">
                   {new Date(story.updated_at).toLocaleDateString()}
                 </TableCell>
               </TableRow>

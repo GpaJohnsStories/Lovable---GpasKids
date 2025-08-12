@@ -184,8 +184,7 @@ export const DeployedContent = ({
       {/* Content */}
       {!audioOnly && content.content && (
         <div 
-          className="deployed-story-content"
-          style={{ fontFamily: 'Georgia, serif' }}
+          className="deployed-story-content font-georgia"
           dangerouslySetInnerHTML={createSafeHtml(content.content)}
         />
       )}

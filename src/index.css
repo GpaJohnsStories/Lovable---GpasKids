@@ -400,3 +400,67 @@
   border-radius: 9px;
   height: 100%;
 }
+
+/* CSS Cleanup: Utility Classes for Inline Styles */
+@layer utilities {
+  /* Font Family Utilities */
+  .font-system {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  
+  .font-georgia {
+    font-family: Georgia, serif;
+  }
+  
+  .font-kalam {
+    font-family: 'Kalam', 'Caveat', cursive, sans-serif;
+  }
+  
+  /* Text Color with Font Combinations */
+  .text-black-system {
+    color: black;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  
+  /* Z-Index Utilities */
+  .z-5 {
+    z-index: 5;
+  }
+  
+  /* Min Height Utilities */
+  .min-h-content {
+    min-height: calc(100vh - 200px);
+  }
+  
+  /* Border Color Dynamic */
+  .border-dynamic {
+    border-color: var(--dynamic-border-color);
+  }
+  
+  /* Positioning Utilities */
+  .absolute-top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  .absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Layout Utilities */
+  .min-w-120 {
+    min-width: 120px;
+  }
+  
+  .min-w-80 {
+    min-width: 80px;
+  }
+  
+  .text-center-inline {
+    text-align: center;
+  }
+}
