@@ -84,13 +84,12 @@ class ThreatDetectionSystem {
         type: 'suspicious_activity',
         severity: activity.frequency > 20 ? 'high' : 'medium',
         description: `Suspicious ${activity.type} activity detected`,
-        metadata: {
-          activityType: activity.type,
-          frequency: activity.frequency,
-          timeWindow: activity.timeWindow,
-          context: activity.context,
-          ipHash: this.getIpHash()
-        },
+          metadata: {
+            activityType: activity.type,
+            frequency: activity.frequency,
+            timeWindow: activity.timeWindow,
+            context: activity.context
+          },
         resolved: false
       };
 
@@ -309,11 +308,7 @@ class ThreatDetectionSystem {
     return `threat_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
-  private getIpHash(): string {
-    // Simple hash of connection info for privacy
-    const data = `${navigator.userAgent}_${window.location.host}`;
-    return btoa(data).substr(0, 12);
-  }
+  // Removed IP hashing for complete privacy compliance
 
   private triggerEmergencyAlert(threat: ThreatEvent): void {
     // Store emergency alert for admin dashboard

@@ -138,9 +138,11 @@ const SecurityAuditDashboard = () => {
                       <span className="font-medium">{log.table_name}</span>
                       {getClientTypeBadge(log.client_type)}
                     </div>
-                    <div className="text-sm text-gray-500">
-                      {format(new Date(log.created_at), 'MMM dd, yyyy HH:mm:ss')}
-                      {log.ip_address && ` • IP: ${log.ip_address}`}
+                    <div className="text-sm text-gray-500 space-y-1">
+                      <div>{format(new Date(log.created_at), 'MMM dd, yyyy HH:mm:ss')}</div>
+                      {log.user_id && (
+                        <div className="text-xs">User ID: {log.user_id}</div>
+                      )}
                     </div>
                   </div>
                 </div>

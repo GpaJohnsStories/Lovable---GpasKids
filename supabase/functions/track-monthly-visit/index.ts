@@ -1,16 +1,9 @@
-
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
-
-// Your IP addresses to exclude
-const EXCLUDED_IPS = [
-  '168.157.32.95',     // Your IPv4
-  '2600:1700:4800:1bb0:ad47:5d1f:f4a2:7b1c' // Your IPv6
-];
 
 // Legitimate search engine crawlers that should be allowed for SEO
 const SEARCH_ENGINE_CRAWLERS = [
@@ -50,7 +43,7 @@ function detectSearchEngine(userAgent: string | null): boolean {
 }
 
 function detectUnwantedBot(userAgent: string | null, headers: Headers): boolean {
-  console.log('Bot detection - User Agent:', userAgent);
+  console.log('Bot detection - User Agent check only (not stored)');
   
   // No user agent is suspicious
   if (!userAgent) {
@@ -98,32 +91,6 @@ function detectUnwantedBot(userAgent: string | null, headers: Headers): boolean 
   
   console.log('Human visitor detected');
   return false;
-}
-
-function getClientIP(req: Request): string | null {
-  // Try various headers for the real IP
-  const headers = [
-    'CF-Connecting-IP',     // Cloudflare
-    'X-Real-IP',           // Nginx
-    'X-Forwarded-For',     // Standard proxy header
-    'X-Client-IP',         // Some proxies
-    'X-Forwarded',         // Alternative
-    'Forwarded-For',       // Alternative
-    'Forwarded'            // RFC 7239
-  ];
-  
-  for (const header of headers) {
-    const value = req.headers.get(header);
-    if (value) {
-      // X-Forwarded-For can contain multiple IPs, take the first one
-      const ip = value.split(',')[0].trim();
-      console.log(`IP found in ${header}: ${ip}`);
-      return ip;
-    }
-  }
-  
-  console.log('No IP found in headers');
-  return null;
 }
 
 async function trackExcludedVisit(supabase: any, year: number, month: number, columnName: string) {
@@ -202,35 +169,18 @@ Deno.serve(async (req) => {
 
     console.log('=== PROCESSING VISIT TRACKING REQUEST ===')
 
-    // Get client information
+    // Get user agent for bot detection only (not stored)
     const userAgent = req.headers.get('User-Agent');
-    const clientIP = getClientIP(req);
     
-    console.log('Client IP:', clientIP);
-    console.log('User Agent:', userAgent);
+    console.log('=== Visit Tracking (Privacy-First) ===');
+    console.log('Timestamp:', new Date().toISOString());
+    console.log('Auth header present:', !!req.headers.get('authorization'));
+    console.log('Request method:', req.method);
 
     // Get current year and month for tracking
     const now = new Date()
     const year = now.getFullYear()
     const month = now.getMonth() + 1
-
-    // Check if IP should be excluded (your IP)
-    if (clientIP && EXCLUDED_IPS.includes(clientIP)) {
-      console.log(`Visit excluded: IP ${clientIP} is in exclusion list`);
-      await trackExcludedVisit(supabase, year, month, 'other_excluded_count');
-      return new Response(
-        JSON.stringify({ 
-          success: true, 
-          message: 'Visit excluded - owner IP',
-          excluded_reason: 'owner_ip',
-          ip: clientIP
-        }),
-        { 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200 
-        }
-      )
-    }
 
     // Check if this is a search engine crawler
     if (detectSearchEngine(userAgent)) {
@@ -241,7 +191,8 @@ Deno.serve(async (req) => {
           success: true, 
           message: 'Search engine visit tracked',
           excluded_reason: 'search_engine',
-          user_agent: userAgent
+          year,
+          month
         }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -259,7 +210,8 @@ Deno.serve(async (req) => {
           success: true, 
           message: 'Visit excluded - unwanted bot detected',
           excluded_reason: 'unwanted_bot',
-          user_agent: userAgent
+          year,
+          month
         }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -303,7 +255,9 @@ Deno.serve(async (req) => {
         JSON.stringify({ 
           success: true, 
           message: 'Admin visit excluded from tracking',
-          excluded_reason: 'admin'
+          excluded_reason: 'admin',
+          year,
+          month
         }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -313,11 +267,6 @@ Deno.serve(async (req) => {
     }
 
     console.log(`=== TRACKING LEGITIMATE VISIT FOR ${year}-${month} ===`)
-    console.log('Visit details:', {
-      ip: clientIP,
-      userAgent: userAgent?.substring(0, 100),
-      timestamp: now.toISOString()
-    });
 
     // Try to increment visit count for current month
     // First, try to get existing record
@@ -363,18 +312,14 @@ Deno.serve(async (req) => {
       console.log('New monthly visit record created with count: 1');
     }
 
-    console.log('=== VISIT SUCCESSFULLY TRACKED ===')
+    console.log('=== VISIT SUCCESSFULLY TRACKED (NO PERSONAL DATA COLLECTED) ===')
 
     return new Response(
       JSON.stringify({ 
         success: true, 
         year, 
         month,
-        message: 'Visit tracked successfully',
-        client_info: {
-          ip: clientIP,
-          user_agent: userAgent?.substring(0, 100)
-        }
+        message: 'Visit tracked successfully'
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

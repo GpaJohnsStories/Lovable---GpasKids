@@ -20,36 +20,30 @@ export type Database = {
           admin_id: string | null
           created_at: string | null
           id: string
-          ip_address: unknown | null
           new_values: Json | null
           old_values: Json | null
           record_id: string | null
           table_name: string | null
-          user_agent: string | null
         }
         Insert: {
           action: string
           admin_id?: string | null
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
           new_values?: Json | null
           old_values?: Json | null
           record_id?: string | null
           table_name?: string | null
-          user_agent?: string | null
         }
         Update: {
           action?: string
           admin_id?: string | null
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
           new_values?: Json | null
           old_values?: Json | null
           record_id?: string | null
           table_name?: string | null
-          user_agent?: string | null
         }
         Relationships: []
       }
@@ -153,36 +147,30 @@ export type Database = {
           client_type: string | null
           created_at: string
           id: string
-          ip_address: unknown | null
           operation_details: Json | null
           operation_type: string
           record_id: string | null
           table_name: string
-          user_agent: string | null
           user_id: string | null
         }
         Insert: {
           client_type?: string | null
           created_at?: string
           id?: string
-          ip_address?: unknown | null
           operation_details?: Json | null
           operation_type: string
           record_id?: string | null
           table_name: string
-          user_agent?: string | null
           user_id?: string | null
         }
         Update: {
           client_type?: string | null
           created_at?: string
           id?: string
-          ip_address?: unknown | null
           operation_details?: Json | null
           operation_type?: string
           record_id?: string | null
           table_name?: string
-          user_agent?: string | null
           user_id?: string | null
         }
         Relationships: []
@@ -430,24 +418,18 @@ export type Database = {
       story_reads: {
         Row: {
           id: string
-          ip_address: unknown | null
           read_at: string
           story_id: string
-          user_agent: string | null
         }
         Insert: {
           id?: string
-          ip_address?: unknown | null
           read_at?: string
           story_id: string
-          user_agent?: string | null
         }
         Update: {
           id?: string
-          ip_address?: unknown | null
           read_at?: string
           story_id?: string
-          user_agent?: string | null
         }
         Relationships: [
           {
@@ -463,25 +445,19 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          ip_address: unknown | null
           story_id: string
-          user_agent: string | null
           vote_type: string
         }
         Insert: {
           created_at?: string
           id?: string
-          ip_address?: unknown | null
           story_id: string
-          user_agent?: string | null
           vote_type: string
         }
         Update: {
           created_at?: string
           id?: string
-          ip_address?: unknown | null
           story_id?: string
-          user_agent?: string | null
           vote_type?: string
         }
         Relationships: [

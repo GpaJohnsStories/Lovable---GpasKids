@@ -37,9 +37,6 @@ export const useVisitTracker = () => {
             console.log(`Visit excluded: ${response.data.message} (${response.data.excluded_reason})`);
           } else if (response.data.success) {
             console.log(`Visit tracked successfully for ${response.data.year}-${response.data.month}`);
-            if (response.data.client_info) {
-              console.log('Client info:', response.data.client_info);
-            }
           }
         }
       } catch (error) {
