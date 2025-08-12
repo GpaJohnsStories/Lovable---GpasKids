@@ -685,15 +685,18 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            {/* Normal Speed */}
                            <button
                              style={{
-                               padding: '6px 12px',
+                               width: '55px',
+                               height: '55px',
                                backgroundColor: '#86efac',
-                               color: '#1f2937',
+                               color: '#814d2e',
                                borderRadius: '6px',
                                border: 'none',
                                cursor: 'pointer',
-                               fontSize: '12px',
+                               fontSize: '10px',
                                fontWeight: '600',
-                               minWidth: '50px'
+                               display: 'flex',
+                               alignItems: 'center',
+                               justifyContent: 'center'
                              }}
                              onClick={() => handleSpeedChange(1)}
                            >
@@ -703,7 +706,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            {/* Fast Speed */}
                            <button
                              style={{
-                               padding: '6px 12px',
+                               width: '55px',
+                               height: '55px',
                                backgroundColor: '#4ade80',
                                color: '#1f2937',
                                borderRadius: '6px',
@@ -711,7 +715,9 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                cursor: 'pointer',
                                fontSize: '12px',
                                fontWeight: '600',
-                               minWidth: '50px'
+                               display: 'flex',
+                               alignItems: 'center',
+                               justifyContent: 'center'
                              }}
                              onClick={() => handleSpeedChange(1.25)}
                            >
@@ -721,15 +727,18 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            {/* Faster Speed */}
                            <button
                              style={{
-                               padding: '6px 12px',
+                               width: '55px',
+                               height: '55px',
                                backgroundColor: '#22c55e',
                                color: 'white',
                                borderRadius: '6px',
                                border: 'none',
                                cursor: 'pointer',
-                               fontSize: '12px',
+                               fontSize: '11px',
                                fontWeight: '600',
-                               minWidth: '50px'
+                               display: 'flex',
+                               alignItems: 'center',
+                               justifyContent: 'center'
                              }}
                              onClick={() => handleSpeedChange(1.5)}
                            >
@@ -739,15 +748,18 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            {/* Fastest Speed */}
                            <button
                              style={{
-                               padding: '6px 12px',
+                               width: '55px',
+                               height: '55px',
                                backgroundColor: '#16a34a',
                                color: '#fb923c',
                                borderRadius: '6px',
                                border: 'none',
                                cursor: 'pointer',
-                               fontSize: '12px',
+                               fontSize: '10px',
                                fontWeight: '600',
-                               minWidth: '50px'
+                               display: 'flex',
+                               alignItems: 'center',
+                               justifyContent: 'center'
                              }}
                              onClick={() => handleSpeedChange(2)}
                            >
