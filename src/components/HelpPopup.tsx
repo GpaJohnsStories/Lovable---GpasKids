@@ -14,7 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
-import { createSafeHtml } from "@/utils/xssProtection";
+import { createSafeHtml } from "../utils/xssProtection";
 
 interface HelpPopupProps {
   isOpen: boolean;
