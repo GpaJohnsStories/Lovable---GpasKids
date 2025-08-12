@@ -323,7 +323,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;h1&gt;Heading 1&lt;/h1&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '2em', fontWeight: 700 }}>
+                  <div className="font-kalam text-2xl font-bold">
                     Heading 1
                   </div>
                 </div>
@@ -332,7 +332,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;h2&gt;Heading 2&lt;/h2&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '1.5em', fontWeight: 700 }}>
+                  <div className="font-kalam text-xl font-bold">
                     Heading 2
                   </div>
                 </div>
@@ -341,7 +341,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;h3&gt;Heading 3&lt;/h3&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '1.17em', fontWeight: 700 }}>
+                  <div className="font-kalam text-lg font-bold">
                     Heading 3
                   </div>
                 </div>
@@ -350,7 +350,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p&gt;UI Text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '14px', lineHeight: '1.7' }}>
+                  <div className="font-kalam text-sm leading-relaxed">
                     UI Text (Navigation, Buttons, etc.)
                   </div>
                 </div>
@@ -365,7 +365,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;div class="text-blue-900 font-handwritten text-2xl font-bold"&gt;Grandpa John's&lt;/div&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '1.5rem', fontWeight: 700, color: '#1e3a8a' }}>
+                  <div className="font-kalam text-2xl font-bold text-blue-900">
                     Grandpa John's
                   </div>
                 </div>
@@ -374,7 +374,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;div class="text-white font-handwritten text-3xl font-bold"&gt;Stories for Kids&lt;/div&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '1.875rem', fontWeight: 700, color: '#ffffff', backgroundColor: '#1f2937', padding: '4px 8px', borderRadius: '4px' }}>
+                  <div className="font-kalam text-3xl font-bold text-white bg-gray-800 px-2 py-1 rounded">
                     Stories for Kids
                   </div>
                 </div>
@@ -383,7 +383,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p class="text-amber-100 text-sm font-medium"&gt;Where every story feels like a new adventure&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif", fontSize: '0.875rem', fontWeight: 500, color: '#fef3c7', backgroundColor: '#1f2937', padding: '4px 8px', borderRadius: '4px' }}>
+                  <div className="font-kalam text-sm font-medium text-amber-100 bg-gray-800 px-2 py-1 rounded">
                     Where every story feels like a new adventure
                   </div>
                 </div>
@@ -398,7 +398,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;h1&gt;Story Heading 1&lt;/h1&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '2em', fontWeight: 'bold', color: '#000000', lineHeight: '1.6' }}>
+                  <div className="font-georgia-2xl">
                     Story Heading 1
                   </div>
                 </div>
@@ -407,7 +407,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;h2&gt;Story Heading 2&lt;/h2&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '1.5em', fontWeight: 'bold', color: '#000000', lineHeight: '1.6' }}>
+                  <div className="font-georgia-xl">
                     Story Heading 2
                   </div>
                 </div>
@@ -416,7 +416,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;h3&gt;Story Heading 3&lt;/h3&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '1.17em', fontWeight: 'bold', color: '#000000', lineHeight: '1.6' }}>
+                  <div className="font-georgia-lg">
                     Story Heading 3
                   </div>
                 </div>
@@ -425,7 +425,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p&gt;Story paragraph text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000', lineHeight: '1.5' }}>
+                  <div className="font-georgia-base">
                     Story paragraph text (main content)
                   </div>
                 </div>
@@ -434,7 +434,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;strong&gt;Bold text&lt;/strong&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', fontWeight: 'bold', color: '#000000', lineHeight: '1.6' }}>
+                  <div className="font-georgia-bold">
                     Bold text
                   </div>
                 </div>
@@ -443,7 +443,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;em&gt;Italic text&lt;/em&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', fontStyle: 'italic', color: '#000000', lineHeight: '1.6' }}>
+                  <div className="font-georgia-italic">
                     Italic text
                   </div>
                 </div>
@@ -452,7 +452,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;u&gt;Underlined text&lt;/u&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', textDecoration: 'underline', color: '#000000', lineHeight: '1.6' }}>
+                  <div className="font-georgia-underline">
                     Underlined text
                   </div>
                 </div>
@@ -461,7 +461,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;center&gt;Centered text&lt;/center&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000', lineHeight: '1.5', textAlign: 'center' }}>
+                  <div className="font-georgia-center">
                     Centered text
                   </div>
                 </div>
@@ -485,7 +485,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 12px;"&gt;Small text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '12px', color: '#000000', lineHeight: '1.5' }}>
+                  <div className="font-georgia-12">
                     Small text (12px)
                   </div>
                 </div>
@@ -494,7 +494,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 14px;"&gt;Minimum text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '14px', color: '#000000', lineHeight: '1.5' }}>
+                  <div className="font-georgia-14">
                     Minimum text (14px)
                   </div>
                 </div>
@@ -503,7 +503,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 16px;"&gt;Regular text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '16px', color: '#000000', lineHeight: '1.5' }}>
+                  <div className="font-georgia-16">
                     Regular text (16px)
                   </div>
                 </div>
@@ -512,7 +512,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p&gt;Default story text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000', lineHeight: '1.5' }}>
+                  <div className="font-georgia-base">
                     Default story text (18px)
                   </div>
                 </div>
@@ -521,7 +521,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 20px;"&gt;Large text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '20px', color: '#000000', lineHeight: '1.5' }}>
+                  <div className="font-georgia-20">
                     Large text (20px)
                   </div>
                 </div>
@@ -530,7 +530,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 24px;"&gt;Extra large text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '24px', color: '#000000', lineHeight: '1.5' }}>
+                  <div className="font-georgia-24">
                     Extra large text (24px)
                   </div>
                 </div>
@@ -545,7 +545,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #000000;"&gt;Black text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000', lineHeight: '1.5' }}>
+                  <div className="font-georgia-base">
                     Black text (default story color)
                   </div>
                 </div>
@@ -554,7 +554,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #92400e;"&gt;Amber-800 text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#92400e', lineHeight: '1.5' }}>
+                  <div className="font-georgia-amber-800">
                     Amber-800 text (warm brown)
                   </div>
                 </div>
@@ -563,7 +563,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #b45309;"&gt;Amber-700 text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#b45309', lineHeight: '1.5' }}>
+                  <div className="font-georgia-amber-700">
                     Amber-700 text (personal text color)
                   </div>
                 </div>
@@ -572,7 +572,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #dc2626;"&gt;Red text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#dc2626', lineHeight: '1.5' }}>
+                  <div className="font-georgia-red">
                     Red text (alerts, warnings)
                   </div>
                 </div>
@@ -581,7 +581,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #059669;"&gt;Green text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#059669', lineHeight: '1.5' }}>
+                  <div className="font-georgia-green">
                     Green text (success, nature)
                   </div>
                 </div>
@@ -590,7 +590,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #2563eb;"&gt;Blue text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#2563eb', lineHeight: '1.5' }}>
+                  <div className="font-georgia-blue">
                     Blue text (links, info)
                   </div>
                 </div>
@@ -599,7 +599,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #7c3aed;"&gt;Purple text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#7c3aed', lineHeight: '1.5' }}>
+                  <div className="font-georgia-purple">
                     Purple text (magical, special)
                   </div>
                 </div>
@@ -608,7 +608,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #64748b;"&gt;Gray text&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#64748b', lineHeight: '1.5' }}>
+                  <div className="font-georgia-gray">
                     Gray text (muted, secondary)
                   </div>
                 </div>
@@ -623,7 +623,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;h2 style="color: #92400e; font-size: 24px;"&gt;Large Amber Heading&lt;/h2&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '24px', fontWeight: 'bold', color: '#92400e', lineHeight: '1.6' }}>
+                  <div className="font-georgia-24 font-bold text-amber-800">
                     Large Amber Heading
                   </div>
                 </div>
@@ -632,7 +632,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #059669; font-size: 20px;"&gt;&lt;strong&gt;Bold Green Text&lt;/strong&gt;&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '20px', fontWeight: 'bold', color: '#059669', lineHeight: '1.5' }}>
+                  <div className="font-georgia-20 font-bold text-green-600">
                     Bold Green Text
                   </div>
                 </div>
@@ -641,7 +641,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="color: #7c3aed; font-size: 16px;"&gt;&lt;em&gt;Purple Italic Text&lt;/em&gt;&lt;/p&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '16px', fontStyle: 'italic', color: '#7c3aed', lineHeight: '1.5' }}>
+                  <div className="font-georgia-16 italic text-purple-600">
                     Purple Italic Text
                   </div>
                 </div>
@@ -650,7 +650,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;center&gt;&lt;p style="color: #dc2626; font-size: 22px;"&gt;&lt;u&gt;Centered Red Underlined&lt;/u&gt;&lt;/p&gt;&lt;/center&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '22px', textDecoration: 'underline', color: '#dc2626', lineHeight: '1.5', textAlign: 'center' }}>
+                  <div className="font-georgia-base text-center underline text-red-600 text-2xl">
                     Centered Red Underlined
                   </div>
                 </div>
@@ -674,7 +674,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;ul&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ul&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000' }}>
+                  <div className="font-georgia-base">
                     <ul><li>Bullet list item</li></ul>
                   </div>
                 </div>
@@ -683,7 +683,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                   <div>
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;ol&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ol&gt;</code>
                   </div>
-                  <div style={{ fontFamily: "'Georgia', serif", fontSize: '18px', color: '#000000' }}>
+                  <div className="font-georgia-base">
                     <ol><li>Numbered list item</li></ol>
                   </div>
                 </div>

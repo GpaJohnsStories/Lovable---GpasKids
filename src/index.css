@@ -526,4 +526,84 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     border-color: #9c441a;
   }
+  
+  /* Georgia font variations for editor */
+  .font-georgia-2xl {
+    font-family: 'Georgia', serif;
+    font-size: 2em;
+    font-weight: bold;
+    color: #000000;
+    line-height: 1.6;
+  }
+  
+  .font-georgia-xl {
+    font-family: 'Georgia', serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000000;
+    line-height: 1.6;
+  }
+  
+  .font-georgia-lg {
+    font-family: 'Georgia', serif;
+    font-size: 1.17em;
+    font-weight: bold;
+    color: #000000;
+    line-height: 1.6;
+  }
+  
+  .font-georgia-base {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    color: #000000;
+    line-height: 1.5;
+  }
+  
+  .font-georgia-bold {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    line-height: 1.6;
+  }
+  
+  .font-georgia-italic {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: #000000;
+    line-height: 1.6;
+  }
+  
+  .font-georgia-underline {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    text-decoration: underline;
+    color: #000000;
+    line-height: 1.6;
+  }
+  
+  .font-georgia-center {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    color: #000000;
+    line-height: 1.5;
+    text-align: center;
+  }
+  
+  /* Size variants */
+  .font-georgia-12 { font-family: 'Georgia', serif; font-size: 12px; color: #000000; line-height: 1.5; }
+  .font-georgia-14 { font-family: 'Georgia', serif; font-size: 14px; color: #000000; line-height: 1.5; }
+  .font-georgia-16 { font-family: 'Georgia', serif; font-size: 16px; color: #000000; line-height: 1.5; }
+  .font-georgia-20 { font-family: 'Georgia', serif; font-size: 20px; color: #000000; line-height: 1.5; }
+  .font-georgia-24 { font-family: 'Georgia', serif; font-size: 24px; color: #000000; line-height: 1.5; }
+  
+  /* Color variants */
+  .font-georgia-amber-800 { font-family: 'Georgia', serif; font-size: 18px; color: #92400e; line-height: 1.5; }
+  .font-georgia-amber-700 { font-family: 'Georgia', serif; font-size: 18px; color: #b45309; line-height: 1.5; }
+  .font-georgia-red { font-family: 'Georgia', serif; font-size: 18px; color: #dc2626; line-height: 1.5; }
+  .font-georgia-green { font-family: 'Georgia', serif; font-size: 18px; color: #059669; line-height: 1.5; }
+  .font-georgia-blue { font-family: 'Georgia', serif; font-size: 18px; color: #2563eb; line-height: 1.5; }
+  .font-georgia-purple { font-family: 'Georgia', serif; font-size: 18px; color: #7c3aed; line-height: 1.5; }
+  .font-georgia-gray { font-family: 'Georgia', serif; font-size: 18px; color: #64748b; line-height: 1.5; }
 }
