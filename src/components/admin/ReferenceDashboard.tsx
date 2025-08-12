@@ -12,7 +12,7 @@ const ReferenceDashboard = () => {
   const [activeSection, setActiveSection] = useState<SectionType>("all");
 
   const sections = [
-    { id: "colors" as const, label: "Color Reference", component: <ColorReferenceTable /> },
+    { id: "colors" as const, label: "Color Library", component: <ColorReferenceTable /> },
     { id: "upload" as const, label: "Upload Icon", component: <IconUploadSection /> },
     { id: "icons" as const, label: "Icon Library", component: <IconLibraryDisplay /> },
     { id: "css" as const, label: "CSS Library", component: <CssLibrarySection /> },
