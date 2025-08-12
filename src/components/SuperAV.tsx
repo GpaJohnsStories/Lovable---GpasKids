@@ -48,7 +48,7 @@ const CustomArrowIcon: React.FC = () => {
 const CustomPlayIcon: React.FC = () => {
   const { iconUrl, isLoading, error } = useCachedIcon('ICO-AV1.jpg');
   
-  if (isLoading) return <div style={{ width: '55px', height: '55px' }} />;
+  if (isLoading) return <div style={{ width: '65px', height: '65px' }} />;
   if (error || !iconUrl) return <span>PLAY</span>;
   
   return (
@@ -56,8 +56,8 @@ const CustomPlayIcon: React.FC = () => {
       src={iconUrl} 
       alt="Play" 
       style={{ 
-        height: '55px', 
-        width: '55px',
+        height: '65px', 
+        width: '65px',
         objectFit: 'contain'
       }} 
     />
