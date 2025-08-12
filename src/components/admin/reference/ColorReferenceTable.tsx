@@ -334,7 +334,7 @@ const ColorReferenceTable = () => {
                     title={`${color.name} - ${color.hex}`}
                   />
                 </TableCell>
-                <TableCell className="font-medium">
+                <TableCell className="font-bold">
                   {color.name}
                 </TableCell>
                 <TableCell className="font-mono text-sm">
