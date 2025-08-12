@@ -4,6 +4,8 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RefreshCw } from "lucide-react";
 import { useSuperAVContext } from '@/contexts/SuperAVContext';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
+import speedNormalIcon from "@/assets/speed-normal-icon.png";
+import speedFastIcon from "@/assets/speed-fast-icon.png";
 import { 
   FontScaleStep, 
   DEFAULT_FONT_SCALE, 
@@ -658,7 +660,15 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
                      onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                      onClick={() => handleSpeedChange(1)}>
-                       <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#814d2e'}}>Normal</span>
+                       <img 
+                         src={speedNormalIcon} 
+                         alt="Normal speed"
+                         style={{
+                           width: '45px',
+                           height: '45px',
+                           objectFit: 'contain'
+                         }}
+                       />
                      </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
@@ -684,7 +694,15 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
                      onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                      onClick={() => handleSpeedChange(1.25)}>
-                       <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: 'white'}}>Fast</span>
+                       <img 
+                         src={speedFastIcon} 
+                         alt="Fast speed"
+                         style={{
+                           width: '45px',
+                           height: '45px',
+                           objectFit: 'contain'
+                         }}
+                       />
                      </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
