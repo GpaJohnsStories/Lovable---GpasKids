@@ -674,14 +674,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                           <b style={{color: '#D2691E', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
                         </div>
                         
-                        {/* Speed buttons row */}
-                        <div style={{
-                          height: '55px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-around',
-                          padding: '8px'
-                        }}>
+                         {/* Speed buttons row */}
+                         <div style={{
+                           height: '55px',
+                           display: 'flex',
+                           alignItems: 'center',
+                           justifyContent: 'space-around',
+                           padding: '4px 8px 8px 8px'
+                         }}>
                            {/* Normal Speed */}
                            <button
                              style={{
