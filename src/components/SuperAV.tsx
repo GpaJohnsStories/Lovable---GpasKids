@@ -658,21 +658,21 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                      borderRadius: '12px',
                      boxShadow: '0 4px 8px rgba(210, 105, 30, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
                    }}>
-                     <div style={{
-                       backgroundColor: 'white',
-                       borderRadius: '9px',
-                       height: '100%'
-                      }}>
-                        {/* Header */}
-                        <div style={{
-                          height: '27px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          borderBottom: '1px solid #f3f4f6'
-                        }}>
-                          <b style={{color: '#D2691E', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
-                        </div>
+                      <div style={{
+                        backgroundColor: '#D2691E',
+                        borderRadius: '9px',
+                        height: '100%'
+                       }}>
+                         {/* Header */}
+                         <div style={{
+                           height: '27px',
+                           display: 'flex',
+                           alignItems: 'center',
+                           justifyContent: 'center',
+                           borderBottom: '1px solid rgba(255,255,255,0.2)'
+                         }}>
+                           <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
+                         </div>
                         
                          {/* Speed buttons row */}
                          <div style={{
