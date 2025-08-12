@@ -38,12 +38,28 @@ const ColorReferenceTable = () => {
       notes: "Darker shade for hover states and interactive elements. Provides good contrast."
     },
     {
+      name: "Orange - Rust",
+      hex: "#F97316",
+      grouping: "Primary",
+      howUsed: ["Active buttons", "Current page indicators"],
+      whereUsed: ["Admin Dashboard", "Navigation menu"],
+      notes: "Rust orange for active states and current selections. Strong visual emphasis."
+    },
+    {
       name: "Yellow - Golden",
       hex: "#FFD700",
       grouping: "Primary",
       howUsed: ["Accent highlights", "Special buttons"],
       whereUsed: ["Story pages", "Admin Dashboard"],
       notes: "Accent color for highlights and special emphasis. Catches children's attention."
+    },
+    {
+      name: "Yellow - Bright",
+      hex: "#FFFF00",
+      grouping: "Other",
+      howUsed: ["Warning highlights", "Attention grabbers"],
+      whereUsed: ["Validation messages", "Important notices"],
+      notes: "Pure yellow for strong warnings and alerts. High visibility color."
     },
 
     // Background Colors
@@ -97,6 +113,22 @@ const ColorReferenceTable = () => {
       whereUsed: ["Story metadata", "Comment timestamps"],
       notes: "Muted text and descriptions. Used for less important information."
     },
+    {
+      name: "Brown - Earth",
+      hex: "#9c441a",
+      grouping: "Secondary",
+      howUsed: ["Section headers", "Category labels"],
+      whereUsed: ["Admin sections", "Category displays"],
+      notes: "Earth brown for section organization and categorization."
+    },
+    {
+      name: "Brown - Wood",
+      hex: "#814d2e",
+      grouping: "Secondary",
+      howUsed: ["Border colors", "Divider lines"],
+      whereUsed: ["Card borders", "Section dividers"],
+      notes: "Woody brown for subtle borders and visual separation."
+    },
 
     // Interactive Elements
     {
@@ -116,12 +148,36 @@ const ColorReferenceTable = () => {
       notes: "Information and links. Calm and trustworthy feeling."
     },
     {
+      name: "Blue - Light",
+      hex: "#ADD8E6",
+      grouping: "Other",
+      howUsed: ["Secondary links", "Subtle highlights"],
+      whereUsed: ["Secondary navigation", "Metadata links"],
+      notes: "Light blue for secondary interactive elements and subtle emphasis."
+    },
+    {
+      name: "Blue - Admin",
+      hex: "#2563eb",
+      grouping: "Primary",
+      howUsed: ["Admin interface", "Primary admin buttons"],
+      whereUsed: ["Admin Dashboard", "Admin forms"],
+      notes: "Primary admin interface color. Professional and authoritative appearance."
+    },
+    {
       name: "Red - Coral",
       hex: "#FF6B6B",
       grouping: "Other",
       howUsed: ["Error messages", "Important notices"],
       whereUsed: ["Error pages", "Validation messages"],
       notes: "Alerts and important notices. Attention-grabbing but not alarming."
+    },
+    {
+      name: "Red - Crimson",
+      hex: "#DC143C",
+      grouping: "Other",
+      howUsed: ["Critical errors", "Danger states"],
+      whereUsed: ["Delete confirmations", "Critical warnings"],
+      notes: "Deep red for critical actions and serious warnings. Strong attention signal."
     },
 
     // Special Effects
