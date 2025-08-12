@@ -3,6 +3,7 @@ import React from 'react';
 import { SuperAV } from '../SuperAV';
 import { StoryCodePhotoDisplay } from './StoryCodePhotoDisplay';
 import { useStoryCodeLookup } from '../../hooks/useStoryCodeLookup';
+import { createSafeHtml } from "../../utils/xssProtection";
 
 interface StoryContentRendererProps {
   content: string;
@@ -34,7 +35,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
           parts.push(
             <div 
               key={`text-${lastIndex}`}
-              dangerouslySetInnerHTML={{ __html: beforeText }}
+              dangerouslySetInnerHTML={createSafeHtml(beforeText)}
               className="prose prose-lg max-w-none text-black leading-relaxed font-normal"
               style={{ fontFamily: 'Georgia, serif' }}
             />
@@ -60,7 +61,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
         parts.push(
           <div 
             key={`text-${lastIndex}`}
-            dangerouslySetInnerHTML={{ __html: remainingText }}
+            dangerouslySetInnerHTML={createSafeHtml(remainingText)}
             className="prose prose-lg max-w-none text-black leading-relaxed font-normal"
             style={{ fontFamily: 'Georgia, serif' }}
           />
@@ -72,7 +73,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
     if (parts.length === 0) {
       return (
         <div 
-          dangerouslySetInnerHTML={{ __html: text }}
+          dangerouslySetInnerHTML={createSafeHtml(text)}
           className="prose prose-lg max-w-none text-black leading-relaxed font-normal"
           style={{ fontFamily: 'Georgia, serif' }}
         />
@@ -185,7 +186,7 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
       {/* Story Content */}
       {storyData.content && (
         <div 
-          dangerouslySetInnerHTML={{ __html: storyData.content }}
+          dangerouslySetInnerHTML={createSafeHtml(storyData.content)}
           className="prose prose-lg max-w-none text-black leading-relaxed font-normal mt-4"
           style={{ fontFamily: 'Georgia, serif' }}
         />

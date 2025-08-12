@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { createSafeHtml } from "@/utils/xssProtection";
 
 const LibraryInstructions = () => {
   const [content, setContent] = useState<string>("");
@@ -82,7 +83,7 @@ const LibraryInstructions = () => {
         lineHeight: '1.6',
         fontWeight: 'normal'
       }}>
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <div dangerouslySetInnerHTML={createSafeHtml(content)} />
       </div>
       
       {/* Web-text code indicator */}

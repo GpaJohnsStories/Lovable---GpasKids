@@ -5,6 +5,7 @@ import { AudioButton } from '@/components/AudioButton';
 import { SuperAV } from '@/components/SuperAV';
 import { ArrowRight } from 'lucide-react';
 import { FontScaleStep, DEFAULT_FONT_SCALE, getTypographyClasses } from '@/utils/fontScaleUtils';
+import { createSafeHtml } from "@/utils/xssProtection";
 
 interface ProportionalWebTextBoxProps {
   webtextCode: string;
@@ -31,9 +32,10 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const [showSuperAV, setShowSuperAV] = useState(false);
 
   const getContent = () => {
-    if (loading) return "Loading...";
-    if (!webtext) return "Coming Soon";
-    return webtext.content || webtext.excerpt || "No content available";
+    if (loading) return { __html: "Loading..." };
+    if (!webtext) return { __html: "Coming Soon" };
+    const content = webtext.content || webtext.excerpt || "No content available";
+    return createSafeHtml(content);
   };
 
   useEffect(() => {
@@ -142,7 +144,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                 <div 
                   className="proportional-content text-blue-800 leading-relaxed break-words"
                   style={getScaleStyles()}
-                  dangerouslySetInnerHTML={{ __html: getContent() }}
+                  dangerouslySetInnerHTML={getContent()}
                 />
               </div>
             </div>
@@ -222,7 +224,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           <div 
             className="proportional-content text-amber-900 leading-relaxed"
             style={getScaleStyles()}
-            dangerouslySetInnerHTML={{ __html: getContent() }}
+            dangerouslySetInnerHTML={getContent()}
           />
           
           {/* Clear the float */}

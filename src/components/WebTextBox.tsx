@@ -5,6 +5,7 @@ import { AudioButton } from '@/components/AudioButton';
 
 import { SuperAV } from '@/components/SuperAV';
 import { ArrowRight } from 'lucide-react';
+import { createSafeHtml } from "@/utils/xssProtection";
 
 interface WebTextBoxProps {
   webtextCode: string;
@@ -31,9 +32,10 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [showSuperAV, setShowSuperAV] = useState(false);
 
   const getContent = () => {
-    if (loading) return "Loading...";
-    if (!webtext) return "Coming Soon";
-    return webtext.content || webtext.excerpt || "No content available";
+    if (loading) return { __html: "Loading..." };
+    if (!webtext) return { __html: "Coming Soon" };
+    const content = webtext.content || webtext.excerpt || "No content available";
+    return createSafeHtml(content);
   };
 
   useEffect(() => {
@@ -117,7 +119,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                 <div 
                   className="font-handwritten text-blue-800 leading-relaxed break-words [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>h3]:font-handwritten [&>p]:mb-3 [&>p]:break-words [&>p]:font-handwritten [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
                   style={{ fontSize: `${fontSize}px` }}
-                  dangerouslySetInnerHTML={{ __html: getContent() }}
+                  dangerouslySetInnerHTML={getContent()}
                 />
               </div>
             </div>
@@ -197,7 +199,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           <div 
             className="font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
             style={{ fontSize: `${fontSize}px` }}
-            dangerouslySetInnerHTML={{ __html: getContent() }}
+            dangerouslySetInnerHTML={getContent()}
           />
           
           {/* Clear the float */}

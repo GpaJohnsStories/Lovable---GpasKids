@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { SuperAV } from '@/components/SuperAV';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { createSafeHtml } from "@/utils/xssProtection";
 
 interface StoryData {
   id: string;
@@ -185,7 +186,7 @@ export const DeployedContent = ({
         <div 
           className="deployed-story-content"
           style={{ fontFamily: 'Georgia, serif' }}
-          dangerouslySetInnerHTML={{ __html: content.content }}
+          dangerouslySetInnerHTML={createSafeHtml(content.content)}
         />
       )}
     </div>

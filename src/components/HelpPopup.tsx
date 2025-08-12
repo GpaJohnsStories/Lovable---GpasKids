@@ -14,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
+import { createSafeHtml } from "@/utils/xssProtection";
 
 interface HelpPopupProps {
   isOpen: boolean;
@@ -160,7 +161,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
                 )}
                 <div 
                   className="font-handwritten text-gray-800 leading-relaxed [&>h3]:text-xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:text-orange-800 [&>h3]:font-handwritten [&>p]:text-base [&>p]:mb-3 [&>p]:font-handwritten [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>strong]:font-handwritten [&>em]:font-handwritten" 
-                  dangerouslySetInnerHTML={{ __html: helpContent }}
+                  dangerouslySetInnerHTML={createSafeHtml(helpContent)}
                 />
                 
                 {/* Bottom Left: Webtext Code */}
