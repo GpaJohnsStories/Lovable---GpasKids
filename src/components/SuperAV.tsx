@@ -474,20 +474,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
             <div style={{flex: 1, display: 'flex', alignItems: 'center'}}>
               <table width={244} cellSpacing={0} cellPadding={0} border={0}>
               <tbody>
-                {/* Row 1: 4 cells, 27px height, blue fill, labeled */}
-                <tr>
-                   <td width={60} height={27} style={{backgroundImage: 'url(/public/lovable-uploads/ICA-PL1.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px 0 0 0'}} role="button" aria-label="Play" title="Play" align="center" valign="middle">
-                   </td>
-                  <td width={60} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Pause" title="Pause" align="center" valign="middle">
-                    <b style={{color: 'white', fontFamily: FONT_FUN}}>Pause</b>
-                  </td>
-                  <td width={60} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Restart" title="Restart" align="center" valign="middle">
-                    <b style={{color: 'white', fontFamily: FONT_FUN}}>Restart</b>
-                  </td>
-                  <td width={60} height={27} style={{backgroundColor: '#2563eb', borderRadius: '0 12px 0 0'}} role="button" aria-label="Stop" title="Stop" align="center" valign="middle">
-                    <b style={{color: 'white', fontFamily: FONT_FUN}}>STOP</b>
-                  </td>
-                </tr>
 
                 {/* Row 2: 4 beautiful buttons with gradients and icons */}
                 <tr>
