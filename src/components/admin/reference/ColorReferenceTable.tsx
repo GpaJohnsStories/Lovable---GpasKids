@@ -182,7 +182,7 @@ const ColorReferenceTable = () => {
 
     // Special Effects
     {
-      name: "Shadow - Soft",
+      name: "Black - Shadow - Soft",
       hex: "#0000001A",
       grouping: "Other",
       howUsed: ["Card shadows", "Depth effects"],
@@ -190,7 +190,7 @@ const ColorReferenceTable = () => {
       notes: "Card shadows and depth (10% opacity). Creates subtle elevation."
     },
     {
-      name: "Glow - Warm",
+      name: "Yellow - Glow - Warm",
       hex: "#FFD70080",
       grouping: "Other",
       howUsed: ["Button glow effects", "Hover highlights"],
@@ -198,7 +198,7 @@ const ColorReferenceTable = () => {
       notes: "Button glow effects (50% opacity). Adds magical feeling to interactions."
     },
     {
-      name: "Highlight - Gentle",
+      name: "Cream - Highlight - Gentle",
       hex: "#FFF8DC80",
       grouping: "Other",
       howUsed: ["Hover states", "Selection highlights"],
