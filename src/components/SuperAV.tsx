@@ -48,18 +48,17 @@ const CustomArrowIcon: React.FC = () => {
 const CustomPlayIcon: React.FC = () => {
   const { iconUrl, isLoading, error } = useCachedIcon('ICA-PL1.jpg');
   
-  if (isLoading) return <div style={{ width: '55px', height: '55px' }} />;
-  if (error || !iconUrl) return <div style={{ width: '55px', height: '55px', background: '#814d2e' }} />;
+  if (isLoading) return <div style={{ width: '45px', height: '45px' }} />;
+  if (error || !iconUrl) return <span>PLAY</span>;
   
   return (
     <img 
       src={iconUrl} 
       alt="Play" 
       style={{ 
-        height: '55px', 
-        width: '55px',
-        objectFit: 'contain',
-        borderRadius: '12px'
+        height: '45px', 
+        width: '45px',
+        objectFit: 'contain'
       }} 
     />
   );
@@ -499,34 +498,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 {/* Row 2: 4 beautiful buttons with gradients and icons */}
                 <tr>
                    <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', borderRadius: '0 0 0 12px', textAlign: 'center'}}>
-                     <div style={{
-                       width: '55px',
-                       height: '55px',
-                       borderRadius: '12px',
-                       display: 'flex',
-                       alignItems: 'center',
-                       justifyContent: 'center',
-                       boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                       cursor: 'pointer',
-                       transition: 'all 0.15s ease',
-                       border: '1px solid rgba(255,255,255,0.2)',
-                       transform: 'scale(1)'
-                     }} 
-                     role="button" 
-                     aria-label="Play" 
-                     title="Play"
-                     onMouseEnter={(e) => {
-                       e.currentTarget.style.transform = 'scale(1.1)';
-                     }}
-                     onMouseLeave={(e) => {
-                       e.currentTarget.style.transform = 'scale(1)';
-                     }}
-                     onMouseDown={(e) => {
-                       e.currentTarget.style.transform = 'scale(0.95)';
-                     }}
-                      onMouseUp={(e) => {
-                        e.currentTarget.style.transform = 'scale(1.1)';
-                      }}
+                     <div 
+                       className="button-3d-base button-3d-standard"
+                       role="button" 
+                       aria-label="Play Audio" 
+                       title="Play Audio"
+                       style={{
+                         cursor: 'pointer'
+                       }}
                        onClick={handlePlay}>
                          <CustomPlayIcon />
                        </div>
