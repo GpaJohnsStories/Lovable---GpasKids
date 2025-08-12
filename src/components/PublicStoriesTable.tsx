@@ -184,11 +184,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                 placeholder="Search stories by title, content, author, or keywords..."
                 value={localSearchTerm}
                 onChange={(e) => setLocalSearchTerm(e.target.value)}
-                className="pl-10 pr-10 py-2 text-sm border-2 focus:border-orange-400 rounded-lg placeholder:font-bold"
-                style={{ 
-                  fontFamily: 'system-ui, -apple-system, sans-serif',
-                  borderColor: '#9c441a'
-                }}
+                className="pl-10 pr-10 py-2 text-sm border-2 focus:border-orange-400 rounded-lg placeholder:font-bold search-input-amber"
               />
               {searchTerm && (
                 <Button
@@ -234,9 +230,8 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         <TooltipTrigger asChild>
                           <Button
                             onClick={() => handleSort('story_code')}
-                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
                             size="sm"
-                            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                           >
                             Code
                             {getSortIcon('story_code')}
@@ -252,9 +247,8 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         <TooltipTrigger asChild>
                           <Button
                             onClick={() => handleSort('title')}
-                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
                             size="sm"
-                            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                           >
                             Title
                             {getSortIcon('title')}
@@ -270,9 +264,8 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         <TooltipTrigger asChild>
                           <Button
                             onClick={() => handleSort('author')}
-                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
                             size="sm"
-                            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                           >
                             Author
                             {getSortIcon('author')}
@@ -289,9 +282,8 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                           <TooltipTrigger asChild>
                             <DropdownMenuTrigger asChild>
                               <Button
-                                className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1"
+                                className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1 font-system"
                                 size="sm"
-                                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                               >
                                 {categoryFilter === 'all' ? 'Category' : getCategoryDisplayName(categoryFilter)}
                                 <ChevronDown className="h-3 w-3" />
@@ -309,9 +301,8 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                            {categoryOptions.map((category) => (
                              <DropdownMenuItem
                                key={category}
-                               onClick={() => setCategoryFilter(category)}
-                               className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100"
-                               style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                                onClick={() => setCategoryFilter(category)}
+                                className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100 font-system"
                              >
                                <div className="flex items-center gap-2 w-full">
                                   <div 
@@ -333,9 +324,8 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         <TooltipTrigger asChild>
                           <Button
                             onClick={() => handleSort('read_count')}
-                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
                             size="sm"
-                            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                           >
                             Reads
                             {getSortIcon('read_count')}
@@ -351,9 +341,8 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         <TooltipTrigger asChild>
                           <Button
                             onClick={() => handleSort('updated_at')}
-                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
                             size="sm"
-                            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                           >
                             Updated
                             {getSortIcon('updated_at')}
@@ -370,12 +359,11 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                   {stories?.map((story) => (
                     <TableRow key={story.id}>
                       <TableCell 
-                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
-                        className="font-mono text-xs"
+                        className="font-mono text-xs text-black-system"
                       >
                         {story.story_code}
                       </TableCell>
-                      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+                      <TableCell className="text-black-system">
                         <div>
                           <Link 
                             to={`/story/${story.story_code}`} 
@@ -395,7 +383,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                           )}
                         </div>
                       </TableCell>
-                      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+                      <TableCell className="text-black-system">
                         <div className="flex flex-col items-center gap-1">
                           <span className="text-sm">{story.author}</span>
                           {onEditBio && (
@@ -409,20 +397,18 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                           )}
                         </div>
                       </TableCell>
-                      <TableCell style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+                      <TableCell className="text-black-system">
                         <div className={`${getCategoryBadgeColor(story.category)} text-white text-xs px-2 py-1 rounded text-center`}>
                           {getCategoryShortName(story.category)}
                         </div>
                       </TableCell>
                       <TableCell 
-                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
-                        className="text-center"
+                        className="text-center text-black-system"
                       >
                         {story.read_count}
                       </TableCell>
                       <TableCell 
-                        style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
-                        className="text-xs"
+                        className="text-xs text-black-system"
                       >
                         {new Date(story.updated_at).toLocaleDateString()}
                       </TableCell>

@@ -203,9 +203,8 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                       <TooltipTrigger asChild>
                         <Button
                           onClick={() => handleSort('author_name')}
-                          className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                          className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
                           size="sm"
-                          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                         >
                           <User className="h-3 w-3 mr-1" />
                           Author
@@ -218,8 +217,7 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                     </Tooltip>
                   </TableHead>
                   <TableHead className="p-1 text-center bg-background border-r border-gray-200">
-                    <div className="bg-green-500 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center rounded"
-                         style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    <div className="bg-green-500 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center rounded font-system">
                       Biography & Stories
                     </div>
                   </TableHead>
@@ -228,9 +226,8 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                       <TooltipTrigger asChild>
                         <Button
                           onClick={() => handleSort('native_country_name')}
-                          className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                          className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
                           size="sm"
-                          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                         >
                           <Globe className="h-3 w-3 mr-1" />
                           Origin
@@ -247,9 +244,8 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                       <TooltipTrigger asChild>
                         <Button
                           onClick={() => handleSort('born_date')}
-                          className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1"
+                          className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
                           size="sm"
-                          style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                         >
                           <Calendar className="h-3 w-3 mr-1" />
                           Life Span
@@ -262,8 +258,7 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                     </Tooltip>
                   </TableHead>
                   <TableHead className="p-1 text-center bg-background">
-                    <div className="bg-green-500 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center rounded"
-                         style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    <div className="bg-green-500 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center rounded font-system">
                       Actions
                     </div>
                   </TableHead>
@@ -273,14 +268,12 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                 {sortedBios.map((bio) => (
                   <TableRow key={bio.id} className="hover:bg-amber-50/50">
                     <TableCell 
-                      className="font-semibold text-amber-900 align-top"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                      className="font-semibold text-amber-900 align-top text-black-system"
                     >
                       {bio.author_name}
                     </TableCell>
                     <TableCell 
-                      className="max-w-md align-top"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                      className="max-w-md align-top text-black-system"
                     >
                       <div className="space-y-3">
                         <div className="text-sm text-amber-700 leading-relaxed">
@@ -296,24 +289,21 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
                       </div>
                     </TableCell>
                     <TableCell 
-                      className="text-amber-700 align-top"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                      className="text-amber-700 align-top text-black-system"
                     >
                       <div className="text-sm">
                         {getCountryLanguageDisplay(bio)}
                       </div>
                     </TableCell>
                     <TableCell 
-                      className="text-amber-700 align-top"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                      className="text-amber-700 align-top text-black-system"
                     >
                       <div className="text-sm">
                         {formatLifeSpan(bio)}
                       </div>
                     </TableCell>
                     <TableCell 
-                      className="align-top"
-                      style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}
+                      className="align-top text-black-system"
                     >
                       <Button
                         size="sm"

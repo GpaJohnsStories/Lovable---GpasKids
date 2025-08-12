@@ -30,8 +30,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
   return (
     <div className="w-full max-w-md mx-auto">
       <Card 
-        className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative border-2 border-amber-300" 
-        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+        className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative border-2 border-amber-300 font-system" 
         onClick={handleClick}
       >
         <CardContent className="p-3 text-center relative">
@@ -53,11 +52,11 @@ const StoryCard = ({ story }: StoryCardProps) => {
               </div>
             )}
             <div className="flex-1">
-              <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight font-system">
                 {story.title}
               </h3>
               {story.tagline && (
-                <h4 className="text-sm font-medium text-amber-700 mb-1 italic leading-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <h4 className="text-sm font-medium text-amber-700 mb-1 italic leading-tight font-system">
                   {story.tagline}
                 </h4>
               )}
@@ -65,15 +64,15 @@ const StoryCard = ({ story }: StoryCardProps) => {
           </div>
           
           <div className="flex flex-col items-center text-sm text-amber-600 mb-2">
-            <span className="font-medium mb-1" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>by {story.author}</span>
+            <span className="font-medium mb-1 font-system">by {story.author}</span>
             <AuthorLink authorName={story.author} size="sm" />
           </div>
 
           <div className="flex items-center justify-center text-xs text-amber-600 mb-2">
-            <span className="font-medium" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>Story Code: {story.story_code}</span>
+            <span className="font-medium font-system">Story Code: {story.story_code}</span>
           </div>
           
-          <p className="text-amber-700 mb-2 leading-relaxed text-sm" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontSize: '14px' }}>
+          <p className="text-amber-700 mb-2 leading-relaxed text-sm font-system">
             {story.excerpt || story.description}
           </p>
           

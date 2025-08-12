@@ -58,15 +58,7 @@ const LibraryInstructions = () => {
   if (isLoading) {
     return (
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
-        <div style={{ 
-          color: '#000000',
-          fontSize: '18px',
-          fontStyle: 'italic',
-          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-          lineHeight: '1.6',
-          fontWeight: 'normal',
-          textAlign: 'center'
-        }}>
+        <div className="text-center-18-system">
           Loading instructions...
         </div>
       </div>
@@ -75,28 +67,12 @@ const LibraryInstructions = () => {
 
   return (
     <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 relative">
-      <div style={{ 
-        color: '#000000',
-        fontSize: '18px',
-        fontStyle: 'italic',
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-        lineHeight: '1.6',
-        fontWeight: 'normal'
-      }}>
+      <div className="text-18-system">
         <div dangerouslySetInnerHTML={createSafeHtml(content)} />
       </div>
       
       {/* Web-text code indicator */}
-      <div style={{ 
-        position: 'absolute',
-        bottom: '8px',
-        right: '12px',
-        fontSize: '12px',
-        color: '#666',
-        fontFamily: 'monospace',
-        fontWeight: 'normal',
-        opacity: 0.7
-      }}>
+      <div className="code-indicator">
         SYS-LIB
       </div>
     </div>

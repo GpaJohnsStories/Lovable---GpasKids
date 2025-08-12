@@ -2,26 +2,26 @@ const PureTable = () => {
   return (
     <table>
       <tbody>
-        <tr style={{ height: '27.5px' }}>
-          <td style={{ backgroundColor: '#2563eb' }}></td>
-          <td style={{ backgroundColor: '#2563eb' }}></td>
-          <td style={{ backgroundColor: '#2563eb' }}></td>
-          <td style={{ backgroundColor: '#2563eb' }}></td>
+        <tr className="h-27-5">
+          <td className="bg-blue-500-hex"></td>
+          <td className="bg-blue-500-hex"></td>
+          <td className="bg-blue-500-hex"></td>
+          <td className="bg-blue-500-hex"></td>
         </tr>
-        <tr style={{ height: '55px' }}>
-          <td style={{ backgroundColor: '#2563eb' }}></td>
-          <td style={{ backgroundColor: '#2563eb' }}></td>
-          <td style={{ backgroundColor: '#2563eb' }}></td>
-          <td style={{ backgroundColor: '#2563eb' }}></td>
+        <tr className="h-55">
+          <td className="bg-blue-500-hex"></td>
+          <td className="bg-blue-500-hex"></td>
+          <td className="bg-blue-500-hex"></td>
+          <td className="bg-blue-500-hex"></td>
         </tr>
-        <tr style={{ height: '27.5px' }}>
-          <td colSpan={4} style={{ backgroundColor: 'transparent', border: 'none' }}></td>
+        <tr className="h-27-5">
+          <td colSpan={4} className="bg-transparent-none"></td>
         </tr>
-        <tr style={{ height: '27.5px' }}>
-          <td colSpan={4} style={{ backgroundColor: '#8B4513' }}></td>
+        <tr className="h-27-5">
+          <td colSpan={4} className="bg-brown-hex"></td>
         </tr>
-        <tr style={{ height: '55px' }}>
-          <td colSpan={4} style={{ backgroundColor: '#8B4513' }}></td>
+        <tr className="h-55">
+          <td colSpan={4} className="bg-brown-hex"></td>
         </tr>
       </tbody>
     </table>
