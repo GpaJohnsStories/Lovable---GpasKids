@@ -682,141 +682,125 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                           justifyContent: 'space-around',
                           padding: '8px'
                         }}>
-                          {/* Normal Speed */}
-                          <div style={{
-                            width: '55px',
-                            height: '55px',
-                            background: 'linear-gradient(145deg, #86efac, #65d997)',
-                            borderRadius: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                            cursor: 'pointer',
-                            transition: 'all 0.15s ease',
-                            border: '1px solid rgba(255,255,255,0.2)',
-                            transform: 'scale(1)'
-                          }} 
-                          role="button" 
-                          aria-label="Normal Speed" 
-                          title="Normal Speed"
-                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                          onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                           onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                           onClick={() => handleSpeedChange(1)}>
-                             <img 
-                               src={speedNormalIcon} 
-                               alt="Normal speed"
-                               style={{
-                                 width: '45px',
-                                 height: '45px',
-                                 objectFit: 'contain'
-                               }}
-                             />
-                           </div>
-                          
-                          {/* Fast Speed */}
-                          <div style={{
-                            width: '55px',
-                            height: '55px',
-                            background: 'linear-gradient(145deg, #4ade80, #22c55e)',
-                            borderRadius: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                            cursor: 'pointer',
-                            transition: 'all 0.15s ease',
-                            border: '1px solid rgba(255,255,255,0.2)',
-                            transform: 'scale(1)'
-                          }} 
-                          role="button" 
-                          aria-label="Fast Speed" 
-                          title="Fast Speed"
-                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                          onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                           onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                           onClick={() => handleSpeedChange(1.25)}>
-                             <img 
-                               src={speedFastIcon} 
-                               alt="Fast speed"
-                               style={{
-                                 width: '45px',
-                                 height: '45px',
-                                 objectFit: 'contain'
-                               }}
-                             />
-                           </div>
-                          
-                          {/* Faster Speed */}
-                          <div style={{
-                            width: '55px',
-                            height: '55px',
-                            background: 'linear-gradient(145deg, #22c55e, #16a34a)',
-                            borderRadius: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                            cursor: 'pointer',
-                            transition: 'all 0.15s ease',
-                            border: '1px solid rgba(255,255,255,0.2)',
-                            transform: 'scale(1)'
-                          }} 
-                          role="button" 
-                          aria-label="Faster Speed" 
-                          title="Faster Speed"
-                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                          onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                           onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                           onClick={() => handleSpeedChange(1.5)}>
-                             <img 
-                               src={speedFasterIcon} 
-                               alt="Faster speed"
-                               style={{
-                                 width: '45px',
-                                 height: '45px',
-                                 objectFit: 'contain'
-                               }}
-                             />
-                           </div>
-                          
-                          {/* Fastest Speed */}
-                          <div style={{
-                            width: '55px',
-                            height: '55px',
-                            background: 'linear-gradient(145deg, #16a34a, #15803d)',
-                            borderRadius: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                            cursor: 'pointer',
-                            transition: 'all 0.15s ease',
-                            border: '1px solid rgba(255,255,255,0.2)',
-                            transform: 'scale(1)'
-                          }} 
-                          role="button" 
-                          aria-label="Fastest Speed" 
-                          title="Fastest Speed"
-                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                          onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-                           onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                           onClick={() => handleSpeedChange(2)}>
-                             <img 
-                               src={speedFastestIcon} 
-                               alt="Fastest speed"
-                               style={{
-                                 width: '45px',
-                                 height: '45px',
-                                 objectFit: 'contain'
-                               }}
-                             />
-                           </div>
+                           {/* Normal Speed */}
+                           <button
+                             style={{
+                               padding: '8px 16px',
+                               backgroundColor: playbackRate === 1 ? '#86efac' : '#d1fae5',
+                               color: playbackRate === 1 ? '#1f2937' : '#374151',
+                               borderRadius: '8px',
+                               border: 'none',
+                               cursor: 'pointer',
+                               fontSize: '14px',
+                               fontWeight: '500',
+                               transition: 'all 0.2s ease'
+                             }}
+                             onMouseEnter={(e) => {
+                               if (playbackRate !== 1) {
+                                 e.currentTarget.style.backgroundColor = '#86efac';
+                                 e.currentTarget.style.color = '#1f2937';
+                               }
+                             }}
+                             onMouseLeave={(e) => {
+                               if (playbackRate !== 1) {
+                                 e.currentTarget.style.backgroundColor = '#d1fae5';
+                                 e.currentTarget.style.color = '#374151';
+                               }
+                             }}
+                             onClick={() => handleSpeedChange(1)}
+                           >
+                             Normal
+                           </button>
+                           
+                           {/* Fast Speed */}
+                           <button
+                             style={{
+                               padding: '8px 16px',
+                               backgroundColor: playbackRate === 1.25 ? '#4ade80' : '#bbf7d0',
+                               color: playbackRate === 1.25 ? '#1f2937' : '#374151',
+                               borderRadius: '8px',
+                               border: 'none',
+                               cursor: 'pointer',
+                               fontSize: '14px',
+                               fontWeight: '500',
+                               transition: 'all 0.2s ease'
+                             }}
+                             onMouseEnter={(e) => {
+                               if (playbackRate !== 1.25) {
+                                 e.currentTarget.style.backgroundColor = '#4ade80';
+                                 e.currentTarget.style.color = '#1f2937';
+                               }
+                             }}
+                             onMouseLeave={(e) => {
+                               if (playbackRate !== 1.25) {
+                                 e.currentTarget.style.backgroundColor = '#bbf7d0';
+                                 e.currentTarget.style.color = '#374151';
+                               }
+                             }}
+                             onClick={() => handleSpeedChange(1.25)}
+                           >
+                             Fast
+                           </button>
+                           
+                           {/* Faster Speed */}
+                           <button
+                             style={{
+                               padding: '8px 16px',
+                               backgroundColor: playbackRate === 1.5 ? '#22c55e' : '#a7f3d0',
+                               color: playbackRate === 1.5 ? 'white' : '#374151',
+                               borderRadius: '8px',
+                               border: 'none',
+                               cursor: 'pointer',
+                               fontSize: '14px',
+                               fontWeight: '500',
+                               transition: 'all 0.2s ease'
+                             }}
+                             onMouseEnter={(e) => {
+                               if (playbackRate !== 1.5) {
+                                 e.currentTarget.style.backgroundColor = '#22c55e';
+                                 e.currentTarget.style.color = 'white';
+                               }
+                             }}
+                             onMouseLeave={(e) => {
+                               if (playbackRate !== 1.5) {
+                                 e.currentTarget.style.backgroundColor = '#a7f3d0';
+                                 e.currentTarget.style.color = '#374151';
+                               }
+                             }}
+                             onClick={() => handleSpeedChange(1.5)}
+                           >
+                             Faster
+                           </button>
+                           
+                           {/* Fastest Speed */}
+                           <button
+                             style={{
+                               padding: '8px 16px',
+                               backgroundColor: playbackRate === 2 ? '#16a34a' : '#86efac',
+                               color: playbackRate === 2 ? '#fb923c' : '#374151',
+                               borderRadius: '8px',
+                               border: 'none',
+                               cursor: 'pointer',
+                               fontSize: '14px',
+                               fontWeight: '500',
+                               transition: 'all 0.2s ease'
+                             }}
+                             onMouseEnter={(e) => {
+                               if (playbackRate !== 2) {
+                                 e.currentTarget.style.backgroundColor = '#16a34a';
+                                 e.currentTarget.style.color = '#fb923c';
+                               }
+                             }}
+                             onMouseLeave={(e) => {
+                               if (playbackRate !== 2) {
+                                 e.currentTarget.style.backgroundColor = '#86efac';
+                                 e.currentTarget.style.color = '#374151';
+                               }
+                             }}
+                             onClick={() => handleSpeedChange(2)}
+                           >
+                             Fastest
+                           </button>
                         </div>
                       </div>
                      </td>
