@@ -476,9 +476,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
               <tbody>
                 {/* Row 1: 4 cells, 27px height, blue fill, labeled */}
                 <tr>
-                  <td width={60} height={27} style={{backgroundColor: '#2563eb', borderRadius: '12px 0 0 0'}} role="button" aria-label="Play" title="Play" align="center" valign="middle">
-                    <b style={{color: 'white', fontFamily: FONT_FUN}}>Play</b>
-                  </td>
+                   <td width={60} height={27} style={{backgroundImage: 'url(/public/lovable-uploads/ICA-PL1.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '12px 0 0 0'}} role="button" aria-label="Play" title="Play" align="center" valign="middle">
+                   </td>
                   <td width={60} height={27} style={{backgroundColor: '#2563eb'}} role="button" aria-label="Pause" title="Pause" align="center" valign="middle">
                     <b style={{color: 'white', fontFamily: FONT_FUN}}>Pause</b>
                   </td>
@@ -496,9 +495,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                      <div style={{
                        width: '55px',
                        height: '55px',
-                       backgroundImage: 'url(/public/lovable-uploads/ICA-PL1.jpg)',
-                       backgroundSize: 'cover',
-                       backgroundPosition: 'center',
+                       background: 'linear-gradient(145deg, #22c55e, #16a34a)',
                        borderRadius: '12px',
                        display: 'flex',
                        alignItems: 'center',
