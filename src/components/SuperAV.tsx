@@ -482,7 +482,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        width: '55px',
                        height: '55px',
                        backgroundImage: 'url(/public/lovable-uploads/ICA-PL1.jpg)',
-                       backgroundSize: 'cover',
+                       backgroundSize: 'contain',
                        backgroundPosition: 'center',
                        borderRadius: '12px',
                        display: 'flex',
