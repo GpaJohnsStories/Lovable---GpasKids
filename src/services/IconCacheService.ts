@@ -39,7 +39,7 @@ class IconCacheService {
     'ICO-HL2.gif',      // Buddy icon
     'ICO-HO1.jpg',      // Grandpa John icon
     'ICO-CDY.png',      // Peppermint candy audio button
-    'ICO-CWS.jpg',      // SuperAV change word size icon
+    'ICO-CSZ.jpg',      // SuperAV change word size icon
     'ICO-CCP.png',      // SuperAV chocolate plus (increase font) icon
     'ICO-CCM.png',      // SuperAV chocolate minus (decrease font) icon
   ];
