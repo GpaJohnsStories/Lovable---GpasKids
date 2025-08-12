@@ -342,3 +342,47 @@
 .button-3d-text-yellow {
   color: #ffff00;
 }
+
+/* Icon Library Action Buttons */
+.icon-library-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.icon-library-edit-btn {
+  background: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
+  border: none !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.375rem !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.icon-library-edit-btn:hover {
+  background: hsl(var(--primary) / 0.9) !important;
+  transform: translateY(-1px) !important;
+}
+
+.icon-library-delete-btn {
+  background: hsl(var(--destructive)) !important;
+  color: hsl(var(--destructive-foreground)) !important;
+  border: none !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.375rem !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.icon-library-delete-btn:hover {
+  background: hsl(var(--destructive) / 0.9) !important;
+  transform: translateY(-1px) !important;
+}

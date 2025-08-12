@@ -273,31 +273,28 @@ const IconLibraryDisplay = () => {
                    </p>
                  </div>
                  
-                 {/* Action buttons - now always visible with better styling */}
-                 <div className="flex justify-center gap-2 transition-opacity border-t pt-2 mt-2">
-                   <Button
-                     variant="outline"
-                     size="sm"
-                     onClick={() => {
-                       console.log('Edit button clicked for:', icon.icon_code);
-                       handleReplace(icon);
-                     }}
-                     className="h-8 px-3 bg-blue-50 hover:bg-blue-100 border-blue-200"
-                   >
-                     <Edit3 className="h-3 w-3" />
-                     <span className="ml-1 text-xs">Edit</span>
-                   </Button>
-                   <AlertDialog>
-                     <AlertDialogTrigger asChild>
-                       <Button
-                         variant="outline"
-                         size="sm"
-                         className="h-8 px-3 bg-red-50 hover:bg-red-100 border-red-200 text-red-600 hover:text-red-700"
-                       >
-                         <Trash2 className="h-3 w-3" />
-                         <span className="ml-1 text-xs">Delete</span>
-                       </Button>
-                     </AlertDialogTrigger>
+                  <div className="icon-library-actions">
+                    <Button
+                      size="sm"
+                      onClick={() => {
+                        console.log('Edit button clicked for:', icon.icon_code);
+                        handleReplace(icon);
+                      }}
+                      className="icon-library-edit-btn"
+                    >
+                      <Edit3 className="h-3 w-3" />
+                      <span className="ml-1 text-xs">Edit</span>
+                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          size="sm"
+                          className="icon-library-delete-btn"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                          <span className="ml-1 text-xs">Delete</span>
+                        </Button>
+                      </AlertDialogTrigger>
                      <AlertDialogContent>
                        <AlertDialogHeader>
                          <AlertDialogTitle>Delete Icon</AlertDialogTitle>
