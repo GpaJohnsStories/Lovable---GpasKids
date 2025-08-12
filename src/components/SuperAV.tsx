@@ -88,7 +88,7 @@ const CustomCCMIcon: React.FC = () => {
 const CustomCWSIcon: React.FC = () => {
   const { iconUrl, isLoading, error } = useCachedIcon('ICO-CWS.jpg');
   
-  if (isLoading) return <div style={{ width: '24px', height: '24px' }} />;
+  if (isLoading) return <div style={{ width: '55px', height: '55px' }} />;
   if (error || !iconUrl) return <span style={{ fontSize: '12px' }}>Size</span>;
   
   return (
@@ -96,8 +96,8 @@ const CustomCWSIcon: React.FC = () => {
       src={iconUrl} 
       alt="Change word size" 
       style={{ 
-        height: '24px', 
-        width: '24px',
+        height: '55px', 
+        width: '55px',
         objectFit: 'contain'
       }} 
     />
