@@ -7,7 +7,8 @@ interface ColorData {
   name: string;
   hex: string;
   grouping: 'Primary' | 'Secondary' | 'Other';
-  usage: string[];
+  howUsed: string[];
+  whereUsed: string[];
   notes: string;
 }
 
@@ -24,21 +25,24 @@ const ColorReferenceTable = () => {
       name: "Orange - Warm",
       hex: "#FF8C42",
       grouping: "Primary",
-      usage: ["Index page headers", "Button components"],
+      howUsed: ["Page headers", "Button components"],
+      whereUsed: ["Index page", "Library page"],
       notes: "Primary brand color for headers and buttons. Creates warm, welcoming feeling for children."
     },
     {
       name: "Orange - Deep",
       hex: "#D2691E",
       grouping: "Primary",
-      usage: ["Button hover states", "Navigation elements"],
+      howUsed: ["Button hover states", "Navigation elements"],
+      whereUsed: ["All pages", "Menu components"],
       notes: "Darker shade for hover states and interactive elements. Provides good contrast."
     },
     {
       name: "Yellow - Golden",
       hex: "#FFD700",
       grouping: "Primary",
-      usage: ["Accent highlights", "Special buttons"],
+      howUsed: ["Accent highlights", "Special buttons"],
+      whereUsed: ["Story pages", "Admin Dashboard"],
       notes: "Accent color for highlights and special emphasis. Catches children's attention."
     },
 
@@ -47,21 +51,24 @@ const ColorReferenceTable = () => {
       name: "White - Cream",
       hex: "#FFF8DC",
       grouping: "Secondary",
-      usage: ["Page backgrounds", "Main content areas"],
+      howUsed: ["Page backgrounds", "Main content areas"],
+      whereUsed: ["Index page", "Library page", "Story pages"],
       notes: "Primary background, warm and comforting. Easy on eyes for extended reading."
     },
     {
       name: "Beige - Light",
       hex: "#F5F5DC",
       grouping: "Secondary",
-      usage: ["Card backgrounds", "Secondary content areas"],
+      howUsed: ["Card backgrounds", "Secondary content areas"],
+      whereUsed: ["Comment pages", "About page"],
       notes: "Secondary background areas. Provides subtle contrast without being harsh."
     },
     {
       name: "Ivory - Soft",
       hex: "#FFFFF0",
       grouping: "Secondary",
-      usage: ["Story content areas", "Comment sections"],
+      howUsed: ["Story content areas", "Comment sections"],
+      whereUsed: ["Story detail page", "Comment detail page"],
       notes: "Card backgrounds and content areas. Very gentle and readable."
     },
 
@@ -70,21 +77,24 @@ const ColorReferenceTable = () => {
       name: "Brown - Dark",
       hex: "#654321",
       grouping: "Primary",
-      usage: ["Main text content", "Story titles"],
+      howUsed: ["Main text content", "Story titles"],
+      whereUsed: ["All pages", "Story content"],
       notes: "Primary text color, easy to read. Good contrast with cream backgrounds."
     },
     {
       name: "Brown - Medium",
       hex: "#8B4513",
       grouping: "Secondary",
-      usage: ["Secondary text", "Form labels"],
+      howUsed: ["Secondary text", "Form labels"],
+      whereUsed: ["Forms", "Admin pages"],
       notes: "Secondary text and labels. Softer than dark brown but still readable."
     },
     {
       name: "Brown - Light",
       hex: "#A0522D",
       grouping: "Secondary",
-      usage: ["Muted text", "Descriptions"],
+      howUsed: ["Muted text", "Descriptions"],
+      whereUsed: ["Story metadata", "Comment timestamps"],
       notes: "Muted text and descriptions. Used for less important information."
     },
 
@@ -93,21 +103,24 @@ const ColorReferenceTable = () => {
       name: "Green - Forest",
       hex: "#228B22",
       grouping: "Other",
-      usage: ["Success messages", "Positive actions"],
+      howUsed: ["Success messages", "Positive actions"],
+      whereUsed: ["Form submissions", "Success pages"],
       notes: "Success states and positive actions. Universally understood positive color."
     },
     {
       name: "Blue - Sky",
       hex: "#87CEEB",
       grouping: "Other",
-      usage: ["Information messages", "Links"],
+      howUsed: ["Information messages", "Links"],
+      whereUsed: ["Help pages", "Navigation links"],
       notes: "Information and links. Calm and trustworthy feeling."
     },
     {
       name: "Red - Coral",
       hex: "#FF6B6B",
       grouping: "Other",
-      usage: ["Error messages", "Important notices"],
+      howUsed: ["Error messages", "Important notices"],
+      whereUsed: ["Error pages", "Validation messages"],
       notes: "Alerts and important notices. Attention-grabbing but not alarming."
     },
 
@@ -116,21 +129,24 @@ const ColorReferenceTable = () => {
       name: "Shadow - Soft",
       hex: "#0000001A",
       grouping: "Other",
-      usage: ["Card shadows", "Depth effects"],
+      howUsed: ["Card shadows", "Depth effects"],
+      whereUsed: ["Story cards", "Comment cards"],
       notes: "Card shadows and depth (10% opacity). Creates subtle elevation."
     },
     {
       name: "Glow - Warm",
       hex: "#FFD70080",
       grouping: "Other",
-      usage: ["Button glow effects", "Hover highlights"],
+      howUsed: ["Button glow effects", "Hover highlights"],
+      whereUsed: ["Interactive buttons", "Menu items"],
       notes: "Button glow effects (50% opacity). Adds magical feeling to interactions."
     },
     {
       name: "Highlight - Gentle",
       hex: "#FFF8DC80",
       grouping: "Other",
-      usage: ["Hover states", "Selection highlights"],
+      howUsed: ["Hover states", "Selection highlights"],
+      whereUsed: ["Table rows", "Interactive elements"],
       notes: "Hover highlights (50% opacity). Subtle feedback for user interactions."
     }
   ];
@@ -208,13 +224,14 @@ const ColorReferenceTable = () => {
         </p>
       </CardHeader>
       <CardContent>
-        <Table>
+        <Table style={{ backgroundColor: '#FFF8DC' }}>
           <TableHeader>
             <TableRow>
               <TableHead className="w-20">Color Swatch</TableHead>
               <SortableHeader column="name">Color Name</SortableHeader>
               <SortableHeader column="hex">Hex Code</SortableHeader>
               <SortableHeader column="grouping">Grouping</SortableHeader>
+              <TableHead className="w-48">How Used</TableHead>
               <TableHead className="w-48">Where Used</TableHead>
               <TableHead className="w-80">Notes</TableHead>
             </TableRow>
@@ -248,9 +265,18 @@ const ColorReferenceTable = () => {
                 </TableCell>
                 <TableCell className="text-sm">
                   <ul className="space-y-1">
-                    {color.usage.map((use, idx) => (
+                    {color.howUsed.map((use, idx) => (
                       <li key={idx} className="text-muted-foreground">
                         • {use}
+                      </li>
+                    ))}
+                  </ul>
+                </TableCell>
+                <TableCell className="text-sm">
+                  <ul className="space-y-1">
+                    {color.whereUsed.map((where, idx) => (
+                      <li key={idx} className="text-muted-foreground">
+                        • {where}
                       </li>
                     ))}
                   </ul>
