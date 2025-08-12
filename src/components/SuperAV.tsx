@@ -679,7 +679,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            height: '55px',
                            display: 'flex',
                            alignItems: 'center',
-                           justifyContent: 'space-around',
+                           justifyContent: 'space-between',
                            padding: '4px 8px 8px 8px'
                          }}>
                            {/* Normal Speed */}
