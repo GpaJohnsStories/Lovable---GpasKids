@@ -326,8 +326,8 @@ const ColorReferenceTable = () => {
           </TableHeader>
           <TableBody>
             {sortedData.map((color, index) => (
-              <TableRow key={index}>
-                <TableCell className="p-4">
+              <TableRow key={index} className="h-16">
+                <TableCell className="p-2">
                   <div 
                     className="w-14 h-14 rounded border-2 border-muted-foreground/20 shadow-sm"
                     style={{ backgroundColor: color.hex }}
