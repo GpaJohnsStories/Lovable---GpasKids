@@ -86,7 +86,7 @@ const AdminSiteMapContent = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-3xl font-bold text-black mb-2" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <h2 className="text-3xl font-bold text-black mb-2 font-system">
           Site Map
         </h2>
         <p className="text-muted-foreground">

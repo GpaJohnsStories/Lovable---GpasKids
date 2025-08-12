@@ -204,11 +204,7 @@ const AdminStoriesTable = ({
               placeholder="Search stories by title, content, author, or keywords..."
               value={localSearchTerm}
               onChange={(e) => setLocalSearchTerm(e.target.value)}
-              className="pl-10 pr-10 py-2 text-sm border-2 focus:border-orange-400 rounded-lg placeholder:font-bold"
-              style={{ 
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-                borderColor: '#9c441a'
-              }}
+                className="pl-10 pr-10 py-2 text-sm border-2 focus:border-orange-400 rounded-lg placeholder:font-bold search-input-amber"
             />
             {searchTerm && (
               <Button
@@ -224,7 +220,7 @@ const AdminStoriesTable = ({
         </div>
         <div className="relative">
           {isLoading ? (
-            <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+            <div className="text-center py-8 text-black-system">
               <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
               <p>Loading stories...</p>
             </div>

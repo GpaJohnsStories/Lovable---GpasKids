@@ -34,7 +34,7 @@ const CommentsDashboard = () => {
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <h2 className="text-3xl font-bold text-black font-system">
           {isViewer ? 'View Comments' : 'Manage Comments'}
         </h2>
         {!isViewer && (

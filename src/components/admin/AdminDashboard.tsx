@@ -24,7 +24,7 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
   return (
     <AdminLayout>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <h1 className="text-3xl font-bold text-black font-system">
           Manage Stories
         </h1>
       </div>

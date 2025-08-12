@@ -36,8 +36,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
             <div 
               key={`text-${lastIndex}`}
               dangerouslySetInnerHTML={createSafeHtml(beforeText)}
-              className="prose prose-lg max-w-none text-black leading-relaxed font-normal"
-              style={{ fontFamily: 'Georgia, serif' }}
+              className="prose prose-lg max-w-none text-black leading-relaxed font-normal font-georgia"
             />
           );
         }
@@ -62,8 +61,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
           <div 
             key={`text-${lastIndex}`}
             dangerouslySetInnerHTML={createSafeHtml(remainingText)}
-            className="prose prose-lg max-w-none text-black leading-relaxed font-normal"
-            style={{ fontFamily: 'Georgia, serif' }}
+            className="prose prose-lg max-w-none text-black leading-relaxed font-normal font-georgia"
           />
         );
       }
@@ -74,8 +72,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
       return (
         <div 
           dangerouslySetInnerHTML={createSafeHtml(text)}
-          className="prose prose-lg max-w-none text-black leading-relaxed font-normal"
-          style={{ fontFamily: 'Georgia, serif' }}
+          className="prose prose-lg max-w-none text-black leading-relaxed font-normal font-georgia"
         />
       );
     }
@@ -152,7 +149,7 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
   return (
     <div className="my-6 p-4 border border-blue-300 rounded-lg bg-blue-50">
       {/* Story Title */}
-      <h3 className="text-xl font-bold text-blue-800 mb-3 text-center" style={{ fontFamily: 'Segoe UI, sans-serif' }}>
+      <h3 className="text-xl font-bold text-blue-800 mb-3 text-center font-system">
         {storyData.title}
       </h3>
 
@@ -187,8 +184,7 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
       {storyData.content && (
         <div 
           dangerouslySetInnerHTML={createSafeHtml(storyData.content)}
-          className="prose prose-lg max-w-none text-black leading-relaxed font-normal mt-4"
-          style={{ fontFamily: 'Georgia, serif' }}
+          className="prose prose-lg max-w-none text-black leading-relaxed font-normal mt-4 font-georgia"
         />
       )}
 

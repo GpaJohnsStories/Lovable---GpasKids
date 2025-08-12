@@ -155,7 +155,7 @@ const AdminHeaderBanner = () => {
 
           {/* Left section: Title, Secure notice, and Logout button */}
           <div className="flex items-center gap-3 pl-14 sm:pl-16">
-            <h1 className="text-2xl font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: '#FFFF00' }}>
+            <h1 className="text-2xl font-bold font-system" style={{ color: '#FFFF00' }}>
               Buddy's Admin
             </h1>
             <div className="relative">

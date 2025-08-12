@@ -69,12 +69,12 @@ const StoryHeader = ({
         </div>
 
         {tagline && (
-          <h2 className="text-xl text-orange-700 text-center mb-4 italic font-medium" style={{ fontFamily: 'Georgia, serif' }}>
+          <h2 className="text-xl text-orange-700 text-center mb-4 italic font-medium font-georgia">
             {tagline}
           </h2>
         )}
 
-        <div className="flex items-center justify-center space-x-4 text-sm text-orange-600 mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+        <div className="flex items-center justify-center space-x-4 text-sm text-orange-600 mb-2 font-georgia">
           <div className="flex items-center">
             <span className="font-medium">by {author}</span>
           </div>
@@ -91,7 +91,7 @@ const StoryHeader = ({
         </div>
 
         {description && (
-          <p className="text-lg text-orange-700 text-center mb-6 italic" style={{ fontFamily: 'Georgia, serif' }}>
+          <p className="text-lg text-orange-700 text-center mb-6 italic font-georgia">
             {description}
           </p>
         )}

@@ -76,7 +76,7 @@ const AuthorBiosTable = ({ onEditBio, onCreateBio }: AuthorBiosTableProps) => {
       </CardHeader>
       <CardContent>
         {biosLoading ? (
-          <div className="text-center py-8" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+          <div className="text-center py-8 text-black-system">
             <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
             <p>Loading author bios...</p>
           </div>

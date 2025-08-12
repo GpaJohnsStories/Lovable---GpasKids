@@ -55,7 +55,7 @@ const AdminOverview = () => {
     <div className="space-y-6">
       <div className="mb-0">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-black" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <h1 className="text-3xl font-bold text-black font-system">
             Admin Dashboard
           </h1>
           {isViewer && (

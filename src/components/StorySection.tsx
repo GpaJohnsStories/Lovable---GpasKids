@@ -144,8 +144,8 @@ const StorySection = () => {
             Click Here to Begin <em>Your</em> Adventure in Reading
           </Button>
         </Link>
-        <p className="text-blue-800 mt-4 text-sm text-center" style={{ fontFamily: 'Kalam, "Comic Sans MS", "Apple Color Emoji", cursive' }}>
-          I hope you will return here often as I try add new stories whenever I can.   <span className="text-sm text-blue-800 font-bold italic" style={{ fontFamily: 'Kalam, "Comic Sans MS", "Apple Color Emoji", cursive' }}>Gpa John</span>
+        <p className="text-blue-800 mt-4 text-sm text-center font-kalam">
+          I hope you will return here often as I try add new stories whenever I can.   <span className="text-sm text-blue-800 font-bold italic font-kalam">Gpa John</span>
         </p>
       </div>
     </section>

@@ -117,10 +117,9 @@ const EditorContent: React.FC<EditorContentProps> = ({
       onFocus={handleFocus}
       onKeyDown={handleKeyDown}
       onPaste={handlePaste}
-      className="rich-editor min-h-[400px] p-4 focus:outline-none"
+      className="rich-editor min-h-[400px] p-4 focus:outline-none font-georgia"
       style={{ 
         whiteSpace: 'pre-line',
-        fontFamily: 'Georgia, serif',
         fontSize: '18px',
         color: '#000000',
         lineHeight: '1.6',

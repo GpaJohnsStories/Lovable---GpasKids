@@ -13,7 +13,6 @@ export const insertLink = () => {
 
 export const applyDefaultStyles = (element: HTMLDivElement) => {
   if (element) {
-    element.style.fontFamily = 'Georgia, serif';
     element.style.fontSize = '18px';
     element.style.color = '#000000';
     element.style.lineHeight = '1.6';
@@ -83,7 +82,6 @@ export const normalizeContent = (element: HTMLDivElement) => {
         el.tagName !== 'EM' && el.tagName !== 'B' && el.tagName !== 'I' && 
         el.tagName !== 'U' && el.tagName !== 'A' && el.tagName !== 'BR' && 
         el.tagName !== 'SPAN') {
-      el.style.fontFamily = 'Georgia, serif';
       el.style.fontSize = '18px';
       el.style.color = '#000000';
       el.style.lineHeight = '1.6';
@@ -96,7 +94,7 @@ export const normalizeContent = (element: HTMLDivElement) => {
     
     // For spans, preserve font-size but normalize other properties
     if (el.tagName === 'SPAN') {
-      el.style.fontFamily = 'Georgia, serif';
+      el.style.fontSize = '18px';
       el.style.color = '#000000';
       el.style.lineHeight = '1.6';
       // Don't override font-size for spans

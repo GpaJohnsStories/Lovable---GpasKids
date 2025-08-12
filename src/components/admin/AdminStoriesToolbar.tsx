@@ -30,8 +30,7 @@ const AdminStoriesToolbar = ({
           <Button
             onClick={() => onViewChange('stories')}
             variant={currentView === 'stories' ? 'default' : 'outline'}
-            className="flex items-center gap-2"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+            className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
           >
             <BookOpen className="h-4 w-4" />
             Stories
@@ -39,8 +38,7 @@ const AdminStoriesToolbar = ({
           <Button
             onClick={() => onViewChange('bios')}
             variant={currentView === 'bios' ? 'default' : 'outline'}
-            className="flex items-center gap-2"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+            className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
           >
             <Users className="h-4 w-4" />
             Author Bios
@@ -53,8 +51,7 @@ const AdminStoriesToolbar = ({
             <>
               <Button
                 onClick={onCreateStory}
-                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white"
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
               >
                 <Plus className="h-4 w-4" />
                 Create New Story
@@ -62,8 +59,7 @@ const AdminStoriesToolbar = ({
               <Button
                 onClick={onToggleGroupByAuthor}
                 variant={groupByAuthor ? 'default' : 'outline'}
-                className="flex items-center gap-2"
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
               >
                 <Users className="h-4 w-4" />
                 {groupByAuthor ? 'Ungroup Stories' : 'Group by Author'}
@@ -74,8 +70,7 @@ const AdminStoriesToolbar = ({
           {currentView === 'bios' && !isViewer && (
             <Button
               onClick={onCreateBio}
-              className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white"
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+              className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
             >
               <Plus className="h-4 w-4" />
               Create New Bio
