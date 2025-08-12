@@ -96,7 +96,7 @@ const CustomCWSIcon: React.FC = () => {
       src={iconUrl} 
       alt="Change word size" 
       style={{ 
-        height: '49px', 
+        height: '45px', 
         width: 'auto',
         objectFit: 'contain'
       }} 
