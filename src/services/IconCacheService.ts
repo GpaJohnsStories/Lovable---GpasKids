@@ -45,6 +45,7 @@ class IconCacheService {
     'ICO-CCP.png',      // SuperAV chocolate plus (increase font) icon
     'ICO-CCM.png',      // SuperAV chocolate minus (decrease font) icon
     'ICA-PL1.jpg',      // SuperAV play button icon
+    'ICO-AV8.jpg',      // SuperAV fastest speed button icon
   ];
 
   /**

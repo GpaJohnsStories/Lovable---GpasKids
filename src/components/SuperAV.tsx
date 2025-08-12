@@ -136,6 +136,85 @@ const CustomCWSIcon: React.FC = () => {
   );
 };
 
+// Custom Fastest Speed Button Component
+const FastestSpeedButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+  const { iconUrl, isLoading, error } = useCachedIcon('ICO-AV8.jpg');
+  
+  if (isLoading) {
+    return (
+      <button
+        style={{
+          width: '55px',
+          height: '55px',
+          backgroundColor: '#16a34a',
+          color: '#fb923c',
+          borderRadius: '6px',
+          border: 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+        onClick={onClick}
+      >
+        <div style={{ width: '45px', height: '45px' }} />
+      </button>
+    );
+  }
+  
+  if (error || !iconUrl) {
+    return (
+      <button
+        style={{
+          width: '55px',
+          height: '55px',
+          backgroundColor: '#16a34a',
+          color: '#fb923c',
+          borderRadius: '6px',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: '10px',
+          fontWeight: '600',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+        onClick={onClick}
+      >
+        FASTEST
+      </button>
+    );
+  }
+  
+  return (
+    <button
+      style={{
+        width: '55px',
+        height: '55px',
+        backgroundColor: '#16a34a',
+        borderRadius: '6px',
+        border: 'none',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2px'
+      }}
+      onClick={onClick}
+    >
+      <img 
+        src={iconUrl} 
+        alt="Fastest Speed" 
+        style={{ 
+          width: '51px',
+          height: '51px',
+          objectFit: 'contain'
+        }} 
+      />
+    </button>
+  );
+};
+
 interface SuperAVProps {
   isOpen: boolean;
   onClose: () => void;
@@ -690,26 +769,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              FASTER
                            </button>
                            
-                           {/* Fastest Speed */}
-                           <button
-                             style={{
-                               width: '55px',
-                               height: '55px',
-                               backgroundColor: '#16a34a',
-                               color: '#fb923c',
-                               borderRadius: '6px',
-                               border: 'none',
-                               cursor: 'pointer',
-                               fontSize: '10px',
-                               fontWeight: '600',
-                               display: 'flex',
-                               alignItems: 'center',
-                               justifyContent: 'center'
-                             }}
-                             onClick={() => handleSpeedChange(2)}
-                           >
-                             FASTEST
-                           </button>
+                            {/* Fastest Speed */}
+                            <FastestSpeedButton onClick={() => handleSpeedChange(2)} />
                         </div>
                       </div>
                      </td>
