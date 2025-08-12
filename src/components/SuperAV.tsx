@@ -48,7 +48,7 @@ const CustomArrowIcon: React.FC = () => {
 const CustomPlayIcon: React.FC = () => {
   const { iconUrl, isLoading, error } = useCachedIcon('ICO-AV1.jpg');
   
-  if (isLoading) return <div style={{ width: '65px', height: '65px' }} />;
+  if (isLoading) return <div style={{ width: '45px', height: '45px' }} />;
   if (error || !iconUrl) return <span>PLAY</span>;
   
   return (
@@ -56,8 +56,8 @@ const CustomPlayIcon: React.FC = () => {
       src={iconUrl} 
       alt="Play" 
       style={{ 
-        height: '65px', 
-        width: '65px',
+        height: '45px', 
+        width: '45px',
         objectFit: 'contain'
       }} 
     />
@@ -498,17 +498,17 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 {/* Row 2: 4 beautiful buttons with gradients and icons */}
                 <tr>
                    <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', borderRadius: '0 0 0 12px', textAlign: 'center'}}>
-                     <div 
-                       className="button-3d-base button-3d-standard"
-                       role="button" 
-                       aria-label="Play Audio" 
-                       title="Play Audio"
-                       style={{
-                         cursor: 'pointer'
-                       }}
-                       onClick={handlePlay}>
-                         <CustomPlayIcon />
-                       </div>
+                      <div 
+                        className="button-3d-base button-3d-standard button-3d-green"
+                        role="button" 
+                        aria-label="Play Audio" 
+                        title="Play Audio"
+                        style={{
+                          cursor: 'pointer'
+                        }}
+                        onClick={handlePlay}>
+                          <CustomPlayIcon />
+                        </div>
                    </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
                     <div style={{
