@@ -51,7 +51,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           onChange={(e) => onInputChange('title', e.target.value)}
           placeholder="Enter story title"
           maxLength={40}
-          style={{ borderColor: '#9c441a', borderWidth: '2px' }}
+          className="border-amber-border border-2"
           required
         />
         <div className="text-right text-sm text-gray-500">
@@ -69,7 +69,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           value={formData.author}
           onChange={(e) => onInputChange('author', e.target.value)}
           placeholder="Enter author name"
-          style={{ borderColor: '#9c441a', borderWidth: '2px' }}
+          className="border-amber-border border-2"
           required
         />
       </div>
@@ -79,7 +79,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           Category *
         </Label>
         <Select value={formData.category} onValueChange={(value) => onInputChange('category', value)}>
-          <SelectTrigger style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+          <SelectTrigger className="border-amber-border border-2">
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
@@ -104,8 +104,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           placeholder="Enter a brief tagline"
           maxLength={100}
           rows={2}
-          className="resize-none"
-          style={{ borderColor: '#9c441a', borderWidth: '2px' }}
+          className="resize-none border-amber-border border-2"
         />
         <div className="text-right text-sm text-gray-500">
           {formData.tagline.length}/100
@@ -122,7 +121,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           onChange={(e) => onInputChange('excerpt', e.target.value)}
           placeholder="Write a brief, engaging description that will make readers want to read your story..."
           rows={compact ? 2 : 3}
-          style={{ borderColor: '#9c441a', borderWidth: '2px' }}
+          className="border-amber-border border-2"
         />
       </div>
 

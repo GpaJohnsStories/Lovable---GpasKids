@@ -160,12 +160,7 @@ const PersonalIdSection = ({
                       <button
                         type="button"
                         onClick={handleClearId}
-                        className="h-9 px-3 rounded-md text-sm font-bold inline-flex items-center justify-center gap-2"
-                        style={{ 
-                          backgroundColor: '#DC143C',
-                          color: '#FFFF00',
-                          border: '1px solid #DC143C'
-                        }}
+                        className="h-9 px-3 rounded-md text-sm font-bold inline-flex items-center justify-center gap-2 bg-crimson-red text-bright-yellow border border-crimson-red"
                       >
                         <ArrowLeft className="h-4 w-4 mr-1" />
                         Clear

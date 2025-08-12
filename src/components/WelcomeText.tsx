@@ -14,7 +14,7 @@ const WelcomeText = () => {
     <TooltipProvider>
       <div className="w-full py-6 mt-0">
         <div className="container mx-auto px-4">
-          <div className="rounded-3xl p-6 md:p-8 shadow-lg border-2 border-yellow-400 font-fun mx-2 relative" style={{backgroundColor: '#ADD8E6'}}>
+          <div className="rounded-3xl p-6 md:p-8 shadow-lg border-2 border-yellow-400 font-fun mx-2 relative bg-light-blue-bg">
             <div className="flex flex-col md:flex-row items-start gap-6">
               <div className="relative flex-shrink-0">
                 <Tooltip>

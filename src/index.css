@@ -30,6 +30,25 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     
+    /* Semantic color tokens for brand colors */
+    --warm-orange: 22 100% 62%; /* #FF8C42 */
+    --deep-orange: 22 82% 47%; /* #D2691E */
+    --golden-yellow: 51 100% 50%; /* #FFD700 */
+    --cream-white: 60 100% 94%; /* #FFF8DC */
+    --light-beige: 60 56% 91%; /* #F5F5DC */
+    --soft-ivory: 60 100% 97%; /* #FFFFF0 */
+    --dark-brown: 30 65% 26%; /* #654321 */
+    --medium-brown: 25 73% 31%; /* #8B4513 */
+    --light-brown: 19 56% 40%; /* #A0522D */
+    --forest-green: 120 61% 34%; /* #228B22 */
+    --sky-blue: 197 71% 73%; /* #87CEEB */
+    --coral-red: 6 93% 71%; /* #FF6B6B */
+    --amber-border: 30 68% 36%; /* #9c441a */
+    --orange-accent: 22 92% 52%; /* #F97316 */
+    --crimson-red: 348 83% 47%; /* #DC143C */
+    --bright-yellow: 60 100% 50%; /* #FFFF00 */
+    --light-blue-bg: 197 100% 85%; /* #ADD8E6 */
+    
     /* Tab colors for story editor */
     --tab-content: 25 95% 53%; /* orange-500 base for Content tab */
     --tab-content-hover: 20 90% 48%; /* orange-600 for hover */
@@ -475,13 +494,41 @@
     height: 55px;
   }
   
-  /* Background color utilities */
-  .bg-blue-500-hex {
-    background-color: #2563eb;
+  /* Semantic color utilities */
+  .bg-warm-orange {
+    background-color: hsl(var(--warm-orange));
   }
   
-  .bg-brown-hex {
-    background-color: #8B4513;
+  .bg-deep-orange {
+    background-color: hsl(var(--deep-orange));
+  }
+  
+  .bg-light-blue-bg {
+    background-color: hsl(var(--light-blue-bg));
+  }
+  
+  .text-orange-accent {
+    color: hsl(var(--orange-accent));
+  }
+  
+  .border-orange-accent {
+    border-color: hsl(var(--orange-accent));
+  }
+  
+  .border-amber-border {
+    border-color: hsl(var(--amber-border));
+  }
+  
+  .bg-crimson-red {
+    background-color: hsl(var(--crimson-red));
+  }
+  
+  .text-bright-yellow {
+    color: hsl(var(--bright-yellow));
+  }
+  
+  .border-crimson-red {
+    border-color: hsl(var(--crimson-red));
   }
   
   .bg-transparent-none {

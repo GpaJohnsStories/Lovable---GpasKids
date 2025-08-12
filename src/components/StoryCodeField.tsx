@@ -121,14 +121,13 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
           name="story_code"
           render={({ field }) => (
             <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
-              <FormLabel className="font-fun text-xl sm:text-left" style={{ color: '#F97316' }}>Enter Current or New Unique Story / Webtext Code *</FormLabel>
+              <FormLabel className="font-fun text-xl sm:text-left text-orange-accent">Enter Current or New Unique Story / Webtext Code *</FormLabel>
               <div className="sm:col-span-2">
                 <FormControl>
                   <Input
                     {...field}
                     placeholder="Enter story code..."
-                    className="w-full px-3 py-2 text-base border rounded-md font-bold"
-                    style={{ borderColor: '#F97316', borderWidth: '2px' }}
+                    className="w-full px-3 py-2 text-base border rounded-md font-bold border-orange-accent border-2"
                     autoComplete="off"
                     onBlur={(e) => {
                       field.onBlur();
@@ -159,7 +158,7 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor="story_code" className={`font-bold ${labelSize}`} style={{ color: '#F97316' }}>
+        <Label htmlFor="story_code" className={`font-bold ${labelSize} text-orange-accent`}>
           Enter Current or New Unique Story / Webtext Code *
         </Label>
         <Input
@@ -167,8 +166,7 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Enter story code..."
-          className="w-full px-3 py-2 text-base border rounded-md font-bold"
-          style={{ borderColor: '#F97316', borderWidth: '2px' }}
+          className="w-full px-3 py-2 text-base border rounded-md font-bold border-orange-accent border-2"
           autoComplete="off"
           onBlur={(e) => {
             handleStoryCodeLookup(e.target.value);
