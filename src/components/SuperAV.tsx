@@ -46,7 +46,7 @@ const CustomArrowIcon: React.FC = () => {
 
 // Custom Play Icon Component
 const CustomPlayIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('ICA-PL1.jpg');
+  const { iconUrl, isLoading, error } = useCachedIcon('ICO-AV1.jpg');
   
   if (isLoading) return <div style={{ width: '55px', height: '55px' }} />;
   if (error || !iconUrl) return <span>PLAY</span>;
