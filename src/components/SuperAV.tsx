@@ -652,14 +652,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
                 {/* Row 4: 1 cell, 27px height, brown fill, centered text */}
                 <tr>
-                  <td colSpan={4} height={27} style={{backgroundColor: '#814d2e', borderRadius: '12px 12px 0 0'}} align="center" valign="middle">
-                    <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
+                  <td colSpan={4} height={27} style={{backgroundColor: 'white', borderRadius: '12px 12px 0 0'}} align="center" valign="middle">
+                    <b style={{color: 'black', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
                   </td>
                 </tr>
 
                 {/* Row 5: 4 speed control buttons with gradients */}
                 <tr>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 0 12px'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white', borderRadius: '0 0 0 12px'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -693,7 +693,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        />
                      </div>
                   </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -727,7 +727,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        />
                      </div>
                   </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
@@ -761,7 +761,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        />
                      </div>
                   </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 12px 0'}}>
+                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: 'white', borderRadius: '0 0 12px 0'}}>
                     <div style={{
                       width: '55px',
                       height: '55px',
