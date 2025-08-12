@@ -6,6 +6,8 @@ import { useSuperAVContext } from '@/contexts/SuperAVContext';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import speedNormalIcon from "@/assets/speed-normal-icon.png";
 import speedFastIcon from "@/assets/speed-fast-icon.png";
+import speedFasterIcon from "@/assets/speed-faster-icon.png";
+import speedFastestIcon from "@/assets/speed-fastest-icon.png";
 import { 
   FontScaleStep, 
   DEFAULT_FONT_SCALE, 
@@ -728,7 +730,15 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
                      onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                      onClick={() => handleSpeedChange(1.5)}>
-                       <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: 'white'}}>Faster</span>
+                       <img 
+                         src={speedFasterIcon} 
+                         alt="Faster speed"
+                         style={{
+                           width: '45px',
+                           height: '45px',
+                           objectFit: 'contain'
+                         }}
+                       />
                      </div>
                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#814d2e', borderRadius: '0 0 12px 0'}}>
@@ -754,7 +764,15 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                     onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
                      onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                      onClick={() => handleSpeedChange(2)}>
-                       <span style={{fontFamily: FONT_FUN, fontWeight: 'bold', fontSize: '13px', color: '#F2BA15'}}>Fastest</span>
+                       <img 
+                         src={speedFastestIcon} 
+                         alt="Fastest speed"
+                         style={{
+                           width: '45px',
+                           height: '45px',
+                           objectFit: 'contain'
+                         }}
+                       />
                      </div>
                     </td>
                   </tr>
