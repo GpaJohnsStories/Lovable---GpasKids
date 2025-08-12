@@ -685,121 +685,73 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            {/* Normal Speed */}
                            <button
                              style={{
-                               padding: '8px 16px',
-                               backgroundColor: playbackRate === 1 ? '#86efac' : '#d1fae5',
-                               color: playbackRate === 1 ? '#1f2937' : '#374151',
-                               borderRadius: '8px',
+                               padding: '6px 12px',
+                               backgroundColor: '#86efac',
+                               color: '#1f2937',
+                               borderRadius: '6px',
                                border: 'none',
                                cursor: 'pointer',
-                               fontSize: '14px',
-                               fontWeight: '500',
-                               transition: 'all 0.2s ease'
-                             }}
-                             onMouseEnter={(e) => {
-                               if (playbackRate !== 1) {
-                                 e.currentTarget.style.backgroundColor = '#86efac';
-                                 e.currentTarget.style.color = '#1f2937';
-                               }
-                             }}
-                             onMouseLeave={(e) => {
-                               if (playbackRate !== 1) {
-                                 e.currentTarget.style.backgroundColor = '#d1fae5';
-                                 e.currentTarget.style.color = '#374151';
-                               }
+                               fontSize: '12px',
+                               fontWeight: '600',
+                               minWidth: '50px'
                              }}
                              onClick={() => handleSpeedChange(1)}
                            >
-                             Normal
+                             NORMAL
                            </button>
                            
                            {/* Fast Speed */}
                            <button
                              style={{
-                               padding: '8px 16px',
-                               backgroundColor: playbackRate === 1.25 ? '#4ade80' : '#bbf7d0',
-                               color: playbackRate === 1.25 ? '#1f2937' : '#374151',
-                               borderRadius: '8px',
+                               padding: '6px 12px',
+                               backgroundColor: '#4ade80',
+                               color: '#1f2937',
+                               borderRadius: '6px',
                                border: 'none',
                                cursor: 'pointer',
-                               fontSize: '14px',
-                               fontWeight: '500',
-                               transition: 'all 0.2s ease'
-                             }}
-                             onMouseEnter={(e) => {
-                               if (playbackRate !== 1.25) {
-                                 e.currentTarget.style.backgroundColor = '#4ade80';
-                                 e.currentTarget.style.color = '#1f2937';
-                               }
-                             }}
-                             onMouseLeave={(e) => {
-                               if (playbackRate !== 1.25) {
-                                 e.currentTarget.style.backgroundColor = '#bbf7d0';
-                                 e.currentTarget.style.color = '#374151';
-                               }
+                               fontSize: '12px',
+                               fontWeight: '600',
+                               minWidth: '50px'
                              }}
                              onClick={() => handleSpeedChange(1.25)}
                            >
-                             Fast
+                             FAST
                            </button>
                            
                            {/* Faster Speed */}
                            <button
                              style={{
-                               padding: '8px 16px',
-                               backgroundColor: playbackRate === 1.5 ? '#22c55e' : '#a7f3d0',
-                               color: playbackRate === 1.5 ? 'white' : '#374151',
-                               borderRadius: '8px',
+                               padding: '6px 12px',
+                               backgroundColor: '#22c55e',
+                               color: 'white',
+                               borderRadius: '6px',
                                border: 'none',
                                cursor: 'pointer',
-                               fontSize: '14px',
-                               fontWeight: '500',
-                               transition: 'all 0.2s ease'
-                             }}
-                             onMouseEnter={(e) => {
-                               if (playbackRate !== 1.5) {
-                                 e.currentTarget.style.backgroundColor = '#22c55e';
-                                 e.currentTarget.style.color = 'white';
-                               }
-                             }}
-                             onMouseLeave={(e) => {
-                               if (playbackRate !== 1.5) {
-                                 e.currentTarget.style.backgroundColor = '#a7f3d0';
-                                 e.currentTarget.style.color = '#374151';
-                               }
+                               fontSize: '12px',
+                               fontWeight: '600',
+                               minWidth: '50px'
                              }}
                              onClick={() => handleSpeedChange(1.5)}
                            >
-                             Faster
+                             FASTER
                            </button>
                            
                            {/* Fastest Speed */}
                            <button
                              style={{
-                               padding: '8px 16px',
-                               backgroundColor: playbackRate === 2 ? '#16a34a' : '#86efac',
-                               color: playbackRate === 2 ? '#fb923c' : '#374151',
-                               borderRadius: '8px',
+                               padding: '6px 12px',
+                               backgroundColor: '#16a34a',
+                               color: '#fb923c',
+                               borderRadius: '6px',
                                border: 'none',
                                cursor: 'pointer',
-                               fontSize: '14px',
-                               fontWeight: '500',
-                               transition: 'all 0.2s ease'
-                             }}
-                             onMouseEnter={(e) => {
-                               if (playbackRate !== 2) {
-                                 e.currentTarget.style.backgroundColor = '#16a34a';
-                                 e.currentTarget.style.color = '#fb923c';
-                               }
-                             }}
-                             onMouseLeave={(e) => {
-                               if (playbackRate !== 2) {
-                                 e.currentTarget.style.backgroundColor = '#86efac';
-                                 e.currentTarget.style.color = '#374151';
-                               }
+                               fontSize: '12px',
+                               fontWeight: '600',
+                               minWidth: '50px'
                              }}
                              onClick={() => handleSpeedChange(2)}
                            >
-                             Fastest
+                             FASTEST
                            </button>
                         </div>
                       </div>
