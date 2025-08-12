@@ -84,6 +84,26 @@ const CustomCCMIcon: React.FC = () => {
   );
 };
 
+// Custom CWS Icon Component for change word size
+const CustomCWSIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('ICO-CWS.jpg');
+  
+  if (isLoading) return <div style={{ width: '24px', height: '24px' }} />;
+  if (error || !iconUrl) return <span style={{ fontSize: '12px' }}>Size</span>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Change word size" 
+      style={{ 
+        height: '24px', 
+        width: '24px',
+        objectFit: 'contain'
+      }} 
+    />
+  );
+};
+
 interface SuperAVProps {
   isOpen: boolean;
   onClose: () => void;
@@ -809,14 +829,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            alignItems: 'center',
                            gap: '6px'
                          }}>
-                            <img 
-                              src="/lovable-uploads/ICO-CWS.jpg" 
-                              alt="Change word size"
-                              style={{
-                                width: '24px',
-                                height: '24px'
-                              }}
-                            />
+                           <CustomCWSIcon />
                          </div>
                         
                         {/* Right side: Two 55x55 buttons */}
