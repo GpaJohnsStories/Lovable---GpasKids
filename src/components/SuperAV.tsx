@@ -809,15 +809,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            alignItems: 'center',
                            gap: '6px'
                          }}>
-                           <img 
-                             src="/lovable-uploads/ICO-CFH.gif" 
-                             alt="Change font size"
-                             style={{
-                               width: '24px',
-                               height: '24px'
-                             }}
-                           />
-                           <CustomArrowIcon />
+                            <img 
+                              src="/lovable-uploads/ICO-CWS.jpg" 
+                              alt="Change word size"
+                              style={{
+                                width: '24px',
+                                height: '24px'
+                              }}
+                            />
                          </div>
                         
                         {/* Right side: Two 55x55 buttons */}
