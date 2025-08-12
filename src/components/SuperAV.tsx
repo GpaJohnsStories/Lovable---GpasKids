@@ -507,6 +507,33 @@ export const SuperAV: React.FC<SuperAVProps> = ({
               <table width={244} cellSpacing={0} cellPadding={0} border={0}>
               <tbody>
 
+                {/* Row 1: Playback Controls Header */}
+                <tr>
+                   <td colSpan={4} style={{
+                     padding: '3px', 
+                     background: 'linear-gradient(145deg, #D2691E, #B8641A)',
+                     borderRadius: '12px',
+                     boxShadow: '0 4px 8px rgba(210, 105, 30, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
+                   }}>
+                      <div style={{
+                        backgroundColor: '#D2691E',
+                        borderRadius: '9px',
+                        height: '100%'
+                       }}>
+                         {/* Header */}
+                         <div style={{
+                           height: '27px',
+                           display: 'flex',
+                           alignItems: 'center',
+                           justifyContent: 'center',
+                           borderBottom: '1px solid rgba(255,255,255,0.2)'
+                         }}>
+                           <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Controls">Playback Controls</b>
+                         </div>
+                       </div>
+                   </td>
+                </tr>
+
                 {/* Row 2: 4 beautiful buttons with gradients and icons */}
                 <tr>
                    <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', borderRadius: '0 0 0 12px', textAlign: 'center'}}>
