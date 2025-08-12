@@ -1,6 +1,6 @@
 import { useState } from "react";
 import IconLibraryDisplay from "./IconLibraryDisplay";
-import PreferredColorsSection from "./reference/PreferredColorsSection";
+import ColorReferenceTable from "./reference/ColorReferenceTable";
 import IconUploadSection from "./reference/IconUploadSection";
 import CssLibrarySection from "./reference/CssLibrarySection";
 import CssExceptionsSection from "./reference/CssExceptionsSection";
@@ -12,7 +12,7 @@ const ReferenceDashboard = () => {
   const [activeSection, setActiveSection] = useState<SectionType>("all");
 
   const sections = [
-    { id: "colors" as const, label: "Color Library", component: <PreferredColorsSection /> },
+    { id: "colors" as const, label: "Color Reference", component: <ColorReferenceTable /> },
     { id: "upload" as const, label: "Upload Icon", component: <IconUploadSection /> },
     { id: "icons" as const, label: "Icon Library", component: <IconLibraryDisplay /> },
     { id: "css" as const, label: "CSS Library", component: <CssLibrarySection /> },
