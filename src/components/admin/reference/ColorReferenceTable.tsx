@@ -132,6 +132,38 @@ const ColorReferenceTable = () => {
 
     // Interactive Elements
     {
+      name: "Green - Primary",
+      hex: "#16a34a",
+      grouping: "Primary",
+      howUsed: ["Success states", "Positive actions", "Nature themes"],
+      whereUsed: ["Success buttons", "Confirmation messages", "Growth indicators"],
+      notes: "Primary green for success and positive states. Strong, confident color."
+    },
+    {
+      name: "Green - Bright",
+      hex: "#22c55e",
+      grouping: "Primary",
+      howUsed: ["Bright success states", "Active elements", "Highlight text"],
+      whereUsed: ["Active buttons", "Success notifications", "Positive feedback"],
+      notes: "Brighter variant of green for more vibrant success states."
+    },
+    {
+      name: "Green - Emerald",
+      hex: "#10b981",
+      grouping: "Primary",
+      howUsed: ["Emerald accents", "Secondary success", "Nature elements"],
+      whereUsed: ["Secondary buttons", "Badge colors", "Icon highlights"],
+      notes: "Emerald green for sophisticated success states and nature themes."
+    },
+    {
+      name: "Green - Dark",
+      hex: "#059669",
+      grouping: "Primary",
+      howUsed: ["Dark success states", "Text on light backgrounds", "Deep accents"],
+      whereUsed: ["Text colors", "Dark mode elements", "Strong emphasis"],
+      notes: "Darker green for text and strong emphasis in success contexts."
+    },
+    {
       name: "Green - Forest",
       hex: "#228B22",
       grouping: "Other",
