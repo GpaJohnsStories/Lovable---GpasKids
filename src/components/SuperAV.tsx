@@ -60,6 +60,22 @@ const CustomPlayIcon: React.FC = () => {
   );
 };
 
+// Custom Pause Icon Component
+const CustomPauseIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('ICO-AV2.jpg');
+  
+  if (isLoading) return <div className="w-full h-full" />;
+  if (error || !iconUrl) return <span>PAUSE</span>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Pause" 
+      className="w-full h-full object-contain"
+    />
+  );
+};
+
 // Custom CCP Icon Component for bigger size button
 const CustomCCPIcon: React.FC = () => {
   const { iconUrl, isLoading, error } = useCachedIcon('ICO-CCP.png');
@@ -506,43 +522,19 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                           <CustomPlayIcon />
                         </div>
                    </td>
-                  <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
-                    <div style={{
-                      width: '55px',
-                      height: '55px',
-                      background: 'linear-gradient(145deg, #fbbf24, #f59e0b)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.3)',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      border: '1px solid rgba(255,255,255,0.2)',
-                      transform: 'scale(1)'
-                    }} 
-                    role="button" 
-                    aria-label="Pause" 
-                    title="Pause"
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                    }}
-                    onMouseDown={(e) => {
-                      e.currentTarget.style.transform = 'scale(0.95)';
-                    }}
-                     onMouseUp={(e) => {
-                       e.currentTarget.style.transform = 'scale(1.1)';
-                     }}
-                     onClick={handlePause}>
-                       <div style={{display: 'flex', gap: '4px'}}>
-                         <div style={{width: '5px', height: '18px', backgroundColor: 'white', borderRadius: '1px'}}></div>
-                         <div style={{width: '5px', height: '18px', backgroundColor: 'white', borderRadius: '1px'}}></div>
-                       </div>
-                     </div>
-                  </td>
+                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', textAlign: 'center'}}>
+                       <div 
+                         className="button-3d-base button-3d-standard button-3d-yellow"
+                         role="button" 
+                         aria-label="Pause Audio" 
+                         title="Pause Audio"
+                         style={{
+                           cursor: 'pointer'
+                         }}
+                         onClick={handlePause}>
+                           <CustomPauseIcon />
+                         </div>
+                   </td>
                   <td width={60} height={55} style={{padding: '0 2.5px 8px 2.5px', backgroundColor: '#2563eb', textAlign: 'center'}}>
                     <div style={{
                       width: '55px',

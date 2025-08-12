@@ -31,6 +31,7 @@ class IconCacheService {
     'ICO-WR3.jpg',      // Writing main icon
     'ICO-WR2.gif',      // Submit Story submenu (tall & slender)
     'ICO-AV1.jpg',      // SuperAV Play button
+    'ICO-AV2.jpg',      // SuperAV Pause button
     'ICO-WR3.jpg',      // How To Write submenu (same as main)
     'ICO-AB1.jpg',      // About Us main icon / Authors submenu
     'ICO-AB3.jpg',      // 3 Helpers submenu
