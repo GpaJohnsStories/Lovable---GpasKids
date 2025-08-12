@@ -245,74 +245,82 @@ const IconLibraryDisplay = () => {
             No icons found in the library
           </div>
         ) : (
-          <div className="grid grid-cols-4 gap-4">
-            {icons.map((icon) => (
-              <div
-                key={icon.id}
-                className="border rounded-lg p-4 text-center hover:shadow-md transition-shadow group"
-              >
-                <div className="flex justify-center items-center h-16 mb-3">
-                  <img
-                    src={getSafeIconUrl(icon.file_path)}
-                    alt={icon.icon_name}
-                    className="max-w-full max-h-full object-contain"
-                    onError={(e) => {
-                      console.warn(`Failed to load icon ${icon.file_path}, setting fallback`);
-                      e.currentTarget.src = getSafeIconUrl('ICO-N2K.png');
-                    }}
-                  />
-                </div>
-                <div className="space-y-1 mb-3">
-                  <p className="font-mono text-sm font-bold text-primary">
-                    {icon.icon_code}
-                  </p>
-                  <p className="text-sm text-foreground">
-                    {icon.file_path}
-                  </p>
-                </div>
-                
-                {/* Action buttons - visible on hover */}
-                <div className="flex justify-center gap-2 transition-opacity">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleReplace(icon)}
-                    className="h-8 px-2"
-                  >
-                    <Edit3 className="h-3 w-3" />
-                  </Button>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-8 px-2 text-destructive hover:text-destructive"
-                      >
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Delete Icon</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Are you sure you want to delete "{icon.icon_name}" ({icon.icon_code})? 
-                          This action cannot be undone and will remove both the file and database entry.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => handleDelete(icon)}
-                          className="bg-destructive hover:bg-destructive/90"
-                        >
-                          Delete
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
-              </div>
-            ))}
+           <div className="grid grid-cols-4 gap-4">
+             {icons.map((icon) => {
+               console.log('Rendering icon card with buttons for:', icon.icon_code);
+               return (
+               <div
+                 key={icon.id}
+                 className="border rounded-lg p-4 text-center hover:shadow-md transition-shadow group"
+               >
+                 <div className="flex justify-center items-center h-16 mb-3">
+                   <img
+                     src={getSafeIconUrl(icon.file_path)}
+                     alt={icon.icon_name}
+                     className="max-w-full max-h-full object-contain"
+                     onError={(e) => {
+                       console.warn(`Failed to load icon ${icon.file_path}, setting fallback`);
+                       e.currentTarget.src = getSafeIconUrl('ICO-N2K.png');
+                     }}
+                   />
+                 </div>
+                 <div className="space-y-1 mb-3">
+                   <p className="font-mono text-sm font-bold text-primary">
+                     {icon.icon_code}
+                   </p>
+                   <p className="text-sm text-foreground">
+                     {icon.file_path}
+                   </p>
+                 </div>
+                 
+                 {/* Action buttons - now always visible with better styling */}
+                 <div className="flex justify-center gap-2 transition-opacity border-t pt-2 mt-2">
+                   <Button
+                     variant="outline"
+                     size="sm"
+                     onClick={() => {
+                       console.log('Edit button clicked for:', icon.icon_code);
+                       handleReplace(icon);
+                     }}
+                     className="h-8 px-3 bg-blue-50 hover:bg-blue-100 border-blue-200"
+                   >
+                     <Edit3 className="h-3 w-3" />
+                     <span className="ml-1 text-xs">Edit</span>
+                   </Button>
+                   <AlertDialog>
+                     <AlertDialogTrigger asChild>
+                       <Button
+                         variant="outline"
+                         size="sm"
+                         className="h-8 px-3 bg-red-50 hover:bg-red-100 border-red-200 text-red-600 hover:text-red-700"
+                       >
+                         <Trash2 className="h-3 w-3" />
+                         <span className="ml-1 text-xs">Delete</span>
+                       </Button>
+                     </AlertDialogTrigger>
+                     <AlertDialogContent>
+                       <AlertDialogHeader>
+                         <AlertDialogTitle>Delete Icon</AlertDialogTitle>
+                         <AlertDialogDescription>
+                           Are you sure you want to delete "{icon.icon_name}" ({icon.icon_code})? 
+                           This action cannot be undone and will remove both the file and database entry.
+                         </AlertDialogDescription>
+                       </AlertDialogHeader>
+                       <AlertDialogFooter>
+                         <AlertDialogCancel>Cancel</AlertDialogCancel>
+                         <AlertDialogAction
+                           onClick={() => handleDelete(icon)}
+                           className="bg-destructive hover:bg-destructive/90"
+                         >
+                           Delete
+                         </AlertDialogAction>
+                       </AlertDialogFooter>
+                     </AlertDialogContent>
+                   </AlertDialog>
+                 </div>
+               </div>
+               );
+             })}
           </div>
         )}
 
