@@ -680,7 +680,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            display: 'flex',
                            alignItems: 'center',
                            justifyContent: 'space-between',
-                           padding: '4px 8px 8px 8px'
+                           padding: '4px 2.5px 8px 2.5px'
                          }}>
                            {/* Normal Speed */}
                            <button
