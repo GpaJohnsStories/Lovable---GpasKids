@@ -98,14 +98,19 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
     return (
       <>
         <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
-          {/* Peppermint Audio Button - Top Right Corner - only show if audio is available */}
+          {/* Top Right Control Box - only show if audio is available */}
           {webtext?.audio_url && (
-            <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
-              <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
-                Click to listen or change word size
+            <div className="absolute top-4 right-4 z-[5]">
+              <div className="bg-white/90 border-2 border-green-600 rounded-lg p-2 shadow-lg">
+                <div className="grid grid-cols-2 gap-2 items-center">
+                  <div className="text-sm font-handwritten font-bold text-green-800 leading-tight">
+                    Click to listen or<br />change word size
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
+                  </div>
+                </div>
               </div>
-              <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
-              <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
             </div>
           )}
 
