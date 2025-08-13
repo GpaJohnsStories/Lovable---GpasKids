@@ -360,15 +360,10 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                 <TableBody>
                   {stories?.map((story) => (
                     <TableRow key={story.id} className="border-b border-gray-200">
-                      <TableCell 
-                        className="font-mono text-xs text-black-system"
-                      >
-                        {story.story_code}
-                      </TableCell>
                       <TableCell className="text-black-system">
                         <div className="flex items-center gap-3">
                           {story.photo_link_1 && (
-                            <div className="flex-shrink-0">
+                            <div className="flex-shrink-0 flex flex-col items-center">
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <img
@@ -384,6 +379,9 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                                   <p>{story.photo_alt_1 || `Photo for ${story.title}`}</p>
                                 </TooltipContent>
                               </Tooltip>
+                              <div className="font-mono text-sm font-bold text-black-system mt-2">
+                                {story.story_code}
+                              </div>
                             </div>
                           )}
                           <div className="flex-1">
