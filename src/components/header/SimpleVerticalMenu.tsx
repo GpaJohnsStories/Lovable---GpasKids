@@ -46,7 +46,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const mainMenuItems: MainMenuItem[] = [
     {
       id: "guide", 
-      icon: "ICO-GU1.jpg", // Guide icon (available in storage)
+      icon: "!CO-MM1.jpg", // Guide icon - Main Menu 1
       text: "Guide",
       color: "#F97316",
       onClick: () => {
@@ -56,7 +56,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "home",
-      icon: "!CO-HOX.jpg", // Home icon (available in storage)
+      icon: "!CO-MM2.png", // Home icon - Main Menu 2
       text: "Home",
       color: "#F97316",
       onClick: () => {
@@ -66,7 +66,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "library",
-      icon: "!CO-LB1.gif", // Library icon (available in storage)
+      icon: "!CO-MM3.gif", // Library icon - Main Menu 3
       text: "Library", 
       color: "#F97316",
       onClick: () => {
@@ -76,7 +76,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "read-story",
-      icon: "!CO-LB3.gif", // Read Story icon (available in storage) 
+      icon: "!CO-MM4.gif", // Read Story icon - Main Menu 4
       text: "Read Story",
       color: "#F97316",
       onClick: () => {
@@ -98,25 +98,25 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "comments",
-      icon: "!CO-CO1.gif", // Comments icon (available in storage)
+      icon: "!CO-MM5.gif", // Comments icon - Main Menu 5
       text: "Comments",
       color: "#F97316", 
       submenus: [
         {
           id: "view-comments",
-          icon: "!CO-CO2.gif", // View Comments (available in storage)
-          text: "Make Comment",
+          icon: "!CO-S51.gif", // View Comments - Submenu 5-1
+          text: "View Comments",
           onClick: () => {
-            window.location.href = "/make-comment";
+            window.location.href = "/view-comments";
             onClose();
           }
         },
         {
           id: "make-comment",
-          icon: "!CO-CO3.gif", // Make Comment (available in storage)
-          text: "View Comments", 
+          icon: "!CO-S52.gif", // Make Comment - Submenu 5-2
+          text: "Make Comment", 
           onClick: () => {
-            window.location.href = "/view-comments";
+            window.location.href = "/make-comment";
             onClose();
           }
         }
@@ -124,25 +124,16 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "writing",
-      icon: "!CO-WR3.jpg", // Writing icon (main menu) 
+      icon: "!CO-MM6.gif", // Writing icon - Main Menu 6
       text: "Writing",
       color: "#F97316",
       submenus: [
         {
           id: "submit-story",
-          icon: "!CO-WR2.gif", // Submit Story (1st/rightmost submenu - tall & slender)
+          icon: "!CO-S61.gif", // Submit Story - Submenu 6-1
           text: "Submit Story",
           onClick: () => {
             window.location.href = "/writing";
-            onClose();
-          }
-        },
-        {
-          id: "guide-write",
-          icon: "!CO-WR3.jpg", // Guide Write (2nd/leftmost submenu - same as main)
-          text: "Guide Write",
-          onClick: () => {
-            window.location.href = "/writing#write-story";
             onClose();
           }
         }
@@ -150,13 +141,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "about-us",
-      icon: "!CO-AB1.jpg", // About Us icon (available in storage)
+      icon: "!CO-MM7.gif", // About Us icon - Main Menu 7
       text: "About Us",
       color: "#F97316",
       submenus: [
         {
           id: "grandpa-john",
-          icon: "", // No icon - text only
+          icon: "!CO-S71.jpg", // Grandpa John - Submenu 7-1
           text: "Grandpa John",
           onClick: () => {
             window.location.href = "/about";
@@ -165,7 +156,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "3-helpers",
-          icon: "!CO-AB3.jpg",
+          icon: "!CO-S72.jpg", // 3 Helpers - Submenu 7-2
           text: "3 Helpers", 
           onClick: () => {
             window.location.href = "/about#buddy";
@@ -174,7 +165,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "authors",
-          icon: "", // No icon - text only
+          icon: "!CO-S73.jpg", // Authors - Submenu 7-3
           text: "Authors",
           onClick: () => {
             window.location.href = "/public-author-bios";
@@ -183,7 +174,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "the-3-ais",
-          icon: "!CO-AB5.jpg", 
+          icon: "!CO-S74.jpg", // 3 Helpful AI's - Submenu 7-4
           text: "3 Helpful AI's",
           onClick: () => {
             window.location.href = "/about#special-thank-you";
@@ -194,7 +185,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "safe-secure",
-      icon: "!CO-SA1.jpg", // Safe & Secure icon (available in storage)
+      icon: "!CO-MM8.jpg", // Safe & Secure icon - Main Menu 8
       text: "Safe & Secure", 
       color: "#F97316",
       onClick: () => {

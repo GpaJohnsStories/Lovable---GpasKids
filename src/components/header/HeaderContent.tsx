@@ -21,10 +21,10 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Use cached icons for Buddy and Menu button - v2.0 with proper icon caching
-  const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('!ICO-HL2.gif');
-  const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('!ICO-MU2.gif');
-  const { iconUrl: safeForKidsIconUrl, isLoading: sfkLoading, error: sfkError } = useCachedIcon('ICO-SFK.gif');
-  const { iconUrl: hgjIconUrl, isLoading: hgjLoading, error: hgjError } = useCachedIcon('ICO-HGJ.gif');
+  const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('!CO-TB1.gif');
+  const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('!CO-TB2.gif');
+  const { iconUrl: safeForKidsIconUrl, isLoading: sfkLoading, error: sfkError } = useCachedIcon('!CO-SFK.gif');
+  const { iconUrl: hgjIconUrl, isLoading: hgjLoading, error: hgjError } = useCachedIcon('!CO-HGJ.gif');
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -121,7 +121,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
             <div className="relative hidden md:flex md:justify-center md:items-center">
               <div className="relative">
                 <img 
-                  src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExczNveHBjNDkxcDNwMG5mcHh2dmxvYXlycm4zZjF5a3BxaWRxb3VoNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cMALqIjmb7ygw/giphy.gif"
+                  src="!CO-TBX.gif"
                   alt="Fun dancing GIF"
                   className="w-48 lg:w-64 h-32 lg:h-40 rounded-full border-4 border-white shadow-[inset_0_12px_20px_rgba(0,0,0,0.5),inset_0_6px_12px_rgba(0,0,0,0.3),inset_0_2px_6px_rgba(0,0,0,0.2)] object-cover object-left"
                 />
