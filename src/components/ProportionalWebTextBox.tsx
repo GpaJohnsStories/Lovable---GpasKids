@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ChevronRight } from 'lucide-react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { getStoryPhotos } from '@/utils/storyUtils';
 import { AudioButton } from '@/components/AudioButton';
@@ -106,7 +107,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                   <div className="text-base font-handwritten font-bold text-green-800 leading-tight">
                     Click to listen or<br />change word size
                   </div>
-                  <div className="flex items-center justify-end">
+                  <div className="flex items-center justify-end gap-2">
+                    <ChevronRight className="w-8 h-8 text-green-600 font-bold" strokeWidth={4} />
                     <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
                   </div>
                 </div>
