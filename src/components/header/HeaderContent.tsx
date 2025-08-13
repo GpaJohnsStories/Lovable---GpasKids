@@ -202,7 +202,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
               )}
               {(sfkError || !safeForKidsIconUrl) && !sfkLoading ? (
                 <div className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-full border-2 border-green-500">
-                  SAFE
+                  !CO-SFK.gif
                 </div>
               ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
                 <img 
