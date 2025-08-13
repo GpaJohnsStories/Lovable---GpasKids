@@ -228,7 +228,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
               {/* Show text if no icon available, otherwise show Menu image - hidden on hover */}
               {(menuError || !menuIconUrl) && !menuLoading ? (
                 <div className="w-full h-12 sm:h-18 md:h-24 bg-yellow-200 flex items-center justify-center text-yellow-800 text-xs font-bold rounded-md group-hover:hidden">
-                  MENU
+                  !CO-TB2.gif
                 </div>
               ) : menuIconUrl && !menuLoading && !menuError ? (
                 <img 
