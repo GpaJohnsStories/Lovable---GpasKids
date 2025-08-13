@@ -36,6 +36,8 @@ interface Story {
   created_at: string;
   tagline?: string;
   excerpt?: string;
+  photo_link_1?: string;
+  photo_alt_1?: string;
 }
 
 interface PublicStoriesTableProps {
@@ -66,7 +68,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
     queryFn: async () => {
       let query = supabase
         .from('stories')
-        .select('*')
+        .select('id, story_code, title, author, category, read_count, updated_at, created_at, tagline, excerpt, photo_link_1, photo_alt_1')
         .eq('published', 'Y')
         .not('category', 'eq', 'WebText')
         .order(sortField, { ascending: sortDirection === 'asc' });
@@ -357,30 +359,45 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                 </TableHeader>
                 <TableBody>
                   {stories?.map((story) => (
-                    <TableRow key={story.id}>
+                    <TableRow key={story.id} className="border-b border-gray-200">
                       <TableCell 
                         className="font-mono text-xs text-black-system"
                       >
                         {story.story_code}
                       </TableCell>
                       <TableCell className="text-black-system">
-                        <div>
-                          <Link 
-                            to={`/story/${story.story_code}`} 
-                            className="hover:text-red-600 transition-colors duration-300 font-medium text-base"
-                          >
-                            {story.title}
-                          </Link>
-                          {story.tagline && (
-                            <div className="text-sm font-medium text-amber-700 italic mt-1">
-                              {story.tagline}
+                        <div className="flex items-center gap-3">
+                          {story.photo_link_1 && (
+                            <div className="flex-shrink-0">
+                              <img
+                                src={story.photo_link_1}
+                                alt={story.photo_alt_1 || `Photo for ${story.title}`}
+                                title={story.photo_alt_1 || `Photo for ${story.title}`}
+                                className="w-[100px] h-[100px] rounded-lg border-2 border-white shadow-lg object-cover"
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none';
+                                }}
+                              />
                             </div>
                           )}
-                          {story.excerpt && (
-                            <div className="text-sm text-amber-600 mt-1 leading-relaxed">
-                              {story.excerpt}
-                            </div>
-                          )}
+                          <div className="flex-1">
+                            <Link 
+                              to={`/story/${story.story_code}`} 
+                              className="hover:text-red-600 transition-colors duration-300 font-medium text-base"
+                            >
+                              {story.title}
+                            </Link>
+                            {story.tagline && (
+                              <div className="text-sm font-medium text-amber-700 italic mt-1">
+                                {story.tagline}
+                              </div>
+                            )}
+                            {story.excerpt && (
+                              <div className="text-sm text-amber-600 mt-1 leading-relaxed">
+                                {story.excerpt}
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </TableCell>
                       <TableCell className="text-black-system">
