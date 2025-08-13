@@ -369,15 +369,24 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         <div className="flex items-center gap-3">
                           {story.photo_link_1 && (
                             <div className="flex-shrink-0">
-                              <img
-                                src={story.photo_link_1}
-                                alt={story.photo_alt_1 || `Photo for ${story.title}`}
-                                title={story.photo_alt_1 || `Photo for ${story.title}`}
-                                className="w-[100px] h-[100px] rounded-lg border-2 border-white shadow-lg object-cover"
-                                onError={(e) => {
-                                  e.currentTarget.style.display = 'none';
-                                }}
-                              />
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <img
+                                    src={story.photo_link_1}
+                                    alt={story.photo_alt_1 || `Photo for ${story.title}`}
+                                    className="w-[100px] h-[100px] rounded-lg border-2 border-white shadow-lg object-cover cursor-pointer"
+                                    onError={(e) => {
+                                      e.currentTarget.style.display = 'none';
+                                    }}
+                                  />
+                                </TooltipTrigger>
+                                <TooltipContent 
+                                  className="max-w-xs text-base text-white font-medium px-4 py-3 rounded-lg shadow-lg border-0"
+                                  style={{ backgroundColor: '#A0522D' }}
+                                >
+                                  <p>{story.photo_alt_1 || `Photo for ${story.title}`}</p>
+                                </TooltipContent>
+                              </Tooltip>
                             </div>
                           )}
                           <div className="flex-1">
