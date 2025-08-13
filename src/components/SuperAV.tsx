@@ -4,10 +4,6 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RefreshCw } from "lucide-react";
 import { useSuperAVContext } from '@/contexts/SuperAVContext';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
-import speedNormalIcon from "@/assets/speed-normal-icon.png";
-import speedFastIcon from "@/assets/speed-fast-icon.png";
-import speedFasterIcon from "@/assets/speed-faster-icon.png";
-import speedFastestIcon from "@/assets/speed-fastest-icon.png";
 import { 
   FontScaleStep, 
   DEFAULT_FONT_SCALE, 
@@ -108,6 +104,67 @@ const CustomStopIcon: React.FC = () => {
   );
 };
 
+// Custom Speed Icon Components
+const CustomSpeedNormalIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV5');
+  
+  if (isLoading) return <div className="w-full h-full" />;
+  if (error || !iconUrl) return <span>!CO-AV5</span>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Normal Speed" 
+      className="w-full h-full object-contain"
+    />
+  );
+};
+
+const CustomSpeedFastIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV6');
+  
+  if (isLoading) return <div className="w-full h-full" />;
+  if (error || !iconUrl) return <span>!CO-AV6</span>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Fast Speed" 
+      className="w-full h-full object-contain"
+    />
+  );
+};
+
+const CustomSpeedFasterIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV7');
+  
+  if (isLoading) return <div className="w-full h-full" />;
+  if (error || !iconUrl) return <span>!CO-AV7</span>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Faster Speed" 
+      className="w-full h-full object-contain"
+    />
+  );
+};
+
+const CustomSpeedFastestIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV8');
+  
+  if (isLoading) return <div className="w-full h-full" />;
+  if (error || !iconUrl) return <span>!CO-AV8</span>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Fastest Speed" 
+      className="w-full h-full object-contain"
+    />
+  );
+};
+
 const CustomCCPIcon: React.FC = () => {
   const { iconUrl, isLoading, error } = useCachedIcon('!ICO-CCP.png');
   
@@ -167,84 +224,6 @@ const CustomCWSIcon: React.FC = () => {
   );
 };
 
-// Custom Fastest Speed Button Component
-const FastestSpeedButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!ICO-AV8.jpg');
-  
-  if (isLoading) {
-    return (
-      <button
-        style={{
-          width: '55px',
-          height: '55px',
-          backgroundColor: '#16a34a',
-          color: '#fb923c',
-          borderRadius: '6px',
-          border: 'none',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        onClick={onClick}
-      >
-        <div style={{ width: '45px', height: '45px' }} />
-      </button>
-    );
-  }
-  
-  if (error || !iconUrl) {
-    return (
-      <button
-        style={{
-          width: '55px',
-          height: '55px',
-          backgroundColor: '#16a34a',
-          color: '#fb923c',
-          borderRadius: '6px',
-          border: 'none',
-          cursor: 'pointer',
-          fontSize: '10px',
-          fontWeight: '600',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-        onClick={onClick}
-      >
-        FASTEST
-      </button>
-    );
-  }
-  
-  return (
-    <button
-      style={{
-        width: '55px',
-        height: '55px',
-        backgroundColor: '#16a34a',
-        borderRadius: '6px',
-        border: 'none',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2px'
-      }}
-      onClick={onClick}
-    >
-      <img 
-        src={iconUrl} 
-        alt="Fastest Speed" 
-        style={{ 
-          width: '51px',
-          height: '51px',
-          objectFit: 'contain'
-        }} 
-      />
-    </button>
-  );
-};
 
 interface SuperAVProps {
   isOpen: boolean;
@@ -734,71 +713,57 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            justifyContent: 'space-between',
                            padding: '4px 2.5px 8px 2.5px'
                          }}>
-                           {/* Normal Speed */}
-                           <button
-                             style={{
-                               width: '55px',
-                               height: '55px',
-                               backgroundColor: '#86efac',
-                               color: '#814d2e',
-                               borderRadius: '6px',
-                               border: 'none',
-                               cursor: 'pointer',
-                               fontSize: '10px',
-                               fontWeight: '600',
-                               display: 'flex',
-                               alignItems: 'center',
-                               justifyContent: 'center'
-                             }}
-                             onClick={() => handleSpeedChange(1)}
-                           >
-                             NORMAL
-                           </button>
-                           
-                           {/* Fast Speed */}
-                           <button
-                             style={{
-                               width: '55px',
-                               height: '55px',
-                               backgroundColor: '#4ade80',
-                               color: '#1f2937',
-                               borderRadius: '6px',
-                               border: 'none',
-                               cursor: 'pointer',
-                               fontSize: '12px',
-                               fontWeight: '600',
-                               display: 'flex',
-                               alignItems: 'center',
-                               justifyContent: 'center'
-                             }}
-                             onClick={() => handleSpeedChange(1.25)}
-                           >
-                             FAST
-                           </button>
-                           
-                           {/* Faster Speed */}
-                           <button
-                             style={{
-                               width: '55px',
-                               height: '55px',
-                               backgroundColor: '#22c55e',
-                               color: 'white',
-                               borderRadius: '6px',
-                               border: 'none',
-                               cursor: 'pointer',
-                               fontSize: '11px',
-                               fontWeight: '600',
-                               display: 'flex',
-                               alignItems: 'center',
-                               justifyContent: 'center'
-                             }}
-                             onClick={() => handleSpeedChange(1.5)}
-                           >
-                             FASTER
-                           </button>
-                           
-                            {/* Fastest Speed */}
-                            <FastestSpeedButton onClick={() => handleSpeedChange(2)} />
+                            {/* Normal Speed */}
+                            <div 
+                              className="button-3d-base button-3d-standard button-3d-green"
+                              role="button" 
+                              aria-label="Normal Speed" 
+                              title="Normal Speed"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={() => handleSpeedChange(1)}>
+                                <CustomSpeedNormalIcon />
+                              </div>
+                            
+                            {/* Fast Speed */}
+                            <div 
+                              className="button-3d-base button-3d-standard button-3d-green"
+                              role="button" 
+                              aria-label="Fast Speed" 
+                              title="Fast Speed"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={() => handleSpeedChange(1.25)}>
+                                <CustomSpeedFastIcon />
+                              </div>
+                            
+                            {/* Faster Speed */}
+                            <div 
+                              className="button-3d-base button-3d-standard button-3d-green"
+                              role="button" 
+                              aria-label="Faster Speed" 
+                              title="Faster Speed"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={() => handleSpeedChange(1.5)}>
+                                <CustomSpeedFasterIcon />
+                              </div>
+                            
+                             {/* Fastest Speed */}
+                             <div 
+                               className="button-3d-base button-3d-standard button-3d-green"
+                               role="button" 
+                               aria-label="Fastest Speed" 
+                               title="Fastest Speed"
+                               style={{
+                                 cursor: 'pointer'
+                               }}
+                               onClick={() => handleSpeedChange(2)}>
+                                 <CustomSpeedFastestIcon />
+                               </div>
                         </div>
                       </div>
                      </td>
