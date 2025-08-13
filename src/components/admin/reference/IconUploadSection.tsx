@@ -34,9 +34,8 @@ const IconUploadSection = () => {
       const { error: dbError } = await supabase
         .from('icon_library')
         .insert({
-          icon_code: iconCode,
           icon_name: name,
-          file_path: uploadData.path
+          file_name_path: uploadData.path
         });
 
       if (dbError) {

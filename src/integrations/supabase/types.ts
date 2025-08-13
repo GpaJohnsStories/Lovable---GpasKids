@@ -208,23 +208,20 @@ export type Database = {
       icon_library: {
         Row: {
           created_at: string
-          file_path: string
+          file_name_path: string
           icon_name: string
-          id: string
           updated_at: string
         }
         Insert: {
           created_at?: string
-          file_path: string
+          file_name_path: string
           icon_name: string
-          id?: string
           updated_at?: string
         }
         Update: {
           created_at?: string
-          file_path?: string
+          file_name_path?: string
           icon_name?: string
-          id?: string
           updated_at?: string
         }
         Relationships: []

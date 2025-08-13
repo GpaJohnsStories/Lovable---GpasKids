@@ -12,10 +12,8 @@ import { RefreshCw, Trash2, Edit3 } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface IconLibraryItem {
-  id: string;
-  icon_code: string;
+  file_name_path: string;
   icon_name: string;
-  file_path: string;
   created_at: string;
   updated_at: string;
 }
@@ -33,7 +31,7 @@ const IconLibraryDisplay = () => {
       const { data, error } = await supabase
         .from('icon_library')
         .select('*')
-        .order('icon_code', { ascending: true });
+        .order('icon_name', { ascending: true });
 
       if (error) {
         console.error('❌ Error fetching icon library:', error);
@@ -54,7 +52,7 @@ const IconLibraryDisplay = () => {
       // Delete from storage
       const { error: storageError } = await supabase.storage
         .from('icons')
-        .remove([icon.file_path]);
+        .remove([icon.file_name_path]);
 
       if (storageError) {
         console.error('Storage delete error:', storageError);
@@ -65,7 +63,7 @@ const IconLibraryDisplay = () => {
       const { error: dbError } = await supabase
         .from('icon_library')
         .delete()
-        .eq('id', icon.id);
+        .eq('file_name_path', icon.file_name_path);
 
       if (dbError) {
         throw new Error(`Database delete failed: ${dbError.message}`);
@@ -86,7 +84,8 @@ const IconLibraryDisplay = () => {
   const replaceMutation = useMutation({
     mutationFn: async ({ icon, file }: { icon: IconLibraryItem, file: File }) => {
       const fileExt = file.name.split('.').pop();
-      const fileName = `${icon.icon_code}.${fileExt}`;
+      const baseName = icon.file_name_path.split('.')[0];
+      const fileName = `${baseName}.${fileExt}`;
       
       // Upload new file to storage (overwrite)
       const { error: uploadError } = await supabase.storage
@@ -101,11 +100,11 @@ const IconLibraryDisplay = () => {
       }
 
       // Update database record with new file path if extension changed
-      if (fileName !== icon.file_path) {
+      if (fileName !== icon.file_name_path) {
         const { error: dbError } = await supabase
           .from('icon_library')
-          .update({ file_path: fileName, updated_at: new Date().toISOString() })
-          .eq('id', icon.id);
+          .update({ file_name_path: fileName, updated_at: new Date().toISOString() })
+          .eq('file_name_path', icon.file_name_path);
 
         if (dbError) {
           throw new Error(`Database update failed: ${dbError.message}`);
@@ -247,41 +246,41 @@ const IconLibraryDisplay = () => {
         ) : (
            <div className="grid grid-cols-4 gap-4">
              {icons.map((icon) => {
-               console.log('Rendering icon card with buttons for:', icon.icon_code);
+               console.log('Rendering icon card with buttons for:', icon.icon_name);
                return (
-               <div
-                 key={icon.id}
-                 className="border rounded-lg p-4 text-center hover:shadow-md transition-shadow group"
-               >
-                 <div className="flex justify-center items-center h-16 mb-3">
-                   <img
-                     src={getSafeIconUrl(icon.file_path)}
-                     alt={icon.icon_name}
-                     className="max-w-full max-h-full object-contain"
-                     onError={(e) => {
-                       console.warn(`Failed to load icon ${icon.file_path}, setting fallback`);
-                       e.currentTarget.src = getSafeIconUrl('ICO-N2K.png');
-                     }}
-                   />
-                 </div>
-                 <div className="space-y-1 mb-3">
-                   <p className="font-mono text-sm font-bold text-primary">
-                     {icon.icon_code}
-                   </p>
-                   <p className="text-sm text-foreground">
-                     {icon.file_path}
-                   </p>
-                 </div>
+                <div
+                  key={icon.file_name_path}
+                  className="border rounded-lg p-4 text-center hover:shadow-md transition-shadow group"
+                >
+                  <div className="flex justify-center items-center h-16 mb-3">
+                    <img
+                      src={getSafeIconUrl(icon.file_name_path)}
+                      alt={icon.icon_name}
+                      className="max-w-full max-h-full object-contain"
+                      onError={(e) => {
+                        console.warn(`Failed to load icon ${icon.file_name_path}, setting fallback`);
+                        e.currentTarget.src = getSafeIconUrl('ICO-N2K.png');
+                      }}
+                    />
+                  </div>
+                  <div className="space-y-1 mb-3">
+                    <p className="font-mono text-sm font-bold text-primary">
+                      {icon.icon_name}
+                    </p>
+                    <p className="text-sm text-foreground">
+                      {icon.file_name_path}
+                    </p>
+                  </div>
                  
                   <div className="icon-library-actions">
-                    <Button
-                      size="sm"
-                      onClick={() => {
-                        console.log('Edit button clicked for:', icon.icon_code);
-                        handleReplace(icon);
-                      }}
-                      className="icon-library-edit-btn"
-                    >
+                     <Button
+                       size="sm"
+                       onClick={() => {
+                         console.log('Edit button clicked for:', icon.icon_name);
+                         handleReplace(icon);
+                       }}
+                       className="icon-library-edit-btn"
+                     >
                       <Edit3 className="h-3 w-3" />
                       <span className="ml-1 text-xs">Edit</span>
                     </Button>
@@ -298,10 +297,10 @@ const IconLibraryDisplay = () => {
                      <AlertDialogContent>
                        <AlertDialogHeader>
                          <AlertDialogTitle>Delete Icon</AlertDialogTitle>
-                         <AlertDialogDescription>
-                           Are you sure you want to delete "{icon.icon_name}" ({icon.icon_code})? 
-                           This action cannot be undone and will remove both the file and database entry.
-                         </AlertDialogDescription>
+                          <AlertDialogDescription>
+                            Are you sure you want to delete "{icon.icon_name}"? 
+                            This action cannot be undone and will remove both the file and database entry.
+                          </AlertDialogDescription>
                        </AlertDialogHeader>
                        <AlertDialogFooter>
                          <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -329,19 +328,19 @@ const IconLibraryDisplay = () => {
             </DialogHeader>
             {selectedIcon && (
               <div className="space-y-4">
-                <div className="text-center">
-                  <img
-                    src={getSafeIconUrl(selectedIcon.file_path)}
-                    alt={selectedIcon.icon_name}
-                    className="max-w-20 max-h-20 object-contain mx-auto mb-2"
-                  />
-                  <p className="font-mono text-sm font-bold text-primary">
-                    {selectedIcon.icon_code}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {selectedIcon.icon_name}
-                  </p>
-                </div>
+                 <div className="text-center">
+                   <img
+                     src={getSafeIconUrl(selectedIcon.file_name_path)}
+                     alt={selectedIcon.icon_name}
+                     className="max-w-20 max-h-20 object-contain mx-auto mb-2"
+                   />
+                   <p className="font-mono text-sm font-bold text-primary">
+                     {selectedIcon.icon_name}
+                   </p>
+                   <p className="text-sm text-muted-foreground">
+                     {selectedIcon.file_name_path}
+                   </p>
+                 </div>
                 
                 <div>
                   <Label htmlFor="replaceFile">New Icon File</Label>
