@@ -179,7 +179,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                   )}
                   {(hgjError || !hgjIconUrl) && !hgjLoading ? (
                     <div className="w-full h-12 sm:h-18 md:h-24 bg-transparent flex items-center justify-center text-orange-800 text-xs font-bold">
-                      HGJ
+                      !CO-HGJ.gif
                     </div>
                   ) : hgjIconUrl && !hgjLoading && !hgjError ? (
                     <img 
