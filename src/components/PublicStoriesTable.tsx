@@ -227,23 +227,6 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
               <Table>
                 <TableHeader>
                   <TableRow className="bg-background hover:bg-background">
-                    <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-20">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            onClick={() => handleSort('story_code')}
-                            className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                            size="sm"
-                          >
-                            Code
-                            {getSortIcon('story_code')}
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-xs">Click to sort by Code</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableHead>
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200">
                       <Tooltip>
                         <TooltipTrigger asChild>
