@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 import { Upload, Plus } from 'lucide-react';
 
@@ -15,21 +16,24 @@ const IconUploadForm = () => {
   const [fileExtension, setFileExtension] = useState('png');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [isPriority, setIsPriority] = useState(false);
   
   const queryClient = useQueryClient();
 
   // Generate filename based on icon code and extension
   const generateFileName = () => {
     if (!iconCode.trim()) return '';
-    return `${iconCode}.${fileExtension}`;
+    const prefix = isPriority ? '!' : '';
+    return `${prefix}${iconCode}.${fileExtension}`;
   };
 
   const uploadMutation = useMutation({
     mutationFn: async ({ file, code, name }: { file: File, code: string, name: string }) => {
       setIsUploading(true);
       
-      // Upload file to storage using the generated filename
-      const fileName = `${code}.${fileExtension}`;
+      // Upload file to storage using the generated filename with priority prefix if needed
+      const prefix = isPriority ? '!' : '';
+      const fileName = `${prefix}${code}.${fileExtension}`;
       
       const { error: uploadError } = await supabase.storage
         .from('icons')
@@ -62,6 +66,7 @@ const IconUploadForm = () => {
       setIconCode('');
       setIconName('');
       setSelectedFile(null);
+      setIsPriority(false);
       queryClient.invalidateQueries({ queryKey: ['icon-library'] });
       setIsUploading(false);
     },
@@ -79,9 +84,9 @@ const IconUploadForm = () => {
       return;
     }
 
-    // Validate icon code format (alphanumeric with underscores/hyphens)
-    if (!/^[a-zA-Z0-9_-]+$/.test(iconCode)) {
-      toast.error('Icon code should only contain letters, numbers, underscores, and hyphens');
+    // Validate icon code format (3-8 chars, alphanumeric with underscores/hyphens)
+    if (!/^[a-zA-Z0-9_-]{3,8}$/.test(iconCode)) {
+      toast.error('Icon code should be 3-8 characters containing only letters, numbers, underscores, and hyphens');
       return;
     }
 
@@ -167,6 +172,18 @@ const IconUploadForm = () => {
               placeholder="e.g., Home Icon"
               className="mt-1"
             />
+          </div>
+          
+          {/* Priority Icon Checkbox */}
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="isPriority" 
+              checked={isPriority}
+              onCheckedChange={(checked) => setIsPriority(checked as boolean)}
+            />
+            <Label htmlFor="isPriority" className="text-sm font-medium">
+              Priority Icon (adds "!" prefix for preloading)
+            </Label>
           </div>
           
           <div>
