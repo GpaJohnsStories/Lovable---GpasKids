@@ -101,7 +101,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           {/* Top Right Control Box - only show if audio is available */}
           {webtext?.audio_url && (
             <div className="absolute top-4 right-4 z-[5]">
-              <div className="bg-white/90 border-2 border-green-600 rounded-lg p-2 shadow-lg">
+              <div className="bg-white/90 border-4 border-blue-500 rounded-lg p-2 shadow-lg">
                 <div className="grid grid-cols-2 gap-2 items-center">
                   <div className="text-sm font-handwritten font-bold text-green-800 leading-tight">
                     Click to listen or<br />change word size
