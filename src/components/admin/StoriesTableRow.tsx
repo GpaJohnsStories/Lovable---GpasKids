@@ -250,10 +250,10 @@ const StoriesTableRow = ({
 
   return (
     <TableRow>
-      <TableCell className="p-1 text-left" style={{ width: '70px', minWidth: '70px', maxWidth: '70px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="p-1 text-left admin-table-cell" style={{ width: '70px', minWidth: '70px', maxWidth: '70px' }}>
         <span className="text-xs">{story.story_code}</span>
       </TableCell>
-      <TableCell className="p-1" style={{ width: '280px', minWidth: '280px', maxWidth: '280px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="p-1 admin-table-cell" style={{ width: '280px', minWidth: '280px', maxWidth: '280px' }}>
         <div className="flex items-center space-x-2">
           {firstPhoto && (
             <div className="flex-shrink-0">
@@ -272,7 +272,7 @@ const StoriesTableRow = ({
               {story.title}
             </div>
             {story.tagline && (
-              <div className="text-xs italic text-amber-700 truncate" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+              <div className="text-xs italic text-amber-700 truncate admin-table-font">
                 {hasVideo && story.tagline.toUpperCase().includes('VIDEO') ? (
                   <>🎥 {story.tagline}</>
                 ) : (
@@ -284,7 +284,7 @@ const StoriesTableRow = ({
         </div>
       </TableCell>
       {!hideAuthor && (
-        <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+        <TableCell className="p-1 text-center admin-table-cell" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
           <div className="flex flex-col items-center gap-1">
             <span className="text-xs">{story.author}</span>
             {onEditBio && (
@@ -306,7 +306,7 @@ const StoriesTableRow = ({
           </Badge>
         </div>
       </TableCell>
-      <TableCell className="p-1 text-center" style={{ width: '50px', minWidth: '50px', maxWidth: '50px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="p-1 text-center admin-table-cell" style={{ width: '50px', minWidth: '50px', maxWidth: '50px' }}>
         <div className="flex justify-center">
           <TooltipProvider>
             <Tooltip>
@@ -336,7 +336,7 @@ const StoriesTableRow = ({
           </TooltipProvider>
         </div>
       </TableCell>
-      <TableCell className="p-1 text-center" style={{ width: '100px', minWidth: '100px', maxWidth: '100px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="p-1 text-center admin-table-cell" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
         <div className="space-y-1">
           {/* Votes - First position */}
           <div className="flex items-center justify-center space-x-2">
@@ -367,7 +367,7 @@ const StoriesTableRow = ({
           </div>
         </div>
       </TableCell>
-      <TableCell className="p-1 text-center" style={{ width: '80px', minWidth: '80px', maxWidth: '80px', fontFamily: 'system-ui, -apple-system, sans-serif', color: 'black' }}>
+      <TableCell className="p-1 text-center admin-table-cell" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
         <div className="flex flex-col items-center space-y-1">
           {showActions ? (
             <>

@@ -489,11 +489,21 @@
   .h-27-5 {
     height: 27.5px;
   }
-  
+
   .h-55 {
     height: 55px;
   }
-  
+
+  /* Admin Table Font Utilities */
+  .admin-table-font {
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  .admin-table-cell {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: black;
+  }
+
   /* Semantic color utilities */
   .bg-warm-orange {
     background-color: hsl(var(--warm-orange));

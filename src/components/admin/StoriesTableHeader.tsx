@@ -146,9 +146,8 @@ const StoriesTableHeader = ({
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '70px', minWidth: '70px', maxWidth: '70px' }}>
           <Button
             onClick={() => onSort('story_code')}
-            className={`${getButtonColor('story_code')} w-full h-6 text-xs px-1 py-1`}
+            className={`${getButtonColor('story_code')} w-full h-6 text-xs px-1 py-1 admin-table-font`}
             size="sm"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
             Code
             {getSortIcon('story_code')}
@@ -157,9 +156,8 @@ const StoriesTableHeader = ({
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '280px', minWidth: '280px', maxWidth: '280px' }}>
           <Button
             onClick={() => onSort('title')}
-            className={`${getButtonColor('title')} w-full h-6 text-xs px-1 py-1`}
+            className={`${getButtonColor('title')} w-full h-6 text-xs px-1 py-1 admin-table-font`}
             size="sm"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
             Title
             {getSortIcon('title')}
@@ -169,9 +167,8 @@ const StoriesTableHeader = ({
           <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
             <Button
               onClick={onToggleGroupByAuthor || (() => onSort('author'))}
-              className={`${groupByAuthor ? 'bg-green-600 hover:bg-green-700' : getButtonColor('author')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1`}
+              className={`${groupByAuthor ? 'bg-green-600 hover:bg-green-700' : getButtonColor('author')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1 admin-table-font`}
               size="sm"
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
             >
               {groupByAuthor ? (
                 <>
@@ -191,9 +188,8 @@ const StoriesTableHeader = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className={`${getButtonColor('category')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1`}
+                className={`${getButtonColor('category')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1 admin-table-font`}
                 size="sm"
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
               >
                 {getCurrentCategoryDisplay()}
                 <ChevronDown className="h-3 w-3" />
@@ -214,8 +210,7 @@ const StoriesTableHeader = ({
                       onCategoryFilter?.(category);
                     }
                   }}
-                  className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100"
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100 admin-table-font"
                 >
                   <div className="flex items-center gap-2 w-full">
                     <div 
@@ -235,8 +230,8 @@ const StoriesTableHeader = ({
         </TableHead>
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '50px', minWidth: '50px', maxWidth: '50px' }}>
           <div
-            className="bg-gradient-to-b from-orange-400 to-orange-600 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif', width: '100%', borderRadius: '0px' }}
+            className="bg-gradient-to-b from-orange-400 to-orange-600 text-white h-6 text-xs px-1 py-1 flex items-center justify-center admin-table-font w-full"
+            style={{ borderRadius: '0px' }}
             title="Copyright Status: ©=Full Copyright, O=Open, S=Limited Sharing"
           >
             ©
@@ -246,9 +241,8 @@ const StoriesTableHeader = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className={`${getButtonColor('read_count')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1`}
+                className={`${getButtonColor('read_count')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1 admin-table-font`}
                 size="sm"
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
               >
                 Stats
                 <ChevronDown className="h-3 w-3" />
@@ -269,8 +263,7 @@ const StoriesTableHeader = ({
                       onSort(option.field);
                     }
                   }}
-                  className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100"
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                  className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100 admin-table-font"
                 >
                   <div className="flex items-center gap-2 w-full">
                     <div className={`flex items-center gap-1 ${option.color} font-bold`}>
@@ -289,9 +282,8 @@ const StoriesTableHeader = ({
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '80px', minWidth: '80px', maxWidth: '80px' }}>
           <Button
             onClick={() => onSort('updated_at')}
-            className={`${getButtonColor('updated_at')} w-full h-6 text-xs px-1 py-1`}
+            className={`${getButtonColor('updated_at')} w-full h-6 text-xs px-1 py-1 admin-table-font`}
             size="sm"
-            style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
             Updated
             {getSortIcon('updated_at')}
@@ -300,8 +292,8 @@ const StoriesTableHeader = ({
         {showActions && (
           <TableHead className="p-1 text-center bg-background" style={{ width: '120px', minWidth: '120px', maxWidth: '120px' }}>
             <div
-              className="bg-blue-500 text-white h-6 text-xs px-1 py-1 flex items-center justify-center"
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif', borderRadius: '0px' }}
+              className="bg-blue-500 text-white h-6 text-xs px-1 py-1 flex items-center justify-center admin-table-font"
+              style={{ borderRadius: '0px' }}
             >
               Actions
             </div>

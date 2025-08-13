@@ -40,17 +40,15 @@ const CommentsTableHeader = ({ sortField, sortDirection, onSort }: CommentsTable
           <TableHead key={`${header.field}-${index}`} className={`p-2 text-center ${header.width || ''}`}>
             {header.isAction ? (
               <span 
-                className="font-bold bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded shadow-[0_6px_12px_rgba(161,98,7,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-yellow-700" 
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+                className="font-bold bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded shadow-[0_6px_12px_rgba(161,98,7,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-yellow-700 admin-table-font"
               >
                 {header.label}
               </span>
             ) : (
               <Button
                 onClick={() => onSort(header.field)}
-                className={`${getButtonColor(header.field)} w-full justify-center`}
+                className={`${getButtonColor(header.field)} w-full justify-center admin-table-font`}
                 size="sm"
-                style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
               >
                 <div className="flex items-center justify-center gap-2">
                   {header.label}
