@@ -46,7 +46,7 @@ const CustomArrowIcon: React.FC = () => {
 
 // Custom Play Icon Component
 const CustomPlayIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('ICO-AV1.jpg');
+  const { iconUrl, isLoading, error } = useCachedIcon('!ICO-AV1.jpg');
   
   if (isLoading) return <div className="w-full h-full" />;
   if (error || !iconUrl) return <span>PLAY</span>;
@@ -62,7 +62,7 @@ const CustomPlayIcon: React.FC = () => {
 
 // Custom Pause Icon Component
 const CustomPauseIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('ICO-AV2.jpg');
+  const { iconUrl, isLoading, error } = useCachedIcon('!ICO-AV2.jpg');
   
   if (isLoading) return <div className="w-full h-full" />;
   if (error || !iconUrl) return <span>PAUSE</span>;
@@ -78,7 +78,7 @@ const CustomPauseIcon: React.FC = () => {
 
 // Custom CCP Icon Component for bigger size button
 const CustomCCPIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('ICO-CCP.png');
+  const { iconUrl, isLoading, error } = useCachedIcon('!ICO-CCP.png');
   
   if (isLoading) return <div style={{ width: '45px', height: '45px' }} />;
   if (error || !iconUrl) return <span>BIGGER</span>;
@@ -98,7 +98,7 @@ const CustomCCPIcon: React.FC = () => {
 
 // Custom CCM Icon Component for smaller size button
 const CustomCCMIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('ICO-CCM.png');
+  const { iconUrl, isLoading, error } = useCachedIcon('!ICO-CCM.png');
   
   if (isLoading) return <div style={{ width: '45px', height: '45px' }} />;
   if (error || !iconUrl) return <span>smaller</span>;
@@ -118,7 +118,7 @@ const CustomCCMIcon: React.FC = () => {
 
 // Custom CWS Icon Component for change word size
 const CustomCWSIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('ICO-CSZ.jpg');
+  const { iconUrl, isLoading, error } = useCachedIcon('!ICO-CSZ.jpg');
   
   if (isLoading) return <div style={{ width: '55px', height: '55px' }} />;
   if (error || !iconUrl) return <span style={{ fontSize: '12px' }}>Size</span>;
@@ -138,7 +138,7 @@ const CustomCWSIcon: React.FC = () => {
 
 // Custom Fastest Speed Button Component
 const FastestSpeedButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
-  const { iconUrl, isLoading, error } = useCachedIcon('ICO-AV8.jpg');
+  const { iconUrl, isLoading, error } = useCachedIcon('!ICO-AV8.jpg');
   
   if (isLoading) {
     return (

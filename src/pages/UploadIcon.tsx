@@ -16,7 +16,7 @@ export const UploadIcon = () => {
       
       const result = await uploadIconFromGoogleDrive(
         googleDriveUrl,
-        'ICO-CDY.png',
+        '!ICO-CDY.png',
         'Peppermint candy audio button icon'
       );
 
@@ -40,7 +40,7 @@ export const UploadIcon = () => {
         disabled={isUploading}
         className="mb-4"
       >
-        {isUploading ? 'Uploading...' : 'Upload ICO-CDY.png'}
+        {isUploading ? 'Uploading...' : 'Upload !ICO-CDY.png'}
       </Button>
       {message && (
         <div className="p-4 rounded-lg bg-gray-100">
