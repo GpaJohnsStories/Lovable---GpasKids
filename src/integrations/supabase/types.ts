@@ -210,6 +210,7 @@ export type Database = {
           created_at: string
           file_name_path: string
           icon_name: string
+          label: string | null
           updated_at: string
           usage_locations: Json | null
         }
@@ -217,6 +218,7 @@ export type Database = {
           created_at?: string
           file_name_path: string
           icon_name: string
+          label?: string | null
           updated_at?: string
           usage_locations?: Json | null
         }
@@ -224,6 +226,7 @@ export type Database = {
           created_at?: string
           file_name_path?: string
           icon_name?: string
+          label?: string | null
           updated_at?: string
           usage_locations?: Json | null
         }
