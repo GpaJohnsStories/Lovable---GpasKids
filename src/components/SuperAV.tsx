@@ -457,6 +457,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     };
   }, [isOpen, onClose]);
 
+  console.log('🎬 SuperAV render - isOpen:', isOpen, 'title:', title);
+  
   return (
     <div>
       {isOpen && (
