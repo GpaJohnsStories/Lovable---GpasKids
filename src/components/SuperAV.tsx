@@ -879,41 +879,31 @@ export const SuperAV: React.FC<SuperAVProps> = ({
              </table>
              </div>
              
-             {/* Close button positioned below font size buttons */}
-             <div style={{
-               all: 'unset',
-               boxSizing: 'border-box',
-               display: 'flex',
-               justifyContent: 'center',
-               marginTop: '12px',
-               marginBottom: '8px'
-             }}>
-               <button
-                 onClick={onClose}
-                 style={{
-                   all: 'unset',
-                   boxSizing: 'border-box',
-                   paddingLeft: '40px',
-                   paddingRight: '40px',
-                    paddingTop: '2px',
-                    paddingBottom: '2px',
-                   backgroundColor: '#F97316',
-                   color: 'white',
-                   borderRadius: '8px',
-                   fontWeight: 'bold',
-                    fontSize: '23px',
-                   fontFamily: FONT_FUN,
-                   cursor: 'pointer',
-                   transition: 'background-color 0.2s ease',
-                   border: 'none',
-                   outline: 'none',
-                 }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e35507'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#F97316'}
-               >
-                 Close
-               </button>
-             </div>
+              {/* Close button positioned below font size buttons */}
+              <div style={{
+                all: 'unset',
+                boxSizing: 'border-box',
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '12px',
+                marginBottom: '8px'
+              }}>
+                <div 
+                  className="button-3d-base button-3d-standard"
+                  role="button" 
+                  aria-label="Close SuperAV" 
+                  title="Close SuperAV"
+                  style={{
+                    cursor: 'pointer'
+                  }}
+                  onClick={onClose}>
+                   <CachedIcon 
+                     iconCode="!CO-CLS" 
+                     fallback={<span className="text-sm font-bold">Close</span>}
+                     style={{ height: '45px', width: '45px', objectFit: 'contain' }}
+                   />
+                </div>
+              </div>
            </div>
          </div>
          
