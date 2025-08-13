@@ -122,7 +122,7 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
             </div>
           )}
           
-          {/* Show icon if available, otherwise always show text */}
+          {/* Show icon if available, otherwise show icon code for missing icons */}
           {!isLoading && iconUrl && !error ? (
             <img 
               src={iconUrl}
@@ -143,7 +143,7 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
               }}
             >
               <span className="text-center leading-tight break-words hyphens-auto max-w-full">
-                {text}
+                {icon || text}
               </span>
             </div>
           )}

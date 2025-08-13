@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 interface IconLibraryItem {
   file_name_path: string;
   icon_name: string;
+  label?: string | null;
   created_at: string;
   updated_at: string;
   usage_locations?: Array<{

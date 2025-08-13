@@ -59,7 +59,8 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     {
       id: "home",
       icon: "!CO-MM2.png", // Home icon - Main Menu 2
-      text: "Home",
+      text: "!CO-MM2.png",
+      tooltipText: "Home",
       color: "#F97316",
       onClick: () => {
         window.location.href = "/";
