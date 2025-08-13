@@ -31,6 +31,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   // Audio controls state for peppermint button
   const [showSuperAV, setShowSuperAV] = useState(false);
 
+  console.log('ProportionalWebTextBox rendering with code:', webtextCode);
+
   const getContent = () => {
     if (loading) return { __html: "Loading..." };
     if (!webtext) return { __html: "Coming Soon" };
