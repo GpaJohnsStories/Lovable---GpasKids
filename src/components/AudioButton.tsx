@@ -43,7 +43,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
         
         {/* Visible tooltip for user to see what the button does */}
         <div className="absolute top-full right-0 mt-3 px-4 py-2 bg-red-600 text-white text-base font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20 shadow-lg border border-red-700">
-          Click if you prefer to listen.
+          Click if you want to listen or change word size.
         </div>
       </button>
       
