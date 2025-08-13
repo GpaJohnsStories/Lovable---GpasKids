@@ -224,6 +224,28 @@ const CustomCWSIcon: React.FC = () => {
   );
 };
 
+// Reusable CachedIcon component for size controls
+interface CachedIconProps {
+  iconCode: string;
+  fallback: React.ReactNode;
+  style?: React.CSSProperties;
+}
+
+const CachedIcon: React.FC<CachedIconProps> = ({ iconCode, fallback, style }) => {
+  const { iconUrl, isLoading, error } = useCachedIcon(iconCode);
+  
+  if (isLoading) return <div style={style} />;
+  if (error || !iconUrl) return <>{fallback}</>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt={iconCode} 
+      style={style}
+    />
+  );
+};
+
 
 interface SuperAVProps {
   isOpen: boolean;
@@ -796,15 +818,19 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              width: '100%',
                              gap: '8px'
                             }}>
-                              {/* Left: Change Word Size Icon */}
+                          {/* Left: Size Icon */}
                           <div style={{
                             display: 'flex',
                             alignItems: 'center'
                           }}>
-                            <CustomCWSIcon />
+                            <CachedIcon 
+                              iconCode="!CO-AV9" 
+                              fallback={<span className="text-xs">!CO-AV9</span>}
+                              style={{ height: '45px', width: '45px', objectFit: 'contain' }}
+                            />
                           </div>
                         
-                         {/* Center and Right: Two chocolate buttons */}
+                         {/* Center and Right: Bigger and Smaller buttons */}
                          <div style={{
                            display: 'flex',
                            gap: '8px'
@@ -820,22 +846,30 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                               pointerEvents: isMaxSize ? 'none' : 'auto'
                             }}
                             onClick={!isMaxSize ? handleScaleIncrease : undefined}>
-                             <CustomCCPIcon />
+                             <CachedIcon 
+                               iconCode="!CO-AVB" 
+                               fallback={<span className="text-xs">!CO-AVB</span>}
+                               style={{ height: '45px', width: '45px', objectFit: 'contain' }}
+                             />
                           </div>
                           
-                          <div 
-                            className={`button-3d-base button-3d-standard ${isMinSize ? 'opacity-60' : ''}`}
-                            role="button" 
-                            aria-label="Decrease Font Size" 
-                            title="Decrease Font Size"
-                            style={{
-                              cursor: isMinSize ? 'not-allowed' : 'pointer',
-                              opacity: isMinSize ? 0.6 : 1,
-                              pointerEvents: isMinSize ? 'none' : 'auto'
-                            }}
-                            onClick={!isMinSize ? handleScaleDecrease : undefined}>
-                             <CustomCCMIcon />
-                          </div>
+                           <div 
+                             className={`button-3d-base button-3d-standard ${isMinSize ? 'opacity-60' : ''}`}
+                             role="button" 
+                             aria-label="Decrease Font Size" 
+                             title="Decrease Font Size"
+                             style={{
+                               cursor: isMinSize ? 'not-allowed' : 'pointer',
+                               opacity: isMinSize ? 0.6 : 1,
+                               pointerEvents: isMinSize ? 'none' : 'auto'
+                             }}
+                             onClick={!isMinSize ? handleScaleDecrease : undefined}>
+                              <CachedIcon 
+                                iconCode="!CO-AVS" 
+                                fallback={<span className="text-xs">!CO-AVS</span>}
+                                style={{ height: '45px', width: '45px', objectFit: 'contain' }}
+                              />
+                           </div>
                          </div>
                        </div>
                         </div>
