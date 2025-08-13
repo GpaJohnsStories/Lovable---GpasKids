@@ -102,11 +102,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           {webtext?.audio_url && (
             <div className="absolute z-[5]" style={{ top: -1, right: -1 }}>
               <div className="bg-white/90 border-4 border-blue-500 rounded-lg p-2 shadow-lg">
-                <div className="grid grid-cols-2 gap-2 items-center">
+                <div className="grid grid-cols-2 gap-1 items-center">
                   <div className="text-sm font-handwritten font-bold text-green-800 leading-tight">
                     Click to listen or<br />change word size
                   </div>
-                  <div className="flex items-center justify-center">
+                  <div className="flex items-center justify-end">
                     <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
                   </div>
                 </div>
