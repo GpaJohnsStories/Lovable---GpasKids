@@ -46,10 +46,10 @@ const CustomArrowIcon: React.FC = () => {
 
 // Custom Play Icon Component
 const CustomPlayIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!ICO-AV1.jpg');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV1');
   
   if (isLoading) return <div className="w-full h-full" />;
-  if (error || !iconUrl) return <span>PLAY</span>;
+  if (error || !iconUrl) return <span>!CO-AV1</span>;
   
   return (
     <img 
@@ -62,10 +62,10 @@ const CustomPlayIcon: React.FC = () => {
 
 // Custom Pause Icon Component
 const CustomPauseIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!ICO-AV2.jpg');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV2');
   
   if (isLoading) return <div className="w-full h-full" />;
-  if (error || !iconUrl) return <span>PAUSE</span>;
+  if (error || !iconUrl) return <span>!CO-AV2</span>;
   
   return (
     <img 
@@ -76,7 +76,38 @@ const CustomPauseIcon: React.FC = () => {
   );
 };
 
-// Custom CCP Icon Component for bigger size button
+// Custom Restart Icon Component
+const CustomRestartIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV3');
+  
+  if (isLoading) return <div className="w-full h-full" />;
+  if (error || !iconUrl) return <span>!CO-AV3</span>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Restart" 
+      className="w-full h-full object-contain"
+    />
+  );
+};
+
+// Custom Stop Icon Component
+const CustomStopIcon: React.FC = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV4');
+  
+  if (isLoading) return <div className="w-full h-full" />;
+  if (error || !iconUrl) return <span>!CO-AV4</span>;
+  
+  return (
+    <img 
+      src={iconUrl} 
+      alt="Stop" 
+      className="w-full h-full object-contain"
+    />
+  );
+};
+
 const CustomCCPIcon: React.FC = () => {
   const { iconUrl, isLoading, error } = useCachedIcon('!ICO-CCP.png');
   
@@ -636,36 +667,31 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                <CustomPauseIcon />
                              </div>
                            
-                           {/* Restart Button */}
-                           <div 
-                             className="button-3d-base button-3d-standard button-3d-orange"
-                             role="button" 
-                             aria-label="Restart Audio" 
-                             title="Restart Audio"
-                             style={{
-                               cursor: 'pointer'
-                             }}
-                             onClick={handleRestart}>
-                               <RefreshCw size={20} color="white" strokeWidth={2.5} />
-                             </div>
-                           
-                           {/* Stop Button */}
-                           <div 
-                             className="button-3d-base button-3d-standard button-3d-red"
-                             role="button" 
-                             aria-label="Stop Audio" 
-                             title="Stop Audio"
-                             style={{
-                               cursor: 'pointer'
-                             }}
-                             onClick={handleStop}>
-                               <div style={{
-                                 width: '16px',
-                                 height: '16px',
-                                 backgroundColor: 'white',
-                                 borderRadius: '2px'
-                               }}></div>
-                             </div>
+                            {/* Restart Button */}
+                            <div 
+                              className="button-3d-base button-3d-standard button-3d-orange"
+                              role="button" 
+                              aria-label="Restart Audio" 
+                              title="Restart Audio"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={handleRestart}>
+                                <CustomRestartIcon />
+                              </div>
+                            
+                            {/* Stop Button */}
+                            <div 
+                              className="button-3d-base button-3d-standard button-3d-red"
+                              role="button" 
+                              aria-label="Stop Audio" 
+                              title="Stop Audio"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={handleStop}>
+                                <CustomStopIcon />
+                              </div>
                          </div>
                        </div>
                    </td>
