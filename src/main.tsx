@@ -4,8 +4,8 @@ import './index.css'
 import { SuperAVProvider } from './contexts/SuperAVContext'
 import { iconCacheService } from './services/IconCacheService'
 
-// Clear the cache for !ICA-PL1.jpg to load the new cropped version
-iconCacheService.refreshIcon('!ICA-PL1.jpg');
+// Clear the entire cache to load the renamed priority icons
+iconCacheService.clearCache();
 
 createRoot(document.getElementById("root")!).render(
   <SuperAVProvider>

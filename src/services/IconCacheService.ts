@@ -21,31 +21,31 @@ class IconCacheService {
 
   // Priority icons to preload (using "!" prefix for priority identification)
   private readonly PRIORITY_ICONS = [
-    '!ICO-HOX.jpg',      // Home icon
-    '!ICO-LB1.gif',      // Library main icon
-    '!ICO-LB2.gif',      // Browse Stories submenu
-    '!ICO-LB3.gif',      // Read Story submenu
-    '!ICO-CO1.gif',      // Comments main icon
-    '!ICO-CO2.gif',      // View Comments submenu
-    '!ICO-CO3.gif',      // Make Comment submenu
-    '!ICO-WR3.jpg',      // Writing main icon
-    '!ICO-WR2.gif',      // Submit Story submenu (tall & slender)
-    '!ICO-AV1.jpg',      // SuperAV Play button
-    '!ICO-AV2.jpg',      // SuperAV Pause button
-    '!ICO-WR3.jpg',      // How To Write submenu (same as main)
-    '!ICO-AB1.jpg',      // About Us main icon / Authors submenu
-    '!ICO-AB3.jpg',      // 3 Helpers submenu
-    '!ICO-AB5.jpg',      // The 3 AI's submenu
-    '!ICO-SA1.jpg',      // Safe & Secure main icon
-    '!ICO-MU2.gif',      // Menu button icon
-    '!ICO-HL2.gif',      // Buddy icon
-    '!ICO-HO1.jpg',      // Grandpa John icon
-    '!ICO-CDY.png',      // Peppermint candy audio button
-    '!ICO-CSZ.jpg',      // SuperAV change word size icon
-    '!ICO-CCP.png',      // SuperAV chocolate plus (increase font) icon
-    '!ICO-CCM.png',      // SuperAV chocolate minus (decrease font) icon
-    '!ICA-PL1.jpg',      // SuperAV play button icon
-    '!ICO-AV8.jpg',      // SuperAV fastest speed button icon
+    '!CO-HOX.jpg',      // Home icon
+    '!CO-LB1.gif',      // Library main icon
+    '!CO-LB2.gif',      // Browse Stories submenu
+    '!CO-LB3.gif',      // Read Story submenu
+    '!CO-CO1.gif',      // Comments main icon
+    '!CO-CO2.gif',      // View Comments submenu
+    '!CO-CO3.gif',      // Make Comment submenu
+    '!CO-WR3.jpg',      // Writing main icon
+    '!CO-WR2.gif',      // Submit Story submenu (tall & slender)
+    '!CO-AV1.jpg',      // SuperAV Play button
+    '!CO-AV2.jpg',      // SuperAV Pause button
+    '!CO-WR3.jpg',      // How To Write submenu (same as main)
+    '!CO-AB1.jpg',      // About Us main icon / Authors submenu
+    '!CO-AB3.jpg',      // 3 Helpers submenu
+    '!CO-AB5.jpg',      // The 3 AI's submenu
+    '!CO-SA1.jpg',      // Safe & Secure main icon
+    '!CO-MU2.gif',      // Menu button icon
+    '!CO-HL2.gif',      // Buddy icon
+    '!CO-HO1.jpg',      // Grandpa John icon
+    '!CO-CDY.png',      // Peppermint candy audio button
+    '!CO-CSZ.jpg',      // SuperAV change word size icon
+    '!CO-CCP.png',      // SuperAV chocolate plus (increase font) icon
+    '!CO-CCM.png',      // SuperAV chocolate minus (decrease font) icon
+    '!CA-PL1.jpg',      // SuperAV play button icon
+    '!CO-AV8.jpg',      // SuperAV fastest speed button icon
   ];
 
   /**
