@@ -899,7 +899,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                   onClick={onClose}>
                    <CachedIcon 
                      iconCode="!CO-CLS" 
-                     fallback={<span className="text-sm font-bold">Close</span>}
+                     fallback={<span className="text-xs">!CO-CLS</span>}
                      style={{ height: '45px', width: '45px', objectFit: 'contain' }}
                    />
                 </div>
