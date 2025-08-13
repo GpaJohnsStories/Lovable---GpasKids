@@ -56,7 +56,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "home",
-      icon: "!ICO-HOX.jpg", // Home icon (available in storage)
+      icon: "!CO-HOX.jpg", // Home icon (available in storage)
       text: "Home",
       color: "#F97316",
       onClick: () => {
@@ -66,7 +66,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "library",
-      icon: "!ICO-LB1.gif", // Library icon (available in storage)
+      icon: "!CO-LB1.gif", // Library icon (available in storage)
       text: "Library", 
       color: "#F97316",
       onClick: () => {
@@ -76,7 +76,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "read-story",
-      icon: "!ICO-LB3.gif", // Read Story icon (available in storage) 
+      icon: "!CO-LB3.gif", // Read Story icon (available in storage) 
       text: "Read Story",
       color: "#F97316",
       onClick: () => {
@@ -98,13 +98,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "comments",
-      icon: "!ICO-CO1.gif", // Comments icon (available in storage)
+      icon: "!CO-CO1.gif", // Comments icon (available in storage)
       text: "Comments",
       color: "#F97316", 
       submenus: [
         {
           id: "view-comments",
-          icon: "!ICO-CO2.gif", // View Comments (available in storage)
+          icon: "!CO-CO2.gif", // View Comments (available in storage)
           text: "Make Comment",
           onClick: () => {
             window.location.href = "/make-comment";
@@ -113,7 +113,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "make-comment",
-          icon: "!ICO-CO3.gif", // Make Comment (available in storage)
+          icon: "!CO-CO3.gif", // Make Comment (available in storage)
           text: "View Comments", 
           onClick: () => {
             window.location.href = "/view-comments";
@@ -124,13 +124,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "writing",
-      icon: "!ICO-WR3.jpg", // Writing icon (main menu) 
+      icon: "!CO-WR3.jpg", // Writing icon (main menu) 
       text: "Writing",
       color: "#F97316",
       submenus: [
         {
           id: "submit-story",
-          icon: "!ICO-WR2.gif", // Submit Story (1st/rightmost submenu - tall & slender)
+          icon: "!CO-WR2.gif", // Submit Story (1st/rightmost submenu - tall & slender)
           text: "Submit Story",
           onClick: () => {
             window.location.href = "/writing";
@@ -139,7 +139,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "guide-write",
-          icon: "!ICO-WR3.jpg", // Guide Write (2nd/leftmost submenu - same as main)
+          icon: "!CO-WR3.jpg", // Guide Write (2nd/leftmost submenu - same as main)
           text: "Guide Write",
           onClick: () => {
             window.location.href = "/writing#write-story";
@@ -150,7 +150,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "about-us",
-      icon: "!ICO-AB1.jpg", // About Us icon (available in storage)
+      icon: "!CO-AB1.jpg", // About Us icon (available in storage)
       text: "About Us",
       color: "#F97316",
       submenus: [
@@ -165,7 +165,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "3-helpers",
-          icon: "!ICO-AB3.jpg",
+          icon: "!CO-AB3.jpg",
           text: "3 Helpers", 
           onClick: () => {
             window.location.href = "/about#buddy";
@@ -183,7 +183,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "the-3-ais",
-          icon: "!ICO-AB5.jpg", 
+          icon: "!CO-AB5.jpg", 
           text: "3 Helpful AI's",
           onClick: () => {
             window.location.href = "/about#special-thank-you";
@@ -194,7 +194,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "safe-secure",
-      icon: "!ICO-SA1.jpg", // Safe & Secure icon (available in storage)
+      icon: "!CO-SA1.jpg", // Safe & Secure icon (available in storage)
       text: "Safe & Secure", 
       color: "#F97316",
       onClick: () => {
