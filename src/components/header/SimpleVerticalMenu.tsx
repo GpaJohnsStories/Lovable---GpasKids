@@ -25,6 +25,7 @@ interface MainMenuItem {
   submenus?: SubMenuItem[];
   disabled?: boolean;
   disabledMessage?: string;
+  tooltipText?: string;
 }
 
 const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => {
@@ -48,6 +49,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       id: "guide", 
       icon: "!CO-MM1.jpg", // Guide icon - Main Menu 1
       text: "!CO-MM1.jpg",
+      tooltipText: "Guide",
       color: "#F97316",
       onClick: () => {
         window.location.href = "/guide";
@@ -236,6 +238,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                   onClick={() => handleMainMenuClick(item)}
                   disabled={item.disabled}
                   disabledMessage={item.disabledMessage}
+                  tooltipText={item.tooltipText}
                 />
                 
                 {/* Submenu buttons arranged horizontally in a line going left */}

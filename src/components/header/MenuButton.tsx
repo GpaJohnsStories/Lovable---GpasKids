@@ -16,9 +16,10 @@ interface MenuButtonProps {
   disabled?: boolean;
   disabledMessage?: string;
   level?: number; // For dynamic tooltip positioning
+  tooltipText?: string; // Optional separate tooltip text
 }
 
-const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, disabledMessage, level = 0 }: MenuButtonProps) => {
+const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, disabledMessage, level = 0, tooltipText }: MenuButtonProps) => {
   const { iconUrl, isLoading, error } = useCachedIcon(icon);
   const { shouldShowTooltips, registerTooltip, unregisterTooltip } = useTooltipContext();
   const tooltipId = useId();
@@ -149,7 +150,7 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
         </button>
       </TooltipTrigger>
       <TooltipContent side="top" sideOffset={-20} className="z-[100] bg-popover text-popover-foreground border shadow-md">
-        <p className="font-semibold">{disabled && disabledMessage ? disabledMessage : text}</p>
+        <p className="font-semibold">{disabled && disabledMessage ? disabledMessage : (tooltipText || text)}</p>
       </TooltipContent>
     </Tooltip>
   );
