@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { RefreshCw, Trash2, Edit3 } from 'lucide-react';
+import { RefreshCw, Trash2, Edit3, ChevronUp, ChevronDown } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface IconLibraryItem {
@@ -16,13 +17,23 @@ interface IconLibraryItem {
   icon_name: string;
   created_at: string;
   updated_at: string;
+  usage_locations?: Array<{
+    component: string;
+    location: string;
+    context: string;
+  }>;
 }
+
+type SortColumn = 'file_name_path' | 'icon_name' | 'usage_locations';
+type SortDirection = 'asc' | 'desc';
 
 const IconLibraryDisplay = () => {
   const queryClient = useQueryClient();
   const [replaceDialogOpen, setReplaceDialogOpen] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<IconLibraryItem | null>(null);
   const [newFile, setNewFile] = useState<File | null>(null);
+  const [sortColumn, setSortColumn] = useState<SortColumn>('file_name_path');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   
   const { data: icons, isLoading, error, refetch } = useQuery({
     queryKey: ['icon-library'],
@@ -169,6 +180,70 @@ const IconLibraryDisplay = () => {
     }
   };
 
+  const handleSort = (column: SortColumn) => {
+    if (sortColumn === column) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortColumn(column);
+      setSortDirection('asc');
+    }
+  };
+
+  const sortedIcons = icons ? [...icons].sort((a, b) => {
+    let aValue: string;
+    let bValue: string;
+
+    switch (sortColumn) {
+      case 'file_name_path':
+        aValue = a.file_name_path;
+        bValue = b.file_name_path;
+        break;
+      case 'icon_name':
+        aValue = a.icon_name;
+        bValue = b.icon_name;
+        break;
+      case 'usage_locations':
+        aValue = a.usage_locations?.[0]?.location || '';
+        bValue = b.usage_locations?.[0]?.location || '';
+        break;
+      default:
+        return 0;
+    }
+
+    if (sortDirection === 'asc') {
+      return aValue.localeCompare(bValue);
+    } else {
+      return bValue.localeCompare(aValue);
+    }
+  }) : [];
+
+  const SortableHeader = ({ column, children }: { column: SortColumn; children: React.ReactNode }) => (
+    <TableHead 
+      className="cursor-pointer hover:bg-muted/50 select-none"
+      onClick={() => handleSort(column)}
+    >
+      <div className="flex items-center gap-2">
+        {children}
+        <div className="flex flex-col">
+          <ChevronUp 
+            className={`h-3 w-3 ${
+              sortColumn === column && sortDirection === 'asc' 
+                ? 'text-primary' 
+                : 'text-muted-foreground/30'
+            }`} 
+          />
+          <ChevronDown 
+            className={`h-3 w-3 -mt-1 ${
+              sortColumn === column && sortDirection === 'desc' 
+                ? 'text-primary' 
+                : 'text-muted-foreground/30'
+            }`} 
+          />
+        </div>
+      </div>
+    </TableHead>
+  );
+
   if (isLoading) {
     return (
       <Card>
@@ -176,13 +251,9 @@ const IconLibraryDisplay = () => {
           <CardTitle>Icon Library</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-4 gap-4">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <div key={index} className="animate-pulse">
-                <div className="bg-muted h-20 rounded mb-2"></div>
-                <div className="bg-muted h-4 rounded mb-1"></div>
-                <div className="bg-muted h-3 rounded"></div>
-              </div>
+          <div className="animate-pulse space-y-4">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="h-16 bg-muted rounded"></div>
             ))}
           </div>
         </CardContent>
@@ -237,6 +308,9 @@ const IconLibraryDisplay = () => {
             </Button>
           </div>
         </CardTitle>
+        <p className="text-sm text-muted-foreground">
+          Click column headers to sort. Shows exact locations where each icon is used.
+        </p>
       </CardHeader>
       <CardContent>
         {!icons || icons.length === 0 ? (
@@ -244,80 +318,102 @@ const IconLibraryDisplay = () => {
             No icons found in the library
           </div>
         ) : (
-           <div className="grid grid-cols-4 gap-4">
-             {icons.map((icon) => {
-               console.log('Rendering icon card with buttons for:', icon.icon_name);
-               return (
-                <div
-                  key={icon.file_name_path}
-                  className="border rounded-lg p-4 text-center hover:shadow-md transition-shadow group"
-                >
-                  <div className="flex justify-center items-center h-16 mb-3">
-                    <img
-                      src={getSafeIconUrl(icon.file_name_path)}
-                      alt={icon.icon_name}
-                      className="max-w-full max-h-full object-contain"
-                      onError={(e) => {
-                        console.warn(`Failed to load icon ${icon.file_name_path}, setting fallback`);
-                        e.currentTarget.src = getSafeIconUrl('ICO-N2K.png');
-                      }}
-                    />
-                  </div>
-                  <div className="space-y-1 mb-3">
-                    <p className="font-mono text-sm font-bold text-primary">
-                      {icon.icon_name}
-                    </p>
-                    <p className="text-sm text-foreground">
-                      {icon.file_name_path}
-                    </p>
-                  </div>
-                 
-                  <div className="icon-library-actions">
-                     <Button
-                       size="sm"
-                       onClick={() => {
-                         console.log('Edit button clicked for:', icon.icon_name);
-                         handleReplace(icon);
-                       }}
-                       className="icon-library-edit-btn"
-                     >
-                      <Edit3 className="h-3 w-3" />
-                      <span className="ml-1 text-xs">Edit</span>
-                    </Button>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          size="sm"
-                          className="icon-library-delete-btn"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                          <span className="ml-1 text-xs">Delete</span>
-                        </Button>
-                      </AlertDialogTrigger>
-                     <AlertDialogContent>
-                       <AlertDialogHeader>
-                         <AlertDialogTitle>Delete Icon</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            Are you sure you want to delete "{icon.icon_name}"? 
-                            This action cannot be undone and will remove both the file and database entry.
-                          </AlertDialogDescription>
-                       </AlertDialogHeader>
-                       <AlertDialogFooter>
-                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                         <AlertDialogAction
-                           onClick={() => handleDelete(icon)}
-                           className="bg-destructive hover:bg-destructive/90"
-                         >
-                           Delete
-                         </AlertDialogAction>
-                       </AlertDialogFooter>
-                     </AlertDialogContent>
-                   </AlertDialog>
-                 </div>
-               </div>
-               );
-             })}
-          </div>
+          <Table style={{ backgroundColor: '#FFF8DC' }}>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-20">Icon</TableHead>
+                <SortableHeader column="file_name_path">
+                  <span className="font-bold">File Name Path</span>
+                </SortableHeader>
+                <SortableHeader column="icon_name">
+                  <span className="font-bold">Icon Name</span>
+                </SortableHeader>
+                <SortableHeader column="usage_locations">
+                  <span className="font-bold">Used In</span>
+                </SortableHeader>
+                <TableHead className="w-32">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sortedIcons.map((icon) => (
+                <TableRow key={icon.file_name_path} className="h-16">
+                  <TableCell className="p-2">
+                    <div className="w-14 h-14 flex items-center justify-center border rounded">
+                      <img
+                        src={getSafeIconUrl(icon.file_name_path)}
+                        alt={icon.icon_name}
+                        className="max-w-full max-h-full object-contain"
+                        onError={(e) => {
+                          console.warn(`Failed to load icon ${icon.file_name_path}, setting fallback`);
+                          e.currentTarget.src = getSafeIconUrl('ICO-N2K.png');
+                        }}
+                      />
+                    </div>
+                  </TableCell>
+                  <TableCell className="font-bold">
+                    {icon.file_name_path}
+                  </TableCell>
+                  <TableCell>
+                    {icon.icon_name}
+                  </TableCell>
+                  <TableCell>
+                    {icon.usage_locations && icon.usage_locations.length > 0 ? (
+                      <div className="space-y-1">
+                        {icon.usage_locations.map((usage, idx) => (
+                          <div key={idx} className="text-sm">
+                            {usage.location}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <span className="text-muted-foreground text-sm">Not assigned</span>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleReplace(icon)}
+                        className="h-8"
+                      >
+                        <Edit3 className="h-3 w-3" />
+                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="h-8"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Icon</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete "{icon.icon_name}"? 
+                              This action cannot be undone and will remove both the file and database entry.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDelete(icon)}
+                              className="bg-destructive hover:bg-destructive/90"
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         )}
 
         {/* Replace Icon Dialog */}

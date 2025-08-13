@@ -211,18 +211,21 @@ export type Database = {
           file_name_path: string
           icon_name: string
           updated_at: string
+          usage_locations: Json | null
         }
         Insert: {
           created_at?: string
           file_name_path: string
           icon_name: string
           updated_at?: string
+          usage_locations?: Json | null
         }
         Update: {
           created_at?: string
           file_name_path?: string
           icon_name?: string
           updated_at?: string
+          usage_locations?: Json | null
         }
         Relationships: []
       }
