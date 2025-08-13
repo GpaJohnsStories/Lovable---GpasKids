@@ -56,7 +56,7 @@ const IconUploadSection = () => {
       setSelectedFile(null);
       
       // Invalidate queries to refresh icon library
-      queryClient.invalidateQueries({ queryKey: ["icons"] });
+      queryClient.invalidateQueries({ queryKey: ['icon-library'] });
     },
     onError: (error) => {
       toast({
