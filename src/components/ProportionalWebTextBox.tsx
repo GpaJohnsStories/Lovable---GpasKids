@@ -31,8 +31,6 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   // Audio controls state for peppermint button
   const [showSuperAV, setShowSuperAV] = useState(false);
 
-  console.log('ProportionalWebTextBox rendering with code:', webtextCode);
-
   const getContent = () => {
     if (loading) return { __html: "Loading..." };
     if (!webtext) return { __html: "Coming Soon" };
@@ -102,7 +100,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
         <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
           {/* Top Right Control Box - only show if audio is available */}
           {webtext?.audio_url && (
-            <div className="absolute z-[5]" style={{ top: '-1px', right: '-1px' }}>
+            <div className="absolute z-[5]" style={{ top: -1, right: -1 }}>
               <div className="bg-white/90 border-4 border-blue-500 rounded-lg p-2 shadow-lg">
                 <div className="grid grid-cols-2 gap-2 items-center">
                   <div className="text-sm font-handwritten font-bold text-green-800 leading-tight">
