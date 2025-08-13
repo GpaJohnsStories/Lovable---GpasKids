@@ -26,6 +26,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   const { iconUrl: safeForKidsIconUrl, isLoading: sfkLoading, error: sfkError } = useCachedIcon('!CO-SFK.gif');
   const { iconUrl: hgjIconUrl, isLoading: hgjLoading, error: hgjError } = useCachedIcon('!CO-HGJ.gif');
   const { iconUrl: dancingGifUrl, isLoading: dancingLoading, error: dancingError } = useCachedIcon('!CO-TBX.gif');
+  const { iconUrl: speechBubbleUrl, isLoading: speechLoading, error: speechError } = useCachedIcon('!CO-TBY');
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -139,13 +140,20 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                 ) : null}
                 {/* Speech Bubble Image - Positioned to the right of GIF */}
                 <div className="absolute -right-8 top-1/2 transform -translate-y-1/2">
-                  <img 
-                    src="/lovable-uploads/9b3a12df-2473-4574-9762-76224ff8b67d.png" 
-                    alt="Speech bubble"
-                    className="w-16 lg:w-20 h-16 lg:h-20 object-contain"
-                    onLoad={() => console.log('New speech bubble image loaded successfully')}
-                    onError={(e) => console.log('New speech bubble image failed to load:', e)}
-                  />
+                  {speechLoading && (
+                    <div className="w-16 lg:w-20 h-16 lg:h-20 bg-yellow-300 animate-pulse rounded-md" />
+                  )}
+                  {(speechError || !speechBubbleUrl) && !speechLoading ? (
+                    <div className="w-16 lg:w-20 h-16 lg:h-20 bg-yellow-200 flex items-center justify-center text-yellow-800 text-xs font-bold rounded-md">
+                      !CO-TBY
+                    </div>
+                  ) : speechBubbleUrl && !speechLoading && !speechError ? (
+                    <img 
+                      src={speechBubbleUrl}
+                      alt="Speech bubble"
+                      className="w-16 lg:w-20 h-16 lg:h-20 object-contain"
+                    />
+                  ) : null}
                 </div>
                 {/* Safe For Kids Shield - Now moved to right section next to menu */}
               </div>
