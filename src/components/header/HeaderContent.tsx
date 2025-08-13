@@ -86,10 +86,10 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
               <div className="w-full h-12 sm:h-18 md:h-24 bg-green-300 animate-pulse rounded-md group-hover:hidden" />
             )}
             
-            {/* Show text if no icon available, otherwise show Buddy image - hidden on hover */}
+            {/* Show icon code if no icon available, otherwise show Buddy image - hidden on hover */}
             {(buddyError || !buddyIconUrl) && !buddyLoading ? (
               <div className="w-full h-12 sm:h-18 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-md group-hover:hidden">
-                BUDDY
+                !CO-TB1.gif
               </div>
             ) : buddyIconUrl && !buddyLoading && !buddyError ? (
               <img 
