@@ -47,7 +47,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     {
       id: "guide", 
       icon: "!CO-MM1.jpg", // Guide icon - Main Menu 1
-      text: "Guide",
+      text: "!CO-MM1.jpg",
       color: "#F97316",
       onClick: () => {
         window.location.href = "/guide";
