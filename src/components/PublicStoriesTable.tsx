@@ -338,7 +338,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                 <TableBody>
                   {stories?.map((story) => (
                     <TableRow key={story.id} className="table-row-green">
-                      <TableCell className="text-black-system">
+                      <TableCell className="text-black-system table-cell-top">
                         <div className="flex items-center gap-3">
                           {story.photo_link_1 && (
                             <div className="flex-shrink-0 flex flex-col items-center">
@@ -382,7 +382,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className="text-black-system">
+                      <TableCell className="text-black-system table-cell-top">
                         <div className="flex flex-col items-center gap-1">
                           <span className="text-sm">{story.author}</span>
                           {onEditBio && (
@@ -396,18 +396,18 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                           )}
                         </div>
                       </TableCell>
-                      <TableCell className="text-black-system">
+                      <TableCell className="text-black-system table-cell-top">
                         <div className={`${getCategoryBadgeColor(story.category)} text-white text-xs px-2 py-1 rounded text-center`}>
                           {getCategoryShortName(story.category)}
                         </div>
                       </TableCell>
                       <TableCell 
-                        className="text-center text-black-system"
+                        className="text-center text-black-system table-cell-top"
                       >
                         {story.read_count}
                       </TableCell>
                       <TableCell 
-                        className="text-xs text-black-system"
+                        className="text-xs text-black-system table-cell-top"
                       >
                         {new Date(story.updated_at).toLocaleDateString()}
                       </TableCell>

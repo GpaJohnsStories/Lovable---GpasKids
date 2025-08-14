@@ -695,3 +695,8 @@
 .table-header-no-border th {
   border: none !important;
 }
+
+/* Align table cells to top */
+.table-cell-top {
+  vertical-align: top !important;
+}
