@@ -729,59 +729,59 @@
 
 /* Toolbar button color variants */
 .btn-toolbar-orange {
-  background: linear-gradient(to bottom, #f97316, #ea580c);
-  border: 1px solid #c2410c;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(to bottom, #f97316, #ea580c) !important;
+  border: 1px solid #c2410c !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
 }
 
 .btn-toolbar-blue {
-  background: linear-gradient(to bottom, #3b82f6, #2563eb);
-  border: 1px solid #1d4ed8;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(to bottom, #3b82f6, #2563eb) !important;
+  border: 1px solid #1d4ed8 !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
 }
 
 .btn-toolbar-green {
-  background: linear-gradient(to bottom, #22c55e, #16a34a);
-  border: 1px solid #15803d;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(to bottom, #22c55e, #16a34a) !important;
+  border: 1px solid #15803d !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
 }
 
 .btn-toolbar-purple {
-  background: linear-gradient(to bottom, #a855f7, #9333ea);
-  border: 1px solid #7c3aed;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(to bottom, #a855f7, #9333ea) !important;
+  border: 1px solid #7c3aed !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
 }
 
 .btn-toolbar-slate {
-  background: linear-gradient(to bottom, #64748b, #475569);
-  border: 1px solid #334155;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(to bottom, #64748b, #475569) !important;
+  border: 1px solid #334155 !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
 }
 
 .btn-toolbar-yellow {
-  background: linear-gradient(to bottom, #FFD700, #DAA520);
-  border: 1px solid #B8860B;
-  color: black;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(to bottom, #FFD700, #DAA520) !important;
+  border: 1px solid #B8860B !important;
+  color: black !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
 }
 
 .btn-toolbar-indigo {
-  background: linear-gradient(to bottom, #6366f1, #4f46e5);
-  border: 1px solid #4338ca;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(to bottom, #6366f1, #4f46e5) !important;
+  border: 1px solid #4338ca !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
 }
 
 .btn-toolbar-red {
-  background: linear-gradient(to bottom, #ef4444, #dc2626);
-  border: 1px solid #b91c1c;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(to bottom, #ef4444, #dc2626) !important;
+  border: 1px solid #b91c1c !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
 }
 
 /* Hover effects for all toolbar buttons */
