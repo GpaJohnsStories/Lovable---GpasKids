@@ -142,7 +142,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                     <TooltipContent 
                       side="bottom" 
                       align="center"
-                      className="bg-primary text-primary-foreground font-bold border border-border shadow-lg"
+                      className="font-bold"
                     >
                       {dancingIconName || "Dancing children"}
                     </TooltipContent>
