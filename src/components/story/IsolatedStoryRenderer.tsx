@@ -50,7 +50,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             border: 0,
             boxSizing: 'border-box',
             display: 'block',
-            fontFamily: baseFontFamily,
+            // Remove fontFamily from container to allow inline styles to work
             fontSize: '18px',
             color: '#000000',
             lineHeight: '1.5',
@@ -75,6 +75,10 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             div[style*="font-family"]:not(.no-text-styles) span[style*="text-decoration: underline"],
             div[style*="font-family"]:not(.no-text-styles) span[style*="text-decoration:underline"] {
               text-decoration: underline !important;
+            }
+            /* Default font family for content without inline styles */
+            div:not([style*="font-family"]) {
+              font-family: ${isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif"} !important;
             }
           `
         }} />
