@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import AdminStoriesTable from "./AdminStoriesTable";
-import AuthorBiosTable from "./AuthorBiosTable";
+
 import { useUserRole } from "@/hooks/useUserRole";
 
 const AdminStories = () => {
@@ -33,33 +33,16 @@ const AdminStories = () => {
     window.open(editUrl, '_blank');
   };
 
-  const handleCreateBio = () => {
-    console.log('🎯 AdminStories: Creating new author bio');
-    navigate('/buddys_admin/author-bios/add');
-  };
-
-  const handleEditBio = (bio: any) => {
-    console.log('🎯 AdminStories: Editing author bio:', bio.id, bio.author_name);
-    navigate(`/buddys_admin/author-bios/edit/${bio.id}`);
-  };
 
   return (
     <div className="space-y-4">
-      {view === 'bios' ? (
-        <AuthorBiosTable
-          onEditBio={handleEditBio}
-          onCreateBio={handleCreateBio}
-        />
-      ) : (
-        <AdminStoriesTable
-          onEditStory={handleEditStory}
-          onCreateStory={handleCreateStory}
-          showActions={!isViewer}
-          onEditBio={handleEditBio}
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-        />
-      )}
+      <AdminStoriesTable
+        onEditStory={handleEditStory}
+        onCreateStory={handleCreateStory}
+        showActions={!isViewer}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+      />
     </div>
   );
 };

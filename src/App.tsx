@@ -41,7 +41,7 @@ import CommentsDashboard from "./components/admin/CommentsDashboard";
 import AdminCommentDetail from "./components/admin/AdminCommentDetail";
 import CreateAdminComment from "./components/admin/CreateAdminComment";
 import SecurityAuditDashboard from "./components/admin/SecurityAuditDashboard";
-import AuthorBioManagement from "./components/admin/AuthorBioManagement";
+
 import UnifiedStoryPage from "./components/unified-story/UnifiedStoryPage";
 
 // Security and Auth
@@ -111,9 +111,6 @@ function App() {
                       <Route path="/buddys_admin/stories" element={<SecureAdminRoute><AdminStories /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/comments" element={<SecureAdminRoute><CommentsDashboard /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/security" element={<SecureAdminRoute><SecurityAuditDashboard /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/author-bios" element={<SecureAdminRoute><AuthorBioManagement /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/author-bios/add" element={<SecureAdminRoute><AuthorBioManagement /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/author-bios/edit/:id" element={<SecureAdminRoute><AuthorBioManagement /></SecureAdminRoute>} />
                       
                       <Route path="/buddys_admin/reference" element={<SecureAdminRoute><ReferenceDashboard /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMapContent /></SecureAdminRoute>} />

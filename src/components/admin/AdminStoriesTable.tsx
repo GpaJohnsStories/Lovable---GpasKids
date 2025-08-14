@@ -33,7 +33,6 @@ interface AdminStoriesTableProps {
   onEditStory: (story: any) => void;
   onCreateStory: () => void;
   showActions?: boolean;
-  onEditBio?: (authorName: string) => void;
   searchTerm?: string;
   onSearchChange?: (value: string) => void;
 }
@@ -42,7 +41,6 @@ const AdminStoriesTable = ({
   onEditStory, 
   onCreateStory,
   showActions = true,
-  onEditBio,
   searchTerm = '',
   onSearchChange
 }: AdminStoriesTableProps) => {
@@ -260,7 +258,6 @@ const AdminStoriesTable = ({
                               onDelete={handleDeleteStory}
                               onStatusChange={handleStatusChange}
                               hideAuthor={true}
-                              onEditBio={onEditBio}
                             />
                           ))}
                         </TableBody>
@@ -307,7 +304,7 @@ const AdminStoriesTable = ({
                         }}
                         onDelete={handleDeleteStory}
                         onStatusChange={handleStatusChange}
-                        onEditBio={onEditBio}
+                        
                       />
                     ))}
                   </TableBody>
