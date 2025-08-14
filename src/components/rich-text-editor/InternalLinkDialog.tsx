@@ -14,10 +14,9 @@ interface InternalLinkDialogProps {
 const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, children }) => {
   const [open, setOpen] = useState(false);
   const [linkText, setLinkText] = useState('');
-  const [linkType, setLinkType] = useState<'page' | 'section' | 'external'>('page');
+  const [linkType, setLinkType] = useState<'page' | 'section'>('page');
   const [selectedPage, setSelectedPage] = useState('');
   const [selectedSection, setSelectedSection] = useState('');
-  const [externalUrl, setExternalUrl] = useState('');
 
   // Define available pages and their sections
   const pages = [
@@ -46,8 +45,6 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
       url = selectedPage;
     } else if (linkType === 'section') {
       url = selectedPage + selectedSection;
-    } else if (linkType === 'external') {
-      url = externalUrl;
     }
 
     if (url && linkText) {
@@ -57,7 +54,6 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
       setLinkText('');
       setSelectedPage('');
       setSelectedSection('');
-      setExternalUrl('');
       setLinkType('page');
     }
   };
@@ -91,14 +87,13 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
 
           <div>
             <Label className="text-lg font-semibold text-amber-700">Link Type</Label>
-            <Select value={linkType} onValueChange={(value: 'page' | 'section' | 'external') => setLinkType(value)}>
+            <Select value={linkType} onValueChange={(value: 'page' | 'section') => setLinkType(value)}>
               <SelectTrigger className="mt-1 text-lg">
                 <SelectValue placeholder="Select link type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="page">Page on this website</SelectItem>
                 <SelectItem value="section">Section on a page</SelectItem>
-                <SelectItem value="external">External website</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -139,18 +134,6 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
             </div>
           )}
 
-          {linkType === 'external' && (
-            <div>
-              <Label htmlFor="external-url" className="text-lg font-semibold text-amber-700">External URL</Label>
-              <Input
-                id="external-url"
-                placeholder="https://example.com"
-                value={externalUrl}
-                onChange={(e) => setExternalUrl(e.target.value)}
-                className="mt-1 text-lg"
-              />
-            </div>
-          )}
 
           <div className="flex justify-end space-x-2 pt-4">
             <Button variant="outline" onClick={() => setOpen(false)} className="text-lg px-6 py-3">
@@ -158,7 +141,7 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
             </Button>
             <Button 
               onClick={handleInsert} 
-              disabled={!linkText || (!selectedPage && linkType !== 'external') || (!externalUrl && linkType === 'external')}
+              disabled={!linkText || !selectedPage}
               className="bg-amber-600 hover:bg-amber-700 text-white text-lg px-6 py-3"
             >
               Insert Link
