@@ -702,12 +702,15 @@
 }
 
 /* Details column stack styling */
+/* Desktop consistent layout for details column */
 .details-column-stack {
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: center;
-  min-width: 120px;
+  width: 128px;
+  min-width: 128px;
+  max-width: 128px;
 }
 
 .details-stack-item {
@@ -715,4 +718,5 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  width: 100%;
 }

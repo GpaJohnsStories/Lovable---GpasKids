@@ -225,47 +225,47 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
           ) : (
             <div className="border border-green-700 rounded-lg overflow-hidden">
               <Table>
-                 <TableHeader className="table-header-no-border">
-                   <TableRow className="table-header-no-border bg-background hover:bg-background">
-                     <TableHead className="p-1 text-center bg-background border-r border-green-700">
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button
-                             onClick={() => handleSort('title')}
-                             className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                           >
-                             Title
-                             {getSortIcon('title')}
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p className="text-xs">Click to sort by Title</p>
-                         </TooltipContent>
-                       </Tooltip>
-                     </TableHead>
-                     <TableHead className="p-1 text-center bg-background border-r border-green-700 w-24">
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <button
-                             onClick={() => handleSort('author')}
-                             className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                           >
-                             Author
-                             {getSortIcon('author')}
-                           </button>
-                         </TooltipTrigger>
-                         <TooltipContent>
-                           <p className="text-xs">Click to sort by Author</p>
-                         </TooltipContent>
-                       </Tooltip>
-                     </TableHead>
-                     <TableHead className="p-1 text-center bg-background w-32">
-                       <div className="text-white bg-green-700 h-6 text-xs px-1 py-1 font-system flex items-center justify-center">
-                         Details
-                       </div>
-                     </TableHead>
-                    </TableRow>
-                 </TableHeader>
+                  <TableHeader className="table-header-no-border">
+                    <TableRow className="table-header-no-border bg-background hover:bg-background">
+                      <TableHead className="p-1 text-center bg-background border-r border-green-700 min-w-0">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              onClick={() => handleSort('title')}
+                              className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
+                            >
+                              Title
+                              {getSortIcon('title')}
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-xs">Click to sort by Title</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TableHead>
+                      <TableHead className="p-1 text-center bg-background border-r border-green-700 w-24 min-w-24 max-w-24">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              onClick={() => handleSort('author')}
+                              className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
+                            >
+                              Author
+                              {getSortIcon('author')}
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="text-xs">Click to sort by Author</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TableHead>
+                      <TableHead className="p-1 text-center bg-background w-32 min-w-32 max-w-32">
+                        <div className="text-white bg-green-700 h-6 text-xs px-1 py-1 font-system flex items-center justify-center">
+                          Details
+                        </div>
+                      </TableHead>
+                     </TableRow>
+                  </TableHeader>
                 <TableBody>
                   {stories?.map((story) => (
                      <TableRow key={story.id} className="table-row-green">
