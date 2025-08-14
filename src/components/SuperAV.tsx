@@ -826,7 +826,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              <CachedIcon 
                                iconCode="!CO-AV9.jpg" 
                                fallback={<span className="text-xs">!CO-AV9.jpg</span>}
-                               style={{ height: '60px', width: '60px', objectFit: 'contain' }}
+                               style={{ height: '80px', width: '120px', objectFit: 'contain' }}
                             />
                           </div>
                         
