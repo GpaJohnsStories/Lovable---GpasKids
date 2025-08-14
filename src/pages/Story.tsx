@@ -213,12 +213,11 @@ const Story = () => {
               <div 
                 className="bg-[#F5E6D3] border-2 border-[#9c441a] rounded-lg p-6 md:p-8 shadow-sm"
               >
-                <div
-                  className="story-content"
-                  style={{ fontFamily: 'Georgia, serif', fontSize: `${fontSize}px` }}
-                >
-                  <StoryContentRenderer content={story.content || "No content available."} />
-                </div>
+                <StoryContentRenderer 
+                  content={story.content || "No content available."}
+                  fontSize={fontSize}
+                  onFontSizeChange={setFontSize}
+                />
               </div>
             </div>
           </main>

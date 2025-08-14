@@ -8,11 +8,15 @@ import { createSafeHtml } from "../../utils/xssProtection";
 interface StoryContentRendererProps {
   content: string;
   className?: string;
+  fontSize?: number;
+  onFontSizeChange?: (fontSize: number) => void;
 }
 
 export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({ 
   content, 
-  className = "" 
+  className = "",
+  fontSize = 16,
+  onFontSizeChange
 }) => {
   const { lookupStoryByCode } = useStoryCodeLookup();
 
@@ -37,6 +41,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
               key={`text-${lastIndex}`}
               dangerouslySetInnerHTML={createSafeHtml(beforeText)}
               className="prose prose-lg max-w-none text-black leading-relaxed font-normal font-georgia"
+              style={{ fontSize: `${fontSize}px` }}
             />
           );
         }
@@ -62,6 +67,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
             key={`text-${lastIndex}`}
             dangerouslySetInnerHTML={createSafeHtml(remainingText)}
             className="prose prose-lg max-w-none text-black leading-relaxed font-normal font-georgia"
+            style={{ fontSize: `${fontSize}px` }}
           />
         );
       }
@@ -73,6 +79,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
         <div 
           dangerouslySetInnerHTML={createSafeHtml(text)}
           className="prose prose-lg max-w-none text-black leading-relaxed font-normal font-georgia"
+          style={{ fontSize: `${fontSize}px` }}
         />
       );
     }
@@ -185,6 +192,7 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
         <div 
           dangerouslySetInnerHTML={createSafeHtml(storyData.content)}
           className="prose prose-lg max-w-none text-black leading-relaxed font-normal mt-4 font-georgia"
+          style={{ fontSize: `${fontSize}px` }}
         />
       )}
 
