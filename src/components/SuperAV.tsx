@@ -823,10 +823,10 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                             display: 'flex',
                             alignItems: 'center'
                           }}>
-                            <CachedIcon 
-                              iconCode="!CO-AV9" 
-                              fallback={<span className="text-xs">!CO-AV9</span>}
-                              style={{ height: '45px', width: '45px', objectFit: 'contain' }}
+                             <CachedIcon 
+                               iconCode="!Co-AW9.jpg" 
+                               fallback={<span className="text-xs">!Co-AW9.jpg</span>}
+                               style={{ height: '45px', width: '45px', objectFit: 'contain' }}
                             />
                           </div>
                         
@@ -846,10 +846,10 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                               pointerEvents: isMaxSize ? 'none' : 'auto'
                             }}
                             onClick={!isMaxSize ? handleScaleIncrease : undefined}>
-                             <CachedIcon 
-                               iconCode="!CO-AVB" 
-                               fallback={<span className="text-xs">!CO-AVB</span>}
-                               style={{ height: '45px', width: '45px', objectFit: 'contain' }}
+                              <CachedIcon 
+                                iconCode="!CO-AVB.png" 
+                                fallback={<span className="text-xs">!CO-AVB.png</span>}
+                                style={{ height: '45px', width: '45px', objectFit: 'contain' }}
                              />
                           </div>
                           
@@ -864,10 +864,10 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                pointerEvents: isMinSize ? 'none' : 'auto'
                              }}
                              onClick={!isMinSize ? handleScaleDecrease : undefined}>
-                              <CachedIcon 
-                                iconCode="!CO-AVS" 
-                                fallback={<span className="text-xs">!CO-AVS</span>}
-                                style={{ height: '45px', width: '45px', objectFit: 'contain' }}
+                               <CachedIcon 
+                                 iconCode="!CO-AVS.jpg" 
+                                 fallback={<span className="text-xs">!CO-AVS.jpg</span>}
+                                 style={{ height: '45px', width: '45px', objectFit: 'contain' }}
                               />
                            </div>
                          </div>
