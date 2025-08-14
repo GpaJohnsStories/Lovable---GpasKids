@@ -14,6 +14,12 @@ interface StoryFormFieldsProps {
     excerpt: string;
     story_code: string;
     published: string;
+    // Bio-specific fields
+    bio_subject_name?: string;
+    born_date?: string;
+    died_date?: string;
+    native_country?: string;
+    native_language?: string;
   };
   onInputChange: (field: string, value: string) => void;
   compact?: boolean;
@@ -92,6 +98,88 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
           </SelectContent>
         </Select>
       </div>
+
+      {/* Bio-specific fields - only show when category is BioText */}
+      {formData.category === 'BioText' && (
+        <>
+          <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 space-y-4">
+            <h3 className="text-lg font-bold text-teal-800 mb-3">Biography Information</h3>
+            
+            <div className="space-y-2">
+              <Label htmlFor="bio_subject_name" className={`font-bold text-gray-700 ${labelSize}`}>
+                Subject of Biography *
+              </Label>
+              <Input
+                id="bio_subject_name"
+                type="text"
+                value={formData.bio_subject_name || ''}
+                onChange={(e) => onInputChange('bio_subject_name', e.target.value)}
+                placeholder="Enter the name of the person this biography is about"
+                className="border-teal-300 border-2"
+                required={formData.category === 'BioText'}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="born_date" className={`font-bold text-gray-700 ${labelSize}`}>
+                  Born Date
+                </Label>
+                <Input
+                  id="born_date"
+                  type="date"
+                  value={formData.born_date || ''}
+                  onChange={(e) => onInputChange('born_date', e.target.value)}
+                  className="border-teal-300 border-2"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="died_date" className={`font-bold text-gray-700 ${labelSize}`}>
+                  Died Date
+                </Label>
+                <Input
+                  id="died_date"
+                  type="date"
+                  value={formData.died_date || ''}
+                  onChange={(e) => onInputChange('died_date', e.target.value)}
+                  className="border-teal-300 border-2"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="native_country" className={`font-bold text-gray-700 ${labelSize}`}>
+                  Native Country
+                </Label>
+                <Input
+                  id="native_country"
+                  type="text"
+                  value={formData.native_country || ''}
+                  onChange={(e) => onInputChange('native_country', e.target.value)}
+                  placeholder="e.g., United States"
+                  className="border-teal-300 border-2"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="native_language" className={`font-bold text-gray-700 ${labelSize}`}>
+                  Native Language
+                </Label>
+                <Input
+                  id="native_language"
+                  type="text"
+                  value={formData.native_language || ''}
+                  onChange={(e) => onInputChange('native_language', e.target.value)}
+                  placeholder="e.g., English"
+                  className="border-teal-300 border-2"
+                />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
 
       <div className="space-y-2">
