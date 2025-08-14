@@ -681,3 +681,8 @@
     max-width: 20rem !important;
   }
 }
+
+/* Table row with green border */
+.table-row-green {
+  border-bottom-color: hsl(var(--forest-green)) !important;
+}

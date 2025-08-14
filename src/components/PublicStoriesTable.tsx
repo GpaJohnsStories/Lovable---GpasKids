@@ -333,11 +333,11 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         </TooltipContent>
                       </Tooltip>
                     </TableHead>
-                  </TableRow>
+                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {stories?.map((story) => (
-                    <TableRow key={story.id}>
+                    <TableRow key={story.id} className="table-row-green">
                       <TableCell className="text-black-system">
                         <div className="flex items-center gap-3">
                           {story.photo_link_1 && (
