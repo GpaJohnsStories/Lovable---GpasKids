@@ -24,7 +24,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
         {/* Font Controls */}
         <div className="flex items-center gap-1">
           <Select onValueChange={onFontChange}>
-            <SelectTrigger className="h-8 w-36 text-sm" style={{ borderColor: '#9c441a' }}>
+            <SelectTrigger className="h-8 w-36 text-sm btn-toolbar-slate">
               <SelectValue placeholder="Font Family" />
             </SelectTrigger>
             <SelectContent className="bg-white z-50">
@@ -39,7 +39,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             </SelectContent>
           </Select>
           <Select onValueChange={onFontSizeChange}>
-            <SelectTrigger className="h-8 w-28 text-sm" style={{ borderColor: '#9c441a' }}>
+            <SelectTrigger className="h-8 w-28 text-sm btn-toolbar-slate">
               <SelectValue placeholder="Size" />
             </SelectTrigger>
             <SelectContent className="bg-white z-50">
@@ -60,31 +60,25 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
         <div className="flex items-center gap-1">
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onFormat('strong')}
-            className="h-8 px-2"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-2 btn-toolbar-orange"
           >
             <Bold className="h-4 w-4" />
           </Button>
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onFormat('em')}
-            className="h-8 px-2"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-2 btn-toolbar-orange"
           >
             <Italic className="h-4 w-4" />
           </Button>
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onFormat('u')}
-            className="h-8 px-2"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-2 btn-toolbar-orange"
           >
             <Underline className="h-4 w-4" />
           </Button>
@@ -92,22 +86,18 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           {/* Dash buttons moved here for better accessibility */}
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onInsertText('–')}
-            className="h-8 px-3 text-sm font-bold"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-3 text-sm font-bold btn-toolbar-orange"
             title="Insert N-dash (short pause for audio)"
           >
             –
           </Button>
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onInsertText('—')}
-            className="h-8 px-3 text-sm font-bold"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-3 text-sm font-bold btn-toolbar-orange"
             title="Insert M-dash (long pause for audio)"
           >
             —
@@ -120,31 +110,25 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
         <div className="flex items-center gap-1">
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onAlign('left')}
-            className="h-8 px-2"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-2 btn-toolbar-blue"
           >
             <AlignLeft className="h-4 w-4" />
           </Button>
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onAlign('center')}
-            className="h-8 px-2"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-2 btn-toolbar-blue"
           >
             <AlignCenter className="h-4 w-4" />
           </Button>
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onAlign('right')}
-            className="h-8 px-2"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-2 btn-toolbar-blue"
           >
             <AlignRight className="h-4 w-4" />
           </Button>
@@ -156,21 +140,17 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
         <div className="flex items-center gap-1">
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onInsertList(false)}
-            className="h-8 px-2"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-2 btn-toolbar-purple"
           >
             <List className="h-4 w-4" />
           </Button>
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onInsertList(true)}
-            className="h-8 px-2"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-2 btn-toolbar-purple"
           >
             <ListOrdered className="h-4 w-4" />
           </Button>
@@ -182,41 +162,33 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
         <div className="flex items-center gap-1">
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onFormat('big')}
-            className="h-8 px-3 text-sm"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-3 text-sm btn-toolbar-indigo"
           >
             Big
           </Button>
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onFormat('med')}
-            className="h-8 px-3 text-sm"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-3 text-sm btn-toolbar-indigo"
           >
             Med
           </Button>
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onFormat('large')}
-            className="h-8 px-3 text-sm"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-3 text-sm btn-toolbar-indigo"
           >
             Large
           </Button>
           <Button
             type="button"
-            variant="outline"
             size="sm"
             onClick={() => onFormat('p')}
-            className="h-8 px-3 text-sm"
-            style={{ borderColor: '#9c441a' }}
+            className="h-8 px-3 text-sm btn-toolbar-indigo"
           >
             P
           </Button>
@@ -230,8 +202,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             <Button
               type="button"
               size="sm"
-              className="h-8 px-2 text-white border-0 hover:opacity-90"
-              style={{ backgroundColor: '#228B22' }}
+              className="h-8 px-2 btn-toolbar-green"
               title="Insert internal link"
             >
               <Link2 className="h-4 w-4" />
@@ -248,8 +219,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             type="button"
             size="sm"
             onClick={onClearHtml}
-            className="h-8 px-2 text-black border-0 hover:opacity-90"
-            style={{ backgroundColor: '#F2BA15' }}
+            className="h-8 px-2 btn-toolbar-yellow"
             title="Clear HTML from selection"
           >
             <span className="text-sm font-bold">&lt;X&gt;</span>
@@ -258,8 +228,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             type="button"
             size="sm"
             onClick={onClearAll}
-            className="h-8 px-2 text-white border-0 hover:opacity-90"
-            style={{ backgroundColor: '#DC2626' }}
+            className="h-8 px-2 btn-toolbar-red"
             title="Clear all content"
           >
             <Trash2 className="h-4 w-4" />

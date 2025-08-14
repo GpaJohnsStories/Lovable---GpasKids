@@ -726,3 +726,73 @@
   text-align: center;
   width: 100%;
 }
+
+/* Toolbar button color variants */
+.btn-toolbar-orange {
+  background: linear-gradient(to bottom, #f97316, #ea580c);
+  border: 1px solid #c2410c;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-toolbar-blue {
+  background: linear-gradient(to bottom, #3b82f6, #2563eb);
+  border: 1px solid #1d4ed8;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-toolbar-green {
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  border: 1px solid #15803d;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-toolbar-purple {
+  background: linear-gradient(to bottom, #a855f7, #9333ea);
+  border: 1px solid #7c3aed;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-toolbar-slate {
+  background: linear-gradient(to bottom, #64748b, #475569);
+  border: 1px solid #334155;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-toolbar-yellow {
+  background: linear-gradient(to bottom, #eab308, #ca8a04);
+  border: 1px solid #a16207;
+  color: black;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-toolbar-indigo {
+  background: linear-gradient(to bottom, #6366f1, #4f46e5);
+  border: 1px solid #4338ca;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-toolbar-red {
+  background: linear-gradient(to bottom, #ef4444, #dc2626);
+  border: 1px solid #b91c1c;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Hover effects for all toolbar buttons */
+.btn-toolbar-orange:hover,
+.btn-toolbar-blue:hover,
+.btn-toolbar-green:hover,
+.btn-toolbar-purple:hover,
+.btn-toolbar-slate:hover,
+.btn-toolbar-yellow:hover,
+.btn-toolbar-indigo:hover,
+.btn-toolbar-red:hover {
+  opacity: 0.9;
+  transform: translateY(1px);
+}
