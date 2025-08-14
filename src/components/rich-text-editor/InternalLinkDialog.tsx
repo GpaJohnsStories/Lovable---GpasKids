@@ -32,9 +32,34 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
   ];
 
   const sections = {
+    '/': [
+      { value: '#welcome', label: 'Welcome Section' },
+      { value: '#featured-stories', label: 'Featured Stories' },
+      { value: '#about-grandpa', label: 'About Grandpa Section' }
+    ],
+    '/library': [
+      { value: '#story-categories', label: 'Story Categories' },
+      { value: '#recent-stories', label: 'Recent Stories' },
+      { value: '#popular-stories', label: 'Popular Stories' }
+    ],
+    '/about': [
+      { value: '#about-site', label: 'About This Site' },
+      { value: '#about-author', label: 'About the Author' },
+      { value: '#contact', label: 'Contact Information' }
+    ],
     '/writing': [
       { value: '#copyright', label: 'Copyright Section' },
-      { value: '#write-story', label: 'Write a Story Section' }
+      { value: '#write-story', label: 'Write a Story Section' },
+      { value: '#submission-guidelines', label: 'Submission Guidelines' }
+    ],
+    '/view-comments': [
+      { value: '#recent-comments', label: 'Recent Comments' },
+      { value: '#comment-rules', label: 'Comment Rules' }
+    ],
+    '/help-gpa': [
+      { value: '#getting-started', label: 'Getting Started' },
+      { value: '#navigation-help', label: 'Navigation Help' },
+      { value: '#troubleshooting', label: 'Troubleshooting' }
     ]
   };
 
