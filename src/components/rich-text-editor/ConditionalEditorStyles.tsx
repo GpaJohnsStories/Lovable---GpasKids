@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ConditionalEditorStylesProps {
-  category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "STORY";
+  category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "STORY";
 }
 
 const ConditionalEditorStyles: React.FC<ConditionalEditorStylesProps> = ({ category }) => {

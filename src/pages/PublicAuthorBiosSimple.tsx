@@ -13,34 +13,36 @@ const PublicAuthorBiosSimple = () => {
   console.log('🔍 PublicAuthorBiosSimple: Component mounting');
 
   const { data: bios, isLoading, error } = useQuery({
-    queryKey: ['public-author-bios-simple'],
+    queryKey: ['author-biographies'],
     queryFn: async () => {
-      console.log('🔍 PublicAuthorBiosSimple: Starting query');
+      console.log('🔍 AuthorBiographies: Starting query');
       try {
         const { data, error } = await supabase
-          .from('author_bios')
-          .select('id, author_name')
-          .limit(5);
+          .from('stories')
+          .select('id, bio_subject_name, title, author, excerpt, photo_link_1')
+          .eq('category', 'BioText')
+          .eq('published', 'Y')
+          .order('bio_subject_name');
         
-        console.log('🔍 PublicAuthorBiosSimple: Query result', { data, error });
+        console.log('🔍 AuthorBiographies: Query result', { data, error });
         
         if (error) {
-          console.error('🚨 PublicAuthorBiosSimple: Query error:', error);
+          console.error('🚨 AuthorBiographies: Query error:', error);
           throw error;
         }
         
         return data || [];
       } catch (err) {
-        console.error('🚨 PublicAuthorBiosSimple: Catch block error:', err);
+        console.error('🚨 AuthorBiographies: Catch block error:', err);
         throw err;
       }
     },
   });
 
-  console.log('🔍 PublicAuthorBiosSimple: Render state', { isLoading, error, biosCount: bios?.length });
+  console.log('🔍 AuthorBiographies: Render state', { isLoading, error, biosCount: bios?.length });
 
   if (error) {
-    console.error('🚨 PublicAuthorBiosSimple: Rendering error state:', error);
+    console.error('🚨 AuthorBiographies: Rendering error state:', error);
     return (
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
         <WelcomeHeader />
@@ -48,9 +50,9 @@ const PublicAuthorBiosSimple = () => {
           <Card className="max-w-2xl mx-auto">
             <CardContent className="p-8">
               <div className="text-center">
-                <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Authors</h2>
+                <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Biographies</h2>
                 <p className="text-gray-700 mb-4">
-                  We encountered an error while loading the author biographies.
+                  We encountered an error while loading the biographies.
                 </p>
                 <p className="text-sm text-gray-500">
                   Error: {error?.message || 'Unknown error'}
@@ -66,56 +68,75 @@ const PublicAuthorBiosSimple = () => {
   }
 
   if (isLoading) {
-    console.log('🔍 PublicAuthorBiosSimple: Rendering loading state');
+    console.log('🔍 AuthorBiographies: Rendering loading state');
     return (
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
         <WelcomeHeader />
-        <LoadingSpinner message="Loading author biographies (simple)..." />
+        <LoadingSpinner message="Loading biographies..." />
         <CookieFreeFooter />
         <ScrollToTop />
       </div>
     );
   }
 
-  console.log('🔍 PublicAuthorBiosSimple: Rendering success state');
+  console.log('🔍 AuthorBiographies: Rendering success state');
   return (
       <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
         <WelcomeHeader />
         
         <div className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <Card className="mb-8">
               <CardHeader>
                 <CardTitle 
                   className="text-3xl font-bold text-amber-800 text-center"
                   style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                 >
-                  Authors (Simple View)
+                  Author Biographies
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p 
-                  className="text-amber-700 text-center text-lg leading-relaxed mb-4"
-                  style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
-                >
-                  Testing simplified author biographies page.
-                </p>
-                
                 {bios && bios.length > 0 ? (
-                  <div className="space-y-2">
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {bios.map((bio) => (
-                      <div key={bio.id} className="p-3 bg-amber-50 rounded border">
-                        <p className="font-semibold text-amber-800">
-                          {bio.author_name}
-                        </p>
-                        <p className="text-sm text-amber-600">ID: {bio.id}</p>
-                      </div>
+                      <Card key={bio.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                        {bio.photo_link_1 && (
+                          <div className="aspect-video overflow-hidden">
+                            <img 
+                              src={bio.photo_link_1} 
+                              alt={`Portrait of ${bio.bio_subject_name}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        )}
+                        <CardContent className="p-4">
+                          <h3 className="text-xl font-bold text-amber-800 mb-2">
+                            {bio.bio_subject_name}
+                          </h3>
+                          <p className="text-sm text-amber-600 mb-2">
+                            by {bio.author}
+                          </p>
+                          {bio.excerpt && (
+                            <p className="text-gray-700 text-sm mb-4 line-clamp-3">
+                              {bio.excerpt}
+                            </p>
+                          )}
+                          <div className="flex justify-center">
+                            <a 
+                              href={`/author/${encodeURIComponent(bio.bio_subject_name || '')}`}
+                              className="inline-flex items-center px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-medium rounded-lg transition-colors duration-200"
+                            >
+                              View Biography
+                            </a>
+                          </div>
+                        </CardContent>
+                      </Card>
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-8">
+                  <div className="text-center py-12">
                     <p className="text-amber-700 text-lg">
-                      No author biographies found.
+                      No biographies are currently available.
                     </p>
                   </div>
                 )}

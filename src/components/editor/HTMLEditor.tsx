@@ -6,7 +6,7 @@ interface HTMLEditorProps {
   onChange: (content: string) => void;
   placeholder?: string;
   onSave?: () => void;
-  category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "STORY";
+  category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "STORY";
 }
 
 const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({ 

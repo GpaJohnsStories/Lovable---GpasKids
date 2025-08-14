@@ -6,7 +6,7 @@ interface Story {
   id?: string;
   title: string;
   author: string;
-  category: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText";
+  category: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText";
   content: string;
   tagline: string;
   excerpt: string;

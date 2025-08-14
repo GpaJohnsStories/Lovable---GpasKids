@@ -171,7 +171,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
           icon: "!CO-S73.jpg", // Authors - Submenu 7-3
           text: "Authors",
           onClick: () => {
-            window.location.href = "/public-author-bios";
+            window.location.href = "/author-bios-simple";
             onClose();
           }
         },

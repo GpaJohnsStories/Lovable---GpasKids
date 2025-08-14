@@ -6,7 +6,7 @@ interface IsolatedStoryRendererProps {
   excerpt?: string;
   useRichCleaning?: boolean;
   className?: string;
-  category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "STORY";
+  category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "STORY";
 }
 
 /**
