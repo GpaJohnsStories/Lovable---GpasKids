@@ -186,7 +186,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                 placeholder="Search stories by title, content, author, or keywords..."
                 value={localSearchTerm}
                 onChange={(e) => setLocalSearchTerm(e.target.value)}
-                className="pl-10 pr-10 py-2 text-sm border-2 focus:border-orange-400 rounded-lg placeholder:font-bold search-input-amber"
+                className="pl-10 pr-10 py-2 text-sm border-2 focus:border-[#228B22] rounded-lg placeholder:font-bold search-input-amber"
               />
               {searchTerm && (
                 <Button
@@ -203,14 +203,14 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
             {/* Search Results Counter */}
             {searchTerm && searchTerm.trim() !== '' && (
               <div className="text-center mt-3">
-                <p className="text-sm text-orange-700 font-system">
+                <p className="text-sm text-[#228B22] font-system">
                   Found {stories?.length || 0} stories matching '{searchTerm}'
                 </p>
                 <Button
                   onClick={handleClearSearch}
                   variant="outline"
                   size="sm"
-                  className="mt-2 border-orange-300 text-orange-700 hover:bg-orange-50"
+                  className="mt-2 border-[#228B22] text-[#228B22] hover:bg-green-50"
                 >
                   Clear Search Results
                 </Button>
@@ -219,7 +219,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
           </div>
           {isLoading ? (
             <div className="text-center py-8 text-black-system">
-              <BookOpen className="h-8 w-8 animate-spin text-orange-600 mx-auto mb-4" />
+              <BookOpen className="h-8 w-8 animate-spin text-[#228B22] mx-auto mb-4" />
               <p>Loading stories...</p>
             </div>
           ) : (
