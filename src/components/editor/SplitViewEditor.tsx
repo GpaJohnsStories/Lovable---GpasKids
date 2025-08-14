@@ -12,6 +12,8 @@ interface SplitViewEditorProps {
   placeholder?: string;
   onSave?: () => void;
   category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "STORY";
+  fontSize?: number;
+  onFontSizeChange?: (fontSize: number) => void;
 }
 
 const SplitViewEditor: React.FC<SplitViewEditorProps> = ({ 
@@ -19,7 +21,9 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   onChange, 
   placeholder = "Start writing your story...",
   onSave,
-  category
+  category,
+  fontSize = 16,
+  onFontSizeChange
 }) => {
   console.log('🎯 SplitViewEditor: Rendering with content:', {
     content: content ? `"${content.substring(0, 100)}..."` : 'undefined/empty',
@@ -281,6 +285,8 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
                 content={content}
                 useRichCleaning={true}
                 category={category}
+                fontSize={fontSize}
+                onFontSizeChange={onFontSizeChange}
               />
             </div>
             <StoryContentScrollToTop scrollContainerRef={storyContentRef} />

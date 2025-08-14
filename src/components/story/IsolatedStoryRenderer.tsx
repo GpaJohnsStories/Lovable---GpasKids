@@ -7,6 +7,8 @@ interface IsolatedStoryRendererProps {
   useRichCleaning?: boolean;
   className?: string;
   category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "STORY";
+  fontSize?: number;
+  onFontSizeChange?: (fontSize: number) => void;
 }
 
 /**
@@ -18,7 +20,9 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
   excerpt, 
   useRichCleaning = false,
   className = "",
-  category
+  category,
+  fontSize = 16,
+  onFontSizeChange
 }) => {
   const isWebText = category === "WebText";
   const baseFontFamily = isWebText 
@@ -51,7 +55,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             boxSizing: 'border-box',
             display: 'block',
             // Remove fontFamily from container to allow inline styles to work
-            fontSize: '18px',
+            fontSize: `${fontSize}px`,
             color: '#000000',
             lineHeight: '1.5',
           }}
@@ -102,7 +106,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
           boxSizing: 'border-box',
           display: 'block',
           fontFamily: baseFontFamily,
-          fontSize: '18px',
+          fontSize: `${fontSize}px`,
           color: '#000000',
           lineHeight: '1.5',
         }}

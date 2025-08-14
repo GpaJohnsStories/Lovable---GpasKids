@@ -125,6 +125,8 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           allowTextToSpeech={true}
           context="unified-story-system"
           onStoryFound={(story) => populateFormWithStory(story, true)}
+          fontSize={fontSize}
+          onFontSizeChange={setFontSize}
         />
       </div>
       

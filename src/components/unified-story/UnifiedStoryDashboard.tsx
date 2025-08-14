@@ -33,6 +33,8 @@ interface UnifiedStoryDashboardProps {
   allowTextToSpeech?: boolean;
   context?: string;
   onStoryFound?: (story: Story) => void;
+  fontSize?: number;
+  onFontSizeChange?: (fontSize: number) => void;
 }
 
 const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
@@ -51,7 +53,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   onSaveOnly,
   allowTextToSpeech = false,
   context = "unified-story-system",
-  onStoryFound
+  onStoryFound,
+  fontSize = 16,
+  onFontSizeChange
 }) => {
   const { currentlyPlaying, loadingVoice, playVoice, stopAudio } = useVoiceTesting();
   const [uploading, setUploading] = useState<{ [key: number]: boolean }>({});
@@ -935,6 +939,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             placeholder="Write your story here..."
             onSave={onSaveOnly}
             category={formData.category}
+            fontSize={fontSize}
+            onFontSizeChange={onFontSizeChange}
           />
         </CardContent>
       </Card>
