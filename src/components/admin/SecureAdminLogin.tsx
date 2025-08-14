@@ -17,7 +17,11 @@ const SecureAdminLogin = ({ onSuccess }: SecureAdminLoginProps) => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
+    
     if (!email || !password) {
       toast.error('Please enter both email and password');
       return;
@@ -89,39 +93,48 @@ const SecureAdminLogin = ({ onSuccess }: SecureAdminLoginProps) => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium">Email</label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="password" className="text-sm font-medium">Password</label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-            />
-          </div>
-          <Button onClick={handleLogin} className="w-full" size="lg" disabled={isLoading}>
-            {isLoading ? 'Signing in...' : 'Login'}
-          </Button>
-          
-          <button
-            type="button"
-            onClick={() => navigate('/')}
-            className="text-sm text-muted-foreground hover:text-primary underline w-full text-center"
-          >
-            Back to Home
-          </button>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-medium">Email</label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                autoComplete="email"
+                required
+                disabled={isLoading}
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="password" className="text-sm font-medium">Password</label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                autoComplete="current-password"
+                required
+                disabled={isLoading}
+              />
+            </div>
+            <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+              {isLoading ? 'Signing in...' : 'Login'}
+            </Button>
+            
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className="text-sm text-muted-foreground hover:text-primary underline w-full text-center"
+              disabled={isLoading}
+            >
+              Back to Home
+            </button>
+          </form>
         </CardContent>
       </Card>
     </div>
