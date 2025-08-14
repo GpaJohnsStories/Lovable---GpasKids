@@ -82,7 +82,7 @@ const StoriesTableHeader = ({
       case 'WebText':
         return 'WebText';
       case 'BioText':
-        return 'Biographies';
+        return 'BioText';
       default:
         return category;
     }
@@ -103,7 +103,7 @@ const StoriesTableHeader = ({
       case 'WebText':
         return 'bg-gradient-to-b from-amber-700 to-amber-900 text-white border-amber-900';
       case 'BioText':
-        return 'bg-gradient-to-b from-teal-400 to-teal-600 text-white border-teal-500';
+        return 'bg-gradient-to-b from-yellow-800 to-yellow-900 text-white border-yellow-800';
       default:
         return 'bg-gray-100 text-gray-700 border-gray-300';
     }
