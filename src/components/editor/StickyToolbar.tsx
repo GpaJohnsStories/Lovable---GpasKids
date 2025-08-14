@@ -31,8 +31,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
               <SelectItem value="Kalam" style={{ fontFamily: 'Kalam' }}>Kalam</SelectItem>
               <SelectItem value="Georgia" style={{ fontFamily: 'Georgia' }}>Georgia</SelectItem>
               <SelectItem value="Arial" style={{ fontFamily: 'Arial' }}>Arial</SelectItem>
-              <SelectItem value="Comic Sans MS" style={{ fontFamily: 'Comic Sans MS' }}>Comic Sans MS</SelectItem>
-              <SelectItem value="Caveat" style={{ fontFamily: 'Caveat' }}>Caveat</SelectItem>
             </SelectContent>
           </Select>
           <Select onValueChange={onFontSizeChange} defaultValue="4">
