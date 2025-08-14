@@ -223,11 +223,11 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
               <p>Loading stories...</p>
             </div>
           ) : (
-            <div className="border rounded-lg overflow-hidden">
+            <div className="border border-[#228B22] rounded-lg overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-background hover:bg-background">
-                    <TableHead className="p-1 text-center bg-background border-r border-gray-200">
+                    <TableHead className="p-1 text-center bg-background border-r border-[#228B22]">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <button
@@ -243,7 +243,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         </TooltipContent>
                       </Tooltip>
                     </TableHead>
-                    <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-24">
+                    <TableHead className="p-1 text-center bg-background border-r border-[#228B22] w-24">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <button
@@ -259,7 +259,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         </TooltipContent>
                       </Tooltip>
                     </TableHead>
-                    <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-28">
+                    <TableHead className="p-1 text-center bg-background border-r border-[#228B22] w-28">
                       <DropdownMenu>
                           <Tooltip>
                           <TooltipTrigger asChild>
@@ -301,7 +301,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                          </DropdownMenuContent>
                       </DropdownMenu>
                     </TableHead>
-                    <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-20">
+                    <TableHead className="p-1 text-center bg-background border-r border-[#228B22] w-20">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <button
