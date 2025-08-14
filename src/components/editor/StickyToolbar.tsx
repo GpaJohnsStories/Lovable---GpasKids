@@ -88,6 +88,30 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           >
             <Underline className="h-4 w-4" />
           </Button>
+          
+          {/* Dash buttons moved here for better accessibility */}
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => onInsertText('–')}
+            className="h-8 px-3 text-sm font-bold"
+            style={{ borderColor: '#9c441a' }}
+            title="Insert N-dash (short pause for audio)"
+          >
+            –
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => onInsertText('—')}
+            className="h-8 px-3 text-sm font-bold"
+            style={{ borderColor: '#9c441a' }}
+            title="Insert M-dash (long pause for audio)"
+          >
+            —
+          </Button>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
@@ -205,10 +229,9 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           <InternalLinkDialog onInsertLink={onInsertLink}>
             <Button
               type="button"
-              variant="outline"
               size="sm"
-              className="h-8 px-2"
-              style={{ borderColor: '#9c441a' }}
+              className="h-8 px-2 text-white border-0 hover:opacity-90"
+              style={{ backgroundColor: '#228B22' }}
               title="Insert internal link"
             >
               <Link2 className="h-4 w-4" />
@@ -216,33 +239,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           </InternalLinkDialog>
         </div>
 
-        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
-
-        {/* Dash buttons for audio pauses */}
-        <div className="flex items-center gap-1">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => onInsertText('–')}
-            className="h-8 px-3 text-sm font-bold"
-            style={{ borderColor: '#9c441a' }}
-            title="Insert N-dash (short pause for audio)"
-          >
-            –
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => onInsertText('—')}
-            className="h-8 px-3 text-sm font-bold"
-            style={{ borderColor: '#9c441a' }}
-            title="Insert M-dash (long pause for audio)"
-          >
-            —
-          </Button>
-        </div>
 
         <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
         
