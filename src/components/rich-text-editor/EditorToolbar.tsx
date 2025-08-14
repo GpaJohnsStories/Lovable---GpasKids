@@ -13,11 +13,14 @@ import {
   List,
   ListOrdered,
   Link,
+  Link2,
   Type,
   Heading1,
   Heading2,
   Heading3
 } from "lucide-react";
+import InternalLinkDialog from './InternalLinkDialog';
+import { insertInternalLink } from './EditorUtils';
 
 interface EditorToolbarProps {
   onCommand: (command: string, value?: string) => void;
@@ -25,6 +28,15 @@ interface EditorToolbarProps {
 }
 
 const EditorToolbar: React.FC<EditorToolbarProps> = ({ onCommand, onInsertLink }) => {
+  const handleInternalLink = (url: string, text: string) => {
+    insertInternalLink(url, text);
+    // Trigger change event to update the parent component
+    const event = new Event('input', { bubbles: true });
+    const activeElement = document.activeElement as HTMLElement;
+    if (activeElement) {
+      activeElement.dispatchEvent(event);
+    }
+  };
   const fontSizes = [
     { value: '1', label: 'Very Small' },
     { value: '2', label: 'Small' },
@@ -231,10 +243,23 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ onCommand, onInsertLink }
         size="sm"
         onClick={onInsertLink}
         className="h-8 w-8 p-0"
-        title="Insert Link (Ctrl+K)"
+        title="Insert External Link (Ctrl+K)"
       >
         <Link className="h-4 w-4" />
       </Button>
+      
+      {/* Internal Link Button */}
+      <InternalLinkDialog onInsertLink={handleInternalLink}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="h-8 w-8 p-0"
+          title="Insert Internal Link"
+        >
+          <Link2 className="h-4 w-4" />
+        </Button>
+      </InternalLinkDialog>
     </div>
   );
 };

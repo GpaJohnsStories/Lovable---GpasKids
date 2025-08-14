@@ -11,6 +11,27 @@ export const insertLink = () => {
   return url;
 };
 
+export const insertInternalLink = (url: string, text: string) => {
+  const selection = window.getSelection();
+  if (selection && selection.rangeCount > 0) {
+    const range = selection.getRangeAt(0);
+    
+    // Create the link element
+    const link = document.createElement('a');
+    link.href = url;
+    link.textContent = text;
+    link.style.color = '#3b82f6';
+    link.style.textDecoration = 'underline';
+    
+    // Replace the selection with the link
+    range.deleteContents();
+    range.insertNode(link);
+    
+    // Clear selection
+    selection.removeAllRanges();
+  }
+};
+
 export const applyDefaultStyles = (element: HTMLDivElement) => {
   if (element) {
     element.style.fontSize = '18px';

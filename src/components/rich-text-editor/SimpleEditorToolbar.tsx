@@ -9,14 +9,26 @@ import {
   AlignCenter, 
   AlignRight,
   List,
-  ListOrdered
+  ListOrdered,
+  Link2
 } from "lucide-react";
+import InternalLinkDialog from './InternalLinkDialog';
+import { insertInternalLink } from './EditorUtils';
 
 interface SimpleEditorToolbarProps {
   onCommand: (command: string, value?: string) => void;
 }
 
 const SimpleEditorToolbar: React.FC<SimpleEditorToolbarProps> = ({ onCommand }) => {
+  const handleInternalLink = (url: string, text: string) => {
+    insertInternalLink(url, text);
+    // Trigger change event to update the parent component
+    const event = new Event('input', { bubbles: true });
+    const activeElement = document.activeElement as HTMLElement;
+    if (activeElement) {
+      activeElement.dispatchEvent(event);
+    }
+  };
   return (
     <div className="flex items-center gap-2 p-3 bg-gray-50 border-b border-gray-200">
       <Button
@@ -134,6 +146,21 @@ const SimpleEditorToolbar: React.FC<SimpleEditorToolbarProps> = ({ onCommand }) 
       >
         –
       </Button>
+
+      <Separator orientation="vertical" className="h-6 mx-1" />
+
+      {/* Internal Link Button */}
+      <InternalLinkDialog onInsertLink={handleInternalLink}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="h-8 w-8 p-0"
+          title="Insert Internal Link"
+        >
+          <Link2 className="h-4 w-4" />
+        </Button>
+      </InternalLinkDialog>
     </div>
   );
 };
