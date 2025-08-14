@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useCachedIcon } from "@/hooks/useCachedIcon";
 import MenuButton from "./MenuButton";
 
 interface SimpleVerticalMenuProps {
@@ -32,6 +33,39 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const location = useLocation();
   
+  // Get icon names for tooltips
+  const { iconName: guideIconName } = useCachedIcon("!CO-MM1.jpg");
+  const { iconName: homeIconName } = useCachedIcon("!CO-MM2.jpg");
+  const { iconName: libraryIconName } = useCachedIcon("!CO-MM3.jpg");
+  const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.jpg");
+  const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.jpg");
+  const { iconName: writingIconName } = useCachedIcon("!CO-MM6.jpg");
+  const { iconName: aboutIconName } = useCachedIcon("!CO-MM7.jpg");
+  const { iconName: safeIconName } = useCachedIcon("!CO-MM8.jpg");
+  
+  // Submenu icon names
+  const { iconName: viewCommentsIconName } = useCachedIcon("!CO-S51.jpg");
+  const { iconName: makeCommentIconName } = useCachedIcon("!CO-S52.jpg");
+  const { iconName: submitStoryIconName } = useCachedIcon("!CO-S61.jpg");
+  const { iconName: grandpaJohnIconName } = useCachedIcon("!CO-S71.jpg");
+  const { iconName: helpersIconName } = useCachedIcon("!CO-S72.jpg");
+  const { iconName: authorsIconName } = useCachedIcon("!CO-S73.jpg");
+  const { iconName: aisIconName } = useCachedIcon("!CO-S74.jpg");
+  
+  // Helper function to get submenu icon names
+  const getSubmenuIconName = (iconPath: string) => {
+    switch (iconPath) {
+      case "!CO-S51.jpg": return viewCommentsIconName || "View Comments";
+      case "!CO-S52.jpg": return makeCommentIconName || "Make Comment";
+      case "!CO-S61.jpg": return submitStoryIconName || "Submit Story";
+      case "!CO-S71.jpg": return grandpaJohnIconName || "Grandpa John";
+      case "!CO-S72.jpg": return helpersIconName || "3 Helpers";
+      case "!CO-S73.jpg": return authorsIconName || "Authors";
+      case "!CO-S74.jpg": return aisIconName || "3 Helpful AI's";
+      default: return null;
+    }
+  };
+  
   // Check if we have a stored story path or if we're currently on a story page
   const currentStoryPath = sessionStorage.getItem('currentStoryPath');
   const isStorySelected = location.pathname.startsWith('/story/') || currentStoryPath;
@@ -49,7 +83,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       id: "guide", 
       icon: "!CO-MM1.jpg", // Guide icon - Main Menu 1
       text: "!CO-MM1.jpg",
-      tooltipText: "Guide",
+      tooltipText: guideIconName || "Guide",
       color: "#F97316",
       onClick: () => {
         window.location.href = "/guide";
@@ -60,7 +94,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       id: "home",
       icon: "!CO-MM2.jpg", // Home icon - Main Menu 2
       text: "!CO-MM2.jpg",
-      tooltipText: "Home",
+      tooltipText: homeIconName || "Home",
       color: "#F97316",
       onClick: () => {
         window.location.href = "/";
@@ -71,6 +105,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       id: "library",
       icon: "!CO-MM3.jpg", // Library icon - Main Menu 3
       text: "Library", 
+      tooltipText: libraryIconName || "Library",
       color: "#F97316",
       onClick: () => {
         window.location.href = "/library";
@@ -81,6 +116,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       id: "read-story",
       icon: "!CO-MM4.jpg", // Read Story icon - Main Menu 4
       text: "Read Story",
+      tooltipText: readStoryIconName || "Read Story",
       color: "#F97316",
       onClick: () => {
         console.log("Read Story clicked");
@@ -103,6 +139,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       id: "comments",
       icon: "!CO-MM5.jpg", // Comments icon - Main Menu 5
       text: "Comments",
+      tooltipText: commentsIconName || "Comments",
       color: "#F97316", 
       submenus: [
         {
@@ -129,6 +166,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       id: "writing",
       icon: "!CO-MM6.jpg", // Writing icon - Main Menu 6
       text: "Writing",
+      tooltipText: writingIconName || "Writing",
       color: "#F97316",
       submenus: [
         {
@@ -146,6 +184,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       id: "about-us",
       icon: "!CO-MM7.jpg", // About Us icon - Main Menu 7
       text: "About Us",
+      tooltipText: aboutIconName || "About Us",
       color: "#F97316",
       submenus: [
         {
@@ -190,6 +229,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       id: "safe-secure",
       icon: "!CO-MM8.jpg", // Safe & Secure icon - Main Menu 8
       text: "Safe & Secure", 
+      tooltipText: safeIconName || "Safe & Secure",
       color: "#F97316",
       onClick: () => {
         window.location.href = "/privacy";
@@ -262,6 +302,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                           onClick={() => handleSubmenuItemClick(submenuItem.onClick)}
                           disabled={submenuItem.disabled}
                           disabledMessage={submenuItem.disabledMessage}
+                          tooltipText={getSubmenuIconName(submenuItem.icon)}
                         />
                       </div>
                     ))}
