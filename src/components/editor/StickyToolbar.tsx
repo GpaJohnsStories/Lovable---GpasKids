@@ -38,7 +38,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
               <SelectItem value="Comic Sans MS" style={{ fontFamily: 'Comic Sans MS' }}>Comic Sans MS</SelectItem>
             </SelectContent>
           </Select>
-          <Select onValueChange={onFontSizeChange}>
+          <Select onValueChange={onFontSizeChange} defaultValue="4">
             <SelectTrigger className="h-8 w-28 text-sm btn-toolbar-slate">
               <SelectValue placeholder="Size" />
             </SelectTrigger>
