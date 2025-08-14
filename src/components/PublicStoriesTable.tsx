@@ -339,7 +339,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                   {stories?.map((story) => (
                     <TableRow key={story.id} className="table-row-green">
                       <TableCell className="text-black-system table-cell-top">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-start gap-3">
                           {story.photo_link_1 && (
                             <div className="flex-shrink-0 flex flex-col items-center">
                               <Tooltip>
