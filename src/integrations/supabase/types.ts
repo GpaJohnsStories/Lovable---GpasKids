@@ -313,16 +313,21 @@ export type Database = {
           audio_segments: number | null
           audio_url: string | null
           author: string
+          bio_subject_name: string | null
           book_title: string | null
+          born_date: string | null
           category: Database["public"]["Enums"]["story_category"]
           chapter_number: number | null
           chapter_title: string | null
           content: string | null
           copyright_status: string | null
           created_at: string
+          died_date: string | null
           excerpt: string | null
           google_drive_link: string | null
           id: string
+          native_country: string | null
+          native_language: string | null
           ok_count: number
           photo_alt_1: string | null
           photo_alt_2: string | null
@@ -349,16 +354,21 @@ export type Database = {
           audio_segments?: number | null
           audio_url?: string | null
           author: string
+          bio_subject_name?: string | null
           book_title?: string | null
+          born_date?: string | null
           category: Database["public"]["Enums"]["story_category"]
           chapter_number?: number | null
           chapter_title?: string | null
           content?: string | null
           copyright_status?: string | null
           created_at?: string
+          died_date?: string | null
           excerpt?: string | null
           google_drive_link?: string | null
           id?: string
+          native_country?: string | null
+          native_language?: string | null
           ok_count?: number
           photo_alt_1?: string | null
           photo_alt_2?: string | null
@@ -385,16 +395,21 @@ export type Database = {
           audio_segments?: number | null
           audio_url?: string | null
           author?: string
+          bio_subject_name?: string | null
           book_title?: string | null
+          born_date?: string | null
           category?: Database["public"]["Enums"]["story_category"]
           chapter_number?: number | null
           chapter_title?: string | null
           content?: string | null
           copyright_status?: string | null
           created_at?: string
+          died_date?: string | null
           excerpt?: string | null
           google_drive_link?: string | null
           id?: string
+          native_country?: string | null
+          native_language?: string | null
           ok_count?: number
           photo_alt_1?: string | null
           photo_alt_2?: string | null
@@ -592,6 +607,7 @@ export type Database = {
         | "North Pole"
         | "World Changers"
         | "WebText"
+        | "BioText"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -726,6 +742,7 @@ export const Constants = {
         "North Pole",
         "World Changers",
         "WebText",
+        "BioText",
       ],
     },
   },
