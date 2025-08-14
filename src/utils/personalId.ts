@@ -58,20 +58,19 @@ export function generateIdSuffix(): string {
   return randomLetter;
 }
 
-// Check if a Personal ID already exists in the database
+// Check if a Personal ID already exists in the database using secure function
 async function isPersonalIdUsed(personalId: string): Promise<boolean> {
   const { data, error } = await supabase
-    .from('used_personal_ids')
-    .select('personal_id')
-    .eq('personal_id', personalId.toUpperCase())
-    .limit(1);
+    .rpc('check_personal_id_exists', { 
+      p_personal_id: personalId.toUpperCase() 
+    });
   
   if (error) {
     // Don't log specific error details to prevent information leakage
     throw error;
   }
   
-  return data && data.length > 0;
+  return data === true;
 }
 
 // Store a Personal ID in the database to mark it as used
