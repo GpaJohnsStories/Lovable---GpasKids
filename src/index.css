@@ -757,8 +757,8 @@
 }
 
 .btn-toolbar-slate {
-  background: linear-gradient(to bottom, #64748b, #475569) !important;
-  border: 1px solid #334155 !important;
+  background: linear-gradient(to bottom, #A0522D, #8B4513) !important;
+  border: 1px solid #654321 !important;
   color: white !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
 }
