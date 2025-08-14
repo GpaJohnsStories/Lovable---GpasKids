@@ -700,3 +700,19 @@
 .table-cell-top {
   vertical-align: top !important;
 }
+
+/* Details column stack styling */
+.details-column-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  min-width: 120px;
+}
+
+.details-stack-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}

@@ -225,193 +225,126 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
           ) : (
             <div className="border border-green-700 rounded-lg overflow-hidden">
               <Table>
-                <TableHeader className="table-header-no-border">
-                  <TableRow className="table-header-no-border bg-background hover:bg-background">
-                    <TableHead className="p-1 text-center bg-background border-r border-green-700">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <button
-                            onClick={() => handleSort('title')}
-                            className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                          >
-                            Title
-                            {getSortIcon('title')}
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-xs">Click to sort by Title</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableHead>
-                    <TableHead className="p-1 text-center bg-background border-r border-green-700 w-24">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <button
-                            onClick={() => handleSort('author')}
-                            className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                          >
-                            Author
-                            {getSortIcon('author')}
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-xs">Click to sort by Author</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableHead>
-                    <TableHead className="p-1 text-center bg-background border-r border-green-700 w-28">
-                      <DropdownMenu>
-                          <Tooltip>
-                          <TooltipTrigger asChild>
-                            <DropdownMenuTrigger asChild>
-                              <button
-                                className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1 font-system"
-                              >
-                                {categoryFilter === 'all' ? 'Category' : getCategoryDisplayName(categoryFilter)}
-                                <ChevronDown className="h-3 w-3" />
-                              </button>
-                            </DropdownMenuTrigger>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-xs">Click to select Category</p>
-                          </TooltipContent>
-                        </Tooltip>
-                         <DropdownMenuContent 
-                           align="center" 
-                           className="bg-white border border-gray-200 shadow-lg rounded-md z-50 min-w-120"
-                         >
-                           {categoryOptions.map((category) => (
-                             <DropdownMenuItem
-                               key={category}
-                                onClick={() => setCategoryFilter(category)}
-                                className="px-2 py-1 text-sm cursor-pointer hover:bg-gray-100 font-system"
-                             >
-                               <div className="flex items-center gap-2 w-full">
-                                  <div 
-                                    className={`${getCategoryColor(category)} px-3 py-1 rounded-full text-xs font-medium border shadow-sm hover:shadow-md transition-shadow min-w-80 text-center-inline`}
-                                  >
-                                   {getCategoryDisplayName(category)}
-                                 </div>
-                                 {categoryFilter === category && (
-                                   <div className="text-green-600 font-bold">✓</div>
-                                 )}
-                               </div>
-                             </DropdownMenuItem>
-                           ))}
-                         </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableHead>
-                    <TableHead className="p-1 text-center bg-background border-r border-green-700 w-20">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <button
-                            onClick={() => handleSort('read_count')}
-                            className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                          >
-                            Reads
-                            {getSortIcon('read_count')}
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-xs">Click to sort by Reader count.</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableHead>
-                    <TableHead className="p-1 text-center bg-background w-24">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <button
-                            onClick={() => handleSort('updated_at')}
-                            className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                          >
-                            Updated
-                            {getSortIcon('updated_at')}
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-xs">Click to sort by Date & Time of last update</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableHead>
-                   </TableRow>
-                </TableHeader>
+                 <TableHeader className="table-header-no-border">
+                   <TableRow className="table-header-no-border bg-background hover:bg-background">
+                     <TableHead className="p-1 text-center bg-background border-r border-green-700">
+                       <Tooltip>
+                         <TooltipTrigger asChild>
+                           <button
+                             onClick={() => handleSort('title')}
+                             className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
+                           >
+                             Title
+                             {getSortIcon('title')}
+                           </button>
+                         </TooltipTrigger>
+                         <TooltipContent>
+                           <p className="text-xs">Click to sort by Title</p>
+                         </TooltipContent>
+                       </Tooltip>
+                     </TableHead>
+                     <TableHead className="p-1 text-center bg-background border-r border-green-700 w-24">
+                       <Tooltip>
+                         <TooltipTrigger asChild>
+                           <button
+                             onClick={() => handleSort('author')}
+                             className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
+                           >
+                             Author
+                             {getSortIcon('author')}
+                           </button>
+                         </TooltipTrigger>
+                         <TooltipContent>
+                           <p className="text-xs">Click to sort by Author</p>
+                         </TooltipContent>
+                       </Tooltip>
+                     </TableHead>
+                     <TableHead className="p-1 text-center bg-background w-32">
+                       <div className="text-white bg-green-700 h-6 text-xs px-1 py-1 font-system flex items-center justify-center">
+                         Details
+                       </div>
+                     </TableHead>
+                    </TableRow>
+                 </TableHeader>
                 <TableBody>
                   {stories?.map((story) => (
-                    <TableRow key={story.id} className="table-row-green">
-                      <TableCell className="text-black-system table-cell-top">
-                        <div className="flex items-start gap-3">
-                          {story.photo_link_1 && (
-                            <div className="flex-shrink-0 flex flex-col items-center">
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <img
-                                    src={story.photo_link_1}
-                                    alt={story.photo_alt_1 || `Photo for ${story.title}`}
-                                    className="w-[100px] h-[100px] rounded-lg border-2 border-white shadow-lg object-cover cursor-pointer"
-                                    onError={(e) => {
-                                      e.currentTarget.style.display = 'none';
-                                    }}
-                                  />
-                                </TooltipTrigger>
-                                <TooltipContent className="story-photo-tooltip">
-                                  <p>{story.photo_alt_1 || `Photo for ${story.title}`}</p>
-                                </TooltipContent>
-                              </Tooltip>
-                              <div className="font-mono text-sm font-bold text-black-system mt-2">
-                                {story.story_code}
-                              </div>
-                            </div>
-                          )}
-                          <div className="flex-1">
-                            <Link 
-                              to={`/story/${story.story_code}`} 
-                              className="hover:text-red-600 transition-colors duration-300 font-medium text-base"
-                            >
-                              {story.title}
-                            </Link>
-                            {story.tagline && (
-                              <div className="text-sm font-medium text-amber-700 italic mt-1">
-                                {story.tagline}
-                              </div>
-                            )}
-                            {story.excerpt && (
-                              <div className="text-sm text-amber-600 mt-1 leading-relaxed">
-                                {story.excerpt}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-black-system table-cell-top">
-                        <div className="flex flex-col items-center gap-1">
-                          <span className="text-sm">{story.author}</span>
-                          {onEditBio && (
-                            <Button
-                              onClick={() => onEditBio(story.author)}
-                              className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-2 py-1 h-auto"
-                              size="sm"
-                            >
-                              Bio
-                            </Button>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-black-system table-cell-top">
-                        <div className={`${getCategoryBadgeColor(story.category)} text-white text-xs px-2 py-1 rounded text-center`}>
-                          {getCategoryShortName(story.category)}
-                        </div>
-                      </TableCell>
-                      <TableCell 
-                        className="text-center text-black-system table-cell-top"
-                      >
-                        {story.read_count}
-                      </TableCell>
-                      <TableCell 
-                        className="text-xs text-black-system table-cell-top"
-                      >
-                        {new Date(story.updated_at).toLocaleDateString()}
-                      </TableCell>
-                    </TableRow>
+                     <TableRow key={story.id} className="table-row-green">
+                       <TableCell className="text-black-system table-cell-top">
+                         <div className="flex items-start gap-3">
+                           {story.photo_link_1 && (
+                             <div className="flex-shrink-0 flex flex-col items-center">
+                               <Tooltip>
+                                 <TooltipTrigger asChild>
+                                   <img
+                                     src={story.photo_link_1}
+                                     alt={story.photo_alt_1 || `Photo for ${story.title}`}
+                                     className="w-[100px] h-[100px] rounded-lg border-2 border-white shadow-lg object-cover cursor-pointer"
+                                     onError={(e) => {
+                                       e.currentTarget.style.display = 'none';
+                                     }}
+                                   />
+                                 </TooltipTrigger>
+                                 <TooltipContent className="story-photo-tooltip">
+                                   <p>{story.photo_alt_1 || `Photo for ${story.title}`}</p>
+                                 </TooltipContent>
+                               </Tooltip>
+                               <div className="font-mono text-sm font-bold text-black-system mt-2">
+                                 {story.story_code}
+                               </div>
+                             </div>
+                           )}
+                           <div className="flex-1">
+                             <Link 
+                               to={`/story/${story.story_code}`} 
+                               className="hover:text-red-600 transition-colors duration-300 font-medium text-base"
+                             >
+                               {story.title}
+                             </Link>
+                             {story.tagline && (
+                               <div className="text-sm font-medium text-amber-700 italic mt-1">
+                                 {story.tagline}
+                               </div>
+                             )}
+                             {story.excerpt && (
+                               <div className="text-sm text-amber-600 mt-1 leading-relaxed">
+                                 {story.excerpt}
+                               </div>
+                             )}
+                           </div>
+                         </div>
+                       </TableCell>
+                       <TableCell className="text-black-system table-cell-top">
+                         <div className="flex flex-col items-center gap-1">
+                           <span className="text-sm">{story.author}</span>
+                           {onEditBio && (
+                             <Button
+                               onClick={() => onEditBio(story.author)}
+                               className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-2 py-1 h-auto"
+                               size="sm"
+                             >
+                               Bio
+                             </Button>
+                           )}
+                         </div>
+                       </TableCell>
+                       <TableCell className="text-black-system table-cell-top">
+                         <div className="details-column-stack">
+                           <div className="details-stack-item">
+                             <div className={`${getCategoryBadgeColor(story.category)} text-white text-xs px-2 py-1 rounded text-center mb-1`}>
+                               {getCategoryShortName(story.category)}
+                             </div>
+                           </div>
+                           <div className="details-stack-item">
+                             <div className="text-xs text-gray-600 font-medium">Reads</div>
+                             <div className="text-sm font-bold text-black-system">{story.read_count}</div>
+                           </div>
+                           <div className="details-stack-item">
+                             <div className="text-xs text-gray-600 font-medium">Updated</div>
+                             <div className="text-xs text-black-system">{new Date(story.updated_at).toLocaleDateString()}</div>
+                           </div>
+                         </div>
+                       </TableCell>
+                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
