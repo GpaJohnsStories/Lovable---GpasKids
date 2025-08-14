@@ -25,8 +25,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('!CO-TB2.gif');
   const { iconUrl: safeForKidsIconUrl, isLoading: sfkLoading, error: sfkError } = useCachedIcon('!CO-SFK.gif');
   const { iconUrl: hgjIconUrl, isLoading: hgjLoading, error: hgjError } = useCachedIcon('!CO-HGJ.gif');
-  const { iconUrl: dancingGifUrl, isLoading: dancingLoading, error: dancingError } = useCachedIcon('!CO-TBX.gif');
-  const { iconUrl: speechBubbleUrl, isLoading: speechLoading, error: speechError } = useCachedIcon('!CO-TBY');
+  const { iconUrl: dancingGifUrl, iconName: dancingIconName, isLoading: dancingLoading, error: dancingError } = useCachedIcon('!CO-TBX.gif');
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -132,29 +131,23 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                     <span className="text-blue-800 text-sm font-bold text-center">!CO-TBX.gif</span>
                   </div>
                 ) : dancingGifUrl && !dancingLoading && !dancingError ? (
-                  <img 
-                    src={dancingGifUrl}
-                    alt="Fun dancing GIF"
-                    className="w-48 lg:w-64 h-32 lg:h-40 rounded-full border-4 border-white shadow-[inset_0_12px_20px_rgba(0,0,0,0.5),inset_0_6px_12px_rgba(0,0,0,0.3),inset_0_2px_6px_rgba(0,0,0,0.2)] object-cover object-left"
-                  />
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <img 
+                        src={dancingGifUrl}
+                        alt={dancingIconName || "Dancing children"}
+                        className="w-48 lg:w-64 h-32 lg:h-40 rounded-full border-4 border-white shadow-[inset_0_12px_20px_rgba(0,0,0,0.5),inset_0_6px_12px_rgba(0,0,0,0.3),inset_0_2px_6px_rgba(0,0,0,0.2)] object-cover object-left cursor-pointer"
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      side="bottom" 
+                      align="center"
+                      className="bg-primary text-primary-foreground font-bold border border-border shadow-lg"
+                    >
+                      {dancingIconName || "Dancing children"}
+                    </TooltipContent>
+                  </Tooltip>
                 ) : null}
-                {/* Speech Bubble Image - Positioned to the right of GIF */}
-                <div className="absolute -right-8 top-1/2 transform -translate-y-1/2">
-                  {speechLoading && (
-                    <div className="w-16 lg:w-20 h-16 lg:h-20 bg-yellow-300 animate-pulse rounded-md" />
-                  )}
-                  {(speechError || !speechBubbleUrl) && !speechLoading ? (
-                    <div className="w-16 lg:w-20 h-16 lg:h-20 bg-yellow-200 flex items-center justify-center text-yellow-800 text-xs font-bold rounded-md">
-                      !CO-TBY
-                    </div>
-                  ) : speechBubbleUrl && !speechLoading && !speechError ? (
-                    <img 
-                      src={speechBubbleUrl}
-                      alt="Speech bubble"
-                      className="w-16 lg:w-20 h-16 lg:h-20 object-contain"
-                    />
-                  ) : null}
-                </div>
                 {/* Safe For Kids Shield - Now moved to right section next to menu */}
               </div>
             </div>
