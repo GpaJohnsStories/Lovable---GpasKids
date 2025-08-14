@@ -34,6 +34,38 @@ export function sanitizeText(text: string): string {
 }
 
 /**
+ * Sanitize CSS style attribute value
+ */
+function sanitizeStyleAttribute(styleValue: string): string {
+  // Allowed CSS properties for basic formatting
+  const allowedProperties = [
+    'font-family', 'font-size', 'font-weight', 'font-style',
+    'color', 'background-color', 'text-align', 'text-decoration',
+    'line-height', 'margin', 'padding', 'border', 'width', 'height'
+  ];
+  
+  // Remove dangerous CSS values
+  let sanitized = styleValue
+    .replace(/expression\s*\(/gi, '') // Remove CSS expressions
+    .replace(/javascript:/gi, '') // Remove javascript: URLs
+    .replace(/url\s*\(/gi, '') // Remove url() functions for security
+    .replace(/import/gi, ''); // Remove @import statements
+  
+  // Parse individual CSS declarations
+  const declarations = sanitized.split(';').filter(decl => decl.trim());
+  const safeDeclarations: string[] = [];
+  
+  declarations.forEach(decl => {
+    const [property, value] = decl.split(':').map(s => s.trim());
+    if (property && value && allowedProperties.includes(property.toLowerCase())) {
+      safeDeclarations.push(`${property}: ${value}`);
+    }
+  });
+  
+  return safeDeclarations.join('; ');
+}
+
+/**
  * Safe HTML content renderer that preserves basic formatting while preventing XSS
  * Only allows specific safe HTML tags and attributes
  */
@@ -69,8 +101,11 @@ export function createSafeHtml(content: string): { __html: string } {
     return '';
   });
   
-  // Remove ALL style attributes completely for unified story system
-  sanitized = sanitized.replace(/\s+style\s*=\s*["'][^"']*["']/gi, '');
+  // Sanitize style attributes instead of removing them completely
+  sanitized = sanitized.replace(/\s+style\s*=\s*["']([^"']*)["']/gi, (match, styleValue) => {
+    const safeStyles = sanitizeStyleAttribute(styleValue);
+    return safeStyles ? ` style="${safeStyles}"` : '';
+  });
 
   return { __html: sanitized };
 }
