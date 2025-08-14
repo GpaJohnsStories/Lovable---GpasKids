@@ -824,8 +824,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                             alignItems: 'center'
                           }}>
                              <CachedIcon 
-                               iconCode="!Co-AW9.jpg" 
-                               fallback={<span className="text-xs">!Co-AW9.jpg</span>}
+                               iconCode="!CO-AV9.jpg" 
+                               fallback={<span className="text-xs">!CO-AV9.jpg</span>}
                                style={{ height: '45px', width: '45px', objectFit: 'contain' }}
                             />
                           </div>
