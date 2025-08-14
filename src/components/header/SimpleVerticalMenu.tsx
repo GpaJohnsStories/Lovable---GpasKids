@@ -58,8 +58,8 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "home",
-      icon: "!CO-MM2.png", // Home icon - Main Menu 2
-      text: "!CO-MM2.png",
+      icon: "!CO-MM2.jpg", // Home icon - Main Menu 2
+      text: "!CO-MM2.jpg",
       tooltipText: "Home",
       color: "#F97316",
       onClick: () => {
@@ -69,7 +69,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "library",
-      icon: "!CO-MM3.gif", // Library icon - Main Menu 3
+      icon: "!CO-MM3.jpg", // Library icon - Main Menu 3
       text: "Library", 
       color: "#F97316",
       onClick: () => {
@@ -79,7 +79,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "read-story",
-      icon: "!CO-MM4.gif", // Read Story icon - Main Menu 4
+      icon: "!CO-MM4.jpg", // Read Story icon - Main Menu 4
       text: "Read Story",
       color: "#F97316",
       onClick: () => {
@@ -101,13 +101,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "comments",
-      icon: "!CO-MM5.gif", // Comments icon - Main Menu 5
+      icon: "!CO-MM5.jpg", // Comments icon - Main Menu 5
       text: "Comments",
       color: "#F97316", 
       submenus: [
         {
           id: "view-comments",
-          icon: "!CO-S51.gif", // View Comments - Submenu 5-1
+          icon: "!CO-S51.jpg", // View Comments - Submenu 5-1
           text: "View Comments",
           onClick: () => {
             window.location.href = "/view-comments";
@@ -116,7 +116,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "make-comment",
-          icon: "!CO-S52.gif", // Make Comment - Submenu 5-2
+          icon: "!CO-S52.jpg", // Make Comment - Submenu 5-2
           text: "Make Comment", 
           onClick: () => {
             window.location.href = "/make-comment";
@@ -127,13 +127,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "writing",
-      icon: "!CO-MM6.gif", // Writing icon - Main Menu 6
+      icon: "!CO-MM6.jpg", // Writing icon - Main Menu 6
       text: "Writing",
       color: "#F97316",
       submenus: [
         {
           id: "submit-story",
-          icon: "!CO-S61.gif", // Submit Story - Submenu 6-1
+          icon: "!CO-S61.jpg", // Submit Story - Submenu 6-1
           text: "Submit Story",
           onClick: () => {
             window.location.href = "/writing";
@@ -144,7 +144,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "about-us",
-      icon: "!CO-MM7.gif", // About Us icon - Main Menu 7
+      icon: "!CO-MM7.jpg", // About Us icon - Main Menu 7
       text: "About Us",
       color: "#F97316",
       submenus: [
