@@ -14,7 +14,7 @@ import StoriesTableRow from "./StoriesTableRow";
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
-type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText';
+type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'BioText';
 
 interface GroupedStory extends Record<string, any> {
   id: string;

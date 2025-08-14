@@ -11,7 +11,7 @@ import {
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at';
 type SortDirection = 'asc' | 'desc';
-type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText';
+type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'BioText';
 
 interface StoriesTableHeaderProps {
   sortField: SortField;
@@ -58,13 +58,13 @@ const StoriesTableHeader = ({
   const getCategoryOptions = (): CategoryFilter[] => {
     const baseCategories: CategoryFilter[] = ['all', 'Fun', 'Life', 'North Pole', 'World Changers'];
     
-    // Include WebText ONLY for admin view (when showPublishedOnly is false)
-    // Exclude WebText from public library (when showPublishedOnly is true)
+    // Include WebText and BioText ONLY for admin view (when showPublishedOnly is false)
+    // Exclude WebText and BioText from public library (when showPublishedOnly is true)
     if (showPublishedOnly) {
-      return baseCategories; // Public library - no WebText
+      return baseCategories; // Public library - no WebText or BioText
     }
     
-    return [...baseCategories, 'WebText']; // Admin library - include WebText
+    return [...baseCategories, 'WebText', 'BioText']; // Admin library - include WebText and BioText
   };
 
   const getCategoryDisplayName = (category: CategoryFilter) => {
@@ -81,6 +81,8 @@ const StoriesTableHeader = ({
         return 'World Changers';
       case 'WebText':
         return 'WebText';
+      case 'BioText':
+        return 'Biographies';
       default:
         return category;
     }
@@ -100,6 +102,8 @@ const StoriesTableHeader = ({
         return 'bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500';
       case 'WebText':
         return 'bg-gradient-to-b from-amber-700 to-amber-900 text-white border-amber-900';
+      case 'BioText':
+        return 'bg-gradient-to-b from-teal-400 to-teal-600 text-white border-teal-500';
       default:
         return 'bg-gray-100 text-gray-700 border-gray-300';
     }
