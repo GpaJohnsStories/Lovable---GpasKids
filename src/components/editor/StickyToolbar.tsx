@@ -28,14 +28,12 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
               <SelectValue placeholder="Font Family" />
             </SelectTrigger>
             <SelectContent className="bg-white z-50">
+              <SelectItem value="Kalam" style={{ fontFamily: 'Kalam' }}>Kalam</SelectItem>
               <SelectItem value="Georgia" style={{ fontFamily: 'Georgia' }}>Georgia</SelectItem>
               <SelectItem value="Arial" style={{ fontFamily: 'Arial' }}>Arial</SelectItem>
-              <SelectItem value="Times New Roman" style={{ fontFamily: 'Times New Roman' }}>Times New Roman</SelectItem>
-              <SelectItem value="Helvetica" style={{ fontFamily: 'Helvetica' }}>Helvetica</SelectItem>
-              <SelectItem value="Verdana" style={{ fontFamily: 'Verdana' }}>Verdana</SelectItem>
-              <SelectItem value="Courier New" style={{ fontFamily: 'Courier New' }}>Courier New</SelectItem>
-              <SelectItem value="Impact" style={{ fontFamily: 'Impact' }}>Impact</SelectItem>
               <SelectItem value="Comic Sans MS" style={{ fontFamily: 'Comic Sans MS' }}>Comic Sans MS</SelectItem>
+              <SelectItem value="Times New Roman" style={{ fontFamily: 'Times New Roman' }}>Times New Roman</SelectItem>
+              <SelectItem value="Caveat" style={{ fontFamily: 'Caveat' }}>Caveat</SelectItem>
             </SelectContent>
           </Select>
           <Select onValueChange={onFontSizeChange} defaultValue="4">
