@@ -317,15 +317,15 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                        <TableCell className="text-black-system table-cell-top">
                          <div className="flex flex-col items-center gap-1">
                            <span className="text-sm">{story.author}</span>
-                           {onEditBio && (
-                             <Button
-                               onClick={() => onEditBio(story.author)}
-                               className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-2 py-1 h-auto"
-                               size="sm"
-                             >
-                               Bio
-                             </Button>
-                           )}
+                            {onEditBio && (
+                              <Button
+                                onClick={() => onEditBio(story.author)}
+                                className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 h-auto min-w-[80px]"
+                                size="sm"
+                              >
+                                Biography
+                              </Button>
+                            )}
                          </div>
                        </TableCell>
                        <TableCell className="text-black-system table-cell-top">
