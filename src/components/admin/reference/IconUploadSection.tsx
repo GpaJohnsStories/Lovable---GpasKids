@@ -160,7 +160,7 @@ const IconUploadSection = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="iconName">Icon Name</Label>
+            <Label htmlFor="iconName">Icon Tool-Tip</Label>
             <Input
               id="iconName"
               value={iconName}
