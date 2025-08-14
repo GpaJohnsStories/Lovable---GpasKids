@@ -59,9 +59,9 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
         />
         <style dangerouslySetInnerHTML={{
           __html: `
-            /* Ensure inline font-family styles take precedence */
-            [style*="font-family"] {
-              font-family: inherit !important;
+            /* Preserve inline font-family styles - no overrides */
+            span[style*="font-family"] {
+              /* Let inline styles work naturally */
             }
             div[style*="font-family"]:not(.no-text-styles) strong,
             div[style*="font-family"]:not(.no-text-styles) b,
