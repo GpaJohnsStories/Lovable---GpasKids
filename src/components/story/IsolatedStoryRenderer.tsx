@@ -40,22 +40,45 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
     const safeHtml = createSafeHtml(processedContent);
     
     return (
-      <div 
-        className={className}
-        style={{
-          // Targeted resets that preserve HTML element defaults
-          margin: 0,
-          padding: 0,
-          border: 0,
-          boxSizing: 'border-box',
-          display: 'block',
-          fontFamily: baseFontFamily,
-          fontSize: '18px',
-          color: '#000000',
-          lineHeight: '1.5',
-        }}
-        dangerouslySetInnerHTML={safeHtml}
-      />
+      <>
+        <div 
+          className={className}
+          style={{
+            // Targeted resets that preserve HTML element defaults
+            margin: 0,
+            padding: 0,
+            border: 0,
+            boxSizing: 'border-box',
+            display: 'block',
+            fontFamily: baseFontFamily,
+            fontSize: '18px',
+            color: '#000000',
+            lineHeight: '1.5',
+          }}
+          dangerouslySetInnerHTML={safeHtml}
+        />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            div[style*="font-family"]:not(.no-text-styles) strong,
+            div[style*="font-family"]:not(.no-text-styles) b,
+            div[style*="font-family"]:not(.no-text-styles) span[style*="font-weight: bold"],
+            div[style*="font-family"]:not(.no-text-styles) span[style*="font-weight:bold"] {
+              font-weight: bold !important;
+            }
+            div[style*="font-family"]:not(.no-text-styles) em,
+            div[style*="font-family"]:not(.no-text-styles) i,
+            div[style*="font-family"]:not(.no-text-styles) span[style*="font-style: italic"],
+            div[style*="font-family"]:not(.no-text-styles) span[style*="font-style:italic"] {
+              font-style: italic !important;
+            }
+            div[style*="font-family"]:not(.no-text-styles) u,
+            div[style*="font-family"]:not(.no-text-styles) span[style*="text-decoration: underline"],
+            div[style*="font-family"]:not(.no-text-styles) span[style*="text-decoration:underline"] {
+              text-decoration: underline !important;
+            }
+          `
+        }} />
+      </>
     );
   }
 
