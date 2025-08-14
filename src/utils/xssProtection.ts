@@ -1,7 +1,10 @@
 /**
  * XSS Protection Utilities
  * Provides secure HTML encoding and content sanitization for user-generated content
+ * Uses DOMPurify for industry-standard HTML sanitization
  */
+
+import DOMPurify from 'dompurify';
 
 /**
  * Encode HTML entities to prevent XSS attacks
@@ -33,81 +36,33 @@ export function sanitizeText(text: string): string {
   return sanitized;
 }
 
-/**
- * Sanitize CSS style attribute value
- */
-function sanitizeStyleAttribute(styleValue: string): string {
-  // Allowed CSS properties for basic formatting
-  const allowedProperties = [
-    'font-family', 'font-size', 'font-weight', 'font-style',
-    'color', 'background-color', 'text-align', 'text-decoration',
-    'line-height', 'margin', 'padding', 'border', 'width', 'height'
-  ];
-  
-  // Remove dangerous CSS values
-  let sanitized = styleValue
-    .replace(/expression\s*\(/gi, '') // Remove CSS expressions
-    .replace(/javascript:/gi, '') // Remove javascript: URLs
-    .replace(/url\s*\(/gi, '') // Remove url() functions for security
-    .replace(/import/gi, ''); // Remove @import statements
-  
-  // Parse individual CSS declarations
-  const declarations = sanitized.split(';').filter(decl => decl.trim());
-  const safeDeclarations: string[] = [];
-  
-  declarations.forEach(decl => {
-    const [property, value] = decl.split(':').map(s => s.trim());
-    if (property && value && allowedProperties.includes(property.toLowerCase())) {
-      safeDeclarations.push(`${property}: ${value}`);
-    }
-  });
-  
-  return safeDeclarations.join('; ');
-}
 
 /**
- * Safe HTML content renderer that preserves basic formatting while preventing XSS
- * Only allows specific safe HTML tags and attributes
+ * Safe HTML content renderer using DOMPurify for industry-standard XSS protection
+ * Preserves basic formatting while preventing XSS attacks
  */
 export function createSafeHtml(content: string): { __html: string } {
   if (!content || typeof content !== 'string') {
     return { __html: '' };
   }
 
-  // List of allowed HTML tags for story content (basic formatting only)
-  const allowedTags = ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'ol', 'ul', 'li', 'span', 'center', 'a'];
-  
-  let sanitized = content;
-  
-  // Remove script tags and their content completely
-  sanitized = sanitized.replace(/<script[^>]*>.*?<\/script>/gis, '');
-  
-  // Remove dangerous event handlers
-  sanitized = sanitized.replace(/on\w+\s*=\s*["'][^"']*["']/gi, '');
-  
-  // Remove javascript: protocol
-  sanitized = sanitized.replace(/javascript:/gi, '');
-  
-  // Remove data: protocol except for safe data URLs
-  sanitized = sanitized.replace(/data:(?!image\/)/gi, '');
-  
-  // Remove any HTML tags that are not in our allowed list
-  // Use a simpler approach: find all tags and check if they're allowed
-  sanitized = sanitized.replace(/<\/?([a-zA-Z][a-zA-Z0-9]*)[^>]*>/g, (match, tagName) => {
-    const lowerTagName = tagName.toLowerCase();
-    if (allowedTags.includes(lowerTagName)) {
-      return match;
-    }
-    return '';
-  });
-  
-  // Sanitize style attributes instead of removing them completely
-  sanitized = sanitized.replace(/\s+style\s*=\s*["']([^"']*)["']/gi, (match, styleValue) => {
-    const safeStyles = sanitizeStyleAttribute(styleValue);
-    return safeStyles ? ` style="${safeStyles}"` : '';
+  // Configure DOMPurify with allowed tags and attributes for story content
+  const cleanHtml = DOMPurify.sanitize(content, {
+    ALLOWED_TAGS: [
+      'p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 
+      'ol', 'ul', 'li', 'span', 'center', 'a', 'font'
+    ],
+    ALLOWED_ATTR: [
+      'style', 'href', 'target', 'rel', 'title', 'alt',
+      'face', 'size', 'color' // Allow font attributes for backward compatibility
+    ],
+    ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|cid|xmpp|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+    ADD_ATTR: ['target'], // Allow target="_blank" for links
+    FORBID_CONTENTS: ['script', 'style'],
+    KEEP_CONTENT: false
   });
 
-  return { __html: sanitized };
+  return { __html: cleanHtml };
 }
 
 /**
