@@ -230,14 +230,13 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200">
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button
+                          <button
                             onClick={() => handleSort('title')}
                             className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                            size="sm"
                           >
                             Title
                             {getSortIcon('title')}
-                          </Button>
+                          </button>
                         </TooltipTrigger>
                         <TooltipContent>
                           <p className="text-xs">Click to sort by Title</p>
@@ -247,14 +246,13 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-24">
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button
+                          <button
                             onClick={() => handleSort('author')}
                             className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                            size="sm"
                           >
                             Author
                             {getSortIcon('author')}
-                          </Button>
+                          </button>
                         </TooltipTrigger>
                         <TooltipContent>
                           <p className="text-xs">Click to sort by Author</p>
@@ -263,16 +261,15 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                     </TableHead>
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-28">
                       <DropdownMenu>
-                        <Tooltip>
+                          <Tooltip>
                           <TooltipTrigger asChild>
                             <DropdownMenuTrigger asChild>
-                              <Button
+                              <button
                                 className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1 font-system"
-                                size="sm"
                               >
                                 {categoryFilter === 'all' ? 'Category' : getCategoryDisplayName(categoryFilter)}
                                 <ChevronDown className="h-3 w-3" />
-                              </Button>
+                              </button>
                             </DropdownMenuTrigger>
                           </TooltipTrigger>
                           <TooltipContent>
@@ -307,14 +304,13 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                     <TableHead className="p-1 text-center bg-background border-r border-gray-200 w-20">
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button
+                          <button
                             onClick={() => handleSort('read_count')}
                             className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                            size="sm"
                           >
                             Reads
                             {getSortIcon('read_count')}
-                          </Button>
+                          </button>
                         </TooltipTrigger>
                         <TooltipContent>
                           <p className="text-xs">Click to sort by Reader count.</p>
@@ -324,14 +320,13 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                     <TableHead className="p-1 text-center bg-background w-24">
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button
+                          <button
                             onClick={() => handleSort('updated_at')}
                             className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1 font-system"
-                            size="sm"
                           >
                             Updated
                             {getSortIcon('updated_at')}
-                          </Button>
+                          </button>
                         </TooltipTrigger>
                         <TooltipContent>
                           <p className="text-xs">Click to sort by Date & Time of last update</p>
