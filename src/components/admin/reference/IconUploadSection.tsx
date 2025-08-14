@@ -85,10 +85,10 @@ const IconUploadSection = () => {
       return;
     }
 
-    if (!/^[A-Z]{3}-[A-Z0-9]{3}$/.test(iconCode.toUpperCase())) {
+    if (!/^!?[A-Z]{2,3}-[A-Z0-9]{2,3}$/.test(iconCode.toUpperCase())) {
       toast({
         title: "Invalid icon code",
-        description: "Icon code must follow AAA-BBB format (3 capital letters, dash, 3 letters/numbers).",
+        description: "Icon code must follow AAA-BBB or !AA-BBB format (optional !, 2-3 capital letters, dash, 2-3 letters/numbers).",
         variant: "destructive",
       });
       return;
