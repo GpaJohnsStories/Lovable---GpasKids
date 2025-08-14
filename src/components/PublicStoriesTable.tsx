@@ -70,7 +70,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
         .from('stories')
         .select('id, story_code, title, author, category, read_count, updated_at, created_at, tagline, excerpt, photo_link_1, photo_alt_1')
         .eq('published', 'Y')
-        .not('category', 'eq', 'WebText')
+        .not('category', 'in', '("WebText","BioText")')
         .order(sortField, { ascending: sortDirection === 'asc' });
       
       // Apply category filter
