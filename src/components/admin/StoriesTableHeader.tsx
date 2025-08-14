@@ -97,7 +97,7 @@ const StoriesTableHeader = ({
       case 'Life':
         return 'bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500';
       case 'North Pole':
-        return 'bg-gradient-to-b from-cyan-400 to-cyan-600 text-white border-cyan-500';
+        return 'bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500';
       case 'World Changers':
         return 'bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500';
       case 'WebText':
