@@ -174,8 +174,9 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
   };
 
   return (
-    <TooltipProvider>
-      <Card>
+    <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 xl:px-12">
+      <TooltipProvider>
+        <Card>
         <CardContent className="p-6">
           {/* Search Input */}
           <div className="mb-6">
@@ -353,6 +354,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
         </CardContent>
       </Card>
     </TooltipProvider>
+    </div>
   );
 };
 
