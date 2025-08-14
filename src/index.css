@@ -686,3 +686,12 @@
 .table-row-green {
   border-bottom-color: hsl(var(--forest-green)) !important;
 }
+
+/* Remove borders from table header */
+.table-header-no-border {
+  border: none !important;
+}
+
+.table-header-no-border th {
+  border: none !important;
+}

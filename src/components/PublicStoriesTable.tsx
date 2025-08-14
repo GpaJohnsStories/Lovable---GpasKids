@@ -225,8 +225,8 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
           ) : (
             <div className="border border-green-700 rounded-lg overflow-hidden">
               <Table>
-                <TableHeader>
-                  <TableRow className="bg-background hover:bg-background">
+                <TableHeader className="table-header-no-border">
+                  <TableRow className="table-header-no-border bg-background hover:bg-background">
                     <TableHead className="p-1 text-center bg-background border-r border-green-700">
                       <Tooltip>
                         <TooltipTrigger asChild>
