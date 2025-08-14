@@ -187,7 +187,19 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     const selectedText = content.substring(start, end);
     
     if (selectedText) {
-      const sizeTag = `<font size="${size}">${selectedText}</font>`;
+      // Map font sizes to pixel values
+      const sizeMap: { [key: string]: string } = {
+        '1': '12px',
+        '2': '14px', 
+        '3': '16px',
+        '4': '18px',
+        '5': '20px',
+        '6': '24px',
+        '7': '28px'
+      };
+      
+      const pixelSize = sizeMap[size] || '16px';
+      const sizeTag = `<span style="font-size: ${pixelSize}">${selectedText}</span>`;
       const newContent = content.substring(0, start) + sizeTag + content.substring(end);
       onChange(newContent);
       
