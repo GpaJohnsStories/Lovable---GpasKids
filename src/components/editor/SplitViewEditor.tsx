@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import StickyToolbar from './StickyToolbar';
 import HTMLEditor from './HTMLEditor';
 import IsolatedStoryRenderer from '@/components/story/IsolatedStoryRenderer';
@@ -27,6 +28,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   });
   const editorRef = useRef<HTMLTextAreaElement>(null);
   const storyContentRef = useRef<HTMLDivElement>(null);
+  const [showHelp, setShowHelp] = useState(false);
 
   const insertTextAtCursor = (text: string) => {
     const textarea = editorRef.current;
@@ -209,6 +211,34 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     }, 0);
   };
 
+  const handleShowHelp = () => {
+    setShowHelp(true);
+  };
+
+  const shortcuts = [
+    { key: 'Ctrl + B', action: 'Bold' },
+    { key: 'Ctrl + C', action: 'Copy' },
+    { key: 'Ctrl + E', action: 'Center Text' },
+    { key: 'Ctrl + Enter', action: 'New Line (<br>)' },
+    { key: 'Ctrl + F', action: 'Georgia Font' },
+    { key: 'Ctrl + H', action: 'Help' },
+    { key: 'Ctrl + I', action: 'Italics' },
+    { key: 'Ctrl + K', action: 'Clear HTML' },
+    { key: 'Ctrl + L', action: 'Bullets' },
+    { key: 'Ctrl + M', action: 'M-dash — (long pause)' },
+    { key: 'Ctrl + N', action: 'N-dash – (short pause)' },
+    { key: 'Ctrl + P', action: 'Paragraph' },
+    { key: 'Ctrl + Q', action: 'Font Reference' },
+    { key: 'Ctrl + S', action: 'Save Story' },
+    { key: 'Ctrl + U', action: 'Underline' },
+    { key: 'Ctrl + X', action: 'Cut' },
+    { key: 'Ctrl + Y', action: 'Paste' },
+    { key: 'Ctrl + #', action: 'Numbered List' },
+    { key: 'Ctrl + 1', action: 'Big Heading' },
+    { key: 'Ctrl + 2', action: 'Medium Heading' },
+    { key: 'Ctrl + 3', action: 'Large Text' }
+  ];
+
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden bg-white relative">
         <StickyToolbar
@@ -221,6 +251,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
           onFontChange={handleFontChange}
           onFontSizeChange={handleFontSizeChange}
           onInsertLink={handleInsertLink}
+          onShowHelp={handleShowHelp}
         />
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
@@ -256,6 +287,23 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
+
+      {/* Help Dialog */}
+      <Dialog open={showHelp} onOpenChange={setShowHelp}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Keyboard Shortcuts</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2 max-h-96 overflow-y-auto">
+            {shortcuts.map((shortcut, index) => (
+              <div key={index} className="flex justify-between items-center py-1 border-b border-gray-100 last:border-b-0">
+                <span className="font-mono text-sm">{shortcut.key}</span>
+                <span className="text-sm text-gray-600">{shortcut.action}</span>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
