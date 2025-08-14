@@ -158,7 +158,9 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     const selectedText = content.substring(start, end);
     
     if (selectedText) {
-      const fontTag = `<span style="font-family: ${font}">${selectedText}</span>`;
+      // Remove any existing font-family spans from the selected text to prevent nesting
+      const cleanText = selectedText.replace(/<span[^>]*style="[^"]*font-family[^"]*"[^>]*>(.*?)<\/span>/gi, '$1');
+      const fontTag = `<span style="font-family: ${font}">${cleanText}</span>`;
       const newContent = content.substring(0, start) + fontTag + content.substring(end);
       onChange(newContent);
       
