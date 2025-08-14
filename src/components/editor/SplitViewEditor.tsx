@@ -149,16 +149,77 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     }, 0);
   };
 
+  const handleFontChange = (font: string) => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    
+    if (selectedText) {
+      const fontTag = `<span style="font-family: ${font}">${selectedText}</span>`;
+      const newContent = content.substring(0, start) + fontTag + content.substring(end);
+      onChange(newContent);
+      
+      // Set cursor position after the formatted text
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = start + fontTag.length;
+        textarea.focus();
+      }, 0);
+    }
+  };
+
+  const handleFontSizeChange = (size: string) => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    
+    if (selectedText) {
+      const sizeTag = `<font size="${size}">${selectedText}</font>`;
+      const newContent = content.substring(0, start) + sizeTag + content.substring(end);
+      onChange(newContent);
+      
+      // Set cursor position after the formatted text
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = start + sizeTag.length;
+        textarea.focus();
+      }, 0);
+    }
+  };
+
+  const handleInsertLink = (url: string, text: string) => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const linkTag = `<a href="${url}">${text}</a>`;
+    const newContent = content.substring(0, start) + linkTag + content.substring(start);
+    onChange(newContent);
+    
+    // Set cursor position after the link
+    setTimeout(() => {
+      textarea.selectionStart = textarea.selectionEnd = start + linkTag.length;
+      textarea.focus();
+    }, 0);
+  };
+
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden bg-white relative">
-      <StickyToolbar 
-        onFormat={handleFormat}
-        onInsertList={handleInsertList}
-        onAlign={handleAlign}
-        onClearHtml={handleClearHtml}
-        onClearAll={handleClearAll}
-        onInsertText={insertTextAtCursor}
-      />
+        <StickyToolbar
+          onFormat={handleFormat}
+          onInsertList={handleInsertList}
+          onAlign={handleAlign}
+          onClearHtml={handleClearHtml}
+          onClearAll={handleClearAll}
+          onInsertText={insertTextAtCursor}
+          onFontChange={handleFontChange}
+          onFontSizeChange={handleFontSizeChange}
+          onInsertLink={handleInsertLink}
+        />
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
         <ResizablePanel defaultSize={50} minSize={30}>

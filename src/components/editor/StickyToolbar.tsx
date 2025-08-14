@@ -1,7 +1,9 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, X } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2 } from "lucide-react";
+import InternalLinkDialog from "@/components/rich-text-editor/InternalLinkDialog";
 
 interface StickyToolbarProps {
   onFormat: (tag: string) => void;
@@ -10,12 +12,50 @@ interface StickyToolbarProps {
   onClearHtml: () => void;
   onClearAll: () => void;
   onInsertText: (text: string) => void;
+  onFontChange: (font: string) => void;
+  onFontSizeChange: (size: string) => void;
+  onInsertLink: (url: string, text: string) => void;
 }
 
-const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, onAlign, onClearHtml, onClearAll, onInsertText }) => {
+const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, onAlign, onClearHtml, onClearAll, onInsertText, onFontChange, onFontSizeChange, onInsertLink }) => {
   return (
     <div className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{ backgroundColor: '#16a34a' }}>
       <div className="flex items-center gap-2 flex-wrap">
+        {/* Font Controls */}
+        <div className="flex items-center gap-1">
+          <Select onValueChange={onFontChange}>
+            <SelectTrigger className="h-8 w-36 text-sm" style={{ borderColor: '#9c441a' }}>
+              <SelectValue placeholder="Font Family" />
+            </SelectTrigger>
+            <SelectContent className="bg-white z-50">
+              <SelectItem value="Georgia" style={{ fontFamily: 'Georgia' }}>Georgia</SelectItem>
+              <SelectItem value="Arial" style={{ fontFamily: 'Arial' }}>Arial</SelectItem>
+              <SelectItem value="Times New Roman" style={{ fontFamily: 'Times New Roman' }}>Times New Roman</SelectItem>
+              <SelectItem value="Helvetica" style={{ fontFamily: 'Helvetica' }}>Helvetica</SelectItem>
+              <SelectItem value="Verdana" style={{ fontFamily: 'Verdana' }}>Verdana</SelectItem>
+              <SelectItem value="Courier New" style={{ fontFamily: 'Courier New' }}>Courier New</SelectItem>
+              <SelectItem value="Impact" style={{ fontFamily: 'Impact' }}>Impact</SelectItem>
+              <SelectItem value="Comic Sans MS" style={{ fontFamily: 'Comic Sans MS' }}>Comic Sans MS</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select onValueChange={onFontSizeChange}>
+            <SelectTrigger className="h-8 w-28 text-sm" style={{ borderColor: '#9c441a' }}>
+              <SelectValue placeholder="Size" />
+            </SelectTrigger>
+            <SelectContent className="bg-white z-50">
+              <SelectItem value="1">Very Small</SelectItem>
+              <SelectItem value="2">Small</SelectItem>
+              <SelectItem value="3">Medium</SelectItem>
+              <SelectItem value="4">Large</SelectItem>
+              <SelectItem value="5">Very Large</SelectItem>
+              <SelectItem value="6">Extra Large</SelectItem>
+              <SelectItem value="7">Huge</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
+
         {/* Text Formatting */}
         <div className="flex items-center gap-1">
           <Button
@@ -156,6 +196,24 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           >
             P
           </Button>
+        </div>
+
+        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
+
+        {/* Internal Link */}
+        <div className="flex items-center gap-1">
+          <InternalLinkDialog onInsertLink={onInsertLink}>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="h-8 px-2"
+              style={{ borderColor: '#9c441a' }}
+              title="Insert internal link"
+            >
+              <Link2 className="h-4 w-4" />
+            </Button>
+          </InternalLinkDialog>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
