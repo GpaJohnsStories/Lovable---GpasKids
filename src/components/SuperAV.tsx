@@ -826,7 +826,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              <CachedIcon 
                                iconCode="!CO-AV9.jpg" 
                                fallback={<span className="text-xs">!CO-AV9.jpg</span>}
-                               style={{ height: '45px', width: '45px', objectFit: 'contain' }}
+                               style={{ height: '60px', width: '60px', objectFit: 'contain' }}
                             />
                           </div>
                         
@@ -849,7 +849,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                               <CachedIcon 
                                 iconCode="!CO-AVB.png" 
                                 fallback={<span className="text-xs">!CO-AVB.png</span>}
-                                style={{ height: '45px', width: '45px', objectFit: 'contain' }}
+                                style={{ height: '60px', width: '60px', objectFit: 'contain' }}
                              />
                           </div>
                           
@@ -867,7 +867,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                <CachedIcon 
                                  iconCode="!CO-AVS.jpg" 
                                  fallback={<span className="text-xs">!CO-AVS.jpg</span>}
-                                 style={{ height: '45px', width: '45px', objectFit: 'contain' }}
+                                 style={{ height: '60px', width: '60px', objectFit: 'contain' }}
                               />
                            </div>
                          </div>
