@@ -61,14 +61,40 @@ const IconLibraryDisplay = () => {
   // Delete icon mutation
   const deleteMutation = useMutation({
     mutationFn: async (icon: IconLibraryItem) => {
-      // Delete from storage
-      const { error: storageError } = await supabase.storage
+      console.log(`🗑️ Starting deletion of icon: ${icon.file_name_path}`);
+      
+      // First check if file exists in storage
+      const { data: existingFiles } = await supabase.storage
         .from('icons')
-        .remove([icon.file_name_path]);
+        .list('', { search: icon.file_name_path });
+      
+      const fileExists = existingFiles?.some(file => file.name === icon.file_name_path);
+      console.log(`📁 File exists in storage: ${fileExists}`);
 
-      if (storageError) {
-        console.error('Storage delete error:', storageError);
-        // Don't throw here, still try to delete from database
+      // Delete from storage if file exists
+      if (fileExists) {
+        const { error: storageError } = await supabase.storage
+          .from('icons')
+          .remove([icon.file_name_path]);
+
+        if (storageError) {
+          console.error('❌ Storage delete failed:', storageError);
+          throw new Error(`Failed to delete file from storage: ${storageError.message}`);
+        }
+
+        // Verify the file was actually deleted
+        const { data: verifyFiles } = await supabase.storage
+          .from('icons')
+          .list('', { search: icon.file_name_path });
+        
+        const stillExists = verifyFiles?.some(file => file.name === icon.file_name_path);
+        if (stillExists) {
+          throw new Error('File still exists in storage after deletion attempt');
+        }
+        
+        console.log('✅ File successfully deleted from storage');
+      } else {
+        console.log('⚠️ File does not exist in storage, proceeding with database deletion');
       }
 
       // Delete from database
@@ -81,6 +107,7 @@ const IconLibraryDisplay = () => {
         throw new Error(`Database delete failed: ${dbError.message}`);
       }
 
+      console.log('✅ Database record deleted successfully');
       return icon;
     },
     onSuccess: (deletedIcon) => {
@@ -103,7 +130,7 @@ const IconLibraryDisplay = () => {
       const { error: uploadError } = await supabase.storage
         .from('icons')
         .upload(fileName, file, {
-          cacheControl: '3600',
+          cacheControl: '0', // Disable caching to force refresh
           upsert: true
         });
 
