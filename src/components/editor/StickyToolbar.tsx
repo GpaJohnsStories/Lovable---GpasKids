@@ -219,7 +219,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             type="button"
             size="sm"
             onClick={onClearHtml}
-            className="h-8 px-2 btn-toolbar-yellow"
+            className="h-8 px-2 btn-toolbar-orange"
             title="Clear HTML from selection"
           >
             <span className="text-sm font-bold">&lt;X&gt;</span>
