@@ -186,7 +186,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                 placeholder="Search stories by title, content, author, or keywords..."
                 value={localSearchTerm}
                 onChange={(e) => setLocalSearchTerm(e.target.value)}
-                className="pl-10 pr-10 py-2 text-sm border-2 focus:border-[#228B22] rounded-lg placeholder:font-bold search-input-amber"
+                className="pl-10 pr-10 py-2 text-sm border-2 focus:border-[hsl(var(--forest-green))] rounded-lg placeholder:font-bold search-input-amber"
               />
               {searchTerm && (
                 <Button
@@ -203,14 +203,14 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
             {/* Search Results Counter */}
             {searchTerm && searchTerm.trim() !== '' && (
               <div className="text-center mt-3">
-                <p className="text-sm text-[#228B22] font-system">
+                <p className="text-sm text-[hsl(var(--forest-green))] font-system">
                   Found {stories?.length || 0} stories matching '{searchTerm}'
                 </p>
                 <Button
                   onClick={handleClearSearch}
                   variant="outline"
                   size="sm"
-                  className="mt-2 border-[#228B22] text-[#228B22] hover:bg-green-50"
+                  className="mt-2 border-[hsl(var(--forest-green))] text-[hsl(var(--forest-green))] hover:bg-green-50"
                 >
                   Clear Search Results
                 </Button>
@@ -219,20 +219,20 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
           </div>
           {isLoading ? (
             <div className="text-center py-8 text-black-system">
-              <BookOpen className="h-8 w-8 animate-spin text-[#228B22] mx-auto mb-4" />
+              <BookOpen className="h-8 w-8 animate-spin text-[hsl(var(--forest-green))] mx-auto mb-4" />
               <p>Loading stories...</p>
             </div>
           ) : (
-            <div className="border border-[#228B22] rounded-lg overflow-hidden">
+            <div className="border border-[hsl(var(--forest-green))] rounded-lg overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-background hover:bg-background">
-                    <TableHead className="p-1 text-center bg-background border-r border-[#228B22]">
+                    <TableHead className="p-1 text-center bg-background border-r border-[hsl(var(--forest-green))]">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <button
                             onClick={() => handleSort('title')}
-                            className="bg-[#228B22] hover:bg-[#2E8B2E] text-white w-full h-6 text-xs px-1 py-1 font-system"
+                            className="bg-[hsl(var(--forest-green))] hover:bg-[hsl(var(--forest-green)_/_0.8)] text-white w-full h-6 text-xs px-1 py-1 font-system"
                           >
                             Title
                             {getSortIcon('title')}
@@ -243,12 +243,12 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         </TooltipContent>
                       </Tooltip>
                     </TableHead>
-                    <TableHead className="p-1 text-center bg-background border-r border-[#228B22] w-24">
+                    <TableHead className="p-1 text-center bg-background border-r border-[hsl(var(--forest-green))] w-24">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <button
                             onClick={() => handleSort('author')}
-                            className="bg-[#228B22] hover:bg-[#2E8B2E] text-white w-full h-6 text-xs px-1 py-1 font-system"
+                            className="bg-[hsl(var(--forest-green))] hover:bg-[hsl(var(--forest-green)_/_0.8)] text-white w-full h-6 text-xs px-1 py-1 font-system"
                           >
                             Author
                             {getSortIcon('author')}
@@ -259,13 +259,13 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         </TooltipContent>
                       </Tooltip>
                     </TableHead>
-                    <TableHead className="p-1 text-center bg-background border-r border-[#228B22] w-28">
+                    <TableHead className="p-1 text-center bg-background border-r border-[hsl(var(--forest-green))] w-28">
                       <DropdownMenu>
                           <Tooltip>
                           <TooltipTrigger asChild>
                             <DropdownMenuTrigger asChild>
                               <button
-                                className="bg-[#228B22] hover:bg-[#2E8B2E] text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1 font-system"
+                                className="bg-[hsl(var(--forest-green))] hover:bg-[hsl(var(--forest-green)_/_0.8)] text-white w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1 font-system"
                               >
                                 {categoryFilter === 'all' ? 'Category' : getCategoryDisplayName(categoryFilter)}
                                 <ChevronDown className="h-3 w-3" />
@@ -301,12 +301,12 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                          </DropdownMenuContent>
                       </DropdownMenu>
                     </TableHead>
-                    <TableHead className="p-1 text-center bg-background border-r border-[#228B22] w-20">
+                    <TableHead className="p-1 text-center bg-background border-r border-[hsl(var(--forest-green))] w-20">
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <button
                             onClick={() => handleSort('read_count')}
-                            className="bg-[#228B22] hover:bg-[#2E8B2E] text-white w-full h-6 text-xs px-1 py-1 font-system"
+                            className="bg-[hsl(var(--forest-green))] hover:bg-[hsl(var(--forest-green)_/_0.8)] text-white w-full h-6 text-xs px-1 py-1 font-system"
                           >
                             Reads
                             {getSortIcon('read_count')}
@@ -322,7 +322,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                         <TooltipTrigger asChild>
                           <button
                             onClick={() => handleSort('updated_at')}
-                            className="bg-[#228B22] hover:bg-[#2E8B2E] text-white w-full h-6 text-xs px-1 py-1 font-system"
+                            className="bg-[hsl(var(--forest-green))] hover:bg-[hsl(var(--forest-green)_/_0.8)] text-white w-full h-6 text-xs px-1 py-1 font-system"
                           >
                             Updated
                             {getSortIcon('updated_at')}
