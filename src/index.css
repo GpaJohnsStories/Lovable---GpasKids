@@ -764,9 +764,9 @@
 }
 
 .btn-toolbar-yellow {
-  background: linear-gradient(to bottom, #FFD700, #DAA520) !important;
-  border: 1px solid #B8860B !important;
-  color: black !important;
+  background: linear-gradient(to bottom, #814d2e, #6d4126) !important;
+  border: 1px solid #5a351e !important;
+  color: #FFD700 !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
 }
 
