@@ -26,7 +26,7 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
     { value: '/writing', label: 'Writing Page' },
     { value: '/view-comments', label: 'Comments Page' },
     { value: '/help-gpa', label: 'Help Gpa Page' },
-    { value: '/how-to', label: 'How To Page' },
+    { value: '/guide', label: 'Guide' },
     { value: '/public-author-bios', label: 'Author Bios' },
     { value: '/privacy', label: 'Privacy Policy' }
   ];
@@ -60,6 +60,13 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
       { value: '#getting-started', label: 'Getting Started' },
       { value: '#navigation-help', label: 'Navigation Help' },
       { value: '#troubleshooting', label: 'Troubleshooting' }
+    ],
+    '/guide': [
+      { value: '#getting-started', label: 'Getting Started' },
+      { value: '#home-page-guide', label: 'Home Page Guide' },
+      { value: '#story-library-guide', label: 'Story Library Guide' },
+      { value: '#navigation-guide', label: 'Navigation Guide' },
+      { value: '#writing-guide', label: 'Writing Guide' }
     ]
   };
 
