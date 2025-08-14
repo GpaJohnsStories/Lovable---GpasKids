@@ -139,14 +139,6 @@ const AuthorBio = () => {
         
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
-            <div className="mb-6 no-print">
-              <Link to="/author-bios-simple">
-                <Button className="cozy-button mb-4">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Biographies
-                </Button>
-              </Link>
-            </div>
 
             <Card className="mb-8 print-friendly">
               <CardContent className="p-8">
