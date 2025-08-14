@@ -202,7 +202,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
             <Button
               type="button"
               size="sm"
-              className="h-8 px-2 btn-toolbar-green"
+              className="h-8 px-2 btn-toolbar-yellow"
               title="Insert internal link"
             >
               <Link2 className="h-4 w-4" />
