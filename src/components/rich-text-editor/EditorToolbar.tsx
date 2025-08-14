@@ -24,10 +24,9 @@ import { insertInternalLink } from './EditorUtils';
 
 interface EditorToolbarProps {
   onCommand: (command: string, value?: string) => void;
-  onInsertLink: () => void;
 }
 
-const EditorToolbar: React.FC<EditorToolbarProps> = ({ onCommand, onInsertLink }) => {
+const EditorToolbar: React.FC<EditorToolbarProps> = ({ onCommand }) => {
   const handleInternalLink = (url: string, text: string) => {
     insertInternalLink(url, text);
     // Trigger change event to update the parent component
@@ -237,16 +236,6 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ onCommand, onInsertLink }
       <Separator orientation="vertical" className="h-6 mx-1" />
 
       {/* Links */}
-      <Button
-        type="button"
-        variant="ghost"
-        size="sm"
-        onClick={onInsertLink}
-        className="h-8 w-8 p-0"
-        title="Insert External Link (Ctrl+K)"
-      >
-        <Link className="h-4 w-4" />
-      </Button>
       
       {/* Internal Link Button */}
       <InternalLinkDialog onInsertLink={handleInternalLink}>

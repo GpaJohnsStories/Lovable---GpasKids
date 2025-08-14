@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import EditorToolbar from './rich-text-editor/EditorToolbar';
 import EditorContent from './rich-text-editor/EditorContent';
 import EditorStyles from './rich-text-editor/EditorStyles';
-import { execCommand, insertLink } from './rich-text-editor/EditorUtils';
+import { execCommand } from './rich-text-editor/EditorUtils';
 
 interface RichTextEditorProps {
   content: string;
@@ -26,13 +26,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     }
   };
 
-  const handleInsertLink = () => {
-    const url = insertLink();
-    if (url && editorRef.current) {
-      editorRef.current.focus();
-      onChange(editorRef.current.innerHTML);
-    }
-  };
 
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
@@ -40,7 +33,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       
       <EditorToolbar
         onCommand={handleCommand}
-        onInsertLink={handleInsertLink}
       />
       
       <EditorContent

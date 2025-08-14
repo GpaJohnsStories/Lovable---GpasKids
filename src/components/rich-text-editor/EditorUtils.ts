@@ -3,13 +3,6 @@ export const execCommand = (command: string, value?: string) => {
   document.execCommand(command, false, value);
 };
 
-export const insertLink = () => {
-  const url = prompt('Enter URL:');
-  if (url) {
-    execCommand('createLink', url);
-  }
-  return url;
-};
 
 export const insertInternalLink = (url: string, text: string) => {
   const selection = window.getSelection();
@@ -61,11 +54,6 @@ export const handleKeyboardShortcuts = (
       case 'u':
         e.preventDefault();
         onCommand('underline');
-        break;
-      case 'k':
-        e.preventDefault();
-        const url = insertLink();
-        if (url) onCommand('createLink', url);
         break;
     }
   }
