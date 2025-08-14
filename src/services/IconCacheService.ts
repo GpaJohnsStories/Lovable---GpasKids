@@ -20,34 +20,6 @@ class IconCacheService {
     maxSize: 50 // max 50 icons
   };
 
-  // Priority icons to preload (using "!" prefix for priority identification)
-  private readonly PRIORITY_ICONS = [
-    '!CO-HOX.jpg',      // Home icon
-    '!CO-LB1.gif',      // Library main icon
-    '!CO-LB2.gif',      // Browse Stories submenu
-    '!CO-LB3.gif',      // Read Story submenu
-    '!CO-CO1.gif',      // Comments main icon
-    '!CO-CO2.gif',      // View Comments submenu
-    '!CO-CO3.gif',      // Make Comment submenu
-    '!CO-WR3.jpg',      // Writing main icon
-    '!CO-WR2.gif',      // Submit Story submenu (tall & slender)
-    '!CO-AV1.jpg',      // SuperAV Play button
-    '!CO-AV2.jpg',      // SuperAV Pause button
-    '!CO-WR3.jpg',      // How To Write submenu (same as main)
-    '!CO-AB1.jpg',      // About Us main icon / Authors submenu
-    '!CO-AB3.jpg',      // 3 Helpers submenu
-    '!CO-AB5.jpg',      // The 3 AI's submenu
-    '!CO-SA1.jpg',      // Safe & Secure main icon
-    '!CO-MU2.gif',      // Menu button icon
-    '!CO-HL2.gif',      // Buddy icon
-    '!CO-HO1.jpg',      // Grandpa John icon
-    '!CO-CDY.png',      // Peppermint candy audio button
-    '!CO-CSZ.jpg',      // SuperAV change word size icon
-    '!CO-CCP.png',      // SuperAV chocolate plus (increase font) icon
-    '!CO-CCM.png',      // SuperAV chocolate minus (decrease font) icon
-    '!CA-PL1.jpg',      // SuperAV play button icon
-    '!CO-AV8.jpg',      // SuperAV fastest speed button icon
-  ];
 
   /**
    * Get icon URL, either from cache or by loading it
@@ -77,22 +49,45 @@ class IconCacheService {
   }
 
   /**
-   * Preload priority icons (public menu and header icons)
+   * Preload priority icons (automatically detect icons with "!" prefix from database)
    */
   async preloadPriorityIcons(): Promise<void> {
     console.log('🔄 Preloading priority icons...');
     
-    const preloadPromises = this.PRIORITY_ICONS.map(async (iconPath) => {
-      try {
-        await this.getIconUrl(iconPath);
-        console.log(`✅ Preloaded: ${iconPath}`);
-      } catch (error) {
-        console.warn(`⚠️ Failed to preload ${iconPath}:`, error);
-      }
-    });
+    try {
+      // Fetch all priority icons from database (icons starting with "!")
+      const { data: priorityIcons, error } = await supabase
+        .from('icon_library')
+        .select('file_name_path')
+        .like('file_name_path', '!%');
 
-    await Promise.allSettled(preloadPromises);
-    console.log('🎯 Priority icon preloading complete');
+      if (error) {
+        console.warn('⚠️ Failed to fetch priority icons from database:', error);
+        return;
+      }
+
+      if (!priorityIcons || priorityIcons.length === 0) {
+        console.log('📭 No priority icons found in database');
+        return;
+      }
+
+      console.log(`🎯 Found ${priorityIcons.length} priority icons to preload`);
+
+      const preloadPromises = priorityIcons.map(async (iconRecord) => {
+        const iconPath = iconRecord.file_name_path;
+        try {
+          await this.getIconUrl(iconPath);
+          console.log(`✅ Preloaded: ${iconPath}`);
+        } catch (error) {
+          console.warn(`⚠️ Failed to preload ${iconPath}:`, error);
+        }
+      });
+
+      await Promise.allSettled(preloadPromises);
+      console.log('🎯 Priority icon preloading complete');
+    } catch (error) {
+      console.error('💥 Error during priority icon preloading:', error);
+    }
   }
 
   /**

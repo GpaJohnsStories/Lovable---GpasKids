@@ -10,7 +10,7 @@ interface AudioButtonProps {
 }
 
 export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, className = "" }) => {
-  const { iconUrl: candyIconUrl, iconName, isLoading: candyLoading, error: candyError } = useCachedIcon('!CO-RPC');
+  const { iconUrl: candyIconUrl, iconName, isLoading: candyLoading, error: candyError } = useCachedIcon('!CO-RPC.gif');
   const { shouldShowTooltips, registerTooltip, unregisterTooltip } = useTooltipContext();
   const tooltipId = useId();
 
