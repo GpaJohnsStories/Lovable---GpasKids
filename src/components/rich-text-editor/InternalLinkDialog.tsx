@@ -26,7 +26,7 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
     { value: '/writing', label: 'Writing Page' },
     { value: '/view-comments', label: 'Comments Page' },
     { value: '/help-gpa', label: 'Help Gpa Page' },
-    { value: '/guide', label: 'Guide' },
+    { value: '/guide', label: 'Guide Page' },
     { value: '/public-author-bios', label: 'Author Bios' },
     { value: '/privacy', label: 'Privacy Policy' }
   ];
