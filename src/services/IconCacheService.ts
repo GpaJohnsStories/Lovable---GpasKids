@@ -4,6 +4,7 @@ interface CachedIcon {
   url: string;
   blob: Blob;
   timestamp: number;
+  iconName?: string; // Add icon name for tooltips
 }
 
 interface IconCacheConfig {
@@ -120,6 +121,19 @@ class IconCacheService {
    */
   private async loadIcon(iconPath: string): Promise<string> {
     try {
+      // First, try to get icon metadata from database
+      let iconName = iconPath; // Default fallback
+      
+      const { data: iconData, error: dbError } = await supabase
+        .from('icon_library')
+        .select('icon_name')
+        .eq('file_name_path', iconPath)
+        .single();
+      
+      if (!dbError && iconData) {
+        iconName = iconData.icon_name;
+      }
+
       // Get the icon from Supabase storage
       const { data, error } = await supabase.storage
         .from('icons')
@@ -136,8 +150,8 @@ class IconCacheService {
       // Create blob URL
       const url = URL.createObjectURL(data);
 
-      // Cache the icon
-      this.cacheIcon(iconPath, data, url);
+      // Cache the icon with its name
+      this.cacheIcon(iconPath, data, url, iconName);
 
       return url;
     } catch (error) {
@@ -151,7 +165,7 @@ class IconCacheService {
   /**
    * Cache an icon
    */
-  private cacheIcon(iconPath: string, blob: Blob, url: string): void {
+  private cacheIcon(iconPath: string, blob: Blob, url: string, iconName?: string): void {
     // Clean up old entries if cache is full
     if (this.cache.size >= this.config.maxSize) {
       this.evictOldestEntry();
@@ -160,10 +174,19 @@ class IconCacheService {
     this.cache.set(iconPath, {
       url,
       blob,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      iconName
     });
 
     console.log(`📦 Cached icon: ${iconPath} (cache size: ${this.cache.size})`);
+  }
+
+  /**
+   * Get icon name for tooltip/alt text
+   */
+  getIconName(iconPath: string): string | null {
+    const cached = this.cache.get(iconPath);
+    return cached?.iconName || null;
   }
 
   /**

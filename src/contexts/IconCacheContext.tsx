@@ -3,6 +3,7 @@ import { iconCacheService } from '@/services/IconCacheService';
 
 interface IconCacheContextType {
   getIconUrl: (iconPath: string) => Promise<string>;
+  getIconName: (iconPath: string) => string | null;
   isPreloading: boolean;
   preloadingProgress: number;
   cacheStats: {
@@ -64,12 +65,17 @@ export const IconCacheProvider: React.FC<IconCacheProviderProps> = ({ children }
     }
   }, []);
 
+  const getIconName = useCallback((iconPath: string): string | null => {
+    return iconCacheService.getIconName(iconPath);
+  }, []);
+
   const refreshStats = useCallback(() => {
     setCacheStats(iconCacheService.getCacheStats());
   }, []);
 
   const contextValue: IconCacheContextType = {
     getIconUrl,
+    getIconName,
     isPreloading,
     preloadingProgress,
     cacheStats,

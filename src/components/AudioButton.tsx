@@ -8,7 +8,7 @@ interface AudioButtonProps {
 }
 
 export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, className = "" }) => {
-  const { iconUrl: candyIconUrl, isLoading: candyLoading, error: candyError } = useCachedIcon('!CO-RPC');
+  const { iconUrl: candyIconUrl, iconName, isLoading: candyLoading, error: candyError } = useCachedIcon('!CO-RPC');
 
   return (
     <div className={`relative z-5 ${className}`}>
@@ -43,7 +43,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
         ) : candyIconUrl && !candyLoading && !candyError ? (
           <img
             src={candyIconUrl}
-            alt="Click if you prefer to listen."
+            alt={iconName || "Click if you prefer to listen."}
             className="w-full h-full rounded-full"
             style={{ 
               backgroundColor: 'transparent',
@@ -55,7 +55,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
         
         {/* Visible tooltip for user to see what the button does */}
         <div className="absolute top-full right-0 mt-3 px-4 py-2 bg-red-600 text-white text-base font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20 shadow-lg border border-red-700">
-          Click if you want to listen or change word size.
+          {iconName || "Click if you want to listen or change word size."}
         </div>
       </button>
       
