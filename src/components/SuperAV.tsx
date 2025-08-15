@@ -805,7 +805,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                          boxShadow: '0 4px 8px rgba(129, 77, 46, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
                       }}>
                           <div style={{
-                            padding: '2px',
+                            padding: '1px 2px',
                             backgroundColor: '#FFF8DC',
                             borderRadius: '9px',
                             height: '100%'
