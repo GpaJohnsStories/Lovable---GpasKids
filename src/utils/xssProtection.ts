@@ -46,23 +46,79 @@ export function createSafeHtml(content: string): { __html: string } {
     return { __html: '' };
   }
 
-  // Configure DOMPurify with allowed tags and attributes for story content
-  const cleanHtml = DOMPurify.sanitize(content, {
-    ALLOWED_TAGS: [
-      'p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 
-      'ol', 'ul', 'li', 'span', 'center', 'a', 'font'
-    ],
-    ALLOWED_ATTR: [
-      'style', 'href', 'target', 'rel', 'title', 'alt',
-      'face', 'size', 'color' // Allow font attributes for backward compatibility
-    ],
-    ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|cid|xmpp|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
-    ADD_ATTR: ['target'], // Allow target="_blank" for links
-    FORBID_CONTENTS: ['script', 'style'],
-    KEEP_CONTENT: false
+  console.log('🔍 createSafeHtml input length:', content.length);
+  console.log('🔍 createSafeHtml input preview:', content.substring(0, 200));
+
+  try {
+    // More permissive DOMPurify configuration for story content
+    const cleanHtml = DOMPurify.sanitize(content, {
+      ALLOWED_TAGS: [
+        'p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'ol', 'ul', 'li', 'span', 'center', 'a', 'font', 'div', 'img',
+        'table', 'tr', 'td', 'th', 'tbody', 'thead', 'small', 'big',
+        'sup', 'sub', 'b', 'i', 'pre', 'code', 'blockquote', 'hr'
+      ],
+      ALLOWED_ATTR: [
+        'style', 'href', 'target', 'rel', 'title', 'alt', 'src', 'width', 'height',
+        'face', 'size', 'color', 'class', 'id', 'align', 'valign', 'bgcolor',
+        'border', 'cellpadding', 'cellspacing', 'colspan', 'rowspan'
+      ],
+      ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|cid|xmpp|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+      ADD_ATTR: ['target'],
+      FORBID_CONTENTS: ['script', 'style'],
+      KEEP_CONTENT: true,
+      ALLOW_DATA_ATTR: false,
+      SANITIZE_DOM: true
+    });
+
+    console.log('✅ DOMPurify output length:', cleanHtml.length);
+    console.log('✅ DOMPurify output preview:', cleanHtml.substring(0, 200));
+
+    if (!cleanHtml || cleanHtml.trim().length === 0) {
+      console.warn('⚠️ DOMPurify returned empty content, using fallback');
+      return createFallbackSafeHtml(content);
+    }
+
+    return { __html: cleanHtml };
+  } catch (error) {
+    console.error('❌ DOMPurify error:', error);
+    console.warn('⚠️ Falling back to custom sanitization');
+    return createFallbackSafeHtml(content);
+  }
+}
+
+/**
+ * Fallback sanitization when DOMPurify fails
+ */
+function createFallbackSafeHtml(content: string): { __html: string } {
+  console.log('🔄 Using fallback sanitization');
+  
+  const allowedTags = ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'ol', 'ul', 'li', 'span', 'center', 'a', 'font', 'div'];
+  
+  let sanitized = content;
+  
+  // Remove script tags and their content completely
+  sanitized = sanitized.replace(/<script[^>]*>.*?<\/script>/gis, '');
+  
+  // Remove dangerous event handlers
+  sanitized = sanitized.replace(/on\w+\s*=\s*["'][^"']*["']/gi, '');
+  
+  // Remove javascript: protocol
+  sanitized = sanitized.replace(/javascript:/gi, '');
+  
+  // Allow most HTML tags for now (less restrictive for debugging)
+  sanitized = sanitized.replace(/<\/?([a-zA-Z][a-zA-Z0-9]*)[^>]*>/g, (match, tagName) => {
+    const lowerTagName = tagName.toLowerCase();
+    // For debugging, be very permissive
+    const dangerousTags = ['script', 'iframe', 'object', 'embed', 'form', 'input', 'textarea', 'button'];
+    if (dangerousTags.includes(lowerTagName)) {
+      return '';
+    }
+    return match;
   });
 
-  return { __html: cleanHtml };
+  console.log('🔄 Fallback output length:', sanitized.length);
+  return { __html: sanitized };
 }
 
 /**
