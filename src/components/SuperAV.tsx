@@ -764,40 +764,30 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                           {/* Speed buttons row */}
                           <div style={{
                             height: '55px',
-                            display: 'flex',
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(4, 1fr)',
+                            gap: '8px',
                             alignItems: 'center',
-                            justifyContent: 'space-between',
                             padding: '4px 2.5px 8px 2.5px',
                             borderBottomLeftRadius: '9px',
                             borderBottomRightRadius: '9px'
                           }}>
-                            {/* Normal Speed */}
+                            {/* Normal Speed - spans 2 cells */}
                              <div 
                                className="button-3d-base button-3d-60px-square button-3d-green"
                                role="button" 
                                aria-label="Normal Speed" 
                                title="Normal Speed"
                                style={{
-                                 cursor: 'pointer'
+                                 cursor: 'pointer',
+                                 gridColumn: 'span 2',
+                                 width: '100%'
                                }}
                                onClick={() => handleSpeedChange(1)}>
                                  <CustomSpeedNormalIcon />
                                </div>
                             
-                            {/* Faster Speed */}
-                            <div 
-                              className="button-3d-base button-3d-60px-square button-3d-green"
-                              role="button" 
-                              aria-label="Faster Speed" 
-                              title="Faster Speed"
-                              style={{
-                                cursor: 'pointer'
-                              }}
-                              onClick={() => handleSpeedChange(1.5)}>
-                                <CustomSpeedFasterIcon />
-                              </div>
-                            
-                            {/* Fast Speed */}
+                            {/* Fast Speed - cell 3 */}
                             <div 
                               className="button-3d-base button-3d-60px-square button-3d-green"
                               role="button" 
@@ -808,6 +798,19 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                               }}
                               onClick={() => handleSpeedChange(1.25)}>
                                 <CustomSpeedFastIcon />
+                              </div>
+                            
+                            {/* Faster Speed - cell 4 */}
+                            <div 
+                              className="button-3d-base button-3d-60px-square button-3d-green"
+                              role="button" 
+                              aria-label="Faster Speed" 
+                              title="Faster Speed"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={() => handleSpeedChange(1.5)}>
+                                <CustomSpeedFasterIcon />
                               </div>
                             
                         </div>
