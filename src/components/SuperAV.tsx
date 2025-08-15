@@ -568,9 +568,9 @@ export const SuperAV: React.FC<SuperAVProps> = ({
               textAlign: 'center',
               border: '2px solid #8B4513',
               borderRadius: '8px',
-              padding: '3px',
+              padding: '0',
               marginBottom: '8px',
-              width: '244px',
+              width: '248px',
               boxSizing: 'border-box'
             }}>
               {/* Title container - Fixed height for 3 lines */}
