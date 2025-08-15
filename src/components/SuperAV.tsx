@@ -644,27 +644,25 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                    <td colSpan={4} className="playback-controls-section">
                       <div className="playback-controls-inner">
                           {/* Header */}
-                          <div style={{
-                            height: '27px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderTopLeftRadius: '9px',
-                            borderTopRightRadius: '9px'
-                          }}>
+                           <div style={{
+                             height: '27px',
+                             display: 'flex',
+                             alignItems: 'center',
+                             justifyContent: 'center',
+                             borderRadius: '9px 9px 0 0'
+                           }}>
                            <b style={{color: '#8B4513', fontFamily: FONT_FUN}} aria-label="Playback Control">Playback Control</b>
                          </div>
                          
                           {/* Control buttons row */}
-                          <div style={{
-                            height: '65px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            padding: '4px 2.5px 8px 2.5px',
-                            borderBottomLeftRadius: '9px',
-                            borderBottomRightRadius: '9px'
-                          }}>
+                           <div style={{
+                             height: '65px',
+                             display: 'flex',
+                             alignItems: 'center',
+                             justifyContent: 'space-between',
+                             padding: '4px 2.5px 8px 2.5px',
+                             borderRadius: '0 0 9px 9px'
+                           }}>
                            {/* Play Button */}
                             <div 
                               className="button-3d-base button-3d-60px-square button-3d-green"
