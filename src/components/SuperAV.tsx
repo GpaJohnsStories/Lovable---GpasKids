@@ -895,8 +895,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                   title="Close SuperAV"
                   style={{
                     cursor: 'pointer',
-                    width: '75px',
-                    height: '75px',
+                    width: '60px',
+                    height: '60px',
                     zIndex: -1,
                     position: 'relative'
                   }}
@@ -904,7 +904,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                    <CachedIcon 
                      iconCode="!CO-CLS.jpg" 
                      fallback={<span className="text-xs">!CO-CLS.jpg</span>}
-                     style={{ height: '75px', width: '75px', objectFit: 'contain' }}
+                     style={{ height: '60px', width: '60px', objectFit: 'contain' }}
                    />
                 </div>
               </div>
