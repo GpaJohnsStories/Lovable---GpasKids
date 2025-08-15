@@ -923,17 +923,17 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                          style={{
                            cursor: 'pointer',
                            height: '60px',
-                           width: '230px',
+                           width: '244px',
                            display: 'flex',
                            alignItems: 'center',
                            justifyContent: 'center'
                          }}
                          onClick={onClose}>
-                         <CachedIcon 
-                           iconCode="!CO-CLS.jpg" 
-                           fallback={<span className="text-xs">!CO-CLS.jpg</span>}
-                           style={{ height: '60px', width: '230px', objectFit: 'fill' }}
-                         />
+                          <CachedIcon 
+                            iconCode="!CO-CLS.jpg" 
+                            fallback={<span className="text-xs">!CO-CLS.jpg</span>}
+                            style={{ height: '60px', width: '244px', objectFit: 'fill' }}
+                          />
                        </div>
                      </td>
                    </tr>
