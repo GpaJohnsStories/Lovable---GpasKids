@@ -98,11 +98,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   if (isSysWel) {
     return (
       <>
-        <div id={id} className="bg-green-100 border-4 border-green-600 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
+        <div id={id} className="bg-green-50 border-4 border-green-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
           {/* Top Right Control Box - only show if audio is available */}
           {webtext?.audio_url && (
             <div className="absolute z-[5]" style={{ top: -1, right: -1 }}>
-              <div className="bg-white/90 border-4 border-green-600 rounded-lg px-2 py-1 shadow-lg">
+              <div className="bg-white/90 border-4 border-green-500 rounded-lg px-2 py-1 shadow-lg">
                 <div className="flex items-center justify-end gap-2">
                   <div className="text-base font-handwritten font-bold text-green-800 leading-tight">
                     Click to listen or<br />change word size
@@ -123,10 +123,10 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                   <img
                     src={mainPhoto.url}
                     alt={mainPhoto.alt}
-                    className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded-lg border-2 border-green-600 shadow-lg cursor-pointer transition-transform hover:scale-105"
+                    className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded-lg border-2 border-green-500 shadow-lg cursor-pointer transition-transform hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 rounded-lg"></div>
-                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-xs text-green-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-xs text-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     {mainPhoto.alt}
                   </div>
                 </div>
@@ -138,7 +138,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
               {/* Title section */}
               <div className="mb-4">
                 <div className="flex items-start gap-3 justify-start">
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-green-800 leading-tight break-words text-left">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-green-700 leading-tight break-words text-left">
                     {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
                   </h1>
                 </div>
@@ -147,7 +147,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
               {/* Content below title with proportional scaling */}
               <div className="flex-1 min-w-0">
                 <div 
-                  className="proportional-content text-green-800 leading-relaxed break-words"
+                  className="proportional-content text-green-700 leading-relaxed break-words"
                   style={getScaleStyles()}
                   dangerouslySetInnerHTML={getContent()}
                 />
@@ -157,7 +157,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
 
           {/* Bottom right: Webtext code */}
           <div className="flex justify-end">
-            <div className="bg-green-200/70 rounded px-3 py-1 text-sm font-mono text-green-700 border border-green-400">
+            <div className="bg-green-100/70 rounded px-3 py-1 text-sm font-mono text-green-600 border border-green-300">
               {webtextCode}
             </div>
           </div>
