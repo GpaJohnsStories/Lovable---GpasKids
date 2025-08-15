@@ -910,7 +910,10 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        border: 'none',
                        background: 'transparent',
                        padding: '2px 0 0 0',
-                       textAlign: 'center'
+                       textAlign: 'center',
+                       display: 'flex',
+                       justifyContent: 'center',
+                       alignItems: 'center'
                      }}>
                        <div 
                          className="button-3d-base"
