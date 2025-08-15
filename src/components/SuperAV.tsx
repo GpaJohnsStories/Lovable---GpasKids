@@ -643,56 +643,56 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            padding: '4px 2.5px 8px 2.5px'
                          }}>
                            {/* Play Button */}
-                           <div 
-                             className="button-3d-base button-3d-standard button-3d-green"
-                             role="button" 
-                             aria-label="Play Audio" 
-                             title="Play Audio"
-                             style={{
-                               cursor: 'pointer'
-                             }}
-                             onClick={handlePlay}>
-                               <CustomPlayIcon />
-                             </div>
+                            <div 
+                              className="button-3d-base button-3d-60px-square button-3d-green"
+                              role="button" 
+                              aria-label="Play Audio" 
+                              title="Play Audio"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={handlePlay}>
+                                <CustomPlayIcon />
+                              </div>
                            
                            {/* Pause Button */}
-                           <div 
-                             className="button-3d-base button-3d-standard button-3d-amber"
-                             role="button" 
-                             aria-label="Pause Audio" 
-                             title="Pause Audio"
-                             style={{
-                               cursor: 'pointer'
-                             }}
-                             onClick={handlePause}>
-                               <CustomPauseIcon />
-                             </div>
+                            <div 
+                              className="button-3d-base button-3d-60px-square button-3d-amber"
+                              role="button" 
+                              aria-label="Pause Audio" 
+                              title="Pause Audio"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={handlePause}>
+                                <CustomPauseIcon />
+                              </div>
                            
                             {/* Restart Button */}
-                            <div 
-                              className="button-3d-base button-3d-standard button-3d-orange"
-                              role="button" 
-                              aria-label="Restart Audio" 
-                              title="Restart Audio"
-                              style={{
-                                cursor: 'pointer'
-                              }}
-                              onClick={handleRestart}>
-                                <CustomRestartIcon />
-                              </div>
+                             <div 
+                               className="button-3d-base button-3d-60px-square button-3d-orange"
+                               role="button" 
+                               aria-label="Restart Audio" 
+                               title="Restart Audio"
+                               style={{
+                                 cursor: 'pointer'
+                               }}
+                               onClick={handleRestart}>
+                                 <CustomRestartIcon />
+                               </div>
                             
                             {/* Stop Button */}
-                            <div 
-                              className="button-3d-base button-3d-standard button-3d-red"
-                              role="button" 
-                              aria-label="Stop Audio" 
-                              title="Stop Audio"
-                              style={{
-                                cursor: 'pointer'
-                              }}
-                              onClick={handleStop}>
-                                <CustomStopIcon />
-                              </div>
+                             <div 
+                               className="button-3d-base button-3d-60px-square button-3d-red"
+                               role="button" 
+                               aria-label="Stop Audio" 
+                               title="Stop Audio"
+                               style={{
+                                 cursor: 'pointer'
+                               }}
+                               onClick={handleStop}>
+                                 <CustomStopIcon />
+                               </div>
                          </div>
                        </div>
                    </td>
@@ -736,21 +736,21 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            padding: '4px 2.5px 8px 2.5px'
                          }}>
                             {/* Normal Speed */}
-                            <div 
-                              className="button-3d-base button-3d-standard button-3d-green"
-                              role="button" 
-                              aria-label="Normal Speed" 
-                              title="Normal Speed"
-                              style={{
-                                cursor: 'pointer'
-                              }}
-                              onClick={() => handleSpeedChange(1)}>
-                                <CustomSpeedNormalIcon />
-                              </div>
+                             <div 
+                               className="button-3d-base button-3d-60px-square button-3d-green"
+                               role="button" 
+                               aria-label="Normal Speed" 
+                               title="Normal Speed"
+                               style={{
+                                 cursor: 'pointer'
+                               }}
+                               onClick={() => handleSpeedChange(1)}>
+                                 <CustomSpeedNormalIcon />
+                               </div>
                             
                             {/* Fast Speed */}
                             <div 
-                              className="button-3d-base button-3d-standard button-3d-green"
+                              className="button-3d-base button-3d-60px-square button-3d-green"
                               role="button" 
                               aria-label="Fast Speed" 
                               title="Fast Speed"
@@ -763,7 +763,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                             
                             {/* Faster Speed */}
                             <div 
-                              className="button-3d-base button-3d-standard button-3d-green"
+                              className="button-3d-base button-3d-60px-square button-3d-green"
                               role="button" 
                               aria-label="Faster Speed" 
                               title="Faster Speed"
@@ -776,7 +776,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                             
                              {/* Fastest Speed */}
                              <div 
-                               className="button-3d-base button-3d-standard button-3d-green"
+                               className="button-3d-base button-3d-60px-square button-3d-green"
                                role="button" 
                                aria-label="Fastest Speed" 
                                title="Fastest Speed"
@@ -835,41 +835,41 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            display: 'flex',
                            gap: '8px'
                          }}>
-                          <div 
-                            className={`button-3d-base button-3d-standard ${isMaxSize ? 'opacity-60' : ''}`}
-                            role="button" 
-                            aria-label="Increase Font Size" 
-                            title="Increase Font Size"
-                            style={{
-                              cursor: isMaxSize ? 'not-allowed' : 'pointer',
-                              opacity: isMaxSize ? 0.6 : 1,
-                              pointerEvents: isMaxSize ? 'none' : 'auto'
-                            }}
-                            onClick={!isMaxSize ? handleScaleIncrease : undefined}>
-                              <CachedIcon 
-                                iconCode="!CO-AVB.png" 
-                                fallback={<span className="text-xs">!CO-AVB.png</span>}
-                                style={{ height: '60px', width: '60px', objectFit: 'contain' }}
-                             />
-                          </div>
-                          
                            <div 
-                             className={`button-3d-base button-3d-standard ${isMinSize ? 'opacity-60' : ''}`}
+                             className={`button-3d-base button-3d-60px-square ${isMaxSize ? 'opacity-60' : ''}`}
                              role="button" 
-                             aria-label="Decrease Font Size" 
-                             title="Decrease Font Size"
+                             aria-label="Increase Font Size" 
+                             title="Increase Font Size"
                              style={{
-                               cursor: isMinSize ? 'not-allowed' : 'pointer',
-                               opacity: isMinSize ? 0.6 : 1,
-                               pointerEvents: isMinSize ? 'none' : 'auto'
+                               cursor: isMaxSize ? 'not-allowed' : 'pointer',
+                               opacity: isMaxSize ? 0.6 : 1,
+                               pointerEvents: isMaxSize ? 'none' : 'auto'
                              }}
-                             onClick={!isMinSize ? handleScaleDecrease : undefined}>
+                             onClick={!isMaxSize ? handleScaleIncrease : undefined}>
                                <CachedIcon 
-                                 iconCode="!CO-AVS.jpg" 
-                                 fallback={<span className="text-xs">!CO-AVS.jpg</span>}
+                                 iconCode="!CO-AVB.png" 
+                                 fallback={<span className="text-xs">!CO-AVB.png</span>}
                                  style={{ height: '60px', width: '60px', objectFit: 'contain' }}
                               />
                            </div>
+                          
+                            <div 
+                              className={`button-3d-base button-3d-60px-square ${isMinSize ? 'opacity-60' : ''}`}
+                              role="button" 
+                              aria-label="Decrease Font Size" 
+                              title="Decrease Font Size"
+                              style={{
+                                cursor: isMinSize ? 'not-allowed' : 'pointer',
+                                opacity: isMinSize ? 0.6 : 1,
+                                pointerEvents: isMinSize ? 'none' : 'auto'
+                              }}
+                              onClick={!isMinSize ? handleScaleDecrease : undefined}>
+                                <CachedIcon 
+                                  iconCode="!CO-AVS.jpg" 
+                                  fallback={<span className="text-xs">!CO-AVS.jpg</span>}
+                                  style={{ height: '60px', width: '60px', objectFit: 'contain' }}
+                               />
+                            </div>
                          </div>
                        </div>
                         </div>
@@ -888,16 +888,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 marginTop: '0px',
                 marginBottom: '8px'
               }}>
-                <div 
-                  className="button-3d-base button-3d-standard"
-                  role="button" 
-                  aria-label="Close SuperAV" 
-                  title="Close SuperAV"
-                  style={{
-                    cursor: 'pointer',
-                    width: '60px',
-                    height: '60px',
-                    zIndex: 1000,
+                 <div 
+                   className="button-3d-base button-3d-60px-square"
+                   role="button" 
+                   aria-label="Close SuperAV" 
+                   title="Close SuperAV"
+                   style={{
+                     cursor: 'pointer',
+                     zIndex: 1000,
                     position: 'relative'
                   }}
                   onClick={onClose}>
