@@ -566,11 +566,12 @@ export const SuperAV: React.FC<SuperAVProps> = ({
             {/* Fixed-height text containers at top with brown border */}
             <div style={{ 
               textAlign: 'center',
-              border: '2px solid #D2691E',
+              border: '2px solid #fdba74',
               borderRadius: '8px',
-              padding: '8px',
+              padding: '6px',
               marginBottom: '8px',
-              width: '244px'
+              width: '240px',
+              boxSizing: 'border-box'
             }}>
               {/* Title container - Fixed height for 3 lines */}
               <div style={{
