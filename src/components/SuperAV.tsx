@@ -654,7 +654,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                             alignItems: 'center',
                             justifyContent: 'center'
                           }}>
-                           <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Controls">Playbook Controls</b>
+                           <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Control">Playback Control</b>
                          </div>
                          
                          {/* Control buttons row */}
