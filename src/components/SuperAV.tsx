@@ -758,7 +758,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                             borderTopLeftRadius: '9px',
                             borderTopRightRadius: '9px'
                           }}>
-                           <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
+                           <b style={{color: '#8B4513', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
                          </div>
                         
                           {/* Speed buttons row */}
