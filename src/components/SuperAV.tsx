@@ -632,7 +632,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                     fontSize: '12px',
                     fontFamily: FONT_FUN,
                     fontWeight: 'bold',
-                    color: '#9ca3af',
+                    color: '#8B4513',
                     margin: '0',
                     padding: '0',
                     lineHeight: '1.2',
