@@ -641,7 +641,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
                 {/* Row 1 & 2: Playback Controls Header and Buttons - Merged */}
                 <tr>
-                   <td colSpan={4} className="playback-controls-section">
+                   <td colSpan={4} className="playback-controls-section" style={{ border: 'none', boxShadow: 'none', background: 'transparent', padding: 0 }}>
                       <div className="playback-controls-inner">
                           {/* Header */}
                            <div style={{
@@ -729,9 +729,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                    <td colSpan={4} style={{
                      padding: '3px', 
                      background: '#D4C89A',
-                     border: '2px solid #8B4513',
-                     borderRadius: '12px',
-                     boxShadow: '0 4px 8px rgba(139, 69, 19, 0.3)'
+                     borderRadius: '12px'
                     }}>
                        <div style={{
                          backgroundColor: '#D4C89A',
@@ -739,15 +737,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                          height: '100%'
                         }}>
                           {/* Header */}
-                          <div style={{
-                            height: '27px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            borderBottom: '1px solid rgba(255,255,255,0.2)',
-                            borderTopLeftRadius: '9px',
-                            borderTopRightRadius: '9px'
-                          }}>
+                           <div style={{
+                             height: '27px',
+                             display: 'flex',
+                             alignItems: 'center',
+                             justifyContent: 'center',
+                             borderTopLeftRadius: '9px',
+                             borderTopRightRadius: '9px'
+                           }}>
                            <b style={{color: '#8B4513', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
                          </div>
                         
@@ -814,13 +811,11 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
                   {/* Row 7: Font Size Control Section - New Flex Layout */}
                    <tr>
-                        <td colSpan={4} height={62} style={{
-                          padding: '3px', 
-                          background: '#D4C89A',
-                          border: '2px solid #8B4513',
-                          borderRadius: '12px',
-                          boxShadow: '0 4px 8px rgba(139, 69, 19, 0.3)'
-                       }}>
+                         <td colSpan={4} height={62} style={{
+                           padding: '3px', 
+                           background: '#D4C89A',
+                           borderRadius: '12px'
+                        }}>
                            <div style={{
                              padding: '0px 2px',
                              backgroundColor: '#D4C89A',
