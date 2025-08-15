@@ -13,7 +13,7 @@ import About from "./pages/About";
 import Story from "./pages/Story";
 import Library from "./pages/Library";
 import Writing from "./pages/Writing";
-import HowTo from "./pages/HowTo";
+import Guide from "./pages/Guide";
 import HelpGpa from "./pages/HelpGpa";
 
 import MakeComment from "./pages/MakeComment";
@@ -90,7 +90,7 @@ function App() {
                       <Route path="/story/:storyCode" element={<Story />} />
                       <Route path="/library" element={<Library />} />
                       <Route path="/writing" element={<Writing />} />
-                      <Route path="/guide" element={<HowTo />} />
+                      <Route path="/guide" element={<Guide />} />
                       <Route path="/help-gpa" element={<HelpGpa />} />
                       
                       <Route path="/make-comment" element={<MakeComment />} />

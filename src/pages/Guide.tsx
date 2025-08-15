@@ -4,7 +4,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import { WebTextBox } from "@/components/WebTextBox";
 import { supabase } from "@/integrations/supabase/client";
 
-const HowTo = () => {
+const Guide = () => {
 
   const webtextBoxes = [
     {
@@ -157,4 +157,4 @@ const HowTo = () => {
   );
 };
 
-export default HowTo;
+export default Guide;
