@@ -570,11 +570,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                padding: '0'
              }}>
                <div className="phone-screen">
-                 {/* Phone Status Bar with Notch */}
-                 <div className="phone-status-bar">
-                   <div className="phone-notch"></div>
-                 </div>
-                 
                  {/* Title container */}
                  <div style={{
                    minHeight: '60px',
