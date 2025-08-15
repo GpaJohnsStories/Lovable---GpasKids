@@ -435,6 +435,38 @@
   border-radius: 9px;
 }
 
+/* Phone Screen Design for SuperAV Top Group */
+.phone-screen {
+  background: linear-gradient(180deg, #ffffff, #f9f6f2);
+  border-radius: 20px;
+  padding: 16px;
+  margin: 8px;
+  box-shadow: 
+    inset 0 0 0 2px hsl(var(--light-brown)), 
+    0 4px 12px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.phone-status-bar {
+  height: 24px;
+  background: #3B2A1A;
+  border-bottom: 1px solid #6B4C36;
+  border-radius: 12px 12px 0 0;
+  margin: -16px -16px 12px -16px;
+  position: relative;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: #2A1F15;
+  border-radius: 2px;
+}
+
 /* CSS Cleanup: Utility Classes for Inline Styles */
 @layer utilities {
   /* Font Family Utilities */

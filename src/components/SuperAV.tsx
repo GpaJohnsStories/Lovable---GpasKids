@@ -564,88 +564,83 @@ export const SuperAV: React.FC<SuperAVProps> = ({
             border: '1px solid #fed7aa',
           }}>
             {/* Fixed-height text containers at top with brown border */}
-            <div style={{ 
-              textAlign: 'center',
-              border: '2px solid #8B4513',
-              borderRadius: '8px',
-              padding: '0',
-              marginBottom: '8px',
-              width: '248px',
-              boxSizing: 'border-box'
-            }}>
-              {/* Title container - Fixed height for 3 lines */}
-              <div style={{
-                height: '72px', // 3 lines at 20px font with 1.2 line-height
-                overflow: 'hidden',
-                marginBottom: '1px',
-                textAlign: 'center'
-              }}>
-                <h3 style={{
-                  all: 'unset',
-                  boxSizing: 'border-box',
-                  display: 'block',
-                  fontSize: '20px',
-                  fontWeight: 'bold',
-                  fontStyle: 'italic',
-                  fontFamily: FONT_FUN,
-                  color: '#F97316',
-                  margin: '0',
-                  padding: '0',
-                  lineHeight: '1.2',
-                  wordWrap: 'break-word',
-                  overflowWrap: 'break-word',
-                  textAlign: 'center'
-                }}>{title}</h3>
-              </div>
-              
-              {/* Author container - Fixed height for 2 lines */}
-              {showAuthor && author && (
-                <div style={{
-                  height: '33.6px', // 2 lines at 14px font with 1.2 line-height
-                  overflow: 'hidden',
-                  marginBottom: '1px',
-                  textAlign: 'center'
-                }}>
-                  <p style={{
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'block',
-                    fontSize: '14px',
-                    fontFamily: FONT_FUN,
-                    color: '#6b7280',
-                    margin: '0',
-                    padding: '0',
-                    lineHeight: '1.2',
-                    wordWrap: 'break-word',
-                    overflowWrap: 'break-word',
-                    textAlign: 'center'
-                  }}>by {author}</p>
-                </div>
-              )}
-              
-              {/* "Being read by" container - Fixed height for 1 line */}
-              {voiceName && (
-                <div style={{
-                  height: '14.4px', // 1 line at 12px font with 1.2 line-height
-                  overflow: 'hidden',
-                  textAlign: 'center'
-                }}>
-                  <p style={{
-                    all: 'unset',
-                    boxSizing: 'border-box',
-                    display: 'block',
-                    fontSize: '12px',
-                    fontFamily: FONT_FUN,
-                    fontWeight: 'bold',
-                    color: '#8B4513',
-                    margin: '0',
-                    padding: '0',
-                    lineHeight: '1.2',
-                    textAlign: 'center'
-                  }}>Being read by {voiceName} from OpenAI</p>
-                </div>
-              )}
-            </div>
+             <div className="playback-controls-section" style={{
+               width: '248px',
+               marginBottom: '8px',
+               padding: '0'
+             }}>
+               <div className="phone-screen">
+                 {/* Phone Status Bar with Notch */}
+                 <div className="phone-status-bar">
+                   <div className="phone-notch"></div>
+                 </div>
+                 
+                 {/* Title container */}
+                 <div style={{
+                   minHeight: '60px',
+                   display: 'flex',
+                   alignItems: 'center',
+                   justifyContent: 'center',
+                   marginBottom: '12px'
+                 }}>
+                    <h3 style={{
+                      all: 'unset',
+                      boxSizing: 'border-box',
+                      display: '-webkit-box',
+                      fontSize: '18px',
+                      fontWeight: 'bold',
+                      fontStyle: 'italic',
+                      fontFamily: FONT_FUN,
+                      color: '#2d1810',
+                      margin: '0',
+                      padding: '0',
+                      lineHeight: '1.3',
+                      wordWrap: 'break-word',
+                      overflowWrap: 'break-word',
+                      textAlign: 'center',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden'
+                    }}>{title}</h3>
+                 </div>
+                 
+                 {/* Author and Voice Info */}
+                 <div style={{
+                   borderTop: '1px solid rgba(184, 134, 11, 0.3)',
+                   paddingTop: '8px',
+                   textAlign: 'center'
+                 }}>
+                   {showAuthor && author && (
+                     <p style={{
+                       all: 'unset',
+                       boxSizing: 'border-box',
+                       display: 'block',
+                       fontSize: '14px',
+                       fontFamily: FONT_FUN,
+                       color: '#5d4e37',
+                       margin: '0 0 4px 0',
+                       padding: '0',
+                       lineHeight: '1.2'
+                     }}>by {author}</p>
+                   )}
+                   
+                   {voiceName && (
+                     <p style={{
+                       all: 'unset',
+                       boxSizing: 'border-box',
+                       display: 'block',
+                       fontSize: '12px',
+                       fontFamily: FONT_FUN,
+                       fontWeight: 'bold',
+                       color: '#8B4513',
+                       margin: '0',
+                       padding: '0',
+                       lineHeight: '1.2'
+                     }}>Being read by {voiceName} from OpenAI</p>
+                   )}
+                 </div>
+               </div>
+             </div>
             
             {/* Table with simplified positioning */}
             <div style={{flex: 1, display: 'flex', alignItems: 'center', marginTop: '1px'}}>
