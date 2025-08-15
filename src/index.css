@@ -423,10 +423,10 @@
 
 /* SuperAV Playback Controls Section */
 .playback-controls-section {
-  background: #D4C89A;
+  background: linear-gradient(180deg, #ffffff, #f9f6f2);
   border: 2px solid #8B4513;
   border-radius: 12px;
-  padding: 3px;
+  padding: 8px;
   box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
 }
 

@@ -566,12 +566,10 @@ export const SuperAV: React.FC<SuperAVProps> = ({
             {/* Fixed-height text containers at top with brown border */}
              <div className="playback-controls-section" style={{
                width: '252px',
-               marginBottom: '0px',
-               padding: '0px'
+               marginBottom: '0px'
              }}>
-               <div className="phone-screen">
-                 {/* Title container */}
-                 <div style={{
+               {/* Title container */}
+               <div style={{
                    minHeight: '60px',
                    display: 'flex',
                    alignItems: 'center',
@@ -635,9 +633,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                    )}
                  </div>
                </div>
-             </div>
-            
-            {/* Table with simplified positioning */}
+             
+             {/* Table with simplified positioning */}
             <div style={{flex: 1, display: 'flex', alignItems: 'center', marginTop: '1px'}}>
               <table width={244} cellSpacing={0} cellPadding={0} border={0}>
               <tbody>
