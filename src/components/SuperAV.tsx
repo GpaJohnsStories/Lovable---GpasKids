@@ -833,7 +833,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                       }}>
                            <div style={{
                              padding: '0px 2px',
-                             backgroundColor: '#e3d5ec',
+                             backgroundColor: '#D4C89A',
                              borderRadius: '9px',
                              height: '100%'
                            }}>
