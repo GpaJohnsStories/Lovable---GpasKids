@@ -763,12 +763,11 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                         
                           {/* Speed buttons row */}
                            <div style={{
-                             height: '80px',
+                             height: '60px',
                              display: 'grid',
-                             gridTemplateColumns: '120px 60px 60px 60px',
-                             gap: '8px',
+                             gridTemplateColumns: '120px 60px 60px',
+                             gap: '0px',
                              alignItems: 'center',
-                             padding: '4px 2.5px 8px 2.5px',
                              borderBottomLeftRadius: '9px',
                              borderBottomRightRadius: '9px'
                            }}>
