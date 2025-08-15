@@ -572,7 +572,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
               <div style={{
                 height: '72px', // 3 lines at 20px font with 1.2 line-height
                 overflow: 'hidden',
-                marginBottom: '1px'
+                marginBottom: '1px',
+                textAlign: 'center'
               }}>
                 <h3 style={{
                   all: 'unset',
@@ -587,7 +588,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                   padding: '0',
                   lineHeight: '1.2',
                   wordWrap: 'break-word',
-                  overflowWrap: 'break-word'
+                  overflowWrap: 'break-word',
+                  textAlign: 'center'
                 }}>{title}</h3>
               </div>
               
@@ -596,7 +598,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 <div style={{
                   height: '33.6px', // 2 lines at 14px font with 1.2 line-height
                   overflow: 'hidden',
-                  marginBottom: '1px'
+                  marginBottom: '1px',
+                  textAlign: 'center'
                 }}>
                   <p style={{
                     all: 'unset',
@@ -609,7 +612,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                     padding: '0',
                     lineHeight: '1.2',
                     wordWrap: 'break-word',
-                    overflowWrap: 'break-word'
+                    overflowWrap: 'break-word',
+                    textAlign: 'center'
                   }}>by {author}</p>
                 </div>
               )}
@@ -618,7 +622,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
               {voiceName && (
                 <div style={{
                   height: '14.4px', // 1 line at 12px font with 1.2 line-height
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  textAlign: 'center'
                 }}>
                   <p style={{
                     all: 'unset',
@@ -631,8 +636,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                     margin: '0',
                     padding: '0',
                     lineHeight: '1.2',
-                    whiteSpace: 'nowrap',
-                    textOverflow: 'ellipsis'
+                    textAlign: 'center'
                   }}>Being read by {voiceName} from OpenAI</p>
                 </div>
               )}
