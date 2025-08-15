@@ -909,30 +909,31 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                      <td style={{
                        border: 'none',
                        background: 'transparent',
-                       padding: '2px 0 0 0',
+                       padding: '0',
                        textAlign: 'center',
                        display: 'flex',
                        justifyContent: 'center',
-                       alignItems: 'center'
+                       alignItems: 'center',
+                       width: '100%'
                      }}>
-                       <div 
-                         className="button-3d-base"
-                         role="button" 
-                         aria-label="Close SuperAV" 
-                         title="Close SuperAV"
-                         style={{
-                           cursor: 'pointer',
-                           height: '60px',
-                           width: '244px',
-                           display: 'flex',
-                           alignItems: 'center',
-                           justifyContent: 'center'
-                         }}
+                        <div 
+                          className="button-3d-base"
+                          role="button" 
+                          aria-label="Close SuperAV" 
+                          title="Close SuperAV"
+                          style={{
+                            cursor: 'pointer',
+                            height: '60px',
+                            width: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
                          onClick={onClose}>
                           <CachedIcon 
                             iconCode="!CO-CLS.jpg" 
                             fallback={<span className="text-xs">!CO-CLS.jpg</span>}
-                            style={{ height: '60px', width: '244px', objectFit: 'fill' }}
+                            style={{ height: '60px', width: '100%', objectFit: 'fill' }}
                           />
                        </div>
                      </td>
