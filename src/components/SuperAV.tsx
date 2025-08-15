@@ -660,7 +660,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                             borderTopLeftRadius: '9px',
                             borderTopRightRadius: '9px'
                           }}>
-                           <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Control">Playback Control</b>
+                           <b style={{color: '#8B4513', fontFamily: FONT_FUN}} aria-label="Playback Control">Playback Control</b>
                          </div>
                          
                           {/* Control buttons row */}
