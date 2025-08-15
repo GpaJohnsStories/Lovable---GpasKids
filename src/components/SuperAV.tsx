@@ -586,7 +586,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                       fontWeight: 'bold',
                       fontStyle: 'italic',
                       fontFamily: FONT_FUN,
-                      color: '#654321',
+                       color: '#F97316',
                       margin: '0',
                       padding: '0',
                       lineHeight: '1.3',
