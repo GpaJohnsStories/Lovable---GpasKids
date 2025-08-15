@@ -756,7 +756,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              display: 'grid',
                              gridTemplateColumns: '120px 60px 60px',
                              gap: '0px',
-                             alignItems: 'center',
+                             alignItems: 'start',
                              borderBottomLeftRadius: '9px',
                              borderBottomRightRadius: '9px'
                            }}>
