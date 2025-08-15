@@ -567,7 +567,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
              <div className="playback-controls-section" style={{
                width: '252px',
                marginBottom: '0px',
-               padding: '1px'
+               padding: '0px'
              }}>
                <div className="phone-screen">
                  {/* Title container */}
