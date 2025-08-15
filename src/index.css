@@ -434,8 +434,6 @@
   background: #D4C89A;
   border-radius: 9px;
 }
-  height: 100%;
-}
 
 /* CSS Cleanup: Utility Classes for Inline Styles */
 @layer utilities {
