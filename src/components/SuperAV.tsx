@@ -562,7 +562,27 @@ export const SuperAV: React.FC<SuperAVProps> = ({
             padding: '8px',
             backdropFilter: 'blur(4px)',
             border: '1px solid #fed7aa',
+            backgroundImage: 'url(/lovable-uploads/paper-texture.png)',
+            backgroundRepeat: 'repeat',
+            backgroundSize: '200px 200px',
+            backgroundBlendMode: 'soft-light',
+            position: 'relative',
           }}>
+            {/* Paper texture overlay */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage: 'url(/lovable-uploads/paper-texture.png)',
+              backgroundRepeat: 'repeat',
+              backgroundSize: '200px 200px',
+              opacity: 0.15,
+              mixBlendMode: 'soft-light',
+              pointerEvents: 'none',
+              borderRadius: '12px',
+            }} />
             {/* Fixed-height text containers at top with brown border */}
              <div className="playback-controls-section" style={{
                width: '252px',
