@@ -899,41 +899,44 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                />
                             </div>
                          </div>
-                       </div>
                         </div>
+                         </div>
+                      </td>
+                   </tr>
+                   
+                   {/* New borderless close button row */}
+                   <tr>
+                     <td style={{
+                       border: 'none',
+                       background: 'transparent',
+                       padding: '2px 0 0 0',
+                       textAlign: 'center'
+                     }}>
+                       <div 
+                         className="button-3d-base"
+                         role="button" 
+                         aria-label="Close SuperAV" 
+                         title="Close SuperAV"
+                         style={{
+                           cursor: 'pointer',
+                           height: '60px',
+                           width: '230px',
+                           display: 'flex',
+                           alignItems: 'center',
+                           justifyContent: 'center'
+                         }}
+                         onClick={onClose}>
+                         <CachedIcon 
+                           iconCode="!CO-CLS.jpg" 
+                           fallback={<span className="text-xs">!CO-CLS.jpg</span>}
+                           style={{ height: '60px', width: '230px', objectFit: 'contain' }}
+                         />
+                       </div>
                      </td>
-                  </tr>
+                   </tr>
                 </tbody>
              </table>
              </div>
-             
-              {/* Close button with simplified positioning */}
-              <div style={{
-                all: 'unset',
-                boxSizing: 'border-box',
-                display: 'flex',
-                justifyContent: 'center',
-                 marginTop: '1px',
-                 marginBottom: '1px'
-              }}>
-                 <div 
-                   className="button-3d-base button-3d-60px-square"
-                   role="button" 
-                   aria-label="Close SuperAV" 
-                   title="Close SuperAV"
-                   style={{
-                     cursor: 'pointer',
-                     zIndex: 1000,
-                    position: 'relative'
-                  }}
-                  onClick={onClose}>
-                   <CachedIcon 
-                     iconCode="!CO-CLS.jpg" 
-                     fallback={<span className="text-xs">!CO-CLS.jpg</span>}
-                     style={{ height: '60px', width: '60px', objectFit: 'contain' }}
-                   />
-                </div>
-              </div>
            </div>
          </div>
          
