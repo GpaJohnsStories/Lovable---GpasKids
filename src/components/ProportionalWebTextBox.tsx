@@ -7,6 +7,7 @@ import { SuperAV } from '@/components/SuperAV';
 import { ArrowRight } from 'lucide-react';
 import { FontScaleStep, DEFAULT_FONT_SCALE, getTypographyClasses } from '@/utils/fontScaleUtils';
 import { createSafeHtml } from "@/utils/xssProtection";
+import { useNavigate } from 'react-router-dom';
 
 interface ProportionalWebTextBoxProps {
   webtextCode: string;
@@ -23,6 +24,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   title,
   id
 }) => {
+  const navigate = useNavigate();
   const { lookupStoryByCode } = useStoryCodeLookup();
   const [webtext, setWebtext] = useState<any>(null);
   const [iconUrl, setIconUrl] = useState<string>('');
@@ -119,17 +121,23 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
             {/* Photo in left column on tablets+ */}
             {mainPhoto && (
               <div className="w-fit flex-shrink-0">
-                <div className="group relative">
+                <button 
+                  onClick={() => navigate('/guide')}
+                  className="group relative block transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 p-1 border-2 border-emerald-700"
+                  style={{
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+                  }}
+                >
                   <img
                     src={mainPhoto.url}
                     alt={mainPhoto.alt}
-                    className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded-lg border-2 border-emerald-600 shadow-lg cursor-pointer transition-transform hover:scale-105"
+                    className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded border border-emerald-800"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 rounded-lg"></div>
-                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-xs text-emerald-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    {mainPhoto.alt}
+                  <div className="absolute bottom-2 left-2 right-2 bg-emerald-900/80 backdrop-blur-sm rounded px-2 py-1 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center font-bold">
+                    Click to visit Buddy's Guide!
                   </div>
-                </div>
+                </button>
               </div>
             )}
 
