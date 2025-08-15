@@ -123,6 +123,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
               <div className="w-fit flex-shrink-0">
                 <button 
                   onClick={() => navigate('/guide')}
+                  title={mainPhoto.alt}
                   className="group relative block transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 p-1 border-2 border-emerald-700"
                   style={{
                     boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
