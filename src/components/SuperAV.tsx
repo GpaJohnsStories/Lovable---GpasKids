@@ -734,12 +734,12 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 <tr>
                    <td colSpan={4} style={{
                      padding: '3px', 
-                     background: 'linear-gradient(145deg, #D2691E, #B8641A)',
+                     background: '#B19CD9',
                      borderRadius: '12px',
-                     boxShadow: '0 4px 8px rgba(210, 105, 30, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
+                     boxShadow: '0 4px 8px rgba(177, 156, 217, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
                    }}>
                       <div style={{
-                        backgroundColor: '#D2691E',
+                        backgroundColor: '#B19CD9',
                         borderRadius: '9px',
                         height: '100%'
                        }}>
