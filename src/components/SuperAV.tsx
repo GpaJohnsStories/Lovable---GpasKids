@@ -700,7 +700,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
                 {/* Row 3: 1 cell, 27px height, transparent */}
                 <tr>
-                  <td colSpan={4} height={10} style={{backgroundColor: 'transparent', border: 'none'}}></td>
+                   <td colSpan={4} height={1} style={{backgroundColor: 'transparent', border: 'none'}}></td>
                 </tr>
 
                 {/* Row 4 & 5: Playbook Speed Section - Using same style as word size controls */}
@@ -793,7 +793,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
                   {/* Row 6: Font Size Section Gap */}
                   <tr>
-                    <td colSpan={4} height={10} style={{backgroundColor: 'transparent', border: 'none'}}></td>
+                    <td colSpan={4} height={1} style={{backgroundColor: 'transparent', border: 'none'}}></td>
                   </tr>
 
                   {/* Row 7: Font Size Control Section - New Flex Layout */}
@@ -885,8 +885,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 boxSizing: 'border-box',
                 display: 'flex',
                 justifyContent: 'center',
-                marginTop: '2px',
-                marginBottom: '8px'
+                 marginTop: '1px',
+                 marginBottom: '0px'
               }}>
                  <div 
                    className="button-3d-base button-3d-60px-square"
