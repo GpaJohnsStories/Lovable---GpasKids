@@ -885,7 +885,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 boxSizing: 'border-box',
                 display: 'flex',
                 justifyContent: 'center',
-                marginTop: '12px',
+                marginTop: '0px',
                 marginBottom: '8px'
               }}>
                 <div 
