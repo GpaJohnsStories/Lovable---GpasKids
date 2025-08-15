@@ -741,13 +741,13 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                      background: '#D4C89A',
                      border: '2px solid #8B4513',
                      borderRadius: '12px',
-                     boxShadow: '0 4px 8px rgba(212, 200, 154, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
-                   }}>
-                      <div style={{
-                        backgroundColor: '#D4C89A',
-                        borderRadius: '9px',
-                        height: '100%'
-                       }}>
+                     boxShadow: '0 4px 8px rgba(139, 69, 19, 0.3)'
+                    }}>
+                       <div style={{
+                         backgroundColor: '#D4C89A',
+                         borderRadius: '9px',
+                         height: '100%'
+                        }}>
                           {/* Header */}
                           <div style={{
                             height: '27px',
@@ -835,11 +835,11 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                   {/* Row 7: Font Size Control Section - New Flex Layout */}
                    <tr>
                         <td colSpan={4} height={62} style={{
-                          padding: '1px', 
-                          background: 'linear-gradient(145deg, #814d2e, #6b3f24)',
+                          padding: '3px', 
+                          background: '#D4C89A',
                           border: '2px solid #8B4513',
                           borderRadius: '12px',
-                          boxShadow: '0 4px 8px rgba(129, 77, 46, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
+                          boxShadow: '0 4px 8px rgba(139, 69, 19, 0.3)'
                        }}>
                            <div style={{
                              padding: '0px 2px',
