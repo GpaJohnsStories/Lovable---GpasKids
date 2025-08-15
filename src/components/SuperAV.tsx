@@ -798,7 +798,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
                   {/* Row 7: Font Size Control Section - New Flex Layout */}
                    <tr>
-                       <td colSpan={4} height={66} style={{
+                       <td colSpan={4} height={62} style={{
                          padding: '1px', 
                          background: 'linear-gradient(145deg, #814d2e, #6b3f24)',
                          borderRadius: '12px',
