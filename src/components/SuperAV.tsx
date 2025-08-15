@@ -738,13 +738,13 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 <tr>
                    <td colSpan={4} style={{
                      padding: '3px', 
-                     background: '#B19CD9',
+                     background: '#D4C89A',
                      border: '2px solid #FFD700',
                      borderRadius: '12px',
-                     boxShadow: '0 4px 8px rgba(177, 156, 217, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
+                     boxShadow: '0 4px 8px rgba(212, 200, 154, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
                    }}>
                       <div style={{
-                        backgroundColor: '#B19CD9',
+                        backgroundColor: '#D4C89A',
                         borderRadius: '9px',
                         height: '100%'
                        }}>
