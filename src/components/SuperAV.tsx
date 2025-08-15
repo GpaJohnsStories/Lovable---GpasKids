@@ -770,7 +770,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                    cursor: 'pointer',
                                    width: '120px',
                                    height: '60px',
-                                   borderRadius: '6px'
+                                   borderRadius: '0px'
                                  }}
                                 onClick={() => handleSpeedChange(1)}>
                                   <CustomSpeedNormalIcon />
