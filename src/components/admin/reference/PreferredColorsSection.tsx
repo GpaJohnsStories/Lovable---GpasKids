@@ -42,6 +42,13 @@ const PreferredColorsSection = () => {
         { name: "Warm Glow", hex: "#FFD70080", description: "Button glow effects (50% opacity)" },
         { name: "Gentle Highlight", hex: "#FFF8DC80", description: "Hover highlights (50% opacity)" }
       ]
+    },
+    {
+      title: "Other",
+      colors: [
+        { name: "Muted Gold", hex: "#D4C89A", description: "Warm background for contrast with chocolate elements" },
+        { name: "Soft Lilac", hex: "#e3d5ec", description: "Subtle background color with good pop effect" }
+      ]
     }
   ];
 
