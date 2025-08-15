@@ -762,7 +762,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            }}>
                              {/* Normal Speed - exact same size as Change Word Size label */}
                               <div 
-                                className="button-3d-base button-3d-standard button-3d-green"
+                                className="button-3d-base button-3d-60px-square button-3d-green"
                                 role="button" 
                                 aria-label="Normal Speed" 
                                 title="Normal Speed"
