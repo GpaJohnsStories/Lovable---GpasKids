@@ -42,7 +42,7 @@ const CustomArrowIcon: React.FC = () => {
 
 // Custom Play Icon Component
 const CustomPlayIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV1');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV1.jpg');
   
   if (isLoading) return <div className="w-full h-full" />;
   if (error || !iconUrl) return <span>!CO-AV1</span>;
@@ -58,7 +58,7 @@ const CustomPlayIcon: React.FC = () => {
 
 // Custom Pause Icon Component
 const CustomPauseIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV2');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV2.jpg');
   
   if (isLoading) return <div className="w-full h-full" />;
   if (error || !iconUrl) return <span>!CO-AV2</span>;
@@ -74,7 +74,7 @@ const CustomPauseIcon: React.FC = () => {
 
 // Custom Restart Icon Component
 const CustomRestartIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV3');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV3.jpg');
   
   if (isLoading) return <div className="w-full h-full" />;
   if (error || !iconUrl) return <span>!CO-AV3</span>;
@@ -90,7 +90,7 @@ const CustomRestartIcon: React.FC = () => {
 
 // Custom Stop Icon Component
 const CustomStopIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV4');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV4.jpg');
   
   if (isLoading) return <div className="w-full h-full" />;
   if (error || !iconUrl) return <span>!CO-AV4</span>;
@@ -106,7 +106,7 @@ const CustomStopIcon: React.FC = () => {
 
 // Custom Speed Icon Components
 const CustomSpeedNormalIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV5');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV5.jpg');
   
   if (isLoading) return <div className="w-full h-full" />;
   if (error || !iconUrl) return <span>!CO-AV5</span>;
@@ -121,7 +121,7 @@ const CustomSpeedNormalIcon: React.FC = () => {
 };
 
 const CustomSpeedFastIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV6');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV6.jpg');
   
   if (isLoading) return <div className="w-full h-full" />;
   if (error || !iconUrl) return <span>!CO-AV6</span>;
@@ -136,7 +136,7 @@ const CustomSpeedFastIcon: React.FC = () => {
 };
 
 const CustomSpeedFasterIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV7');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV7.jpg');
   
   if (isLoading) return <div className="w-full h-full" />;
   if (error || !iconUrl) return <span>!CO-AV7</span>;
@@ -151,7 +151,7 @@ const CustomSpeedFasterIcon: React.FC = () => {
 };
 
 const CustomSpeedFastestIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV8');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-AV8.jpg');
   
   if (isLoading) return <div className="w-full h-full" />;
   if (error || !iconUrl) return <span>!CO-AV8</span>;
