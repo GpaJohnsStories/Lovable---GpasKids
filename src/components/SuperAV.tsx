@@ -563,60 +563,83 @@ export const SuperAV: React.FC<SuperAVProps> = ({
             backdropFilter: 'blur(4px)',
             border: '1px solid #fed7aa',
           }}>
-            {/* Title and Author at top */}
-            <div style={{
-              all: 'unset',
-              boxSizing: 'border-box',
-              display: 'block',
+            {/* Fixed-height text containers at top */}
+            <div style={{ 
               textAlign: 'center',
-              marginBottom: '16px',
-              paddingTop: '8px',
+              paddingTop: '2px'
             }}>
-              <h3 style={{
-                all: 'unset',
-                boxSizing: 'border-box',
-                display: 'block',
-                fontSize: '20px',
-                fontWeight: 'bold',
-                fontStyle: 'italic',
-                fontFamily: FONT_FUN,
-                color: '#F97316',
-                margin: '0',
-                padding: '0',
-                lineHeight: '1.2',
-              }}>{title}</h3>
-              {showAuthor && author && (
-                <p style={{
+              {/* Title container - Fixed height for 3 lines */}
+              <div style={{
+                height: '72px', // 3 lines at 20px font with 1.2 line-height
+                overflow: 'hidden',
+                marginBottom: '1px'
+              }}>
+                <h3 style={{
                   all: 'unset',
                   boxSizing: 'border-box',
                   display: 'block',
-                  fontSize: '14px',
-                  fontFamily: FONT_FUN,
-                  color: '#6b7280',
-                  marginTop: '4px',
-                  margin: '4px 0 0 0',
-                  padding: '0',
-                }}>by {author}</p>
-              )}
-              {voiceName && (
-                <p style={{
-                  all: 'unset',
-                  boxSizing: 'border-box',
-                  display: 'block',
-                  fontSize: '12px',
-                  fontFamily: FONT_FUN,
+                  fontSize: '20px',
                   fontWeight: 'bold',
-                  color: '#9ca3af',
-                  marginTop: '4px',
-                  margin: '4px 0 0 0',
+                  fontStyle: 'italic',
+                  fontFamily: FONT_FUN,
+                  color: '#F97316',
+                  margin: '0',
                   padding: '0',
-                }}>Being read by {voiceName} from OpenAI</p>
+                  lineHeight: '1.2',
+                  wordWrap: 'break-word',
+                  overflowWrap: 'break-word'
+                }}>{title}</h3>
+              </div>
+              
+              {/* Author container - Fixed height for 2 lines */}
+              {showAuthor && author && (
+                <div style={{
+                  height: '33.6px', // 2 lines at 14px font with 1.2 line-height
+                  overflow: 'hidden',
+                  marginBottom: '1px'
+                }}>
+                  <p style={{
+                    all: 'unset',
+                    boxSizing: 'border-box',
+                    display: 'block',
+                    fontSize: '14px',
+                    fontFamily: FONT_FUN,
+                    color: '#6b7280',
+                    margin: '0',
+                    padding: '0',
+                    lineHeight: '1.2',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word'
+                  }}>by {author}</p>
+                </div>
+              )}
+              
+              {/* "Being read by" container - Fixed height for 1 line */}
+              {voiceName && (
+                <div style={{
+                  height: '14.4px', // 1 line at 12px font with 1.2 line-height
+                  overflow: 'hidden'
+                }}>
+                  <p style={{
+                    all: 'unset',
+                    boxSizing: 'border-box',
+                    display: 'block',
+                    fontSize: '12px',
+                    fontFamily: FONT_FUN,
+                    fontWeight: 'bold',
+                    color: '#9ca3af',
+                    margin: '0',
+                    padding: '0',
+                    lineHeight: '1.2',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis'
+                  }}>Being read by {voiceName} from OpenAI</p>
+                </div>
               )}
             </div>
             
-            
-            {/* Table */}
-            <div style={{flex: 1, display: 'flex', alignItems: 'center', marginTop: '16px'}}>
+            {/* Table with simplified positioning */}
+            <div style={{flex: 1, display: 'flex', alignItems: 'center', marginTop: '1px'}}>
               <table width={244} cellSpacing={0} cellPadding={0} border={0}>
               <tbody>
 
@@ -879,14 +902,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
              </table>
              </div>
              
-              {/* Close button positioned below font size buttons */}
+              {/* Close button with simplified positioning */}
               <div style={{
                 all: 'unset',
                 boxSizing: 'border-box',
                 display: 'flex',
                 justifyContent: 'center',
-                 marginTop: '-2px',
-                 marginBottom: '0px'
+                 marginTop: '1px',
+                 marginBottom: '1px'
               }}>
                  <div 
                    className="button-3d-base button-3d-60px-square"
