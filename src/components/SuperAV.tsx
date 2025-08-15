@@ -610,13 +610,13 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                   marginTop: '4px',
                   margin: '4px 0 0 0',
                   padding: '0',
-                }}><br />Being read by {voiceName} from OpenAI</p>
+                }}>Being read by {voiceName} from OpenAI</p>
               )}
             </div>
             
             
             {/* Table */}
-            <div style={{flex: 1, display: 'flex', alignItems: 'center'}}>
+            <div style={{flex: 1, display: 'flex', alignItems: 'center', paddingTop: '2px'}}>
               <table width={244} cellSpacing={0} cellPadding={0} border={0}>
               <tbody>
 
