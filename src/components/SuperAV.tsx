@@ -897,7 +897,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                     cursor: 'pointer',
                     width: '60px',
                     height: '60px',
-                    zIndex: -1,
+                    zIndex: 1000,
                     position: 'relative'
                   }}
                   onClick={onClose}>
