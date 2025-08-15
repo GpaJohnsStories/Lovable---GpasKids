@@ -651,24 +651,28 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 <tr>
                    <td colSpan={4} className="playback-controls-section">
                       <div className="playback-controls-inner">
-                         {/* Header */}
+                          {/* Header */}
                           <div style={{
                             height: '27px',
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center'
+                            justifyContent: 'center',
+                            borderTopLeftRadius: '9px',
+                            borderTopRightRadius: '9px'
                           }}>
                            <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Control">Playback Control</b>
                          </div>
                          
-                         {/* Control buttons row */}
-                         <div style={{
-                           height: '65px',
-                           display: 'flex',
-                           alignItems: 'center',
-                           justifyContent: 'space-between',
-                           padding: '4px 2.5px 8px 2.5px'
-                         }}>
+                          {/* Control buttons row */}
+                          <div style={{
+                            height: '65px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '4px 2.5px 8px 2.5px',
+                            borderBottomLeftRadius: '9px',
+                            borderBottomRightRadius: '9px'
+                          }}>
                            {/* Play Button */}
                             <div 
                               className="button-3d-base button-3d-60px-square button-3d-green"
@@ -744,25 +748,29 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                         borderRadius: '9px',
                         height: '100%'
                        }}>
-                         {/* Header */}
-                         <div style={{
-                           height: '27px',
-                           display: 'flex',
-                           alignItems: 'center',
-                           justifyContent: 'center',
-                           borderBottom: '1px solid rgba(255,255,255,0.2)'
-                         }}>
+                          {/* Header */}
+                          <div style={{
+                            height: '27px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderBottom: '1px solid rgba(255,255,255,0.2)',
+                            borderTopLeftRadius: '9px',
+                            borderTopRightRadius: '9px'
+                          }}>
                            <b style={{color: 'white', fontFamily: FONT_FUN}} aria-label="Playback Speed">Playback Speed</b>
                          </div>
                         
-                         {/* Speed buttons row */}
-                         <div style={{
-                           height: '55px',
-                           display: 'flex',
-                           alignItems: 'center',
-                           justifyContent: 'space-between',
-                           padding: '4px 2.5px 8px 2.5px'
-                         }}>
+                          {/* Speed buttons row */}
+                          <div style={{
+                            height: '55px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '4px 2.5px 8px 2.5px',
+                            borderBottomLeftRadius: '9px',
+                            borderBottomRightRadius: '9px'
+                          }}>
                             {/* Normal Speed */}
                              <div 
                                className="button-3d-base button-3d-60px-square button-3d-green"
@@ -845,7 +853,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              justifyContent: 'space-evenly',
                              height: '100%',
                              width: '100%',
-                             gap: '8px'
+                             gap: '8px',
+                             borderRadius: '9px'
                             }}>
                           {/* Left: Size Icon */}
                           <div style={{
