@@ -810,18 +810,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                 <CustomSpeedFasterIcon />
                               </div>
                             
-                             {/* Fastest Speed */}
-                             <div 
-                               className="button-3d-base button-3d-60px-square button-3d-green"
-                               role="button" 
-                               aria-label="Fastest Speed" 
-                               title="Fastest Speed"
-                               style={{
-                                 cursor: 'pointer'
-                               }}
-                               onClick={() => handleSpeedChange(2)}>
-                                 <CustomSpeedFastestIcon />
-                               </div>
                         </div>
                       </div>
                      </td>
