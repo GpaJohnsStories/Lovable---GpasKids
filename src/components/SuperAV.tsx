@@ -735,6 +735,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                    <td colSpan={4} style={{
                      padding: '3px', 
                      background: '#B19CD9',
+                     border: '1px solid #FFD700',
                      borderRadius: '12px',
                      boxShadow: '0 4px 8px rgba(177, 156, 217, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
                    }}>
@@ -825,12 +826,13 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
                   {/* Row 7: Font Size Control Section - New Flex Layout */}
                    <tr>
-                       <td colSpan={4} height={62} style={{
-                         padding: '1px', 
-                         background: 'linear-gradient(145deg, #814d2e, #6b3f24)',
-                         borderRadius: '12px',
-                         boxShadow: '0 4px 8px rgba(129, 77, 46, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
-                      }}>
+                        <td colSpan={4} height={62} style={{
+                          padding: '1px', 
+                          background: 'linear-gradient(145deg, #814d2e, #6b3f24)',
+                          border: '1px solid #FFD700',
+                          borderRadius: '12px',
+                          boxShadow: '0 4px 8px rgba(129, 77, 46, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
+                       }}>
                            <div style={{
                              padding: '0px 2px',
                              backgroundColor: '#D4C89A',
