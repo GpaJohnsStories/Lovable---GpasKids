@@ -523,7 +523,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
               maxHeight: 'none',
               
               // Appearance
-              background: 'linear-gradient(to bottom, #fffbeb, #fed7aa)',
+              background: '#D4C89A',
               border: '4px solid #fdba74',
               borderRadius: '16px',
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
@@ -557,7 +557,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
             height: 'calc(100% - 8px)',
             width: 'calc(100% - 8px)',
             margin: '0 auto',
-            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            backgroundColor: '#D4C89A',
             borderRadius: '12px',
             padding: '16px',
             backdropFilter: 'blur(4px)',
