@@ -739,7 +739,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                    <td colSpan={4} style={{
                      padding: '3px', 
                      background: '#D4C89A',
-                     border: '2px solid #FFD700',
+                     border: '2px solid #8B4513',
                      borderRadius: '12px',
                      boxShadow: '0 4px 8px rgba(212, 200, 154, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
                    }}>
@@ -837,7 +837,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                         <td colSpan={4} height={62} style={{
                           padding: '1px', 
                           background: 'linear-gradient(145deg, #814d2e, #6b3f24)',
-                          border: '2px solid #FFD700',
+                          border: '2px solid #8B4513',
                           borderRadius: '12px',
                           boxShadow: '0 4px 8px rgba(129, 77, 46, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.2)'
                        }}>
