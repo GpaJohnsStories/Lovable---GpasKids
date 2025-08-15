@@ -766,11 +766,11 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                 role="button" 
                                 aria-label="Normal Speed" 
                                 title="Normal Speed"
-                                style={{
-                                  cursor: 'pointer',
-                                  width: '120px',
-                                  height: '80px'
-                                }}
+                                 style={{
+                                   cursor: 'pointer',
+                                   width: '120px',
+                                   height: '60px'
+                                 }}
                                 onClick={() => handleSpeedChange(1)}>
                                   <CustomSpeedNormalIcon />
                                 </div>
