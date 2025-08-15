@@ -98,16 +98,16 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   if (isSysWel) {
     return (
       <>
-        <div id={id} className="rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative" style={{ backgroundColor: '#F0FFF0', border: '4px solid #2E7D32' }}>
+        <div id={id} className="bg-emerald-50 border-4 border-emerald-600 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
           {/* Top Right Control Box - only show if audio is available */}
           {webtext?.audio_url && (
             <div className="absolute z-[5]" style={{ top: -1, right: -1 }}>
-              <div className="bg-white/90 rounded-lg px-2 py-1 shadow-lg" style={{ border: '4px solid #2E7D32' }}>
+              <div className="bg-white/90 border-4 border-emerald-600 rounded-lg px-2 py-1 shadow-lg">
                 <div className="flex items-center justify-end gap-2">
-                  <div className="text-base font-handwritten font-bold leading-tight" style={{ color: '#1B5E20' }}>
+                  <div className="text-base font-handwritten font-bold text-emerald-900 leading-tight">
                     Click to listen or<br />change word size
                   </div>
-                  <ChevronRight className="w-8 h-8 font-bold" strokeWidth={4} style={{ color: '#2E7D32' }} />
+                  <ChevronRight className="w-8 h-8 text-emerald-800 font-bold" strokeWidth={4} />
                   <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
                 </div>
               </div>
@@ -123,11 +123,10 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                   <img
                     src={mainPhoto.url}
                     alt={mainPhoto.alt}
-                    className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded-lg border-2 shadow-lg cursor-pointer transition-transform hover:scale-105"
-                    style={{ borderColor: '#2E7D32' }}
+                    className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded-lg border-2 border-emerald-600 shadow-lg cursor-pointer transition-transform hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 rounded-lg"></div>
-                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ color: '#2E7D32' }}>
+                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-xs text-emerald-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     {mainPhoto.alt}
                   </div>
                 </div>
@@ -139,7 +138,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
               {/* Title section */}
               <div className="mb-4">
                 <div className="flex items-start gap-3 justify-start">
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold leading-tight break-words text-left" style={{ color: '#1B5E20' }}>
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-emerald-900 leading-tight break-words text-left">
                     {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
                   </h1>
                 </div>
@@ -148,8 +147,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
               {/* Content below title with proportional scaling */}
               <div className="flex-1 min-w-0">
                 <div 
-                  className="proportional-content leading-relaxed break-words"
-                  style={{ ...getScaleStyles(), color: '#1B5E20' }}
+                  className="proportional-content text-emerald-900 leading-relaxed break-words"
+                  style={getScaleStyles()}
                   dangerouslySetInnerHTML={getContent()}
                 />
               </div>
@@ -158,7 +157,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
 
           {/* Bottom right: Webtext code */}
           <div className="flex justify-end">
-            <div className="rounded px-3 py-1 text-sm font-mono" style={{ backgroundColor: '#E8F5E8', color: '#2E7D32', border: '1px solid #4CAF50' }}>
+            <div className="bg-emerald-100/70 rounded px-3 py-1 text-sm font-mono text-emerald-800 border border-emerald-500">
               {webtextCode}
             </div>
           </div>
