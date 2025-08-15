@@ -566,7 +566,9 @@ export const SuperAV: React.FC<SuperAVProps> = ({
             {/* Fixed-height text containers at top with brown border */}
              <div className="playback-controls-section" style={{
                width: '252px',
-               marginBottom: '0px'
+               marginBottom: '0px',
+               border: '2px solid #5A3E2B',
+               boxShadow: 'inset 0 0 0 2px #A67C52'
              }}>
                {/* Title container */}
                <div style={{
