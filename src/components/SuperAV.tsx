@@ -896,7 +896,9 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                   style={{
                     cursor: 'pointer',
                     width: '75px',
-                    height: '75px'
+                    height: '75px',
+                    zIndex: -1,
+                    position: 'relative'
                   }}
                   onClick={onClose}>
                    <CachedIcon 
