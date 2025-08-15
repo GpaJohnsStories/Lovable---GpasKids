@@ -568,7 +568,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                width: '252px',
                marginBottom: '0px',
                border: '2px solid #5A3E2B',
-               boxShadow: 'inset 0 0 0 2px #A67C52, 0 4px 12px rgba(0,0,0,0.2)'
+               boxShadow: 'inset 0 0 0 2px #A67C52'
              }}>
                {/* Title container */}
                <div style={{
