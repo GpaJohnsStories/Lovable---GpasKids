@@ -559,7 +559,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
             margin: '0 auto',
             backgroundColor: '#D4C89A',
             borderRadius: '12px',
-            padding: '16px',
+            padding: '8px',
             backdropFilter: 'blur(4px)',
             border: '1px solid #fed7aa',
           }}>
