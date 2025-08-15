@@ -135,6 +135,9 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     alt={mainPhoto.alt}
                     className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded border border-emerald-800"
                   />
+                  <div className="absolute bottom-2 left-2 right-2 bg-emerald-900/90 backdrop-blur-sm rounded-lg px-3 py-2 text-sm text-yellow-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center font-bold shadow-lg border border-emerald-700" style={{ fontSize: '14pt', fontFamily: 'Comic Sans MS, cursive, sans-serif' }}>
+                    {mainPhoto.alt}
+                  </div>
                 </button>
               </div>
             )}
