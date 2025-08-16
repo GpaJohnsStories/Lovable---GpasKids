@@ -3,6 +3,7 @@
  */
 
 import { createSafeHtml } from "@/utils/xssProtection";
+import { wrapParagraphs } from "@/utils/textUtils";
 
 interface StoryContentRendererProps {
   content?: string;
@@ -18,7 +19,9 @@ const StoryContentRenderer = ({
   className = ""
 }: StoryContentRendererProps) => {
   if (content) {
-    const safeHtml = createSafeHtml(content);
+    // Wrap plain text in paragraphs if needed
+    const processedContent = wrapParagraphs(content);
+    const safeHtml = createSafeHtml(processedContent);
     return (
       <div 
         className={`story-content ${className}`}

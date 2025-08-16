@@ -52,3 +52,28 @@ export const isWithinWordLimit = (text: string, wordLimit: number): boolean => {
   const wordCount = countWords(text);
   return wordCount <= wordLimit;
 };
+
+/**
+ * Wraps plain text paragraphs in <p> tags if they aren't already
+ * @param content - The content to process
+ * @returns Content with paragraphs properly wrapped
+ */
+export const wrapParagraphs = (content: string): string => {
+  if (!content || content.trim() === '') return content;
+  
+  // If content already has HTML tags, don't modify it
+  if (content.includes('<') && content.includes('>')) {
+    return content;
+  }
+  
+  // Split by double line breaks and wrap each paragraph in <p> tags
+  const paragraphs = content.split(/\n\s*\n/).filter(p => p.trim() !== '');
+  
+  if (paragraphs.length === 0) return content;
+  if (paragraphs.length === 1 && !content.includes('\n\n')) {
+    // Single paragraph without double line breaks
+    return `<p>${paragraphs[0].trim()}</p>`;
+  }
+  
+  return paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+};

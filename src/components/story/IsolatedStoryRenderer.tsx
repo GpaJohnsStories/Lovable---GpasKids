@@ -1,5 +1,6 @@
 import React from 'react';
 import { createSafeHtml } from "@/utils/xssProtection";
+import { wrapParagraphs } from "@/utils/textUtils";
 
 interface IsolatedStoryRendererProps {
   content?: string;
@@ -40,6 +41,9 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
         // If parsing fails, use the content as-is
       }
     }
+    
+    // Wrap plain text in paragraphs if needed
+    processedContent = wrapParagraphs(processedContent);
     
     const safeHtml = createSafeHtml(processedContent);
     

@@ -1,4 +1,5 @@
 import { createSafeHtml } from "@/utils/xssProtection";
+import { wrapParagraphs } from "@/utils/textUtils";
 
 interface SecureStoryContentProps {
   content?: string;
@@ -16,7 +17,9 @@ const SecureStoryContent = ({
   className = "" 
 }: SecureStoryContentProps) => {
   if (content) {
-    const safeHtml = createSafeHtml(content);
+    // Wrap plain text in paragraphs if needed
+    const processedContent = wrapParagraphs(content);
+    const safeHtml = createSafeHtml(processedContent);
     return (
       <div 
         className={`story-content ${className}`}
