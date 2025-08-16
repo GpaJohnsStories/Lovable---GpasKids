@@ -648,10 +648,10 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                {useSysAvx && sysAvx ? (
                  /* SYS-AVX layout with photo and text */
                  <div style={{
-                   padding: '8px',
+                   padding: '4px 8px', // Reduced top/bottom padding from 8px to 4px
                    display: 'flex',
                    flexDirection: 'column',
-                   gap: '8px'
+                   gap: '4px' // Reduced gap from 8px to 4px
                  }}>
                    <div style={{
                      display: 'flex',
@@ -706,7 +706,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                    
                    {/* Second sentence - below buddy at left margin */}
                    <div style={{
-                     marginTop: '8px'
+                     marginTop: '4px' // Reduced from 8px to 4px
                    }}>
                      <div 
                        style={{
