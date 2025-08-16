@@ -1,13 +1,19 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Cookie, Eye, Lock, HardDrive } from "lucide-react";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
+import { AudioButton } from "@/components/AudioButton";
+import { SuperAV } from "@/components/SuperAV";
+import { SuperAVProvider } from "@/contexts/SuperAVContext";
 
 const Privacy = () => {
+  const [showSuperAV, setShowSuperAV] = useState(false);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
+    <SuperAVProvider>
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
       <WelcomeHeader />
       
       <div className="max-w-4xl mx-auto p-6">
@@ -53,6 +59,19 @@ const Privacy = () => {
                 </p>
               </div>
             </div>
+          </div>
+          
+          {/* AudioButton for the top webtext */}
+          <div style={{ 
+            position: 'absolute',
+            top: '8px',
+            left: '8px',
+            zIndex: 10
+          }}>
+            <AudioButton 
+              code="SYS-P2Y"
+              onClick={() => setShowSuperAV(true)}
+            />
           </div>
           
           {/* Web-text code indicator */}
@@ -341,7 +360,18 @@ const Privacy = () => {
       </div>
       
       <CookieFreeFooter />
+      
+      {/* SuperAV Component */}
+      <SuperAV
+        isOpen={showSuperAV}
+        onClose={() => setShowSuperAV(false)}
+        title="Privacy Policy Message"
+        showAuthor={true}
+        author="Grandpa John"
+        audioUrl={undefined} // This will trigger SYS-AVX fallback
+      />
     </div>
+    </SuperAVProvider>
   );
 };
 
