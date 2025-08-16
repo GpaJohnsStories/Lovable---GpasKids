@@ -664,7 +664,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                          flexShrink: 0,
                          maxHeight: '220px' // About half of SuperAV popup height
                        }}>
-                         <img
+                         <img 
                            src={sysAvx.photoUrl}
                            alt={sysAvx.photoAlt || 'Buddy with headphones'}
                            style={{
@@ -677,7 +677,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        </div>
                      )}
                      
-                     {/* Text content wrapping to right and below */}
+                     {/* First sentence - to buddy's right */}
                      <div style={{
                        flex: 1,
                        minWidth: 0 // Allow shrinking
@@ -698,8 +698,34 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            wordWrap: 'break-word',
                            overflowWrap: 'break-word'
                          }}
-                         dangerouslySetInnerHTML={createSafeHtml(sysAvx.content)}
-                       />
+                       >
+                         There is no audio file for this page yet.
+                       </div>
+                     </div>
+                   </div>
+                   
+                   {/* Second sentence - below buddy at left margin */}
+                   <div style={{
+                     marginTop: '8px'
+                   }}>
+                     <div 
+                       style={{
+                         fontSize: `${currentScale === 'xs' ? '12px' : 
+                                    currentScale === 'sm' ? '14px' :
+                                    currentScale === 'base' ? '16px' :
+                                    currentScale === 'lg' ? '18px' :
+                                    currentScale === 'xl' ? '20px' :
+                                    currentScale === '2xl' ? '24px' :
+                                    currentScale === '3xl' ? '30px' :
+                                    currentScale === '4xl' ? '36px' : '16px'}`,
+                         fontFamily: FONT_FUN,
+                         color: '#654321',
+                         lineHeight: '1.4',
+                         wordWrap: 'break-word',
+                         overflowWrap: 'break-word'
+                       }}
+                     >
+                       But your word size buttons below still work just fine.
                      </div>
                    </div>
                  </div>
