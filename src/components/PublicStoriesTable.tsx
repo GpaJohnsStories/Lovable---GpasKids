@@ -3,11 +3,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { BookOpen, ArrowUp, ArrowDown, ChevronDown, Search, X } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { BookOpen, ArrowUp, ArrowDown, ChevronDown, Search, X, Music, Video, Calendar, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { getCategoryShortName } from "@/utils/categoryUtils";
+import { calculateReadingTime } from "@/utils/readingTimeUtils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,9 +23,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'updated_at';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'updated_at' | 'created_at' | 'reading_time' | 'thumbs_up_count';
 type SortDirection = 'asc' | 'desc';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers';
+type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'created_at' | 'reading_time';
+type MediaFilter = 'all' | 'audio' | 'video' | 'both';
 
 interface Story {
   id: string;
@@ -34,6 +38,12 @@ interface Story {
   read_count: number;
   updated_at: string;
   created_at: string;
+  thumbs_up_count: number;
+  thumbs_down_count: number;
+  reading_time_minutes?: number;
+  audio_url?: string;
+  video_url?: string;
+  content?: string;
   tagline?: string;
   excerpt?: string;
   photo_link_1?: string;
@@ -52,6 +62,10 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+  const [sortOption, setSortOption] = useState<SortOption>('read_count');
+  const [groupByAuthor, setGroupByAuthor] = useState(false);
+  const [showCategorySelect, setShowCategorySelect] = useState(false);
+  const [mediaFilter, setMediaFilter] = useState<MediaFilter>('all');
 
   // Debounced search effect
   useEffect(() => {
@@ -65,18 +79,26 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
   }, [localSearchTerm, onSearchChange]);
 
   const { data: stories, isLoading } = useQuery({
-    queryKey: ['public-stories', sortField, sortDirection, categoryFilter, searchTerm],
+    queryKey: ['public-stories', sortField, sortDirection, categoryFilter, searchTerm, mediaFilter, sortOption],
     queryFn: async () => {
       let query = supabase
         .from('stories')
-        .select('id, story_code, title, author, category, read_count, updated_at, created_at, tagline, excerpt, photo_link_1, photo_alt_1, copyright_status')
+        .select('id, story_code, title, author, category, read_count, updated_at, created_at, thumbs_up_count, thumbs_down_count, reading_time_minutes, audio_url, video_url, content, tagline, excerpt, photo_link_1, photo_alt_1, copyright_status')
         .eq('published', 'Y')
-        .not('category', 'in', '("WebText","BioText")')
-        .order(sortField, { ascending: sortDirection === 'asc' });
+        .not('category', 'in', '("WebText","BioText")');
       
       // Apply category filter
       if (categoryFilter !== 'all') {
         query = query.eq('category', categoryFilter);
+      }
+
+      // Apply media filter
+      if (mediaFilter === 'audio') {
+        query = query.not('audio_url', 'is', null);
+      } else if (mediaFilter === 'video') {
+        query = query.not('video_url', 'is', null);
+      } else if (mediaFilter === 'both') {
+        query = query.not('audio_url', 'is', null).not('video_url', 'is', null);
       }
 
       // Apply search filter
@@ -86,6 +108,13 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
           `title.ilike.${searchQuery},content.ilike.${searchQuery},excerpt.ilike.${searchQuery},tagline.ilike.${searchQuery},author.ilike.${searchQuery}`
         );
       }
+
+      // Apply sorting
+      if (sortOption === 'thumbs') {
+        query = query.order('thumbs_up_count', { ascending: false }).order('thumbs_down_count', { ascending: true });
+      } else {
+        query = query.order(sortField, { ascending: sortDirection === 'asc' });
+      }
       
       const { data, error } = await query;
       
@@ -93,10 +122,18 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
       
       // Filter stories based on current time for public library
       const now = new Date();
-      return data.filter(story => {
+      let filteredData = data.filter(story => {
         const storyDate = new Date(story.updated_at);
         return storyDate <= now;
       });
+
+      // Calculate reading time for stories that don't have it
+      filteredData = filteredData.map(story => ({
+        ...story,
+        reading_time_minutes: story.reading_time_minutes || Math.max(1, Math.ceil((story.content?.length || 0) / 1000))
+      }));
+
+      return filteredData;
     },
   });
 
@@ -107,6 +144,32 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
       setSortField(field);
       // Start with descending for read_count, ascending for others
       setSortDirection(field === 'read_count' ? 'desc' : 'asc');
+    }
+  };
+
+  const handleSortOptionChange = (option: SortOption) => {
+    setSortOption(option);
+    setGroupByAuthor(option === 'author');
+    setShowCategorySelect(option === 'category');
+    
+    if (option === 'thumbs') {
+      setSortField('thumbs_up_count');
+      setSortDirection('desc');
+    } else if (option === 'author') {
+      setSortField('author');
+      setSortDirection('asc');
+    } else if (option === 'reading_time') {
+      setSortField('reading_time_minutes' as SortField);
+      setSortDirection('asc');
+    } else {
+      setSortField(option as SortField);
+      setSortDirection(option === 'read_count' || option === 'updated_at' || option === 'created_at' ? 'desc' : 'asc');
+    }
+  };
+
+  const toggleSortDirection = () => {
+    if (sortOption !== 'thumbs' && sortOption !== 'author') {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     }
   };
 
@@ -174,32 +237,158 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
     }
   };
 
+  const getSortOptionDisplayName = (option: SortOption) => {
+    switch (option) {
+      case 'story_code': return 'Story Code';
+      case 'title': return 'Title';
+      case 'author': return 'Author (Grouped)';
+      case 'category': return 'Category';
+      case 'read_count': return 'Read Count';
+      case 'thumbs': return 'Thumbs Up/Down';
+      case 'updated_at': return 'Updated';
+      case 'created_at': return 'Created (Newest)';
+      case 'reading_time': return 'Reading Time';
+      default: return 'Sort by...';
+    }
+  };
+
+  const getMediaFilterDisplayName = (filter: MediaFilter) => {
+    switch (filter) {
+      case 'all': return 'All Stories';
+      case 'audio': return 'Has Audio';
+      case 'video': return 'Has Video';
+      case 'both': return 'Has Audio & Video';
+      default: return 'Media Filter';
+    }
+  };
+
+  // Group stories by author when in author mode
+  const groupedStories = groupByAuthor && stories ? 
+    stories.reduce((groups, story) => {
+      const author = story.author;
+      if (!groups[author]) {
+        groups[author] = [];
+      }
+      groups[author].push(story);
+      return groups;
+    }, {} as Record<string, typeof stories>) : null;
+
   return (
     <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 xl:px-12">
       <TooltipProvider>
         <Card>
         <CardContent className="p-6">
-          {/* Search Input */}
+          {/* Search and Sort Controls */}
           <div className="mb-6">
-            <div className="relative w-full sm:w-80 md:w-96 lg:w-[600px] xl:w-[700px]">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search stories by title, content, author, or keywords..."
-                value={localSearchTerm}
-                onChange={(e) => setLocalSearchTerm(e.target.value)}
-                className="pl-10 pr-10 py-2 text-sm border-2 focus:border-green-700 rounded-lg placeholder:font-bold search-input-amber"
-              />
-              {searchTerm && (
-                <Button
-                  onClick={handleClearSearch}
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              )}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              {/* Search Input */}
+              <div className="relative flex-1 sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search stories by title, content, author, or keywords..."
+                  value={localSearchTerm}
+                  onChange={(e) => setLocalSearchTerm(e.target.value)}
+                  className="pl-10 pr-10 py-2 text-sm border-2 focus:border-green-700 rounded-lg placeholder:font-bold search-input-amber"
+                />
+                {searchTerm && (
+                  <Button
+                    onClick={handleClearSearch}
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+
+              {/* Sort Controls */}
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                {/* Sort By Dropdown */}
+                <div className="flex items-center gap-2">
+                  <Select value={sortOption} onValueChange={handleSortOptionChange}>
+                    <SelectTrigger className="w-full sm:w-48 bg-background border-2 border-green-700 focus:border-green-800 z-50">
+                      <SelectValue placeholder="Sort by..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-2 border-green-700 z-50">
+                      <SelectItem value="story_code">Story Code</SelectItem>
+                      <SelectItem value="title">Title</SelectItem>
+                      <SelectItem value="author">Author (Grouped)</SelectItem>
+                      <SelectItem value="category">Category</SelectItem>
+                      <SelectItem value="read_count">Read Count</SelectItem>
+                      <SelectItem value="thumbs">Thumbs Up/Down</SelectItem>
+                      <SelectItem value="updated_at">Updated</SelectItem>
+                      <SelectItem value="created_at">Created (Newest)</SelectItem>
+                      <SelectItem value="reading_time">Reading Time</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  {/* Sort Direction Toggle */}
+                  {sortOption !== 'thumbs' && sortOption !== 'author' && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={toggleSortDirection}
+                          variant="outline"
+                          size="sm"
+                          className="p-2 border-2 border-green-700 hover:bg-green-50"
+                        >
+                          {sortDirection === 'asc' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Toggle sort direction</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                </div>
+
+                {/* Category Filter (when category sort is selected) */}
+                {showCategorySelect && (
+                  <Select value={categoryFilter} onValueChange={(value: CategoryFilter) => setCategoryFilter(value)}>
+                    <SelectTrigger className="w-full sm:w-40 bg-background border-2 border-green-700 z-50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-2 border-green-700 z-50">
+                      {categoryOptions.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {getCategoryDisplayName(option)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+
+                {/* Media Filter */}
+                <Select value={mediaFilter} onValueChange={(value: MediaFilter) => setMediaFilter(value)}>
+                  <SelectTrigger className="w-full sm:w-40 bg-background border-2 border-green-700 z-50">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-2 border-green-700 z-50">
+                    <SelectItem value="all">All Stories</SelectItem>
+                    <SelectItem value="audio">
+                      <div className="flex items-center gap-2">
+                        <Music className="h-4 w-4" />
+                        Has Audio
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="video">
+                      <div className="flex items-center gap-2">
+                        <Video className="h-4 w-4" />
+                        Has Video
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="both">
+                      <div className="flex items-center gap-2">
+                        <Music className="h-4 w-4" />
+                        <Video className="h-4 w-4" />
+                        Both
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             
             {/* Search Results Counter */}
@@ -223,6 +412,44 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
             <div className="text-center py-8 text-black-system">
               <BookOpen className="h-8 w-8 animate-spin text-green-700 mx-auto mb-4" />
               <p>Loading stories...</p>
+            </div>
+          ) : groupByAuthor && groupedStories ? (
+            // Grouped by Author View
+            <div className="space-y-6">
+              {Object.entries(groupedStories)
+                .sort(([a], [b]) => a.localeCompare(b))
+                .map(([author, authorStories]) => (
+                  <div key={author} className="border border-green-700 rounded-lg overflow-hidden">
+                    <div className="bg-green-700 text-white p-4">
+                      <h3 className="text-lg font-bold">{author}</h3>
+                      <p className="text-sm opacity-90">{authorStories.length} stories</p>
+                    </div>
+                    <div className="p-4">
+                      <div className="grid gap-3">
+                        {authorStories
+                          .sort((a, b) => a.title.localeCompare(b.title))
+                          .map((story) => (
+                            <div key={story.id} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                              <div className="flex items-center gap-3">
+                                <span className="font-mono text-sm font-bold text-green-700">{story.story_code}</span>
+                                <Link 
+                                  to={`/story/${story.story_code}`} 
+                                  className="font-medium hover:text-red-600 transition-colors"
+                                >
+                                  {story.title}
+                                </Link>
+                              </div>
+                              <div className="flex items-center gap-2 text-sm text-gray-600">
+                                <span>{story.read_count} reads</span>
+                                {story.audio_url && <Music className="h-4 w-4 text-green-600" />}
+                                {story.video_url && <Video className="h-4 w-4 text-blue-600" />}
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </div>
           ) : (
             <div className="border border-green-700 rounded-lg overflow-hidden">
@@ -362,23 +589,31 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                              </Tooltip>
                           </div>
                         </TableCell>
-                       <TableCell className="text-black-system table-cell-top">
-                         <div className="details-column-stack">
-                           <div className="details-stack-item">
-                             <div className={`${getCategoryBadgeColor(story.category)} text-white text-xs px-2 py-1 rounded text-center mb-1`}>
-                               {getCategoryShortName(story.category)}
-                             </div>
-                           </div>
-                           <div className="details-stack-item">
-                             <div className="text-xs text-gray-600 font-medium">Reads</div>
-                             <div className="text-sm font-bold text-black-system">{story.read_count}</div>
-                           </div>
-                           <div className="details-stack-item">
-                             <div className="text-xs text-gray-600 font-medium">Updated</div>
-                             <div className="text-xs text-black-system">{new Date(story.updated_at).toLocaleDateString()}</div>
-                           </div>
-                         </div>
-                       </TableCell>
+                        <TableCell className="text-black-system table-cell-top">
+                          <div className="details-column-stack">
+                            <div className="details-stack-item">
+                              <div className={`${getCategoryBadgeColor(story.category)} text-white text-xs px-2 py-1 rounded text-center mb-1`}>
+                                {getCategoryShortName(story.category)}
+                              </div>
+                            </div>
+                            <div className="details-stack-item">
+                              <div className="text-xs text-gray-600 font-medium">Reads</div>
+                              <div className="text-sm font-bold text-black-system">{story.read_count}</div>
+                            </div>
+                            <div className="details-stack-item">
+                              <div className="text-xs text-gray-600 font-medium">👍 {story.thumbs_up_count} 👎 {story.thumbs_down_count}</div>
+                            </div>
+                            <div className="details-stack-item">
+                              <div className="text-xs text-gray-600 font-medium">Updated</div>
+                              <div className="text-xs text-black-system">{new Date(story.updated_at).toLocaleDateString()}</div>
+                            </div>
+                            <div className="details-stack-item flex gap-1 justify-center">
+                              {story.audio_url && <Music className="h-4 w-4 text-green-600" />}
+                              {story.video_url && <Video className="h-4 w-4 text-blue-600" />}
+                              {story.reading_time_minutes && <div className="flex items-center gap-1"><Clock className="h-3 w-3 text-gray-500" /><span className="text-xs text-gray-500">{story.reading_time_minutes}m</span></div>}
+                            </div>
+                          </div>
+                        </TableCell>
                      </TableRow>
                   ))}
                 </TableBody>
