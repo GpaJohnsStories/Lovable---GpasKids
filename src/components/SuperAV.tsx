@@ -4,6 +4,8 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RefreshCw } from "lucide-react";
 import { useSuperAVContext } from '@/contexts/SuperAVContext';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
+import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
+import { createSafeHtml } from '@/utils/xssProtection';
 import { 
   FontScaleStep, 
   DEFAULT_FONT_SCALE, 
@@ -285,8 +287,20 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [isPlaying, setIsPlaying] = useState(false);
-  const [playbackRate, setPlaybackRate] = useState(1);
+  const [playbackRate, setPlaybackRate] = useState(0.5); // Default to normal speed (0.5)
   const audioRef = useRef<HTMLAudioElement>(null);
+  
+  // SYS-AVX fallback state
+  const [useSysAvx, setUseSysAvx] = useState(false);
+  const [sysAvx, setSysAvx] = useState<{
+    title: string;
+    content: string;
+    audioUrl: string;
+    photoUrl?: string;
+    photoAlt?: string;
+  } | null>(null);
+  
+  const { lookupStoryByCode } = useStoryCodeLookup();
   const dialogRef = useRef<HTMLDivElement>(null);
 
   // Register/unregister with context when isOpen changes
@@ -295,12 +309,53 @@ export const SuperAV: React.FC<SuperAVProps> = ({
       superAVContext.registerInstance(instanceId, onClose);
     } else {
       superAVContext.unregisterInstance(instanceId);
+      // Reset SYS-AVX state when closing
+      setUseSysAvx(false);
+      setSysAvx(null);
     }
 
     return () => {
       superAVContext.unregisterInstance(instanceId);
     };
   }, [isOpen, instanceId, onClose, superAVContext]);
+
+  // Load SYS-AVX when needed (no audio URL provided)
+  useEffect(() => {
+    if (isOpen && !audioUrl) {
+      console.log('🔧 No audio URL provided, looking up SYS-AVX fallback');
+      lookupStoryByCode('SYS-AVX', true).then(result => {
+        if (result.found && result.story?.audio_url) {
+          console.log('✅ SYS-AVX found with audio:', result.story);
+          setSysAvx({
+            title: result.story.title || 'SYS-AVX',
+            content: result.story.content || '',
+            audioUrl: result.story.audio_url,
+            photoUrl: result.story.photo_link_1,
+            photoAlt: result.story.photo_alt_1 || 'Buddy with headphones'
+          });
+          setUseSysAvx(true);
+        } else {
+          console.warn('⚠️ SYS-AVX not found or missing audio, keeping normal UI');
+        }
+      });
+    } else if (isOpen && audioUrl) {
+      // Reset SYS-AVX state when we have a regular audio URL
+      setUseSysAvx(false);
+      setSysAvx(null);
+    }
+  }, [isOpen, audioUrl, lookupStoryByCode]);
+
+  // Auto-play SYS-AVX audio when it becomes available
+  useEffect(() => {
+    if (useSysAvx && sysAvx?.audioUrl && audioRef.current) {
+      console.log('🎵 Auto-playing SYS-AVX audio at speed 0.5');
+      audioRef.current.playbackRate = 0.5;
+      setPlaybackRate(0.5);
+      audioRef.current.play().catch(error => {
+        console.warn('⚠️ Auto-play blocked:', error);
+      });
+    }
+  }, [useSysAvx, sysAvx]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -326,7 +381,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
   // Audio control functions
   const handlePlay = () => {
-    if (audioRef.current && audioUrl) {
+    if (audioRef.current && (audioUrl || sysAvx?.audioUrl)) {
       audioRef.current.play();
       setIsPlaying(true);
     }
@@ -433,7 +488,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
         audio.removeEventListener('play', handlePlay);
       };
     }
-  }, [audioUrl]);
+  }, [audioUrl, sysAvx?.audioUrl]);
 
   
 
@@ -590,70 +645,134 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                border: '2px solid #5A3E2B',
                boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)'
              }}>
-               {/* Title container */}
-               <div style={{
-                   minHeight: '60px',
-                   display: 'flex',
-                   alignItems: 'center',
-                   justifyContent: 'center',
-                   marginBottom: '12px'
-                 }}>
-                    <h3 style={{
-                      all: 'unset',
-                      boxSizing: 'border-box',
-                      display: '-webkit-box',
-                      fontSize: '18px',
-                      fontWeight: 'bold',
-                      fontStyle: 'italic',
-                      fontFamily: FONT_FUN,
-                       color: '#F97316',
-                      margin: '0',
-                      padding: '0',
-                      lineHeight: '1.3',
-                      wordWrap: 'break-word',
-                      overflowWrap: 'break-word',
-                      textAlign: 'center',
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden'
-                    }}>{title}</h3>
-                 </div>
-                 
-                 {/* Author and Voice Info */}
+               {useSysAvx && sysAvx ? (
+                 /* SYS-AVX layout with photo and text */
                  <div style={{
-                   borderTop: '1px solid rgba(184, 134, 11, 0.3)',
-                   paddingTop: '8px',
-                   textAlign: 'center'
+                   padding: '8px',
+                   display: 'flex',
+                   flexDirection: 'column',
+                   gap: '8px'
                  }}>
-                   {showAuthor && author && (
-                     <p style={{
-                       all: 'unset',
-                       boxSizing: 'border-box',
-                       display: 'block',
-                       fontSize: '14px',
-                       fontFamily: FONT_FUN,
-                       color: '#654321',
-                       margin: '0 0 4px 0',
-                       padding: '0',
-                       lineHeight: '1.2'
-                     }}>by {author}</p>
-                   )}
-                   
-                   {voiceName && (
-                     <p style={{
-                       all: 'unset',
-                       boxSizing: 'border-box',
-                       display: 'block',
-                       fontSize: '12px',
-                       fontFamily: FONT_FUN,
-                       fontWeight: 'bold',
-                       color: '#8B4513',
-                       margin: '0',
-                       padding: '0',
-                       lineHeight: '1.2'
-                     }}>Being read by {voiceName} from OpenAI</p>
-                   )}
+                   <div style={{
+                     display: 'flex',
+                     gap: '8px',
+                     alignItems: 'flex-start'
+                   }}>
+                     {/* Photo in upper-left */}
+                     {sysAvx.photoUrl && (
+                       <div style={{ 
+                         flexShrink: 0,
+                         maxHeight: '220px', // About half of SuperAV popup height
+                         border: '2px solid #5A3E2B'
+                       }}>
+                         <img 
+                           src={sysAvx.photoUrl}
+                           alt={sysAvx.photoAlt || 'Buddy with headphones'}
+                           style={{
+                             maxHeight: '220px',
+                             maxWidth: '120px',
+                             objectFit: 'contain',
+                             display: 'block'
+                           }}
+                         />
+                       </div>
+                     )}
+                     
+                     {/* Text content wrapping to right and below */}
+                     <div style={{
+                       flex: 1,
+                       minWidth: 0 // Allow shrinking
+                     }}>
+                       <div 
+                         style={{
+                           fontSize: `${currentScale === 'xs' ? '12px' : 
+                                      currentScale === 'sm' ? '14px' :
+                                      currentScale === 'base' ? '16px' :
+                                      currentScale === 'lg' ? '18px' :
+                                      currentScale === 'xl' ? '20px' :
+                                      currentScale === '2xl' ? '24px' :
+                                      currentScale === '3xl' ? '30px' :
+                                      currentScale === '4xl' ? '36px' : '16px'}`,
+                           fontFamily: FONT_FUN,
+                           color: '#654321',
+                           lineHeight: '1.4',
+                           wordWrap: 'break-word',
+                           overflowWrap: 'break-word'
+                         }}
+                         dangerouslySetInnerHTML={createSafeHtml(sysAvx.content)}
+                       />
+                     </div>
+                   </div>
                  </div>
+               ) : (
+                 /* Normal title/author layout */
+                 <>
+                   {/* Title container */}
+                   <div style={{
+                       minHeight: '60px',
+                       display: 'flex',
+                       alignItems: 'center',
+                       justifyContent: 'center',
+                       marginBottom: '12px'
+                     }}>
+                        <h3 style={{
+                          all: 'unset',
+                          boxSizing: 'border-box',
+                          display: '-webkit-box',
+                          fontSize: '18px',
+                          fontWeight: 'bold',
+                          fontStyle: 'italic',
+                          fontFamily: FONT_FUN,
+                           color: '#F97316',
+                          margin: '0',
+                          padding: '0',
+                          lineHeight: '1.3',
+                          wordWrap: 'break-word',
+                          overflowWrap: 'break-word',
+                          textAlign: 'center',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
+                        }}>{title}</h3>
+                     </div>
+                     
+                     {/* Author and Voice Info */}
+                     <div style={{
+                       borderTop: '1px solid rgba(184, 134, 11, 0.3)',
+                       paddingTop: '8px',
+                       textAlign: 'center'
+                     }}>
+                       {showAuthor && author && (
+                         <p style={{
+                           all: 'unset',
+                           boxSizing: 'border-box',
+                           display: 'block',
+                           fontSize: '14px',
+                           fontFamily: FONT_FUN,
+                           color: '#654321',
+                           margin: '0 0 4px 0',
+                           padding: '0',
+                           lineHeight: '1.2'
+                         }}>by {author}</p>
+                       )}
+                       
+                       {voiceName && (
+                         <p style={{
+                           all: 'unset',
+                           boxSizing: 'border-box',
+                           display: 'block',
+                           fontSize: '12px',
+                           fontFamily: FONT_FUN,
+                           fontWeight: 'bold',
+                           color: '#8B4513',
+                           margin: '0',
+                           padding: '0',
+                           lineHeight: '1.2'
+                         }}>Being read by {voiceName} from OpenAI</p>
+                       )}
+                     </div>
+                 </>
+               )}
                </div>
              
              {/* Table with simplified positioning */}
@@ -952,15 +1071,15 @@ export const SuperAV: React.FC<SuperAVProps> = ({
            </div>
          </div>
          
-         {/* Hidden audio element */}
-         {audioUrl && (
-           <audio ref={audioRef} preload="metadata">
-             <source src={audioUrl} type="audio/mpeg" />
-             <source src={audioUrl} type="audio/mp3" />
-             <source src={audioUrl} type="audio/wav" />
-             Your browser does not support the audio element.
-            </audio>
-          )}
+          {/* Hidden audio element */}
+          {(audioUrl || sysAvx?.audioUrl) && (
+            <audio ref={audioRef} preload="metadata">
+              <source src={audioUrl || sysAvx?.audioUrl} type="audio/mpeg" />
+              <source src={audioUrl || sysAvx?.audioUrl} type="audio/mp3" />
+              <source src={audioUrl || sysAvx?.audioUrl} type="audio/wav" />
+              Your browser does not support the audio element.
+             </audio>
+           )}
           
           </div>
         </>
