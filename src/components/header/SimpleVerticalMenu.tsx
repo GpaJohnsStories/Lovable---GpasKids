@@ -264,7 +264,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     <>
       {/* Menu Container - positioned below gold button, scrolls with page */}
       <div 
-        className="absolute top-full right-0 z-[60] mt-2"
+        className="absolute top-full right-0 z-[45] mt-2"
         onClick={handleMenuContainerClick}
       >
         <div className="relative">
