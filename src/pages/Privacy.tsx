@@ -105,6 +105,11 @@ const Privacy = () => {
           <CardContent className="space-y-6">
             {/* Zero Cookies Section */}
             <div className="bg-green-50 p-6 rounded-lg relative">
+              {/* Audio Button - Always visible in top right corner */}
+              <div className="absolute top-4 right-4 z-[5]">
+                <AudioButton code="SYS-PR1" onClick={() => setShowSuperAV(true)} />
+              </div>
+              
               <div className="flex items-center space-x-3 mb-4">
                 <Cookie className="h-6 w-6 text-green-600" />
                 <h2 className="text-xl font-semibold text-green-800">Zero Cookies Promise</h2>
@@ -136,6 +141,11 @@ const Privacy = () => {
 
             {/* Cloudflare Security Cookie */}
             <div className="bg-orange-50 p-6 rounded-lg relative">
+              {/* Audio Button - Always visible in top right corner */}
+              <div className="absolute top-4 right-4 z-[5]">
+                <AudioButton code="SYS-PR2" onClick={() => setShowSuperAV(true)} />
+              </div>
+              
               <div className="flex items-center space-x-3 mb-4">
                 <Shield className="h-6 w-6 text-orange-600" />
                 <h2 className="text-xl font-semibold text-orange-800">Cloudflare Security Protection</h2>
@@ -171,6 +181,11 @@ const Privacy = () => {
 
             {/* Local Storage Section */}
             <div className="bg-indigo-50 p-6 rounded-lg relative">
+              {/* Audio Button - Always visible in top right corner */}
+              <div className="absolute top-4 right-4 z-[5]">
+                <AudioButton code="SYS-PR3" onClick={() => setShowSuperAV(true)} />
+              </div>
+              
               <div className="flex items-center space-x-3 mb-4">
                 <HardDrive className="h-6 w-6 text-indigo-600" />
                 <h2 className="text-xl font-semibold text-indigo-800">Local Browser Storage</h2>
@@ -207,6 +222,11 @@ const Privacy = () => {
 
             {/* No Tracking Section */}
             <div className="bg-blue-50 p-6 rounded-lg relative">
+              {/* Audio Button - Always visible in top right corner */}
+              <div className="absolute top-4 right-4 z-[5]">
+                <AudioButton code="SYS-PR4" onClick={() => setShowSuperAV(true)} />
+              </div>
+              
               <div className="flex items-center space-x-3 mb-4">
                 <Eye className="h-6 w-6 text-blue-600" />
                 <h2 className="text-xl font-semibold text-blue-800">No Tracking or Analytics</h2>
@@ -237,6 +257,11 @@ const Privacy = () => {
 
             {/* Data Collection Section */}
             <div className="bg-purple-50 p-6 rounded-lg relative">
+              {/* Audio Button - Always visible in top right corner */}
+              <div className="absolute top-4 right-4 z-[5]">
+                <AudioButton code="SYS-PR5" onClick={() => setShowSuperAV(true)} />
+              </div>
+              
               <div className="flex items-center space-x-3 mb-4">
                 <Shield className="h-6 w-6 text-purple-600" />
                 <h2 className="text-xl font-semibold text-purple-800">What We Don't Collect</h2>
@@ -270,6 +295,11 @@ const Privacy = () => {
 
             {/* Admin Access Section */}
             <div className="bg-amber-50 p-6 rounded-lg relative">
+              {/* Audio Button - Always visible in top right corner */}
+              <div className="absolute top-4 right-4 z-[5]">
+                <AudioButton code="SYS-PR6" onClick={() => setShowSuperAV(true)} />
+              </div>
+              
               <div className="flex items-center space-x-3 mb-4">
                 <Lock className="h-6 w-6 text-amber-600" />
                 <h2 className="text-xl font-semibold text-amber-800">Secure Admin Access</h2>
@@ -308,6 +338,11 @@ const Privacy = () => {
 
             {/* Contact Section */}
             <div className="bg-gray-50 p-6 rounded-lg relative">
+              {/* Audio Button - Always visible in top right corner */}
+              <div className="absolute top-4 right-4 z-[5]">
+                <AudioButton code="SYS-PR7" onClick={() => setShowSuperAV(true)} />
+              </div>
+              
               <h2 className="text-xl font-semibold text-gray-800 mb-4">Questions About Our Privacy Policy?</h2>
               <p className="!text-gray-700 !text-base !font-normal leading-relaxed">
                 If you have any questions about our cookie-free approach or privacy practices, 
@@ -334,6 +369,11 @@ const Privacy = () => {
             </div>
 
             <div className="text-center pt-6 relative">
+              {/* Audio Button - Always visible in top right corner */}
+              <div className="absolute top-4 right-4 z-[5]">
+                <AudioButton code="SYS-PRQ" onClick={() => setShowSuperAV(true)} />
+              </div>
+              
               <p className="text-amber-600 italic">
                 "Privacy is not about hiding something.<br />It's about protecting everything that matters."
               </p>
