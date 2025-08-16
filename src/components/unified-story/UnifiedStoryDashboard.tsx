@@ -272,8 +272,44 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <div className="flex gap-6">
-        {/* Story Details Card - 45% width */}
+        {/* Left Column - 45% width */}
         <div className="w-[45%] space-y-4">
+          {/* Action Buttons Box */}
+          {onStartNew && (
+            <div className="p-3 border-[3px] border-[#16a34a] bg-green-50 rounded-lg">
+              <div className="space-y-2">
+                <button 
+                  type="button" 
+                  onClick={onStartNew}
+                  className="w-full text-sm h-8 px-3 text-white bg-blue-600 border-blue-700 hover:bg-blue-700 rounded-md border flex items-center justify-center gap-2"
+                >
+                  <FileText className="h-3 w-3" />
+                  Start New
+                </button>
+                
+                <button 
+                  type="button" 
+                  onClick={onSaveOnly}
+                  disabled={isSaving || isGeneratingAudio}
+                  className="w-full text-sm h-8 px-3 text-white bg-green-600 border-green-700 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-2"
+                >
+                  <Save className="h-3 w-3" />
+                  {isSaving ? 'Saving...' : 'Save Details & Text Before Audio'}
+                </button>
+                
+                <button 
+                  type="button" 
+                  onClick={onCancel}
+                  className="w-full text-sm h-8 px-3 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-2"
+                >
+                  <X className="h-3 w-3" />
+                  Exit
+                </button>
+              </div>
+            </div>
+          )}
+          
+          {/* Story Details Card */}
           <Card className="border-2" style={{ borderColor: '#16a34a' }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
