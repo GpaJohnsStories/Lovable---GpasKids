@@ -315,9 +315,24 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           {/* Story Details Card */}
           <Card className="border-2" style={{ borderColor: '#16a34a' }}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Story Details
+              <CardTitle className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  Story Details
+                  {formData.category === 'BioText' && (
+                    <span className="text-sm text-gray-600 ml-2">& Biography Information</span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-full">
+                    1A
+                  </span>
+                  {formData.category === 'BioText' && (
+                    <span className="bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-full">
+                      1B
+                    </span>
+                  )}
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -339,9 +354,14 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           {/* Story Photos Section */}
           <Card className="border-2" style={{ borderColor: '#814d2e' }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#814d2e' }}>
-                <Image className="h-5 w-5" />
-                Story Photos
+              <CardTitle className="flex items-center justify-between text-2xl font-semibold" style={{ color: '#814d2e' }}>
+                <div className="flex items-center gap-2">
+                  <Image className="h-5 w-5" />
+                  Story Photos
+                </div>
+                <span className="bg-orange-600 text-white text-sm font-bold px-3 py-1 rounded-full">
+                  2
+                </span>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
@@ -507,22 +527,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          {/* Audio Upload - Condensed */}
-          <Card className="border-2" style={{ borderColor: '#4A7C59' }}>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#4A7C59' }}>
-                <Volume2 className="h-5 w-5" />
-                Audio Upload
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3">
-              <AudioUploadSection
-                audioUrl={formData.audio_url}
-                onAudioUpload={(url) => onInputChange('audio_url', url)}
-                onAudioRemove={() => onInputChange('audio_url', '')}
-              />
-            </CardContent>
-          </Card>
         </div>
 
         {/* Settings & Actions Column - Uses remaining space */}
@@ -635,9 +639,14 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           {/* AI Voice Generation */}
           <Card className="h-fit border-2" style={{ borderColor: '#2563eb' }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#2563eb' }}>
-                <Volume2 className="h-5 w-5" />
-                Create AI Voice File
+              <CardTitle className="flex items-center justify-between text-2xl font-semibold" style={{ color: '#2563eb' }}>
+                <div className="flex items-center gap-2">
+                  <Volume2 className="h-5 w-5" />
+                  Create AI Voice File
+                </div>
+                <span className="bg-purple-600 text-white text-sm font-bold px-3 py-1 rounded-full">
+                  4
+                </span>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
@@ -941,20 +950,39 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          {/* Story Video - Added to Content tab */}
-          <Card className="h-fit border-2" style={{ borderColor: '#9333ea' }}>
+          {/* Optional Uploads Section */}
+          <Card className="h-fit border-2" style={{ borderColor: '#6b7280' }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#9333ea' }}>
-                <Video className="h-5 w-5" />
-                Story Video
+              <CardTitle className="flex items-center justify-between text-xl font-semibold" style={{ color: '#6b7280' }}>
+                <span>Optional</span>
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-3">
-              <StoryVideoUpload
-                videoUrl={formData.video_url}
-                onVideoUpload={onVideoUpload}
-                onVideoRemove={onVideoRemove}
-              />
+            <CardContent className="p-3 space-y-4">
+              {/* Audio Upload */}
+              <div>
+                <h4 className="flex items-center gap-2 text-sm font-semibold mb-2" style={{ color: '#4A7C59' }}>
+                  <Volume2 className="h-4 w-4" />
+                  Audio Upload - Add or Replace
+                </h4>
+                <AudioUploadSection
+                  audioUrl={formData.audio_url}
+                  onAudioUpload={(url) => onInputChange('audio_url', url)}
+                  onAudioRemove={() => onInputChange('audio_url', '')}
+                />
+              </div>
+              
+              {/* Video Upload */}
+              <div>
+                <h4 className="flex items-center gap-2 text-sm font-semibold mb-2" style={{ color: '#9333ea' }}>
+                  <Video className="h-4 w-4" />
+                  Video Upload - Add or Replace
+                </h4>
+                <StoryVideoUpload
+                  videoUrl={formData.video_url}
+                  onVideoUpload={onVideoUpload}
+                  onVideoRemove={onVideoRemove}
+                />
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -963,9 +991,14 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       {/* Story Editor */}
       <Card className="border-2" style={{ borderColor: '#F97316' }}>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F97316' }}>
-            <FileText className="h-5 w-5" />
-            Story Content
+          <CardTitle className="flex items-center justify-between text-2xl font-semibold" style={{ color: '#F97316' }}>
+            <div className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Story Content
+            </div>
+            <span className="bg-red-600 text-white text-sm font-bold px-3 py-1 rounded-full">
+              3
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent>
