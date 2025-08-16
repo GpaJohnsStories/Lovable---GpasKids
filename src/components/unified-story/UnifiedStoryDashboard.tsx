@@ -986,9 +986,20 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               <FileText className="h-5 w-5" />
               Story Content
             </div>
-            <span className="bg-red-600 text-white text-sm font-bold px-3 py-1 rounded-full">
-              3
-            </span>
+            <div className="flex items-center gap-2">
+              <button 
+                type="button" 
+                onClick={onSaveOnly}
+                disabled={isSaving || isGeneratingAudio}
+                className="text-xs h-8 px-3 text-white bg-green-600 border-green-700 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-1"
+              >
+                <Save className="h-3 w-3" />
+                Save
+              </button>
+              <span className="bg-red-600 text-white text-sm font-bold px-3 py-1 rounded-full">
+                3
+              </span>
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent>
