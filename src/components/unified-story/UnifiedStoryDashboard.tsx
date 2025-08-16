@@ -276,12 +276,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         <div className="w-[45%] space-y-4">
           {/* Action Buttons Box */}
           {onStartNew && (
-            <div className="p-3 border-[3px] border-[#16a34a] bg-green-50 rounded-lg">
-              <div className="space-y-2">
+            <div className="p-2 border-[3px] border-[#16a34a] bg-green-50 rounded-lg">
+              <div className="flex gap-1">
                 <button 
                   type="button" 
                   onClick={onStartNew}
-                  className="w-full text-sm h-8 px-3 text-white bg-blue-600 border-blue-700 hover:bg-blue-700 rounded-md border flex items-center justify-center gap-2"
+                  className="flex-1 text-xs h-8 text-white bg-blue-600 border-blue-700 hover:bg-blue-700 rounded-md border flex items-center justify-center gap-1"
                 >
                   <FileText className="h-3 w-3" />
                   Start New
@@ -291,16 +291,16 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   type="button" 
                   onClick={onSaveOnly}
                   disabled={isSaving || isGeneratingAudio}
-                  className="w-full text-sm h-8 px-3 text-white bg-green-600 border-green-700 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-2"
+                  className="flex-1 text-xs h-8 text-white bg-green-600 border-green-700 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-1"
                 >
                   <Save className="h-3 w-3" />
-                  {isSaving ? 'Saving...' : 'Save Details & Text Before Audio'}
+                  Save
                 </button>
                 
                 <button 
                   type="button" 
                   onClick={onCancel}
-                  className="w-full text-sm h-8 px-3 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-2"
+                  className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1"
                 >
                   <X className="h-3 w-3" />
                   Exit
