@@ -67,6 +67,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const isSysWel = webtextCode === "SYS-WEL";
   const photos = webtext ? getStoryPhotos(webtext) : [];
   const mainPhoto = photos[0];
+  const showBorder = !!(borderColor && borderColor.trim() !== '' && borderColor !== 'transparent');
 
   // Special styling for SYS-WEL content
   if (isSysWel) {
@@ -152,8 +153,8 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     <>
       <div 
         id={id}
-        className={`rounded-lg border-4 p-6 ${backgroundColor} relative`}
-        style={{ borderColor }}
+        className={`rounded-lg ${showBorder ? 'border-4' : 'border-0'} p-6 ${backgroundColor} relative`}
+        style={showBorder ? { borderColor } : undefined}
       >
         {/* Audio Button - Always visible in top right corner */}
         <div className="absolute top-4 right-4 z-[5]">
