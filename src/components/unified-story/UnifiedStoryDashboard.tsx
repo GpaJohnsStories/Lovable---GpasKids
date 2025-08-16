@@ -979,7 +979,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       </div>
 
       {/* Story Editor */}
-      <Card className="border-2" style={{ borderColor: '#F97316' }}>
+      <Card className="border-2" style={{ borderColor: '#F97316' }} data-story-content-section>
         <CardHeader>
           <CardTitle className="flex items-center justify-between text-2xl font-semibold" style={{ color: '#F97316' }}>
             <div className="flex items-center gap-2">
@@ -1002,7 +1002,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0 relative">
           <SplitViewEditor
             content={formData.content}
             onChange={(content) => onInputChange('content', content)}
@@ -1012,6 +1012,22 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             fontSize={fontSize}
             onFontSizeChange={onFontSizeChange}
           />
+          
+          {/* Floating Format Menu Button */}
+          <button
+            type="button"
+            onClick={() => {
+              const storyContentElement = document.querySelector('[data-story-content-section]');
+              if (storyContentElement) {
+                storyContentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+            className="absolute bottom-4 right-4 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white flex items-center gap-1 z-10"
+            title="Return to Format Menu"
+          >
+            <FileText className="h-3 w-3" />
+            Format Menu
+          </button>
         </CardContent>
       </Card>
     </form>
