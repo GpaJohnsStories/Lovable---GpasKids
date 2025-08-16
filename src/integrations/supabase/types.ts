@@ -548,6 +548,28 @@ export type Database = {
         Args: { "": string }
         Returns: string
       }
+      get_public_approved_comment_by_id: {
+        Args: { comment_id: string }
+        Returns: {
+          content: string
+          created_at: string
+          id: string
+          parent_id: string
+          subject: string
+          updated_at: string
+        }[]
+      }
+      get_public_approved_comments: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          content: string
+          created_at: string
+          id: string
+          parent_id: string
+          subject: string
+          updated_at: string
+        }[]
+      }
       has_admin_access: {
         Args: Record<PropertyKey, never>
         Returns: boolean
