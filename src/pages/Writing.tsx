@@ -45,12 +45,56 @@ const Writing = () => {
         <main className="container mx-auto px-4 pt-8 pb-12">
           {/* Copyright Section */}
           <div id="copyright" className="max-w-6xl mx-auto">
-            <WebTextBox
-              webtextCode="SYS-CPR"
-              borderColor="border-purple-500"
-              backgroundColor="bg-purple-50"
-              title="Copyright and What It Means for You"
-            />
+            <div 
+              className="border-4 rounded-lg p-6"
+              style={{ 
+                borderColor: '#DC143C',
+                backgroundColor: 'rgba(220, 20, 60, 0.1)'
+              }}
+            >
+              <WebTextBox
+                webtextCode="SYS-CPR"
+                borderColor=""
+                backgroundColor=""
+                title="Copyright and What It Means for You"
+              />
+            </div>
+          </div>
+
+          {/* Copyright Part 2 Section */}
+          <div id="copyright-2" className="max-w-6xl mx-auto mt-8">
+            <div 
+              className="border-4 rounded-lg p-6"
+              style={{ 
+                borderColor: '#FFFF00',
+                backgroundColor: 'rgba(255, 255, 0, 0.1)'
+              }}
+            >
+              <WebTextBox
+                webtextCode="SYS-CP2"
+                borderColor=""
+                backgroundColor=""
+                title="Copyright Information Part 2"
+              />
+            </div>
+          </div>
+
+          {/* Copyright Part 3 Section */}
+          <div id="copyright-3" className="max-w-6xl mx-auto mt-8">
+            <div 
+              className="border-4 rounded-lg p-6"
+              style={{ 
+                borderColor: '#32CD32',
+                backgroundColor: 'rgba(50, 205, 50, 0.05)'
+              }}
+            >
+              <WebTextBox
+                webtextCode="SYS-CP3"
+                borderColor=""
+                backgroundColor=""
+                title="Copyright Information Part 3"
+              />
+            </div>
           </div>
 
           {/* Write a Story Section */}
