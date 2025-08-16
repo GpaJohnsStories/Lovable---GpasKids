@@ -662,10 +662,9 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                      {sysAvx.photoUrl && (
                        <div style={{ 
                          flexShrink: 0,
-                         maxHeight: '220px', // About half of SuperAV popup height
-                         border: '2px solid #5A3E2B'
+                         maxHeight: '220px' // About half of SuperAV popup height
                        }}>
-                         <img 
+                         <img
                            src={sysAvx.photoUrl}
                            alt={sysAvx.photoAlt || 'Buddy with headphones'}
                            style={{
