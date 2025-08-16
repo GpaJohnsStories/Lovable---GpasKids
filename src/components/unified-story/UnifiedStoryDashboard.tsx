@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
-import { Save, X, FileText, Image, Video, Volume2, Play, Square, Trash2 } from "lucide-react";
+import { Save, X, FileText, Image, Video, Volume2, Play, Square, Trash2, Headphones } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StoryFormFields from "../StoryFormFields";
 import StoryVideoUpload from "../StoryVideoUpload";
@@ -532,7 +532,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 </tbody>
               </table>
               
-              {/* Copyright Status and Publication Status side-by-side (switched positions) */}
+              {/* Copyright Status and Publication Status with Media Icons */}
               <div className="flex gap-3">
                 {/* Copyright Status - Now on left */}
                 <div className="space-y-1 flex-1">
@@ -543,18 +543,34 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   />
                 </div>
                 
-                {/* Publication Status - Now on right */}
+                {/* Publication Status with Media Icons - Now on right */}
                 <div className="space-y-1 flex-1">
                   <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
-                  <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
-                    <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor(formData.published)}`}>
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent className="z-50 bg-white border shadow-lg">
-                      <SelectItem value="N">Not Published</SelectItem>
-                      <SelectItem value="Y">Published</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="flex items-center gap-2">
+                    <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
+                      <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor(formData.published)}`}>
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent className="z-50 bg-white border shadow-lg">
+                        <SelectItem value="N">Not Published</SelectItem>
+                        <SelectItem value="Y">Published</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    
+                    {/* Media Icons */}
+                    <div className="flex items-center gap-1">
+                      {formData.audio_url && (
+                        <div className="flex items-center justify-center w-6 h-6 rounded bg-green-100 border border-green-300">
+                          <Headphones className="h-3 w-3 text-green-600" />
+                        </div>
+                      )}
+                      {formData.video_url && (
+                        <div className="flex items-center justify-center w-6 h-6 rounded bg-blue-100 border border-blue-300">
+                          <Video className="h-3 w-3 text-blue-600" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
 
