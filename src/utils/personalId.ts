@@ -73,6 +73,11 @@ async function isPersonalIdUsed(personalId: string): Promise<boolean> {
   return data === true;
 }
 
+// Export function to check if Personal ID exists (for form validation)
+export async function checkPersonalIdExists(personalId: string): Promise<boolean> {
+  return isPersonalIdUsed(personalId);
+}
+
 // Store a Personal ID in the database to mark it as used
 async function storePersonalId(personalId: string): Promise<void> {
   const { error } = await supabase

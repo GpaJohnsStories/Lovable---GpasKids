@@ -109,7 +109,9 @@ const PersonalIdSection = ({
     }
   };
 
-  const validateExistingPersonalId = (value: string) => {
+  const [isValidating, setIsValidating] = useState(false);
+
+  const validateExistingPersonalId = async (value: string) => {
     if (!value) {
       setExistingPersonalIdError(null);
       return;
@@ -125,8 +127,23 @@ const PersonalIdSection = ({
       return;
     }
     
-    // Additional validation could be added here to check if ID exists in database
-    setExistingPersonalIdError(null);
+    // Check if ID exists in database
+    setIsValidating(true);
+    try {
+      const { checkPersonalIdExists } = await import("@/utils/personalId");
+      const exists = await checkPersonalIdExists(value);
+      
+      if (!exists) {
+        setExistingPersonalIdError("Personal ID not found. Please check your ID or create a new one.");
+      } else {
+        setExistingPersonalIdError(null);
+      }
+    } catch (error) {
+      console.error("Error validating Personal ID:", error);
+      setExistingPersonalIdError("Error checking Personal ID. Please try again.");
+    } finally {
+      setIsValidating(false);
+    }
   };
 
   return (
@@ -148,12 +165,15 @@ const PersonalIdSection = ({
                 if (existingPersonalIdError) setExistingPersonalIdError(null);
               }}
               onBlur={(e) => {
-                validateExistingPersonalId(e.target.value);
+                validateExistingPersonalId(e.target.value.toUpperCase());
               }}
               maxLength={6}
               className="w-36 text-center font-bold text-base md:text-sm"
             />
           </div>
+          {isValidating && (
+            <p className="text-sm text-blue-600 mt-1">Checking Personal ID...</p>
+          )}
           {existingPersonalIdError && <p className="text-sm font-bold text-destructive mt-2">{existingPersonalIdError}</p>}
         </div>
       </TabsContent>
