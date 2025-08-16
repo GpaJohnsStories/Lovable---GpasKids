@@ -11,6 +11,7 @@ import { ArrowLeft } from "lucide-react";
 import { format } from 'date-fns';
 import CommentReplyForm from "@/components/CommentReplyForm";
 import CommentRepliesList from "@/components/CommentRepliesList";
+import { getPersonalIdDisplay } from "@/utils/personalIdUtils";
 
 type Comment = {
   id: string;
@@ -67,13 +68,16 @@ const CommentDetail = () => {
     navigate("/view-comments");
   };
 
-  const getPersonalIdDisplay = (personalId: string) => {
-    if (personalId === '0000FF') {
+  const getPersonalIdDisplayComponent = (personalId: string) => {
+    const isAnnouncement = personalId === '0000FF';
+    const displayText = getPersonalIdDisplay(personalId, isAnnouncement);
+    
+    if (isAnnouncement) {
       return (
-        <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
+        <span className="text-blue-600 font-semibold font-fun">{displayText}</span>
       );
     }
-    return <span className="font-fun text-orange-600">{personalId}</span>;
+    return <span className="font-fun text-orange-600">{displayText}</span>;
   };
 
   if (isLoading) {
@@ -168,7 +172,7 @@ const CommentDetail = () => {
                   </h1>
                   <div className="flex items-center gap-4 text-sm">
                     <span className="font-semibold">
-                      By: {getPersonalIdDisplay(comment.personal_id)}
+                      By: {getPersonalIdDisplayComponent(comment.personal_id)}
                     </span>
                     <span className={`font-fun ${isAnnouncement ? 'text-blue-600' : 'text-orange-600'}`}>
                       Posted: {format(new Date(comment.created_at), 'MMM d, yyyy, h:mm a')}

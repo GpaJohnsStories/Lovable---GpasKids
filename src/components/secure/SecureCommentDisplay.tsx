@@ -1,4 +1,5 @@
 import { sanitizeCommentContent, sanitizeCommentSubject, sanitizePersonalId } from "@/utils/xssProtection";
+import { getPersonalIdDisplay } from "@/utils/personalIdUtils";
 
 interface SecureCommentDisplayProps {
   subject: string;
@@ -26,13 +27,15 @@ const SecureCommentDisplay = ({
   const safeContent = sanitizeCommentContent(content);
   const safePersonalId = sanitizePersonalId(personalId);
 
-  const getPersonalIdDisplay = () => {
+  const getPersonalIdDisplayComponent = () => {
+    const displayText = getPersonalIdDisplay(safePersonalId, isAnnouncement);
+    
     if (isAnnouncement || safePersonalId === '0000FF') {
       return (
-        <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
+        <span className="text-blue-600 font-semibold font-fun">{displayText}</span>
       );
     }
-    return <span className="font-fun text-orange-600">{safePersonalId}</span>;
+    return <span className="font-fun text-orange-600">{displayText}</span>;
   };
 
   return (
@@ -46,7 +49,7 @@ const SecureCommentDisplay = ({
       <div className="flex justify-between items-start mb-3">
         <div className="flex items-center gap-4 text-sm">
           <span className="font-semibold">
-            By: {getPersonalIdDisplay()}
+            By: {getPersonalIdDisplayComponent()}
           </span>
           <span className={`font-fun ${isAnnouncement ? 'text-blue-600' : 'text-orange-600'}`}>
             {createdAt}

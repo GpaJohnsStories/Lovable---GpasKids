@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,8 @@ import {
 } from "@/components/ui/form";
 import { containsBadWord, getHighlightedParts } from "@/utils/profanity";
 import { generateCompletePersonalId } from "@/utils/personalId";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Copy, CheckCheck } from "lucide-react";
+import { toast } from "sonner";
 
 interface PersonalIdSectionProps {
   form: UseFormReturn<any>;
@@ -40,9 +40,13 @@ const PersonalIdSection = ({
   setExistingPersonalIdError,
 }: PersonalIdSectionProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showCopied, setShowCopied] = useState(false);
   
   const handleClearId = () => {
     setPersonalId(null);
+    setShowCopied(false);
+    form.setValue("personalId", "");
+    toast.success("Personal ID cleared");
   };
   
   const handleCreateId = async () => {
@@ -60,6 +64,8 @@ const PersonalIdSection = ({
         const completeId = await generateCompletePersonalId(currentPrefix);
         if (completeId) {
           setPersonalId(completeId);
+          form.setValue("personalId", completeId);
+          toast.success("Personal ID created successfully! Please copy and save it now - you cannot recover it if lost!");
         } else {
           form.setError("personal_id_prefix", { 
             type: "manual", 
@@ -87,6 +93,19 @@ const PersonalIdSection = ({
     } else {
       setExistingPersonalId('');
       setExistingPersonalIdError(null);
+    }
+  };
+
+  const copyToClipboard = async () => {
+    if (personalId) {
+      try {
+        await navigator.clipboard.writeText(personalId);
+        setShowCopied(true);
+        setTimeout(() => setShowCopied(false), 2000);
+        toast.success("Personal ID copied to clipboard!");
+      } catch (err) {
+        toast.error("Failed to copy to clipboard");
+      }
     }
   };
 
@@ -147,31 +166,37 @@ const PersonalIdSection = ({
                 </div>
                 <FormMessage />
                 {personalId && (
-                  <div className="mt-4 p-4 bg-amber-50 rounded-lg border-2 border-amber-300">
-                    <p className="text-orange-800 font-fun text-lg font-bold mb-2">
-                      Your Complete Personal ID:
-                    </p>
-                    <div className="flex justify-center mb-3">
-                      <div className="bg-amber-200 px-3 py-2 rounded-lg">
-                        <span className="font-bold text-xl text-orange-900">{personalId}</span>
-                      </div>
-                    </div>
-                    <div className="flex justify-center mb-3">
-                      <button
+                  <div className="mt-3 p-4 bg-green-50 border-2 border-green-200 rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-green-800 font-medium">
+                        ✅ Your Personal ID: <span className="font-mono font-bold text-lg">{personalId}</span>
+                      </p>
+                      <Button
                         type="button"
-                        onClick={handleClearId}
-                        className="h-9 px-3 rounded-md text-sm font-bold inline-flex items-center justify-center gap-2 bg-crimson-red text-bright-yellow border border-crimson-red"
+                        variant="outline"
+                        size="sm"
+                        onClick={copyToClipboard}
+                        className="flex items-center gap-1"
                       >
-                        <ArrowLeft className="h-4 w-4 mr-1" />
-                        Clear
-                      </button>
+                        {showCopied ? <CheckCheck className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                        {showCopied ? "Copied!" : "Copy"}
+                      </Button>
                     </div>
-                    <p className="text-sm text-orange-700 font-fun">
-                      Make a note of this code! This is your secure 6-character Personal ID (4 chars + random letter + check digit).
+                    <p className="text-amber-700 font-medium text-sm mb-3 bg-amber-50 p-2 rounded border">
+                      ⚠️ <strong>IMPORTANT:</strong> Write this down somewhere safe! This is the ONLY way to view your comments and replies. We cannot recover it if lost.
                     </p>
-                    <p className="text-sm text-orange-600 mt-2 font-fun font-bold">
-                      Please clear this ID from the screen after you've written it down safely.
+                    <p className="text-blue-700 text-sm mb-3">
+                      💡 From now on, only the first 4 characters will be shown publicly (like {personalId.substring(0, 4)}**) to protect your privacy.
                     </p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={handleClearId}
+                      className="mt-2"
+                    >
+                      Clear & Create New
+                    </Button>
                   </div>
                 )}
               </div>

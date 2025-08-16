@@ -39,25 +39,31 @@ const ViewComments = () => {
           </h2>
 
           <div className="my-6 p-4 bg-amber-100/60 rounded-lg border-2 border-orange-200">
-            <div className="flex items-center justify-center gap-2">
-              <Search className="h-4 w-4 text-orange-600" />
-              <Input
-                type="text"
-                value={searchInput}
-                onChange={(e) => handleSearchChange(e.target.value)}
-                placeholder="Search by Personal Code..."
-                className="w-64 font-fun"
-              />
-              {searchInput && (
-                <Button 
-                  onClick={handleClearSearch}
-                  variant="outline" 
-                  size="sm"
-                  className="whitespace-nowrap"
-                >
-                  Clear
-                </Button>
-              )}
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex items-center gap-2">
+                <Search className="h-4 w-4 text-orange-600" />
+                <Input
+                  type="text"
+                  value={searchInput}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  placeholder="Enter your full 6-character Personal ID..."
+                  className="w-80 font-fun"
+                />
+                {searchInput && (
+                  <Button 
+                    onClick={handleClearSearch}
+                    variant="outline" 
+                    size="sm"
+                    className="whitespace-nowrap"
+                  >
+                    Clear
+                  </Button>
+                )}
+              </div>
+              <p className="text-sm text-orange-700 text-center max-w-md">
+                💡 <strong>Privacy Note:</strong> Personal IDs in the list show only the first 4 characters (like ABCD**) for privacy. 
+                To see your own comments, enter your complete 6-character Personal ID above.
+              </p>
             </div>
           </div>
           

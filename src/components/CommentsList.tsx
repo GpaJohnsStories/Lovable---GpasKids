@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import CommentsListHeader from "./CommentsListHeader";
 import { Badge } from "@/components/ui/badge";
 import { sanitizeCommentSubject, sanitizePersonalId } from "@/utils/xssProtection";
+import { getPersonalIdDisplay } from "@/utils/personalIdUtils";
 
 type CommentFromDB = {
   id: string;
@@ -127,17 +128,20 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
     navigate(`/comment/${commentId}`);
   };
 
-  const getPersonalIdDisplay = (personalId: string) => {
+  const getPersonalIdDisplayComponent = (personalId: string) => {
     const safePersonalId = sanitizePersonalId(personalId);
-    if (safePersonalId === '0000FF') {
+    const isAnnouncement = safePersonalId === '0000FF';
+    const displayText = getPersonalIdDisplay(safePersonalId, isAnnouncement);
+    
+    if (isAnnouncement) {
       console.log("Rendering GpaJohn display for:", safePersonalId);
       return (
         <div className="flex items-center gap-2 justify-center">
-          <span className="text-blue-600 font-semibold font-fun">GpaJohn</span>
+          <span className="text-blue-600 font-semibold font-fun">{displayText}</span>
         </div>
       );
     }
-    return <span className="font-fun text-orange-800">{safePersonalId}</span>;
+    return <span className="font-fun text-orange-800">{displayText}</span>;
   };
 
   if (isLoading) {
@@ -175,7 +179,7 @@ const CommentsList = ({ personalIdFilter }: CommentsListProps) => {
                     onClick={() => handleCommentClick(comment.id)}
                   >
                     <TableCell className="font-medium text-center">
-                      {getPersonalIdDisplay(comment.personal_id)}
+                      {getPersonalIdDisplayComponent(comment.personal_id)}
                     </TableCell>
                     <TableCell className="font-fun text-orange-800">{format(new Date(comment.created_at), 'MMM d, yyyy')}</TableCell>
                     <TableCell className={`font-fun ${isAnnouncement ? 'text-blue-800' : 'text-orange-800'}`}>
