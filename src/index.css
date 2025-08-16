@@ -169,6 +169,32 @@
     list-style-position: inside;
     margin-bottom: 0.75rem;
   }
+
+  /* Story content list styles - restore bullets and numbers */
+  .story-content ul,
+  .rendered-story-content ul,
+  .deployed-story-content ul {
+    list-style-type: disc !important;
+    list-style-position: inside !important;
+    margin-bottom: 0.75rem !important;
+    padding-left: 1rem !important;
+  }
+  
+  .story-content ol,
+  .rendered-story-content ol,
+  .deployed-story-content ol {
+    list-style-type: decimal !important;
+    list-style-position: inside !important;
+    margin-bottom: 0.75rem !important;
+    padding-left: 1rem !important;
+  }
+  
+  .story-content li,
+  .rendered-story-content li,
+  .deployed-story-content li {
+    margin-bottom: 0.25rem !important;
+    display: list-item !important;
+  }
 }
 
 /* Enhanced scrollbar visibility for help popup */

@@ -46,7 +46,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
     return (
       <>
         <div 
-          className={className}
+          className={`rendered-story-content ${className}`}
           style={{
             // Targeted resets that preserve HTML element defaults
             margin: 0,
