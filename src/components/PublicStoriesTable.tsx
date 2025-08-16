@@ -4,7 +4,7 @@ import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { BookOpen, ArrowUp, ArrowDown, ChevronDown, Search, X, Music, Video, Calendar, Clock } from "lucide-react";
+import { BookOpen, ArrowUp, ArrowDown, ChevronDown, Search, X, Headphones, Video, Calendar, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -369,7 +369,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                     <SelectItem value="all">All Stories</SelectItem>
                     <SelectItem value="audio">
                       <div className="flex items-center gap-2">
-                        <Music className="h-4 w-4" />
+                        <Headphones className="h-4 w-4" />
                         Has Audio
                       </div>
                     </SelectItem>
@@ -381,7 +381,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                     </SelectItem>
                     <SelectItem value="both">
                       <div className="flex items-center gap-2">
-                        <Music className="h-4 w-4" />
+                        <Headphones className="h-4 w-4" />
                         <Video className="h-4 w-4" />
                         Both
                       </div>
@@ -441,7 +441,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                               </div>
                               <div className="flex items-center gap-2 text-sm text-gray-600">
                                 <span>{story.read_count} reads</span>
-                                {story.audio_url && <Music className="h-4 w-4 text-green-600" />}
+                                {story.audio_url && <Headphones className="h-4 w-4 text-green-600" />}
                                 {story.video_url && <Video className="h-4 w-4 text-blue-600" />}
                               </div>
                             </div>
@@ -608,7 +608,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                               <div className="text-xs text-black-system">{new Date(story.updated_at).toLocaleDateString()}</div>
                             </div>
                             <div className="details-stack-item flex gap-1 justify-center">
-                              {story.audio_url && <Music className="h-4 w-4 text-green-600" />}
+                              {story.audio_url && <Headphones className="h-4 w-4 text-green-600" />}
                               {story.video_url && <Video className="h-4 w-4 text-blue-600" />}
                               {story.reading_time_minutes && <div className="flex items-center gap-1"><Clock className="h-3 w-3 text-gray-500" /><span className="text-xs text-gray-500">{story.reading_time_minutes}m</span></div>}
                             </div>
