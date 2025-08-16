@@ -106,7 +106,7 @@ const Privacy = () => {
             {/* Zero Cookies Section */}
             <div className="bg-green-50 p-6 rounded-lg relative">
               {/* Audio Button - Always visible in top right corner */}
-              <div className="absolute top-4 right-4 z-[5]">
+              <div className="absolute top-4 right-4">
                 <AudioButton code="SYS-PR1" onClick={() => setShowSuperAV(true)} />
               </div>
               
@@ -142,7 +142,7 @@ const Privacy = () => {
             {/* Cloudflare Security Cookie */}
             <div className="bg-orange-50 p-6 rounded-lg relative">
               {/* Audio Button - Always visible in top right corner */}
-              <div className="absolute top-4 right-4 z-[5]">
+              <div className="absolute top-4 right-4">
                 <AudioButton code="SYS-PR2" onClick={() => setShowSuperAV(true)} />
               </div>
               
@@ -182,7 +182,7 @@ const Privacy = () => {
             {/* Local Storage Section */}
             <div className="bg-indigo-50 p-6 rounded-lg relative">
               {/* Audio Button - Always visible in top right corner */}
-              <div className="absolute top-4 right-4 z-[5]">
+              <div className="absolute top-4 right-4">
                 <AudioButton code="SYS-PR3" onClick={() => setShowSuperAV(true)} />
               </div>
               
@@ -223,7 +223,7 @@ const Privacy = () => {
             {/* No Tracking Section */}
             <div className="bg-blue-50 p-6 rounded-lg relative">
               {/* Audio Button - Always visible in top right corner */}
-              <div className="absolute top-4 right-4 z-[5]">
+              <div className="absolute top-4 right-4">
                 <AudioButton code="SYS-PR4" onClick={() => setShowSuperAV(true)} />
               </div>
               
@@ -258,7 +258,7 @@ const Privacy = () => {
             {/* Data Collection Section */}
             <div className="bg-purple-50 p-6 rounded-lg relative">
               {/* Audio Button - Always visible in top right corner */}
-              <div className="absolute top-4 right-4 z-[5]">
+              <div className="absolute top-4 right-4">
                 <AudioButton code="SYS-PR5" onClick={() => setShowSuperAV(true)} />
               </div>
               
@@ -296,7 +296,7 @@ const Privacy = () => {
             {/* Admin Access Section */}
             <div className="bg-amber-50 p-6 rounded-lg relative">
               {/* Audio Button - Always visible in top right corner */}
-              <div className="absolute top-4 right-4 z-[5]">
+              <div className="absolute top-4 right-4">
                 <AudioButton code="SYS-PR6" onClick={() => setShowSuperAV(true)} />
               </div>
               
@@ -339,7 +339,7 @@ const Privacy = () => {
             {/* Contact Section */}
             <div className="bg-gray-50 p-6 rounded-lg relative">
               {/* Audio Button - Always visible in top right corner */}
-              <div className="absolute top-4 right-4 z-[5]">
+              <div className="absolute top-4 right-4">
                 <AudioButton code="SYS-PR7" onClick={() => setShowSuperAV(true)} />
               </div>
               
@@ -370,7 +370,7 @@ const Privacy = () => {
 
             <div className="text-center pt-6 relative">
               {/* Audio Button - Always visible in top right corner */}
-              <div className="absolute top-4 right-4 z-[5]">
+              <div className="absolute top-4 right-4">
                 <AudioButton code="SYS-PRQ" onClick={() => setShowSuperAV(true)} />
               </div>
               
