@@ -287,7 +287,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [isPlaying, setIsPlaying] = useState(false);
-  const [playbackRate, setPlaybackRate] = useState(0.5); // Default to normal speed (0.5)
+  const [playbackRate, setPlaybackRate] = useState(1.0); // Default to normal speed (1.0) since audio is recorded at 0.5
   const audioRef = useRef<HTMLAudioElement>(null);
   
   // SYS-AVX fallback state
@@ -348,9 +348,9 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   // Auto-play SYS-AVX audio when it becomes available
   useEffect(() => {
     if (useSysAvx && sysAvx?.audioUrl && audioRef.current) {
-      console.log('🎵 Auto-playing SYS-AVX audio at speed 0.5');
-      audioRef.current.playbackRate = 0.5;
-      setPlaybackRate(0.5);
+      console.log('🎵 Auto-playing SYS-AVX audio at speed 1.0');
+      audioRef.current.playbackRate = 1.0;
+      setPlaybackRate(1.0);
       audioRef.current.play().catch(error => {
         console.warn('⚠️ Auto-play blocked:', error);
       });
