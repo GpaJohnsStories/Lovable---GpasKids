@@ -38,6 +38,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
     handleVideoRemove,
     handleVoiceChange,
     handleGenerateAudio,
+    handleStartNew,
     error: storyError
   } = useStoryFormState(storyId);
 
@@ -122,6 +123,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           onSubmit={onSubmit}
           onCancel={handleCancel}
           onSaveOnly={onSaveOnly}
+          onStartNew={handleStartNew}
           allowTextToSpeech={true}
           context="unified-story-system"
           onStoryFound={(story) => populateFormWithStory(story, true)}

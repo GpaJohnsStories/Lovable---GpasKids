@@ -30,6 +30,7 @@ interface UnifiedStoryDashboardProps {
   onSubmit: (e: React.FormEvent) => void;
   onCancel: () => void;
   onSaveOnly: () => void;
+  onStartNew?: () => void;
   allowTextToSpeech?: boolean;
   context?: string;
   onStoryFound?: (story: Story) => void;
@@ -51,6 +52,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   onSubmit,
   onCancel,
   onSaveOnly,
+  onStartNew,
   allowTextToSpeech = false,
   context = "unified-story-system",
   onStoryFound,
@@ -588,8 +590,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 />
               </div>
 
-              {/* Save and Cancel Buttons */}
-              <div className="flex gap-2 pt-2">
+              {/* Action Buttons */}
+              <div className="flex gap-1 pt-2">
                 <button 
                   type="button" 
                   onClick={onSaveOnly}
@@ -600,13 +602,24 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   {isSaving ? 'Saving...' : 'Save Details & Text Before Audio'}
                 </button>
                 
+                {onStartNew && (
+                  <button 
+                    type="button" 
+                    onClick={onStartNew}
+                    className="flex-none text-xs h-8 px-3 text-white bg-blue-600 border-blue-700 hover:bg-blue-700 rounded-md border flex items-center justify-center gap-1"
+                  >
+                    <FileText className="h-3 w-3" />
+                    Start New
+                  </button>
+                )}
+                
                 <button 
                   type="button" 
                   onClick={onCancel}
-                  className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1"
+                  className="flex-none text-xs h-8 px-3 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1"
                 >
                   <X className="h-3 w-3" />
-                  Cancel
+                  Exit
                 </button>
               </div>
             </CardContent>
