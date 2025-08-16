@@ -668,8 +668,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            src={sysAvx.photoUrl}
                            alt={sysAvx.photoAlt || 'Buddy with headphones'}
                             style={{
-                              width: '35px',
-                              height: '35px',
+                              width: '45px',
+                              height: '45px',
                               objectFit: 'contain',
                               display: 'block'
                             }}
