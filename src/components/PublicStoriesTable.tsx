@@ -38,6 +38,7 @@ interface Story {
   excerpt?: string;
   photo_link_1?: string;
   photo_alt_1?: string;
+  copyright_status?: string;
 }
 
 interface PublicStoriesTableProps {
@@ -68,7 +69,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
     queryFn: async () => {
       let query = supabase
         .from('stories')
-        .select('id, story_code, title, author, category, read_count, updated_at, created_at, tagline, excerpt, photo_link_1, photo_alt_1')
+        .select('id, story_code, title, author, category, read_count, updated_at, created_at, tagline, excerpt, photo_link_1, photo_alt_1, copyright_status')
         .eq('published', 'Y')
         .not('category', 'in', '("WebText","BioText")')
         .order(sortField, { ascending: sortDirection === 'asc' });
@@ -314,20 +315,53 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                            </div>
                          </div>
                        </TableCell>
-                       <TableCell className="text-black-system table-cell-top">
-                         <div className="flex flex-col items-center gap-1">
-                           <span className="text-sm">{story.author}</span>
-                            {onEditBio && (
-                              <Button
-                                onClick={() => onEditBio(story.author)}
-                                className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 h-auto min-w-[80px]"
-                                size="sm"
-                              >
-                                Biography
-                              </Button>
-                            )}
-                         </div>
-                       </TableCell>
+                        <TableCell className="text-black-system table-cell-top">
+                          <div className="flex flex-col items-center gap-1">
+                            <span className="text-sm">{story.author}</span>
+                             {onEditBio && (
+                               <Tooltip>
+                                 <TooltipTrigger asChild>
+                                   <Button
+                                     onClick={() => onEditBio(story.author)}
+                                     className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 h-auto min-w-[80px]"
+                                     size="sm"
+                                   >
+                                     Biography
+                                   </Button>
+                                 </TooltipTrigger>
+                                 <TooltipContent>
+                                   <p className="text-xs">View {story.author}'s biography. Click for more information</p>
+                                 </TooltipContent>
+                               </Tooltip>
+                             )}
+                             <Tooltip>
+                               <TooltipTrigger asChild>
+                                 <Link to="/writing">
+                                   <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-pointer ${
+                                     (story.copyright_status || '©') === '©' ? 'bg-red-500' :
+                                     (story.copyright_status || '©') === 'O' ? 'bg-green-500' :
+                                     'bg-yellow-500'
+                                   }`}>
+                                     {story.copyright_status || '©'}
+                                   </span>
+                                 </Link>
+                               </TooltipTrigger>
+                               <TooltipContent>
+                                 <div className="text-xs">
+                                   {(story.copyright_status || '©') === '©' && (
+                                     <span>© Full Copyright - All rights reserved. Click for more information</span>
+                                   )}
+                                   {(story.copyright_status || '©') === 'O' && (
+                                     <span>O Open, No Copyright - Free to share. Click for more information</span>
+                                   )}
+                                   {(story.copyright_status || '©') === 'S' && (
+                                     <span>S Limited Sharing - Gpa John's Copyright. Click for more information</span>
+                                   )}
+                                 </div>
+                               </TooltipContent>
+                             </Tooltip>
+                          </div>
+                        </TableCell>
                        <TableCell className="text-black-system table-cell-top">
                          <div className="details-column-stack">
                            <div className="details-stack-item">
