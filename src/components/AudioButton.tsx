@@ -7,9 +7,15 @@ interface AudioButtonProps {
   code: string; // storyCode or webtextCode
   onClick: () => void;
   className?: string;
+  tooltipText?: string; // Optional custom tooltip text
 }
 
-export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, className = "" }) => {
+export const AudioButton: React.FC<AudioButtonProps> = ({ 
+  code, 
+  onClick, 
+  className = "", 
+  tooltipText 
+}) => {
   const { iconUrl: candyIconUrl, iconName, isLoading: candyLoading, error: candyError } = useCachedIcon('!CO-RPC.gif');
   const { shouldShowTooltips, registerTooltip, unregisterTooltip } = useTooltipContext();
   const tooltipId = useId();
@@ -21,7 +27,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
     };
   }, [tooltipId, registerTooltip, unregisterTooltip]);
 
-  const tooltipText = iconName || "Click if you want to listen or change word size.";
+  const displayTooltipText = tooltipText || iconName || "Click if you want to listen or change word size.";
 
   return (
     <div className={`relative z-[5] ${className}`}>
@@ -58,7 +64,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
             ) : candyIconUrl && !candyLoading && !candyError ? (
               <img
                 src={candyIconUrl}
-                alt={tooltipText}
+                alt={displayTooltipText}
                 className="w-full h-full rounded-full"
                 style={{ 
                   backgroundColor: 'transparent',
@@ -76,7 +82,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
             align="end"
             className="bg-red-600 text-white text-base font-bold border border-red-700 shadow-lg"
           >
-            {tooltipText}
+            {displayTooltipText}
           </TooltipContent>
         )}
       </Tooltip>

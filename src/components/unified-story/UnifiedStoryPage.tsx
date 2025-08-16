@@ -102,11 +102,12 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
             Add / Edit Stories & WebText
           </h1>
           
-          {/* Peppermint Candy Audio Button */}
+          {/* Audio Button */}
           <AudioButton
             code={formData.story_code || ''}
             onClick={toggleAudioControls}
             className="ml-4"
+            tooltipText="Listen to Current Story"
           />
         </div>
         
