@@ -109,6 +109,26 @@ const PersonalIdSection = ({
     }
   };
 
+  const validateExistingPersonalId = (value: string) => {
+    if (!value) {
+      setExistingPersonalIdError(null);
+      return;
+    }
+    
+    if (value.length !== 6) {
+      setExistingPersonalIdError("Personal ID must be exactly 6 characters.");
+      return;
+    }
+    
+    if (!/^[a-zA-Z0-9]{6}$/.test(value)) {
+      setExistingPersonalIdError("Personal ID can only contain letters and numbers.");
+      return;
+    }
+    
+    // Additional validation could be added here to check if ID exists in database
+    setExistingPersonalIdError(null);
+  };
+
   return (
     <Tabs value={idMode} onValueChange={handleTabChange} className="w-full">
       <TabsList className="grid w-full grid-cols-2">
@@ -123,8 +143,12 @@ const PersonalIdSection = ({
               placeholder="6-character ID"
               value={existingPersonalId}
               onChange={(e) => {
-                setExistingPersonalId(e.target.value);
+                const value = e.target.value;
+                setExistingPersonalId(value);
                 if (existingPersonalIdError) setExistingPersonalIdError(null);
+              }}
+              onBlur={(e) => {
+                validateExistingPersonalId(e.target.value);
               }}
               maxLength={6}
               className="w-36 text-center font-bold text-base md:text-sm"
