@@ -1013,7 +1013,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             onFontSizeChange={onFontSizeChange}
           />
           
-          {/* Floating Format Menu Button */}
+          {/* Floating Format Menu Button - Always Visible */}
           <button
             type="button"
             onClick={() => {
@@ -1022,7 +1022,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 storyContentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
             }}
-            className="absolute bottom-4 right-4 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white flex items-center gap-1 z-10"
+            className="fixed bottom-6 right-6 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white flex items-center gap-1 z-50 animate-pulse"
             title="Return to Format Menu"
           >
             <FileText className="h-3 w-3" />
