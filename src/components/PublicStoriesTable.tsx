@@ -330,7 +330,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                                    </Button>
                                  </TooltipTrigger>
                                  <TooltipContent>
-                                   <p className="text-xs">View {story.author}'s biography. Click for more information</p>
+                                   <p className="text-xs">View {story.author}'s biography</p>
                                  </TooltipContent>
                                </Tooltip>
                              )}
