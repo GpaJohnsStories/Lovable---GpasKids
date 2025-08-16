@@ -590,38 +590,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 />
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-1 pt-2">
-                <button 
-                  type="button" 
-                  onClick={onSaveOnly}
-                  disabled={isSaving || isGeneratingAudio} 
-                  className="flex-1 text-xs h-8 text-[#ffff00] font-bold bg-green-600 border-green-700 hover:bg-green-700 rounded-md border flex items-center justify-center gap-1"
-                >
-                  <Save className="h-3 w-3" />
-                  {isSaving ? 'Saving...' : 'Save Details & Text Before Audio'}
-                </button>
-                
-                {onStartNew && (
-                  <button 
-                    type="button" 
-                    onClick={onStartNew}
-                    className="flex-none text-xs h-8 px-3 text-white bg-blue-600 border-blue-700 hover:bg-blue-700 rounded-md border flex items-center justify-center gap-1"
-                  >
-                    <FileText className="h-3 w-3" />
-                    Start New
-                  </button>
-                )}
-                
-                <button 
-                  type="button" 
-                  onClick={onCancel}
-                  className="flex-none text-xs h-8 px-3 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1"
-                >
-                  <X className="h-3 w-3" />
-                  Exit
-                </button>
-              </div>
             </CardContent>
           </Card>
 

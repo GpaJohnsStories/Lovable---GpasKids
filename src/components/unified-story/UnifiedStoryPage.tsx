@@ -9,6 +9,7 @@ import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useAdminSession } from '@/hooks/useAdminSession';
 import { toast } from "sonner";
+import { FileText, Save, X } from 'lucide-react';
 
 interface UnifiedStoryPageProps {
   mode: 'add' | 'update';
@@ -96,7 +97,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   return (
     <div className="max-w-7xl mx-auto p-4">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold text-gray-800">
             Add / Edit Stories & WebText
           </h1>
@@ -107,6 +108,39 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
             onClick={toggleAudioControls}
             className="ml-4"
           />
+        </div>
+        
+        {/* Action Buttons Box */}
+        <div className="mb-6 p-4 border-[3px] border-[#16a34a] bg-green-50 rounded-lg">
+          <div className="flex gap-2">
+            <button 
+              type="button" 
+              onClick={handleStartNew}
+              className="flex-none text-sm h-10 px-4 text-white bg-blue-600 border-blue-700 hover:bg-blue-700 rounded-md border flex items-center justify-center gap-2"
+            >
+              <FileText className="h-4 w-4" />
+              Start New
+            </button>
+            
+            <button 
+              type="button" 
+              onClick={onSaveOnly}
+              disabled={isSaving}
+              className="flex-1 text-sm h-10 px-4 text-white bg-green-600 border-green-700 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-2"
+            >
+              <Save className="h-4 w-4" />
+              {isSaving ? 'Saving...' : 'Save Details & Text Before Audio'}
+            </button>
+            
+            <button 
+              type="button" 
+              onClick={handleCancel}
+              className="flex-none text-sm h-10 px-4 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-2"
+            >
+              <X className="h-4 w-4" />
+              Exit
+            </button>
+          </div>
         </div>
         
         <UnifiedStoryDashboard
