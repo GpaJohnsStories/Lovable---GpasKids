@@ -64,7 +64,7 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
       ...storyData,
       ai_voice_name: storyData.ai_voice_name || 'Nova',
       ai_voice_model: storyData.ai_voice_model || 'tts-1',
-      copyright_status: storyData.copyright_status || '©'
+      copyright_status: storyData.copyright_status === 'S' ? 'L' : (storyData.copyright_status || '©')
     });
     
     // If this is from a code lookup, update the current story ID so refetchStory works
@@ -85,7 +85,7 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
         ...story,
         ai_voice_name: story.ai_voice_name || 'Nova',
         ai_voice_model: story.ai_voice_model || 'tts-1',
-        copyright_status: story.copyright_status || '©'
+        copyright_status: story.copyright_status === 'S' ? 'L' : (story.copyright_status || '©')
       });
     } else if (!storyId) {
       console.log('🎯 useStoryFormState: No storyId provided, using initial form data');
