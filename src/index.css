@@ -195,6 +195,19 @@
     margin-bottom: 0.25rem !important;
     display: list-item !important;
   }
+
+  /* Paragraph spacing for story content */
+  .story-content p,
+  .rendered-story-content p,
+  .deployed-story-content p {
+    margin: 0 0 1em 0 !important;
+  }
+  
+  .story-content p:last-child,
+  .rendered-story-content p:last-child,
+  .deployed-story-content p:last-child {
+    margin-bottom: 0 !important;
+  }
 }
 
 /* Enhanced scrollbar visibility for help popup */
