@@ -73,16 +73,14 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     return (
       <>
         <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
-          {/* Peppermint Audio Button - Top Right Corner - only show if audio is available */}
-          {webtext?.audio_url && (
-            <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
-              <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
-                Click to listen or change word size
-              </div>
-              <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
-              <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
+          {/* Peppermint Audio Button - Always visible in top right corner */}
+          <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
+            <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
+              Click to listen or change word size
             </div>
-          )}
+            <ArrowRight className="text-green-800" size={20} strokeWidth={3} />
+            <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
+          </div>
 
           {/* Top section with photo and title */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -154,21 +152,19 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     <>
       <div 
         id={id}
-        className={`rounded-lg border-4 p-6 ${backgroundColor}`}
+        className={`rounded-lg border-4 p-6 ${backgroundColor} relative`}
         style={{ borderColor }}
       >
-        {/* Title and Audio Button Row */}
-        <div className="flex justify-between items-start mb-6">
+        {/* Audio Button - Always visible in top right corner */}
+        <div className="absolute top-4 right-4 z-[5]">
+          <AudioButton code={webtextCode} onClick={() => setShowSuperAV(true)} />
+        </div>
+
+        {/* Title */}
+        <div className="mb-6 pr-16">
           <h3 className="text-2xl sm:text-3xl font-bold text-amber-800">
             {webtext?.title || title}
           </h3>
-          
-          {/* Audio Button in top right */}
-          {webtext?.audio_url && (
-            <div className="flex-shrink-0">
-              <AudioButton code={webtextCode} onClick={() => setShowSuperAV(true)} />
-            </div>
-          )}
         </div>
 
         {/* Photo and Content Section with true text wrapping */}
