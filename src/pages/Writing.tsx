@@ -55,8 +55,8 @@ const Writing = () => {
               <div className="border-none">
                 <WebTextBox
                   webtextCode="SYS-CPR"
-                  borderColor=""
-                  backgroundColor=""
+                  borderColor="border-transparent"
+                  backgroundColor="bg-transparent"
                   title="Copyright and What It Means for You"
                 />
               </div>
@@ -75,8 +75,8 @@ const Writing = () => {
               <div className="border-none">
                 <WebTextBox
                   webtextCode="SYS-CP2"
-                  borderColor=""
-                  backgroundColor=""
+                  borderColor="border-transparent"
+                  backgroundColor="bg-transparent"
                   title="Copyright Information Part 2"
                 />
               </div>
@@ -95,8 +95,8 @@ const Writing = () => {
               <div className="border-none">
                 <WebTextBox
                   webtextCode="SYS-CP3"
-                  borderColor=""
-                  backgroundColor=""
+                  borderColor="border-transparent"
+                  backgroundColor="bg-transparent"
                   title="Copyright Information Part 3"
                 />
               </div>
