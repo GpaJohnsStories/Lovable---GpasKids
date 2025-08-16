@@ -1,6 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
-import { containsBadWord } from "./profanity";
+import { containsBadWord, containsBadWordInCode } from "./profanity";
 
 // Check digit calculation function based on your provided formula
 function calculateCheckDigit(baseID: string): string {
@@ -113,8 +113,8 @@ export async function generateCompletePersonalId(prefix: string): Promise<string
     // Create complete 6-character Personal ID
     const completeId = baseId + checkDigit;
     
-    // Check for bad words in complete ID
-    if (containsBadWord(completeId)) {
+    // Check for bad words in complete ID (both whole words and substrings)
+    if (containsBadWord(completeId) || containsBadWordInCode(completeId)) {
       continue; // Try again with a different random letter
     }
     

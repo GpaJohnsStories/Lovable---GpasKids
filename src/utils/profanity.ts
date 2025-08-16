@@ -49,6 +49,21 @@ export const containsBadWord = (text: string): boolean => {
   return regex.test(text);
 };
 
+// Check for bad words as substrings in codes (for Personal IDs)
+export const containsBadWordInCode = (code: string): boolean => {
+  if (!code) return false;
+  
+  const normalizedCode = code.toLowerCase();
+  
+  // Check for bad words as substrings, but only if they're 4+ characters to avoid false positives
+  return badWords.some(badWord => {
+    if (badWord.length >= 4) {
+      return normalizedCode.includes(badWord.toLowerCase());
+    }
+    return false;
+  });
+};
+
 export const getHighlightedParts = (text: string): { text: string; isBad: boolean }[] => {
     if (!text) return [{ text: '', isBad: false }];
 
