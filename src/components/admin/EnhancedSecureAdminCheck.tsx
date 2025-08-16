@@ -73,6 +73,16 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
           const authorized = hasAccess || false;
           setIsAuthorized(authorized);
           console.log('🔐 EnhancedSecureAdminCheck: User authorized:', authorized);
+          
+          // Prefetch admin chunks for authorized users
+          if (authorized) {
+            // Preload key admin components to improve navigation performance
+            import("@/components/admin/AdminOverview");
+            import("@/components/admin/AdminStories");
+            import("@/components/admin/CommentsDashboard");
+            import("@/components/unified-story/UnifiedStoryPage");
+            import("@/components/admin/SecurityAuditDashboard");
+          }
         }
       } catch (err) {
         console.error('🚨 EnhancedSecureAdminCheck: Auth check failed:', err);
