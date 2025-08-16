@@ -65,8 +65,7 @@ const Privacy = () => {
           <div style={{ 
             position: 'absolute',
             top: '8px',
-            right: '8px',
-            zIndex: 10
+            right: '8px'
           }}>
             <AudioButton 
               code="SYS-P2Y"
