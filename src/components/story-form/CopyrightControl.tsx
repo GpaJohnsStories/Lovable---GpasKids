@@ -16,7 +16,8 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
         return 'Full Copyright';
       case 'O':
         return 'Open, No Copyright';
-      case 'S':
+      case 'L':
+      case 'S': // Backward compatibility
         return 'Limited Sharing';
       default:
         return 'Full Copyright';
@@ -29,7 +30,8 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
         return 'text-white bg-red-600 border-red-700';
       case 'O':
         return 'text-white bg-green-600 border-green-700';
-      case 'S':
+      case 'L':
+      case 'S': // Backward compatibility
         return 'text-black bg-orange-400 border-orange-500';
       default:
         return 'text-white bg-red-600 border-red-700';
@@ -49,8 +51,8 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
           <SelectItem value="O" className="text-green-600 font-bold">
             O Open, No Copyright
           </SelectItem>
-          <SelectItem value="S" className="text-yellow-600 font-bold">
-            S Limited Sharing
+          <SelectItem value="L" className="text-yellow-600 font-bold">
+            L Limited Sharing
           </SelectItem>
         </SelectContent>
       </Select>
@@ -68,7 +70,7 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
               <div className="font-semibold text-green-600">O Open, No Copyright</div>
               <p className="text-gray-700">Free to share and distribute without restrictions.</p>
               
-              <div className="font-semibold text-yellow-600">S Limited Sharing</div>
+              <div className="font-semibold text-yellow-600">L Limited Sharing</div>
               <p className="text-gray-700">Gpa John's copyright - limited sharing allowed with attribution.</p>
             </div>
           </TooltipContent>

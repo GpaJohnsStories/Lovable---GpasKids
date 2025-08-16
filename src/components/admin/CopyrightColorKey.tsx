@@ -21,7 +21,7 @@ const CopyrightColorKey: React.FC = () => {
         
         <div className="flex items-center gap-3">
           <div className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-yellow-500 text-white font-bold text-sm">
-            S
+            L
           </div>
           <span className="text-sm font-medium text-yellow-600">Limited Sharing</span>
         </div>
