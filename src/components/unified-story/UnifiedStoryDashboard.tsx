@@ -319,20 +319,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 <div className="flex items-center gap-2">
                   <FileText className="h-5 w-5" />
                   Story Details
-                  {formData.category === 'BioText' && (
-                    <span className="text-sm text-gray-600 ml-2 flex items-center gap-2">
-                      & Biography Information
-                      <span className="bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full">
-                        1B
-                      </span>
-                    </span>
-                  )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-full">
-                    1A
-                  </span>
-                </div>
+                <span className="bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-full">
+                  1A
+                </span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">

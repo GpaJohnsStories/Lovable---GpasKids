@@ -103,7 +103,12 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
       {formData.category === 'BioText' && (
         <>
           <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 space-y-4">
-            <h3 className="text-lg font-bold text-teal-800 mb-3">Biography Information</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold text-teal-800">Biography Information</h3>
+              <span className="bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full">
+                1B
+              </span>
+            </div>
             
             <div className="space-y-2">
               <Label htmlFor="bio_subject_name" className={`font-bold text-gray-700 ${labelSize}`}>
