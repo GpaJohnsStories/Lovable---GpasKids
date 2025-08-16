@@ -581,9 +581,9 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                                    {(story.copyright_status || '©') === 'O' && (
                                      <span>O Open, No Copyright - Free to share. Click for more information</span>
                                    )}
-                                   {(story.copyright_status || '©') === 'S' && (
-                                     <span>S Limited Sharing - Gpa John's Copyright. Click for more information</span>
-                                   )}
+                    {(story.copyright_status || '©') === 'L' && (
+                      <span>L Limited Sharing - Gpa John's Copyright. Click for more information</span>
+                    )}
                                  </div>
                                </TooltipContent>
                              </Tooltip>

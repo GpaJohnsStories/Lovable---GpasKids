@@ -317,8 +317,8 @@ const StoriesTableRow = ({
                   {(story.copyright_status || '©') === 'O' && (
                     <span className="text-green-600 font-bold">O Open, No Copyright - Free to share</span>
                   )}
-                  {(story.copyright_status || '©') === 'S' && (
-                    <span className="text-yellow-600 font-bold">S Limited Sharing - Gpa John's Copyright</span>
+                  {(story.copyright_status || '©') === 'L' && (
+                    <span className="text-yellow-600 font-bold">L Limited Sharing - Gpa John's Copyright</span>
                   )}
                 </div>
               </TooltipContent>
