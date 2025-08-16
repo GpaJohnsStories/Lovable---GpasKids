@@ -52,12 +52,14 @@ const Writing = () => {
                 backgroundColor: 'rgba(220, 20, 60, 0.1)'
               }}
             >
-              <WebTextBox
-                webtextCode="SYS-CPR"
-                borderColor=""
-                backgroundColor=""
-                title="Copyright and What It Means for You"
-              />
+              <div className="border-none">
+                <WebTextBox
+                  webtextCode="SYS-CPR"
+                  borderColor=""
+                  backgroundColor=""
+                  title="Copyright and What It Means for You"
+                />
+              </div>
             </div>
           </div>
 
@@ -70,12 +72,14 @@ const Writing = () => {
                 backgroundColor: 'rgba(255, 255, 0, 0.1)'
               }}
             >
-              <WebTextBox
-                webtextCode="SYS-CP2"
-                borderColor=""
-                backgroundColor=""
-                title="Copyright Information Part 2"
-              />
+              <div className="border-none">
+                <WebTextBox
+                  webtextCode="SYS-CP2"
+                  borderColor=""
+                  backgroundColor=""
+                  title="Copyright Information Part 2"
+                />
+              </div>
             </div>
           </div>
 
@@ -88,12 +92,14 @@ const Writing = () => {
                 backgroundColor: 'rgba(50, 205, 50, 0.05)'
               }}
             >
-              <WebTextBox
-                webtextCode="SYS-CP3"
-                borderColor=""
-                backgroundColor=""
-                title="Copyright Information Part 3"
-              />
+              <div className="border-none">
+                <WebTextBox
+                  webtextCode="SYS-CP3"
+                  borderColor=""
+                  backgroundColor=""
+                  title="Copyright Information Part 3"
+                />
+              </div>
             </div>
           </div>
 
