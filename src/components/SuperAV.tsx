@@ -677,57 +677,32 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        </div>
                      )}
                      
-                     {/* First sentence and first half of second sentence - to buddy's right */}
-                     <div style={{
-                       flex: 1,
-                       minWidth: 0 // Allow shrinking
-                     }}>
-                       <div 
-                         style={{
-                           fontSize: `${currentScale === 'xs' ? '12px' : 
-                                      currentScale === 'sm' ? '14px' :
-                                      currentScale === 'base' ? '16px' :
-                                      currentScale === 'lg' ? '18px' :
-                                      currentScale === 'xl' ? '20px' :
-                                      currentScale === '2xl' ? '24px' :
-                                      currentScale === '3xl' ? '30px' :
-                                      currentScale === '4xl' ? '36px' : '16px'}`,
-                           fontFamily: FONT_FUN,
-                           color: '#654321',
-                           lineHeight: '1.4',
-                           wordWrap: 'break-word',
-                           overflowWrap: 'break-word'
-                         }}
-                       >
-                         There is no audio file for this page yet. But your word size
-                       </div>
-                     </div>
-                   </div>
-                   
-                   {/* Second half of second sentence - below buddy at left margin */}
-                   <div style={{
-                     marginTop: '2px' // Reduced to 2px
-                   }}>
-                     <div 
-                       style={{
-                         fontSize: `${currentScale === 'xs' ? '12px' : 
-                                    currentScale === 'sm' ? '14px' :
-                                    currentScale === 'base' ? '16px' :
-                                    currentScale === 'lg' ? '18px' :
-                                    currentScale === 'xl' ? '20px' :
-                                    currentScale === '2xl' ? '24px' :
-                                    currentScale === '3xl' ? '30px' :
-                                    currentScale === '4xl' ? '36px' : '16px'}`,
-                         fontFamily: FONT_FUN,
-                         color: '#654321',
-                         lineHeight: '1.4',
-                         wordWrap: 'break-word',
-                         overflowWrap: 'break-word'
-                       }}
-                     >
-                       buttons below still work just fine.
-                     </div>
-                   </div>
+                      {/* Complete paragraph - to buddy's right */}
+                      <div style={{
+                        flex: 1,
+                        minWidth: 0 // Allow shrinking
+                      }}>
+                        <div 
+                          style={{
+                            fontSize: `${currentScale === 'xs' ? '12px' : 
+                                       currentScale === 'sm' ? '14px' :
+                                       currentScale === 'base' ? '16px' :
+                                       currentScale === 'lg' ? '18px' :
+                                       currentScale === 'xl' ? '20px' :
+                                       currentScale === '2xl' ? '24px' :
+                                       currentScale === '3xl' ? '30px' :
+                                       currentScale === '4xl' ? '36px' : '16px'}`,
+                            fontFamily: FONT_FUN,
+                            color: '#654321',
+                            lineHeight: '1.4',
+                            wordWrap: 'break-word',
+                            overflowWrap: 'break-word'
+                          }}
+                        >
+                          There is no audio file for this page yet. But your word size buttons below still work just fine.
+                        </div>
+                      </div>
+                    </div>
                  </div>
                ) : (
                  /* Normal title/author layout */
