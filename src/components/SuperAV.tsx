@@ -677,7 +677,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        </div>
                      )}
                      
-                     {/* First sentence - to buddy's right */}
+                     {/* First sentence and first half of second sentence - to buddy's right */}
                      <div style={{
                        flex: 1,
                        minWidth: 0 // Allow shrinking
@@ -699,12 +699,12 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            overflowWrap: 'break-word'
                          }}
                        >
-                         There is no audio file for this page yet.
+                         There is no audio file for this page yet. But your word size
                        </div>
                      </div>
                    </div>
                    
-                   {/* Second sentence - below buddy at left margin */}
+                   {/* Second half of second sentence - below buddy at left margin */}
                    <div style={{
                      marginTop: '2px' // Reduced to 2px
                    }}>
@@ -725,7 +725,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                          overflowWrap: 'break-word'
                        }}
                      >
-                       But your word size buttons below still work just fine.
+                       buttons below still work just fine.
                      </div>
                    </div>
                  </div>
