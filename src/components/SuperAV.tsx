@@ -647,12 +647,12 @@ export const SuperAV: React.FC<SuperAVProps> = ({
              }}>
                {useSysAvx && sysAvx ? (
                  /* SYS-AVX layout with photo and text */
-                 <div style={{
-                   padding: '2px 8px', // Reduced top/bottom padding to 2px
-                   display: 'flex',
-                   flexDirection: 'column',
-                   gap: '2px' // Reduced gap to 2px
-                 }}>
+                  <div style={{
+                    padding: '2px 8px 2px 2px', // 2px top, 8px right, 2px bottom, 2px left
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '2px' // Reduced gap to 2px
+                  }}>
                    <div style={{
                      display: 'flex',
                      gap: '8px',
