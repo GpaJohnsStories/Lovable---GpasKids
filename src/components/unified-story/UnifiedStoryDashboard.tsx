@@ -306,6 +306,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   Exit
                 </button>
               </div>
+              <div className="mt-2 text-center">
+                <p className="text-xs text-gray-700 font-medium">Reminder: Save, THEN Record</p>
+              </div>
             </div>
           )}
           
