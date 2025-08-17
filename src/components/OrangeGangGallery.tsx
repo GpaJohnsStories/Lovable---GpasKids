@@ -116,11 +116,11 @@ const OrangeGangGallery = () => {
             {/* 1. Centered Original Photo */}
             <div className="text-center">
               <div className="flex justify-center">
-                <AspectRatio ratio={3/2} className="w-full max-w-lg">
+                <AspectRatio ratio={3/2} className="w-full max-w-sm">
                   <img
                     src={originalPhoto}
                     alt="Original Orange Shirt Gang - Six children wearing bright orange t-shirts"
-                    className="w-full h-full object-cover border-4 border-amber-600 rounded bg-amber-50"
+                    className="w-full h-full object-contain border-4 border-amber-600 rounded bg-amber-50"
                   />
                 </AspectRatio>
               </div>
