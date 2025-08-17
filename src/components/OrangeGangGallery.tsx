@@ -112,26 +112,26 @@ const OrangeGangGallery = () => {
         {/* Custom Webtext Box for SYS-OSP */}
         <div className="relative bg-amber-50 rounded-lg border-4 border-amber-600 p-4 sm:p-6">
           {/* Main Content */}
-          <div className="space-y-6">
-            {/* 1. Centered Original Photo */}
+          <div className="space-y-4">
+            {/* 1. Original Photo at Top */}
             <div className="text-center">
               <div className="flex justify-center">
-                <AspectRatio ratio={3/2} className="w-full max-w-sm">
+                <div className="w-full max-w-sm">
                   <img
                     src={originalPhoto}
                     alt="Original Orange Shirt Gang - Six children wearing bright orange t-shirts"
-                    className="w-full h-full object-contain border-4 border-amber-600 rounded bg-amber-50"
+                    className="w-full h-auto object-contain border-4 border-amber-600 rounded bg-amber-50"
                   />
-                </AspectRatio>
+                </div>
               </div>
             </div>
             
-            {/* 2. Caption */}
+            {/* 2. Title Below Photo */}
             <div className="text-center">
-              <h3 className="text-2xl font-bold text-amber-900 tracking-wide">
+              <h3 className="text-xl font-bold text-amber-900 tracking-wide">
                 Original Orange Shirt Gang
               </h3>
-              <p className="text-amber-700 italic mt-2">
+              <p className="text-lg text-amber-700 italic mt-1">
                 The founding members who started it all!
               </p>
             </div>
