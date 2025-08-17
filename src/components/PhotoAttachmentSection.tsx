@@ -1,9 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { Camera } from 'lucide-react';
+import { Camera, ImageIcon } from 'lucide-react';
 
 interface PhotoAttachmentSectionProps {
   file: File | null;
@@ -20,9 +20,81 @@ const PhotoAttachmentSection: React.FC<PhotoAttachmentSectionProps> = ({
   onCaptionChange,
   disabled = false
 }) => {
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [isCompressing, setIsCompressing] = useState(false);
+
+  const compressImage = async (file: File): Promise<File> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      
+      img.onload = () => {
+        // Calculate dimensions (max 1600px on longest side)
+        const maxDimension = 1600;
+        let { width, height } = img;
+        
+        if (width > height) {
+          if (width > maxDimension) {
+            height = (height * maxDimension) / width;
+            width = maxDimension;
+          }
+        } else {
+          if (height > maxDimension) {
+            width = (width * maxDimension) / height;
+            height = maxDimension;
+          }
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Draw and compress
+        ctx?.drawImage(img, 0, 0, width, height);
+        
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, '') + '.webp', {
+                type: 'image/webp',
+                lastModified: Date.now(),
+              });
+              resolve(compressedFile);
+            } else {
+              resolve(file); // Fallback to original
+            }
+          },
+          'image/webp',
+          0.8
+        );
+      };
+      
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
-    onFileChange(selectedFile);
+    
+    if (!selectedFile) {
+      onFileChange(null);
+      return;
+    }
+
+    // Check if compression is needed (over 600KB)
+    if (selectedFile.size > 600 * 1024) {
+      setIsCompressing(true);
+      try {
+        const compressedFile = await compressImage(selectedFile);
+        onFileChange(compressedFile);
+      } catch (error) {
+        console.warn('Compression failed, using original:', error);
+        onFileChange(selectedFile);
+      } finally {
+        setIsCompressing(false);
+      }
+    } else {
+      onFileChange(selectedFile);
+    }
   };
 
   const handleRemoveFile = () => {
@@ -56,8 +128,14 @@ const PhotoAttachmentSection: React.FC<PhotoAttachmentSectionProps> = ({
           className="mt-1"
         />
         <p className="text-xs text-gray-500 mt-1">
-          JPEG, PNG, or WebP files only. Max 10MB.
+          JPEG, PNG, or WebP files. Large images will be automatically compressed to WebP format.
         </p>
+        {isCompressing && (
+          <div className="flex items-center gap-2 mt-2 text-xs text-orange-600">
+            <ImageIcon className="w-3 h-3 animate-pulse" />
+            <span>Compressing image for faster upload...</span>
+          </div>
+        )}
       </div>
 
       {file && (
@@ -66,7 +144,10 @@ const PhotoAttachmentSection: React.FC<PhotoAttachmentSectionProps> = ({
             <div>
               <p className="text-sm font-medium text-gray-700">{file.name}</p>
               <p className="text-xs text-gray-500">
-                {(file.size / 1024 / 1024).toFixed(2)} MB
+                {(file.size / 1024).toFixed(0)} KB
+                {file.type === 'image/webp' && file.size < 600 * 1024 && (
+                  <span className="text-green-600 ml-1">✓ Optimized</span>
+                )}
               </p>
             </div>
             <button

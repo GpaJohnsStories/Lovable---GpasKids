@@ -48,11 +48,11 @@ serve(async (req) => {
 
     // Validate file if present
     if (file) {
-      const maxSize = 10 * 1024 * 1024 // 10MB
+      const maxSize = 1 * 1024 * 1024 // 1MB (reduced from 10MB)
       const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
 
       if (file.size > maxSize) {
-        throw new Error('File size must be less than 10MB')
+        throw new Error('File size must be less than 1MB. Please compress your image.')
       }
 
       if (!allowedTypes.includes(file.type)) {
