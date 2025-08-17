@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
+import { AspectRatio } from './ui/aspect-ratio';
 import LoadingSpinner from './LoadingSpinner';
 import { Database } from '@/integrations/supabase/types';
 
@@ -21,6 +22,15 @@ interface PhotoComment extends Comment {
 
 const OrangeGangGallery = () => {
   console.log('🖼️ OrangeGangGallery component rendering...');
+  
+  // Helper photos (4 fixed slots)
+  const helperPhotos = [
+    { id: 'helper-1', name: 'Helper 1', src: '/placeholder.svg', caption: 'Helper coming soon!' },
+    { id: 'helper-2', name: 'Helper 2', src: '/placeholder.svg', caption: 'Helper coming soon!' },
+    { id: 'helper-3', name: 'Helper 3', src: '/placeholder.svg', caption: 'Helper coming soon!' },
+    { id: 'helper-4', name: 'Helper 4', src: '/placeholder.svg', caption: 'Helper coming soon!' },
+  ];
+  
   const { data: photos, isLoading, error } = useQuery<OrangeGangPhoto[]>({
     queryKey: ['orange-gang-photos'],
     queryFn: async () => {
@@ -73,17 +83,6 @@ const OrangeGangGallery = () => {
     );
   }
 
-  if (!photos || photos.length === 0) {
-    return (
-      <div className="text-center py-12 bg-amber-50 rounded-lg border border-amber-200">
-        <p className="text-amber-700 font-medium text-lg">No photos yet!</p>
-        <p className="text-amber-600 mt-2">
-          Be the first to share a photo of yourself in an orange shirt!
-        </p>
-      </div>
-    );
-  }
-
   return (
     <TooltipProvider>
       <div className="space-y-8">
@@ -127,54 +126,96 @@ const OrangeGangGallery = () => {
           </div>
         </div>
 
+        {/* Helpers Section */}
+        <div className="text-center space-y-6">
+          <h3 className="text-2xl font-semibold text-amber-800">
+            Grandpa's Helpers
+          </h3>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {helperPhotos.map((helper) => (
+              <Tooltip key={helper.id}>
+                <TooltipTrigger asChild>
+                  <div className="group cursor-pointer">
+                    <AspectRatio ratio={2/3} className="overflow-hidden rounded-lg shadow-md border-3 border-amber-400 hover:border-amber-500 transition-all duration-300 bg-amber-50">
+                      <img
+                        src={helper.src}
+                        alt={`${helper.name} - Orange Shirt Gang Helper`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </AspectRatio>
+                    <div className="mt-3 text-center">
+                      <p className="text-sm font-medium text-amber-800">{helper.name}</p>
+                    </div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="top" className="max-w-xs">
+                  <div className="text-center">
+                    <p className="font-medium">{helper.caption}</p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            ))}
+          </div>
+        </div>
+
         {/* User submitted photos section */}
-        <div className="text-center">
-          <h3 className="text-2xl font-semibold text-amber-800 mb-4">
+        <div className="text-center space-y-6">
+          <h3 className="text-2xl font-semibold text-amber-800">
             New Members Gallery
           </h3>
           <p className="text-amber-700 max-w-2xl mx-auto">
             Here are photos from friends who've joined 
             Grandpa's Orange Shirt Gang by sharing their orange shirt pictures.
           </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {photos.map((photo) => (
-            <Tooltip key={photo.id}>
-              <TooltipTrigger asChild>
-                <div className="group cursor-pointer">
-                  <div className="relative overflow-hidden rounded-lg shadow-md border-3 border-amber-400 hover:border-amber-500 transition-all duration-300 bg-amber-50">
-                    <img
-                      src={getPhotoUrl(photo.attachment_path!)}
-                      alt={photo.attachment_caption || 'Orange Shirt Gang Photo'}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <div className="mt-3 text-center">
-                    <p className="text-sm font-medium text-amber-800">
-                      {getDisplayName(photo)}
-                    </p>
-                    <p className="text-xs text-amber-600 mt-1">
-                      {new Date(photo.created_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent side="top" className="max-w-xs">
-                <div className="text-center space-y-1">
-                  <p className="font-medium">{photo.attachment_caption || 'Orange Shirt Gang Photo'}</p>
-                  <p className="text-sm opacity-90">Shared by: {getDisplayName(photo)}</p>
-                  <p className="text-xs opacity-75">
-                    {new Date(photo.created_at).toLocaleDateString()}
-                  </p>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          ))}
+          
+          {(!photos || photos.length === 0) ? (
+            <div className="text-center py-12 bg-amber-50 rounded-lg border border-amber-200">
+              <p className="text-amber-700 font-medium text-lg">No photos yet!</p>
+              <p className="text-amber-600 mt-2">
+                Be the first to share a photo of yourself in an orange shirt!
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {photos.map((photo) => (
+                <Tooltip key={photo.id}>
+                  <TooltipTrigger asChild>
+                    <div className="group cursor-pointer">
+                      <AspectRatio ratio={2/3} className="overflow-hidden rounded-lg shadow-md border-3 border-amber-400 hover:border-amber-500 transition-all duration-300 bg-amber-50">
+                        <img
+                          src={getPhotoUrl(photo.attachment_path!)}
+                          alt={photo.attachment_caption || 'Orange Shirt Gang Photo'}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </AspectRatio>
+                      <div className="mt-3 text-center">
+                        <p className="text-sm font-medium text-amber-800">
+                          {getDisplayName(photo)}
+                        </p>
+                        <p className="text-xs text-amber-600 mt-1">
+                          {new Date(photo.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-xs">
+                    <div className="text-center space-y-1">
+                      <p className="font-medium">{photo.attachment_caption || 'Orange Shirt Gang Photo'}</p>
+                      <p className="text-sm opacity-90">Shared by: {getDisplayName(photo)}</p>
+                      <p className="text-xs opacity-75">
+                        {new Date(photo.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="text-center text-sm text-amber-600 bg-amber-50 rounded-lg p-4 border border-amber-200">
