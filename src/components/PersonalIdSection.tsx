@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { containsBadWord, getHighlightedParts } from "@/utils/profanity";
-import { generateCompletePersonalId } from "@/utils/personalId";
+import { generateCompletePersonalId, checkPersonalIdExists } from "@/utils/personalId";
 import { ArrowLeft, Copy, CheckCheck } from "lucide-react";
 import { toast } from "sonner";
 
@@ -130,7 +130,6 @@ const PersonalIdSection = ({
     // Check if ID exists in database
     setIsValidating(true);
     try {
-      const { checkPersonalIdExists } = await import("@/utils/personalId");
       const exists = await checkPersonalIdExists(value);
       
       if (!exists) {

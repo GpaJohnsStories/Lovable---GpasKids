@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { containsBadWord } from "@/utils/profanity";
-import { setPersonalId } from "@/utils/personalId";
+import { setPersonalId, checkPersonalIdExists } from "@/utils/personalId";
 
 import { detectXssAttempt, logSecurityIncident, sanitizeCommentContent, sanitizeCommentSubject } from "@/utils/xssProtection";
 import PersonalIdSection from "./PersonalIdSection";
@@ -262,7 +262,6 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
         // Re-check Personal ID existence before submission
         const checkIdAsync = async () => {
           try {
-            const { checkPersonalIdExists } = await import("@/utils/personalId");
             const exists = await checkPersonalIdExists(existingPersonalId);
             if (!exists) {
               setExistingPersonalIdError("Personal ID not found. Please check your ID.");
