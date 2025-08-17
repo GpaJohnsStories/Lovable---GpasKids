@@ -40,8 +40,8 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.gif");
   const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.gif");
   const { iconName: writingIconName } = useCachedIcon("!CO-MM6.gif");
-  const { iconName: aboutIconName } = useCachedIcon("!CO-MM7.gif");
-  const { iconName: safeIconName } = useCachedIcon("!CO-MM8.gif");
+  const { iconName: aboutIconName } = useCachedIcon("!CO-MM7.jpg");
+  const { iconName: safeIconName } = useCachedIcon("!CO-MM8.jpg");
   
   // Submenu icon names
   const { iconName: viewCommentsIconName } = useCachedIcon("!CO-S51.jpg");
@@ -182,7 +182,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "about-us",
-      icon: "!CO-MM7.gif", // About Us icon - Main Menu 7
+      icon: "!CO-MM7.jpg", // About Us icon - Main Menu 7
       text: "About Us",
       tooltipText: aboutIconName || "About Us",
       color: "#F97316",
@@ -227,7 +227,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "safe-secure",
-      icon: "!CO-MM8.gif", // Safe & Secure icon - Main Menu 8
+      icon: "!CO-MM8.jpg", // Safe & Secure icon - Main Menu 8
       text: "Safe & Secure", 
       tooltipText: safeIconName || "Safe & Secure",
       color: "#F97316",
