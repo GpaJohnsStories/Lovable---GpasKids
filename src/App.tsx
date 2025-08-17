@@ -8,6 +8,7 @@ import { IconCacheProvider } from "@/contexts/IconCacheContext";
 import { TooltipProvider as CustomTooltipProvider } from "@/contexts/TooltipContext";
 import { SuperAVProvider } from '@/contexts/SuperAVContext';
 import { HelmetProvider } from 'react-helmet-async';
+import { useProfileEnsurance } from "@/hooks/useProfileEnsurance";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Story from "./pages/Story";
@@ -67,6 +68,8 @@ const ConditionalContentProtection = ({ children }: { children: React.ReactNode 
 function App() {
   // Activate visit tracking for the entire app
   useVisitTracker();
+  // Ensure user profiles exist for authenticated users
+  useProfileEnsurance();
   
   return (
     <ErrorBoundary>

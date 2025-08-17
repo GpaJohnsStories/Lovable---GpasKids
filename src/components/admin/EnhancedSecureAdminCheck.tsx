@@ -60,10 +60,19 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
         
         console.log('🔐 EnhancedSecureAdminCheck: Admin access check result:', { hasAccess, accessCheckError });
         
+        // Type guard for debug info
+        const debug = debugInfo as { profile_exists?: boolean; user_role?: string } | null;
+        
         if (accessCheckError) {
           console.error('🚨 Admin access check error:', accessCheckError);
           if (isMounted) {
-            setAuthError('Failed to verify admin access');
+            if (debug && debug.profile_exists === false) {
+              setAuthError('No profile found. Contact site owner to create your admin profile.');
+            } else if (debug && debug.user_role && !['admin', 'viewer'].includes(debug.user_role)) {
+              setAuthError(`Access denied. Your role (${debug.user_role}) does not have admin access.`);
+            } else {
+              setAuthError(`Admin check failed: ${accessCheckError.message}`);
+            }
             setIsAuthorized(false);
           }
           return;
@@ -71,7 +80,20 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
 
         if (isMounted) {
           const authorized = hasAccess || false;
-          setIsAuthorized(authorized);
+          if (authorized) {
+            setIsAuthorized(true);
+            setAuthError(null);
+          } else {
+            // User is authenticated but not authorized - provide specific feedback
+            if (debug && debug.profile_exists === false) {
+              setAuthError('No profile found. Contact site owner to create your admin profile.');
+            } else if (debug && debug.user_role) {
+              setAuthError(`Access denied. Your role (${debug.user_role}) does not have admin access.`);
+            } else {
+              setAuthError('Access denied. You do not have admin or viewer privileges.');
+            }
+            setIsAuthorized(false);
+          }
           console.log('🔐 EnhancedSecureAdminCheck: User authorized:', authorized);
         }
       } catch (err) {
