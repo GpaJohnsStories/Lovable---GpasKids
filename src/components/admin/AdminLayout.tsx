@@ -24,4 +24,6 @@ const AdminLayoutWithHeaderBanner = ({ children }: AdminLayoutWithHeaderBannerPr
   );
 };
 
+// Export with both names for compatibility
 export default AdminLayoutWithHeaderBanner;
+export { AdminLayoutWithHeaderBanner as AdminLayout };
