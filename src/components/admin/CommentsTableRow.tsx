@@ -53,12 +53,19 @@ const CommentsTableRow = ({ comment, onUpdateStatus, onViewComment }: CommentsTa
           className={`font-medium break-words whitespace-normal text-base cursor-pointer hover:text-blue-600 transition-colors ${isAnnouncement ? 'text-blue-800 hover:text-blue-900' : 'hover:text-blue-600'}`}
           onClick={() => onViewComment(comment)}
         >
-          {isAnnouncement && (
-            <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100 mr-2 mb-1">
-              📢 Announcement
-            </Badge>
-          )}
-          {comment.subject}
+          <div className="flex items-center gap-2 flex-wrap">
+            {isAnnouncement && (
+              <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">
+                📢 Announcement
+              </Badge>
+            )}
+            {comment.attachment_path && (
+              <Badge className="bg-orange-100 text-orange-700 hover:bg-orange-100">
+                📷 Photo
+              </Badge>
+            )}
+            <span>{comment.subject}</span>
+          </div>
         </div>
       </TableCell>
       <TableCell className="w-28 text-center">{getStatusBadge(comment.status)}</TableCell>

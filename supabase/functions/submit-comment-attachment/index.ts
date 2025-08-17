@@ -59,10 +59,10 @@ serve(async (req) => {
         throw new Error('Only JPEG, PNG, and WebP images are allowed')
       }
 
-      // Generate unique filename
+      // Generate filename with PID and timestamp for easy identification
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-')
       const fileExtension = file.name.split('.').pop()
-      const uniqueFileName = `pending/${timestamp}-${crypto.randomUUID()}.${fileExtension}`
+      const uniqueFileName = `pending/${personalId.toUpperCase()}_${timestamp}_${crypto.randomUUID().substring(0, 8)}.${fileExtension}`
 
       console.log('Uploading file to pending bucket:', uniqueFileName)
 

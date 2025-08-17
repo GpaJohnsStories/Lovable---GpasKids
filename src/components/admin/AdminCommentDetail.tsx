@@ -7,6 +7,7 @@ import CommentReplyForm from "@/components/CommentReplyForm";
 import CommentRepliesList from "@/components/CommentRepliesList";
 import DecryptedCommentContent from "./DecryptedCommentContent";
 import { useUserRole } from "@/hooks/useUserRole";
+import { supabase } from "@/integrations/supabase/client";
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
@@ -86,38 +87,108 @@ const AdminCommentDetail = ({ comment, isOpen, onClose, onUpdateStatus }: AdminC
                 className={`whitespace-pre-wrap leading-relaxed text-lg ${isAnnouncement ? 'text-blue-800' : 'text-gray-800'}`}
               />
             </div>
+
+            {/* Photo Attachment */}
+            {comment.attachment_path && (
+              <div className="mt-4 p-4 border border-orange-200 rounded-lg bg-orange-50">
+                <h4 className="font-semibold text-orange-800 mb-3 flex items-center gap-2">
+                  📷 Photo Attachment
+                  {comment.attachment_caption && (
+                    <span className="text-sm font-normal text-orange-600">
+                      - {comment.attachment_caption}
+                    </span>
+                  )}
+                </h4>
+                <div className="space-y-3">
+                  <img
+                    src={`https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/${comment.attachment_bucket}/${comment.attachment_path}`}
+                    alt={comment.attachment_caption || comment.subject}
+                    className="max-w-md max-h-64 object-contain rounded-lg shadow-sm border border-orange-200"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      const errorMsg = e.currentTarget.nextElementSibling as HTMLElement;
+                      if (errorMsg) errorMsg.style.display = 'block';
+                    }}
+                  />
+                  <div className="hidden text-red-600 text-sm">
+                    Error loading image. File may have been moved or deleted.
+                  </div>
+                  <div className="text-xs text-orange-600 space-y-1">
+                    <p><strong>File:</strong> {comment.attachment_path}</p>
+                    <p><strong>Bucket:</strong> {comment.attachment_bucket}</p>
+                    {comment.attachment_mime && <p><strong>Type:</strong> {comment.attachment_mime}</p>}
+                    <p><strong>PID from filename:</strong> 
+                      <code className="ml-1 bg-orange-100 px-1 rounded">
+                        {comment.attachment_path?.split('/').pop()?.split('_')[0] || 'Unknown'}
+                      </code>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Admin Actions */}
           {!isViewer && (
-            <div className="flex gap-2 p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <h3 className="font-semibold text-blue-900 mr-4">Admin Actions:</h3>
-              {comment.status !== 'approved' && (
-                <Button 
-                  size="sm" 
-                  className="bg-green-600 hover:bg-green-700 text-white" 
-                  onClick={() => onUpdateStatus(comment.id, 'approved')}
-                >
-                  Approve
-                </Button>
-              )}
-              {comment.status !== 'rejected' && (
-                <Button 
-                  size="sm" 
-                  variant="destructive" 
-                  onClick={() => onUpdateStatus(comment.id, 'rejected')}
-                >
-                  Reject
-                </Button>
-              )}
-              {comment.status !== 'archived' && (
-                <Button 
-                  size="sm" 
-                  variant="secondary" 
-                  onClick={() => onUpdateStatus(comment.id, 'archived')}
-                >
-                  Archive
-                </Button>
+            <div className="space-y-3">
+              <div className="flex gap-2 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <h3 className="font-semibold text-blue-900 mr-4">Admin Actions:</h3>
+                {comment.status !== 'approved' && (
+                  <Button 
+                    size="sm" 
+                    className="bg-green-600 hover:bg-green-700 text-white" 
+                    onClick={() => onUpdateStatus(comment.id, 'approved')}
+                  >
+                    Approve
+                  </Button>
+                )}
+                {comment.status !== 'rejected' && (
+                  <Button 
+                    size="sm" 
+                    variant="destructive" 
+                    onClick={() => onUpdateStatus(comment.id, 'rejected')}
+                  >
+                    Reject
+                  </Button>
+                )}
+                {comment.status !== 'archived' && (
+                  <Button 
+                    size="sm" 
+                    variant="secondary" 
+                    onClick={() => onUpdateStatus(comment.id, 'archived')}
+                  >
+                    Archive
+                  </Button>
+                )}
+              </div>
+
+              {/* Photo-specific Actions */}
+              {comment.attachment_path && comment.attachment_bucket === 'orange-gang-pending' && comment.status !== 'approved' && (
+                <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <h4 className="font-semibold text-orange-800 mb-2">Orange Gang Photo Actions:</h4>
+                  <p className="text-sm text-orange-700 mb-3">
+                    Approving this comment will move the photo to the public Orange Gang Gallery.
+                  </p>
+                  <Button 
+                    size="sm" 
+                    className="bg-orange-600 hover:bg-orange-700 text-white" 
+                    onClick={async () => {
+                      try {
+                        const { data } = await supabase.functions.invoke('approve-comment-photo', {
+                          body: { commentId: comment.id }
+                        });
+                        
+                        if (data?.success) {
+                          onUpdateStatus(comment.id, 'approved');
+                        }
+                      } catch (error) {
+                        console.error('Error approving photo:', error);
+                      }
+                    }}
+                  >
+                    🎉 Approve for Orange Gang Gallery
+                  </Button>
+                </div>
               )}
             </div>
           )}

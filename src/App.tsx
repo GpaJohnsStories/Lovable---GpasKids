@@ -31,6 +31,7 @@ import PublicAuthorBios from "./pages/PublicAuthorBios";
 import PublicAuthorBiosSimple from "./pages/PublicAuthorBiosSimple";
 import AuthorBio from "./pages/AuthorBio";
 import Club from "./pages/Club";
+import OrangeGangPhotos from "./pages/OrangeGangPhotos";
 
 import ReferenceDashboard from "./components/admin/ReferenceDashboard";
 import AdminSiteMapContent from "./components/admin/AdminSiteMapContent";
@@ -97,6 +98,7 @@ function App() {
                       <Route path="/guide" element={<Guide />} />
                       <Route path="/help-gpa" element={<HelpGpa />} />
                       <Route path="/club" element={<Club />} />
+                      <Route path="/club/photos" element={<OrangeGangPhotos />} />
                       
                       <Route path="/make-comment" element={<MakeComment />} />
                       <Route path="/view-comments" element={<ViewComments />} />
