@@ -25,10 +25,10 @@ const OrangeGangGallery = () => {
   
   // Helper photos (4 fixed slots)
   const helperPhotos = [
-    { id: 'helper-1', name: 'Helper 1', src: '/placeholder.svg', caption: 'Helper coming soon!' },
-    { id: 'helper-2', name: 'Helper 2', src: '/placeholder.svg', caption: 'Helper coming soon!' },
-    { id: 'helper-3', name: 'Helper 3', src: '/placeholder.svg', caption: 'Helper coming soon!' },
-    { id: 'helper-4', name: 'Helper 4', src: '/placeholder.svg', caption: 'Helper coming soon!' },
+    { id: 'helper-1', name: 'Buddy', src: '/lovable-uploads/bfdc1312-b16c-4fad-b3b7-9c7d55dab74f.png', caption: 'Buddy - Kindness is my superpower!' },
+    { id: 'helper-2', name: 'Fluffy', src: '/lovable-uploads/ff27a5e0-bf85-4c9b-a9a6-f9d012e46444.png', caption: 'Fluffy - Super Firewall Furball on duty!' },
+    { id: 'helper-3', name: 'Max', src: '/lovable-uploads/1729cdc7-f3de-4393-9987-3dbfacafcdfa.png', caption: 'Max - Maximum Security Force!' },
+    { id: 'helper-4', name: 'Sparky', src: '/lovable-uploads/80d8e834-9f1a-483a-ae7d-cec1be608287.png', caption: 'Sparky - I throw fiery softballs!' },
   ];
   
   const { data: photos, isLoading, error } = useQuery<OrangeGangPhoto[]>({
