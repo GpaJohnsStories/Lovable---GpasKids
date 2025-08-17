@@ -6,7 +6,7 @@ import { Textarea } from './ui/textarea';
 import { Label } from './ui/label';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import PersonalIdSection from './PersonalIdSection';
+import ClubPersonalIdSection from './ClubPersonalIdSection';
 import PhotoAttachmentSection from './PhotoAttachmentSection';
 
 interface CommentFormProps {
@@ -20,6 +20,10 @@ const CommentForm: React.FC<CommentFormProps> = ({ prefilledStoryCode = '' }) =>
   const [file, setFile] = useState<File | null>(null);
   const [caption, setCaption] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handlePersonalIdGenerated = (id: string) => {
+    setPersonalId(id);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,9 +122,8 @@ const CommentForm: React.FC<CommentFormProps> = ({ prefilledStoryCode = '' }) =>
       <h2 className="text-2xl font-bold text-amber-800 mb-6">Share Your Thoughts</h2>
       
       <form onSubmit={handleSubmit} className="space-y-6">
-        <PersonalIdSection
-          personalId={personalId}
-          onPersonalIdChange={setPersonalId}
+        <ClubPersonalIdSection
+          onPersonalIdGenerated={handlePersonalIdGenerated}
           showExplanation={true}
         />
 
