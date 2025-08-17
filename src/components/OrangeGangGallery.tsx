@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import { AspectRatio } from './ui/aspect-ratio';
 import LoadingSpinner from './LoadingSpinner';
 import { Database } from '@/integrations/supabase/types';
+import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
+import { getStoryPhotos } from '@/utils/storyUtils';
+import DOMPurify from 'dompurify';
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
@@ -21,15 +24,38 @@ interface PhotoComment extends Comment {
 }
 
 const OrangeGangGallery = () => {
-  console.log('🖼️ OrangeGangGallery component rendering...');
+  // State for SYS-OSP webtext content
+  const [webtext, setWebtext] = useState<any>(null);
+  const [originalPhoto, setOriginalPhoto] = useState<string>('/lovable-uploads/fc32fa89-9e7a-4e53-851b-68cfbc3cbb8f.png');
+  const { lookupStoryByCode } = useStoryCodeLookup();
   
-  // Helper photos (4 fixed slots)
+  // Helper photos (4 fixed slots) - reduced size
   const helperPhotos = [
     { id: 'helper-1', name: 'Buddy', src: '/lovable-uploads/bfdc1312-b16c-4fad-b3b7-9c7d55dab74f.png', caption: 'Buddy - Kindness is my superpower!' },
     { id: 'helper-2', name: 'Fluffy', src: '/lovable-uploads/ff27a5e0-bf85-4c9b-a9a6-f9d012e46444.png', caption: 'Fluffy - Super Firewall Furball on duty!' },
     { id: 'helper-3', name: 'Max', src: '/lovable-uploads/1729cdc7-f3de-4393-9987-3dbfacafcdfa.png', caption: 'Max - Maximum Security Force!' },
     { id: 'helper-4', name: 'Sparky', src: '/lovable-uploads/80d8e834-9f1a-483a-ae7d-cec1be608287.png', caption: 'Sparky - I throw fiery softballs!' },
   ];
+  
+  // Fetch SYS-OSP webtext content
+  useEffect(() => {
+    const fetchWebtext = async () => {
+      const result = await lookupStoryByCode('SYS-OSP', true);
+      if (result.found && result.story) {
+        setWebtext(result.story);
+        const photos = getStoryPhotos(result.story);
+        if (photos.length > 0) {
+          setOriginalPhoto(photos[0].url);
+        }
+      }
+    };
+    fetchWebtext();
+  }, [lookupStoryByCode]);
+
+  // Create safe HTML for webtext content
+  const createSafeHtml = (content: string) => {
+    return { __html: DOMPurify.sanitize(content) };
+  };
   
   const { data: photos, isLoading, error } = useQuery<OrangeGangPhoto[]>({
     queryKey: ['orange-gang-photos'],
@@ -57,13 +83,10 @@ const OrangeGangGallery = () => {
     return photo.display_name;
   };
 
-  const getTooltipText = (photo: OrangeGangPhoto) => {
-    const displayName = photo.display_name;
-    const caption = photo.attachment_caption || 'Orange Shirt Gang Photo';
-    const date = new Date(photo.created_at).toLocaleDateString();
-    
-    return `${caption}\n\nShared by: ${displayName}\nDate: ${date}`;
-  };
+  // Sort photos newest first
+  const sortedPhotos = photos ? [...photos].sort((a, b) => 
+    new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  ) : [];
 
   if (isLoading) {
     return (
@@ -86,80 +109,85 @@ const OrangeGangGallery = () => {
   return (
     <TooltipProvider>
       <div className="space-y-8">
-        {/* Featured Original Orange Shirt Gang Photo */}
-        <div className="text-center space-y-6">
-          <h2 className="text-3xl font-bold text-amber-800 mb-4">
-            The Orange Shirt Gang
-          </h2>
-          
-          <div className="flex justify-center">
-            <div className="relative">
-              <div className="p-3 bg-gradient-to-br from-yellow-400 via-amber-400 to-orange-400 rounded-2xl shadow-2xl">
-                <div className="p-2 bg-gradient-to-br from-amber-300 to-yellow-300 rounded-xl">
+        {/* Custom Webtext Box for SYS-OSP */}
+        <div className="relative bg-amber-50 rounded-lg border-4 border-amber-600 p-4 sm:p-6">
+          {/* Main Content */}
+          <div className="space-y-6">
+            {/* 1. Centered Original Photo */}
+            <div className="text-center">
+              <div className="flex justify-center">
+                <AspectRatio ratio={3/2} className="w-full max-w-lg">
                   <img
-                    src="/lovable-uploads/fc32fa89-9e7a-4e53-851b-68cfbc3cbb8f.png"
+                    src={originalPhoto}
                     alt="Original Orange Shirt Gang - Six children wearing bright orange t-shirts"
-                    className="w-96 h-auto rounded-lg shadow-lg"
-                    onLoad={() => console.log('✅ Original Orange Shirt Gang photo loaded successfully')}
-                    onError={(e) => {
-                      console.error('❌ Failed to load Original Orange Shirt Gang photo:', e);
-                      console.log('Image src:', e.currentTarget.src);
-                    }}
+                    className="w-full h-full object-cover border-4 border-amber-600 rounded bg-amber-50"
                   />
-                </div>
+                </AspectRatio>
               </div>
-              {/* Decorative corner elements */}
-              <div className="absolute -top-2 -left-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full shadow-lg"></div>
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full shadow-lg"></div>
-              <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full shadow-lg"></div>
-              <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full shadow-lg"></div>
+            </div>
+            
+            {/* 2. Caption */}
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-amber-900 tracking-wide">
+                Original Orange Shirt Gang
+              </h3>
+              <p className="text-amber-700 italic mt-2">
+                The founding members who started it all!
+              </p>
+            </div>
+            
+            {/* 3. Webtext Content */}
+            {webtext && webtext.content && (
+              <div 
+                className="text-amber-800 text-base leading-relaxed"
+                dangerouslySetInnerHTML={createSafeHtml(webtext.content)}
+              />
+            )}
+            
+            {/* 4. Grandpa's Team inside the webtext box */}
+            <div className="text-center space-y-4">
+              <h4 className="text-xl font-semibold text-amber-800">
+                Grandpa's Team
+              </h4>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl mx-auto">
+                {helperPhotos.map((helper) => (
+                  <Tooltip key={helper.id}>
+                    <TooltipTrigger asChild>
+                      <div className="cursor-pointer">
+                        <div className="w-28 sm:w-32 md:w-36 mx-auto">
+                          <AspectRatio ratio={2/3} className="overflow-hidden rounded border-4 border-amber-600 bg-amber-50">
+                            <img
+                              src={helper.src}
+                              alt={`${helper.name} - Orange Shirt Gang Helper`}
+                              className="w-full h-full object-cover"
+                            />
+                          </AspectRatio>
+                        </div>
+                        <div className="mt-2 text-center">
+                          <p className="text-sm font-medium text-amber-800">{helper.name}</p>
+                        </div>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" className="max-w-xs">
+                      <div className="text-center">
+                        <p className="font-medium">{helper.caption}</p>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </div>
             </div>
           </div>
           
-          <div className="space-y-2">
-            <h3 className="text-2xl font-bold text-amber-900 tracking-wide">
-              Original Orange Shirt Gang
-            </h3>
-            <p className="text-amber-700 italic">
-              The founding members who started it all!
-            </p>
+          {/* 5. Bottom-right code badge */}
+          <div className="absolute bottom-2 right-2">
+            <span className="text-xs text-amber-600 bg-amber-100 px-2 py-1 rounded border border-amber-300">
+              SYS-OSP
+            </span>
           </div>
         </div>
 
-        {/* Helpers Section */}
-        <div className="text-center space-y-6">
-          <h3 className="text-2xl font-semibold text-amber-800">
-            Grandpa's Helpers
-          </h3>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            {helperPhotos.map((helper) => (
-              <Tooltip key={helper.id}>
-                <TooltipTrigger asChild>
-                  <div className="group cursor-pointer">
-                    <AspectRatio ratio={2/3} className="overflow-hidden rounded-lg shadow-md border-3 border-amber-400 hover:border-amber-500 transition-all duration-300 bg-amber-50">
-                      <img
-                        src={helper.src}
-                        alt={`${helper.name} - Orange Shirt Gang Helper`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </AspectRatio>
-                    <div className="mt-3 text-center">
-                      <p className="text-sm font-medium text-amber-800">{helper.name}</p>
-                    </div>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="top" className="max-w-xs">
-                  <div className="text-center">
-                    <p className="font-medium">{helper.caption}</p>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
-            ))}
-          </div>
-        </div>
-
-        {/* User submitted photos section */}
+        {/* New Members Gallery (user-submitted photos) */}
         <div className="text-center space-y-6">
           <h3 className="text-2xl font-semibold text-amber-800">
             New Members Gallery
@@ -169,7 +197,7 @@ const OrangeGangGallery = () => {
             Grandpa's Orange Shirt Gang by sharing their orange shirt pictures.
           </p>
           
-          {(!photos || photos.length === 0) ? (
+          {(!sortedPhotos || sortedPhotos.length === 0) ? (
             <div className="text-center py-12 bg-amber-50 rounded-lg border border-amber-200">
               <p className="text-amber-700 font-medium text-lg">No photos yet!</p>
               <p className="text-amber-600 mt-2">
@@ -177,23 +205,22 @@ const OrangeGangGallery = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {photos.map((photo) => (
+            <div className={`grid ${sortedPhotos.length > 24 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'}`}>
+              {sortedPhotos.map((photo) => (
                 <Tooltip key={photo.id}>
                   <TooltipTrigger asChild>
-                    <div className="group cursor-pointer">
-                      <AspectRatio ratio={2/3} className="overflow-hidden rounded-lg shadow-md border-3 border-amber-400 hover:border-amber-500 transition-all duration-300 bg-amber-50">
+                    <div className="cursor-pointer">
+                      <AspectRatio ratio={3/2} className="overflow-hidden rounded border-4 border-amber-600 bg-amber-50">
                         <img
                           src={getPhotoUrl(photo.attachment_path!)}
                           alt={photo.attachment_caption || 'Orange Shirt Gang Photo'}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-cover"
                           onError={(e) => {
                             e.currentTarget.style.display = 'none';
                           }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </AspectRatio>
-                      <div className="mt-3 text-center">
+                      <div className="mt-2 text-center">
                         <p className="text-sm font-medium text-amber-800">
                           {getDisplayName(photo)}
                         </p>
@@ -203,7 +230,7 @@ const OrangeGangGallery = () => {
                       </div>
                     </div>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="max-w-xs">
+                  <TooltipContent side="bottom" className="max-w-xs">
                     <div className="text-center space-y-1">
                       <p className="font-medium">{photo.attachment_caption || 'Orange Shirt Gang Photo'}</p>
                       <p className="text-sm opacity-90">Shared by: {getDisplayName(photo)}</p>
