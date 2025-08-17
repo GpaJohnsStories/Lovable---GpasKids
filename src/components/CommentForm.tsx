@@ -83,29 +83,25 @@ const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: Comment
         status: 'pending'
       });
       
-      // Test database connection first with detailed logging
-      console.log("🔍 Testing database connection...");
-      try {
-        const { data: testData, error: testError } = await supabase
-          .from("comments")
-          .select("count")
-          .limit(1);
+      // Test database connection only in development
+      if (window.location.hostname === 'localhost' || window.location.hostname.includes('lovableproject.com')) {
+        console.log("🔍 Testing database connection...");
+        try {
+          const { data: testData, error: testError } = await supabase
+            .from("comments")
+            .select("count")
+            .limit(1);
+            
+          if (testError) {
+            console.error("❌ Database connection test failed:", testError.message);
+            throw new Error(`Database connection failed: ${testError.message}`);
+          }
           
-        console.log("📊 Database connection test result:", {
-          success: !testError,
-          data: testData,
-          error: testError
-        });
-        
-        if (testError) {
-          console.error("❌ Database connection test failed:", testError);
-          throw new Error(`Database connection failed: ${testError.message}`);
+          console.log("✅ Database connection successful");
+        } catch (connError) {
+          console.error("💥 Database connection error:", connError);
+          throw connError;
         }
-        
-        console.log("✅ Database connection successful");
-      } catch (connError) {
-        console.error("💥 Database connection error:", connError);
-        throw connError;
       }
 
       // Now attempt the insert with detailed logging

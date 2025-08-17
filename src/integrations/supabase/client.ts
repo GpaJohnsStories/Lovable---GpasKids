@@ -1,23 +1,25 @@
 
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
+import { devLog, isDevelopment } from '@/utils/devLog';
 
 const SUPABASE_URL = "https://hlywucxwpzbqmzssmwpj.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhseXd1Y3h3cHpicW16c3Ntd3BqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg5MTQwNTMsImV4cCI6MjA2NDQ5MDA1M30.m72-z_MYxyijIqclV9hJplTNen02IdLLCOv7w3ZoHfY";
 
 // Validate configuration
 if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
-  console.error('🚨 Missing Supabase configuration!');
-  console.error('URL:', SUPABASE_URL ? '✅ Present' : '❌ Missing');
-  console.error('Key:', SUPABASE_PUBLISHABLE_KEY ? '✅ Present' : '❌ Missing');
+  devLog.critical('🚨 Missing Supabase configuration!');
+  devLog.critical('URL:', SUPABASE_URL ? '✅ Present' : '❌ Missing');
+  devLog.critical('Key:', SUPABASE_PUBLISHABLE_KEY ? '✅ Present' : '❌ Missing');
 }
 
-// Log configuration for debugging (safely)
-console.log('🔧 Supabase Configuration (v5 - DEBUG MODE):');
-console.log('URL:', SUPABASE_URL);
-console.log('Key full:', SUPABASE_PUBLISHABLE_KEY);
-console.log('Key prefix:', SUPABASE_PUBLISHABLE_KEY?.substring(0, 20) + '...');
-console.log('Key suffix:', '...' + SUPABASE_PUBLISHABLE_KEY?.substring(SUPABASE_PUBLISHABLE_KEY.length - 20));
+// Log configuration for debugging (dev-only, masked in production)
+if (isDevelopment) {
+  devLog.info('🔧 Supabase Configuration:');
+  devLog.info('URL:', SUPABASE_URL);
+  devLog.info('Key prefix:', SUPABASE_PUBLISHABLE_KEY?.substring(0, 20) + '...');
+  devLog.info('Key suffix:', '...' + SUPABASE_PUBLISHABLE_KEY?.substring(SUPABASE_PUBLISHABLE_KEY.length - 20));
+}
 
 // Single unified Supabase client instance with enhanced configuration
 export const supabase = createClient<Database>(
@@ -31,7 +33,7 @@ export const supabase = createClient<Database>(
     },
     global: {
       headers: {
-        'X-Client-Info': 'gpa-stories-frontend-debug'
+        'X-Client-Info': 'gpa-stories-frontend'
       }
     },
     db: {
@@ -40,53 +42,35 @@ export const supabase = createClient<Database>(
   }
 );
 
-// Enhanced connection test with more detailed logging
+// Connection test (dev-only)
 const testConnection = async () => {
+  if (!isDevelopment) return;
+  
   try {
-    console.log('🔗 Testing Supabase connection on client initialization...');
-    console.time('supabase-connection-test');
+    devLog.info('🔗 Testing Supabase connection...');
+    devLog.time('supabase-connection-test');
     
-    const { data, error, count } = await supabase
+    const { error, count } = await supabase
       .from('stories')
       .select('id', { count: 'exact', head: true })
       .limit(1);
     
-    console.timeEnd('supabase-connection-test');
+    devLog.timeEnd('supabase-connection-test');
     
     if (error) {
-      console.error('🚨 Supabase connection test failed:', error);
-      console.error('Error details:', {
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-        code: error.code
-      });
+      devLog.error('🚨 Supabase connection test failed:', error.message);
     } else {
-      console.log('✅ Supabase connection test successful');
-      console.log('📊 Stories count:', count);
-    }
-    
-    // Test author_bios table specifically
-    console.log('🔗 Testing author_bios table...');
-    const { data: biosData, error: biosError } = await supabase
-      .from('author_bios')
-      .select('id', { count: 'exact', head: true })
-      .limit(1);
-    
-    if (biosError) {
-      console.error('🚨 Author bios table test failed:', biosError);
-    } else {
-      console.log('✅ Author bios table accessible');
-      console.log('📊 Author bios count:', biosData);
+      devLog.info('✅ Supabase connection test successful - Stories count:', count);
     }
     
   } catch (err) {
-    console.error('🚨 Supabase connection test error:', err);
-    console.error('🚨 Error stack:', (err as Error)?.stack);
+    devLog.error('🚨 Supabase connection test error:', (err as Error)?.message);
   }
 };
 
-// Run connection test with error handling
-testConnection().catch(err => {
-  console.error('🚨 Failed to run connection test:', err);
-});
+// Run connection test only in development
+if (isDevelopment) {
+  testConnection().catch(err => {
+    devLog.error('🚨 Failed to run connection test:', err?.message);
+  });
+}
