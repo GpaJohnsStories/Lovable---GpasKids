@@ -2,9 +2,14 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { iconCacheService } from './services/IconCacheService'
+import { BUILD_ID, APP_NAME } from './version'
 
 // Clear the entire cache to load the renamed priority icons
 iconCacheService.clearCache();
+
+// Log build info for debugging
+console.log(`${APP_NAME} build: ${BUILD_ID}`);
+(window as any).__APP_BUILD__ = BUILD_ID;
 
 // Production safety net: Handle chunk loading failures
 if (import.meta.env.PROD) {
