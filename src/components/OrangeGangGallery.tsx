@@ -12,6 +12,7 @@ interface PhotoComment extends Comment {
 }
 
 const OrangeGangGallery = () => {
+  console.log('🖼️ OrangeGangGallery component rendering...');
   const { data: photos, isLoading, error } = useQuery<PhotoComment[]>({
     queryKey: ['orange-gang-photos'],
     queryFn: async () => {

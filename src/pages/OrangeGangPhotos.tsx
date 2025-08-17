@@ -5,11 +5,16 @@ import ScrollToTop from "@/components/ScrollToTop";
 import OrangeGangGallery from "@/components/OrangeGangGallery";
 
 const OrangeGangPhotos = () => {
+  console.log('🍊 OrangeGangPhotos page rendering...');
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
       <WelcomeHeader />
       
       <main className="container mx-auto px-4 py-8">
+        <div className="text-center mb-4">
+          <p className="text-sm text-green-600 font-bold">✅ OrangeGangPhotos page loaded successfully!</p>
+        </div>
         <OrangeGangGallery />
       </main>
       
