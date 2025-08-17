@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useNavigate } from "react-router-dom";
+import { BUILD_ID } from "@/utils/buildInfo";
 
 const AdminOverview = () => {
   const { userRole, isViewer } = useUserRole();
@@ -70,9 +71,14 @@ const AdminOverview = () => {
       {/* Security Audit - Wide box with green border */}
       <Card className="mb-6 border-green-500 border-2">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-green-700">
-            <Shield className="h-5 w-5" />
-            Security Audit
+          <CardTitle className="flex items-center justify-between text-green-700">
+            <div className="flex items-center gap-2">
+              <Shield className="h-5 w-5" />
+              Security Audit
+            </div>
+            <div className="text-sm font-mono text-gray-500">
+              Build: {BUILD_ID}
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent>
