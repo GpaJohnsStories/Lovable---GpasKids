@@ -47,6 +47,33 @@ export type Database = {
         }
         Relationships: []
       }
+      app_settings: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          setting_key: string
+          setting_value: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          setting_key: string
+          setting_value: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          setting_key?: string
+          setting_value?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       author_bios: {
         Row: {
           author_name: string
@@ -202,6 +229,30 @@ export type Database = {
           total_amount?: number
           updated_at?: string
           year?: number
+        }
+        Relationships: []
+      }
+      friend_names: {
+        Row: {
+          created_at: string
+          id: string
+          nickname: string
+          personal_id_hash: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          nickname: string
+          personal_id_hash: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          nickname?: string
+          personal_id_hash?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -592,6 +643,14 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
+      derive_nickname_key: {
+        Args: { personal_id: string }
+        Returns: string
+      }
+      derive_personal_id_hash: {
+        Args: { personal_id: string }
+        Returns: string
+      }
       emergency_admin_reset: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -615,6 +674,18 @@ export type Database = {
       get_allowed_admin_emails: {
         Args: Record<PropertyKey, never>
         Returns: string[]
+      }
+      get_nickname_by_personal_id: {
+        Args: { personal_id: string }
+        Returns: string
+      }
+      get_nickname_pepper: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      get_or_create_nickname: {
+        Args: { desired_nickname?: string; personal_id: string }
+        Returns: string
       }
       get_public_approved_comment_by_id: {
         Args: { comment_id: string }
@@ -704,6 +775,10 @@ export type Database = {
       }
       simple_promote_to_admin: {
         Args: { user_email: string }
+        Returns: string
+      }
+      update_nickname: {
+        Args: { new_nickname: string; personal_id: string }
         Returns: string
       }
     }
