@@ -11,6 +11,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { useNavigate } from "react-router-dom";
 
 const AdminOverview = () => {
+  console.log('📊 AdminOverview: Component is rendering');
   const { userRole, isViewer } = useUserRole();
   const navigate = useNavigate();
   const { data: storyCounts } = useQuery({

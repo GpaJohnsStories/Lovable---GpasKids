@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 type SectionType = "colors" | "upload" | "icons" | "css" | "cssxx" | "all";
 
 const ReferenceDashboard = () => {
+  console.log('📚 ReferenceDashboard: Component is rendering');
   const [activeSection, setActiveSection] = useState<SectionType>("all");
 
   const sections = [

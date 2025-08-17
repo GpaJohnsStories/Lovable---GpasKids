@@ -219,6 +219,7 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
   }
 
   // Authorized
+  console.log('🟢 EnhancedSecureAdminCheck: Rendering authorized content');
   return <>{children}</>;
 };
 
