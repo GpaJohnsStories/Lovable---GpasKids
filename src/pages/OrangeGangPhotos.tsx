@@ -12,9 +12,6 @@ const OrangeGangPhotos = () => {
       <WelcomeHeader />
       
       <main className="container mx-auto px-4 py-8">
-        <div className="text-center mb-4">
-          <p className="text-sm text-green-600 font-bold">✅ OrangeGangPhotos page loaded successfully!</p>
-        </div>
         <OrangeGangGallery />
       </main>
       
