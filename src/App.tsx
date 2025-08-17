@@ -30,6 +30,7 @@ import ResetPassword from "./pages/ResetPassword";
 import PublicAuthorBios from "./pages/PublicAuthorBios";
 import PublicAuthorBiosSimple from "./pages/PublicAuthorBiosSimple";
 import AuthorBio from "./pages/AuthorBio";
+import Club from "./pages/Club";
 
 import ReferenceDashboard from "./components/admin/ReferenceDashboard";
 import AdminSiteMapContent from "./components/admin/AdminSiteMapContent";
@@ -95,6 +96,7 @@ function App() {
                       <Route path="/writing" element={<Writing />} />
                       <Route path="/guide" element={<Guide />} />
                       <Route path="/help-gpa" element={<HelpGpa />} />
+                      <Route path="/club" element={<Club />} />
                       
                       <Route path="/make-comment" element={<MakeComment />} />
                       <Route path="/view-comments" element={<ViewComments />} />

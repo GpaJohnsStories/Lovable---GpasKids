@@ -64,6 +64,39 @@ export const containsBadWordInCode = (code: string): boolean => {
   });
 };
 
+// Enhanced profanity check for nicknames using sliding window approach
+export const containsBadWordInNickname = (nickname: string): boolean => {
+  if (!nickname || nickname.length < 3) return false;
+  
+  const normalizedNickname = nickname.toLowerCase();
+  
+  // Check for exact word matches first
+  const exactMatch = badWords.some(badWord => 
+    new RegExp(`\\b${badWord.toLowerCase()}\\b`).test(normalizedNickname)
+  );
+  
+  if (exactMatch) return true;
+  
+  // For 3-10 character nicknames, use sliding window to check for bad word substrings
+  for (let windowSize = 3; windowSize <= Math.min(normalizedNickname.length, 10); windowSize++) {
+    for (let i = 0; i <= normalizedNickname.length - windowSize; i++) {
+      const substring = normalizedNickname.slice(i, i + windowSize);
+      
+      // Check if this substring matches any bad word (for words 3+ chars)
+      const foundBadWord = badWords.some(badWord => {
+        if (badWord.length >= 3) {
+          return badWord.toLowerCase() === substring;
+        }
+        return false;
+      });
+      
+      if (foundBadWord) return true;
+    }
+  }
+  
+  return false;
+};
+
 export const getHighlightedParts = (text: string): { text: string; isBad: boolean }[] => {
     if (!text) return [{ text: '', isBad: false }];
 
