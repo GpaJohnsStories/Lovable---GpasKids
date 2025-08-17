@@ -1,353 +1,189 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { containsBadWord } from "@/utils/profanity";
-import { setPersonalId, checkPersonalIdExists } from "@/utils/personalId";
 
-import { detectXssAttempt, logSecurityIncident, sanitizeCommentContent, sanitizeCommentSubject } from "@/utils/xssProtection";
-import PersonalIdSection from "./PersonalIdSection";
-import StoryCodeField from "./StoryCodeField";
-import CommentFormFields from "./CommentFormFields";
-
-const formSchema = z.object({
-  story_code: z.string().optional(),
-  personal_id_prefix: z.string().optional(),
-  subject: z.string().min(2, {
-    message: "Subject must be at least 2 characters.",
-  }),
-  content: z.string().min(10, {
-    message: "Your comment must be at least 10 characters.",
-  }),
-});
+import React, { useState } from 'react';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { Label } from './ui/label';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import PersonalIdSection from './PersonalIdSection';
+import PhotoAttachmentSection from './PhotoAttachmentSection';
 
 interface CommentFormProps {
-  prefilledSubject?: string;
   prefilledStoryCode?: string;
 }
 
-// Comment form component - encryption removed
-const CommentForm = ({ prefilledSubject = "", prefilledStoryCode = "" }: CommentFormProps) => {
-  const queryClient = useQueryClient();
-  const [personalId, setPersonalId] = useState<string | null>(null);
-  const [existingPersonalId, setExistingPersonalId] = useState("");
-  const [existingPersonalIdError, setExistingPersonalIdError] = useState<string | null>(null);
-  const [idMode, setIdMode] = useState("existing");
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      story_code: prefilledStoryCode,
-      personal_id_prefix: "",
-      subject: prefilledSubject,
-      content: "",
-    },
-  });
+const CommentForm: React.FC<CommentFormProps> = ({ prefilledStoryCode = '' }) => {
+  const [personalId, setPersonalId] = useState('');
+  const [subject, setSubject] = useState('');
+  const [content, setContent] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+  const [caption, setCaption] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Update subject when prefilledSubject changes
-  useEffect(() => {
-    if (prefilledSubject) {
-      form.setValue("subject", prefilledSubject);
-    }
-  }, [prefilledSubject, form]);
-
-  // Auto-lookup story when prefilledStoryCode is provided
-  useEffect(() => {
-    if (prefilledStoryCode) {
-      form.setValue("story_code", prefilledStoryCode);
-      setTimeout(() => {
-        handleStoryCodeLookup();
-      }, 100);
-    }
-  }, [prefilledStoryCode]);
-
-  const prefix = form.watch("personal_id_prefix");
-
-  useEffect(() => {
-    if (personalId && !personalId.startsWith(prefix || '')) {
-      setPersonalId(null);
-    }
-  }, [prefix, personalId]);
-
-  const addCommentMutation = useMutation({
-    mutationFn: async (newComment: { personal_id: string; subject: string; content: string }) => {
-      console.log("🚀 Starting comment submission process");
-      console.log("📊 Comment data being submitted:", {
-        personal_id: newComment.personal_id,
-        subject: newComment.subject,
-        content_length: newComment.content.length,
-        status: 'pending'
-      });
-      
-      // Test database connection only in development
-      if (window.location.hostname === 'localhost' || window.location.hostname.includes('lovableproject.com')) {
-        console.log("🔍 Testing database connection...");
-        try {
-          const { data: testData, error: testError } = await supabase
-            .from("comments")
-            .select("count")
-            .limit(1);
-            
-          if (testError) {
-            console.error("❌ Database connection test failed:", testError.message);
-            throw new Error(`Database connection failed: ${testError.message}`);
-          }
-          
-          console.log("✅ Database connection successful");
-        } catch (connError) {
-          console.error("💥 Database connection error:", connError);
-          throw connError;
-        }
-      }
-
-      // Now attempt the insert with detailed logging
-      console.log("📝 Attempting to insert comment into database...");
-      const insertPayload = {
-        personal_id: newComment.personal_id,
-        subject: newComment.subject,
-        content: newComment.content,
-        status: 'pending' as const
-      };
-      console.log("📝 Insert payload prepared");
-      
-      try {
-        const { data, error } = await supabase.from("comments").insert([insertPayload]).select();
-
-        console.log("📊 Insert operation result:", {
-          success: !error,
-          data: data,
-          error: error
-        });
-
-        if (error) {
-          console.error("❌ Error submitting comment:", error);
-          console.error("❌ Error details:", {
-            message: error.message,
-            details: error.details,
-            hint: error.hint,
-            code: error.code
-          });
-          throw new Error(`Failed to submit comment: ${error.message}`);
-        }
-        
-        console.log("✅ Comment submitted successfully:", data);
-        return data;
-      } catch (insertError) {
-        console.error("💥 Insert operation failed:", insertError);
-        throw insertError;
-      }
-    },
-    onSuccess: (data) => {
-      console.log("🎉 Comment submission successful, invalidating queries");
-      
-      // Store the personal ID in localStorage for future use
-      const finalPersonalId = idMode === 'existing' ? existingPersonalId : personalId;
-      if (finalPersonalId) {
-        setPersonalId(finalPersonalId);
-      }
-      
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!personalId || personalId.length !== 6) {
       toast({
-        title: "Comment Submitted Successfully!",
-        description: "Your comment has been submitted and is awaiting approval by Grandpa John. You won't see your comment in the list until it's approved, which usually takes 1-2 days. Thank you for your patience!",
-      });
-      form.reset();
-      setPersonalId(null);
-      setExistingPersonalId("");
-      setExistingPersonalIdError(null);
-      setIdMode("existing");
-      
-      // Invalidate both public and admin comment queries
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
-      queryClient.invalidateQueries({ queryKey: ["admin_comments"] });
-    },
-    onError: (error) => {
-      console.error("💥 Comment submission failed:", error);
-      toast({
-        title: "Error submitting comment",
-        description: `Please try again. Error: ${error.message}`,
+        title: "Personal ID Required",
+        description: "Please enter your 6-character Personal ID",
         variant: "destructive",
       });
-    },
-  });
-
-  const handleStoryCodeLookup = async () => {
-    const storyCode = form.getValues("story_code");
-    if (!storyCode || storyCode.trim() === "") {
       return;
     }
 
-    try {
-      const { data: story, error } = await supabase
-        .from("stories")
-        .select("title")
-        .ilike("story_code", storyCode.trim())
-        .maybeSingle();
-
-      if (error) {
-        toast({
-          title: "Error looking up story",
-          description: "Could not fetch story details. Please check the code.",
-          variant: "destructive",
-        });
-        console.error("Error fetching story:", error);
-        return;
-      }
-
-      if (story && story.title) {
-        const newSubject = `${storyCode.trim()} - ${story.title}`;
-        form.setValue("subject", newSubject, { shouldValidate: true });
-        toast({
-            title: "Story Found!",
-            description: `Subject has been filled with "${newSubject}".`,
-        });
-      } else {
-        toast({
-            title: "Story Not Found",
-            description: "We couldn't find a story with that code. Please check and try again.",
-        });
-      }
-    } catch (error) {
-      console.error("An unexpected error occurred during story lookup:", error);
+    if (!subject.trim() || subject.length < 2) {
       toast({
-        title: "An unexpected error occurred",
-        description: "Please try again later.",
+        title: "Subject Required",
+        description: "Please enter a subject (at least 2 characters)",
         variant: "destructive",
       });
+      return;
+    }
+
+    if (!content.trim() || content.length < 10) {
+      toast({
+        title: "Content Required",
+        description: "Please enter your comment (at least 10 characters)",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      if (file) {
+        // Use edge function for file uploads
+        const formData = new FormData();
+        formData.append('personalId', personalId.toUpperCase());
+        formData.append('subject', subject.trim());
+        formData.append('content', content.trim());
+        formData.append('attachment', file);
+        if (caption.trim()) {
+          formData.append('caption', caption.trim());
+        }
+
+        const { data, error } = await supabase.functions.invoke('submit-comment-attachment', {
+          body: formData,
+        });
+
+        if (error) throw error;
+
+        toast({
+          title: "Success!",
+          description: data.message || "Comment with photo submitted successfully!",
+        });
+      } else {
+        // Regular comment submission without file
+        const { error } = await supabase
+          .from('comments')
+          .insert({
+            personal_id: personalId.toUpperCase(),
+            subject: subject.trim(),
+            content: content.trim(),
+            status: 'pending'
+          });
+
+        if (error) throw error;
+
+        toast({
+          title: "Success!",
+          description: "Comment submitted successfully!",
+        });
+      }
+
+      // Reset form
+      setPersonalId('');
+      setSubject('');
+      setContent('');
+      setFile(null);
+      setCaption('');
+      
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to submit comment. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("🚀 Form submission started with values:", values);
-    form.clearErrors();
-    setExistingPersonalIdError(null);
-    let hasError = false;
-
-    // XSS Protection checks
-    if (detectXssAttempt(values.subject)) {
-      logSecurityIncident('xss_attempt_subject', values.subject);
-      form.setError("subject", { type: 'manual', message: 'Invalid characters detected in subject.' });
-      hasError = true;
-    }
-    if (detectXssAttempt(values.content)) {
-      logSecurityIncident('xss_attempt_content', values.content);
-      form.setError("content", { type: 'manual', message: 'Invalid characters detected in content.' });
-      hasError = true;
-    }
-
-    // Bad word checks
-    if (containsBadWord(values.subject)) {
-      form.setError("subject", { type: 'manual', message: 'Please use kinder words in the subject.' });
-      hasError = true;
-    }
-    if (containsBadWord(values.content)) {
-      form.setError("content", { type: 'manual', message: 'Please use kinder words in your comment.' });
-      hasError = true;
-    }
-
-    let finalPersonalId: string | null = null;
-
-    if (idMode === 'existing') {
-      if (!/^[a-zA-Z0-9]{6}$/.test(existingPersonalId)) {
-        setExistingPersonalIdError("Your Personal ID must be exactly 6 letters or numbers.");
-        hasError = true;
-      } else {
-        // Re-check Personal ID existence before submission
-        const checkIdAsync = async () => {
-          try {
-            const exists = await checkPersonalIdExists(existingPersonalId);
-            if (!exists) {
-              setExistingPersonalIdError("Personal ID not found. Please check your ID.");
-              return false;
-            }
-            return true;
-          } catch (error) {
-            setExistingPersonalIdError("Error checking Personal ID. Please try again.");
-            return false;
-          }
-        };
-        
-        // For now, we'll assume validation passed at blur, but in production you'd await this
-        finalPersonalId = existingPersonalId.toUpperCase();
-      }
-    } else { // 'create' mode
-      const prefixValue = values.personal_id_prefix || '';
-      if (containsBadWord(prefixValue)) {
-        form.setError("personal_id_prefix", { type: "manual", message: "Please use kinder words." });
-        hasError = true;
-      } else if (!/^[a-zA-Z0-9]{4}$/.test(prefixValue)) {
-        form.setError("personal_id_prefix", { type: "manual", message: "Your code must be exactly 4 letters or numbers." });
-        hasError = true;
-      } else if (!personalId) {
-        form.setError("personal_id_prefix", { type: "manual", message: "Please click the button to create your Personal ID after entering your code." });
-        hasError = true;
-      } else if (!personalId.startsWith(prefixValue)) {
-        form.setError("personal_id_prefix", { type: "manual", message: "The code you entered doesn't match your generated ID. Please create a new one." });
-        setPersonalId(null);
-        hasError = true;
-      } else {
-        finalPersonalId = personalId;
-      }
-    }
-
-    console.log("📊 Form validation result:", {
-      hasError,
-      finalPersonalId,
-      idMode,
-      existingPersonalId,
-      personalId
-    });
-
-    if (hasError || !finalPersonalId) {
-      console.log("❌ Form validation failed");
-      return;
-    }
-
-    console.log("✅ Form validation passed, submitting comment with personal_id:", finalPersonalId);
-    
-    // Sanitize data before submission
-    const sanitizedData = {
-      personal_id: finalPersonalId,
-      subject: sanitizeCommentSubject(values.subject),
-      content: sanitizeCommentContent(values.content),
-    };
-    
-    addCommentMutation.mutate(sanitizedData);
-  }
-
-  const isSubmittable = (idMode === 'existing' && existingPersonalId.length === 6) || (idMode === 'create' && !!personalId);
-
   return (
-    <div className="mt-8">
-      <h2 className="text-2xl font-bold text-center text-orange-800 mb-4 font-fun">
-        Leave a Comment or Question
-      </h2>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <PersonalIdSection
-            form={form}
-            idMode={idMode}
-            setIdMode={setIdMode}
-            personalId={personalId}
-            setPersonalId={setPersonalId}
-            existingPersonalId={existingPersonalId}
-            setExistingPersonalId={setExistingPersonalId}
-            existingPersonalIdError={existingPersonalIdError}
-            setExistingPersonalIdError={setExistingPersonalIdError}
+    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-sm border border-amber-200">
+      <h2 className="text-2xl font-bold text-amber-800 mb-6">Share Your Thoughts</h2>
+      
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <PersonalIdSection
+          personalId={personalId}
+          onPersonalIdChange={setPersonalId}
+          showExplanation={true}
+        />
+
+        <div>
+          <Label htmlFor="subject" className="text-sm font-medium text-gray-700">
+            Subject *
+          </Label>
+          <Input
+            id="subject"
+            type="text"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            placeholder="What's your comment about?"
+            maxLength={100}
+            disabled={isSubmitting}
+            className="mt-1"
+            required
           />
+          <p className="text-xs text-gray-500 mt-1">
+            {subject.length}/100 characters (minimum 2)
+          </p>
+        </div>
 
-          <StoryCodeField control={form.control} />
+        <div>
+          <Label htmlFor="content" className="text-sm font-medium text-gray-700">
+            Your Comment *
+          </Label>
+          <Textarea
+            id="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Share your thoughts, questions, or stories..."
+            maxLength={1000}
+            disabled={isSubmitting}
+            className="mt-1"
+            rows={6}
+            required
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            {content.length}/1000 characters (minimum 10)
+          </p>
+        </div>
 
-          <CommentFormFields form={form} />
+        <PhotoAttachmentSection
+          file={file}
+          caption={caption}
+          onFileChange={setFile}
+          onCaptionChange={setCaption}
+          disabled={isSubmitting}
+        />
 
-          <Button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white font-bold" disabled={addCommentMutation.isPending || !isSubmittable}>
-            {addCommentMutation.isPending ? "Submitting..." : "Submit Comment"}
-          </Button>
-        </form>
-      </Form>
+        <Button 
+          type="submit" 
+          disabled={isSubmitting}
+          className="w-full bg-amber-600 hover:bg-amber-700 text-white"
+        >
+          {isSubmitting ? 'Submitting...' : 'Submit Comment'}
+        </Button>
+
+        <p className="text-xs text-gray-600 text-center">
+          All comments are reviewed before being posted. Photos will be considered for the Orange Shirt Gang gallery!
+        </p>
+      </form>
     </div>
   );
 };

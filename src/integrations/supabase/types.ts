@@ -130,6 +130,10 @@ export type Database = {
       }
       comments: {
         Row: {
+          attachment_bucket: string | null
+          attachment_caption: string | null
+          attachment_mime: string | null
+          attachment_path: string | null
           content: string
           created_at: string
           id: string
@@ -140,6 +144,10 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          attachment_bucket?: string | null
+          attachment_caption?: string | null
+          attachment_mime?: string | null
+          attachment_path?: string | null
           content: string
           created_at?: string
           id?: string
@@ -150,6 +158,10 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          attachment_bucket?: string | null
+          attachment_caption?: string | null
+          attachment_mime?: string | null
+          attachment_path?: string | null
           content?: string
           created_at?: string
           id?: string
