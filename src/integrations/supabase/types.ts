@@ -548,28 +548,6 @@ export type Database = {
         Args: { "": string }
         Returns: string
       }
-      get_public_approved_comment_by_id: {
-        Args: { comment_id: string }
-        Returns: {
-          content: string
-          created_at: string
-          id: string
-          parent_id: string
-          subject: string
-          updated_at: string
-        }[]
-      }
-      get_public_approved_comments: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          content: string
-          created_at: string
-          id: string
-          parent_id: string
-          subject: string
-          updated_at: string
-        }[]
-      }
       has_admin_access: {
         Args: Record<PropertyKey, never>
         Returns: boolean
@@ -593,16 +571,6 @@ export type Database = {
       is_viewer: {
         Args: Record<PropertyKey, never>
         Returns: boolean
-      }
-      log_admin_activity: {
-        Args: {
-          p_action: string
-          p_new_values?: Json
-          p_old_values?: Json
-          p_record_id?: string
-          p_table_name?: string
-        }
-        Returns: undefined
       }
       log_database_operation: {
         Args: {

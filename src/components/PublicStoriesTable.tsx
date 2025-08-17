@@ -513,9 +513,9 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                                      }}
                                    />
                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    <p>{story.photo_alt_1 || `Photo for ${story.title}`}</p>
-                                  </TooltipContent>
+                                 <TooltipContent className="story-photo-tooltip">
+                                   <p>{story.photo_alt_1 || `Photo for ${story.title}`}</p>
+                                 </TooltipContent>
                                </Tooltip>
                                <div className="font-mono text-sm font-bold text-black-system mt-2">
                                  {story.story_code}

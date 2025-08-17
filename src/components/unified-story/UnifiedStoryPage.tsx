@@ -9,7 +9,6 @@ import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useAdminSession } from '@/hooks/useAdminSession';
 import { toast } from "sonner";
-import { FileText, Save, X } from 'lucide-react';
 
 interface UnifiedStoryPageProps {
   mode: 'add' | 'update';
@@ -39,7 +38,6 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
     handleVideoRemove,
     handleVoiceChange,
     handleGenerateAudio,
-    handleStartNew,
     error: storyError
   } = useStoryFormState(storyId);
 
@@ -102,12 +100,11 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
             Add / Edit Stories & WebText
           </h1>
           
-          {/* Audio Button */}
+          {/* Peppermint Candy Audio Button */}
           <AudioButton
             code={formData.story_code || ''}
             onClick={toggleAudioControls}
             className="ml-4"
-            tooltipText="Listen to Current Story"
           />
         </div>
         
@@ -125,7 +122,6 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           onSubmit={onSubmit}
           onCancel={handleCancel}
           onSaveOnly={onSaveOnly}
-          onStartNew={handleStartNew}
           allowTextToSpeech={true}
           context="unified-story-system"
           onStoryFound={(story) => populateFormWithStory(story, true)}

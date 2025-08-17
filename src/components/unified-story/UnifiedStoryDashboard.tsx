@@ -30,7 +30,6 @@ interface UnifiedStoryDashboardProps {
   onSubmit: (e: React.FormEvent) => void;
   onCancel: () => void;
   onSaveOnly: () => void;
-  onStartNew?: () => void;
   allowTextToSpeech?: boolean;
   context?: string;
   onStoryFound?: (story: Story) => void;
@@ -52,7 +51,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   onSubmit,
   onCancel,
   onSaveOnly,
-  onStartNew,
   allowTextToSpeech = false,
   context = "unified-story-system",
   onStoryFound,
@@ -272,57 +270,13 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <div className="flex gap-6">
-        {/* Left Column - 45% width */}
+        {/* Story Details Card - 45% width */}
         <div className="w-[45%] space-y-4">
-          {/* Action Buttons Box */}
-          {onStartNew && (
-            <div className="p-2 border-[3px] border-[#16a34a] bg-green-50 rounded-lg">
-              <div className="flex gap-1">
-                <button 
-                  type="button" 
-                  onClick={onStartNew}
-                  className="flex-1 text-xs h-8 text-white bg-blue-600 border-blue-700 hover:bg-blue-700 rounded-md border flex items-center justify-center gap-1"
-                >
-                  <FileText className="h-3 w-3" />
-                  Start New
-                </button>
-                
-                <button 
-                  type="button" 
-                  onClick={onSaveOnly}
-                  disabled={isSaving || isGeneratingAudio}
-                  className="flex-1 text-xs h-8 text-white bg-green-600 border-green-700 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-1"
-                >
-                  <Save className="h-3 w-3" />
-                  Save
-                </button>
-                
-                <button 
-                  type="button" 
-                  onClick={onCancel}
-                  className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1"
-                >
-                  <X className="h-3 w-3" />
-                  Exit
-                </button>
-              </div>
-              <div className="mt-2 text-center">
-                <p className="text-xs text-gray-700 font-medium">Reminder: Save, THEN Record</p>
-              </div>
-            </div>
-          )}
-          
-          {/* Story Details Card */}
           <Card className="border-2" style={{ borderColor: '#16a34a' }}>
             <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  Story Details
-                </div>
-                <span className="bg-blue-600 text-white text-sm font-bold px-3 py-1 rounded-full">
-                  1A
-                </span>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                Story Details
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -344,14 +298,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           {/* Story Photos Section */}
           <Card className="border-2" style={{ borderColor: '#814d2e' }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center justify-between text-2xl font-semibold" style={{ color: '#814d2e' }}>
-                <div className="flex items-center gap-2">
-                  <Image className="h-5 w-5" />
-                  Story Photos
-                </div>
-                <span className="bg-orange-600 text-white text-sm font-bold px-3 py-1 rounded-full">
-                  2
-                </span>
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#814d2e' }}>
+                <Image className="h-5 w-5" />
+                Story Photos
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
@@ -517,6 +466,22 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
+          {/* Audio Upload - Condensed */}
+          <Card className="border-2" style={{ borderColor: '#4A7C59' }}>
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#4A7C59' }}>
+                <Volume2 className="h-5 w-5" />
+                Audio Upload
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-3">
+              <AudioUploadSection
+                audioUrl={formData.audio_url}
+                onAudioUpload={(url) => onInputChange('audio_url', url)}
+                onAudioRemove={() => onInputChange('audio_url', '')}
+              />
+            </CardContent>
+          </Card>
         </div>
 
         {/* Settings & Actions Column - Uses remaining space */}
@@ -623,20 +588,36 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 />
               </div>
 
+              {/* Save and Cancel Buttons */}
+              <div className="flex gap-2 pt-2">
+                <button 
+                  type="button" 
+                  onClick={onSaveOnly}
+                  disabled={isSaving || isGeneratingAudio} 
+                  className="flex-1 text-xs h-8 text-[#ffff00] font-bold bg-green-600 border-green-700 hover:bg-green-700 rounded-md border flex items-center justify-center gap-1"
+                >
+                  <Save className="h-3 w-3" />
+                  {isSaving ? 'Saving...' : 'Save Details & Text Before Audio'}
+                </button>
+                
+                <button 
+                  type="button" 
+                  onClick={onCancel}
+                  className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1"
+                >
+                  <X className="h-3 w-3" />
+                  Cancel
+                </button>
+              </div>
             </CardContent>
           </Card>
 
           {/* AI Voice Generation */}
           <Card className="h-fit border-2" style={{ borderColor: '#2563eb' }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center justify-between text-2xl font-semibold" style={{ color: '#2563eb' }}>
-                <div className="flex items-center gap-2">
-                  <Volume2 className="h-5 w-5" />
-                  Create AI Voice File
-                </div>
-                <span className="bg-purple-600 text-white text-sm font-bold px-3 py-1 rounded-full">
-                  4
-                </span>
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#2563eb' }}>
+                <Volume2 className="h-5 w-5" />
+                Create AI Voice File
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
@@ -940,69 +921,34 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          {/* Optional Uploads Section */}
-          <Card className="h-fit border-2" style={{ borderColor: '#6b7280' }}>
+          {/* Story Video - Added to Content tab */}
+          <Card className="h-fit border-2" style={{ borderColor: '#9333ea' }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center justify-between text-xl font-semibold" style={{ color: '#6b7280' }}>
-                <span>Optional</span>
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#9333ea' }}>
+                <Video className="h-5 w-5" />
+                Story Video
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-3 space-y-4">
-              {/* Audio Upload */}
-              <div>
-                <h4 className="flex items-center gap-2 text-sm font-semibold mb-2" style={{ color: '#4A7C59' }}>
-                  <Volume2 className="h-4 w-4" />
-                  Audio Upload - Add or Replace
-                </h4>
-                <AudioUploadSection
-                  audioUrl={formData.audio_url}
-                  onAudioUpload={(url) => onInputChange('audio_url', url)}
-                  onAudioRemove={() => onInputChange('audio_url', '')}
-                />
-              </div>
-              
-              {/* Video Upload */}
-              <div>
-                <h4 className="flex items-center gap-2 text-sm font-semibold mb-2" style={{ color: '#9333ea' }}>
-                  <Video className="h-4 w-4" />
-                  Video Upload - Add or Replace
-                </h4>
-                <StoryVideoUpload
-                  videoUrl={formData.video_url}
-                  onVideoUpload={onVideoUpload}
-                  onVideoRemove={onVideoRemove}
-                />
-              </div>
+            <CardContent className="p-3">
+              <StoryVideoUpload
+                videoUrl={formData.video_url}
+                onVideoUpload={onVideoUpload}
+                onVideoRemove={onVideoRemove}
+              />
             </CardContent>
           </Card>
         </div>
       </div>
 
       {/* Story Editor */}
-      <Card className="border-2" style={{ borderColor: '#F97316' }} data-story-content-section>
+      <Card className="border-2" style={{ borderColor: '#F97316' }}>
         <CardHeader>
-          <CardTitle className="flex items-center justify-between text-2xl font-semibold" style={{ color: '#F97316' }}>
-            <div className="flex items-center gap-2">
-              <FileText className="h-5 w-5" />
-              Story Content
-            </div>
-            <div className="flex items-center gap-2">
-              <button 
-                type="button" 
-                onClick={onSaveOnly}
-                disabled={isSaving || isGeneratingAudio}
-                className="text-xs h-8 px-3 text-white bg-green-600 border-green-700 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-1"
-              >
-                <Save className="h-3 w-3" />
-                Save
-              </button>
-              <span className="bg-red-600 text-white text-sm font-bold px-3 py-1 rounded-full">
-                3
-              </span>
-            </div>
+          <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F97316' }}>
+            <FileText className="h-5 w-5" />
+            Story Content
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-0 relative">
+        <CardContent>
           <SplitViewEditor
             content={formData.content}
             onChange={(content) => onInputChange('content', content)}
@@ -1012,22 +958,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             fontSize={fontSize}
             onFontSizeChange={onFontSizeChange}
           />
-          
-          {/* Floating Format Menu Button - Always Visible */}
-          <button
-            type="button"
-            onClick={() => {
-              const storyContentElement = document.querySelector('[data-story-content-section]');
-              if (storyContentElement) {
-                storyContentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            }}
-            className="fixed bottom-6 right-6 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white flex items-center gap-1 z-50 animate-pulse"
-            title="Return to Format Menu"
-          >
-            <FileText className="h-3 w-3" />
-            Format Menu
-          </button>
         </CardContent>
       </Card>
     </form>

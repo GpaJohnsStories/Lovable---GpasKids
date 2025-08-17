@@ -36,10 +36,10 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   // Get icon names for tooltips
   const { iconName: guideIconName } = useCachedIcon("!CO-MM1.jpg");
   const { iconName: homeIconName } = useCachedIcon("!CO-MM2.jpg");
-  const { iconName: libraryIconName } = useCachedIcon("!CO-MM3.gif");
-  const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.gif");
-  const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.gif");
-  const { iconName: writingIconName } = useCachedIcon("!CO-MM6.gif");
+  const { iconName: libraryIconName } = useCachedIcon("!CO-MM3.jpg");
+  const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.jpg");
+  const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.jpg");
+  const { iconName: writingIconName } = useCachedIcon("!CO-MM6.jpg");
   const { iconName: aboutIconName } = useCachedIcon("!CO-MM7.jpg");
   const { iconName: safeIconName } = useCachedIcon("!CO-MM8.jpg");
   
@@ -103,7 +103,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "library",
-      icon: "!CO-MM3.gif", // Library icon - Main Menu 3
+      icon: "!CO-MM3.jpg", // Library icon - Main Menu 3
       text: "Library", 
       tooltipText: libraryIconName || "Library",
       color: "#F97316",
@@ -114,7 +114,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "read-story",
-      icon: "!CO-MM4.gif", // Read Story icon - Main Menu 4
+      icon: "!CO-MM4.jpg", // Read Story icon - Main Menu 4
       text: "Read Story",
       tooltipText: readStoryIconName || "Read Story",
       color: "#F97316",
@@ -137,7 +137,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "comments",
-      icon: "!CO-MM5.gif", // Comments icon - Main Menu 5
+      icon: "!CO-MM5.jpg", // Comments icon - Main Menu 5
       text: "Comments",
       tooltipText: commentsIconName || "Comments",
       color: "#F97316", 
@@ -164,7 +164,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "writing",
-      icon: "!CO-MM6.gif", // Writing icon - Main Menu 6
+      icon: "!CO-MM6.jpg", // Writing icon - Main Menu 6
       text: "Writing",
       tooltipText: writingIconName || "Writing",
       color: "#F97316",

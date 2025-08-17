@@ -9,7 +9,6 @@ interface AdminLayoutWithHeaderBannerProps {
 }
 
 const AdminLayoutWithHeaderBanner = ({ children }: AdminLayoutWithHeaderBannerProps) => {
-  console.log('🎨 AdminLayout: Rendering admin layout with children:', !!children);
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
       {/* Header Banner */}
@@ -25,6 +24,4 @@ const AdminLayoutWithHeaderBanner = ({ children }: AdminLayoutWithHeaderBannerPr
   );
 };
 
-// Export with both names for compatibility
 export default AdminLayoutWithHeaderBanner;
-export { AdminLayoutWithHeaderBanner as AdminLayout };

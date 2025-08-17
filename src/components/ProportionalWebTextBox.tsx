@@ -157,13 +157,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
 
               {/* Content below title with proportional scaling */}
               <div className="flex-1 min-w-0">
-                <div className="overflow-x-auto">
-                  <div 
-                    className="webtext-content proportional-content text-emerald-900 leading-relaxed break-words"
-                    style={getScaleStyles()}
-                    dangerouslySetInnerHTML={getContent()}
-                  />
-                </div>
+                <div 
+                  className="proportional-content text-emerald-900 leading-relaxed break-words"
+                  style={getScaleStyles()}
+                  dangerouslySetInnerHTML={getContent()}
+                />
               </div>
             </div>
           </div>
@@ -237,13 +235,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           )}
           
           {/* Content that wraps around the floated photo with proportional scaling */}
-          <div className="overflow-x-auto">
-            <div 
-              className="webtext-content proportional-content text-amber-900 leading-relaxed"
-              style={getScaleStyles()}
-              dangerouslySetInnerHTML={getContent()}
-            />
-          </div>
+          <div 
+            className="proportional-content text-amber-900 leading-relaxed"
+            style={getScaleStyles()}
+            dangerouslySetInnerHTML={getContent()}
+          />
           
           {/* Clear the float */}
           <div className="clear-both"></div>

@@ -780,39 +780,6 @@
   vertical-align: top !important;
 }
 
-/* ============= Webtext table styling ============= */
-.webtext-content table {
-  border-collapse: collapse;
-  width: 100%;
-  max-width: 100%;
-  margin: 1rem 0;
-  border: 2px solid hsl(var(--border));
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.webtext-content th,
-.webtext-content td {
-  padding: 12px;
-  border: 1px solid hsl(var(--border));
-  text-align: left;
-  vertical-align: top;
-}
-
-.webtext-content thead th {
-  background: hsl(var(--muted));
-  font-weight: 600;
-  color: hsl(var(--foreground));
-}
-
-.webtext-content tbody tr:nth-child(even) {
-  background: hsl(var(--muted) / 0.3);
-}
-
-.webtext-content tbody tr:hover {
-  background: hsl(var(--muted) / 0.5);
-}
-
 /* Details column stack styling */
 /* Desktop consistent layout for details column */
 .details-column-stack {

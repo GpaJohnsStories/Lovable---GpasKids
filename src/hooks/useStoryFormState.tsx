@@ -184,15 +184,6 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     }
   };
 
-  const handleStartNew = useCallback(() => {
-    console.log('🎯 useStoryFormState: Starting new story - clearing form data');
-    setFormData({
-      ...initialFormData,
-      category: 'WebText' // Default to WebText for new stories
-    });
-    setCurrentStoryId(undefined);
-  }, []);
-
   return {
     formData,
     isLoadingStory,
@@ -206,7 +197,6 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     handleVideoRemove,
     handleVoiceChange,
     handleGenerateAudio,
-    handleStartNew,
     error
   };
 };

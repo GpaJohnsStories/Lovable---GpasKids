@@ -6,7 +6,6 @@ import { useSuperAVContext } from '@/contexts/SuperAVContext';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { createSafeHtml } from '@/utils/xssProtection';
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { 
   FontScaleStep, 
   DEFAULT_FONT_SCALE, 
@@ -805,81 +804,57 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              padding: '4px 2.5px 8px 2.5px',
                              borderRadius: '0 0 9px 9px'
                            }}>
-                            {/* Play Button */}
-                             <Tooltip>
-                               <TooltipTrigger asChild>
-                                 <div 
-                                   className="button-3d-base button-3d-60px-square button-3d-green"
-                                   role="button" 
-                                   aria-label="Play Audio" 
-                                   style={{
-                                     cursor: 'pointer'
-                                   }}
-                                   onClick={handlePlay}>
-                                     <CustomPlayIcon />
-                                   </div>
-                               </TooltipTrigger>
-                               <TooltipContent>
-                                 <p>Play Audio</p>
-                               </TooltipContent>
-                             </Tooltip>
+                           {/* Play Button */}
+                            <div 
+                              className="button-3d-base button-3d-60px-square button-3d-green"
+                              role="button" 
+                              aria-label="Play Audio" 
+                              title="Play Audio"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={handlePlay}>
+                                <CustomPlayIcon />
+                              </div>
                            
-                            {/* Pause Button */}
-                             <Tooltip>
-                               <TooltipTrigger asChild>
-                                 <div 
-                                   className="button-3d-base button-3d-60px-square button-3d-amber"
-                                   role="button" 
-                                   aria-label="Pause Audio" 
-                                   style={{
-                                     cursor: 'pointer'
-                                   }}
-                                   onClick={handlePause}>
-                                     <CustomPauseIcon />
-                                   </div>
-                               </TooltipTrigger>
-                               <TooltipContent>
-                                 <p>Pause Audio</p>
-                               </TooltipContent>
-                             </Tooltip>
+                           {/* Pause Button */}
+                            <div 
+                              className="button-3d-base button-3d-60px-square button-3d-amber"
+                              role="button" 
+                              aria-label="Pause Audio" 
+                              title="Pause Audio"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={handlePause}>
+                                <CustomPauseIcon />
+                              </div>
                            
-                             {/* Restart Button */}
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <div 
-                                    className="button-3d-base button-3d-60px-square button-3d-orange"
-                                    role="button" 
-                                    aria-label="Restart Audio" 
-                                    style={{
-                                      cursor: 'pointer'
-                                    }}
-                                    onClick={handleRestart}>
-                                      <CustomRestartIcon />
-                                    </div>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>Restart Audio</p>
-                                </TooltipContent>
-                              </Tooltip>
+                            {/* Restart Button */}
+                             <div 
+                               className="button-3d-base button-3d-60px-square button-3d-orange"
+                               role="button" 
+                               aria-label="Restart Audio" 
+                               title="Restart Audio"
+                               style={{
+                                 cursor: 'pointer'
+                               }}
+                               onClick={handleRestart}>
+                                 <CustomRestartIcon />
+                               </div>
                             
-                             {/* Stop Button */}
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <div 
-                                    className="button-3d-base button-3d-60px-square button-3d-red"
-                                    role="button" 
-                                    aria-label="Stop Audio" 
-                                    style={{
-                                      cursor: 'pointer'
-                                    }}
-                                    onClick={handleStop}>
-                                      <CustomStopIcon />
-                                    </div>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>Stop Audio</p>
-                                </TooltipContent>
-                              </Tooltip>
+                            {/* Stop Button */}
+                             <div 
+                               className="button-3d-base button-3d-60px-square button-3d-red"
+                               role="button" 
+                               aria-label="Stop Audio" 
+                               title="Stop Audio"
+                               style={{
+                                 cursor: 'pointer'
+                               }}
+                               onClick={handleStop}>
+                                 <CustomStopIcon />
+                               </div>
                          </div>
                        </div>
                    </td>
@@ -924,65 +899,47 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              borderBottomLeftRadius: '9px',
                              borderBottomRightRadius: '9px'
                            }}>
-                              {/* Normal Speed - exact same size as Change Word Size label */}
-                               <Tooltip>
-                                 <TooltipTrigger asChild>
-                                   <div 
-                                     className="button-3d-base button-3d-60px-square button-3d-green"
-                                     role="button" 
-                                     aria-label="Normal Speed" 
-                                      style={{
-                                        cursor: 'pointer',
-                                        width: '120px',
-                                        height: '60px',
-                                        borderRadius: '0px'
-                                      }}
-                                     onClick={() => handleSpeedChange(1)}>
-                                       <CustomSpeedNormalIcon />
-                                     </div>
-                                 </TooltipTrigger>
-                                 <TooltipContent>
-                                   <p>Normal Speed</p>
-                                 </TooltipContent>
-                               </Tooltip>
+                             {/* Normal Speed - exact same size as Change Word Size label */}
+                              <div 
+                                className="button-3d-base button-3d-60px-square button-3d-green"
+                                role="button" 
+                                aria-label="Normal Speed" 
+                                title="Normal Speed"
+                                 style={{
+                                   cursor: 'pointer',
+                                   width: '120px',
+                                   height: '60px',
+                                   borderRadius: '0px'
+                                 }}
+                                onClick={() => handleSpeedChange(1)}>
+                                  <CustomSpeedNormalIcon />
+                                </div>
                             
-                             {/* Fast Speed */}
-                             <Tooltip>
-                               <TooltipTrigger asChild>
-                                 <div 
-                                   className="button-3d-base button-3d-60px-square button-3d-green"
-                                   role="button" 
-                                   aria-label="Fast Speed" 
-                                   style={{
-                                     cursor: 'pointer'
-                                   }}
-                                   onClick={() => handleSpeedChange(1.25)}>
-                                     <CustomSpeedFastIcon />
-                                   </div>
-                               </TooltipTrigger>
-                               <TooltipContent>
-                                 <p>Fast Speed</p>
-                               </TooltipContent>
-                             </Tooltip>
+                            {/* Fast Speed */}
+                            <div 
+                              className="button-3d-base button-3d-60px-square button-3d-green"
+                              role="button" 
+                              aria-label="Fast Speed" 
+                              title="Fast Speed"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={() => handleSpeedChange(1.25)}>
+                                <CustomSpeedFastIcon />
+                              </div>
                             
-                             {/* Faster Speed */}
-                             <Tooltip>
-                               <TooltipTrigger asChild>
-                                 <div 
-                                   className="button-3d-base button-3d-60px-square button-3d-green"
-                                   role="button" 
-                                   aria-label="Faster Speed" 
-                                   style={{
-                                     cursor: 'pointer'
-                                   }}
-                                   onClick={() => handleSpeedChange(1.5)}>
-                                     <CustomSpeedFasterIcon />
-                                   </div>
-                               </TooltipTrigger>
-                               <TooltipContent>
-                                 <p>Faster Speed</p>
-                               </TooltipContent>
-                             </Tooltip>
+                            {/* Faster Speed */}
+                            <div 
+                              className="button-3d-base button-3d-60px-square button-3d-green"
+                              role="button" 
+                              aria-label="Faster Speed" 
+                              title="Faster Speed"
+                              style={{
+                                cursor: 'pointer'
+                              }}
+                              onClick={() => handleSpeedChange(1.5)}>
+                                <CustomSpeedFasterIcon />
+                              </div>
                             
                         </div>
                       </div>
@@ -1033,53 +990,41 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                            display: 'flex',
                            gap: '8px'
                          }}>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <div 
-                                  className={`button-3d-base button-3d-60px-square ${isMaxSize ? 'opacity-60' : ''}`}
-                                  role="button" 
-                                  aria-label="Increase Font Size" 
-                                  style={{
-                                    cursor: isMaxSize ? 'not-allowed' : 'pointer',
-                                    opacity: isMaxSize ? 0.6 : 1,
-                                    pointerEvents: isMaxSize ? 'none' : 'auto'
-                                  }}
-                                  onClick={!isMaxSize ? handleScaleIncrease : undefined}>
-                                    <CachedIcon 
-                                      iconCode="!CO-AVB.png" 
-                                      fallback={<span className="text-xs">!CO-AVB.png</span>}
-                                      style={{ height: '60px', width: '60px', objectFit: 'contain' }}
-                                   />
-                                </div>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>Increase Font Size</p>
-                              </TooltipContent>
-                            </Tooltip>
+                           <div 
+                             className={`button-3d-base button-3d-60px-square ${isMaxSize ? 'opacity-60' : ''}`}
+                             role="button" 
+                             aria-label="Increase Font Size" 
+                             title="Increase Font Size"
+                             style={{
+                               cursor: isMaxSize ? 'not-allowed' : 'pointer',
+                               opacity: isMaxSize ? 0.6 : 1,
+                               pointerEvents: isMaxSize ? 'none' : 'auto'
+                             }}
+                             onClick={!isMaxSize ? handleScaleIncrease : undefined}>
+                               <CachedIcon 
+                                 iconCode="!CO-AVB.png" 
+                                 fallback={<span className="text-xs">!CO-AVB.png</span>}
+                                 style={{ height: '60px', width: '60px', objectFit: 'contain' }}
+                              />
+                           </div>
                           
-                             <Tooltip>
-                               <TooltipTrigger asChild>
-                                 <div 
-                                   className={`button-3d-base button-3d-60px-square ${isMinSize ? 'opacity-60' : ''}`}
-                                   role="button" 
-                                   aria-label="Decrease Font Size" 
-                                   style={{
-                                     cursor: isMinSize ? 'not-allowed' : 'pointer',
-                                     opacity: isMinSize ? 0.6 : 1,
-                                     pointerEvents: isMinSize ? 'none' : 'auto'
-                                   }}
-                                   onClick={!isMinSize ? handleScaleDecrease : undefined}>
-                                     <CachedIcon 
-                                       iconCode="!CO-AVS.jpg" 
-                                       fallback={<span className="text-xs">!CO-AVS.jpg</span>}
-                                       style={{ height: '60px', width: '60px', objectFit: 'contain' }}
-                                    />
-                                 </div>
-                               </TooltipTrigger>
-                               <TooltipContent>
-                                 <p>Decrease Font Size</p>
-                               </TooltipContent>
-                             </Tooltip>
+                            <div 
+                              className={`button-3d-base button-3d-60px-square ${isMinSize ? 'opacity-60' : ''}`}
+                              role="button" 
+                              aria-label="Decrease Font Size" 
+                              title="Decrease Font Size"
+                              style={{
+                                cursor: isMinSize ? 'not-allowed' : 'pointer',
+                                opacity: isMinSize ? 0.6 : 1,
+                                pointerEvents: isMinSize ? 'none' : 'auto'
+                              }}
+                              onClick={!isMinSize ? handleScaleDecrease : undefined}>
+                                <CachedIcon 
+                                  iconCode="!CO-AVS.jpg" 
+                                  fallback={<span className="text-xs">!CO-AVS.jpg</span>}
+                                  style={{ height: '60px', width: '60px', objectFit: 'contain' }}
+                               />
+                            </div>
                          </div>
                         </div>
                          </div>
@@ -1098,32 +1043,26 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        alignItems: 'center',
                        width: '100%'
                      }}>
-                         <Tooltip>
-                           <TooltipTrigger asChild>
-                             <div 
-                               className="button-3d-base"
-                               role="button" 
-                               aria-label="Close SuperAV" 
-                               style={{
-                                 cursor: 'pointer',
-                                 height: '60px',
-                                 width: '100%',
-                                 display: 'flex',
-                                 alignItems: 'center',
-                                 justifyContent: 'center'
-                               }}
-                              onClick={onClose}>
-                               <CachedIcon 
-                                 iconCode="!CO-CLS.jpg" 
-                                 fallback={<span className="text-xs">!CO-CLS.jpg</span>}
-                                 style={{ height: '60px', width: '100%', objectFit: 'fill' }}
-                               />
-                            </div>
-                           </TooltipTrigger>
-                           <TooltipContent>
-                             <p>Close SuperAV</p>
-                           </TooltipContent>
-                         </Tooltip>
+                        <div 
+                          className="button-3d-base"
+                          role="button" 
+                          aria-label="Close SuperAV" 
+                          title="Close SuperAV"
+                          style={{
+                            cursor: 'pointer',
+                            height: '60px',
+                            width: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                         onClick={onClose}>
+                          <CachedIcon 
+                            iconCode="!CO-CLS.jpg" 
+                            fallback={<span className="text-xs">!CO-CLS.jpg</span>}
+                            style={{ height: '60px', width: '100%', objectFit: 'fill' }}
+                          />
+                       </div>
                      </td>
                    </tr>
                 </tbody>

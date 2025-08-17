@@ -67,7 +67,6 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const isSysWel = webtextCode === "SYS-WEL";
   const photos = webtext ? getStoryPhotos(webtext) : [];
   const mainPhoto = photos[0];
-  const showBorder = !!(borderColor && borderColor.trim() !== '' && borderColor !== 'transparent');
 
   // Special styling for SYS-WEL content
   if (isSysWel) {
@@ -115,13 +114,11 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
 
               {/* Content below title */}
               <div className="flex-1 min-w-0">
-              <div className="overflow-x-auto">
                 <div 
-                  className="webtext-content font-handwritten text-blue-800 leading-relaxed break-words [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>h3]:font-handwritten [&>p]:mb-3 [&>p]:break-words [&>p]:font-handwritten [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
+                  className="font-handwritten text-blue-800 leading-relaxed break-words [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>h3]:font-handwritten [&>p]:mb-3 [&>p]:break-words [&>p]:font-handwritten [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
                   style={{ fontSize: `${fontSize}px` }}
                   dangerouslySetInnerHTML={getContent()}
                 />
-              </div>
               </div>
             </div>
           </div>
@@ -155,8 +152,8 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
     <>
       <div 
         id={id}
-        className={`rounded-lg ${showBorder ? 'border-4' : 'border-0'} p-6 ${backgroundColor} relative`}
-        style={showBorder ? { borderColor } : undefined}
+        className={`rounded-lg border-4 p-6 ${backgroundColor} relative`}
+        style={{ borderColor }}
       >
         {/* Audio Button - Always visible in top right corner */}
         <div className="absolute top-4 right-4 z-[5]">
@@ -195,13 +192,11 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           )}
           
           {/* Content that wraps around the floated photo */}
-          <div className="overflow-x-auto">
-            <div 
-              className="webtext-content font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
-              style={{ fontSize: `${fontSize}px` }}
-              dangerouslySetInnerHTML={getContent()}
-            />
-          </div>
+          <div 
+            className="font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
+            style={{ fontSize: `${fontSize}px` }}
+            dangerouslySetInnerHTML={getContent()}
+          />
           
           {/* Clear the float */}
           <div className="clear-both"></div>
