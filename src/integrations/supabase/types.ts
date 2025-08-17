@@ -271,6 +271,30 @@ export type Database = {
         }
         Relationships: []
       }
+      privileged_admins: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -301,6 +325,42 @@ export type Database = {
           updated_at?: string
           webauthn_credentials?: Json | null
           webauthn_enabled?: boolean | null
+        }
+        Relationships: []
+      }
+      role_change_audit: {
+        Row: {
+          changed_by_email: string
+          changed_by_user_id: string
+          created_at: string
+          id: string
+          new_role: string
+          old_role: string | null
+          reason: string | null
+          target_email: string
+          target_user_id: string
+        }
+        Insert: {
+          changed_by_email: string
+          changed_by_user_id: string
+          created_at?: string
+          id?: string
+          new_role: string
+          old_role?: string | null
+          reason?: string | null
+          target_email: string
+          target_user_id: string
+        }
+        Update: {
+          changed_by_email?: string
+          changed_by_user_id?: string
+          created_at?: string
+          id?: string
+          new_role?: string
+          old_role?: string | null
+          reason?: string | null
+          target_email?: string
+          target_user_id?: string
         }
         Relationships: []
       }
@@ -516,6 +576,10 @@ export type Database = {
         Args: { content_text: string }
         Returns: number
       }
+      change_user_role: {
+        Args: { new_role: string; reason?: string; target_email: string }
+        Returns: string
+      }
       check_personal_id_exists: {
         Args: { p_personal_id: string }
         Returns: boolean
@@ -548,6 +612,32 @@ export type Database = {
         Args: { "": string }
         Returns: string
       }
+      get_allowed_admin_emails: {
+        Args: Record<PropertyKey, never>
+        Returns: string[]
+      }
+      get_public_approved_comment_by_id: {
+        Args: { comment_id: string }
+        Returns: {
+          content: string
+          created_at: string
+          id: string
+          parent_id: string
+          subject: string
+          updated_at: string
+        }[]
+      }
+      get_public_approved_comments: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          content: string
+          created_at: string
+          id: string
+          parent_id: string
+          subject: string
+          updated_at: string
+        }[]
+      }
       has_admin_access: {
         Args: Record<PropertyKey, never>
         Returns: boolean
@@ -564,6 +654,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
+      is_privileged_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       is_trusted_client: {
         Args: Record<PropertyKey, never>
         Returns: boolean
@@ -571,6 +665,16 @@ export type Database = {
       is_viewer: {
         Args: Record<PropertyKey, never>
         Returns: boolean
+      }
+      log_admin_activity: {
+        Args: {
+          p_action: string
+          p_new_values?: Json
+          p_old_values?: Json
+          p_record_id?: string
+          p_table_name?: string
+        }
+        Returns: undefined
       }
       log_database_operation: {
         Args: {
