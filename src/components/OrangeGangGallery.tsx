@@ -108,12 +108,48 @@ const OrangeGangGallery = () => {
   return (
     <TooltipProvider>
       <div className="space-y-8">
-        <div className="text-center">
+        {/* Featured Original Orange Shirt Gang Photo */}
+        <div className="text-center space-y-6">
           <h2 className="text-3xl font-bold text-amber-800 mb-4">
             The Orange Shirt Gang
           </h2>
+          
+          <div className="flex justify-center">
+            <div className="relative">
+              <div className="p-3 bg-gradient-to-br from-yellow-400 via-amber-400 to-orange-400 rounded-2xl shadow-2xl">
+                <div className="p-2 bg-gradient-to-br from-amber-300 to-yellow-300 rounded-xl">
+                  <img
+                    src="/lovable-uploads/fc32fa89-9e7a-4e53-851b-68cfbc3cbb8f.png"
+                    alt="Original Orange Shirt Gang - Six children wearing bright orange t-shirts"
+                    className="w-96 h-auto rounded-lg shadow-lg"
+                  />
+                </div>
+              </div>
+              {/* Decorative corner elements */}
+              <div className="absolute -top-2 -left-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full shadow-lg"></div>
+              <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full shadow-lg"></div>
+              <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full shadow-lg"></div>
+              <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full shadow-lg"></div>
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <h3 className="text-2xl font-bold text-amber-900 tracking-wide">
+              Original Orange Shirt Gang
+            </h3>
+            <p className="text-amber-700 italic">
+              The founding members who started it all!
+            </p>
+          </div>
+        </div>
+
+        {/* User submitted photos section */}
+        <div className="text-center">
+          <h3 className="text-2xl font-semibold text-amber-800 mb-4">
+            New Members Gallery
+          </h3>
           <p className="text-amber-700 max-w-2xl mx-auto">
-            Welcome to our special club! Here are photos from friends who've joined 
+            Here are photos from friends who've joined 
             Grandpa's Orange Shirt Gang by sharing their orange shirt pictures.
           </p>
         </div>
