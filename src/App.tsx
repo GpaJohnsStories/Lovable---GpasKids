@@ -84,6 +84,7 @@ function App() {
                   <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
+                    <Suspense fallback={<LoadingSpinner message="Loading page..." />}>
                        <Routes>
                         {/* Public Routes */}
                         <Route path="/" element={<Index />} />
@@ -123,6 +124,7 @@ function App() {
                         {/* Catch-all route */}
                         <Route path="*" element={<NotFound />} />
                        </Routes>
+                    </Suspense>
                    </ConditionalContentProtection>
                   </GlobalHelpProvider>
                    </SuperAVProvider>
