@@ -139,7 +139,7 @@ const OrangeGangGallery = () => {
             {/* 3. Webtext Content */}
             {webtext && webtext.content && (
               <div 
-                className="text-amber-800 text-base leading-relaxed"
+                className="text-amber-800 text-base leading-relaxed prose prose-amber max-w-none prose-ul:list-disc prose-ol:list-decimal prose-li:ml-4 prose-ul:pl-6 prose-ol:pl-6"
                 dangerouslySetInnerHTML={createSafeHtml(webtext.content)}
               />
             )}
