@@ -122,6 +122,11 @@ const OrangeGangGallery = () => {
                     src="/lovable-uploads/fc32fa89-9e7a-4e53-851b-68cfbc3cbb8f.png"
                     alt="Original Orange Shirt Gang - Six children wearing bright orange t-shirts"
                     className="w-96 h-auto rounded-lg shadow-lg"
+                    onLoad={() => console.log('✅ Original Orange Shirt Gang photo loaded successfully')}
+                    onError={(e) => {
+                      console.error('❌ Failed to load Original Orange Shirt Gang photo:', e);
+                      console.log('Image src:', e.currentTarget.src);
+                    }}
                   />
                 </div>
               </div>
