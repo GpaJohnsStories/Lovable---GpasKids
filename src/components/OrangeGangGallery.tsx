@@ -7,49 +7,32 @@ import { Database } from '@/integrations/supabase/types';
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
+type OrangeGangPhoto = {
+  id: string;
+  attachment_path: string;
+  attachment_caption: string | null;
+  created_at: string;
+  display_name: string;
+};
+
 interface PhotoComment extends Comment {
   nickname?: string;
 }
 
 const OrangeGangGallery = () => {
   console.log('🖼️ OrangeGangGallery component rendering...');
-  const { data: photos, isLoading, error } = useQuery<PhotoComment[]>({
+  const { data: photos, isLoading, error } = useQuery<OrangeGangPhoto[]>({
     queryKey: ['orange-gang-photos'],
     queryFn: async () => {
-      // Get approved comments with photo attachments
-      const { data: comments, error } = await supabase
-        .from('comments')
-        .select('*')
-        .eq('status', 'approved')
-        .eq('attachment_bucket', 'orange-gang')
-        .not('attachment_path', 'is', null)
-        .order('created_at', { ascending: false });
+      // Use secure RPC to get public orange gang photos
+      const { data, error } = await supabase
+        .rpc('get_public_orange_gang_photos');
 
       if (error) {
         throw new Error(`Failed to fetch photos: ${error.message}`);
       }
 
-      // Get nicknames for each comment
-      const commentsWithNicknames = await Promise.all(
-        (comments || []).map(async (comment) => {
-          try {
-            const { data: nickname } = await supabase
-              .rpc('get_nickname_by_personal_id', { 
-                personal_id: comment.personal_id 
-              });
-            
-            return {
-              ...comment,
-              nickname: nickname || undefined
-            };
-          } catch (error) {
-            console.warn('Failed to get nickname for comment:', comment.id);
-            return comment;
-          }
-        })
-      );
-
-      return commentsWithNicknames;
+      return data || [];
     },
   });
 
@@ -60,19 +43,14 @@ const OrangeGangGallery = () => {
     return data.publicUrl;
   };
 
-  const getDisplayName = (comment: PhotoComment) => {
-    if (comment.nickname) {
-      return comment.nickname;
-    }
-    // Mask PID for privacy: show first 2 and last 1 characters
-    const pid = comment.personal_id;
-    return `${pid.substring(0, 2)}***${pid.substring(5)}`;
+  const getDisplayName = (photo: OrangeGangPhoto) => {
+    return photo.display_name;
   };
 
-  const getTooltipText = (comment: PhotoComment) => {
-    const displayName = getDisplayName(comment);
-    const caption = comment.attachment_caption || comment.subject;
-    const date = new Date(comment.created_at).toLocaleDateString();
+  const getTooltipText = (photo: OrangeGangPhoto) => {
+    const displayName = photo.display_name;
+    const caption = photo.attachment_caption || 'Orange Shirt Gang Photo';
+    const date = new Date(photo.created_at).toLocaleDateString();
     
     return `${caption}\n\nShared by: ${displayName}\nDate: ${date}`;
   };
@@ -168,7 +146,7 @@ const OrangeGangGallery = () => {
                   <div className="relative overflow-hidden rounded-lg shadow-md border-3 border-amber-400 hover:border-amber-500 transition-all duration-300 bg-amber-50">
                     <img
                       src={getPhotoUrl(photo.attachment_path!)}
-                      alt={photo.attachment_caption || photo.subject}
+                      alt={photo.attachment_caption || 'Orange Shirt Gang Photo'}
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
@@ -188,7 +166,7 @@ const OrangeGangGallery = () => {
               </TooltipTrigger>
               <TooltipContent side="top" className="max-w-xs">
                 <div className="text-center space-y-1">
-                  <p className="font-medium">{photo.attachment_caption || photo.subject}</p>
+                  <p className="font-medium">{photo.attachment_caption || 'Orange Shirt Gang Photo'}</p>
                   <p className="text-sm opacity-90">Shared by: {getDisplayName(photo)}</p>
                   <p className="text-xs opacity-75">
                     {new Date(photo.created_at).toLocaleDateString()}

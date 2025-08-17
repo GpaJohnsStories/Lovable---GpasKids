@@ -721,6 +721,16 @@ export type Database = {
           updated_at: string
         }[]
       }
+      get_public_orange_gang_photos: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          attachment_caption: string
+          attachment_path: string
+          created_at: string
+          display_name: string
+          id: string
+        }[]
+      }
       has_admin_access: {
         Args: Record<PropertyKey, never>
         Returns: boolean
