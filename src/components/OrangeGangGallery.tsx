@@ -7,7 +7,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { Database } from '@/integrations/supabase/types';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { getStoryPhotos } from '@/utils/storyUtils';
-import DOMPurify from 'dompurify';
+import { createSafeHtml } from '@/utils/xssProtection';
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
@@ -52,10 +52,6 @@ const OrangeGangGallery = () => {
     fetchWebtext();
   }, [lookupStoryByCode]);
 
-  // Create safe HTML for webtext content
-  const createSafeHtml = (content: string) => {
-    return { __html: DOMPurify.sanitize(content) };
-  };
   
   const { data: photos, isLoading, error } = useQuery<OrangeGangPhoto[]>({
     queryKey: ['orange-gang-photos'],
@@ -139,7 +135,7 @@ const OrangeGangGallery = () => {
             {/* 3. Webtext Content */}
             {webtext && webtext.content && (
               <div 
-                className="text-amber-800 text-base leading-relaxed prose prose-amber max-w-none prose-ul:list-disc prose-ol:list-decimal prose-li:ml-4 prose-ul:pl-6 prose-ol:pl-6"
+                className="story-content text-amber-800 text-base leading-relaxed"
                 dangerouslySetInnerHTML={createSafeHtml(webtext.content)}
               />
             )}
