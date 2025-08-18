@@ -160,6 +160,18 @@ export const WebTimerWidget = () => {
   };
 
   const handleEndBreak = () => {
+    // Check if break is still active and has time remaining
+    if (timerState.isOnBreak && timerState.minutesLeft > 0) {
+      // Import and use toast to show the message
+      import('@/hooks/use-toast').then(({ toast }) => {
+        toast({
+          title: "5 Minute Break Not Yet Over, Go Play",
+          variant: "destructive",
+        });
+      });
+      return;
+    }
+
     const now = Date.now();
     setTimerState(prev => ({
       ...prev,
