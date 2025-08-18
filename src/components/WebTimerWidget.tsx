@@ -261,7 +261,7 @@ export const WebTimerWidget = () => {
                 <img 
                   src={sparkyIcon} 
                   alt="Sparky the Timer Dragon" 
-                  className="w-8 h-8 object-contain cursor-pointer"
+                  className="h-full w-auto object-contain cursor-pointer"
                   onClick={handleSparkyClick}
                 />
               )}
