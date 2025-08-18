@@ -183,10 +183,19 @@ export const WebTimerWidget = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl relative">
             {/* Device Header */}
-            <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
-              <div className="text-center font-bold font-title text-lg flex items-center justify-center gap-2">
+            <div className="bg-emerald-700 text-white p-3 rounded-t-xl h-16 flex items-center justify-between">
+              {/* Sparky the Dragon - Official Timer Mascot */}
+              <div className="w-12 h-12 flex items-center justify-center">
+                {/* Temporary dragon emoji placeholder - replace with ICO-SPY.jpg when available */}
+                <span className="text-3xl">🐉</span>
+              </div>
+              
+              <div className="text-center font-bold font-title text-lg flex-1">
                 🕒 Break Timer
               </div>
+              
+              {/* Balance spacing */}
+              <div className="w-12"></div>
             </div>
             
             {/* Digital Screen */}
