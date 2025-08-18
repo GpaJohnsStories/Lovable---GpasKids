@@ -89,7 +89,7 @@ function App() {
                       <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
-                    <ActivityTracker />
+                    <ActivityTracker showDebugInfo />
                     <Routes>
                       {/* Public Routes */}
                       <Route path="/" element={<Index />} />
