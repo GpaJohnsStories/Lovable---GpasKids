@@ -307,18 +307,14 @@ export const WebTimerWidget = () => {
           {isDue && !timerState.isOnBreak && (
             <div className="mx-4 mb-3 w-full max-w-full break-words bg-yellow-100 border-2 border-yellow-400 rounded-lg p-3">
               <div className="text-[22px] font-bold text-yellow-800 text-center mb-2">
-                💡 Break Ideas:
+                Break Ideas
               </div>
               <div className="text-[22px] text-yellow-700 space-y-1">
-                <div>• Get a drink 🥤</div>
-                <div>• Stretch your body 🤸</div>
-                <div>• Say hi to someone 👋</div>
-                <div>• Go outside for fresh air 🌿</div>
-                <div className="mt-2 p-2 bg-yellow-200 rounded border border-yellow-500">
-                  <div className="font-bold text-red-600 text-center text-[22px]">
-                    • DO NOT use another screen
-                  </div>
-                </div>
+                <div>• Get a drink</div>
+                <div>• Go stretch</div>
+                <div>• Talk to Someone</div>
+                <div>• Get some fresh air</div>
+                <div>• Stay away from screens</div>
               </div>
             </div>
           )}
