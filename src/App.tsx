@@ -54,7 +54,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import { HelpProvider } from "./contexts/HelpContext";
 import { useVisitTracker } from "./hooks/useVisitTracker";
-import ActivityTracker from "./components/ActivityTracker";
+import BreakGuide from "./components/break/BreakGuide";
 
 const queryClient = new QueryClient();
 
@@ -89,7 +89,7 @@ function App() {
                       <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
-                    <ActivityTracker showDebugInfo />
+                    <BreakGuide />
                     <Routes>
                       {/* Public Routes */}
                       <Route path="/" element={<Index />} />
