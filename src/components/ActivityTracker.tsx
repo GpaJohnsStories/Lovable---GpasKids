@@ -44,6 +44,7 @@ const ActivityTracker = ({ showDebugInfo = false }: ActivityTrackerProps) => {
   };
 
   // Simple attractive button version - no time showing until clicked
+  console.log('🔄 ActivityTracker rendering with showDebugInfo:', showDebugInfo, 'isActive:', isActive);
   return (
     <div className="fixed bottom-4 left-4 z-50">
       <Dialog>
