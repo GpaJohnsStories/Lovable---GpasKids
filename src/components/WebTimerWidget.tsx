@@ -3,12 +3,11 @@ import { Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
-  DialogPortal,
+  DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
-import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 
@@ -181,10 +180,8 @@ export const WebTimerWidget = () => {
 
       {/* Main Timer Dialog */}
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogPortal>
-          <DialogPrimitive.Content
-            className="fixed left-[50%] top-[50%] z-50 translate-x-[-50%] translate-y-[-50%] w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl relative">
             {/* Device Header */}
             <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
               <div className="text-center font-bold font-title text-lg flex items-center justify-center gap-2">
@@ -273,17 +270,14 @@ export const WebTimerWidget = () => {
                 </Button>
               )}
             </div>
-          </DialogPrimitive.Content>
-        </DialogPortal>
+          </DialogContent>
+        </div>
       </Dialog>
 
       {/* Setup Dialog */}
       <Dialog open={showSetup} onOpenChange={() => {}}>
-        <DialogPortal>
-          <DialogPrimitive.Content
-            className="fixed left-[50%] top-[50%] z-50 translate-x-[-50%] translate-y-[-50%] w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
-            onInteractOutside={(e) => e.preventDefault()}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl relative" onInteractOutside={(e) => e.preventDefault()}>
             {/* Device Header */}
             <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
               <div className="text-center font-bold font-title text-lg">
@@ -323,8 +317,8 @@ export const WebTimerWidget = () => {
                 This setting will be remembered until you close your browser.
               </p>
             </div>
-          </DialogPrimitive.Content>
-        </DialogPortal>
+          </DialogContent>
+        </div>
       </Dialog>
     </>
   );
