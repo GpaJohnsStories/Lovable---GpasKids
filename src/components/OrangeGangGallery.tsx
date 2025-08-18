@@ -124,10 +124,10 @@ const OrangeGangGallery = () => {
             
             {/* 2. Title Below Photo */}
             <div className="text-center">
-              <h3 className="text-xl font-bold text-amber-900 tracking-wide">
+              <h3 className="text-xl font-bold text-amber-900 tracking-wide font-playful">
                 Original Orange Shirt Gang
               </h3>
-              <p className="text-lg text-amber-700 italic mt-1">
+              <p className="text-lg text-amber-700 italic mt-1 font-playful">
                 The Kids Who Started It All
               </p>
             </div>
