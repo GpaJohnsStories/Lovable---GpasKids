@@ -140,10 +140,7 @@ export const WebTimerWidget = () => {
             {isDue && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-center">
                 <p className="text-red-700 font-bold font-body">
-                  🌟 Time for a break! 🌟
-                </p>
-                <p className="text-red-600 text-sm font-body">
-                  Step away from the screen and stretch!
+                  🌟 Reminder for you to take a break — get something to drink, stand and stretch, talk to someone, walk outside, whatever, but <b>DO something</b> 🌟
                 </p>
               </div>
             )}
