@@ -89,7 +89,7 @@ export const WebTimerWidget = () => {
   return (
     <>
       {/* Floating Widget */}
-      <div className="fixed bottom-4 left-4 z-40">
+      <div className="fixed bottom-20 left-4 z-40">
         <Button
           onClick={() => setShowDialog(true)}
           data-allow-superav-passthrough="true"
