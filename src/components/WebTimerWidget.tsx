@@ -192,8 +192,7 @@ export const WebTimerWidget = () => {
           <div className="bg-emerald-100 text-emerald-800 mx-4 my-3 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
             <div className="text-center">
               <div className="text-3xl font-bold tracking-wider">
-                {String(Math.floor(timerState.minutesLeft / 60)).padStart(2, '0')}:
-                {String(timerState.minutesLeft % 60).padStart(2, '0')}
+                {timerState.minutesLeft} Minutes
               </div>
               <div className="text-sm mt-1 text-emerald-600">
                 {timerState.isOnBreak ? "Break ends in" : "Until break"}
