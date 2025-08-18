@@ -292,7 +292,7 @@ export const WebTimerWidget = () => {
           </div>
           
           {/* Digital Screen */}
-          <div className="bg-emerald-100 text-emerald-800 mx-4 my-3 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
+          <div className="bg-emerald-100 text-emerald-800 mx-4 my-2 p-3 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
             <div className="text-center">
               <div className="text-[22px] font-bold text-emerald-600 mb-1">
                 {timerState.isOnBreak ? "Break ends in" : "Until break"}
@@ -305,8 +305,8 @@ export const WebTimerWidget = () => {
 
           {/* Break suggestions when due */}
           {(isDue || timerState.isOnBreak) && (
-            <div className="mx-4 mb-3 w-full max-w-full max-h-[160px] overflow-auto break-words bg-yellow-100 border border-yellow-400 rounded-lg p-2">
-              <div className="text-[22px] font-bold text-yellow-800 text-center mb-2 leading-tight">
+            <div className="mx-auto mb-2 w-[92%] max-w-[260px] break-words bg-yellow-100 border border-yellow-400 rounded-lg p-2">
+              <div className="text-[22px] font-bold text-yellow-800 text-center mb-1 leading-tight">
                 Break Ideas
               </div>
               <div className="text-[22px] text-yellow-700 space-y-0.5 text-center leading-tight">
@@ -319,16 +319,27 @@ export const WebTimerWidget = () => {
             </div>
           )}
 
+          {/* I took a break button - shown when on break */}
+          {timerState.isOnBreak && (
+            <div className="mx-4 mb-2">
+              <Button 
+                onClick={handleEndBreak}
+                className="w-full bg-gradient-to-br from-emerald-700 to-emerald-800 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-900 font-semibold transition-all hover:shadow-xl active:transform active:scale-95 font-body"
+              >
+                I took a break
+              </Button>
+            </div>
+          )}
 
           {/* Reminder interval controls */}
-          <div ref={intervalControlsRef} className="mx-4 mb-4">
+          <div ref={intervalControlsRef} className="mx-4 mb-2">
             <Label className="text-sm font-semibold text-emerald-800 block mb-2">
-              Break Interval:
+              Time to Next Break:
             </Label>
             <RadioGroup 
               value={timerState.reminderMinutes.toString()} 
               onValueChange={handleReminderChange}
-              className="flex justify-center items-center gap-4"
+              className="flex justify-center items-center gap-3"
             >
               {[30, 60, 90].map((minutes) => (
                 <div key={minutes} className="flex items-center space-x-1">
@@ -351,21 +362,13 @@ export const WebTimerWidget = () => {
           {/* Action buttons */}
           <div className="mx-4 mb-4 space-y-2">
             {timerState.isOnBreak ? (
-              <div className="space-y-2">
-                <Button 
-                  onClick={handleEndBreak}
-                  className="w-full bg-gradient-to-br from-emerald-700 to-emerald-800 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-900 font-semibold transition-all hover:shadow-xl active:transform active:scale-95 font-body"
-                >
-                  I took a break
-                </Button>
-                <Button 
-                  onClick={handleChangeBreakTime}
-                  variant="outline"
-                  className="w-full bg-gradient-to-br from-emerald-200 to-emerald-300 hover:from-emerald-300 hover:to-emerald-400 text-emerald-800 border-2 border-emerald-500 rounded-full shadow-lg font-semibold transition-all hover:shadow-xl active:transform active:scale-95 font-body"
-                >
-                  Change break time
-                </Button>
-              </div>
+              <Button 
+                onClick={handleChangeBreakTime}
+                variant="outline"
+                className="w-full bg-gradient-to-br from-emerald-200 to-emerald-300 hover:from-emerald-300 hover:to-emerald-400 text-emerald-800 border-2 border-emerald-500 rounded-full shadow-lg font-semibold transition-all hover:shadow-xl active:transform active:scale-95 font-body"
+              >
+                Change break time
+              </Button>
             ) : (
               <Button 
                 onClick={() => setShowDialog(false)}
