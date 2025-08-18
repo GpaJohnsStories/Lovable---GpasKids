@@ -305,11 +305,11 @@ export const WebTimerWidget = () => {
 
           {/* Break suggestions when due */}
           {(isDue || timerState.isOnBreak) && (
-            <div className="mx-4 mb-3 w-full max-w-full break-words bg-yellow-100 border-2 border-yellow-400 rounded-lg p-3">
-              <div className="text-[22px] font-bold text-yellow-800 text-center mb-2">
+            <div className="mx-4 mb-3 w-full max-w-full max-h-[160px] overflow-auto break-words bg-yellow-100 border border-yellow-400 rounded-lg p-2">
+              <div className="text-[22px] font-bold text-yellow-800 text-center mb-2 leading-tight">
                 Break Ideas
               </div>
-              <div className="text-[22px] text-yellow-700 space-y-1">
+              <div className="text-[22px] text-yellow-700 space-y-0.5 text-center leading-tight">
                 <div>• Get a drink</div>
                 <div>• Go stretch</div>
                 <div>• Talk to Someone</div>
