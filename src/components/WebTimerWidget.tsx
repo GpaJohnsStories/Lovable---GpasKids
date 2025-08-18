@@ -3,11 +3,12 @@ import { Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
-  DialogContent,
+  DialogPortal,
   DialogHeader,
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 
@@ -180,141 +181,150 @@ export const WebTimerWidget = () => {
 
       {/* Main Timer Dialog */}
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl">
-          {/* Device Header */}
-          <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
-            <div className="text-center font-bold font-title text-lg flex items-center justify-center gap-2">
-              🕒 Break Timer
-            </div>
-          </div>
-          
-          {/* Digital Screen */}
-          <div className="bg-emerald-100 text-emerald-800 mx-4 my-3 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
-            <div className="text-center">
-              <div className="text-3xl font-bold tracking-wider">
-                {timerState.minutesLeft} Minutes
-              </div>
-              <div className="text-sm mt-1 text-emerald-600">
-                {timerState.isOnBreak ? "Break ends in" : "Until break"}
+        <DialogPortal>
+          <DialogPrimitive.Content
+            className="fixed left-[50%] top-[50%] z-50 translate-x-[-50%] translate-y-[-50%] w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
+          >
+            {/* Device Header */}
+            <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
+              <div className="text-center font-bold font-title text-lg flex items-center justify-center gap-2">
+                🕒 Break Timer
               </div>
             </div>
-          </div>
-
-          {/* Break suggestions when due */}
-          {isDue && !timerState.isOnBreak && (
-            <div className="mx-4 mb-3 bg-yellow-100 border-2 border-yellow-400 rounded-lg p-3">
-              <div className="text-sm font-bold text-yellow-800 text-center mb-2">
-                💡 Break Ideas:
-              </div>
-              <div className="text-xs text-yellow-700 space-y-1">
-                <div>• Get a drink 🥤</div>
-                <div>• Stretch your body 🤸</div>
-                <div>• Say hi to someone 👋</div>
-                <div>• Go outside for fresh air 🌿</div>
-              </div>
-            </div>
-          )}
-
-          {/* Reminder interval controls */}
-          <div className="mx-4 mb-4">
-            <Label className="text-sm font-semibold text-emerald-800 block mb-2">
-              Break Interval:
-            </Label>
-            <RadioGroup 
-              value={timerState.reminderMinutes.toString()} 
-              onValueChange={handleReminderChange}
-              className="grid grid-cols-3 gap-2"
-            >
-              {[30, 60, 90].map((minutes) => (
-                <div key={minutes} className="flex items-center space-x-1">
-                  <RadioGroupItem 
-                    value={minutes.toString()} 
-                    id={`interval-${minutes}`}
-                    className="data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600"
-                  />
-                  <Label 
-                    htmlFor={`interval-${minutes}`} 
-                    className="text-xs font-medium text-emerald-800 cursor-pointer"
-                  >
-                    {minutes}m
-                  </Label>
+            
+            {/* Digital Screen */}
+            <div className="bg-emerald-100 text-emerald-800 mx-4 my-3 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
+              <div className="text-center">
+                <div className="text-3xl font-bold tracking-wider">
+                  {timerState.minutesLeft} Minutes
                 </div>
-              ))}
-            </RadioGroup>
-          </div>
+                <div className="text-sm mt-1 text-emerald-600">
+                  {timerState.isOnBreak ? "Break ends in" : "Until break"}
+                </div>
+              </div>
+            </div>
 
-          {/* Action buttons */}
-          <div className="mx-4 mb-4 space-y-2">
-            {timerState.isOnBreak ? (
-              <Button 
-                onClick={handleEndBreak}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-              >
-                End Break Early
-              </Button>
-            ) : isDue ? (
-              <Button 
-                onClick={handleStartBreak}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-              >
-                Start 5 Min Break
-              </Button>
-            ) : (
-              <Button 
-                onClick={() => setShowDialog(false)}
-                variant="outline"
-                className="w-full bg-emerald-100 hover:bg-emerald-200 text-emerald-800 border-emerald-400 rounded-full shadow-lg font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-              >
-                Close
-              </Button>
+            {/* Break suggestions when due */}
+            {isDue && !timerState.isOnBreak && (
+              <div className="mx-4 mb-3 bg-yellow-100 border-2 border-yellow-400 rounded-lg p-3">
+                <div className="text-sm font-bold text-yellow-800 text-center mb-2">
+                  💡 Break Ideas:
+                </div>
+                <div className="text-xs text-yellow-700 space-y-1">
+                  <div>• Get a drink 🥤</div>
+                  <div>• Stretch your body 🤸</div>
+                  <div>• Say hi to someone 👋</div>
+                  <div>• Go outside for fresh air 🌿</div>
+                </div>
+              </div>
             )}
-          </div>
-        </DialogContent>
+
+            {/* Reminder interval controls */}
+            <div className="mx-4 mb-4">
+              <Label className="text-sm font-semibold text-emerald-800 block mb-2">
+                Break Interval:
+              </Label>
+              <RadioGroup 
+                value={timerState.reminderMinutes.toString()} 
+                onValueChange={handleReminderChange}
+                className="grid grid-cols-3 gap-2"
+              >
+                {[30, 60, 90].map((minutes) => (
+                  <div key={minutes} className="flex items-center space-x-1">
+                    <RadioGroupItem 
+                      value={minutes.toString()} 
+                      id={`interval-${minutes}`}
+                      className="data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600"
+                    />
+                    <Label 
+                      htmlFor={`interval-${minutes}`} 
+                      className="text-xs font-medium text-emerald-800 cursor-pointer"
+                    >
+                      {minutes}m
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </div>
+
+            {/* Action buttons */}
+            <div className="mx-4 mb-4 space-y-2">
+              {timerState.isOnBreak ? (
+                <Button 
+                  onClick={handleEndBreak}
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+                >
+                  End Break Early
+                </Button>
+              ) : isDue ? (
+                <Button 
+                  onClick={handleStartBreak}
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+                >
+                  Start 5 Min Break
+                </Button>
+              ) : (
+                <Button 
+                  onClick={() => setShowDialog(false)}
+                  variant="outline"
+                  className="w-full bg-emerald-100 hover:bg-emerald-200 text-emerald-800 border-emerald-400 rounded-full shadow-lg font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+                >
+                  Close
+                </Button>
+              )}
+            </div>
+          </DialogPrimitive.Content>
+        </DialogPortal>
       </Dialog>
 
       {/* Setup Dialog */}
       <Dialog open={showSetup} onOpenChange={() => {}}>
-        <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl" onInteractOutside={(e) => e.preventDefault()}>
-          {/* Device Header */}
-          <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
-            <div className="text-center font-bold font-title text-lg">
-              🕒 Timer Setup
-            </div>
-          </div>
-          
-          <div className="p-4">
-            <p className="text-sm text-emerald-800 text-center mb-4 font-body">
-              How often would you like to be reminded to take a break?
-            </p>
-            
-            <div className="space-y-3">
-              <Button 
-                onClick={() => handleSetupChoice(30)} 
-                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-              >
-                Every 30 minutes
-              </Button>
-              
-              <Button 
-                onClick={() => handleSetupChoice(60)} 
-                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-              >
-                Every 60 minutes
-              </Button>
-              
-              <Button 
-                onClick={() => handleSetupChoice(90)} 
-                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-              >
-                Every 90 minutes
-              </Button>
+        <DialogPortal>
+          <DialogPrimitive.Content
+            className="fixed left-[50%] top-[50%] z-50 translate-x-[-50%] translate-y-[-50%] w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
+            onInteractOutside={(e) => e.preventDefault()}
+          >
+            {/* Device Header */}
+            <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
+              <div className="text-center font-bold font-title text-lg">
+                🕒 Timer Setup
+              </div>
             </div>
             
-            <p className="text-xs text-emerald-600 text-center mt-4 font-body">
-              This setting will be remembered until you close your browser.
-            </p>
-          </div>
-        </DialogContent>
+            <div className="p-4">
+              <p className="text-sm text-emerald-800 text-center mb-4 font-body">
+                How often would you like to be reminded to take a break?
+              </p>
+              
+              <div className="space-y-3">
+                <Button 
+                  onClick={() => handleSetupChoice(30)} 
+                  className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+                >
+                  Every 30 minutes
+                </Button>
+                
+                <Button 
+                  onClick={() => handleSetupChoice(60)} 
+                  className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+                >
+                  Every 60 minutes
+                </Button>
+                
+                <Button 
+                  onClick={() => handleSetupChoice(90)} 
+                  className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+                >
+                  Every 90 minutes
+                </Button>
+              </div>
+              
+              <p className="text-xs text-emerald-600 text-center mt-4 font-body">
+                This setting will be remembered until you close your browser.
+              </p>
+            </div>
+          </DialogPrimitive.Content>
+        </DialogPortal>
       </Dialog>
     </>
   );
