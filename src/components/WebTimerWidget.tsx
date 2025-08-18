@@ -257,15 +257,13 @@ export const WebTimerWidget = () => {
           {/* Green Banner Header */}
           <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
             <div className="text-center font-bold font-title text-lg flex items-center justify-center gap-3">
-              {sparkyIcon ? (
+              {sparkyIcon && (
                 <img 
                   src={sparkyIcon} 
                   alt="Sparky the Timer Dragon" 
-                  className="w-8 h-8 object-contain"
+                  className="w-8 h-8 object-contain cursor-pointer"
                   onClick={handleSparkyClick}
                 />
-              ) : (
-                <span className="text-2xl" onClick={handleSparkyClick}>🐉</span>
               )}
               🕒 Break Timer {isTestMode && <span className="text-yellow-300 text-sm">(TEST)</span>}
             </div>
