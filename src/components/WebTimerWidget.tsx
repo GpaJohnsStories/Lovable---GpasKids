@@ -282,11 +282,11 @@ export const WebTimerWidget = () => {
           {/* Digital Screen */}
           <div className="bg-emerald-100 text-emerald-800 mx-4 my-3 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
             <div className="text-center">
-              <div className="text-3xl font-bold tracking-wider">
-                {formatTime(timerState.minutesLeft)}
-              </div>
-              <div className="text-sm mt-1 text-emerald-600">
+              <div className="text-sm font-bold text-emerald-600 mb-1">
                 {timerState.isOnBreak ? "Break ends in" : "Until break"}
+              </div>
+              <div className="text-3xl font-bold tracking-wider">
+                {Math.round(timerState.minutesLeft)} Minutes
               </div>
             </div>
           </div>
