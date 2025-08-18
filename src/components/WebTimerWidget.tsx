@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
@@ -44,6 +44,9 @@ export const WebTimerWidget = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
   const [isDue, setIsDue] = useState(false);
+  
+  // Ref for scrolling to break interval controls
+  const intervalControlsRef = useRef<HTMLDivElement>(null);
 
   // Load Sparky the Timer Dragon icon
   const { iconUrl: sparkyIcon, iconName: sparkyTooltip } = useCachedIcon('ICO-SPT.gif');
@@ -152,6 +155,15 @@ export const WebTimerWidget = () => {
     }));
   };
 
+  const handleChangeBreakTime = () => {
+    // Scroll to and highlight the interval controls
+    intervalControlsRef.current?.scrollIntoView({ behavior: 'smooth' });
+    intervalControlsRef.current?.classList.add('animate-pulse');
+    setTimeout(() => {
+      intervalControlsRef.current?.classList.remove('animate-pulse');
+    }, 2000);
+  };
+
   const formatTime = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -251,8 +263,28 @@ export const WebTimerWidget = () => {
             </div>
           )}
 
+          {/* Suggested Break Ideas when on break */}
+          {timerState.isOnBreak && (
+            <div className="mx-4 mb-3 bg-gradient-to-br from-red-600 to-red-700 border-2 border-red-800 rounded-lg p-4 shadow-lg">
+              <div className="text-lg font-bold text-white text-center mb-3 font-title">
+                🔥 Suggested Break Ideas:
+              </div>
+              <div className="text-sm text-red-100 space-y-2 font-body">
+                <div className="flex items-center">• Get a drink</div>
+                <div className="flex items-center">• Stretch your arms & legs</div>
+                <div className="flex items-center">• Say hi to someone</div>
+                <div className="flex items-center">• Go outside for fresh air</div>
+                <div className="mt-3 p-2 bg-red-800/50 rounded-lg border border-red-500 animate-pulse">
+                  <div className="text-yellow-300 font-bold text-center">
+                    • DO NOT USE another screen
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Reminder interval controls */}
-          <div className="mx-4 mb-4">
+          <div ref={intervalControlsRef} className="mx-4 mb-4">
             <Label className="text-sm font-semibold text-emerald-800 block mb-2">
               Break Interval:
             </Label>
@@ -282,12 +314,21 @@ export const WebTimerWidget = () => {
           {/* Action buttons */}
           <div className="mx-4 mb-4 space-y-2">
             {timerState.isOnBreak ? (
-              <Button 
-                onClick={handleEndBreak}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-              >
-                End Break Early
-              </Button>
+              <div className="space-y-2">
+                <Button 
+                  onClick={handleEndBreak}
+                  className="w-full bg-gradient-to-br from-emerald-700 to-emerald-800 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-900 font-semibold transition-all hover:shadow-xl active:transform active:scale-95 font-body"
+                >
+                  I took a break
+                </Button>
+                <Button 
+                  onClick={handleChangeBreakTime}
+                  variant="outline"
+                  className="w-full bg-gradient-to-br from-emerald-200 to-emerald-300 hover:from-emerald-300 hover:to-emerald-400 text-emerald-800 border-2 border-emerald-500 rounded-full shadow-lg font-semibold transition-all hover:shadow-xl active:transform active:scale-95 font-body"
+                >
+                  Change break time
+                </Button>
+              </div>
             ) : isDue ? (
               <Button 
                 onClick={handleStartBreak}
