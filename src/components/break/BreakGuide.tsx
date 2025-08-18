@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useCachedIcon } from '@/hooks/useCachedIcon';
 
 const BreakGuide: React.FC = () => {
   const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
   const [isBreakReminderOpen, setIsBreakReminderOpen] = useState(false);
+  
+  // Get close icon for the Break Timer
+  const { iconUrl: closeIconUrl } = useCachedIcon('!CO-CLS.jpg');
 
   const handleBreakButtonClick = () => {
     setIsBreakTimerOpen(true);
+  };
+
+  const handleCloseBreakTimer = () => {
+    setIsBreakTimerOpen(false);
   };
 
   return (
@@ -21,21 +29,48 @@ const BreakGuide: React.FC = () => {
         Break Guide
       </button>
 
-      {/* Break Timer Dialog - same width as SuperAV, half height */}
+      {/* Break Timer Dialog - same width as SuperAV, half height, with lighter green background */}
       <Dialog open={isBreakTimerOpen} onOpenChange={setIsBreakTimerOpen}>
         <DialogContent 
-          className="w-[288px] h-[245px] max-w-none border-2 border-[#228B22]"
+          className="w-[288px] h-[245px] max-w-none border-2 border-[#228B22] bg-green-100 p-0 gap-0"
           data-testid="break-timer"
         >
-          <DialogHeader>
-            <DialogTitle className="text-center text-lg font-semibold">
-              Break Timer
-            </DialogTitle>
-          </DialogHeader>
-          <div className="flex-1 flex items-center justify-center">
-            <p className="text-center text-base">
-              Break Timer content will go here
-            </p>
+          {/* Screen panel that almost fills the dialog */}
+          <div className="flex-1 m-2 mb-0 bg-white rounded border border-gray-300 relative overflow-hidden">
+            {/* Paper texture overlay */}
+            <div 
+              className="absolute inset-0 opacity-10 pointer-events-none"
+              style={{
+                backgroundImage: "url('/lovable-uploads/paper-texture.png')",
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat'
+              }}
+            />
+            
+            {/* Screen content */}
+            <div className="relative z-10 h-full flex items-center justify-center p-4">
+              <p className="text-center text-base text-gray-800">
+                Break Timer content will go here
+              </p>
+            </div>
+          </div>
+          
+          {/* Close button row at bottom - similar to SuperAV */}
+          <div className="h-12 m-2 mt-1">
+            <button
+              onClick={handleCloseBreakTimer}
+              className="w-full h-full bg-gradient-to-b from-gray-200 via-gray-300 to-gray-400 hover:from-gray-300 hover:via-gray-400 hover:to-gray-500 rounded border border-gray-400 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center"
+            >
+              {closeIconUrl ? (
+                <img 
+                  src={closeIconUrl} 
+                  alt="Close" 
+                  className="w-8 h-8 object-contain"
+                />
+              ) : (
+                <span className="text-gray-700 font-semibold">Close</span>
+              )}
+            </button>
           </div>
         </DialogContent>
       </Dialog>
