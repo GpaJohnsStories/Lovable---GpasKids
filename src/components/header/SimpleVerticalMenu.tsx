@@ -36,7 +36,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   // Get icon names for tooltips
   const { iconName: guideIconName } = useCachedIcon("!CO-MM1.jpg");
   const { iconName: homeIconName } = useCachedIcon("!CO-MM2.jpg");
-  const { iconName: libraryIconName } = useCachedIcon("!CO-MM3.jpg");
+  const { iconName: libraryIconName } = useCachedIcon("!CO-MM3.gif");
   const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.jpg");
   const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.jpg");
   const { iconName: osmIconName } = useCachedIcon("!CO-OSM.png");
@@ -104,8 +104,8 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "library",
-      icon: "!CO-MM3.jpg", // Library icon - Main Menu 3
-      text: "Library", 
+      icon: "!CO-MM3.gif", // Library icon - Main Menu 3
+      text: "Library",
       tooltipText: libraryIconName || "Library",
       color: "#F97316",
       onClick: () => {
