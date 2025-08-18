@@ -254,45 +254,8 @@ export const WebTimerWidget = () => {
             <DialogTitle>Break Timer</DialogTitle>
             <DialogDescription>Web timer to remind you to take breaks while working</DialogDescription>
           </DialogHeader>
-          {/* Device Header */}
-          <div className="bg-emerald-700 text-white px-3 rounded-t-xl h-[55px] flex items-center justify-between">
-            {/* Sparky the Dragon - Official Timer Mascot */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div 
-                  className="w-[55px] h-[55px] flex items-center justify-center cursor-pointer"
-                  onClick={handleSparkyClick}
-                >
-                  {sparkyIcon ? (
-                    <img 
-                      src={sparkyIcon} 
-                      alt="Sparky the Timer Dragon" 
-                      className="w-[55px] h-[55px] object-contain cursor-help"
-                    />
-                  ) : (
-                    <span className="text-4xl cursor-help">🐉</span>
-                  )}
-                </div>
-              </TooltipTrigger>
-              <TooltipContent className="bg-emerald-800 text-white border-emerald-600">
-                <p className="font-body">
-                  {sparkyTooltip || "Sparky the Timer Dragon"}
-                  {isTestMode && <span className="block text-yellow-300">TEST MODE: 10 seconds</span>}
-                  {!isTestMode && <span className="block text-xs text-emerald-200">Triple-click for test mode</span>}
-                </p>
-              </TooltipContent>
-            </Tooltip>
-            
-            <div className="text-center font-bold font-title text-lg flex-1">
-              🕒 Break Timer {isTestMode && <span className="text-yellow-300 text-sm">(TEST)</span>}
-            </div>
-            
-            {/* Balance spacing */}
-            <div className="w-[55px]"></div>
-          </div>
-          
-          {/* Digital Screen */}
-          <div className="bg-emerald-100 text-emerald-800 mx-4 p-3 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
+          {/* Digital Screen - Full Width */}
+          <div className="bg-emerald-100 text-emerald-800 m-2 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
             <div className="text-center">
               <div className="text-[22px] font-bold text-emerald-600 mb-1">
                 {timerState.isOnBreak ? "Break ends in" : "Until break"}
