@@ -38,7 +38,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const { iconName: homeIconName } = useCachedIcon("!CO-MM2.jpg");
   const { iconName: libraryIconName } = useCachedIcon("!CO-MM3.gif");
   const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.gif");
-  const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.jpg");
+  const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.gif");
   const { iconName: osmIconName } = useCachedIcon("!CO-OSM.png");
   const { iconName: writingIconName } = useCachedIcon("!CO-MM6.jpg");
   const { iconName: aboutIconName } = useCachedIcon("!CO-MM7.jpg");
@@ -138,7 +138,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "comments",
-      icon: "!CO-MM5.jpg", // Comments icon - Main Menu 5
+      icon: "!CO-MM5.gif", // Comments icon - Main Menu 5
       text: "Comments",
       tooltipText: commentsIconName || "Comments",
       color: "#F97316", 
