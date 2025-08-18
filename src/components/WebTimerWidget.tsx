@@ -294,7 +294,7 @@ export const WebTimerWidget = () => {
           {/* Digital Screen */}
           <div className="bg-emerald-100 text-emerald-800 mx-4 my-3 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
             <div className="text-center">
-              <div className="text-sm font-bold text-emerald-600 mb-1">
+              <div className="text-2xl font-bold text-emerald-600 mb-1">
                 {timerState.isOnBreak ? "Break ends in" : "Until break"}
               </div>
               <div className="text-3xl font-bold tracking-wider">
@@ -306,16 +306,16 @@ export const WebTimerWidget = () => {
           {/* Break suggestions when due */}
           {isDue && !timerState.isOnBreak && (
             <div className="mx-4 mb-3 bg-yellow-100 border-2 border-yellow-400 rounded-lg p-3">
-              <div className="text-sm font-bold text-yellow-800 text-center mb-2">
+              <div className="text-2xl font-bold text-yellow-800 text-center mb-2">
                 💡 Break Ideas:
               </div>
-              <div className="text-xs text-yellow-700 space-y-1">
+              <div className="text-2xl text-yellow-700 space-y-1">
                 <div>• Get a drink 🥤</div>
                 <div>• Stretch your body 🤸</div>
                 <div>• Say hi to someone 👋</div>
                 <div>• Go outside for fresh air 🌿</div>
                 <div className="mt-2 p-2 bg-yellow-200 rounded border border-yellow-500">
-                  <div className="font-bold text-red-600 text-center">
+                  <div className="font-bold text-red-600 text-center text-2xl">
                     • DO NOT use another screen
                   </div>
                 </div>
@@ -323,6 +323,25 @@ export const WebTimerWidget = () => {
             </div>
           )}
 
+          {/* Suggested Break Ideas when on break */}
+          {timerState.isOnBreak && (
+            <div className="mx-4 mb-3 bg-gradient-to-br from-red-600 to-red-700 border-2 border-red-800 rounded-lg p-4 shadow-lg">
+              <div className="text-2xl font-bold text-white text-center mb-3 font-title">
+                🔥 Suggested Break Ideas:
+              </div>
+              <div className="text-2xl text-red-100 space-y-2 font-body">
+                <div className="flex items-center">• Get a drink</div>
+                <div className="flex items-center">• Stretch your arms & legs</div>
+                <div className="flex items-center">• Say hi to someone</div>
+                <div className="flex items-center">• Go outside for fresh air</div>
+                <div className="mt-3 p-2 bg-red-800/50 rounded-lg border border-red-500 animate-pulse">
+                  <div className="text-yellow-300 font-bold text-center text-2xl">
+                    • DO NOT USE another screen
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Reminder interval controls */}
           <div ref={intervalControlsRef} className="mx-4 mb-4">
