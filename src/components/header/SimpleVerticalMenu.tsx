@@ -170,8 +170,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       tooltipText: osmIconName || "OSM",
       color: "#F97316",
       onClick: () => {
-        // TODO: Add OSM functionality
-        console.log("OSM button clicked");
+        window.location.href = "/club/photos";
         onClose();
       }
     },
