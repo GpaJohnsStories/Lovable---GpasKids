@@ -323,25 +323,6 @@ export const WebTimerWidget = () => {
             </div>
           )}
 
-          {/* Suggested Break Ideas when on break */}
-          {timerState.isOnBreak && (
-            <div className="mx-4 mb-3 bg-gradient-to-br from-red-600 to-red-700 border-2 border-red-800 rounded-lg p-4 shadow-lg">
-              <div className="text-lg font-bold text-white text-center mb-3 font-title">
-                🔥 Suggested Break Ideas:
-              </div>
-              <div className="text-sm text-red-100 space-y-2 font-body">
-                <div className="flex items-center">• Get a drink</div>
-                <div className="flex items-center">• Stretch your arms & legs</div>
-                <div className="flex items-center">• Say hi to someone</div>
-                <div className="flex items-center">• Go outside for fresh air</div>
-                <div className="mt-3 p-2 bg-red-800/50 rounded-lg border border-red-500 animate-pulse">
-                  <div className="text-yellow-300 font-bold text-center">
-                    • DO NOT USE another screen
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Reminder interval controls */}
           <div ref={intervalControlsRef} className="mx-4 mb-4">
