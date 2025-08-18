@@ -254,6 +254,13 @@ export const WebTimerWidget = () => {
             <DialogTitle>Break Timer</DialogTitle>
             <DialogDescription>Web timer to remind you to take breaks while working</DialogDescription>
           </DialogHeader>
+          {/* Green Banner Header */}
+          <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
+            <div className="text-center font-bold font-title text-lg">
+              🕒 Break Timer {isTestMode && <span className="text-yellow-300 text-sm">(TEST)</span>}
+            </div>
+          </div>
+          
           {/* Digital Screen - Full Width */}
           <div className="bg-emerald-100 text-emerald-800 m-2 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
             <div className="text-center">
