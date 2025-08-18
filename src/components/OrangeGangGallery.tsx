@@ -160,7 +160,7 @@ const OrangeGangGallery = () => {
                           </AspectRatio>
                         </div>
                         <div className="mt-2 text-center">
-                          <p className="text-sm font-medium text-amber-800">{helper.name}</p>
+                          <p className="text-lg font-medium text-amber-800">{helper.name}</p>
                         </div>
                       </div>
                     </TooltipTrigger>
