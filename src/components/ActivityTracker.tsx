@@ -52,7 +52,7 @@ const ActivityTracker = ({ showDebugInfo = false }: ActivityTrackerProps) => {
           <Button
             variant="outline"
             size="sm"
-            className="rounded-full shadow-lg bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 border-2 border-green-800 hover:border-green-700 transition-all duration-200 hover:scale-105 text-white px-4 py-2"
+            className="rounded-full shadow-lg bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 border-2 border-purple-300 hover:border-purple-400 transition-all duration-200 hover:scale-105 text-white px-4 py-2"
           >
             <Clock className="h-4 w-4 mr-2" />
             <span className="font-semibold">Activity</span>
@@ -63,7 +63,7 @@ const ActivityTracker = ({ showDebugInfo = false }: ActivityTrackerProps) => {
             />
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md border-2 border-green-800">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-orange-600" />
