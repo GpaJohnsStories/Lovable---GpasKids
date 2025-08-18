@@ -128,7 +128,7 @@ const OrangeGangGallery = () => {
                 Original Orange Shirt Gang
               </h3>
               <p className="text-lg text-amber-700 italic mt-1">
-                The founding members who started it all!
+                The Kids Who Started It All
               </p>
             </div>
             
