@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useCachedIcon } from '@/hooks/useCachedIcon';
 import {
   Dialog,
   DialogContent,
@@ -37,6 +38,9 @@ export const WebTimerWidget = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [showSetup, setShowSetup] = useState(false);
   const [isDue, setIsDue] = useState(false);
+
+  // Load Sparky the Timer Dragon icon
+  const { iconUrl: sparkyIcon } = useCachedIcon('ICO-SPT.gif');
 
   // Initialize reminder preference and check for first-time setup
   useEffect(() => {
@@ -188,8 +192,15 @@ export const WebTimerWidget = () => {
           <div className="bg-emerald-700 text-white p-3 rounded-t-xl h-16 flex items-center justify-between">
             {/* Sparky the Dragon - Official Timer Mascot */}
             <div className="w-12 h-12 flex items-center justify-center">
-              {/* Temporary dragon emoji placeholder - replace with ICO-SPY.jpg when available */}
-              <span className="text-3xl">🐉</span>
+              {sparkyIcon ? (
+                <img 
+                  src={sparkyIcon} 
+                  alt="Sparky the Timer Dragon" 
+                  className="w-12 h-12 object-contain"
+                />
+              ) : (
+                <span className="text-3xl">🐉</span>
+              )}
             </div>
             
             <div className="text-center font-bold font-title text-lg flex-1">
