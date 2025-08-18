@@ -117,7 +117,7 @@ export const WebTimerWidget = () => {
           <DialogHeader>
             <DialogTitle className="font-title">Web Timer</DialogTitle>
             <DialogDescription className="font-body">
-              Track your screen time and take healthy breaks.
+              Reminder for you to take a break — get something to drink, stand and stretch, talk to someone, walk outside, whatever, but <b>DO something</b>.
             </DialogDescription>
           </DialogHeader>
           
