@@ -37,7 +37,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const { iconName: guideIconName } = useCachedIcon("!CO-MM1.jpg");
   const { iconName: homeIconName } = useCachedIcon("!CO-MM2.jpg");
   const { iconName: libraryIconName } = useCachedIcon("!CO-MM3.gif");
-  const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.jpg");
+  const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.gif");
   const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.jpg");
   const { iconName: osmIconName } = useCachedIcon("!CO-OSM.png");
   const { iconName: writingIconName } = useCachedIcon("!CO-MM6.jpg");
@@ -115,7 +115,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "read-story",
-      icon: "!CO-MM4.jpg", // Read Story icon - Main Menu 4
+      icon: "!CO-MM4.gif", // Read Story icon - Main Menu 4
       text: "Read Story",
       tooltipText: readStoryIconName || "Read Story",
       color: "#F97316",
