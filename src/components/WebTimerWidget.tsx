@@ -67,7 +67,29 @@ export const WebTimerWidget = () => {
     }
   }, []);
 
-  // Update timer every minute
+  // Test mode - click Sparky icon 3 times quickly to enable 10-second test mode
+  const [clickCount, setClickCount] = useState(0);
+  const [isTestMode, setIsTestMode] = useState(false);
+  
+  const handleSparkyClick = () => {
+    setClickCount(prev => prev + 1);
+    setTimeout(() => setClickCount(0), 2000); // Reset after 2 seconds
+    
+    if (clickCount === 2) { // Third click
+      setIsTestMode(true);
+      const now = Date.now();
+      setTimerState(prev => ({
+        ...prev,
+        reminderMinutes: 0.17, // 10 seconds for testing
+        minutesLeft: 0.17,
+        startTime: now,
+        timeActive: 0
+      }));
+      console.log('🐉 Test mode activated! Timer set to 10 seconds');
+    }
+  };
+
+  // Update timer every 10 seconds in test mode, every minute in normal mode
   useEffect(() => {
     const interval = setInterval(() => {
       const now = Date.now();
@@ -90,7 +112,9 @@ export const WebTimerWidget = () => {
           }
         } else {
           // Work mode - countdown to break time
-          const activeMinutes = Math.floor((now - prev.startTime) / (1000 * 60));
+          const activeMinutes = isTestMode 
+            ? Math.floor((now - prev.startTime) / (1000 * 10)) * 0.17 // 10-second intervals in test mode
+            : Math.floor((now - prev.startTime) / (1000 * 60)); // 1-minute intervals normally
           const minutesUntilBreak = Math.max(0, prev.reminderMinutes - activeMinutes);
           
           newState.timeActive = activeMinutes;
@@ -101,10 +125,10 @@ export const WebTimerWidget = () => {
       });
       
       setIsDue(!timerState.isOnBreak && timerState.minutesLeft <= 0);
-    }, 60000); // Update every minute
+    }, isTestMode ? 10000 : 60000); // Update every 10 seconds in test mode, every minute normally
 
     return () => clearInterval(interval);
-  }, [timerState.startTime, timerState.reminderMinutes, timerState.isOnBreak, timerState.breakEndTime, timerState.minutesLeft]);
+  }, [timerState.startTime, timerState.reminderMinutes, timerState.isOnBreak, timerState.breakEndTime, timerState.minutesLeft, isTestMode]);
 
   const handleSetupChoice = (minutes: number) => {
     sessionStorage.setItem(STORAGE_KEY, minutes.toString());
@@ -165,8 +189,11 @@ export const WebTimerWidget = () => {
   };
 
   const formatTime = (minutes: number) => {
+    if (isTestMode && minutes < 1) {
+      return `${Math.round(minutes * 60)}s`; // Show seconds in test mode
+    }
     const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
+    const mins = Math.round(minutes % 60);
     if (hours > 0) {
       return `${hours}h ${mins}m`;
     }
@@ -206,12 +233,19 @@ export const WebTimerWidget = () => {
       {/* Main Timer Dialog */}
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl [&>button]:hidden">
+          <DialogHeader className="sr-only">
+            <DialogTitle>Break Timer</DialogTitle>
+            <DialogDescription>Web timer to remind you to take breaks while working</DialogDescription>
+          </DialogHeader>
           {/* Device Header */}
           <div className="bg-emerald-700 text-white px-3 rounded-t-xl h-[55px] flex items-center justify-between">
             {/* Sparky the Dragon - Official Timer Mascot */}
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="w-[55px] h-[55px] flex items-center justify-center">
+                <div 
+                  className="w-[55px] h-[55px] flex items-center justify-center cursor-pointer"
+                  onClick={handleSparkyClick}
+                >
                   {sparkyIcon ? (
                     <img 
                       src={sparkyIcon} 
@@ -224,12 +258,16 @@ export const WebTimerWidget = () => {
                 </div>
               </TooltipTrigger>
               <TooltipContent className="bg-emerald-800 text-white border-emerald-600">
-                <p className="font-body">{sparkyTooltip || "Sparky the Timer Dragon"}</p>
+                <p className="font-body">
+                  {sparkyTooltip || "Sparky the Timer Dragon"}
+                  {isTestMode && <span className="block text-yellow-300">TEST MODE: 10 seconds</span>}
+                  {!isTestMode && <span className="block text-xs text-emerald-200">Triple-click for test mode</span>}
+                </p>
               </TooltipContent>
             </Tooltip>
             
             <div className="text-center font-bold font-title text-lg flex-1">
-              🕒 Break Timer
+              🕒 Break Timer {isTestMode && <span className="text-yellow-300 text-sm">(TEST)</span>}
             </div>
             
             {/* Balance spacing */}
@@ -240,7 +278,7 @@ export const WebTimerWidget = () => {
           <div className="bg-emerald-100 text-emerald-800 mx-4 my-3 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
             <div className="text-center">
               <div className="text-3xl font-bold tracking-wider">
-                {timerState.minutesLeft} Minutes
+                {formatTime(timerState.minutesLeft)}
               </div>
               <div className="text-sm mt-1 text-emerald-600">
                 {timerState.isOnBreak ? "Break ends in" : "Until break"}
@@ -352,6 +390,10 @@ export const WebTimerWidget = () => {
       {/* Setup Dialog */}
       <Dialog open={showSetup} onOpenChange={() => {}}>
         <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl [&>button]:hidden" onInteractOutside={(e) => e.preventDefault()}>
+          <DialogHeader className="sr-only">
+            <DialogTitle>Timer Setup</DialogTitle>
+            <DialogDescription>Choose how often you want to be reminded to take breaks</DialogDescription>
+          </DialogHeader>
           {/* Device Header */}
           <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
             <div className="text-center font-bold font-title text-lg">
