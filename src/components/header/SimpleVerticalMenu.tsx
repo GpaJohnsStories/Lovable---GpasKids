@@ -39,6 +39,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const { iconName: libraryIconName } = useCachedIcon("!CO-MM3.jpg");
   const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.jpg");
   const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.jpg");
+  const { iconName: osmIconName } = useCachedIcon("!CO-OSM.png");
   const { iconName: writingIconName } = useCachedIcon("!CO-MM6.jpg");
   const { iconName: aboutIconName } = useCachedIcon("!CO-MM7.jpg");
   const { iconName: safeIconName } = useCachedIcon("!CO-MM8.jpg");
@@ -163,15 +164,27 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       ]
     },
     {
+      id: "osm",
+      icon: "!CO-OSM.png", // OSM icon - Main Menu 6
+      text: "OSM",
+      tooltipText: osmIconName || "OSM",
+      color: "#F97316",
+      onClick: () => {
+        // TODO: Add OSM functionality
+        console.log("OSM button clicked");
+        onClose();
+      }
+    },
+    {
       id: "writing",
-      icon: "!CO-MM6.jpg", // Writing icon - Main Menu 6
+      icon: "!CO-MM6.jpg", // Writing icon - Main Menu 7
       text: "Writing",
       tooltipText: writingIconName || "Writing",
       color: "#F97316",
       submenus: [
         {
           id: "submit-story",
-          icon: "!CO-S61.jpg", // Submit Story - Submenu 6-1
+          icon: "!CO-S61.jpg", // Submit Story - Submenu 7-1
           text: "Submit Story",
           onClick: () => {
             window.location.href = "/writing";
@@ -182,14 +195,14 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "about-us",
-      icon: "!CO-MM7.jpg", // About Us icon - Main Menu 7
+      icon: "!CO-MM7.jpg", // About Us icon - Main Menu 8
       text: "About Us",
       tooltipText: aboutIconName || "About Us",
       color: "#F97316",
       submenus: [
         {
           id: "grandpa-john",
-          icon: "!CO-S71.jpg", // Grandpa John - Submenu 7-1
+          icon: "!CO-S71.jpg", // Grandpa John - Submenu 8-1
           text: "Grandpa John",
           onClick: () => {
             window.location.href = "/about";
@@ -198,7 +211,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "3-helpers",
-          icon: "!CO-S72.jpg", // 3 Helpers - Submenu 7-2
+          icon: "!CO-S72.jpg", // 3 Helpers - Submenu 8-2
           text: "3 Helpers", 
           onClick: () => {
             window.location.href = "/about#buddy";
@@ -207,7 +220,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "authors",
-          icon: "!CO-S73.jpg", // Authors - Submenu 7-3
+          icon: "!CO-S73.jpg", // Authors - Submenu 8-3
           text: "Authors",
           onClick: () => {
             window.location.href = "/author-bios-simple";
@@ -216,7 +229,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         },
         {
           id: "the-3-ais",
-          icon: "!CO-S74.jpg", // 3 Helpful AI's - Submenu 7-4
+          icon: "!CO-S74.jpg", // 3 Helpful AI's - Submenu 8-4
           text: "3 Helpful AI's",
           onClick: () => {
             window.location.href = "/about#special-thank-you";
@@ -227,7 +240,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "safe-secure",
-      icon: "!CO-MM8.jpg", // Safe & Secure icon - Main Menu 8
+      icon: "!CO-MM8.jpg", // Safe & Secure icon - Main Menu 9
       text: "Safe & Secure", 
       tooltipText: safeIconName || "Safe & Secure",
       color: "#F97316",
