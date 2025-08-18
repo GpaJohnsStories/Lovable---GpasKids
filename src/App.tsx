@@ -52,6 +52,7 @@ import GlobalHelpProvider from "./components/GlobalHelpProvider";
 import ContentProtection from "./components/ContentProtection";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
+import WebTimerWidget from "./components/WebTimerWidget";
 import { HelpProvider } from "./contexts/HelpContext";
 import { useVisitTracker } from "./hooks/useVisitTracker";
 
@@ -86,9 +87,10 @@ function App() {
                   <BrowserRouter>
                     <SuperAVProvider>
                       <GlobalHelpProvider>
-                  <ConditionalContentProtection>
-                    <ScrollToTop />
-                    <Routes>
+                   <ConditionalContentProtection>
+                     <ScrollToTop />
+                     <WebTimerWidget />
+                     <Routes>
                       {/* Public Routes */}
                       <Route path="/" element={<Index />} />
                       <Route path="/about" element={<About />} />
