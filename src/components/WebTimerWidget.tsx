@@ -9,6 +9,12 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 
@@ -156,7 +162,7 @@ export const WebTimerWidget = () => {
   };
 
   return (
-    <>
+    <TooltipProvider>
       {/* Floating Widget */}
       <div className="fixed bottom-20 left-4 z-40">
         <Button
@@ -191,17 +197,25 @@ export const WebTimerWidget = () => {
           {/* Device Header */}
           <div className="bg-emerald-700 text-white px-3 rounded-t-xl h-[55px] flex items-center justify-between">
             {/* Sparky the Dragon - Official Timer Mascot */}
-            <div className="w-[55px] h-[55px] flex items-center justify-center">
-              {sparkyIcon ? (
-                <img 
-                  src={sparkyIcon} 
-                  alt="Sparky the Timer Dragon" 
-                  className="w-[55px] h-[55px] object-contain"
-                />
-              ) : (
-                <span className="text-4xl">🐉</span>
-              )}
-            </div>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="w-[55px] h-[55px] flex items-center justify-center">
+                  {sparkyIcon ? (
+                    <img 
+                      src={sparkyIcon} 
+                      alt="Sparky the Timer Dragon" 
+                      className="w-[55px] h-[55px] object-contain cursor-help"
+                    />
+                  ) : (
+                    <span className="text-4xl cursor-help">🐉</span>
+                  )}
+                </div>
+              </TooltipTrigger>
+              <TooltipContent className="bg-emerald-800 text-white border-emerald-600">
+                <p className="font-body">🐉 Meet Sparky the Timer Dragon!</p>
+                <p className="text-xs mt-1">Your friendly break reminder buddy</p>
+              </TooltipContent>
+            </Tooltip>
             
             <div className="text-center font-bold font-title text-lg flex-1">
               🕒 Break Timer
@@ -339,7 +353,7 @@ export const WebTimerWidget = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </>
+    </TooltipProvider>
   );
 };
 
