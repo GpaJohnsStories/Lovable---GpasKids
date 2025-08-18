@@ -49,7 +49,7 @@ export const WebTimerWidget = () => {
   const intervalControlsRef = useRef<HTMLDivElement>(null);
 
   // Load Sparky the Timer Dragon icon
-  const { iconUrl: sparkyIcon, iconName: sparkyTooltip } = useCachedIcon('ICO-SPT.gif');
+  const { iconUrl: sparkyIcon, iconName: sparkyTooltip } = useCachedIcon('!CO-SPT.gif');
 
   // Initialize reminder preference and check for first-time setup
   useEffect(() => {
