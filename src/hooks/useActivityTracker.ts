@@ -75,21 +75,12 @@ export const useActivityTracker = () => {
     });
   };
 
-  // Show break suggestion toast
+  // Show break suggestion toast or trigger break timer popup
   const showBreakSuggestion = (isRepeat: boolean = false) => {
-    const message = isRepeat 
-      ? 'Reminder: You\'ve been active for a while. Consider taking a 5-minute break for your wellbeing!' 
-      : 'You\'ve Been active for an hour! Time for a short break. Step away from the screen for a few minutes.';
-    
-    toast.info(message, {
-      duration: 10000, // Show for 10 seconds
-      action: {
-        label: 'I took a break',
-        onClick: () => {
-          resetActivityTimer();
-        }
-      }
-    });
+    // Dispatch custom event for break timer popup
+    window.dispatchEvent(new CustomEvent('showBreakTimer', { 
+      detail: { isRepeat } 
+    }));
   };
 
   // Handle user activity

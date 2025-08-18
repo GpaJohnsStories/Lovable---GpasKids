@@ -3,6 +3,8 @@ import { useActivityTracker } from '@/hooks/useActivityTracker';
 import { Button } from '@/components/ui/button';
 import { Clock, Coffee, Info } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { BreakTimerPopup } from './BreakTimerPopup';
+import { useState, useEffect } from 'react';
 
 interface ActivityTrackerProps {
   showDebugInfo?: boolean;
@@ -10,9 +12,26 @@ interface ActivityTrackerProps {
 
 const ActivityTracker = ({ showDebugInfo = false }: ActivityTrackerProps) => {
   const { isActive, timeActive, resetActivityTimer } = useActivityTracker();
+  const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
+
+  // Listen for break timer events
+  useEffect(() => {
+    const handleShowBreakTimer = () => {
+      setIsBreakTimerOpen(true);
+    };
+
+    window.addEventListener('showBreakTimer', handleShowBreakTimer);
+    return () => window.removeEventListener('showBreakTimer', handleShowBreakTimer);
+  }, []);
 
   if (!showDebugInfo) {
-    return null; // Hidden by default, can be enabled for debugging
+    return (
+      <BreakTimerPopup
+        isOpen={isBreakTimerOpen}
+        onClose={() => setIsBreakTimerOpen(false)}
+        onBreakComplete={resetActivityTimer}
+      />
+    );
   }
 
   const formatTime = (minutes: number) => {
@@ -88,6 +107,12 @@ const ActivityTracker = ({ showDebugInfo = false }: ActivityTrackerProps) => {
           </div>
         </DialogContent>
       </Dialog>
+      
+      <BreakTimerPopup
+        isOpen={isBreakTimerOpen}
+        onClose={() => setIsBreakTimerOpen(false)}
+        onBreakComplete={resetActivityTimer}
+      />
     </div>
   );
 };
