@@ -125,10 +125,15 @@ export const WebTimerWidget = () => {
       });
       
       setIsDue(!timerState.isOnBreak && timerState.minutesLeft <= 0);
+      
+      // Auto-start break when due
+      if (!timerState.isOnBreak && timerState.minutesLeft <= 0 && !isDue) {
+        handleStartBreak();
+      }
     }, isTestMode ? 10000 : 60000); // Update every 10 seconds in test mode, every minute normally
 
     return () => clearInterval(interval);
-  }, [timerState.startTime, timerState.reminderMinutes, timerState.isOnBreak, timerState.breakEndTime, timerState.minutesLeft, isTestMode]);
+  }, [timerState.startTime, timerState.reminderMinutes, timerState.isOnBreak, timerState.breakEndTime, timerState.minutesLeft, isTestMode, isDue]);
 
   const handleSetupChoice = (minutes: number) => {
     sessionStorage.setItem(STORAGE_KEY, minutes.toString());
@@ -297,6 +302,11 @@ export const WebTimerWidget = () => {
                 <div>• Stretch your body 🤸</div>
                 <div>• Say hi to someone 👋</div>
                 <div>• Go outside for fresh air 🌿</div>
+                <div className="mt-2 p-2 bg-yellow-200 rounded border border-yellow-500">
+                  <div className="font-bold text-red-600 text-center">
+                    • DO NOT use another screen
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -367,13 +377,6 @@ export const WebTimerWidget = () => {
                   Change break time
                 </Button>
               </div>
-            ) : isDue ? (
-              <Button 
-                onClick={handleStartBreak}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-              >
-                Start 5 Min Break
-              </Button>
             ) : (
               <Button 
                 onClick={() => setShowDialog(false)}
