@@ -259,7 +259,7 @@ export const WebTimerWidget = () => {
             <RadioGroup 
               value={timerState.reminderMinutes.toString()} 
               onValueChange={handleReminderChange}
-              className="grid grid-cols-3 gap-2"
+              className="flex justify-center items-center gap-4"
             >
               {[30, 60, 90].map((minutes) => (
                 <div key={minutes} className="flex items-center space-x-1">
