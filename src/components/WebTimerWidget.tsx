@@ -292,7 +292,7 @@ export const WebTimerWidget = () => {
           </div>
           
           {/* Digital Screen */}
-          <div className="bg-emerald-100 text-emerald-800 mx-4 my-2 p-3 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
+          <div className="bg-emerald-100 text-emerald-800 mx-4 p-3 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
             <div className="text-center">
               <div className="text-[22px] font-bold text-emerald-600 mb-1">
                 {timerState.isOnBreak ? "Break ends in" : "Until break"}
