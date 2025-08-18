@@ -46,7 +46,7 @@ export const WebTimerWidget = () => {
   const [isDue, setIsDue] = useState(false);
 
   // Load Sparky the Timer Dragon icon
-  const { iconUrl: sparkyIcon } = useCachedIcon('ICO-SPT.gif');
+  const { iconUrl: sparkyIcon, iconName: sparkyTooltip } = useCachedIcon('ICO-SPT.gif');
 
   // Initialize reminder preference and check for first-time setup
   useEffect(() => {
@@ -212,8 +212,7 @@ export const WebTimerWidget = () => {
                 </div>
               </TooltipTrigger>
               <TooltipContent className="bg-emerald-800 text-white border-emerald-600">
-                <p className="font-body">🐉 Meet Sparky the Timer Dragon!</p>
-                <p className="text-xs mt-1">Your friendly break reminder buddy</p>
+                <p className="font-body">{sparkyTooltip || "Sparky the Timer Dragon"}</p>
               </TooltipContent>
             </Tooltip>
             
