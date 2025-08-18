@@ -292,7 +292,7 @@ export const WebTimerWidget = () => {
           </div>
           
           {/* Digital Screen */}
-          <div className="bg-emerald-100 text-emerald-800 mx-4 p-3 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
+          <div className="bg-emerald-100 text-emerald-800 mx-4 mb-0.5 p-3 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
             <div className="text-center">
               <div className="text-[22px] font-bold text-emerald-600 mb-1">
                 {timerState.isOnBreak ? "Break ends in" : "Until break"}
@@ -305,7 +305,7 @@ export const WebTimerWidget = () => {
 
           {/* Break suggestions when due */}
           {(isDue || timerState.isOnBreak) && (
-            <div className="mx-auto mb-2 w-[92%] max-w-[260px] break-words bg-yellow-100 border border-yellow-400 rounded-lg p-2">
+            <div className="mx-auto mt-0.5 mb-0.5 w-[92%] max-w-[260px] break-words bg-yellow-100 border border-yellow-400 rounded-lg p-2">
               <div className="text-[22px] font-bold text-yellow-800 text-center mb-1 leading-tight">
                 Break Ideas
               </div>
