@@ -40,7 +40,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.gif");
   const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.gif");
   const { iconName: osmIconName } = useCachedIcon("!CO-OSM.png");
-  const { iconName: writingIconName } = useCachedIcon("!CO-MM6.jpg");
+  const { iconName: writingIconName } = useCachedIcon("!CO-MM6.gif");
   const { iconName: aboutIconName } = useCachedIcon("!CO-MM7.jpg");
   const { iconName: safeIconName } = useCachedIcon("!CO-MM8.jpg");
   
@@ -177,7 +177,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     },
     {
       id: "writing",
-      icon: "!CO-MM6.jpg", // Writing icon - Main Menu 7
+      icon: "!CO-MM6.gif", // Writing icon - Main Menu 7
       text: "Writing",
       tooltipText: writingIconName || "Writing",
       color: "#F97316",
