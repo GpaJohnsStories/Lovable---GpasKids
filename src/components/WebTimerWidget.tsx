@@ -304,7 +304,7 @@ export const WebTimerWidget = () => {
           </div>
 
           {/* Break suggestions when due */}
-          {isDue && !timerState.isOnBreak && (
+          {(isDue || timerState.isOnBreak) && (
             <div className="mx-4 mb-3 w-full max-w-full break-words bg-yellow-100 border-2 border-yellow-400 rounded-lg p-3">
               <div className="text-[22px] font-bold text-yellow-800 text-center mb-2">
                 Break Ideas
