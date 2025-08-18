@@ -156,7 +156,10 @@ export const WebTimerWidget = () => {
       {/* Floating Widget */}
       <div className="fixed bottom-20 left-4 z-40">
         <Button
-          onClick={() => setShowDialog(true)}
+          onClick={() => {
+            console.log('🕒 WebTimer button clicked, showDialog:', showDialog);
+            setShowDialog(true);
+          }}
           data-allow-superav-passthrough="true"
           size="sm"
           className={`
@@ -180,154 +183,150 @@ export const WebTimerWidget = () => {
 
       {/* Main Timer Dialog */}
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl relative">
-            {/* Device Header */}
-            <div className="bg-emerald-700 text-white p-3 rounded-t-xl h-16 flex items-center justify-between">
-              {/* Sparky the Dragon - Official Timer Mascot */}
-              <div className="w-12 h-12 flex items-center justify-center">
-                {/* Temporary dragon emoji placeholder - replace with ICO-SPY.jpg when available */}
-                <span className="text-3xl">🐉</span>
-              </div>
-              
-              <div className="text-center font-bold font-title text-lg flex-1">
-                🕒 Break Timer
-              </div>
-              
-              {/* Balance spacing */}
-              <div className="w-12"></div>
+        <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl [&>button]:hidden">
+          {/* Device Header */}
+          <div className="bg-emerald-700 text-white p-3 rounded-t-xl h-16 flex items-center justify-between">
+            {/* Sparky the Dragon - Official Timer Mascot */}
+            <div className="w-12 h-12 flex items-center justify-center">
+              {/* Temporary dragon emoji placeholder - replace with ICO-SPY.jpg when available */}
+              <span className="text-3xl">🐉</span>
             </div>
             
-            {/* Digital Screen */}
-            <div className="bg-emerald-100 text-emerald-800 mx-4 my-3 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
-              <div className="text-center">
-                <div className="text-3xl font-bold tracking-wider">
-                  {timerState.minutesLeft} Minutes
-                </div>
-                <div className="text-sm mt-1 text-emerald-600">
-                  {timerState.isOnBreak ? "Break ends in" : "Until break"}
-                </div>
+            <div className="text-center font-bold font-title text-lg flex-1">
+              🕒 Break Timer
+            </div>
+            
+            {/* Balance spacing */}
+            <div className="w-12"></div>
+          </div>
+          
+          {/* Digital Screen */}
+          <div className="bg-emerald-100 text-emerald-800 mx-4 my-3 p-4 rounded-lg border-2 border-emerald-600 shadow-inner font-mono">
+            <div className="text-center">
+              <div className="text-3xl font-bold tracking-wider">
+                {timerState.minutesLeft} Minutes
+              </div>
+              <div className="text-sm mt-1 text-emerald-600">
+                {timerState.isOnBreak ? "Break ends in" : "Until break"}
               </div>
             </div>
+          </div>
 
-            {/* Break suggestions when due */}
-            {isDue && !timerState.isOnBreak && (
-              <div className="mx-4 mb-3 bg-yellow-100 border-2 border-yellow-400 rounded-lg p-3">
-                <div className="text-sm font-bold text-yellow-800 text-center mb-2">
-                  💡 Break Ideas:
-                </div>
-                <div className="text-xs text-yellow-700 space-y-1">
-                  <div>• Get a drink 🥤</div>
-                  <div>• Stretch your body 🤸</div>
-                  <div>• Say hi to someone 👋</div>
-                  <div>• Go outside for fresh air 🌿</div>
-                </div>
+          {/* Break suggestions when due */}
+          {isDue && !timerState.isOnBreak && (
+            <div className="mx-4 mb-3 bg-yellow-100 border-2 border-yellow-400 rounded-lg p-3">
+              <div className="text-sm font-bold text-yellow-800 text-center mb-2">
+                💡 Break Ideas:
               </div>
-            )}
+              <div className="text-xs text-yellow-700 space-y-1">
+                <div>• Get a drink 🥤</div>
+                <div>• Stretch your body 🤸</div>
+                <div>• Say hi to someone 👋</div>
+                <div>• Go outside for fresh air 🌿</div>
+              </div>
+            </div>
+          )}
 
-            {/* Reminder interval controls */}
-            <div className="mx-4 mb-4">
-              <Label className="text-sm font-semibold text-emerald-800 block mb-2">
-                Break Interval:
-              </Label>
-              <RadioGroup 
-                value={timerState.reminderMinutes.toString()} 
-                onValueChange={handleReminderChange}
-                className="grid grid-cols-3 gap-2"
+          {/* Reminder interval controls */}
+          <div className="mx-4 mb-4">
+            <Label className="text-sm font-semibold text-emerald-800 block mb-2">
+              Break Interval:
+            </Label>
+            <RadioGroup 
+              value={timerState.reminderMinutes.toString()} 
+              onValueChange={handleReminderChange}
+              className="grid grid-cols-3 gap-2"
+            >
+              {[30, 60, 90].map((minutes) => (
+                <div key={minutes} className="flex items-center space-x-1">
+                  <RadioGroupItem 
+                    value={minutes.toString()} 
+                    id={`interval-${minutes}`}
+                    className="data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600"
+                  />
+                  <Label 
+                    htmlFor={`interval-${minutes}`} 
+                    className="text-xs font-medium text-emerald-800 cursor-pointer"
+                  >
+                    {minutes}m
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+
+          {/* Action buttons */}
+          <div className="mx-4 mb-4 space-y-2">
+            {timerState.isOnBreak ? (
+              <Button 
+                onClick={handleEndBreak}
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
               >
-                {[30, 60, 90].map((minutes) => (
-                  <div key={minutes} className="flex items-center space-x-1">
-                    <RadioGroupItem 
-                      value={minutes.toString()} 
-                      id={`interval-${minutes}`}
-                      className="data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600"
-                    />
-                    <Label 
-                      htmlFor={`interval-${minutes}`} 
-                      className="text-xs font-medium text-emerald-800 cursor-pointer"
-                    >
-                      {minutes}m
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-
-            {/* Action buttons */}
-            <div className="mx-4 mb-4 space-y-2">
-              {timerState.isOnBreak ? (
-                <Button 
-                  onClick={handleEndBreak}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-                >
-                  End Break Early
-                </Button>
-              ) : isDue ? (
-                <Button 
-                  onClick={handleStartBreak}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-                >
-                  Start 5 Min Break
-                </Button>
-              ) : (
-                <Button 
-                  onClick={() => setShowDialog(false)}
-                  variant="outline"
-                  className="w-full bg-emerald-100 hover:bg-emerald-200 text-emerald-800 border-emerald-400 rounded-full shadow-lg font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-                >
-                  Close
-                </Button>
-              )}
-            </div>
-          </DialogContent>
-        </div>
+                End Break Early
+              </Button>
+            ) : isDue ? (
+              <Button 
+                onClick={handleStartBreak}
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+              >
+                Start 5 Min Break
+              </Button>
+            ) : (
+              <Button 
+                onClick={() => setShowDialog(false)}
+                variant="outline"
+                className="w-full bg-emerald-100 hover:bg-emerald-200 text-emerald-800 border-emerald-400 rounded-full shadow-lg font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+              >
+                Close
+              </Button>
+            )}
+          </div>
+        </DialogContent>
       </Dialog>
 
       {/* Setup Dialog */}
       <Dialog open={showSetup} onOpenChange={() => {}}>
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl relative" onInteractOutside={(e) => e.preventDefault()}>
-            {/* Device Header */}
-            <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
-              <div className="text-center font-bold font-title text-lg">
-                🕒 Timer Setup
-              </div>
+        <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl [&>button]:hidden" onInteractOutside={(e) => e.preventDefault()}>
+          {/* Device Header */}
+          <div className="bg-emerald-700 text-white p-3 rounded-t-xl">
+            <div className="text-center font-bold font-title text-lg">
+              🕒 Timer Setup
+            </div>
+          </div>
+          
+          <div className="p-4">
+            <p className="text-sm text-emerald-800 text-center mb-4 font-body">
+              How often would you like to be reminded to take a break?
+            </p>
+            
+            <div className="space-y-3">
+              <Button 
+                onClick={() => handleSetupChoice(30)} 
+                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+              >
+                Every 30 minutes
+              </Button>
+              
+              <Button 
+                onClick={() => handleSetupChoice(60)} 
+                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+              >
+                Every 60 minutes
+              </Button>
+              
+              <Button 
+                onClick={() => handleSetupChoice(90)} 
+                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
+              >
+                Every 90 minutes
+              </Button>
             </div>
             
-            <div className="p-4">
-              <p className="text-sm text-emerald-800 text-center mb-4 font-body">
-                How often would you like to be reminded to take a break?
-              </p>
-              
-              <div className="space-y-3">
-                <Button 
-                  onClick={() => handleSetupChoice(30)} 
-                  className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-                >
-                  Every 30 minutes
-                </Button>
-                
-                <Button 
-                  onClick={() => handleSetupChoice(60)} 
-                  className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-                >
-                  Every 60 minutes
-                </Button>
-                
-                <Button 
-                  onClick={() => handleSetupChoice(90)} 
-                  className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg border-2 border-emerald-800 font-semibold transition-all hover:shadow-xl active:transform active:scale-95"
-                >
-                  Every 90 minutes
-                </Button>
-              </div>
-              
-              <p className="text-xs text-emerald-600 text-center mt-4 font-body">
-                This setting will be remembered until you close your browser.
-              </p>
-            </div>
-          </DialogContent>
-        </div>
+            <p className="text-xs text-emerald-600 text-center mt-4 font-body">
+              This setting will be remembered until you close your browser.
+            </p>
+          </div>
+        </DialogContent>
       </Dialog>
     </>
   );
