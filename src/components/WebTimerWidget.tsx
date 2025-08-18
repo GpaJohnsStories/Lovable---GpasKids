@@ -189,17 +189,17 @@ export const WebTimerWidget = () => {
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="w-[320px] max-w-[320px] p-0 border-4 border-emerald-600 bg-emerald-50 rounded-2xl shadow-xl [&>button]:hidden">
           {/* Device Header */}
-          <div className="bg-emerald-700 text-white p-3 rounded-t-xl h-16 flex items-center justify-between">
+          <div className="bg-emerald-700 text-white px-3 rounded-t-xl h-[55px] flex items-center justify-between">
             {/* Sparky the Dragon - Official Timer Mascot */}
-            <div className="w-12 h-12 flex items-center justify-center">
+            <div className="w-[55px] h-[55px] flex items-center justify-center">
               {sparkyIcon ? (
                 <img 
                   src={sparkyIcon} 
                   alt="Sparky the Timer Dragon" 
-                  className="w-12 h-12 object-contain"
+                  className="w-[55px] h-[55px] object-contain"
                 />
               ) : (
-                <span className="text-3xl">🐉</span>
+                <span className="text-4xl">🐉</span>
               )}
             </div>
             
@@ -208,7 +208,7 @@ export const WebTimerWidget = () => {
             </div>
             
             {/* Balance spacing */}
-            <div className="w-12"></div>
+            <div className="w-[55px]"></div>
           </div>
           
           {/* Digital Screen */}
