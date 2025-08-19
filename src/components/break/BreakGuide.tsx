@@ -157,8 +157,9 @@ const BreakGuide: React.FC = () => {
             onMouseDown={handleMouseDown}
           />
           {/* Screen panel that almost fills the dialog */}
-          <div className="flex-1 m-2 mb-2 bg-white rounded relative overflow-hidden" style={{
+          <div className="flex-1 m-2 mb-2 bg-white relative overflow-hidden" style={{
         border: '2px solid #5A3E2B',
+        borderRadius: '16px', // Same rounded corners as outer dialog
         boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)'
       }}>
             {/* Sparky icon in top left corner with tooltip - SYS-BT2: Triple-click for Back Door access */}
