@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -41,66 +42,99 @@ const SecureAdminLoginWithWebAuthn = ({ onSuccess }: SecureAdminLoginWithWebAuth
 
     setIsLoading(true);
     try {
-      // Step 1: Authenticate with password using Edge Function
-      const { data, error } = await supabase.functions.invoke('secure-auth', {
-        body: {
-          email,
-          password,
-          action: 'signin'
-        }
+      console.log('🔐 Attempting standard Supabase auth login for:', email);
+      
+      // Step 1: Sign in with Supabase Auth directly
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.toLowerCase().trim(),
+        password: password
       });
 
       if (error) {
-        throw error;
+        console.error('🚨 Login error:', error);
+        throw new Error(error.message);
       }
 
-      if (data.error) {
-        throw new Error(data.error);
+      if (!data.user) {
+        throw new Error('Login failed - no user returned');
       }
 
-      // Set the session
-      if (data.session) {
-        await supabase.auth.setSession(data.session);
-        const user = data.user || data.session.user;
-        setUserId(user.id);
+      console.log('✅ Supabase auth successful for user:', data.user.id);
+      setUserId(data.user.id);
 
-        // Check if user has WebAuthn enabled
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('webauthn_enabled, webauthn_credentials, role')
-          .eq('id', user.id)
-          .maybeSingle();
+      // Step 2: Check if this user is a privileged admin
+      console.log('🔍 Checking privileged admin status...');
+      const { data: isPrivilegedAdmin, error: privilegedError } = await supabase.rpc('is_privileged_admin');
+      
+      if (privilegedError) {
+        console.error('🚨 Privileged admin check failed:', privilegedError);
+        await supabase.auth.signOut();
+        throw new Error('Authorization check failed');
+      }
 
-        // Verify admin role
-        if (profile?.role !== 'admin') {
-          await supabase.auth.signOut();
-          throw new Error('Access denied. Admin privileges required.');
-        }
+      if (!isPrivilegedAdmin) {
+        console.log('🚫 User is not a privileged admin');
+        await supabase.auth.signOut();
+        throw new Error('Access denied. You are not authorized for admin access.');
+      }
 
-        // Check WebAuthn requirement
-        if (profile?.webauthn_enabled && Array.isArray(profile?.webauthn_credentials) && profile.webauthn_credentials.length > 0) {
-          setWebauthnRequired(true);
-          
-          // Analyze registered credential types
-          const types = profile.webauthn_credentials.map((cred: any) => cred.authenticatorType || 'unknown');
-          setRegisteredTypes([...new Set(types)] as string[]);
-          
-          setCurrentStep('webauthn');
-          toast.success("Password verified. Please complete WebAuthn authentication.");
-        } else {
-          // No WebAuthn required, complete login
-          setCurrentStep('success');
-          toast.success("Login successful!");
-          setTimeout(() => onSuccess(), 1000);
-        }
+      console.log('✅ User is privileged admin');
+
+      // Step 3: Check if user has regular admin role in profiles
+      const { data: isAdmin, error: adminError } = await supabase.rpc('is_admin');
+      
+      if (adminError) {
+        console.error('🚨 Admin role check failed:', adminError);
+        await supabase.auth.signOut();
+        throw new Error('Role verification failed');
+      }
+
+      if (!isAdmin) {
+        console.log('🚫 User does not have admin role in profiles');
+        await supabase.auth.signOut();
+        throw new Error('Access denied. Admin role required.');
+      }
+
+      console.log('✅ User has admin role');
+
+      // Step 4: Check for WebAuthn requirement
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('webauthn_enabled, webauthn_credentials')
+        .eq('id', data.user.id)
+        .maybeSingle();
+
+      if (profile?.webauthn_enabled && Array.isArray(profile?.webauthn_credentials) && profile.webauthn_credentials.length > 0) {
+        setWebauthnRequired(true);
+        
+        // Analyze registered credential types
+        const types = profile.webauthn_credentials.map((cred: any) => cred.authenticatorType || 'unknown');
+        setRegisteredTypes([...new Set(types)] as string[]);
+        
+        setCurrentStep('webauthn');
+        toast.success("Password verified. Please complete WebAuthn authentication.");
+      } else {
+        // No WebAuthn required, complete login
+        setCurrentStep('success');
+        toast.success("Login successful!");
+        setTimeout(() => onSuccess(), 1000);
       }
     } catch (error: any) {
-      console.error('Login error:', error);
+      console.error('🚨 Login process failed:', error);
       toast.error(error.message || "Login failed");
       
-      // Clear form on error
+      // Clear form and ensure user is signed out
       setPassword("");
       setCurrentStep('credentials');
+      setUserId(null);
+      setWebauthnRequired(false);
+      
+      // Make sure user is signed out on any auth failure
+      try {
+        await supabase.auth.signOut();
+      } catch (signOutError) {
+        console.error('Error during cleanup signout:', signOutError);
+      }
     } finally {
       setIsLoading(false);
     }

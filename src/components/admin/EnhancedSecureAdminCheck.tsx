@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import SecureAdminLoginWithWebAuthn from "./SecureAdminLoginWithWebAuthn";
 import { useEnhancedAuth } from "@/hooks/useEnhancedAuth";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, AlertTriangle, Clock } from "lucide-react";
+import { RefreshCw, AlertTriangle, Clock, Shield } from "lucide-react";
 
 interface EnhancedSecureAdminCheckProps {
   children: React.ReactNode;
@@ -51,55 +51,71 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
         setAuthCheckLoading(true);
         setAuthError(null);
 
-        // Debug auth context first
-        const { data: debugInfo } = await supabase.rpc('debug_auth_context');
-        console.log('🔍 Auth debug info:', debugInfo);
+        // Step 1: Check if user is a privileged admin (in the allowlist)
+        console.log('🔍 Checking privileged admin status...');
+        const { data: isPrivilegedAdmin, error: privilegedError } = await supabase.rpc('is_privileged_admin');
+        
+        if (privilegedError) {
+          console.error('🚨 Privileged admin check failed:', privilegedError);
+          throw new Error(`Privileged admin check failed: ${privilegedError.message}`);
+        }
 
-        // Check admin access (admin or viewer)
-        const { data: hasAccess, error: accessCheckError } = await supabase.rpc('has_admin_access');
-        
-        console.log('🔐 EnhancedSecureAdminCheck: Admin access check result:', { hasAccess, accessCheckError });
-        
-        // Type guard for debug info
-        const debug = debugInfo as { profile_exists?: boolean; user_role?: string } | null;
-        
-        if (accessCheckError) {
-          console.error('🚨 Admin access check error:', accessCheckError);
+        if (!isPrivilegedAdmin) {
+          console.log('🚫 User is not in privileged admin allowlist');
           if (isMounted) {
-            if (debug && debug.profile_exists === false) {
-              setAuthError('No profile found. Contact site owner to create your admin profile.');
-            } else if (debug && debug.user_role && !['admin', 'viewer'].includes(debug.user_role)) {
-              setAuthError(`Access denied. Your role (${debug.user_role}) does not have admin access.`);
-            } else {
-              setAuthError(`Admin check failed: ${accessCheckError.message}`);
-            }
+            setAuthError('Access denied. You are not in the privileged admin allowlist.');
             setIsAuthorized(false);
+            // Sign out user since they shouldn't have access
+            setTimeout(async () => {
+              try {
+                await supabase.auth.signOut();
+              } catch (signOutError) {
+                console.error('Error signing out unauthorized user:', signOutError);
+              }
+            }, 2000);
           }
           return;
         }
 
-        if (isMounted) {
-          const authorized = hasAccess || false;
-          if (authorized) {
-            setIsAuthorized(true);
-            setAuthError(null);
-          } else {
-            // User is authenticated but not authorized - provide specific feedback
-            if (debug && debug.profile_exists === false) {
-              setAuthError('No profile found. Contact site owner to create your admin profile.');
-            } else if (debug && debug.user_role) {
-              setAuthError(`Access denied. Your role (${debug.user_role}) does not have admin access.`);
-            } else {
-              setAuthError('Access denied. You do not have admin or viewer privileges.');
-            }
+        console.log('✅ User is privileged admin');
+
+        // Step 2: Check if user has admin role in profiles
+        console.log('🔍 Checking admin role in profiles...');
+        const { data: isAdmin, error: adminError } = await supabase.rpc('is_admin');
+        
+        if (adminError) {
+          console.error('🚨 Admin role check failed:', adminError);
+          throw new Error(`Admin role check failed: ${adminError.message}`);
+        }
+
+        if (!isAdmin) {
+          console.log('🚫 User does not have admin role');
+          if (isMounted) {
+            setAuthError('Access denied. Admin role required in profiles.');
             setIsAuthorized(false);
+            // Sign out user since they don't have the proper role
+            setTimeout(async () => {
+              try {
+                await supabase.auth.signOut();
+              } catch (signOutError) {
+                console.error('Error signing out user without admin role:', signOutError);
+              }
+            }, 2000);
           }
-          console.log('🔐 EnhancedSecureAdminCheck: User authorized:', authorized);
+          return;
+        }
+
+        console.log('✅ User has admin role');
+
+        if (isMounted) {
+          setIsAuthorized(true);
+          setAuthError(null);
+          console.log('🔐 EnhancedSecureAdminCheck: User fully authorized for admin access');
         }
       } catch (err) {
         console.error('🚨 EnhancedSecureAdminCheck: Auth check failed:', err);
         if (isMounted) {
-          setAuthError('Authentication check failed');
+          setAuthError(err instanceof Error ? err.message : 'Authentication check failed');
           setIsAuthorized(false);
         }
       } finally {
@@ -169,7 +185,7 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
           <div className="space-y-2">
             <p className="text-lg font-medium">
-              {isRecovering ? 'Recovering session...' : 'Verifying access...'}
+              {isRecovering ? 'Recovering session...' : 'Verifying admin access...'}
             </p>
             {isRecovering && (
               <p className="text-sm text-muted-foreground">
@@ -182,35 +198,47 @@ const EnhancedSecureAdminCheck = ({ children }: EnhancedSecureAdminCheckProps) =
     );
   }
 
-  // Show recovery options if we have an auth error
-  if (authError && session?.user) {
+  // Show error state with clear messaging
+  if (authError) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="text-center space-y-6 max-w-md">
           <div className="space-y-2">
-            <AlertTriangle className="h-12 w-12 text-amber-500 mx-auto" />
-            <h2 className="text-xl font-semibold">Session Issue Detected</h2>
+            <AlertTriangle className="h-12 w-12 text-red-500 mx-auto" />
+            <h2 className="text-xl font-semibold">Access Denied</h2>
             <p className="text-muted-foreground">{authError}</p>
           </div>
           
           <div className="space-y-3">
-            <Button onClick={handleRecovery} className="w-full" size="lg">
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Recover Session
-            </Button>
-            
-            <Button 
-              onClick={forceRefresh} 
-              variant="outline" 
-              className="w-full"
-              size="lg"
-            >
-              Force Refresh
-            </Button>
+            {session?.user ? (
+              <>
+                <Button onClick={handleRecovery} className="w-full" size="lg">
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Retry Authorization Check
+                </Button>
+                
+                <Button 
+                  onClick={forceRefresh} 
+                  variant="outline" 
+                  className="w-full"
+                  size="lg"
+                >
+                  Force Refresh
+                </Button>
+              </>
+            ) : (
+              <Button 
+                onClick={() => window.location.href = '/'} 
+                className="w-full"
+                size="lg"
+              >
+                Back to Home
+              </Button>
+            )}
           </div>
           
           <p className="text-xs text-muted-foreground">
-            If the issue persists, you may need to login again.
+            If you believe this is an error, please contact the site administrator.
           </p>
         </div>
       </div>
