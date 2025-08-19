@@ -19,14 +19,12 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Clock, X } from 'lucide-react';
-
+import { Clock, Coffee, X } from 'lucide-react';
 interface BreakTimerPopupProps {
   isOpen: boolean;
   onClose: () => void;
   onBreakComplete: () => void;
 }
-
 export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
   isOpen,
   onClose,
@@ -48,7 +46,6 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
   // Timer countdown
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    
     if (isRunning && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft(prev => {
@@ -61,240 +58,210 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
         });
       }, 1000);
     }
-    
     return () => clearInterval(interval);
   }, [isRunning, timeLeft]);
-
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
-
   const startTimer = () => {
     setIsRunning(true);
   };
-
   const pauseTimer = () => {
     setIsRunning(false);
   };
-
   const resetTimer = () => {
     setTimeLeft(5 * 60);
     setIsRunning(false);
     setIsCompleted(false);
   };
-
   const handleBreakComplete = () => {
     onBreakComplete();
     onClose();
   };
-
   if (!isOpen) return null;
-
-  return (
-    <>
+  return <>
       {/* Backdrop */}
-      <div
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 49,
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        }}
-        onClick={onClose}
-      />
+      <div style={{
+      position: 'fixed',
+      inset: 0,
+      zIndex: 49,
+      backgroundColor: 'rgba(0, 0, 0, 0.6)'
+    }} onClick={onClose} />
       
       {/* Break Timer Dialog - Same size as SuperAV */}
-      <div
-        style={{
-          // Position and size matching SuperAV
-          position: 'fixed',
-          width: '288px',
-          height: '490px',
-          left: 'calc(50% - 144px)', // Center horizontally
-          top: 'calc(50% - 245px)', // Center vertically
-          zIndex: 50,
-          
-          // Dark green styling with SuperAV rounded corners
-          background: 'linear-gradient(135deg, #166534, #15803d)', // Dark green gradient
-          border: '2px solid #14532d', // Dark green border
-          borderRadius: '16px', // Same as SuperAV
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
-          
-          // Font
-          fontFamily: 'Kalam, "Comic Sans MS", Arial, sans-serif',
-          color: '#ffffff',
-          
-          // Layout
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '20px',
-        }}
-      >
+      <div style={{
+      // Position and size matching SuperAV
+      position: 'fixed',
+      width: '288px',
+      height: '490px',
+      left: 'calc(50% - 144px)',
+      // Center horizontally
+      top: 'calc(50% - 245px)',
+      // Center vertically
+      zIndex: 50,
+      // Dark green styling with SuperAV rounded corners
+      background: 'linear-gradient(135deg, #166534, #15803d)',
+      // Dark green gradient
+      border: '2px solid #14532d',
+      // Dark green border
+      borderRadius: '16px',
+      // Same as SuperAV
+      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
+      // Font
+      fontFamily: 'Kalam, "Comic Sans MS", Arial, sans-serif',
+      color: '#ffffff',
+      // Layout
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '20px'
+    }}>
         {/* Header */}
         <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '30px'
-        }}>
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '30px'
+      }}>
           <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px'
-          }}>
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px'
+        }}>
+            
             <h2 style={{
-              fontSize: '20px',
-              fontWeight: 'bold',
-              margin: 0,
-              color: '#dcfce7'
-            }}>
+            fontSize: '20px',
+            fontWeight: 'bold',
+            margin: 0,
+            color: '#dcfce7'
+          }}>
               Break Reminder
             </h2>
           </div>
-          <button
-            onClick={onClose}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: '#dcfce7',
-              cursor: 'pointer',
-              padding: '4px'
-            }}
-          >
-            <X style={{ width: '20px', height: '20px' }} />
+          <button onClick={onClose} style={{
+          background: 'none',
+          border: 'none',
+          color: '#dcfce7',
+          cursor: 'pointer',
+          padding: '4px'
+        }}>
+            <X style={{
+            width: '20px',
+            height: '20px'
+          }} />
           </button>
         </div>
 
         {/* Timer Display */}
         <div style={{
-          textAlign: 'center',
-          marginBottom: '30px'
-        }}>
+        textAlign: 'center',
+        marginBottom: '30px'
+      }}>
           <div style={{
-            fontSize: '48px',
-            fontWeight: 'bold',
-            fontFamily: 'monospace',
-            color: '#dcfce7',
-            marginBottom: '10px'
-          }}>
+          fontSize: '48px',
+          fontWeight: 'bold',
+          fontFamily: 'monospace',
+          color: '#dcfce7',
+          marginBottom: '10px'
+        }}>
             {formatTime(timeLeft)}
           </div>
           <p style={{
-            fontSize: '16px',
-            color: '#bbf7d0',
-            margin: 0
-          }}>
+          fontSize: '16px',
+          color: '#bbf7d0',
+          margin: 0
+        }}>
             {isCompleted ? 'Break complete!' : 'Recommended break time'}
           </p>
         </div>
 
         {/* Message */}
         <div style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          borderRadius: '12px',
-          padding: '16px',
-          marginBottom: '30px',
-          textAlign: 'center'
-        }}>
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: '12px',
+        padding: '16px',
+        marginBottom: '30px',
+        textAlign: 'center'
+      }}>
           <p style={{
-            fontSize: '14px',
-            lineHeight: '1.5',
-            margin: 0,
-            color: '#dcfce7'
-          }}>
-            {isCompleted 
-              ? 'Great job! You took a healthy break. Your eyes and mind will thank you!'
-              : 'Step away from the screen. Stretch, look at something far away, or take a short walk.'
-            }
+          fontSize: '14px',
+          lineHeight: '1.5',
+          margin: 0,
+          color: '#dcfce7'
+        }}>
+            {isCompleted ? 'Great job! You took a healthy break. Your eyes and mind will thank you!' : 'Step away from the screen. Stretch, look at something far away, or take a short walk.'}
           </p>
         </div>
 
         {/* Controls */}
         <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px',
+        marginTop: 'auto'
+      }}>
+          {!isCompleted && <div style={{
           display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-          marginTop: 'auto'
+          gap: '8px'
         }}>
-          {!isCompleted && (
-            <div style={{
-              display: 'flex',
-              gap: '8px'
-            }}>
-              <button
-                onClick={isRunning ? pauseTimer : startTimer}
-                style={{
-                  flex: 1,
-                  padding: '12px',
-                  backgroundColor: '#22c55e',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  fontSize: '16px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = '#16a34a';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = '#22c55e';
-                }}
-              >
+              <button onClick={isRunning ? pauseTimer : startTimer} style={{
+            flex: 1,
+            padding: '12px',
+            backgroundColor: '#22c55e',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            transition: 'all 0.2s'
+          }} onMouseOver={e => {
+            e.currentTarget.style.backgroundColor = '#16a34a';
+          }} onMouseOut={e => {
+            e.currentTarget.style.backgroundColor = '#22c55e';
+          }}>
                 {isRunning ? 'Pause' : 'Start Timer'}
               </button>
-              <button
-                onClick={resetTimer}
-                style={{
-                  padding: '12px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  color: 'white',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '14px'
-                }}
-              >
+              <button onClick={resetTimer} style={{
+            padding: '12px',
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            color: 'white',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontSize: '14px'
+          }}>
                 Reset
               </button>
-            </div>
-          )}
+            </div>}
           
-          <button
-            onClick={handleBreakComplete}
-            style={{
-              padding: '14px',
-              backgroundColor: isCompleted ? '#22c55e' : 'rgba(255, 255, 255, 0.1)',
-              color: 'white',
-              border: isCompleted ? 'none' : '1px solid rgba(255, 255, 255, 0.3)',
-              borderRadius: '8px',
-              fontSize: '16px',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              transition: 'all 0.2s'
-            }}
-            onMouseOver={(e) => {
-              if (isCompleted) {
-                e.currentTarget.style.backgroundColor = '#16a34a';
-              } else {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-              }
-            }}
-            onMouseOut={(e) => {
-              if (isCompleted) {
-                e.currentTarget.style.backgroundColor = '#22c55e';
-              } else {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-              }
-            }}
-          >
+          <button onClick={handleBreakComplete} style={{
+          padding: '14px',
+          backgroundColor: isCompleted ? '#22c55e' : 'rgba(255, 255, 255, 0.1)',
+          color: 'white',
+          border: isCompleted ? 'none' : '1px solid rgba(255, 255, 255, 0.3)',
+          borderRadius: '8px',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          cursor: 'pointer',
+          transition: 'all 0.2s'
+        }} onMouseOver={e => {
+          if (isCompleted) {
+            e.currentTarget.style.backgroundColor = '#16a34a';
+          } else {
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+          }
+        }} onMouseOut={e => {
+          if (isCompleted) {
+            e.currentTarget.style.backgroundColor = '#22c55e';
+          } else {
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+          }
+        }}>
             {isCompleted ? 'Continue - I Took a Break!' : 'Skip - I Already Took a Break'}
           </button>
         </div>
       </div>
-    </>
-  );
+    </>;
 };
