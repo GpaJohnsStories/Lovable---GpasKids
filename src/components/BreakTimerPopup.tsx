@@ -20,6 +20,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Clock, Coffee, X } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useCachedIcon } from '@/hooks/useCachedIcon';
 interface BreakTimerPopupProps {
   isOpen: boolean;
   onClose: () => void;
@@ -33,6 +35,12 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
   const [timeLeft, setTimeLeft] = useState(5 * 60); // 5 minutes in seconds
   const [isRunning, setIsRunning] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+
+  // Get Sparky icon
+  const {
+    iconUrl: sparkyIconUrl,
+    iconName: sparkyName
+  } = useCachedIcon('!CO-SPT.gif');
 
   // Reset timer when popup opens
   useEffect(() => {
@@ -81,7 +89,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     onClose();
   };
   if (!isOpen) return null;
-  return <>
+  return <TooltipProvider>
       {/* Backdrop */}
       <div style={{
       position: 'fixed',
@@ -127,8 +135,36 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
-          color: '#000000'
+          color: '#000000',
+          position: 'relative'
         }}>
+          {/* Sparky icon in top left corner with tooltip */}
+          {sparkyIconUrl && <div style={{
+            position: 'absolute',
+            top: '8px',
+            left: '8px',
+            zIndex: 20,
+            cursor: 'pointer',
+            transition: 'transform 0.2s'
+          }} onMouseOver={e => {
+            e.currentTarget.style.transform = 'scale(1.05)';
+          }} onMouseOut={e => {
+            e.currentTarget.style.transform = 'scale(1)';
+          }}>
+            <Tooltip>
+              <TooltipTrigger>
+                <img src={sparkyIconUrl} alt={sparkyName ?? 'Sparky'} style={{
+              width: '75px',
+              height: '75px',
+              objectFit: 'contain'
+            }} />
+              </TooltipTrigger>
+              <TooltipContent className="whitespace-nowrap">
+                {sparkyName ?? 'Sparky -- Official Break Reminder'}
+              </TooltipContent>
+            </Tooltip>
+          </div>}
+          
           {/* Header */}
           <div style={{
           display: 'flex',
@@ -255,5 +291,5 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           </div>
         </div>
       </div>
-    </>;
+    </TooltipProvider>;
 };
