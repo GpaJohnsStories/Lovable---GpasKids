@@ -85,21 +85,15 @@ const BreakGuide: React.FC = () => {
             {/* Screen content */}
             <div className="relative z-10 h-full flex flex-col p-2">
               {/* Top row with Sparky and "Next Break In —" */}
-              <div className="flex items-center justify-between mb-4 px-1">
-                {/* Spacer for Sparky (75px width) */}
-                <div style={{ width: '75px' }}></div>
-                
-                {/* "Next Break In —" centered between Sparky and right margin */}
-                <div className="font-kalam text-lg font-bold whitespace-nowrap" style={{ color: '#228B22' }}>
+              <div className="flex items-start justify-end mb-4 px-1">
+                {/* "Next Break In —" right-aligned */}
+                <div className="font-kalam text-lg font-bold whitespace-nowrap text-right" style={{ color: '#228B22' }}>
                   Next Break In —
                 </div>
-                
-                {/* Right spacer to balance */}
-                <div style={{ width: '60px' }}></div>
               </div>
               
               {/* Countdown Timer */}
-              <div className="font-kalam text-4xl font-bold mb-6 text-center" style={{ color: '#228B22' }}>
+              <div className="font-kalam text-4xl font-bold mb-6 text-right pr-1" style={{ color: '#228B22' }}>
                 {minutesLeft} Minutes
               </div>
               
