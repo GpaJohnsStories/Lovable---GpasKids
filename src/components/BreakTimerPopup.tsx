@@ -115,7 +115,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
       // Layout
       display: 'flex',
       flexDirection: 'column',
-      padding: '20px'
+      padding: '12px'
     }}>
         {/* Inner Screen */}
         <div style={{
