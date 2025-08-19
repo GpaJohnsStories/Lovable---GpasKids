@@ -38,7 +38,8 @@ export const useVoiceTesting = () => {
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
           text: textToSend,
-          voice: voiceId.toLowerCase() // Convert to lowercase to match API expectations
+          voice: voiceId.toLowerCase(), // Convert to lowercase to match API expectations
+          speed: 0.5 // Match recording speed for consistency
         }
       });
 
