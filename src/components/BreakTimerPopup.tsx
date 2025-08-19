@@ -182,7 +182,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           {/* Timer Display */}
           <div style={{
           textAlign: 'center',
-          marginBottom: '10px'
+          marginBottom: '5px'
         }}>
             <div style={{
             fontSize: '36px',
