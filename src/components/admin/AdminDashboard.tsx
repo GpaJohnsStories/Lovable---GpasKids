@@ -5,10 +5,11 @@ import EmergencyAdminTools from "./EmergencyAdminTools";
 import SecurityAuditDashboard from "./SecurityAuditDashboard";
 import EncryptionStatusCard from "./EncryptionStatusCard";
 import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
+import PrivilegedAdminManager from "./PrivilegedAdminManager";
 
 import EdgeFunctionAuthTest from "./EdgeFunctionAuthTest";
 import { Button } from "@/components/ui/button";
-import { Volume2, Shield, Settings } from "lucide-react";
+import { Volume2, Shield, Settings, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -20,6 +21,7 @@ interface AdminDashboardProps {
 const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => {
   const [showEmergencyTools, setShowEmergencyTools] = useState(false);
   const [showSecurityAudit, setShowSecurityAudit] = useState(false);
+  const [showAdminManager, setShowAdminManager] = useState(false);
 
   return (
     <AdminLayout>
@@ -53,6 +55,14 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
             <Shield className="h-4 w-4" />
             Security Audit Dashboard
           </Button>
+          <Button 
+            onClick={() => setShowAdminManager(!showAdminManager)}
+            variant="outline"
+            className="w-full flex items-center justify-center gap-2 text-green-600 border-green-600 hover:bg-green-50"
+          >
+            <Users className="h-4 w-4" />
+            Admin Management
+          </Button>
         </div>
       </div>
       
@@ -65,6 +75,12 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
       {showSecurityAudit && (
         <div className="mb-6 space-y-6">
           <AdvancedSecurityDashboard />
+        </div>
+      )}
+
+      {showAdminManager && (
+        <div className="mb-6">
+          <PrivilegedAdminManager />
         </div>
       )}
 

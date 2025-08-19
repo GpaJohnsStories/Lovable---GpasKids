@@ -1,18 +1,40 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-// Allowlisted domains and emails for admin access
+// Allowlisted domains for admin access
 const ALLOWED_ORIGINS = [
   'https://hlywucxwpzbqmzssmwpj.lovableproject.com',
   'http://localhost:3000',
   'http://localhost:5173'
 ];
 
-const HARDCODED_ADMIN_EMAILS = [
+// Emergency fallback admin emails (only used if DB query fails)
+const EMERGENCY_FALLBACK_EMAILS = [
   'johnm.chilson@gmail.com',  // Primary admin
-  'paul.chilson@gmail.com',   // Secondary admin (to be added)
+  'paul.chilson@gmail.com',   // Secondary admin
   'gpajohn.buddy@gmail.com'   // Grandpa John's admin account
 ];
+
+// Get allowed admin emails from database
+async function getAllowedAdminEmails(supabaseClient: any): Promise<string[]> {
+  try {
+    console.log('Fetching allowed admin emails from database...');
+    const { data, error } = await supabaseClient.rpc('get_allowed_admin_emails');
+    
+    if (error) {
+      console.error('DB query for allowed emails failed:', error);
+      console.log('Using emergency fallback emails');
+      return EMERGENCY_FALLBACK_EMAILS;
+    }
+    
+    console.log('Successfully fetched allowed emails from DB:', data?.length || 0, 'emails');
+    return data || EMERGENCY_FALLBACK_EMAILS;
+  } catch (err) {
+    console.error('Exception during DB query for allowed emails:', err);
+    console.log('Using emergency fallback emails');
+    return EMERGENCY_FALLBACK_EMAILS;
+  }
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -63,11 +85,17 @@ serve(async (req) => {
 
     const { email, password, action } = await req.json()
 
-    // Email validation - only allow hardcoded admin emails
-    if (!HARDCODED_ADMIN_EMAILS.includes(email.toLowerCase())) {
+    // Get allowed admin emails from database
+    const allowedEmails = await getAllowedAdminEmails(supabaseClient);
+    console.log('Checking email against allowlist:', email.toLowerCase(), 'Source:', allowedEmails === EMERGENCY_FALLBACK_EMAILS ? 'fallback' : 'database');
+
+    // Email validation - check against database-driven allowlist
+    if (!allowedEmails.includes(email.toLowerCase())) {
       console.log('Email not in allowlist:', email);
       return new Response(
-        JSON.stringify({ error: 'Email not authorized for admin access' }),
+        JSON.stringify({ 
+          error: 'Email not authorized for admin access. Contact a privileged admin to be added to the system.' 
+        }),
         { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -92,20 +120,29 @@ serve(async (req) => {
       if (data.user) {
         console.log('Ensuring profile exists for user:', data.user.id);
         
-        const { error: profileError } = await supabaseClient
+        // Check if profile already exists
+        const { data: existingProfile } = await supabaseClient
           .from('profiles')
-          .upsert([{
-            id: data.user.id,
-            role: 'admin'  // Default role for allowlisted emails
-          }], { 
-            onConflict: 'id',
-            ignoreDuplicates: false 
-          });
+          .select('role')
+          .eq('id', data.user.id)
+          .single();
 
-        if (profileError) {
-          console.error('Profile creation error:', profileError);
+        if (!existingProfile) {
+          // Create new profile with admin role for allowlisted emails
+          const { error: profileError } = await supabaseClient
+            .from('profiles')
+            .insert([{
+              id: data.user.id,
+              role: 'admin'
+            }]);
+
+          if (profileError) {
+            console.error('Profile creation error:', profileError);
+          } else {
+            console.log('New admin profile created for user');
+          }
         } else {
-          console.log('Profile ensured for user');
+          console.log('Profile already exists with role:', existingProfile.role);
         }
       }
 
