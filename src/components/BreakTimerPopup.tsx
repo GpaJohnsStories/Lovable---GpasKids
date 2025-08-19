@@ -119,14 +119,15 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     }}>
         {/* Inner Screen */}
         <div style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          backgroundColor: 'white',
           borderRadius: '16px',
           border: '2px solid #5A3E2B',
           boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)',
           padding: '20px',
           display: 'flex',
           flexDirection: 'column',
-          height: '100%'
+          height: '100%',
+          color: '#000000'
         }}>
           {/* Header */}
           <div style={{
@@ -145,14 +146,14 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
               fontSize: '20px',
               fontWeight: 'bold',
               margin: 0,
-              color: '#dcfce7',
+              color: '#000000',
               textAlign: 'right'
             }}>Time For A Break</h2>
             </div>
             <button onClick={onClose} style={{
             background: 'none',
             border: 'none',
-            color: '#dcfce7',
+            color: '#000000',
             cursor: 'pointer',
             padding: '4px'
           }}>
@@ -169,14 +170,14 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             fontSize: '48px',
             fontWeight: 'bold',
             fontFamily: 'monospace',
-            color: '#dcfce7',
+            color: '#000000',
             marginBottom: '10px'
           }}>
               {formatTime(timeLeft)}
             </div>
             <p style={{
             fontSize: '16px',
-            color: '#bbf7d0',
+            color: '#666666',
             margin: 0
           }}>
               {isCompleted ? 'Break complete!' : 'Recommended break time'}
@@ -185,7 +186,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
 
           {/* Message */}
           <div style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          backgroundColor: 'rgba(0, 0, 0, 0.05)',
           borderRadius: '12px',
           padding: '16px',
           marginBottom: '30px',
@@ -195,7 +196,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             fontSize: '14px',
             lineHeight: '1.5',
             margin: 0,
-            color: '#dcfce7'
+            color: '#000000'
           }}>
               {isCompleted ? 'Great job! You took a healthy break. Your eyes and mind will thank you!' : 'Step away from the screen. Stretch, look at something far away, or take a short walk.'}
             </p>
@@ -232,9 +233,9 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
                 </button>
                 <button onClick={resetTimer} style={{
               padding: '12px',
-              backgroundColor: 'rgba(255, 255, 255, 0.2)',
-              color: 'white',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
+              backgroundColor: 'rgba(0, 0, 0, 0.1)',
+              color: '#000000',
+              border: '1px solid rgba(0, 0, 0, 0.2)',
               borderRadius: '8px',
               cursor: 'pointer',
               fontSize: '14px'
@@ -245,9 +246,9 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             
             <button onClick={handleBreakComplete} style={{
             padding: '14px',
-            backgroundColor: isCompleted ? '#22c55e' : 'rgba(255, 255, 255, 0.1)',
-            color: 'white',
-            border: isCompleted ? 'none' : '1px solid rgba(255, 255, 255, 0.3)',
+            backgroundColor: isCompleted ? '#22c55e' : 'rgba(0, 0, 0, 0.1)',
+            color: isCompleted ? 'white' : '#000000',
+            border: isCompleted ? 'none' : '1px solid rgba(0, 0, 0, 0.2)',
             borderRadius: '8px',
             fontSize: '16px',
             fontWeight: 'bold',
@@ -257,13 +258,13 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             if (isCompleted) {
               e.currentTarget.style.backgroundColor = '#16a34a';
             } else {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+              e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.15)';
             }
           }} onMouseOut={e => {
             if (isCompleted) {
               e.currentTarget.style.backgroundColor = '#22c55e';
             } else {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+              e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
             }
           }}>
               {isCompleted ? 'Continue - I Took a Break!' : 'Skip - I Already Took a Break'}
