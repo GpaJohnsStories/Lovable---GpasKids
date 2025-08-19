@@ -273,7 +273,9 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
                 border: 'none',
                 padding: '0',
                 cursor: 'pointer',
-                transition: 'transform 0.2s'
+                transition: 'transform 0.2s',
+                borderRadius: '16px',
+                overflow: 'hidden'
               }}
               onMouseOver={e => {
                 e.currentTarget.style.transform = 'scale(1.02)';
@@ -288,7 +290,8 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
                 style={{
                   height: '60px',
                   width: '100%',
-                  objectFit: 'fill'
+                  objectFit: 'fill',
+                  borderRadius: '16px'
                 }}
               />
             </button>
