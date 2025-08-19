@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
-import { useSuperAVContext } from '@/contexts/SuperAVContext';
 const BreakGuide: React.FC = () => {
   const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
   const [minutesLeft, setMinutesLeft] = useState(15); // Default 15 minutes
@@ -10,8 +9,6 @@ const BreakGuide: React.FC = () => {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const panelRef = useRef<HTMLDivElement>(null);
   
-  const { registerInstance, unregisterInstance } = useSuperAVContext();
-
   // Get close icon for the Break Timer
   const {
     iconUrl: closeIconUrl
@@ -39,23 +36,12 @@ const BreakGuide: React.FC = () => {
     return () => clearInterval(timer);
   }, [isBreakTimerOpen]);
   
-  // Register/unregister with SuperAV context
-  useEffect(() => {
-    if (isBreakTimerOpen) {
-      registerInstance('break-timer', () => setIsBreakTimerOpen(false));
-    } else {
-      unregisterInstance('break-timer');
-    }
-    return () => unregisterInstance('break-timer');
-  }, [isBreakTimerOpen, registerInstance, unregisterInstance]);
-  
   const handleBreakButtonClick = () => {
     setIsBreakTimerOpen(true);
   };
   const handleCloseBreakTimer = () => {
     setIsBreakTimerOpen(false);
     setPosition({ x: 0, y: 0 }); // Reset position when closing
-    unregisterInstance('break-timer');
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
