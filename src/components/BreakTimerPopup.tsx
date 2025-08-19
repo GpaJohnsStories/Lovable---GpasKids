@@ -201,9 +201,9 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           backgroundColor: 'rgba(0, 0, 0, 0.05)',
           borderRadius: '12px',
           padding: '12px',
-          marginBottom: '30px',
+          marginBottom: '8px',
           textAlign: 'left',
-          margin: '0 -8px 30px -8px'
+          margin: '0 -8px 8px -8px'
         }}>
             <h3 style={{
             fontSize: '18px',
