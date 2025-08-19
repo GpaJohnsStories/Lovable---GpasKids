@@ -228,41 +228,6 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           gap: '12px',
           marginTop: 'auto'
         }}>
-            {!isCompleted && <div style={{
-            display: 'flex',
-            gap: '8px'
-          }}>
-                <button onClick={isRunning ? pauseTimer : startTimer} style={{
-              flex: 1,
-              padding: '12px',
-              backgroundColor: '#22c55e',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              fontSize: '16px',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              transition: 'all 0.2s'
-            }} onMouseOver={e => {
-              e.currentTarget.style.backgroundColor = '#16a34a';
-            }} onMouseOut={e => {
-              e.currentTarget.style.backgroundColor = '#22c55e';
-            }}>
-                  {isRunning ? 'Pause' : 'Start Timer'}
-                </button>
-                <button onClick={resetTimer} style={{
-              padding: '12px',
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              color: '#000000',
-              border: '1px solid rgba(0, 0, 0, 0.2)',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '14px'
-            }}>
-                  Reset
-                </button>
-              </div>}
-            
             <button onClick={handleBreakComplete} style={{
             padding: '14px',
             backgroundColor: isCompleted ? '#22c55e' : 'rgba(0, 0, 0, 0.1)',
