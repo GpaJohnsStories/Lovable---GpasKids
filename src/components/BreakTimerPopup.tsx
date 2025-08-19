@@ -267,6 +267,48 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
         color: '#000000',
         position: 'relative'
       }}>
+          {/* Sparky icon in top left corner with tooltip - only show during timer mode */}
+          {!isCompleted && sparkyIconUrl && <div style={{
+          position: 'absolute',
+          top: '8px',
+          left: '8px',
+          zIndex: 20,
+          cursor: 'pointer',
+          transition: 'transform 0.2s'
+        }} onMouseOver={e => {
+          e.currentTarget.style.transform = 'scale(1.05)';
+        }} onMouseOut={e => {
+          e.currentTarget.style.transform = 'scale(1)';
+        }} onClick={handleSparkyClick}>
+            <Tooltip>
+              <TooltipTrigger>
+                <img src={sparkyIconUrl} alt={sparkyName ?? 'Sparky'} style={{
+                width: '75px',
+                height: '75px',
+                objectFit: 'contain'
+              }} />
+              </TooltipTrigger>
+              <TooltipContent className="whitespace-nowrap">
+                {sparkyName ?? 'Sparky -- Official Break Reminder'}
+              </TooltipContent>
+            </Tooltip>
+          </div>}
+          
+          {/* Header - only show during timer mode */}
+          {!isCompleted && <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          marginBottom: '30px'
+        }}>
+            <h2 style={{
+            fontSize: '20px',
+            fontWeight: 'bold',
+            margin: 0,
+            color: '#F97316'
+          }}>Time For A Break</h2>
+          </div>}
+
           {/* Timer Display or Celebration Mode */}
           {isCompleted && selectedCharacter ? (
             /* Celebration Mode */
@@ -336,19 +378,6 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             </div>
            ) : (
              <>
-               {/* Header for timer mode */}
-               <div style={{
-                 textAlign: 'center',
-                 marginBottom: '15px'
-               }}>
-                 <h2 style={{
-                   fontSize: '20px',
-                   fontWeight: 'bold',
-                   margin: 0,
-                   color: '#F97316'
-                 }}>Time For A Break</h2>
-               </div>
-
                {/* Timer Display */}
                <div style={{
                  textAlign: 'center',
