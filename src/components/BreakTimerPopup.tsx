@@ -22,6 +22,32 @@ import React, { useState, useEffect } from 'react';
 import { Clock, Coffee, X } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
+
+// Character definitions for celebration mode
+const CHARACTERS = [
+  {
+    name: 'Buddy',
+    iconPath: '!CO-OSM.png',
+    message: 'I took a run through the park. ',
+    boldMessage: 'Let\'s READ!',
+    accentColor: '#0ea5e9'
+  },
+  {
+    name: 'Max', 
+    iconPath: '!CO-MM8.jpg',
+    message: 'I chased a hacker sneaking into our code. He won\'t do that again. ',
+    boldMessage: 'Now I need a good story!',
+    accentColor: '#f97316'
+  },
+  {
+    name: 'Sparky',
+    iconPath: '!CO-SPY.jpg', 
+    message: 'I toasted some marshmallows. Yummy! ',
+    boldMessage: 'Now let\'s read!',
+    accentColor: '#84cc16',
+    isLarge: true // Double size for Sparky
+  }
+];
 interface BreakTimerPopupProps {
   isOpen: boolean;
   onClose: () => void;
@@ -35,6 +61,9 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
   const [timeLeft, setTimeLeft] = useState(5 * 60); // 5 minutes in seconds
   const [isRunning, setIsRunning] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [allowClose, setAllowClose] = useState(false);
+  const [glowActive, setGlowActive] = useState(false);
+  const [selectedCharacter, setSelectedCharacter] = useState<typeof CHARACTERS[0] | null>(null);
 
   // Get Sparky icon
   const {
@@ -48,12 +77,21 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     iconName: closeName
   } = useCachedIcon('!CO-CLS.jpg');
 
+  // Get selected character icon
+  const {
+    iconUrl: characterIconUrl,
+    iconName: characterName
+  } = useCachedIcon(selectedCharacter?.iconPath || null);
+
   // Reset timer when popup opens and start immediately
   useEffect(() => {
     if (isOpen) {
       setTimeLeft(5 * 60);
       setIsRunning(true);
       setIsCompleted(false);
+      setAllowClose(false);
+      setGlowActive(false);
+      setSelectedCharacter(null);
     }
   }, [isOpen]);
 
@@ -66,6 +104,10 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           if (prev <= 1) {
             setIsRunning(false);
             setIsCompleted(true);
+            // Select random character for celebration
+            const randomCharacter = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
+            setSelectedCharacter(randomCharacter);
+            setGlowActive(true);
             return 0;
           }
           return prev - 1;
@@ -74,6 +116,26 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     }
     return () => clearInterval(interval);
   }, [isRunning, timeLeft]);
+
+  // 5-second delay before allowing close + 5-minute glow timeout
+  useEffect(() => {
+    if (isCompleted) {
+      // Enable close after 5 seconds
+      const closeTimer = setTimeout(() => {
+        setAllowClose(true);
+      }, 5000);
+
+      // Disable glow after 5 minutes
+      const glowTimer = setTimeout(() => {
+        setGlowActive(false);
+      }, 5 * 60 * 1000);
+
+      return () => {
+        clearTimeout(closeTimer);
+        clearTimeout(glowTimer);
+      };
+    }
+  }, [isCompleted]);
   const formatTime = (seconds: number) => {
     const mins = Math.ceil(seconds / 60);
     return `${mins} Minutes`;
@@ -104,8 +166,15 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
   const additionalBoldCount = Math.max(0, 6 - minutesRemaining); // At 5min=1 additional, 4min=2, etc.
 
   const handleBreakComplete = () => {
+    setGlowActive(false);
     onBreakComplete();
     onClose();
+  };
+
+  const handleBackdropClick = () => {
+    if (allowClose) {
+      onClose();
+    }
   };
   if (!isOpen) return null;
   return <TooltipProvider>
@@ -115,7 +184,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
       inset: 0,
       zIndex: 49,
       backgroundColor: 'rgba(0, 0, 0, 0.6)'
-    }} onClick={onClose} />
+    }} onClick={handleBackdropClick} />
       
       {/* Break Timer Dialog - Same size as SuperAV */}
       <div style={{
@@ -199,9 +268,55 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           }}>Time For A Break</h2>
           </div>
 
-          {/* Timer Display or Completion Message */}
-          {isCompleted ? (
-            /* Completion Message */
+          {/* Timer Display or Celebration Mode */}
+          {isCompleted && selectedCharacter ? (
+            /* Celebration Mode */
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+              textAlign: 'center',
+              padding: '20px'
+            }}>
+              {/* Character Icon */}
+              {characterIconUrl && (
+                <div style={{
+                  marginBottom: '20px',
+                  animation: 'fade-in 0.5s ease-out, scale-in 0.3s ease-out'
+                }}>
+                  <img 
+                    src={characterIconUrl} 
+                    alt={characterName || selectedCharacter.name}
+                    style={{
+                      width: selectedCharacter.isLarge ? '280px' : '140px',
+                      height: selectedCharacter.isLarge ? '280px' : '140px',
+                      objectFit: 'contain',
+                      borderRadius: '12px'
+                    }}
+                  />
+                </div>
+              )}
+
+              {/* Character Message */}
+              <div style={{
+                fontSize: '20px',
+                lineHeight: '1.4',
+                color: selectedCharacter.accentColor,
+                animation: 'fade-in 0.5s ease-out 0.2s both'
+              }}>
+                {selectedCharacter.message}
+                <span style={{
+                  fontWeight: 'bold',
+                  fontStyle: 'italic'
+                }}>
+                  {selectedCharacter.boldMessage}
+                </span>
+              </div>
+            </div>
+          ) : isCompleted ? (
+            /* Fallback completion message if character fails to load */
             <div style={{
               textAlign: 'center',
               marginBottom: '20px',
@@ -308,29 +423,44 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
 
         {/* Close Button - Full width at bottom like break timer */}
         {closeIconUrl && (
-          <div style={{ height: '60px' }}>
+          <div style={{ 
+            height: '60px',
+            position: 'relative'
+          }}>
+            {/* Static bright light behind close button */}
+            {glowActive && selectedCharacter && (
+              <div style={{
+                position: 'absolute',
+                inset: '-8px',
+                background: `radial-gradient(circle, ${selectedCharacter.accentColor}40 0%, ${selectedCharacter.accentColor}20 30%, transparent 70%)`,
+                borderRadius: '24px',
+                filter: 'blur(8px)',
+                zIndex: -1
+              }} />
+            )}
+            
             <button 
-              onClick={isCompleted ? onClose : undefined}
-              disabled={!isCompleted}
+              onClick={allowClose ? handleBreakComplete : undefined}
+              disabled={!allowClose}
               style={{
                 width: '100%',
                 height: '100%',
                 background: 'transparent',
                 border: 'none',
                 padding: '0',
-                cursor: isCompleted ? 'pointer' : 'not-allowed',
+                cursor: allowClose ? 'pointer' : 'not-allowed',
                 transition: 'transform 0.2s',
                 borderRadius: '16px',
                 overflow: 'hidden',
-                opacity: isCompleted ? 1 : 0.5
+                opacity: allowClose ? 1 : 0.5
               }}
               onMouseOver={e => {
-                if (isCompleted) {
+                if (allowClose) {
                   e.currentTarget.style.transform = 'scale(1.02)';
                 }
               }}
               onMouseOut={e => {
-                if (isCompleted) {
+                if (allowClose) {
                   e.currentTarget.style.transform = 'scale(1)';
                 }
               }}
