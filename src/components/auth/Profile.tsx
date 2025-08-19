@@ -43,10 +43,8 @@ export default function Profile() {
     setLoading(true);
     
     const { error } = await updateProfile({
-      data: {
-        full_name: fullName,
-        avatar_url: avatarUrl
-      }
+      full_name: fullName,
+      avatar_url: avatarUrl
     });
     
     if (error) {

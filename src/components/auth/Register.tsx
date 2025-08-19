@@ -5,7 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle, CheckCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle, Shield } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { Progress } from '@/components/ui/progress';
 
 export default function Register() {
   const { signUp } = useAuth();
@@ -15,6 +17,64 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  
+  // Password strength states
+  const [passwordStrength, setPasswordStrength] = useState({
+    isValid: false,
+    strengthScore: 0,
+    errors: [] as string[]
+  });
+  const [checkingPassword, setCheckingPassword] = useState(false);
+
+  const checkPasswordStrength = async (password: string) => {
+    if (!password) {
+      setPasswordStrength({ isValid: false, strengthScore: 0, errors: [] });
+      return;
+    }
+    
+    setCheckingPassword(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('check-password-strength', {
+        body: { password }
+      });
+      
+      if (error) {
+        console.error('Password strength check failed:', error);
+        setPasswordStrength({ isValid: false, strengthScore: 0, errors: ['Unable to check password strength'] });
+      } else {
+        setPasswordStrength({
+          isValid: data.isValid,
+          strengthScore: data.strengthScore,
+          errors: data.errors || []
+        });
+      }
+    } catch (err) {
+      console.error('Password strength check error:', err);
+      setPasswordStrength({ isValid: false, strengthScore: 0, errors: ['Unable to check password strength'] });
+    }
+    
+    setCheckingPassword(false);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    
+    // Debounce password strength check
+    const timeoutId = setTimeout(() => {
+      checkPasswordStrength(newPassword);
+    }, 500);
+    
+    return () => clearTimeout(timeoutId);
+  };
+
+  const getStrengthLevel = (score: number) => {
+    if (score >= 80) return { level: 'Strong', color: 'bg-green-500' };
+    if (score >= 60) return { level: 'Good', color: 'bg-yellow-500' };
+    if (score >= 40) return { level: 'Fair', color: 'bg-orange-500' };
+    return { level: 'Weak', color: 'bg-red-500' };
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +83,12 @@ export default function Register() {
     
     if (password.length < 6) {
       setError('Password should be at least 6 characters');
+      setLoading(false);
+      return;
+    }
+    
+    if (!passwordStrength.isValid && password.length > 0) {
+      setError('Please use a stronger password that meets all requirements');
       setLoading(false);
       return;
     }
@@ -103,13 +169,49 @@ export default function Register() {
                   id="password"
                   type="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password (min 6 characters)"
+                  onChange={handlePasswordChange}
+                  placeholder="Enter a strong password"
                   autoComplete="new-password"
                   required
                   minLength={6}
                   disabled={loading}
                 />
+                
+                {/* Password Strength Indicator */}
+                {password && (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Shield className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
+                        Password Strength: {getStrengthLevel(passwordStrength.strengthScore).level}
+                      </span>
+                      {checkingPassword && <span className="text-xs">Checking...</span>}
+                    </div>
+                    
+                    <Progress 
+                      value={passwordStrength.strengthScore} 
+                      className="h-2"
+                    />
+                    
+                    {passwordStrength.errors.length > 0 && (
+                      <div className="space-y-1">
+                        {passwordStrength.errors.map((error, index) => (
+                          <p key={index} className="text-xs text-destructive flex items-center gap-1">
+                            <AlertCircle className="h-3 w-3" />
+                            {error}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {passwordStrength.isValid && (
+                      <p className="text-xs text-green-600 flex items-center gap-1">
+                        <CheckCircle className="h-3 w-3" />
+                        Password meets all requirements
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
               
               <Button type="submit" className="w-full" size="lg" disabled={loading}>
