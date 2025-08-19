@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 
@@ -51,10 +50,10 @@ const BreakGuide: React.FC = () => {
         Break Guide
       </button>
 
-      {/* Break Timer Dialog - same width as SuperAV, half height, with lighter green background */}
-      <Dialog open={isBreakTimerOpen} onOpenChange={setIsBreakTimerOpen}>
-        <DialogContent 
-          className="w-[288px] h-[490px] max-w-none border-2 border-[#228B22] bg-green-100 p-0 gap-0 flex flex-col [&>button]:hidden"
+      {/* Break Timer Panel - same width as SuperAV, half height, with lighter green background */}
+      {isBreakTimerOpen && (
+        <div 
+          className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[288px] h-[490px] border-2 border-[#228B22] bg-green-100 z-50 flex flex-col shadow-xl"
           data-testid="break-timer"
         >
           {/* Screen panel that almost fills the dialog */}
@@ -134,27 +133,9 @@ const BreakGuide: React.FC = () => {
               )}
             </button>
           </div>
-        </DialogContent>
-      </Dialog>
+        </div>
+      )}
 
-      {/* Break Reminder Dialog - same width and height as SuperAV */}
-      <Dialog open={isBreakReminderOpen} onOpenChange={setIsBreakReminderOpen}>
-        <DialogContent 
-          className="w-[288px] h-[490px] max-w-none border-2 border-[#228B22]"
-          data-testid="break-reminder"
-        >
-          <DialogHeader>
-            <DialogTitle className="text-center text-lg font-semibold">
-              Break Reminder
-            </DialogTitle>
-          </DialogHeader>
-          <div className="flex-1 flex items-center justify-center">
-            <p className="text-center text-base">
-              Break Reminder content will go here
-            </p>
-          </div>
-        </DialogContent>
-      </Dialog>
     </TooltipProvider>
   );
 };
