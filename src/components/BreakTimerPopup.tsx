@@ -199,77 +199,101 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           }}>Time For A Break</h2>
           </div>
 
-          {/* Timer Display */}
-          <div style={{
-          textAlign: 'center',
-          marginBottom: '5px'
-        }}>
+          {/* Timer Display or Completion Message */}
+          {isCompleted ? (
+            /* Completion Message */
             <div style={{
-            fontSize: '36px',
-            fontWeight: 'bold',
-            fontFamily: 'Kalam, "Comic Sans MS", Arial, sans-serif',
-            color: '#F97316',
-            marginBottom: '0px'
-          }}>
-               {formatTime(timeLeft)}
-             </div>
-            
-          </div>
-
-          {/* Message */}
-          <div style={{
-          backgroundColor: 'rgba(34, 139, 34, 0.15)',
-          borderRadius: '12px',
-          padding: '12px',
-          marginBottom: '8px',
-          textAlign: 'left',
-          margin: '0 -8px 8px -8px',
-          position: 'relative'
-        }}>
-            <h3 style={{
-            fontSize: '18px',
-            fontWeight: 'bold',
-            margin: '0 0 12px 0',
-            color: '#F97316',
-            textAlign: 'center'
-          }}>Ideas for a quick break...</h3>
-            <ul style={{
-            fontSize: '16px',
-            lineHeight: '1.25',
-            margin: 0,
-            padding: '0',
-            color: '#F97316',
-            listStyle: 'none'
-          }}>
-              {suggestions.map((suggestion, index) => {
-                // First bullet is always bold, then progressive bolding based on time
-                const shouldBeBold = index === 0 || index <= additionalBoldCount;
-                return (
-                  <li key={index} style={{
-                    marginBottom: '4px',
-                    fontWeight: shouldBeBold ? 'bold' : 'normal'
-                  }}>
-                    {suggestion}
-                  </li>
-                );
-              })}
-            </ul>
-            
-            {/* SYS-BT3 code in bottom right corner */}
-            <div style={{
-              position: 'absolute',
-              bottom: '8px',
-              right: '8px'
+              textAlign: 'center',
+              marginBottom: '20px',
+              marginTop: '40px'
             }}>
-              <span style={{
-                fontSize: '12px',
+              <div style={{
+                fontSize: '28px',
                 fontWeight: 'bold',
-                color: '#228B22'
+                fontStyle: 'italic',
+                color: '#22c55e',
+                lineHeight: '1.3',
+                marginBottom: '20px'
               }}>
-                SYS-BT3
-              </span>
+                Great Break!<br />
+                Ready for a story?<br />
+                Let's do it!
+              </div>
             </div>
-          </div>
+          ) : (
+            <>
+              {/* Timer Display */}
+              <div style={{
+                textAlign: 'center',
+                marginBottom: '5px'
+              }}>
+                <div style={{
+                  fontSize: '36px',
+                  fontWeight: 'bold',
+                  fontFamily: 'Kalam, "Comic Sans MS", Arial, sans-serif',
+                  color: '#F97316',
+                  marginBottom: '0px'
+                }}>
+                  {formatTime(timeLeft)}
+                </div>
+              </div>
+
+              {/* Message */}
+              <div style={{
+                backgroundColor: 'rgba(34, 139, 34, 0.15)',
+                borderRadius: '12px',
+                padding: '12px',
+                marginBottom: '8px',
+                textAlign: 'left',
+                margin: '0 -8px 8px -8px',
+                position: 'relative'
+              }}>
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  margin: '0 0 12px 0',
+                  color: '#F97316',
+                  textAlign: 'center'
+                }}>Ideas for a quick break...</h3>
+                <ul style={{
+                  fontSize: '16px',
+                  lineHeight: '1.25',
+                  margin: 0,
+                  padding: '0',
+                  color: '#F97316',
+                  listStyle: 'none'
+                }}>
+                  {suggestions.map((suggestion, index) => {
+                    // First bullet is always bold, then progressive bolding based on time
+                    const shouldBeBold = index === 0 || index <= additionalBoldCount;
+                    return (
+                      <li key={index} style={{
+                        marginBottom: '4px',
+                        fontWeight: shouldBeBold ? 'bold' : 'normal'
+                      }}>
+                        {suggestion}
+                      </li>
+                    );
+                  })}
+                </ul>
+                
+                {/* SYS-BT3 code in bottom right corner */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: '8px',
+                  right: '8px'
+                }}>
+                  <span style={{
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    color: '#228B22'
+                  }}>
+                    SYS-BT3
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Controls */}
           <div style={{
@@ -286,23 +310,29 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
         {closeIconUrl && (
           <div style={{ height: '60px' }}>
             <button 
-              onClick={onClose}
+              onClick={isCompleted ? onClose : undefined}
+              disabled={!isCompleted}
               style={{
                 width: '100%',
                 height: '100%',
                 background: 'transparent',
                 border: 'none',
                 padding: '0',
-                cursor: 'pointer',
+                cursor: isCompleted ? 'pointer' : 'not-allowed',
                 transition: 'transform 0.2s',
                 borderRadius: '16px',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                opacity: isCompleted ? 1 : 0.5
               }}
               onMouseOver={e => {
-                e.currentTarget.style.transform = 'scale(1.02)';
+                if (isCompleted) {
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                }
               }}
               onMouseOut={e => {
-                e.currentTarget.style.transform = 'scale(1)';
+                if (isCompleted) {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }
               }}
             >
               <img 
