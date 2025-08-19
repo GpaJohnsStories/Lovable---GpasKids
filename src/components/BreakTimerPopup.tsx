@@ -182,7 +182,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           {/* Timer Display */}
           <div style={{
           textAlign: 'center',
-          marginBottom: '30px'
+          marginBottom: '15px'
         }}>
             <div style={{
             fontSize: '36px',
@@ -200,9 +200,10 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           <div style={{
           backgroundColor: 'rgba(0, 0, 0, 0.05)',
           borderRadius: '12px',
-          padding: '16px',
+          padding: '12px',
           marginBottom: '30px',
-          textAlign: 'left'
+          textAlign: 'left',
+          margin: '0 -8px 30px -8px'
         }}>
             <h3 style={{
             fontSize: '18px',
