@@ -91,9 +91,9 @@ const BreakGuide: React.FC = () => {
           cursor: isDragging ? 'grabbing' : 'default'
         }}
         data-testid="break-timer">
-          {/* Draggable header area */}
+          {/* Draggable header area - covers most of the panel except close button */}
           <div 
-            className="absolute top-0 left-0 right-0 h-20 cursor-grab active:cursor-grabbing z-30"
+            className="absolute top-0 left-0 right-0 bottom-12 cursor-grab active:cursor-grabbing z-30"
             onMouseDown={handleMouseDown}
           />
           {/* Screen panel that almost fills the dialog */}
