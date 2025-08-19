@@ -9,7 +9,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import StoryContentRenderer from "@/components/content/StoryContentRenderer";
+import PlainTextRenderer from "@/components/content/PlainTextRenderer";
 import { supabase } from "@/integrations/supabase/client";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";

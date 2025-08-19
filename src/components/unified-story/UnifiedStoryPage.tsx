@@ -9,6 +9,7 @@ import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useAdminSession } from '@/hooks/useAdminSession';
 import { toast } from "sonner";
+import { devLog } from "@/utils/devLog";
 
 interface UnifiedStoryPageProps {
   mode: 'add' | 'update';
@@ -21,9 +22,9 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   const [showSuperAV, setShowSuperAV] = useState(false);
   const [fontSize, setFontSize] = useState(16);
 
-  console.log('🎯 UnifiedStoryPage: Rendering with mode:', mode);
-  console.log('🎯 UnifiedStoryPage: URL id param:', id);
-  console.log('🎯 UnifiedStoryPage: Computed storyId:', storyId);
+  devLog.info('🎯 UnifiedStoryPage: Rendering with mode:', mode);
+  devLog.info('🎯 UnifiedStoryPage: URL id param:', id);
+  devLog.info('🎯 UnifiedStoryPage: Computed storyId:', storyId);
 
   const {
     formData,

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -57,16 +57,19 @@ export default function Register() {
     setCheckingPassword(false);
   };
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    
-    // Debounce password strength check
+  // Debounced password strength check using useEffect
+  useEffect(() => {
     const timeoutId = setTimeout(() => {
-      checkPasswordStrength(newPassword);
+      if (password) {
+        checkPasswordStrength(password);
+      }
     }, 500);
     
     return () => clearTimeout(timeoutId);
+  }, [password]);
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
   };
 
   const getStrengthLevel = (score: number) => {

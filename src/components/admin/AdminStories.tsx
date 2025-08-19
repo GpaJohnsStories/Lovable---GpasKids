@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import AdminStoriesTable from "./AdminStoriesTable";
 
 import { useUserRole } from "@/hooks/useUserRole";
+import { devLog } from "@/utils/devLog";
 
 const AdminStories = () => {
   const { isViewer } = useUserRole();
@@ -13,12 +14,12 @@ const AdminStories = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleCreateStory = () => {
-    console.log('🎯 AdminStories: Creating new story - navigating to unified story system');
+    devLog.info('🎯 AdminStories: Creating new story - navigating to unified story system');
     navigate('/buddys_admin/unified_story_system/add');
   };
 
   const handleEditStory = (story: any) => {
-    console.log('🎯 AdminStories: Editing story via unified system:', story.id, story.title);
+    devLog.info('🎯 AdminStories: Editing story via unified system:', story.id, story.title);
     
     // Store current context for potential restoration
     const currentContext = {
