@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 
 const BreakGuide: React.FC = () => {
   const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
   const [isBreakReminderOpen, setIsBreakReminderOpen] = useState(false);
+  const [minutesLeft, setMinutesLeft] = useState(15); // Default 15 minutes
   
   // Get close icon for the Break Timer
   const { iconUrl: closeIconUrl } = useCachedIcon('!CO-CLS.jpg');
+
+  // Countdown timer effect
+  useEffect(() => {
+    if (!isBreakTimerOpen) return;
+    
+    const timer = setInterval(() => {
+      setMinutesLeft(prev => {
+        if (prev <= 1) {
+          // Timer reached zero, could trigger break reminder here
+          return 15; // Reset to 15 minutes
+        }
+        return prev - 1;
+      });
+    }, 60000); // Update every minute
+
+    return () => clearInterval(timer);
+  }, [isBreakTimerOpen]);
 
   const handleBreakButtonClick = () => {
     setIsBreakTimerOpen(true);
@@ -51,10 +69,16 @@ const BreakGuide: React.FC = () => {
             />
             
             {/* Screen content */}
-            <div className="relative z-10 h-full flex items-center justify-center p-4">
-              <p className="text-center text-base text-gray-800">
-                Break Timer content will go here
-              </p>
+            <div className="relative z-10 h-full flex flex-col items-center justify-center p-4">
+              {/* Countdown Timer */}
+              <div className="font-kalam text-4xl font-bold mb-4" style={{ color: '#228B22' }}>
+                {minutesLeft} Minutes
+              </div>
+              
+              {/* Label */}
+              <div className="font-kalam text-xl font-bold" style={{ color: '#228B22' }}>
+                Time to Next Break
+              </div>
             </div>
           </div>
           
