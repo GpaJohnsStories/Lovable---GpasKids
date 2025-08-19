@@ -117,146 +117,156 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
       flexDirection: 'column',
       padding: '20px'
     }}>
-        {/* Header */}
+        {/* Inner Screen */}
         <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '30px'
-      }}>
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          borderRadius: '16px',
+          padding: '20px',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%'
+        }}>
+          {/* Header */}
           <div style={{
           display: 'flex',
+          justifyContent: 'space-between',
           alignItems: 'center',
-          gap: '10px'
+          marginBottom: '30px'
         }}>
-            
-            <h2 style={{
-            fontSize: '20px',
-            fontWeight: 'bold',
-            margin: 0,
-            color: '#dcfce7',
-            textAlign: 'right'
-          }}>Time For A Break</h2>
-          </div>
-          <button onClick={onClose} style={{
-          background: 'none',
-          border: 'none',
-          color: '#dcfce7',
-          cursor: 'pointer',
-          padding: '4px'
-        }}>
-            
-          </button>
-        </div>
-
-        {/* Timer Display */}
-        <div style={{
-        textAlign: 'center',
-        marginBottom: '30px'
-      }}>
-          <div style={{
-          fontSize: '48px',
-          fontWeight: 'bold',
-          fontFamily: 'monospace',
-          color: '#dcfce7',
-          marginBottom: '10px'
-        }}>
-            {formatTime(timeLeft)}
-          </div>
-          <p style={{
-          fontSize: '16px',
-          color: '#bbf7d0',
-          margin: 0
-        }}>
-            {isCompleted ? 'Break complete!' : 'Recommended break time'}
-          </p>
-        </div>
-
-        {/* Message */}
-        <div style={{
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-        borderRadius: '12px',
-        padding: '16px',
-        marginBottom: '30px',
-        textAlign: 'center'
-      }}>
-          <p style={{
-          fontSize: '14px',
-          lineHeight: '1.5',
-          margin: 0,
-          color: '#dcfce7'
-        }}>
-            {isCompleted ? 'Great job! You took a healthy break. Your eyes and mind will thank you!' : 'Step away from the screen. Stretch, look at something far away, or take a short walk.'}
-          </p>
-        </div>
-
-        {/* Controls */}
-        <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '12px',
-        marginTop: 'auto'
-      }}>
-          {!isCompleted && <div style={{
-          display: 'flex',
-          gap: '8px'
-        }}>
-              <button onClick={isRunning ? pauseTimer : startTimer} style={{
-            flex: 1,
-            padding: '12px',
-            backgroundColor: '#22c55e',
-            color: 'white',
+            <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px'
+          }}>
+              
+              <h2 style={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+              margin: 0,
+              color: '#dcfce7',
+              textAlign: 'right'
+            }}>Time For A Break</h2>
+            </div>
+            <button onClick={onClose} style={{
+            background: 'none',
             border: 'none',
+            color: '#dcfce7',
+            cursor: 'pointer',
+            padding: '4px'
+          }}>
+              
+            </button>
+          </div>
+
+          {/* Timer Display */}
+          <div style={{
+          textAlign: 'center',
+          marginBottom: '30px'
+        }}>
+            <div style={{
+            fontSize: '48px',
+            fontWeight: 'bold',
+            fontFamily: 'monospace',
+            color: '#dcfce7',
+            marginBottom: '10px'
+          }}>
+              {formatTime(timeLeft)}
+            </div>
+            <p style={{
+            fontSize: '16px',
+            color: '#bbf7d0',
+            margin: 0
+          }}>
+              {isCompleted ? 'Break complete!' : 'Recommended break time'}
+            </p>
+          </div>
+
+          {/* Message */}
+          <div style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '12px',
+          padding: '16px',
+          marginBottom: '30px',
+          textAlign: 'center'
+        }}>
+            <p style={{
+            fontSize: '14px',
+            lineHeight: '1.5',
+            margin: 0,
+            color: '#dcfce7'
+          }}>
+              {isCompleted ? 'Great job! You took a healthy break. Your eyes and mind will thank you!' : 'Step away from the screen. Stretch, look at something far away, or take a short walk.'}
+            </p>
+          </div>
+
+          {/* Controls */}
+          <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px',
+          marginTop: 'auto'
+        }}>
+            {!isCompleted && <div style={{
+            display: 'flex',
+            gap: '8px'
+          }}>
+                <button onClick={isRunning ? pauseTimer : startTimer} style={{
+              flex: 1,
+              padding: '12px',
+              backgroundColor: '#22c55e',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }} onMouseOver={e => {
+              e.currentTarget.style.backgroundColor = '#16a34a';
+            }} onMouseOut={e => {
+              e.currentTarget.style.backgroundColor = '#22c55e';
+            }}>
+                  {isRunning ? 'Pause' : 'Start Timer'}
+                </button>
+                <button onClick={resetTimer} style={{
+              padding: '12px',
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              color: 'white',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}>
+                  Reset
+                </button>
+              </div>}
+            
+            <button onClick={handleBreakComplete} style={{
+            padding: '14px',
+            backgroundColor: isCompleted ? '#22c55e' : 'rgba(255, 255, 255, 0.1)',
+            color: 'white',
+            border: isCompleted ? 'none' : '1px solid rgba(255, 255, 255, 0.3)',
             borderRadius: '8px',
             fontSize: '16px',
             fontWeight: 'bold',
             cursor: 'pointer',
             transition: 'all 0.2s'
           }} onMouseOver={e => {
-            e.currentTarget.style.backgroundColor = '#16a34a';
+            if (isCompleted) {
+              e.currentTarget.style.backgroundColor = '#16a34a';
+            } else {
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+            }
           }} onMouseOut={e => {
-            e.currentTarget.style.backgroundColor = '#22c55e';
+            if (isCompleted) {
+              e.currentTarget.style.backgroundColor = '#22c55e';
+            } else {
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+            }
           }}>
-                {isRunning ? 'Pause' : 'Start Timer'}
-              </button>
-              <button onClick={resetTimer} style={{
-            padding: '12px',
-            backgroundColor: 'rgba(255, 255, 255, 0.2)',
-            color: 'white',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '14px'
-          }}>
-                Reset
-              </button>
-            </div>}
-          
-          <button onClick={handleBreakComplete} style={{
-          padding: '14px',
-          backgroundColor: isCompleted ? '#22c55e' : 'rgba(255, 255, 255, 0.1)',
-          color: 'white',
-          border: isCompleted ? 'none' : '1px solid rgba(255, 255, 255, 0.3)',
-          borderRadius: '8px',
-          fontSize: '16px',
-          fontWeight: 'bold',
-          cursor: 'pointer',
-          transition: 'all 0.2s'
-        }} onMouseOver={e => {
-          if (isCompleted) {
-            e.currentTarget.style.backgroundColor = '#16a34a';
-          } else {
-            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-          }
-        }} onMouseOut={e => {
-          if (isCompleted) {
-            e.currentTarget.style.backgroundColor = '#22c55e';
-          } else {
-            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-          }
-        }}>
-            {isCompleted ? 'Continue - I Took a Break!' : 'Skip - I Already Took a Break'}
-          </button>
+              {isCompleted ? 'Continue - I Took a Break!' : 'Skip - I Already Took a Break'}
+            </button>
+          </div>
         </div>
       </div>
     </>;
