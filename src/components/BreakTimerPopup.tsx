@@ -211,9 +211,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             margin: '0 0 12px 0',
             color: '#F97316',
             textAlign: 'center'
-          }}>
-              Time for a quick break!
-            </h3>
+          }}>Ideas for a quick break!</h3>
             <ul style={{
             fontSize: '14px',
             lineHeight: '1.6',
@@ -222,13 +220,27 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             color: '#000000',
             listStyle: 'none'
           }}>
-              <li style={{ marginBottom: '4px' }}>🔥 Get a drink or snack</li>
-              <li style={{ marginBottom: '4px' }}>🔥 Stretch arms & legs</li>
-              <li style={{ marginBottom: '4px' }}>🔥 Look outside, far away</li>
-              <li style={{ marginBottom: '4px' }}>🔥 Say "Hi" to someone</li>
-              <li style={{ marginBottom: '4px' }}>🔥 Get some fresh air</li>
-              <li style={{ marginBottom: '4px' }}>🔥 Take a short walk</li>
-              <li style={{ marginBottom: '4px' }}>🔥 DO NOT look at any screens</li>
+              <li style={{
+              marginBottom: '4px'
+            }}>🔥 Get a drink or snack</li>
+              <li style={{
+              marginBottom: '4px'
+            }}>🔥 Stretch arms & legs</li>
+              <li style={{
+              marginBottom: '4px'
+            }}>🔥 Look outside, far away</li>
+              <li style={{
+              marginBottom: '4px'
+            }}>🔥 Say "Hi" to someone</li>
+              <li style={{
+              marginBottom: '4px'
+            }}>🔥 Get some fresh air</li>
+              <li style={{
+              marginBottom: '4px'
+            }}>🔥 Take a short walk</li>
+              <li style={{
+              marginBottom: '4px'
+            }}>🔥 DO NOT look at any screens</li>
             </ul>
           </div>
 
