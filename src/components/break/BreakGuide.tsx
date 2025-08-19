@@ -69,24 +69,24 @@ const BreakGuide: React.FC = () => {
             />
             
             {/* Screen content */}
-            <div className="relative z-10 h-full flex flex-col items-center justify-center p-4">
+            <div className="relative z-10 h-full flex flex-col items-center justify-start pt-6 p-4">
               {/* Countdown Timer */}
               <div className="font-kalam text-4xl font-bold mb-2" style={{ color: '#228B22' }}>
                 {minutesLeft} Minutes
               </div>
               
               {/* Label */}
-              <div className="font-kalam text-xl font-bold mb-4" style={{ color: '#228B22' }}>
+              <div className="font-kalam text-xl font-bold mb-6" style={{ color: '#228B22' }}>
                 Time to Next Break
               </div>
               
-              {/* Additional break guidance text from original BreakTimerPopup */}
-              <div className="text-center mt-4">
-                <p className="font-kalam text-sm mb-2" style={{ color: '#228B22' }}>
-                  Recommended break time
+              {/* New break message */}
+              <div className="text-center">
+                <p className="font-kalam text-base leading-relaxed mb-3" style={{ color: '#228B22' }}>
+                  Grandpa John asked me to be the Official Break Timer to help you keep track of your time on our website. He's learned that taking little breaks helps your eyes stay happy and your brain stay focused. It's a smart habit for everyone, no matter your age!
                 </p>
-                <p className="font-kalam text-xs leading-relaxed" style={{ color: '#228B22' }}>
-                  Step away from the screen. Stretch, look at something far away, or take a short walk.
+                <p className="font-kalam text-base leading-relaxed" style={{ color: '#228B22' }}>
+                  After one hour, Grandpa John asked me to gently remind you to take a short break, so I will do that when the timer above reaches 0.
                 </p>
               </div>
             </div>
