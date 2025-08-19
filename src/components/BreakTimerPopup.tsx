@@ -274,7 +274,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
               e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
             }
           }}>
-              {isCompleted ? 'Continue - I Took a Break!' : 'Skip - I Already Took a Break'}
+              {isCompleted ? 'Continue - I Took a Break!' : 'Skip the Break'}
             </button>
           </div>
         </div>
