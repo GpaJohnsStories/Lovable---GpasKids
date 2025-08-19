@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 const BreakGuide: React.FC = () => {
   const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
   const [minutesLeft, setMinutesLeft] = useState(15); // Default 15 minutes
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const panelRef = useRef<HTMLDivElement>(null);
 
   // Get close icon for the Break Timer
   const {
@@ -36,7 +40,40 @@ const BreakGuide: React.FC = () => {
   };
   const handleCloseBreakTimer = () => {
     setIsBreakTimerOpen(false);
+    setPosition({ x: 0, y: 0 }); // Reset position when closing
   };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (e.button !== 0) return; // Only left click
+    setIsDragging(true);
+    setDragStart({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y
+    });
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging) return;
+    setPosition({
+      x: e.clientX - dragStart.x,
+      y: e.clientY - dragStart.y
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, dragStart]);
   return <TooltipProvider>
       {/* Break Button - positioned bottom-left, same height and alignment as "Top & Menu" button */}
       <button className="fixed bottom-20 left-4 z-50 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:from-green-500 hover:via-green-600 hover:to-green-700 text-white px-4 py-2 rounded-full border-2 border-[#228B22] shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 font-bold font-fun" onClick={handleBreakButtonClick} data-allow-superav-passthrough="true" data-testid="break-button">
@@ -44,7 +81,21 @@ const BreakGuide: React.FC = () => {
       </button>
 
       {/* Break Timer Panel - same width as SuperAV, half height, with lighter green background */}
-      {isBreakTimerOpen && <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[288px] h-[490px] border-2 border-[#228B22] bg-green-100 z-50 flex flex-col shadow-xl" data-testid="break-timer">
+      {isBreakTimerOpen && <div 
+        ref={panelRef}
+        className="fixed w-[288px] h-[490px] border-2 border-[#228B22] bg-green-100 z-50 flex flex-col shadow-xl select-none" 
+        style={{
+          left: `calc(50% + ${position.x}px)`,
+          top: `calc(50% + ${position.y}px)`,
+          transform: 'translate(-50%, -50%)',
+          cursor: isDragging ? 'grabbing' : 'default'
+        }}
+        data-testid="break-timer">
+          {/* Draggable header area */}
+          <div 
+            className="absolute top-0 left-0 right-0 h-20 cursor-grab active:cursor-grabbing z-30"
+            onMouseDown={handleMouseDown}
+          />
           {/* Screen panel that almost fills the dialog */}
           <div className="flex-1 m-2 mb-2 bg-white rounded relative overflow-hidden" style={{
         border: '2px solid #5A3E2B',
