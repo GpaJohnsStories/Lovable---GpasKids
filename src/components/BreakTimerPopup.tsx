@@ -30,14 +30,14 @@ const CHARACTERS = [
     iconPath: '!CO-OSM.png',
     message: 'I took a run through the park. ',
     boldMessage: 'Let\'s READ!',
-    accentColor: '#0ea5e9'
+    accentColor: '#F97316'
   },
   {
     name: 'Max', 
     iconPath: '!CO-MM8.jpg',
     message: 'I chased a hacker sneaking into our code. He won\'t do that again. ',
     boldMessage: 'Now I need a good story!',
-    accentColor: '#f97316'
+    accentColor: '#F97316'
   },
   {
     name: 'Sparky',
