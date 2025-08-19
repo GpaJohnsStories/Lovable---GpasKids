@@ -141,6 +141,7 @@ const BreakGuide: React.FC = () => {
           left: `calc(50% + ${position.x}px)`,
           top: `calc(50% + ${position.y}px)`,
           transform: 'translate(-50%, -50%)',
+          borderRadius: '16px', // Same as SuperAV rounded corners
           cursor: isDragging ? 'grabbing' : 'default'
         }}
         data-testid="break-timer">

@@ -116,10 +116,10 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           top: 'calc(50% - 245px)', // Center vertically
           zIndex: 50,
           
-          // Dark green styling
+          // Dark green styling with SuperAV rounded corners
           background: 'linear-gradient(135deg, #166534, #15803d)', // Dark green gradient
           border: '2px solid #14532d', // Dark green border
-          borderRadius: '16px',
+          borderRadius: '16px', // Same as SuperAV
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
           
           // Font
