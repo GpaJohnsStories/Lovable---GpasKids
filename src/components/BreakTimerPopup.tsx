@@ -42,6 +42,12 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     iconName: sparkyName
   } = useCachedIcon('!CO-SPT.gif');
 
+  // Get Close icon
+  const {
+    iconUrl: closeIconUrl,
+    iconName: closeName
+  } = useCachedIcon('!CO-CLS.jpg');
+
   // Reset timer when popup opens and start immediately
   useEffect(() => {
     if (isOpen) {
@@ -124,7 +130,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
       flexDirection: 'column',
       padding: '12px'
     }}>
-        {/* Inner Screen */}
+        {/* Inner Screen - Shortened */}
         <div style={{
         backgroundColor: 'white',
         borderRadius: '16px',
@@ -133,7 +139,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
         padding: '20px',
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
+        height: '400px',
         color: '#000000',
         position: 'relative'
       }}>
@@ -254,6 +260,41 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             
           </div>
         </div>
+
+        {/* Close Button - Below white screen, within green container */}
+        {closeIconUrl && (
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '12px',
+            cursor: 'pointer'
+          }} onClick={onClose}>
+            <Tooltip>
+              <TooltipTrigger>
+                <img 
+                  src={closeIconUrl} 
+                  alt={closeName ?? 'Close'} 
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    objectFit: 'contain',
+                    transition: 'transform 0.2s'
+                  }}
+                  onMouseOver={e => {
+                    e.currentTarget.style.transform = 'scale(1.1)';
+                  }}
+                  onMouseOut={e => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                {closeName ?? 'Close Break Reminder'}
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        )}
       </div>
     </TooltipProvider>;
 };
