@@ -144,10 +144,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           cursor: 'pointer',
           padding: '4px'
         }}>
-            <X style={{
-            width: '20px',
-            height: '20px'
-          }} />
+            
           </button>
         </div>
 
