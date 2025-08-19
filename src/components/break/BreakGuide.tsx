@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
+import { WebTextBox } from '@/components/WebTextBox';
 const BreakGuide: React.FC = () => {
   const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
   const [minutesLeft, setMinutesLeft] = useState(15); // Default 15 minutes
@@ -156,6 +157,16 @@ const BreakGuide: React.FC = () => {
             }}>When timer reaches 0, I will remind you to take a short break.</p>
               </div>
             </div>
+          </div>
+          
+          {/* WebText Box for SYS-BT2 */}
+          <div className="mx-2 mb-2">
+            <WebTextBox 
+              webtextCode="SYS-BT2"
+              borderColor="#228B22"
+              backgroundColor="bg-green-50"
+              title="Break Timer Info"
+            />
           </div>
           
           {/* Close button row at bottom - full width like SuperAV */}
