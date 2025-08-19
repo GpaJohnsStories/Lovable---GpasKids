@@ -1,7 +1,8 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { User, LogOut, Shield } from 'lucide-react';
+import { User, LogOut, Shield, Settings } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Dashboard() {
   const { user, signOut } = useAuth();
@@ -36,10 +37,20 @@ export default function Dashboard() {
               </ul>
             </div>
 
-            <Button onClick={handleSignOut} variant="outline" className="w-fit">
-              <LogOut className="h-4 w-4 mr-2" />
-              Sign Out
-            </Button>
+            
+            <div className="flex gap-2">
+              <Button asChild variant="outline">
+                <Link to="/profile">
+                  <Settings className="h-4 w-4 mr-2" />
+                  Edit Profile
+                </Link>
+              </Button>
+              
+              <Button onClick={handleSignOut} variant="outline">
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
