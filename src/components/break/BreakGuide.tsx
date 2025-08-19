@@ -56,7 +56,7 @@ const BreakGuide: React.FC = () => {
           </div>
           
           {/* Close button row at bottom - full width like SuperAV */}
-          <div className="h-12 px-2 pb-2">
+          <div className="h-12">
             <button
               onClick={handleCloseBreakTimer}
               className="w-full h-full bg-gradient-to-b from-gray-200 via-gray-300 to-gray-400 hover:from-gray-300 hover:via-gray-400 hover:to-gray-500 border border-gray-400 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center"
