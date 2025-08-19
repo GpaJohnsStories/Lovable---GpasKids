@@ -185,12 +185,12 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           marginBottom: '5px'
         }}>
             <div style={{
-             fontSize: '36px',
-             fontWeight: 'bold',
-             fontFamily: 'Kalam, "Comic Sans MS", Arial, sans-serif',
-             color: '#F97316',
-             marginBottom: '0px'
-           }}>
+            fontSize: '36px',
+            fontWeight: 'bold',
+            fontFamily: 'Kalam, "Comic Sans MS", Arial, sans-serif',
+            color: '#F97316',
+            marginBottom: '0px'
+          }}>
                {formatTime(timeLeft)}
              </div>
             
@@ -211,7 +211,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             margin: '0 0 12px 0',
             color: '#F97316',
             textAlign: 'center'
-          }}>Ideas for a quick break!</h3>
+          }}>Ideas for a quick break...</h3>
             <ul style={{
             fontSize: '14px',
             lineHeight: '1.6',
