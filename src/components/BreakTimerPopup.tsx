@@ -188,7 +188,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             fontSize: '36px',
             fontWeight: 'bold',
             fontFamily: 'Kalam, "Comic Sans MS", Arial, sans-serif',
-            color: '#228B22',
+            color: '#F97316',
             marginBottom: '10px'
           }}>
               {formatTime(timeLeft)}
