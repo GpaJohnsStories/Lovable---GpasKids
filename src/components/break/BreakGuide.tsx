@@ -89,9 +89,9 @@ const BreakGuide: React.FC = () => {
                 {/* Spacer for Sparky (50px width) */}
                 <div style={{ width: '50px' }}></div>
                 
-                {/* "Time to Next Break" centered between Sparky and right margin */}
+                {/* "Next Break In —" centered between Sparky and right margin */}
                 <div className="font-kalam text-xl font-bold" style={{ color: '#228B22' }}>
-                  Time to Next Break
+                  Next Break In —
                 </div>
                 
                 {/* Right spacer to balance */}
