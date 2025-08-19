@@ -64,6 +64,10 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
   const [allowClose, setAllowClose] = useState(false);
   const [glowActive, setGlowActive] = useState(false);
   const [selectedCharacter, setSelectedCharacter] = useState<typeof CHARACTERS[0] | null>(null);
+  
+  // Back door: Triple-click tracking for Sparky icon
+  const [sparkyClickCount, setSparkyClickCount] = useState(0);
+  const [sparkyClickTimer, setSparkyClickTimer] = useState<NodeJS.Timeout | null>(null);
 
   // Get Sparky icon
   const {
@@ -83,6 +87,39 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     iconName: characterName
   } = useCachedIcon(selectedCharacter?.iconPath || null);
 
+  // Back door: Triple-click handler for Sparky icon
+  const handleSparkyClick = () => {
+    setSparkyClickCount(prev => prev + 1);
+    
+    // Clear existing timer
+    if (sparkyClickTimer) {
+      clearTimeout(sparkyClickTimer);
+    }
+    
+    // Set new timer to reset click count after 1 second
+    const timer = setTimeout(() => {
+      setSparkyClickCount(0);
+    }, 1000);
+    setSparkyClickTimer(timer);
+    
+    // Check for triple-click
+    if (sparkyClickCount + 1 >= 3) {
+      // Trigger celebration mode immediately
+      setIsRunning(false);
+      setIsCompleted(true);
+      setTimeLeft(0);
+      // Select random character for celebration
+      const randomCharacter = CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
+      setSelectedCharacter(randomCharacter);
+      setGlowActive(true);
+      // Reset click count
+      setSparkyClickCount(0);
+      if (sparkyClickTimer) {
+        clearTimeout(sparkyClickTimer);
+      }
+    }
+  };
+
   // Reset timer when popup opens and start immediately
   useEffect(() => {
     if (isOpen) {
@@ -92,6 +129,10 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
       setAllowClose(false);
       setGlowActive(false);
       setSelectedCharacter(null);
+      setSparkyClickCount(0);
+      if (sparkyClickTimer) {
+        clearTimeout(sparkyClickTimer);
+      }
     }
   }, [isOpen]);
 
@@ -238,7 +279,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           e.currentTarget.style.transform = 'scale(1.05)';
         }} onMouseOut={e => {
           e.currentTarget.style.transform = 'scale(1)';
-        }}>
+        }} onClick={handleSparkyClick}>
             <Tooltip>
               <TooltipTrigger>
                 <img src={sparkyIconUrl} alt={sparkyName ?? 'Sparky'} style={{
