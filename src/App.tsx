@@ -53,6 +53,7 @@ import ContentProtection from "./components/ContentProtection";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import { HelpProvider } from "./contexts/HelpContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import { useVisitTracker } from "./hooks/useVisitTracker";
 import BreakGuide from "./components/break/BreakGuide";
 
@@ -86,7 +87,8 @@ function App() {
                     <ShadcnToaster />
                   <BrowserRouter>
                     <SuperAVProvider>
-                      <GlobalHelpProvider>
+                      <AuthProvider>
+                        <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
                     <BreakGuide />
@@ -132,8 +134,9 @@ function App() {
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                    </ConditionalContentProtection>
-                 </GlobalHelpProvider>
-                   </SuperAVProvider>
+                        </GlobalHelpProvider>
+                      </AuthProvider>
+                    </SuperAVProvider>
                </BrowserRouter>
                  </CustomTooltipProvider>
              </IconCacheProvider>
