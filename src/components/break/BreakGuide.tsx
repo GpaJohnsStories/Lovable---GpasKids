@@ -105,7 +105,7 @@ const BreakGuide: React.FC = () => {
               
               {/* New break message */}
               <div className="text-center">
-                <p className="font-kalam text-base leading-tight mb-3" style={{ color: '#228B22' }}>
+                <p className="font-kalam text-lg leading-tight mb-3" style={{ color: '#228B22' }}>
                   Grandpa John asked me to be the Official Break Timer to help you keep track of your time on our website. He's learned that taking little breaks helps your eyes stay happy and your brain stay focused. It's a smart habit for everyone, no matter your age!
                 </p>
                 <p className="font-kalam text-base leading-tight" style={{ color: '#228B22' }}>
