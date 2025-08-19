@@ -45,6 +45,13 @@ import AdminCommentDetail from "./components/admin/AdminCommentDetail";
 import CreateAdminComment from "./components/admin/CreateAdminComment";
 import SecurityAuditDashboard from "./components/admin/SecurityAuditDashboard";
 
+// Auth components
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
+import ResetPasswordRequest from "./components/auth/ResetPasswordRequest";
+import Dashboard from "./components/auth/Dashboard";
+
 import UnifiedStoryPage from "./components/unified-story/UnifiedStoryPage";
 
 // Security and Auth
@@ -116,6 +123,14 @@ function App() {
                       <Route path="/public-author-bios" element={<PublicAuthorBios />} />
                       <Route path="/author-bios-simple" element={<PublicAuthorBiosSimple />} />
                       <Route path="/author/:id" element={<AuthorBio />} />
+
+                      {/* Auth Routes */}
+                      <Route path="/auth/login" element={<Login />} />
+                      <Route path="/auth/register" element={<Register />} />
+                      <Route path="/auth/forgot-password" element={<ResetPasswordRequest />} />
+                      
+                      {/* Protected Routes */}
+                      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
 
                       {/* Admin Routes */}
                       <Route path="/buddys_admin" element={<SecureAdminRoute><AdminOverview /></SecureAdminRoute>} />
