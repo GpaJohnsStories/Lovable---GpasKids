@@ -209,7 +209,8 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           padding: '12px',
           marginBottom: '8px',
           textAlign: 'left',
-          margin: '0 -8px 8px -8px'
+          margin: '0 -8px 8px -8px',
+          position: 'relative'
         }}>
             <h3 style={{
             fontSize: '18px',
@@ -248,6 +249,21 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
               marginBottom: '4px'
             }}>🔥 DO NOT look at any screens</li>
             </ul>
+            
+            {/* SYS-BT3 code in bottom right corner */}
+            <div style={{
+              position: 'absolute',
+              bottom: '8px',
+              right: '8px'
+            }}>
+              <span style={{
+                fontSize: '12px',
+                fontWeight: 'bold',
+                color: '#228B22'
+              }}>
+                SYS-BT3
+              </span>
+            </div>
           </div>
 
           {/* Controls */}
