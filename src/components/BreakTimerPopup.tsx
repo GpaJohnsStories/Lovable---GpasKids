@@ -140,7 +140,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             fontSize: '20px',
             fontWeight: 'bold',
             margin: 0,
-            color: '#000000'
+            color: '#F97316'
           }}>Time For A Break</h2>
           </div>
 
