@@ -12,7 +12,7 @@ const BreakGuide: React.FC = () => {
   const { iconUrl: closeIconUrl } = useCachedIcon('!CO-CLS.jpg');
   
   // Get Sparky icon for the Break Timer
-  const { iconUrl: sparkyIconUrl } = useCachedIcon('!CO-SPT.gif');
+  const { iconUrl: sparkyIconUrl, iconName: sparkyName } = useCachedIcon('!CO-SPT.gif');
 
   // Countdown timer effect
   useEffect(() => {
@@ -69,16 +69,12 @@ const BreakGuide: React.FC = () => {
                   <TooltipTrigger>
                     <img 
                       src={sparkyIconUrl} 
-                      alt="Sparky" 
+                      alt={sparkyName ?? 'Sparky'} 
                       style={{ width: '75px', height: '75px', objectFit: 'contain' }}
                     />
                   </TooltipTrigger>
-                  <TooltipContent>
-                    <img 
-                      src={sparkyIconUrl} 
-                      alt="Sparky" 
-                      style={{ width: '50px', height: '50px', objectFit: 'contain' }}
-                    />
+                  <TooltipContent className="whitespace-nowrap">
+                    {sparkyName ?? 'Sparky -- Official Break Timer'}
                   </TooltipContent>
                 </Tooltip>
               </div>
