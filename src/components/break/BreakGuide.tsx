@@ -32,7 +32,7 @@ const BreakGuide: React.FC = () => {
       {/* Break Timer Dialog - same width as SuperAV, half height, with lighter green background */}
       <Dialog open={isBreakTimerOpen} onOpenChange={setIsBreakTimerOpen}>
         <DialogContent 
-          className="w-[288px] h-[245px] max-w-none border-2 border-[#228B22] bg-green-100 p-0 gap-0"
+          className="w-[288px] h-[490px] max-w-none border-2 border-[#228B22] bg-green-100 p-0 gap-0"
           data-testid="break-timer"
         >
           {/* Screen panel that almost fills the dialog */}
