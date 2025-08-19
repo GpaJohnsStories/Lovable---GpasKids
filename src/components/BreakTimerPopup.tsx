@@ -218,7 +218,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             fontSize: '14px',
             lineHeight: '1.6',
             margin: 0,
-            padding: '0 0 0 20px',
+            padding: '0',
             color: '#000000',
             listStyle: 'none'
           }}>
