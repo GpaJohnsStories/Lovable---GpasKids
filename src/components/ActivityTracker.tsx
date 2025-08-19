@@ -90,8 +90,8 @@ const ActivityTracker = ({ showDebugInfo = false }: ActivityTrackerProps) => {
             <div className="flex items-start gap-2 p-3 bg-blue-50 rounded-lg">
               <Info className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
               <div className="text-xs text-blue-800">
-                <p className="mb-1"><strong>What it does:</strong> Automatically tracks when you're actively reading and reminds you to take breaks every 30 minutes.</p>
-                <p><strong>Why it helps:</strong> Regular breaks reduce eye strain and improve focus which is important for everyone.</p>
+                <p className="mb-1"><strong>What it does:</strong> Automatically tracks when you're actively reading and reminds you to take a 5-minute break after 55 minutes of reading.</p>
+                <p><strong>Why it helps:</strong> Regular 55/5 break cycles reduce eye strain and improve focus. After each break, the 55-minute timer starts fresh.</p>
               </div>
             </div>
 

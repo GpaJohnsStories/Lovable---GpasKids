@@ -210,6 +210,14 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     setGlowActive(false);
     onBreakComplete();
     onClose();
+    
+    // Show completion toast with next break timing
+    import('@/hooks/use-toast').then(({ toast }) => {
+      toast({
+        title: 'Break complete! Next break in 55 minutes.',
+        duration: 4000,
+      });
+    });
   };
 
   const handleBackdropClick = () => {

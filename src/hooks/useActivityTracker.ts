@@ -21,7 +21,7 @@ export const useActivityTracker = () => {
 
   const ACTIVITY_STORAGE_KEY = 'user_activity_data';
   const INITIAL_BREAK_SUGGESTION = 55 * 60 * 1000; // 55 minutes
-  const REPEAT_BREAK_INTERVAL = 15 * 60 * 1000; // 15 minutes
+  
   const BREAK_DETECTION_TIME = 5 * 60 * 1000; // 5 minutes of inactivity
   const ACTIVITY_EVENTS = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
 
@@ -75,12 +75,10 @@ export const useActivityTracker = () => {
     });
   };
 
-  // Show break suggestion toast or trigger break timer popup
-  const showBreakSuggestion = (isRepeat: boolean = false) => {
+  // Show break suggestion popup
+  const showBreakSuggestion = () => {
     // Dispatch custom event for break timer popup
-    window.dispatchEvent(new CustomEvent('showBreakTimer', { 
-      detail: { isRepeat } 
-    }));
+    window.dispatchEvent(new CustomEvent('showBreakTimer'));
   };
 
   // Handle user activity
@@ -122,21 +120,10 @@ export const useActivityTracker = () => {
       }
 
       // Check if we should show break suggestion
-      const timeSinceLastSuggestion = now - activityData.lastBreakSuggestion;
-      
-      if (totalActiveTime >= INITIAL_BREAK_SUGGESTION) {
-        // First break suggestion after 1 hour
-        if (activityData.lastBreakSuggestion === 0) {
-          showBreakSuggestion(false);
-          activityData.lastBreakSuggestion = now;
-          saveActivityData(activityData);
-        }
-        // Repeat suggestions every 15 minutes
-        else if (timeSinceLastSuggestion >= REPEAT_BREAK_INTERVAL) {
-          showBreakSuggestion(true);
-          activityData.lastBreakSuggestion = now;
-          saveActivityData(activityData);
-        }
+      if (totalActiveTime >= INITIAL_BREAK_SUGGESTION && activityData.lastBreakSuggestion === 0) {
+        showBreakSuggestion();
+        activityData.lastBreakSuggestion = now;
+        saveActivityData(activityData);
       }
     }
 
