@@ -42,11 +42,11 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     iconName: sparkyName
   } = useCachedIcon('!CO-SPT.gif');
 
-  // Reset timer when popup opens
+  // Reset timer when popup opens and start immediately
   useEffect(() => {
     if (isOpen) {
       setTimeLeft(5 * 60);
-      setIsRunning(false);
+      setIsRunning(true);
       setIsCompleted(false);
     }
   }, [isOpen]);
