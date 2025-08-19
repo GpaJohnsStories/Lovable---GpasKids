@@ -44,7 +44,7 @@ const CHARACTERS = [
     iconPath: '!CO-SPY.jpg', 
     message: 'I toasted some marshmallows. Yummy! ',
     boldMessage: 'Now let\'s read!',
-    accentColor: '#84cc16',
+    accentColor: '#F97316',
     isLarge: true // Double size for Sparky
   }
 ];
