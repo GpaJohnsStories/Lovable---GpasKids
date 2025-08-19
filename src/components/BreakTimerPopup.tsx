@@ -261,38 +261,43 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           </div>
         </div>
 
-        {/* Close Button - Below white screen, within green container */}
+        {/* Close Button - Full width at bottom like break timer */}
         {closeIconUrl && (
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '12px',
-            cursor: 'pointer'
-          }} onClick={onClose}>
-            <Tooltip>
-              <TooltipTrigger>
-                <img 
-                  src={closeIconUrl} 
-                  alt={closeName ?? 'Close'} 
-                  style={{
-                    width: '48px',
-                    height: '48px',
-                    objectFit: 'contain',
-                    transition: 'transform 0.2s'
-                  }}
-                  onMouseOver={e => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                  }}
-                  onMouseOut={e => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                {closeName ?? 'Close Break Reminder'}
-              </TooltipContent>
-            </Tooltip>
+          <div style={{ height: '48px' }}>
+            <button 
+              onClick={onClose}
+              style={{
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(to bottom, #fde68a, #f59e0b, #d97706)',
+                border: '1px solid #92400e',
+                borderRadius: '8px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              onMouseOver={e => {
+                e.currentTarget.style.background = 'linear-gradient(to bottom, #f59e0b, #d97706, #b45309)';
+                e.currentTarget.style.transform = 'scale(1.02)';
+              }}
+              onMouseOut={e => {
+                e.currentTarget.style.background = 'linear-gradient(to bottom, #fde68a, #f59e0b, #d97706)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              <img 
+                src={closeIconUrl} 
+                alt={closeName ?? 'Close'} 
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  objectFit: 'contain'
+                }}
+              />
+            </button>
           </div>
         )}
       </div>
