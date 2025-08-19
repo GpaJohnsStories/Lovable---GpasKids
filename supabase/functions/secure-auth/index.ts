@@ -10,7 +10,8 @@ const ALLOWED_ORIGINS = [
 
 const HARDCODED_ADMIN_EMAILS = [
   'johnm.chilson@gmail.com',  // Primary admin
-  'paul.chilson@gmail.com'    // Secondary admin (to be added)
+  'paul.chilson@gmail.com',   // Secondary admin (to be added)
+  'gpajohn.buddy@gmail.com'   // Grandpa John's admin account
 ];
 
 const corsHeaders = {
@@ -26,10 +27,28 @@ serve(async (req) => {
 
   try {
     // Enhanced origin checking
-    const origin = req.headers.get('origin');
+    const origin = req.headers.get('origin') || '';
     console.log('Request origin:', origin);
-    
-    if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+
+    let isAllowed = false;
+    try {
+      if (!origin) {
+        isAllowed = true; // allow non-browser or missing origin
+      } else {
+        const url = new URL(origin);
+        const host = url.hostname;
+        isAllowed =
+          ALLOWED_ORIGINS.includes(origin) ||
+          host.endsWith('.lovable.dev') ||
+          host.endsWith('.lovableproject.com') ||
+          host === 'localhost';
+      }
+    } catch (_e) {
+      // Fallback: only allow explicit allowlist when URL parsing fails
+      isAllowed = ALLOWED_ORIGINS.includes(origin);
+    }
+
+    if (origin && !isAllowed) {
       console.log('Origin not allowed:', origin);
       return new Response(
         JSON.stringify({ error: 'Origin not allowed' }),

@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.auth-custom-claims]
 verify_jwt = false
+
+[functions.secure-auth]
+verify_jwt = false
