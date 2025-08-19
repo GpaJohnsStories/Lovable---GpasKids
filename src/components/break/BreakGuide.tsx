@@ -133,10 +133,10 @@ const BreakGuide: React.FC = () => {
         Break Guide
       </button>
 
-      {/* Break Timer Panel - same width as SuperAV, half height, with lighter green background */}
+      {/* Break Timer Panel - same width as SuperAV, extended height for SYS-BT2 code */}
       {isBreakTimerOpen && <div 
         ref={panelRef}
-        className="fixed w-[288px] h-[490px] border-2 border-[#228B22] bg-green-100 z-50 flex flex-col shadow-xl select-none" 
+        className="fixed w-[288px] h-[520px] border-2 border-[#228B22] bg-green-100 z-50 flex flex-col shadow-xl select-none"
         style={{
           left: `calc(50% + ${position.x}px)`,
           top: `calc(50% + ${position.y}px)`,
@@ -216,15 +216,15 @@ const BreakGuide: React.FC = () => {
                 </p>
                 <p className="font-kalam text-base leading-tight" style={{
               color: '#228B22'
-            }}>When timer reaches 0, I will remind you to take a short break.</p>
+             }}>When timer reaches 0, I will remind you to take a short break.</p>
               </div>
-            </div>
-          </div>
-          
-          {/* Bottom Right: Webtext Code */}
-          <div className="flex justify-end mx-2 mb-2">
-            <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-green-700 border border-green-300">
-              SYS-BT2
+              
+              {/* SYS-BT2 code in bottom right corner */}
+              <div className="absolute bottom-2 right-2">
+                <span className="font-kalam text-xs font-bold" style={{ color: '#228B22' }}>
+                  SYS-BT2
+                </span>
+              </div>
             </div>
           </div>
           
