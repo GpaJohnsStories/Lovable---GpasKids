@@ -67,7 +67,7 @@ const BreakGuide: React.FC = () => {
                 <img 
                   src={sparkyIconUrl} 
                   alt="Sparky" 
-                  style={{ width: '50px', height: '50px', objectFit: 'contain' }}
+                  style={{ width: '60px', height: '60px', objectFit: 'contain' }}
                 />
               </div>
             )}
