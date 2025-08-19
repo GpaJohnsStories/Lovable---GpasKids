@@ -86,8 +86,8 @@ const BreakGuide: React.FC = () => {
             <div className="relative z-10 h-full flex flex-col p-4">
               {/* Top row with Sparky and "Time to Next Break" */}
               <div className="flex items-center justify-between mb-4">
-                {/* Spacer for Sparky (50px width) */}
-                <div style={{ width: '50px' }}></div>
+                {/* Spacer for Sparky (60px width) */}
+                <div style={{ width: '60px' }}></div>
                 
                 {/* "Next Break In —" centered between Sparky and right margin */}
                 <div className="font-kalam text-xl font-bold" style={{ color: '#228B22' }}>
