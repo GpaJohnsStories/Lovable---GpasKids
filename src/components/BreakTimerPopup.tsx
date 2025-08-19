@@ -89,6 +89,20 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     setIsRunning(false);
     setIsCompleted(false);
   };
+  // Break suggestions array
+  const suggestions = [
+    '🔥 DO NOT look at screens',
+    '🔥 Get a drink or snack', 
+    '🔥 Stretch arms & legs',
+    '🔥 Look outside & far away',
+    '🔥 Get some fresh air',
+    '🔥 Take a short walk'
+  ];
+
+  // Calculate minutes remaining and how many bullets should be bold
+  const minutesRemaining = Math.ceil(timeLeft / 60);
+  const additionalBoldCount = Math.max(0, 6 - minutesRemaining); // At 5min=1 additional, 4min=2, etc.
+
   const handleBreakComplete = () => {
     onBreakComplete();
     onClose();
@@ -227,25 +241,18 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             color: '#F97316',
             listStyle: 'none'
           }}>
-              <li style={{
-              marginBottom: '4px',
-              fontWeight: 'bold'
-            }}>🔥 DO NOT look at screens</li>
-              <li style={{
-              marginBottom: '4px'
-            }}>🔥 Get a drink or snack</li>
-              <li style={{
-              marginBottom: '4px'
-            }}>🔥 Stretch arms & legs</li>
-              <li style={{
-              marginBottom: '4px'
-            }}>🔥 Look outside & far away</li>
-              <li style={{
-              marginBottom: '4px'
-            }}>🔥 Get some fresh air</li>
-              <li style={{
-              marginBottom: '4px'
-            }}>🔥 Take a short walk</li>
+              {suggestions.map((suggestion, index) => {
+                // First bullet is always bold, then progressive bolding based on time
+                const shouldBeBold = index === 0 || index <= additionalBoldCount;
+                return (
+                  <li key={index} style={{
+                    marginBottom: '4px',
+                    fontWeight: shouldBeBold ? 'bold' : 'normal'
+                  }}>
+                    {suggestion}
+                  </li>
+                );
+              })}
             </ul>
             
             {/* SYS-BT3 code in bottom right corner */}
