@@ -132,33 +132,16 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           {/* Header */}
           <div style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
           alignItems: 'center',
           marginBottom: '30px'
         }}>
-            <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px'
-          }}>
-              
-              <h2 style={{
-              fontSize: '20px',
-              fontWeight: 'bold',
-              margin: 0,
-              color: '#000000',
-              textAlign: 'right'
-            }}>Time For A Break</h2>
-            </div>
-            <button onClick={onClose} style={{
-            background: 'none',
-            border: 'none',
-            color: '#000000',
-            cursor: 'pointer',
-            padding: '4px'
-          }}>
-              
-            </button>
+            <h2 style={{
+            fontSize: '20px',
+            fontWeight: 'bold',
+            margin: 0,
+            color: '#000000'
+          }}>Time For A Break</h2>
           </div>
 
           {/* Timer Display */}
