@@ -20,7 +20,7 @@ export const useActivityTracker = () => {
   const updateIntervalRef = useRef<NodeJS.Timeout>();
 
   const ACTIVITY_STORAGE_KEY = 'user_activity_data';
-  const INITIAL_BREAK_SUGGESTION = 60 * 60 * 1000; // 1 hour
+  const INITIAL_BREAK_SUGGESTION = 55 * 60 * 1000; // 55 minutes
   const REPEAT_BREAK_INTERVAL = 15 * 60 * 1000; // 15 minutes
   const BREAK_DETECTION_TIME = 5 * 60 * 1000; // 5 minutes of inactivity
   const ACTIVITY_EVENTS = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
