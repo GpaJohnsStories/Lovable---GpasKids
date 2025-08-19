@@ -204,7 +204,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
 
           {/* Message */}
           <div style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.05)',
+          backgroundColor: 'rgba(34, 139, 34, 0.15)',
           borderRadius: '12px',
           padding: '12px',
           marginBottom: '8px',
