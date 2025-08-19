@@ -324,15 +324,15 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
               {/* Character Icon */}
               {characterIconUrl && (
                 <div style={{
-                  marginBottom: '20px',
+                  marginBottom: selectedCharacter.isLarge ? '10px' : '20px',
                   animation: 'fade-in 0.5s ease-out, scale-in 0.3s ease-out'
                 }}>
                   <img 
                     src={characterIconUrl} 
                     alt={characterName || selectedCharacter.name}
                     style={{
-                      width: selectedCharacter.isLarge ? '280px' : '140px',
-                      height: selectedCharacter.isLarge ? '280px' : '140px',
+                      width: selectedCharacter.isLarge ? '200px' : '140px',
+                      height: selectedCharacter.isLarge ? '200px' : '140px',
                       objectFit: 'contain',
                       borderRadius: '12px'
                     }}
@@ -342,10 +342,12 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
 
               {/* Character Message */}
               <div style={{
-                fontSize: '20px',
+                fontSize: selectedCharacter.isLarge ? '18px' : '20px',
                 lineHeight: '1.4',
                 color: selectedCharacter.accentColor,
-                animation: 'fade-in 0.5s ease-out 0.2s both'
+                animation: 'fade-in 0.5s ease-out 0.2s both',
+                maxWidth: '100%',
+                wordWrap: 'break-word'
               }}>
                 {selectedCharacter.message}
                 <span style={{
