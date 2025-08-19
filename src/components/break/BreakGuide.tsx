@@ -65,7 +65,7 @@ const BreakGuide: React.FC = () => {
                 <img 
                   src={closeIconUrl} 
                   alt="Close" 
-                  className="w-8 h-8 object-contain"
+                  style={{ height: '60px', width: '100%', objectFit: 'fill' }}
                 />
               ) : (
                 <span className="text-gray-700 font-semibold">Close</span>
