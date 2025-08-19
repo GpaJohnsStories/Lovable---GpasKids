@@ -71,13 +71,23 @@ const BreakGuide: React.FC = () => {
             {/* Screen content */}
             <div className="relative z-10 h-full flex flex-col items-center justify-center p-4">
               {/* Countdown Timer */}
-              <div className="font-kalam text-4xl font-bold mb-4" style={{ color: '#228B22' }}>
+              <div className="font-kalam text-4xl font-bold mb-2" style={{ color: '#228B22' }}>
                 {minutesLeft} Minutes
               </div>
               
               {/* Label */}
-              <div className="font-kalam text-xl font-bold" style={{ color: '#228B22' }}>
+              <div className="font-kalam text-xl font-bold mb-4" style={{ color: '#228B22' }}>
                 Time to Next Break
+              </div>
+              
+              {/* Additional break guidance text from original BreakTimerPopup */}
+              <div className="text-center mt-4">
+                <p className="font-kalam text-sm mb-2" style={{ color: '#228B22' }}>
+                  Recommended break time
+                </p>
+                <p className="font-kalam text-xs leading-relaxed" style={{ color: '#228B22' }}>
+                  Step away from the screen. Stretch, look at something far away, or take a short walk.
+                </p>
               </div>
             </div>
           </div>
