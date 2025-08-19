@@ -158,13 +158,13 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     return () => clearInterval(interval);
   }, [isRunning, timeLeft]);
 
-  // 5-second delay before allowing close + 5-minute glow timeout
+  // 3-second delay before allowing close + 5-minute glow timeout
   useEffect(() => {
     if (isCompleted) {
-      // Enable close after 5 seconds
+      // Enable close after 3 seconds
       const closeTimer = setTimeout(() => {
         setAllowClose(true);
-      }, 5000);
+      }, 3000);
 
       // Disable glow after 5 minutes
       const glowTimer = setTimeout(() => {
