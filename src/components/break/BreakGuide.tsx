@@ -67,7 +67,7 @@ const BreakGuide: React.FC = () => {
                 <img 
                   src={sparkyIconUrl} 
                   alt="Sparky" 
-                  style={{ width: '60px', height: '60px', objectFit: 'contain' }}
+                  style={{ width: '75px', height: '75px', objectFit: 'contain' }}
                 />
               </div>
             )}
@@ -86,8 +86,8 @@ const BreakGuide: React.FC = () => {
             <div className="relative z-10 h-full flex flex-col p-2">
               {/* Top row with Sparky and "Next Break In —" */}
               <div className="flex items-center justify-between mb-4 px-1">
-                {/* Spacer for Sparky (60px width) */}
-                <div style={{ width: '60px' }}></div>
+                {/* Spacer for Sparky (75px width) */}
+                <div style={{ width: '75px' }}></div>
                 
                 {/* "Next Break In —" centered between Sparky and right margin */}
                 <div className="font-kalam text-lg font-bold whitespace-nowrap" style={{ color: '#228B22' }}>
