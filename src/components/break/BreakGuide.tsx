@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 
 const BreakGuide: React.FC = () => {
@@ -39,7 +40,7 @@ const BreakGuide: React.FC = () => {
   };
 
   return (
-    <>
+    <TooltipProvider>
       {/* Break Button - positioned bottom-left, same height and alignment as "Top & Menu" button */}
       <button
         className="fixed bottom-20 left-4 z-50 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:from-green-500 hover:via-green-600 hover:to-green-700 text-white px-4 py-2 rounded-full border-2 border-[#228B22] shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 font-bold font-fun"
@@ -61,14 +62,25 @@ const BreakGuide: React.FC = () => {
             border: '2px solid #5A3E2B',
             boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)'
           }}>
-            {/* Sparky icon in top left corner */}
+            {/* Sparky icon in top left corner with tooltip */}
             {sparkyIconUrl && (
               <div className="absolute top-2 left-2 z-20">
-                <img 
-                  src={sparkyIconUrl} 
-                  alt="Sparky" 
-                  style={{ width: '75px', height: '75px', objectFit: 'contain' }}
-                />
+                <Tooltip>
+                  <TooltipTrigger>
+                    <img 
+                      src={sparkyIconUrl} 
+                      alt="Sparky" 
+                      style={{ width: '75px', height: '75px', objectFit: 'contain' }}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <img 
+                      src={sparkyIconUrl} 
+                      alt="Sparky" 
+                      style={{ width: '50px', height: '50px', objectFit: 'contain' }}
+                    />
+                  </TooltipContent>
+                </Tooltip>
               </div>
             )}
             
@@ -147,7 +159,7 @@ const BreakGuide: React.FC = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </>
+    </TooltipProvider>
   );
 };
 
