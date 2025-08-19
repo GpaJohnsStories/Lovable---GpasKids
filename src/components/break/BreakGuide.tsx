@@ -9,6 +9,9 @@ const BreakGuide: React.FC = () => {
   
   // Get close icon for the Break Timer
   const { iconUrl: closeIconUrl } = useCachedIcon('!CO-CLS.jpg');
+  
+  // Get Sparky icon for the Break Timer
+  const { iconUrl: sparkyIconUrl } = useCachedIcon('!CO-SPT.gif');
 
   // Countdown timer effect
   useEffect(() => {
@@ -58,6 +61,17 @@ const BreakGuide: React.FC = () => {
             border: '2px solid #5A3E2B',
             boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)'
           }}>
+            {/* Sparky icon in top left corner */}
+            {sparkyIconUrl && (
+              <div className="absolute top-2 left-2 z-20">
+                <img 
+                  src={sparkyIconUrl} 
+                  alt="Sparky" 
+                  style={{ width: '50px', height: '50px', objectFit: 'contain' }}
+                />
+              </div>
+            )}
+            
             {/* Paper texture overlay */}
             <div 
               className="absolute inset-0 opacity-10 pointer-events-none"
