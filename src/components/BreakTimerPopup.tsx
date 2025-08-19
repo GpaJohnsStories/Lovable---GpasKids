@@ -69,9 +69,8 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     return () => clearInterval(interval);
   }, [isRunning, timeLeft]);
   const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    const mins = Math.ceil(seconds / 60);
+    return `${mins} Minutes`;
   };
   const startTimer = () => {
     setIsRunning(true);
