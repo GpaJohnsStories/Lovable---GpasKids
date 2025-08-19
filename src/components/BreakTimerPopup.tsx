@@ -213,11 +213,11 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             textAlign: 'center'
           }}>Ideas for a quick break...</h3>
             <ul style={{
-            fontSize: '14px',
+            fontSize: '16px',
             lineHeight: '1.6',
             margin: 0,
             padding: '0',
-            color: '#000000',
+            color: '#F97316',
             listStyle: 'none'
           }}>
               <li style={{
