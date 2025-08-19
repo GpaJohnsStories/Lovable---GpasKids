@@ -39,7 +39,7 @@ export const useVoiceTesting = () => {
         body: {
           text: textToSend,
           voice: voiceId.toLowerCase(), // Convert to lowercase to match API expectations
-          speed: 0.5 // Match recording speed for consistency
+          speed: 0.85 // Match recording speed for consistency
         }
       });
 
