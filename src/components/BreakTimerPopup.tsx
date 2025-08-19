@@ -19,7 +19,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Clock, Coffee, X } from 'lucide-react';
+import { Clock, X } from 'lucide-react';
 
 interface BreakTimerPopupProps {
   isOpen: boolean;
@@ -144,7 +144,6 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             alignItems: 'center',
             gap: '10px'
           }}>
-            <Coffee style={{ width: '24px', height: '24px', color: '#dcfce7' }} />
             <h2 style={{
               fontSize: '20px',
               fontWeight: 'bold',
