@@ -228,6 +228,10 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             listStyle: 'none'
           }}>
               <li style={{
+              marginBottom: '4px',
+              fontWeight: 'bold'
+            }}>🔥 DO NOT look at screens</li>
+              <li style={{
               marginBottom: '4px'
             }}>🔥 Get a drink or snack</li>
               <li style={{
@@ -245,9 +249,6 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
               <li style={{
               marginBottom: '4px'
             }}>🔥 Take a short walk</li>
-              <li style={{
-              marginBottom: '4px'
-            }}>🔥 DO NOT look at any screens</li>
             </ul>
             
             {/* SYS-BT3 code in bottom right corner */}
