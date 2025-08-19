@@ -101,7 +101,7 @@ const BreakGuide: React.FC = () => {
                 </p>
                 <p className="font-kalam text-base leading-tight" style={{
               color: '#228B22'
-            }}>When timer reaches 0 I will remind you to take a short break.</p>
+            }}>When timer reaches 0, I will remind you to take a short break.</p>
               </div>
             </div>
           </div>
