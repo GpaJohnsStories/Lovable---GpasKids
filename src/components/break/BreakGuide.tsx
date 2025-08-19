@@ -36,7 +36,7 @@ const BreakGuide: React.FC = () => {
           data-testid="break-timer"
         >
           {/* Screen panel that almost fills the dialog */}
-          <div className="flex-1 m-2 mb-0 bg-white rounded border border-gray-300 relative overflow-hidden">
+          <div className="flex-1 m-2 mb-2 bg-white rounded border border-gray-300 relative overflow-hidden">
             {/* Paper texture overlay */}
             <div 
               className="absolute inset-0 opacity-10 pointer-events-none"
