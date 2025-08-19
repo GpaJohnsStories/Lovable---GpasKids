@@ -4,7 +4,6 @@ import { useCachedIcon } from '@/hooks/useCachedIcon';
 
 const BreakGuide: React.FC = () => {
   const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
-  const [isBreakReminderOpen, setIsBreakReminderOpen] = useState(false);
   const [minutesLeft, setMinutesLeft] = useState(15); // Default 15 minutes
   
   // Get close icon for the Break Timer
