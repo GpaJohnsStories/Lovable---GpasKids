@@ -242,9 +242,6 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
             }}>🔥 Look outside & far away</li>
               <li style={{
               marginBottom: '4px'
-            }}>🔥 Say "Hi" to someone</li>
-              <li style={{
-              marginBottom: '4px'
             }}>🔥 Get some fresh air</li>
               <li style={{
               marginBottom: '4px'
