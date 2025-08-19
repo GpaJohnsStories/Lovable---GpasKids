@@ -202,16 +202,33 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           borderRadius: '12px',
           padding: '16px',
           marginBottom: '30px',
-          textAlign: 'center'
+          textAlign: 'left'
         }}>
-            <p style={{
-            fontSize: '14px',
-            lineHeight: '1.5',
-            margin: 0,
-            color: '#000000'
+            <h3 style={{
+            fontSize: '18px',
+            fontWeight: 'bold',
+            margin: '0 0 12px 0',
+            color: '#F97316',
+            textAlign: 'center'
           }}>
-              {isCompleted ? 'Great job! You took a healthy break. Your eyes and mind will thank you!' : 'Step away from the screen. Stretch, look at something far away, or take a short walk.'}
-            </p>
+              Time for a quick break!
+            </h3>
+            <ul style={{
+            fontSize: '14px',
+            lineHeight: '1.6',
+            margin: 0,
+            padding: '0 0 0 20px',
+            color: '#000000',
+            listStyle: 'none'
+          }}>
+              <li style={{ marginBottom: '4px' }}>🔥 Get a drink or snack</li>
+              <li style={{ marginBottom: '4px' }}>🔥 Stretch arms & legs</li>
+              <li style={{ marginBottom: '4px' }}>🔥 Look outside, far away</li>
+              <li style={{ marginBottom: '4px' }}>🔥 Say "Hi" to someone</li>
+              <li style={{ marginBottom: '4px' }}>🔥 Get some fresh air</li>
+              <li style={{ marginBottom: '4px' }}>🔥 Take a short walk</li>
+              <li style={{ marginBottom: '4px' }}>🔥 DO NOT look at any screens</li>
+            </ul>
           </div>
 
           {/* Controls */}
