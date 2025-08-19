@@ -127,37 +127,37 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     }}>
         {/* Inner Screen */}
         <div style={{
-          backgroundColor: 'white',
-          borderRadius: '16px',
-          border: '2px solid #5A3E2B',
-          boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)',
-          padding: '20px',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-          color: '#000000',
-          position: 'relative'
-        }}>
+        backgroundColor: 'white',
+        borderRadius: '16px',
+        border: '2px solid #5A3E2B',
+        boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)',
+        padding: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        color: '#000000',
+        position: 'relative'
+      }}>
           {/* Sparky icon in top left corner with tooltip */}
           {sparkyIconUrl && <div style={{
-            position: 'absolute',
-            top: '8px',
-            left: '8px',
-            zIndex: 20,
-            cursor: 'pointer',
-            transition: 'transform 0.2s'
-          }} onMouseOver={e => {
-            e.currentTarget.style.transform = 'scale(1.05)';
-          }} onMouseOut={e => {
-            e.currentTarget.style.transform = 'scale(1)';
-          }}>
+          position: 'absolute',
+          top: '8px',
+          left: '8px',
+          zIndex: 20,
+          cursor: 'pointer',
+          transition: 'transform 0.2s'
+        }} onMouseOver={e => {
+          e.currentTarget.style.transform = 'scale(1.05)';
+        }} onMouseOut={e => {
+          e.currentTarget.style.transform = 'scale(1)';
+        }}>
             <Tooltip>
               <TooltipTrigger>
                 <img src={sparkyIconUrl} alt={sparkyName ?? 'Sparky'} style={{
-              width: '75px',
-              height: '75px',
-              objectFit: 'contain'
-            }} />
+                width: '75px',
+                height: '75px',
+                objectFit: 'contain'
+              }} />
               </TooltipTrigger>
               <TooltipContent className="whitespace-nowrap">
                 {sparkyName ?? 'Sparky -- Official Break Reminder'}
@@ -194,13 +194,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
           }}>
               {formatTime(timeLeft)}
             </div>
-            <p style={{
-            fontSize: '16px',
-            color: '#666666',
-            margin: 0
-          }}>
-              {isCompleted ? 'Break complete!' : 'Recommended break time'}
-            </p>
+            
           </div>
 
           {/* Message */}
