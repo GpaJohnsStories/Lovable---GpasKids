@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
+import { BreakTimerPopup } from '../BreakTimerPopup';
 const BreakGuide: React.FC = () => {
   const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
   const [minutesLeft, setMinutesLeft] = useState(15); // Default 15 minutes
@@ -8,6 +9,11 @@ const BreakGuide: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const panelRef = useRef<HTMLDivElement>(null);
+  
+  // SYS-BT2: Back Door functionality - Break Reminder access via triple-click
+  const [isBreakReminderOpen, setIsBreakReminderOpen] = useState(false);
+  const [sparkyClickCount, setSparkyClickCount] = useState(0);
+  const [sparkyClickTimer, setSparkyClickTimer] = useState<NodeJS.Timeout | null>(null);
   
   // Get close icon for the Break Timer
   const {
@@ -44,6 +50,43 @@ const BreakGuide: React.FC = () => {
     setPosition({ x: 0, y: 0 }); // Reset position when closing
   };
 
+  // SYS-BT2: Back Door - Triple-click Sparky to open Break Reminder and set timer to zero
+  // This allows viewing the Break Reminder without waiting for the 15-minute countdown
+  const handleSparkyClick = () => {
+    setSparkyClickCount(prev => prev + 1);
+    
+    // Clear existing timer
+    if (sparkyClickTimer) {
+      clearTimeout(sparkyClickTimer);
+    }
+    
+    // Set new timer to reset click count after 1 second
+    const timer = setTimeout(() => {
+      setSparkyClickCount(0);
+    }, 1000);
+    setSparkyClickTimer(timer);
+    
+    // Check for triple-click (3 clicks within 1 second)
+    if (sparkyClickCount === 2) { // This will be the 3rd click
+      setIsBreakReminderOpen(true);
+      setMinutesLeft(0); // Set timer to zero as requested
+      setSparkyClickCount(0); // Reset click counter
+      if (sparkyClickTimer) {
+        clearTimeout(sparkyClickTimer);
+      }
+    }
+  };
+
+  const handleCloseBreakReminder = () => {
+    setIsBreakReminderOpen(false);
+  };
+
+  const handleBreakComplete = () => {
+    setIsBreakReminderOpen(false);
+    // Reset the break timer back to 15 minutes
+    setMinutesLeft(15);
+  };
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0) return; // Only left click
     setIsDragging(true);
@@ -75,6 +118,15 @@ const BreakGuide: React.FC = () => {
       };
     }
   }, [isDragging, dragStart]);
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (sparkyClickTimer) {
+        clearTimeout(sparkyClickTimer);
+      }
+    };
+  }, [sparkyClickTimer]);
   return <TooltipProvider>
       {/* Break Button - positioned bottom-left, same height and alignment as "Top & Menu" button */}
       <button className="fixed bottom-20 left-4 z-50 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:from-green-500 hover:via-green-600 hover:to-green-700 text-white px-4 py-2 rounded-full border-2 border-[#228B22] shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 font-bold font-fun" onClick={handleBreakButtonClick} data-allow-superav-passthrough="true" data-testid="break-button">
@@ -108,8 +160,11 @@ const BreakGuide: React.FC = () => {
         border: '2px solid #5A3E2B',
         boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)'
       }}>
-            {/* Sparky icon in top left corner with tooltip */}
-            {sparkyIconUrl && <div className="absolute top-2 left-2 z-20">
+            {/* Sparky icon in top left corner with tooltip - SYS-BT2: Triple-click for Back Door access */}
+            {sparkyIconUrl && <div 
+                className="absolute top-2 left-2 z-20 cursor-pointer hover:scale-105 transition-transform"
+                onClick={handleSparkyClick}
+              >
                 <Tooltip>
                   <TooltipTrigger>
                     <img src={sparkyIconUrl} alt={sparkyName ?? 'Sparky'} style={{
@@ -119,7 +174,7 @@ const BreakGuide: React.FC = () => {
               }} />
                   </TooltipTrigger>
                   <TooltipContent className="whitespace-nowrap">
-                    {sparkyName ?? 'Sparky -- Official Break Timer'}
+                    {sparkyName ?? 'Sparky -- Official Break Timer (Triple-click for instant Break Reminder)'}
                   </TooltipContent>
                 </Tooltip>
               </div>}
@@ -182,6 +237,13 @@ const BreakGuide: React.FC = () => {
             </button>
           </div>
         </div>}
+
+      {/* SYS-BT2: Break Reminder popup - opened via Back Door triple-click on Sparky */}
+      <BreakTimerPopup 
+        isOpen={isBreakReminderOpen}
+        onClose={handleCloseBreakReminder}
+        onBreakComplete={handleBreakComplete}
+      />
 
     </TooltipProvider>;
 };

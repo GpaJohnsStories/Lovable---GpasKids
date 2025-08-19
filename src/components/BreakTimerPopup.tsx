@@ -1,3 +1,23 @@
+/**
+ * SYS-BT3 - Break Reminder Popup
+ * 
+ * This is the Break Reminder (formerly Break Timer Alert) that encourages users to take breaks.
+ * It is opened via the Break Timer system when a break is due, or via the Back Door 
+ * functionality (triple-clicking Sparky in the Break Timer).
+ * 
+ * SYS-BT2 Back Door Integration:
+ * - Can be opened instantly via triple-click on Sparky icon in Break Timer
+ * - When opened via Back Door, the Break Timer countdown is set to zero
+ * - Provides immediate access to break reminder without waiting for the 15-minute timer
+ * 
+ * Features:
+ * - 5-minute countdown timer for break duration
+ * - Start/pause functionality
+ * - Reset option to restart the break timer
+ * - Break completion acknowledgment
+ * - Motivational messaging to encourage taking breaks
+ */
+
 import React, { useState, useEffect } from 'react';
 import { Clock, Coffee, X } from 'lucide-react';
 
@@ -131,7 +151,7 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
               margin: 0,
               color: '#dcfce7'
             }}>
-              Break Time!
+              Break Reminder
             </h2>
           </div>
           <button
