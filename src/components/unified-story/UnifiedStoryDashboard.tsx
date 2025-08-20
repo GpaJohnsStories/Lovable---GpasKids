@@ -626,15 +626,15 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <SelectValue placeholder="Select voice" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white border shadow-lg">
-                      <SelectItem value="Alloy">Alloy - Clear, neutral voice</SelectItem>
-                      <SelectItem value="Echo">Echo - Deep, resonant voice</SelectItem>
-                      <SelectItem value="Fable">Fable - British accent, storytelling</SelectItem>
-                      <SelectItem value="Nova">Nova - Warm, friendly voice</SelectItem>
-                      <SelectItem value="Onyx">Onyx - Deep, authoritative voice</SelectItem>
-                      <SelectItem value="Shimmer">Shimmer - Soft, gentle voice</SelectItem>
-                      <SelectItem value="Ash">Ash - Gentle and neutral, calming</SelectItem>
-                      <SelectItem value="Coral">Coral - Bright and clear, youthful tone</SelectItem>
-                      <SelectItem value="Sage">Sage - Warm and thoughtful, reflective</SelectItem>
+                      <SelectItem value="alloy">Buddy</SelectItem>
+                      <SelectItem value="fable">Fluffy</SelectItem>
+                      <SelectItem value="echo">Gpa John</SelectItem>
+                      <SelectItem value="onyx">Max</SelectItem>
+                      <SelectItem value="sage">Sparky</SelectItem>
+                      <SelectItem value="ash">Ash</SelectItem>
+                      <SelectItem value="coral">Coral</SelectItem>
+                      <SelectItem value="nova">Nova</SelectItem>
+                      <SelectItem value="shimmer">Shimmer</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -701,7 +701,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                             <Play className="h-3 w-3" />
                             Test
                           </button>}
-                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Alloy')}>
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('alloy')}>
                           Use
                         </button>
                       </div>
@@ -723,7 +723,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                             <Play className="h-3 w-3" />
                             Test
                           </button>}
-                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Echo')}>
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('echo')}>
                           Use
                         </button>
                       </div>
@@ -748,7 +748,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                             <Play className="h-3 w-3" />
                             Test
                           </button>}
-                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Fable')}>
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('fable')}>
                           Use
                         </button>
                       </div>
@@ -770,7 +770,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                             <Play className="h-3 w-3" />
                             Test
                           </button>}
-                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Nova')}>
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('nova')}>
                           Use
                         </button>
                       </div>
@@ -795,7 +795,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                             <Play className="h-3 w-3" />
                             Test
                           </button>}
-                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Onyx')}>
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('onyx')}>
                           Use
                         </button>
                       </div>
@@ -817,7 +817,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                             <Play className="h-3 w-3" />
                             Test
                           </button>}
-                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Shimmer')}>
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('shimmer')}>
                           Use
                         </button>
                       </div>
@@ -842,7 +842,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                             <Play className="h-3 w-3" />
                             Test
                           </button>}
-                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Ash')}>
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('ash')}>
                           Use
                         </button>
                       </div>
@@ -864,7 +864,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                             <Play className="h-3 w-3" />
                             Test
                           </button>}
-                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Coral')}>
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('coral')}>
                           Use
                         </button>
                       </div>
@@ -889,7 +889,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                             <Play className="h-3 w-3" />
                             Test
                           </button>}
-                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Sage')}>
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('sage')}>
                           Use
                         </button>
                       </div>
