@@ -84,7 +84,7 @@ const Guide = () => {
                 style={{ borderColor: "#16a34a" }}
               >
                 <span>Start</span>
-                <span>Here</span>
+                <span className="text-orange-800">Here</span>
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G2A')?.scrollIntoView({ behavior: 'smooth' })}
