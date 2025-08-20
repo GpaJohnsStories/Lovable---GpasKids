@@ -616,14 +616,14 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           borderColor: '#2563eb'
         }}>
             <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
-              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2b</span>
+              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>3</span>
             </div>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
               color: '#2563eb'
             }}>
                 <Volume2 className="h-5 w-5" />
-                Create AI Voice File
+                Create AI Audio File
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
