@@ -80,66 +80,75 @@ const Guide = () => {
             <div className="flex flex-wrap justify-center gap-1.5">
               <button 
                 onClick={() => document.getElementById('SYS-G1A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-8 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center text-center leading-none break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
+                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
                 style={{ borderColor: "#16a34a" }}
               >
-                Start Here
+                <span className="text-[10px]">Guide To</span>
+                <span className="text-[10px]">Start Here</span>
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G2A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-8 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center text-center leading-none break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
+                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
                 style={{ borderColor: "#16a34a" }}
               >
-                Home Page
+                <span className="text-[10px]">Guide To</span>
+                <span className="text-[10px]">Home Page</span>
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G3A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-8 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center text-center leading-none break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
+                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
                 style={{ borderColor: "#16a34a" }}
               >
-                Story Library
+                <span className="text-[10px]">Guide To</span>
+                <span className="text-[10px]">Story Library</span>
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G3B')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-8 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center text-center leading-none break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
+                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
                 style={{ borderColor: "#16a34a" }}
               >
-                Read A Story
+                <span className="text-[10px]">Guide To</span>
+                <span className="text-[10px]">Read A Story</span>
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G4A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-8 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center text-center leading-none break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
+                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
                 style={{ borderColor: "#16a34a" }}
               >
-                Comments List
+                <span className="text-[10px]">Guide To</span>
+                <span className="text-[10px]">Comments List</span>
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G4B')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-8 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center text-center leading-none break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
+                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
                 style={{ borderColor: "#16a34a" }}
               >
-                Write Comment
+                <span className="text-[10px]">Guide To</span>
+                <span className="text-[10px]">Write Comment</span>
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G5A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-8 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center text-center leading-none break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
+                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
                 style={{ borderColor: "#16a34a" }}
               >
-                Write a Story
+                <span className="text-[10px]">Guide To</span>
+                <span className="text-[10px]">Write a Story</span>
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G6A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-8 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center text-center leading-none break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
+                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
                 style={{ borderColor: "#16a34a" }}
               >
-                About Us
+                <span className="text-[10px]">Guide To</span>
+                <span className="text-[10px]">About Us</span>
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G7A')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-8 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex items-center justify-center text-center leading-none break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
+                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
                 style={{ borderColor: "#16a34a" }}
               >
-                We Are Safe!
+                <span className="text-[10px]">Guide To</span>
+                <span className="text-[10px]">We Are Safe!</span>
               </button>
             </div>
           </div>
