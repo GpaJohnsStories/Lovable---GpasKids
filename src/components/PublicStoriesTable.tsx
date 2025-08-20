@@ -556,10 +556,27 @@ const PublicStoriesTable = ({
                               <div className="text-xs text-gray-600 font-medium">Updated</div>
                               <div className="text-xs text-black-system">{new Date(story.updated_at).toLocaleDateString()}</div>
                             </div>
-                            <div className="details-stack-item flex gap-1 justify-center">
-                              {story.audio_url && <Headphones className="h-4 w-4 text-green-600" />}
-                              {story.video_url && <Video className="h-4 w-4 text-blue-600" />}
-                              {story.reading_time_minutes && <div className="flex items-center gap-1"><Clock className="h-3 w-3 text-gray-500" /><span className="text-xs text-gray-500">{story.reading_time_minutes}m</span></div>}
+                            <div className="details-stack-item">
+                              <div className="flex justify-between items-center">
+                                {story.audio_url ? (
+                                  <Headphones className="w-4 h-4 text-green-600" />
+                                ) : (
+                                  <div className="w-4 h-4"></div>
+                                )}
+                                {story.video_url ? (
+                                  <Video className="w-4 h-4 text-blue-600" />
+                                ) : (
+                                  <div className="w-4 h-4"></div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="details-stack-item">
+                              {story.reading_time_minutes && (
+                                <div className="flex items-center gap-1 justify-center">
+                                  <Clock className="h-3 w-3 text-gray-500" />
+                                  <span className="text-xs text-gray-500">{story.reading_time_minutes}m</span>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </TableCell>
