@@ -328,7 +328,7 @@ const PublicStoriesTable = ({
                       <ChevronDown className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="z-50 bg-[#A0522D] text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
+                   <DropdownMenuContent className="z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
                     <DropdownMenuItem disabled className="text-white/60 cursor-default font-medium">
                       Sort On —
                     </DropdownMenuItem>
@@ -366,7 +366,7 @@ const PublicStoriesTable = ({
                       <ChevronDown className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="z-50 bg-[#A0522D] text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
+                  <DropdownMenuContent className="z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
                     <DropdownMenuItem disabled className="text-white/60 cursor-default font-medium">
                       Select Media
                     </DropdownMenuItem>
