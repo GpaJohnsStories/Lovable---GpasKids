@@ -12,11 +12,13 @@ import { getCategoryShortName } from "@/utils/categoryUtils";
 import { calculateReadingTime } from "@/utils/readingTimeUtils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'updated_at' | 'created_at' | 'reading_time' | 'thumbs_up_count';
 type SortDirection = 'asc' | 'desc';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers';
 type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'created_at' | 'reading_time';
 type MediaFilter = 'all' | 'audio' | 'video' | 'both';
+
 interface Story {
   id: string;
   story_code: string;
@@ -38,11 +40,13 @@ interface Story {
   photo_alt_1?: string;
   copyright_status?: string;
 }
+
 interface PublicStoriesTableProps {
   onEditBio?: (authorName: string) => void;
   searchTerm?: string;
   onSearchChange?: (value: string) => void;
 }
+
 const PublicStoriesTable = ({
   onEditBio,
   searchTerm = '',
@@ -66,6 +70,7 @@ const PublicStoriesTable = ({
     }, 300);
     return () => clearTimeout(timer);
   }, [localSearchTerm, onSearchChange]);
+
   const {
     data: stories,
     isLoading
@@ -127,6 +132,7 @@ const PublicStoriesTable = ({
       return filteredData;
     }
   });
+
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -136,6 +142,7 @@ const PublicStoriesTable = ({
       setSortDirection(field === 'read_count' ? 'desc' : 'asc');
     }
   };
+
   const handleSortOptionChange = (option: SortOption) => {
     setSortOption(option);
     setGroupByAuthor(option === 'author');
@@ -154,15 +161,18 @@ const PublicStoriesTable = ({
       setSortDirection(option === 'read_count' || option === 'updated_at' || option === 'created_at' ? 'desc' : 'asc');
     }
   };
+
   const toggleSortDirection = () => {
     if (sortOption !== 'thumbs' && sortOption !== 'author') {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     }
   };
+
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) return null;
     return sortDirection === 'asc' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />;
   };
+
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
       case "Fun":
@@ -177,6 +187,7 @@ const PublicStoriesTable = ({
         return "bg-gradient-to-b from-gray-400 to-gray-600 border-gray-700 shadow-[0_6px_12px_rgba(75,85,99,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] text-white";
     }
   };
+
   const getCategoryDisplayName = (category: CategoryFilter) => {
     switch (category) {
       case 'all':
@@ -193,6 +204,7 @@ const PublicStoriesTable = ({
         return category;
     }
   };
+
   const getCategoryColor = (category: CategoryFilter) => {
     switch (category) {
       case 'all':
@@ -209,19 +221,23 @@ const PublicStoriesTable = ({
         return 'bg-gray-100 text-gray-700 border-gray-300';
     }
   };
+
   const getCurrentCategoryDisplay = () => {
     if (categoryFilter === 'all') {
       return 'Category';
     }
     return getCategoryDisplayName(categoryFilter);
   };
+
   const categoryOptions: CategoryFilter[] = ['all', 'Fun', 'Life', 'North Pole', 'World Changers'];
+
   const handleClearSearch = () => {
     setLocalSearchTerm('');
     if (onSearchChange) {
       onSearchChange('');
     }
   };
+
   const getSortOptionDisplayName = (option: SortOption) => {
     switch (option) {
       case 'story_code':
@@ -246,6 +262,7 @@ const PublicStoriesTable = ({
         return 'Sort by...';
     }
   };
+
   const getMediaFilterDisplayName = (filter: MediaFilter) => {
     switch (filter) {
       case 'all':
@@ -270,31 +287,11 @@ const PublicStoriesTable = ({
     groups[author].push(story);
     return groups;
   }, {} as Record<string, typeof stories>) : null;
+
   return <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 xl:px-12">
       <TooltipProvider>
         <Card>
         <CardContent className="p-6">
-          {/* Title boxes row */}
-          <div className="flex justify-start mb-px">
-            <div className="flex gap-4 items-center">
-              <div className="h-6 px-3 py-1 text-center border-2 rounded-none flex items-center justify-center" style={{
-                backgroundColor: '#228B22',
-                borderColor: '#228B22',
-                fontSize: '16px',
-                color: '#FFD700',
-                fontFamily: 'Arial, sans-serif',
-                fontWeight: 'bold',
-                textShadow: '0 0 10px #FFD70080, 0 0 20px #FFD70080, 0 0 30px #FFD70080',
-                width: '320px'
-              }}>Search for any word, title or author</div>
-              <div className="h-6 px-3 py-1 border-2 border-gray-300 rounded-none bg-gray-100 text-center flex items-center justify-center" style={{
-                fontSize: '16px',
-                fontFamily: 'Arial, sans-serif',
-                color: 'black',
-                fontWeight: 'bold'
-              }}>Pick how to sort the list.</div>
-            </div>
-          </div>
           {/* Search and Sort Controls */}
           <div className="mb-6">
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -394,6 +391,7 @@ const PublicStoriesTable = ({
                 </Button>
               </div>}
           </div>
+          
           {isLoading ? <div className="text-center py-8 text-black-system">
               <BookOpen className="h-8 w-8 animate-spin text-green-700 mx-auto mb-4" />
               <p>Loading stories...</p>
@@ -541,4 +539,5 @@ const PublicStoriesTable = ({
     </TooltipProvider>
     </div>;
 };
+
 export default PublicStoriesTable;
