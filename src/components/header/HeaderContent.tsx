@@ -165,7 +165,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
               <TooltipTrigger asChild>
                 <button 
                   onClick={handleHgjClick}
-                  className="group relative z-10 bg-gradient-to-br from-orange-600/80 to-orange-700/60 hover:from-orange-500/80 hover:to-orange-600/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 sm:w-20 md:w-24 h-12 sm:h-16 md:h-20 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-orange-600 hover:border-orange-500 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+                  className="group relative z-10 flex items-center justify-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
                 >
                   {hgjLoading && (
                     <div className="w-full h-full bg-orange-300 animate-pulse rounded-md" />
