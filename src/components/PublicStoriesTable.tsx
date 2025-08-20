@@ -297,6 +297,9 @@ const PublicStoriesTable = ({
             <div className="grid gap-3 grid-cols-1 md:grid-cols-3 justify-items-center">
               {/* Search Library */}
               <div className="w-full max-w-[380px] h-16 relative">
+                <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                  <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1</span>
+                </div>
                 <Input
                   placeholder="Type Here to Search"
                   value={localSearchTerm}
@@ -323,7 +326,10 @@ const PublicStoriesTable = ({
               </div>
 
               {/* Select Media */}
-              <div className="w-full max-w-[380px] h-16">
+              <div className="w-full max-w-[380px] h-16 relative">
+                <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                  <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2</span>
+                </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button 
@@ -363,7 +369,10 @@ const PublicStoriesTable = ({
               </div>
 
               {/* Sort On */}
-              <div className="w-full max-w-[380px] h-16">
+              <div className="w-full max-w-[380px] h-16 relative">
+                <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                  <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>3</span>
+                </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button 
@@ -387,7 +396,7 @@ const PublicStoriesTable = ({
                       Author
                       {sortOption === 'author' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => handleSortOptionChange('category')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('category')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-center">
                       Category
                       {sortOption === 'category' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
