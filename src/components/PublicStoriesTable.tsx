@@ -10,25 +10,13 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { getCategoryShortName } from "@/utils/categoryUtils";
 import { calculateReadingTime } from "@/utils/readingTimeUtils";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'updated_at' | 'created_at' | 'reading_time' | 'thumbs_up_count';
 type SortDirection = 'asc' | 'desc';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers';
 type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'created_at' | 'reading_time';
 type MediaFilter = 'all' | 'audio' | 'video' | 'both';
-
 interface Story {
   id: string;
   story_code: string;
@@ -50,14 +38,16 @@ interface Story {
   photo_alt_1?: string;
   copyright_status?: string;
 }
-
 interface PublicStoriesTableProps {
   onEditBio?: (authorName: string) => void;
   searchTerm?: string;
   onSearchChange?: (value: string) => void;
 }
-
-const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: PublicStoriesTableProps) => {
+const PublicStoriesTable = ({
+  onEditBio,
+  searchTerm = '',
+  onSearchChange
+}: PublicStoriesTableProps) => {
   const [sortField, setSortField] = useState<SortField>('read_count');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
@@ -74,19 +64,16 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
         onSearchChange(localSearchTerm);
       }
     }, 300);
-
     return () => clearTimeout(timer);
   }, [localSearchTerm, onSearchChange]);
-
-  const { data: stories, isLoading } = useQuery({
+  const {
+    data: stories,
+    isLoading
+  } = useQuery({
     queryKey: ['public-stories', sortField, sortDirection, categoryFilter, searchTerm, mediaFilter, sortOption],
     queryFn: async () => {
-      let query = supabase
-        .from('stories')
-        .select('id, story_code, title, author, category, read_count, updated_at, created_at, thumbs_up_count, thumbs_down_count, reading_time_minutes, audio_url, video_url, content, tagline, excerpt, photo_link_1, photo_alt_1, copyright_status')
-        .eq('published', 'Y')
-        .not('category', 'in', '("WebText","BioText")');
-      
+      let query = supabase.from('stories').select('id, story_code, title, author, category, read_count, updated_at, created_at, thumbs_up_count, thumbs_down_count, reading_time_minutes, audio_url, video_url, content, tagline, excerpt, photo_link_1, photo_alt_1, copyright_status').eq('published', 'Y').not('category', 'in', '("WebText","BioText")');
+
       // Apply category filter
       if (categoryFilter !== 'all') {
         query = query.eq('category', categoryFilter);
@@ -104,22 +91,27 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
       // Apply search filter
       if (searchTerm && searchTerm.trim() !== '') {
         const searchQuery = `%${searchTerm.trim()}%`;
-        query = query.or(
-          `title.ilike.${searchQuery},content.ilike.${searchQuery},excerpt.ilike.${searchQuery},tagline.ilike.${searchQuery},author.ilike.${searchQuery}`
-        );
+        query = query.or(`title.ilike.${searchQuery},content.ilike.${searchQuery},excerpt.ilike.${searchQuery},tagline.ilike.${searchQuery},author.ilike.${searchQuery}`);
       }
 
       // Apply sorting
       if (sortOption === 'thumbs') {
-        query = query.order('thumbs_up_count', { ascending: false }).order('thumbs_down_count', { ascending: true });
+        query = query.order('thumbs_up_count', {
+          ascending: false
+        }).order('thumbs_down_count', {
+          ascending: true
+        });
       } else {
-        query = query.order(sortField, { ascending: sortDirection === 'asc' });
+        query = query.order(sortField, {
+          ascending: sortDirection === 'asc'
+        });
       }
-      
-      const { data, error } = await query;
-      
+      const {
+        data,
+        error
+      } = await query;
       if (error) throw error;
-      
+
       // Filter stories based on current time for public library
       const now = new Date();
       let filteredData = data.filter(story => {
@@ -132,11 +124,9 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
         ...story,
         reading_time_minutes: story.reading_time_minutes || Math.max(1, Math.ceil((story.content?.length || 0) / 1000))
       }));
-
       return filteredData;
-    },
+    }
   });
-
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -146,12 +136,10 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
       setSortDirection(field === 'read_count' ? 'desc' : 'asc');
     }
   };
-
   const handleSortOptionChange = (option: SortOption) => {
     setSortOption(option);
     setGroupByAuthor(option === 'author');
     setShowCategorySelect(option === 'category');
-    
     if (option === 'thumbs') {
       setSortField('thumbs_up_count');
       setSortDirection('desc');
@@ -166,18 +154,15 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
       setSortDirection(option === 'read_count' || option === 'updated_at' || option === 'created_at' ? 'desc' : 'asc');
     }
   };
-
   const toggleSortDirection = () => {
     if (sortOption !== 'thumbs' && sortOption !== 'author') {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
     }
   };
-
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) return null;
     return sortDirection === 'asc' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />;
   };
-
   const getCategoryBadgeColor = (category: string) => {
     switch (category) {
       case "Fun":
@@ -192,18 +177,22 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
         return "bg-gradient-to-b from-gray-400 to-gray-600 border-gray-700 shadow-[0_6px_12px_rgba(75,85,99,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] text-white";
     }
   };
-
   const getCategoryDisplayName = (category: CategoryFilter) => {
     switch (category) {
-      case 'all': return 'Show All';
-      case 'Fun': return 'Fun Stuff';
-      case 'Life': return 'Life Lessons';
-      case 'North Pole': return 'North Pole';
-      case 'World Changers': return 'World Changers';
-      default: return category;
+      case 'all':
+        return 'Show All';
+      case 'Fun':
+        return 'Fun Stuff';
+      case 'Life':
+        return 'Life Lessons';
+      case 'North Pole':
+        return 'North Pole';
+      case 'World Changers':
+        return 'World Changers';
+      default:
+        return category;
     }
   };
-
   const getCategoryColor = (category: CategoryFilter) => {
     switch (category) {
       case 'all':
@@ -220,80 +209,85 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
         return 'bg-gray-100 text-gray-700 border-gray-300';
     }
   };
-
   const getCurrentCategoryDisplay = () => {
     if (categoryFilter === 'all') {
       return 'Category';
     }
     return getCategoryDisplayName(categoryFilter);
   };
-
   const categoryOptions: CategoryFilter[] = ['all', 'Fun', 'Life', 'North Pole', 'World Changers'];
-
   const handleClearSearch = () => {
     setLocalSearchTerm('');
     if (onSearchChange) {
       onSearchChange('');
     }
   };
-
   const getSortOptionDisplayName = (option: SortOption) => {
     switch (option) {
-      case 'story_code': return 'Story Code';
-      case 'title': return 'Title';
-      case 'author': return 'Author (Grouped)';
-      case 'category': return 'Category';
-      case 'read_count': return 'Read Count';
-      case 'thumbs': return 'Thumbs Up/Down';
-      case 'updated_at': return 'Updated';
-      case 'created_at': return 'Created (Newest)';
-      case 'reading_time': return 'Reading Time';
-      default: return 'Sort by...';
+      case 'story_code':
+        return 'Story Code';
+      case 'title':
+        return 'Title';
+      case 'author':
+        return 'Author (Grouped)';
+      case 'category':
+        return 'Category';
+      case 'read_count':
+        return 'Read Count';
+      case 'thumbs':
+        return 'Thumbs Up/Down';
+      case 'updated_at':
+        return 'Updated';
+      case 'created_at':
+        return 'Created (Newest)';
+      case 'reading_time':
+        return 'Reading Time';
+      default:
+        return 'Sort by...';
     }
   };
-
   const getMediaFilterDisplayName = (filter: MediaFilter) => {
     switch (filter) {
-      case 'all': return 'All Stories';
-      case 'audio': return 'Has Audio';
-      case 'video': return 'Has Video';
-      case 'both': return 'Has Audio & Video';
-      default: return 'Media Filter';
+      case 'all':
+        return 'All Stories';
+      case 'audio':
+        return 'Has Audio';
+      case 'video':
+        return 'Has Video';
+      case 'both':
+        return 'Has Audio & Video';
+      default:
+        return 'Media Filter';
     }
   };
 
   // Group stories by author when in author mode
-  const groupedStories = groupByAuthor && stories ? 
-    stories.reduce((groups, story) => {
-      const author = story.author;
-      if (!groups[author]) {
-        groups[author] = [];
-      }
-      groups[author].push(story);
-      return groups;
-    }, {} as Record<string, typeof stories>) : null;
-
-  return (
-    <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 xl:px-12">
+  const groupedStories = groupByAuthor && stories ? stories.reduce((groups, story) => {
+    const author = story.author;
+    if (!groups[author]) {
+      groups[author] = [];
+    }
+    groups[author].push(story);
+    return groups;
+  }, {} as Record<string, typeof stories>) : null;
+  return <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 xl:px-12">
       <TooltipProvider>
         <Card>
         <CardContent className="p-6">
           {/* Title boxes row */}
           <div className="flex justify-center mb-6">
             <div className="grid grid-cols-2 gap-4 max-w-4xl w-full">
-              <div 
-                className="p-4 text-center border-2 rounded-none"
-                style={{ 
-                  backgroundColor: '#60a5fa', 
-                  borderColor: '#60a5fa',
-                  fontSize: '18px',
-                  color: '#FFD700',
-                  fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
-                }}
-              >
-                Search for any word, title or author.
-              </div>
-              <div className="p-4 border-2 border-gray-300 rounded-none bg-gray-100 text-center" style={{ fontSize: '18px', fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}>
+              <div className="p-4 text-center border-2 rounded-none" style={{
+                backgroundColor: '#60a5fa',
+                borderColor: '#60a5fa',
+                fontSize: '18px',
+                color: '#FFD700',
+                fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
+              }}>You can search for any word, title or author.</div>
+              <div className="p-4 border-2 border-gray-300 rounded-none bg-gray-100 text-center" style={{
+                fontSize: '18px',
+                fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
+              }}>
                 Box 2
               </div>
             </div>
@@ -304,23 +298,10 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
               {/* Search Input */}
               <div className="relative flex-1 sm:max-w-lg md:max-w-xl lg:max-w-2xl">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  type="text"
-                  placeholder="Just start typing here."
-                  value={localSearchTerm}
-                  onChange={(e) => setLocalSearchTerm(e.target.value)}
-                  className="pl-10 pr-10 py-2 text-sm border-2 border-brand-brown focus:border-brand-brown rounded-lg placeholder:font-bold"
-                />
-                {searchTerm && (
-                  <Button
-                    onClick={handleClearSearch}
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
-                  >
+                <Input type="text" placeholder="Just start typing here." value={localSearchTerm} onChange={e => setLocalSearchTerm(e.target.value)} className="pl-10 pr-10 py-2 text-sm border-2 border-brand-brown focus:border-brand-brown rounded-lg placeholder:font-bold" />
+                {searchTerm && <Button onClick={handleClearSearch} variant="ghost" size="sm" className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100">
                     <X className="h-4 w-4" />
-                  </Button>
-                )}
+                  </Button>}
               </div>
 
               {/* Sort Controls */}
@@ -345,40 +326,29 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                   </Select>
 
                   {/* Sort Direction Toggle */}
-                  {sortOption !== 'thumbs' && sortOption !== 'author' && (
-                    <Tooltip>
+                  {sortOption !== 'thumbs' && sortOption !== 'author' && <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button
-                          onClick={toggleSortDirection}
-                          variant="outline"
-                          size="sm"
-                          className="p-2 border-2 border-brand-brown hover:bg-green-50"
-                        >
+                        <Button onClick={toggleSortDirection} variant="outline" size="sm" className="p-2 border-2 border-brand-brown hover:bg-green-50">
                           {sortDirection === 'asc' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Toggle sort direction</p>
                       </TooltipContent>
-                    </Tooltip>
-                  )}
+                    </Tooltip>}
                 </div>
 
                 {/* Category Filter (when category sort is selected) */}
-                {showCategorySelect && (
-                  <Select value={categoryFilter} onValueChange={(value: CategoryFilter) => setCategoryFilter(value)}>
+                {showCategorySelect && <Select value={categoryFilter} onValueChange={(value: CategoryFilter) => setCategoryFilter(value)}>
                     <SelectTrigger className="w-full sm:w-40 bg-background border-2 border-brand-brown z-50">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-background border-2 border-brand-brown z-50">
-                      {categoryOptions.map((option) => (
-                        <SelectItem key={option} value={option}>
+                      {categoryOptions.map(option => <SelectItem key={option} value={option}>
                           {getCategoryDisplayName(option)}
-                        </SelectItem>
-                      ))}
+                        </SelectItem>)}
                     </SelectContent>
-                  </Select>
-                )}
+                  </Select>}
 
                 {/* Media Filter */}
                 <Select value={mediaFilter} onValueChange={(value: MediaFilter) => setMediaFilter(value)}>
@@ -412,50 +382,32 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
             </div>
             
             {/* Search Results Counter */}
-            {searchTerm && searchTerm.trim() !== '' && (
-              <div className="text-center mt-3">
+            {searchTerm && searchTerm.trim() !== '' && <div className="text-center mt-3">
                 <p className="text-sm text-green-700 font-system">
                   Found {stories?.length || 0} stories matching '{searchTerm}'
                 </p>
-                <Button
-                  onClick={handleClearSearch}
-                  variant="outline"
-                  size="sm"
-                  className="mt-2 border-green-700 text-green-700 hover:bg-green-50"
-                >
+                <Button onClick={handleClearSearch} variant="outline" size="sm" className="mt-2 border-green-700 text-green-700 hover:bg-green-50">
                   Clear Search Results
                 </Button>
-              </div>
-            )}
+              </div>}
           </div>
-          {isLoading ? (
-            <div className="text-center py-8 text-black-system">
+          {isLoading ? <div className="text-center py-8 text-black-system">
               <BookOpen className="h-8 w-8 animate-spin text-green-700 mx-auto mb-4" />
               <p>Loading stories...</p>
-            </div>
-          ) : groupByAuthor && groupedStories ? (
-            // Grouped by Author View
-            <div className="space-y-6">
-              {Object.entries(groupedStories)
-                .sort(([a], [b]) => a.localeCompare(b))
-                .map(([author, authorStories]) => (
-                  <div key={author} className="border border-green-700 rounded-lg overflow-hidden">
+            </div> : groupByAuthor && groupedStories ?
+          // Grouped by Author View
+          <div className="space-y-6">
+              {Object.entries(groupedStories).sort(([a], [b]) => a.localeCompare(b)).map(([author, authorStories]) => <div key={author} className="border border-green-700 rounded-lg overflow-hidden">
                     <div className="bg-green-700 text-white p-4">
                       <h3 className="text-lg font-bold">{author}</h3>
                       <p className="text-sm opacity-90">{authorStories.length} stories</p>
                     </div>
                     <div className="p-4">
                       <div className="grid gap-3">
-                        {authorStories
-                          .sort((a, b) => a.title.localeCompare(b.title))
-                          .map((story) => (
-                            <div key={story.id} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                        {authorStories.sort((a, b) => a.title.localeCompare(b.title)).map(story => <div key={story.id} className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                               <div className="flex items-center gap-3">
                                 <span className="font-mono text-sm font-bold text-green-700">{story.story_code}</span>
-                                <Link 
-                                  to={`/story/${story.story_code}`} 
-                                  className="font-medium hover:text-red-600 transition-colors"
-                                >
+                                <Link to={`/story/${story.story_code}`} className="font-medium hover:text-red-600 transition-colors">
                                   {story.title}
                                 </Link>
                               </div>
@@ -464,15 +416,11 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                                 {story.audio_url && <Headphones className="h-4 w-4 text-green-600" />}
                                 {story.video_url && <Video className="h-4 w-4 text-blue-600" />}
                               </div>
-                            </div>
-                          ))}
+                            </div>)}
                       </div>
                     </div>
-                  </div>
-                ))}
-            </div>
-          ) : (
-            <div className="border border-green-700 rounded-lg overflow-hidden">
+                  </div>)}
+            </div> : <div className="border border-green-700 rounded-lg overflow-hidden">
               <Table>
                   <TableHeader className="table-header-no-border">
                     <TableRow className="table-header-no-border bg-background hover:bg-background">
@@ -494,22 +442,15 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                      </TableRow>
                   </TableHeader>
                 <TableBody>
-                  {stories?.map((story) => (
-                     <TableRow key={story.id} className="table-row-green">
+                  {stories?.map(story => <TableRow key={story.id} className="table-row-green">
                        <TableCell className="text-black-system table-cell-top">
                          <div className="flex items-start gap-3">
-                           {story.photo_link_1 && (
-                             <div className="flex-shrink-0 flex flex-col items-center">
+                           {story.photo_link_1 && <div className="flex-shrink-0 flex flex-col items-center">
                                <Tooltip>
                                  <TooltipTrigger asChild>
-                                   <img
-                                     src={story.photo_link_1}
-                                     alt={story.photo_alt_1 || `Photo for ${story.title}`}
-                                     className="w-[100px] h-[100px] rounded-lg border-2 border-white shadow-lg object-cover cursor-pointer"
-                                     onError={(e) => {
-                                       e.currentTarget.style.display = 'none';
-                                     }}
-                                   />
+                                   <img src={story.photo_link_1} alt={story.photo_alt_1 || `Photo for ${story.title}`} className="w-[100px] h-[100px] rounded-lg border-2 border-white shadow-lg object-cover cursor-pointer" onError={e => {
+                              e.currentTarget.style.display = 'none';
+                            }} />
                                  </TooltipTrigger>
                                  <TooltipContent className="story-photo-tooltip">
                                    <p>{story.photo_alt_1 || `Photo for ${story.title}`}</p>
@@ -518,70 +459,46 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                                <div className="font-mono text-sm font-bold text-black-system mt-2">
                                  {story.story_code}
                                </div>
-                             </div>
-                           )}
+                             </div>}
                            <div className="flex-1">
-                             <Link 
-                               to={`/story/${story.story_code}`} 
-                               className="hover:text-red-600 transition-colors duration-300 font-medium text-base"
-                             >
+                             <Link to={`/story/${story.story_code}`} className="hover:text-red-600 transition-colors duration-300 font-medium text-base">
                                {story.title}
                              </Link>
-                             {story.tagline && (
-                               <div className="text-sm font-medium text-amber-700 italic mt-1">
+                             {story.tagline && <div className="text-sm font-medium text-amber-700 italic mt-1">
                                  {story.tagline}
-                               </div>
-                             )}
-                             {story.excerpt && (
-                               <div className="text-sm text-amber-600 mt-1 leading-relaxed">
+                               </div>}
+                             {story.excerpt && <div className="text-sm text-amber-600 mt-1 leading-relaxed">
                                  {story.excerpt}
-                               </div>
-                             )}
+                               </div>}
                            </div>
                          </div>
                        </TableCell>
                         <TableCell className="text-black-system table-cell-top">
                           <div className="flex flex-col items-center gap-1">
                             <span className="text-sm">{story.author}</span>
-                             {onEditBio && (
-                               <Tooltip>
+                             {onEditBio && <Tooltip>
                                  <TooltipTrigger asChild>
-                                   <Button
-                                     onClick={() => onEditBio(story.author)}
-                                     className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 h-auto min-w-[80px]"
-                                     size="sm"
-                                   >
+                                   <Button onClick={() => onEditBio(story.author)} className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 h-auto min-w-[80px]" size="sm">
                                      Biography
                                    </Button>
                                  </TooltipTrigger>
                                  <TooltipContent>
                                    <p className="text-xs">View {story.author}'s biography</p>
                                  </TooltipContent>
-                               </Tooltip>
-                             )}
+                               </Tooltip>}
                              <Tooltip>
                                <TooltipTrigger asChild>
                                  <Link to="/writing">
-                                   <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-pointer ${
-                                     (story.copyright_status || '©') === '©' ? 'bg-red-500' :
-                                     (story.copyright_status || '©') === 'O' ? 'bg-green-500' :
-                                     'bg-yellow-500'
-                                   }`}>
+                                   <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-pointer ${(story.copyright_status || '©') === '©' ? 'bg-red-500' : (story.copyright_status || '©') === 'O' ? 'bg-green-500' : 'bg-yellow-500'}`}>
                                      {story.copyright_status || '©'}
                                    </span>
                                  </Link>
                                </TooltipTrigger>
                                <TooltipContent>
                                  <div className="text-xs">
-                                   {(story.copyright_status || '©') === '©' && (
-                                     <span>© Full Copyright - All rights reserved. Click for more information</span>
-                                   )}
-                                   {(story.copyright_status || '©') === 'O' && (
-                                     <span>O Open, No Copyright - Free to share. Click for more information</span>
-                                   )}
-                    {(story.copyright_status || '©') === 'L' && (
-                      <span>L Limited Sharing - Gpa John's Copyright. Click for more information</span>
-                    )}
+                                   {(story.copyright_status || '©') === '©' && <span>© Full Copyright - All rights reserved. Click for more information</span>}
+                                   {(story.copyright_status || '©') === 'O' && <span>O Open, No Copyright - Free to share. Click for more information</span>}
+                    {(story.copyright_status || '©') === 'L' && <span>L Limited Sharing - Gpa John's Copyright. Click for more information</span>}
                                  </div>
                                </TooltipContent>
                              </Tooltip>
@@ -612,17 +529,13 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                             </div>
                           </div>
                         </TableCell>
-                     </TableRow>
-                  ))}
+                     </TableRow>)}
                 </TableBody>
               </Table>
-            </div>
-          )}
+            </div>}
         </CardContent>
       </Card>
     </TooltipProvider>
-    </div>
-  );
+    </div>;
 };
-
 export default PublicStoriesTable;
