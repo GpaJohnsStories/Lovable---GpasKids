@@ -296,7 +296,7 @@ const PublicStoriesTable = ({
           <div className="w-full flex justify-center mb-4">
             <div className="grid gap-3 grid-cols-1 md:grid-cols-3 justify-items-center">
               {/* Search Library */}
-              <div className="w-full max-w-[380px] h-10 relative">
+              <div className="w-full max-w-[380px] h-16 relative">
                 <Input
                   placeholder="Type Here to Search"
                   value={localSearchTerm}
@@ -312,15 +312,18 @@ const PublicStoriesTable = ({
                     variant="ghost"
                     size="sm"
                     onClick={handleClearSearch}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 text-[#8b4513]/80 hover:text-[#8b4513] hover:bg-orange-200 rounded-full"
+                    className="absolute right-2 top-1 h-8 w-8 p-0 text-[#8b4513]/80 hover:text-[#8b4513] hover:bg-orange-200 rounded-full"
                   >
                     <X className="h-4 w-4" />
                   </Button>
                 )}
+                <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
+                  {stories ? stories.length : 0} returned
+                </div>
               </div>
 
               {/* Select Media */}
-              <div className="w-full max-w-[380px] h-10">
+              <div className="w-full max-w-[380px] h-16">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button 
@@ -354,10 +357,13 @@ const PublicStoriesTable = ({
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
+                <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
+                  {getMediaFilterDisplayName(mediaFilter)} selected
+                </div>
               </div>
 
               {/* Sort On */}
-              <div className="w-full max-w-[380px] h-10">
+              <div className="w-full max-w-[380px] h-16">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button 
@@ -403,6 +409,9 @@ const PublicStoriesTable = ({
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
+                <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
+                  {getSortOptionDisplayName(sortOption)} sorted
+                </div>
               </div>
             </div>
           </div>
