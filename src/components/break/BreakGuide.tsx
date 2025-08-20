@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Button } from '@/components/ui/button';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { BreakTimerPopup } from '../BreakTimerPopup';
 const BreakGuide: React.FC = () => {
@@ -129,9 +130,16 @@ const BreakGuide: React.FC = () => {
   }, [sparkyClickTimer]);
   return <TooltipProvider>
       {/* Break Button - positioned bottom-left, same height and alignment as "Top & Menu" button */}
-      <button className="fixed bottom-20 left-4 z-50 bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:from-green-500 hover:via-green-600 hover:to-green-700 text-white px-4 py-2 rounded-full border-2 border-[#228B22] shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 font-bold font-fun" onClick={handleBreakButtonClick} data-allow-superav-passthrough="true" data-testid="break-button">
-        Break Guide
-      </button>
+      <Button
+        onClick={handleBreakButtonClick}
+        data-allow-superav-passthrough="true"
+        size="sm"
+        className="fixed bottom-20 left-4 z-50 rounded-full shadow-lg bg-gradient-to-b from-green-400 via-green-500 to-green-600 hover:from-green-500 hover:via-green-600 hover:to-green-700 text-white border-2 border-[#228B22] hover:border-[#228B22] transition-all duration-200 hover:scale-105 px-4 py-2"
+        aria-label="Break Guide"
+        data-testid="break-button"
+      >
+        <span className="font-bold font-fun">Break Guide</span>
+      </Button>
 
       {/* Break Timer Panel - same width as SuperAV, extended height for SYS-BT2 code */}
       {isBreakTimerOpen && <div 
