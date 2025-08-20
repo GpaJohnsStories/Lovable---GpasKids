@@ -797,6 +797,10 @@ export type Database = {
         Args: { new_nickname: string; personal_id: string }
         Returns: string
       }
+      validate_admin_context: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
     }
     Enums: {
       comment_status: "pending" | "approved" | "rejected" | "archived"
