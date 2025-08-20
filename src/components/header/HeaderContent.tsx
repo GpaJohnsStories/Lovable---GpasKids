@@ -165,20 +165,20 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
               <TooltipTrigger asChild>
                 <button 
                   onClick={handleHgjClick}
-                  className="bg-transparent border-0 p-0 m-0 cursor-pointer hover:opacity-80 transition-opacity duration-200 w-16 sm:w-20 md:w-24"
+                  className="btn-3d btn-3d-orange btn-3d-sm text-white w-16 sm:w-20 md:w-24 h-12 sm:h-16 md:h-20"
                 >
                   {hgjLoading && (
-                    <div className="w-full h-12 sm:h-18 md:h-24 bg-transparent animate-pulse" />
+                    <div className="w-full h-full bg-orange-300 animate-pulse rounded-md" />
                   )}
                   {(hgjError || !hgjIconUrl) && !hgjLoading ? (
-                    <div className="w-full h-12 sm:h-18 md:h-24 bg-transparent flex items-center justify-center text-orange-800 text-xs font-bold">
+                    <div className="w-full h-full flex items-center justify-center text-orange-800 text-xs font-bold">
                       !CO-HGJ.gif
                     </div>
                   ) : hgjIconUrl && !hgjLoading && !hgjError ? (
                     <img 
                       src={hgjIconUrl}
                       alt="Click to Help Grandpa John"
-                      className="w-full h-12 sm:h-18 md:h-24 object-contain"
+                      className="w-full h-full object-contain"
                     />
                   ) : null}
                 </button>
