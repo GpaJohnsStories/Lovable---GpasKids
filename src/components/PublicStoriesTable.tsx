@@ -297,7 +297,7 @@ const PublicStoriesTable = ({
             <div className="grid gap-3 grid-cols-1 md:grid-cols-3 justify-items-center">
               {/* Search Library */}
               <div className="w-full max-w-[380px] h-16 relative">
-                <div className="absolute -top-7 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                <div className="absolute -top-5 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
                   <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1</span>
                 </div>
                 <Input
@@ -327,7 +327,7 @@ const PublicStoriesTable = ({
 
               {/* Select Media */}
               <div className="w-full max-w-[380px] h-16 relative">
-                <div className="absolute -top-7 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                <div className="absolute -top-5 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
                   <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2</span>
                 </div>
                 <DropdownMenu>
@@ -370,7 +370,7 @@ const PublicStoriesTable = ({
 
               {/* Sort On */}
               <div className="w-full max-w-[380px] h-16 relative">
-                <div className="absolute -top-7 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                <div className="absolute -top-5 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
                   <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>3</span>
                 </div>
                 <DropdownMenu>
