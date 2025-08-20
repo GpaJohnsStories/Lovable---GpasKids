@@ -640,7 +640,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       <SelectItem value="Onyx">Onyx - Deep, authoritative voice</SelectItem>
                       <SelectItem value="Shimmer">Shimmer - Soft, gentle voice</SelectItem>
                       <SelectItem value="Ash">Ash - Gentle and neutral, calming</SelectItem>
-                      <SelectItem value="Ballad">Ballad - Expressive and melodic, storytelling</SelectItem>
                       <SelectItem value="Coral">Coral - Bright and clear, youthful tone</SelectItem>
                       <SelectItem value="Sage">Sage - Warm and thoughtful, reflective</SelectItem>
                     </SelectContent>
@@ -925,7 +924,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   
-                  {/* Row 4: Ash | Ballad */}
+                  {/* Row 4: Ash | Coral */}
                   <tr>
                     <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
                       <div className="text-xs font-bold mb-1">Ash</div>
@@ -965,47 +964,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       </div>
                     </td>
                     <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
-                      <div className="text-xs font-bold mb-1">Ballad</div>
-                      <div className="text-xs text-gray-600 mb-2">Expressive and melodic, storytelling</div>
-                      <div className="flex gap-1 justify-center">
-                        {loadingVoice === 'ballad' ? (
-                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
-                            <LoadingSpinner />
-                            <span>Testing...</span>
-                          </div>
-                        ) : currentlyPlaying === 'ballad' ? (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                            onClick={stopAudio}
-                          >
-                            <Square className="h-3 w-3" />
-                            Stop
-                          </button>
-                        ) : (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
-                            onClick={() => playVoice('ballad', formData.content, formData.title)}
-                          >
-                            <Play className="h-3 w-3" />
-                            Test
-                          </button>
-                        )}
-                        <button 
-                          type="button"
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => onVoiceChange?.('Ballad')}
-                        >
-                          Use
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  
-                  {/* Row 5: Coral | Sage */}
-                  <tr>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
                       <div className="text-xs font-bold mb-1">Coral</div>
                       <div className="text-xs text-gray-600 mb-2">Bright and clear, youthful tone</div>
                       <div className="flex gap-1 justify-center">
@@ -1042,6 +1000,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                         </button>
                       </div>
                     </td>
+                  </tr>
+                  
+                  {/* Row 5: Sage */}
+                  <tr>
                     <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
                       <div className="text-xs font-bold mb-1">Sage</div>
                       <div className="text-xs text-gray-600 mb-2">Warm and thoughtful, reflective</div>
@@ -1078,6 +1040,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                           Use
                         </button>
                       </div>
+                    </td>
+                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                      <div className="text-xs text-gray-600">Available for future voices</div>
                     </td>
                   </tr>
                 </tbody>
