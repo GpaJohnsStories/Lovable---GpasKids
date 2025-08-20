@@ -51,7 +51,6 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ResetPasswordRequest from "./components/auth/ResetPasswordRequest";
 import Dashboard from "./components/auth/Dashboard";
-import Profile from "./components/auth/Profile";
 
 import UnifiedStoryPage from "./components/unified-story/UnifiedStoryPage";
 
@@ -132,7 +131,6 @@ function App() {
                       
                       {/* Protected Routes */}
                       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
                       {/* Admin Routes */}
                       <Route path="/buddys_admin" element={<SecureAdminRoute><AdminOverview /></SecureAdminRoute>} />

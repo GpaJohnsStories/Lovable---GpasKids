@@ -114,19 +114,13 @@ export default function Login() {
             </Button>
           </form>
 
-          <div className="text-center space-y-2">
+          <div className="text-center">
             <Link
               to="/auth/forgot-password"
               className="text-sm text-primary hover:underline"
             >
               Forgot your password?
             </Link>
-            <div className="text-sm text-muted-foreground">
-              Need an account?{' '}
-              <Link to="/auth/register" className="text-primary hover:underline">
-                Register here
-              </Link>
-            </div>
           </div>
         </CardContent>
       </Card>
