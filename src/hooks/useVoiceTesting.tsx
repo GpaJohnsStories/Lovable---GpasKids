@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { getVoiceCharacter } from "@/utils/characterVoices";
 import { truncateToWordLimit } from "@/utils/textUtils";
 
 export const useVoiceTesting = () => {

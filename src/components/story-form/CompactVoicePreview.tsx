@@ -8,6 +8,7 @@ import { Play, Square, Volume2, AlertCircle, CheckCircle } from "lucide-react";
 import LoadingSpinner from "../LoadingSpinner";
 import { toast } from "@/hooks/use-toast";
 import { truncateToWordLimit } from "@/utils/textUtils";
+import { getVoiceCharacter } from "@/utils/characterVoices";
 
 const voices = [
   { id: 'alloy', name: 'Alloy', description: 'Neutral and balanced' },
@@ -202,6 +203,11 @@ const CompactVoicePreview: React.FC<CompactVoicePreviewProps> = ({
                     <div>
                       <h4 className="font-medium text-sm text-orange-800">{voice.name}</h4>
                       <p className="text-xs text-orange-600">{voice.description}</p>
+                      {getVoiceCharacter(voice.id) && (
+                        <p className="text-xs text-amber-700 font-medium mt-1">
+                          📖 {getVoiceCharacter(voice.id)}
+                        </p>
+                      )}
                     </div>
                     
                     <div className="flex gap-1">

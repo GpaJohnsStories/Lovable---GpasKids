@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Mic, Square, Volume2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-
+import { getVoiceCharacter } from "@/utils/characterVoices";
 
 interface VoiceSelectionProps {
   selectedVoice: string;
@@ -39,7 +39,48 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
 
   return (
     <div className="space-y-6">
-
+      <Card className="border-orange-200">
+        <CardContent className="p-4">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Volume2 className="h-4 w-4 text-orange-600" />
+              <Label className="text-sm font-bold">AI Voice Selection</Label>
+            </div>
+            
+            <Select value={selectedVoice} onValueChange={onVoiceChange}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a voice for AI audio generation" />
+              </SelectTrigger>
+              <SelectContent>
+                {voices.map((voice) => (
+                  <SelectItem key={voice.id} value={voice.id}>
+                    <div className="flex flex-col">
+                      <span className="font-medium">{voice.name}</span>
+                      <span className="text-xs text-gray-600">{voice.description}</span>
+                      {getVoiceCharacter(voice.id) && (
+                        <span className="text-xs text-amber-700 font-medium">
+                          📖 Assigned to: {getVoiceCharacter(voice.id)}
+                        </span>
+                      )}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            {selectedVoiceData && (
+              <div className="text-sm text-gray-600 bg-blue-50 p-3 rounded">
+                <strong>Selected:</strong> {selectedVoiceData.name} - {selectedVoiceData.description}
+                {getVoiceCharacter(selectedVoiceData.id) && (
+                  <div className="text-amber-700 font-medium mt-1">
+                    📖 Character Assignment: {getVoiceCharacter(selectedVoiceData.id)}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
