@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useHelp } from "@/contexts/HelpContext";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
@@ -198,11 +198,15 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                   !CO-SFK.gif
                 </div>
               ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
-                <img 
-                  src={safeForKidsIconUrl}
-                  alt="Safe For Kids Shield"
-                  className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] object-contain"
-                />
+                <Link to="/security">
+                  <button className="transition-transform duration-200 hover:scale-105 active:scale-95">
+                    <img 
+                      src={safeForKidsIconUrl}
+                      alt="Safe For Kids Shield - Click for Security Info"
+                      className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] object-contain cursor-pointer"
+                    />
+                  </button>
+                </Link>
               ) : null}
             </div>
             
