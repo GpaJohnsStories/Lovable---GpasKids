@@ -13,11 +13,11 @@ import { calculateReadingTime } from "@/utils/readingTimeUtils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'updated_at' | 'created_at' | 'reading_time' | 'thumbs_up_count';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'updated_at' | 'created_at' | 'reading_time_minutes' | 'thumbs_up_count';
 type SortDirection = 'asc' | 'desc';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers';
-type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'created_at' | 'reading_time';
-type MediaFilter = 'all' | 'audio' | 'video' | 'both';
+type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'reading_time';
+type MediaFilter = 'all' | 'text' | 'audio' | 'video' | 'both';
 
 interface Story {
   id: string;
@@ -61,21 +61,16 @@ const PublicStoriesTable = ({
   const [showCategorySelect, setShowCategorySelect] = useState(false);
   const [mediaFilter, setMediaFilter] = useState<MediaFilter>('all');
 
-  // Debounced search effect
+  // Sync local search with external search term
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (onSearchChange) {
-        onSearchChange(localSearchTerm);
-      }
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [localSearchTerm, onSearchChange]);
+    setLocalSearchTerm(searchTerm);
+  }, [searchTerm]);
 
   const {
     data: stories,
     isLoading
   } = useQuery({
-    queryKey: ['public-stories', sortField, sortDirection, categoryFilter, searchTerm, mediaFilter, sortOption],
+    queryKey: ['public-stories', sortField, sortDirection, categoryFilter, localSearchTerm, mediaFilter, sortOption],
     queryFn: async () => {
       let query = supabase.from('stories').select('id, story_code, title, author, category, read_count, updated_at, created_at, thumbs_up_count, thumbs_down_count, reading_time_minutes, audio_url, video_url, content, tagline, excerpt, photo_link_1, photo_alt_1, copyright_status').eq('published', 'Y').not('category', 'in', '("WebText","BioText")');
 
@@ -85,7 +80,9 @@ const PublicStoriesTable = ({
       }
 
       // Apply media filter
-      if (mediaFilter === 'audio') {
+      if (mediaFilter === 'text') {
+        query = query.is('audio_url', null).is('video_url', null);
+      } else if (mediaFilter === 'audio') {
         query = query.not('audio_url', 'is', null);
       } else if (mediaFilter === 'video') {
         query = query.not('video_url', 'is', null);
@@ -94,8 +91,8 @@ const PublicStoriesTable = ({
       }
 
       // Apply search filter
-      if (searchTerm && searchTerm.trim() !== '') {
-        const searchQuery = `%${searchTerm.trim()}%`;
+      if (localSearchTerm && localSearchTerm.trim() !== '') {
+        const searchQuery = `%${localSearchTerm.trim()}%`;
         query = query.or(`title.ilike.${searchQuery},content.ilike.${searchQuery},excerpt.ilike.${searchQuery},tagline.ilike.${searchQuery},author.ilike.${searchQuery}`);
       }
 
@@ -154,11 +151,14 @@ const PublicStoriesTable = ({
       setSortField('author');
       setSortDirection('asc');
     } else if (option === 'reading_time') {
-      setSortField('reading_time_minutes' as SortField);
+      setSortField('reading_time_minutes');
       setSortDirection('asc');
+    } else if (option === 'updated_at') {
+      setSortField('updated_at');
+      setSortDirection('desc');
     } else {
       setSortField(option as SortField);
-      setSortDirection(option === 'read_count' || option === 'updated_at' || option === 'created_at' ? 'desc' : 'asc');
+      setSortDirection(option === 'read_count' ? 'desc' : 'asc');
     }
   };
 
@@ -253,11 +253,9 @@ const PublicStoriesTable = ({
       case 'thumbs':
         return 'Thumbs Up/Down';
       case 'updated_at':
-        return 'Updated';
-      case 'created_at':
-        return 'Created (Newest)';
+        return 'Date Updated';
       case 'reading_time':
-        return 'Reading Time';
+        return 'Time to Read';
       default:
         return 'Sort by...';
     }
@@ -267,12 +265,14 @@ const PublicStoriesTable = ({
     switch (filter) {
       case 'all':
         return 'All Stories';
+      case 'text':
+        return 'Text Only';
       case 'audio':
-        return 'Has Audio';
+        return 'Has Text & Audio';
       case 'video':
         return 'Has Video';
       case 'both':
-        return 'Has Audio & Video';
+        return 'Has Text, Audio & Video';
       default:
         return 'Media Filter';
     }
@@ -292,6 +292,100 @@ const PublicStoriesTable = ({
       <TooltipProvider>
         <Card>
         <CardContent className="p-6">
+          {/* Control Boxes */}
+          <div className="w-full flex justify-center mb-4">
+            <div className="grid gap-3 grid-cols-1 md:grid-cols-3 justify-items-center">
+              {/* Search Library */}
+              <div className="w-full max-w-[380px] h-12 relative">
+                <Input
+                  placeholder="Search Library"
+                  value={localSearchTerm}
+                  onChange={(e) => {
+                    setLocalSearchTerm(e.target.value);
+                    onSearchChange?.(e.target.value);
+                  }}
+                  className="bg-[#A0522D] text-white placeholder-white/80 rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] hover:bg-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40"
+                />
+                {localSearchTerm && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleClearSearch}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 text-white/80 hover:text-white hover:bg-[#8b4513] rounded-full"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+
+              {/* Sort On */}
+              <div className="w-full max-w-[380px] h-12">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button className="bg-[#A0522D] text-white hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between">
+                      {getSortOptionDisplayName(sortOption)}
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="z-50 bg-[#A0522D] text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
+                    <DropdownMenuItem disabled className="text-white/60 cursor-default font-medium">
+                      Sort On —
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('title')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Title
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('author')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Author
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('category')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Category
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('read_count')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Times Story Read
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('thumbs')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Thumbs Up / Down
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('reading_time')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Time to Read
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('updated_at')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Date Updated
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              {/* Select Media */}
+              <div className="w-full max-w-[380px] h-12">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button className="bg-[#A0522D] text-white hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between">
+                      {getMediaFilterDisplayName(mediaFilter)}
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="z-50 bg-[#A0522D] text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
+                    <DropdownMenuItem disabled className="text-white/60 cursor-default font-medium">
+                      Select Media
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setMediaFilter('all')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      All Stories
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setMediaFilter('text')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Text Only
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setMediaFilter('audio')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Has Text & Audio
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setMediaFilter('both')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Has Text, Audio & Video
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+          </div>
           
           {isLoading ? <div className="text-center py-8 text-black-system">
               <BookOpen className="h-8 w-8 animate-spin text-green-700 mx-auto mb-4" />
