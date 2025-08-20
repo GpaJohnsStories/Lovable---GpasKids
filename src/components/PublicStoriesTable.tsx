@@ -278,6 +278,26 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
       <TooltipProvider>
         <Card>
         <CardContent className="p-6">
+          {/* Title boxes row */}
+          <div className="flex justify-center mb-6">
+            <div className="grid grid-cols-2 gap-4 max-w-4xl w-full">
+              <div 
+                className="p-4 text-center border-2 rounded-none"
+                style={{ 
+                  backgroundColor: '#60a5fa', 
+                  borderColor: '#60a5fa',
+                  fontSize: '18px',
+                  color: '#FFD700',
+                  fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
+                }}
+              >
+                Search for any word, title or author.
+              </div>
+              <div className="p-4 border-2 border-gray-300 rounded-none bg-gray-100 text-center" style={{ fontSize: '18px', fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}>
+                Box 2
+              </div>
+            </div>
+          </div>
           {/* Search and Sort Controls */}
           <div className="mb-6">
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">

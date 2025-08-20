@@ -25,34 +25,6 @@ const Library = () => {
           </h1>
         </div>
         
-        {/* Title boxes row */}
-        <div className="flex justify-center mb-6">
-          <div className="grid grid-cols-4 gap-4 max-w-4xl w-full">
-            <div 
-              className="p-4 text-center border-2 rounded-none"
-              style={{ 
-                backgroundColor: '#60a5fa', 
-                borderColor: '#60a5fa',
-                fontSize: '18px',
-                color: '#FFD700',
-                fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
-              }}
-            >
-              Search for any word, title or author.
-            </div>
-            {/* Placeholder for remaining 3 boxes */}
-            <div className="p-4 border-2 border-gray-300 rounded-none bg-gray-100">
-              Box 2
-            </div>
-            <div className="p-4 border-2 border-gray-300 rounded-none bg-gray-100">
-              Box 3
-            </div>
-            <div className="p-4 border-2 border-gray-300 rounded-none bg-gray-100">
-              Box 4
-            </div>
-          </div>
-        </div>
-        
         <div className="mb-8">
           <PublicStoriesTable 
             onEditBio={handleViewAuthorBio} 
