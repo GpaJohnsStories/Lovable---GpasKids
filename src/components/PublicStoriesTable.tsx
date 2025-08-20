@@ -275,7 +275,7 @@ const PublicStoriesTable = ({
         <Card>
         <CardContent className="p-6">
           {/* Title boxes row */}
-          <div className="flex justify-start mb-6">
+          <div className="flex justify-start mb-px">
             <div className="flex gap-4 items-center">
               <div className="h-6 px-3 py-1 text-center border-2 rounded-none flex items-center justify-center" style={{
                 backgroundColor: '#60a5fa',
