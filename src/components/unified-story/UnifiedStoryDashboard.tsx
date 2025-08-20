@@ -473,8 +473,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           <Card className="border-2 relative" style={{
           borderColor: '#4A7C59'
         }}>
-            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
-              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1c</span>
+            <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
+              <span className="text-black text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>C</span>
             </div>
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
