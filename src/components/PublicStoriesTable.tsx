@@ -287,9 +287,7 @@ const PublicStoriesTable = ({
               <div className="p-4 border-2 border-gray-300 rounded-none bg-gray-100 text-center" style={{
                 fontSize: '18px',
                 fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
-              }}>
-                Pick how you want the list sorted.
-              </div>
+              }}>Pick how to sort the list.</div>
             </div>
           </div>
           {/* Search and Sort Controls */}
