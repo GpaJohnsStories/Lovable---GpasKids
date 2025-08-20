@@ -681,7 +681,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           <Card className="h-fit border-2 relative" style={{
           borderColor: '#2563eb'
         }}>
-            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+            <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
               <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>A</span>
             </div>
             <CardHeader className="pb-3">
