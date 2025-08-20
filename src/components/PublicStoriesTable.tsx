@@ -296,7 +296,7 @@ const PublicStoriesTable = ({
           <div className="w-full flex justify-center mb-4">
             <div className="grid gap-3 grid-cols-1 md:grid-cols-3 justify-items-center">
               {/* Search Library */}
-              <div className="w-full max-w-[380px] h-11 relative">
+              <div className="w-full max-w-[380px] h-10 relative">
                 <Input
                   placeholder="Type Here to Search"
                   value={localSearchTerm}
@@ -304,7 +304,7 @@ const PublicStoriesTable = ({
                     setLocalSearchTerm(e.target.value);
                     onSearchChange?.(e.target.value);
                   }}
-                  className="text-[16pt] text-[#8b4513] font-bold placeholder:text-[16pt] placeholder:text-[#8b4513]/70 rounded-lg h-11 px-2 shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40"
+                  className="text-[16pt] text-[#8b4513] font-bold placeholder:text-[16pt] placeholder:text-[#8b4513]/70 rounded-lg h-10 px-2 shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40"
                   style={{ backgroundColor: '#FFEDD5' }}
                 />
                 {localSearchTerm && (
@@ -320,11 +320,11 @@ const PublicStoriesTable = ({
               </div>
 
               {/* Sort On */}
-              <div className="w-full max-w-[380px] h-11">
+              <div className="w-full max-w-[380px] h-10">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button 
-                      className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-11 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                      className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
                       aria-label={`Currently sorting by ${getSortOptionDisplayName(sortOption)}`}
                       title={`Currently sorting by: ${getSortOptionDisplayName(sortOption)}`}
                     >
@@ -362,11 +362,11 @@ const PublicStoriesTable = ({
               </div>
 
               {/* Select Media */}
-              <div className="w-full max-w-[380px] h-11">
+              <div className="w-full max-w-[380px] h-10">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button 
-                      className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-11 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                      className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
                       aria-label={`Currently filtering by ${getMediaFilterDisplayName(mediaFilter)}`}
                       title={`Current filter: ${getMediaFilterDisplayName(mediaFilter)}`}
                     >
