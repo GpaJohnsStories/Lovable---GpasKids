@@ -130,7 +130,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
         <div className="flex items-center gap-1">
           <Button type="button" size="sm" onClick={() => onFormat('big')} className="h-8 px-3 text-sm btn-toolbar-indigo">32px</Button>
           <Button type="button" size="sm" onClick={() => onFormat('med')} className="h-8 px-3 text-sm btn-toolbar-indigo">
-            Med
+            24px
           </Button>
           <Button type="button" size="sm" onClick={() => onFormat('large')} className="h-8 px-3 text-sm btn-toolbar-indigo">
             Large
