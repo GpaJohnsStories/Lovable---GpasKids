@@ -289,7 +289,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   return <form onSubmit={onSubmit} className="space-y-6">
       <div className="flex gap-6">
         <div className="w-[45%] space-y-4">
-          <div className="border border-transparent bg-transparent p-4 h-16">
+          <div className="bg-blue-600 border border-transparent p-4 h-16">
             <div className="flex gap-3 h-full">
               <button 
                 type="button" 
