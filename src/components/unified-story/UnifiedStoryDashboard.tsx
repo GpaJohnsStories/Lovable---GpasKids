@@ -340,7 +340,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           borderColor: '#814d2e'
         }}>
             <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
-              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1b</span>
+              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2</span>
             </div>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
