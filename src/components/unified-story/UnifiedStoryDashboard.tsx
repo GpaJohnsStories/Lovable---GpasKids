@@ -960,7 +960,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             <button 
               type="button" 
               onClick={onSaveOnly}
-              className="text-white font-bold rounded px-4 py-2"
+              className="text-white font-bold rounded-lg px-4 py-2"
               style={{ backgroundColor: '#22c55e' }}
             >
               SAVE
