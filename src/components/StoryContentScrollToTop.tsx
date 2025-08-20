@@ -4,9 +4,10 @@ import { Button } from '@/components/ui/button';
 
 interface StoryContentScrollToTopProps {
   scrollContainerRef: React.RefObject<HTMLElement>;
+  targetSelector?: string;
 }
 
-const StoryContentScrollToTop: React.FC<StoryContentScrollToTopProps> = ({ scrollContainerRef }) => {
+const StoryContentScrollToTop: React.FC<StoryContentScrollToTopProps> = ({ scrollContainerRef, targetSelector }) => {
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
@@ -23,8 +24,16 @@ const StoryContentScrollToTop: React.FC<StoryContentScrollToTopProps> = ({ scrol
     }
   }, [scrollContainerRef]);
 
-  const scrollToTop = () => {
-    if (scrollContainerRef.current) {
+  const scrollToTarget = () => {
+    if (targetSelector) {
+      const targetElement = document.querySelector(targetSelector);
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    } else if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({
         top: 0,
         behavior: 'smooth'
@@ -37,12 +46,13 @@ const StoryContentScrollToTop: React.FC<StoryContentScrollToTopProps> = ({ scrol
   return (
     <div className="absolute bottom-4 right-4 z-10">
       <Button
-        onClick={scrollToTop}
+        onClick={scrollToTarget}
         size="sm"
-        className="rounded-full shadow-lg bg-gradient-to-br from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 text-white border-2 border-orange-600 hover:border-orange-500 transition-all duration-300 hover:scale-105 px-4 py-2"
-        aria-label="Scroll to top of story content"
+        style={{ backgroundColor: '#F97316' }}
+        className="rounded-full shadow-lg hover:opacity-90 text-white border-2 border-orange-600 hover:border-orange-500 transition-all duration-300 hover:scale-105 px-4 py-2"
+        aria-label={targetSelector ? "Go to Format Menu" : "Scroll to top of story content"}
       >
-        <span className="font-bold font-fun">Menu</span>
+        <span className="font-bold font-fun">{targetSelector ? "Format Menu" : "Menu"}</span>
         <ArrowUp className="h-4 w-4 ml-2" />
       </Button>
     </div>

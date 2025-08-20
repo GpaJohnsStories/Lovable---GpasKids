@@ -20,7 +20,7 @@ interface StickyToolbarProps {
 
 const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, onAlign, onClearHtml, onClearAll, onInsertText, onFontChange, onFontSizeChange, onInsertLink, onShowHelp }) => {
   return (
-    <div className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{ backgroundColor: '#16a34a' }}>
+    <div id="format-menu" className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{ backgroundColor: '#16a34a' }}>
       <div className="flex items-center gap-2 flex-wrap">
         {/* Font Controls */}
         <div className="flex items-center gap-1">

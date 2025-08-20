@@ -301,7 +301,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
                 onFontSizeChange={onFontSizeChange}
               />
             </div>
-            <StoryContentScrollToTop scrollContainerRef={storyContentRef} />
+            <StoryContentScrollToTop scrollContainerRef={storyContentRef} targetSelector="#format-menu" />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
