@@ -321,7 +321,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           <Card className="border-2 relative" style={{
           borderColor: '#16a34a'
         }}>
-            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+            <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
               <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1a</span>
             </div>
             <CardHeader>
@@ -339,7 +339,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           <Card className="border-2 relative" style={{
           borderColor: '#814d2e'
         }}>
-            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+            <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
               <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2</span>
             </div>
             <CardHeader className="pb-3">
@@ -597,7 +597,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           <Card className="h-fit border-2 relative" style={{
           borderColor: '#2563eb'
         }}>
-            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+            <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
               <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>4</span>
             </div>
             <CardHeader className="pb-3">
@@ -663,7 +663,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           <Card className="h-fit border-2 relative" style={{
           borderColor: '#2563eb'
         }}>
-            <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
+            <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
               <span className="text-black text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>A</span>
             </div>
             <CardHeader className="pb-3">
@@ -906,7 +906,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           <Card className="h-fit border-2 relative" style={{
           borderColor: '#9333ea'
         }}>
-            <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
+            <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
               <span className="text-black text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>B</span>
             </div>
             <CardHeader className="pb-3">
@@ -925,7 +925,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           <Card className="border-2 relative" style={{
           borderColor: '#4A7C59'
         }}>
-            <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
+            <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
               <span className="text-black text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>C</span>
             </div>
             <CardHeader className="pb-2">
@@ -946,7 +946,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       <Card className="border-2 relative" style={{
       borderColor: '#F97316'
     }}>
-        <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+        <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
           <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>3</span>
         </div>
         <CardHeader>
