@@ -287,11 +287,15 @@ const PublicStoriesTable = ({
                 textShadow: '0 0 10px #FFD70080, 0 0 20px #FFD70080, 0 0 30px #FFD70080',
                 width: '320px'
               }}>Search for any word, title or author</div>
-              <div className="h-6 px-3 py-1 border-2 border-gray-300 rounded-none bg-gray-100 text-center flex items-center justify-center" style={{
+              <div className="h-6 px-3 py-1 border-2 rounded-none text-center flex items-center justify-center" style={{
+                backgroundColor: '#228B22',
+                borderColor: '#228B22',
                 fontSize: '16px',
+                color: '#FFD700',
                 fontFamily: 'Arial, sans-serif',
-                color: 'black',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                textShadow: '0 0 10px #FFD70080, 0 0 20px #FFD70080, 0 0 30px #FFD70080',
+                width: '320px'
               }}>Pick how to sort the list.</div>
             </div>
           </div>
