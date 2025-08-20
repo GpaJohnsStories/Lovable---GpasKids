@@ -304,7 +304,8 @@ const PublicStoriesTable = ({
                     setLocalSearchTerm(e.target.value);
                     onSearchChange?.(e.target.value);
                   }}
-                  className="bg-[#A0522D] text-white placeholder-white/80 rounded-lg h-12 px-5 shadow-lg ring-1 ring-[#8b4513] hover:bg-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40"
+                  className="text-white placeholder-white/80 rounded-lg h-12 px-5 shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40"
+                  style={{ background: 'linear-gradient(145deg, #fb923c, #F97316)' }}
                 />
                 {localSearchTerm && (
                   <Button
