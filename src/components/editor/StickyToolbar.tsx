@@ -4,7 +4,6 @@ import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key } from "lucide-react";
 import InternalLinkDialog from "@/components/rich-text-editor/InternalLinkDialog";
-
 interface StickyToolbarProps {
   onFormat: (tag: string) => void;
   onInsertList: (ordered: boolean) => void;
@@ -17,10 +16,21 @@ interface StickyToolbarProps {
   onInsertLink: (url: string, text: string) => void;
   onShowHelp: () => void;
 }
-
-const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, onAlign, onClearHtml, onClearAll, onInsertText, onFontChange, onFontSizeChange, onInsertLink, onShowHelp }) => {
-  return (
-    <div id="format-menu" className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{ backgroundColor: '#16a34a' }}>
+const StickyToolbar: React.FC<StickyToolbarProps> = ({
+  onFormat,
+  onInsertList,
+  onAlign,
+  onClearHtml,
+  onClearAll,
+  onInsertText,
+  onFontChange,
+  onFontSizeChange,
+  onInsertLink,
+  onShowHelp
+}) => {
+  return <div className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{
+    backgroundColor: '#16a34a'
+  }}>
       <div className="flex items-center gap-2 flex-wrap">
         {/* Font Controls */}
         <div className="flex items-center gap-1">
@@ -29,9 +39,15 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
               <SelectValue placeholder="Font" />
             </SelectTrigger>
             <SelectContent className="bg-white z-50">
-              <SelectItem value="Kalam" style={{ fontFamily: 'Kalam' }}>Kalam (child-friendly)</SelectItem>
-              <SelectItem value="Georgia" style={{ fontFamily: 'Georgia' }}>Georgia (story content)</SelectItem>
-              <SelectItem value="Arial" style={{ fontFamily: 'Arial' }}>Arial (titles & headings)</SelectItem>
+              <SelectItem value="Kalam" style={{
+              fontFamily: 'Kalam'
+            }}>Kalam (child-friendly)</SelectItem>
+              <SelectItem value="Georgia" style={{
+              fontFamily: 'Georgia'
+            }}>Georgia (story content)</SelectItem>
+              <SelectItem value="Arial" style={{
+              fontFamily: 'Arial'
+            }}>Arial (titles & headings)</SelectItem>
             </SelectContent>
           </Select>
           <Select onValueChange={onFontSizeChange} defaultValue="4">
@@ -50,204 +66,119 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({ onFormat, onInsertList, o
           </Select>
         </div>
 
-        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
+        <Separator orientation="vertical" className="h-6" style={{
+        backgroundColor: '#9c441a'
+      }} />
 
         {/* Text Formatting */}
         <div className="flex items-center gap-1">
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onFormat('strong')}
-            className="h-8 px-2 btn-toolbar-orange"
-          >
+          <Button type="button" size="sm" onClick={() => onFormat('strong')} className="h-8 px-2 btn-toolbar-orange">
             <Bold className="h-4 w-4" />
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onFormat('em')}
-            className="h-8 px-2 btn-toolbar-orange"
-          >
+          <Button type="button" size="sm" onClick={() => onFormat('em')} className="h-8 px-2 btn-toolbar-orange">
             <Italic className="h-4 w-4" />
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onFormat('u')}
-            className="h-8 px-2 btn-toolbar-orange"
-          >
+          <Button type="button" size="sm" onClick={() => onFormat('u')} className="h-8 px-2 btn-toolbar-orange">
             <Underline className="h-4 w-4" />
           </Button>
           
           {/* Dash buttons moved here for better accessibility */}
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onInsertText('–')}
-            className="h-8 px-3 text-sm font-bold btn-toolbar-orange"
-            title="Insert N-dash (short pause for audio)"
-          >
+          <Button type="button" size="sm" onClick={() => onInsertText('–')} className="h-8 px-3 text-sm font-bold btn-toolbar-orange" title="Insert N-dash (short pause for audio)">
             –
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onInsertText('—')}
-            className="h-8 px-3 text-sm font-bold btn-toolbar-orange"
-            title="Insert M-dash (long pause for audio)"
-          >
+          <Button type="button" size="sm" onClick={() => onInsertText('—')} className="h-8 px-3 text-sm font-bold btn-toolbar-orange" title="Insert M-dash (long pause for audio)">
             —
           </Button>
         </div>
 
-        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
+        <Separator orientation="vertical" className="h-6" style={{
+        backgroundColor: '#9c441a'
+      }} />
 
         {/* Text Alignment */}
         <div className="flex items-center gap-1">
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onAlign('left')}
-            className="h-8 px-2 btn-toolbar-blue"
-          >
+          <Button type="button" size="sm" onClick={() => onAlign('left')} className="h-8 px-2 btn-toolbar-blue">
             <AlignLeft className="h-4 w-4" />
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onAlign('center')}
-            className="h-8 px-2 btn-toolbar-blue"
-          >
+          <Button type="button" size="sm" onClick={() => onAlign('center')} className="h-8 px-2 btn-toolbar-blue">
             <AlignCenter className="h-4 w-4" />
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onAlign('right')}
-            className="h-8 px-2 btn-toolbar-blue"
-          >
+          <Button type="button" size="sm" onClick={() => onAlign('right')} className="h-8 px-2 btn-toolbar-blue">
             <AlignRight className="h-4 w-4" />
           </Button>
         </div>
 
-        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
+        <Separator orientation="vertical" className="h-6" style={{
+        backgroundColor: '#9c441a'
+      }} />
 
         {/* Lists */}
         <div className="flex items-center gap-1">
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onInsertList(false)}
-            className="h-8 px-2 btn-toolbar-purple"
-          >
+          <Button type="button" size="sm" onClick={() => onInsertList(false)} className="h-8 px-2 btn-toolbar-purple">
             <List className="h-4 w-4" />
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onInsertList(true)}
-            className="h-8 px-2 btn-toolbar-purple"
-          >
+          <Button type="button" size="sm" onClick={() => onInsertList(true)} className="h-8 px-2 btn-toolbar-purple">
             <ListOrdered className="h-4 w-4" />
           </Button>
         </div>
 
-        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
+        <Separator orientation="vertical" className="h-6" style={{
+        backgroundColor: '#9c441a'
+      }} />
 
         {/* Quick Tags */}
         <div className="flex items-center gap-1">
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onFormat('big')}
-            className="h-8 px-3 text-sm btn-toolbar-indigo"
-          >
-            Big
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onFormat('med')}
-            className="h-8 px-3 text-sm btn-toolbar-indigo"
-          >
+          <Button type="button" size="sm" onClick={() => onFormat('big')} className="h-8 px-3 text-sm btn-toolbar-indigo">32px</Button>
+          <Button type="button" size="sm" onClick={() => onFormat('med')} className="h-8 px-3 text-sm btn-toolbar-indigo">
             Med
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onFormat('large')}
-            className="h-8 px-3 text-sm btn-toolbar-indigo"
-          >
+          <Button type="button" size="sm" onClick={() => onFormat('large')} className="h-8 px-3 text-sm btn-toolbar-indigo">
             Large
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onFormat('p')}
-            className="h-8 px-3 text-sm btn-toolbar-indigo"
-          >
+          <Button type="button" size="sm" onClick={() => onFormat('p')} className="h-8 px-3 text-sm btn-toolbar-indigo">
             P
           </Button>
         </div>
 
-        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
+        <Separator orientation="vertical" className="h-6" style={{
+        backgroundColor: '#9c441a'
+      }} />
 
         {/* Internal Link */}
         <div className="flex items-center gap-1">
           <InternalLinkDialog onInsertLink={onInsertLink}>
-            <Button
-              type="button"
-              size="sm"
-              className="h-8 px-2 btn-toolbar-yellow"
-              title="Insert internal link"
-            >
+            <Button type="button" size="sm" className="h-8 px-2 btn-toolbar-yellow" title="Insert internal link">
               <Link2 className="h-4 w-4" />
             </Button>
           </InternalLinkDialog>
         </div>
 
 
-        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
+        <Separator orientation="vertical" className="h-6" style={{
+        backgroundColor: '#9c441a'
+      }} />
         
         {/* Clear buttons */}
         <div className="flex items-center gap-1">
-          <Button
-            type="button"
-            size="sm"
-            onClick={onClearHtml}
-            className="h-8 px-2 btn-toolbar-orange"
-            title="Clear HTML from selection"
-          >
+          <Button type="button" size="sm" onClick={onClearHtml} className="h-8 px-2 btn-toolbar-orange" title="Clear HTML from selection">
             <span className="text-sm font-bold">&lt;X&gt;</span>
           </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={onClearAll}
-            className="h-8 px-2 btn-toolbar-red"
-            title="Clear all content"
-          >
+          <Button type="button" size="sm" onClick={onClearAll} className="h-8 px-2 btn-toolbar-red" title="Clear all content">
             <Trash2 className="h-4 w-4" />
           </Button>
         </div>
 
-        <Separator orientation="vertical" className="h-6" style={{ backgroundColor: '#9c441a' }} />
+        <Separator orientation="vertical" className="h-6" style={{
+        backgroundColor: '#9c441a'
+      }} />
         
         {/* Help button */}
         <div className="flex items-center gap-1">
-          <Button
-            type="button"
-            size="sm"
-            onClick={onShowHelp}
-            className="h-8 px-2 btn-toolbar-green"
-            title="Show keyboard shortcuts (Ctrl+H)"
-          >
+          <Button type="button" size="sm" onClick={onShowHelp} className="h-8 px-2 btn-toolbar-green" title="Show keyboard shortcuts (Ctrl+H)">
             <Key className="h-4 w-4" />
           </Button>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default StickyToolbar;
