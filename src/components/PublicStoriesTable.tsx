@@ -461,7 +461,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                           <TooltipTrigger asChild>
                             <button
                               onClick={() => handleSort('title')}
-                              className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
+                              className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system rounded-full"
                             >
                               Title
                               {getSortIcon('title')}
@@ -477,7 +477,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                           <TooltipTrigger asChild>
                             <button
                               onClick={() => handleSort('author')}
-                              className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system"
+                              className="bg-green-700 hover:bg-green-800 text-white w-full h-6 text-xs px-1 py-1 font-system rounded-full"
                             >
                               Author
                               {getSortIcon('author')}
