@@ -84,7 +84,7 @@ const GpaJohnComments = () => {
                   {comment.subject}
                 </h3>
                 
-                <div className="text-blue-800 font-fun leading-relaxed text-base mb-4">
+                <div className="text-blue-800 font-fun leading-relaxed text-story-lg mb-4">
                   {comment.content.length > 200 
                     ? `${comment.content.substring(0, 200)}...` 
                     : comment.content
