@@ -298,21 +298,21 @@ const PublicStoriesTable = ({
               {/* Search Library */}
               <div className="w-full max-w-[380px] h-12 relative">
                 <Input
-                  placeholder="Search Library"
+                  placeholder="Type Here to Search Library"
                   value={localSearchTerm}
                   onChange={(e) => {
                     setLocalSearchTerm(e.target.value);
                     onSearchChange?.(e.target.value);
                   }}
-                  className="text-white font-bold placeholder:text-white/80 placeholder:!text-white placeholder:opacity-80 rounded-lg h-12 px-5 shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40 !text-white"
-                  style={{ background: 'linear-gradient(145deg, #fb923c, #F97316)', color: 'white' }}
+                  className="text-[#8b4513] font-bold placeholder:text-[#8b4513]/70 rounded-lg h-12 px-5 shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40"
+                  style={{ backgroundColor: '#FFEDD5' }}
                 />
                 {localSearchTerm && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={handleClearSearch}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 text-white/80 hover:text-white hover:bg-[#8b4513] rounded-full"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 text-[#8b4513]/80 hover:text-[#8b4513] hover:bg-orange-200 rounded-full"
                   >
                     <X className="h-4 w-4" />
                   </Button>
