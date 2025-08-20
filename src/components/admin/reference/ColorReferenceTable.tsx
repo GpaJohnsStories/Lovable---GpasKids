@@ -41,8 +41,8 @@ const ColorReferenceTable = () => {
       name: "Orange - Rust",
       hex: "#F97316",
       grouping: "Primary",
-      howUsed: ["Active buttons", "Current page indicators"],
-      whereUsed: ["Admin Dashboard", "Navigation menu"],
+      howUsed: ["Active buttons", "Current page indicators", "Border"],
+      whereUsed: ["Admin Dashboard", "Navigation menu", "Guide Page, Story Library - Border", "Guide Page, Writing - Border"],
       notes: "Rust orange for active states and current selections. Strong visual emphasis."
     },
     {
@@ -135,8 +135,8 @@ const ColorReferenceTable = () => {
       name: "Green - Primary",
       hex: "#16a34a",
       grouping: "Primary",
-      howUsed: ["Success states", "Positive actions", "Nature themes"],
-      whereUsed: ["Success buttons", "Confirmation messages", "Growth indicators"],
+      howUsed: ["Success states", "Positive actions", "Nature themes", "Border"],
+      whereUsed: ["Success buttons", "Confirmation messages", "Growth indicators", "Guide Page, Getting Started - Border"],
       notes: "Primary green for success and positive states. Strong, confident color."
     },
     {
@@ -167,9 +167,9 @@ const ColorReferenceTable = () => {
       name: "Green - Forest",
       hex: "#228B22",
       grouping: "Other",
-      howUsed: ["Success messages", "Positive actions"],
-      whereUsed: ["Form submissions", "Success pages"],
-      notes: "Success states and positive actions. Universally understood positive color."
+      howUsed: ["Success messages", "Positive actions", "Border", "Safety themes"],
+      whereUsed: ["Form submissions", "Success pages", "Guide Page, We Are Safe! - Border"],
+      notes: "Success states and positive actions. Forest green for safety and security themes."
     },
     {
       name: "Blue - Sky",
@@ -183,8 +183,8 @@ const ColorReferenceTable = () => {
       name: "Blue - Light",
       hex: "#ADD8E6",
       grouping: "Other",
-      howUsed: ["Secondary links", "Subtle highlights"],
-      whereUsed: ["Secondary navigation", "Metadata links"],
+      howUsed: ["Secondary links", "Subtle highlights", "Border", "Information elements"],
+      whereUsed: ["Secondary navigation", "Metadata links", "Guide Page, About Us - Border"],
       notes: "Light blue for secondary interactive elements and subtle emphasis."
     },
     {
@@ -236,6 +236,120 @@ const ColorReferenceTable = () => {
       howUsed: ["Hover states", "Selection highlights"],
       whereUsed: ["Table rows", "Interactive elements"],
       notes: "Hover highlights (50% opacity). Subtle feedback for user interactions."
+    },
+    
+    // Guide Page Colors
+    {
+      name: "Red - Primary",
+      hex: "#dc2626",
+      grouping: "Primary",
+      howUsed: ["Border", "Attention elements"],
+      whereUsed: ["Guide Page, Home Page - Border"],
+      notes: "Red to match buddy's home roof. Strong attention-grabbing color."
+    },
+    {
+      name: "Blue - Primary",
+      hex: "#3b82f6",
+      grouping: "Primary",
+      howUsed: ["Border", "Admin elements"],
+      whereUsed: ["Guide Page, Read A Story - Border"],
+      notes: "Blue same as admin top banner. Professional and trustworthy."
+    },
+    {
+      name: "Peach - Light",
+      hex: "#FFCBA4",
+      grouping: "Secondary",
+      howUsed: ["Border", "Warm accents"],
+      whereUsed: ["Guide Page, Comments List Page - Border"],
+      notes: "Light peach for gentle, warm borders. Child-friendly color."
+    },
+    {
+      name: "Peach - Darker",
+      hex: "#E6A875",
+      grouping: "Secondary",
+      howUsed: ["Border", "Warm accents"],
+      whereUsed: ["Guide Page, Write a Comment Page - Border"],
+      notes: "Darker peach for slightly more emphasis while staying warm."
+    },
+    {
+      name: "Blue - Light Guide",
+      hex: "#60a5fa",
+      grouping: "Secondary",
+      howUsed: ["Border", "Information elements"],
+      whereUsed: ["Guide Page, About Us - Border"],
+      notes: "Light blue for informational sections. Calm and approachable."
+    },
+    {
+      name: "Green - Forest Dark",
+      hex: "#4A7C59",
+      grouping: "Primary",
+      howUsed: ["Border", "Safety themes"],
+      whereUsed: ["Guide Page, We Are Safe! - Border"],
+      notes: "Forest green for safety and security themes. Natural, protective feeling."
+    },
+    {
+      name: "Green - Background Light",
+      hex: "#16a34a33",
+      grouping: "Other",
+      howUsed: ["Background", "Subtle highlights"],
+      whereUsed: ["Guide Page, Getting Started - Background"],
+      notes: "Light green background (20% opacity). Gentle, success-oriented background."
+    },
+    {
+      name: "Red - Background Light",
+      hex: "#dc262633",
+      grouping: "Other",
+      howUsed: ["Background", "Subtle highlights"],
+      whereUsed: ["Guide Page, Home Page - Background"],
+      notes: "Light red background (20% opacity). Subtle warm background accent."
+    },
+    {
+      name: "Orange - Background Light",
+      hex: "#F9731633",
+      grouping: "Other",
+      howUsed: ["Background", "Subtle highlights"],
+      whereUsed: ["Guide Page, Story Library - Background", "Guide Page, Writing - Background"],
+      notes: "Light orange background (20% opacity). Warm, energetic background tone."
+    },
+    {
+      name: "Blue - Background Light",
+      hex: "#3b82f633",
+      grouping: "Other",
+      howUsed: ["Background", "Subtle highlights"],
+      whereUsed: ["Guide Page, Read A Story - Background"],
+      notes: "Light blue background (20% opacity). Calm, professional background."
+    },
+    {
+      name: "Peach - Background Light",
+      hex: "#FFCBA433",
+      grouping: "Other",
+      howUsed: ["Background", "Subtle highlights"],
+      whereUsed: ["Guide Page, Comments List Page - Background"],
+      notes: "Light peach background (20% opacity). Gentle, warm background tone."
+    },
+    {
+      name: "Peach - Background Medium",
+      hex: "#E6A87533",
+      grouping: "Other",
+      howUsed: ["Background", "Subtle highlights"],
+      whereUsed: ["Guide Page, Write a Comment Page - Background"],
+      notes: "Medium peach background (20% opacity). Slightly stronger warm background."
+    },
+    {
+      name: "Blue - Background Soft",
+      hex: "#60a5fa33",
+      grouping: "Other",
+      howUsed: ["Background", "Subtle highlights"],
+      whereUsed: ["Guide Page, About Us - Background"],
+      notes: "Soft blue background (20% opacity). Gentle informational background."
+    },
+    {
+      name: "Emerald - Background Light",
+      hex: "#047857",
+      grouping: "Other",
+      howUsed: ["Background", "Subtle highlights"],
+      whereUsed: ["Guide Page, We Are Safe! - Background"],
+      notes: "Light emerald background (20% opacity). Natural, safe feeling background."
     }
   ];
 
