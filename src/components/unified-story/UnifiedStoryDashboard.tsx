@@ -495,9 +495,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           borderColor: '#F97316',
           borderWidth: '2px'
         }}>
-            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
-              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2a</span>
-            </div>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
               color: '#F97316'
