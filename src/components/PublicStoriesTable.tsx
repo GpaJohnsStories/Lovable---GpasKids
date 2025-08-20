@@ -281,9 +281,11 @@ const PublicStoriesTable = ({
                 backgroundColor: '#228B22',
                 borderColor: '#228B22',
                 fontSize: '16px',
-                color: 'black',
+                color: '#FFD700',
                 fontFamily: 'Arial, sans-serif',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                textShadow: '0 0 10px #FFD70080, 0 0 20px #FFD70080, 0 0 30px #FFD70080',
+                width: '320px'
               }}>Search for any word, title or author</div>
               <div className="h-6 px-3 py-1 border-2 border-gray-300 rounded-none bg-gray-100 text-center flex items-center justify-center" style={{
                 fontSize: '16px',
@@ -297,7 +299,7 @@ const PublicStoriesTable = ({
           <div className="mb-6">
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               {/* Search Input */}
-              <div className="relative" style={{ width: 'fit-content', maxWidth: '320px' }}>
+              <div className="relative" style={{ width: '320px' }}>
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input type="text" placeholder="Just start typing here." value={localSearchTerm} onChange={e => setLocalSearchTerm(e.target.value)} className="pl-10 pr-10 py-2 text-sm border-2 border-brand-brown focus:border-brand-brown rounded-lg placeholder:font-bold" />
                 {searchTerm && <Button onClick={handleClearSearch} variant="ghost" size="sm" className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100">
