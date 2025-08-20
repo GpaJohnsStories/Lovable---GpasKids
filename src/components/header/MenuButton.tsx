@@ -143,7 +143,7 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
               }}
             >
               <span className="text-center leading-tight break-words hyphens-auto max-w-full">
-                {text}
+                {icon || text}
               </span>
             </div>
           )}
