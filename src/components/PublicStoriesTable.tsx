@@ -308,10 +308,10 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                 {/* Sort By Dropdown */}
                 <div className="flex items-center gap-2">
                   <Select value={sortOption} onValueChange={handleSortOptionChange}>
-                    <SelectTrigger className="w-full sm:w-48 bg-background border-2 border-green-700 focus:border-green-800 z-50">
+                    <SelectTrigger className="w-full sm:w-48 bg-background border-2 border-brand-brown focus:border-brand-brown z-50">
                       <SelectValue placeholder="Sort by..." />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-2 border-green-700 z-50">
+                    <SelectContent className="bg-background border-2 border-brand-brown z-50">
                       <SelectItem value="story_code">Story Code</SelectItem>
                       <SelectItem value="title">Title</SelectItem>
                       <SelectItem value="author">Author (Grouped)</SelectItem>
@@ -332,7 +332,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                           onClick={toggleSortDirection}
                           variant="outline"
                           size="sm"
-                          className="p-2 border-2 border-green-700 hover:bg-green-50"
+                          className="p-2 border-2 border-brand-brown hover:bg-green-50"
                         >
                           {sortDirection === 'asc' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
                         </Button>
@@ -347,10 +347,10 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                 {/* Category Filter (when category sort is selected) */}
                 {showCategorySelect && (
                   <Select value={categoryFilter} onValueChange={(value: CategoryFilter) => setCategoryFilter(value)}>
-                    <SelectTrigger className="w-full sm:w-40 bg-background border-2 border-green-700 z-50">
+                    <SelectTrigger className="w-full sm:w-40 bg-background border-2 border-brand-brown z-50">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-2 border-green-700 z-50">
+                    <SelectContent className="bg-background border-2 border-brand-brown z-50">
                       {categoryOptions.map((option) => (
                         <SelectItem key={option} value={option}>
                           {getCategoryDisplayName(option)}
@@ -362,10 +362,10 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
 
                 {/* Media Filter */}
                 <Select value={mediaFilter} onValueChange={(value: MediaFilter) => setMediaFilter(value)}>
-                  <SelectTrigger className="w-full sm:w-40 bg-background border-2 border-green-700 z-50">
+                  <SelectTrigger className="w-full sm:w-40 bg-background border-2 border-brand-brown z-50">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-2 border-green-700 z-50">
+                  <SelectContent className="bg-background border-2 border-brand-brown z-50">
                     <SelectItem value="all">All Stories</SelectItem>
                     <SelectItem value="audio">
                       <div className="flex items-center gap-2">

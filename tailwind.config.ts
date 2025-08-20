@@ -105,7 +105,8 @@ export default {
 				info: {
 					DEFAULT: 'hsl(var(--info))',
 					foreground: 'hsl(var(--info-foreground))'
-				}
+				},
+				'brand-brown': 'hsl(var(--medium-brown))'
 			},
 			fontFamily: {
 				'handwritten': ['Kalam', 'Comic Sans MS', 'Arial', 'sans-serif'],
