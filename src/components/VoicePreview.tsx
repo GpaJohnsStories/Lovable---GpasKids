@@ -10,7 +10,7 @@ import { truncateToWordLimit } from "@/utils/textUtils";
 import { getVoiceCharacter } from "@/utils/characterVoices";
 
 const voices = [
-  { id: 'alloy', name: 'Alloy', description: 'Neutral and balanced' },
+  { id: 'alloy', name: 'Buddy', description: 'Neutral and balanced (Alloy)' },
   { id: 'echo', name: 'Echo', description: 'Clear and crisp' },
   { id: 'fable', name: 'Fable', description: 'Warm and storytelling' },
   { id: 'onyx', name: 'Onyx', description: 'Deep and authoritative' },
