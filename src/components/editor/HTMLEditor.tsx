@@ -72,30 +72,6 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     }, 0);
   };
 
-  const handleClipboard = async (action: 'copy' | 'cut' | 'paste') => {
-    const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = content.substring(start, end);
-
-    try {
-      if (action === 'copy' && selectedText) {
-        await navigator.clipboard.writeText(selectedText);
-      } else if (action === 'cut' && selectedText) {
-        await navigator.clipboard.writeText(selectedText);
-        const newContent = content.substring(0, start) + content.substring(end);
-        onChange(newContent);
-      } else if (action === 'paste') {
-        const clipboardText = await navigator.clipboard.readText();
-        const newContent = content.substring(0, start) + clipboardText + content.substring(end);
-        onChange(newContent);
-      }
-    } catch (err) {
-      console.warn('Clipboard operation failed:', err);
-    }
-  };
 
   const handleClearHtml = () => {
     const textarea = typeof textareaRef === 'function' ? null : textareaRef.current;
@@ -167,18 +143,6 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
         case 'u':
           e.preventDefault();
           wrapSelectedText('<span style="text-decoration: underline;">', '</span>');
-          break;
-        case 'c':
-          e.preventDefault();
-          handleClipboard('copy');
-          break;
-        case 'x':
-          e.preventDefault();
-          handleClipboard('cut');
-          break;
-        case 'y':
-          e.preventDefault();
-          handleClipboard('paste');
           break;
         case 'p':
           e.preventDefault();
@@ -261,7 +225,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + S', action: 'Save Story' },
     { key: 'Ctrl + U', action: 'Underline' },
     { key: 'Ctrl + X', action: 'Cut' },
-    { key: 'Ctrl + Y', action: 'Paste' },
+    { key: 'Ctrl + V', action: 'Paste' },
     { key: 'Ctrl + #', action: 'Numbered List' },
     { key: 'Ctrl + 1', action: 'Big Text' },
     { key: 'Ctrl + 2', action: 'Med Text' },

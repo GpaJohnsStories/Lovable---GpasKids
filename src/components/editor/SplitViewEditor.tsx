@@ -248,7 +248,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     { key: 'Ctrl + S', action: 'Save Story' },
     { key: 'Ctrl + U', action: 'Underline' },
     { key: 'Ctrl + X', action: 'Cut' },
-    { key: 'Ctrl + Y', action: 'Paste' },
+    { key: 'Ctrl + V', action: 'Paste' },
     { key: 'Ctrl + #', action: 'Numbered List' },
     { key: 'Ctrl + 1', action: 'Big Heading' },
     { key: 'Ctrl + 2', action: 'Medium Heading' },
