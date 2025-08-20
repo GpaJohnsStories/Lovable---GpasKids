@@ -4,52 +4,46 @@ import { format } from 'date-fns';
 import { MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
-
 type GpaJohnComment = {
   id: string;
   created_at: string;
   subject: string;
   content: string;
 };
-
 const GpaJohnComments = () => {
-  const { data: comments, isLoading, error } = useQuery<GpaJohnComment[]>({
+  const {
+    data: comments,
+    isLoading,
+    error
+  } = useQuery<GpaJohnComment[]>({
     queryKey: ["gpaJohnComments"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("comments")
-        .select("id, created_at, subject, content")
-        .eq("personal_id", "0000FF")
-        .eq("status", "approved")
-        .order("created_at", { ascending: false })
-        .limit(3);
-
+      const {
+        data,
+        error
+      } = await supabase.from("comments").select("id, created_at, subject, content").eq("personal_id", "0000FF").eq("status", "approved").order("created_at", {
+        ascending: false
+      }).limit(3);
       if (error) {
         throw new Error(error.message);
       }
-
       return data as GpaJohnComment[];
-    },
+    }
   });
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
   };
-
   if (isLoading) {
-    return (
-      <div className="flex justify-center py-4">
+    return <div className="flex justify-center py-4">
         <LoadingSpinner />
-      </div>
-    );
+      </div>;
   }
 
   // Always show the announcements banner, even if no comments
-  return (
-    <section className="py-8">
+  return <section className="py-8">
       {/* Header Banner - Always visible */}
       <div className="container mx-auto px-4">
         <div className="bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 rounded-xl p-3 shadow-[0_6px_0_#1e40af,0_8px_15px_rgba(0,0,0,0.3)] border border-blue-700 mb-4 relative">
@@ -60,14 +54,9 @@ const GpaJohnComments = () => {
       </div>
 
       {/* Comments List - Only show if we have comments and no error */}
-      {!error && comments && comments.length > 0 && (
-        <div className="container mx-auto px-4">
+      {!error && comments && comments.length > 0 && <div className="container mx-auto px-4">
           <div className="space-y-4">
-            {comments.map((comment) => (
-              <div 
-                key={comment.id}
-                className="bg-blue-50/80 border-2 border-blue-200 rounded-lg p-6 shadow-lg"
-              >
+            {comments.map(comment => <div key={comment.id} className="bg-blue-50/80 border-2 border-blue-200 rounded-lg p-6 shadow-lg">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <span className="font-bold text-blue-800 font-fun text-lg">GpaJohn</span>
@@ -75,7 +64,7 @@ const GpaJohnComments = () => {
                       📢 Announcement
                     </div>
                   </div>
-                  <span className="text-blue-600 font-fun text-sm">
+                  <span className="text-blue-600 font-fun text-base">
                     {format(new Date(comment.created_at), 'MMM d, yyyy')}
                   </span>
                 </div>
@@ -84,27 +73,16 @@ const GpaJohnComments = () => {
                   {comment.subject}
                 </h3>
                 
-                <div className="text-blue-800 font-fun leading-relaxed text-story-lg mb-4">
-                  {comment.content.length > 200 
-                    ? `${comment.content.substring(0, 200)}...` 
-                    : comment.content
-                  }
+                <div className="text-blue-800 font-fun leading-relaxed text-base mb-4">
+                  {comment.content.length > 200 ? `${comment.content.substring(0, 200)}...` : comment.content}
                 </div>
                 
-                <Link 
-                  to={`/comment/${comment.id}`} 
-                  onClick={scrollToTop}
-                  className="inline-block bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 text-white font-fun font-semibold px-6 py-3 rounded-full shadow-[0_4px_0_#1e40af,0_6px_10px_rgba(0,0,0,0.3)] border border-blue-700 hover:shadow-[0_2px_0_#1e40af,0_4px_8px_rgba(0,0,0,0.3)] hover:translate-y-[2px] transition-all duration-150 active:shadow-[0_0_0_#1e40af,0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[4px]"
-                >
+                <Link to={`/comment/${comment.id}`} onClick={scrollToTop} className="inline-block bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 text-white font-fun font-semibold px-6 py-3 rounded-full shadow-[0_4px_0_#1e40af,0_6px_10px_rgba(0,0,0,0.3)] border border-blue-700 hover:shadow-[0_2px_0_#1e40af,0_4px_8px_rgba(0,0,0,0.3)] hover:translate-y-[2px] transition-all duration-150 active:shadow-[0_0_0_#1e40af,0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[4px]">
                   Read Full Announcement
                 </Link>
-              </div>
-            ))}
+              </div>)}
           </div>
-        </div>
-      )}
-    </section>
-  );
+        </div>}
+    </section>;
 };
-
 export default GpaJohnComments;
