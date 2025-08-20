@@ -323,8 +323,12 @@ const PublicStoriesTable = ({
               <div className="w-full max-w-[380px] h-12">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between">
-                      {getSortOptionDisplayName(sortOption)}
+                    <Button 
+                      className="bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                      aria-label={`Currently sorting by ${getSortOptionDisplayName(sortOption)}`}
+                      title={`Currently sorting by: ${getSortOptionDisplayName(sortOption)}`}
+                    >
+                      Sort On —
                       <ChevronDown className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
@@ -361,8 +365,12 @@ const PublicStoriesTable = ({
               <div className="w-full max-w-[380px] h-12">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between">
-                      {getMediaFilterDisplayName(mediaFilter)}
+                    <Button 
+                      className="bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                      aria-label={`Currently filtering by ${getMediaFilterDisplayName(mediaFilter)}`}
+                      title={`Current filter: ${getMediaFilterDisplayName(mediaFilter)}`}
+                    >
+                      Select Media —
                       <ChevronDown className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
