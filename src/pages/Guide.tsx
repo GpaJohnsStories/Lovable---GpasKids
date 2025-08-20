@@ -91,7 +91,7 @@ const Guide = () => {
                 className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-red-200 to-red-300 hover:from-red-300 hover:to-red-400 active:from-red-400 active:to-red-500 text-white border-2 border-red-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
                 style={{ borderColor: "#dc2626" }}
               >
-                <span className="text-orange-800 text-[10px]">Guide To</span>
+                <span className="text-orange-800 text-[10px]">Your Guide to the</span>
                 <span className="text-orange-800 text-[10px]">Home Page</span>
               </button>
               <button 
