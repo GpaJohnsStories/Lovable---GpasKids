@@ -102,7 +102,10 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
       {/* Bio-specific fields - only show when category is BioText */}
       {formData.category === 'BioText' && (
         <>
-          <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 space-y-4">
+          <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 space-y-4 relative">
+            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1b</span>
+            </div>
             <h3 className="text-lg font-bold text-teal-800 mb-3">Biography Information</h3>
             
             <div className="space-y-2">
