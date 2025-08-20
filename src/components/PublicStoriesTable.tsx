@@ -276,8 +276,8 @@ const PublicStoriesTable = ({
         <CardContent className="p-6">
           {/* Title boxes row */}
           <div className="flex justify-center mb-6">
-            <div className="grid grid-cols-2 gap-4 max-w-4xl w-full">
-              <div className="h-6 px-2 py-1 text-center border-2 rounded-none flex items-center justify-center" style={{
+            <div className="flex gap-4 items-center">
+              <div className="h-6 px-3 py-1 text-center border-2 rounded-none flex items-center justify-center" style={{
                 backgroundColor: '#60a5fa',
                 borderColor: '#60a5fa',
                 fontSize: '16px',
@@ -285,7 +285,7 @@ const PublicStoriesTable = ({
                 fontFamily: 'Arial, sans-serif',
                 fontWeight: 'bold'
               }}>Search for any word, title or author.</div>
-              <div className="h-6 px-2 py-1 border-2 border-gray-300 rounded-none bg-gray-100 text-center flex items-center justify-center" style={{
+              <div className="h-6 px-3 py-1 border-2 border-gray-300 rounded-none bg-gray-100 text-center flex items-center justify-center" style={{
                 fontSize: '16px',
                 fontFamily: 'Arial, sans-serif',
                 color: 'black',
