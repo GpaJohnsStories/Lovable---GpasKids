@@ -143,7 +143,7 @@ const Guide = () => {
               borderColor: "#4A7C59"
             }}>
                 <span className="text-orange-800 text-[10px]">Guide To</span>
-                <span className="text-orange-800 text-[10px]">Security</span>
+                <span className="text-orange-800 text-[10px]">Your Safety</span>
               </button>
             </div>
           </div>
