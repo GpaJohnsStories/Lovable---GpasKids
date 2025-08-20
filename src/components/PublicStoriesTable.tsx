@@ -509,7 +509,7 @@ const PublicStoriesTable = ({
                        </TableCell>
                         <TableCell className="text-black-system table-cell-top">
                           <div className="flex flex-col items-center gap-1">
-                            <span className="text-sm">{story.author}</span>
+                            <span className="text-[16pt] text-black" style={{ fontFamily: 'Georgia, serif' }}>{story.author}</span>
                              {onEditBio && <Tooltip>
                                  <TooltipTrigger asChild>
                                    <Button onClick={() => onEditBio(story.author)} className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 h-auto min-w-[80px]" size="sm">
