@@ -494,13 +494,13 @@ const PublicStoriesTable = ({
                                  {story.story_code}
                                </div>
                              </div>}
-                           <div className="flex-1">
-                             <Link to={`/story/${story.story_code}`} className="hover:text-red-600 transition-colors duration-300 font-medium text-base">
-                               {story.title}
-                             </Link>
-                             {story.tagline && <div className="text-sm font-medium text-amber-700 italic mt-1">
-                                 {story.tagline}
-                               </div>}
+                            <div className="flex-1">
+                              <Link to={`/story/${story.story_code}`} className="hover:text-red-600 transition-colors duration-300 font-semibold text-[18pt] text-black leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+                                {story.title}
+                              </Link>
+                              {story.tagline && <div className="text-[16pt] font-medium text-black italic mt-1" style={{ fontFamily: 'Georgia, serif' }}>
+                                  {story.tagline}
+                                </div>}
                               {story.excerpt && <div className="text-[16pt] text-black mt-1 leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
                                   {story.excerpt}
                                 </div>}
