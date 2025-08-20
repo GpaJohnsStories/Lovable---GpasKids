@@ -304,7 +304,7 @@ const PublicStoriesTable = ({
                     setLocalSearchTerm(e.target.value);
                     onSearchChange?.(e.target.value);
                   }}
-                  className="text-[18pt] text-[#8b4513] font-bold placeholder:text-[18pt] placeholder:text-[#8b4513]/70 rounded-lg h-12 px-5 shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40"
+                  className="text-[16pt] text-[#8b4513] font-bold placeholder:text-[16pt] placeholder:text-[#8b4513]/70 rounded-lg h-12 px-5 shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40"
                   style={{ backgroundColor: '#FFEDD5' }}
                 />
                 {localSearchTerm && (
@@ -324,7 +324,7 @@ const PublicStoriesTable = ({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button 
-                      className="text-[18pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                      className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
                       aria-label={`Currently sorting by ${getSortOptionDisplayName(sortOption)}`}
                       title={`Currently sorting by: ${getSortOptionDisplayName(sortOption)}`}
                     >
@@ -332,7 +332,7 @@ const PublicStoriesTable = ({
                       <ChevronDown className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                   <DropdownMenuContent className="text-[18pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
+                   <DropdownMenuContent className="text-[16pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
                     <DropdownMenuItem disabled className="text-white cursor-default font-medium">
                       Sort On —
                     </DropdownMenuItem>
@@ -366,7 +366,7 @@ const PublicStoriesTable = ({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button 
-                      className="text-[18pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                      className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
                       aria-label={`Currently filtering by ${getMediaFilterDisplayName(mediaFilter)}`}
                       title={`Current filter: ${getMediaFilterDisplayName(mediaFilter)}`}
                     >
@@ -374,7 +374,7 @@ const PublicStoriesTable = ({
                       <ChevronDown className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="text-[18pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
+                  <DropdownMenuContent className="text-[16pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
                     <DropdownMenuItem disabled className="text-white cursor-default font-medium">
                       Select Media
                     </DropdownMenuItem>
