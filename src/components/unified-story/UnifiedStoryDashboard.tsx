@@ -15,7 +15,6 @@ import type { Story } from '@/hooks/useStoryFormState';
 import { formatDate, formatTime } from '@/utils/dateUtils';
 import { useVoiceTesting } from '@/hooks/useVoiceTesting';
 import LoadingSpinner from "../LoadingSpinner";
-
 interface UnifiedStoryDashboardProps {
   formData: Story;
   isSaving: boolean;
@@ -36,7 +35,6 @@ interface UnifiedStoryDashboardProps {
   fontSize?: number;
   onFontSizeChange?: (fontSize: number) => void;
 }
-
 const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   formData,
   isSaving,
@@ -57,8 +55,15 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   fontSize = 16,
   onFontSizeChange
 }) => {
-  const { currentlyPlaying, loadingVoice, playVoice, stopAudio } = useVoiceTesting();
-  const [uploading, setUploading] = useState<{ [key: number]: boolean }>({});
+  const {
+    currentlyPlaying,
+    loadingVoice,
+    playVoice,
+    stopAudio
+  } = useVoiceTesting();
+  const [uploading, setUploading] = useState<{
+    [key: number]: boolean;
+  }>({});
   const getPublishedColor = (publishedStatus: string) => {
     switch (publishedStatus) {
       case 'Y':
@@ -74,88 +79,105 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   const getAudioStatusStyle = () => {
     const audioDate = formData.audio_generated_at;
     const updateDate = formData.updated_at;
-    
+
     // If no audio generated, treat as outdated
     if (!audioDate) {
-      return { backgroundColor: '#DC2626', color: '#FFFF00' };
+      return {
+        backgroundColor: '#DC2626',
+        color: '#FFFF00'
+      };
     }
-    
+
     // Create dates and truncate to minutes (ignore seconds)
     const audioDateTime = new Date(audioDate);
     const updateDateTime = new Date(updateDate);
     audioDateTime.setSeconds(0, 0); // Remove seconds and milliseconds
     updateDateTime.setSeconds(0, 0); // Remove seconds and milliseconds
-    
+
     // If audio is older than last update, it's outdated
     if (audioDateTime < updateDateTime) {
-      return { backgroundColor: '#DC2626', color: '#FFFF00' };
+      return {
+        backgroundColor: '#DC2626',
+        color: '#FFFF00'
+      };
     }
-    
+
     // If audio is equal to or newer than last update, it's current
-    return { backgroundColor: '#16a34a', color: 'white' };
+    return {
+      backgroundColor: '#16a34a',
+      color: 'white'
+    };
   };
 
   // Helper function to get last update styling
   const getLastUpdateStyle = () => {
     const updateDate = formData.updated_at;
-    
     if (!updateDate) {
-      return { backgroundColor: '#F2BA15', color: 'black' };
+      return {
+        backgroundColor: '#F2BA15',
+        color: 'black'
+      };
     }
-    
+
     // Get today's date (ignoring time)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     // Get update date (ignoring time)
     const update = new Date(updateDate);
     update.setHours(0, 0, 0, 0);
-    
+
     // If updated today, use green background with white text
     if (update.getTime() === today.getTime()) {
-      return { backgroundColor: '#228B22', color: 'white' };
+      return {
+        backgroundColor: '#228B22',
+        color: 'white'
+      };
     }
-    
+
     // Otherwise use gold background with black text
-    return { backgroundColor: '#F2BA15', color: 'black' };
+    return {
+      backgroundColor: '#F2BA15',
+      color: 'black'
+    };
   };
   // Resize image helper function
   const resizeImage = (file: File, maxWidth = 800, maxHeight = 600, quality = 0.85): Promise<File> => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d')!;
       const img = document.createElement('img');
-      
       img.onload = () => {
-        const { width, height } = img;
-        let { width: newWidth, height: newHeight } = img;
-        
+        const {
+          width,
+          height
+        } = img;
+        let {
+          width: newWidth,
+          height: newHeight
+        } = img;
         if (width > height) {
           if (newWidth > maxWidth) {
-            newHeight = (newHeight * maxWidth) / newWidth;
+            newHeight = newHeight * maxWidth / newWidth;
             newWidth = maxWidth;
           }
         } else {
           if (newHeight > maxHeight) {
-            newWidth = (newWidth * maxHeight) / newHeight;
+            newWidth = newWidth * maxHeight / newHeight;
             newHeight = maxHeight;
           }
         }
-        
         canvas.width = newWidth;
         canvas.height = newHeight;
-        
         ctx.drawImage(img, 0, 0, newWidth, newHeight);
-        
-        canvas.toBlob((blob) => {
+        canvas.toBlob(blob => {
           const resizedFile = new File([blob!], file.name, {
             type: file.type,
-            lastModified: Date.now(),
+            lastModified: Date.now()
           });
           resolve(resizedFile);
         }, file.type, quality);
       };
-      
       img.src = URL.createObjectURL(file);
     });
   };
@@ -174,7 +196,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       toast({
         title: "Invalid File Type",
         description: "Please select an image file",
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
@@ -185,35 +207,39 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       toast({
         title: "File Too Large",
         description: "Image size must be less than 10MB",
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
-
     console.log('✅ File validation passed, starting upload process');
-
-    setUploading(prev => ({ ...prev, [photoNumber]: true }));
-
+    setUploading(prev => ({
+      ...prev,
+      [photoNumber]: true
+    }));
     try {
       // Check admin status first
-      const { data: session } = await supabase.auth.getSession();
+      const {
+        data: session
+      } = await supabase.auth.getSession();
       console.log('📝 Current session:', session?.session?.user?.id ? 'User logged in' : 'No user');
-      
-      const { data: isAdmin, error: adminError } = await supabase.rpc('is_admin_safe');
+      const {
+        data: isAdmin,
+        error: adminError
+      } = await supabase.rpc('is_admin_safe');
       console.log('👑 Admin status check:', isAdmin, 'Error:', adminError);
-      
+
       // Resize the image to prevent cropping and reduce file size
       console.log('🔄 Starting image resize...');
       toast({
         title: "Processing Image",
-        description: "Resizing image...",
+        description: "Resizing image..."
       });
       const resizedFile = await resizeImage(file, 800, 600, 0.85);
       console.log('✅ Image resized:', {
         originalSize: (file.size / 1024 / 1024).toFixed(2) + 'MB',
         resizedSize: (resizedFile.size / 1024 / 1024).toFixed(2) + 'MB'
       });
-      
+
       // Generate unique filename
       const fileExt = resizedFile.name.split('.').pop();
       const fileName = `story-photos/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
@@ -221,12 +247,14 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
 
       // Upload resized file to Supabase storage
       console.log('☁️ Starting upload to Supabase storage...');
-      const { data, error } = await supabase.storage
-        .from('story-photos')
-        .upload(fileName, resizedFile);
-
-      console.log('📤 Upload response:', { data, error });
-
+      const {
+        data,
+        error
+      } = await supabase.storage.from('story-photos').upload(fileName, resizedFile);
+      console.log('📤 Upload response:', {
+        data,
+        error
+      });
       if (error) {
         console.error('❌ Upload failed:', error);
         throw error;
@@ -234,15 +262,16 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
 
       // Get public URL
       console.log('🔗 Getting public URL...');
-      const { data: { publicUrl } } = supabase.storage
-        .from('story-photos')
-        .getPublicUrl(fileName);
-
+      const {
+        data: {
+          publicUrl
+        }
+      } = supabase.storage.from('story-photos').getPublicUrl(fileName);
       console.log('✅ Public URL generated:', publicUrl);
       onPhotoUpload(photoNumber, publicUrl);
       toast({
         title: "Photo Uploaded Successfully",
-        description: `Photo resized and uploaded! Original: ${(file.size / 1024 / 1024).toFixed(1)}MB → Resized: ${(resizedFile.size / 1024 / 1024).toFixed(1)}MB`,
+        description: `Photo resized and uploaded! Original: ${(file.size / 1024 / 1024).toFixed(1)}MB → Resized: ${(resizedFile.size / 1024 / 1024).toFixed(1)}MB`
       });
     } catch (error) {
       console.error('❌ Upload error details:', error);
@@ -250,14 +279,16 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       toast({
         title: "Upload Failed",
         description: `Failed to upload photo: ${error instanceof Error ? error.message : 'Unknown error'}`,
-        variant: "destructive",
+        variant: "destructive"
       });
     } finally {
       console.log('🏁 Upload process completed');
-      setUploading(prev => ({ ...prev, [photoNumber]: false }));
+      setUploading(prev => ({
+        ...prev,
+        [photoNumber]: false
+      }));
     }
   };
-
   console.log('🎯 UnifiedStoryDashboard: Rendering with formData:', {
     id: formData.id,
     title: formData.title,
@@ -266,13 +297,13 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
     hasAudio: !!formData.audio_url,
     aiVoiceName: formData.ai_voice_name
   });
-
-  return (
-    <form onSubmit={onSubmit} className="space-y-6">
+  return <form onSubmit={onSubmit} className="space-y-6">
       <div className="flex gap-6">
         {/* Story Details Card - 45% width */}
         <div className="w-[45%] space-y-4">
-          <Card className="border-2" style={{ borderColor: '#16a34a' }}>
+          <Card className="border-2" style={{
+          borderColor: '#16a34a'
+        }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5" />
@@ -280,185 +311,139 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-            <StoryCodeField
-              value={formData.story_code}
-              onChange={(value) => onInputChange('story_code', value)}
-              onStoryFound={onStoryFound}
-              currentStoryId={formData.id}
-              compact={true}
-            />
-              <StoryFormFields
-                formData={formData} 
-                onInputChange={onInputChange}
-                compact={true}
-              />
+            <StoryCodeField value={formData.story_code} onChange={value => onInputChange('story_code', value)} onStoryFound={onStoryFound} currentStoryId={formData.id} compact={true} />
+              <StoryFormFields formData={formData} onInputChange={onInputChange} compact={true} />
             </CardContent>
           </Card>
 
           {/* Story Photos Section */}
-          <Card className="border-2" style={{ borderColor: '#814d2e' }}>
+          <Card className="border-2" style={{
+          borderColor: '#814d2e'
+        }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#814d2e' }}>
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
+              color: '#814d2e'
+            }}>
                 <Image className="h-5 w-5" />
                 Story Photos
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
-              <table className="w-full table-fixed border-collapse border-2" style={{ borderColor: '#9c441a' }}>
+              <table className="w-full table-fixed border-collapse border-2" style={{
+              borderColor: '#9c441a'
+            }}>
                 <tbody>
                   {/* Photo Display Row */}
                   <tr>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                    <td className="p-2 border" style={{
+                    borderColor: '#9c441a'
+                  }}>
                       <div className="relative">
-                        {formData.photo_link_1 ? (
-                          <>
+                        {formData.photo_link_1 ? <>
                             <img src={formData.photo_link_1} alt="Photo 1" className="w-full h-20 object-cover rounded" />
-                            <button
-                              type="button"
-                              onClick={() => onPhotoRemove(1)}
-                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs"
-                            >
+                            <button type="button" onClick={() => onPhotoRemove(1)} className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs">
                               <Trash2 className="h-3 w-3" />
                             </button>
-                          </>
-                        ) : (
-                          <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
-                        )}
+                          </> : <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>}
                       </div>
                     </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                    <td className="p-2 border" style={{
+                    borderColor: '#9c441a'
+                  }}>
                       <div className="relative">
-                        {formData.photo_link_2 ? (
-                          <>
+                        {formData.photo_link_2 ? <>
                             <img src={formData.photo_link_2} alt="Photo 2" className="w-full h-20 object-cover rounded" />
-                            <button
-                              type="button"
-                              onClick={() => onPhotoRemove(2)}
-                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs"
-                            >
+                            <button type="button" onClick={() => onPhotoRemove(2)} className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs">
                               <Trash2 className="h-3 w-3" />
                             </button>
-                          </>
-                        ) : (
-                          <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
-                        )}
+                          </> : <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>}
                       </div>
                     </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                    <td className="p-2 border" style={{
+                    borderColor: '#9c441a'
+                  }}>
                       <div className="relative">
-                        {formData.photo_link_3 ? (
-                          <>
+                        {formData.photo_link_3 ? <>
                             <img src={formData.photo_link_3} alt="Photo 3" className="w-full h-20 object-cover rounded" />
-                            <button
-                              type="button"
-                              onClick={() => onPhotoRemove(3)}
-                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs"
-                            >
+                            <button type="button" onClick={() => onPhotoRemove(3)} className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs">
                               <Trash2 className="h-3 w-3" />
                             </button>
-                          </>
-                        ) : (
-                          <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
-                        )}
+                          </> : <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>}
                       </div>
                     </td>
                   </tr>
                   
                   {/* File Input Row */}
                   <tr>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input 
-                        type="file" 
-                        accept="image/*" 
-                        onChange={(e) => {
-                          console.log('📁 File input change event triggered for photo 1');
-                          const file = e.target.files?.[0];
-                          console.log('📁 Selected file:', file ? file.name : 'No file selected');
-                          if (file) {
-                            console.log('📁 Starting file upload process for:', file.name);
-                            handlePhotoUpload(file, 1);
-                          } else {
-                            console.log('❌ No file was selected');
-                          }
-                          e.target.value = ''; // Reset input
-                        }}
-                        disabled={uploading[1]}
-                        className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" 
-                      />
+                    <td className="p-2 border" style={{
+                    borderColor: '#9c441a'
+                  }}>
+                      <input type="file" accept="image/*" onChange={e => {
+                      console.log('📁 File input change event triggered for photo 1');
+                      const file = e.target.files?.[0];
+                      console.log('📁 Selected file:', file ? file.name : 'No file selected');
+                      if (file) {
+                        console.log('📁 Starting file upload process for:', file.name);
+                        handlePhotoUpload(file, 1);
+                      } else {
+                        console.log('❌ No file was selected');
+                      }
+                      e.target.value = ''; // Reset input
+                    }} disabled={uploading[1]} className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
                       {uploading[1] && <div className="text-xs text-blue-600 mt-1">Uploading...</div>}
                     </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input 
-                        type="file" 
-                        accept="image/*" 
-                        onChange={(e) => {
-                          console.log('📁 File input change event triggered for photo 2');
-                          const file = e.target.files?.[0];
-                          console.log('📁 Selected file:', file ? file.name : 'No file selected');
-                          if (file) {
-                            console.log('📁 Starting file upload process for:', file.name);
-                            handlePhotoUpload(file, 2);
-                          } else {
-                            console.log('❌ No file was selected');
-                          }
-                          e.target.value = ''; // Reset input
-                        }}
-                        disabled={uploading[2]}
-                        className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" 
-                      />
+                    <td className="p-2 border" style={{
+                    borderColor: '#9c441a'
+                  }}>
+                      <input type="file" accept="image/*" onChange={e => {
+                      console.log('📁 File input change event triggered for photo 2');
+                      const file = e.target.files?.[0];
+                      console.log('📁 Selected file:', file ? file.name : 'No file selected');
+                      if (file) {
+                        console.log('📁 Starting file upload process for:', file.name);
+                        handlePhotoUpload(file, 2);
+                      } else {
+                        console.log('❌ No file was selected');
+                      }
+                      e.target.value = ''; // Reset input
+                    }} disabled={uploading[2]} className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
                       {uploading[2] && <div className="text-xs text-blue-600 mt-1">Uploading...</div>}
                     </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input 
-                        type="file" 
-                        accept="image/*" 
-                        onChange={(e) => {
-                          console.log('📁 File input change event triggered for photo 3');
-                          const file = e.target.files?.[0];
-                          console.log('📁 Selected file:', file ? file.name : 'No file selected');
-                          if (file) {
-                            console.log('📁 Starting file upload process for:', file.name);
-                            handlePhotoUpload(file, 3);
-                          } else {
-                            console.log('❌ No file was selected');
-                          }
-                          e.target.value = ''; // Reset input
-                        }}
-                        disabled={uploading[3]}
-                        className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" 
-                      />
+                    <td className="p-2 border" style={{
+                    borderColor: '#9c441a'
+                  }}>
+                      <input type="file" accept="image/*" onChange={e => {
+                      console.log('📁 File input change event triggered for photo 3');
+                      const file = e.target.files?.[0];
+                      console.log('📁 Selected file:', file ? file.name : 'No file selected');
+                      if (file) {
+                        console.log('📁 Starting file upload process for:', file.name);
+                        handlePhotoUpload(file, 3);
+                      } else {
+                        console.log('❌ No file was selected');
+                      }
+                      e.target.value = ''; // Reset input
+                    }} disabled={uploading[3]} className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" />
                       {uploading[3] && <div className="text-xs text-blue-600 mt-1">Uploading...</div>}
                     </td>
                   </tr>
                   
                   {/* Alt Text Row */}
                   <tr>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input 
-                        type="text" 
-                        placeholder="Alt text" 
-                        value={formData.photo_alt_1 || ''} 
-                        onChange={(e) => onInputChange('photo_alt_1', e.target.value)}
-                        className="w-full text-xs p-1 border rounded"
-                      />
+                    <td className="p-2 border" style={{
+                    borderColor: '#9c441a'
+                  }}>
+                      <input type="text" placeholder="Alt text" value={formData.photo_alt_1 || ''} onChange={e => onInputChange('photo_alt_1', e.target.value)} className="w-full text-xs p-1 border rounded" />
                     </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input 
-                        type="text" 
-                        placeholder="Alt text" 
-                        value={formData.photo_alt_2 || ''} 
-                        onChange={(e) => onInputChange('photo_alt_2', e.target.value)}
-                        className="w-full text-xs p-1 border rounded"
-                      />
+                    <td className="p-2 border" style={{
+                    borderColor: '#9c441a'
+                  }}>
+                      <input type="text" placeholder="Alt text" value={formData.photo_alt_2 || ''} onChange={e => onInputChange('photo_alt_2', e.target.value)} className="w-full text-xs p-1 border rounded" />
                     </td>
-                    <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
-                      <input 
-                        type="text" 
-                        placeholder="Alt text" 
-                        value={formData.photo_alt_3 || ''} 
-                        onChange={(e) => onInputChange('photo_alt_3', e.target.value)}
-                        className="w-full text-xs p-1 border rounded"
-                      />
+                    <td className="p-2 border" style={{
+                    borderColor: '#9c441a'
+                  }}>
+                      <input type="text" placeholder="Alt text" value={formData.photo_alt_3 || ''} onChange={e => onInputChange('photo_alt_3', e.target.value)} className="w-full text-xs p-1 border rounded" />
                     </td>
                   </tr>
                 </tbody>
@@ -467,19 +452,19 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
 
           {/* Audio Upload - Condensed */}
-          <Card className="border-2" style={{ borderColor: '#4A7C59' }}>
+          <Card className="border-2" style={{
+          borderColor: '#4A7C59'
+        }}>
             <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#4A7C59' }}>
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
+              color: '#4A7C59'
+            }}>
                 <Volume2 className="h-5 w-5" />
                 Audio Upload
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
-              <AudioUploadSection
-                audioUrl={formData.audio_url}
-                onAudioUpload={(url) => onInputChange('audio_url', url)}
-                onAudioRemove={() => onInputChange('audio_url', '')}
-              />
+              <AudioUploadSection audioUrl={formData.audio_url} onAudioUpload={url => onInputChange('audio_url', url)} onAudioRemove={() => onInputChange('audio_url', '')} />
             </CardContent>
           </Card>
         </div>
@@ -487,22 +472,35 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         {/* Settings & Actions Column - Uses remaining space */}
         <div className="flex-1 space-y-4">
           {/* Settings Card with side-by-side Copyright and Publication */}
-          <Card className="h-fit" style={{ borderColor: '#F97316', borderWidth: '2px' }}>
+          <Card className="h-fit" style={{
+          borderColor: '#F97316',
+          borderWidth: '2px'
+        }}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F97316' }}>
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
+              color: '#F97316'
+            }}>
                 <FileText className="h-5 w-5" />
                 Story Status
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {/* Timestamp Information Table */}
-              <table className="w-full text-xs" style={{ border: '2px solid #9c441a' }}>
+              <table className="w-full text-xs" style={{
+              border: '2px solid #9c441a'
+            }}>
                 <tbody>
                   <tr>
-                    <td colSpan={2} className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', ...getLastUpdateStyle() }}>
+                    <td colSpan={2} className="text-center font-bold px-1 py-1" style={{
+                    borderRight: '1px solid #9c441a',
+                    ...getLastUpdateStyle()
+                  }}>
                       Last Update
                     </td>
-                    <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{ borderRight: '1px solid #9c441a', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
+                    <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{
+                    borderRight: '1px solid #9c441a',
+                    backgroundColor: 'rgba(22, 156, 249, 0.3)'
+                  }}>
                       Original Upload
                     </td>
                     <td colSpan={2} className="text-center font-bold px-1 py-1" style={getAudioStatusStyle()}>
@@ -510,22 +508,45 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   <tr>
-                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', borderTop: '1px solid #9c441a', ...getLastUpdateStyle() }}>
+                    <td className="text-center font-bold px-1 py-1" style={{
+                    borderRight: '1px solid #9c441a',
+                    borderTop: '1px solid #9c441a',
+                    ...getLastUpdateStyle()
+                  }}>
                       {formatDate(formData.updated_at)}
                     </td>
-                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', borderTop: '1px solid #9c441a', ...getLastUpdateStyle() }}>
+                    <td className="text-center font-bold px-1 py-1" style={{
+                    borderRight: '1px solid #9c441a',
+                    borderTop: '1px solid #9c441a',
+                    ...getLastUpdateStyle()
+                  }}>
                       {formatTime(formData.updated_at)}
                     </td>
-                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', borderTop: '1px solid #9c441a', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
+                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{
+                    borderRight: '1px solid #9c441a',
+                    borderTop: '1px solid #9c441a',
+                    backgroundColor: 'rgba(22, 156, 249, 0.3)'
+                  }}>
                       {formatDate(formData.created_at)}
                     </td>
-                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', borderTop: '1px solid #9c441a', backgroundColor: 'rgba(22, 156, 249, 0.3)' }}>
+                    <td className="text-center text-gray-600 font-bold px-1 py-1" style={{
+                    borderRight: '1px solid #9c441a',
+                    borderTop: '1px solid #9c441a',
+                    backgroundColor: 'rgba(22, 156, 249, 0.3)'
+                  }}>
                       {formatTime(formData.created_at)}
                     </td>
-                    <td className="text-center font-bold px-1 py-1" style={{ borderRight: '1px solid #9c441a', borderTop: '1px solid #9c441a', ...getAudioStatusStyle() }}>
+                    <td className="text-center font-bold px-1 py-1" style={{
+                    borderRight: '1px solid #9c441a',
+                    borderTop: '1px solid #9c441a',
+                    ...getAudioStatusStyle()
+                  }}>
                       {formatDate(formData.audio_generated_at)}
                     </td>
-                    <td className="text-center font-bold px-1 py-1" style={{ borderTop: '1px solid #9c441a', ...getAudioStatusStyle() }}>
+                    <td className="text-center font-bold px-1 py-1" style={{
+                    borderTop: '1px solid #9c441a',
+                    ...getAudioStatusStyle()
+                  }}>
                       {formatTime(formData.audio_generated_at)}
                     </td>
                   </tr>
@@ -537,17 +558,14 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 {/* Copyright Status - Now on left */}
                 <div className="space-y-1 flex-1">
                   <Label className="text-xs font-bold text-gray-700">Copyright Status</Label>
-                  <CopyrightControl
-                    value={formData.copyright_status || '©'}
-                    onChange={(value) => onInputChange('copyright_status', value)}
-                  />
+                  <CopyrightControl value={formData.copyright_status || '©'} onChange={value => onInputChange('copyright_status', value)} />
                 </div>
                 
                 {/* Publication Status with Media Icons - Now on right */}
                 <div className="space-y-1 flex-1">
                   <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
                   <div className="flex items-center gap-2">
-                    <Select value={formData.published} onValueChange={(value) => onInputChange('published', value)}>
+                    <Select value={formData.published} onValueChange={value => onInputChange('published', value)}>
                       <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor(formData.published)}`}>
                         <SelectValue placeholder="Select status" />
                       </SelectTrigger>
@@ -559,16 +577,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     
                     {/* Media Icons */}
                     <div className="flex items-center gap-1">
-                      {formData.audio_url && (
-                        <div className="flex items-center justify-center w-6 h-6 rounded bg-green-100 border border-green-300">
+                      {formData.audio_url && <div className="flex items-center justify-center w-6 h-6 rounded bg-green-100 border border-green-300">
                           <Headphones className="h-3 w-3 text-green-600" />
-                        </div>
-                      )}
-                      {formData.video_url && (
-                        <div className="flex items-center justify-center w-6 h-6 rounded bg-blue-100 border border-blue-300">
+                        </div>}
+                      {formData.video_url && <div className="flex items-center justify-center w-6 h-6 rounded bg-blue-100 border border-blue-300">
                           <Video className="h-3 w-3 text-blue-600" />
-                        </div>
-                      )}
+                        </div>}
                     </div>
                   </div>
                 </div>
@@ -577,34 +591,20 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               {/* Google Drive Link */}
               <div className="space-y-1">
                 <Label htmlFor="google_drive_link" className="text-xs font-bold text-gray-700">Google Drive Link</Label>
-                <input
-                  id="google_drive_link"
-                  type="url"
-                  value={formData.google_drive_link}
-                  onChange={(e) => onInputChange('google_drive_link', e.target.value)}
-                  placeholder="https://drive.google.com/..."
-                  className="w-full p-2 text-xs border rounded-md"
-                  style={{ borderColor: '#9c441a', borderWidth: '2px' }}
-                />
+                <input id="google_drive_link" type="url" value={formData.google_drive_link} onChange={e => onInputChange('google_drive_link', e.target.value)} placeholder="https://drive.google.com/..." className="w-full p-2 text-xs border rounded-md" style={{
+                borderColor: '#9c441a',
+                borderWidth: '2px'
+              }} />
               </div>
 
               {/* Save and Cancel Buttons */}
               <div className="flex gap-2 pt-2">
-                <button 
-                  type="button" 
-                  onClick={onSaveOnly}
-                  disabled={isSaving || isGeneratingAudio} 
-                  className="flex-1 text-xs h-8 text-[#ffff00] font-bold bg-green-600 border-green-700 hover:bg-green-700 rounded-md border flex items-center justify-center gap-1"
-                >
+                <button type="button" onClick={onSaveOnly} disabled={isSaving || isGeneratingAudio} className="flex-1 text-xs h-8 text-[#ffff00] font-bold bg-green-600 border-green-700 hover:bg-green-700 rounded-md border flex items-center justify-center gap-1">
                   <Save className="h-3 w-3" />
                   {isSaving ? 'Saving...' : 'Save Details & Text Before Audio'}
                 </button>
                 
-                <button 
-                  type="button" 
-                  onClick={onCancel}
-                  className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1"
-                >
+                <button type="button" onClick={onCancel} className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1">
                   <X className="h-3 w-3" />
                   Cancel
                 </button>
@@ -613,9 +613,13 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
 
           {/* AI Voice Generation */}
-          <Card className="h-fit border-2" style={{ borderColor: '#2563eb' }}>
+          <Card className="h-fit border-2" style={{
+          borderColor: '#2563eb'
+        }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#2563eb' }}>
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
+              color: '#2563eb'
+            }}>
                 <Volume2 className="h-5 w-5" />
                 Create AI Voice File
               </CardTitle>
@@ -625,11 +629,11 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 {/* Choose Voice */}
                 <div className="flex-1">
                   <Label className="text-xs font-bold text-gray-700 mb-1 block">Choose Voice</Label>
-                  <Select 
-                    value={formData.ai_voice_name || 'Nova'} 
-                    onValueChange={(value) => onVoiceChange?.(value)}
-                  >
-                    <SelectTrigger className="w-full text-xs" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                  <Select value={formData.ai_voice_name || 'Nova'} onValueChange={value => onVoiceChange?.(value)}>
+                    <SelectTrigger className="w-full text-xs" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
                       <SelectValue placeholder="Select voice" />
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white border shadow-lg">
@@ -649,28 +653,23 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 {/* Generate Audio Button */}
                 <div className="flex-1">
                   <Label className="text-xs font-bold text-gray-700 mb-1 block">Generate Audio</Label>
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      try {
-                        console.log('🎵 UnifiedStoryDashboard: Generate audio clicked for story:', formData.id);
-                        await onGenerateAudio();
-                        toast({
-                          title: "Audio Generation Started",
-                          description: "Your story audio is being generated. This may take a few minutes.",
-                        });
-                      } catch (error) {
-                        console.error('🎵 UnifiedStoryDashboard: Audio generation error:', error);
-                        toast({
-                          title: "Audio Generation Failed",
-                          description: error instanceof Error ? error.message : "Failed to generate audio. Please try again.",
-                          variant: "destructive",
-                        });
-                      }
-                    }}
-                    disabled={isGeneratingAudio || !formData.content?.trim() || !formData.id}
-                    className="w-full h-9 text-sm font-bold text-white bg-orange-600 border-orange-700 hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-2"
-                  >
+                  <button type="button" onClick={async () => {
+                  try {
+                    console.log('🎵 UnifiedStoryDashboard: Generate audio clicked for story:', formData.id);
+                    await onGenerateAudio();
+                    toast({
+                      title: "Audio Generation Started",
+                      description: "Your story audio is being generated. This may take a few minutes."
+                    });
+                  } catch (error) {
+                    console.error('🎵 UnifiedStoryDashboard: Audio generation error:', error);
+                    toast({
+                      title: "Audio Generation Failed",
+                      description: error instanceof Error ? error.message : "Failed to generate audio. Please try again.",
+                      variant: "destructive"
+                    });
+                  }
+                }} disabled={isGeneratingAudio || !formData.content?.trim() || !formData.id} className="w-full h-9 text-sm font-bold text-white bg-orange-600 border-orange-700 hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-2">
                     <Volume2 className="h-4 w-4" />
                     {isGeneratingAudio ? 'Generating...' : formData.id ? 'Generate Audio' : 'Save Story First'}
                   </button>
@@ -680,88 +679,65 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
 
           {/* Voice Selection - Simple Table */}
-          <Card className="h-fit border-2" style={{ borderColor: '#2563eb' }}>
+          <Card className="h-fit border-2" style={{
+          borderColor: '#2563eb'
+        }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#2563eb' }}>
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
+              color: '#2563eb'
+            }}>
                 <Volume2 className="h-5 w-5" />
                 Voice Previews
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
-              <table className="w-full table-fixed border-collapse" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+              <table className="w-full table-fixed border-collapse" style={{
+              borderColor: '#9c441a',
+              borderWidth: '2px'
+            }}>
                 <tbody>
                   {/* Row 1: Alloy | Echo */}
                   <tr>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
-                      <div className="text-xs font-bold mb-1">Buddy</div>
-                      <div className="text-xs text-gray-600 mb-2">Clear, neutral voice</div>
+                    <td className="p-2 border text-center" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
+                      <div className="text-xs font-bold mb-1">Alloy</div>
+                      <div className="text-xs text-gray-600 mb-2">Clear, neutral voice (Alloy)</div>
                       <div className="flex gap-1 justify-center">
-                        {loadingVoice === 'alloy' ? (
-                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                        {loadingVoice === 'alloy' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
                             <span>Testing...</span>
-                          </div>
-                        ) : currentlyPlaying === 'alloy' ? (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                            onClick={stopAudio}
-                          >
+                          </div> : currentlyPlaying === 'alloy' ? <button type="button" className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" onClick={stopAudio}>
                             <Square className="h-3 w-3" />
                             Stop
-                          </button>
-                        ) : (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
-                            onClick={() => playVoice('alloy', formData.content, formData.title)}
-                          >
+                          </button> : <button type="button" className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" onClick={() => playVoice('alloy', formData.content, formData.title)}>
                             <Play className="h-3 w-3" />
                             Test
-                          </button>
-                        )}
-                        <button 
-                          type="button"
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => onVoiceChange?.('Alloy')}
-                        >
+                          </button>}
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Alloy')}>
                           Use
                         </button>
                       </div>
                     </td>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                    <td className="p-2 border text-center" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
                       <div className="text-xs font-bold mb-1">Echo</div>
                       <div className="text-xs text-gray-600 mb-2">Deep, resonant voice</div>
                       <div className="flex gap-1 justify-center">
-                        {loadingVoice === 'echo' ? (
-                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                        {loadingVoice === 'echo' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
                             <span>Testing...</span>
-                          </div>
-                        ) : currentlyPlaying === 'echo' ? (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                            onClick={stopAudio}
-                          >
+                          </div> : currentlyPlaying === 'echo' ? <button type="button" className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" onClick={stopAudio}>
                             <Square className="h-3 w-3" />
                             Stop
-                          </button>
-                        ) : (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
-                            onClick={() => playVoice('echo', formData.content, formData.title)}
-                          >
+                          </button> : <button type="button" className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" onClick={() => playVoice('echo', formData.content, formData.title)}>
                             <Play className="h-3 w-3" />
                             Test
-                          </button>
-                        )}
-                        <button 
-                          type="button"
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => onVoiceChange?.('Echo')}
-                        >
+                          </button>}
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Echo')}>
                           Use
                         </button>
                       </div>
@@ -770,76 +746,46 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   
                   {/* Row 2: Fable | Nova */}
                   <tr>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                    <td className="p-2 border text-center" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
                       <div className="text-xs font-bold mb-1">Fable</div>
                       <div className="text-xs text-gray-600 mb-2">British accent, storytelling</div>
                       <div className="flex gap-1 justify-center">
-                        {loadingVoice === 'fable' ? (
-                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                        {loadingVoice === 'fable' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
                             <span>Testing...</span>
-                          </div>
-                        ) : currentlyPlaying === 'fable' ? (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                            onClick={stopAudio}
-                          >
+                          </div> : currentlyPlaying === 'fable' ? <button type="button" className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" onClick={stopAudio}>
                             <Square className="h-3 w-3" />
                             Stop
-                          </button>
-                        ) : (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
-                            onClick={() => playVoice('fable', formData.content, formData.title)}
-                          >
+                          </button> : <button type="button" className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" onClick={() => playVoice('fable', formData.content, formData.title)}>
                             <Play className="h-3 w-3" />
                             Test
-                          </button>
-                        )}
-                        <button 
-                          type="button"
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => onVoiceChange?.('Fable')}
-                        >
+                          </button>}
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Fable')}>
                           Use
                         </button>
                       </div>
                     </td>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                    <td className="p-2 border text-center" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
                       <div className="text-xs font-bold mb-1">Nova</div>
                       <div className="text-xs text-gray-600 mb-2">Warm, friendly voice</div>
                       <div className="flex gap-1 justify-center">
-                        {loadingVoice === 'nova' ? (
-                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                        {loadingVoice === 'nova' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
                             <span>Testing...</span>
-                          </div>
-                        ) : currentlyPlaying === 'nova' ? (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                            onClick={stopAudio}
-                          >
+                          </div> : currentlyPlaying === 'nova' ? <button type="button" className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" onClick={stopAudio}>
                             <Square className="h-3 w-3" />
                             Stop
-                          </button>
-                        ) : (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
-                            onClick={() => playVoice('nova', formData.content, formData.title)}
-                          >
+                          </button> : <button type="button" className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" onClick={() => playVoice('nova', formData.content, formData.title)}>
                             <Play className="h-3 w-3" />
                             Test
-                          </button>
-                        )}
-                        <button 
-                          type="button"
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => onVoiceChange?.('Nova')}
-                        >
+                          </button>}
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Nova')}>
                           Use
                         </button>
                       </div>
@@ -848,76 +794,46 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   
                   {/* Row 3: Onyx | Shimmer */}
                   <tr>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                    <td className="p-2 border text-center" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
                       <div className="text-xs font-bold mb-1">Onyx</div>
                       <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice</div>
                       <div className="flex gap-1 justify-center">
-                        {loadingVoice === 'onyx' ? (
-                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                        {loadingVoice === 'onyx' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
                             <span>Testing...</span>
-                          </div>
-                        ) : currentlyPlaying === 'onyx' ? (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                            onClick={stopAudio}
-                          >
+                          </div> : currentlyPlaying === 'onyx' ? <button type="button" className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" onClick={stopAudio}>
                             <Square className="h-3 w-3" />
                             Stop
-                          </button>
-                        ) : (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
-                            onClick={() => playVoice('onyx', formData.content, formData.title)}
-                          >
+                          </button> : <button type="button" className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" onClick={() => playVoice('onyx', formData.content, formData.title)}>
                             <Play className="h-3 w-3" />
                             Test
-                          </button>
-                        )}
-                        <button 
-                          type="button"
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => onVoiceChange?.('Onyx')}
-                        >
+                          </button>}
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Onyx')}>
                           Use
                         </button>
                       </div>
                     </td>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                    <td className="p-2 border text-center" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
                       <div className="text-xs font-bold mb-1">Shimmer</div>
                       <div className="text-xs text-gray-600 mb-2">Soft, gentle voice</div>
                       <div className="flex gap-1 justify-center">
-                        {loadingVoice === 'shimmer' ? (
-                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                        {loadingVoice === 'shimmer' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
                             <span>Testing...</span>
-                          </div>
-                        ) : currentlyPlaying === 'shimmer' ? (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                            onClick={stopAudio}
-                          >
+                          </div> : currentlyPlaying === 'shimmer' ? <button type="button" className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" onClick={stopAudio}>
                             <Square className="h-3 w-3" />
                             Stop
-                          </button>
-                        ) : (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
-                            onClick={() => playVoice('shimmer', formData.content, formData.title)}
-                          >
+                          </button> : <button type="button" className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" onClick={() => playVoice('shimmer', formData.content, formData.title)}>
                             <Play className="h-3 w-3" />
                             Test
-                          </button>
-                        )}
-                        <button 
-                          type="button"
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => onVoiceChange?.('Shimmer')}
-                        >
+                          </button>}
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Shimmer')}>
                           Use
                         </button>
                       </div>
@@ -926,76 +842,46 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   
                   {/* Row 4: Ash | Coral */}
                   <tr>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                    <td className="p-2 border text-center" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
                       <div className="text-xs font-bold mb-1">Ash</div>
                       <div className="text-xs text-gray-600 mb-2">Gentle and neutral, calming</div>
                       <div className="flex gap-1 justify-center">
-                        {loadingVoice === 'ash' ? (
-                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                        {loadingVoice === 'ash' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
                             <span>Testing...</span>
-                          </div>
-                        ) : currentlyPlaying === 'ash' ? (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                            onClick={stopAudio}
-                          >
+                          </div> : currentlyPlaying === 'ash' ? <button type="button" className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" onClick={stopAudio}>
                             <Square className="h-3 w-3" />
                             Stop
-                          </button>
-                        ) : (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
-                            onClick={() => playVoice('ash', formData.content, formData.title)}
-                          >
+                          </button> : <button type="button" className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" onClick={() => playVoice('ash', formData.content, formData.title)}>
                             <Play className="h-3 w-3" />
                             Test
-                          </button>
-                        )}
-                        <button 
-                          type="button"
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => onVoiceChange?.('Ash')}
-                        >
+                          </button>}
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Ash')}>
                           Use
                         </button>
                       </div>
                     </td>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                    <td className="p-2 border text-center" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
                       <div className="text-xs font-bold mb-1">Coral</div>
                       <div className="text-xs text-gray-600 mb-2">Bright and clear, youthful tone</div>
                       <div className="flex gap-1 justify-center">
-                        {loadingVoice === 'coral' ? (
-                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                        {loadingVoice === 'coral' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
                             <span>Testing...</span>
-                          </div>
-                        ) : currentlyPlaying === 'coral' ? (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                            onClick={stopAudio}
-                          >
+                          </div> : currentlyPlaying === 'coral' ? <button type="button" className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" onClick={stopAudio}>
                             <Square className="h-3 w-3" />
                             Stop
-                          </button>
-                        ) : (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
-                            onClick={() => playVoice('coral', formData.content, formData.title)}
-                          >
+                          </button> : <button type="button" className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" onClick={() => playVoice('coral', formData.content, formData.title)}>
                             <Play className="h-3 w-3" />
                             Test
-                          </button>
-                        )}
-                        <button 
-                          type="button"
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => onVoiceChange?.('Coral')}
-                        >
+                          </button>}
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Coral')}>
                           Use
                         </button>
                       </div>
@@ -1004,44 +890,32 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   
                   {/* Row 5: Sage */}
                   <tr>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                    <td className="p-2 border text-center" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
                       <div className="text-xs font-bold mb-1">Sage</div>
                       <div className="text-xs text-gray-600 mb-2">Warm and thoughtful, reflective</div>
                       <div className="flex gap-1 justify-center">
-                        {loadingVoice === 'sage' ? (
-                          <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                        {loadingVoice === 'sage' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
                             <span>Testing...</span>
-                          </div>
-                        ) : currentlyPlaying === 'sage' ? (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1"
-                            onClick={stopAudio}
-                          >
+                          </div> : currentlyPlaying === 'sage' ? <button type="button" className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" onClick={stopAudio}>
                             <Square className="h-3 w-3" />
                             Stop
-                          </button>
-                        ) : (
-                          <button 
-                            type="button"
-                            className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1"
-                            onClick={() => playVoice('sage', formData.content, formData.title)}
-                          >
+                          </button> : <button type="button" className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" onClick={() => playVoice('sage', formData.content, formData.title)}>
                             <Play className="h-3 w-3" />
                             Test
-                          </button>
-                        )}
-                        <button 
-                          type="button"
-                          className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                          onClick={() => onVoiceChange?.('Sage')}
-                        >
+                          </button>}
+                        <button type="button" className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" onClick={() => onVoiceChange?.('Sage')}>
                           Use
                         </button>
                       </div>
                     </td>
-                    <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                    <td className="p-2 border text-center" style={{
+                    borderColor: '#9c441a',
+                    borderWidth: '2px'
+                  }}>
                       <div className="text-xs text-gray-600">Available for future voices</div>
                     </td>
                   </tr>
@@ -1051,46 +925,40 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
 
           {/* Story Video - Added to Content tab */}
-          <Card className="h-fit border-2" style={{ borderColor: '#9333ea' }}>
+          <Card className="h-fit border-2" style={{
+          borderColor: '#9333ea'
+        }}>
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#9333ea' }}>
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
+              color: '#9333ea'
+            }}>
                 <Video className="h-5 w-5" />
                 Story Video
               </CardTitle>
             </CardHeader>
             <CardContent className="p-3">
-              <StoryVideoUpload
-                videoUrl={formData.video_url}
-                onVideoUpload={onVideoUpload}
-                onVideoRemove={onVideoRemove}
-              />
+              <StoryVideoUpload videoUrl={formData.video_url} onVideoUpload={onVideoUpload} onVideoRemove={onVideoRemove} />
             </CardContent>
           </Card>
         </div>
       </div>
 
       {/* Story Editor */}
-      <Card className="border-2" style={{ borderColor: '#F97316' }}>
+      <Card className="border-2" style={{
+      borderColor: '#F97316'
+    }}>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#F97316' }}>
+          <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
+          color: '#F97316'
+        }}>
             <FileText className="h-5 w-5" />
             Story Content
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <SplitViewEditor
-            content={formData.content}
-            onChange={(content) => onInputChange('content', content)}
-            placeholder="Write your story here..."
-            onSave={onSaveOnly}
-            category={formData.category}
-            fontSize={fontSize}
-            onFontSizeChange={onFontSizeChange}
-          />
+          <SplitViewEditor content={formData.content} onChange={content => onInputChange('content', content)} placeholder="Write your story here..." onSave={onSaveOnly} category={formData.category} fontSize={fontSize} onFontSizeChange={onFontSizeChange} />
         </CardContent>
       </Card>
-    </form>
-  );
+    </form>;
 };
-
 export default UnifiedStoryDashboard;
