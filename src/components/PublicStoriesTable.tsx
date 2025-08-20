@@ -319,6 +319,39 @@ const PublicStoriesTable = ({
                 )}
               </div>
 
+              {/* Select Media */}
+              <div className="w-full max-w-[380px] h-10">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                      aria-label={`Currently filtering by ${getMediaFilterDisplayName(mediaFilter)}`}
+                      title={`Current filter: ${getMediaFilterDisplayName(mediaFilter)}`}
+                    >
+                      Select Media —
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="text-[16pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
+                    <DropdownMenuItem disabled className="text-white cursor-default font-medium">
+                      Select Media
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setMediaFilter('all')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      All Stories
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setMediaFilter('text')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Text Only
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setMediaFilter('audio')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Has Text & Audio
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setMediaFilter('both')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                      Has Text, Audio & Video
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
               {/* Sort On */}
               <div className="w-full max-w-[380px] h-10">
                 <DropdownMenu>
@@ -356,39 +389,6 @@ const PublicStoriesTable = ({
                     </DropdownMenuItem>
                     <DropdownMenuItem onSelect={() => handleSortOptionChange('updated_at')} className="text-white hover:bg-[#8b4513] rounded-lg">
                       Date Updated
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-
-              {/* Select Media */}
-              <div className="w-full max-w-[380px] h-10">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button 
-                      className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
-                      aria-label={`Currently filtering by ${getMediaFilterDisplayName(mediaFilter)}`}
-                      title={`Current filter: ${getMediaFilterDisplayName(mediaFilter)}`}
-                    >
-                      Select Media —
-                      <ChevronDown className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="text-[16pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
-                    <DropdownMenuItem disabled className="text-white cursor-default font-medium">
-                      Select Media
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setMediaFilter('all')} className="text-white hover:bg-[#8b4513] rounded-lg">
-                      All Stories
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setMediaFilter('text')} className="text-white hover:bg-[#8b4513] rounded-lg">
-                      Text Only
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setMediaFilter('audio')} className="text-white hover:bg-[#8b4513] rounded-lg">
-                      Has Text & Audio
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setMediaFilter('both')} className="text-white hover:bg-[#8b4513] rounded-lg">
-                      Has Text, Audio & Video
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
