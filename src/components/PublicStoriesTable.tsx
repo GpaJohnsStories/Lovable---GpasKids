@@ -278,8 +278,8 @@ const PublicStoriesTable = ({
           <div className="flex justify-start mb-px">
             <div className="flex gap-4 items-center">
               <div className="h-6 px-3 py-1 text-center border-2 rounded-none flex items-center justify-center" style={{
-                backgroundColor: '#60a5fa',
-                borderColor: '#60a5fa',
+                backgroundColor: '#228B22',
+                borderColor: '#228B22',
                 fontSize: '16px',
                 color: 'black',
                 fontFamily: 'Arial, sans-serif',
