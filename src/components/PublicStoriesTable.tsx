@@ -323,7 +323,7 @@ const PublicStoriesTable = ({
               <div className="w-full max-w-[380px] h-12">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="bg-[#A0522D] text-white hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between">
+                    <Button className="bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between">
                       {getSortOptionDisplayName(sortOption)}
                       <ChevronDown className="h-4 w-4" />
                     </Button>
@@ -361,7 +361,7 @@ const PublicStoriesTable = ({
               <div className="w-full max-w-[380px] h-12">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="bg-[#A0522D] text-white hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between">
+                    <Button className="bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-12 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between">
                       {getMediaFilterDisplayName(mediaFilter)}
                       <ChevronDown className="h-4 w-4" />
                     </Button>
