@@ -625,10 +625,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      armor: {
-        Args: { "": string }
-        Returns: string
-      }
       calculate_reading_time: {
         Args: { content_text: string }
         Returns: number
@@ -640,10 +636,6 @@ export type Database = {
       check_personal_id_exists: {
         Args: { p_personal_id: string }
         Returns: boolean
-      }
-      dearmor: {
-        Args: { "": string }
-        Returns: string
       }
       debug_auth_context: {
         Args: Record<PropertyKey, never>
@@ -663,18 +655,6 @@ export type Database = {
       }
       emergency_promote_admin: {
         Args: { user_email: string }
-        Returns: string
-      }
-      gen_random_bytes: {
-        Args: { "": number }
-        Returns: string
-      }
-      gen_random_uuid: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      gen_salt: {
-        Args: { "": string }
         Returns: string
       }
       get_allowed_admin_emails: {
@@ -772,14 +752,6 @@ export type Database = {
           p_table_name: string
         }
         Returns: undefined
-      }
-      pgp_armor_headers: {
-        Args: { "": string }
-        Returns: Record<string, unknown>[]
-      }
-      pgp_key_id: {
-        Args: { "": string }
-        Returns: string
       }
       promote_user_to_admin: {
         Args: { user_email: string }
