@@ -289,7 +289,7 @@ const PublicStoriesTable = ({ onEditBio, searchTerm = '', onSearchChange }: Publ
                   placeholder="Just start typing here."
                   value={localSearchTerm}
                   onChange={(e) => setLocalSearchTerm(e.target.value)}
-                  className="pl-10 pr-10 py-2 text-sm border-2 border-green-700 focus:border-green-800 rounded-lg placeholder:font-bold search-input-amber"
+                  className="pl-10 pr-10 py-2 text-sm border-2 border-green-700 focus:border-green-800 rounded-lg placeholder:font-bold"
                 />
                 {searchTerm && (
                   <Button
