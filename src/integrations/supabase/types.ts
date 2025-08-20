@@ -360,9 +360,7 @@ export type Database = {
       }
       profiles: {
         Row: {
-          avatar_url: string | null
           created_at: string
-          display_name: string | null
           id: string
           role: string
           updated_at: string
@@ -370,9 +368,7 @@ export type Database = {
           webauthn_enabled: boolean | null
         }
         Insert: {
-          avatar_url?: string | null
           created_at?: string
-          display_name?: string | null
           id: string
           role?: string
           updated_at?: string
@@ -380,9 +376,7 @@ export type Database = {
           webauthn_enabled?: boolean | null
         }
         Update: {
-          avatar_url?: string | null
           created_at?: string
-          display_name?: string | null
           id?: string
           role?: string
           updated_at?: string

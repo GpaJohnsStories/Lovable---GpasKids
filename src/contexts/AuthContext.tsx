@@ -1,3 +1,4 @@
+
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -7,7 +8,7 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signUp: (params: { email: string; password: string; full_name?: string }) => Promise<{ data: any; error: any }>;
+  signUp: (params: { email: string; password: string }) => Promise<{ data: any; error: any }>;
   signIn: (params: { email: string; password: string }) => Promise<{ data: any; error: any }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ data: any; error: any }>;
@@ -56,7 +57,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, [user]);
 
-  const signUp = async ({ email, password, full_name }: { email: string; password: string; full_name?: string }) => {
+  const signUp = async ({ email, password }: { email: string; password: string }) => {
     try {
       const redirectUrl = `${window.location.origin}/`;
       
@@ -65,9 +66,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         password,
         options: {
           emailRedirectTo: redirectUrl,
-          data: {
-            full_name,
-          },
         },
       });
       
@@ -133,24 +131,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         throw new Error('No user logged in');
       }
 
-      // Map full_name to display_name for compatibility
-      const profileUpdates = { ...updates };
-      if (updates.full_name) {
-        profileUpdates.display_name = updates.full_name;
-        delete profileUpdates.full_name;
-      }
+      // Filter out any personal data fields that no longer exist
+      const filteredUpdates = Object.keys(updates).reduce((acc, key) => {
+        if (!['full_name', 'avatar_url', 'display_name'].includes(key)) {
+          acc[key] = updates[key];
+        }
+        return acc;
+      }, {} as any);
 
-      const { error } = await supabase
-        .from('profiles')
-        .update(profileUpdates)
-        .eq('id', user.id);
+      // Only update if there are valid fields to update
+      if (Object.keys(filteredUpdates).length > 0) {
+        const { error } = await supabase
+          .from('profiles')
+          .update(filteredUpdates)
+          .eq('id', user.id);
+          
+        if (error) throw error;
         
-      if (error) throw error;
-      
-      setUserProfile(prevProfile => ({
-        ...prevProfile,
-        ...profileUpdates
-      }));
+        setUserProfile(prevProfile => ({
+          ...prevProfile,
+          ...filteredUpdates
+        }));
+      }
       
       return { error: null };
     } catch (error) {
