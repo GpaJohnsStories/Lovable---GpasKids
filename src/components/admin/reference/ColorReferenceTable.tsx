@@ -188,12 +188,12 @@ const ColorReferenceTable = () => {
       notes: "Light blue for secondary interactive elements and subtle emphasis. Also used as welcoming background."
     },
     {
-      name: "Blue - Admin",
+      name: "Blue - Admin/Deep",
       hex: "#2563eb",
       grouping: "Primary",
-      howUsed: ["Admin interface", "Primary admin buttons"],
-      whereUsed: ["Admin Dashboard", "Admin forms"],
-      notes: "Primary admin interface color. Professional and authoritative appearance."
+      howUsed: ["Admin interface", "Primary admin buttons", "Gradient backgrounds", "Accent elements"],
+      whereUsed: ["Admin Dashboard", "Admin forms", "Home Page, Latest Announcements Banner - Gradient"],
+      notes: "Primary admin interface color. Also used for deep blue gradient backgrounds and strong accents."
     },
     {
       name: "Red - Coral",
@@ -251,9 +251,9 @@ const ColorReferenceTable = () => {
       name: "Blue - Primary",
       hex: "#3b82f6",
       grouping: "Primary",
-      howUsed: ["Border", "Admin elements"],
-      whereUsed: ["Guide Page, Read A Story - Border"],
-      notes: "Blue same as admin top banner. Professional and trustworthy."
+      howUsed: ["Border", "Admin elements", "Gradient backgrounds", "Primary elements"],
+      whereUsed: ["Guide Page, Read A Story - Border", "Home Page, Latest Announcements Banner - Gradient", "About Page, About Grandpa John - Border"],
+      notes: "Blue same as admin top banner. Professional and trustworthy. Also used for announcement banners and About page borders."
     },
     {
       name: "Peach - Light",
@@ -352,31 +352,32 @@ const ColorReferenceTable = () => {
       notes: "Light emerald background (20% opacity). Natural, safe feeling background."
     },
     
-    // Home Page Colors
+    // About Page Colors  
     {
-      name: "Yellow - Bright Border",
+      name: "Yellow - Medium Border",
       hex: "#facc15",
       grouping: "Primary",
       howUsed: ["Border", "Attention highlights"],
-      whereUsed: ["Home Page, SYS-WEL - Border"],
-      notes: "Bright yellow border for the main welcome section. Eye-catching and cheerful."
+      whereUsed: ["About Page, About Buddy - Border", "Home Page, SYS-WEL - Border"],
+      notes: "Medium yellow border for About Buddy section and welcome area. Warm, friendly, and cheerful."
     },
     {
-      name: "Blue - Medium",
-      hex: "#3b82f6",
+      name: "Yellow - Gold Border",
+      hex: "#eab308",
       grouping: "Primary",
-      howUsed: ["Gradient backgrounds", "Primary elements"],
-      whereUsed: ["Home Page, Latest Announcements Banner - Gradient"],
-      notes: "Medium blue used in announcement banner gradients. Professional and trustworthy."
+      howUsed: ["Border", "Gold accents"],
+      whereUsed: ["About Page, A Special Thank You - Border"],
+      notes: "Gold yellow border for special sections. Premium, thankful feeling."
     },
     {
-      name: "Blue - Deep",
-      hex: "#2563eb",
-      grouping: "Primary", 
-      howUsed: ["Gradient backgrounds", "Accent elements"],
-      whereUsed: ["Home Page, Latest Announcements Banner - Gradient"],
-      notes: "Deep blue for rich gradient backgrounds and strong accents."
+      name: "Purple - Light Background",
+      hex: "#e9d5ff",
+      grouping: "Secondary",
+      howUsed: ["Background", "Special sections"],
+      whereUsed: ["About Page, A Special Thank You - Background"],
+      notes: "Light purple background for special thank you section. Gentle, appreciative tone."
     },
+    // Home Page Colors
     {
       name: "Blue - Dark",
       hex: "#1d4ed8",
