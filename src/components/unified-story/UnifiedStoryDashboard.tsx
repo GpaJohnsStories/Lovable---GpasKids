@@ -750,8 +750,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     borderColor: '#9c441a',
                     borderWidth: '2px'
                   }}>
-                      <div className="text-xs font-bold mb-1">Fable</div>
-                      <div className="text-xs text-gray-600 mb-2">British accent, storytelling</div>
+                      <div className="text-xs font-bold mb-1">Fluffy</div>
+                      <div className="text-xs text-gray-600 mb-2">British accent, storytelling (Fable)</div>
                       <div className="flex gap-1 justify-center">
                         {loadingVoice === 'fable' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
@@ -798,8 +798,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     borderColor: '#9c441a',
                     borderWidth: '2px'
                   }}>
-                      <div className="text-xs font-bold mb-1">Onyx</div>
-                      <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice</div>
+                      <div className="text-xs font-bold mb-1">Max</div>
+                      <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice (Onyx)</div>
                       <div className="flex gap-1 justify-center">
                         {loadingVoice === 'onyx' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
@@ -894,8 +894,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     borderColor: '#9c441a',
                     borderWidth: '2px'
                   }}>
-                      <div className="text-xs font-bold mb-1">Sage</div>
-                      <div className="text-xs text-gray-600 mb-2">Warm and thoughtful, reflective</div>
+                      <div className="text-xs font-bold mb-1">Sparky</div>
+                      <div className="text-xs text-gray-600 mb-2">Warm and thoughtful, reflective (Sage)</div>
                       <div className="flex gap-1 justify-center">
                         {loadingVoice === 'sage' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
