@@ -134,7 +134,7 @@ const BreakGuide: React.FC = () => {
         onClick={handleBreakButtonClick}
         data-allow-superav-passthrough="true"
         size="sm"
-        className="fixed bottom-20 left-4 z-50 rounded-full shadow-lg bg-gradient-to-br from-green-400 to-green-600 hover:from-green-300 hover:to-green-500 text-white border-2 border-green-600 hover:border-green-500 transition-all duration-300 hover:scale-105 px-4 py-2 shadow-[0_4px_8px_rgba(0,0,0,0.3),0_2px_4px_rgba(34,139,34,0.4)] hover:shadow-[0_6px_12px_rgba(0,0,0,0.4),0_3px_6px_rgba(34,139,34,0.5)]"
+        className="fixed bottom-20 left-4 z-50 rounded-full shadow-lg bg-gradient-to-br from-[#228B22] to-green-700 hover:from-[#2F8B2F] hover:to-green-600 text-white border-2 border-[#228B22] hover:border-green-600 transition-all duration-300 hover:scale-105 px-4 py-2 shadow-[0_4px_8px_rgba(0,0,0,0.3),0_2px_4px_rgba(34,139,34,0.4)] hover:shadow-[0_6px_12px_rgba(0,0,0,0.4),0_3px_6px_rgba(34,139,34,0.5)]"
         aria-label="Break Guide"
         data-testid="break-button"
       >
