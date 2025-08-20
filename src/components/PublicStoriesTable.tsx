@@ -66,6 +66,23 @@ const PublicStoriesTable = ({
     setLocalSearchTerm(searchTerm);
   }, [searchTerm]);
 
+  // Query to fetch authors who have biographies
+  const { data: authorBios } = useQuery({
+    queryKey: ['author-bios'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('author_bios')
+        .select('author_name');
+      if (error) throw error;
+      return data;
+    }
+  });
+
+  // Create a normalized set of authors with bios for efficient lookup
+  const authorsWithBios = new Set(
+    authorBios?.map(bio => bio.author_name.toLowerCase().trim()) || []
+  );
+
   const {
     data: stories,
     isLoading
@@ -510,16 +527,16 @@ const PublicStoriesTable = ({
                         <TableCell className="text-black-system table-cell-top">
                           <div className="flex flex-col items-center gap-1">
                             <span className="text-[16pt] text-black" style={{ fontFamily: 'Georgia, serif' }}>{story.author}</span>
-                             {onEditBio && <Tooltip>
-                                 <TooltipTrigger asChild>
-                                   <Button onClick={() => onEditBio(story.author)} className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 h-auto min-w-[80px]" size="sm">
-                                     Biography
-                                   </Button>
-                                 </TooltipTrigger>
-                                 <TooltipContent>
-                                   <p className="text-xs">View {story.author}'s biography</p>
-                                 </TooltipContent>
-                               </Tooltip>}
+                             {onEditBio && authorsWithBios.has(story.author.toLowerCase().trim()) && <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button onClick={() => onEditBio(story.author)} className="bg-amber-500 hover:bg-amber-600 text-white text-xs px-3 py-1 h-auto min-w-[80px]" size="sm">
+                                      Biography
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p className="text-xs">View {story.author}'s biography</p>
+                                  </TooltipContent>
+                                </Tooltip>}
                              <Tooltip>
                                <TooltipTrigger asChild>
                                  <Link to="/writing">
