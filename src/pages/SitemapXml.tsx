@@ -46,7 +46,7 @@ const SitemapXml = () => {
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gpaskids.com/privacy</loc>
+    <loc>https://gpaskids.com/security</loc>
     <lastmod>2025-01-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

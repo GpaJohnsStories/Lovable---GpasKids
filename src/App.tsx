@@ -114,7 +114,7 @@ function App() {
                       <Route path="/make-comment" element={<MakeComment />} />
                       <Route path="/view-comments" element={<ViewComments />} />
                       <Route path="/comment/:id" element={<CommentDetail />} />
-                      <Route path="/privacy" element={<Privacy />} />
+                      <Route path="/security" element={<Privacy />} />
                       <Route path="/robots.txt" element={<RobotsTxt />} />
                       <Route path="/sitemap.xml" element={<SitemapXml />} />
                       <Route path="/voice-preview" element={<VoicePreview />} />

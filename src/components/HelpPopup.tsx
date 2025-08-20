@@ -75,7 +75,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
       '/make-comment': 'Make Comment',
       '/view-comments': 'View Comments',
       '/writing': 'Story Writing',
-      '/privacy': 'Privacy Policy',
+      '/security': 'Privacy Policy',
       '/help-gpa': 'Help Grandpa',
       '/admin': 'Admin Panel',
       '/admin-access': 'Admin Access'

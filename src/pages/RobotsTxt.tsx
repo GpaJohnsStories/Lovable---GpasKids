@@ -21,7 +21,7 @@ Allow: /about
 Allow: /writing
 Allow: /help-gpa
 Allow: /view-comments
-Allow: /privacy
+Allow: /security
 
 # Social media bots
 User-agent: Googlebot

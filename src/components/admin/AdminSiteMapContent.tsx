@@ -16,7 +16,7 @@ const AdminSiteMapContent = () => {
     { name: "Make Comment", path: "/make-comment", icon: MessageSquare, description: "Leave a comment" },
     { name: "Writing Guide", path: "/guide", icon: BookOpen, description: "How to write stories" },
     { name: "Help", path: "/help-gpa", icon: Users, description: "Get help from Grandpa" },
-    { name: "Privacy Policy", path: "/privacy", icon: Settings, description: "Privacy and safety information" }
+    { name: "Privacy Policy", path: "/security", icon: Settings, description: "Privacy and safety information" }
   ];
 
   const adminPages = [

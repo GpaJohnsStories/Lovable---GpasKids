@@ -46,7 +46,7 @@ const WelcomeText = () => {
                   <p className="text-blue-800 italic font-fun text-lg">
                     Please be sure to read our promise to you, click{' '}
                     <Link 
-                      to="/privacy" 
+                      to="/security" 
                       onClick={scrollToTop}
                       className="text-blue-600 hover:text-blue-800 underline font-bold"
                     >

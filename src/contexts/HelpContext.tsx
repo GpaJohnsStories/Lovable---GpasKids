@@ -10,7 +10,7 @@ const ROUTE_HELP_MAP: Record<string, string> = {
   '/make-comment': 'HLP-COM1',
   '/view-comments': 'HLP-COM2',
   '/writing': 'HLP-WR',
-  '/privacy': 'HLP-PRV',
+  '/security': 'HLP-PRV',
   '/help-gpa': 'HELP_GPA_HELP',
   '/author': 'AUTHOR_HELP',
   '/buddys_admin': 'ADMIN_HELP',

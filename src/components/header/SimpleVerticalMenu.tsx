@@ -244,7 +244,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       tooltipText: safeIconName || "Safe & Secure",
       color: "#F97316",
       onClick: () => {
-        window.location.href = "/privacy";
+        window.location.href = "/security";
         onClose();
       }
     }
