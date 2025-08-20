@@ -470,24 +470,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          <Card className="border-2 relative" style={{
-          borderColor: '#4A7C59'
-        }}>
-            <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
-              <span className="text-black text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>C</span>
-            </div>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
-              color: '#4A7C59'
-            }}>
-                <Volume2 className="h-5 w-5" />
-                Audio Upload
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-3">
-              <AudioUploadSection audioUrl={formData.audio_url} onAudioUpload={url => onInputChange('audio_url', url)} onAudioRemove={() => onInputChange('audio_url', '')} />
-            </CardContent>
-          </Card>
         </div>
 
         <div className="flex-1 space-y-4">
@@ -937,6 +919,25 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardHeader>
             <CardContent className="p-3">
               <StoryVideoUpload videoUrl={formData.video_url} onVideoUpload={onVideoUpload} onVideoRemove={onVideoRemove} />
+            </CardContent>
+          </Card>
+
+          <Card className="border-2 relative" style={{
+          borderColor: '#4A7C59'
+        }}>
+            <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
+              <span className="text-black text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>C</span>
+            </div>
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
+              color: '#4A7C59'
+            }}>
+                <Volume2 className="h-5 w-5" />
+                Audio Upload
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-3">
+              <AudioUploadSection audioUrl={formData.audio_url} onAudioUpload={url => onInputChange('audio_url', url)} onAudioRemove={() => onInputChange('audio_url', '')} />
             </CardContent>
           </Card>
         </div>
