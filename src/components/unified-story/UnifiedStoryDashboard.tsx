@@ -29,6 +29,7 @@ interface UnifiedStoryDashboardProps {
   onSubmit: (e: React.FormEvent) => void;
   onCancel: () => void;
   onSaveOnly: () => void;
+  onNew: () => void;
   allowTextToSpeech?: boolean;
   context?: string;
   onStoryFound?: (story: Story) => void;
@@ -49,6 +50,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   onSubmit,
   onCancel,
   onSaveOnly,
+  onNew,
   allowTextToSpeech = false,
   context = "unified-story-system",
   onStoryFound,
@@ -306,6 +308,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             <div className="flex gap-3 h-full">
               <button 
                 type="button" 
+                onClick={onSaveOnly}
                 className="flex-1 h-full text-white font-bold rounded"
                 style={{ backgroundColor: '#22c55e' }}
               >
@@ -313,6 +316,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </button>
               <button 
                 type="button" 
+                onClick={onNew}
                 className="flex-1 h-full text-white font-bold rounded"
                 style={{ backgroundColor: '#FF8C42' }}
               >
@@ -320,6 +324,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </button>
               <button 
                 type="button" 
+                onClick={onCancel}
                 className="flex-1 h-full text-white font-bold rounded"
                 style={{ backgroundColor: '#DC143C' }}
               >
