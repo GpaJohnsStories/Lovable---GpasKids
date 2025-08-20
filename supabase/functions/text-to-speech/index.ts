@@ -62,9 +62,10 @@ serve(async (req) => {
     console.log(`📊 Text analysis: ${wordCount} words`);
     
     let processedText = text;
-    if (wordCount > 200) {
-      console.log(`⚠️ Text exceeds 200 words (${wordCount}), truncating for cost control`);
-      processedText = truncateToWordLimit(text, 200);
+    const wordLimit = 30;
+    if (wordCount > wordLimit) {
+      console.log(`⚠️ Text exceeds ${wordLimit} words (${wordCount}), truncating for cost control`);
+      processedText = truncateToWordLimit(text, wordLimit);
       console.log(`✂️ Text truncated to ${countWords(processedText)} words`);
     }
 
@@ -132,7 +133,7 @@ serve(async (req) => {
       JSON.stringify({ 
         audioContent: base64Audio,
         wordCount: countWords(processedText),
-        wasTruncated: wordCount > 200
+        wasTruncated: wordCount > wordLimit
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
