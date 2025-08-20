@@ -24,7 +24,10 @@ const StoryContentScrollToTop: React.FC<StoryContentScrollToTopProps> = ({ scrol
     }
   }, [scrollContainerRef]);
 
-  const scrollToTarget = () => {
+  const scrollToTarget = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
     if (targetSelector) {
       const targetElement = document.querySelector(targetSelector);
       if (targetElement) {
@@ -48,6 +51,7 @@ const StoryContentScrollToTop: React.FC<StoryContentScrollToTopProps> = ({ scrol
     <div className="fixed bottom-20 right-4 z-50">
       <Button
         onClick={scrollToTarget}
+        type="button"
         size="sm"
         style={{ backgroundColor: '#F97316' }}
         className="rounded-full shadow-lg hover:opacity-90 text-white border-2 border-orange-600 hover:border-orange-500 transition-all duration-300 hover:scale-105 px-4 py-2"
