@@ -38,18 +38,32 @@ export const IconCacheProvider: React.FC<IconCacheProviderProps> = ({ children }
         setPreloadingProgress(100);
       } catch (error) {
         console.error('Failed to preload icons:', error);
+        // Don't throw - just log and continue with empty cache
       } finally {
         setIsPreloading(false);
-        setCacheStats(iconCacheService.getCacheStats());
+        try {
+          setCacheStats(iconCacheService.getCacheStats());
+        } catch (error) {
+          console.error('Failed to get cache stats:', error);
+          // Set safe defaults
+          setCacheStats({ size: 0, maxSize: 50, keys: [], loadingCount: 0 });
+        }
         console.log('✅ Icon cache initialization complete');
       }
     };
 
-    initializeCache();
+    initializeCache().catch((error) => {
+      console.error('Failed to initialize icon cache:', error);
+      setIsPreloading(false);
+    });
 
     // Cleanup on unmount
     return () => {
-      iconCacheService.clearCache();
+      try {
+        iconCacheService.clearCache();
+      } catch (error) {
+        console.error('Failed to clear cache on unmount:', error);
+      }
     };
   }, []);
 

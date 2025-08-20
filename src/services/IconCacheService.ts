@@ -80,6 +80,7 @@ class IconCacheService {
           console.log(`✅ Preloaded: ${iconPath}`);
         } catch (error) {
           console.warn(`⚠️ Failed to preload ${iconPath}:`, error);
+          // Don't throw, just log the error and continue
         }
       });
 
@@ -87,6 +88,7 @@ class IconCacheService {
       console.log('🎯 Priority icon preloading complete');
     } catch (error) {
       console.error('💥 Error during priority icon preloading:', error);
+      // Don't throw, just log the error to prevent app crashes
     }
   }
 
