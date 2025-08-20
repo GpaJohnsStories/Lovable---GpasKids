@@ -120,11 +120,11 @@ const Guide = () => {
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G4B')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 border-green-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
-                style={{ borderColor: "#16a34a" }}
+                className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-orange-200 to-orange-300 hover:from-orange-300 hover:to-orange-400 active:from-orange-400 active:to-orange-500 text-white border-2 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]"
+                style={{ borderColor: "#E6A875" }}
               >
-                <span className="text-[10px]">Guide To</span>
-                <span className="text-[10px]">Write Comment</span>
+                <span className="text-orange-800 text-[10px]">Guide To</span>
+                <span className="text-orange-800 text-[10px]">Write A Comment</span>
               </button>
               <button 
                 onClick={() => document.getElementById('SYS-G5A')?.scrollIntoView({ behavior: 'smooth' })}
