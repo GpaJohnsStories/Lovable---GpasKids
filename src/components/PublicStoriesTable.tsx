@@ -4,7 +4,7 @@ import { Table, TableBody, TableHead, TableHeader, TableRow, TableCell } from "@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { BookOpen, ArrowUp, ArrowDown, ChevronDown, Search, X, Headphones, Video, Calendar, Clock } from "lucide-react";
+import { BookOpen, ArrowUp, ArrowDown, ChevronDown, Search, X, Headphones, Video, Calendar, Clock, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -336,17 +336,21 @@ const PublicStoriesTable = ({
                     <DropdownMenuItem disabled className="text-white cursor-default font-medium">
                       Select Media
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setMediaFilter('all')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => setMediaFilter('all')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       All Stories
+                      {mediaFilter === 'all' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setMediaFilter('text')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => setMediaFilter('text')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Text Only
+                      {mediaFilter === 'text' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setMediaFilter('audio')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => setMediaFilter('audio')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Has Text & Audio
+                      {mediaFilter === 'audio' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setMediaFilter('both')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => setMediaFilter('both')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Has Text, Audio & Video
+                      {mediaFilter === 'both' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -369,26 +373,33 @@ const PublicStoriesTable = ({
                     <DropdownMenuItem disabled className="text-white cursor-default font-medium">
                       Sort On —
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => handleSortOptionChange('title')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('title')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Title
+                      {sortOption === 'title' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => handleSortOptionChange('author')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('author')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Author
+                      {sortOption === 'author' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => handleSortOptionChange('category')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('category')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Category
+                      {sortOption === 'category' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => handleSortOptionChange('read_count')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('read_count')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Times Story Read
+                      {sortOption === 'read_count' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => handleSortOptionChange('thumbs')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('thumbs')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Thumbs Up / Down
+                      {sortOption === 'thumbs' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => handleSortOptionChange('reading_time')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('reading_time')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Time to Read
+                      {sortOption === 'reading_time' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => handleSortOptionChange('updated_at')} className="text-white hover:bg-[#8b4513] rounded-lg">
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('updated_at')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Date Updated
+                      {sortOption === 'updated_at' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
