@@ -557,7 +557,7 @@ const PublicStoriesTable = ({
                               <div className="text-xs text-black-system">{new Date(story.updated_at).toLocaleDateString()}</div>
                             </div>
                             <div className="details-stack-item">
-                              <div className="flex justify-between items-center">
+                              <div className="flex justify-center items-center gap-3">
                                 {story.audio_url ? (
                                   <Headphones className="w-4 h-4 text-green-600" />
                                 ) : (
