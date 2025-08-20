@@ -725,7 +725,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     borderWidth: '2px'
                   }}>
                       <div className="text-xs font-bold mb-1">Gpa John</div>
-                      <div className="text-xs text-gray-600 mb-2">Deep, resonant voice</div>
+                      <div className="text-xs text-gray-600 mb-2">Deep, resonant voice (Echo)</div>
                       <div className="flex gap-1 justify-center">
                         {loadingVoice === 'echo' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
