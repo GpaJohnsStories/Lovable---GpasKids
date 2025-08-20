@@ -38,7 +38,7 @@ const Library = () => {
                 fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
               }}
             >
-              Just start typing...
+              Search for any word, title or author.
             </div>
             {/* Placeholder for remaining 3 boxes */}
             <div className="p-4 border-2 border-gray-300 rounded-none bg-gray-100">
