@@ -130,7 +130,7 @@ const StorySection = () => {
           </Button>
         </Link>
         <p className="text-blue-800 mt-4 text-center font-kalam font-semibold text-xl">
-          I hope you will return here often as I add new stories whenever I can.   <span className="text-xl text-blue-800 font-bold italic font-kalam">Gpa John</span>
+          I hope you will return here often, as I add new stories whenever I can.   <span className="text-xl text-blue-800 font-bold italic font-kalam">Gpa John</span>
         </p>
       </div>
     </section>;
