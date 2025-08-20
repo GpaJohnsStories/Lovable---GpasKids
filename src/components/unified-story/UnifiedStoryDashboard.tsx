@@ -301,9 +301,31 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       <div className="flex gap-6">
         {/* Story Details Card - 45% width */}
         <div className="w-[45%] space-y-4">
-          {/* New transparent box */}
+          {/* New transparent box with buttons */}
           <div className="border border-transparent bg-transparent p-4 h-16">
-            {/* Empty transparent box */}
+            <div className="flex gap-3 h-full">
+              <button 
+                type="button" 
+                className="flex-1 h-full text-white font-bold rounded"
+                style={{ backgroundColor: '#22c55e' }}
+              >
+                SAVE
+              </button>
+              <button 
+                type="button" 
+                className="flex-1 h-full text-white font-bold rounded"
+                style={{ backgroundColor: '#FF8C42' }}
+              >
+                + New
+              </button>
+              <button 
+                type="button" 
+                className="flex-1 h-full text-white font-bold rounded"
+                style={{ backgroundColor: '#DC143C' }}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
           <Card className="border-2" style={{
           borderColor: '#16a34a'
