@@ -304,7 +304,7 @@ const PublicStoriesTable = ({
                     setLocalSearchTerm(e.target.value);
                     onSearchChange?.(e.target.value);
                   }}
-                  className="text-white placeholder-white/80 rounded-lg h-12 px-5 shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40 !text-white"
+                  className="text-white placeholder:text-white/80 placeholder:!text-white placeholder:opacity-80 rounded-lg h-12 px-5 shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40 !text-white"
                   style={{ background: 'linear-gradient(145deg, #fb923c, #F97316)', color: 'white' }}
                 />
                 {localSearchTerm && (
