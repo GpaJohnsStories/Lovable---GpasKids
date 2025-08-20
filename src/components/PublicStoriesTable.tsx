@@ -333,7 +333,7 @@ const PublicStoriesTable = ({
                     </Button>
                   </DropdownMenuTrigger>
                    <DropdownMenuContent className="z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
-                    <DropdownMenuItem disabled className="text-white/60 cursor-default font-medium">
+                    <DropdownMenuItem disabled className="text-white cursor-default font-medium">
                       Sort On —
                     </DropdownMenuItem>
                     <DropdownMenuItem onSelect={() => handleSortOptionChange('title')} className="text-white hover:bg-[#8b4513] rounded-lg">
@@ -375,7 +375,7 @@ const PublicStoriesTable = ({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1 w-[380px]">
-                    <DropdownMenuItem disabled className="text-white/60 cursor-default font-medium">
+                    <DropdownMenuItem disabled className="text-white cursor-default font-medium">
                       Select Media
                     </DropdownMenuItem>
                     <DropdownMenuItem onSelect={() => setMediaFilter('all')} className="text-white hover:bg-[#8b4513] rounded-lg">
