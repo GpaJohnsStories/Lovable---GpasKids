@@ -501,9 +501,9 @@ const PublicStoriesTable = ({
                              {story.tagline && <div className="text-sm font-medium text-amber-700 italic mt-1">
                                  {story.tagline}
                                </div>}
-                             {story.excerpt && <div className="text-sm text-amber-600 mt-1 leading-relaxed">
-                                 {story.excerpt}
-                               </div>}
+                              {story.excerpt && <div className="text-[16pt] text-black mt-1 leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+                                  {story.excerpt}
+                                </div>}
                            </div>
                          </div>
                        </TableCell>
