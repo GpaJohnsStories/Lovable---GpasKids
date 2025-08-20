@@ -546,8 +546,9 @@ const PublicStoriesTable = ({
                               </div>
                             </div>
                             <div className="details-stack-item">
-                              <div className="text-xs text-gray-600 font-medium">Reads</div>
-                              <div className="text-sm font-bold text-black-system">{story.read_count}</div>
+                              <div className="text-sm font-medium text-gray-600">
+                                Reads: <span className="font-bold text-black-system">{story.read_count.toLocaleString()}</span>
+                              </div>
                             </div>
                             <div className="details-stack-item">
                               <div className="text-xs text-gray-600 font-medium">👍 {story.thumbs_up_count} 👎 {story.thumbs_down_count}</div>
