@@ -181,11 +181,11 @@ const ColorReferenceTable = () => {
     },
     {
       name: "Blue - Light",
-      hex: "#ADD8E6",
+      hex: "#ADD8E6", 
       grouping: "Other",
-      howUsed: ["Secondary links", "Subtle highlights", "Border", "Information elements"],
-      whereUsed: ["Secondary navigation", "Metadata links", "Guide Page, About Us - Border"],
-      notes: "Light blue for secondary interactive elements and subtle emphasis."
+      howUsed: ["Secondary links", "Subtle highlights", "Border", "Information elements", "Background"],
+      whereUsed: ["Secondary navigation", "Metadata links", "Guide Page, About Us - Border", "Home Page, SYS-WEL - Background"],
+      notes: "Light blue for secondary interactive elements and subtle emphasis. Also used as welcoming background."
     },
     {
       name: "Blue - Admin",
@@ -350,6 +350,64 @@ const ColorReferenceTable = () => {
       howUsed: ["Background", "Subtle highlights"],
       whereUsed: ["Guide Page, We Are Safe! - Background"],
       notes: "Light emerald background (20% opacity). Natural, safe feeling background."
+    },
+    
+    // Home Page Colors
+    {
+      name: "Yellow - Bright Border",
+      hex: "#facc15",
+      grouping: "Primary",
+      howUsed: ["Border", "Attention highlights"],
+      whereUsed: ["Home Page, SYS-WEL - Border"],
+      notes: "Bright yellow border for the main welcome section. Eye-catching and cheerful."
+    },
+    {
+      name: "Blue - Medium",
+      hex: "#3b82f6",
+      grouping: "Primary",
+      howUsed: ["Gradient backgrounds", "Primary elements"],
+      whereUsed: ["Home Page, Latest Announcements Banner - Gradient"],
+      notes: "Medium blue used in announcement banner gradients. Professional and trustworthy."
+    },
+    {
+      name: "Blue - Deep",
+      hex: "#2563eb",
+      grouping: "Primary", 
+      howUsed: ["Gradient backgrounds", "Accent elements"],
+      whereUsed: ["Home Page, Latest Announcements Banner - Gradient"],
+      notes: "Deep blue for rich gradient backgrounds and strong accents."
+    },
+    {
+      name: "Blue - Dark",
+      hex: "#1d4ed8",
+      grouping: "Primary",
+      howUsed: ["Gradient backgrounds", "Deep accents"],
+      whereUsed: ["Home Page, Latest Announcements Banner - Gradient"],
+      notes: "Dark blue for gradient depth and strong visual impact."
+    },
+    {
+      name: "Blue - Border Dark",
+      hex: "#1e40af",
+      grouping: "Primary",
+      howUsed: ["Borders", "Shadow effects"],
+      whereUsed: ["Home Page, Latest Announcements Banner - Border", "Home Page, Latest Announcements Banner - Shadow"],
+      notes: "Dark blue for borders and shadow effects on announcement elements."
+    },
+    {
+      name: "Blue - Light Background",
+      hex: "#eff6ff",
+      grouping: "Secondary",
+      howUsed: ["Background", "Content areas"],
+      whereUsed: ["Home Page, Announcement Box - Background"],
+      notes: "Very light blue background (blue-50 with opacity). Gentle, readable background."
+    },
+    {
+      name: "Blue - Light Border",
+      hex: "#bfdbfe",
+      grouping: "Secondary",
+      howUsed: ["Border", "Subtle dividers"],
+      whereUsed: ["Home Page, Announcement Box - Border"],
+      notes: "Light blue borders for announcement boxes. Subtle but clear definition."
     }
   ];
 
