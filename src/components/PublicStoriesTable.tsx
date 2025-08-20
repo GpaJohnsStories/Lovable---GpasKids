@@ -288,7 +288,7 @@ const PublicStoriesTable = ({
                 fontSize: '18px',
                 fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
               }}>
-                Box 2
+                Pick how you want the list sorted.
               </div>
             </div>
           </div>
