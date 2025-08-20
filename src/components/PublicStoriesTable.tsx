@@ -282,12 +282,14 @@ const PublicStoriesTable = ({
                 borderColor: '#60a5fa',
                 fontSize: '18px',
                 color: '#000000',
-                fontFamily: 'Arial, sans-serif'
+                fontFamily: 'Arial, sans-serif',
+                fontWeight: 'bold'
               }}>You can search for any word, title or author.</div>
               <div className="p-4 border-2 border-gray-300 rounded-none bg-gray-100 text-center" style={{
                 fontSize: '18px',
                 color: '#000000',
-                fontFamily: 'Arial, sans-serif'
+                fontFamily: 'Arial, sans-serif',
+                fontWeight: 'bold'
               }}>Pick how to sort the list.</div>
             </div>
           </div>
