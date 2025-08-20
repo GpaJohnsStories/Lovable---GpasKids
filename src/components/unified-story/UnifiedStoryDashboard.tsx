@@ -318,9 +318,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </div>
           </div>
 
-          <Card className="border-2" style={{
+          <Card className="border-2 relative" style={{
           borderColor: '#16a34a'
         }}>
+            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1a</span>
+            </div>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5" />
@@ -333,9 +336,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          <Card className="border-2" style={{
+          <Card className="border-2 relative" style={{
           borderColor: '#814d2e'
         }}>
+            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1b</span>
+            </div>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
               color: '#814d2e'
@@ -464,9 +470,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          <Card className="border-2" style={{
+          <Card className="border-2 relative" style={{
           borderColor: '#4A7C59'
         }}>
+            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1c</span>
+            </div>
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
               color: '#4A7C59'
@@ -482,10 +491,13 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         </div>
 
         <div className="flex-1 space-y-4">
-          <Card className="h-fit" style={{
+          <Card className="h-fit relative" style={{
           borderColor: '#F97316',
           borderWidth: '2px'
         }}>
+            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2a</span>
+            </div>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
               color: '#F97316'
@@ -603,9 +615,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          <Card className="h-fit border-2" style={{
+          <Card className="h-fit border-2 relative" style={{
           borderColor: '#2563eb'
         }}>
+            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2b</span>
+            </div>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
               color: '#2563eb'
@@ -666,9 +681,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          <Card className="h-fit border-2" style={{
+          <Card className="h-fit border-2 relative" style={{
           borderColor: '#2563eb'
         }}>
+            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2c</span>
+            </div>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
               color: '#2563eb'
@@ -906,9 +924,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          <Card className="h-fit border-2" style={{
+          <Card className="h-fit border-2 relative" style={{
           borderColor: '#9333ea'
         }}>
+            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+              <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2d</span>
+            </div>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
               color: '#9333ea'
@@ -924,9 +945,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         </div>
       </div>
 
-      <Card className="border-2" style={{
+      <Card className="border-2 relative" style={{
       borderColor: '#F97316'
     }}>
+        <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+          <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>3</span>
+        </div>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
           color: '#F97316'
