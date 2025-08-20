@@ -12,6 +12,8 @@ import { getCategoryShortName } from "@/utils/categoryUtils";
 import { calculateReadingTime } from "@/utils/readingTimeUtils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useCachedIcon } from "@/hooks/useCachedIcon";
+import CopyrightIcon from "@/components/CopyrightIcon";
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'updated_at' | 'created_at' | 'reading_time_minutes' | 'thumbs_up_count';
 type SortDirection = 'asc' | 'desc';
@@ -537,22 +539,7 @@ const PublicStoriesTable = ({
                                     <p className="text-xs">View {story.author}'s biography</p>
                                   </TooltipContent>
                                 </Tooltip>}
-                             <Tooltip>
-                               <TooltipTrigger asChild>
-                                 <Link to="/writing">
-                                   <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-pointer ${(story.copyright_status || '©') === '©' ? 'bg-red-500' : (story.copyright_status || '©') === 'O' ? 'bg-green-500' : 'bg-yellow-500'}`}>
-                                     {story.copyright_status || '©'}
-                                   </span>
-                                 </Link>
-                               </TooltipTrigger>
-                               <TooltipContent>
-                                 <div className="text-xs">
-                                   {(story.copyright_status || '©') === '©' && <span>© Full Copyright - All rights reserved. Click for more information</span>}
-                                   {(story.copyright_status || '©') === 'O' && <span>O Open, No Copyright - Free to share. Click for more information</span>}
-                    {(story.copyright_status || '©') === 'L' && <span>L Limited Sharing - Gpa John's Copyright. Click for more information</span>}
-                                 </div>
-                               </TooltipContent>
-                             </Tooltip>
+                             <CopyrightIcon copyrightStatus={story.copyright_status || '©'} />
                           </div>
                         </TableCell>
                         <TableCell className="text-black-system table-cell-top">
