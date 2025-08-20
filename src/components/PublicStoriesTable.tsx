@@ -321,7 +321,7 @@ const PublicStoriesTable = ({
                   </Button>
                 )}
                 <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
-                  {stories ? stories.length : 0} returned
+                  {stories ? stories.length : 0} Stories
                 </div>
               </div>
 
@@ -364,7 +364,7 @@ const PublicStoriesTable = ({
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
-                  {getMediaFilterDisplayName(mediaFilter)} selected
+                  Selected: {getMediaFilterDisplayName(mediaFilter)}
                 </div>
               </div>
 
@@ -419,7 +419,7 @@ const PublicStoriesTable = ({
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
-                  {getSortOptionDisplayName(sortOption)} sorted
+                  Sorted: {getSortOptionDisplayName(sortOption)}
                 </div>
               </div>
             </div>
