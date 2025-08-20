@@ -277,16 +277,19 @@ const PublicStoriesTable = ({
           {/* Title boxes row */}
           <div className="flex justify-center mb-6">
             <div className="grid grid-cols-2 gap-4 max-w-4xl w-full">
-              <div className="p-4 text-center border-2 rounded-none" style={{
+              <div className="h-6 px-2 py-1 text-center border-2 rounded-none flex items-center justify-center" style={{
                 backgroundColor: '#60a5fa',
                 borderColor: '#60a5fa',
-                fontSize: '18px',
-                color: '#FFD700',
-                fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
+                fontSize: '16px',
+                color: 'black',
+                fontFamily: 'Arial, sans-serif',
+                fontWeight: 'bold'
               }}>Search for any word, title or author.</div>
-              <div className="p-4 border-2 border-gray-300 rounded-none bg-gray-100 text-center" style={{
-                fontSize: '18px',
-                fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
+              <div className="h-6 px-2 py-1 border-2 border-gray-300 rounded-none bg-gray-100 text-center flex items-center justify-center" style={{
+                fontSize: '16px',
+                fontFamily: 'Arial, sans-serif',
+                color: 'black',
+                fontWeight: 'bold'
               }}>Pick how to sort the list.</div>
             </div>
           </div>
