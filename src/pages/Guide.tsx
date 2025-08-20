@@ -135,7 +135,7 @@ const Guide = () => {
               borderColor: "#60a5fa"
             }}>
                 <span className="text-orange-800 text-[10px]">Guide To</span>
-                <span className="text-orange-800 text-[10px]">About Us</span>
+                <span className="text-orange-800 text-[10px]">All About Us</span>
               </button>
               <button onClick={() => document.getElementById('SYS-G7A')?.scrollIntoView({
               behavior: 'smooth'
