@@ -41,10 +41,11 @@ const StoryContentScrollToTop: React.FC<StoryContentScrollToTopProps> = ({ scrol
     }
   };
 
-  if (!showButton) return null;
+  // Always show button when targetSelector is provided, otherwise check scroll position
+  if (!targetSelector && !showButton) return null;
 
   return (
-    <div className="absolute bottom-4 right-4 z-10">
+    <div className="absolute bottom-4 right-4 z-50">
       <Button
         onClick={scrollToTarget}
         size="sm"
