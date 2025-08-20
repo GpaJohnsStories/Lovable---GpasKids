@@ -297,7 +297,7 @@ const PublicStoriesTable = ({
           <div className="mb-6">
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               {/* Search Input */}
-              <div className="relative flex-1 sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+              <div className="relative w-fit">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input type="text" placeholder="Just start typing here." value={localSearchTerm} onChange={e => setLocalSearchTerm(e.target.value)} className="pl-10 pr-10 py-2 text-sm border-2 border-brand-brown focus:border-brand-brown rounded-lg placeholder:font-bold" />
                 {searchTerm && <Button onClick={handleClearSearch} variant="ghost" size="sm" className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100">
