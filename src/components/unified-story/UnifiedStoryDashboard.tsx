@@ -950,11 +950,21 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>3</span>
         </div>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
+          <CardTitle className="flex items-center justify-between text-2xl font-semibold" style={{
           color: '#F97316'
         }}>
-          <FileText className="h-5 w-5" />
-          Story Content
+            <div className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Story Content
+            </div>
+            <button 
+              type="button" 
+              onClick={onSaveOnly}
+              className="text-white font-bold rounded px-4 py-2"
+              style={{ backgroundColor: '#22c55e' }}
+            >
+              SAVE
+            </button>
         </CardTitle>
         </CardHeader>
         <CardContent>
