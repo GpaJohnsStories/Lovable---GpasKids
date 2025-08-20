@@ -136,7 +136,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
             20px
           </Button>
           <Button type="button" size="sm" onClick={() => onFormat('p')} className="h-8 px-3 text-sm btn-toolbar-indigo">
-            P
+            ¶
           </Button>
         </div>
 
