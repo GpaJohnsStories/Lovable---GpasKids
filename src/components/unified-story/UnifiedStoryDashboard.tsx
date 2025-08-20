@@ -15,6 +15,7 @@ import type { Story } from '@/hooks/useStoryFormState';
 import { formatDate, formatTime } from '@/utils/dateUtils';
 import { useVoiceTesting } from '@/hooks/useVoiceTesting';
 import LoadingSpinner from "../LoadingSpinner";
+
 interface UnifiedStoryDashboardProps {
   formData: Story;
   isSaving: boolean;
@@ -36,6 +37,7 @@ interface UnifiedStoryDashboardProps {
   fontSize?: number;
   onFontSizeChange?: (fontSize: number) => void;
 }
+
 const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   formData,
   isSaving,
@@ -66,6 +68,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   const [uploading, setUploading] = useState<{
     [key: number]: boolean;
   }>({});
+
   const getPublishedColor = (publishedStatus: string) => {
     switch (publishedStatus) {
       case 'Y':
@@ -77,12 +80,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
     }
   };
 
-  // Helper function to get audio status styling
   const getAudioStatusStyle = () => {
     const audioDate = formData.audio_generated_at;
     const updateDate = formData.updated_at;
 
-    // If no audio generated, treat as outdated
     if (!audioDate) {
       return {
         backgroundColor: '#DC2626',
@@ -90,13 +91,11 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       };
     }
 
-    // Create dates and truncate to minutes (ignore seconds)
     const audioDateTime = new Date(audioDate);
     const updateDateTime = new Date(updateDate);
-    audioDateTime.setSeconds(0, 0); // Remove seconds and milliseconds
-    updateDateTime.setSeconds(0, 0); // Remove seconds and milliseconds
+    audioDateTime.setSeconds(0, 0);
+    updateDateTime.setSeconds(0, 0);
 
-    // If audio is older than last update, it's outdated
     if (audioDateTime < updateDateTime) {
       return {
         backgroundColor: '#DC2626',
@@ -104,14 +103,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       };
     }
 
-    // If audio is equal to or newer than last update, it's current
     return {
       backgroundColor: '#16a34a',
       color: 'white'
     };
   };
 
-  // Helper function to get last update styling
   const getLastUpdateStyle = () => {
     const updateDate = formData.updated_at;
     if (!updateDate) {
@@ -121,15 +118,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       };
     }
 
-    // Get today's date (ignoring time)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // Get update date (ignoring time)
     const update = new Date(updateDate);
     update.setHours(0, 0, 0, 0);
 
-    // If updated today, use green background with white text
     if (update.getTime() === today.getTime()) {
       return {
         backgroundColor: '#228B22',
@@ -137,13 +131,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       };
     }
 
-    // Otherwise use gold background with black text
     return {
       backgroundColor: '#F2BA15',
       color: 'black'
     };
   };
-  // Resize image helper function
+
   const resizeImage = (file: File, maxWidth = 800, maxHeight = 600, quality = 0.85): Promise<File> => {
     return new Promise(resolve => {
       const canvas = document.createElement('canvas');
@@ -184,7 +177,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
     });
   };
 
-  // Handle photo upload
   const handlePhotoUpload = async (file: File, photoNumber: 1 | 2 | 3) => {
     console.log('🖼️ Photo upload started for photo', photoNumber, 'with file:', file);
     if (!file) {
@@ -192,7 +184,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       return;
     }
 
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       console.log('❌ Invalid file type:', file.type);
       toast({
@@ -203,7 +194,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       return;
     }
 
-    // Validate file size (max 10MB for original, will be reduced after resize)
     if (file.size > 10 * 1024 * 1024) {
       console.log('❌ File too large:', file.size);
       toast({
@@ -219,7 +209,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       [photoNumber]: true
     }));
     try {
-      // Check admin status first
       const {
         data: session
       } = await supabase.auth.getSession();
@@ -230,7 +219,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       } = await supabase.rpc('is_admin_safe');
       console.log('👑 Admin status check:', isAdmin, 'Error:', adminError);
 
-      // Resize the image to prevent cropping and reduce file size
       console.log('🔄 Starting image resize...');
       toast({
         title: "Processing Image",
@@ -242,12 +230,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         resizedSize: (resizedFile.size / 1024 / 1024).toFixed(2) + 'MB'
       });
 
-      // Generate unique filename
       const fileExt = resizedFile.name.split('.').pop();
       const fileName = `story-photos/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
       console.log('📝 Generated filename:', fileName);
 
-      // Upload resized file to Supabase storage
       console.log('☁️ Starting upload to Supabase storage...');
       const {
         data,
@@ -262,7 +248,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         throw error;
       }
 
-      // Get public URL
       console.log('🔗 Getting public URL...');
       const {
         data: {
@@ -291,6 +276,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       }));
     }
   };
+
   console.log('🎯 UnifiedStoryDashboard: Rendering with formData:', {
     id: formData.id,
     title: formData.title,
@@ -299,11 +285,10 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
     hasAudio: !!formData.audio_url,
     aiVoiceName: formData.ai_voice_name
   });
+
   return <form onSubmit={onSubmit} className="space-y-6">
       <div className="flex gap-6">
-        {/* Story Details Card - 45% width */}
         <div className="w-[45%] space-y-4">
-          {/* New transparent box with buttons */}
           <div className="border border-transparent bg-transparent p-4 h-16">
             <div className="flex gap-3 h-full">
               <button 
@@ -332,6 +317,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </button>
             </div>
           </div>
+
           <Card className="border-2" style={{
           borderColor: '#16a34a'
         }}>
@@ -347,7 +333,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          {/* Story Photos Section */}
           <Card className="border-2" style={{
           borderColor: '#814d2e'
         }}>
@@ -364,7 +349,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               borderColor: '#9c441a'
             }}>
                 <tbody>
-                  {/* Photo Display Row */}
                   <tr>
                     <td className="p-2 border" style={{
                     borderColor: '#9c441a'
@@ -404,7 +388,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   
-                  {/* File Input Row */}
                   <tr>
                     <td className="p-2 border" style={{
                     borderColor: '#9c441a'
@@ -459,7 +442,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   
-                  {/* Alt Text Row */}
                   <tr>
                     <td className="p-2 border" style={{
                     borderColor: '#9c441a'
@@ -482,7 +464,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          {/* Audio Upload - Condensed */}
           <Card className="border-2" style={{
           borderColor: '#4A7C59'
         }}>
@@ -500,9 +481,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           </Card>
         </div>
 
-        {/* Settings & Actions Column - Uses remaining space */}
         <div className="flex-1 space-y-4">
-          {/* Settings Card with side-by-side Copyright and Publication */}
           <Card className="h-fit" style={{
           borderColor: '#F97316',
           borderWidth: '2px'
@@ -516,7 +495,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {/* Timestamp Information Table */}
               <table className="w-full text-xs" style={{
               border: '2px solid #9c441a'
             }}>
@@ -584,15 +562,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 </tbody>
               </table>
               
-              {/* Copyright Status and Publication Status with Media Icons */}
               <div className="flex gap-3">
-                {/* Copyright Status - Now on left */}
                 <div className="space-y-1 flex-1">
                   <Label className="text-xs font-bold text-gray-700">Copyright Status</Label>
                   <CopyrightControl value={formData.copyright_status || '©'} onChange={value => onInputChange('copyright_status', value)} />
                 </div>
                 
-                {/* Publication Status with Media Icons - Now on right */}
                 <div className="space-y-1 flex-1">
                   <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
                   <div className="flex items-center gap-2">
@@ -606,7 +581,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                       </SelectContent>
                     </Select>
                     
-                    {/* Media Icons */}
                     <div className="flex items-center gap-1">
                       {formData.audio_url && <div className="flex items-center justify-center w-6 h-6 rounded bg-green-100 border border-green-300">
                           <Headphones className="h-3 w-3 text-green-600" />
@@ -619,7 +593,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 </div>
               </div>
 
-              {/* Google Drive Link */}
               <div className="space-y-1">
                 <Label htmlFor="google_drive_link" className="text-xs font-bold text-gray-700">Google Drive Link</Label>
                 <input id="google_drive_link" type="url" value={formData.google_drive_link} onChange={e => onInputChange('google_drive_link', e.target.value)} placeholder="https://drive.google.com/..." className="w-full p-2 text-xs border rounded-md" style={{
@@ -627,23 +600,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                 borderWidth: '2px'
               }} />
               </div>
-
-              {/* Save and Cancel Buttons */}
-              <div className="flex gap-2 pt-2">
-                <button type="button" onClick={onSaveOnly} disabled={isSaving || isGeneratingAudio} className="flex-1 text-xs h-8 text-[#ffff00] font-bold bg-green-600 border-green-700 hover:bg-green-700 rounded-md border flex items-center justify-center gap-1">
-                  <Save className="h-3 w-3" />
-                  {isSaving ? 'Saving...' : 'Save Details & Text Before Audio'}
-                </button>
-                
-                <button type="button" onClick={onCancel} className="flex-1 text-xs h-8 text-white bg-red-600 border-red-700 hover:bg-red-700 rounded-md border flex items-center justify-center gap-1">
-                  <X className="h-3 w-3" />
-                  Cancel
-                </button>
-              </div>
             </CardContent>
           </Card>
 
-          {/* AI Voice Generation */}
           <Card className="h-fit border-2" style={{
           borderColor: '#2563eb'
         }}>
@@ -657,7 +616,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardHeader>
             <CardContent className="p-3">
               <div className="flex gap-3 items-end">
-                {/* Choose Voice */}
                 <div className="flex-1">
                   <Label className="text-xs font-bold text-gray-700 mb-1 block">Choose Voice</Label>
                   <Select value={formData.ai_voice_name || 'Nova'} onValueChange={value => onVoiceChange?.(value)}>
@@ -681,7 +639,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   </Select>
                 </div>
 
-                {/* Generate Audio Button */}
                 <div className="flex-1">
                   <Label className="text-xs font-bold text-gray-700 mb-1 block">Generate Audio</Label>
                   <button type="button" onClick={async () => {
@@ -709,7 +666,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          {/* Voice Selection - Simple Table */}
           <Card className="h-fit border-2" style={{
           borderColor: '#2563eb'
         }}>
@@ -727,7 +683,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
               borderWidth: '2px'
             }}>
                 <tbody>
-                  {/* Row 1: Alloy | Echo */}
                   <tr>
                     <td className="p-2 border text-center" style={{
                     borderColor: '#9c441a',
@@ -775,7 +730,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   
-                  {/* Row 2: Fable | Nova */}
                   <tr>
                     <td className="p-2 border text-center" style={{
                     borderColor: '#9c441a',
@@ -823,7 +777,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   
-                  {/* Row 3: Onyx | Shimmer */}
                   <tr>
                     <td className="p-2 border text-center" style={{
                     borderColor: '#9c441a',
@@ -871,7 +824,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   
-                  {/* Row 4: Ash | Coral */}
                   <tr>
                     <td className="p-2 border text-center" style={{
                     borderColor: '#9c441a',
@@ -919,7 +871,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     </td>
                   </tr>
                   
-                  {/* Row 5: Sage */}
                   <tr>
                     <td className="p-2 border text-center" style={{
                     borderColor: '#9c441a',
@@ -955,7 +906,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardContent>
           </Card>
 
-          {/* Story Video - Added to Content tab */}
           <Card className="h-fit border-2" style={{
           borderColor: '#9333ea'
         }}>
@@ -974,7 +924,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
         </div>
       </div>
 
-      {/* Story Editor */}
       <Card className="border-2" style={{
       borderColor: '#F97316'
     }}>
@@ -982,9 +931,9 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
           <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
           color: '#F97316'
         }}>
-            <FileText className="h-5 w-5" />
-            Story Content
-          </CardTitle>
+          <FileText className="h-5 w-5" />
+          Story Content
+        </CardTitle>
         </CardHeader>
         <CardContent>
           <SplitViewEditor content={formData.content} onChange={content => onInputChange('content', content)} placeholder="Write your story here..." onSave={onSaveOnly} category={formData.category} fontSize={fontSize} onFontSizeChange={onFontSizeChange} />
@@ -992,4 +941,5 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       </Card>
     </form>;
 };
+
 export default UnifiedStoryDashboard;
