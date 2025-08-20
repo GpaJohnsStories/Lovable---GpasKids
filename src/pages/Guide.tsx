@@ -102,8 +102,8 @@ const Guide = () => {
             })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-blue-200 to-blue-300 hover:from-blue-300 hover:to-blue-400 active:from-blue-400 active:to-blue-500 text-white border-2 border-blue-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]" style={{
               borderColor: "#3b82f6"
             }}>
-                <span className="text-orange-800 text-[10px]">Guide To</span>
-                <span className="text-orange-800 text-[10px]">Read A Story</span>
+                <span className="text-orange-800 text-[10px]">Guide to</span>
+                <span className="text-orange-800 text-[10px]">Enjoying a Story</span>
               </button>
               <button onClick={() => document.getElementById('SYS-G4A')?.scrollIntoView({
               behavior: 'smooth'
