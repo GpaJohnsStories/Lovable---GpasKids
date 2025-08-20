@@ -29,7 +29,6 @@ interface UnifiedStoryDashboardProps {
   onSubmit: (e: React.FormEvent) => void;
   onCancel: () => void;
   onSaveOnly: () => void;
-  onNew: () => void;
   allowTextToSpeech?: boolean;
   context?: string;
   onStoryFound?: (story: Story) => void;
@@ -50,7 +49,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   onSubmit,
   onCancel,
   onSaveOnly,
-  onNew,
   allowTextToSpeech = false,
   context = "unified-story-system",
   onStoryFound,
@@ -303,35 +301,6 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
       <div className="flex gap-6">
         {/* Story Details Card - 45% width */}
         <div className="w-[45%] space-y-4">
-          {/* New transparent box with buttons */}
-          <div className="border border-transparent bg-transparent p-4 h-16">
-            <div className="flex gap-3 h-full">
-              <button 
-                type="button" 
-                onClick={onSaveOnly}
-                className="flex-1 h-full text-white font-bold rounded"
-                style={{ backgroundColor: '#22c55e' }}
-              >
-                SAVE
-              </button>
-              <button 
-                type="button" 
-                onClick={onNew}
-                className="flex-1 h-full text-white font-bold rounded"
-                style={{ backgroundColor: '#FF8C42' }}
-              >
-                + New
-              </button>
-              <button 
-                type="button" 
-                onClick={onCancel}
-                className="flex-1 h-full text-white font-bold rounded"
-                style={{ backgroundColor: '#DC143C' }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
           <Card className="border-2" style={{
           borderColor: '#16a34a'
         }}>
@@ -665,12 +634,12 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     borderColor: '#9c441a',
                     borderWidth: '2px'
                   }}>
-                      <SelectValue placeholder="Select voice" />
+                      
                     </SelectTrigger>
                     <SelectContent className="z-50 bg-white border shadow-lg">
                       <SelectItem value="Alloy">Alloy - Clear, neutral voice</SelectItem>
                       <SelectItem value="Echo">Echo - Deep, resonant voice</SelectItem>
-                      <SelectItem value="Fable">Fable - British accent, storytelling</SelectItem>
+                      
                       <SelectItem value="Nova">Nova - Warm, friendly voice</SelectItem>
                       <SelectItem value="Onyx">Onyx - Deep, authoritative voice</SelectItem>
                       <SelectItem value="Shimmer">Shimmer - Soft, gentle voice</SelectItem>
@@ -755,8 +724,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     borderColor: '#9c441a',
                     borderWidth: '2px'
                   }}>
-                      <div className="text-xs font-bold mb-1">Gpa John</div>
-                      <div className="text-xs text-gray-600 mb-2">Deep, resonant voice (Echo)</div>
+                      <div className="text-xs font-bold mb-1">Echo</div>
+                      <div className="text-xs text-gray-600 mb-2">Deep, resonant voice</div>
                       <div className="flex gap-1 justify-center">
                         {loadingVoice === 'echo' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
@@ -781,8 +750,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     borderColor: '#9c441a',
                     borderWidth: '2px'
                   }}>
-                      <div className="text-xs font-bold mb-1">Fluffy</div>
-                      <div className="text-xs text-gray-600 mb-2">British accent, storytelling (Fable)</div>
+                      <div className="text-xs font-bold mb-1">Fable</div>
+                      <div className="text-xs text-gray-600 mb-2">British accent, storytelling</div>
                       <div className="flex gap-1 justify-center">
                         {loadingVoice === 'fable' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
@@ -829,8 +798,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     borderColor: '#9c441a',
                     borderWidth: '2px'
                   }}>
-                      <div className="text-xs font-bold mb-1">Max</div>
-                      <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice (Onyx)</div>
+                      <div className="text-xs font-bold mb-1">Onyx</div>
+                      <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice</div>
                       <div className="flex gap-1 justify-center">
                         {loadingVoice === 'onyx' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
@@ -925,8 +894,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                     borderColor: '#9c441a',
                     borderWidth: '2px'
                   }}>
-                      <div className="text-xs font-bold mb-1">Sparky</div>
-                      <div className="text-xs text-gray-600 mb-2">Warm and thoughtful, reflective (Sage)</div>
+                      <div className="text-xs font-bold mb-1">Sage</div>
+                      <div className="text-xs text-gray-600 mb-2">Warm and thoughtful, reflective</div>
                       <div className="flex gap-1 justify-center">
                         {loadingVoice === 'sage' ? <div className="flex items-center gap-1 px-2 py-1 text-xs">
                             <LoadingSpinner />
