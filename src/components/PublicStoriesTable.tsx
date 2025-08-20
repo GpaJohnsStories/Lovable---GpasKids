@@ -541,9 +541,16 @@ const PublicStoriesTable = ({
                         <TableCell className="text-black-system table-cell-top">
                           <div className="details-column-stack">
                             <div className="details-stack-item">
-                              <div className={`${getCategoryBadgeColor(story.category)} text-white text-xs px-2 py-1 rounded text-center mb-1`}>
-                                {getCategoryShortName(story.category)}
-                              </div>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <div className={`${getCategoryBadgeColor(story.category)} text-white text-xs px-2 py-1 rounded text-center mb-1 cursor-help`}>
+                                    {getCategoryShortName(story.category)}
+                                  </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p className="text-xs">Story Category</p>
+                                </TooltipContent>
+                              </Tooltip>
                             </div>
                             <div className="details-stack-item">
                               <div className="text-sm font-medium text-gray-600">
