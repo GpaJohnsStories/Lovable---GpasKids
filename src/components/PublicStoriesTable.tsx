@@ -312,7 +312,7 @@ const PublicStoriesTable = ({
                 {/* Sort By Dropdown */}
                 <div className="flex items-center gap-2">
                   <Select value={sortOption} onValueChange={handleSortOptionChange}>
-                    <SelectTrigger className="w-full sm:w-48 bg-background border-2 border-brand-brown focus:border-brand-brown z-50">
+                    <SelectTrigger className="w-fit bg-background border-2 border-brand-brown focus:border-brand-brown z-50" style={{ minWidth: 'fit-content' }}>
                       <SelectValue placeholder="Sort by..." />
                     </SelectTrigger>
                     <SelectContent className="bg-background border-2 border-brand-brown z-50">
