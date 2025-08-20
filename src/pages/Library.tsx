@@ -34,7 +34,7 @@ const Library = () => {
                 backgroundColor: '#60a5fa', 
                 borderColor: '#60a5fa',
                 fontSize: '18px',
-                color: '#22c55e',
+                color: '#FFD700',
                 fontFamily: "'Kalam', 'Caveat', cursive, sans-serif"
               }}
             >
