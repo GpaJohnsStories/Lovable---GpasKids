@@ -291,8 +291,7 @@ const PublicStoriesTable = ({
                 fontSize: '16px',
                 fontFamily: 'Arial, sans-serif',
                 color: 'black',
-                fontWeight: 'bold',
-                width: '320px'
+                fontWeight: 'bold'
               }}>Pick how to sort the list.</div>
             </div>
           </div>
