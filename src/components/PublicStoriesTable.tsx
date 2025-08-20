@@ -498,10 +498,10 @@ const PublicStoriesTable = ({
                               <Link to={`/story/${story.story_code}`} className="hover:text-red-600 transition-colors duration-300 font-semibold text-[18pt] text-black leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
                                 {story.title}
                               </Link>
-                              {story.tagline && <div className="text-[16pt] font-medium text-black italic mt-1" style={{ fontFamily: 'Georgia, serif' }}>
+                              {story.tagline && <div className="text-[16pt] font-medium text-amber-700 italic mt-1" style={{ fontFamily: 'Georgia, serif' }}>
                                   {story.tagline}
                                 </div>}
-                              {story.excerpt && <div className="text-[16pt] text-amber-700 mt-1" style={{ fontFamily: 'Georgia, serif' }}>
+                              {story.excerpt && <div className="text-[16pt] text-black mt-1" style={{ fontFamily: 'Georgia, serif' }}>
                                   {story.excerpt}
                                 </div>}
                            </div>
