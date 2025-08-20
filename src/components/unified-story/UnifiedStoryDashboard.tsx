@@ -693,7 +693,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
                   {/* Row 1: Alloy | Echo */}
                   <tr>
                     <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
-                      <div className="text-xs font-bold mb-1">Alloy</div>
+                      <div className="text-xs font-bold mb-1">Buddy</div>
                       <div className="text-xs text-gray-600 mb-2">Clear, neutral voice</div>
                       <div className="flex gap-1 justify-center">
                         {loadingVoice === 'alloy' ? (
