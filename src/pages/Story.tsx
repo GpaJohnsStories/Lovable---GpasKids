@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from 'date-fns';
@@ -45,10 +45,12 @@ interface StoryData {
   thumbs_up_count: number;
   thumbs_down_count: number;
   ok_count: number;
+  copyright_status?: string;
 }
 
 const Story = () => {
   const { storyCode } = useParams<{ storyCode: string }>();
+  const [searchParams] = useSearchParams();
   const [story, setStory] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,6 +59,7 @@ const Story = () => {
   
   const [fontSize, setFontSize] = useState(18);
   const navigate = useNavigate();
+  const isPrintMode = searchParams.get('print') === '1';
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -85,15 +88,17 @@ const Story = () => {
 
         setStory(data);
         
-        // Store the current story path for the READ menu functionality
-        sessionStorage.setItem('currentStoryPath', `/story/${storyCode}`);
-        console.log('📖 Story loaded - stored currentStoryPath:', `/story/${storyCode}`);
+        // Store the current story path for the READ menu functionality (unless in print mode)
+        if (!isPrintMode) {
+          sessionStorage.setItem('currentStoryPath', `/story/${storyCode}`);
+          console.log('📖 Story loaded - stored currentStoryPath:', `/story/${storyCode}`);
 
-        // Increment read_count
-        await supabase
-          .from('stories')
-          .update({ read_count: (data.read_count || 0) + 1 })
-          .eq('id', data.id);
+          // Increment read_count (only for normal views, not print mode)
+          await supabase
+            .from('stories')
+            .update({ read_count: (data.read_count || 0) + 1 })
+            .eq('id', data.id);
+        }
 
       } catch (err) {
         console.error("Unexpected error fetching story:", err);
@@ -106,7 +111,23 @@ const Story = () => {
     if (storyCode) {
       fetchStory();
     }
-  }, [storyCode, navigate]);
+  }, [storyCode, navigate, isPrintMode]);
+
+  // Auto-trigger print in print mode
+  useEffect(() => {
+    if (isPrintMode && story && !loading) {
+      const timer = setTimeout(() => {
+        window.print();
+        // Optional: close window after printing
+        const afterPrint = () => {
+          window.removeEventListener('afterprint', afterPrint);
+          window.close();
+        };
+        window.addEventListener('afterprint', afterPrint);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isPrintMode, story, loading]);
 
   const handleVoteUpdate = (newCounts: { thumbs_up_count: number; thumbs_down_count: number; ok_count: number }, newVote: 'thumbs_up' | 'thumbs_down' | 'ok' | null) => {
     if (story) {
@@ -149,8 +170,8 @@ const Story = () => {
 
   return (
       <div className="min-h-screen bg-white">
-        <WelcomeHeader />
-        <ScrollToTop />
+        {!isPrintMode && <WelcomeHeader />}
+        {!isPrintMode && <ScrollToTop />}
         <div className="container mx-auto px-4 pt-0">
           <StoryHeader
             title={story.title}
@@ -168,19 +189,23 @@ const Story = () => {
             aiVoiceName={story.ai_voice_name}
             aiVoiceModel={story.ai_voice_model}
             allowTextToSpeech={false}
+            copyrightStatus={story.copyright_status}
+            printMode={isPrintMode}
           />
 
-          {/* Top Voting Section */}
-          <StoryVotingSection
-            storyId={story.id}
-            storyCode={story.story_code}
-            storyTitle={story.title}
-            thumbsUpCount={story.thumbs_up_count}
-            thumbsDownCount={story.thumbs_down_count}
-            okCount={story.ok_count}
-            currentVote={currentVote}
-            onVoteUpdate={handleVoteUpdate}
-          />
+          {/* Top Voting Section - Hide in print mode */}
+          {!isPrintMode && (
+            <StoryVotingSection
+              storyId={story.id}
+              storyCode={story.story_code}
+              storyTitle={story.title}
+              thumbsUpCount={story.thumbs_up_count}
+              thumbsDownCount={story.thumbs_down_count}
+              okCount={story.ok_count}
+              currentVote={currentVote}
+              onVoteUpdate={handleVoteUpdate}
+            />
+          )}
 
           <main className="mb-8">
             {/* Photo Gallery using StoryPhotosGallery component */}
@@ -196,19 +221,21 @@ const Story = () => {
               </div>
             )}
 
-            {/* Font and Audio Controls positioned above story box */}
+            {/* Font and Audio Controls positioned above story box - Hide in print mode */}
             <div className="relative">
               
               {/* Audio Button - positioned on right */}
-              <div className="absolute top-0 right-0 -mt-8 z-10">
-                <AudioButton
-                  code={story.story_code}
-                  onClick={() => {
-                    console.log('Audio button clicked for story:', story.story_code);
-                    setShowSuperAV(true);
-                  }}
-                />
-              </div>
+              {!isPrintMode && (
+                <div className="absolute top-0 right-0 -mt-8 z-10">
+                  <AudioButton
+                    code={story.story_code}
+                    onClick={() => {
+                      console.log('Audio button clicked for story:', story.story_code);
+                      setShowSuperAV(true);
+                    }}
+                  />
+                </div>
+              )}
               
               <div 
                 className="bg-[#F5E6D3] border-2 border-[#9c441a] rounded-lg p-6 md:p-8 shadow-sm"
@@ -222,33 +249,36 @@ const Story = () => {
             </div>
           </main>
 
-          {/* Bottom Voting Section */}
-          <StoryVotingSection
-            storyId={story.id}
-            storyCode={story.story_code}
-            storyTitle={story.title}
-            thumbsUpCount={story.thumbs_up_count}
-            thumbsDownCount={story.thumbs_down_count}
-            okCount={story.ok_count}
-            currentVote={currentVote}
-            onVoteUpdate={handleVoteUpdate}
-          />
+          {/* Bottom Voting Section - Hide in print mode */}
+          {!isPrintMode && (
+            <StoryVotingSection
+              storyId={story.id}
+              storyCode={story.story_code}
+              storyTitle={story.title}
+              thumbsUpCount={story.thumbs_up_count}
+              thumbsDownCount={story.thumbs_down_count}
+              okCount={story.ok_count}
+              currentVote={currentVote}
+              onVoteUpdate={handleVoteUpdate}
+            />
+          )}
         </div>
         
-        {/* SuperAV Player */}
-        <SuperAV
-          isOpen={showSuperAV}
-          onClose={() => setShowSuperAV(false)}
-          title={story.title}
-          author={story.author}
-          voiceName={story.ai_voice_name}
-          audioUrl={story.audio_url}
-          fontSize={fontSize}
-          onFontSizeChange={setFontSize}
-        />
+        {/* SuperAV Player - Hide in print mode */}
+        {!isPrintMode && (
+          <SuperAV
+            isOpen={showSuperAV}
+            onClose={() => setShowSuperAV(false)}
+            title={story.title}
+            author={story.author}
+            voiceName={story.ai_voice_name}
+            audioUrl={story.audio_url}
+            fontSize={fontSize}
+            onFontSizeChange={setFontSize}
+          />
+        )}
         
-        
-        <CookieFreeFooter />
+        {!isPrintMode && <CookieFreeFooter />}
       </div>
   );
 };

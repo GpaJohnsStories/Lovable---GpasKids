@@ -4,6 +4,8 @@ import { renderCategoryBadge } from "@/utils/categoryUtils";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
 import AuthorLink from "@/components/AuthorLink";
+import CopyrightIcon from "@/components/CopyrightIcon";
+import PrintIcon from "@/components/PrintIcon";
 
 interface StoryHeaderProps {
   title: string;
@@ -21,6 +23,8 @@ interface StoryHeaderProps {
   aiVoiceName?: string;
   aiVoiceModel?: string;
   allowTextToSpeech?: boolean;
+  copyrightStatus?: string;
+  printMode?: boolean;
 }
 
 const StoryHeader = ({ 
@@ -38,7 +42,9 @@ const StoryHeader = ({
   audioDuration, 
   aiVoiceName, 
   aiVoiceModel,
-  allowTextToSpeech = false
+  allowTextToSpeech = false,
+  copyrightStatus,
+  printMode = false
 }: StoryHeaderProps) => {
   const [showSuperAV, setShowSuperAV] = useState(false);
   const [fontSize, setFontSize] = useState(16);
@@ -47,8 +53,8 @@ const StoryHeader = ({
     <>
       {/* Container with audio button positioned top right */}
       <div className="relative">
-        {/* Audio Button - Top Right Corner - only show if audio is available */}
-        {audioUrl && (
+        {/* Audio Button - Top Right Corner - only show if audio is available and not in print mode */}
+        {audioUrl && !printMode && (
           <div className="absolute top-0 right-0 z-5">
             <AudioButton 
               code={storyCode || 'STORY'}
@@ -74,20 +80,29 @@ const StoryHeader = ({
           </h2>
         )}
 
-        <div className="flex items-center justify-center space-x-4 text-xl text-orange-600 mb-2 font-georgia">
-          <div className="flex items-center">
-            <span className="font-medium">by {author}</span>
+        <div className="flex flex-col items-center gap-2 text-xl text-orange-600 mb-2 font-georgia">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center">
+              <span className="font-medium">by {author}</span>
+            </div>
+            {!printMode && <AuthorLink authorName={author} variant="button" size="sm" />}
+            {showStoryCode && storyCode ? (
+              <div className="flex items-center">
+                <span>Story Code: {storyCode}</span>
+              </div>
+            ) : (
+              <div className="flex items-center">
+                <span>{new Date(createdAt).toLocaleDateString()}</span>
+              </div>
+            )}
           </div>
-          <AuthorLink authorName={author} variant="button" size="sm" />
-          {showStoryCode && storyCode ? (
-            <div className="flex items-center">
-              <span>Story Code: {storyCode}</span>
-            </div>
-          ) : (
-            <div className="flex items-center">
-              <span>{new Date(createdAt).toLocaleDateString()}</span>
-            </div>
-          )}
+          {/* Icons row */}
+          <div className="flex items-center gap-2">
+            <CopyrightIcon copyrightStatus={copyrightStatus || '©'} />
+            {(copyrightStatus === 'L' || copyrightStatus === 'O') && !printMode && storyCode && (
+              <PrintIcon storyCode={storyCode} />
+            )}
+          </div>
         </div>
 
         {description && (
@@ -97,18 +112,20 @@ const StoryHeader = ({
         )}
       </div>
 
-      {/* SuperAV Player */}
-      <SuperAV
-        isOpen={showSuperAV}
-        onClose={() => setShowSuperAV(false)}
-        title={title}
-        author={author}
-        voiceName={aiVoiceName}
-        showAuthor={true}
-        audioUrl={audioUrl}
-        fontSize={fontSize}
-        onFontSizeChange={setFontSize}
-      />
+      {/* SuperAV Player - Hide in print mode */}
+      {!printMode && (
+        <SuperAV
+          isOpen={showSuperAV}
+          onClose={() => setShowSuperAV(false)}
+          title={title}
+          author={author}
+          voiceName={aiVoiceName}
+          showAuthor={true}
+          audioUrl={audioUrl}
+          fontSize={fontSize}
+          onFontSizeChange={setFontSize}
+        />
+      )}
     </>
   );
 };
