@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { IconCacheProvider } from "@/contexts/IconCacheContext";
 import { TooltipProvider as CustomTooltipProvider } from "@/contexts/TooltipContext";
 import { SuperAVProvider } from '@/contexts/SuperAVContext';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { useProfileEnsurance } from "@/hooks/useProfileEnsurance";
 import Index from "./pages/Index";
 import About from "./pages/About";
@@ -87,6 +87,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <HelmetProvider>
+            <Helmet defaultTitle="GpasKids.com | Stories & More for Kids" titleTemplate="%s" />
             <HelpProvider>
               <IconCacheProvider>
                 <CustomTooltipProvider>
