@@ -1,18 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
-import { createSafeHtml } from '@/utils/xssProtection';
+import { usePersonalId } from '@/hooks/usePersonalId';
+import SecureStoryContent from '@/components/secure/SecureStoryContent';
+import { replaceTokens, TokenReplacementContext } from '@/utils/printTokens';
 
-const PrintBlackBox: React.FC = () => {
+interface PrintBlackBoxProps {
+  storyContext?: {
+    title?: string;
+    story_code?: string;
+    author?: string;
+    category?: string;
+  };
+}
+
+const PrintBlackBox: React.FC<PrintBlackBoxProps> = ({ storyContext }) => {
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const { lookupStoryByCode } = useStoryCodeLookup();
+  const { personalId } = usePersonalId();
 
   useEffect(() => {
     const fetchBlackBoxContent = async () => {
       try {
         const result = await lookupStoryByCode('PRT-CRO', true);
         if (result.found && result.story) {
-          setContent(result.story.content || '');
+          const tokenContext: TokenReplacementContext = {
+            personalId,
+            story: storyContext
+          };
+          const processedContent = replaceTokens(result.story.content || '', tokenContext);
+          setContent(processedContent);
         }
       } catch (error) {
         console.error('Error fetching PRT-CRO content:', error);
@@ -22,7 +39,7 @@ const PrintBlackBox: React.FC = () => {
     };
 
     fetchBlackBoxContent();
-  }, [lookupStoryByCode]);
+  }, [lookupStoryByCode, personalId, storyContext]);
 
   if (loading || !content) {
     return null;
@@ -30,8 +47,9 @@ const PrintBlackBox: React.FC = () => {
 
   return (
     <div className="print-black-box">
-      <div 
-        dangerouslySetInnerHTML={createSafeHtml(content)}
+      <SecureStoryContent 
+        content={content}
+        className=""
       />
     </div>
   );

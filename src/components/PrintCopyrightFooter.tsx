@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { usePersonalId } from '@/hooks/usePersonalId';
-import { createSafeHtml } from '@/utils/xssProtection';
-import { maskPersonalId } from '@/utils/personalIdUtils';
+import SecureStoryContent from '@/components/secure/SecureStoryContent';
+import { replaceTokens, TokenReplacementContext } from '@/utils/printTokens';
 
-const PrintCopyrightFooter: React.FC = () => {
+interface PrintCopyrightFooterProps {
+  storyContext?: {
+    title?: string;
+    story_code?: string;
+    author?: string;
+    category?: string;
+  };
+}
+
+const PrintCopyrightFooter: React.FC<PrintCopyrightFooterProps> = ({ storyContext }) => {
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const { lookupStoryByCode } = useStoryCodeLookup();
@@ -15,28 +24,12 @@ const PrintCopyrightFooter: React.FC = () => {
       try {
         const result = await lookupStoryByCode('PRT-COF', true);
         if (result.found && result.story) {
-          let footerContent = result.story.content || '';
-          
-          // Replace tokens with actual values
-          const now = new Date();
-          const date = now.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric', 
-            year: 'numeric' 
-          });
-          const time = now.toLocaleTimeString('en-US', { 
-            hour: 'numeric', 
-            minute: '2-digit',
-            hour12: true 
-          });
-          const maskedPid = personalId ? maskPersonalId(personalId) : '';
-          
-          footerContent = footerContent
-            .replace(/\{\{DATE\}\}/g, date)
-            .replace(/\{\{TIME\}\}/g, time)
-            .replace(/\{\{PID\}\}/g, maskedPid);
-          
-          setContent(footerContent);
+          const tokenContext: TokenReplacementContext = {
+            personalId,
+            story: storyContext
+          };
+          const processedContent = replaceTokens(result.story.content || '', tokenContext);
+          setContent(processedContent);
         }
       } catch (error) {
         console.error('Error fetching PRT-COF content:', error);
@@ -46,7 +39,7 @@ const PrintCopyrightFooter: React.FC = () => {
     };
 
     fetchFooterContent();
-  }, [lookupStoryByCode, personalId]);
+  }, [lookupStoryByCode, personalId, storyContext]);
 
   if (loading || !content) {
     return null;
@@ -54,8 +47,9 @@ const PrintCopyrightFooter: React.FC = () => {
 
   return (
     <div className="print-copyright-footer">
-      <div 
-        dangerouslySetInnerHTML={createSafeHtml(content)}
+      <SecureStoryContent 
+        content={content}
+        className=""
       />
     </div>
   );

@@ -230,7 +230,16 @@ const Story = () => {
           />
 
           {/* Print Black Box - Show only in print mode */}
-          {isPrintMode && <PrintBlackBox />}
+          {isPrintMode && (
+            <PrintBlackBox 
+              storyContext={{
+                title: story.title,
+                story_code: story.story_code,
+                author: story.author,
+                category: story.category
+              }}
+            />
+          )}
 
           {/* Top Voting Section - Hide in print mode */}
           {!isPrintMode && (
@@ -321,7 +330,16 @@ const Story = () => {
         <PrintWatermark show={isPrintMode && story.copyright_status === 'L'} />
         
         {/* Print Copyright Footer - Only for 'O' status stories in print mode */}
-        {isPrintMode && story.copyright_status === 'O' && <PrintCopyrightFooter />}
+        {isPrintMode && story.copyright_status === 'O' && (
+          <PrintCopyrightFooter 
+            storyContext={{
+              title: story.title,
+              story_code: story.story_code,
+              author: story.author,
+              category: story.category
+            }}
+          />
+        )}
         
         {!isPrintMode && <CookieFreeFooter />}
       </div>
