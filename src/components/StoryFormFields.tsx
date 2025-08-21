@@ -23,12 +23,20 @@ interface StoryFormFieldsProps {
   };
   onInputChange: (field: string, value: string) => void;
   compact?: boolean;
+  hideTitle?: boolean;
+  hideAuthor?: boolean;
+  hideTagline?: boolean;
+  hideExcerpt?: boolean;
 }
 
 const StoryFormFields: React.FC<StoryFormFieldsProps> = ({ 
   formData, 
   onInputChange,
-  compact = false 
+  compact = false,
+  hideTitle = false,
+  hideAuthor = false,
+  hideTagline = false,
+  hideExcerpt = false
 }) => {
   const fieldSpacing = compact ? "space-y-3" : "space-y-4";
   const labelSize = compact ? "text-sm" : "text-base";
@@ -46,39 +54,43 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
 
   return (
     <div className={fieldSpacing}>
-      <div className="space-y-2">
-        <Label htmlFor="title" className={`font-bold text-gray-700 ${labelSize}`}>
-          Title * <span className="text-gray-500 font-normal">(Maximum 40 Characters)</span>
-        </Label>
-        <Input
-          id="title"
-          type="text"
-          value={formData.title}
-          onChange={(e) => onInputChange('title', e.target.value)}
-          placeholder="Enter story title"
-          maxLength={40}
-          className="border-amber-border border-2"
-          required
-        />
-        <div className="text-right text-sm text-gray-500">
-          {formData.title.length}/40
+      {!hideTitle && (
+        <div className="space-y-2">
+          <Label htmlFor="title" className={`font-bold text-gray-700 ${labelSize}`}>
+            Title * <span className="text-gray-500 font-normal">(Maximum 40 Characters)</span>
+          </Label>
+          <Input
+            id="title"
+            type="text"
+            value={formData.title}
+            onChange={(e) => onInputChange('title', e.target.value)}
+            placeholder="Enter story title"
+            maxLength={40}
+            className="border-amber-border border-2"
+            required
+          />
+          <div className="text-right text-sm text-gray-500">
+            {formData.title.length}/40
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="space-y-2">
-        <Label htmlFor="author" className={`font-bold text-gray-700 ${labelSize}`}>
-          Author *
-        </Label>
-        <Input
-          id="author"
-          type="text"
-          value={formData.author}
-          onChange={(e) => onInputChange('author', e.target.value)}
-          placeholder="Enter author name"
-          className="border-amber-border border-2"
-          required
-        />
-      </div>
+      {!hideAuthor && (
+        <div className="space-y-2">
+          <Label htmlFor="author" className={`font-bold text-gray-700 ${labelSize}`}>
+            Author *
+          </Label>
+          <Input
+            id="author"
+            type="text"
+            value={formData.author}
+            onChange={(e) => onInputChange('author', e.target.value)}
+            placeholder="Enter author name"
+            className="border-amber-border border-2"
+            required
+          />
+        </div>
+      )}
 
       <div className="space-y-2">
         <Label htmlFor="category" className={`font-bold text-gray-700 ${labelSize}`}>
@@ -185,37 +197,41 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
       )}
 
 
-      <div className="space-y-2">
-        <Label htmlFor="tagline" className={`font-bold text-gray-700 ${labelSize}`}>
-          Tagline <span className="text-gray-500 font-normal">(Maximum 100 Characters)</span>
-        </Label>
-        <Textarea
-          id="tagline"
-          value={formData.tagline}
-          onChange={(e) => onInputChange('tagline', e.target.value)}
-          placeholder="Enter a brief tagline"
-          maxLength={100}
-          rows={2}
-          className="resize-none border-amber-border border-2"
-        />
-        <div className="text-right text-sm text-gray-500">
-          {formData.tagline.length}/100
+      {!hideTagline && (
+        <div className="space-y-2">
+          <Label htmlFor="tagline" className={`font-bold text-gray-700 ${labelSize}`}>
+            Tagline <span className="text-gray-500 font-normal">(Maximum 100 Characters)</span>
+          </Label>
+          <Textarea
+            id="tagline"
+            value={formData.tagline}
+            onChange={(e) => onInputChange('tagline', e.target.value)}
+            placeholder="Enter a brief tagline"
+            maxLength={100}
+            rows={2}
+            className="resize-none border-amber-border border-2"
+          />
+          <div className="text-right text-sm text-gray-500">
+            {formData.tagline.length}/100
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="space-y-2">
-        <Label htmlFor="excerpt" className={`font-bold text-gray-700 ${labelSize}`}>
-          Excerpt
-        </Label>
-        <Textarea
-          id="excerpt"
-          value={formData.excerpt}
-          onChange={(e) => onInputChange('excerpt', e.target.value)}
-          placeholder="Write a brief, engaging description that will make readers want to read your story..."
-          rows={compact ? 2 : 3}
-          className="border-amber-border border-2"
-        />
-      </div>
+      {!hideExcerpt && (
+        <div className="space-y-2">
+          <Label htmlFor="excerpt" className={`font-bold text-gray-700 ${labelSize}`}>
+            Excerpt
+          </Label>
+          <Textarea
+            id="excerpt"
+            value={formData.excerpt}
+            onChange={(e) => onInputChange('excerpt', e.target.value)}
+            placeholder="Write a brief, engaging description that will make readers want to read your story..."
+            rows={compact ? 2 : 3}
+            className="border-amber-border border-2"
+          />
+        </div>
+      )}
 
       {!compact && (
         <div className="space-y-2">

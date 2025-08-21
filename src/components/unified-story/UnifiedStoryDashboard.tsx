@@ -36,6 +36,7 @@ interface UnifiedStoryDashboardProps {
   onStoryFound?: (story: Story) => void;
   fontSize?: number;
   onFontSizeChange?: (fontSize: number) => void;
+  hideHeaderFields?: boolean;
 }
 
 const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
@@ -57,7 +58,8 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   context = "unified-story-system",
   onStoryFound,
   fontSize = 16,
-  onFontSizeChange
+  onFontSizeChange,
+  hideHeaderFields = false
 }) => {
   const {
     currentlyPlaying,
@@ -332,7 +334,15 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
             </CardHeader>
             <CardContent className="space-y-4">
             <StoryCodeField value={formData.story_code} onChange={value => onInputChange('story_code', value)} onStoryFound={onStoryFound} currentStoryId={formData.id} compact={true} />
-              <StoryFormFields formData={formData} onInputChange={onInputChange} compact={true} />
+              <StoryFormFields 
+                formData={formData} 
+                onInputChange={onInputChange} 
+                compact={true} 
+                hideTitle={hideHeaderFields}
+                hideAuthor={hideHeaderFields}
+                hideTagline={hideHeaderFields}
+                hideExcerpt={hideHeaderFields}
+              />
             </CardContent>
           </Card>
 

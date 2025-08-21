@@ -160,6 +160,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
           onStoryFound={(story) => populateFormWithStory(story, true)}
           fontSize={fontSize}
           onFontSizeChange={setFontSize}
+          hideHeaderFields={true}
         />
       </div>
       
