@@ -118,12 +118,45 @@ const Story = () => {
     if (isPrintMode && story && !loading) {
       const timer = setTimeout(() => {
         window.print();
-        // Optional: close window after printing
-        const afterPrint = () => {
-          window.removeEventListener('afterprint', afterPrint);
-          window.close();
+        
+        // Handle post-print navigation
+        const handleAfterPrint = () => {
+          window.removeEventListener('afterprint', handleAfterPrint);
+          
+          // Get the referrer or fallback to library
+          const referrer = document.referrer;
+          const fallbackUrl = '/library';
+          
+          // If we have a referrer and it's from the same origin, go back there
+          if (referrer && referrer.includes(window.location.origin)) {
+            // Extract the path from the referrer
+            const referrerPath = new URL(referrer).pathname + new URL(referrer).search;
+            window.location.href = referrerPath;
+          } else {
+            // Otherwise go to the story page (remove print parameter)
+            const currentPath = window.location.pathname;
+            window.location.href = currentPath;
+          }
         };
-        window.addEventListener('afterprint', afterPrint);
+        
+        // Handle browsers that support afterprint event
+        window.addEventListener('afterprint', handleAfterPrint);
+        
+        // Fallback for browsers that don't support afterprint
+        // Wait a bit longer and then redirect anyway
+        setTimeout(() => {
+          window.removeEventListener('afterprint', handleAfterPrint);
+          const referrer = document.referrer;
+          
+          if (referrer && referrer.includes(window.location.origin)) {
+            const referrerPath = new URL(referrer).pathname + new URL(referrer).search;
+            window.location.href = referrerPath;
+          } else {
+            const currentPath = window.location.pathname;
+            window.location.href = currentPath;
+          }
+        }, 3000); // 3 second fallback
+        
       }, 500);
       return () => clearTimeout(timer);
     }
