@@ -48,7 +48,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
             className="h-16 w-32 px-4 btn-toolbar-golden text-lg font-bold" 
             title="Insert Story Tokens"
           >
-            <FileCode className="h-6 w-6 mr-2" />
             Add Tokens
           </Button>
         </div>
