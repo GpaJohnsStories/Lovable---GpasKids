@@ -102,6 +102,30 @@ const ResetPassword = () => {
     handlePasswordReset();
   }, [searchParams, navigate]);
 
+  const validatePassword = (pwd: string): string | null => {
+    if (pwd.length < 8) {
+      return "Password must be at least 8 characters long";
+    }
+    
+    if (!/[A-Z]/.test(pwd)) {
+      return "Password must contain at least one uppercase letter";
+    }
+    
+    if (!/[a-z]/.test(pwd)) {
+      return "Password must contain at least one lowercase letter";
+    }
+    
+    if (!/\d/.test(pwd)) {
+      return "Password must contain at least one number";
+    }
+    
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pwd)) {
+      return "Password must contain at least one special character";
+    }
+    
+    return null;
+  };
+
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -110,8 +134,9 @@ const ResetPassword = () => {
       return;
     }
 
-    if (password.length < 6) {
-      toast.error("Password must be at least 6 characters");
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      toast.error(passwordError);
       return;
     }
 
@@ -123,7 +148,16 @@ const ResetPassword = () => {
       });
 
       if (error) {
-        toast.error(error.message);
+        // Handle specific error cases for better user experience
+        if (error.message.toLowerCase().includes('leaked') || 
+            error.message.toLowerCase().includes('compromised') ||
+            error.message.toLowerCase().includes('breach')) {
+          toast.error("This password has been found in a data breach. Please choose a different password.");
+        } else if (error.message.toLowerCase().includes('weak')) {
+          toast.error("Password is too weak. Please choose a stronger password.");
+        } else {
+          toast.error(error.message);
+        }
       } else {
         toast.success("Password updated successfully!");
         navigate('/');
@@ -165,7 +199,7 @@ const ResetPassword = () => {
             Set New Password
           </CardTitle>
           <p className="text-sm text-gray-600 text-center">
-            Enter your new password
+            Password must be at least 8 characters with uppercase, lowercase, number, and special character
           </p>
         </CardHeader>
         <CardContent>
@@ -179,7 +213,7 @@ const ResetPassword = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="text-lg py-3 pl-10 pr-10"
-                minLength={6}
+                minLength={8}
               />
               <button
                 type="button"
@@ -198,7 +232,7 @@ const ResetPassword = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 className="text-lg py-3 pl-10 pr-10"
-                minLength={6}
+                minLength={8}
               />
               <button
                 type="button"
