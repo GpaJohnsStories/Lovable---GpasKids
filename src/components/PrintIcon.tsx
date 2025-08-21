@@ -11,8 +11,15 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
   const { iconUrl, isLoading, error } = useCachedIcon('!CO-PTR.gif');
 
   const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     console.log('Print icon clicked for story:', storyCode);
-    // Don't prevent default - let the Link handle navigation
+    const printUrl = `/story/${storyCode}?print=1`;
+    const newWindow = window.open(printUrl, '_blank', 'noopener,noreferrer');
+    if (!newWindow) {
+      console.warn('Popup blocked - trying alternative method');
+      // Fallback: try to navigate in same tab
+      window.location.href = printUrl;
+    }
   };
 
   // Show loading placeholder
@@ -27,11 +34,11 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
     return (
       <Tooltip>
         <TooltipTrigger asChild>
-          <Link to={`/story/${storyCode}?print=1`} target="_blank" rel="noopener noreferrer" onClick={handleClick}>
+          <button onClick={handleClick}>
             <span className="text-xs font-bold px-2 py-1 rounded bg-blue-500 text-white cursor-pointer hover:bg-blue-600">
               Print
             </span>
-          </Link>
+          </button>
         </TooltipTrigger>
         <TooltipContent>
           <div className="text-xs">
@@ -45,7 +52,7 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Link to={`/story/${storyCode}?print=1`} target="_blank" rel="noopener noreferrer" onClick={handleClick}>
+        <button onClick={handleClick}>
           <div className="w-8 h-8 rounded cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg border border-gray-300">
             <img 
               src={iconUrl} 
@@ -53,7 +60,7 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
               className="w-full h-full object-cover rounded"
             />
           </div>
-        </Link>
+        </button>
       </TooltipTrigger>
       <TooltipContent>
         <div className="text-xs">
