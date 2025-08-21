@@ -18,6 +18,7 @@ import StoryVotingSection from "@/components/StoryVotingSection";
 import { getStoryPhotos } from "@/utils/storyUtils";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
+import PrintWatermark from "@/components/PrintWatermark";
 
 
 interface StoryData {
@@ -310,6 +311,9 @@ const Story = () => {
             onFontSizeChange={setFontSize}
           />
         )}
+        
+        {/* Print Watermark - Only show when printing and copyright is 'L' */}
+        <PrintWatermark show={isPrintMode && story.copyright_status === 'L'} />
         
         {!isPrintMode && <CookieFreeFooter />}
       </div>
