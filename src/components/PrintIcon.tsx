@@ -10,6 +10,11 @@ interface PrintIconProps {
 const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
   const { iconUrl, isLoading, error } = useCachedIcon('!CO-PTR.gif');
 
+  const handleClick = (e: React.MouseEvent) => {
+    console.log('Print icon clicked for story:', storyCode);
+    // Don't prevent default - let the Link handle navigation
+  };
+
   // Show loading placeholder
   if (isLoading) {
     return (
@@ -22,7 +27,7 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
     return (
       <Tooltip>
         <TooltipTrigger asChild>
-          <Link to={`/story/${storyCode}?print=1`} target="_blank" rel="noopener noreferrer">
+          <Link to={`/story/${storyCode}?print=1`} target="_blank" rel="noopener noreferrer" onClick={handleClick}>
             <span className="text-xs font-bold px-2 py-1 rounded bg-blue-500 text-white cursor-pointer hover:bg-blue-600">
               Print
             </span>
@@ -40,7 +45,7 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Link to={`/story/${storyCode}?print=1`} target="_blank" rel="noopener noreferrer">
+        <Link to={`/story/${storyCode}?print=1`} target="_blank" rel="noopener noreferrer" onClick={handleClick}>
           <div className="w-8 h-8 rounded cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg border border-gray-300">
             <img 
               src={iconUrl} 
