@@ -231,6 +231,18 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     setShowHelp(true);
   };
 
+  const handleInsertHorizontalLine = () => {
+    insertTextAtCursor('<hr class="rule" />');
+  };
+
+  const handleInsertPageBreak = () => {
+    insertTextAtCursor('<div class="page-break"></div>');
+  };
+
+  const handleWrapKeepTogether = () => {
+    wrapSelectedText('<div class="avoid-break">', '</div>');
+  };
+
   const shortcuts = [
     { key: 'Ctrl + B', action: 'Bold' },
     { key: 'Ctrl + C', action: 'Copy' },
@@ -268,6 +280,9 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
           onFontSizeChange={handleFontSizeChange}
           onInsertLink={handleInsertLink}
           onShowHelp={handleShowHelp}
+          onInsertHorizontalLine={handleInsertHorizontalLine}
+          onInsertPageBreak={handleInsertPageBreak}
+          onWrapKeepTogether={handleWrapKeepTogether}
         />
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">

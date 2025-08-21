@@ -870,8 +870,149 @@
   transform: translateY(1px);
 }
 
+/* Horizontal Line Styles */
+.story-content hr.rule,
+.rendered-story-content hr.rule,
+.deployed-story-content hr.rule {
+  border: none;
+  height: 1px;
+  background-color: #666;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.story-content hr.rule-thick,
+.rendered-story-content hr.rule-thick,
+.deployed-story-content hr.rule-thick {
+  border: none;
+  height: 3px;
+  background-color: #666;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.story-content hr.rule-dotted,
+.rendered-story-content hr.rule-dotted,
+.deployed-story-content hr.rule-dotted {
+  border: none;
+  height: 1px;
+  background: repeating-linear-gradient(to right, #666 0, #666 4px, transparent 4px, transparent 8px);
+  margin: 1rem 0;
+  width: 100%;
+}
+
+/* Page Break Styles */
+.story-content .page-break,
+.rendered-story-content .page-break,
+.deployed-story-content .page-break {
+  border: 2px dashed #ccc;
+  background-color: #f9f9f9;
+  color: #666;
+  text-align: center;
+  padding: 8px;
+  margin: 1rem 0;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.story-content .page-break::before,
+.rendered-story-content .page-break::before,
+.deployed-story-content .page-break::before {
+  content: "Page Break (will break page in print)";
+}
+
+.story-content hr.page-break,
+.rendered-story-content hr.page-break,
+.deployed-story-content hr.page-break {
+  border: 2px dashed #ccc;
+  background-color: #f9f9f9;
+  height: 20px;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.story-content hr.page-break::before,
+.rendered-story-content hr.page-break::before,
+.deployed-story-content hr.page-break::before {
+  content: "Page Break Line (will break page in print)";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  background: #f9f9f9;
+  padding: 0 8px;
+}
+
+/* Keep Together Styling */
+.story-content .avoid-break,
+.rendered-story-content .avoid-break,
+.deployed-story-content .avoid-break {
+  border: 1px solid #e0e0e0;
+  background-color: #fafafa;
+  padding: 8px;
+  margin: 0.5rem 0;
+  border-radius: 4px;
+  position: relative;
+}
+
+.story-content .avoid-break::before,
+.rendered-story-content .avoid-break::before,
+.deployed-story-content .avoid-break::before {
+  content: "Keep Together";
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  background: white;
+  padding: 0 4px;
+  font-size: 10px;
+  color: #999;
+  font-style: italic;
+}
+
 /* Print Styles - Fixed 16pt font size for all story content */
 @media print {
+  /* Page break controls */
+  .page-break,
+  hr.page-break {
+    page-break-before: always;
+    break-before: page;
+    display: block !important;
+    height: 0 !important;
+    border: none !important;
+    background: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: hidden;
+  }
+  
+  .page-break::before,
+  hr.page-break::before {
+    display: none !important;
+  }
+  
+  /* Keep content together */
+  .avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .avoid-break::before {
+    display: none !important;
+  }
+  
+  /* Hide horizontal line indicators in print */
+  hr.rule::before,
+  hr.rule-thick::before,
+  hr.rule-dotted::before {
+    display: none !important;
+  }
   /* Set all story content to 16pt (21px) for printing */
   .story-content,
   .story-content p,

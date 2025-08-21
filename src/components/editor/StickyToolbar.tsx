@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key } from "lucide-react";
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package } from "lucide-react";
 import InternalLinkDialog from "@/components/rich-text-editor/InternalLinkDialog";
 interface StickyToolbarProps {
   onFormat: (tag: string) => void;
@@ -15,6 +15,9 @@ interface StickyToolbarProps {
   onFontSizeChange: (size: string) => void;
   onInsertLink: (url: string, text: string) => void;
   onShowHelp: () => void;
+  onInsertHorizontalLine: () => void;
+  onInsertPageBreak: () => void;
+  onWrapKeepTogether: () => void;
 }
 const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onFormat,
@@ -26,7 +29,10 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onFontChange,
   onFontSizeChange,
   onInsertLink,
-  onShowHelp
+  onShowHelp,
+  onInsertHorizontalLine,
+  onInsertPageBreak,
+  onWrapKeepTogether
 }) => {
   return <div className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{
     backgroundColor: '#16a34a'
@@ -153,6 +159,22 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
           </InternalLinkDialog>
         </div>
 
+        <Separator orientation="vertical" className="h-6" style={{
+        backgroundColor: '#9c441a'
+      }} />
+
+        {/* Page Break and Content Tools */}
+        <div className="flex items-center gap-1">
+          <Button type="button" size="sm" onClick={onInsertHorizontalLine} className="h-8 px-2 btn-toolbar-slate" title="Insert horizontal line">
+            <Minus className="h-4 w-4" />
+          </Button>
+          <Button type="button" size="sm" onClick={onInsertPageBreak} className="h-8 px-2 btn-toolbar-indigo" title="Insert page break (for printing)">
+            <FileText className="h-4 w-4" />
+          </Button>
+          <Button type="button" size="sm" onClick={onWrapKeepTogether} className="h-8 px-2 btn-toolbar-purple" title="Keep selected content together">
+            <Package className="h-4 w-4" />
+          </Button>
+        </div>
 
         <Separator orientation="vertical" className="h-6" style={{
         backgroundColor: '#9c441a'
