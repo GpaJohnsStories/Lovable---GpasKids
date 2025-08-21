@@ -243,6 +243,42 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     wrapSelectedText('<div class="avoid-break">', '</div>');
   };
 
+  const handleAddTokens = () => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    // Check if tokens already exist
+    const hasTokens = content.includes('{{TITLE:') || 
+                     content.includes('{{TAGLINE:') || 
+                     content.includes('{{AUTHOR:') || 
+                     content.includes('{{EXCERPT:');
+    
+    if (hasTokens) {
+      // Position cursor at the beginning for editing existing tokens
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = 0;
+        textarea.focus();
+      }, 0);
+      return;
+    }
+
+    // Insert tokens at the top with blank line after excerpt
+    const tokensText = `{{TITLE: }}
+{{TAGLINE: }}
+{{AUTHOR: }}
+{{EXCERPT: }}
+
+${content}`;
+    
+    onChange(tokensText);
+    
+    // Position cursor after "{{TITLE: " for immediate editing
+    setTimeout(() => {
+      textarea.selectionStart = textarea.selectionEnd = 9; // Position after "{{TITLE: "
+      textarea.focus();
+    }, 0);
+  };
+
   const shortcuts = [
     { key: 'Ctrl + B', action: 'Bold' },
     { key: 'Ctrl + C', action: 'Copy' },
@@ -283,6 +319,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
           onInsertHorizontalLine={handleInsertHorizontalLine}
           onInsertPageBreak={handleInsertPageBreak}
           onWrapKeepTogether={handleWrapKeepTogether}
+          onAddTokens={handleAddTokens}
         />
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">

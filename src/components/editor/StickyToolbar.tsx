@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package } from "lucide-react";
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package, FileCode } from "lucide-react";
 import InternalLinkDialog from "@/components/rich-text-editor/InternalLinkDialog";
 interface StickyToolbarProps {
   onFormat: (tag: string) => void;
@@ -18,6 +18,7 @@ interface StickyToolbarProps {
   onInsertHorizontalLine: () => void;
   onInsertPageBreak: () => void;
   onWrapKeepTogether: () => void;
+  onAddTokens: () => void;
 }
 const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onFormat,
@@ -32,12 +33,30 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onShowHelp,
   onInsertHorizontalLine,
   onInsertPageBreak,
-  onWrapKeepTogether
+  onWrapKeepTogether,
+  onAddTokens
 }) => {
   return <div className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{
     backgroundColor: '#16a34a'
   }}>
       <div className="flex items-center gap-2 flex-wrap">
+        {/* Add Tokens Button - First on the left, spans full toolbar height */}
+        <div className="flex items-center gap-1">
+          <Button 
+            type="button" 
+            onClick={onAddTokens} 
+            className="h-16 w-32 px-4 btn-toolbar-golden text-lg font-bold" 
+            title="Insert Story Tokens"
+          >
+            <FileCode className="h-6 w-6 mr-2" />
+            Add Tokens
+          </Button>
+        </div>
+
+        <Separator orientation="vertical" className="h-6" style={{
+        backgroundColor: '#9c441a'
+      }} />
+
         {/* Font Controls */}
         <div className="flex items-center gap-1">
           <Select onValueChange={onFontChange}>
