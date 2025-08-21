@@ -63,9 +63,11 @@ const StoryHeader = ({
           </div>
         )}
         
-        <div className="text-center mb-6">
-          {renderCategoryBadge(category)}
-        </div>
+        {!printMode && (
+          <div className="text-center mb-6">
+            {renderCategoryBadge(category)}
+          </div>
+        )}
 
         {/* Story Title - Now properly centered */}
         <div className="text-center mb-4">
