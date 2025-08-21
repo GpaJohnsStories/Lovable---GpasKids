@@ -88,9 +88,6 @@ const StoryHeader = ({
               <span className="font-medium">by {author}</span>
             </div>
             {!printMode && <AuthorLink authorName={author} variant="button" size="sm" />}
-            <div className="flex items-center">
-              <span>{new Date(createdAt).toLocaleDateString()}</span>
-            </div>
           </div>
           {/* Icons row */}
           <div className="flex items-center gap-2">
