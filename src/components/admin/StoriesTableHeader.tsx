@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status';
 type SortDirection = 'asc' | 'desc';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'BioText';
 
@@ -233,13 +233,15 @@ const StoriesTableHeader = ({
           </DropdownMenu>
         </TableHead>
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '50px', minWidth: '50px', maxWidth: '50px' }}>
-          <div
-            className="bg-gradient-to-b from-orange-400 to-orange-600 text-white h-6 text-xs px-1 py-1 flex items-center justify-center admin-table-font w-full"
-            style={{ borderRadius: '0px' }}
+          <Button
+            onClick={() => onSort('copyright_status')}
+            className={`${getButtonColor('copyright_status')} w-full h-6 text-xs px-1 py-1 admin-table-font`}
+            size="sm"
             title="Copyright Status: ©=Full Copyright, O=Open, S=Limited Sharing"
           >
             ©
-          </div>
+            {getSortIcon('copyright_status')}
+          </Button>
         </TableHead>
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
           <DropdownMenu>

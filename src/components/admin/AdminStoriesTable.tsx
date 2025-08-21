@@ -11,11 +11,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status';
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'BioText';
-type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'reading_time';
+type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'reading_time' | 'copyright_status';
 type MediaFilter = 'all' | 'text' | 'audio' | 'video' | 'both';
 
 interface GroupedStory extends Record<string, any> {
@@ -238,6 +238,8 @@ const AdminStoriesTable = ({
         return 'Date Updated';
       case 'reading_time':
         return 'Time to Read';
+      case 'copyright_status':
+        return 'Copyright Status';
       default:
         return 'Sort by...';
     }
@@ -275,6 +277,9 @@ const AdminStoriesTable = ({
     } else if (option === 'updated_at') {
       setSortField('updated_at');
       setSortDirection('desc');
+    } else if (option === 'copyright_status') {
+      setSortField('copyright_status');
+      setSortDirection('asc');
     } else {
       setSortField(option as SortField);
       setSortDirection(option === 'read_count' ? 'desc' : 'asc');
@@ -404,10 +409,14 @@ const AdminStoriesTable = ({
                     Time to Read
                     {sortOption === 'reading_time' && <Check className="h-4 w-4" />}
                   </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => handleSortOptionChange('updated_at')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
-                    Date Updated
-                    {sortOption === 'updated_at' && <Check className="h-4 w-4" />}
-                  </DropdownMenuItem>
+                   <DropdownMenuItem onSelect={() => handleSortOptionChange('updated_at')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                     Date Updated
+                     {sortOption === 'updated_at' && <Check className="h-4 w-4" />}
+                   </DropdownMenuItem>
+                   <DropdownMenuItem onSelect={() => handleSortOptionChange('copyright_status')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                     Copyright Status
+                     {sortOption === 'copyright_status' && <Check className="h-4 w-4" />}
+                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
