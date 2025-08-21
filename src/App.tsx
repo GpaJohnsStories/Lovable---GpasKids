@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Toaster as ShadcnToaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { IconCacheProvider } from "@/contexts/IconCacheContext";
 import { TooltipProvider as CustomTooltipProvider } from "@/contexts/TooltipContext";
 import { SuperAVProvider } from '@/contexts/SuperAVContext';
@@ -50,7 +50,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ResetPasswordRequest from "./components/auth/ResetPasswordRequest";
-import Dashboard from "./components/auth/Dashboard";
+// import Dashboard from "./components/auth/Dashboard"; // Redirected to admin
 
 import UnifiedStoryPage from "./components/unified-story/UnifiedStoryPage";
 
@@ -130,8 +130,8 @@ function App() {
                       <Route path="/auth/register" element={<Register />} />
                       <Route path="/auth/forgot-password" element={<ResetPasswordRequest />} />
                       
-                      {/* Protected Routes */}
-                      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                       {/* Protected Routes - Redirect to Admin */}
+                       <Route path="/dashboard" element={<ProtectedRoute><Navigate to="/buddys_admin" replace /></ProtectedRoute>} />
 
                       {/* Admin Routes */}
                       <Route path="/buddys_admin" element={<SecureAdminRoute><AdminOverview /></SecureAdminRoute>} />
