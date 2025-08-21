@@ -415,7 +415,7 @@ const PublicStoriesTable = ({
                       Author
                       {sortOption === 'author' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => handleSortOptionChange('category')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-center">
+                    <DropdownMenuItem onSelect={() => handleSortOptionChange('category')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Category
                       {sortOption === 'category' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
