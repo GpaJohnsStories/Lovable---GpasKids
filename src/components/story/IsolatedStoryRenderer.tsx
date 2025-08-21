@@ -64,21 +64,20 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
       <>
         {/* Header Preview Section */}
         {showHeaderPreview && tokens && (tokens.titleHtml || tokens.taglineHtml || tokens.authorHtml || tokens.excerptHtml) && (
-          <div className="header-preview mb-6 pb-4 border-b border-gray-200">
+          <div className="header-preview mb-6 pb-4 border-b border-border">
             {tokens.titleHtml && (
               <h1 
-                className="text-2xl font-bold mb-2"
+                className="text-2xl font-bold mb-2 text-foreground"
                 style={{ 
                   fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
-                  fontSize: `${Math.floor(fontSize * 1.5)}px`,
-                  color: '#000000'
+                  fontSize: `${Math.floor(fontSize * 1.5)}px`
                 }}
                 dangerouslySetInnerHTML={createSafeHtml(tokens.titleHtml)}
               />
             )}
             {tokens.taglineHtml && (
               <div 
-                className="text-lg italic mb-2 text-gray-600"
+                className="text-lg italic mb-2 text-muted-foreground"
                 style={{ 
                   fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
                   fontSize: `${Math.floor(fontSize * 1.1)}px`
@@ -88,18 +87,17 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             )}
             {tokens.authorHtml && (
               <div 
-                className="text-base mb-2"
+                className="text-base mb-2 text-foreground"
                 style={{ 
                   fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
-                  fontSize: `${fontSize}px`,
-                  color: '#000000'
+                  fontSize: `${fontSize}px`
                 }}
                 dangerouslySetInnerHTML={createSafeHtml(tokens.authorHtml)}
               />
             )}
             {tokens.excerptHtml && (
               <div 
-                className="text-sm text-gray-500"
+                className="text-sm text-muted-foreground"
                 style={{ 
                   fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
                   fontSize: `${Math.floor(fontSize * 0.9)}px`
