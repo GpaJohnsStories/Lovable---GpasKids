@@ -869,3 +869,74 @@
   opacity: 0.9;
   transform: translateY(1px);
 }
+
+/* Print Styles - Fixed 16pt font size for all story content */
+@media print {
+  /* Set all story content to 16pt (21px) for printing */
+  .story-content,
+  .story-content p,
+  .story-content span,
+  .story-content em,
+  .story-content strong,
+  .story-content i,
+  .story-content b,
+  .story-content li,
+  .rendered-story-content,
+  .rendered-story-content p,
+  .rendered-story-content span,
+  .rendered-story-content em,
+  .rendered-story-content strong,
+  .rendered-story-content i,
+  .rendered-story-content b,
+  .rendered-story-content li,
+  .deployed-story-content,
+  .deployed-story-content p,
+  .deployed-story-content span,
+  .deployed-story-content em,
+  .deployed-story-content strong,
+  .deployed-story-content i,
+  .deployed-story-content b,
+  .deployed-story-content li,
+  .proportional-content p,
+  .proportional-content span,
+  .proportional-content em,
+  .proportional-content strong,
+  .proportional-content i,
+  .proportional-content b,
+  .proportional-content li {
+    font-size: 21px !important; /* 16pt */
+    line-height: 1.5 !important;
+  }
+  
+  /* Keep titles and headings at larger sizes */
+  .story-content h1,
+  .story-content h2,
+  .story-content h3,
+  .rendered-story-content h1,
+  .rendered-story-content h2,
+  .rendered-story-content h3,
+  .deployed-story-content h1,
+  .deployed-story-content h2,
+  .deployed-story-content h3,
+  .proportional-content h3 {
+    font-size: 28px !important; /* Keep headings larger for hierarchy */
+    font-weight: bold !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Override any inline font sizes that might interfere */
+  .story-content [style*="font-size"],
+  .rendered-story-content [style*="font-size"],
+  .deployed-story-content [style*="font-size"] {
+    font-size: 21px !important; /* 16pt */
+  }
+  
+  /* Clean up print appearance - remove shadows and backgrounds for less ink */
+  .story-content,
+  .rendered-story-content,
+  .deployed-story-content {
+    background: white !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
