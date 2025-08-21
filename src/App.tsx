@@ -50,7 +50,6 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ResetPasswordRequest from "./components/auth/ResetPasswordRequest";
-// import Dashboard from "./components/auth/Dashboard"; // Redirected to admin
 
 import UnifiedStoryPage from "./components/unified-story/UnifiedStoryPage";
 
