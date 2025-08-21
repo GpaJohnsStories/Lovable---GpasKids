@@ -1126,7 +1126,7 @@
     background: white;
     border-top: 1px solid #000;
     font-size: 14pt !important;
-    line-height: 0.9;
+    line-height: 0.9 !important;
     text-align: center;
     z-index: 1000;
   }
@@ -1134,6 +1134,7 @@
   /* Force 14pt font and hide images in copyright footer */
   .print-copyright-footer * {
     font-size: 14pt !important;
+    line-height: 0.9 !important;
   }
   
   .print-copyright-footer img {
