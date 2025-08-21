@@ -4,10 +4,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Search, X } from "lucide-react";
+import { BookOpen, Search, X, ChevronDown, Check } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
 
@@ -15,6 +16,8 @@ type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'BioText';
+type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'reading_time';
+type MediaFilter = 'all' | 'text' | 'audio' | 'video' | 'both';
 
 interface GroupedStory extends Record<string, any> {
   id: string;
@@ -50,6 +53,8 @@ const AdminStoriesTable = ({
   const [groupByAuthor, setGroupByAuthor] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+  const [sortOption, setSortOption] = useState<SortOption>('title');
+  const [mediaFilter, setMediaFilter] = useState<MediaFilter>('all');
 
   // Sync local search term with parent prop
   useEffect(() => {
@@ -68,7 +73,7 @@ const AdminStoriesTable = ({
   }, [localSearchTerm, onSearchChange]);
 
   const { data: stories, isLoading, refetch } = useQuery({
-    queryKey: ['admin-stories', sortField, sortDirection, publishedFilter, categoryFilter],
+    queryKey: ['admin-stories', sortField, sortDirection, publishedFilter, categoryFilter, mediaFilter, sortOption],
     queryFn: async () => {
       let query = supabase
         .from('stories')
@@ -93,21 +98,47 @@ const AdminStoriesTable = ({
     },
   });
 
-  // Filter stories based on search term
+  // Filter stories based on search term and media filter
   const filteredStories = React.useMemo(() => {
-    if (!stories || !searchTerm.trim()) return stories;
+    let result = stories || [];
     
-    const searchLower = searchTerm.toLowerCase();
-    return stories.filter(story => 
-      story.title?.toLowerCase().includes(searchLower) ||
-      story.author?.toLowerCase().includes(searchLower) ||
-      story.content?.toLowerCase().includes(searchLower) ||
-      story.story_code?.toLowerCase().includes(searchLower) ||
-      story.tagline?.toLowerCase().includes(searchLower) ||
-      story.excerpt?.toLowerCase().includes(searchLower) ||
-      story.category?.toLowerCase().includes(searchLower)
-    );
-  }, [stories, searchTerm]);
+    // Apply search filter
+    if (searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase();
+      result = result.filter(story => 
+        story.title?.toLowerCase().includes(searchLower) ||
+        story.author?.toLowerCase().includes(searchLower) ||
+        story.content?.toLowerCase().includes(searchLower) ||
+        story.story_code?.toLowerCase().includes(searchLower) ||
+        story.tagline?.toLowerCase().includes(searchLower) ||
+        story.excerpt?.toLowerCase().includes(searchLower) ||
+        story.category?.toLowerCase().includes(searchLower)
+      );
+    }
+    
+    // Apply media filter
+    if (mediaFilter !== 'all') {
+      result = result.filter(story => {
+        const hasAudio = !!story.audio_url;
+        const hasVideo = !!story.video_url;
+        
+        switch (mediaFilter) {
+          case 'text':
+            return !hasAudio && !hasVideo;
+          case 'audio':
+            return hasAudio && !hasVideo;
+          case 'video':
+            return hasVideo;
+          case 'both':
+            return hasAudio && hasVideo;
+          default:
+            return true;
+        }
+      });
+    }
+    
+    return result;
+  }, [stories, searchTerm, mediaFilter]);
 
   const handleSort = (field: SortField) => {
     // Exit group by author view when sorting by other fields
@@ -190,6 +221,67 @@ const AdminStoriesTable = ({
     }
   };
 
+  const getSortOptionDisplayName = (option: SortOption) => {
+    switch (option) {
+      case 'story_code':
+        return 'Story Code';
+      case 'title':
+        return 'Title';
+      case 'author':
+        return 'Author (Grouped)';
+      case 'category':
+        return 'Category';
+      case 'read_count':
+        return 'Read Count';
+      case 'thumbs':
+        return 'Thumbs Up/Down';
+      case 'updated_at':
+        return 'Date Updated';
+      case 'reading_time':
+        return 'Time to Read';
+      default:
+        return 'Sort by...';
+    }
+  };
+
+  const getMediaFilterDisplayName = (filter: MediaFilter) => {
+    switch (filter) {
+      case 'all':
+        return 'All Stories';
+      case 'text':
+        return 'Text Only';
+      case 'audio':
+        return 'Has Text & Audio';
+      case 'video':
+        return 'Has Video';
+      case 'both':
+        return 'Has Text, Audio & Video';
+      default:
+        return 'Media Filter';
+    }
+  };
+
+  const handleSortOptionChange = (option: SortOption) => {
+    setSortOption(option);
+    setGroupByAuthor(option === 'author');
+    if (option === 'thumbs') {
+      setSortField('thumbs_up_count');
+      setSortDirection('desc');
+    } else if (option === 'author') {
+      setSortField('author');
+      setSortDirection('asc');
+    } else if (option === 'reading_time') {
+      setSortField('reading_time_minutes');
+      setSortDirection('asc');
+    } else if (option === 'updated_at') {
+      setSortField('updated_at');
+      setSortDirection('desc');
+    } else {
+      setSortField(option as SortField);
+      setSortDirection(option === 'read_count' ? 'desc' : 'asc');
+    }
+  };
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -214,6 +306,139 @@ const AdminStoriesTable = ({
                 <X className="h-4 w-4" />
               </Button>
             )}
+          </div>
+        </div>
+        
+        {/* Control Boxes */}
+        <div className="w-full flex justify-center mb-4">
+          <div className="grid gap-3 grid-cols-1 md:grid-cols-3 justify-items-center">
+            {/* Search Library */}
+            <div className="w-full max-w-[380px] h-16 relative">
+              <div className="absolute -top-5 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1</span>
+              </div>
+              <Input
+                placeholder="Type Here to Search"
+                value={localSearchTerm}
+                onChange={(e) => {
+                  setLocalSearchTerm(e.target.value);
+                  onSearchChange?.(e.target.value);
+                }}
+                className="text-[16pt] text-[#8b4513] font-bold placeholder:text-[16pt] placeholder:text-[#8b4513]/70 rounded-lg h-10 px-2 py-0 flex items-center shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40"
+                style={{ backgroundColor: '#FFEDD5' }}
+              />
+              {localSearchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleClearSearch}
+                  className="absolute right-2 top-1 h-8 w-8 p-0 text-[#8b4513]/80 hover:text-[#8b4513] hover:bg-orange-200 rounded-full"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+              <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
+                {stories ? stories.length : 0} Stories
+              </div>
+            </div>
+
+            {/* Select Media */}
+            <div className="w-full max-w-[380px] h-16 relative">
+              <div className="absolute -top-5 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2</span>
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                    aria-label={`Currently filtering by ${getMediaFilterDisplayName(mediaFilter)}`}
+                    title={`Current filter: ${getMediaFilterDisplayName(mediaFilter)}`}
+                  >
+                    Select Media —
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="text-[18pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1">
+                  <DropdownMenuItem disabled className="text-white cursor-default font-medium">
+                    Select Media
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setMediaFilter('all')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    All Stories
+                    {mediaFilter === 'all' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setMediaFilter('text')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Text Only
+                    {mediaFilter === 'text' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setMediaFilter('audio')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Has Text & Audio
+                    {mediaFilter === 'audio' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setMediaFilter('both')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Has Text, Audio & Video
+                    {mediaFilter === 'both' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
+                Selected: {getMediaFilterDisplayName(mediaFilter)}
+              </div>
+            </div>
+
+            {/* Sort On */}
+            <div className="w-full max-w-[380px] h-16 relative">
+              <div className="absolute -top-5 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>3</span>
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                    aria-label={`Currently sorting by ${getSortOptionDisplayName(sortOption)}`}
+                    title={`Currently sorting by: ${getSortOptionDisplayName(sortOption)}`}
+                  >
+                    Sort On —
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                 <DropdownMenuContent className="text-[18pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1">
+                  <DropdownMenuItem disabled className="text-white cursor-default font-medium">
+                    Sort On —
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => handleSortOptionChange('title')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Title
+                    {sortOption === 'title' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => handleSortOptionChange('author')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Author
+                    {sortOption === 'author' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => handleSortOptionChange('category')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Category
+                    {sortOption === 'category' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => handleSortOptionChange('read_count')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Times Story Read
+                    {sortOption === 'read_count' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => handleSortOptionChange('thumbs')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Thumbs Up / Down
+                    {sortOption === 'thumbs' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => handleSortOptionChange('reading_time')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Time to Read
+                    {sortOption === 'reading_time' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => handleSortOptionChange('updated_at')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Date Updated
+                    {sortOption === 'updated_at' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
+                Sorted: {getSortOptionDisplayName(sortOption)}
+              </div>
+            </div>
           </div>
         </div>
         <div className="relative">
