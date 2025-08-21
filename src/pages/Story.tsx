@@ -20,6 +20,7 @@ import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
 import PrintWatermark from "@/components/PrintWatermark";
 import PrintBlackBox from "@/components/PrintBlackBox";
+import PrintCopyrightFooter from "@/components/PrintCopyrightFooter";
 
 
 interface StoryData {
@@ -207,7 +208,7 @@ const Story = () => {
       <div className="min-h-screen bg-white">
         {!isPrintMode && <WelcomeHeader />}
         {!isPrintMode && <ScrollToTop />}
-        <div className="container mx-auto px-4 pt-0">
+        <div className={`container mx-auto px-4 pt-0 ${isPrintMode && story.copyright_status === 'O' ? 'print-footer-spacer' : ''}`}>
           <StoryHeader
             title={story.title}
             category={story.category}
@@ -318,6 +319,9 @@ const Story = () => {
         
         {/* Print Watermark - Only show when printing and copyright is 'L' */}
         <PrintWatermark show={isPrintMode && story.copyright_status === 'L'} />
+        
+        {/* Print Copyright Footer - Only for 'O' status stories in print mode */}
+        {isPrintMode && story.copyright_status === 'O' && <PrintCopyrightFooter />}
         
         {!isPrintMode && <CookieFreeFooter />}
       </div>
