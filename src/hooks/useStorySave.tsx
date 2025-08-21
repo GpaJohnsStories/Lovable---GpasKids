@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { extractHeaderTokens } from "@/utils/headerTokens";
 
 interface Story {
   id?: string;
@@ -91,8 +92,18 @@ export const useStorySave = () => {
     setIsSaving(true);
     
     try {
+      // Extract header tokens from content and merge with form data
+      const { tokens, contentWithoutTokens } = extractHeaderTokens(formData.content);
+      
       const saveData = {
         ...formData,
+        // Override with token values if they exist (plain text for DB fields)
+        title: tokens.title || formData.title,
+        tagline: tokens.tagline || formData.tagline,
+        author: tokens.author || formData.author,
+        excerpt: tokens.excerpt || formData.excerpt,
+        // Keep original content with tokens for rendering
+        content: formData.content,
         ai_voice_name: formData.ai_voice_name || 'Nova',
         ai_voice_model: formData.ai_voice_model || 'tts-1'
       };

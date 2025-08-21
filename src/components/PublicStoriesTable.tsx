@@ -14,7 +14,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import CopyrightIcon from "@/components/CopyrightIcon";
-import PrintIcon from "@/components/PrintIcon";
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'updated_at' | 'created_at' | 'reading_time_minutes' | 'thumbs_up_count';
 type SortDirection = 'asc' | 'desc';
@@ -542,9 +541,6 @@ const PublicStoriesTable = ({
                                 </Tooltip>}
                               <div className="flex items-center gap-2 justify-center">
                                 <CopyrightIcon copyrightStatus={story.copyright_status || '©'} />
-                                {(story.copyright_status === 'L' || story.copyright_status === 'O') && (
-                                  <PrintIcon storyCode={story.story_code} />
-                                )}
                               </div>
                           </div>
                         </TableCell>

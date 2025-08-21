@@ -43,6 +43,7 @@ export const replaceTokens = (content: string, context: TokenReplacementContext 
     .replace(/\{\{DATE\}\}/g, date)
     .replace(/\{\{TIME\}\}/g, time)
     .replace(/\{\{YEAR\}\}/g, year)
+    .replace(/\{\{ThisYear\}\}/g, year) // Alias for {{YEAR}}
     .replace(/\{\{PID\}\}/g, maskedPid)
     .replace(/\{\{STORY_TITLE\}\}/g, storyTitle)
     .replace(/\{\{STORY_CODE\}\}/g, storyCode)

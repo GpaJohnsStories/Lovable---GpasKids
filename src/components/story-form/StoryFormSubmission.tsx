@@ -2,6 +2,7 @@
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { validateStoryForm, checkStoryCodeExists } from "./StoryFormValidation";
+import { extractHeaderTokens } from "@/utils/headerTokens";
 
 interface Story {
   id?: string;
@@ -32,8 +33,22 @@ export const handleStorySubmission = async (
   console.log('Story content length:', formData.content?.length || 0);
   console.log('Story content preview:', formData.content?.substring(0, 200) + (formData.content?.length > 200 ? '...' : ''));
   
-  // Validate form data
-  if (!validateStoryForm(formData)) {
+  // Extract header tokens from content and merge with form data
+  const { tokens } = extractHeaderTokens(formData.content);
+  
+  // Update formData with token values (plain text for DB fields)
+  const processedFormData = {
+    ...formData,
+    title: tokens.title || formData.title,
+    tagline: tokens.tagline || formData.tagline,
+    author: tokens.author || formData.author,
+    excerpt: tokens.excerpt || formData.excerpt,
+    // Keep original content with tokens
+    content: formData.content
+  };
+  
+  // Validate form data (after token processing)
+  if (!validateStoryForm(processedFormData)) {
     console.log('Form validation failed');
     return;
   }
@@ -41,7 +56,7 @@ export const handleStorySubmission = async (
   console.log('Form validation passed');
 
   // Check for duplicate story code
-  const isDuplicate = await checkStoryCodeExists(formData.story_code, story?.id);
+  const isDuplicate = await checkStoryCodeExists(processedFormData.story_code, story?.id);
   if (isDuplicate) {
     console.log('Duplicate story code detected');
     toast.error("Story code already exists. Please choose a different code.");
@@ -58,7 +73,7 @@ export const handleStorySubmission = async (
       const { error } = await supabase
         .from('stories')
         .update({
-          ...formData,
+          ...processedFormData,
           updated_at: new Date().toISOString()
         })
         .eq('id', story.id);
@@ -75,7 +90,7 @@ export const handleStorySubmission = async (
       console.log('Insert data:', formData);
       const { error } = await supabase
         .from('stories')
-        .insert([formData]);
+        .insert([processedFormData]);
       
       if (error) {
         console.error('Insert error:', error);

@@ -6,6 +6,7 @@ import { SuperAV } from "@/components/SuperAV";
 import AuthorLink from "@/components/AuthorLink";
 import CopyrightIcon from "@/components/CopyrightIcon";
 import PrintIcon from "@/components/PrintIcon";
+import { createSafeHeaderHtml } from "@/utils/headerTokens";
 
 interface StoryHeaderProps {
   title: string;
@@ -25,6 +26,11 @@ interface StoryHeaderProps {
   allowTextToSpeech?: boolean;
   copyrightStatus?: string;
   printMode?: boolean;
+  // HTML token props for dynamic styling
+  titleHtml?: string;
+  taglineHtml?: string;
+  authorHtml?: string;
+  descriptionHtml?: string;
 }
 
 const StoryHeader = ({ 
@@ -44,7 +50,11 @@ const StoryHeader = ({
   aiVoiceModel,
   allowTextToSpeech = false,
   copyrightStatus,
-  printMode = false
+  printMode = false,
+  titleHtml,
+  taglineHtml,
+  authorHtml,
+  descriptionHtml
 }: StoryHeaderProps) => {
   const [showSuperAV, setShowSuperAV] = useState(false);
   const [fontSize, setFontSize] = useState(16);
@@ -71,21 +81,44 @@ const StoryHeader = ({
 
         {/* Story Title - Now properly centered */}
         <div className="text-center mb-4">
-          <h1 className="text-3xl font-bold text-orange-800 leading-tight">
-            {title}
-          </h1>
+          {titleHtml ? (
+            <h1 
+              className="text-3xl font-bold text-orange-800 leading-tight"
+              dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
+            />
+          ) : (
+            <h1 className="text-3xl font-bold text-orange-800 leading-tight">
+              {title}
+            </h1>
+          )}
         </div>
 
-        {tagline && (
-          <h2 className="text-2xl text-orange-700 text-center mb-4 italic font-medium font-georgia">
-            {tagline}
-          </h2>
+        {(tagline || taglineHtml) && (
+          <div className="text-center mb-4">
+            {taglineHtml ? (
+              <h2 
+                className="text-2xl text-orange-700 italic font-medium font-georgia whitespace-pre-line"
+                dangerouslySetInnerHTML={createSafeHeaderHtml(taglineHtml)}
+              />
+            ) : (
+              <h2 className="text-2xl text-orange-700 italic font-medium font-georgia whitespace-pre-line">
+                {tagline}
+              </h2>
+            )}
+          </div>
         )}
 
         <div className="flex flex-col items-center gap-2 text-xl text-orange-600 mb-2 font-georgia">
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
-              <span className="font-medium">by {author}</span>
+              {authorHtml ? (
+                <span 
+                  className="font-medium"
+                  dangerouslySetInnerHTML={createSafeHeaderHtml(`by ${authorHtml}`)}
+                />
+              ) : (
+                <span className="font-medium">by {author}</span>
+              )}
             </div>
             {!printMode && <AuthorLink authorName={author} variant="button" size="sm" />}
           </div>
@@ -98,10 +131,19 @@ const StoryHeader = ({
           </div>
         </div>
 
-        {description && (
-          <p className="text-lg text-orange-700 text-center mb-6 italic font-georgia">
-            {description}
-          </p>
+        {(description || descriptionHtml) && (
+          <div className="text-center mb-6">
+            {descriptionHtml ? (
+              <p 
+                className="text-lg text-orange-700 italic font-georgia whitespace-pre-line"
+                dangerouslySetInnerHTML={createSafeHeaderHtml(descriptionHtml)}
+              />
+            ) : (
+              <p className="text-lg text-orange-700 italic font-georgia whitespace-pre-line">
+                {description}
+              </p>
+            )}
+          </div>
         )}
       </div>
 

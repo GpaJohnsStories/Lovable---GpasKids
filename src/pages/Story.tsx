@@ -21,6 +21,7 @@ import { SuperAV } from "@/components/SuperAV";
 import PrintWatermark from "@/components/PrintWatermark";
 import PrintBlackBox from "@/components/PrintBlackBox";
 import PrintCopyrightFooter from "@/components/PrintCopyrightFooter";
+import { extractHeaderTokens } from "@/utils/headerTokens";
 
 
 interface StoryData {
@@ -122,42 +123,23 @@ const Story = () => {
       const timer = setTimeout(() => {
         window.print();
         
-        // Handle post-print navigation
+        // Handle post-print navigation - simplified to stay on story page
         const handleAfterPrint = () => {
           window.removeEventListener('afterprint', handleAfterPrint);
-          
-          // Get the referrer or fallback to library
-          const referrer = document.referrer;
-          const fallbackUrl = '/library';
-          
-          // If we have a referrer and it's from the same origin, go back there
-          if (referrer && referrer.includes(window.location.origin)) {
-            // Extract the path from the referrer
-            const referrerPath = new URL(referrer).pathname + new URL(referrer).search;
-            window.location.href = referrerPath;
-          } else {
-            // Otherwise go to the story page (remove print parameter)
-            const currentPath = window.location.pathname;
-            window.location.href = currentPath;
-          }
+          // Remove print parameter and stay on story page
+          const currentPath = window.location.pathname;
+          window.location.href = currentPath;
         };
         
         // Handle browsers that support afterprint event
         window.addEventListener('afterprint', handleAfterPrint);
         
         // Fallback for browsers that don't support afterprint
-        // Wait a bit longer and then redirect anyway
         setTimeout(() => {
           window.removeEventListener('afterprint', handleAfterPrint);
-          const referrer = document.referrer;
-          
-          if (referrer && referrer.includes(window.location.origin)) {
-            const referrerPath = new URL(referrer).pathname + new URL(referrer).search;
-            window.location.href = referrerPath;
-          } else {
-            const currentPath = window.location.pathname;
-            window.location.href = currentPath;
-          }
+          // Remove print parameter and stay on story page
+          const currentPath = window.location.pathname;
+          window.location.href = currentPath;
         }, 3000); // 3 second fallback
         
       }, 500);
@@ -204,6 +186,9 @@ const Story = () => {
 
   const photos = getStoryPhotos(story);
 
+  // Extract header tokens from story content for dynamic rendering
+  const { tokens, contentWithoutTokens } = extractHeaderTokens(story.content || '');
+
   return (
       <div className="min-h-screen bg-white">
         {!isPrintMode && <WelcomeHeader />}
@@ -227,6 +212,10 @@ const Story = () => {
             allowTextToSpeech={false}
             copyrightStatus={story.copyright_status}
             printMode={isPrintMode}
+            titleHtml={tokens.titleHtml}
+            taglineHtml={tokens.taglineHtml}
+            authorHtml={tokens.authorHtml}
+            descriptionHtml={tokens.excerptHtml}
           />
 
           {/* Print Black Box - Show only in print mode */}
@@ -289,7 +278,7 @@ const Story = () => {
                 className="bg-[#F5E6D3] border-2 border-[#9c441a] rounded-lg p-6 md:p-8 shadow-sm"
               >
                 <StoryContentRenderer 
-                  content={story.content || "No content available."}
+                  content={contentWithoutTokens || story.content || "No content available."}
                   fontSize={fontSize}
                   onFontSizeChange={setFontSize}
                 />
