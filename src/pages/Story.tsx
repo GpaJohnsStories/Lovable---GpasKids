@@ -19,6 +19,7 @@ import { getStoryPhotos } from "@/utils/storyUtils";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
 import PrintWatermark from "@/components/PrintWatermark";
+import PrintBlackBox from "@/components/PrintBlackBox";
 
 
 interface StoryData {
@@ -226,6 +227,9 @@ const Story = () => {
             copyrightStatus={story.copyright_status}
             printMode={isPrintMode}
           />
+
+          {/* Print Black Box - Show only in print mode */}
+          {isPrintMode && <PrintBlackBox />}
 
           {/* Top Voting Section - Hide in print mode */}
           {!isPrintMode && (

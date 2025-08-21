@@ -1097,6 +1097,24 @@
     justify-content: center;
   }
   
+  /* Print Black Box styles for copyright warnings */
+  .print-black-box {
+    width: 90%;
+    margin: 1.5rem auto;
+    border: 10px solid #000000;
+    padding: 1rem;
+    background: transparent;
+    color: #000000;
+    page-break-inside: avoid;
+    text-align: center;
+    display: block;
+  }
+  
+  /* Prevent font size overrides on black box content */
+  .print-black-box * {
+    color: #000000 !important;
+  }
+  
   .print-watermark-image {
     max-width: 60%;
     max-height: 60%;
