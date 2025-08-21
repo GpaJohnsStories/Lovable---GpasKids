@@ -1126,15 +1126,25 @@
     background: white;
     border-top: 1px solid #000;
     font-size: 14pt !important;
+    font-family: Georgia, serif !important;
     line-height: 0.9 !important;
     text-align: center;
     z-index: 1000;
   }
   
   /* Force 14pt font and hide images in copyright footer */
-  .print-copyright-footer * {
+  .print-copyright-footer *,
+  .print-copyright-footer p,
+  .print-copyright-footer div,
+  .print-copyright-footer span,
+  .print-copyright-footer strong,
+  .print-copyright-footer b,
+  .print-copyright-footer em,
+  .print-copyright-footer i {
     font-size: 14pt !important;
+    font-family: Georgia, serif !important;
     line-height: 0.9 !important;
+    color: #000 !important;
   }
   
   .print-copyright-footer img {
