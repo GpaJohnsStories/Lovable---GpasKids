@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
@@ -285,30 +284,6 @@ const AdminStoriesTable = ({
   return (
     <Card>
       <CardContent className="p-6">
-        {/* Search Input */}
-        <div className="mb-6">
-          <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              type="text"
-              placeholder="Search stories by title, content, author, or keywords..."
-              value={localSearchTerm}
-              onChange={(e) => setLocalSearchTerm(e.target.value)}
-                className="pl-10 pr-10 py-2 text-sm border-2 focus:border-orange-400 rounded-lg placeholder:font-bold search-input-amber"
-            />
-            {searchTerm && (
-              <Button
-                onClick={handleClearSearch}
-                variant="ghost"
-                size="sm"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-gray-100"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            )}
-          </div>
-        </div>
-        
         {/* Control Boxes */}
         <div className="w-full flex justify-center mb-4">
           <div className="grid gap-3 grid-cols-1 md:grid-cols-3 justify-items-center">
@@ -441,6 +416,8 @@ const AdminStoriesTable = ({
             </div>
           </div>
         </div>
+        
+        {/* Table Content */}
         <div className="relative">
           {isLoading ? (
             <div className="text-center py-8 text-black-system">
