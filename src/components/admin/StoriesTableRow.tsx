@@ -194,6 +194,21 @@ const StoriesTableRow = ({
     setEditedTime('');
   };
 
+  const getNextCopyrightStatus = (currentStatus: string): string => {
+    switch (currentStatus) {
+      case '©': return 'L';
+      case 'L': return 'O';
+      case 'O': return '©';
+      default: return 'L'; // Default to L if unknown
+    }
+  };
+
+  const handleCycleCopyright = () => {
+    const currentStatus = story.copyright_status || '©';
+    const nextStatus = getNextCopyrightStatus(currentStatus);
+    handleCopyrightStatusChange(nextStatus);
+  };
+
   const handleCopyrightStatusChange = async (newStatus: string) => {
     const { error } = await supabase
       .from('stories')
@@ -301,11 +316,23 @@ const StoriesTableRow = ({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-help ${
-                  (story.copyright_status || '©') === '©' ? 'bg-red-500' :
-                  (story.copyright_status || '©') === 'O' ? 'bg-green-500' :
-                  'bg-yellow-500'
-                }`}>
+                <span 
+                  className={`text-xs font-bold px-2 py-1 rounded text-white cursor-pointer ${
+                    (story.copyright_status || '©') === '©' ? 'bg-red-500 hover:bg-red-600' :
+                    (story.copyright_status || '©') === 'O' ? 'bg-green-500 hover:bg-green-600' :
+                    'bg-yellow-500 hover:bg-yellow-600'
+                  }`}
+                  onClick={handleCycleCopyright}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleCycleCopyright();
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Change copyright status from ${story.copyright_status || '©'} to next status`}
+                >
                   {story.copyright_status || '©'}
                 </span>
               </TooltipTrigger>
@@ -320,6 +347,7 @@ const StoriesTableRow = ({
                   {(story.copyright_status || '©') === 'L' && (
                     <span className="text-yellow-600 font-bold">L Limited Sharing - Gpa John's Copyright</span>
                   )}
+                  <div className="mt-1 text-gray-600">Click to cycle: © → L → O</div>
                 </div>
               </TooltipContent>
             </Tooltip>
