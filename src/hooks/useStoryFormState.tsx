@@ -38,7 +38,7 @@ const normalizeContentWithTokens = (content: string, storyData: any): string => 
   // Create header tokens pre-filled with story data
   const headerTokens = `{{TITLE}}${storyData.title || ''}{{/TITLE}}
 {{TAGLINE}}${storyData.tagline || ''}{{/TAGLINE}}
-{{AUTHOR}}${storyData.author || 'Grandpa John'}{{/AUTHOR}}
+{{AUTHOR}}${storyData.author || ''}{{/AUTHOR}}
 {{EXCERPT}}${storyData.excerpt || ''}{{/EXCERPT}}
 
 `;

@@ -18,7 +18,9 @@ export interface ExtractedTokens {
 
 /**
  * Extracts header tokens from story content
- * Supports: {{TITLE: ...}}, {{TAGLINE: ...}}, {{AUTHOR: ...}}, {{EXCERPT: ...}}
+ * Supports both formats:
+ * - Colon style: {{TITLE: content}}
+ * - Block style: {{TITLE}}content{{/TITLE}}
  * Each token can contain HTML/CSS which will be sanitized on render
  */
 export const extractHeaderTokens = (content: string): ExtractedTokens => {
@@ -32,17 +34,34 @@ export const extractHeaderTokens = (content: string): ExtractedTokens => {
   const tokens: HeaderTokens = {};
   let cleanedContent = content;
 
-  // Define token patterns (case insensitive, multiline support)
+  // Define token patterns for both colon and block styles
   const tokenPatterns = [
+    // Colon style patterns
     { key: 'title', pattern: /\{\{TITLE:\s*([\s\S]*?)\}\}/gi },
     { key: 'tagline', pattern: /\{\{TAGLINE:\s*([\s\S]*?)\}\}/gi },
     { key: 'author', pattern: /\{\{AUTHOR:\s*([\s\S]*?)\}\}/gi },
-    { key: 'excerpt', pattern: /\{\{EXCERPT:\s*([\s\S]*?)\}\}/gi }
+    { key: 'excerpt', pattern: /\{\{EXCERPT:\s*([\s\S]*?)\}\}/gi },
+    // Block style patterns
+    { key: 'title', pattern: /\{\{TITLE\}\}([\s\S]*?)\{\{\/TITLE\}\}/gi },
+    { key: 'tagline', pattern: /\{\{TAGLINE\}\}([\s\S]*?)\{\{\/TAGLINE\}\}/gi },
+    { key: 'author', pattern: /\{\{AUTHOR\}\}([\s\S]*?)\{\{\/AUTHOR\}\}/gi },
+    { key: 'excerpt', pattern: /\{\{EXCERPT\}\}([\s\S]*?)\{\{\/EXCERPT\}\}/gi }
   ];
 
-  // Extract each token type
-  tokenPatterns.forEach(({ key, pattern }) => {
-    const matches = Array.from(content.matchAll(pattern));
+  // Extract each token type (block style takes precedence if both exist)
+  ['title', 'tagline', 'author', 'excerpt'].forEach(key => {
+    const colonPattern = tokenPatterns.find(p => p.key === key && p.pattern.source.includes(':'));
+    const blockPattern = tokenPatterns.find(p => p.key === key && p.pattern.source.includes('/'));
+    
+    // Try block style first, then colon style
+    let matches = Array.from(content.matchAll(blockPattern!.pattern));
+    let patternUsed = blockPattern!.pattern;
+    
+    if (matches.length === 0) {
+      matches = Array.from(content.matchAll(colonPattern!.pattern));
+      patternUsed = colonPattern!.pattern;
+    }
+    
     if (matches.length > 0) {
       // Use the last match if multiple exist
       const lastMatch = matches[matches.length - 1];
@@ -52,8 +71,8 @@ export const extractHeaderTokens = (content: string): ExtractedTokens => {
       tokens[`${key}Html` as keyof HeaderTokens] = htmlValue;
       tokens[key as keyof HeaderTokens] = stripHtmlTags(htmlValue);
       
-      // Remove all instances of this token from content
-      cleanedContent = cleanedContent.replace(pattern, '');
+      // Remove all instances of this token pattern from content
+      cleanedContent = cleanedContent.replace(patternUsed, '');
     }
   });
 

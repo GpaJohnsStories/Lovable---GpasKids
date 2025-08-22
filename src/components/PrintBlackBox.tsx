@@ -3,6 +3,7 @@ import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { usePersonalId } from '@/hooks/usePersonalId';
 import SecureStoryContent from '@/components/secure/SecureStoryContent';
 import { replaceTokens, TokenReplacementContext } from '@/utils/printTokens';
+import { extractHeaderTokens, createSafeHeaderHtml } from '@/utils/headerTokens';
 
 interface PrintBlackBoxProps {
   storyContext?: {
@@ -15,6 +16,7 @@ interface PrintBlackBoxProps {
 
 const PrintBlackBox: React.FC<PrintBlackBoxProps> = ({ storyContext }) => {
   const [content, setContent] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const { lookupStoryByCode } = useStoryCodeLookup();
   const { personalId } = usePersonalId();
@@ -24,11 +26,18 @@ const PrintBlackBox: React.FC<PrintBlackBoxProps> = ({ storyContext }) => {
       try {
         const result = await lookupStoryByCode('PRT-CRO', true);
         if (result.found && result.story) {
+          // Extract header tokens and get clean content
+          const extracted = extractHeaderTokens(result.story.content || '');
+          
+          // Set title for display above the black box
+          setTitle(extracted.tokens.title || '');
+          
+          // Process the cleaned content with print tokens
           const tokenContext: TokenReplacementContext = {
             personalId,
             story: storyContext
           };
-          const processedContent = replaceTokens(result.story.content || '', tokenContext);
+          const processedContent = replaceTokens(extracted.contentWithoutTokens, tokenContext);
           setContent(processedContent);
         }
       } catch (error) {
@@ -47,6 +56,19 @@ const PrintBlackBox: React.FC<PrintBlackBoxProps> = ({ storyContext }) => {
 
   return (
     <div className="print-black-box">
+      {title && (
+        <div 
+          className="print-black-box-title" 
+          style={{ 
+            fontWeight: 'bold', 
+            marginBottom: '8px',
+            fontSize: '16px',
+            textAlign: 'center'
+          }}
+        >
+          {title}
+        </div>
+      )}
       <SecureStoryContent 
         content={content}
         className=""
