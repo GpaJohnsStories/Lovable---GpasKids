@@ -8,6 +8,7 @@ import { ArrowRight } from 'lucide-react';
 import { FontScaleStep, DEFAULT_FONT_SCALE, getTypographyClasses } from '@/utils/fontScaleUtils';
 import { createSafeHtml } from "@/utils/xssProtection";
 import { useNavigate } from 'react-router-dom';
+import { useCachedIcon } from '@/hooks/useCachedIcon';
 
 interface ProportionalWebTextBoxProps {
   webtextCode: string;
@@ -30,6 +31,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const [iconUrl, setIconUrl] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [fontScale, setFontScale] = useState<FontScaleStep>(DEFAULT_FONT_SCALE);
+  
+  const isSysWel = webtextCode === "SYS-WEL";
+  
+  // Load Buddy's new icon for SYS-WEL
+  const { iconUrl: buddyIconUrl, iconName: buddyIconName, isLoading: buddyIconLoading } = useCachedIcon(isSysWel ? '!CO-BG1.jpg' : null);
   
   // Audio controls state for peppermint button
   const [showSuperAV, setShowSuperAV] = useState(false);
@@ -67,7 +73,6 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
     fetchData();
   }, [webtextCode, lookupStoryByCode]);
 
-  const isSysWel = webtextCode === "SYS-WEL";
   const photos = webtext ? getStoryPhotos(webtext) : [];
   const mainPhoto = photos[0];
 
@@ -117,12 +122,12 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           {/* Top section with photo and title */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             {/* Photo in left column on tablets+ */}
-            {mainPhoto && (
+            {buddyIconUrl && (
               <div className="w-fit flex-shrink-0">
                 <div className="inline-block group">
                   <button 
                     onClick={() => navigate('/guide')}
-                    title={mainPhoto.alt}
+                    title={buddyIconName || 'Buddy Guide'}
                     className="relative block transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 p-1 border-2 border-emerald-700"
                     style={{
                       boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
@@ -130,12 +135,12 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     }}
                   >
                     <img
-                      src={mainPhoto.url}
-                      alt={mainPhoto.alt}
+                      src={buddyIconUrl}
+                      alt={buddyIconName || 'Buddy Guide'}
                       className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded border border-emerald-800"
                     />
                   </button>
-                  <div className="mt-2 bg-emerald-900/90 backdrop-blur-sm rounded-lg px-3 py-2 text-sm text-yellow-100 text-center font-bold shadow-lg border border-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ fontSize: '13pt', fontFamily: 'Comic Sans MS, cursive, sans-serif' }}>
+                  <div className="mt-2 bg-emerald-900/90 backdrop-blur-sm rounded-lg px-3 py-2 text-sm text-yellow-100 text-center font-bold shadow-lg border border-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ fontSize: '13pt', fontFamily: 'Kalam, Comic Sans MS, cursive, sans-serif' }}>
                     Yup, this is me, Buddy,<br />
                     your Official Guide.<br />
                     Click to follow me.
