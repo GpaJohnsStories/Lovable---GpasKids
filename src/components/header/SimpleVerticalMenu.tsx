@@ -163,17 +163,17 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         }
       ]
     },
-    {
-      id: "osm",
-      icon: "!CO-OSM.png", // OSM icon - Main Menu 6
-      text: "OSM",
-      tooltipText: osmIconName || "OSM",
-      color: "#F97316",
-      onClick: () => {
-        window.location.href = "/club/photos";
-        onClose();
-      }
-    },
+    // {
+    //   id: "osm",
+    //   icon: "!CO-OSM.png", // OSM icon - Main Menu 6
+    //   text: "OSM",
+    //   tooltipText: osmIconName || "OSM",
+    //   color: "#F97316",
+    //   onClick: () => {
+    //     window.location.href = "/club/photos";
+    //     onClose();
+    //   }
+    // },
     {
       id: "writing",
       icon: "!CO-MM6.gif", // Writing icon - Main Menu 7
