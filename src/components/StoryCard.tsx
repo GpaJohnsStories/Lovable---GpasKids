@@ -56,7 +56,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
                 {story.title}
               </h3>
               {story.tagline && (
-                <h4 className="text-sm font-medium text-amber-700 mb-1 italic leading-tight font-system">
+                <h4 className="text-21px font-medium text-amber-700 mb-1 italic leading-tight font-fun">
                   {story.tagline}
                 </h4>
               )}
