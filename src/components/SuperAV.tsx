@@ -710,7 +710,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                         currentScale === '4xl' ? '36px' : '16px'}`,
                              fontFamily: FONT_FUN,
                              color: '#654321',
-                             lineHeight: '1.2',
+                             lineHeight: '1.0',
                              wordWrap: 'break-word',
                              overflowWrap: 'break-word'
                            }}
