@@ -700,14 +700,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                          <div 
                            className={styles.superavText}
                            style={{
-                             fontSize: `${currentScale === 'xs' ? '12px' : 
-                                        currentScale === 'sm' ? '14px' :
-                                        currentScale === 'base' ? '16px' :
-                                        currentScale === 'lg' ? '18px' :
-                                        currentScale === 'xl' ? '20px' :
-                                        currentScale === '2xl' ? '24px' :
-                                        currentScale === '3xl' ? '30px' :
-                                        currentScale === '4xl' ? '36px' : '16px'}`,
+                             fontSize: `${currentScale === 'xs' ? '11px' : 
+                                        currentScale === 'sm' ? '13px' :
+                                        currentScale === 'base' ? '15px' :
+                                        currentScale === 'lg' ? '17px' :
+                                        currentScale === 'xl' ? '19px' :
+                                        currentScale === '2xl' ? '23px' :
+                                        currentScale === '3xl' ? '29px' :
+                                        currentScale === '4xl' ? '35px' : '15px'}`,
                              fontFamily: FONT_FUN,
                              color: '#654321',
                              lineHeight: '1.0',
