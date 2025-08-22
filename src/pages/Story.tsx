@@ -61,7 +61,7 @@ const Story = () => {
   const [currentVote, setCurrentVote] = useState<'thumbs_up' | 'thumbs_down' | 'ok' | null>(null);
   const [showSuperAV, setShowSuperAV] = useState(false);
   
-  const [fontSize, setFontSize] = useState(16);
+  const [fontSize, setFontSize] = useState(21); // 16pt = 21px
   const navigate = useNavigate();
   const isPrintMode = searchParams.get('print') === '1';
 
