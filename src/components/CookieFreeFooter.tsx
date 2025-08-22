@@ -2,8 +2,18 @@
 import React from 'react';
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCachedIcon } from '@/hooks/useCachedIcon';
+import { useTooltipContext } from '@/contexts/TooltipContext';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const CookieFreeFooter = () => {
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-CFF.gif');
+  const { registerTooltip } = useTooltipContext();
+
+  React.useEffect(() => {
+    registerTooltip('cookie-free-footer');
+  }, [registerTooltip]);
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -17,14 +27,34 @@ const CookieFreeFooter = () => {
         <div className="flex justify-between items-center">
           {/* Left Side */}
           <div className="flex items-center space-x-2 text-green-700">
-            <Link 
-              to="/security"
-              onClick={scrollToTop}
-            >
-              <button className="bg-gradient-to-b from-orange-400 to-orange-600 text-green-600 px-3 py-2 rounded-full font-bold shadow-[0_6px_12px_rgba(194,65,12,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-orange-700 transition-all duration-200 hover:shadow-[0_8px_16px_rgba(194,65,12,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)] text-sm font-fun">
-                🍪 Cookie-Free
-              </button>
-            </Link>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link 
+                    to="/security"
+                    onClick={scrollToTop}
+                    className="block"
+                  >
+                    {isLoading ? (
+                      <div className="w-12 h-12 bg-amber-200 rounded-full animate-pulse"></div>
+                    ) : error || !iconUrl ? (
+                      <div className="bg-gradient-to-b from-orange-400 to-orange-600 text-green-600 px-3 py-2 rounded-full font-bold shadow-[0_6px_12px_rgba(194,65,12,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-orange-700 transition-all duration-200 hover:shadow-[0_8px_16px_rgba(194,65,12,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)] text-sm font-fun">
+                        🍪 Cookie-Free
+                      </div>
+                    ) : (
+                      <img
+                        src={iconUrl}
+                        alt="Cookie-Free"
+                        className="w-12 h-12 object-contain rounded-full hover:scale-110 transition-all duration-200 cursor-pointer"
+                      />
+                    )}
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Cookie-Free Website - No tracking, no ads, just safe stories!</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           
           {/* Center */}
