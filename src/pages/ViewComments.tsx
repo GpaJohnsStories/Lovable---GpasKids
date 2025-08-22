@@ -7,7 +7,6 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { Search } from "lucide-react";
 
 const ViewComments = () => {
   const [personalIdFilter, setPersonalIdFilter] = useState<string | null>(null);
@@ -45,9 +44,8 @@ const ViewComments = () => {
             </p>
           </div>
 
-          <div className="my-6 p-4 bg-white/60 rounded-lg border-2 border-orange-200">
-            <div className="flex justify-center items-center gap-2">
-              <Search className="h-4 w-4 text-orange-600" />
+          <div className="my-6 flex justify-center">
+            <div className="flex items-center gap-2 p-4 bg-white/60 rounded-lg border-2 border-orange-200">
               <InputOTP 
                 maxLength={6}
                 value={searchInput}
