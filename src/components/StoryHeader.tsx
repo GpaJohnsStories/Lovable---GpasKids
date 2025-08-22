@@ -124,7 +124,7 @@ const StoryHeader = ({
           </div>
           {/* Icons row */}
           <div className="flex items-center gap-2">
-            {!printMode && <CopyrightIcon copyrightStatus={copyrightStatus || '©'} />}
+            {/* {!printMode && <CopyrightIcon copyrightStatus={copyrightStatus || '©'} />} */}
             {(copyrightStatus === 'L' || copyrightStatus === 'O') && !printMode && storyCode && (
               <PrintIcon storyCode={storyCode} />
             )}
