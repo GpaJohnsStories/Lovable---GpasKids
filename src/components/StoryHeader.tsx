@@ -83,11 +83,11 @@ const StoryHeader = ({
         <div className="text-center mb-4">
           {titleHtml ? (
             <h1 
-              className="h3-fun-24 font-bold text-amber-800 leading-tight text-center"
+              className="text-27px font-bold text-amber-800 leading-tight text-center font-fun"
               dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
             />
           ) : (
-            <h1 className="h3-fun-24 font-bold text-amber-800 leading-tight text-center">
+            <h1 className="text-27px font-bold text-amber-800 leading-tight text-center font-fun">
               {title}
             </h1>
           )}
