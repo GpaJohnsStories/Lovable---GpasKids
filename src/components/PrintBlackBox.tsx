@@ -55,7 +55,7 @@ const PrintBlackBox: React.FC<PrintBlackBoxProps> = ({ storyContext }) => {
   }
 
   return (
-    <div className="print-black-box">
+    <div className="print-black-box max-w-2xl mx-auto">
       {title && (
         <div 
           className="print-black-box-title" 
