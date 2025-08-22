@@ -18,6 +18,22 @@ const ROUTE_HELP_MAP: Record<string, string> = {
   '/admin-access': 'ADMIN_ACCESS_HELP'
 };
 
+// Map routes to Guide page anchors for deep-linking
+const ROUTE_GUIDE_ANCHOR_MAP: Record<string, string> = {
+  '/': 'SYS-G2A', // Home Page
+  '/library': 'SYS-G3A', // Story Library
+  '/view-comments': 'SYS-G4A', // Comments List Page
+  '/make-comment': 'SYS-G4B', // Write a Comment Page
+  '/writing': 'SYS-G5A', // Writing
+  '/about': 'SYS-G6A', // About Us
+  '/public-author-bios': 'SYS-G6A',
+  '/author-bios-simple': 'SYS-G6A',
+  '/security': 'SYS-G7A', // We Are Safe!
+  '/guide': 'SYS-G1A', // Getting Started
+  '/help-gpa': 'SYS-G1A',
+  '/club': 'SYS-G1A'
+};
+
 const DEFAULT_HELP_MESSAGE = "I'm sorry but Grandpa John has not yet written the help message for this page. You can, however, post a comment and he will see it and respond as soon as he can.\nEnjoy your visit to our website.\nYour friend,\nBuddy";
 
 interface HelpContextType {
@@ -52,6 +68,14 @@ export const HelpProvider: React.FC<HelpProviderProps> = ({ children }) => {
     if (route.startsWith('/buddys_admin')) return 'ADMIN_HELP';
     
     return ROUTE_HELP_MAP[route] || 'HLP-HOME';
+  }, []);
+
+  const getGuideAnchorForRoute = useCallback((route: string): string => {
+    // Handle dynamic routes
+    if (route.startsWith('/story/')) return 'SYS-G3B'; // Read A Story
+    if (route.startsWith('/author/')) return 'SYS-G6A'; // About Us
+    
+    return ROUTE_GUIDE_ANCHOR_MAP[route] || 'SYS-G1A'; // Default to Getting Started
   }, []);
 
   const fetchHelpContent = useCallback(async (route: string) => {
@@ -90,14 +114,19 @@ export const HelpProvider: React.FC<HelpProviderProps> = ({ children }) => {
 
   const showHelp = useCallback((route: string) => {
     console.log('🆘 Showing help for route:', route);
-    setCurrentRoute(route);
-    setIsHelpOpen(true);
-    console.log('🔓 Help popup state set to: true');
-    // Clear any cached content before fetching new content
-    setHelpContent('');
-    setStoryData(null);
-    fetchHelpContent(route);
-  }, [fetchHelpContent]);
+    
+    // Take no action for admin routes
+    if (route.startsWith('/buddys_admin') || route.startsWith('/admin')) {
+      console.log('🚫 Admin route detected, no help action taken');
+      return;
+    }
+    
+    // For public routes, open Guide page with appropriate anchor in new tab
+    const anchor = getGuideAnchorForRoute(route);
+    const guideUrl = `/guide#${anchor}`;
+    console.log('📖 Opening Guide page in new tab:', guideUrl);
+    window.open(guideUrl, '_blank', 'noopener,noreferrer');
+  }, [getGuideAnchorForRoute]);
 
   const hideHelp = useCallback(() => {
     console.log('🔒 Closing help popup');
