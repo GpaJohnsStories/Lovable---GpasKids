@@ -40,7 +40,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
             <div 
               key={`text-${lastIndex}`}
               dangerouslySetInnerHTML={createSafeHtml(beforeText)}
-              className="story-content prose prose-lg max-w-none text-black leading-relaxed font-normal font-georgia"
+              className="story-content prose max-w-none text-black leading-relaxed font-normal font-georgia"
               style={{ fontSize: `${fontSize}px` }}
             />
           );
@@ -66,7 +66,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
           <div 
             key={`text-${lastIndex}`}
             dangerouslySetInnerHTML={createSafeHtml(remainingText)}
-            className="story-content prose prose-lg max-w-none text-black leading-relaxed font-normal font-georgia"
+            className="story-content prose max-w-none text-black leading-relaxed font-normal font-georgia"
             style={{ fontSize: `${fontSize}px` }}
           />
         );
@@ -78,7 +78,7 @@ export const StoryContentRenderer: React.FC<StoryContentRendererProps> = ({
       return (
         <div 
           dangerouslySetInnerHTML={createSafeHtml(text)}
-          className="story-content prose prose-lg max-w-none text-black leading-relaxed font-normal font-georgia"
+          className="story-content prose max-w-none text-black leading-relaxed font-normal font-georgia"
           style={{ fontSize: `${fontSize}px` }}
         />
       );
@@ -191,7 +191,7 @@ const StoryCodeContent: React.FC<{ storyCode: string }> = ({ storyCode }) => {
       {storyData.content && (
         <div 
           dangerouslySetInnerHTML={createSafeHtml(storyData.content)}
-          className="story-content prose prose-lg max-w-none text-black leading-relaxed font-normal mt-4 font-georgia"
+          className="story-content prose max-w-none text-black leading-relaxed font-normal mt-4 font-georgia"
           style={{ fontSize: `${fontSize}px` }}
         />
       )}
