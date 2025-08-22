@@ -77,7 +77,8 @@ const StorySection = () => {
     excerpt: story.excerpt,
     thumbs_up_count: story.thumbs_up_count,
     thumbs_down_count: story.thumbs_down_count,
-    ok_count: story.ok_count
+    ok_count: story.ok_count,
+    read_count: story.read_count
   });
   
   const featuredStories = [];

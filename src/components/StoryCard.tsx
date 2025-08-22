@@ -53,7 +53,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
               </div>
               <div className="mb-2">
                 <div className="text-xs text-gray-600 font-medium">
-                  👍 {story.thumbs_up_count || 0} 👎 {story.thumbs_down_count || 0} 😊 {story.ok_count || 0}
+                  👍 {story.thumbs_up_count || 0} 👎 {story.thumbs_down_count || 0} 😊 {story.ok_count || 0} Reads: {(story.read_count || 0).toLocaleString()}
                 </div>
               </div>
               <div className="flex-1 flex items-center justify-center">
