@@ -143,7 +143,7 @@ const StorySection = () => {
         <div className="flex justify-center">
           <Link to="/library" onClick={scrollToTop}>
             <Button className="bg-gradient-to-b from-orange-400 to-orange-600 text-white border-orange-700 h3-fun-24 px-8 py-4 rounded-full shadow-[0_6px_12px_rgba(194,65,12,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border hover:shadow-[0_8px_16px_rgba(194,65,12,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)] transition-all duration-200">
-              Click Here to Begin <em>Your</em> Adventure in Reading
+              Click to Begin <em>Your</em> Adventure in Reading
             </Button>
           </Link>
         </div>
