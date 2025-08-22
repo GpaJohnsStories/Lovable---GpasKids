@@ -449,18 +449,21 @@ const AdminHeaderBanner = () => {
                           minHeight: '55px'
                         }}
                       >
-                        {refLoading && (
-                          <div className="w-10 h-10 bg-orange-300 animate-pulse rounded" />
-                        )}
-                        {(refError || !refIconUrl) && !refLoading ? (
-                          <span className="text-sm font-bold text-white">REF</span>
-                        ) : refIconUrl && !refLoading && !refError ? (
-                          <img 
-                            src={refIconUrl}
-                            alt="Reference"
-                            className="w-10 h-10 object-contain"
-                          />
-                        ) : null}
+                         {refIconUrl && !refLoading && !refError ? (
+                           <img 
+                             src={refIconUrl}
+                             alt="Reference"
+                             className="w-12 h-12 object-contain"
+                             onError={(e) => {
+                               console.warn('Failed to load ICO-LTB.gif icon');
+                               e.currentTarget.style.display = 'none';
+                             }}
+                           />
+                         ) : refLoading ? (
+                           <div className="w-10 h-10 bg-orange-300 animate-pulse rounded" />
+                         ) : (
+                           <BookOpen className="w-12 h-12 text-white" />
+                         )}
                       </div>
                     </Link>
                     {hoveredButton === button.name && (
