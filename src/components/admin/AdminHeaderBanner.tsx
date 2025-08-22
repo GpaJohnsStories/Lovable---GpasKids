@@ -38,7 +38,7 @@ const AdminHeaderBanner = () => {
   const { iconUrl: librariesIconUrl } = useCachedIcon('!CO-MM3.gif');
   const { iconUrl: commentsIconUrl } = useCachedIcon('!ICO-CO3.gif');
   const { iconUrl: storyCreateIconUrl } = useCachedIcon('!ICO-CO2.gif');
-  const { iconUrl: biosIconUrl } = useCachedIcon('!ICO-AB1.jpg');
+  const { iconUrl: biosIconUrl } = useCachedIcon('!CO-MM7.jpg');
 
   const handleCreateStoryClick = () => {
     console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
