@@ -130,7 +130,7 @@ export const getCategoryButtonForStory = (category: string, storyId: string | nu
       <button className={className}>
         <div className="flex items-center">
           {config?.icon}
-          <span>{category}</span>
+          <span className="font-fun text-21px">{category}</span>
         </div>
       </button>
     </Link>
