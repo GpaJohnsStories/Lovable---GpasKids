@@ -1,17 +1,19 @@
 import IconLibraryDisplay from "./IconLibraryDisplay";
 import ColorReferenceTable from "./reference/ColorReferenceTable";
 import IconUploadSection from "./reference/IconUploadSection";
+import FontLibrarySection from "./reference/FontLibrarySection";
 import CssLibrarySection from "./reference/CssLibrarySection";
 import CssExceptionsSection from "./reference/CssExceptionsSection";
 import { Button } from "@/components/ui/button";
 
-type SectionType = "colors" | "upload" | "icons" | "css" | "cssxx" | "top";
+type SectionType = "colors" | "upload" | "icons" | "fonts" | "css" | "cssxx" | "top";
 
 const ReferenceDashboard = () => {
   const sections = [
     { id: "colors" as const, label: "Color Library", component: <ColorReferenceTable /> },
     { id: "upload" as const, label: "Upload Icon", component: <IconUploadSection /> },
     { id: "icons" as const, label: "Icon Library", component: <IconLibraryDisplay /> },
+    { id: "fonts" as const, label: "Font Library", component: <FontLibrarySection /> },
     { id: "css" as const, label: "CSS Library", component: <CssLibrarySection /> },
     { id: "cssxx" as const, label: "CSS XX", component: <CssExceptionsSection /> },
   ];
