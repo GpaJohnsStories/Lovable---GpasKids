@@ -83,11 +83,11 @@ const StoryHeader = ({
         <div className="text-center mb-4">
           {titleHtml ? (
             <h1 
-              className="text-3xl font-bold text-orange-800 leading-tight"
+              className="h3-fun-24 font-bold text-amber-800 leading-tight text-center"
               dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
             />
           ) : (
-            <h1 className="text-3xl font-bold text-orange-800 leading-tight">
+            <h1 className="h3-fun-24 font-bold text-amber-800 leading-tight text-center">
               {title}
             </h1>
           )}
@@ -97,19 +97,18 @@ const StoryHeader = ({
           <div className="text-center mb-4">
             {taglineHtml ? (
               <h2 
-                className="text-orange-700 italic font-medium font-georgia whitespace-pre-line"
-                style={{ fontSize: '25px' }}
+                className="text-21px text-amber-700 italic leading-tight font-fun text-center whitespace-pre-line"
                 dangerouslySetInnerHTML={createSafeHeaderHtml(taglineHtml)}
               />
             ) : (
-              <h2 className="text-orange-700 italic font-medium font-georgia whitespace-pre-line" style={{ fontSize: '25px' }}>
+              <h2 className="text-21px text-amber-700 italic leading-tight font-fun text-center whitespace-pre-line">
                 {tagline}
               </h2>
             )}
           </div>
         )}
 
-        <div className="flex flex-col items-center gap-2 text-xl text-orange-600 mb-2 font-georgia">
+        <div className="flex flex-col items-center gap-2 text-21px text-amber-800 mb-2 font-fun">
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
               {authorHtml ? (
@@ -136,11 +135,11 @@ const StoryHeader = ({
           <div className="text-center mb-6">
             {descriptionHtml ? (
               <p 
-                className="text-lg text-orange-700 italic font-georgia whitespace-pre-line"
+                className="text-21px text-amber-700 leading-relaxed font-fun text-center whitespace-pre-line"
                 dangerouslySetInnerHTML={createSafeHeaderHtml(descriptionHtml)}
               />
             ) : (
-              <p className="text-lg text-orange-700 italic font-georgia whitespace-pre-line">
+              <p className="text-21px text-amber-700 leading-relaxed font-fun text-center whitespace-pre-line">
                 {description}
               </p>
             )}
