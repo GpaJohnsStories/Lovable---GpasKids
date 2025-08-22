@@ -123,7 +123,9 @@ const FontLibrarySection = () => {
               {sortedFontData.map((font, index) => (
                 <TableRow key={index}>
                   <TableCell className="text-foreground">{font.fontFamily}</TableCell>
-                  <TableCell className="text-foreground">{font.fontName}</TableCell>
+                  <TableCell className="text-foreground">
+                    {(font.fontFamily === "Georgia" || font.fontFamily === "Kalam/Fun") ? "*" : ""}{font.fontName}
+                  </TableCell>
                   <TableCell className="text-foreground">{getStyleAbbreviation(font.style)}</TableCell>
                   <TableCell>{renderTextSample(font.fontName, font.style, 16)}</TableCell>
                   <TableCell className={font.style === "Regular" || font.style === "Bold" ? "bg-yellow-300" : ""}>
