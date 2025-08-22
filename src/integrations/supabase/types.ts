@@ -387,36 +387,42 @@ export type Database = {
       }
       role_change_audit: {
         Row: {
-          changed_by_email: string
+          changed_by_email_domain: string | null
+          changed_by_email_hash: string | null
           changed_by_user_id: string
           created_at: string
           id: string
           new_role: string
           old_role: string | null
           reason: string | null
-          target_email: string
+          target_email_domain: string | null
+          target_email_hash: string | null
           target_user_id: string
         }
         Insert: {
-          changed_by_email: string
+          changed_by_email_domain?: string | null
+          changed_by_email_hash?: string | null
           changed_by_user_id: string
           created_at?: string
           id?: string
           new_role: string
           old_role?: string | null
           reason?: string | null
-          target_email: string
+          target_email_domain?: string | null
+          target_email_hash?: string | null
           target_user_id: string
         }
         Update: {
-          changed_by_email?: string
+          changed_by_email_domain?: string | null
+          changed_by_email_hash?: string | null
           changed_by_user_id?: string
           created_at?: string
           id?: string
           new_role?: string
           old_role?: string | null
           reason?: string | null
-          target_email?: string
+          target_email_domain?: string | null
+          target_email_hash?: string | null
           target_user_id?: string
         }
         Relationships: []
