@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -38,6 +37,8 @@ export default {
 				'story-h3-2xl': ['2.25rem', { lineHeight: '1.7' }],
 				'story-h3-3xl': ['2.625rem', { lineHeight: '1.7' }],
 				'story-h3-4xl': ['3rem', { lineHeight: '1.8' }],
+				// Standard 21px font sizes
+				'21px': ['21px', { lineHeight: '1.5' }],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -169,5 +170,7 @@ export default {
 		'text-story-xl', 'text-story-2xl', 'text-story-3xl', 'text-story-4xl',
 		'text-story-h3-xs', 'text-story-h3-sm', 'text-story-h3-base', 'text-story-h3-lg',
 		'text-story-h3-xl', 'text-story-h3-2xl', 'text-story-h3-3xl', 'text-story-h3-4xl',
+		// Standard 21px classes
+		'text-21px', 'font-fun', 'font-georgia',
 	],
 } satisfies Config;
