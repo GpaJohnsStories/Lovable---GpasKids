@@ -26,7 +26,11 @@ const StoryPhotosGallery = ({ photos, storyTitle }: StoryPhotosGalleryProps) => 
             <Tooltip key={index}>
               <TooltipTrigger asChild>
                 <div className={`cursor-pointer ${
-                  photos.length === 3 && index === 2 ? 'sm:col-span-2 sm:justify-self-center sm:max-w-md lg:col-span-1 lg:justify-self-auto lg:max-w-none' : ''
+                  photos.length === 3 ? (
+                    index === 0 ? 'justify-self-start' :
+                    index === 1 ? 'justify-self-center lg:justify-self-center md:justify-self-end' :
+                    'md:col-span-2 md:justify-self-center lg:col-span-1 lg:justify-self-end'
+                  ) : ''
                 }`}>
                   <img
                     src={photo.url}
