@@ -47,7 +47,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
                 />
               </div>
             )}
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col items-center">
               <div className="mb-2">
                 {getCategoryButtonForStory(story.category, story.story_code)}
               </div>
