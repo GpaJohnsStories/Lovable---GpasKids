@@ -500,16 +500,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     <div>
       {isOpen && (
         <>
-           {/* Backdrop - visual only, doesn't intercept clicks */}
-           <div
-             style={{
-               position: 'fixed',
-               inset: 0,
-               zIndex: 9998,
-               backgroundColor: 'rgba(0, 0, 0, 0.5)',
-               pointerEvents: 'none', // Make backdrop visual-only
-             }}
-           />
            {/* SuperAV Dialog */}
            <div 
              ref={dialogRef}
