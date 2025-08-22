@@ -310,6 +310,9 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     photoAlt?: string;
   } | null>(null);
   
+  // Coachmark state - shows moving hand on open, disappears on interaction or after 3 seconds
+  const [showCoachmark, setShowCoachmark] = useState(false);
+  
   const { lookupStoryByCode } = useStoryCodeLookup();
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -355,17 +358,19 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     }
   }, [isOpen, audioUrl, lookupStoryByCode]);
 
-  // Auto-play SYS-AVX audio when it becomes available
+  // Show coachmark when SuperAV opens
   useEffect(() => {
-    if (useSysAvx && sysAvx?.audioUrl && audioRef.current) {
-      console.log('🎵 Auto-playing SYS-AVX audio at speed 1.0');
-      audioRef.current.playbackRate = 1.0;
-      setPlaybackRate(1.0);
-      audioRef.current.play().catch(error => {
-        console.warn('⚠️ Auto-play blocked:', error);
-      });
+    if (isOpen) {
+      setShowCoachmark(true);
+      // Auto-hide coachmark after 3 seconds
+      const timer = setTimeout(() => {
+        setShowCoachmark(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowCoachmark(false);
     }
-  }, [useSysAvx, sysAvx]);
+  }, [isOpen]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -393,6 +398,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   const handlePlay = (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
+    setShowCoachmark(false); // Hide coachmark on first interaction
     console.log('🎵 Play button clicked, audioRef:', !!audioRef.current, 'audioUrl:', audioUrl || sysAvx?.audioUrl);
     if (audioRef.current && (audioUrl || sysAvx?.audioUrl)) {
       audioRef.current.play().catch(error => {
@@ -407,6 +413,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   const handlePause = (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
+    setShowCoachmark(false); // Hide coachmark on interaction
     if (audioRef.current) {
       audioRef.current.pause();
       setIsPlaying(false);
@@ -416,6 +423,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   const handleRestart = (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
+    setShowCoachmark(false); // Hide coachmark on interaction
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       if (isPlaying) {
@@ -427,6 +435,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   const handleStop = (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
+    setShowCoachmark(false); // Hide coachmark on interaction
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -576,13 +585,14 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     <div>
       {isOpen && (
         <>
-           {/* Backdrop */}
+           {/* Backdrop - visual only, doesn't intercept clicks */}
            <div
              style={{
                position: 'fixed',
                inset: 0,
                zIndex: 9998,
                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+               pointerEvents: 'none', // Make backdrop visual-only
              }}
            />
            {/* SuperAV Dialog */}
@@ -846,18 +856,34 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              padding: '4px 2.5px 8px 2.5px',
                              borderRadius: '0 0 9px 9px'
                            }}>
-                            {/* Play Button */}
-                             <div 
-                               className={`button-3d-base button-3d-60px-square button-3d-green ${styles.superavIconButton}`}
-                               role="button" 
-                               aria-label="Play Audio" 
-                               title="Play Audio"
-                               style={{
-                                 cursor: 'pointer'
-                               }}
-                               onClick={(e) => handlePlay(e)}>
-                                 <CustomPlayIcon />
-                               </div>
+                             {/* Play Button with moving hand coachmark */}
+                              <div 
+                                className={`button-3d-base button-3d-60px-square button-3d-green ${styles.superavIconButton}`}
+                                role="button" 
+                                aria-label="Play Audio" 
+                                title="Play Audio"
+                                style={{
+                                  cursor: 'pointer',
+                                  position: 'relative'
+                                }}
+                                onClick={(e) => handlePlay(e)}>
+                                  <CustomPlayIcon />
+                                  {/* Moving hand coachmark */}
+                                  {showCoachmark && (
+                                    <div
+                                      style={{
+                                        position: 'absolute',
+                                        top: '-50px',
+                                        left: '-10px',
+                                        animation: 'bounce 1s infinite',
+                                        pointerEvents: 'none',
+                                        zIndex: 10000
+                                      }}
+                                    >
+                                      <CustomArrowIcon />
+                                    </div>
+                                  )}
+                                </div>
                             
                             {/* Pause Button */}
                              <div 

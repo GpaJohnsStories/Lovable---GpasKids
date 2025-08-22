@@ -96,9 +96,23 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
 
   return (
     <>
-      <Dialog open={isOpen} onOpenChange={onClose}>
+      <Dialog 
+        open={isOpen} 
+        onOpenChange={(open) => {
+          if (!open) {
+            if (isSuperAVOpen) return; // Don't close Help when SuperAV is open
+            onClose();
+          }
+        }}
+      >
         <DialogContent 
           className="max-w-2xl h-[90vh] bg-gradient-to-b from-amber-50 to-orange-50 border-2 border-orange-200 flex flex-col p-0 [&>button]:hidden font-kalam"
+          onInteractOutside={(e) => {
+            if (isSuperAVOpen) e.preventDefault(); // Prevent closing when SuperAV is open
+          }}
+          onEscapeKeyDown={(e) => {
+            if (isSuperAVOpen) e.preventDefault(); // Prevent ESC closing when SuperAV is open
+          }}
         >
           {/* Header with Title and Audio Controls */}
           <DialogHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 pb-0 border-b border-orange-200 space-y-0">
