@@ -98,11 +98,11 @@ const StoryHeader = ({
             {taglineHtml ? (
               <h2 
                 className="text-orange-700 italic font-medium font-georgia whitespace-pre-line"
-                style={{ fontSize: '23px' }}
+                style={{ fontSize: '25px' }}
                 dangerouslySetInnerHTML={createSafeHeaderHtml(taglineHtml)}
               />
             ) : (
-              <h2 className="text-orange-700 italic font-medium font-georgia whitespace-pre-line" style={{ fontSize: '23px' }}>
+              <h2 className="text-orange-700 italic font-medium font-georgia whitespace-pre-line" style={{ fontSize: '25px' }}>
                 {tagline}
               </h2>
             )}
