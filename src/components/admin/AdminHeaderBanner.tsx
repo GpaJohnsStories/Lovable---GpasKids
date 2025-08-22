@@ -431,7 +431,7 @@ const AdminHeaderBanner = () => {
 
               // Special handling for Reference button as square icon button
               if (button.name === 'Reference') {
-                const { iconUrl: refIconUrl, isLoading: refLoading, error: refError } = useCachedIcon('ICO-AD1.gif');
+                const { iconUrl: refIconUrl, isLoading: refLoading, error: refError } = useCachedIcon('ICO-LTB.gif');
                 
                 const referenceButton = (
                   <div 
@@ -455,7 +455,7 @@ const AdminHeaderBanner = () => {
                              alt="Reference"
                              className="w-12 h-12 object-contain"
                              onError={(e) => {
-                               console.warn('Failed to load ICO-AD1.gif icon');
+                               console.warn('Failed to load ICO-LTB.gif icon');
                                e.currentTarget.style.display = 'none';
                              }}
                            />
