@@ -74,7 +74,10 @@ const StorySection = () => {
     content: story.content,
     tagline: story.tagline,
     story_code: story.story_code,
-    excerpt: story.excerpt
+    excerpt: story.excerpt,
+    thumbs_up_count: story.thumbs_up_count,
+    thumbs_down_count: story.thumbs_down_count,
+    ok_count: story.ok_count
   });
   
   const featuredStories = [];

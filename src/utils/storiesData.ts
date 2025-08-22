@@ -15,6 +15,9 @@ export interface StoryData {
   tagline?: string;
   story_code?: string;
   excerpt?: string;
+  thumbs_up_count?: number;
+  thumbs_down_count?: number;
+  ok_count?: number;
 }
 
 export const getNewestStories = (realStories: any[] = []): StoryData[] => {
@@ -35,7 +38,10 @@ export const getNewestStories = (realStories: any[] = []): StoryData[] => {
     content: story.content,
     tagline: story.tagline,
     story_code: story.story_code,
-    excerpt: story.excerpt
+    excerpt: story.excerpt,
+    thumbs_up_count: story.thumbs_up_count,
+    thumbs_down_count: story.thumbs_down_count,
+    ok_count: story.ok_count
   }));
 
   console.log('Final newest stories:', realStoryData);

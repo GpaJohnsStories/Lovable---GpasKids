@@ -51,6 +51,11 @@ const StoryCard = ({ story }: StoryCardProps) => {
               <div className="mb-2">
                 {getCategoryButtonForStory(story.category, story.story_code)}
               </div>
+              <div className="mb-2">
+                <div className="text-xs text-gray-600 font-medium">
+                  👍 {story.thumbs_up_count || 0} 👎 {story.thumbs_down_count || 0} 😊 {story.ok_count || 0}
+                </div>
+              </div>
               <div className="flex-1 flex items-center justify-center">
                 <h3 className="h3-fun-24 font-bold text-amber-800 leading-tight text-center">
                   {story.title}
