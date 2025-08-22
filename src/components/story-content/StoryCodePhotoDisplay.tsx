@@ -33,7 +33,9 @@ export const StoryCodePhotoDisplay: React.FC<StoryCodePhotoDisplayProps> = ({ st
         // Multiple photos - grid layout
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {photos.map((photo, index) => (
-            <div key={index} className="overflow-hidden rounded-lg shadow-lg border-4 border-white">
+            <div key={index} className={`overflow-hidden rounded-lg shadow-lg border-4 border-white ${
+              photos.length === 3 && index === 2 ? 'md:col-span-2 md:justify-self-center md:max-w-md lg:col-span-1 lg:justify-self-auto lg:max-w-none' : ''
+            }`}>
               <img
                 src={photo.url}
                 alt={photo.alt}
