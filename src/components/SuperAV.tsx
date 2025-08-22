@@ -395,21 +395,32 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
 
   // Audio control functions
-  const handlePlay = () => {
+  const handlePlay = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    console.log('🎵 Play button clicked, audioRef:', !!audioRef.current, 'audioUrl:', audioUrl || sysAvx?.audioUrl);
     if (audioRef.current && (audioUrl || sysAvx?.audioUrl)) {
-      audioRef.current.play();
+      audioRef.current.play().catch(error => {
+        console.warn('⚠️ Play failed:', error);
+      });
       setIsPlaying(true);
+    } else {
+      console.warn('⚠️ Cannot play - missing audio element or URL');
     }
   };
 
-  const handlePause = () => {
+  const handlePause = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     if (audioRef.current) {
       audioRef.current.pause();
       setIsPlaying(false);
     }
   };
 
-  const handleRestart = () => {
+  const handleRestart = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       if (isPlaying) {
@@ -418,7 +429,9 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     }
   };
 
-  const handleStop = () => {
+  const handleStop = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -861,7 +874,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                style={{
                                  cursor: 'pointer'
                                }}
-                               onClick={handlePlay}>
+                               onClick={(e) => handlePlay(e)}>
                                  <CustomPlayIcon />
                                </div>
                             
@@ -874,7 +887,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                style={{
                                  cursor: 'pointer'
                                }}
-                               onClick={handlePause}>
+                               onClick={(e) => handlePause(e)}>
                                  <CustomPauseIcon />
                                </div>
                             
@@ -887,7 +900,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                 style={{
                                   cursor: 'pointer'
                                 }}
-                                onClick={handleRestart}>
+                                onClick={(e) => handleRestart(e)}>
                                   <CustomRestartIcon />
                                 </div>
                             
@@ -900,7 +913,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                style={{
                                  cursor: 'pointer'
                                }}
-                               onClick={handleStop}>
+                               onClick={(e) => handleStop(e)}>
                                  <CustomStopIcon />
                                </div>
                          </div>
