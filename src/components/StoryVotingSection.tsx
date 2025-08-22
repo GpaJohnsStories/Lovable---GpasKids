@@ -25,7 +25,7 @@ const StoryVotingSection = ({
   return (
     <div className="mb-8">
       <div className="flex items-center justify-center">
-        <div className="border-2 border-amber-border rounded-lg p-4 bg-white shadow-sm">
+        <div className="border-2 border-amber-border rounded-lg p-2 bg-white shadow-sm">
           <StoryVoting
             storyId={storyId}
             storyCode={storyCode}

@@ -92,7 +92,7 @@ const StoryVoting = ({
   const encodedStoryCode = encodeURIComponent(storyCode);
 
   return (
-    <div className="flex flex-col items-center space-y-4 p-6 bg-amber-50 rounded-lg border border-amber-200">
+    <div className="flex flex-col items-center space-y-2 p-2 bg-amber-50 rounded-lg border border-amber-200">
       <h3 className="text-lg font-semibold text-orange-800 mb-2">How did you like this story?</h3>
       
       <div className="flex flex-col lg:flex-row items-center gap-4">
