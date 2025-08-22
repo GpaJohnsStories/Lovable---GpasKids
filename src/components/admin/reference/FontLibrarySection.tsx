@@ -99,15 +99,15 @@ const FontLibrarySection = () => {
                   </Button>
                 </TableHead>
                 <TableHead className="text-foreground font-bold">Style</TableHead>
-                <TableHead className="text-foreground font-bold">14 PT</TableHead>
-                <TableHead className="text-foreground font-bold">16 PT</TableHead>
-                <TableHead className="text-foreground font-bold">18 PT</TableHead>
-                <TableHead className="text-foreground font-bold">20 PT</TableHead>
-                <TableHead className="text-foreground font-bold">22 PT</TableHead>
-                <TableHead className="text-foreground font-bold">24 PT</TableHead>
-                <TableHead className="text-foreground font-bold">26 PT</TableHead>
-                <TableHead className="text-foreground font-bold">28 PT</TableHead>
-                <TableHead className="text-foreground font-bold">30 PT</TableHead>
+                <TableHead className="text-foreground font-bold">14 PT 19px</TableHead>
+                <TableHead className="text-foreground font-bold">16 PT 21px</TableHead>
+                <TableHead className="text-foreground font-bold">18 PT 24px</TableHead>
+                <TableHead className="text-foreground font-bold">20 PT 27px</TableHead>
+                <TableHead className="text-foreground font-bold">22 PT 29px</TableHead>
+                <TableHead className="text-foreground font-bold">24 PT 32px</TableHead>
+                <TableHead className="text-foreground font-bold">26 PT 35px</TableHead>
+                <TableHead className="text-foreground font-bold">28 PT 37px</TableHead>
+                <TableHead className="text-foreground font-bold">30 PT 40px</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
