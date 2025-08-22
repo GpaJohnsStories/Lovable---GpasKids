@@ -65,7 +65,7 @@ const ViewComments = () => {
                   </Button>
                 )}
               </div>
-              <p className="text-sm text-orange-700 text-center max-w-md">
+              <p className="text-21px text-orange-700 text-center max-w-md font-fun">
                 💡 <strong>Privacy Note:</strong> Personal IDs in the list show only the first 4 characters (like ABCD**) for privacy. 
                 To see your own comments, enter your complete 6-character Personal ID above.
               </p>
