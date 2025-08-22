@@ -59,7 +59,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
             </div>
           </div>
           {story.tagline && (
-            <div className="mb-3">
+            <div className="mb-0">
               <h4 className="text-21px text-amber-700 italic leading-tight font-fun text-center">
                 {story.tagline}
               </h4>
