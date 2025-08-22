@@ -124,10 +124,10 @@ const OrangeGangGallery = () => {
             
             {/* 2. Title Below Photo */}
             <div className="text-center">
-              <h3 className="text-xl font-bold text-amber-900 tracking-wide font-playful">
+              <h3 className="text-xl font-bold text-amber-900 tracking-wide font-fun">
                 Original Orange Shirt Gang
               </h3>
-              <p className="text-lg text-amber-700 italic mt-1 font-playful">
+              <p className="text-lg text-amber-700 italic mt-1 font-fun">
                 The Kids Who Started It All
               </p>
             </div>
@@ -160,7 +160,7 @@ const OrangeGangGallery = () => {
                           </AspectRatio>
                         </div>
                         <div className="mt-2 text-center">
-                          <p className="text-lg font-medium text-amber-800 font-playful">{helper.name}</p>
+                          <p className="text-lg font-medium text-amber-800 font-fun">{helper.name}</p>
                         </div>
                       </div>
                     </TooltipTrigger>

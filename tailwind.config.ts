@@ -111,7 +111,6 @@ export default {
 			fontFamily: {
 				'handwritten': ['Kalam', 'Comic Sans MS', 'Arial', 'sans-serif'],
 				'fun': ['Kalam', 'Comic Sans MS', 'Arial', 'sans-serif'],
-				'playful': ['Fredoka One', 'Kalam', 'Comic Sans MS', 'Arial', 'sans-serif'],
 				'georgia': ['Georgia', 'Times New Roman', 'serif'],
 			},
 			borderRadius: {
