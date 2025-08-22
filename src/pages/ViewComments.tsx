@@ -47,7 +47,12 @@ const ViewComments = () => {
                   value={searchInput}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   placeholder="Enter your full 6-character Personal ID..."
-                  className="w-80 font-fun"
+                  className="font-family-arial text-24px"
+                  style={{
+                    width: '126px', // 1.5 times width of 6 characters at 24px Arial
+                    fontFamily: 'Arial, sans-serif',
+                    fontSize: '24px'
+                  }}
                 />
                 {searchInput && (
                   <Button 
