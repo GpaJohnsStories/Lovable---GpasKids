@@ -184,7 +184,24 @@ const Guide = () => {
           
           {/* Stack of WebText Boxes */}
           <div className="space-y-2 mb-1">
-            {webtextBoxes.map((box, index) => <WebTextBox key={index} webtextCode={box.webtextCode} borderColor={box.borderColor} backgroundColor={box.backgroundColor} title={box.title} id={box.webtextCode} />)}
+            {webtextBoxes.map((box, index) => <WebTextBox 
+              key={index} 
+              webtextCode={box.webtextCode} 
+              borderColor={box.borderColor} 
+              backgroundColor={box.backgroundColor} 
+              title={box.title} 
+              id={box.webtextCode}
+              showReturn={true}
+              onReturnClick={() => {
+                // Try to close the tab first (if opened from another tab)
+                try {
+                  window.close();
+                } catch (e) {
+                  // If closing fails or not allowed, go back in history
+                  window.history.back();
+                }
+              }}
+            />)}
           </div>
         </div>
       </main>

@@ -13,6 +13,8 @@ interface WebTextBoxProps {
   backgroundColor: string;
   title: string;
   id?: string;
+  showReturn?: boolean;
+  onReturnClick?: () => void;
 }
 
 export const WebTextBox: React.FC<WebTextBoxProps> = ({
@@ -20,7 +22,9 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   borderColor,
   backgroundColor,
   title,
-  id
+  id,
+  showReturn = false,
+  onReturnClick
 }) => {
   const { lookupStoryByCode } = useStoryCodeLookup();
   const [webtext, setWebtext] = useState<any>(null);
@@ -123,8 +127,16 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             </div>
           </div>
 
-          {/* Bottom right: Webtext code */}
-          <div className="flex justify-end">
+          {/* Bottom section with return button and webtext code */}
+          <div className="flex justify-between items-end">
+            {showReturn && (
+              <button
+                onClick={onReturnClick}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-handwritten text-lg font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+              >
+                ← Return
+              </button>
+            )}
             <div className="bg-blue-200/70 rounded px-3 py-1 text-sm font-mono text-blue-700 border border-blue-400">
               {webtextCode}
             </div>
@@ -202,8 +214,16 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           <div className="clear-both"></div>
         </div>
 
-        {/* Bottom Right: Webtext Code */}
-        <div className="flex justify-end mt-6">
+        {/* Bottom section with return button and webtext code */}
+        <div className="flex justify-between items-end mt-6">
+          {showReturn && (
+            <button
+              onClick={onReturnClick}
+              className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-handwritten text-lg font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+            >
+              ← Return
+            </button>
+          )}
           <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
             {webtextCode}
           </div>
