@@ -60,7 +60,7 @@ export const renderCategoryBadge = (category: string) => {
   
   return (
     <span 
-      className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${styles}`} 
+      className={`inline-flex items-center px-4 py-2 rounded text-21px font-bold ${styles}`} 
       style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
     >
       {displayName}
