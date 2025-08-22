@@ -35,7 +35,7 @@ const AdminHeaderBanner = () => {
   const { iconUrl: secureIconUrl } = useCachedIcon(isSecure ? 'ICO-ADS.jpg' : null);
   const { iconUrl: logoutIconUrl } = useCachedIcon('ICO-ADX.png');
   const { iconUrl: dashboardIconUrl } = useCachedIcon('ICO-AD1.gif');
-  const { iconUrl: librariesIconUrl } = useCachedIcon('!ICO-LB1.gif');
+  const { iconUrl: librariesIconUrl } = useCachedIcon('!CO-MM3.gif');
   const { iconUrl: commentsIconUrl } = useCachedIcon('!ICO-CO3.gif');
   const { iconUrl: storyCreateIconUrl } = useCachedIcon('!ICO-CO2.gif');
   const { iconUrl: biosIconUrl } = useCachedIcon('!ICO-AB1.jpg');
