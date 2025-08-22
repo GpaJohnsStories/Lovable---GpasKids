@@ -21,7 +21,7 @@ const CookieFreeFooter = () => {
               to="/security"
               onClick={scrollToTop}
             >
-              <button className="bg-gradient-to-b from-green-400 to-green-600 px-3 py-2 rounded-full font-semibold shadow-[0_6px_12px_rgba(22,101,52,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-green-700 transition-all duration-200 hover:shadow-[0_8px_16px_rgba(22,101,52,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)] text-sm" style={{ color: '#9c441a' }}>
+              <button className="bg-gradient-to-b from-green-400 to-green-600 text-amber-600 px-3 py-2 rounded-full font-semibold shadow-[0_6px_12px_rgba(22,101,52,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-green-700 transition-all duration-200 hover:shadow-[0_8px_16px_rgba(22,101,52,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)] text-sm">
                 🍪 Cookie-Free
               </button>
             </Link>
