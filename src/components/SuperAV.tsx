@@ -22,25 +22,7 @@ import styles from './SuperAV.module.css';
 // Font constant from tailwind.config.ts font-fun definition
 const FONT_FUN = 'Kalam, "Comic Sans MS", Arial, sans-serif';
 
-// Custom Arrow Icon Component
-const CustomArrowIcon: React.FC = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('ICO-ARR.gif');
-  
-  if (isLoading) return <div style={{ width: '40px', height: '40px' }} />;
-  if (error || !iconUrl) return <div style={{ width: '40px', height: '40px', background: '#814d2e' }} />;
-  
-  return (
-    <img 
-      src={iconUrl} 
-      alt="Arrow" 
-      style={{ 
-        height: '40px', 
-        width: '40px',
-        objectFit: 'contain'
-      }} 
-    />
-  );
-};
+// Removed CustomArrowIcon component - no longer needed
 
 // Custom Play Icon Component
 const CustomPlayIcon: React.FC = () => {
@@ -310,8 +292,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     photoAlt?: string;
   } | null>(null);
   
-  // Coachmark state - shows moving hand on open, disappears on interaction or after 3 seconds
-  const [showCoachmark, setShowCoachmark] = useState(false);
+  // Removed coachmark state - no longer needed
   
   const { lookupStoryByCode } = useStoryCodeLookup();
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -358,19 +339,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     }
   }, [isOpen, audioUrl, lookupStoryByCode]);
 
-  // Show coachmark when SuperAV opens
-  useEffect(() => {
-    if (isOpen) {
-      setShowCoachmark(true);
-      // Auto-hide coachmark after 3 seconds
-      const timer = setTimeout(() => {
-        setShowCoachmark(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    } else {
-      setShowCoachmark(false);
-    }
-  }, [isOpen]);
+  // Removed coachmark effect - no longer needed
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -398,7 +367,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   const handlePlay = (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
-    setShowCoachmark(false); // Hide coachmark on first interaction
     console.log('🎵 Play button clicked, audioRef:', !!audioRef.current, 'audioUrl:', audioUrl || sysAvx?.audioUrl);
     if (audioRef.current && (audioUrl || sysAvx?.audioUrl)) {
       audioRef.current.play().catch(error => {
@@ -413,7 +381,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   const handlePause = (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
-    setShowCoachmark(false); // Hide coachmark on interaction
     if (audioRef.current) {
       audioRef.current.pause();
       setIsPlaying(false);
@@ -423,7 +390,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   const handleRestart = (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
-    setShowCoachmark(false); // Hide coachmark on interaction
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       if (isPlaying) {
@@ -435,7 +401,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   const handleStop = (e?: React.MouseEvent) => {
     e?.preventDefault();
     e?.stopPropagation();
-    setShowCoachmark(false); // Hide coachmark on interaction
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -527,57 +492,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
 
   
 
-  // Custom click handler for document to handle passthrough elements
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleDocumentClick = (e: MouseEvent) => {
-      const target = e.target as Element;
-      const dialogElement = dialogRef.current;
-      
-      // Check if click is inside SuperAV dialog
-      if (dialogElement && dialogElement.contains(target)) {
-        return; // Let SuperAV handle its own clicks
-      }
-      
-      // Check if click is on a passthrough element
-      const passthroughElement = target.closest('[data-allow-superav-passthrough="true"]');
-      
-      if (passthroughElement) {
-        console.log('🎯 Passthrough element clicked:', passthroughElement);
-        
-        // Close SuperAV
-        onClose();
-        
-        // Handle specific actions based on aria-label
-        const ariaLabel = passthroughElement.getAttribute('aria-label') || '';
-        
-        if (ariaLabel.includes('Scroll')) {
-          console.log('📜 Triggering scroll to top');
-          setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }, 100);
-        } else if (ariaLabel.includes('Menu')) {
-          console.log('🎮 Triggering menu click');
-          setTimeout(() => {
-            // Find the button and trigger its click handler
-            const button = passthroughElement as HTMLButtonElement;
-            button.click();
-          }, 100);
-        }
-      } else {
-        // Normal click outside - close dialog
-        onClose();
-      }
-    };
-
-    // Add event listener to document (use bubbling phase)
-    document.addEventListener('click', handleDocumentClick, false);
-    
-    return () => {
-      document.removeEventListener('click', handleDocumentClick, false);
-    };
-  }, [isOpen, onClose]);
+  // Removed document click handler - SuperAV stays open until explicitly closed
 
   console.log('🎬 SuperAV render - isOpen:', isOpen, 'title:', title);
   
@@ -619,7 +534,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 border: '4px solid #fdba74',
                 borderRadius: '16px',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                cursor: isDragging ? 'grabbing' : 'grab',
                 
                 // Font reset
                 fontFamily: FONT_FUN,
@@ -637,7 +551,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                          currentScale === '3xl' ? 2.1 :
                                          currentScale === '4xl' ? 2.6 : 1)
               } as any}
-             onMouseDown={handleMouseDown}
            >
         
         {/* Close button positioned at bottom after font size buttons */}
@@ -687,15 +600,32 @@ export const SuperAV: React.FC<SuperAVProps> = ({
               pointerEvents: 'none',
               borderRadius: '12px',
             }} />
-             {/* Fixed-height text containers at top with brown border */}
-              <div 
-                className={`playbook-controls-section ${styles.superavHeader}`}
-                style={{
-                width: '252px',
-                marginBottom: '0px',
-                border: '2px solid #5A3E2B',
-                boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)'
-              }}>
+              {/* Fixed-height text containers at top with brown border */}
+               <div 
+                 className={`playbook-controls-section ${styles.superavHeader}`}
+                 style={{
+                 width: '252px',
+                 marginBottom: '0px',
+                 border: '2px solid #5A3E2B',
+                 boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)',
+                 position: 'relative'
+               }}>
+                 {/* Drag handle at top */}
+                 <div 
+                   onMouseDown={handleMouseDown}
+                   style={{
+                     position: 'absolute',
+                     top: '0',
+                     left: '0',
+                     right: '0',
+                     height: '12px',
+                     cursor: isDragging ? 'grabbing' : 'grab',
+                     backgroundColor: 'transparent',
+                     zIndex: 1,
+                     borderRadius: '8px 8px 0 0'
+                   }}
+                   title="Drag to move"
+                 />
                {useSysAvx && sysAvx ? (
                  /* SYS-AVX layout with photo and text */
                   <div style={{
@@ -856,34 +786,18 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              padding: '4px 2.5px 8px 2.5px',
                              borderRadius: '0 0 9px 9px'
                            }}>
-                             {/* Play Button with moving hand coachmark */}
-                              <div 
-                                className={`button-3d-base button-3d-60px-square button-3d-green ${styles.superavIconButton}`}
-                                role="button" 
-                                aria-label="Play Audio" 
-                                title="Play Audio"
-                                style={{
-                                  cursor: 'pointer',
-                                  position: 'relative'
-                                }}
-                                onClick={(e) => handlePlay(e)}>
-                                  <CustomPlayIcon />
-                                  {/* Moving hand coachmark */}
-                                  {showCoachmark && (
-                                    <div
-                                      style={{
-                                        position: 'absolute',
-                                        top: '-50px',
-                                        left: '-10px',
-                                        animation: 'bounce 1s infinite',
-                                        pointerEvents: 'none',
-                                        zIndex: 10000
-                                      }}
-                                    >
-                                      <CustomArrowIcon />
-                                    </div>
-                                  )}
-                                </div>
+                              {/* Play Button */}
+                               <div 
+                                 className={`button-3d-base button-3d-60px-square button-3d-green ${styles.superavIconButton}`}
+                                 role="button" 
+                                 aria-label="Play Audio" 
+                                 title="Play Audio"
+                                 style={{
+                                   cursor: 'pointer'
+                                 }}
+                                 onClick={(e) => handlePlay(e)}>
+                                   <CustomPlayIcon />
+                                 </div>
                             
                             {/* Pause Button */}
                              <div 
