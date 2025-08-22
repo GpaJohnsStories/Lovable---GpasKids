@@ -44,7 +44,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
                 <img 
                   src={firstPhoto} 
                   alt={`${story.title} thumbnail`}
-                  className="w-25 h-25 object-cover rounded border border-gray-400"
+                  className="w-[25px] h-[25px] object-cover rounded border border-gray-400"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}
