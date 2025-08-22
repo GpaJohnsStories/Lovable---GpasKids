@@ -5,7 +5,7 @@ import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { BreakTimerPopup } from '../BreakTimerPopup';
 const BreakGuide: React.FC = () => {
   const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
-  const [minutesLeft, setMinutesLeft] = useState(15); // Default 15 minutes
+  const [minutesLeft, setMinutesLeft] = useState(55); // Default 55 minutes
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -33,8 +33,9 @@ const BreakGuide: React.FC = () => {
     const timer = setInterval(() => {
       setMinutesLeft(prev => {
         if (prev <= 1) {
-          // Timer reached zero, could trigger break reminder here
-          return 15; // Reset to 15 minutes
+          // Timer reached zero, auto-open break reminder
+          setIsBreakReminderOpen(true);
+          return 55; // Reset to 55 minutes
         }
         return prev - 1;
       });
@@ -52,7 +53,7 @@ const BreakGuide: React.FC = () => {
   };
 
   // SYS-BT2: Back Door - Triple-click Sparky to open Break Reminder and set timer to zero
-  // This allows viewing the Break Reminder without waiting for the 15-minute countdown
+  // This allows viewing the Break Reminder without waiting for the 55-minute countdown
   const handleSparkyClick = () => {
     setSparkyClickCount(prev => prev + 1);
     
@@ -84,8 +85,8 @@ const BreakGuide: React.FC = () => {
 
   const handleBreakComplete = () => {
     setIsBreakReminderOpen(false);
-    // Reset the break timer back to 15 minutes
-    setMinutesLeft(15);
+    // Reset the break timer back to 55 minutes
+    setMinutesLeft(55);
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
