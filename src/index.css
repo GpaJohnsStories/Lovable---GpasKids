@@ -916,6 +916,11 @@
   width: 100%;
 }
 
+/* Reusable Typography Classes */
+.h3-fun-24 {
+  @apply font-fun text-2xl;
+}
+
 /* Page Break Styles */
 .story-content .page-break,
 .rendered-story-content .page-break,

@@ -52,7 +52,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
               </div>
             )}
             <div className="flex-1">
-              <h3 className="text-base font-bold text-amber-800 mb-1 leading-tight font-system">
+              <h3 className="h3-fun-24 font-bold text-amber-800 mb-1 leading-tight">
                 {story.title}
               </h3>
               {story.tagline && (
