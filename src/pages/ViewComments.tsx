@@ -37,8 +37,8 @@ const ViewComments = () => {
             Published Comments
           </h2>
 
-          <div className="my-6 p-4 bg-amber-100/60 rounded-lg border-2 border-orange-200">
-            <p className="text-21px text-orange-700 text-center max-w-md mx-auto font-fun">
+          <div className="my-6 p-4 bg-amber-100/60 rounded-lg border-2 border-orange-200 max-w-md">
+            <p className="text-21px text-orange-700 text-center font-fun">
               💡 <strong>Privacy Note:</strong> Personal IDs in the list show only the first 4 characters (like ABCD**) for privacy. 
               To see your own comments, enter your complete 6-character Personal ID below.
             </p>
