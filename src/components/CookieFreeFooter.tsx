@@ -7,7 +7,7 @@ import { useTooltipContext } from '@/contexts/TooltipContext';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const CookieFreeFooter = () => {
-  const { iconUrl, isLoading, error } = useCachedIcon('!CO-CFF.gif');
+  const { iconUrl, isLoading, error } = useCachedIcon('!CO-CFF.png');
   const { registerTooltip } = useTooltipContext();
 
   React.useEffect(() => {
