@@ -45,6 +45,9 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   const storyCode = storyData?.story_code;
   const { iconUrl: cachedIconUrl } = useCachedIcon(storyCode ? `${storyCode}.jpg` : null);
   
+  // Get the Guide icon for the help popup header
+  const { iconUrl: guideIconUrl } = useCachedIcon("!CO-MM1.jpg");
+  
   // Update audioCode when storyData changes
   useEffect(() => {
     if (storyData?.story_code) {
@@ -102,7 +105,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
             {/* Guide Photo - Now links to /guide */}
             <button onClick={handleGuideClick}>
               <img 
-                src={getSafeIconUrl("ICO-GU1")}
+                src={guideIconUrl || getSafeIconUrl("ICO-GU1")}
                 alt="Guide icon - Click to go to guide"
                 className="w-20 h-20 object-cover rounded-lg border-2 border-green-600 shadow-lg hover:border-orange-600 hover:scale-105 transition-all duration-200 cursor-pointer"
                 onError={(e) => {
