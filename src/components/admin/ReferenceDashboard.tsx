@@ -1,4 +1,3 @@
-import { useState } from "react";
 import IconLibraryDisplay from "./IconLibraryDisplay";
 import ColorReferenceTable from "./reference/ColorReferenceTable";
 import IconUploadSection from "./reference/IconUploadSection";
@@ -6,11 +5,9 @@ import CssLibrarySection from "./reference/CssLibrarySection";
 import CssExceptionsSection from "./reference/CssExceptionsSection";
 import { Button } from "@/components/ui/button";
 
-type SectionType = "colors" | "upload" | "icons" | "css" | "cssxx" | "all";
+type SectionType = "colors" | "upload" | "icons" | "css" | "cssxx" | "top";
 
 const ReferenceDashboard = () => {
-  const [activeSection, setActiveSection] = useState<SectionType>("all");
-
   const sections = [
     { id: "colors" as const, label: "Color Library", component: <ColorReferenceTable /> },
     { id: "upload" as const, label: "Upload Icon", component: <IconUploadSection /> },
@@ -19,26 +16,19 @@ const ReferenceDashboard = () => {
     { id: "cssxx" as const, label: "CSS XX", component: <CssExceptionsSection /> },
   ];
 
-  const handleSectionChange = (sectionId: SectionType) => {
-    setActiveSection(sectionId);
-    handleScrollToTop();
+  const handleSectionScroll = (sectionId: SectionType) => {
+    if (sectionId === "top") {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const element = document.getElementById(`section-${sectionId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
   };
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const renderSections = () => {
-    if (activeSection === "all") {
-      return sections.map((section, index) => (
-        <div key={section.id}>
-          {section.component}
-        </div>
-      ));
-    }
-    
-    const selectedSection = sections.find(s => s.id === activeSection);
-    return selectedSection ? selectedSection.component : null;
   };
 
   return (
@@ -52,17 +42,17 @@ const ReferenceDashboard = () => {
       {/* Navigation Buttons */}
       <div className="flex flex-wrap gap-3 p-4 bg-muted/30 rounded-lg border">
         <Button
-          variant={activeSection === "all" ? "default" : "outline"}
-          onClick={() => handleSectionChange("all")}
+          variant="outline"
+          onClick={() => handleSectionScroll("top")}
           className="min-w-[120px]"
         >
-          Show All
+          Scroll to Top
         </Button>
         {sections.map((section) => (
           <Button
             key={section.id}
-            variant={activeSection === section.id ? "default" : "outline"}
-            onClick={() => handleSectionChange(section.id)}
+            variant="outline"
+            onClick={() => handleSectionScroll(section.id)}
             className="min-w-[120px]"
           >
             {section.label}
@@ -70,9 +60,13 @@ const ReferenceDashboard = () => {
         ))}
       </div>
 
-      {/* Section Content */}
-      <div className="space-y-8">
-        {renderSections()}
+      {/* Section Content - Always show all sections */}
+      <div className="space-y-12">
+        {sections.map((section) => (
+          <div key={section.id} id={`section-${section.id}`} className="scroll-mt-24">
+            {section.component}
+          </div>
+        ))}
       </div>
 
       {/* Floating Top Button */}
