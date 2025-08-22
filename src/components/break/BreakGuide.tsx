@@ -129,7 +129,7 @@ const BreakGuide: React.FC = () => {
       }
     };
   }, [sparkyClickTimer]);
-  return <TooltipProvider>
+  return <TooltipProvider delayDuration={200}>
       {/* Break Button - positioned bottom-left, same height and alignment as "Top & Menu" button */}
       <Button
         onClick={handleBreakButtonClick}
@@ -177,7 +177,7 @@ const BreakGuide: React.FC = () => {
                 onClick={handleSparkyClick}
               >
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger asChild>
                     <img src={sparkyIconUrl} alt={sparkyName ?? 'Sparky'} style={{
                 width: '75px',
                 height: '75px',
