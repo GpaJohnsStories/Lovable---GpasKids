@@ -33,18 +33,14 @@ const StoryCard = ({ story }: StoryCardProps) => {
         className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative border-2 border-amber-300 font-system" 
         onClick={handleClick}
       >
-        <CardContent className="p-3 text-center relative">
-          <div className="mb-2">
-            {getCategoryButtonForStory(story.category, story.story_code)}
-          </div>
-          
-          <div className="flex items-center justify-center mb-2">
+        <CardContent className="p-3 relative">
+          <div className="flex gap-3 mb-3">
             {firstPhoto && (
-              <div className="flex-shrink-0 mr-3">
+              <div className="flex-shrink-0">
                 <img 
                   src={firstPhoto} 
                   alt={`${story.title} thumbnail`}
-                  className="w-[25px] h-[25px] object-cover rounded border border-gray-400"
+                  className="w-40 h-40 object-cover rounded border border-gray-400"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}
@@ -52,6 +48,9 @@ const StoryCard = ({ story }: StoryCardProps) => {
               </div>
             )}
             <div className="flex-1">
+              <div className="mb-2">
+                {getCategoryButtonForStory(story.category, story.story_code)}
+              </div>
               <h3 className="h3-fun-24 font-bold text-amber-800 mb-1 leading-tight">
                 {story.title}
               </h3>
