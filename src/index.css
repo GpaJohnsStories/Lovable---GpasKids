@@ -922,7 +922,8 @@
 }
 
 .text-21px {
-  @apply text-21px;
+  font-size: 21px;
+  line-height: 1.5;
 }
 
 /* Page Break Styles */
