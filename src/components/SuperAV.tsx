@@ -287,11 +287,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     return pixelSizeToScale(fontSize);
   });
 
-  // Compact line height state with localStorage persistence
-  const [compactLineHeight, setCompactLineHeight] = useState<boolean>(() => {
-    const stored = localStorage.getItem('superav-compact-mode');
-    return stored === 'true';
-  });
 
   // Calculate min/max size states
   const isMinSize = isMinScale(currentScale);
@@ -489,20 +484,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     localStorage.setItem('superav-font-scale', currentScale);
   }, [currentScale]);
 
-  useEffect(() => {
-    localStorage.setItem('superav-compact-mode', compactLineHeight.toString());
-  }, [compactLineHeight]);
-
-  // Handle compact mode toggle
-  const handleCompactModeToggle = () => {
-    setCompactLineHeight(!compactLineHeight);
-  };
-
-  // Handle reset preferences
-  const handleResetPreferences = () => {
-    setCurrentScale('base');
-    setCompactLineHeight(false);
-  };
 
   React.useEffect(() => {
     if (isDragging) {
@@ -581,11 +562,11 @@ export const SuperAV: React.FC<SuperAVProps> = ({
       }
     };
 
-    // Add event listener to document
-    document.addEventListener('click', handleDocumentClick, true);
+    // Add event listener to document (use bubbling phase)
+    document.addEventListener('click', handleDocumentClick, false);
     
     return () => {
-      document.removeEventListener('click', handleDocumentClick, true);
+      document.removeEventListener('click', handleDocumentClick, false);
     };
   }, [isOpen, onClose]);
 
@@ -755,7 +736,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                         currentScale === '4xl' ? '35px' : '15px'}`,
                              fontFamily: FONT_FUN,
                              color: '#654321',
-                             lineHeight: compactLineHeight ? '1.0' : '1.2',
+                             lineHeight: '1.2',
                              wordWrap: 'break-word',
                              overflowWrap: 'break-word'
                            }}
@@ -1092,71 +1073,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                       </td>
                    </tr>
                    
-                   {/* Row 8: Compact Mode and Reset Controls */}
-                   <tr>
-                     <td colSpan={4} height={1} style={{backgroundColor: 'transparent', border: 'none'}}></td>
-                   </tr>
-                   
-                   <tr>
-                     <td colSpan={4} style={{
-                       padding: '3px', 
-                       background: '#D4C89A',
-                       borderRadius: '12px'
-                     }}>
-                       <div style={{
-                         padding: '4px',
-                         backgroundColor: '#D4C89A',
-                         borderRadius: '9px',
-                         display: 'flex',
-                         alignItems: 'center',
-                         justifyContent: 'space-around',
-                         gap: '8px',
-                         height: '40px'
-                       }}>
-                         {/* Compact Mode Checkbox */}
-                         <label style={{
-                           display: 'flex',
-                           alignItems: 'center',
-                           gap: '4px',
-                           cursor: 'pointer',
-                           fontSize: '11px',
-                           fontFamily: FONT_FUN,
-                           color: '#654321'
-                         }}>
-                           <input
-                             type="checkbox"
-                             checked={compactLineHeight}
-                             onChange={handleCompactModeToggle}
-                             style={{
-                               margin: 0,
-                               transform: 'scale(1.2)'
-                             }}
-                           />
-                           Compact
-                         </label>
-                         
-                         {/* Reset Button */}
-                         <button
-                           onClick={handleResetPreferences}
-                           className="button-3d-base"
-                           style={{
-                             height: '32px',
-                             padding: '4px 12px',
-                             fontSize: '11px',
-                             fontFamily: FONT_FUN,
-                             cursor: 'pointer',
-                             border: 'none',
-                             borderRadius: '6px',
-                             background: '#f59e0b',
-                             color: '#654321',
-                             fontWeight: 'bold'
-                           }}
-                         >
-                           Reset
-                         </button>
-                       </div>
-                     </td>
-                   </tr>
                    
                     {/* New borderless close button row */}
                    <tr>
