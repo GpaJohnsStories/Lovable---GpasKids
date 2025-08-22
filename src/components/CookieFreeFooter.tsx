@@ -38,8 +38,11 @@ const CookieFreeFooter = () => {
                     {isLoading ? (
                       <div className="w-12 h-12 bg-amber-200 rounded-full animate-pulse"></div>
                     ) : error || !iconUrl ? (
-                      <div className="w-12 h-12 bg-gradient-to-b from-orange-400 to-orange-600 rounded-full shadow-[0_6px_12px_rgba(194,65,12,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] border border-orange-700 transition-all duration-200 hover:shadow-[0_8px_16px_rgba(194,65,12,0.4),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.4)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]">
-                      </div>
+                      <img
+                        src="/lovable-uploads/!CO-CFF.png"
+                        alt="Cookie-Free"
+                        className="w-12 h-12 object-contain rounded-full hover:scale-110 transition-all duration-200 cursor-pointer"
+                      />
                     ) : (
                       <img
                         src={iconUrl}
