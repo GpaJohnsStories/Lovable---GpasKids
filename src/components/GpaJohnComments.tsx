@@ -43,7 +43,7 @@ const GpaJohnComments = () => {
   }
 
   // Always show the announcements banner, even if no comments
-  return <section className="py-4">
+  return <section className="pt-4 pb-2">
       {/* Header Banner - Always visible */}
       <div className="container mx-auto px-4">
         <div className="flex justify-center">
