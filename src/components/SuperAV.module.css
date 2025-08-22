@@ -1,0 +1,150 @@
+/* SuperAV Scoped Styles - Isolated from global CSS changes */
+
+.superavRoot {
+  /* Reset and isolate the entire SuperAV modal */
+  font-family: 'Kalam', cursive;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+.superavPanel {
+  /* Main panel container - fixed dimensions to prevent overflow */
+  width: 288px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.superavHeader {
+  /* Header section - fixed font sizes */
+  flex-shrink: 0;
+}
+
+.superavHeader h2 {
+  font-size: 16px !important;
+  font-weight: bold;
+  line-height: 1.3;
+  margin: 0 0 8px 0;
+}
+
+.superavHeader p {
+  font-size: 12px !important;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.superavBody {
+  /* Scrollable content area */
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.superavText {
+  /* Content text that scales with font controls */
+  font-size: calc(14px * var(--superav-content-scale, 1));
+  line-height: 1.4;
+  margin: 8px 0;
+}
+
+.superavText b,
+.superavText strong {
+  font-weight: bold;
+  font-size: inherit;
+}
+
+.superavControls {
+  /* Controls section - fixed sizes */
+  flex-shrink: 0;
+  padding-top: 8px;
+}
+
+.superavButton {
+  /* All buttons use consistent sizing */
+  font-size: 12px !important;
+  font-weight: normal !important;
+  line-height: 1.2 !important;
+  padding: 6px 12px !important;
+  white-space: nowrap;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.superavIconButton {
+  /* Icon-only buttons */
+  font-size: 12px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  padding: 6px !important;
+}
+
+.superavSpeedSelector {
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+}
+
+.superavFontControls {
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+}
+
+.superavFontControls span {
+  font-size: 11px !important;
+}
+
+/* Drag handle */
+.superavDragHandle {
+  cursor: move;
+  font-size: 12px !important;
+  padding: 4px 8px;
+}
+
+/* Override any global styles that might interfere */
+.superavRoot * {
+  box-sizing: border-box;
+}
+
+.superavRoot button {
+  font-family: inherit;
+}
+
+.superavRoot .text-xs {
+  font-size: 11px !important;
+}
+
+.superavRoot .text-sm {
+  font-size: 12px !important;
+}
+
+.superavRoot .text-base {
+  font-size: 14px !important;
+}
+
+/* Ensure viewport height doesn't cause issues */
+@media (max-height: 600px) {
+  .superavPanel {
+    max-height: 85vh;
+  }
+}
+
+@media (max-height: 480px) {
+  .superavPanel {
+    max-height: 80vh;
+  }
+  
+  .superavButton {
+    min-height: 28px;
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+  }
+  
+  .superavIconButton {
+    min-width: 28px !important;
+    min-height: 28px !important;
+    padding: 4px !important;
+  }
+}

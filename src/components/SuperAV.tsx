@@ -16,6 +16,7 @@ import {
   getScaleDisplayName,
   pixelSizeToScale
 } from '@/utils/fontScaleUtils';
+import styles from './SuperAV.module.css';
 
 // SuperAV component - Unified audio and font controls
 
@@ -559,39 +560,50 @@ export const SuperAV: React.FC<SuperAVProps> = ({
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
             }}
           />
-          {/* SuperAV Dialog */}
-          <div 
-            ref={dialogRef}
-            style={{
-              // CSS Reset for complete isolation
-              all: 'unset',
-              boxSizing: 'border-box',
-              
-              // Position and size
-              position: 'fixed',
-              width: '288px',
-              height: '490px',
-              left: `calc(10% + ${position.x}px)`,
-              top: `calc(5% + ${position.y}px)`,
-              zIndex: 50,
-              maxWidth: 'none',
-              maxHeight: 'none',
-              
-              // Appearance
-              background: '#D4C89A',
-              border: '4px solid #fdba74',
-              borderRadius: '16px',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-              cursor: isDragging ? 'grabbing' : 'grab',
-              
-              // Font reset
-              fontFamily: FONT_FUN,
-              fontSize: '14px',
-              lineHeight: '1.5',
-              color: '#000000',
-            }}
-            onMouseDown={handleMouseDown}
-          >
+           {/* SuperAV Dialog */}
+           <div 
+             ref={dialogRef}
+             className={styles.superavRoot}
+              style={{
+                // CSS Reset for complete isolation
+                all: 'unset',
+                boxSizing: 'border-box',
+                
+                // Position and size
+                position: 'fixed',
+                width: '288px',
+                height: '490px',
+                left: `calc(10% + ${position.x}px)`,
+                top: `calc(5% + ${position.y}px)`,
+                zIndex: 50,
+                maxWidth: 'none',
+                maxHeight: 'none',
+                
+                // Appearance
+                background: '#D4C89A',
+                border: '4px solid #fdba74',
+                borderRadius: '16px',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                cursor: isDragging ? 'grabbing' : 'grab',
+                
+                // Font reset
+                fontFamily: FONT_FUN,
+                fontSize: '14px',
+                lineHeight: '1.5',
+                color: '#000000',
+                
+                // CSS variable for content scaling
+                '--superav-content-scale': (currentScale === 'xs' ? 0.85 : 
+                                         currentScale === 'sm' ? 1 :
+                                         currentScale === 'base' ? 1.15 :
+                                         currentScale === 'lg' ? 1.3 :
+                                         currentScale === 'xl' ? 1.45 :
+                                         currentScale === '2xl' ? 1.7 :
+                                         currentScale === '3xl' ? 2.1 :
+                                         currentScale === '4xl' ? 2.6 : 1)
+              } as any}
+             onMouseDown={handleMouseDown}
+           >
         
         {/* Close button positioned at bottom after font size buttons */}
 
@@ -603,26 +615,28 @@ export const SuperAV: React.FC<SuperAVProps> = ({
           height: '100%',
           padding: '4px',
         }}>
-          <div style={{
-            all: 'unset',
-            boxSizing: 'border-box',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            height: 'calc(100% - 8px)',
-            width: 'calc(100% - 8px)',
-            margin: '0 auto',
-            backgroundColor: '#D4C89A',
-            borderRadius: '12px',
-            padding: '8px',
-            backdropFilter: 'blur(4px)',
-            border: '1px solid #fed7aa',
-            backgroundImage: 'url(/lovable-uploads/paper-texture.png)',
-            backgroundRepeat: 'repeat',
-            backgroundSize: '200px 200px',
-            backgroundBlendMode: 'soft-light',
-            position: 'relative',
-          }}>
+           <div 
+             className={styles.superavPanel}
+             style={{
+             all: 'unset',
+             boxSizing: 'border-box',
+             display: 'flex',
+             flexDirection: 'column',
+             alignItems: 'center',
+             height: 'calc(100% - 8px)',
+             width: 'calc(100% - 8px)',
+             margin: '0 auto',
+             backgroundColor: '#D4C89A',
+             borderRadius: '12px',
+             padding: '8px',
+             backdropFilter: 'blur(4px)',
+             border: '1px solid #fed7aa',
+             backgroundImage: 'url(/lovable-uploads/paper-texture.png)',
+             backgroundRepeat: 'repeat',
+             backgroundSize: '200px 200px',
+             backgroundBlendMode: 'soft-light',
+             position: 'relative',
+           }}>
             {/* Paper texture overlay */}
             <div style={{
               position: 'absolute',
@@ -638,13 +652,15 @@ export const SuperAV: React.FC<SuperAVProps> = ({
               pointerEvents: 'none',
               borderRadius: '12px',
             }} />
-            {/* Fixed-height text containers at top with brown border */}
-             <div className="playback-controls-section" style={{
-               width: '252px',
-               marginBottom: '0px',
-               border: '2px solid #5A3E2B',
-               boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)'
-             }}>
+             {/* Fixed-height text containers at top with brown border */}
+              <div 
+                className={`playbook-controls-section ${styles.superavHeader}`}
+                style={{
+                width: '252px',
+                marginBottom: '0px',
+                border: '2px solid #5A3E2B',
+                boxShadow: 'inset 0 0 0 2px #A67C52, inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2)'
+              }}>
                {useSysAvx && sysAvx ? (
                  /* SYS-AVX layout with photo and text */
                   <div style={{
@@ -682,23 +698,24 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                         flex: 1,
                         minWidth: 0 // Allow shrinking
                       }}>
-                        <div 
-                          style={{
-                            fontSize: `${currentScale === 'xs' ? '12px' : 
-                                       currentScale === 'sm' ? '14px' :
-                                       currentScale === 'base' ? '16px' :
-                                       currentScale === 'lg' ? '18px' :
-                                       currentScale === 'xl' ? '20px' :
-                                       currentScale === '2xl' ? '24px' :
-                                       currentScale === '3xl' ? '30px' :
-                                       currentScale === '4xl' ? '36px' : '16px'}`,
-                            fontFamily: FONT_FUN,
-                            color: '#654321',
-                            lineHeight: '1.4',
-                            wordWrap: 'break-word',
-                            overflowWrap: 'break-word'
-                          }}
-                        >
+                         <div 
+                           className={styles.superavText}
+                           style={{
+                             fontSize: `${currentScale === 'xs' ? '12px' : 
+                                        currentScale === 'sm' ? '14px' :
+                                        currentScale === 'base' ? '16px' :
+                                        currentScale === 'lg' ? '18px' :
+                                        currentScale === 'xl' ? '20px' :
+                                        currentScale === '2xl' ? '24px' :
+                                        currentScale === '3xl' ? '30px' :
+                                        currentScale === '4xl' ? '36px' : '16px'}`,
+                             fontFamily: FONT_FUN,
+                             color: '#654321',
+                             lineHeight: '1.4',
+                             wordWrap: 'break-word',
+                             overflowWrap: 'break-word'
+                           }}
+                         >
                           There is no audio file for this page yet. But your word size buttons below still work just fine.
                         </div>
                       </div>
@@ -804,44 +821,44 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                              padding: '4px 2.5px 8px 2.5px',
                              borderRadius: '0 0 9px 9px'
                            }}>
-                           {/* Play Button */}
-                            <div 
-                              className="button-3d-base button-3d-60px-square button-3d-green"
-                              role="button" 
-                              aria-label="Play Audio" 
-                              title="Play Audio"
-                              style={{
-                                cursor: 'pointer'
-                              }}
-                              onClick={handlePlay}>
-                                <CustomPlayIcon />
-                              </div>
-                           
-                           {/* Pause Button */}
-                            <div 
-                              className="button-3d-base button-3d-60px-square button-3d-amber"
-                              role="button" 
-                              aria-label="Pause Audio" 
-                              title="Pause Audio"
-                              style={{
-                                cursor: 'pointer'
-                              }}
-                              onClick={handlePause}>
-                                <CustomPauseIcon />
-                              </div>
-                           
-                            {/* Restart Button */}
+                            {/* Play Button */}
                              <div 
-                               className="button-3d-base button-3d-60px-square button-3d-orange"
+                               className={`button-3d-base button-3d-60px-square button-3d-green ${styles.superavIconButton}`}
                                role="button" 
-                               aria-label="Restart Audio" 
-                               title="Restart Audio"
+                               aria-label="Play Audio" 
+                               title="Play Audio"
                                style={{
                                  cursor: 'pointer'
                                }}
-                               onClick={handleRestart}>
-                                 <CustomRestartIcon />
+                               onClick={handlePlay}>
+                                 <CustomPlayIcon />
                                </div>
+                            
+                            {/* Pause Button */}
+                             <div 
+                               className={`button-3d-base button-3d-60px-square button-3d-amber ${styles.superavIconButton}`}
+                               role="button" 
+                               aria-label="Pause Audio" 
+                               title="Pause Audio"
+                               style={{
+                                 cursor: 'pointer'
+                               }}
+                               onClick={handlePause}>
+                                 <CustomPauseIcon />
+                               </div>
+                            
+                             {/* Restart Button */}
+                              <div 
+                                className={`button-3d-base button-3d-60px-square button-3d-orange ${styles.superavIconButton}`}
+                                role="button" 
+                                aria-label="Restart Audio" 
+                                title="Restart Audio"
+                                style={{
+                                  cursor: 'pointer'
+                                }}
+                                onClick={handleRestart}>
+                                  <CustomRestartIcon />
+                                </div>
                             
                             {/* Stop Button */}
                              <div 
@@ -1043,20 +1060,20 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                        alignItems: 'center',
                        width: '100%'
                      }}>
-                        <div 
-                          className="button-3d-base"
-                          role="button" 
-                          aria-label="Close SuperAV" 
-                          title="Close SuperAV"
-                          style={{
-                            cursor: 'pointer',
-                            height: '60px',
-                            width: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}
-                         onClick={onClose}>
+                         <div 
+                           className={`button-3d-base ${styles.superavButton}`}
+                           role="button" 
+                           aria-label="Close SuperAV" 
+                           title="Close SuperAV"
+                           style={{
+                             cursor: 'pointer',
+                             height: '60px',
+                             width: '100%',
+                             display: 'flex',
+                             alignItems: 'center',
+                             justifyContent: 'center'
+                           }}
+                          onClick={onClose}>
                           <CachedIcon 
                             iconCode="!CO-CLS.jpg" 
                             fallback={<span className="text-xs">!CO-CLS.jpg</span>}
