@@ -36,18 +36,18 @@ const CookieFreeFooter = () => {
                     className="block"
                   >
                     {isLoading ? (
-                      <div className="w-12 h-12 bg-amber-200 rounded-full animate-pulse"></div>
+                      <div className="w-16 h-16 bg-amber-200 rounded-full animate-pulse"></div>
                     ) : error || !iconUrl ? (
                       <img
                         src="/lovable-uploads/!CO-CFF.png"
                         alt="Cookie-Free"
-                        className="w-12 h-12 object-contain rounded-full hover:scale-110 transition-all duration-200 cursor-pointer"
+                        className="w-16 h-16 object-contain rounded-full hover:scale-110 transition-all duration-200 cursor-pointer"
                       />
                     ) : (
                       <img
                         src={iconUrl}
                         alt="Cookie-Free"
-                        className="w-12 h-12 object-contain rounded-full hover:scale-110 transition-all duration-200 cursor-pointer"
+                        className="w-16 h-16 object-contain rounded-full hover:scale-110 transition-all duration-200 cursor-pointer"
                       />
                     )}
                   </Link>
