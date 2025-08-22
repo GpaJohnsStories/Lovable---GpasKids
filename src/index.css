@@ -921,6 +921,10 @@
   @apply font-fun text-2xl;
 }
 
+.text-21px {
+  @apply text-21px;
+}
+
 /* Page Break Styles */
 .story-content .page-break,
 .rendered-story-content .page-break,
