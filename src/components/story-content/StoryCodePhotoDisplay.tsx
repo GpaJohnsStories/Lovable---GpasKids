@@ -22,7 +22,7 @@ export const StoryCodePhotoDisplay: React.FC<StoryCodePhotoDisplayProps> = ({ st
               src={photos[0].url}
               alt={photos[0].alt}
               title={photos[0].alt}
-              className="w-full h-auto rounded-lg shadow-lg border-4 border-white object-contain max-h-64"
+              className="h-auto rounded-lg shadow-lg border-4 border-white object-contain max-h-64"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
               }}
@@ -33,14 +33,14 @@ export const StoryCodePhotoDisplay: React.FC<StoryCodePhotoDisplayProps> = ({ st
         // Multiple photos - grid layout
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {photos.map((photo, index) => (
-            <div key={index} className={`overflow-hidden rounded-lg shadow-lg border-4 border-white ${
+            <div key={index} className={`${
               photos.length === 3 && index === 2 ? 'md:col-span-2 md:justify-self-center md:max-w-md lg:col-span-1 lg:justify-self-auto lg:max-w-none' : ''
             }`}>
               <img
                 src={photo.url}
                 alt={photo.alt}
                 title={photo.alt}
-                className="w-full h-32 object-contain transition-transform duration-300"
+                className="h-32 object-contain transition-transform duration-300 rounded-lg shadow-lg border-4 border-white"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                 }}

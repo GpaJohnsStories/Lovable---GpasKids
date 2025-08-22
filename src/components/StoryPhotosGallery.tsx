@@ -25,14 +25,14 @@ const StoryPhotosGallery = ({ photos, storyTitle }: StoryPhotosGalleryProps) => 
           {photos.map((photo, index) => (
             <Tooltip key={index}>
               <TooltipTrigger asChild>
-                <div className={`overflow-hidden rounded-lg shadow-sm cursor-pointer border-2 border-amber-border ${
+                <div className={`cursor-pointer ${
                   photos.length === 3 && index === 2 ? 'sm:col-span-2 sm:justify-self-center sm:max-w-md lg:col-span-1 lg:justify-self-auto lg:max-w-none' : ''
                 }`}>
                   <img
                     src={photo.url}
                     alt={photo.alt}
                     title={photo.alt}
-                    className="w-full max-h-48 object-contain transition-transform duration-300"
+                    className="max-h-48 object-contain transition-transform duration-300 rounded-lg shadow-sm border-2 border-amber-border"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
