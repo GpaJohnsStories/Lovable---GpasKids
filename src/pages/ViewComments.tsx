@@ -5,8 +5,8 @@ import CommentsList from "@/components/CommentsList";
 import ScrollToTop from "@/components/ScrollToTop";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Search } from "lucide-react";
 
 const ViewComments = () => {
@@ -48,18 +48,20 @@ const ViewComments = () => {
           <div className="my-6 p-4 bg-white/60 rounded-lg border-2 border-orange-200">
             <div className="flex justify-center items-center gap-2">
               <Search className="h-4 w-4 text-orange-600" />
-              <Input
-                type="text"
+              <InputOTP 
+                maxLength={6}
                 value={searchInput}
-                onChange={(e) => handleSearchChange(e.target.value)}
-                placeholder="Enter your full 6-character Personal ID..."
-                className="font-family-arial text-24px"
-                style={{
-                  width: '126px', // 1.5 times width of 6 characters at 24px Arial
-                  fontFamily: 'Arial, sans-serif',
-                  fontSize: '21px'
-                }}
-              />
+                onChange={(value) => handleSearchChange(value)}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
               {searchInput && (
                 <Button 
                   onClick={handleClearSearch}
