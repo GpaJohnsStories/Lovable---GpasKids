@@ -56,23 +56,10 @@ const PrintBlackBox: React.FC<PrintBlackBoxProps> = ({ storyContext }) => {
 
   return (
     <div className="print-black-box max-w-2xl mx-auto">
-      {title && (
-        <div 
-          className="print-black-box-title" 
-          style={{ 
-            fontWeight: 'bold', 
-            marginBottom: '8px',
-            fontSize: '16px',
-            textAlign: 'center'
-          }}
-        >
-          {title}
-        </div>
-      )}
-      <SecureStoryContent 
-        content={content}
-        className=""
-      />
+      {title && <div className="print-black-box-title">{title}</div>}
+      <div className="print-black-box-content">
+        <SecureStoryContent content={content} />
+      </div>
     </div>
   );
 };

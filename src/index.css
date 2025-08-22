@@ -987,6 +987,25 @@
   font-style: italic;
 }
 
+/* Print Black Box Typography */
+.print-black-box-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14pt;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin-bottom: 6pt;
+}
+
+.print-black-box-content,
+.print-black-box-content * {
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 12pt !important;
+  color: #000 !important;
+  text-align: center !important;
+  line-height: 1.35;
+}
+
 /* Print Styles - Fixed 16pt font size for all story content */
 @media print {
   /* Page break controls */
