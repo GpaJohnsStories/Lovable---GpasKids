@@ -582,15 +582,15 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     <div>
       {isOpen && (
         <>
-          {/* Backdrop */}
-          <div
-            style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 49,
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            }}
-          />
+           {/* Backdrop */}
+           <div
+             style={{
+               position: 'fixed',
+               inset: 0,
+               zIndex: 9998,
+               backgroundColor: 'rgba(0, 0, 0, 0.5)',
+             }}
+           />
            {/* SuperAV Dialog */}
            <div 
              ref={dialogRef}
@@ -606,7 +606,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 height: '490px',
                 left: `calc(10% + ${position.x}px)`,
                 top: `calc(5% + ${position.y}px)`,
-                zIndex: 50,
+                zIndex: 9999,
                 maxWidth: 'none',
                 maxHeight: 'none',
                 
