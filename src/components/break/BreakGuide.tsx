@@ -139,7 +139,7 @@ const BreakGuide: React.FC = () => {
         aria-label="Break Guide"
         data-testid="break-button"
       >
-        <span className="font-bold font-fun">Break Guide</span>
+        <span className="font-bold font-fun text-21px">Break Guide</span>
       </Button>
 
       {/* Break Timer Panel - same width as SuperAV, extended height for SYS-BT2 code */}
