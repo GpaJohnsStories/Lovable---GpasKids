@@ -1,9 +1,13 @@
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 import { WebTextBox } from "@/components/WebTextBox";
 import { supabase } from "@/integrations/supabase/client";
 const Guide = () => {
+  const location = useLocation();
+  
   const webtextBoxes = [{
     webtextCode: "SYS-G1A",
     borderColor: "#16a34a",
@@ -59,6 +63,36 @@ const Guide = () => {
     backgroundColor: "bg-emerald-700/20",
     title: "We Are Safe!"
   }];
+
+  // Auto-scroll to hash anchor when page loads or hash changes
+  useEffect(() => {
+    if (location.hash) {
+      const elementId = location.hash.substring(1); // Remove the # from hash
+      console.log('📍 Attempting to scroll to element:', elementId);
+      
+      const scrollToElement = () => {
+        const element = document.getElementById(elementId);
+        if (element) {
+          console.log('✅ Found element, scrolling:', elementId);
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return true;
+        }
+        return false;
+      };
+
+      // Try immediately
+      if (!scrollToElement()) {
+        // If element not found, retry after a short delay (in case content is still loading)
+        const timer = setTimeout(() => {
+          if (!scrollToElement()) {
+            console.log('❌ Element not found after retry:', elementId);
+          }
+        }, 100);
+        
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [location.hash]);
   return <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
       <WelcomeHeader />
       
