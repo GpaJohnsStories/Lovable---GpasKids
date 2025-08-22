@@ -26,7 +26,7 @@ const CookieFreeFooter = () => {
       <div className="max-w-6xl mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
           {/* Left Side */}
-          <div className="flex items-center space-x-2 text-green-700">
+          <div className="relative h-20 w-28 flex items-center text-green-700">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -36,18 +36,18 @@ const CookieFreeFooter = () => {
                     className="block"
                   >
                     {isLoading ? (
-                      <div className="w-20 h-20 bg-amber-200 rounded-full animate-pulse"></div>
+                      <div className="w-20 h-20 bg-amber-200 rounded-full animate-pulse scale-[1.2] origin-left"></div>
                     ) : error || !iconUrl ? (
                       <img
                         src="/lovable-uploads/!CO-CFF.png"
                         alt="Cookie-Free"
-                        className="w-20 h-20 object-contain rounded-full hover:scale-110 transition-all duration-200 cursor-pointer"
+                        className="w-20 h-20 object-contain rounded-full scale-[1.2] origin-left hover:scale-[1.3] transition-transform duration-200 cursor-pointer"
                       />
                     ) : (
                       <img
                         src={iconUrl}
                         alt="Cookie-Free"
-                        className="w-20 h-20 object-contain rounded-full hover:scale-110 transition-all duration-200 cursor-pointer"
+                        className="w-20 h-20 object-contain rounded-full scale-[1.2] origin-left hover:scale-[1.3] transition-transform duration-200 cursor-pointer"
                       />
                     )}
                   </Link>
@@ -60,7 +60,7 @@ const CookieFreeFooter = () => {
           </div>
           
           {/* Center */}
-          <div className="flex items-center space-x-1 text-amber-600 text-sm font-bold">
+          <div className="flex-1 flex items-center justify-center space-x-1 text-amber-600 text-sm font-bold px-4 overflow-hidden whitespace-nowrap">
             <span>Made with</span>
             <Heart className="h-3 w-3 text-red-500" strokeWidth={3} />
             <span>for children with help from Lovable AI at Lovable.dev</span>
