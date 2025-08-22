@@ -49,6 +49,15 @@ const StorySection = () => {
   // Get the most read story (highest read_count)
   const mostReadStory = realStories.length > 0 ? realStories.reduce((prev, current) => prev.read_count > current.read_count ? prev : current) : null;
 
+  // Get the most popular story (highest thumbs_up_count)
+  let mostPopularStory = realStories.length > 0 ? realStories.reduce((prev, current) => prev.thumbs_up_count > current.thumbs_up_count ? prev : current) : null;
+  
+  // If most popular is the same as most read, get the next most popular
+  if (mostPopularStory && mostReadStory && mostPopularStory.id === mostReadStory.id) {
+    const remainingStories = realStories.filter(story => story.id !== mostReadStory.id);
+    mostPopularStory = remainingStories.length > 0 ? remainingStories.reduce((prev, current) => prev.thumbs_up_count > current.thumbs_up_count ? prev : current) : null;
+  }
+
   // Convert to StoryData format
   const convertToStoryData = (story: any) => ({
     id: story.id,
@@ -67,10 +76,15 @@ const StorySection = () => {
     story_code: story.story_code,
     excerpt: story.excerpt
   });
+  
   const featuredStories = [];
   if (mostReadStory) featuredStories.push({
     ...convertToStoryData(mostReadStory),
     category: 'Most Read Story'
+  });
+  if (mostPopularStory) featuredStories.push({
+    ...convertToStoryData(mostPopularStory),
+    category: 'Most Popular Story'
   });
   const scrollToTop = () => {
     window.scrollTo({
@@ -111,11 +125,9 @@ const StorySection = () => {
   return <section className="py-16">
       {featuredStories.length > 0 ? <div className="mb-12">
           {/* Featured Stories Section */}
-          <div className="flex flex-col lg:flex-row lg:gap-6 space-y-8 lg:space-y-0">
-            {featuredStories.map(story => <div key={story.id} className="lg:flex-1">
-                <div className="space-y-4">
-                  <StoryCard story={story} />
-                </div>
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:gap-6 space-y-8 lg:space-y-0">
+            {featuredStories.map(story => <div key={story.id}>
+                <StoryCard story={story} />
               </div>)}
           </div>
         </div> : <div className="text-center mb-12">
