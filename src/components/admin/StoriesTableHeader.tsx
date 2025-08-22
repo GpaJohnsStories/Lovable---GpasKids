@@ -56,15 +56,13 @@ const StoriesTableHeader = ({
 
   // Define category options based on context
   const getCategoryOptions = (): CategoryFilter[] => {
-    const baseCategories: CategoryFilter[] = ['all', 'Fun', 'Life', 'North Pole', 'World Changers'];
-    
     // Include WebText and BioText ONLY for admin view (when showPublishedOnly is false)
     // Exclude WebText and BioText from public library (when showPublishedOnly is true)
     if (showPublishedOnly) {
-      return baseCategories; // Public library - no WebText or BioText
+      return ['all', 'Fun', 'Life', 'North Pole', 'World Changers']; // Public library - no WebText or BioText
     }
     
-    return [...baseCategories, 'WebText', 'BioText']; // Admin library - include WebText and BioText
+    return ['all', 'WebText', 'Fun', 'Life', 'North Pole', 'World Changers', 'BioText']; // Admin library - WebText after Show All
   };
 
   const getCategoryDisplayName = (category: CategoryFilter) => {
