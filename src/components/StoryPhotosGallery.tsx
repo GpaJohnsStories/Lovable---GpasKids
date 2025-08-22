@@ -35,7 +35,6 @@ const StoryPhotosGallery = ({ photos, storyTitle }: StoryPhotosGalleryProps) => 
                   <img
                     src={photo.url}
                     alt={photo.alt}
-                    title={photo.alt}
                     className="max-h-48 object-contain transition-transform duration-300 rounded-lg shadow-sm border-2 border-amber-border"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
