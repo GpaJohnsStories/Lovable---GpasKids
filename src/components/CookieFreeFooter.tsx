@@ -26,7 +26,7 @@ const CookieFreeFooter = () => {
       <div className="max-w-6xl mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
           {/* Left Side */}
-          <div className="relative h-20 w-28 flex items-center text-green-700">
+          <div className="relative h-20 w-48 flex items-center text-green-700">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
