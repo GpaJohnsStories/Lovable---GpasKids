@@ -45,6 +45,15 @@ const FontLibrarySection = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
 
+  const getStyleAbbreviation = (style: FontStyle): string => {
+    switch (style) {
+      case "Regular": return "R";
+      case "Bold": return "B";
+      case "Italic": return "I";
+      default: return style;
+    }
+  };
+
   const getFontStyle = (fontName: string, style: FontStyle): React.CSSProperties => {
     const baseStyle: React.CSSProperties = {
       fontFamily: fontName === "system-ui" ? "system-ui, -apple-system, sans-serif" :
@@ -115,7 +124,7 @@ const FontLibrarySection = () => {
                 <TableRow key={index}>
                   <TableCell className="text-foreground">{font.fontFamily}</TableCell>
                   <TableCell className="text-foreground">{font.fontName}</TableCell>
-                  <TableCell className="text-foreground">{font.style}</TableCell>
+                  <TableCell className="text-foreground">{getStyleAbbreviation(font.style)}</TableCell>
                   <TableCell>{renderTextSample(font.fontName, font.style, 16)}</TableCell>
                   <TableCell className={font.style === "Regular" || font.style === "Bold" ? "bg-yellow-300" : ""}>
                     {renderTextSample(font.fontName, font.style, 16)}
