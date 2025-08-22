@@ -32,6 +32,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const [loading, setLoading] = useState(true);
   const [fontScale, setFontScale] = useState<FontScaleStep>(DEFAULT_FONT_SCALE);
   
+  // Define isSysWel first, before using it
   const isSysWel = webtextCode === "SYS-WEL";
   
   // Load Buddy's new icon for SYS-WEL
