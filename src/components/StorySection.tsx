@@ -125,7 +125,7 @@ const StorySection = () => {
 
       <div className="text-center">
         <Link to="/library" onClick={scrollToTop}>
-          <Button className="cozy-button text-lg px-8 py-4">
+          <Button className="cozy-button h3-fun-24 px-8 py-4">
             Click Here to Begin <em>Your</em> Adventure in Reading
           </Button>
         </Link>
