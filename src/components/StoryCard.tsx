@@ -28,7 +28,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
   const firstPhoto = getFirstAvailablePhoto();
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-md mx-auto md:mx-0 md:ml-0">
       <Card 
         className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative border-2 border-amber-300 font-system" 
         onClick={handleClick}
