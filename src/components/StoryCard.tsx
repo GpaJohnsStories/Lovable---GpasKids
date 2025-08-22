@@ -69,7 +69,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
           </div>
 
           <div className="flex items-center justify-center text-xs text-amber-600 mb-2">
-            <span className="font-medium font-system">Story Code: {story.story_code}</span>
+            <span className="text-19px font-medium font-fun">Story Code: {story.story_code}</span>
           </div>
           
           <p className="text-amber-700 mb-2 leading-relaxed text-sm font-system">

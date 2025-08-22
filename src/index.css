@@ -921,6 +921,11 @@
   @apply font-fun text-2xl;
 }
 
+.text-19px {
+  font-size: 19px;
+  line-height: 1.5;
+}
+
 .text-21px {
   font-size: 21px;
   line-height: 1.5;
