@@ -45,7 +45,7 @@ const ViewComments = () => {
               </p>
             </div>
 
-            <div className="p-4 bg-white/60 rounded-lg border-2 border-orange-200 w-full md:w-80 lg:w-96">
+            <div className="p-4 bg-green-100/60 rounded-lg border-2 border-green-500 w-full md:w-80 lg:w-96">
               <div className="flex flex-col items-center gap-4">
                 <p className="text-21px text-orange-700 text-center font-fun">
                   <strong>Enter Your Personal ID:</strong>
