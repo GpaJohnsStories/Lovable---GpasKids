@@ -5,6 +5,7 @@ import FontLibrarySection from "./reference/FontLibrarySection";
 import CssLibrarySection from "./reference/CssLibrarySection";
 import CssExceptionsSection from "./reference/CssExceptionsSection";
 import { Button } from "@/components/ui/button";
+import { BUILD_ID } from "@/utils/buildInfo";
 
 type SectionType = "colors" | "upload" | "icons" | "fonts" | "css" | "cssxx" | "top";
 
@@ -17,6 +18,9 @@ const ReferenceDashboard = () => {
     { id: "css" as const, label: "CSS Library", component: <CssLibrarySection /> },
     { id: "cssxx" as const, label: "CSS XX", component: <CssExceptionsSection /> },
   ];
+
+  // Log sections for debugging
+  console.log("📚 ReferenceDashboard sections:", sections.map(s => ({ id: s.id, label: s.label })));
 
   const handleSectionScroll = (sectionId: SectionType) => {
     if (sectionId === "top") {
@@ -39,6 +43,7 @@ const ReferenceDashboard = () => {
         <h2 className="text-3xl font-bold text-black mb-2 font-system">
           Admin Reference
         </h2>
+        <p className="text-sm text-muted-foreground">Build: {BUILD_ID}</p>
       </div>
 
       {/* Navigation Buttons */}
