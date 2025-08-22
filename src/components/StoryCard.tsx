@@ -56,13 +56,15 @@ const StoryCard = ({ story }: StoryCardProps) => {
                   {story.title}
                 </h3>
               </div>
-              {story.tagline && (
-                <h4 className="text-21px font-medium text-amber-700 italic leading-tight font-fun text-center">
-                  {story.tagline}
-                </h4>
-              )}
             </div>
           </div>
+          {story.tagline && (
+            <div className="mb-3">
+              <h4 className="text-21px font-medium text-amber-700 italic leading-tight font-fun">
+                {story.tagline}
+              </h4>
+            </div>
+          )}
           
           <div className="flex flex-col items-center text-sm text-amber-600 mb-2">
             <span className="text-21px font-medium mb-1 font-fun">by {story.author}</span>
