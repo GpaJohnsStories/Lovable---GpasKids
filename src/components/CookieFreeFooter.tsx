@@ -60,10 +60,13 @@ const CookieFreeFooter = () => {
           </div>
           
           {/* Center */}
-          <div className="flex-1 flex items-center justify-center space-x-1 text-amber-600 text-lg font-bold px-4">
-            <span>Made with</span>
-            <Heart className="h-4 w-4 text-red-500" strokeWidth={3} />
-            <span>for children with help from Lovable AI at Lovable.dev</span>
+          <div className="flex-1 flex flex-col items-center justify-center text-amber-600 text-lg font-bold px-4 text-center leading-tight">
+            <div className="flex items-center flex-wrap justify-center gap-1">
+              <span>Made with</span>
+              <Heart className="h-4 w-4 text-red-500 inline" strokeWidth={3} />
+              <span>for children</span>
+            </div>
+            <div>with help from Lovable AI at Lovable.dev</div>
           </div>
           
           {/* Right Side */}
