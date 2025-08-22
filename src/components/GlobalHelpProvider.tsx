@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useHelp } from '@/contexts/HelpContext';
-import HelpPopup from './HelpPopup';
+// import HelpPopup from './HelpPopup';
 
 interface GlobalHelpProviderProps {
   children: React.ReactNode;
@@ -28,7 +28,7 @@ const GlobalHelpProvider: React.FC<GlobalHelpProviderProps> = ({ children }) => 
   return (
     <>
       {children}
-      <HelpPopup
+      {/* <HelpPopup
         isOpen={isHelpOpen}
         onClose={hideHelp}
         helpContent={helpContent}
@@ -36,7 +36,7 @@ const GlobalHelpProvider: React.FC<GlobalHelpProviderProps> = ({ children }) => 
         currentRoute={currentRoute}
         storyData={storyData}
         onNavigateToGuide={handleNavigateToGuide}
-      />
+      /> */}
     </>
   );
 };
