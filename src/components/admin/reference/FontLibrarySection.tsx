@@ -34,6 +34,14 @@ const FontLibrarySection = () => {
   ];
 
   const sortedFontData = [...fontData].sort((a, b) => {
+    const aHasAsterisk = a.fontFamily === "Georgia" || a.fontFamily === "Kalam/Fun";
+    const bHasAsterisk = b.fontFamily === "Georgia" || b.fontFamily === "Kalam/Fun";
+    
+    // If one has asterisk and other doesn't, prioritize asterisk
+    if (aHasAsterisk && !bHasAsterisk) return -1;
+    if (!aHasAsterisk && bHasAsterisk) return 1;
+    
+    // If both have same asterisk status, sort by font name
     if (sortOrder === "asc") {
       return a.fontName.localeCompare(b.fontName);
     } else {
