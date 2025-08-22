@@ -36,7 +36,7 @@ const AdminHeaderBanner = () => {
   const { iconUrl: logoutIconUrl } = useCachedIcon('ICO-ADX.png');
   const { iconUrl: dashboardIconUrl } = useCachedIcon('ICO-AD1.gif');
   const { iconUrl: librariesIconUrl } = useCachedIcon('!CO-MM3.gif');
-  const { iconUrl: commentsIconUrl } = useCachedIcon('!ICO-CO3.gif');
+  const { iconUrl: commentsIconUrl } = useCachedIcon('!CO-MM5.gif');
   const { iconUrl: storyCreateIconUrl } = useCachedIcon('!CO-MM6.gif');
   const { iconUrl: biosIconUrl } = useCachedIcon('!CO-MM7.jpg');
 
