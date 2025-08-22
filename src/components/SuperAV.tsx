@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect, useId } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { RefreshCw } from "lucide-react";
@@ -711,7 +710,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                                         currentScale === '4xl' ? '36px' : '16px'}`,
                              fontFamily: FONT_FUN,
                              color: '#654321',
-                             lineHeight: '1.4',
+                             lineHeight: '1.2',
                              wordWrap: 'break-word',
                              overflowWrap: 'break-word'
                            }}
