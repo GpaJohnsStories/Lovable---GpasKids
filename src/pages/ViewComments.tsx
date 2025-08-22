@@ -37,39 +37,46 @@ const ViewComments = () => {
             Published Comments
           </h2>
 
-          <div className="my-6 p-4 bg-amber-100/60 rounded-lg border-2 border-orange-200 max-w-md">
-            <p className="text-21px text-orange-700 text-center font-fun">
-              💡 <strong>Privacy Note:</strong> Personal IDs in the list show only the first 4 characters (like ABCD**) for privacy. 
-              To see your own comments, enter your complete 6-character Personal ID below.
-            </p>
-          </div>
+          <div className="my-6 flex flex-col md:flex-row gap-4 justify-between items-start">
+            <div className="p-4 bg-amber-100/60 rounded-lg border-2 border-orange-200 w-full md:w-80 lg:w-96">
+              <p className="text-21px text-orange-700 text-center font-fun">
+                💡 <strong>Privacy Note:</strong> Personal IDs in the list show only the first 4 characters (like ABCD**) for privacy. 
+                To see your own comments, enter your complete 6-character Personal ID below.
+              </p>
+            </div>
 
-          <div className="my-6 flex justify-center">
-            <div className="flex items-center gap-2 p-4 bg-white/60 rounded-lg border-2 border-orange-200">
-              <InputOTP 
-                maxLength={6}
-                value={searchInput}
-                onChange={(value) => handleSearchChange(value)}
-              >
-                <InputOTPGroup>
-                  <InputOTPSlot index={0} />
-                  <InputOTPSlot index={1} />
-                  <InputOTPSlot index={2} />
-                  <InputOTPSlot index={3} />
-                  <InputOTPSlot index={4} />
-                  <InputOTPSlot index={5} />
-                </InputOTPGroup>
-              </InputOTP>
-              {searchInput && (
-                <Button 
-                  onClick={handleClearSearch}
-                  variant="outline" 
-                  size="sm"
-                  className="whitespace-nowrap"
-                >
-                  Clear
-                </Button>
-              )}
+            <div className="p-4 bg-white/60 rounded-lg border-2 border-orange-200 w-full md:w-80 lg:w-96">
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-21px text-orange-700 text-center font-fun">
+                  <strong>Enter Your Personal ID:</strong>
+                </p>
+                <div className="flex items-center gap-2">
+                  <InputOTP 
+                    maxLength={6}
+                    value={searchInput}
+                    onChange={(value) => handleSearchChange(value)}
+                  >
+                    <InputOTPGroup>
+                      <InputOTPSlot index={0} />
+                      <InputOTPSlot index={1} />
+                      <InputOTPSlot index={2} />
+                      <InputOTPSlot index={3} />
+                      <InputOTPSlot index={4} />
+                      <InputOTPSlot index={5} />
+                    </InputOTPGroup>
+                  </InputOTP>
+                  {searchInput && (
+                    <Button 
+                      onClick={handleClearSearch}
+                      variant="outline" 
+                      size="sm"
+                      className="whitespace-nowrap"
+                    >
+                      Clear
+                    </Button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
           
