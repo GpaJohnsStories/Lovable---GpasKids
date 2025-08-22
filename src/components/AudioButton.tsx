@@ -21,7 +21,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
     };
   }, [tooltipId, registerTooltip, unregisterTooltip]);
 
-  const tooltipText = iconName || "Click if you want to listen or change word size.";
+  const tooltipText = "Click to listen or change word size.";
 
   return (
     <div className={`relative z-[5] ${className}`}>
