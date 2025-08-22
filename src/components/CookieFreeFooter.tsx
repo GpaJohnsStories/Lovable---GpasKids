@@ -70,7 +70,7 @@ const CookieFreeFooter = () => {
           </div>
           
           {/* Right Side */}
-          <div className="text-amber-600 font-medium text-sm">
+          <div className="text-amber-600 font-medium text-base">
             © 2025 Grandpa John's Stories
           </div>
         </div>
