@@ -540,7 +540,7 @@ const PublicStoriesTable = ({
                                   </TooltipContent>
                                 </Tooltip>}
                               <div className="flex items-center gap-2 justify-center">
-                                <CopyrightIcon copyrightStatus={story.copyright_status || '©'} />
+                                {/* <CopyrightIcon copyrightStatus={story.copyright_status || '©'} /> */}
                               </div>
                           </div>
                         </TableCell>
