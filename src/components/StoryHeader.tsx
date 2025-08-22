@@ -94,7 +94,7 @@ const StoryHeader = ({
         </div>
 
         {(tagline || taglineHtml) && (
-          <div className="text-center mb-4">
+          <div className="text-center mb-2">
             {taglineHtml ? (
               <h2 
                 className="text-21px text-amber-700 italic leading-tight font-fun text-center whitespace-pre-line"
