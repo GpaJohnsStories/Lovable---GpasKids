@@ -9,8 +9,8 @@ import { Trash2, Plus, Mail } from 'lucide-react';
 
 interface PrivilegedAdmin {
   id: string;
-  email: string;
-  user_id: string;
+  email_domain: string;
+  email_hash_preview: string;
   created_at: string;
 }
 
@@ -22,10 +22,7 @@ export default function PrivilegedAdminManager() {
 
   const fetchAdmins = async () => {
     try {
-      const { data, error } = await supabase
-        .from('privileged_admins')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { data, error } = await supabase.rpc('list_privileged_admins_masked');
 
       if (error) throw error;
       setAdmins(data || []);
@@ -45,25 +42,16 @@ export default function PrivilegedAdminManager() {
 
     setSubmitting(true);
     try {
-      // Find user by email first (check auth.users via profiles)
       const email = newEmail.toLowerCase().trim();
       
-      // For now, we'll use a simpler approach - just try to insert with a placeholder user_id
-      // The database will need to be updated to handle this better
-      const { data, error } = await supabase
-        .from('privileged_admins')
-        .insert([{ 
-          email: email,
-          user_id: crypto.randomUUID() // Temporary - this should be handled by a database function
-        }])
-        .select();
+      const { data, error } = await supabase.rpc('add_privileged_admin_secure', {
+        admin_email: email
+      });
 
-      if (error) {
-        if (error.code === '23505') { // Unique constraint violation
-          toast.error('This email is already a privileged admin');
-        } else {
-          throw error;
-        }
+      if (error) throw error;
+
+      if (data && data.startsWith('ERROR:')) {
+        toast.error(data.replace('ERROR: ', ''));
         return;
       }
 
@@ -78,8 +66,8 @@ export default function PrivilegedAdminManager() {
     }
   };
 
-  const removeAdmin = async (adminId: string, email: string) => {
-    if (!confirm(`Remove ${email} from privileged admins?`)) return;
+  const removeAdmin = async (adminId: string, emailDomain: string) => {
+    if (!confirm(`Remove admin from domain ${emailDomain}?`)) return;
 
     try {
       const { error } = await supabase
@@ -141,30 +129,30 @@ export default function PrivilegedAdminManager() {
           </div>
         ) : (
           <div className="space-y-2">
-            {admins.map((admin) => (
-              <div 
-                key={admin.id}
-                className="flex items-center justify-between p-3 border rounded-lg"
+        {admins.map((admin) => (
+          <div 
+            key={admin.id}
+            className="flex items-center justify-between p-3 border rounded-lg"
+          >
+            <div className="flex flex-col">
+              <span className="font-medium">@{admin.email_domain}</span>
+              <span className="text-sm text-muted-foreground">
+                Hash: {admin.email_hash_preview} | Added: {new Date(admin.created_at).toLocaleDateString()}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary">Privileged Admin</Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => removeAdmin(admin.id, admin.email_domain)}
+                className="text-destructive hover:text-destructive"
               >
-                <div className="flex flex-col">
-                  <span className="font-medium">{admin.email}</span>
-                  <span className="text-sm text-muted-foreground">
-                    Added: {new Date(admin.created_at).toLocaleDateString()}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="secondary">Privileged Admin</Badge>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => removeAdmin(admin.id, admin.email)}
-                    className="text-destructive hover:text-destructive"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            ))}
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        ))}
           </div>
         )}
 

@@ -338,6 +338,8 @@ export type Database = {
         Row: {
           created_at: string
           email: string
+          email_domain: string | null
+          email_hash: string | null
           id: string
           updated_at: string
           user_id: string
@@ -345,6 +347,8 @@ export type Database = {
         Insert: {
           created_at?: string
           email: string
+          email_domain?: string | null
+          email_hash?: string | null
           id?: string
           updated_at?: string
           user_id: string
@@ -352,6 +356,8 @@ export type Database = {
         Update: {
           created_at?: string
           email?: string
+          email_domain?: string | null
+          email_hash?: string | null
           id?: string
           updated_at?: string
           user_id?: string
@@ -631,6 +637,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_privileged_admin_secure: {
+        Args: { admin_email: string }
+        Returns: string
+      }
       calculate_reading_time: {
         Args: { content_text: string }
         Returns: number
@@ -662,6 +672,10 @@ export type Database = {
       emergency_promote_admin: {
         Args: { user_email: string }
         Returns: string
+      }
+      get_allowed_admin_email_hashes: {
+        Args: Record<PropertyKey, never>
+        Returns: string[]
       }
       get_allowed_admin_emails: {
         Args: Record<PropertyKey, never>
@@ -739,6 +753,15 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
+      list_privileged_admins_masked: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          email_domain: string
+          email_hash_preview: string
+          id: string
+        }[]
+      }
       log_admin_activity: {
         Args: {
           p_action: string
@@ -765,6 +788,10 @@ export type Database = {
       }
       promote_user_to_viewer: {
         Args: { user_email: string }
+        Returns: string
+      }
+      remove_privileged_admin_secure: {
+        Args: { admin_email: string }
         Returns: string
       }
       simple_promote_to_admin: {

@@ -15,24 +15,42 @@ const EMERGENCY_FALLBACK_EMAILS = [
   'gpajohn.buddy@gmail.com'   // Grandpa John's admin account
 ];
 
-// Get allowed admin emails from database
-async function getAllowedAdminEmails(supabaseClient: any): Promise<string[]> {
+// Get allowed admin email hashes from database  
+async function getAllowedAdminEmailHashes(supabaseClient: any): Promise<string[]> {
   try {
-    console.log('Fetching allowed admin emails from database...');
-    const { data, error } = await supabaseClient.rpc('get_allowed_admin_emails');
+    console.log('Fetching allowed admin email hashes from database...');
+    const { data, error } = await supabaseClient.rpc('get_allowed_admin_email_hashes');
     
     if (error) {
-      console.error('DB query for allowed emails failed:', error);
-      console.log('Using emergency fallback emails');
-      return EMERGENCY_FALLBACK_EMAILS;
+      console.error('DB query for allowed email hashes failed:', error);
+      console.log('Using emergency fallback emails (computing hashes)');
+      // Compute hashes for fallback emails
+      const fallbackHashes = await Promise.all(
+        EMERGENCY_FALLBACK_EMAILS.map(async email => {
+          const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(email.toLowerCase()));
+          return Array.from(new Uint8Array(buffer))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
+        })
+      );
+      return fallbackHashes;
     }
     
-    console.log('Successfully fetched allowed emails from DB:', data?.length || 0, 'emails');
-    return data || EMERGENCY_FALLBACK_EMAILS;
+    console.log('Successfully fetched allowed email hashes from DB:', data?.length || 0, 'hashes');
+    return data || [];
   } catch (err) {
-    console.error('Exception during DB query for allowed emails:', err);
-    console.log('Using emergency fallback emails');
-    return EMERGENCY_FALLBACK_EMAILS;
+    console.error('Exception during DB query for allowed email hashes:', err);
+    console.log('Using emergency fallback emails (computing hashes)');
+    // Compute hashes for fallback emails
+    const fallbackHashes = await Promise.all(
+      EMERGENCY_FALLBACK_EMAILS.map(async email => {
+        const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(email.toLowerCase()));
+        return Array.from(new Uint8Array(buffer))
+          .map(b => b.toString(16).padStart(2, '0'))
+          .join('');
+      })
+    );
+    return fallbackHashes;
   }
 }
 
@@ -85,13 +103,20 @@ serve(async (req) => {
 
     const { email, password, action } = await req.json()
 
-    // Get allowed admin emails from database
-    const allowedEmails = await getAllowedAdminEmails(supabaseClient);
-    console.log('Checking email against allowlist:', email.toLowerCase(), 'Source:', allowedEmails === EMERGENCY_FALLBACK_EMAILS ? 'fallback' : 'database');
+    // Get allowed admin email hashes from database
+    const allowedEmailHashes = await getAllowedAdminEmailHashes(supabaseClient);
+    
+    // Compute hash for provided email
+    const emailBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(email.toLowerCase()));
+    const emailHash = Array.from(new Uint8Array(emailBuffer))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+    
+    console.log('Checking email hash against allowlist. Hash preview:', emailHash.substring(0, 8) + '...');
 
-    // Email validation - check against database-driven allowlist
-    if (!allowedEmails.includes(email.toLowerCase())) {
-      console.log('Email not in allowlist:', email);
+    // Email validation - check hash against database-driven allowlist
+    if (!allowedEmailHashes.includes(emailHash)) {
+      console.log('Email hash not in allowlist. Hash:', emailHash.substring(0, 8) + '...');
       return new Response(
         JSON.stringify({ 
           error: 'Email not authorized for admin access. Contact a privileged admin to be added to the system.' 
