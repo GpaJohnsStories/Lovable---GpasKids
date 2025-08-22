@@ -47,15 +47,17 @@ const StoryCard = ({ story }: StoryCardProps) => {
                 />
               </div>
             )}
-            <div className="flex-1 flex flex-col items-center">
+            <div className="flex-1 flex flex-col items-center h-40">
               <div className="mb-2">
                 {getCategoryButtonForStory(story.category, story.story_code)}
               </div>
-              <h3 className="h3-fun-24 font-bold text-amber-800 mb-1 leading-tight text-center">
-                {story.title}
-              </h3>
+              <div className="flex-1 flex items-center justify-center">
+                <h3 className="h3-fun-24 font-bold text-amber-800 leading-tight text-center">
+                  {story.title}
+                </h3>
+              </div>
               {story.tagline && (
-                <h4 className="text-21px font-medium text-amber-700 mb-1 italic leading-tight font-fun">
+                <h4 className="text-21px font-medium text-amber-700 italic leading-tight font-fun text-center">
                   {story.tagline}
                 </h4>
               )}
