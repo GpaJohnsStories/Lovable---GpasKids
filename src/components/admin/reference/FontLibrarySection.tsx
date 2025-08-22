@@ -129,7 +129,10 @@ const FontLibrarySection = () => {
             </TableHeader>
             <TableBody>
               {sortedFontData.map((font, index) => (
-                <TableRow key={index}>
+                <TableRow 
+                  key={index}
+                  className={font.fontFamily === "Georgia" || font.fontFamily === "Kalam/Fun" ? "bg-paper" : ""}
+                >
                   <TableCell className="text-foreground">{font.fontFamily}</TableCell>
                   <TableCell className="text-foreground">
                     {(font.fontFamily === "Georgia" || font.fontFamily === "Kalam/Fun") ? "*" : ""}{font.fontName}
