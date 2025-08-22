@@ -129,7 +129,7 @@ const StorySection = () => {
             Click Here to Begin <em>Your</em> Adventure in Reading
           </Button>
         </Link>
-        <p className="text-blue-800 mt-4 text-center font-kalam font-semibold text-xl">
+        <p className="text-blue-800 mt-4 text-center font-kalam font-semibold text-21px">
           I hope you will return here often, as I add new stories whenever I can.   <span className="text-xl text-blue-800 font-bold italic font-kalam">Gpa John</span>
         </p>
       </div>
