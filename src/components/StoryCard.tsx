@@ -72,7 +72,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
             <span className="text-19px font-medium font-fun">Story Code: {story.story_code}</span>
           </div>
           
-          <p className="text-amber-700 mb-2 leading-relaxed text-sm font-system">
+          <p className="text-21px text-amber-700 mb-2 leading-relaxed font-fun">
             {story.excerpt || story.description}
           </p>
           
