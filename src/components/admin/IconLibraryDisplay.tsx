@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { RefreshCw, Trash2, Edit3, ChevronUp, ChevronDown } from 'lucide-react';
+import { RefreshCw, Trash2, Edit3, ChevronUp, ChevronDown, Search, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface IconLibraryItem {
@@ -35,6 +35,7 @@ const IconLibraryDisplay = () => {
   const [newFile, setNewFile] = useState<File | null>(null);
   const [sortColumn, setSortColumn] = useState<SortColumn>('file_name_path');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [searchTerm, setSearchTerm] = useState('');
   
   const { data: icons, isLoading, error, refetch } = useQuery({
     queryKey: ['icon-library'],
@@ -217,33 +218,53 @@ const IconLibraryDisplay = () => {
     }
   };
 
-  const sortedIcons = icons ? [...icons].sort((a, b) => {
-    let aValue: string;
-    let bValue: string;
+  // Filter and sort icons
+  const filteredAndSortedIcons = icons 
+    ? [...icons]
+        .filter(icon => {
+          if (!searchTerm) return true;
+          const searchLower = searchTerm.toLowerCase();
+          return (
+            icon.file_name_path.toLowerCase().includes(searchLower) ||
+            icon.icon_name.toLowerCase().includes(searchLower) ||
+            icon.usage_locations?.some(location => 
+              location.location.toLowerCase().includes(searchLower) ||
+              location.component.toLowerCase().includes(searchLower)
+            )
+          );
+        })
+        .sort((a, b) => {
+          let aValue: string;
+          let bValue: string;
 
-    switch (sortColumn) {
-      case 'file_name_path':
-        aValue = a.file_name_path;
-        bValue = b.file_name_path;
-        break;
-      case 'icon_name':
-        aValue = a.icon_name;
-        bValue = b.icon_name;
-        break;
-      case 'usage_locations':
-        aValue = a.usage_locations?.[0]?.location || '';
-        bValue = b.usage_locations?.[0]?.location || '';
-        break;
-      default:
-        return 0;
-    }
+          switch (sortColumn) {
+            case 'file_name_path':
+              aValue = a.file_name_path;
+              bValue = b.file_name_path;
+              break;
+            case 'icon_name':
+              aValue = a.icon_name;
+              bValue = b.icon_name;
+              break;
+            case 'usage_locations':
+              aValue = a.usage_locations?.[0]?.location || '';
+              bValue = b.usage_locations?.[0]?.location || '';
+              break;
+            default:
+              return 0;
+          }
 
-    if (sortDirection === 'asc') {
-      return aValue.localeCompare(bValue);
-    } else {
-      return bValue.localeCompare(aValue);
-    }
-  }) : [];
+          if (sortDirection === 'asc') {
+            return aValue.localeCompare(bValue);
+          } else {
+            return bValue.localeCompare(aValue);
+          }
+        })
+    : [];
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+  };
 
   const SortableHeader = ({ column, children }: { column: SortColumn; children: React.ReactNode }) => (
     <TableHead 
@@ -322,18 +343,46 @@ const IconLibraryDisplay = () => {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          Icon Library
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary">{icons?.length || 0} icons</Badge>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleRefresh}
-              className="h-8"
-            >
-              <RefreshCw className="h-4 w-4 mr-1" />
-              Refresh
-            </Button>
+          <span>Icon Library</span>
+          <div className="flex items-center gap-4">
+            {/* Search Box */}
+            <div className="relative">
+              <Input
+                type="text"
+                placeholder="Search icons..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-10 w-64 h-8 text-sm"
+              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleClearSearch}
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0 hover:bg-muted"
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary">
+                {searchTerm 
+                  ? `${filteredAndSortedIcons.length} of ${icons?.length || 0}` 
+                  : `${icons?.length || 0} icons`
+                }
+              </Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleRefresh}
+                className="h-8"
+              >
+                <RefreshCw className="h-4 w-4 mr-1" />
+                Refresh
+              </Button>
+            </div>
           </div>
         </CardTitle>
         <p className="text-sm text-muted-foreground">
@@ -363,7 +412,7 @@ const IconLibraryDisplay = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sortedIcons.map((icon) => (
+              {filteredAndSortedIcons.map((icon) => (
                 <TableRow key={icon.file_name_path} className="h-16">
                   <TableCell className="p-2">
                     <div className="w-14 h-14 flex items-center justify-center border rounded">
