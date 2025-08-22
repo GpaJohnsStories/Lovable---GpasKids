@@ -51,7 +51,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
               <div className="mb-2">
                 {getCategoryButtonForStory(story.category, story.story_code)}
               </div>
-              <h3 className="h3-fun-24 font-bold text-amber-800 mb-1 leading-tight">
+              <h3 className="h3-fun-24 font-bold text-amber-800 mb-1 leading-tight text-center">
                 {story.title}
               </h3>
               {story.tagline && (
