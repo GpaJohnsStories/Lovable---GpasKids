@@ -67,7 +67,7 @@ const StoryCard = ({ story }: StoryCardProps) => {
           )}
           
           <div className="flex flex-col items-center text-sm text-amber-600 mb-2">
-            <span className="text-21px font-medium mb-1 font-fun">by {story.author}</span>
+            <span className="text-21px font-medium mb-1 font-fun text-amber-800">by {story.author}</span>
             <AuthorLink authorName={story.author} size="sm" />
           </div>
 
