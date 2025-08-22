@@ -2,6 +2,7 @@
 import WelcomeHeader from "@/components/WelcomeHeader";
 import { ProportionalWebTextBox } from "@/components/ProportionalWebTextBox";
 import StorySection from "@/components/StorySection";
+import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ScrollToTop from "@/components/ScrollToTop";
 
@@ -19,6 +20,9 @@ const Index = () => {
           backgroundColor="#ADD8E6"
           title=""
         />
+        
+        {/* GpaJohn's Banner - Keeping the wide blue button */}
+        <GpaJohnComments />
         
         <StorySection />
       </main>

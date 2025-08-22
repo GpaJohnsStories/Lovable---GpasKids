@@ -52,37 +52,6 @@ const GpaJohnComments = () => {
           </div>
         </div>
       </div>
-
-      {/* Comments List - Only show if we have comments and no error */}
-      {!error && comments && comments.length > 0 && <div className="container mx-auto px-4">
-          <div className="space-y-4">
-            {comments.map(comment => <div key={comment.id} className="bg-blue-50/80 border-2 border-blue-200 rounded-lg p-6 shadow-lg">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-blue-800 font-fun text-lg">GpaJohn</span>
-                    <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-fun">
-                      📢 Announcement
-                    </div>
-                  </div>
-                  <span className="text-blue-600 font-fun text-base">
-                    {format(new Date(comment.created_at), 'MMM d, yyyy')}
-                  </span>
-                </div>
-                
-                <h3 className="text-xl font-bold text-blue-800 font-fun mb-3">
-                  {comment.subject}
-                </h3>
-                
-                <div className="text-blue-800 font-fun leading-relaxed text-base mb-4">
-                  {comment.content.length > 200 ? `${comment.content.substring(0, 200)}...` : comment.content}
-                </div>
-                
-                <Link to={`/comment/${comment.id}`} onClick={scrollToTop} className="inline-block bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 text-white font-fun font-semibold px-6 py-3 rounded-full shadow-[0_4px_0_#1e40af,0_6px_10px_rgba(0,0,0,0.3)] border border-blue-700 hover:shadow-[0_2px_0_#1e40af,0_4px_8px_rgba(0,0,0,0.3)] hover:translate-y-[2px] transition-all duration-150 active:shadow-[0_0_0_#1e40af,0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[4px]">
-                  Read Full Announcement
-                </Link>
-              </div>)}
-          </div>
-        </div>}
     </section>;
 };
 export default GpaJohnComments;
