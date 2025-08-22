@@ -22,16 +22,19 @@ const AuthorLink = ({ authorName, variant = "button", size = "sm" }: AuthorLinkP
     );
   }
 
-  return (
-    <Link to={`/author/${encodedAuthorName}`}>
-      <div 
-        className="inline-flex items-center h-auto py-1 px-2 text-xs border-2 border-amber-300 bg-white text-amber-700 hover:bg-amber-50 rounded cursor-pointer transition-colors font-bold"
-        title={`View ${authorName}'s biography`}
-      >
-        Bio
-      </div>
-    </Link>
-  );
+  // Bio button commented out per user request
+  // return (
+  //   <Link to={`/author/${encodedAuthorName}`}>
+  //     <div 
+  //       className="inline-flex items-center h-auto py-1 px-2 text-xs border-2 border-amber-300 bg-white text-amber-700 hover:bg-amber-50 rounded cursor-pointer transition-colors font-bold"
+  //       title={`View ${authorName}'s biography`}
+  //     >
+  //       Bio
+  //     </div>
+  //   </Link>
+  // );
+  
+  return null;
 };
 
 export default AuthorLink;
