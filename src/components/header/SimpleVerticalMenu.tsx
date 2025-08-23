@@ -185,15 +185,15 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
             onClose();
           }
         },
-        {
-          id: "authors",
-          icon: "!CO-S73.jpg", // Authors - Submenu 8-3
-          text: "Authors",
-          onClick: () => {
-            window.location.href = "/author-bios-simple";
-            onClose();
-          }
-        },
+        // {
+        //   id: "authors",
+        //   icon: "!CO-S73.jpg", // Authors - Submenu 8-3
+        //   text: "Authors",
+        //   onClick: () => {
+        //     window.location.href = "/author-bios-simple";
+        //     onClose();
+        //   }
+        // },
         {
           id: "the-3-ais",
           icon: "!CO-S74.jpg", // 3 Helpful AI's - Submenu 8-4
