@@ -125,7 +125,7 @@ const FontLibrarySection = () => {
                 <TableHead className="text-foreground font-bold min-w-[80px]">14 PT 19px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">15 PT 20px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">16 PT 21px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H3 18 PT 24px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H3<br/>18 PT 24px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H2 20 PT 27px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H2 22 PT 29px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H1 24 PT 32px</TableHead>
