@@ -243,6 +243,62 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     wrapSelectedText('<div class="avoid-break">', '</div>');
   };
 
+  const handleInsertFontSize = (fontType: string) => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    
+    let fontSize, lineHeight, margin, fontWeight;
+    
+    switch (fontType) {
+      case 'footer':
+        fontSize = '14px';
+        lineHeight = '19px';
+        margin = '8px 0';
+        fontWeight = 'normal';
+        break;
+      case 'body':
+        fontSize = '16px';
+        lineHeight = '21px';
+        margin = '10px 0';
+        fontWeight = 'normal';
+        break;
+      case 'h3':
+        fontSize = '18px';
+        lineHeight = '24px';
+        margin = '12px 0';
+        fontWeight = 'bold';
+        break;
+      case 'h2':
+        fontSize = '23px';
+        lineHeight = '30px';
+        margin = '16px 0';
+        fontWeight = 'bold';
+        break;
+      case 'h1':
+        fontSize = '30px';
+        lineHeight = '40px';
+        margin = '20px 0';
+        fontWeight = 'bold';
+        break;
+      default:
+        return;
+    }
+
+    const styleTag = `<span style="font-size: ${fontSize}; line-height: ${lineHeight}; margin: ${margin}; font-weight: ${fontWeight}; display: inline-block;">${selectedText || 'Text here'}</span>`;
+    const newContent = content.substring(0, start) + styleTag + content.substring(end);
+    onChange(newContent);
+    
+    // Set cursor position after the formatted text
+    setTimeout(() => {
+      textarea.selectionStart = textarea.selectionEnd = start + styleTag.length;
+      textarea.focus();
+    }, 0);
+  };
+
   const handleAddTokens = () => {
     const textarea = editorRef.current;
     if (!textarea) return;
@@ -320,6 +376,7 @@ ${content}`;
           onInsertPageBreak={handleInsertPageBreak}
           onWrapKeepTogether={handleWrapKeepTogether}
           onAddTokens={handleAddTokens}
+          onInsertFontSize={handleInsertFontSize}
         />
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
