@@ -55,11 +55,8 @@ const FontLibrarySection = () => {
 
   const getFontStyle = (fontName: string, style: FontStyle): React.CSSProperties => {
     const baseStyle: React.CSSProperties = {
-      fontFamily: fontName === "system-ui" ? "system-ui, -apple-system, sans-serif" :
-                  fontName === "Georgia" ? "Georgia, serif" :
-                  fontName === "Kalam" ? "Kalam, cursive" :
-                  fontName === "Caveat" ? "Caveat, cursive" :
-                  fontName === "ui-monospace" ? "ui-monospace, monospace" : fontName,
+      fontFamily: fontName === "Georgia" ? "Georgia, serif" :
+                  fontName === "Kalam" ? "Kalam, cursive" : fontName,
       color: "black",
     };
 
