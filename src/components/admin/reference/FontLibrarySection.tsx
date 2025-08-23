@@ -112,14 +112,18 @@ const FontLibrarySection = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-foreground font-bold min-w-[120px]">Font Family</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[120px]">
+                <TableHead className="text-foreground font-bold w-20 text-center">
+                  <div className="whitespace-normal break-words">Font Family</div>
+                </TableHead>
+                <TableHead className="text-foreground font-bold w-20 text-center">
                   <Button 
                     variant="ghost" 
                     onClick={toggleSort}
-                    className="p-0 h-auto font-bold hover:bg-muted"
+                    className="p-0 h-auto font-bold hover:bg-muted w-full"
                   >
-                    Font Name {sortOrder === "asc" ? "↑" : "↓"}
+                    <div className="whitespace-normal break-words text-center">
+                      Font Name {sortOrder === "asc" ? "↑" : "↓"}
+                    </div>
                   </Button>
                 </TableHead>
                 <TableHead className="text-foreground font-bold min-w-[60px]">Style</TableHead>
