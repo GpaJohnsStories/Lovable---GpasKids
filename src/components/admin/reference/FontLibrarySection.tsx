@@ -16,6 +16,9 @@ const FontLibrarySection = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
 
   const fontData: FontData[] = [
+    { fontFamily: "Arial", fontName: "Arial", style: "Regular" },
+    { fontFamily: "Arial", fontName: "Arial", style: "Bold" },
+    { fontFamily: "Arial", fontName: "Arial", style: "Italic" },
     { fontFamily: "Georgia", fontName: "Georgia", style: "Regular" },
     { fontFamily: "Georgia", fontName: "Georgia", style: "Bold" },
     { fontFamily: "Georgia", fontName: "Georgia", style: "Italic" },
@@ -25,8 +28,8 @@ const FontLibrarySection = () => {
   ];
 
   const sortedFontData = [...fontData].sort((a, b) => {
-    const aHasAsterisk = a.fontFamily === "Georgia" || a.fontFamily === "Kalam/Fun";
-    const bHasAsterisk = b.fontFamily === "Georgia" || b.fontFamily === "Kalam/Fun";
+    const aHasAsterisk = a.fontFamily === "Arial" || a.fontFamily === "Georgia" || a.fontFamily === "Kalam/Fun";
+    const bHasAsterisk = b.fontFamily === "Arial" || b.fontFamily === "Georgia" || b.fontFamily === "Kalam/Fun";
     
     // If one has asterisk and other doesn't, prioritize asterisk
     if (aHasAsterisk && !bHasAsterisk) return -1;
@@ -55,7 +58,8 @@ const FontLibrarySection = () => {
 
   const getFontStyle = (fontName: string, style: FontStyle): React.CSSProperties => {
     const baseStyle: React.CSSProperties = {
-      fontFamily: fontName === "Georgia" ? "Georgia, serif" :
+      fontFamily: fontName === "Arial" ? "Arial, sans-serif" :
+                  fontName === "Georgia" ? "Georgia, serif" :
                   fontName === "Kalam" ? "Kalam, cursive" : fontName,
       color: "black",
     };
@@ -137,11 +141,11 @@ const FontLibrarySection = () => {
               {sortedFontData.map((font, index) => (
                 <TableRow 
                   key={index}
-                  className={font.fontFamily === "Georgia" || font.fontFamily === "Kalam/Fun" ? "bg-white" : ""}
+                  className={font.fontFamily === "Arial" || font.fontFamily === "Georgia" || font.fontFamily === "Kalam/Fun" ? "bg-white" : ""}
                 >
                   <TableCell className="text-foreground">{font.fontFamily}</TableCell>
                   <TableCell className="text-foreground">
-                    {(font.fontFamily === "Georgia" || font.fontFamily === "Kalam/Fun") ? "*" : ""}{font.fontName}
+                    {(font.fontFamily === "Arial" || font.fontFamily === "Georgia" || font.fontFamily === "Kalam/Fun") ? "*" : ""}{font.fontName}
                   </TableCell>
                   <TableCell className="text-foreground text-center">{getStyleAbbreviation(font.style)}</TableCell>
                   <TableCell>{renderTextSample(font.fontName, font.style, 14)}</TableCell>
