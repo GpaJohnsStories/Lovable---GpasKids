@@ -114,7 +114,7 @@ const Writing = () => {
           </div> */}
 
           {/* Story Submission Release Form - Separate Box */}
-          <div 
+          {/* <div 
             className="max-w-6xl mx-auto border-4 border-red-600 rounded-lg px-16 py-8 shadow-xl relative overflow-hidden mt-8"
             style={{
               backgroundImage: `url('/lovable-uploads/2a50a95f-ad31-4394-b52c-f65e3bc6f5b3.png')`,
@@ -126,7 +126,7 @@ const Writing = () => {
             <div className="relative z-10">
               <StorySubmissionForm />
             </div>
-          </div>
+          </div> */}
         </main>
         
         <CookieFreeFooter />
