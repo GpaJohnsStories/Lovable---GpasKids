@@ -33,12 +33,6 @@ const Guide = () => {
     backgroundColor: "bg-blue-600/20",
     title: "Read A Story"
   }, {
-    webtextCode: "SYS-G4B",
-    borderColor: "#E6A875",
-    // Darker Peach - leave color alone
-    backgroundColor: "bg-orange-400/20",
-    title: "Write a Comment Page"
-  }, {
     webtextCode: "SYS-G5A",
     borderColor: "#F97316",
     // Orange to match menu icons
@@ -132,14 +126,6 @@ const Guide = () => {
             }}>
                 <span className="text-orange-800 text-[10px]">Guide to</span>
                 <span className="text-orange-800 text-[10px]">Enjoying a Story</span>
-              </button>
-              <button onClick={() => document.getElementById('SYS-G4B')?.scrollIntoView({
-              behavior: 'smooth'
-            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-orange-200 to-orange-300 hover:from-orange-300 hover:to-orange-400 active:from-orange-400 active:to-orange-500 text-white border-2 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]" style={{
-              borderColor: "#E6A875"
-            }}>
-                <span className="text-orange-800 text-[10px]">How to</span>
-                <span className="text-orange-800 text-[10px]">Write Comments</span>
               </button>
               <button onClick={() => document.getElementById('SYS-G5A')?.scrollIntoView({
               behavior: 'smooth'
