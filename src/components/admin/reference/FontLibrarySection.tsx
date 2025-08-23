@@ -141,10 +141,10 @@ const FontLibrarySection = () => {
                 <TableHead className="text-foreground font-bold min-w-[80px]">14 PT 19px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">15 PT 20px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">16 PT 21px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>BODY<br/>21px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H3<br/>24px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H2<br/>30px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H1<br/>40px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>BODY<br/>16 PT 21px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H3<br/>18 PT 24px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H2<br/>23 PT 30px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H1<br/>30 PT 40px</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
