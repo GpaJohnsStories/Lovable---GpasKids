@@ -97,17 +97,6 @@ const AdminHeaderBanner = () => {
       description: 'Full story list with add/update, sorting and viewing services'
     },
     {
-      name: 'Comments',
-      path: '/buddys_admin/comments',
-      icon: MessageSquare,
-      bgColor: 'bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-500',
-      hoverColor: 'hover:from-yellow-400 hover:via-yellow-500 hover:to-yellow-600',
-      shadowColor: 'shadow-[0_6px_0_#ca8a04,0_8px_15px_rgba(0,0,0,0.3)]',
-      hoverShadow: 'hover:shadow-[0_4px_0_#ca8a04,0_6px_12px_rgba(0,0,0,0.4)]',
-      textColor: 'text-green-800',
-      description: 'Full comment list with edit and approval services'
-    },
-    {
       name: 'Reference',
       path: '/buddys_admin/reference',
       icon: BookOpen,
