@@ -12,8 +12,6 @@ const AdminSiteMapContent = () => {
     { name: "Home", path: "/", icon: Home, description: "Main landing page with story listings" },
     { name: "Library", path: "/library", icon: BookOpen, description: "Browse all available stories" },
     { name: "About", path: "/about", icon: Users, description: "About the storyteller and website" },
-    { name: "View Comments", path: "/view-comments", icon: MessageSquare, description: "Read community comments" },
-    { name: "Make Comment", path: "/make-comment", icon: MessageSquare, description: "Leave a comment" },
     { name: "Writing Guide", path: "/guide", icon: BookOpen, description: "How to write stories" },
     { name: "Help", path: "/help-gpa", icon: Users, description: "Get help from Grandpa" },
     { name: "Privacy Policy", path: "/security", icon: Settings, description: "Privacy and safety information" }
@@ -22,8 +20,6 @@ const AdminSiteMapContent = () => {
   const adminPages = [
     { name: "Admin Overview", path: "/buddys_admin", icon: Settings, description: "Main admin dashboard" },
     { name: "Manage Stories", path: "/buddys_admin/stories", icon: BookOpen, description: "Create and edit stories" },
-    { name: "Comments Dashboard", path: "/buddys_admin/comments", icon: MessageSquare, description: "Moderate comments" },
-    { name: "Author Bios", path: "/buddys_admin/author-bios", icon: Users, description: "Manage author biographies" },
     { name: "Security Audit", path: "/buddys_admin/security", icon: Settings, description: "Security monitoring and audit" },
     { name: "Admin Reference", path: "/buddys_admin/reference", icon: BookOpen, description: "Icons, colors, and resources" },
     { name: "Site Map", path: "/buddys_admin/sitemap", icon: Settings, description: "This page - site navigation overview" }
@@ -31,8 +27,6 @@ const AdminSiteMapContent = () => {
 
   const utilityPages = [
     { name: "Story Pages", path: "/story/[code]", icon: BookOpen, description: "Individual story display pages" },
-    { name: "Author Profile", path: "/author/[id]", icon: Users, description: "Individual author biography pages" },
-    { name: "Comment Detail", path: "/comment/[id]", icon: MessageSquare, description: "Individual comment pages" },
     { name: "404 Not Found", path: "*", icon: AlertCircle, description: "Error page for invalid URLs" }
   ];
 
@@ -132,13 +126,13 @@ const AdminSiteMapContent = () => {
             <div>
               <h4 className="font-medium mb-2">User Journey:</h4>
               <p className="text-muted-foreground">
-                Home → Library (browse stories) → Story pages → Comments → Make Comment
+                Home → Library (browse stories) → Story pages → About → Help
               </p>
             </div>
             <div>
               <h4 className="font-medium mb-2">Admin Workflow:</h4>
               <p className="text-muted-foreground">
-                Admin Login → Stories Management → Comment Moderation → Author Bio Management
+                Admin Login → Stories Management → Security Audit → Reference Materials
               </p>
             </div>
             <div>

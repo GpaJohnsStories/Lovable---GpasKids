@@ -11,6 +11,9 @@ const RobotsTxt = () => {
 Allow: /
 Disallow: /buddys_admin/
 Disallow: /make-comment
+Disallow: /view-comments
+Disallow: /writing
+Disallow: /author-bios-simple
 Disallow: /forgot-password
 Disallow: /reset-password
 
@@ -18,9 +21,7 @@ Disallow: /reset-password
 Allow: /story/*
 Allow: /library
 Allow: /about
-Allow: /writing
 Allow: /help-gpa
-Allow: /view-comments
 Allow: /security
 
 # Social media bots
