@@ -160,7 +160,7 @@ const FontLibrarySection = () => {
                   <TableCell>
                     {renderTextSamplePx(font.fontName, font.style, 21)}
                   </TableCell>
-                  <TableCell className={font.style === "Italic" ? "bg-orange-200" : ""}>
+                  <TableCell>
                     {renderTextSamplePx(font.fontName, font.style, 24)}
                   </TableCell>
                   <TableCell>{renderTextSamplePx(font.fontName, font.style, 30)}</TableCell>
