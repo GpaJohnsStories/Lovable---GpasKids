@@ -104,14 +104,14 @@ const Writing = () => {
           </div>
 
           {/* Write a Story Section */}
-          <div id="write-story" className="max-w-6xl mx-auto mt-8">
+          {/* <div id="write-story" className="max-w-6xl mx-auto mt-8">
             <WebTextBox
               webtextCode="SYS-WAS"
               borderColor="border-orange-500"
               backgroundColor="bg-white"
               title="Write a Story for Gpa's Kids"
             />
-          </div>
+          </div> */}
 
           {/* Story Submission Release Form - Separate Box */}
           <div 
