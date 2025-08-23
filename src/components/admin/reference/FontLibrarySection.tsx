@@ -121,7 +121,7 @@ const FontLibrarySection = () => {
                     </div>
                   </Button>
                 </TableHead>
-                <TableHead className="text-foreground font-bold min-w-[60px]">Style</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[60px] text-center">Sty</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">14 PT 19px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">15 PT 20px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">16 PT 21px</TableHead>
@@ -143,7 +143,7 @@ const FontLibrarySection = () => {
                   <TableCell className="text-foreground">
                     {(font.fontFamily === "Georgia" || font.fontFamily === "Kalam/Fun") ? "*" : ""}{font.fontName}
                   </TableCell>
-                  <TableCell className="text-foreground">{getStyleAbbreviation(font.style)}</TableCell>
+                  <TableCell className="text-foreground text-center">{getStyleAbbreviation(font.style)}</TableCell>
                   <TableCell>{renderTextSample(font.fontName, font.style, 14)}</TableCell>
                   <TableCell>{renderTextSample(font.fontName, font.style, 15)}</TableCell>
                   <TableCell className={font.style === "Regular" || font.style === "Bold" ? "bg-yellow-300" : ""}>
