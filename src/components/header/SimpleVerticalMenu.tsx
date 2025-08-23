@@ -38,15 +38,12 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const { iconName: homeIconName } = useCachedIcon("!CO-MM2.jpg");
   const { iconName: libraryIconName } = useCachedIcon("!CO-MM3.gif");
   const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.gif");
-  const { iconName: commentsIconName } = useCachedIcon("!CO-MM5.gif");
   const { iconName: osmIconName } = useCachedIcon("!CO-OSM.png");
   const { iconName: writingIconName } = useCachedIcon("!CO-MM6.gif");
   const { iconName: aboutIconName } = useCachedIcon("!CO-MM7.jpg");
   const { iconName: safeIconName } = useCachedIcon("!CO-MM8.jpg");
   
   // Submenu icon names
-  const { iconName: viewCommentsIconName } = useCachedIcon("!CO-S51.jpg");
-  const { iconName: makeCommentIconName } = useCachedIcon("!CO-S52.jpg");
   const { iconName: submitStoryIconName } = useCachedIcon("!CO-S61.jpg");
   const { iconName: grandpaJohnIconName } = useCachedIcon("!CO-S71.jpg");
   const { iconName: helpersIconName } = useCachedIcon("!CO-S72.jpg");
@@ -56,8 +53,6 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   // Helper function to get submenu icon names
   const getSubmenuIconName = (iconPath: string) => {
     switch (iconPath) {
-      case "!CO-S51.jpg": return viewCommentsIconName || "View Comments";
-      case "!CO-S52.jpg": return makeCommentIconName || "Make Comment";
       case "!CO-S61.jpg": return submitStoryIconName || "Submit Story";
       case "!CO-S71.jpg": return grandpaJohnIconName || "Grandpa John";
       case "!CO-S72.jpg": return helpersIconName || "3 Helpers";
@@ -135,33 +130,6 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
       },
       disabled: !isStorySelected,
       disabledMessage: "Select a story first to read"
-    },
-    {
-      id: "comments",
-      icon: "!CO-MM5.gif", // Comments icon - Main Menu 5
-      text: "Comments",
-      tooltipText: commentsIconName || "Comments",
-      color: "#F97316", 
-      submenus: [
-        {
-          id: "view-comments",
-          icon: "!CO-S51.jpg", // View Comments - Submenu 5-1
-          text: "View Comments",
-          onClick: () => {
-            window.location.href = "/view-comments";
-            onClose();
-          }
-        },
-        {
-          id: "make-comment",
-          icon: "!CO-S52.jpg", // Make Comment - Submenu 5-2
-          text: "Make Comment", 
-          onClick: () => {
-            window.location.href = "/make-comment";
-            onClose();
-          }
-        }
-      ]
     },
     // {
     //   id: "osm",
