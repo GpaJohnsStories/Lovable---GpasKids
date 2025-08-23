@@ -138,7 +138,7 @@ const FontLibrarySection = () => {
                   </Button>
                 </TableHead>
                 <TableHead className="text-foreground font-bold min-w-[60px] text-center">Sty</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">14 PT 19px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px] text-center" style={{backgroundColor: '#f97316', color: 'white'}}>Footer<br/>14 PT 19px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px] text-center" style={{backgroundColor: '#60a5fa', color: 'white'}}>BODY<br/>16 PT 21px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px] text-center" style={{backgroundColor: '#DC143C', color: 'white'}}>H3<br/>18 PT 24px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px] text-center" style={{backgroundColor: '#DC143C', color: 'white'}}>H2<br/>23 PT 30px</TableHead>
