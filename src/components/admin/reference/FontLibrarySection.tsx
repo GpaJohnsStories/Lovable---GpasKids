@@ -16,21 +16,12 @@ const FontLibrarySection = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
 
   const fontData: FontData[] = [
-    { fontFamily: "System UI", fontName: "system-ui", style: "Regular" },
-    { fontFamily: "System UI", fontName: "system-ui", style: "Bold" },
-    { fontFamily: "System UI", fontName: "system-ui", style: "Italic" },
     { fontFamily: "Georgia", fontName: "Georgia", style: "Regular" },
     { fontFamily: "Georgia", fontName: "Georgia", style: "Bold" },
     { fontFamily: "Georgia", fontName: "Georgia", style: "Italic" },
     { fontFamily: "Kalam/Fun", fontName: "Kalam", style: "Regular" },
     { fontFamily: "Kalam/Fun", fontName: "Kalam", style: "Bold" },
     { fontFamily: "Kalam/Fun", fontName: "Kalam", style: "Italic" },
-    { fontFamily: "Caveat", fontName: "Caveat", style: "Regular" },
-    { fontFamily: "Caveat", fontName: "Caveat", style: "Bold" },
-    { fontFamily: "Caveat", fontName: "Caveat", style: "Italic" },
-    { fontFamily: "Monospace", fontName: "ui-monospace", style: "Regular" },
-    { fontFamily: "Monospace", fontName: "ui-monospace", style: "Bold" },
-    { fontFamily: "Monospace", fontName: "ui-monospace", style: "Italic" },
   ];
 
   const sortedFontData = [...fontData].sort((a, b) => {
