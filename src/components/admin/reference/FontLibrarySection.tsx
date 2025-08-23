@@ -81,17 +81,24 @@ const FontLibrarySection = () => {
     return baseStyle;
   };
 
-  const renderTextSample = (fontName: string, style: FontStyle, pointSize: number) => {
+  const renderTextSample = (fontName: string, style: FontStyle, pointSize: number, headerLevel?: string) => {
     const fontStyle = getFontStyle(fontName, style);
     return (
-      <span 
-        style={{
-          ...fontStyle,
-          fontSize: `${pointSize}pt`,
-        }}
-      >
-        Text
-      </span>
+      <div className="text-center">
+        {headerLevel && (
+          <div style={{ color: '#DC143C', fontSize: '12px', fontWeight: 'bold', marginBottom: '4px' }}>
+            {headerLevel}
+          </div>
+        )}
+        <span 
+          style={{
+            ...fontStyle,
+            fontSize: `${pointSize}pt`,
+          }}
+        >
+          Aa
+        </span>
+      </div>
     );
   };
 
@@ -105,8 +112,8 @@ const FontLibrarySection = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-foreground font-bold">Font Family</TableHead>
-                <TableHead className="text-foreground font-bold">
+                <TableHead className="text-foreground font-bold min-w-[120px]">Font Family</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[120px]">
                   <Button 
                     variant="ghost" 
                     onClick={toggleSort}
@@ -115,16 +122,16 @@ const FontLibrarySection = () => {
                     Font Name {sortOrder === "asc" ? "↑" : "↓"}
                   </Button>
                 </TableHead>
-                <TableHead className="text-foreground font-bold">Style</TableHead>
-                <TableHead className="text-foreground font-bold">14 PT 19px</TableHead>
-                <TableHead className="text-foreground font-bold">16 PT 21px</TableHead>
-                <TableHead className="text-foreground font-bold">18 PT 24px</TableHead>
-                <TableHead className="text-foreground font-bold">20 PT 27px</TableHead>
-                <TableHead className="text-foreground font-bold">22 PT 29px</TableHead>
-                <TableHead className="text-foreground font-bold">24 PT 32px</TableHead>
-                <TableHead className="text-foreground font-bold">26 PT 35px</TableHead>
-                <TableHead className="text-foreground font-bold">28 PT 37px</TableHead>
-                <TableHead className="text-foreground font-bold">30 PT 40px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[60px]">Style</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">14 PT 19px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">15 PT 20px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">16 PT 21px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">18 PT 24px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">20 PT 27px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">22 PT 29px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">24 PT 32px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">28 PT 37px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">30 PT 40px</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -138,19 +145,19 @@ const FontLibrarySection = () => {
                     {(font.fontFamily === "Georgia" || font.fontFamily === "Kalam/Fun") ? "*" : ""}{font.fontName}
                   </TableCell>
                   <TableCell className="text-foreground">{getStyleAbbreviation(font.style)}</TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 16)}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 14)}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 15)}</TableCell>
                   <TableCell className={font.style === "Regular" || font.style === "Bold" ? "bg-yellow-300" : ""}>
                     {renderTextSample(font.fontName, font.style, 16)}
                   </TableCell>
                   <TableCell className={font.style === "Italic" ? "bg-orange-200" : ""}>
-                    {renderTextSample(font.fontName, font.style, 18)}
+                    {renderTextSample(font.fontName, font.style, 18, "H3")}
                   </TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 20)}</TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 22)}</TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 24)}</TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 26)}</TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 28)}</TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 30)}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 20, "H2")}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 22, "H2")}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 24, "H1")}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 28, "H1")}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 30, "H1")}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
