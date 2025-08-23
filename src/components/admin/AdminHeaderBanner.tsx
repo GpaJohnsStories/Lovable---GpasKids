@@ -426,7 +426,7 @@ const AdminHeaderBanner = () => {
                   </div>
                 );
                 
-                return [librariesButton, ...(isViewer ? [] : [createStoryButton]), biosButton];
+                return [librariesButton, ...(isViewer ? [] : [createStoryButton])];
               }
 
               // Special handling for Reference button as square icon button
