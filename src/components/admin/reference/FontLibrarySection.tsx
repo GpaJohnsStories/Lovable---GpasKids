@@ -140,7 +140,6 @@ const FontLibrarySection = () => {
                 <TableHead className="text-foreground font-bold min-w-[60px] text-center">Sty</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">14 PT 19px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">15 PT 20px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">16 PT 21px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>BODY<br/>16 PT 21px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H3<br/>18 PT 24px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H2<br/>23 PT 30px</TableHead>
@@ -160,9 +159,6 @@ const FontLibrarySection = () => {
                   <TableCell className="text-foreground text-center">{getStyleAbbreviation(font.style)}</TableCell>
                   <TableCell>{renderTextSample(font.fontName, font.style, 14)}</TableCell>
                   <TableCell>{renderTextSample(font.fontName, font.style, 15)}</TableCell>
-                  <TableCell className={font.style === "Regular" || font.style === "Bold" ? "bg-yellow-300" : ""}>
-                    {renderTextSample(font.fontName, font.style, 16)}
-                  </TableCell>
                   <TableCell className={font.style === "Regular" || font.style === "Bold" ? "bg-yellow-300" : ""}>
                     {renderTextSamplePx(font.fontName, font.style, 21)}
                   </TableCell>
