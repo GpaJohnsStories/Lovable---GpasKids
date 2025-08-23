@@ -154,9 +154,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
 
         {/* Quick Tags */}
         <div className="flex items-center gap-1">
-          <Button type="button" size="sm" onClick={() => onFormat('large')} className="h-8 px-3 text-sm btn-toolbar-indigo">
-            20px
-          </Button>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
