@@ -125,12 +125,12 @@ const FontLibrarySection = () => {
                 <TableHead className="text-foreground font-bold min-w-[80px]">14 PT 19px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">15 PT 20px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">16 PT 21px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">H3 18 PT 24px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">H2 20 PT 27px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">H2 22 PT 29px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">H1 24 PT 32px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">H1 28 PT 37px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">H1 30 PT 40px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H3 18 PT 24px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H2 20 PT 27px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H2 22 PT 29px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H1 24 PT 32px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H1 28 PT 37px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]" style={{backgroundColor: '#DC143C', color: 'white'}}>H1 30 PT 40px</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
