@@ -350,44 +350,44 @@ const AdminHeaderBanner = () => {
               }
 
               // Special handling for Comments button as square icon button
-              if (button.name === 'Comments') {
-                const commentsButton = (
-                  <div 
-                    key={button.name}
-                    className="relative"
-                    onMouseEnter={() => setHoveredButton(button.name)}
-                    onMouseLeave={() => setHoveredButton(null)}
-                  >
-                    <Link to={button.path} onClick={scrollToTop}>
-                      <div
-                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-green-300/50 hover:scale-105 transition-transform cursor-pointer"
-                        style={{ 
-                          backgroundColor: '#4A7C59',
-                          minWidth: '55px',
-                          minHeight: '55px'
-                        }}
-                      >
-                        {commentsIconUrl ? (
-                          <img 
-                            src={commentsIconUrl} 
-                            alt="Comments List"
-                            className="w-12 h-12 object-contain"
-                          />
-                        ) : (
-                          <MessageSquare className="w-12 h-12 text-black" />
-                        )}
-                      </div>
-                    </Link>
-                    {hoveredButton === button.name && (
-                      <div className="nav-bubble opacity-100 visible">
-                        <b>Comments List</b>
-                      </div>
-                    )}
-                  </div>
-                );
-                
-                return commentsButton;
-              }
+              // if (button.name === 'Comments') {
+              //   const commentsButton = (
+              //     <div 
+              //       key={button.name}
+              //       className="relative"
+              //       onMouseEnter={() => setHoveredButton(button.name)}
+              //       onMouseLeave={() => setHoveredButton(null)}
+              //     >
+              //       <Link to={button.path} onClick={scrollToTop}>
+              //         <div
+              //           className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-green-300/50 hover:scale-105 transition-transform cursor-pointer"
+              //           style={{ 
+              //             backgroundColor: '#4A7C59',
+              //             minWidth: '55px',
+              //             minHeight: '55px'
+              //           }}
+              //         >
+              //           {commentsIconUrl ? (
+              //             <img 
+              //               src={commentsIconUrl} 
+              //               alt="Comments List"
+              //               className="w-12 h-12 object-contain"
+              //             />
+              //           ) : (
+              //             <MessageSquare className="w-12 h-12 text-black" />
+              //           )}
+              //         </div>
+              //       </Link>
+              //       {hoveredButton === button.name && (
+              //         <div className="nav-bubble opacity-100 visible">
+              //           <b>Comments List</b>
+              //         </div>
+              //       )}
+              //     </div>
+              //   );
+              //   
+              //   return commentsButton;
+              // }
 
               // Special handling for Library button with dropdown
               if (button.name === 'Libraries') {
