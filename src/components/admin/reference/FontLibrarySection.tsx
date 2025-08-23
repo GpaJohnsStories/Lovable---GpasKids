@@ -81,15 +81,10 @@ const FontLibrarySection = () => {
     return baseStyle;
   };
 
-  const renderTextSample = (fontName: string, style: FontStyle, pointSize: number, headerLevel?: string) => {
+  const renderTextSample = (fontName: string, style: FontStyle, pointSize: number) => {
     const fontStyle = getFontStyle(fontName, style);
     return (
       <div className="text-center">
-        {headerLevel && (
-          <div style={{ color: '#DC143C', fontSize: '12px', fontWeight: 'bold', marginBottom: '4px' }}>
-            {headerLevel}
-          </div>
-        )}
         <span 
           style={{
             ...fontStyle,
@@ -130,12 +125,12 @@ const FontLibrarySection = () => {
                 <TableHead className="text-foreground font-bold min-w-[80px]">14 PT 19px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">15 PT 20px</TableHead>
                 <TableHead className="text-foreground font-bold min-w-[80px]">16 PT 21px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">18 PT 24px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">20 PT 27px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">22 PT 29px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">24 PT 32px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">28 PT 37px</TableHead>
-                <TableHead className="text-foreground font-bold min-w-[80px]">30 PT 40px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">H3 18 PT 24px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">H2 20 PT 27px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">H2 22 PT 29px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">H1 24 PT 32px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">H1 28 PT 37px</TableHead>
+                <TableHead className="text-foreground font-bold min-w-[80px]">H1 30 PT 40px</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -155,13 +150,13 @@ const FontLibrarySection = () => {
                     {renderTextSample(font.fontName, font.style, 16)}
                   </TableCell>
                   <TableCell className={font.style === "Italic" ? "bg-orange-200" : ""}>
-                    {renderTextSample(font.fontName, font.style, 18, "H3")}
+                    {renderTextSample(font.fontName, font.style, 18)}
                   </TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 20, "H2")}</TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 22, "H2")}</TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 24, "H1")}</TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 28, "H1")}</TableCell>
-                  <TableCell>{renderTextSample(font.fontName, font.style, 30, "H1")}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 20)}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 22)}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 24)}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 28)}</TableCell>
+                  <TableCell>{renderTextSample(font.fontName, font.style, 30)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
