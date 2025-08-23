@@ -115,12 +115,12 @@ const FontLibrarySection = () => {
 
   return (
     <Card>
+      <span id="fonts-anchor" className="absolute -top-24"></span>
       <CardHeader>
         <CardTitle className="text-h2 font-system text-foreground">Font Library</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="overflow-x-auto">
-          <Table>
+        <Table className="w-full table-auto">
             <TableHeader>
               <TableRow>
                 <TableHead className="text-foreground font-bold w-20 text-center">
@@ -168,8 +168,7 @@ const FontLibrarySection = () => {
                 </TableRow>
               ))}
             </TableBody>
-          </Table>
-        </div>
+        </Table>
       </CardContent>
     </Card>
   );
