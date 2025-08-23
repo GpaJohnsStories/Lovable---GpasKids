@@ -142,24 +142,24 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     //     onClose();
     //   }
     // },
-    {
-      id: "writing",
-      icon: "!CO-MM6.gif", // Writing icon - Main Menu 7
-      text: "Writing",
-      tooltipText: writingIconName || "Writing",
-      color: "#F97316",
-      submenus: [
-        {
-          id: "submit-story",
-          icon: "!CO-S61.jpg", // Submit Story - Submenu 7-1
-          text: "Submit Story",
-          onClick: () => {
-            window.location.href = "/writing";
-            onClose();
-          }
-        }
-      ]
-    },
+    // {
+    //   id: "writing",
+    //   icon: "!CO-MM6.gif", // Writing icon - Main Menu 7
+    //   text: "Writing",
+    //   tooltipText: writingIconName || "Writing",
+    //   color: "#F97316",
+    //   submenus: [
+    //     {
+    //       id: "submit-story",
+    //       icon: "!CO-S61.jpg", // Submit Story - Submenu 7-1
+    //       text: "Submit Story",
+    //       onClick: () => {
+    //         window.location.href = "/writing";
+    //         onClose();
+    //       }
+    //     }
+    //   ]
+    // },
     {
       id: "about-us",
       icon: "!CO-MM7.jpg", // About Us icon - Main Menu 8
