@@ -51,7 +51,7 @@ const SuperText = () => {
       
       <div className="container mx-auto px-4 py-8">
         {/* Two-column header row */}
-        <div className="flex justify-between items-start mb-8">
+        <div className="flex justify-between items-start mb-[2px]">
           <h1 className="text-3xl font-bold text-amber-800">
             Super Text Manager
           </h1>
