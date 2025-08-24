@@ -19,6 +19,7 @@ interface StickyToolbarProps {
   onInsertPageBreak: () => void;
   onWrapKeepTogether: () => void;
   onAddTokens: () => void;
+  onInsertFontSize: (fontType: string) => void;
 }
 const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onFormat,
@@ -34,7 +35,8 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onInsertHorizontalLine,
   onInsertPageBreak,
   onWrapKeepTogether,
-  onAddTokens
+  onAddTokens,
+  onInsertFontSize
 }) => {
   return <div className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{
     backgroundColor: '#16a34a'
@@ -152,16 +154,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
 
         {/* Quick Tags */}
         <div className="flex items-center gap-1">
-          <Button type="button" size="sm" onClick={() => onFormat('big')} className="h-8 px-3 text-sm btn-toolbar-indigo">32px</Button>
-          <Button type="button" size="sm" onClick={() => onFormat('med')} className="h-8 px-3 text-sm btn-toolbar-indigo">
-            24px
-          </Button>
-          <Button type="button" size="sm" onClick={() => onFormat('large')} className="h-8 px-3 text-sm btn-toolbar-indigo">
-            20px
-          </Button>
-          <Button type="button" size="sm" onClick={() => onFormat('p')} className="h-8 px-3 text-sm btn-toolbar-indigo">
-            ¶
-          </Button>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
@@ -216,6 +208,59 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
         <div className="flex items-center gap-1">
           <Button type="button" size="sm" onClick={onShowHelp} className="h-8 px-2 btn-toolbar-green" title="Show keyboard shortcuts (Ctrl+H)">
             <Key className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+
+      {/* Second Row - Font Size Buttons */}
+      <div className="flex items-center gap-2 flex-wrap mt-2">
+        {/* Font Size Buttons */}
+        <div className="flex items-center gap-1">
+          <Button 
+            type="button" 
+            onClick={() => onInsertFontSize('footer')} 
+            className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
+          >
+            Footer 14 PT 19px
+          </Button>
+          <Button 
+            type="button" 
+            onClick={() => onInsertFontSize('body')} 
+            className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
+          >
+            BODY 16 PT 21px
+          </Button>
+          <Button 
+            type="button" 
+            onClick={() => onInsertFontSize('h3')} 
+            className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
+          >
+            H3 18 PT 24px
+          </Button>
+          <Button 
+            type="button" 
+            onClick={() => onInsertFontSize('h2')} 
+            className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
+          >
+            H2 23 PT 30px
+          </Button>
+          <Button 
+            type="button" 
+            onClick={() => onInsertFontSize('h1')} 
+            className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
+          >
+            H1 30 PT 40px
+          </Button>
+        </div>
+
+        <Separator orientation="vertical" className="h-6" style={{
+          backgroundColor: '#9c441a'
+        }} />
+
+        {/* Paragraph Button */}
+        <div className="flex items-center gap-1">
+          <Button type="button" size="sm" onClick={() => onFormat('p')} className="h-8 px-3 text-sm btn-toolbar-indigo">
+            ¶
           </Button>
         </div>
       </div>

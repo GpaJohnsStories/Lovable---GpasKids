@@ -57,7 +57,7 @@ const UnifiedStoryDashboard: React.FC<UnifiedStoryDashboardProps> = ({
   allowTextToSpeech = false,
   context = "unified-story-system",
   onStoryFound,
-  fontSize = 16,
+  fontSize = 21,
   onFontSizeChange,
   hideHeaderFields = false
 }) => {

@@ -40,7 +40,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.gif");
   const { iconName: osmIconName } = useCachedIcon("!CO-OSM.png");
   const { iconName: writingIconName } = useCachedIcon("!CO-MM6.gif");
-  const { iconName: aboutIconName } = useCachedIcon("!CO-MM7.jpg");
+  const { iconName: aboutIconName } = useCachedIcon("!CO-AB3.jpg");
   const { iconName: safeIconName } = useCachedIcon("!CO-MM8.jpg");
   
   // Submenu icon names
@@ -162,48 +162,14 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     // },
     {
       id: "about-us",
-      icon: "!CO-MM7.jpg", // About Us icon - Main Menu 8
+      icon: "!CO-AB3.jpg", // About Us icon - Main Menu 8
       text: "About Us",
       tooltipText: aboutIconName || "About Us",
       color: "#F97316",
-      submenus: [
-        {
-          id: "grandpa-john",
-          icon: "!CO-S71.jpg", // Grandpa John - Submenu 8-1
-          text: "Grandpa John",
-          onClick: () => {
-            window.location.href = "/about";
-            onClose();
-          }
-        },
-        {
-          id: "3-helpers",
-          icon: "!CO-S72.jpg", // 3 Helpers - Submenu 8-2
-          text: "3 Helpers", 
-          onClick: () => {
-            window.location.href = "/about#buddy";
-            onClose();
-          }
-        },
-        // {
-        //   id: "authors",
-        //   icon: "!CO-S73.jpg", // Authors - Submenu 8-3
-        //   text: "Authors",
-        //   onClick: () => {
-        //     window.location.href = "/author-bios-simple";
-        //     onClose();
-        //   }
-        // },
-        {
-          id: "the-3-ais",
-          icon: "!CO-S74.jpg", // 3 Helpful AI's - Submenu 8-4
-          text: "3 Helpful AI's",
-          onClick: () => {
-            window.location.href = "/about#special-thank-you";
-            onClose();
-          }
-        }
-      ]
+      onClick: () => {
+        window.location.href = "/about";
+        onClose();
+      }
     },
     {
       id: "safe-secure",

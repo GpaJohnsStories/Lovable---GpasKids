@@ -22,7 +22,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   placeholder = "Start writing your story...",
   onSave,
   category,
-  fontSize = 16,
+  fontSize = 21,
   onFontSizeChange
 }) => {
   console.log('🎯 SplitViewEditor: Rendering with content:', {
@@ -243,17 +243,78 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     wrapSelectedText('<div class="avoid-break">', '</div>');
   };
 
+  const handleInsertFontSize = (fontType: string) => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    
+    let fontSize, lineHeight, margin, fontWeight;
+    
+    switch (fontType) {
+      case 'footer':
+        fontSize = '14px';
+        lineHeight = '19px';
+        margin = '8px 0';
+        fontWeight = 'normal';
+        break;
+      case 'body':
+        fontSize = '16px';
+        lineHeight = '21px';
+        margin = '10px 0';
+        fontWeight = 'normal';
+        break;
+      case 'h3':
+        fontSize = '18px';
+        lineHeight = '24px';
+        margin = '12px 0';
+        fontWeight = 'bold';
+        break;
+      case 'h2':
+        fontSize = '23px';
+        lineHeight = '30px';
+        margin = '16px 0';
+        fontWeight = 'bold';
+        break;
+      case 'h1':
+        fontSize = '30px';
+        lineHeight = '40px';
+        margin = '20px 0';
+        fontWeight = 'bold';
+        break;
+      default:
+        return;
+    }
+
+    const styleTag = `<span style="font-size: ${fontSize}; line-height: ${lineHeight}; margin: ${margin}; font-weight: ${fontWeight}; display: inline-block;">${selectedText || 'Text here'}</span>`;
+    const newContent = content.substring(0, start) + styleTag + content.substring(end);
+    onChange(newContent);
+    
+    // Set cursor position after the formatted text
+    setTimeout(() => {
+      textarea.selectionStart = textarea.selectionEnd = start + styleTag.length;
+      textarea.focus();
+    }, 0);
+  };
+
   const handleAddTokens = () => {
     const textarea = editorRef.current;
     if (!textarea) return;
 
-    // Check if tokens already exist
-    const hasTokens = content.includes('{{TITLE:') || 
-                     content.includes('{{TAGLINE:') || 
-                     content.includes('{{AUTHOR:') || 
-                     content.includes('{{EXCERPT:');
+    // Check if block-style or colon-style tokens already exist
+    const hasBlockTokens = content.includes('{{TITLE}}') || 
+                          content.includes('{{TAGLINE}}') || 
+                          content.includes('{{AUTHOR}}') || 
+                          content.includes('{{EXCERPT}}');
+                          
+    const hasColonTokens = content.includes('{{TITLE:') || 
+                          content.includes('{{TAGLINE:') || 
+                          content.includes('{{AUTHOR:') || 
+                          content.includes('{{EXCERPT:');
     
-    if (hasTokens) {
+    if (hasBlockTokens || hasColonTokens) {
       // Position cursor at the beginning for editing existing tokens
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = 0;
@@ -262,19 +323,19 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
       return;
     }
 
-    // Insert tokens at the top with blank line after excerpt
-    const tokensText = `{{TITLE: }}
-{{TAGLINE: }}
-{{AUTHOR: }}
-{{EXCERPT: }}
+    // Insert block-style tokens at the top with blank line after excerpt
+    const tokensText = `{{TITLE}}{{/TITLE}}
+{{TAGLINE}}{{/TAGLINE}}
+{{AUTHOR}}{{/AUTHOR}}
+{{EXCERPT}}{{/EXCERPT}}
 
 ${content}`;
     
     onChange(tokensText);
     
-    // Position cursor after "{{TITLE: " for immediate editing
+    // Position cursor between {{TITLE}} and {{/TITLE}} for immediate editing
     setTimeout(() => {
-      textarea.selectionStart = textarea.selectionEnd = 9; // Position after "{{TITLE: "
+      textarea.selectionStart = textarea.selectionEnd = 9; // Position after "{{TITLE}}"
       textarea.focus();
     }, 0);
   };
@@ -320,6 +381,7 @@ ${content}`;
           onInsertPageBreak={handleInsertPageBreak}
           onWrapKeepTogether={handleWrapKeepTogether}
           onAddTokens={handleAddTokens}
+          onInsertFontSize={handleInsertFontSize}
         />
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">

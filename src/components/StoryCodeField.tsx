@@ -133,6 +133,12 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
                       field.onBlur();
                       handleStoryCodeLookup(e.target.value);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleStoryCodeLookup(e.currentTarget.value);
+                      }
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -172,6 +178,15 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
             handleStoryCodeLookup(e.target.value);
             if (onCodeLookup) {
               onCodeLookup(e.target.value);
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleStoryCodeLookup(e.currentTarget.value);
+              if (onCodeLookup) {
+                onCodeLookup(e.currentTarget.value);
+              }
             }
           }}
         />
