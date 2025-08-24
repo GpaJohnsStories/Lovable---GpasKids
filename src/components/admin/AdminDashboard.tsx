@@ -10,10 +10,10 @@ import PrivilegedAdminManager from "./PrivilegedAdminManager";
 import EdgeFunctionAuthTest from "./EdgeFunctionAuthTest";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Volume2, Shield, Settings, Users, Code } from "lucide-react";
+import { Volume2, Shield, Settings, Users, Code, RefreshCw, Copy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { BUILD_ID } from "@/utils/buildInfo";
+import { BUILD_ID, BUILD_SOURCE } from "@/utils/buildInfo";
 
 interface AdminDashboardProps {
   onCreateStory: () => void;
@@ -25,6 +25,19 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
   const [showSecurityAudit, setShowSecurityAudit] = useState(false);
   const [showAdminManager, setShowAdminManager] = useState(false);
 
+  const handleForceRefresh = () => {
+    window.location.href = `${window.location.href.split('?')[0]}?v=${BUILD_ID}`;
+  };
+
+  const handleCopyBuildId = async () => {
+    try {
+      await navigator.clipboard.writeText(BUILD_ID);
+      // Could add toast notification here if desired
+    } catch (err) {
+      console.error('Failed to copy build ID:', err);
+    }
+  };
+
   return (
     <AdminLayout>
       <div className="mb-8">
@@ -35,12 +48,37 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
         <div className="mt-4 flex gap-4">
           <Card className="bg-blue-50 border-blue-200 flex-1">
             <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-blue-700">
-                <Code className="h-4 w-4" />
-                <span className="font-medium">Build Version:</span>
-                <span className="font-mono text-sm bg-white px-2 py-1 rounded border">
-                  {BUILD_ID}
-                </span>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-blue-700">
+                  <Code className="h-4 w-4" />
+                  <span className="font-medium">Build Version:</span>
+                  <span className="font-mono text-sm bg-white px-2 py-1 rounded border">
+                    {BUILD_ID}
+                  </span>
+                  <span className={`text-xs px-2 py-1 rounded ${BUILD_SOURCE === 'compile-time' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                    {BUILD_SOURCE}
+                  </span>
+                </div>
+                <div className="flex gap-1">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={handleForceRefresh}
+                    className="h-7 px-2 text-xs"
+                    title="Force refresh with cache bust"
+                  >
+                    <RefreshCw className="h-3 w-3" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={handleCopyBuildId}
+                    className="h-7 px-2 text-xs"
+                    title="Copy build ID"
+                  >
+                    <Copy className="h-3 w-3" />
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>

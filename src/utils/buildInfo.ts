@@ -16,5 +16,8 @@ export const BUILD_ID = typeof __BUILD_ID__ !== 'undefined' ? __BUILD_ID__ : (()
   return `${year}${month}${day}-${hours}${minutes}`;
 })();
 
+// Export build source for debugging
+export const BUILD_SOURCE = typeof __BUILD_ID__ !== 'undefined' ? 'compile-time' : 'runtime';
+
 // Log build info once when this module is imported
-console.log(`🏗️ App Build ID: ${BUILD_ID} (${typeof __BUILD_ID__ !== 'undefined' ? 'compile-time' : 'runtime'})`);
+console.log(`🏗️ App Build ID: ${BUILD_ID} (${BUILD_SOURCE})`);
