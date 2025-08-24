@@ -32,17 +32,31 @@ const AdminDashboard = ({ onCreateStory, onEditStory }: AdminDashboardProps) => 
           Manage Stories
         </h1>
         
-        <Card className="mt-4 bg-blue-50 border-blue-200">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 text-blue-700">
-              <Code className="h-4 w-4" />
-              <span className="font-medium">Current Build Version:</span>
-              <span className="font-mono text-sm bg-white px-2 py-1 rounded border">
-                {BUILD_ID}
-              </span>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="mt-4 flex gap-4">
+          <Card className="bg-blue-50 border-blue-200 flex-1">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 text-blue-700">
+                <Code className="h-4 w-4" />
+                <span className="font-medium">Build Version:</span>
+                <span className="font-mono text-sm bg-white px-2 py-1 rounded border">
+                  {BUILD_ID}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-green-50 border-green-200 flex-1">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 text-green-700">
+                <span className="font-medium">Environment:</span>
+                <span className="font-mono text-xs bg-white px-2 py-1 rounded border">
+                  {window.location.hostname === 'localhost' ? 'LOCAL' : 
+                   window.location.hostname.includes('lovable.app') ? 'PREVIEW' : 'PRODUCTION'}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
       
       <div className="my-6 flex gap-4">
