@@ -36,7 +36,7 @@ const SuperTextStoryStatus = () => {
   return (
     <Card className="h-fit relative" style={{
       borderColor: '#F97316',
-      borderWidth: '2px'
+      borderWidth: '4px'
     }}>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
