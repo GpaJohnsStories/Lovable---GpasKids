@@ -56,7 +56,7 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
         return {
           __html: `
             <div class="bg-orange-100 p-4 rounded-lg border-2 border-orange-300 mb-4">
-              <div class="text-orange-700 font-bold text-xl leading-relaxed" style="font-family: 'Kalam', cursive;">
+              <div class="text-orange-700 font-bold text-xl leading-relaxed" style="font-family: 'Caveat', cursive;">
                 ${buddyParagraph.replace(/^<p[^>]*>/, '').replace(/<\/p>$/, '')}
               </div>
             </div>
