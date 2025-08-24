@@ -18,7 +18,6 @@ const Index = () => {
           webtextCode="SYS-AAA"
           borderColor="border-yellow-400"
           backgroundColor="#ADD8E6"
-          title="SYS-AAA Content"
         />
         
         {/* GpaJohn's Banner - Keeping the wide blue button */}

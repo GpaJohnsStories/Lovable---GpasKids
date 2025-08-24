@@ -14,7 +14,7 @@ interface ProportionalWebTextBoxProps {
   webtextCode: string;
   borderColor: string;
   backgroundColor: string;
-  title: string;
+  title?: string;
   id?: string;
 }
 
@@ -210,11 +210,13 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
         </div>
 
         {/* Title */}
-        <div className="mb-6 pr-16">
-          <h3 className={`${typographyClasses.h3} font-bold text-amber-800`}>
-            {webtext?.title || title}
-          </h3>
-        </div>
+        {(webtext?.title || title) && (
+          <div className="mb-6 pr-16">
+            <h3 className={`${typographyClasses.h3} font-bold text-amber-800`}>
+              {webtext?.title || title}
+            </h3>
+          </div>
+        )}
 
         {/* Photo and Content Section with true text wrapping */}
         <div className="relative">
@@ -260,17 +262,17 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
       </div>
 
       {/* SuperAV Floating Popup with scale support */}
-      <SuperAV
-        isOpen={showSuperAV}
-        onClose={() => setShowSuperAV(false)}
-        title={webtext?.title || title}
-        author={webtext?.author}
-        voiceName={webtext?.ai_voice_name}
-        showAuthor={false}
-        audioUrl={webtext?.audio_url}
-        fontScale={fontScale}
-        onFontScaleChange={setFontScale}
-      />
+        <SuperAV
+          isOpen={showSuperAV}
+          onClose={() => setShowSuperAV(false)}
+          title={webtext?.title || title || "Content"}
+          author={webtext?.author}
+          voiceName={webtext?.ai_voice_name}
+          showAuthor={false}
+          audioUrl={webtext?.audio_url}
+          fontScale={fontScale}
+          onFontScaleChange={setFontScale}
+        />
     </>
   );
 };
