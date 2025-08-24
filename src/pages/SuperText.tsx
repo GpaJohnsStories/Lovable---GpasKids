@@ -70,7 +70,7 @@ const SuperText = () => {
               <TableCell className="p-2 align-top">
                 <button
                   onClick={handleSaveAndClear}
-                  className="px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2"
+                  className="w-80 px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2"
                   style={{
                     backgroundColor: '#228B22', // Forest Green
                     color: '#FFD700', // Golden Yellow
@@ -104,7 +104,7 @@ const SuperText = () => {
                     // TODO: Cancel functionality will be implemented later
                     console.log('Cancel all edits - functionality to be implemented');
                   }}
-                  className="px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2"
+                  className="w-80 px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2"
                   style={{
                     backgroundColor: '#dc2626', // Red Primary
                     color: '#ffffff', // Bold White
