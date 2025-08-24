@@ -6,12 +6,12 @@ const SuperText = () => {
   return (
     <SecureAdminRoute>
       <Helmet>
-        <title>Super Text to Add / Edit / Update Text Files - Admin</title>
+        <title>Super Text Manager - Admin</title>
       </Helmet>
       
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-amber-800 mb-8">
-          Super Text to Add / Edit / Update Text Files
+          Super Text Manager
         </h1>
         
         {/* Content will be added in future steps */}
