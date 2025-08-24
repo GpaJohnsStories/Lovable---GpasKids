@@ -49,7 +49,7 @@ const SuperText = () => {
         <title>Super Text Manager - Admin</title>
       </Helmet>
       
-      <div className="container mx-auto px-4 pb-8">
+      <div className="container mx-auto px-4 pb-8 -mt-[30px]">
         {/* Two-column header row */}
         <div className="flex justify-between items-start mb-[2px]">
           <h1 className="text-3xl font-bold text-amber-800 m-0">
