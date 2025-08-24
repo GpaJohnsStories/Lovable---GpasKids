@@ -50,16 +50,16 @@ const SuperText = () => {
       </Helmet>
       
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-amber-800 mb-[2px]">
-          Super Text Manager
-        </h1>
-        
         {/* Story Status Box */}
-        <div className="flex justify-end mt-[2px] mb-4">
+        <div className="flex justify-end mb-[2px]">
           <div className="w-80">
             <SuperTextStoryStatus />
           </div>
         </div>
+        
+        <h1 className="text-3xl font-bold text-amber-800 mb-8">
+          Super Text Manager
+        </h1>
         
         {/* Save & Clear Form Button Row */}
         <div className="flex justify-start mb-8">
