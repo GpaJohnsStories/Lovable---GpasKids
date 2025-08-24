@@ -70,7 +70,7 @@ const SuperText = () => {
               <TableCell className="p-2 align-top">
                 <button
                   onClick={handleSaveAndClear}
-                  className="w-80 px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2"
+                  className="w-80 h-16 px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
                   style={{
                     backgroundColor: '#228B22', // Forest Green
                     color: '#FFD700', // Golden Yellow
@@ -104,7 +104,7 @@ const SuperText = () => {
                     // TODO: Cancel functionality will be implemented later
                     console.log('Cancel all edits - functionality to be implemented');
                   }}
-                  className="w-80 px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2"
+                  className="w-80 h-16 px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
                   style={{
                     backgroundColor: '#dc2626', // Red Primary
                     color: '#ffffff', // Bold White
@@ -125,7 +125,7 @@ const SuperText = () => {
                     e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
                   }}
                 >
-                  CANCEL ALL EDITS & CLEAR FORM
+                  <span className="text-center leading-tight">CANCEL ALL EDITS & CLEAR FORM</span>
                 </button>
               </TableCell>
             </TableRow>
