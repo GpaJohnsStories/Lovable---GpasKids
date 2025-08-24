@@ -31,7 +31,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
   const isWebText = category === "WebText";
   const baseFontFamily = isWebText 
     ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" 
-    : "Georgia, serif";
+    : "'Arial', sans-serif";
 
   if (content) {
     // Extract tokens if showing header preview
@@ -69,7 +69,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               <h1 
                 className="text-2xl font-bold mb-2 text-foreground"
                 style={{ 
-                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
+                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "'Arial', sans-serif",
                   fontSize: `${Math.floor(fontSize * 1.5)}px`
                 }}
                 dangerouslySetInnerHTML={createSafeHtml(tokens.titleHtml)}
@@ -79,7 +79,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               <div 
                 className="text-lg italic mb-2 text-muted-foreground"
                 style={{ 
-                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
+                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "'Arial', sans-serif",
                   fontSize: `${Math.floor(fontSize * 1.1)}px`
                 }}
                 dangerouslySetInnerHTML={createSafeHtml(tokens.taglineHtml)}
@@ -89,7 +89,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               <div 
                 className="text-base mb-2 text-foreground"
                 style={{ 
-                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
+                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "'Arial', sans-serif",
                   fontSize: `${fontSize}px`
                 }}
                 dangerouslySetInnerHTML={createSafeHtml(tokens.authorHtml)}
@@ -99,7 +99,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               <div 
                 className="text-sm text-muted-foreground"
                 style={{ 
-                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
+                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "'Arial', sans-serif",
                   fontSize: `${Math.floor(fontSize * 0.9)}px`
                 }}
                 dangerouslySetInnerHTML={createSafeHtml(tokens.excerptHtml)}
@@ -150,7 +150,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             }
             /* Default font family for content without inline styles */
             div:not([style*="font-family"]) {
-              font-family: ${isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif"} !important;
+              font-family: ${isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "'Arial', sans-serif"} !important;
             }
           `
         }} />

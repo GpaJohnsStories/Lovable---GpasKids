@@ -22,7 +22,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   placeholder = "Start writing your story...",
   onSave,
   category,
-  fontSize = 16,
+  fontSize = 21,
   onFontSizeChange
 }) => {
   console.log('🎯 SplitViewEditor: Rendering with content:', {
