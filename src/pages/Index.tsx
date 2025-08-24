@@ -15,7 +15,7 @@ const Index = () => {
       
       <main className="container mx-auto px-4 pt-0">
         <ProportionalWebTextBox 
-          webtextCode="SYS-WEL"
+          webtextCode="SYS-AAA"
           borderColor="border-yellow-400"
           backgroundColor="#ADD8E6"
           title=""
