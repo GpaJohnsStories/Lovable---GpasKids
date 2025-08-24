@@ -89,7 +89,7 @@ const SuperText = () => {
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <AlertDialogContent className="max-w-md">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-xl font-bold text-center">
+            <AlertDialogTitle className="text-xl font-bold text-center" style={{ color: '#dc2626' }}>
               Confirm Save & Clear
             </AlertDialogTitle>
             <AlertDialogDescription className="text-lg text-center">
