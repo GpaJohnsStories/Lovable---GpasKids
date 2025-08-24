@@ -40,7 +40,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const { iconName: readStoryIconName } = useCachedIcon("!CO-MM4.gif");
   const { iconName: osmIconName } = useCachedIcon("!CO-OSM.png");
   const { iconName: writingIconName } = useCachedIcon("!CO-MM6.gif");
-  const { iconName: aboutIconName } = useCachedIcon("!CO-MM7.jpg");
+  const { iconName: aboutIconName } = useCachedIcon("!CO-AB3.jpg");
   const { iconName: safeIconName } = useCachedIcon("!CO-MM8.jpg");
   
   // Submenu icon names
@@ -162,7 +162,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     // },
     {
       id: "about-us",
-      icon: "!CO-MM7.jpg", // About Us icon - Main Menu 8
+      icon: "!CO-AB3.jpg", // About Us icon - Main Menu 8
       text: "About Us",
       tooltipText: aboutIconName || "About Us",
       color: "#F97316",
