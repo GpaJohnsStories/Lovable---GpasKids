@@ -98,7 +98,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                     className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded-lg border-2 border-blue-500 shadow-lg cursor-pointer transition-transform hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 rounded-lg"></div>
-                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-xs text-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif' }}>
                     {mainPhoto.alt}
                   </div>
                 </div>
@@ -195,7 +195,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                   }}
                 />
                 {photos[0]?.alt && (
-                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-xs text-amber-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded px-2 py-1 text-amber-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif' }}>
                     {photos[0].alt}
                   </div>
                 )}
