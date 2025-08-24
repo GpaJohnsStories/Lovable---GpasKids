@@ -52,6 +52,7 @@ import Register from "./components/auth/Register";
 import ResetPasswordRequest from "./components/auth/ResetPasswordRequest";
 
 import UnifiedStoryPage from "./components/unified-story/UnifiedStoryPage";
+import SuperText from "./pages/SuperText";
 
 // Security and Auth
 import GlobalHelpProvider from "./components/GlobalHelpProvider";
@@ -140,6 +141,7 @@ function App() {
                       
                       <Route path="/buddys_admin/reference" element={<SecureAdminRoute><ReferenceDashboard /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMapContent /></SecureAdminRoute>} />
+                      <Route path="/buddys_admin/super-text" element={<SuperText />} />
 
                       {/* Unified Story System Routes - These are the only story management routes now */}
                       <Route path="/buddys_admin/unified_story_system/add" element={<SecureAdminRoute><UnifiedStoryPage mode="add" /></SecureAdminRoute>} />
