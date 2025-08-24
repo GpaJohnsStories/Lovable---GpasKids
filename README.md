@@ -64,6 +64,30 @@ This project is built with:
 
 Simply open [Lovable](https://lovable.dev/projects/37a1286c-a0bf-481b-8daa-ca6740409270) and click on Share -> Publish.
 
+## Deploying to GoDaddy Shared Hosting
+
+To deploy this React app to GoDaddy shared hosting:
+
+1. **Build the production version:**
+   ```sh
+   npm run build
+   ```
+
+2. **Create deployment zip:**
+   - Navigate to the `dist` folder created by the build
+   - Select ALL contents inside the `dist` folder (not the folder itself)
+   - Create a zip file containing all these files
+   - The .htaccess file will be included automatically for proper routing
+
+3. **Upload to GoDaddy:**
+   - Log into your GoDaddy cPanel
+   - Go to File Manager
+   - Navigate to your domain's public_html folder
+   - Upload and extract the zip file
+   - Your React app should now be live!
+
+**Important:** Make sure your Supabase project allows your GoDaddy domain in CORS settings.
+
 ## Can I connect a custom domain to my Lovable project?
 
 Yes, you can!
