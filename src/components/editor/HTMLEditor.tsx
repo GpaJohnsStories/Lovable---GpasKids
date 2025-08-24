@@ -247,7 +247,8 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
             placeholder={placeholder}
             className="w-full h-full min-h-[400px] p-4 border-none outline-none resize-none font-mono text-sm leading-relaxed bg-white"
             style={{
-              fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+              fontFamily: 'Arial, sans-serif',
+              fontSize: '21px',
               lineHeight: '1.6'
             }}
           />
