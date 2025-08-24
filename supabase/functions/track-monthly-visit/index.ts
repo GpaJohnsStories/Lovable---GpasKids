@@ -5,6 +5,90 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+// Simple GeoIP lookup using a basic IP geolocation service as fallback
+// In production, we'll use the MaxMind MMDB file for better accuracy
+async function getCountryFromIP(ip: string): Promise<{ country_code: string; country_name: string }> {
+  try {
+    // For localhost/private IPs, return unknown
+    if (ip === '127.0.0.1' || ip === '::1' || ip.startsWith('192.168.') || ip.startsWith('10.') || ip.startsWith('172.')) {
+      return { country_code: 'XX', country_name: 'Unknown' };
+    }
+
+    // Try to get country from a free geolocation service
+    const geoResponse = await fetch(`http://ip-api.com/json/${ip}?fields=status,countryCode,country`, {
+      timeout: 5000
+    });
+    
+    if (geoResponse.ok) {
+      const geoData = await geoResponse.json();
+      if (geoData.status === 'success') {
+        return {
+          country_code: geoData.countryCode || 'XX',
+          country_name: geoData.country || 'Unknown'
+        };
+      }
+    }
+  } catch (error) {
+    console.warn('GeoIP lookup failed:', error);
+  }
+  
+  // Default to unknown if lookup fails
+  return { country_code: 'XX', country_name: 'Unknown' };
+}
+
+async function trackCountryVisit(supabase: any, year: number, month: number, countryCode: string, countryName: string) {
+  try {
+    // Get existing record
+    const { data: existingRecord } = await supabase
+      .from('monthly_country_visits')
+      .select('*')
+      .eq('year', year)
+      .eq('month', month)
+      .eq('country_code', countryCode)
+      .single();
+
+    if (existingRecord) {
+      // Update existing record
+      const { error: updateError } = await supabase
+        .from('monthly_country_visits')
+        .update({
+          visit_count: existingRecord.visit_count + 1,
+          last_visit_date: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        })
+        .eq('year', year)
+        .eq('month', month)
+        .eq('country_code', countryCode);
+
+      if (updateError) {
+        console.error('Failed to update country visit:', updateError);
+      } else {
+        console.log(`Updated country visit: ${countryCode} (${countryName}) ${existingRecord.visit_count} -> ${existingRecord.visit_count + 1}`);
+      }
+    } else {
+      // Insert new record
+      const { error: insertError } = await supabase
+        .from('monthly_country_visits')
+        .insert({
+          year,
+          month,
+          country_code: countryCode,
+          country_name: countryName,
+          visit_count: 1,
+          last_visit_date: new Date().toISOString()
+        });
+
+      if (insertError) {
+        console.error('Failed to insert country visit:', insertError);
+      } else {
+        console.log(`Tracked new country visit: ${countryCode} (${countryName}) for ${year}-${month}`);
+      }
+    }
+  } catch (error) {
+    console.error('Error tracking country visit:', error);
+  }
+}
+
 // Legitimate search engine crawlers that should be allowed for SEO
 const SEARCH_ENGINE_CRAWLERS = [
   'googlebot', 'bingbot', 'slurp', 'duckduckbot', 'baiduspider', 
@@ -267,6 +351,20 @@ Deno.serve(async (req) => {
     }
 
     console.log(`=== TRACKING LEGITIMATE VISIT FOR ${year}-${month} ===`)
+
+    // Get visitor's IP address for country lookup
+    const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0] || 
+                     req.headers.get('x-real-ip') || 
+                     '127.0.0.1';
+
+    console.log(`Processing visit from IP: ${clientIp}`);
+
+    // Get country information from IP
+    const { country_code, country_name } = await getCountryFromIP(clientIp);
+    console.log(`Resolved country: ${country_code} (${country_name})`);
+
+    // Track the country visit
+    await trackCountryVisit(supabase, year, month, country_code, country_name);
 
     // Try to increment visit count for current month
     // First, try to get existing record

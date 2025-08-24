@@ -295,6 +295,39 @@ export type Database = {
         }
         Relationships: []
       }
+      monthly_country_visits: {
+        Row: {
+          country_code: string
+          country_name: string
+          created_at: string
+          last_visit_date: string
+          month: number
+          updated_at: string
+          visit_count: number
+          year: number
+        }
+        Insert: {
+          country_code?: string
+          country_name?: string
+          created_at?: string
+          last_visit_date?: string
+          month: number
+          updated_at?: string
+          visit_count?: number
+          year: number
+        }
+        Update: {
+          country_code?: string
+          country_name?: string
+          created_at?: string
+          last_visit_date?: string
+          month?: number
+          updated_at?: string
+          visit_count?: number
+          year?: number
+        }
+        Relationships: []
+      }
       monthly_visits: {
         Row: {
           admin_visits_count: number
