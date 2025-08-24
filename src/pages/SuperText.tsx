@@ -50,12 +50,19 @@ const SuperText = () => {
       </Helmet>
       
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-amber-800 mb-8">
+        <h1 className="text-3xl font-bold text-amber-800 mb-[2px]">
           Super Text Manager
         </h1>
         
-        {/* Save & Clear Form Button Row with Story Status */}
-        <div className="flex justify-between items-start mb-8 gap-8">
+        {/* Story Status Box */}
+        <div className="flex justify-end mt-[2px] mb-4">
+          <div className="w-80">
+            <SuperTextStoryStatus />
+          </div>
+        </div>
+        
+        {/* Save & Clear Form Button Row */}
+        <div className="flex justify-start mb-8">
           <button
             onClick={handleSaveAndClear}
             className="px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2"
@@ -81,11 +88,6 @@ const SuperText = () => {
           >
             Save & Clear Form
           </button>
-          
-          {/* Story Status Box */}
-          <div className="w-80">
-            <SuperTextStoryStatus />
-          </div>
         </div>
         
         {/* Content will be added in future steps */}
