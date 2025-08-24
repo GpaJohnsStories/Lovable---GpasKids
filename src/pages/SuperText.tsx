@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import SecureAdminRoute from '@/components/admin/SecureAdminRoute';
+import './SuperText.css';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -98,27 +99,13 @@ const SuperText = () => {
           <AlertDialogFooter className="flex justify-center gap-4 mt-6">
             <AlertDialogCancel 
               onClick={handleConfirmNo}
-              className="px-8 py-3 rounded-full text-lg font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2"
-              style={{
-                backgroundColor: '#dc2626', // Red Primary
-                color: '#FFD700', // Golden Yellow
-                borderColor: '#b91c1c', // Darker red for border
-                boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-              }}
+              className="supertext-no-btn rounded-full px-8 py-3 text-lg font-bold border-2"
             >
               NO
             </AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleConfirmYes}
-              className="px-8 py-3 rounded-full text-lg font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2"
-              style={{
-                backgroundColor: '#228B22', // Forest Green
-                color: '#ffffff', // Pure White
-                borderColor: '#1F7A1F', // Darker green for border
-                boxShadow: '0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-              }}
+              className="supertext-yes-btn rounded-full px-8 py-3 text-lg font-bold border-2"
             >
               YES
             </AlertDialogAction>

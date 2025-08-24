@@ -1,0 +1,47 @@
+/* SuperText page specific styles */
+
+.supertext-yes-btn {
+  background-color: #228B22 !important; /* Forest Green */
+  background-image: none !important;
+  color: #ffffff !important; /* Pure White */
+  border-color: #1F7A1F !important; /* Darker green for border */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+  transition: all 0.2s ease !important;
+}
+
+.supertext-yes-btn:hover {
+  background-color: #228B22 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
+}
+
+.supertext-yes-btn:active {
+  transform: scale(0.98) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
+}
+
+.supertext-no-btn {
+  background-color: #dc2626 !important; /* Red Primary */
+  background-image: none !important;
+  color: #FFD700 !important; /* Golden Yellow */
+  border-color: #b91c1c !important; /* Darker red for border */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+  transition: all 0.2s ease !important;
+}
+
+.supertext-no-btn:hover {
+  background-color: #dc2626 !important;
+  background-image: none !important;
+  color: #FFD700 !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
+}
+
+.supertext-no-btn:active {
+  transform: scale(0.98) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
+}
