@@ -70,7 +70,7 @@ const SuperText = () => {
               <TableCell className="p-2 align-top">
                 <button
                   onClick={handleSaveAndClear}
-                  className="w-80 h-16 px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
+                  className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
                   style={{
                     backgroundColor: '#228B22', // Forest Green
                     color: '#FFD700', // Golden Yellow
