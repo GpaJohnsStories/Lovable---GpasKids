@@ -51,153 +51,164 @@ const SuperText = () => {
       </Helmet>
       
       <div className="container mx-auto px-4 pb-8 -mt-[30px]">
-        <Table className="w-full border-collapse">
-          <TableBody>
-            {/* Row 1: Title and Story Status (spans 4 rows) */}
-            <TableRow className="border-0">
-              <TableCell className="p-2 align-top">
-                <h1 className="text-3xl font-bold text-amber-800 m-0 pl-2 pt-[14px]">
-                  Super Text Manager
-                </h1>
-              </TableCell>
-              <TableCell className="p-2 align-top w-80" rowSpan={4}>
+        {/* Title */}
+        <h1 className="text-3xl font-bold text-amber-800 mb-6 pl-2">
+          Super Text Manager
+        </h1>
+
+        {/* Desktop Layout: 3-column table (hidden on tablets) */}
+        <div className="hidden lg:block">
+          <Table className="w-full border-collapse">
+            <TableBody>
+              <TableRow className="border-0">
+                {/* Left Column: Blank */}
+                <TableCell className="p-2 align-top w-1/3">
+                  {/* Future content */}
+                </TableCell>
+                
+                {/* Middle Column: Story Status */}
+                <TableCell className="p-2 align-top w-1/3">
+                  <SuperTextStoryStatus />
+                </TableCell>
+                
+                {/* Right Column: Buttons */}
+                <TableCell className="p-2 align-top w-1/3">
+                  <div className="flex flex-col gap-4">
+                    <button
+                      onClick={handleSaveAndClear}
+                      className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
+                      style={{
+                        backgroundColor: '#228B22', // Forest Green
+                        color: '#FFD700', // Golden Yellow
+                        borderColor: '#1F7A1F', // Darker green for border
+                        boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                      }}
+                      onMouseDown={(e) => {
+                        e.currentTarget.style.transform = 'scale(0.98)';
+                        e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
+                      }}
+                      onMouseUp={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                        e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                      }}
+                    >
+                      Save & Clear Form
+                    </button>
+                    
+                    <button
+                      onClick={() => {
+                        // TODO: Cancel functionality will be implemented later
+                        console.log('Cancel all edits - functionality to be implemented');
+                      }}
+                      className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
+                      style={{
+                        backgroundColor: '#dc2626', // Red Primary
+                        color: '#ffffff', // Bold White
+                        borderColor: '#b91c1c', // Darker red for border
+                        boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                      }}
+                      onMouseDown={(e) => {
+                        e.currentTarget.style.transform = 'scale(0.98)';
+                        e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
+                      }}
+                      onMouseUp={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                        e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                      }}
+                    >
+                      <span className="text-center leading-tight">CANCEL ALL EDITS & CLEAR FORM</span>
+                    </button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* Tablet Layout: 2-column grid (hidden on desktop) */}
+        <div className="block lg:hidden">
+          <div className="grid grid-cols-2 gap-4">
+            {/* First Row: Story Status centered across both columns */}
+            <div className="col-span-2 flex justify-center">
+              <div className="max-w-md">
                 <SuperTextStoryStatus />
-              </TableCell>
-            </TableRow>
+              </div>
+            </div>
             
-            {/* Row 2: Save & Clear Form Button */}
-            <TableRow className="border-0">
-              <TableCell className="p-2 align-top">
-                <button
-                  onClick={handleSaveAndClear}
-                  className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
-                  style={{
-                    backgroundColor: '#228B22', // Forest Green
-                    color: '#FFD700', // Golden Yellow
-                    borderColor: '#1F7A1F', // Darker green for border
-                    boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                  }}
-                  onMouseDown={(e) => {
-                    e.currentTarget.style.transform = 'scale(0.98)';
-                    e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
-                  }}
-                  onMouseUp={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.05)';
-                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
-                  }}
-                >
-                  Save & Clear Form
-                </button>
-              </TableCell>
-            </TableRow>
+            {/* Second Row: Buttons in left column, empty right column */}
+            <div className="flex flex-col gap-4">
+              <button
+                onClick={handleSaveAndClear}
+                className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
+                style={{
+                  backgroundColor: '#228B22', // Forest Green
+                  color: '#FFD700', // Golden Yellow
+                  borderColor: '#1F7A1F', // Darker green for border
+                  boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                }}
+                onMouseDown={(e) => {
+                  e.currentTarget.style.transform = 'scale(0.98)';
+                  e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
+                }}
+                onMouseUp={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                }}
+              >
+                Save & Clear Form
+              </button>
+              
+              <button
+                onClick={() => {
+                  // TODO: Cancel functionality will be implemented later
+                  console.log('Cancel all edits - functionality to be implemented');
+                }}
+                className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
+                style={{
+                  backgroundColor: '#dc2626', // Red Primary
+                  color: '#ffffff', // Bold White
+                  borderColor: '#b91c1c', // Darker red for border
+                  boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                }}
+                onMouseDown={(e) => {
+                  e.currentTarget.style.transform = 'scale(0.98)';
+                  e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
+                }}
+                onMouseUp={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                }}
+              >
+                <span className="text-center leading-tight">CANCEL ALL EDITS & CLEAR FORM</span>
+              </button>
+            </div>
             
-            {/* Row 3: Cancel Button */}
-            <TableRow className="border-0">
-              <TableCell className="p-2 align-top">
-                <button
-                  onClick={() => {
-                    // TODO: Cancel functionality will be implemented later
-                    console.log('Cancel all edits - functionality to be implemented');
-                  }}
-                  className="w-80 h-16 px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
-                  style={{
-                    backgroundColor: '#dc2626', // Red Primary
-                    color: '#ffffff', // Bold White
-                    borderColor: '#b91c1c', // Darker red for border
-                    boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                  }}
-                  onMouseDown={(e) => {
-                    e.currentTarget.style.transform = 'scale(0.98)';
-                    e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
-                  }}
-                  onMouseUp={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.05)';
-                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
-                  }}
-                >
-                  <span className="text-center leading-tight">CANCEL ALL EDITS & CLEAR FORM</span>
-                </button>
-              </TableCell>
-            </TableRow>
-            
-            {/* Row 4: Empty placeholder */}
-            <TableRow className="border-0">
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-            </TableRow>
-            
-            {/* Row 5: Empty placeholder */}
-            <TableRow className="border-0">
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-            </TableRow>
-            
-            {/* Row 6: Empty placeholder */}
-            <TableRow className="border-0">
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-            </TableRow>
-            
-            {/* Row 7: Empty placeholder */}
-            <TableRow className="border-0">
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-            </TableRow>
-            
-            {/* Row 8: Empty placeholder */}
-            <TableRow className="border-0">
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-            </TableRow>
-            
-            {/* Row 9: Empty placeholder */}
-            <TableRow className="border-0">
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-            </TableRow>
-            
-            {/* Row 10: Empty placeholder */}
-            <TableRow className="border-0">
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-              <TableCell className="p-2 align-top">
-                {/* Future content */}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+            {/* Empty right column */}
+            <div>
+              {/* Future content */}
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Confirmation Dialog */}
