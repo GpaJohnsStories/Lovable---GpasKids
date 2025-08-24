@@ -96,10 +96,37 @@ const SuperText = () => {
               </TableCell>
             </TableRow>
             
-            {/* Row 3: Empty placeholder */}
+            {/* Row 3: Cancel Button */}
             <TableRow className="border-0">
               <TableCell className="p-2 align-top">
-                {/* Future content */}
+                <button
+                  onClick={() => {
+                    // TODO: Cancel functionality will be implemented later
+                    console.log('Cancel all edits - functionality to be implemented');
+                  }}
+                  className="px-8 py-4 rounded-full text-xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2"
+                  style={{
+                    backgroundColor: '#dc2626', // Red Primary
+                    color: '#ffffff', // Bold White
+                    borderColor: '#b91c1c', // Darker red for border
+                    boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                  }}
+                  onMouseDown={(e) => {
+                    e.currentTarget.style.transform = 'scale(0.98)';
+                    e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
+                  }}
+                  onMouseUp={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                  }}
+                >
+                  CANCEL ALL EDITS & CLEAR FORM
+                </button>
               </TableCell>
             </TableRow>
             
