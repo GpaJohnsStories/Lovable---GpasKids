@@ -22,7 +22,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   placeholder = "Start writing your story...",
   onSave,
   category,
-  fontSize = 21,
+  fontSize = 16,
   onFontSizeChange
 }) => {
   console.log('🎯 SplitViewEditor: Rendering with content:', {
@@ -303,18 +303,13 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     const textarea = editorRef.current;
     if (!textarea) return;
 
-    // Check if block-style or colon-style tokens already exist
-    const hasBlockTokens = content.includes('{{TITLE}}') || 
-                          content.includes('{{TAGLINE}}') || 
-                          content.includes('{{AUTHOR}}') || 
-                          content.includes('{{EXCERPT}}');
-                          
-    const hasColonTokens = content.includes('{{TITLE:') || 
-                          content.includes('{{TAGLINE:') || 
-                          content.includes('{{AUTHOR:') || 
-                          content.includes('{{EXCERPT:');
+    // Check if tokens already exist
+    const hasTokens = content.includes('{{TITLE:') || 
+                     content.includes('{{TAGLINE:') || 
+                     content.includes('{{AUTHOR:') || 
+                     content.includes('{{EXCERPT:');
     
-    if (hasBlockTokens || hasColonTokens) {
+    if (hasTokens) {
       // Position cursor at the beginning for editing existing tokens
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = 0;
@@ -323,19 +318,19 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
       return;
     }
 
-    // Insert block-style tokens at the top with blank line after excerpt
-    const tokensText = `{{TITLE}}{{/TITLE}}
-{{TAGLINE}}{{/TAGLINE}}
-{{AUTHOR}}{{/AUTHOR}}
-{{EXCERPT}}{{/EXCERPT}}
+    // Insert tokens at the top with blank line after excerpt
+    const tokensText = `{{TITLE: }}
+{{TAGLINE: }}
+{{AUTHOR: }}
+{{EXCERPT: }}
 
 ${content}`;
     
     onChange(tokensText);
     
-    // Position cursor between {{TITLE}} and {{/TITLE}} for immediate editing
+    // Position cursor after "{{TITLE: " for immediate editing
     setTimeout(() => {
-      textarea.selectionStart = textarea.selectionEnd = 9; // Position after "{{TITLE}}"
+      textarea.selectionStart = textarea.selectionEnd = 9; // Position after "{{TITLE: "
       textarea.focus();
     }, 0);
   };

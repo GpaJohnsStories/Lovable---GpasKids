@@ -20,7 +20,7 @@ const UnifiedStoryPage: React.FC<UnifiedStoryPageProps> = ({ mode }) => {
   const navigate = useNavigate();
   const storyId = mode === 'update' ? id : undefined;
   const [showSuperAV, setShowSuperAV] = useState(false);
-  const [fontSize, setFontSize] = useState(21);
+  const [fontSize, setFontSize] = useState(16);
 
   devLog.info('🎯 UnifiedStoryPage: Rendering with mode:', mode);
   devLog.info('🎯 UnifiedStoryPage: URL id param:', id);

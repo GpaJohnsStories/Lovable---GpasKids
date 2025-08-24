@@ -97,7 +97,7 @@ const Guide = () => {
             <div className="flex flex-wrap justify-center gap-1.5">
               <button onClick={() => document.getElementById('SYS-G1A')?.scrollIntoView({
               behavior: 'smooth'
-            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 rounded-full text-sm font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_6px_12px_rgba(0,0,0,0.15),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]" style={{
+            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 rounded-full text-sm font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]" style={{
               borderColor: "#16a34a"
             }}>
                 <span className="text-orange-800 text-base">Start</span>
@@ -105,7 +105,7 @@ const Guide = () => {
               </button>
               <button onClick={() => document.getElementById('SYS-G2A')?.scrollIntoView({
               behavior: 'smooth'
-            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-red-200 to-red-300 hover:from-red-300 hover:to-red-400 active:from-red-400 active:to-red-500 text-white border-2 border-red-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_6px_12px_rgba(0,0,0,0.15),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]" style={{
+            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-red-200 to-red-300 hover:from-red-300 hover:to-red-400 active:from-red-400 active:to-red-500 text-white border-2 border-red-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]" style={{
               borderColor: "#dc2626"
             }}>
                 <span className="text-orange-800 text-[10px]">Guide to</span>
@@ -113,7 +113,7 @@ const Guide = () => {
               </button>
               <button onClick={() => document.getElementById('SYS-G3A')?.scrollIntoView({
               behavior: 'smooth'
-            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-orange-200 to-orange-300 hover:from-orange-300 hover:to-orange-400 active:from-orange-400 active:to-orange-500 text-white border-2 border-orange-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_6px_12px_rgba(0,0,0,0.15),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]" style={{
+            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-orange-200 to-orange-300 hover:from-orange-300 hover:to-orange-400 active:from-orange-400 active:to-orange-500 text-white border-2 border-orange-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]" style={{
               borderColor: "#F97316"
             }}>
                 <span className="text-orange-800 text-[10px]">Guide to</span>
@@ -121,7 +121,7 @@ const Guide = () => {
               </button>
               <button onClick={() => document.getElementById('SYS-G3B')?.scrollIntoView({
               behavior: 'smooth'
-            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-blue-200 to-blue-300 hover:from-blue-300 hover:to-blue-400 active:from-blue-400 active:to-blue-500 text-white border-2 border-blue-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_6px_12px_rgba(0,0,0,0.15),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]" style={{
+            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-blue-200 to-blue-300 hover:from-blue-300 hover:to-blue-400 active:from-blue-400 active:to-blue-500 text-white border-2 border-blue-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]" style={{
               borderColor: "#3b82f6"
             }}>
                 <span className="text-orange-800 text-[10px]">Guide to</span>
@@ -130,7 +130,7 @@ const Guide = () => {
               {/* Commented out SYS-G5A button
               <button onClick={() => document.getElementById('SYS-G5A')?.scrollIntoView({
               behavior: 'smooth'
-            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-orange-200 to-orange-300 hover:from-orange-300 hover:to-orange-400 active:from-orange-400 active:to-orange-500 text-white border-2 border-orange-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_6px_12px_rgba(0,0,0,0.15),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]" style={{
+            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-orange-200 to-orange-300 hover:from-orange-300 hover:to-orange-400 active:from-orange-400 active:to-orange-500 text-white border-2 border-orange-600 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]" style={{
               borderColor: "#F97316"
             }}>
                 <span className="text-orange-800 text-[10px]">How to</span>
@@ -139,7 +139,7 @@ const Guide = () => {
               */}
               <button onClick={() => document.getElementById('SYS-G6A')?.scrollIntoView({
               behavior: 'smooth'
-            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 active:from-blue-300 active:to-blue-400 text-white border-2 border-blue-400 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_6px_12px_rgba(0,0,0,0.15),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]" style={{
+            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 active:from-blue-300 active:to-blue-400 text-white border-2 border-blue-400 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]" style={{
               borderColor: "#60a5fa"
             }}>
                 <span className="text-orange-800 text-[10px]">Guide To</span>
@@ -147,7 +147,7 @@ const Guide = () => {
               </button>
               <button onClick={() => document.getElementById('SYS-G7A')?.scrollIntoView({
               behavior: 'smooth'
-            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-emerald-100 to-emerald-200 hover:from-emerald-200 hover:to-emerald-300 active:from-emerald-300 active:to-emerald-400 text-white border-2 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_6px_12px_rgba(0,0,0,0.15),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]" style={{
+            })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-emerald-100 to-emerald-200 hover:from-emerald-200 hover:to-emerald-300 active:from-emerald-300 active:to-emerald-400 text-white border-2 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-[1px]" style={{
               borderColor: "#4A7C59"
             }}>
                 <span className="text-orange-800 text-[10px]">Guide To</span>
