@@ -93,7 +93,7 @@ const SuperText = () => {
               Confirm Save & Clear
             </AlertDialogTitle>
             <AlertDialogDescription className="text-lg text-center font-bold" style={{ color: '#000000' }}>
-              Are you SURE you want to SAVE this file and CLEAR this page for a new form?
+              Are you <span style={{ color: '#dc2626' }}>SURE</span> you want to <span style={{ color: '#dc2626' }}>SAVE</span> this file and <span style={{ color: '#dc2626' }}>CLEAR</span> this page for a new form?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex justify-center gap-4 mt-6">
