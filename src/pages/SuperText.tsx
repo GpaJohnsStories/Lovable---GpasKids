@@ -22,29 +22,29 @@ import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
-const SuperText = () => {
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [storyCode, setStoryCode] = useState('');
-  const [category, setCategory] = useState('');
-  const [foundStoryTitle, setFoundStoryTitle] = useState('');
-  const [foundStory, setFoundStory] = useState<any>(null);
-  const [noStoryFound, setNoStoryFound] = useState(false);
-  const [showInvalidCode, setShowInvalidCode] = useState(false);
-  const [isUpdatingText, setIsUpdatingText] = useState(false);
-  const [isAddingText, setIsAddingText] = useState(false);
+const SuperText: React.FC = () => {
+  const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
+  const [storyCode, setStoryCode] = React.useState('');
+  const [category, setCategory] = React.useState('');
+  const [foundStoryTitle, setFoundStoryTitle] = React.useState('');
+  const [foundStory, setFoundStory] = React.useState<any>(null);
+  const [noStoryFound, setNoStoryFound] = React.useState(false);
+  const [showInvalidCode, setShowInvalidCode] = React.useState(false);
+  const [isUpdatingText, setIsUpdatingText] = React.useState(false);
+  const [isAddingText, setIsAddingText] = React.useState(false);
   
   // Photo state management
-  const [photoLinks, setPhotoLinks] = useState<{[key: number]: string}>({
+  const [photoLinks, setPhotoLinks] = React.useState<{[key: number]: string}>({
     1: '',
     2: '',
     3: ''
   });
-  const [photoAlts, setPhotoAlts] = useState<{[key: number]: string}>({
+  const [photoAlts, setPhotoAlts] = React.useState<{[key: number]: string}>({
     1: '',
     2: '',
     3: ''
   });
-  const [uploading, setUploading] = useState<{[key: number]: boolean}>({});
+  const [uploading, setUploading] = React.useState<{[key: number]: boolean}>({});
   
   const { lookupStoryByCode } = useStoryCodeLookup();
   
