@@ -88,10 +88,12 @@ const SuperText = () => {
                     <Label htmlFor="story-code" className="text-base font-semibold">
                       Story / Webtext Code
                     </Label>
-                    <StoryCodeField 
-                      value={storyCode}
-                      onChange={setStoryCode}
-                    />
+                        <div className="w-1/2">
+                          <StoryCodeField 
+                            value={storyCode}
+                            onChange={setStoryCode}
+                          />
+                        </div>
                   </div>
                   
                   <div className="space-y-2">
@@ -210,10 +212,12 @@ const SuperText = () => {
                     <Label htmlFor="story-code-tablet" className="text-base font-semibold">
                       Story / Webtext Code
                     </Label>
-                    <StoryCodeField 
-                      value={storyCode}
-                      onChange={setStoryCode}
-                    />
+                    <div className="w-1/2">
+                      <StoryCodeField 
+                        value={storyCode}
+                        onChange={setStoryCode}
+                      />
+                    </div>
                   </div>
                   
                   <div className="space-y-2">
