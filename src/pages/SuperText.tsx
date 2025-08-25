@@ -99,7 +99,7 @@ const SuperText = () => {
                             onChange={(e) => setStoryCode(e.target.value)}
                             placeholder="Code"
                             className="w-full px-3 py-2 text-base border rounded-md border-orange-accent border-2"
-                            style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'normal', color: '#000000' }}
+                            style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'bold', color: '#000000' }}
                             autoComplete="off"
                           />
                         </div>
@@ -230,7 +230,7 @@ const SuperText = () => {
                         onChange={(e) => setStoryCode(e.target.value)}
                         placeholder="Code"
                         className="w-full px-3 py-2 text-base border rounded-md border-orange-accent border-2"
-                        style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'normal', color: '#000000' }}
+                        style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'bold', color: '#000000' }}
                         autoComplete="off"
                       />
                     </div>
