@@ -86,9 +86,6 @@ const SuperText = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="story-code" className="text-base font-semibold">
-                          Story / Webtext Code
-                        </Label>
                         <Label htmlFor="story-code" className="font-bold text-xl text-orange-accent block">
                           Enter Current or New Unique Story / Webtext Code *
                         </Label>
@@ -217,9 +214,6 @@ const SuperText = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="story-code-tablet" className="text-base font-semibold">
-                      Story / Webtext Code
-                    </Label>
                     <Label htmlFor="story-code-tablet" className="font-bold text-xl text-orange-accent block">
                       Enter Current or New Unique Story / Webtext Code *
                     </Label>
