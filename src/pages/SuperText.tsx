@@ -110,7 +110,7 @@ const SuperText = () => {
                     </Label>
                     <div className="w-1/2">
                       <Select value={category} onValueChange={setCategory}>
-                        <SelectTrigger className="w-full">
+                        <SelectTrigger className="w-full border-2" style={{ borderColor: '#8B4513' }}>
                           <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
                       <SelectContent className="bg-white z-[100]">
@@ -243,7 +243,7 @@ const SuperText = () => {
                     </Label>
                     <div className="w-1/2">
                       <Select value={category} onValueChange={setCategory}>
-                        <SelectTrigger className="w-full">
+                        <SelectTrigger className="w-full border-2" style={{ borderColor: '#8B4513' }}>
                           <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
                       <SelectContent className="bg-white z-[100]">
