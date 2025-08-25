@@ -706,6 +706,14 @@ export type Database = {
         Args: { user_email: string }
         Returns: string
       }
+      export_public_rls_policies_json: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      export_public_schema_json: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       get_allowed_admin_email_hashes: {
         Args: Record<PropertyKey, never>
         Returns: string[]
