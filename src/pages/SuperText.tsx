@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Table, TableBody, TableRow, TableCell } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StoryCodeField from "@/components/StoryCodeField";
@@ -84,17 +85,24 @@ const SuperText = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="story-code" className="text-base font-semibold">
-                      Story / Webtext Code
-                    </Label>
+                      <div className="space-y-2">
+                        <Label htmlFor="story-code" className="text-base font-semibold">
+                          Story / Webtext Code
+                        </Label>
+                        <Label htmlFor="story-code" className="font-bold text-xl text-orange-accent block">
+                          Enter Current or New Unique Story / Webtext Code *
+                        </Label>
                         <div className="w-1/2">
-                          <StoryCodeField 
+                          <Input
+                            id="story-code"
                             value={storyCode}
-                            onChange={setStoryCode}
+                            onChange={(e) => setStoryCode(e.target.value)}
+                            placeholder="Enter story code..."
+                            className="w-full px-3 py-2 text-base border rounded-md font-bold border-orange-accent border-2"
+                            autoComplete="off"
                           />
                         </div>
-                  </div>
+                      </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="category" className="text-base font-semibold">
@@ -212,10 +220,17 @@ const SuperText = () => {
                     <Label htmlFor="story-code-tablet" className="text-base font-semibold">
                       Story / Webtext Code
                     </Label>
+                    <Label htmlFor="story-code-tablet" className="font-bold text-xl text-orange-accent block">
+                      Enter Current or New Unique Story / Webtext Code *
+                    </Label>
                     <div className="w-1/2">
-                      <StoryCodeField 
+                      <Input
+                        id="story-code-tablet"
                         value={storyCode}
-                        onChange={setStoryCode}
+                        onChange={(e) => setStoryCode(e.target.value)}
+                        placeholder="Enter story code..."
+                        className="w-full px-3 py-2 text-base border rounded-md font-bold border-orange-accent border-2"
+                        autoComplete="off"
                       />
                     </div>
                   </div>
