@@ -190,11 +190,58 @@ const SuperText = () => {
         {/* Tablet Layout: 2-column grid (hidden on desktop) */}
         <div className="block lg:hidden">
           <div className="grid grid-cols-2 gap-4">
-            {/* First Row: Story Status centered across both columns */}
-            <div className="col-span-2 flex justify-center">
-              <div className="max-w-md">
-                <SuperTextStoryStatus />
-              </div>
+            {/* First Row: Story Details in left, Story Status in right */}
+            <div>
+              <Card className="bg-white border-4" style={{ borderColor: '#22c55e' }}>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 font-bold" style={{
+                    color: '#22c55e',
+                    fontSize: '24px',
+                    lineHeight: '1.2',
+                    fontWeight: 700
+                  }}>
+                    <FileText className="h-5 w-5" color="#22c55e" />
+                    <span>Story Details</span>
+                    <span className="ml-auto bg-amber-600 text-white px-2 py-1 rounded text-sm font-bold">
+                      1a
+                    </span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="story-code-tablet" className="text-base font-semibold">
+                      Story / Webtext Code
+                    </Label>
+                    <StoryCodeField 
+                      value={storyCode}
+                      onChange={setStoryCode}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="category-tablet" className="text-base font-semibold">
+                      Category
+                    </Label>
+                    <Select value={category} onValueChange={setCategory}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white z-[100]">
+                        <SelectItem value="Fun">Fun</SelectItem>
+                        <SelectItem value="Life">Life</SelectItem>
+                        <SelectItem value="North Pole">North Pole</SelectItem>
+                        <SelectItem value="World Changers">World Changers</SelectItem>
+                        <SelectItem value="WebText">WebText</SelectItem>
+                        <SelectItem value="BioText">BioText</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            
+            <div>
+              <SuperTextStoryStatus />
             </div>
             
             {/* Second Row: Buttons in left column, empty right column */}
