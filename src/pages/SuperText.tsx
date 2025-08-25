@@ -63,11 +63,11 @@ const SuperText = () => {
         </h1>
 
         {/* Desktop Layout: Works on all screen sizes with horizontal scroll */}
-        <div className="block overflow-x-auto pt-4 pl-4">
-          <div className="flex items-start justify-center gap-6 w-full max-w-7xl mx-auto">
+        <div className="w-full px-8">
+          <div className="flex items-start justify-center gap-8 w-full">
             {/* Left Side: Story Details */}
-            <div className="flex-1">
-              <Card className="bg-white border-4 h-full relative" style={{ borderColor: '#22c55e' }}>
+            <div className="shrink-0 w-[600px] h-[460px]">
+              <Card className="bg-white border-4 h-full overflow-hidden relative" style={{ borderColor: '#22c55e' }}>
                 {/* Blue dot with "1" in top left corner */}
                 <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold z-10">
                   1
@@ -126,13 +126,13 @@ const SuperText = () => {
             </div>
             
             {/* Center: Story Status */}
-            <div className="flex-1">
+            <div className="shrink-0 w-[600px] h-[460px]">
               <SuperTextStoryStatus />
             </div>
             
             {/* Right Side: Buttons */}
-            <div className="flex-1">
-              <Card className="bg-white h-full" style={{ border: '4px solid #dc2626' }}>
+            <div className="shrink-0 w-[600px] h-[460px]">
+              <Card className="bg-white h-full overflow-hidden" style={{ border: '4px solid #dc2626' }}>
                 <CardContent className="p-6 flex flex-col gap-4 items-center justify-center h-full">
                   <button
                     onClick={handleSaveAndClear}
