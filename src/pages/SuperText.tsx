@@ -66,10 +66,10 @@ const SuperText = () => {
         <div className="block overflow-x-auto">
           <div className="flex items-start justify-center gap-4 min-w-[1024px]">
             {/* Left Side: Story Details */}
-            <div className="flex-1 max-w-sm">
-              <Card className="bg-white border-4 h-full relative" style={{ borderColor: '#22c55e' }}>
+            <div className="flex-1 max-w-sm relative">
+              <Card className="bg-white border-4 h-full" style={{ borderColor: '#22c55e' }}>
                 {/* Blue dot with "1" in top left corner */}
-                <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg z-50">
+                <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{ zIndex: 9999 }}>
                   1
                 </div>
                 <CardHeader className="pb-3">
