@@ -72,11 +72,14 @@ const SuperText = () => {
                 <TableCell className="p-2 align-top w-1/3">
                   <Card className="bg-white border-4" style={{ borderColor: '#22c55e' }}>
                     <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-2xl font-bold" style={{
-                        color: '#22c55e'
+                      <CardTitle className="flex items-center gap-2 font-bold" style={{
+                        color: '#22c55e',
+                        fontSize: '24px',
+                        lineHeight: '1.2',
+                        fontWeight: 700
                       }}>
-                        <FileText className="h-5 w-5" />
-                        Story Details
+                        <FileText className="h-5 w-5" color="#22c55e" />
+                        <span>Story Details</span>
                         <span className="ml-auto bg-amber-600 text-white px-2 py-1 rounded text-sm font-bold">
                           1a
                         </span>
