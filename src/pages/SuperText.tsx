@@ -63,7 +63,7 @@ const SuperText = () => {
         </h1>
 
         {/* Desktop Layout: Works on all screen sizes with horizontal scroll */}
-        <div className="block overflow-x-auto">
+        <div className="block overflow-x-auto pt-4 pl-4">
           <div className="flex items-start justify-center gap-4 min-w-[1024px]">
             {/* Left Side: Story Details */}
             <div className="flex-1 max-w-sm">
