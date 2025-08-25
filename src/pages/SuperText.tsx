@@ -29,6 +29,7 @@ const SuperText = () => {
   const [noStoryFound, setNoStoryFound] = useState(false);
   const [showInvalidCode, setShowInvalidCode] = useState(false);
   const [isUpdatingText, setIsUpdatingText] = useState(false);
+  const [isAddingText, setIsAddingText] = useState(false);
   
   const { lookupStoryByCode } = useStoryCodeLookup();
   
@@ -57,6 +58,7 @@ const SuperText = () => {
     setStoryCode(newCode);
     setShowInvalidCode(false); // Clear invalid message when typing
     setIsUpdatingText(false); // Reset updating state when code changes
+    setIsAddingText(false); // Reset adding state when code changes
   };
 
   // Debounced lookup function
@@ -143,6 +145,7 @@ const SuperText = () => {
       // TODO: Implement update functionality
     } else {
       console.log('Add new text confirmed for code:', storyCode);
+      setIsAddingText(true);
       // TODO: Implement add functionality
     }
   };
@@ -150,17 +153,18 @@ const SuperText = () => {
   const handleTextActionNo = () => {
     if (foundStory) {
       console.log('Update text declined for story:', foundStory.title);
-      // Clear the form for update case
-      setStoryCode('');
-      setCategory('');
-      setFoundStoryTitle('');
-      setFoundStory(null);
-      setNoStoryFound(false);
-      setShowInvalidCode(false);
-      setIsUpdatingText(false);
     } else {
       console.log('Add new text declined for code:', storyCode);
     }
+    // Clear the form for both update and add cases
+    setStoryCode('');
+    setCategory('');
+    setFoundStoryTitle('');
+    setFoundStory(null);
+    setNoStoryFound(false);
+    setShowInvalidCode(false);
+    setIsUpdatingText(false);
+    setIsAddingText(false);
   };
 
   return (
@@ -260,6 +264,21 @@ const SuperText = () => {
                       }}
                     >
                       Updating Text
+                    </div>
+                  </div>
+                ) : isAddingText ? (
+                  <div className="absolute top-2 right-2 z-10">
+                    <div
+                      className="px-4 py-2 rounded-full font-bold text-lg border-2"
+                      style={{
+                        backgroundColor: '#228B22', // Green
+                        color: '#FFD700', // Golden Yellow text
+                        borderColor: '#1F7A1F', // Darker green border
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                      }}
+                    >
+                      Adding New Text
                     </div>
                   </div>
                 ) : isValidStoryCode(storyCode.trim()) && (foundStory || noStoryFound) ? (
