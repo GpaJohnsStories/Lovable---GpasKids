@@ -71,14 +71,17 @@ const SuperText = () => {
             <div className="flex-1 max-w-sm">
               <Card className="bg-white border-4 h-full" style={{ borderColor: '#22c55e' }}>
                 <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 font-bold" style={{
-                    color: '#22c55e !important',
-                    fontSize: '24px !important',
-                    lineHeight: '1.2',
-                    fontWeight: '700 !important'
-                  }}>
-                    <FileText className="h-5 w-5" color="#22c55e" />
-                    <span>Story Details</span>
+                  <CardTitle 
+                    className="flex items-center gap-2 font-bold" 
+                    style={{
+                      color: '#22c55e',
+                      fontSize: '24px',
+                      lineHeight: '1.2',
+                      fontWeight: '700'
+                    }}
+                  >
+                    <FileText className="h-5 w-5" style={{ color: '#22c55e' }} />
+                    <span style={{ color: '#22c55e' }}>Story Details</span>
                     <span className="ml-auto bg-amber-600 text-white px-2 py-1 rounded text-sm font-bold">
                       1a
                     </span>
@@ -199,14 +202,17 @@ const SuperText = () => {
             <div>
               <Card className="bg-white border-4 h-full" style={{ borderColor: '#22c55e' }}>
                 <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 font-bold" style={{
-                    color: '#22c55e',
-                    fontSize: '24px',
-                    lineHeight: '1.2',
-                    fontWeight: 700
-                  }}>
-                    <FileText className="h-5 w-5" color="#22c55e" />
-                    <span>Story Details</span>
+                  <CardTitle 
+                    className="flex items-center gap-2 font-bold" 
+                    style={{
+                      color: '#22c55e',
+                      fontSize: '24px',
+                      lineHeight: '1.2',
+                      fontWeight: '700'
+                    }}
+                  >
+                    <FileText className="h-5 w-5" style={{ color: '#22c55e' }} />
+                    <span style={{ color: '#22c55e' }}>Story Details</span>
                     <span className="ml-auto bg-amber-600 text-white px-2 py-1 rounded text-sm font-bold">
                       1a
                     </span>
