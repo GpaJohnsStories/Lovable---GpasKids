@@ -25,6 +25,7 @@ const SuperText = () => {
   const [storyCode, setStoryCode] = useState('');
   const [category, setCategory] = useState('');
   const [foundStoryTitle, setFoundStoryTitle] = useState('');
+  const [foundStory, setFoundStory] = useState<any>(null);
   const [noStoryFound, setNoStoryFound] = useState(false);
   
   const { lookupStoryByCode } = useStoryCodeLookup();
@@ -37,6 +38,7 @@ const SuperText = () => {
     
     if (!code.trim() || code.trim().length < 3) {
       setFoundStoryTitle('');
+      setFoundStory(null);
       setCategory('');
       setNoStoryFound(false);
       return;
@@ -47,6 +49,7 @@ const SuperText = () => {
     
     if (result.found && result.story) {
       setFoundStoryTitle(result.story.title);
+      setFoundStory(result.story);
       // Only set category if it's in the allowed list
       if (allowedCategories.includes(result.story.category)) {
         setCategory(result.story.category);
@@ -56,6 +59,7 @@ const SuperText = () => {
       setNoStoryFound(false);
     } else if (!result.error) {
       setFoundStoryTitle('');
+      setFoundStory(null);
       setCategory('');
       setNoStoryFound(true);
     }
@@ -199,7 +203,7 @@ const SuperText = () => {
             
             {/* Center: Story Status */}
             <div className="flex-1">
-              <SuperTextStoryStatus />
+              <SuperTextStoryStatus story={foundStory} />
             </div>
             
             {/* Right Side: Buttons */}

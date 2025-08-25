@@ -5,9 +5,43 @@ import { FileText, Headphones, Video } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import CopyrightControl from "@/components/story-form/CopyrightControl";
 
-const SuperTextStoryStatus = () => {
+interface Story {
+  id?: string;
+  title?: string;
+  author?: string;
+  category?: string;
+  created_at?: string;
+  updated_at?: string;
+  audio_generated_at?: string | null;
+  copyright_status?: string;
+  published?: string;
+  google_drive_link?: string;
+}
+
+interface SuperTextStoryStatusProps {
+  story?: Story | null;
+}
+
+const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) => {
+  const formatDateTime = (dateString?: string | null) => {
+    if (!dateString) return { date: '--/--/--', time: '--:--' };
+    
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString('en-US', { 
+      month: '2-digit', 
+      day: '2-digit', 
+      year: '2-digit' 
+    });
+    const formattedTime = date.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    });
+    
+    return { date: formattedDate, time: formattedTime };
+  };
+
   const getLastUpdateStyle = () => {
-    // Default styling for placeholder state
     return {
       backgroundColor: '#F2BA15',
       color: 'black'
@@ -15,10 +49,10 @@ const SuperTextStoryStatus = () => {
   };
 
   const getAudioStatusStyle = () => {
-    // Default styling for placeholder state
+    const hasAudio = story?.audio_generated_at;
     return {
-      backgroundColor: '#DC2626',
-      color: '#FFFF00'
+      backgroundColor: hasAudio ? '#22c55e' : '#DC2626',
+      color: hasAudio ? 'black' : '#FFFF00'
     };
   };
 
@@ -74,41 +108,41 @@ const SuperTextStoryStatus = () => {
                 borderTop: '1px solid #9c441a',
                 ...getLastUpdateStyle()
               }}>
-                --/--/--
+                {formatDateTime(story?.updated_at).date}
               </td>
               <td className="text-center font-bold px-1 py-1" style={{
                 borderRight: '1px solid #9c441a',
                 borderTop: '1px solid #9c441a',
                 ...getLastUpdateStyle()
               }}>
-                --:--
+                {formatDateTime(story?.updated_at).time}
               </td>
               <td className="text-center text-gray-600 font-bold px-1 py-1" style={{
                 borderRight: '1px solid #9c441a',
                 borderTop: '1px solid #9c441a',
                 backgroundColor: 'rgba(22, 156, 249, 0.3)'
               }}>
-                --/--/--
+                {formatDateTime(story?.created_at).date}
               </td>
               <td className="text-center text-gray-600 font-bold px-1 py-1" style={{
                 borderRight: '1px solid #9c441a',
                 borderTop: '1px solid #9c441a',
                 backgroundColor: 'rgba(22, 156, 249, 0.3)'
               }}>
-                --:--
+                {formatDateTime(story?.created_at).time}
               </td>
               <td className="text-center font-bold px-1 py-1" style={{
                 borderRight: '1px solid #9c441a',
                 borderTop: '1px solid #9c441a',
                 ...getAudioStatusStyle()
               }}>
-                --/--/--
+                {formatDateTime(story?.audio_generated_at).date}
               </td>
               <td className="text-center font-bold px-1 py-1" style={{
                 borderTop: '1px solid #9c441a',
                 ...getAudioStatusStyle()
               }}>
-                --:--
+                {formatDateTime(story?.audio_generated_at).time}
               </td>
             </tr>
           </tbody>
@@ -117,14 +151,14 @@ const SuperTextStoryStatus = () => {
         <div className="flex gap-3">
           <div className="space-y-1 flex-1">
             <Label className="text-xs font-bold text-gray-700">Copyright Status</Label>
-            <CopyrightControl value="©" onChange={() => {}} />
+            <CopyrightControl value={story?.copyright_status || "©"} onChange={() => {}} />
           </div>
           
           <div className="space-y-1 flex-1">
             <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
             <div className="flex items-center gap-2">
-              <Select value="N" onValueChange={() => {}}>
-                <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor('N')}`}>
+              <Select value={story?.published || "N"} onValueChange={() => {}}>
+                <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor(story?.published || 'N')}`}>
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent className="z-50 bg-white border shadow-lg">
@@ -150,7 +184,7 @@ const SuperTextStoryStatus = () => {
           <input 
             id="google_drive_link" 
             type="url" 
-            value="" 
+            value={story?.google_drive_link || ""} 
             onChange={() => {}}
             placeholder="https://drive.google.com/..." 
             className="w-full p-2 text-xs border rounded-md" 
