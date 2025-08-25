@@ -102,6 +102,25 @@ const SuperText = () => {
     // Keep current scroll position
   };
 
+  // Handle text action (Update/Add) decisions
+  const handleTextActionYes = () => {
+    if (foundStory) {
+      console.log('Update text confirmed for story:', foundStory.title);
+      // TODO: Implement update functionality
+    } else {
+      console.log('Add new text confirmed for code:', storyCode);
+      // TODO: Implement add functionality
+    }
+  };
+
+  const handleTextActionNo = () => {
+    if (foundStory) {
+      console.log('Update text declined for story:', foundStory.title);
+    } else {
+      console.log('Add new text declined for code:', storyCode);
+    }
+  };
+
   return (
     <SecureAdminRoute>
       <Helmet>
@@ -184,6 +203,57 @@ const SuperText = () => {
                 <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold z-10">
                   1
                 </div>
+                
+                {/* Text Action Indicator in top right corner */}
+                {storyCode.trim().length >= 3 && (foundStory || noStoryFound) && (
+                  <div className="absolute -top-2 -right-2 z-10">
+                    <div className="flex items-center gap-2">
+                      {/* Action Message Pill */}
+                      <div
+                        className="px-4 py-2 rounded-full font-bold text-lg border-2"
+                        style={{
+                          backgroundColor: foundStory ? '#dc2626' : '#228B22', // Red if update, Green if add
+                          color: '#FFD700', // Golden Yellow text
+                          borderColor: foundStory ? '#b91c1c' : '#1F7A1F', // Darker border
+                          boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                          textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                        }}
+                      >
+                        {foundStory ? 'Update This Text?' : 'Add New Text?'}
+                      </div>
+                      
+                      {/* Yes Button */}
+                      <button
+                        onClick={handleTextActionYes}
+                        className="px-4 py-2 rounded-full font-bold text-lg border-2 hover:scale-105 transition-transform"
+                        style={{
+                          backgroundColor: '#228B22', // Green
+                          color: '#ffffff', // White text
+                          borderColor: '#1F7A1F',
+                          boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                          textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                        }}
+                      >
+                        Yes
+                      </button>
+                      
+                      {/* No Button */}
+                      <button
+                        onClick={handleTextActionNo}
+                        className="px-4 py-2 rounded-full font-bold text-lg border-2 hover:scale-105 transition-transform"
+                        style={{
+                          backgroundColor: '#dc2626', // Red
+                          color: '#ffffff', // White text
+                          borderColor: '#b91c1c',
+                          boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                          textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                        }}
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                )}
                 <CardHeader className="pb-3">
                   <CardTitle 
                     className="flex items-center gap-2 font-bold" 
