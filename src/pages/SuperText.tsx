@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import SecureAdminRoute from '@/components/admin/SecureAdminRoute';
 import SuperTextStoryStatus from '@/components/SuperTextStoryStatus';
@@ -18,48 +18,59 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FileText } from "lucide-react";
-import { supabase } from '@/integrations/supabase/client';
+import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 
 const SuperText = () => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [storyCode, setStoryCode] = useState('');
   const [category, setCategory] = useState('');
   const [foundStoryTitle, setFoundStoryTitle] = useState('');
+  const [noStoryFound, setNoStoryFound] = useState(false);
+  
+  const { lookupStoryByCode } = useStoryCodeLookup();
+  
+  const allowedCategories = ["Fun", "Life", "North Pole", "World Changers", "WebText", "BioText"];
 
-  const lookupStoryByCode = async (code: string) => {
-    if (!code.trim()) {
+  // Debounced lookup function
+  const debouncedLookup = useCallback(async (code: string) => {
+    console.log('🔧 Debounced lookup called with:', code);
+    
+    if (!code.trim() || code.trim().length < 3) {
       setFoundStoryTitle('');
       setCategory('');
+      setNoStoryFound(false);
       return;
     }
 
-    try {
-      const { data, error } = await supabase
-        .from('stories')
-        .select('title, category')
-        .eq('story_code', code.trim())
-        .maybeSingle();
-
-      if (error) {
-        console.error('Error looking up story:', error);
-        setFoundStoryTitle('');
-        setCategory('');
-        return;
-      }
-
-      if (data) {
-        setFoundStoryTitle(data.title);
-        setCategory(data.category);
+    const result = await lookupStoryByCode(code.trim(), true);
+    console.log('🔧 Lookup result:', result);
+    
+    if (result.found && result.story) {
+      setFoundStoryTitle(result.story.title);
+      // Only set category if it's in the allowed list
+      if (allowedCategories.includes(result.story.category)) {
+        setCategory(result.story.category);
       } else {
-        setFoundStoryTitle('');
         setCategory('');
       }
-    } catch (error) {
-      console.error('Error looking up story:', error);
+      setNoStoryFound(false);
+    } else if (!result.error) {
       setFoundStoryTitle('');
       setCategory('');
+      setNoStoryFound(true);
     }
-  };
+  }, [lookupStoryByCode]);
+
+  // Debounce timer
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (storyCode.trim()) {
+        debouncedLookup(storyCode);
+      }
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, [storyCode, debouncedLookup]);
 
   const handleSaveAndClear = () => {
     setShowConfirmDialog(true);
@@ -129,18 +140,15 @@ const SuperText = () => {
                           Current or New<br />Unique Code:
                         </Label>
                         <div className="w-1/2">
-                          <Input
-                            id="story-code"
-                            value={storyCode}
-                            onChange={(e) => {
-                              setStoryCode(e.target.value);
-                              lookupStoryByCode(e.target.value);
-                            }}
-                            placeholder="Code"
-                            className="w-full px-3 py-2 text-base border rounded-md border-orange-accent border-2"
-                            style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'bold', color: '#000000' }}
-                            autoComplete="off"
-                          />
+                           <Input
+                             id="story-code"
+                             value={storyCode}
+                             onChange={(e) => setStoryCode(e.target.value)}
+                             placeholder="Code"
+                             className="w-full px-3 py-2 text-base border rounded-md border-orange-accent border-2"
+                             style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'bold', color: '#000000' }}
+                             autoComplete="off"
+                           />
                         </div>
                       </div>
                       
@@ -151,6 +159,18 @@ const SuperText = () => {
                             <div className="text-sm font-bold text-gray-600 mb-2">Found Story Title:</div>
                             <div className="font-bold text-lg" style={{ color: '#22c55e', fontSize: '21px' }}>
                               {foundStoryTitle}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* No Story Found Message */}
+                      {noStoryFound && storyCode.trim().length >= 3 && (
+                        <div className="w-full mt-4">
+                          <div className="w-full p-4 border-2 rounded-md bg-gray-50" style={{ borderColor: '#6b7280' }}>
+                            <div className="text-sm font-bold text-gray-600 mb-2">Lookup Result:</div>
+                            <div className="font-bold text-lg text-gray-600" style={{ fontSize: '21px' }}>
+                              No story found for this code
                             </div>
                           </div>
                         </div>
