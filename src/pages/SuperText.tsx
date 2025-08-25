@@ -256,9 +256,9 @@ const SuperText = () => {
                     <div
                       className="px-4 py-2 rounded-full font-bold text-lg border-2"
                       style={{
-                        backgroundColor: '#dc2626', // Red
-                        color: '#FFD700', // Golden Yellow text
-                        borderColor: '#b91c1c', // Darker red border
+                        backgroundColor: '#228B22', // Green
+                        color: '#ffffff', // White text
+                        borderColor: '#1F7A1F', // Darker green border
                         boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
                       }}
@@ -272,7 +272,7 @@ const SuperText = () => {
                       className="px-4 py-2 rounded-full font-bold text-lg border-2"
                       style={{
                         backgroundColor: '#228B22', // Green
-                        color: '#FFD700', // Golden Yellow text
+                        color: '#ffffff', // White text
                         borderColor: '#1F7A1F', // Darker green border
                         boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
                         textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
