@@ -34,7 +34,7 @@ const SuperTextStoryStatus = () => {
   };
 
   return (
-    <Card className="h-full overflow-hidden relative" style={{
+    <Card className="h-fit relative" style={{
       borderColor: '#F97316',
       borderWidth: '4px'
     }}>
