@@ -206,7 +206,7 @@ const SuperText = () => {
                 
                 {/* Text Action Indicator in top right corner */}
                 {storyCode.trim().length >= 3 && (foundStory || noStoryFound) && (
-                  <div className="absolute -top-2 -right-2 z-10">
+                  <div className="absolute -top-6 -right-6 z-10">
                     <div className="flex items-center gap-2">
                       {/* Action Message Pill */}
                       <div
