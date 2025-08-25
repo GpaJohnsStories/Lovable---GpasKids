@@ -17,8 +17,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FileText } from "lucide-react";
+import { FileText, Image, Trash2 } from "lucide-react";
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const SuperText = () => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -31,9 +33,147 @@ const SuperText = () => {
   const [isUpdatingText, setIsUpdatingText] = useState(false);
   const [isAddingText, setIsAddingText] = useState(false);
   
+  // Photo state management
+  const [photoLinks, setPhotoLinks] = useState<{[key: number]: string}>({
+    1: '',
+    2: '',
+    3: ''
+  });
+  const [photoAlts, setPhotoAlts] = useState<{[key: number]: string}>({
+    1: '',
+    2: '',
+    3: ''
+  });
+  const [uploading, setUploading] = useState<{[key: number]: boolean}>({});
+  
   const { lookupStoryByCode } = useStoryCodeLookup();
   
   const allowedCategories = ["Fun", "Life", "North Pole", "World Changers", "WebText", "BioText"];
+
+  // Image resize function
+  const resizeImage = (file: File, maxWidth = 800, maxHeight = 600, quality = 0.85): Promise<File> => {
+    return new Promise(resolve => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d')!;
+      const img = document.createElement('img');
+      img.onload = () => {
+        const { width, height } = img;
+        let { width: newWidth, height: newHeight } = img;
+        if (width > height) {
+          if (newWidth > maxWidth) {
+            newHeight = newHeight * maxWidth / newWidth;
+            newWidth = maxWidth;
+          }
+        } else {
+          if (newHeight > maxHeight) {
+            newWidth = newWidth * maxHeight / newHeight;
+            newHeight = maxHeight;
+          }
+        }
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+        canvas.toBlob(blob => {
+          const resizedFile = new File([blob!], file.name, {
+            type: file.type,
+            lastModified: Date.now()
+          });
+          resolve(resizedFile);
+        }, file.type, quality);
+      };
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  // Handle photo upload
+  const handlePhotoUpload = async (file: File, photoNumber: 1 | 2 | 3) => {
+    console.log('🖼️ Photo upload started for photo', photoNumber, 'with file:', file);
+    if (!file) {
+      console.log('❌ No file provided');
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      console.log('❌ Invalid file type:', file.type);
+      toast({
+        title: "Invalid File Type",
+        description: "Please select an image file",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      console.log('❌ File too large:', file.size);
+      toast({
+        title: "File Too Large",
+        description: "Image size must be less than 10MB",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    console.log('✅ File validation passed, starting upload process');
+    setUploading(prev => ({ ...prev, [photoNumber]: true }));
+    
+    try {
+      const { data: session } = await supabase.auth.getSession();
+      console.log('📝 Current session:', session?.session?.user?.id ? 'User logged in' : 'No user');
+      const { data: isAdmin, error: adminError } = await supabase.rpc('is_admin_safe');
+      console.log('👑 Admin status check:', isAdmin, 'Error:', adminError);
+
+      console.log('🔄 Starting image resize...');
+      toast({
+        title: "Processing Image",
+        description: "Resizing image..."
+      });
+      const resizedFile = await resizeImage(file, 800, 600, 0.85);
+      console.log('✅ Image resized:', {
+        originalSize: (file.size / 1024 / 1024).toFixed(2) + 'MB',
+        resizedSize: (resizedFile.size / 1024 / 1024).toFixed(2) + 'MB'
+      });
+
+      const fileExt = resizedFile.name.split('.').pop();
+      const fileName = `story-photos/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+      console.log('📝 Generated filename:', fileName);
+
+      console.log('☁️ Starting upload to Supabase storage...');
+      const { data, error } = await supabase.storage.from('story-photos').upload(fileName, resizedFile);
+      console.log('📤 Upload response:', { data, error });
+      
+      if (error) {
+        console.error('❌ Upload failed:', error);
+        throw error;
+      }
+
+      console.log('🔗 Getting public URL...');
+      const { data: { publicUrl } } = supabase.storage.from('story-photos').getPublicUrl(fileName);
+      console.log('✅ Public URL generated:', publicUrl);
+      
+      setPhotoLinks(prev => ({ ...prev, [photoNumber]: publicUrl }));
+      toast({
+        title: "Photo Uploaded Successfully",
+        description: `Photo resized and uploaded! Original: ${(file.size / 1024 / 1024).toFixed(1)}MB → Resized: ${(resizedFile.size / 1024 / 1024).toFixed(1)}MB`
+      });
+    } catch (error) {
+      console.error('❌ Upload error details:', error);
+      console.error('Error message:', error instanceof Error ? error.message : error);
+      toast({
+        title: "Upload Failed",
+        description: `Failed to upload photo: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        variant: "destructive"
+      });
+    } finally {
+      console.log('🏁 Upload process completed');
+      setUploading(prev => ({ ...prev, [photoNumber]: false }));
+    }
+  };
+
+  // Handle photo remove
+  const handlePhotoRemove = (photoNumber: 1 | 2 | 3) => {
+    setPhotoLinks(prev => ({ ...prev, [photoNumber]: '' }));
+    setPhotoAlts(prev => ({ ...prev, [photoNumber]: '' }));
+  };
 
   // Validate story code format: aaa-bbb (7 chars, dash at position 4)
   const isValidStoryCode = (code: string) => {
@@ -165,6 +305,10 @@ const SuperText = () => {
     setShowInvalidCode(false);
     setIsUpdatingText(false);
     setIsAddingText(false);
+    // Clear photo state
+    setPhotoLinks({ 1: '', 2: '', 3: '' });
+    setPhotoAlts({ 1: '', 2: '', 3: '' });
+    setUploading({});
   };
 
   return (
@@ -219,6 +363,10 @@ const SuperText = () => {
                 setShowInvalidCode(false);
                 setIsUpdatingText(false);
                 setIsAddingText(false);
+                // Clear photo state
+                setPhotoLinks({ 1: '', 2: '', 3: '' });
+                setPhotoAlts({ 1: '', 2: '', 3: '' });
+                setUploading({});
                 console.log('All edits cancelled and form cleared');
               }}
               className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
@@ -433,6 +581,180 @@ const SuperText = () => {
                       </Select>
                     </div>
                   </div>
+                </CardContent>
+              </Card>
+              
+              {/* Story Photos Box */}
+              <Card className="bg-white border-4 h-fit relative mt-6" style={{ borderColor: '#814d2e' }}>
+                {/* Blue dot with "2" in top left corner */}
+                <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                  <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2</span>
+                </div>
+                
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#814d2e' }}>
+                    <Image className="h-5 w-5" />
+                    Story Photos
+                  </CardTitle>
+                </CardHeader>
+                
+                <CardContent className="p-3">
+                  <table className="w-full table-fixed border-collapse border-2" style={{ borderColor: '#9c441a' }}>
+                    <tbody>
+                      <tr>
+                        <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                          <div className="relative">
+                            {photoLinks[1] ? (
+                              <>
+                                <img src={photoLinks[1]} alt="Photo 1" className="w-full h-20 object-cover rounded" />
+                                <button 
+                                  type="button" 
+                                  onClick={() => handlePhotoRemove(1)} 
+                                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </button>
+                              </>
+                            ) : (
+                              <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                            )}
+                          </div>
+                        </td>
+                        <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                          <div className="relative">
+                            {photoLinks[2] ? (
+                              <>
+                                <img src={photoLinks[2]} alt="Photo 2" className="w-full h-20 object-cover rounded" />
+                                <button 
+                                  type="button" 
+                                  onClick={() => handlePhotoRemove(2)} 
+                                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </button>
+                              </>
+                            ) : (
+                              <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                            )}
+                          </div>
+                        </td>
+                        <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                          <div className="relative">
+                            {photoLinks[3] ? (
+                              <>
+                                <img src={photoLinks[3]} alt="Photo 3" className="w-full h-20 object-cover rounded" />
+                                <button 
+                                  type="button" 
+                                  onClick={() => handlePhotoRemove(3)} 
+                                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 text-xs"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </button>
+                              </>
+                            ) : (
+                              <div className="w-full h-20 bg-gray-100 rounded flex items-center justify-center text-xs">No Photo</div>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            onChange={(e) => {
+                              console.log('📁 File input change event triggered for photo 1');
+                              const file = e.target.files?.[0];
+                              console.log('📁 Selected file:', file ? file.name : 'No file selected');
+                              if (file) {
+                                console.log('📁 Starting file upload process for:', file.name);
+                                handlePhotoUpload(file, 1);
+                              } else {
+                                console.log('❌ No file was selected');
+                              }
+                              e.target.value = ''; // Reset input
+                            }} 
+                            disabled={uploading[1]} 
+                            className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" 
+                          />
+                          {uploading[1] && <div className="text-xs text-blue-600 mt-1">Uploading...</div>}
+                        </td>
+                        <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            onChange={(e) => {
+                              console.log('📁 File input change event triggered for photo 2');
+                              const file = e.target.files?.[0];
+                              console.log('📁 Selected file:', file ? file.name : 'No file selected');
+                              if (file) {
+                                console.log('📁 Starting file upload process for:', file.name);
+                                handlePhotoUpload(file, 2);
+                              } else {
+                                console.log('❌ No file was selected');
+                              }
+                              e.target.value = ''; // Reset input
+                            }} 
+                            disabled={uploading[2]} 
+                            className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" 
+                          />
+                          {uploading[2] && <div className="text-xs text-blue-600 mt-1">Uploading...</div>}
+                        </td>
+                        <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            onChange={(e) => {
+                              console.log('📁 File input change event triggered for photo 3');
+                              const file = e.target.files?.[0];
+                              console.log('📁 Selected file:', file ? file.name : 'No file selected');
+                              if (file) {
+                                console.log('📁 Starting file upload process for:', file.name);
+                                handlePhotoUpload(file, 3);
+                              } else {
+                                console.log('❌ No file was selected');
+                              }
+                              e.target.value = ''; // Reset input
+                            }} 
+                            disabled={uploading[3]} 
+                            className="w-full text-xs file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" 
+                          />
+                          {uploading[3] && <div className="text-xs text-blue-600 mt-1">Uploading...</div>}
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                          <input 
+                            type="text" 
+                            placeholder="Alt text" 
+                            value={photoAlts[1] || ''} 
+                            onChange={(e) => setPhotoAlts(prev => ({ ...prev, 1: e.target.value }))} 
+                            className="w-full text-xs p-1 border rounded" 
+                          />
+                        </td>
+                        <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                          <input 
+                            type="text" 
+                            placeholder="Alt text" 
+                            value={photoAlts[2] || ''} 
+                            onChange={(e) => setPhotoAlts(prev => ({ ...prev, 2: e.target.value }))} 
+                            className="w-full text-xs p-1 border rounded" 
+                          />
+                        </td>
+                        <td className="p-2 border" style={{ borderColor: '#9c441a' }}>
+                          <input 
+                            type="text" 
+                            placeholder="Alt text" 
+                            value={photoAlts[3] || ''} 
+                            onChange={(e) => setPhotoAlts(prev => ({ ...prev, 3: e.target.value }))} 
+                            className="w-full text-xs p-1 border rounded" 
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </CardContent>
               </Card>
             </div>
