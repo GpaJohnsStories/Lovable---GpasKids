@@ -27,10 +27,35 @@ const SuperText = () => {
   const [foundStoryTitle, setFoundStoryTitle] = useState('');
   const [foundStory, setFoundStory] = useState<any>(null);
   const [noStoryFound, setNoStoryFound] = useState(false);
+  const [showInvalidCode, setShowInvalidCode] = useState(false);
   
   const { lookupStoryByCode } = useStoryCodeLookup();
   
   const allowedCategories = ["Fun", "Life", "North Pole", "World Changers", "WebText", "BioText"];
+
+  // Validate story code format: aaa-bbb (7 chars, dash at position 4)
+  const isValidStoryCode = (code: string) => {
+    return code.length === 7 && code.charAt(3) === '-' && /^[a-zA-Z0-9]{3}-[a-zA-Z0-9]{3}$/.test(code);
+  };
+
+  // Handle input blur to show invalid code message
+  const handleStoryCodeBlur = () => {
+    if (storyCode.trim() && !isValidStoryCode(storyCode.trim())) {
+      setShowInvalidCode(true);
+      setFoundStory(null);
+      setFoundStoryTitle('');
+      setNoStoryFound(false);
+    } else {
+      setShowInvalidCode(false);
+    }
+  };
+
+  // Handle input change
+  const handleStoryCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newCode = e.target.value.toUpperCase(); // Convert to uppercase
+    setStoryCode(newCode);
+    setShowInvalidCode(false); // Clear invalid message when typing
+  };
 
   // Debounced lookup function
   const debouncedLookup = useCallback(async (code: string) => {
@@ -68,8 +93,14 @@ const SuperText = () => {
   // Debounce timer
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (storyCode.trim()) {
+      if (storyCode.trim() && isValidStoryCode(storyCode.trim())) {
         debouncedLookup(storyCode);
+      } else if (storyCode.trim() && storyCode.trim().length >= 3) {
+        // Clear results if code is not valid format
+        setFoundStoryTitle('');
+        setFoundStory(null);
+        setCategory('');
+        setNoStoryFound(false);
       }
     }, 250);
 
@@ -205,7 +236,7 @@ const SuperText = () => {
                 </div>
                 
                 {/* Text Action Indicator in top right corner INSIDE the box */}
-                {storyCode.trim().length >= 3 && (foundStory || noStoryFound) && (
+                {isValidStoryCode(storyCode.trim()) && (foundStory || noStoryFound) && (
                   <div className="absolute top-2 right-2 z-10">
                     <div className="flex flex-col items-end gap-2">
                       {/* Main Action Message Pill */}
@@ -257,6 +288,24 @@ const SuperText = () => {
                     </div>
                   </div>
                 )}
+                
+                {/* Invalid Code Entered Message */}
+                {showInvalidCode && (
+                  <div className="absolute top-2 right-2 z-10">
+                    <div
+                      className="px-4 py-2 rounded-full font-bold text-lg border-2"
+                      style={{
+                        backgroundColor: '#dc2626', // Red
+                        color: '#FFD700', // Golden Yellow text
+                        borderColor: '#b91c1c', // Darker red border
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                      }}
+                    >
+                      Invalid Code Entered
+                    </div>
+                  </div>
+                )}
                 <CardHeader className="pb-3">
                   <CardTitle 
                     className="flex items-center gap-2 font-bold" 
@@ -280,7 +329,8 @@ const SuperText = () => {
                            <Input
                              id="story-code"
                              value={storyCode}
-                             onChange={(e) => setStoryCode(e.target.value)}
+                             onChange={handleStoryCodeChange}
+                             onBlur={handleStoryCodeBlur}
                              placeholder="Code"
                              className="w-full px-3 py-2 text-base border rounded-md border-orange-accent border-2"
                              style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'bold', color: '#000000' }}
