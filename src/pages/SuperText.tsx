@@ -210,8 +210,16 @@ const SuperText = () => {
             
             <button
               onClick={() => {
-                // TODO: Cancel functionality will be implemented later
-                console.log('Cancel all edits - functionality to be implemented');
+                // Clear all form fields and reset state
+                setStoryCode('');
+                setCategory('');
+                setFoundStoryTitle('');
+                setFoundStory(null);
+                setNoStoryFound(false);
+                setShowInvalidCode(false);
+                setIsUpdatingText(false);
+                setIsAddingText(false);
+                console.log('All edits cancelled and form cleared');
               }}
               className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
               style={{
