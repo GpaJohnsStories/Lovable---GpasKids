@@ -28,6 +28,7 @@ const SuperText = () => {
   const [foundStory, setFoundStory] = useState<any>(null);
   const [noStoryFound, setNoStoryFound] = useState(false);
   const [showInvalidCode, setShowInvalidCode] = useState(false);
+  const [isUpdatingText, setIsUpdatingText] = useState(false);
   
   const { lookupStoryByCode } = useStoryCodeLookup();
   
@@ -55,6 +56,7 @@ const SuperText = () => {
     const newCode = e.target.value.toUpperCase(); // Convert to uppercase
     setStoryCode(newCode);
     setShowInvalidCode(false); // Clear invalid message when typing
+    setIsUpdatingText(false); // Reset updating state when code changes
   };
 
   // Debounced lookup function
@@ -137,6 +139,7 @@ const SuperText = () => {
   const handleTextActionYes = () => {
     if (foundStory) {
       console.log('Update text confirmed for story:', foundStory.title);
+      setIsUpdatingText(true);
       // TODO: Implement update functionality
     } else {
       console.log('Add new text confirmed for code:', storyCode);
@@ -147,6 +150,14 @@ const SuperText = () => {
   const handleTextActionNo = () => {
     if (foundStory) {
       console.log('Update text declined for story:', foundStory.title);
+      // Clear the form for update case
+      setStoryCode('');
+      setCategory('');
+      setFoundStoryTitle('');
+      setFoundStory(null);
+      setNoStoryFound(false);
+      setShowInvalidCode(false);
+      setIsUpdatingText(false);
     } else {
       console.log('Add new text declined for code:', storyCode);
     }
@@ -236,7 +247,22 @@ const SuperText = () => {
                 </div>
                 
                 {/* Text Action Indicator in top right corner INSIDE the box */}
-                {isValidStoryCode(storyCode.trim()) && (foundStory || noStoryFound) && (
+                {isUpdatingText ? (
+                  <div className="absolute top-2 right-2 z-10">
+                    <div
+                      className="px-4 py-2 rounded-full font-bold text-lg border-2"
+                      style={{
+                        backgroundColor: '#dc2626', // Red
+                        color: '#FFD700', // Golden Yellow text
+                        borderColor: '#b91c1c', // Darker red border
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                      }}
+                    >
+                      Updating Text
+                    </div>
+                  </div>
+                ) : isValidStoryCode(storyCode.trim()) && (foundStory || noStoryFound) ? (
                   <div className="absolute top-2 right-2 z-10">
                     <div className="flex flex-col items-end gap-2">
                       {/* Main Action Message Pill */}
@@ -287,7 +313,7 @@ const SuperText = () => {
                       </div>
                     </div>
                   </div>
-                )}
+                ) : null}
                 
                 {/* Invalid Code Entered Message */}
                 {showInvalidCode && (
