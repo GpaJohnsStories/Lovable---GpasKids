@@ -122,61 +122,65 @@ const SuperText = () => {
             </div>
             
             {/* Right Side: Buttons */}
-            <div className="flex-1 max-w-sm flex flex-col gap-4 items-center">
-              <button
-                onClick={handleSaveAndClear}
-                className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
-                style={{
-                  backgroundColor: '#228B22', // Forest Green
-                  color: '#FFD700', // Golden Yellow
-                  borderColor: '#1F7A1F', // Darker green for border
-                  boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                }}
-                onMouseDown={(e) => {
-                  e.currentTarget.style.transform = 'scale(0.98)';
-                  e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
-                }}
-                onMouseUp={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
-                }}
-              >
-                Save & Clear Form
-              </button>
-              
-              <button
-                onClick={() => {
-                  // TODO: Cancel functionality will be implemented later
-                  console.log('Cancel all edits - functionality to be implemented');
-                }}
-                className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
-                style={{
-                  backgroundColor: '#dc2626', // Red Primary
-                  color: '#ffffff', // Bold White
-                  borderColor: '#b91c1c', // Darker red for border
-                  boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                }}
-                onMouseDown={(e) => {
-                  e.currentTarget.style.transform = 'scale(0.98)';
-                  e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
-                }}
-                onMouseUp={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
-                }}
-              >
-                <span className="text-center leading-tight">CANCEL ALL EDITS & CLEAR FORM</span>
-              </button>
+            <div className="flex-1 max-w-sm">
+              <Card className="bg-white border-4 h-full" style={{ borderColor: '#dc2626' }}>
+                <CardContent className="p-6 flex flex-col gap-4 items-center justify-center h-full">
+                  <button
+                    onClick={handleSaveAndClear}
+                    className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
+                    style={{
+                      backgroundColor: '#228B22', // Forest Green
+                      color: '#FFD700', // Golden Yellow
+                      borderColor: '#1F7A1F', // Darker green for border
+                      boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                    }}
+                    onMouseDown={(e) => {
+                      e.currentTarget.style.transform = 'scale(0.98)';
+                      e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
+                    }}
+                    onMouseUp={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                    }}
+                  >
+                    Save & Clear Form
+                  </button>
+                  
+                  <button
+                    onClick={() => {
+                      // TODO: Cancel functionality will be implemented later
+                      console.log('Cancel all edits - functionality to be implemented');
+                    }}
+                    className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
+                    style={{
+                      backgroundColor: '#dc2626', // Red Primary
+                      color: '#ffffff', // Bold White
+                      borderColor: '#b91c1c', // Darker red for border
+                      boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                    }}
+                    onMouseDown={(e) => {
+                      e.currentTarget.style.transform = 'scale(0.98)';
+                      e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
+                    }}
+                    onMouseUp={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+                    }}
+                  >
+                    <span className="text-center leading-tight">CANCEL ALL EDITS & CLEAR FORM</span>
+                  </button>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
