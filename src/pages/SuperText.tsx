@@ -108,10 +108,11 @@ const SuperText = () => {
                     <Label htmlFor="category" className="text-base font-semibold">
                       Category
                     </Label>
-                    <Select value={category} onValueChange={setCategory}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
+                    <div className="w-1/2">
+                      <Select value={category} onValueChange={setCategory}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
                       <SelectContent className="bg-white z-[100]">
                         <SelectItem value="Fun">Fun</SelectItem>
                         <SelectItem value="Life">Life</SelectItem>
@@ -120,7 +121,8 @@ const SuperText = () => {
                         <SelectItem value="WebText">WebText</SelectItem>
                         <SelectItem value="BioText">BioText</SelectItem>
                       </SelectContent>
-                    </Select>
+                      </Select>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -239,10 +241,11 @@ const SuperText = () => {
                     <Label htmlFor="category-tablet" className="text-base font-semibold">
                       Category
                     </Label>
-                    <Select value={category} onValueChange={setCategory}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
+                    <div className="w-1/2">
+                      <Select value={category} onValueChange={setCategory}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
                       <SelectContent className="bg-white z-[100]">
                         <SelectItem value="Fun">Fun</SelectItem>
                         <SelectItem value="Life">Life</SelectItem>
@@ -251,7 +254,8 @@ const SuperText = () => {
                         <SelectItem value="WebText">WebText</SelectItem>
                         <SelectItem value="BioText">BioText</SelectItem>
                       </SelectContent>
-                    </Select>
+                      </Select>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
