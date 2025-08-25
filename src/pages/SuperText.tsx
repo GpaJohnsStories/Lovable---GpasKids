@@ -186,7 +186,7 @@ const SuperText = () => {
                       e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
                     }}
                   >
-                    <span className="text-center leading-tight">CANCEL ALL EDITS & CLEAR FORM</span>
+                    <span className="text-center leading-tight">Cancel All Edits<br />& Clear Form</span>
                   </button>
                 </CardContent>
               </Card>
@@ -313,7 +313,7 @@ const SuperText = () => {
                   e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
                 }}
               >
-                <span className="text-center leading-tight">CANCEL ALL EDITS & CLEAR FORM</span>
+                <span className="text-center leading-tight">Cancel All Edits<br />& Clear Form</span>
               </button>
             </div>
             
