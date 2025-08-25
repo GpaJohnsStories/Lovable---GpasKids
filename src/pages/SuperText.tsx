@@ -123,7 +123,7 @@ const SuperText = () => {
             
             {/* Right Side: Buttons */}
             <div className="flex-1 max-w-sm">
-              <Card className="bg-white border-4 h-full" style={{ borderColor: '#dc2626' }}>
+              <Card className="bg-white h-full" style={{ border: '4px solid #dc2626' }}>
                 <CardContent className="p-6 flex flex-col gap-4 items-center justify-center h-full">
                   <button
                     onClick={handleSaveAndClear}
