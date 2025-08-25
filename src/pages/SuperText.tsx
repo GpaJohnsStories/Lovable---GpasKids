@@ -14,9 +14,16 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Table, TableBody, TableRow, TableCell } from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import StoryCodeField from "@/components/StoryCodeField";
+import { FileText } from "lucide-react";
 
 const SuperText = () => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [storyCode, setStoryCode] = useState('');
+  const [category, setCategory] = useState('');
 
   const handleSaveAndClear = () => {
     setShowConfirmDialog(true);
@@ -61,9 +68,49 @@ const SuperText = () => {
           <Table className="w-full border-collapse">
             <TableBody>
               <TableRow className="border-0">
-                {/* Left Column: Blank */}
+                {/* Left Column: Story Details */}
                 <TableCell className="p-2 align-top w-1/3">
-                  {/* Future content */}
+                  <Card className="bg-white">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-lg font-bold">
+                        <FileText className="h-5 w-5" />
+                        Story Details
+                        <span className="ml-auto bg-amber-600 text-white px-2 py-1 rounded text-sm font-bold">
+                          1a
+                        </span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="story-code" className="text-base font-semibold">
+                          Story / Webtext Code
+                        </Label>
+                        <StoryCodeField 
+                          value={storyCode}
+                          onChange={setStoryCode}
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="category" className="text-base font-semibold">
+                          Category
+                        </Label>
+                        <Select value={category} onValueChange={setCategory}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a category" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-white z-[100]">
+                            <SelectItem value="Fun">Fun</SelectItem>
+                            <SelectItem value="Life">Life</SelectItem>
+                            <SelectItem value="North Pole">North Pole</SelectItem>
+                            <SelectItem value="World Changers">World Changers</SelectItem>
+                            <SelectItem value="WebText">WebText</SelectItem>
+                            <SelectItem value="BioText">BioText</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </TableCell>
                 
                 {/* Middle Column: Story Status */}
