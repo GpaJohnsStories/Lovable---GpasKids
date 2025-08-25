@@ -18,12 +18,43 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FileText } from "lucide-react";
+import { supabase } from '@/integrations/supabase/client';
 
 const SuperText = () => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [storyCode, setStoryCode] = useState('');
   const [category, setCategory] = useState('');
   const [foundStoryTitle, setFoundStoryTitle] = useState('');
+
+  const lookupStoryByCode = async (code: string) => {
+    if (!code.trim()) {
+      setFoundStoryTitle('');
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('stories')
+        .select('title')
+        .eq('story_code', code.trim())
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error looking up story:', error);
+        setFoundStoryTitle('');
+        return;
+      }
+
+      if (data) {
+        setFoundStoryTitle(data.title);
+      } else {
+        setFoundStoryTitle('');
+      }
+    } catch (error) {
+      console.error('Error looking up story:', error);
+      setFoundStoryTitle('');
+    }
+  };
 
   const handleSaveAndClear = () => {
     setShowConfirmDialog(true);
@@ -98,13 +129,7 @@ const SuperText = () => {
                             value={storyCode}
                             onChange={(e) => {
                               setStoryCode(e.target.value);
-                              // TODO: Look up story by code and set title
-                              if (e.target.value.trim()) {
-                                // Placeholder - will be implemented with actual lookup
-                                setFoundStoryTitle("Story title will appear here when code lookup is implemented");
-                              } else {
-                                setFoundStoryTitle('');
-                              }
+                              lookupStoryByCode(e.target.value);
                             }}
                             placeholder="Code"
                             className="w-full px-3 py-2 text-base border rounded-md border-orange-accent border-2"
