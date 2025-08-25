@@ -29,30 +29,35 @@ const SuperText = () => {
   const lookupStoryByCode = async (code: string) => {
     if (!code.trim()) {
       setFoundStoryTitle('');
+      setCategory('');
       return;
     }
 
     try {
       const { data, error } = await supabase
         .from('stories')
-        .select('title')
+        .select('title, category')
         .eq('story_code', code.trim())
         .maybeSingle();
 
       if (error) {
         console.error('Error looking up story:', error);
         setFoundStoryTitle('');
+        setCategory('');
         return;
       }
 
       if (data) {
         setFoundStoryTitle(data.title);
+        setCategory(data.category);
       } else {
         setFoundStoryTitle('');
+        setCategory('');
       }
     } catch (error) {
       console.error('Error looking up story:', error);
       setFoundStoryTitle('');
+      setCategory('');
     }
   };
 
