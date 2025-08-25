@@ -70,7 +70,7 @@ const SuperText = () => {
               <TableRow className="border-0">
                 {/* Left Column: Story Details */}
                 <TableCell className="p-2 align-top w-1/3">
-                  <Card className="bg-white border-4" style={{ borderColor: '#22c55e' }}>
+                  <Card className="bg-white border-4 h-full" style={{ borderColor: '#22c55e' }}>
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2 font-bold" style={{
                         color: '#22c55e',
@@ -192,7 +192,7 @@ const SuperText = () => {
           <div className="grid grid-cols-2 gap-4">
             {/* First Row: Story Details in left, Story Status in right */}
             <div>
-              <Card className="bg-white border-4" style={{ borderColor: '#22c55e' }}>
+              <Card className="bg-white border-4 h-full" style={{ borderColor: '#22c55e' }}>
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2 font-bold" style={{
                     color: '#22c55e',
