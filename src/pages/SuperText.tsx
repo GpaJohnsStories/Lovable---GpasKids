@@ -105,9 +105,6 @@ const SuperText = () => {
                       </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="category" className="text-base font-semibold">
-                      Category
-                    </Label>
                     <div className="w-1/2">
                       <Select value={category} onValueChange={setCategory}>
                         <SelectTrigger className="w-full border-2" style={{ borderColor: '#8B4513' }}>
@@ -238,9 +235,6 @@ const SuperText = () => {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="category-tablet" className="text-base font-semibold">
-                      Category
-                    </Label>
                     <div className="w-1/2">
                       <Select value={category} onValueChange={setCategory}>
                         <SelectTrigger className="w-full border-2" style={{ borderColor: '#8B4513' }}>
