@@ -70,7 +70,7 @@ const SuperText = () => {
               <TableRow className="border-0">
                 {/* Left Column: Story Details */}
                 <TableCell className="p-2 align-top w-1/3">
-                  <Card className="bg-white">
+                  <Card className="bg-white border-4" style={{ borderColor: '#22c55e' }}>
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2 text-lg font-bold">
                         <FileText className="h-5 w-5" />
