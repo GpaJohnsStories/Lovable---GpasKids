@@ -80,9 +80,6 @@ const SuperText = () => {
                   >
                     <FileText className="h-5 w-5" style={{ color: '#22c55e' }} />
                     <span style={{ color: '#22c55e' }}>Story Details</span>
-                    <span className="ml-auto bg-amber-600 text-white px-2 py-1 rounded text-sm font-bold">
-                      1a
-                    </span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
