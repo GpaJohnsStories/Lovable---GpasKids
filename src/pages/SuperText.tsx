@@ -23,6 +23,7 @@ const SuperText = () => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [storyCode, setStoryCode] = useState('');
   const [category, setCategory] = useState('');
+  const [foundStoryTitle, setFoundStoryTitle] = useState('');
 
   const handleSaveAndClear = () => {
     setShowConfirmDialog(true);
@@ -95,7 +96,16 @@ const SuperText = () => {
                           <Input
                             id="story-code"
                             value={storyCode}
-                            onChange={(e) => setStoryCode(e.target.value)}
+                            onChange={(e) => {
+                              setStoryCode(e.target.value);
+                              // TODO: Look up story by code and set title
+                              if (e.target.value.trim()) {
+                                // Placeholder - will be implemented with actual lookup
+                                setFoundStoryTitle("Story title will appear here when code lookup is implemented");
+                              } else {
+                                setFoundStoryTitle('');
+                              }
+                            }}
                             placeholder="Code"
                             className="w-full px-3 py-2 text-base border rounded-md border-orange-accent border-2"
                             style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'bold', color: '#000000' }}
@@ -103,6 +113,18 @@ const SuperText = () => {
                           />
                         </div>
                       </div>
+                      
+                      {/* Story Title Display Box */}
+                      {foundStoryTitle && (
+                        <div className="w-full mt-4">
+                          <div className="w-full p-4 border-2 rounded-md bg-blue-50" style={{ borderColor: '#22c55e' }}>
+                            <div className="text-sm font-bold text-gray-600 mb-2">Found Story Title:</div>
+                            <div className="font-bold text-lg" style={{ color: '#22c55e', fontSize: '21px' }}>
+                              {foundStoryTitle}
+                            </div>
+                          </div>
+                        </div>
+                      )}
                   
                   <div className="space-y-2">
                     <div className="w-1/2">
