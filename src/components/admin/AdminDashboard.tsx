@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { AdminLayout } from './AdminLayout';
-import { AdminHeaderBanner } from './AdminHeaderBanner';
+import AdminLayout from './AdminLayout';
+import AdminHeaderBanner from './AdminHeaderBanner';
 import { SecurityAdminPanel } from './SecurityAdminPanel';
 import { ReferenceAdminPanel } from './ReferenceAdminPanel';
 import { DiagnosticsAdminPanel } from './DiagnosticsAdminPanel';
