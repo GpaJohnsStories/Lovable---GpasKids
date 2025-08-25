@@ -88,7 +88,7 @@ const SuperText = () => {
                 <CardContent className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="story-code" className="font-bold text-xl text-orange-accent block">
-                          Enter Current or New<br />Unique Code
+                          Current or New<br />Unique Code:
                         </Label>
                         <div className="w-1/2">
                           <Input
