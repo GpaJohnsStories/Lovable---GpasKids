@@ -67,11 +67,13 @@ export const extractHeaderTokens = (content: string): ExtractedTokens => {
       const lastMatch = matches[matches.length - 1];
       const htmlValue = lastMatch[1].trim();
       
-      // Store both HTML and plain text versions
-      tokens[`${key}Html` as keyof HeaderTokens] = htmlValue;
-      tokens[key as keyof HeaderTokens] = stripHtmlTags(htmlValue);
+      // Store both HTML and plain text versions (only if not empty)
+      if (htmlValue) {
+        tokens[`${key}Html` as keyof HeaderTokens] = htmlValue;
+        tokens[key as keyof HeaderTokens] = stripHtmlTags(htmlValue);
+      }
       
-      // Remove all instances of this token pattern from content
+      // Remove all instances of this token pattern from content (even if empty)
       cleanedContent = cleanedContent.replace(patternUsed, '');
     }
   });
