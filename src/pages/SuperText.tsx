@@ -17,10 +17,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FileText, Image, Trash2 } from "lucide-react";
+import { FileText, Image, Trash2, Volume2, Play, Square } from "lucide-react";
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { useVoiceTesting } from '@/hooks/useVoiceTesting';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const SuperText: React.FC = () => {
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
@@ -46,7 +48,17 @@ const SuperText: React.FC = () => {
   });
   const [uploading, setUploading] = React.useState<{[key: number]: boolean}>({});
   
+  // Voice state management
+  const [selectedVoice, setSelectedVoice] = React.useState('Nova');
+  const [isGeneratingAudio, setIsGeneratingAudio] = React.useState(false);
+  
   const { lookupStoryByCode } = useStoryCodeLookup();
+  const {
+    currentlyPlaying,
+    loadingVoice,
+    playVoice,
+    stopAudio
+  } = useVoiceTesting();
   
   const allowedCategories = ["Fun", "Life", "North Pole", "World Changers", "WebText", "BioText"];
 
@@ -794,6 +806,246 @@ const SuperText: React.FC = () => {
             {/* Right Side: Story Status */}
             <div className="flex-1">
               <SuperTextStoryStatus story={foundStory} />
+              
+              {/* Create AI Audio File Box */}
+              <Card className="h-fit border-2 relative mt-6" style={{ borderColor: '#2563eb' }}>
+                <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                  <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>4</span>
+                </div>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#2563eb' }}>
+                    <Volume2 className="h-5 w-5" />
+                    Create AI Audio File
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <div className="flex gap-3 items-end">
+                    <div className="flex-1">
+                      <Label className="text-xs font-bold text-gray-700 mb-1 block">Choose Voice</Label>
+                      <Select value={selectedVoice || 'Nova'} onValueChange={setSelectedVoice}>
+                        <SelectTrigger className="w-full text-xs" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <SelectValue placeholder="Select voice" />
+                        </SelectTrigger>
+                        <SelectContent className="z-50 bg-white border shadow-lg">
+                          <SelectItem value="alloy">Buddy</SelectItem>
+                          <SelectItem value="fable">Fluffy</SelectItem>
+                          <SelectItem value="echo">Gpa John</SelectItem>
+                          <SelectItem value="onyx">Max</SelectItem>
+                          <SelectItem value="sage">Sparky</SelectItem>
+                          <SelectItem value="ash">Ash</SelectItem>
+                          <SelectItem value="coral">Coral</SelectItem>
+                          <SelectItem value="nova">Nova</SelectItem>
+                          <SelectItem value="shimmer">Shimmer</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="flex-1">
+                      <Label className="text-xs font-bold text-gray-700 mb-1 block">Generate Audio</Label>
+                      <button 
+                        type="button"
+                        onClick={async () => {
+                          try {
+                            console.log('🎵 SuperText: Generate audio clicked');
+                            setIsGeneratingAudio(true);
+                            // TODO: Implement audio generation
+                            toast({
+                              title: "Audio Generation",
+                              description: "Audio generation functionality to be implemented"
+                            });
+                          } catch (error) {
+                            console.error('🎵 SuperText: Audio generation error:', error);
+                            toast({
+                              title: "Audio Generation Failed",
+                              description: error instanceof Error ? error.message : "Failed to generate audio. Please try again.",
+                              variant: "destructive"
+                            });
+                          } finally {
+                            setIsGeneratingAudio(false);
+                          }
+                        }}
+                        disabled={isGeneratingAudio || !foundStory?.content?.trim()}
+                        className="w-full h-9 text-sm font-bold text-white bg-orange-600 border-orange-700 hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-md border flex items-center justify-center gap-2"
+                      >
+                        <Volume2 className="h-4 w-4" />
+                        {isGeneratingAudio ? 'Generating...' : foundStory?.id ? 'Generate Audio' : 'Story Required'}
+                      </button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Voice Previews Box */}
+              <Card className="h-fit border-2 relative mt-6" style={{ borderColor: '#2563eb' }}>
+                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
+                  <span className="text-black text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>A</span>
+                </div>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#2563eb' }}>
+                    <Volume2 className="h-5 w-5" />
+                    Voice Previews
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <table className="w-full table-fixed border-collapse" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                    <tbody>
+                      <tr>
+                        <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <div className="text-xs font-bold mb-1">Buddy</div>
+                          <div className="text-xs text-gray-600 mb-2">Clear, neutral voice (Alloy)</div>
+                          <div className="flex gap-1 justify-center">
+                            {loadingVoice === 'alloy' ? (
+                              <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                                <LoadingSpinner />
+                                <span>Testing...</span>
+                              </div>
+                            ) : currentlyPlaying === 'alloy' ? (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" 
+                                onClick={stopAudio}
+                              >
+                                <Square className="h-3 w-3" />
+                                Stop
+                              </button>
+                            ) : (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" 
+                                onClick={() => playVoice('alloy', foundStory?.content || 'Hello, I am Buddy. This is a voice preview test.', 'Voice Preview')}
+                              >
+                                <Play className="h-3 w-3" />
+                                Test
+                              </button>
+                            )}
+                            <button 
+                              type="button" 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" 
+                              onClick={() => setSelectedVoice('alloy')}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <div className="text-xs font-bold mb-1">Gpa John</div>
+                          <div className="text-xs text-gray-600 mb-2">Deep, resonant voice (Echo)</div>
+                          <div className="flex gap-1 justify-center">
+                            {loadingVoice === 'echo' ? (
+                              <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                                <LoadingSpinner />
+                                <span>Testing...</span>
+                              </div>
+                            ) : currentlyPlaying === 'echo' ? (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" 
+                                onClick={stopAudio}
+                              >
+                                <Square className="h-3 w-3" />
+                                Stop
+                              </button>
+                            ) : (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" 
+                                onClick={() => playVoice('echo', foundStory?.content || 'Hello, I am Gpa John. This is a voice preview test.', 'Voice Preview')}
+                              >
+                                <Play className="h-3 w-3" />
+                                Test
+                              </button>
+                            )}
+                            <button 
+                              type="button" 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" 
+                              onClick={() => setSelectedVoice('echo')}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <div className="text-xs font-bold mb-1">Fluffy</div>
+                          <div className="text-xs text-gray-600 mb-2">British accent, storytelling (Fable)</div>
+                          <div className="flex gap-1 justify-center">
+                            {loadingVoice === 'fable' ? (
+                              <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                                <LoadingSpinner />
+                                <span>Testing...</span>
+                              </div>
+                            ) : currentlyPlaying === 'fable' ? (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" 
+                                onClick={stopAudio}
+                              >
+                                <Square className="h-3 w-3" />
+                                Stop
+                              </button>
+                            ) : (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" 
+                                onClick={() => playVoice('fable', foundStory?.content || 'Hello, I am Fluffy. This is a voice preview test.', 'Voice Preview')}
+                              >
+                                <Play className="h-3 w-3" />
+                                Test
+                              </button>
+                            )}
+                            <button 
+                              type="button" 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" 
+                              onClick={() => setSelectedVoice('fable')}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <div className="text-xs font-bold mb-1">Nova</div>
+                          <div className="text-xs text-gray-600 mb-2">Warm, friendly voice</div>
+                          <div className="flex gap-1 justify-center">
+                            {loadingVoice === 'nova' ? (
+                              <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                                <LoadingSpinner />
+                                <span>Testing...</span>
+                              </div>
+                            ) : currentlyPlaying === 'nova' ? (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" 
+                                onClick={stopAudio}
+                              >
+                                <Square className="h-3 w-3" />
+                                Stop
+                              </button>
+                            ) : (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" 
+                                onClick={() => playVoice('nova', foundStory?.content || 'Hello, I am Nova. This is a voice preview test.', 'Voice Preview')}
+                              >
+                                <Play className="h-3 w-3" />
+                                Test
+                              </button>
+                            )}
+                            <button 
+                              type="button" 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" 
+                              onClick={() => setSelectedVoice('nova')}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
