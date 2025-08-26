@@ -15,9 +15,9 @@ const Index = () => {
       
       <main className="container mx-auto px-4 pt-0">
         <ProportionalWebTextBox 
-          webtextCode="SYS-AAA"
-          borderColor="border-yellow-400"
-          backgroundColor="#ADD8E6"
+          webtextCode="SYS-WEL"
+          borderColor="#facc15"
+          backgroundColor="bg-[#ADD8E6]"
         />
         
         {/* GpaJohn's Banner - Keeping the wide blue button */}
