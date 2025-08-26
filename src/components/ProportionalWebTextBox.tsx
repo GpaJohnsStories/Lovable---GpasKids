@@ -259,7 +259,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
         {/* Bottom Right: Webtext Code */}
         <div className="flex justify-end mt-6">
           <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
-            {webtextCode}
+            SYS-WEL
           </div>
         </div>
       </div>
