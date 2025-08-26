@@ -40,10 +40,6 @@ const AdminHeaderBanner = () => {
   const { iconUrl: storyCreateIconUrl } = useCachedIcon('!CO-MM6.gif');
   const { iconUrl: biosIconUrl } = useCachedIcon('!CO-MM7.jpg');
 
-  const handleCreateStoryClick = () => {
-    console.log('🎯 AdminHeaderBanner: + Story button clicked - navigating to unified story system');
-    navigate('/buddys_admin/unified_story_system/add');
-  };
 
   const handleLogout = async () => {
     try {
@@ -259,43 +255,6 @@ const AdminHeaderBanner = () => {
                 </div>
               );
 
-              // Render + Story button as square icon button
-              const createStoryButton = (
-                <div 
-                  key="create-story"
-                  className="relative"
-                  onMouseEnter={() => setHoveredButton('Story')}
-                  onMouseLeave={() => setHoveredButton(null)}
-                >
-                  <div
-                    onClick={() => {
-                      console.log('🎯 + Story button clicked in header');
-                      handleCreateStoryClick();
-                    }}
-                    className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-orange-300/50 hover:scale-105 transition-transform cursor-pointer"
-                    style={{ 
-                      backgroundColor: '#9c441a',
-                      minWidth: '55px',
-                      minHeight: '55px'
-                    }}
-                   >
-                     {storyCreateIconUrl ? (
-                       <img 
-                         src={storyCreateIconUrl} 
-                         alt="Add / Edit Story/Webtext"
-                         className="w-12 h-12 object-contain"
-                       />
-                     ) : (
-                       <span className="text-2xl font-bold text-white">+</span>
-                     )}
-                  </div>
-                  {hoveredButton === 'Story' && (
-                    <div className="nav-bubble opacity-100 visible">
-                      <b>Add / Edit Story/Webtext</b>
-                    </div>
-                  )}
-                </div>
-              );
 
               // Render Dashboard button as square icon button
               const dashboardButton = (
@@ -415,7 +374,7 @@ const AdminHeaderBanner = () => {
                   </div>
                 );
                 
-                return [librariesButton, ...(isViewer ? [] : [createStoryButton])];
+                return [librariesButton];
               }
 
               // Special handling for Reference button as square icon button
