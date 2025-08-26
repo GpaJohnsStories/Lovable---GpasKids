@@ -281,7 +281,39 @@ const SuperText: React.FC = () => {
   const handleTextActionYes = () => {
     if (foundStory) {
       console.log('Update text confirmed for story:', foundStory.title);
+      
+      // Populate all form fields with existing story data
+      setCategory(foundStory.category || '');
+      
+      // Populate photo links
+      setPhotoLinks({
+        1: foundStory.photo_link_1 || '',
+        2: foundStory.photo_link_2 || '',
+        3: foundStory.photo_link_3 || ''
+      });
+      
+      // Populate photo alt texts
+      setPhotoAlts({
+        1: foundStory.photo_alt_1 || '',
+        2: foundStory.photo_alt_2 || '',
+        3: foundStory.photo_alt_3 || ''
+      });
+      
       setIsUpdatingText(true);
+      console.log('Form populated with existing story data:', {
+        category: foundStory.category,
+        photos: {
+          photo_link_1: foundStory.photo_link_1,
+          photo_link_2: foundStory.photo_link_2,
+          photo_link_3: foundStory.photo_link_3
+        },
+        photo_alts: {
+          photo_alt_1: foundStory.photo_alt_1,
+          photo_alt_2: foundStory.photo_alt_2,
+          photo_alt_3: foundStory.photo_alt_3
+        }
+      });
+      
       // TODO: Implement update functionality
     } else {
       console.log('Add new text confirmed for code:', storyCode);
