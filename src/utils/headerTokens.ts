@@ -34,32 +34,30 @@ export const extractHeaderTokens = (content: string): ExtractedTokens => {
   const tokens: HeaderTokens = {};
   let cleanedContent = content;
 
-  // Define token patterns for both colon and block styles
-  const tokenPatterns = [
+  // Define ALL token patterns that need to be removed from preview
+  const allTokenPatterns = [
+    // Block style patterns (with content)
+    /\{\{TITLE\}\}([\s\S]*?)\{\{\/TITLE\}\}/gi,
+    /\{\{TAGLINE\}\}([\s\S]*?)\{\{\/TAGLINE\}\}/gi,
+    /\{\{AUTHOR\}\}([\s\S]*?)\{\{\/AUTHOR\}\}/gi,
+    /\{\{EXCERPT\}\}([\s\S]*?)\{\{\/EXCERPT\}\}/gi,
     // Colon style patterns
-    { key: 'title', pattern: /\{\{TITLE:\s*([\s\S]*?)\}\}/gi },
-    { key: 'tagline', pattern: /\{\{TAGLINE:\s*([\s\S]*?)\}\}/gi },
-    { key: 'author', pattern: /\{\{AUTHOR:\s*([\s\S]*?)\}\}/gi },
-    { key: 'excerpt', pattern: /\{\{EXCERPT:\s*([\s\S]*?)\}\}/gi },
-    // Block style patterns
-    { key: 'title', pattern: /\{\{TITLE\}\}([\s\S]*?)\{\{\/TITLE\}\}/gi },
-    { key: 'tagline', pattern: /\{\{TAGLINE\}\}([\s\S]*?)\{\{\/TAGLINE\}\}/gi },
-    { key: 'author', pattern: /\{\{AUTHOR\}\}([\s\S]*?)\{\{\/AUTHOR\}\}/gi },
-    { key: 'excerpt', pattern: /\{\{EXCERPT\}\}([\s\S]*?)\{\{\/EXCERPT\}\}/gi }
+    /\{\{TITLE:\s*([\s\S]*?)\}\}/gi,
+    /\{\{TAGLINE:\s*([\s\S]*?)\}\}/gi,
+    /\{\{AUTHOR:\s*([\s\S]*?)\}\}/gi,
+    /\{\{EXCERPT:\s*([\s\S]*?)\}\}/gi
   ];
 
-  // Extract each token type (block style takes precedence if both exist)
+  // Extract token content first (block style takes precedence)
   ['title', 'tagline', 'author', 'excerpt'].forEach(key => {
-    const colonPattern = tokenPatterns.find(p => p.key === key && p.pattern.source.includes(':'));
-    const blockPattern = tokenPatterns.find(p => p.key === key && p.pattern.source.includes('/'));
-    
-    // Try block style first, then colon style
-    let matches = Array.from(content.matchAll(blockPattern!.pattern));
-    let patternUsed = blockPattern!.pattern;
+    // Try block style first
+    const blockPattern = new RegExp(`\\{\\{${key.toUpperCase()}\\}\\}([\\s\\S]*?)\\{\\{\\/${key.toUpperCase()}\\}\\}`, 'gi');
+    let matches = Array.from(content.matchAll(blockPattern));
     
     if (matches.length === 0) {
-      matches = Array.from(content.matchAll(colonPattern!.pattern));
-      patternUsed = colonPattern!.pattern;
+      // Try colon style
+      const colonPattern = new RegExp(`\\{\\{${key.toUpperCase()}:\\s*([\\s\\S]*?)\\}\\}`, 'gi');
+      matches = Array.from(content.matchAll(colonPattern));
     }
     
     if (matches.length > 0) {
@@ -72,10 +70,12 @@ export const extractHeaderTokens = (content: string): ExtractedTokens => {
         tokens[`${key}Html` as keyof HeaderTokens] = htmlValue;
         tokens[key as keyof HeaderTokens] = stripHtmlTags(htmlValue);
       }
-      
-      // Remove all instances of this token pattern from content (even if empty)
-      cleanedContent = cleanedContent.replace(patternUsed, '');
     }
+  });
+
+  // Remove ALL token patterns from content (including empty ones)
+  allTokenPatterns.forEach(pattern => {
+    cleanedContent = cleanedContent.replace(pattern, '');
   });
 
   // Clean up any extra whitespace left by token removal
