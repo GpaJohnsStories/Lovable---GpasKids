@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import SecureAdminRoute from '@/components/admin/SecureAdminRoute';
 import SuperTextStoryStatus from '@/components/SuperTextStoryStatus';
+import SplitViewEditor from '@/components/editor/SplitViewEditor';
 import './SuperText.css';
 import {
   AlertDialog,
@@ -55,6 +56,10 @@ const SuperText: React.FC = () => {
   const [isGeneratingAudio, setIsGeneratingAudio] = React.useState(false);
   const [videoUrl, setVideoUrl] = React.useState<string>('');
   const [audioUrl, setAudioUrl] = React.useState<string>('');
+  
+  // Story content state for editor
+  const [storyContent, setStoryContent] = React.useState<string>('');
+  const [fontSize, setFontSize] = React.useState<number>(21);
   
   const { lookupStoryByCode } = useStoryCodeLookup();
   const {
@@ -320,6 +325,9 @@ const SuperText: React.FC = () => {
       setAudioUrl(foundStory.audio_url || '');
       setSelectedVoice(foundStory.ai_voice_name || 'Nova');
       
+      // Populate story content for editor
+      setStoryContent(foundStory.content || '');
+      
       setIsUpdatingText(true);
       console.log('Form populated with existing story data:', {
         category: foundStory.category,
@@ -362,6 +370,8 @@ const SuperText: React.FC = () => {
     setPhotoLinks({ 1: '', 2: '', 3: '' });
     setPhotoAlts({ 1: '', 2: '', 3: '' });
     setUploading({});
+    // Clear content state
+    setStoryContent('');
   };
 
   return (
@@ -420,6 +430,8 @@ const SuperText: React.FC = () => {
                 setPhotoLinks({ 1: '', 2: '', 3: '' });
                 setPhotoAlts({ 1: '', 2: '', 3: '' });
                 setUploading({});
+                // Clear content state
+                setStoryContent('');
                 console.log('All edits cancelled and form cleared');
               }}
               className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
@@ -1296,6 +1308,33 @@ const SuperText: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Story Formatting Section - Full Width */}
+      {(isUpdatingText || isAddingText) && (
+        <div className="w-full mt-8">
+          <Card className="bg-white border-4" style={{ borderColor: '#22c55e' }}>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-2xl font-bold text-amber-800 flex items-center gap-3">
+                <FileText className="h-6 w-6" />
+                {isUpdatingText ? `Editing: ${foundStoryTitle}` : `Creating New Story: ${storyCode}`}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <SplitViewEditor
+                content={storyContent}
+                onChange={setStoryContent}
+                placeholder={isUpdatingText 
+                  ? "Edit your story content here..." 
+                  : "Start writing your new story..."
+                }
+                category={category as "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "STORY"}
+                fontSize={fontSize}
+                onFontSizeChange={setFontSize}
+              />
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       {/* Confirmation Dialog */}
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
