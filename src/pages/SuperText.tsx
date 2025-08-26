@@ -20,6 +20,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FileText, Image, Trash2, Volume2, Play, Square, Video } from "lucide-react";
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
+import { useStorySave } from '@/hooks/useStorySave';
+import { extractHeaderTokens } from "@/utils/headerTokens";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useVoiceTesting } from '@/hooks/useVoiceTesting';
@@ -60,8 +62,10 @@ const SuperText: React.FC = () => {
   // Story content state for editor
   const [storyContent, setStoryContent] = React.useState<string>('');
   const [fontSize, setFontSize] = React.useState<number>(21);
+  const [previewContent, setPreviewContent] = React.useState<string | null>(null);
   
   const { lookupStoryByCode } = useStoryCodeLookup();
+  const { saveStory, isSaving } = useStorySave();
   const {
     currentlyPlaying,
     loadingVoice,
@@ -272,13 +276,118 @@ const SuperText: React.FC = () => {
     return () => clearTimeout(timer);
   }, [storyCode, debouncedLookup]);
 
-  const handleSaveAndClear = () => {
-    setShowConfirmDialog(true);
+  const handleSaveAndClear = async () => {
+    // Check if we're in editing mode
+    if (!isUpdatingText && !isAddingText) {
+      toast({
+        title: "No Content to Save",
+        description: "Please choose 'Update existing text' or 'Add new text' first",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate story code and category for new stories
+    if (!isValidStoryCode(storyCode)) {
+      toast({
+        title: "Invalid Story Code",
+        description: "Please enter a valid story code (format: ABC-123)",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (isAddingText && !category) {
+      toast({
+        title: "Category Required",
+        description: "Please select a category for the new story",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Extract tokens from content for validation and data
+    const { tokens, contentWithoutTokens } = extractHeaderTokens(storyContent);
+    
+    // Validate title token exists
+    if (!tokens.title) {
+      toast({
+        title: "Title Required",
+        description: "Please add a TITLE token to your story content",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Build story payload
+    const storyPayload = {
+      ...(foundStory?.id && { id: foundStory.id }), // Include ID for updates
+      story_code: storyCode,
+      category: category as "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText",
+      title: tokens.title || '',
+      tagline: tokens.tagline || '',
+      author: tokens.author || '',
+      excerpt: tokens.excerpt || '',
+      content: storyContent,
+      photo_link_1: photoLinks[1] || '',
+      photo_link_2: photoLinks[2] || '',
+      photo_link_3: photoLinks[3] || '',
+      photo_alt_1: photoAlts[1] || '',
+      photo_alt_2: photoAlts[2] || '',
+      photo_alt_3: photoAlts[3] || '',
+      video_url: videoUrl,
+      audio_url: audioUrl,
+      ai_voice_name: selectedVoice,
+      ai_voice_model: 'tts-1',
+      published: foundStory?.published || 'N',
+      google_drive_link: foundStory?.google_drive_link || ''
+    };
+
+    console.log('🚀 Saving story payload:', storyPayload);
+
+    try {
+      const success = await saveStory(storyPayload, async () => {
+        console.log('✅ Save successful, fetching updated story for verification');
+        
+        // Clear preview first for visual effect
+        setPreviewContent('');
+        
+        // Small delay then fetch and show saved content
+        setTimeout(async () => {
+          const result = await lookupStoryByCode(storyCode, true);
+          if (result.found && result.story) {
+            setPreviewContent(result.story.content);
+            console.log('🔍 Preview updated with saved content');
+            
+            // Show confirmation dialog after preview is updated
+            setShowConfirmDialog(true);
+          }
+        }, 200);
+      });
+      
+      if (!success) {
+        console.log('❌ Save failed');
+      }
+    } catch (error) {
+      console.error('💥 Error during save:', error);
+    }
   };
 
   const handleConfirmYes = () => {
-    // TODO: Save functionality will be implemented later
-    console.log('Save and clear confirmed - functionality to be implemented');
+    // Clear all form data
+    setStoryCode('');
+    setCategory('');
+    setFoundStory(null);
+    setFoundStoryTitle('');
+    setNoStoryFound(false);
+    setStoryContent('');
+    setPreviewContent(null);
+    setPhotoLinks({ 1: '', 2: '', 3: '' });
+    setPhotoAlts({ 1: '', 2: '', 3: '' });
+    setVideoUrl('');
+    setAudioUrl('');
+    setIsUpdatingText(false);
+    setIsAddingText(false);
     
     // Close dialog
     setShowConfirmDialog(false);
@@ -289,8 +398,10 @@ const SuperText: React.FC = () => {
       behavior: 'smooth'
     });
     
-    // Dispatch custom event for form clearing (for future form implementation)
-    window.dispatchEvent(new CustomEvent('supertext:clear-form'));
+    toast({
+      title: "Form Cleared",
+      description: "Ready for new content creation"
+    });
   };
 
   const handleConfirmNo = () => {
@@ -1353,6 +1464,7 @@ const SuperText: React.FC = () => {
                 category={category as "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "STORY"}
                 fontSize={fontSize}
                 onFontSizeChange={setFontSize}
+                previewContent={previewContent}
               />
             </CardContent>
           </Card>

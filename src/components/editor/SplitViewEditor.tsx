@@ -14,6 +14,7 @@ interface SplitViewEditorProps {
   category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "STORY";
   fontSize?: number;
   onFontSizeChange?: (fontSize: number) => void;
+  previewContent?: string | null;
 }
 
 const SplitViewEditor: React.FC<SplitViewEditorProps> = ({ 
@@ -23,7 +24,8 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   onSave,
   category,
   fontSize = 21,
-  onFontSizeChange
+  onFontSizeChange,
+  previewContent = null
 }) => {
   console.log('🎯 SplitViewEditor: Rendering with content:', {
     content: content ? `"${content.substring(0, 100)}..."` : 'undefined/empty',
@@ -408,7 +410,7 @@ ${content}`;
               className="flex-1 p-4 overflow-auto bg-white"
             >
               <IsolatedStoryRenderer
-                content={content}
+                content={previewContent !== null ? previewContent : content}
                 useRichCleaning={true}
                 category={category}
                 fontSize={fontSize}
