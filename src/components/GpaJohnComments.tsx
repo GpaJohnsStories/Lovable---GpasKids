@@ -47,8 +47,8 @@ const GpaJohnComments = () => {
   return <section className="pt-4 pb-2">
       {/* Header Banner - Always visible */}
       <div className="container mx-auto px-4">
-        <div className="flex justify-center">
-          <div style={{ border: '4px solid #2563eb' }} className="rounded-lg">
+        <div className="flex justify-center w-full">
+          <div style={{ border: '2px solid #2563eb' }} className="rounded-lg w-full max-w-4xl">
             <ProportionalWebTextBox 
               webtextCode="SYS-LAA"
               borderColor="#2563eb"

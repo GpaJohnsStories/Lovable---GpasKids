@@ -202,7 +202,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
     <>
       <div 
         id={id}
-        className={`rounded-lg border-4 p-6 ${backgroundColor} relative`}
+        className={`rounded-lg p-6 ${backgroundColor} relative w-full min-h-fit`}
         style={{ borderColor }}
       >
         {/* Audio Button - Always visible in top right corner */}
