@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { SuperAV } from '@/components/SuperAV';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { createSafeHtml } from "@/utils/xssProtection";
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
 interface StoryData {
   id: string;
@@ -183,9 +183,13 @@ export const DeployedContent = ({
       
       {/* Content */}
       {!audioOnly && content.content && (
-        <div 
-          className="deployed-story-content font-georgia"
-          dangerouslySetInnerHTML={createSafeHtml(content.content)}
+        <IsolatedStoryRenderer
+          content={content.content}
+          className="deployed-story-content"
+          category="WebText"
+          fontSize={fontSize}
+          onFontSizeChange={onFontSizeChange}
+          useRichCleaning={true}
         />
       )}
     </div>

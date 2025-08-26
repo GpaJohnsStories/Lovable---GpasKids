@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from 'date-fns';
 import { ExternalLink } from "lucide-react";
-import { StoryContentRenderer } from "@/components/story-content/StoryContentRenderer";
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 import WelcomeHeader from "@/components/WelcomeHeader";
 import StoryHeader from "@/components/StoryHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -277,10 +277,12 @@ const Story = () => {
               <div 
                 className="bg-[#F5E6D3] border-2 border-[#9c441a] rounded-lg p-6 md:p-8 shadow-sm"
               >
-                <StoryContentRenderer 
+                <IsolatedStoryRenderer 
                   content={contentWithoutTokens || story.content || "No content available."}
                   fontSize={fontSize}
                   onFontSizeChange={setFontSize}
+                  category="STORY"
+                  useRichCleaning={true}
                 />
               </div>
             </div>

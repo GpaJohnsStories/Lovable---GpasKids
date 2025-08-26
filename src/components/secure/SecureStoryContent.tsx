@@ -1,5 +1,5 @@
-import { createSafeHtml } from "@/utils/xssProtection";
-import { wrapParagraphs } from "@/utils/textUtils";
+import React from 'react';
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
 interface SecureStoryContentProps {
   content?: string;
@@ -8,36 +8,22 @@ interface SecureStoryContentProps {
 }
 
 /**
- * Secure story content renderer that prevents XSS while preserving formatting
- * Uses sanitized HTML rendering for story content
+ * Secure story content renderer - delegates to IsolatedStoryRenderer
+ * @deprecated Use IsolatedStoryRenderer directly for new code
  */
 const SecureStoryContent = ({ 
   content, 
   excerpt, 
   className = "" 
 }: SecureStoryContentProps) => {
-  if (content) {
-    // Wrap plain text in paragraphs if needed
-    const processedContent = wrapParagraphs(content);
-    const safeHtml = createSafeHtml(processedContent);
-    return (
-      <div 
-        className={`story-content ${className}`}
-        dangerouslySetInnerHTML={safeHtml}
-      />
-    );
-  }
-
-  if (excerpt) {
-    // For excerpts, use plain text (no HTML allowed)
-    return (
-      <p className={`story-content ${className}`}>
-        {excerpt}
-      </p>
-    );
-  }
-
-  return null;
+  return (
+    <IsolatedStoryRenderer
+      content={content}
+      excerpt={excerpt}
+      className={className}
+      useRichCleaning={true}
+    />
+  );
 };
 
 export default SecureStoryContent;

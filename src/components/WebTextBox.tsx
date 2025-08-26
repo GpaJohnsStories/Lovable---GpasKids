@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { getStoryPhotos } from '@/utils/storyUtils';
 import { AudioButton } from '@/components/AudioButton';
-
 import { SuperAV } from '@/components/SuperAV';
 import { ArrowRight } from 'lucide-react';
-import { createSafeHtml } from "@/utils/xssProtection";
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
 interface WebTextBoxProps {
   webtextCode: string;
@@ -36,10 +35,9 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [showSuperAV, setShowSuperAV] = useState(false);
 
   const getContent = () => {
-    if (loading) return { __html: "Loading..." };
-    if (!webtext) return { __html: "Coming Soon" };
-    const content = webtext.content || webtext.excerpt || "No content available";
-    return createSafeHtml(content);
+    if (loading) return "Loading...";
+    if (!webtext) return "Coming Soon";
+    return webtext.content || webtext.excerpt || "No content available";
   };
 
   useEffect(() => {
@@ -118,10 +116,13 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
 
               {/* Content below title */}
               <div className="flex-1 min-w-0">
-                <div 
-                  className="font-handwritten text-blue-800 leading-relaxed break-words [&>h3]:text-xl [&>h3]:sm:text-2xl [&>h3]:font-bold [&>h3]:mb-4 [&>h3]:break-words [&>h3]:font-handwritten [&>p]:mb-3 [&>p]:break-words [&>p]:font-handwritten [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
-                  style={{ fontSize: `${fontSize}px` }}
-                  dangerouslySetInnerHTML={getContent()}
+                <IsolatedStoryRenderer
+                  content={getContent()}
+                  className="font-handwritten text-blue-800 leading-relaxed break-words"
+                  category="WebText"
+                  fontSize={fontSize}
+                  onFontSizeChange={setFontSize}
+                  useRichCleaning={true}
                 />
               </div>
             </div>
@@ -204,10 +205,13 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           )}
           
           {/* Content that wraps around the floated photo */}
-          <div 
-            className="font-handwritten text-amber-900 leading-relaxed [&>ul]:list-disc [&>ul]:list-inside [&>ul]:mb-3 [&>ul]:font-handwritten [&>ol]:list-decimal [&>ol]:list-inside [&>ol]:mb-3 [&>ol]:font-handwritten [&>li]:mb-1 [&>li]:font-handwritten [&>p]:font-handwritten [&>h3]:font-handwritten [&>span]:font-handwritten [&>em]:font-handwritten [&>strong]:font-handwritten [&>i]:font-handwritten [&>b]:font-handwritten"
-            style={{ fontSize: `${fontSize}px` }}
-            dangerouslySetInnerHTML={getContent()}
+          <IsolatedStoryRenderer
+            content={getContent()}
+            className="font-handwritten text-amber-900 leading-relaxed"
+            category="WebText"
+            fontSize={fontSize}
+            onFontSizeChange={setFontSize}
+            useRichCleaning={true}
           />
           
           {/* Clear the float */}

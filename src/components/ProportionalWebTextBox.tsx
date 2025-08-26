@@ -6,9 +6,9 @@ import { AudioButton } from '@/components/AudioButton';
 import { SuperAV } from '@/components/SuperAV';
 import { ArrowRight } from 'lucide-react';
 import { FontScaleStep, DEFAULT_FONT_SCALE, getTypographyClasses } from '@/utils/fontScaleUtils';
-import { createSafeHtml } from "@/utils/xssProtection";
 import { useNavigate } from 'react-router-dom';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
 interface ProportionalWebTextBoxProps {
   webtextCode: string;
@@ -42,10 +42,9 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const [showSuperAV, setShowSuperAV] = useState(false);
 
   const getContent = () => {
-    if (loading) return { __html: "Loading..." };
-    if (!webtext) return { __html: "Coming Soon" };
-    const content = webtext.content || webtext.excerpt || "No content available";
-    return createSafeHtml(content);
+    if (loading) return "Loading...";
+    if (!webtext) return "Coming Soon";
+    return webtext.content || webtext.excerpt || "No content available";
   };
 
   useEffect(() => {
@@ -163,10 +162,12 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
 
               {/* Content below title with proportional scaling */}
               <div className="flex-1 min-w-0">
-                <div 
+                <IsolatedStoryRenderer
+                  content={getContent()}
                   className="proportional-content text-emerald-900 leading-relaxed break-words"
-                  style={getScaleStyles()}
-                  dangerouslySetInnerHTML={getContent()}
+                  category="WebText"
+                  fontSize={16} // Base font size for scaling
+                  useRichCleaning={true}
                 />
               </div>
             </div>
@@ -243,10 +244,12 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           )}
           
           {/* Content that wraps around the floated photo with proportional scaling */}
-          <div 
+          <IsolatedStoryRenderer
+            content={getContent()}
             className="proportional-content text-amber-900 leading-relaxed"
-            style={getScaleStyles()}
-            dangerouslySetInnerHTML={getContent()}
+            category="WebText"
+            fontSize={16} // Base font size for scaling
+            useRichCleaning={true}
           />
           
           {/* Clear the float */}

@@ -1,9 +1,10 @@
 /**
- * Unified story content renderer that replaces both StoryContent and SimpleStoryContent
+ * Plain text renderer - delegates to IsolatedStoryRenderer
+ * @deprecated Use IsolatedStoryRenderer directly for new code
  */
 
-import { createSafeHtml } from "@/utils/xssProtection";
-import { wrapParagraphs } from "@/utils/textUtils";
+import React from 'react';
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
 interface StoryContentRendererProps {
   content?: string;
@@ -18,27 +19,14 @@ const StoryContentRenderer = ({
   useRichCleaning = false,
   className = ""
 }: StoryContentRendererProps) => {
-  if (content) {
-    // Wrap plain text in paragraphs if needed
-    const processedContent = wrapParagraphs(content);
-    const safeHtml = createSafeHtml(processedContent);
-    return (
-      <div 
-        className={`story-content ${className}`}
-        dangerouslySetInnerHTML={safeHtml}
-      />
-    );
-  }
-
-  if (excerpt) {
-    return (
-      <p className={`story-content ${className}`}>
-        {excerpt}
-      </p>
-    );
-  }
-
-  return null;
+  return (
+    <IsolatedStoryRenderer
+      content={content}
+      excerpt={excerpt}
+      useRichCleaning={useRichCleaning}
+      className={className}
+    />
+  );
 };
 
 export default StoryContentRenderer;
