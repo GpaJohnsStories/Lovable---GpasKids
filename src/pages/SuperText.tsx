@@ -345,8 +345,30 @@ const SuperText: React.FC = () => {
       
       // TODO: Implement update functionality
     } else {
+      // For new stories, require category selection first
+      if (!category) {
+        toast({
+          title: "Category Required",
+          description: "Please select a category before proceeding with the new story.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
       console.log('Add new text confirmed for code:', storyCode);
+      
+      // Insert story tokens at the beginning of content
+      const tokensText = `{{TITLE}}{{/TITLE}}
+{{TAGLINE}}{{/TAGLINE}}
+{{AUTHOR}}{{/AUTHOR}}
+{{EXCERPT}}{{/EXCERPT}}
+
+`;
+      
+      setStoryContent(tokensText);
       setIsAddingText(true);
+      
+      console.log('New story editor ready with tokens for category:', category);
       // TODO: Implement add functionality
     }
   };
