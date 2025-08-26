@@ -1042,6 +1042,203 @@ const SuperText: React.FC = () => {
                           </div>
                         </td>
                       </tr>
+                      
+                      <tr>
+                        <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <div className="text-xs font-bold mb-1">Max</div>
+                          <div className="text-xs text-gray-600 mb-2">Deep, authoritative voice (Onyx)</div>
+                          <div className="flex gap-1 justify-center">
+                            {loadingVoice === 'onyx' ? (
+                              <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                                <LoadingSpinner />
+                                <span>Testing...</span>
+                              </div>
+                            ) : currentlyPlaying === 'onyx' ? (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" 
+                                onClick={stopAudio}
+                              >
+                                <Square className="h-3 w-3" />
+                                Stop
+                              </button>
+                            ) : (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" 
+                                onClick={() => playVoice('onyx', foundStory?.content || 'Hello, I am Max. This is a voice preview test.', 'Voice Preview')}
+                              >
+                                <Play className="h-3 w-3" />
+                                Test
+                              </button>
+                            )}
+                            <button 
+                              type="button" 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" 
+                              onClick={() => setSelectedVoice('onyx')}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <div className="text-xs font-bold mb-1">Shimmer</div>
+                          <div className="text-xs text-gray-600 mb-2">Soft, gentle voice</div>
+                          <div className="flex gap-1 justify-center">
+                            {loadingVoice === 'shimmer' ? (
+                              <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                                <LoadingSpinner />
+                                <span>Testing...</span>
+                              </div>
+                            ) : currentlyPlaying === 'shimmer' ? (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" 
+                                onClick={stopAudio}
+                              >
+                                <Square className="h-3 w-3" />
+                                Stop
+                              </button>
+                            ) : (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" 
+                                onClick={() => playVoice('shimmer', foundStory?.content || 'Hello, I am Shimmer. This is a voice preview test.', 'Voice Preview')}
+                              >
+                                <Play className="h-3 w-3" />
+                                Test
+                              </button>
+                            )}
+                            <button 
+                              type="button" 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" 
+                              onClick={() => setSelectedVoice('shimmer')}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <div className="text-xs font-bold mb-1">Ash</div>
+                          <div className="text-xs text-gray-600 mb-2">Gentle and neutral, calming</div>
+                          <div className="flex gap-1 justify-center">
+                            {loadingVoice === 'ash' ? (
+                              <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                                <LoadingSpinner />
+                                <span>Testing...</span>
+                              </div>
+                            ) : currentlyPlaying === 'ash' ? (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" 
+                                onClick={stopAudio}
+                              >
+                                <Square className="h-3 w-3" />
+                                Stop
+                              </button>
+                            ) : (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" 
+                                onClick={() => playVoice('ash', foundStory?.content || 'Hello, I am Ash. This is a voice preview test.', 'Voice Preview')}
+                              >
+                                <Play className="h-3 w-3" />
+                                Test
+                              </button>
+                            )}
+                            <button 
+                              type="button" 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" 
+                              onClick={() => setSelectedVoice('ash')}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <div className="text-xs font-bold mb-1">Coral</div>
+                          <div className="text-xs text-gray-600 mb-2">Bright and clear, youthful tone</div>
+                          <div className="flex gap-1 justify-center">
+                            {loadingVoice === 'coral' ? (
+                              <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                                <LoadingSpinner />
+                                <span>Testing...</span>
+                              </div>
+                            ) : currentlyPlaying === 'coral' ? (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" 
+                                onClick={stopAudio}
+                              >
+                                <Square className="h-3 w-3" />
+                                Stop
+                              </button>
+                            ) : (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" 
+                                onClick={() => playVoice('coral', foundStory?.content || 'Hello, I am Coral. This is a voice preview test.', 'Voice Preview')}
+                              >
+                                <Play className="h-3 w-3" />
+                                Test
+                              </button>
+                            )}
+                            <button 
+                              type="button" 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" 
+                              onClick={() => setSelectedVoice('coral')}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <div className="text-xs font-bold mb-1">Sparky</div>
+                          <div className="text-xs text-gray-600 mb-2">Warm and thoughtful, reflective (Sage)</div>
+                          <div className="flex gap-1 justify-center">
+                            {loadingVoice === 'sage' ? (
+                              <div className="flex items-center gap-1 px-2 py-1 text-xs">
+                                <LoadingSpinner />
+                                <span>Testing...</span>
+                              </div>
+                            ) : currentlyPlaying === 'sage' ? (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-1" 
+                                onClick={stopAudio}
+                              >
+                                <Square className="h-3 w-3" />
+                                Stop
+                              </button>
+                            ) : (
+                              <button 
+                                type="button" 
+                                className="text-xs px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 flex items-center gap-1" 
+                                onClick={() => playVoice('sage', foundStory?.content || 'Hello, I am Sparky. This is a voice preview test.', 'Voice Preview')}
+                              >
+                                <Play className="h-3 w-3" />
+                                Test
+                              </button>
+                            )}
+                            <button 
+                              type="button" 
+                              className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700" 
+                              onClick={() => setSelectedVoice('sage')}
+                            >
+                              Use
+                            </button>
+                          </div>
+                        </td>
+                        <td className="p-2 border text-center" style={{ borderColor: '#9c441a', borderWidth: '2px' }}>
+                          <div className="text-xs text-gray-600">Available for future voices</div>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </CardContent>
