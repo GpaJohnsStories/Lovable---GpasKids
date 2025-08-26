@@ -623,6 +623,7 @@ const SuperText: React.FC = () => {
                              className="w-full px-3 py-2 text-base border rounded-md border-orange-accent border-2"
                              style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'bold', color: '#000000' }}
                              autoComplete="off"
+                             disabled={isUpdatingText || isAddingText}
                            />
                         </div>
                       </div>
@@ -653,10 +654,10 @@ const SuperText: React.FC = () => {
                   
                   <div className="space-y-2">
                     <div className="w-1/2">
-                      <Select value={category} onValueChange={setCategory}>
-                        <SelectTrigger className="w-full border-2 font-bold text-xl" style={{ borderColor: '#8B4513', color: '#FF8C00' }}>
-                          <SelectValue placeholder="Category" />
-                        </SelectTrigger>
+                       <Select value={category} onValueChange={setCategory} disabled={isUpdatingText || isAddingText}>
+                         <SelectTrigger className="w-full border-2 font-bold text-xl" style={{ borderColor: '#8B4513', color: '#FF8C00' }}>
+                           <SelectValue placeholder="Category" />
+                         </SelectTrigger>
                       <SelectContent className="bg-white z-[100]">
                         <SelectItem value="Fun">Fun</SelectItem>
                         <SelectItem value="Life">Life</SelectItem>
