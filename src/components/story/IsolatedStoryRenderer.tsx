@@ -42,8 +42,8 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
       contentWithoutTokens = extracted.contentWithoutTokens;
     }
 
-    // Use the content without tokens if available, otherwise use original content
-    let processedContent = contentWithoutTokens || content;
+    // Use the content without tokens if available (even if empty string), otherwise original content
+    let processedContent = (typeof contentWithoutTokens === 'string') ? contentWithoutTokens : content;
     
     // Preprocess content to handle quote-wrapped strings
     if (typeof processedContent === 'string' && processedContent.startsWith('"') && processedContent.endsWith('"')) {
