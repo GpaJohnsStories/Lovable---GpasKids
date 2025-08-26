@@ -17,12 +17,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FileText, Image, Trash2, Volume2, Play, Square } from "lucide-react";
+import { FileText, Image, Trash2, Volume2, Play, Square, Video } from "lucide-react";
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useVoiceTesting } from '@/hooks/useVoiceTesting';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import StoryVideoUpload from "@/components/StoryVideoUpload";
+import AudioUploadSection from "@/components/unified-story/AudioUploadSection";
 
 const SuperText: React.FC = () => {
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
@@ -48,9 +50,11 @@ const SuperText: React.FC = () => {
   });
   const [uploading, setUploading] = React.useState<{[key: number]: boolean}>({});
   
-  // Voice state management
-  const [selectedVoice, setSelectedVoice] = React.useState('Nova');
+  // Voice and media state management
+  const [selectedVoice, setSelectedVoice] = React.useState<string>('Nova');
   const [isGeneratingAudio, setIsGeneratingAudio] = React.useState(false);
+  const [videoUrl, setVideoUrl] = React.useState<string>('');
+  const [audioUrl, setAudioUrl] = React.useState<string>('');
   
   const { lookupStoryByCode } = useStoryCodeLookup();
   const {
@@ -310,6 +314,11 @@ const SuperText: React.FC = () => {
         2: foundStory.photo_alt_2 || '',
         3: foundStory.photo_alt_3 || ''
       });
+      
+      // Populate video and audio URLs
+      setVideoUrl(foundStory.video_url || '');
+      setAudioUrl(foundStory.audio_url || '');
+      setSelectedVoice(foundStory.ai_voice_name || 'Nova');
       
       setIsUpdatingText(true);
       console.log('Form populated with existing story data:', {
@@ -799,6 +808,46 @@ const SuperText: React.FC = () => {
                       </tr>
                     </tbody>
                   </table>
+                </CardContent>
+              </Card>
+              
+              {/* Story Video Box */}
+              <Card className="bg-white border-4 h-fit relative mt-6" style={{ borderColor: '#9333ea' }}>
+                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
+                  <span className="text-black text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>B</span>
+                </div>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#9333ea' }}>
+                    <Video className="h-5 w-5" />
+                    Story Video
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <StoryVideoUpload 
+                    videoUrl={videoUrl} 
+                    onVideoUpload={setVideoUrl} 
+                    onVideoRemove={() => setVideoUrl('')} 
+                  />
+                </CardContent>
+              </Card>
+              
+              {/* Audio Upload Box */}
+              <Card className="bg-white border-4 h-fit relative mt-6" style={{ borderColor: '#4A7C59' }}>
+                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center z-10" style={{ backgroundColor: '#FF8C42' }}>
+                  <span className="text-black text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>C</span>
+                </div>
+                <CardHeader className="pb-2">
+                  <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{ color: '#4A7C59' }}>
+                    <Volume2 className="h-5 w-5" />
+                    Audio Upload
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                  <AudioUploadSection 
+                    audioUrl={audioUrl} 
+                    onAudioUpload={setAudioUrl} 
+                    onAudioRemove={() => setAudioUrl('')} 
+                  />
                 </CardContent>
               </Card>
             </div>
