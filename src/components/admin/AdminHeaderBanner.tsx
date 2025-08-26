@@ -93,6 +93,17 @@ const AdminHeaderBanner = () => {
       description: 'Full story list with add/update, sorting and viewing services'
     },
     {
+      name: 'Super Text',
+      path: '/buddys_admin/super-text',
+      icon: FileText,
+      bgColor: 'bg-gradient-to-b from-purple-500 via-purple-600 to-purple-700',
+      hoverColor: 'hover:from-purple-600 hover:via-purple-700 hover:to-purple-800',
+      shadowColor: 'shadow-[0_6px_0_#9333ea,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#9333ea,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-white',
+      description: 'Super Text editor for advanced text management'
+    },
+    {
       name: 'Reference',
       path: '/buddys_admin/reference',
       icon: BookOpen,
@@ -375,6 +386,46 @@ const AdminHeaderBanner = () => {
                 );
                 
                 return [librariesButton];
+              }
+
+              // Special handling for Super Text button as square icon button
+              if (button.name === 'Super Text') {
+                const superTextButton = (
+                  <div 
+                    key={button.name}
+                    className="relative"
+                    onMouseEnter={() => setHoveredButton(button.name)}
+                    onMouseLeave={() => setHoveredButton(null)}
+                  >
+                    <Link to={button.path} onClick={scrollToTop}>
+                      <div
+                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-purple-300/50 hover:scale-105 transition-transform cursor-pointer"
+                        style={{ 
+                          backgroundColor: '#9333ea',
+                          minWidth: '55px',
+                          minHeight: '55px'
+                        }}
+                      >
+                        {storyCreateIconUrl ? (
+                          <img 
+                            src={storyCreateIconUrl} 
+                            alt="Super Text"
+                            className="w-12 h-12 object-contain"
+                          />
+                        ) : (
+                          <FileText className="w-12 h-12 text-white" />
+                        )}
+                      </div>
+                    </Link>
+                    {hoveredButton === button.name && (
+                      <div className="nav-bubble opacity-100 visible">
+                        <b>Super Text</b>
+                      </div>
+                    )}
+                  </div>
+                );
+                
+                return superTextButton;
               }
 
               // Special handling for Reference button as square icon button

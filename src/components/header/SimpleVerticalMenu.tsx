@@ -161,17 +161,6 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     //   ]
     // },
     {
-      id: "super-text",
-      icon: "!CO-MM6.gif", // Super Text icon - Main Menu 6
-      text: "Super Text",
-      tooltipText: "Super Text",
-      color: "#F97316",
-      onClick: () => {
-        window.location.href = "/buddys_admin/super-text";
-        onClose();
-      }
-    },
-    {
       id: "about-us",
       icon: "!CO-AB3.jpg", // About Us icon - Main Menu 8
       text: "About Us",
