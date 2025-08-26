@@ -374,6 +374,26 @@ const SuperText: React.FC = () => {
     setStoryContent('');
   };
 
+  // Automatically show editor based on story lookup results
+  React.useEffect(() => {
+    if (foundStory) {
+      // Story found - show editor for updating
+      setIsUpdatingText(true);
+      setIsAddingText(false);
+      console.log('Editor ready for updating story:', foundStory.title);
+    } else if (storyCode && storyCode.length >= 3 && noStoryFound) {
+      // Valid code but no story found - show editor for adding new
+      setIsAddingText(true); 
+      setIsUpdatingText(false);
+      setStoryContent(''); // Clear content for new story
+      console.log('Editor ready for adding new story with code:', storyCode);
+    } else {
+      // Hide editor when conditions not met
+      setIsUpdatingText(false);
+      setIsAddingText(false);
+    }
+  }, [foundStory, storyCode, noStoryFound]);
+
   return (
     <SecureAdminRoute>
       <Helmet>
