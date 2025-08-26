@@ -51,7 +51,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ResetPasswordRequest from "./components/auth/ResetPasswordRequest";
 
-import UnifiedStoryPage from "./components/unified-story/UnifiedStoryPage";
+import UnifiedStoryDeprecated from "./components/admin/UnifiedStoryDeprecated";
 import SuperText from "./pages/SuperText";
 
 // Security and Auth
@@ -143,9 +143,8 @@ function App() {
                       <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMapContent /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/super-text" element={<SuperText />} />
 
-                      {/* Unified Story System Routes - These are the only story management routes now */}
-                      <Route path="/buddys_admin/unified_story_system/add" element={<SecureAdminRoute><UnifiedStoryPage mode="add" /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/unified_story_system/update/:id" element={<SecureAdminRoute><ErrorBoundary><UnifiedStoryPage mode="update" /></ErrorBoundary></SecureAdminRoute>} />
+                       {/* Deprecated Unified Story System - Redirects to Super Text */}
+                       <Route path="/buddys_admin/unified_story_system/*" element={<SecureAdminRoute><UnifiedStoryDeprecated /></SecureAdminRoute>} />
 
                       {/* Catch-all route */}
                       <Route path="*" element={<NotFound />} />

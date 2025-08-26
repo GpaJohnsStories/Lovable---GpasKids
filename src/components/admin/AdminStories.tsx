@@ -14,24 +14,16 @@ const AdminStories = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleCreateStory = () => {
-    devLog.info('🎯 AdminStories: Creating new story - navigating to unified story system');
-    navigate('/buddys_admin/unified_story_system/add');
+    devLog.info('🎯 AdminStories: Creating new story - navigating to super-text');
+    navigate('/buddys_admin/super-text');
   };
 
   const handleEditStory = (story: any) => {
-    devLog.info('🎯 AdminStories: Editing story via unified system:', story.id, story.title);
+    devLog.info('🎯 AdminStories: Editing story via super-text:', story.id, story.title, 'code:', story.story_code);
     
-    // Store current context for potential restoration
-    const currentContext = {
-      scrollPosition: window.pageYOffset,
-      timestamp: Date.now(),
-      returnUrl: window.location.pathname + window.location.search
-    };
-    sessionStorage.setItem('admin-edit-context', JSON.stringify(currentContext));
-    
-    // Navigate to unified story system for editing
-    const editUrl = `/buddys_admin/unified_story_system/update/${story.id}`;
-    window.open(editUrl, '_blank');
+    // Navigate to super-text with story code for editing
+    const editUrl = `/buddys_admin/super-text?code=${encodeURIComponent(story.story_code || '')}`;
+    navigate(editUrl);
   };
 
 

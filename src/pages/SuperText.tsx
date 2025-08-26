@@ -27,7 +27,6 @@ import { toast } from "@/hooks/use-toast";
 import { useVoiceTesting } from '@/hooks/useVoiceTesting';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import StoryVideoUpload from "@/components/StoryVideoUpload";
-import AudioUploadSection from "@/components/unified-story/AudioUploadSection";
 
 const SuperText: React.FC = () => {
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
@@ -989,11 +988,11 @@ const SuperText: React.FC = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-3">
-                  <AudioUploadSection 
-                    audioUrl={audioUrl} 
-                    onAudioUpload={setAudioUrl} 
-                    onAudioRemove={() => setAudioUrl('')} 
-                  />
+                  <div className="space-y-4">
+                    <div className="text-sm text-muted-foreground">
+                      Audio upload functionality will be added back here.
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
