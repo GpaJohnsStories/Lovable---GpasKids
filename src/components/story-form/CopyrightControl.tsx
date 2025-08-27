@@ -45,19 +45,19 @@ const CopyrightControl = ({ value, onChange, fullWidth = false, triggerClassName
     <div className="flex items-center gap-2">
       <Select value={value || '©'} onValueChange={onChange}>
         <SelectTrigger 
-          className={`${fullWidth ? 'w-full' : 'w-auto min-w-[140px]'} text-xs font-bold ${getCopyrightColor(value || '©')} ${triggerClassName}`}
-          style={triggerStyle}
+          className={`${fullWidth ? 'w-full' : 'w-auto min-w-[140px]'} h-12 font-bold ${getCopyrightColor(value || '©')} ${triggerClassName}`}
+          style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold', ...triggerStyle }}
         >
           <SelectValue />
         </SelectTrigger>
-        <SelectContent className="z-50 bg-white border shadow-lg">
-          <SelectItem value="©" className="text-red-600 font-bold">
+        <SelectContent className="z-50 bg-white border shadow-lg" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
+          <SelectItem value="©" className="text-red-600 font-bold" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
             © Full Copyright
           </SelectItem>
-          <SelectItem value="O" className="text-green-600 font-bold">
+          <SelectItem value="O" className="text-green-600 font-bold" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
             O Open, No Copyright
           </SelectItem>
-          <SelectItem value="L" className="text-yellow-600 font-bold">
+          <SelectItem value="L" className="text-yellow-600 font-bold" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
             L Limited Sharing
           </SelectItem>
         </SelectContent>

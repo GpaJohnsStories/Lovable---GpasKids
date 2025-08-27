@@ -829,33 +829,33 @@ const SuperText: React.FC = () => {
                         </Label>
                         <div className="w-1/2">
                            <Input
-                             id="story-code"
-                             value={storyCode}
-                             onChange={handleStoryCodeChange}
-                             onBlur={handleStoryCodeBlur}
-                             placeholder="Code"
-                             className="w-full px-3 py-2 text-base border rounded-md border-orange-accent border-2"
-                             style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'bold', color: '#000000' }}
-                             autoComplete="off"
-                             disabled={isUpdatingText || isAddingText}
-                           />
+                              id="story-code"
+                              value={storyCode}
+                              onChange={handleStoryCodeChange}
+                              onBlur={handleStoryCodeBlur}
+                              placeholder="Code"
+                              className="w-full h-12 px-3 py-2 text-base border rounded-md border-orange-accent border-2"
+                              style={{ fontFamily: 'Arial, sans-serif', fontSize: '21px', fontWeight: 'bold', color: '#000000' }}
+                              autoComplete="off"
+                              disabled={isUpdatingText || isAddingText}
+                            />
                         </div>
                       </div>
                       
                     <div className="flex items-end gap-4">
                       <div className="w-1/2">
                          <Select value={category} onValueChange={setCategory} disabled={isUpdatingText || isAddingText}>
-                           <SelectTrigger className="w-full border-2 font-bold text-xl" style={{ borderColor: '#8B4513', color: '#FF8C00' }}>
-                             <SelectValue placeholder="Category" />
-                           </SelectTrigger>
-                        <SelectContent className="bg-white z-[100]">
-                          <SelectItem value="Fun">Fun</SelectItem>
-                          <SelectItem value="Life">Life</SelectItem>
-                          <SelectItem value="North Pole">North Pole</SelectItem>
-                          <SelectItem value="World Changers">World Changers</SelectItem>
-                          <SelectItem value="WebText">WebText</SelectItem>
-                          <SelectItem value="BioText">BioText</SelectItem>
-                        </SelectContent>
+                            <SelectTrigger className="w-full h-12 border-2 font-bold" style={{ borderColor: '#8B4513', color: '#FF8C00', fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
+                              <SelectValue placeholder="Category" />
+                            </SelectTrigger>
+                         <SelectContent className="bg-white z-[100]" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
+                           <SelectItem value="Fun" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>Fun</SelectItem>
+                           <SelectItem value="Life" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>Life</SelectItem>
+                           <SelectItem value="North Pole" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>North Pole</SelectItem>
+                           <SelectItem value="World Changers" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>World Changers</SelectItem>
+                           <SelectItem value="WebText" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>WebText</SelectItem>
+                           <SelectItem value="BioText" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>BioText</SelectItem>
+                         </SelectContent>
                         </Select>
                       </div>
                       
