@@ -168,6 +168,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                   category="WebText"
                   fontSize={16} // Base font size for scaling
                   useRichCleaning={true}
+                  showHeaderPreview={false} // Don't show header preview for SYS-WEL since we handle title separately
                 />
               </div>
             </div>
@@ -250,6 +251,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
             category="WebText"
             fontSize={16} // Base font size for scaling
             useRichCleaning={true}
+            showHeaderPreview={false} // Don't show header preview since we handle title separately
           />
           
           {/* Clear the float */}
