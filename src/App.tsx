@@ -62,7 +62,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { HelpProvider } from "./contexts/HelpContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useVisitTracker } from "./hooks/useVisitTracker";
-
+import BreakGuide from "./components/break/BreakGuide";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +74,14 @@ const ConditionalContentProtection = ({ children }: { children: React.ReactNode 
       {children}
     </ContentProtection>
   );
+};
+
+// Component to conditionally render BreakGuide on public pages only
+const ConditionalBreakGuide = () => {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith('/buddys_admin');
+  
+  return !isAdminPage ? <BreakGuide /> : null;
 };
 
 function App() {
@@ -99,6 +107,7 @@ function App() {
                         <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
+                    <ConditionalBreakGuide />
                     
                     <Routes>
                       {/* Public Routes */}
