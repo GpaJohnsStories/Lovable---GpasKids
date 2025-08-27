@@ -479,7 +479,10 @@ const PublicStoriesTable: React.FC = () => {
                     
                      {/* Author Column */}
                      <TableCell className="p-2 text-center">
-                       <Badge className={`${getCategoryBadgeColor(story.category)} w-full justify-center text-center px-3 py-1 rounded-sm`} style={{ fontSize: '21px' }}>
+                       <Badge 
+                         className={`${getCategoryBadgeColor(story.category)} justify-center text-center px-3 py-1 rounded-sm ${story.category === 'World Changers' ? 'w-64' : 'w-full'}`} 
+                         style={{ fontSize: '21px' }}
+                       >
                          {getCategoryDisplayName(story.category)}
                        </Badge>
                        <div className="text-center mt-2" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>{story.author}</div>
