@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useCallback, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { toast } from "sonner";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -13,8 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
-import { SecureAdminRoute } from '@/components/auth/SecureAdminRoute';
-import StoryPhotoUpload from '@/components/story-form/StoryPhotoUpload';
+import SecureAdminRoute from '@/components/admin/SecureAdminRoute';
 import StoryVideoUpload from '@/components/StoryVideoUpload';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 
@@ -31,11 +30,16 @@ interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
+  photo_alt_1: string;
+  photo_alt_2: string;
+  photo_alt_3: string;
   video_url: string;
   ai_voice_name: string;
   ai_voice_model: string;
   copyright_status?: string;
   audio_url?: string;
+  audio_duration_seconds?: number;
+  video_duration_seconds?: number;
   created_at?: string;
   updated_at?: string;
   audio_generated_at?: string;
@@ -388,33 +392,42 @@ const SuperText: React.FC = () => {
               {/* Photo Upload Section */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Photo Uploads</CardTitle>
+                  <CardTitle className="text-lg">Photo Links</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <StoryPhotoUpload
-                    photoNumber={1}
-                    photoLink={formData.photo_link_1}
-                    photoAlt={formData.photo_alt_1}
-                    onPhotoUpload={handlePhotoUpload}
-                    onPhotoRemove={handlePhotoRemove}
-                    onAltChange={(altText) => handleInputChange('photo_alt_1', altText)}
-                  />
-                  <StoryPhotoUpload
-                    photoNumber={2}
-                    photoLink={formData.photo_link_2}
-                    photoAlt={formData.photo_alt_2}
-                    onPhotoUpload={handlePhotoUpload}
-                    onPhotoRemove={handlePhotoRemove}
-                    onAltChange={(altText) => handleInputChange('photo_alt_2', altText)}
-                  />
-                  <StoryPhotoUpload
-                    photoNumber={3}
-                    photoLink={formData.photo_link_3}
-                    photoAlt={formData.photo_alt_3}
-                    onPhotoUpload={handlePhotoUpload}
-                    onPhotoRemove={handlePhotoRemove}
-                    onAltChange={(altText) => handleInputChange('photo_alt_3', altText)}
-                  />
+                  <div>
+                    <Label htmlFor="photo_link_1">Photo Link 1</Label>
+                    <Input
+                      type="url"
+                      id="photo_link_1"
+                      placeholder="Photo URL 1"
+                      value={formData.photo_link_1}
+                      onKeyDown={handleKeyDown}
+                      onChange={(e) => handleInputChange('photo_link_1', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="photo_link_2">Photo Link 2</Label>
+                    <Input
+                      type="url"
+                      id="photo_link_2"
+                      placeholder="Photo URL 2"
+                      value={formData.photo_link_2}
+                      onKeyDown={handleKeyDown}
+                      onChange={(e) => handleInputChange('photo_link_2', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="photo_link_3">Photo Link 3</Label>
+                    <Input
+                      type="url"
+                      id="photo_link_3"
+                      placeholder="Photo URL 3"
+                      value={formData.photo_link_3}
+                      onKeyDown={handleKeyDown}
+                      onChange={(e) => handleInputChange('photo_link_3', e.target.value)}
+                    />
+                  </div>
                 </CardContent>
               </Card>
 
@@ -458,7 +471,7 @@ const SuperText: React.FC = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <Button
-                    variant="primary"
+                    variant="default"
                     onClick={() => handleSave('save-and-clear')}
                     disabled={isSaving}
                     className="w-full"
@@ -497,7 +510,7 @@ const SuperText: React.FC = () => {
           </DialogHeader>
           <DialogFooter>
             <Button onClick={() => confirmSave(false)}>Cancel</Button>
-            <Button variant="primary" onClick={() => confirmSave(true)}>
+            <Button variant="default" onClick={() => confirmSave(true)}>
               Save
             </Button>
           </DialogFooter>

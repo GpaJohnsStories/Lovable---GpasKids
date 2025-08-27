@@ -59,6 +59,9 @@ export interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
+  photo_alt_1: string;
+  photo_alt_2: string;
+  photo_alt_3: string;
   video_url: string;
   ai_voice_name: string;
   ai_voice_model: string;
@@ -84,6 +87,9 @@ const initialFormData: Story = {
   photo_link_1: '',
   photo_link_2: '',
   photo_link_3: '',
+  photo_alt_1: '',
+  photo_alt_2: '',
+  photo_alt_3: '',
   video_url: '',
   ai_voice_name: 'Nova',
   ai_voice_model: 'tts-1',

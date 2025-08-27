@@ -131,19 +131,19 @@ const PublicStoriesTable: React.FC = () => {
     if (!hasAudio && !hasVideo) return null;
     
     return (
-      <div className="flex items-center gap-3 mt-1">
+      <div className="flex items-center gap-4 mt-2">
         {hasAudio && (
-          <div className="flex items-center gap-1 text-blue-600">
-            <Volume2 className="h-5 w-5" />
-            <span className="text-sm font-medium">
+          <div className="flex items-center gap-2 text-blue-600">
+            <Volume2 className="h-6 w-6" />
+            <span className="text-base font-medium">
               {formatDuration(story.audio_duration_seconds)}
             </span>
           </div>
         )}
         {hasVideo && (
-          <div className="flex items-center gap-1 text-purple-600">
-            <VideoIcon className="h-5 w-5" />
-            <span className="text-sm font-medium">
+          <div className="flex items-center gap-2 text-purple-600">
+            <VideoIcon className="h-6 w-6" />
+            <span className="text-base font-medium">
               {formatDuration(story.video_duration_seconds)}
             </span>
           </div>
@@ -189,8 +189,8 @@ const PublicStoriesTable: React.FC = () => {
                         <h4 className="font-semibold text-lg mb-1">{story.title}</h4>
                         <div className="text-sm text-gray-600 mb-2">
                           <span className="font-medium">{story.author}</span>
-                          <MediaIcons story={story} />
                         </div>
+                        <MediaIcons story={story} />
                         <p className="text-gray-700 text-sm mb-2">{story.tagline}</p>
                         <div className="flex items-center gap-4 text-xs text-gray-500">
                           <Badge variant="secondary">{story.category}</Badge>
@@ -225,8 +225,8 @@ const PublicStoriesTable: React.FC = () => {
               <h3 className="font-semibold text-lg mb-1">{story.title}</h3>
               <div className="text-sm text-gray-600 mb-2">
                 <span className="font-medium">{story.author}</span>
-                <MediaIcons story={story} />
               </div>
+              <MediaIcons story={story} />
               <p className="text-gray-700 text-sm mb-2">{story.tagline}</p>
               <div className="flex items-center gap-4 text-xs text-gray-500">
                 <Badge variant="secondary">{story.category}</Badge>
