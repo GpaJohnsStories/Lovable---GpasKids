@@ -433,7 +433,7 @@ const PublicStoriesTable: React.FC = () => {
                     {/* Title Column */}
                     <TableCell className="p-2">
                       <div className="cursor-pointer" onClick={() => handleStoryClick(story.story_code)}>
-                        <div className="font-bold text-black text-sm">
+                        <div className="font-bold text-black" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>
                           {story.title}
                         </div>
                         {story.tagline && (
