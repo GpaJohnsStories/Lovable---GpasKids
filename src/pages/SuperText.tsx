@@ -3,19 +3,21 @@ import { useState, useCallback, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { toast } from "sonner";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import SecureAdminRoute from '@/components/admin/SecureAdminRoute';
 import StoryVideoUpload from '@/components/StoryVideoUpload';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
+import SplitViewEditor from '@/components/editor/SplitViewEditor';
+import ConditionalEditorStyles from '@/components/rich-text-editor/ConditionalEditorStyles';
+import SuperTextStoryStatus from '@/components/SuperTextStoryStatus';
+import { useAdminSession } from '@/hooks/useAdminSession';
+import './SuperText.css';
 
 interface Story {
   id?: string;
@@ -77,10 +79,12 @@ const SuperText: React.FC = () => {
   const storyId = searchParams.get('id');
   const clear = searchParams.get('clear') === 'true';
 
+  const { handleStoryFormSave } = useAdminSession();
+
   const { handleSubmit, handleSaveOnly, isSaving } = useStoryFormActions(
     storyId,
     refetchStory,
-    clear ? () => navigate('/admin') : undefined
+    handleStoryFormSave
   );
 
   useEffect(() => {
@@ -188,122 +192,91 @@ const SuperText: React.FC = () => {
   return (
     <SecureAdminRoute>
       <Helmet>
-        <title>Super Text Editor - Story Management</title>
+        <title>Super Text Manager</title>
       </Helmet>
+      <ConditionalEditorStyles category={formData.category} />
       
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-        <div className="container mx-auto px-4 py-8">
-          <div className="mb-8 flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-800">Super Text Editor</h1>
-            <div className="flex gap-2">
-              <Input
-                type="text"
-                placeholder="Story Code"
-                value={storyCode}
-                onKeyDown={handleKeyDown}
-                onChange={(e) => setStoryCode(e.target.value)}
-                className="max-w-[150px]"
-              />
-              <Button onClick={handleStoryCodeLookup} disabled={isLoadingStory}>
-                {isLoadingStory ? 'Looking Up...' : 'Lookup Code'}
+      <div className="min-h-screen" style={{ 
+        backgroundImage: 'url("/lovable-uploads/paper-texture.png")', 
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'repeat'
+      }}>
+        {/* Header with title and action buttons */}
+        <div className="bg-brown-100 py-4 px-6 border-b-2 border-brown-200">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-3xl font-bold text-brown-800 mb-4">Super Text Manager</h1>
+            <div className="flex gap-4 flex-wrap">
+              <Button 
+                onClick={() => handleSave('save-only')} 
+                disabled={isSaving}
+                className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full"
+              >
+                {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
+              </Button>
+              
+              <Button 
+                onClick={() => handleSave('save-and-clear')} 
+                disabled={isSaving}
+                className="px-8 py-3 text-lg font-semibold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700"
+              >
+                {isSaving ? 'Saving...' : 'Save & Clear Form'}
+              </Button>
+              
+              <Button 
+                onClick={() => setSaveAction('cancel-all')}
+                className="supertext-no-btn px-8 py-3 text-lg font-semibold rounded-full"
+              >
+                Cancel All Edits & Clear Form
               </Button>
             </div>
           </div>
-          
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-            <div className="xl:col-span-2 space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Story Details</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="title">Title</Label>
-                      <Input
-                        type="text"
-                        id="title"
-                        placeholder="Story Title"
-                        value={formData.title}
-                        onKeyDown={handleKeyDown}
-                        onChange={(e) => handleInputChange('title', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="author">Author</Label>
-                      <Input
-                        type="text"
-                        id="author"
-                        placeholder="Author Name"
-                        value={formData.author}
-                        onKeyDown={handleKeyDown}
-                        onChange={(e) => handleInputChange('author', e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="story_code">Story Code</Label>
-                      <Input
-                        type="text"
-                        id="story_code"
-                        placeholder="Unique Story Code"
-                        value={formData.story_code}
-                        onKeyDown={handleKeyDown}
-                        onChange={(e) => handleInputChange('story_code', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="tagline">Tagline</Label>
-                      <Input
-                        type="text"
-                        id="tagline"
-                        placeholder="Short Tagline"
-                        value={formData.tagline}
-                        onKeyDown={handleKeyDown}
-                        onChange={(e) => handleInputChange('tagline', e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="excerpt">Excerpt</Label>
-                    <Input
-                      type="text"
-                      id="excerpt"
-                      placeholder="Brief Excerpt"
-                      value={formData.excerpt}
-                      onKeyDown={handleKeyDown}
-                      onChange={(e) => handleInputChange('excerpt', e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="content">Content</Label>
-                    <Textarea
-                      id="content"
-                      placeholder="Story Content"
-                      value={formData.content}
-                      onKeyDown={handleKeyDown}
-                      onChange={(e) => handleInputChange('content', e.target.value)}
-                      className="min-h-[200px]"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
+        </div>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Media & Settings</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="max-w-7xl mx-auto p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Left Panel - Form Fields */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Text Details Section */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                  <h2 className="text-xl font-bold text-green-700">📄 Text Details</h2>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-orange-600 font-semibold text-base">Current or New Unique Code:</Label>
+                    <div className="flex gap-2 mt-1">
+                      <Input
+                        type="text"
+                        placeholder="Code"
+                        value={storyCode}
+                        onChange={(e) => {
+                          setStoryCode(e.target.value);
+                          handleInputChange('story_code', e.target.value);
+                        }}
+                        className="flex-1 border-orange-400 focus:border-orange-500"
+                      />
+                      <Button 
+                        onClick={handleStoryCodeLookup} 
+                        disabled={isLoadingStory}
+                        variant="outline"
+                        className="border-orange-400 text-orange-600 hover:bg-orange-50"
+                      >
+                        {isLoadingStory ? 'Looking...' : 'Lookup'}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="category">Category</Label>
-                      <Select value={category} onValueChange={(value) => {
+                      <Select value={formData.category} onValueChange={(value) => {
                         setCategory(value);
                         handleInputChange('category', value);
                       }}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select a category" />
+                        <SelectTrigger className="w-full border-orange-400 focus:border-orange-500">
+                          <SelectValue placeholder="Category" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="Fun">Fun</SelectItem>
@@ -315,186 +288,227 @@ const SuperText: React.FC = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div>
-                      <Label htmlFor="publication_status_code">Publication Status</Label>
-                      <Select value={publicationStatusCode.toString()} onValueChange={(value) => {
-                        setPublicationStatusCode(Number(value));
-                        handleInputChange('publication_status_code', value);
-                      }}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1">Published</SelectItem>
-                          <SelectItem value="2">Draft</SelectItem>
-                          <SelectItem value="3">Scheduled</SelectItem>
-                          <SelectItem value="4">Archived</SelectItem>
-                          <SelectItem value="5">Unspecified</SelectItem>
-                        </SelectContent>
-                      </Select>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" className="p-2">🎧</Button>
+                      <Button variant="outline" size="sm" className="p-2">📹</Button>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="ai_voice_name">AI Voice Name</Label>
-                      <Input
-                        type="text"
-                        id="ai_voice_name"
-                        placeholder="AI Voice Name"
-                        value={formData.ai_voice_name}
-                        onKeyDown={handleKeyDown}
-                        onChange={(e) => handleInputChange('ai_voice_name', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="ai_voice_model">AI Voice Model</Label>
-                      <Input
-                        type="text"
-                        id="ai_voice_model"
-                        placeholder="AI Voice Model"
-                        value={formData.ai_voice_model}
-                        onKeyDown={handleKeyDown}
-                        onChange={(e) => handleInputChange('ai_voice_model', e.target.value)}
-                      />
-                    </div>
-                  </div>
+
                   <div>
-                    <Label htmlFor="google_drive_link">Google Drive Link</Label>
-                    <Input
-                      type="url"
-                      id="google_drive_link"
-                      placeholder="Link to Google Drive document"
-                      value={formData.google_drive_link}
-                      onKeyDown={handleKeyDown}
-                      onChange={(e) => handleInputChange('google_drive_link', e.target.value)}
-                    />
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Label htmlFor="copyright_status">Copyright Status</Label>
-                    <Select value={copyrightStatus} onValueChange={(value) => {
+                    <Select value={formData.copyright_status || '©'} onValueChange={(value) => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select" />
+                      <SelectTrigger className="w-full bg-red-600 text-white border-red-700">
+                        <SelectValue placeholder="© Full Copyright" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="©">©</SelectItem>
-                        <SelectItem value="®">®</SelectItem>
-                        <SelectItem value="™">™</SelectItem>
+                        <SelectItem value="©">© Full Copyright</SelectItem>
+                        <SelectItem value="®">® Registered</SelectItem>
+                        <SelectItem value="™">™ Trademark</SelectItem>
                         <SelectItem value="L">License</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
-                </CardContent>
-              </Card>
 
-              {/* Photo Upload Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Photo Links</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="photo_link_1">Photo Link 1</Label>
-                    <Input
-                      type="url"
-                      id="photo_link_1"
-                      placeholder="Photo URL 1"
-                      value={formData.photo_link_1}
-                      onKeyDown={handleKeyDown}
-                      onChange={(e) => handleInputChange('photo_link_1', e.target.value)}
-                    />
+                  <div className="bg-gray-100 p-4 rounded border-2 border-orange-400">
+                    <Label className="text-gray-600 font-medium">Lookup Result:</Label>
+                    <p className="text-gray-500 mt-1">Enter code and category to search</p>
                   </div>
-                  <div>
-                    <Label htmlFor="photo_link_2">Photo Link 2</Label>
-                    <Input
-                      type="url"
-                      id="photo_link_2"
-                      placeholder="Photo URL 2"
-                      value={formData.photo_link_2}
-                      onKeyDown={handleKeyDown}
-                      onChange={(e) => handleInputChange('photo_link_2', e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="photo_link_3">Photo Link 3</Label>
-                    <Input
-                      type="url"
-                      id="photo_link_3"
-                      placeholder="Photo URL 3"
-                      value={formData.photo_link_3}
-                      onKeyDown={handleKeyDown}
-                      onChange={(e) => handleInputChange('photo_link_3', e.target.value)}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              {/* Video Upload Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Video Upload</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <StoryVideoUpload
-                    videoUrl={formData.video_url}
-                    onVideoUpload={handleVideoUpload}
-                    onVideoRemove={handleVideoRemove}
-                    onDurationCalculated={handleVideoDurationCalculated}
+              {/* Story Photos Section */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                  <h2 className="text-xl font-bold text-orange-700">🖼️ Story Photos</h2>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4">
+                  {[1, 2, 3].map((index) => (
+                    <div key={index} className="border-2 border-orange-400 rounded p-4 text-center">
+                      <div className="bg-gray-100 h-32 flex items-center justify-center mb-2 rounded">
+                        <span className="text-gray-500">No Photo</span>
+                      </div>
+                      <Button variant="outline" size="sm" className="w-full mb-2 text-red-600 border-red-400">
+                        Choose File
+                      </Button>
+                      <span className="text-xs text-gray-500">N...en</span>
+                      <Input 
+                        placeholder="Alt text" 
+                        className="mt-2 text-sm"
+                        value={(formData as any)[`photo_alt_${index}`] || ''}
+                        onChange={(e) => handleInputChange(`photo_alt_${index}` as keyof Story, e.target.value)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Story Video Section */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
+                  <h2 className="text-xl font-bold text-purple-700">📹 Story Video</h2>
+                </div>
+                
+                <StoryVideoUpload
+                  videoUrl={formData.video_url}
+                  onVideoUpload={handleVideoUpload}
+                  onVideoRemove={handleVideoRemove}
+                  onDurationCalculated={handleVideoDurationCalculated}
+                />
+              </div>
+
+              {/* Audio Upload Section */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">C</div>
+                  <h2 className="text-xl font-bold text-green-700">🔊 Audio Upload</h2>
+                </div>
+                
+                <p className="text-gray-600">Audio upload functionality will be added back here.</p>
+              </div>
+
+              {/* Google Drive Upload Section */}
+              <div className="bg-orange-100 border-2 border-orange-400 rounded-lg p-6">
+                <h2 className="text-xl font-bold text-orange-700 mb-4">Upload Text From Google Drive</h2>
+                <div className="space-y-3">
+                  <Input
+                    type="text"
+                    placeholder="Paste Google Drive Share Code here"
+                    value={formData.google_drive_link}
+                    onChange={(e) => handleInputChange('google_drive_link', e.target.value)}
+                    className="border-orange-400 focus:border-orange-500"
                   />
-                </CardContent>
-              </Card>
+                  <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
+                    Upload
+                  </Button>
+                </div>
+              </div>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Audio Actions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Button onClick={handleGenerateAudio} disabled={isGeneratingAudio || !formData.id}>
-                    {isGeneratingAudio
-                      ? 'Generating Audio...'
-                      : (formData.audio_url ? 'Regenerate Audio' : 'Generate Audio')}
-                  </Button>
-                  {formData.audio_url && (
-                    <audio controls src={formData.audio_url} className="mt-4">
-                      Your browser does not support the audio element.
-                    </audio>
-                  )}
-                </CardContent>
-              </Card>
+              {/* Split Editor Section */}
+              <div className="bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4">
+                <div className="mb-4">
+                  <h2 className="text-xl font-bold text-green-700">📝 Creating New Story: {formData.story_code || 'SVS-AEW'}</h2>
+                </div>
+                
+                <SplitViewEditor
+                  content={formData.content}
+                  onChange={(value) => handleInputChange('content', value)}
+                  placeholder="Enter your story content here..."
+                  category={formData.category as any}
+                  previewContent={formData.content}
+                />
+              </div>
             </div>
-            <div className="xl:col-span-1">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Actions</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Button
-                    variant="default"
-                    onClick={() => handleSave('save-and-clear')}
-                    disabled={isSaving}
-                    className="w-full"
-                  >
-                    {isSaving ? 'Saving...' : 'Save & Clear'}
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={() => handleSave('save-only')}
-                    disabled={isSaving}
-                    className="w-full"
-                  >
-                    {isSaving ? 'Saving...' : 'Save Only'}
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    onClick={() => confirmSave(false)}
-                    className="w-full"
-                  >
-                    Cancel
-                  </Button>
-                </CardContent>
-              </Card>
+
+            {/* Right Panel - Status and Actions */}
+            <div className="space-y-6">
+              {/* Text Status Section */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6">
+                <h2 className="text-xl font-bold text-blue-700 mb-4">📋 Text Status</h2>
+                <SuperTextStoryStatus 
+                  story={formData}
+                  publicationStatusCode={publicationStatusCode}
+                  onStatusChange={(status) => {
+                    setPublicationStatusCode(status);
+                    handleInputChange('publication_status_code', status.toString());
+                  }}
+                />
+              </div>
+
+              {/* Last Updates Section */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-4">
+                <h2 className="text-xl font-bold text-orange-600 mb-4">Last Updates</h2>
+                <div className="space-y-2">
+                  <div className="bg-yellow-300 p-2 text-center rounded">
+                    <div className="font-bold">Last Text</div>
+                    <div className="text-sm">--/--/-- --:--</div>
+                  </div>
+                  <div className="bg-red-500 text-white p-2 text-center rounded">
+                    <div className="font-bold">Last Audio</div>
+                    <div className="text-sm">--/--/-- --:--</div>
+                  </div>
+                  <div className="bg-blue-300 p-2 text-center rounded">
+                    <div className="font-bold">Original</div>
+                    <div className="text-sm">--/--/-- --:--</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Create AI Audio Section */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6">
+                <h2 className="text-xl font-bold text-blue-700 mb-4">🔊 Create AI Audio File</h2>
+                
+                <div className="mb-4">
+                  <Label className="font-semibold">Choose Voice</Label>
+                  <Select value={formData.ai_voice_name} onValueChange={(value) => handleInputChange('ai_voice_name', value)}>
+                    <SelectTrigger className="w-full border-orange-400">
+                      <SelectValue placeholder="Select voice" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Nova">Nova</SelectItem>
+                      <SelectItem value="Alloy">Alloy</SelectItem>
+                      <SelectItem value="Echo">Echo</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <Button 
+                  onClick={() => handleGenerateAudio()}
+                  disabled={isGeneratingAudio || !formData.content}
+                  className="w-full bg-gray-400 text-gray-600"
+                >
+                  🔊 {isGeneratingAudio ? 'Generating...' : 'Story Required'}
+                </Button>
+              </div>
+
+              {/* Voice Previews Section */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">A</div>
+                  <h2 className="text-xl font-bold text-blue-700">🔊 Voice Previews</h2>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  {[
+                    { name: 'Buddy', desc: 'Clear, neutral voice (Alloy)', voice: 'alloy' },
+                    { name: 'Gpa John', desc: 'Deep, resonant voice (Echo)', voice: 'echo' },
+                    { name: 'Fluffy', desc: 'British accent, storytelling (Fable)', voice: 'fable' },
+                    { name: 'Nova', desc: 'Warm, friendly voice', voice: 'nova' },
+                    { name: 'Max', desc: 'Deep, authoritative voice (Onyx)', voice: 'onyx' },
+                    { name: 'Shimmer', desc: 'Soft, gentle voice', voice: 'shimmer' },
+                    { name: 'Ash', desc: 'Gentle and neutral, calming', voice: 'ash' },
+                    { name: 'Coral', desc: 'Bright and clear, youthful tone', voice: 'coral' },
+                    { name: 'Sparky', desc: 'Warm and thoughtful, reflective (Sage)', voice: 'sage' },
+                    { name: '', desc: 'Available for future voices', voice: '' }
+                  ].map((voice, index) => (
+                    <div key={index} className="border rounded p-2 text-center">
+                      <div className="font-bold">{voice.name}</div>
+                      <div className="text-xs text-gray-600 mb-2">{voice.desc}</div>
+                      {voice.voice && (
+                        <div className="flex gap-1">
+                          <Button size="sm" variant="outline" className="flex-1 text-xs">
+                            ▶ Test
+                          </Button>
+                          <Button size="sm" className="flex-1 text-xs bg-green-600 hover:bg-green-700">
+                            Use
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {error && (
+                <div className="bg-red-100 border-2 border-red-400 rounded-lg p-4">
+                  <h3 className="font-bold text-red-700">Error</h3>
+                  <p className="text-red-600">{error}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -506,12 +520,15 @@ const SuperText: React.FC = () => {
             <DialogTitle>Confirm Save</DialogTitle>
             <DialogDescription>
               Are you sure you want to save this story?
+              {saveAction === 'save-and-clear' && ' The form will be cleared after saving.'}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button onClick={() => confirmSave(false)}>Cancel</Button>
-            <Button variant="default" onClick={() => confirmSave(true)}>
-              Save
+            <Button variant="outline" onClick={() => confirmSave(false)}>
+              Cancel
+            </Button>
+            <Button onClick={() => confirmSave(true)}>
+              {saveAction === 'save-and-clear' ? 'Save & Clear' : 'Save Only'}
             </Button>
           </DialogFooter>
         </DialogContent>
