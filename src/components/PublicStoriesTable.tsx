@@ -235,8 +235,8 @@ const PublicStoriesTable: React.FC = () => {
         {/* Reading Time with Glasses Icon - Always show if available */}
         {hasReadingTime && (
           <div className="flex items-center gap-1 text-gray-600">
-            <Glasses className="h-4 w-4" />
-            <span className="text-sm font-medium">
+            <Glasses className="h-[21px] w-[21px]" />
+            <span className="font-medium" style={{ fontSize: '21px' }}>
               {hasReadingTime} min
             </span>
           </div>
@@ -246,16 +246,16 @@ const PublicStoriesTable: React.FC = () => {
         <div className="flex items-center gap-4">
           {hasAudio && (
             <div className="flex items-center gap-1 text-blue-600">
-              <Volume2 className="h-5 w-5" />
-              <span className="text-sm font-medium">
+              <Volume2 className="h-[21px] w-[21px]" />
+              <span className="font-medium" style={{ fontSize: '21px' }}>
                 {formatDuration(story.audio_duration_seconds)}
               </span>
             </div>
           )}
           {hasVideo && (
             <div className="flex items-center gap-1 text-purple-600">
-              <VideoIcon className="h-5 w-5" />
-              <span className="text-sm font-medium">
+              <VideoIcon className="h-[21px] w-[21px]" />
+              <span className="font-medium" style={{ fontSize: '21px' }}>
                 {formatDuration(story.video_duration_seconds)}
               </span>
             </div>
