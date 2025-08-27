@@ -96,26 +96,26 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
       case 1:
         return {
           ...baseStyle,
+          backgroundColor: '#10b981', // Green Emerald
+          color: 'white'
+        };
+      case 2:
+        return {
+          ...baseStyle,
           backgroundColor: '#FFD700', // Golden Yellow
           color: '#228B22' // Forest Green text
         };
-      case 2:
+      case 3:
         return {
           ...baseStyle,
           backgroundColor: '#3b82f6', // Blue Primary
           color: 'white'
         };
-      case 3:
+      case 4:
         return {
           ...baseStyle,
           backgroundColor: '#9c441a', // Brown Earth
           color: 'white'
-        };
-      case 4:
-        return {
-          ...baseStyle,
-          backgroundColor: '#DC143C', // Red Crimson
-          color: '#FFD700' // Golden Yellow text
         };
       default: // 5
         return {
