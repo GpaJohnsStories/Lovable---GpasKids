@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
-import { Volume2, VideoIcon, ChevronDown, Check, X, Glasses } from "lucide-react";
+import { Volume2, VideoIcon, ChevronDown, Check, X, Glasses, ArrowUp, ArrowDown } from "lucide-react";
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface Story {
@@ -34,6 +34,7 @@ interface Story {
 
 type MediaFilter = 'all' | 'text' | 'audio' | 'video' | 'both';
 type SortOption = 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'reading_time' | 'updated_at' | 'copyright_status';
+type SortDirection = 'asc' | 'desc';
 
 const formatDuration = (seconds: number | undefined): string => {
   if (!seconds || seconds === 0) return '';
@@ -55,6 +56,7 @@ const PublicStoriesTable: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [mediaFilter, setMediaFilter] = useState<MediaFilter>('all');
   const [sortOption, setSortOption] = useState<SortOption>('title');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -138,28 +140,39 @@ const PublicStoriesTable: React.FC = () => {
     
     // Apply sorting
     result.sort((a, b) => {
+      let comparison = 0;
+      
       switch (sortOption) {
         case 'title':
-          return a.title.localeCompare(b.title);
+          comparison = a.title.localeCompare(b.title);
+          break;
         case 'author':
-          return a.author.localeCompare(b.author);
+          comparison = a.author.localeCompare(b.author);
+          break;
         case 'category':
-          return a.category.localeCompare(b.category);
+          comparison = a.category.localeCompare(b.category);
+          break;
         case 'read_count':
-          return (b.read_count || 0) - (a.read_count || 0);
+          comparison = (a.read_count || 0) - (b.read_count || 0);
+          break;
         case 'thumbs':
-          return (b.thumbs_up_count || 0) - (a.thumbs_up_count || 0);
+          comparison = (a.thumbs_up_count || 0) - (b.thumbs_up_count || 0);
+          break;
         case 'reading_time':
-          return (a.reading_time_minutes || 0) - (b.reading_time_minutes || 0);
+          comparison = (a.reading_time_minutes || 0) - (b.reading_time_minutes || 0);
+          break;
         case 'updated_at':
-          return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+          comparison = new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime();
+          break;
         default:
           return 0;
       }
+      
+      return sortDirection === 'asc' ? comparison : -comparison;
     });
     
     return result;
-  }, [stories, searchTerm, mediaFilter, sortOption]);
+  }, [stories, searchTerm, mediaFilter, sortOption, sortDirection]);
 
   const handleStoryClick = (storyCode: string) => {
     navigate(`/story/${storyCode}`);
@@ -352,51 +365,60 @@ const PublicStoriesTable: React.FC = () => {
               <div className="absolute -top-5 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
                 <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>3</span>
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
-                  >
-                    Sort On —
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="text-[18pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1">
-                  <DropdownMenuItem disabled className="text-white cursor-default font-medium">
-                    Sort On —
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setSortOption('title')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
-                    Title
-                    {sortOption === 'title' && <Check className="h-4 w-4" />}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setSortOption('author')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
-                    Author
-                    {sortOption === 'author' && <Check className="h-4 w-4" />}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setSortOption('category')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
-                    Category
-                    {sortOption === 'category' && <Check className="h-4 w-4" />}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setSortOption('read_count')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
-                    Times Story Read
-                    {sortOption === 'read_count' && <Check className="h-4 w-4" />}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setSortOption('thumbs')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
-                    Thumbs Up / Down
-                    {sortOption === 'thumbs' && <Check className="h-4 w-4" />}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setSortOption('reading_time')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
-                    Time to Read
-                    {sortOption === 'reading_time' && <Check className="h-4 w-4" />}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setSortOption('updated_at')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
-                    Date Updated
-                    {sortOption === 'updated_at' && <Check className="h-4 w-4" />}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <div className="flex gap-1">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] flex-1 justify-between"
+                    >
+                      Sort On —
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="text-[18pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1">
+                    <DropdownMenuItem disabled className="text-white cursor-default font-medium">
+                      Sort On —
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setSortOption('title')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                      Title
+                      {sortOption === 'title' && <Check className="h-4 w-4" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setSortOption('author')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                      Author
+                      {sortOption === 'author' && <Check className="h-4 w-4" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setSortOption('category')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                      Category
+                      {sortOption === 'category' && <Check className="h-4 w-4" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setSortOption('read_count')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                      Times Story Read
+                      {sortOption === 'read_count' && <Check className="h-4 w-4" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setSortOption('thumbs')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                      Thumbs Up / Down
+                      {sortOption === 'thumbs' && <Check className="h-4 w-4" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setSortOption('reading_time')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                      Time to Read
+                      {sortOption === 'reading_time' && <Check className="h-4 w-4" />}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => setSortOption('updated_at')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                      Date Updated
+                      {sortOption === 'updated_at' && <Check className="h-4 w-4" />}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Button
+                  onClick={() => setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')}
+                  className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 w-12 shadow-lg ring-1 ring-[#8b4513] flex items-center justify-center"
+                  title={`Currently sorting ${sortDirection === 'asc' ? 'A to Z / Low to High' : 'Z to A / High to Low'}`}
+                >
+                  {sortDirection === 'asc' ? <ArrowUp className="h-5 w-5" /> : <ArrowDown className="h-5 w-5" />}
+                </Button>
+              </div>
               <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
-                Sorted by: {getSortOptionDisplayName(sortOption)}
+                Sorted by: {getSortOptionDisplayName(sortOption)} ({sortDirection === 'asc' ? 'A→Z' : 'Z→A'})
               </div>
             </div>
           </div>
