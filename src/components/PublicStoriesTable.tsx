@@ -167,6 +167,7 @@ const PublicStoriesTable: React.FC = () => {
 
   const handleClearSearch = () => {
     setSearchTerm('');
+    setMediaFilter('all');
   };
 
   const getMediaFilterDisplayName = (filter: MediaFilter) => {
