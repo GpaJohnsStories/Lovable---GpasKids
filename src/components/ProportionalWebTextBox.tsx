@@ -8,6 +8,7 @@ import { ArrowRight } from 'lucide-react';
 import { FontScaleStep, DEFAULT_FONT_SCALE, getTypographyClasses } from '@/utils/fontScaleUtils';
 import { useNavigate } from 'react-router-dom';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
+import { extractHeaderTokens, createSafeHeaderHtml } from '@/utils/headerTokens';
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
 interface ProportionalWebTextBoxProps {
@@ -154,9 +155,26 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
               {/* Title section */}
               <div className="mb-4">
                 <div className="flex items-start gap-3 justify-start">
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-emerald-900 leading-tight break-words text-left">
-                    {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
-                  </h1>
+                  {(() => {
+                    const content = getContent();
+                    const { tokens } = extractHeaderTokens(content);
+                    const titleHtml = tokens.titleHtml;
+                    
+                    if (titleHtml) {
+                      return (
+                        <h1 
+                          className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
+                          dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
+                        />
+                      );
+                    } else {
+                      return (
+                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-emerald-900 leading-tight break-words text-left">
+                          {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
+                        </h1>
+                      );
+                    }
+                  })()}
                 </div>
               </div>
 
@@ -214,9 +232,26 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
         {/* Title */}
         {(webtext?.title || title) && (
           <div className="mb-6 pr-16">
-            <h3 className={`${typographyClasses.h3} font-bold text-amber-800`}>
-              {webtext?.title || title}
-            </h3>
+            {(() => {
+              const content = getContent();
+              const { tokens } = extractHeaderTokens(content);
+              const titleHtml = tokens.titleHtml;
+              
+              if (titleHtml) {
+                return (
+                  <h3 
+                    className={`${typographyClasses.h3} font-bold text-amber-800`}
+                    dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
+                  />
+                );
+              } else {
+                return (
+                  <h3 className={`${typographyClasses.h3} font-bold text-amber-800`}>
+                    {webtext?.title || title}
+                  </h3>
+                );
+              }
+            })()}
           </div>
         )}
 

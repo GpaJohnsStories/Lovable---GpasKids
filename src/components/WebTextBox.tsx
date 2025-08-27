@@ -4,6 +4,7 @@ import { getStoryPhotos } from '@/utils/storyUtils';
 import { AudioButton } from '@/components/AudioButton';
 import { SuperAV } from '@/components/SuperAV';
 import { ArrowRight } from 'lucide-react';
+import { extractHeaderTokens, createSafeHeaderHtml } from '@/utils/headerTokens';
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
 interface WebTextBoxProps {
@@ -108,9 +109,26 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
               {/* Title section */}
               <div className="mb-4">
                 <div className="flex items-start gap-3 justify-start">
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-blue-800 leading-tight break-words text-left">
-                    {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
-                  </h1>
+                  {(() => {
+                    const content = getContent();
+                    const { tokens } = extractHeaderTokens(content);
+                    const titleHtml = tokens.titleHtml;
+                    
+                    if (titleHtml) {
+                      return (
+                        <h1 
+                          className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-blue-800 leading-tight break-words text-left"
+                          dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
+                        />
+                      );
+                    } else {
+                      return (
+                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-blue-800 leading-tight break-words text-left">
+                          {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
+                        </h1>
+                      );
+                    }
+                  })()}
                 </div>
               </div>
 
@@ -176,9 +194,26 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
 
         {/* Title */}
         <div className="mb-6 pr-16">
-          <h3 className="text-2xl sm:text-3xl font-bold text-amber-800">
-            {webtext?.title || title}
-          </h3>
+          {(() => {
+            const content = getContent();
+            const { tokens } = extractHeaderTokens(content);
+            const titleHtml = tokens.titleHtml;
+            
+            if (titleHtml) {
+              return (
+                <h3 
+                  className="text-2xl sm:text-3xl font-bold text-amber-800"
+                  dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
+                />
+              );
+            } else {
+              return (
+                <h3 className="text-2xl sm:text-3xl font-bold text-amber-800">
+                  {webtext?.title || title}
+                </h3>
+              );
+            }
+          })()}
         </div>
 
         {/* Photo and Content Section with true text wrapping */}
