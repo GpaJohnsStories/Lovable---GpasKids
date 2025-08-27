@@ -43,7 +43,10 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
   const getLastUpdateStyle = () => {
     return {
       backgroundColor: '#F2BA15',
-      color: 'black'
+      color: 'black',
+      fontSize: '21px',
+      fontFamily: 'Arial, sans-serif',
+      fontWeight: 'bold'
     };
   };
 
@@ -51,7 +54,10 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
     const hasAudio = story?.audio_generated_at;
     return {
       backgroundColor: hasAudio ? '#22c55e' : '#DC2626',
-      color: hasAudio ? 'black' : '#FFFF00'
+      color: hasAudio ? 'black' : '#FFFF00',
+      fontSize: '21px',
+      fontFamily: 'Arial, sans-serif',
+      fontWeight: 'bold'
     };
   };
 
@@ -103,7 +109,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
         </div>
 
         <div className="flex flex-col items-center">
-          <table className="w-auto text-xs" style={{
+          <table className="w-full text-xs" style={{
             border: '2px solid #9c441a'
           }}>
             <tbody>
@@ -141,7 +147,10 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
               <tr>
                 <td className="text-center font-bold px-1 py-1 text-gray-700" style={{
                   borderTop: '1px solid #9c441a',
-                  backgroundColor: 'rgba(22, 156, 249, 0.3)'
+                  backgroundColor: 'rgba(22, 156, 249, 0.3)',
+                  fontSize: '21px',
+                  fontFamily: 'Arial, sans-serif',
+                  fontWeight: 'bold'
                 }}>
                   Original
                 </td>
@@ -149,7 +158,10 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
               <tr>
                 <td className="text-center font-bold px-1 py-1 text-gray-600" style={{
                   borderTop: '1px solid #9c441a',
-                  backgroundColor: 'rgba(22, 156, 249, 0.3)'
+                  backgroundColor: 'rgba(22, 156, 249, 0.3)',
+                  fontSize: '21px',
+                  fontFamily: 'Arial, sans-serif',
+                  fontWeight: 'bold'
                 }}>
                   {formatDateTime(story?.created_at).date} {formatDateTime(story?.created_at).time}
                 </td>
