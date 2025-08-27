@@ -80,7 +80,7 @@ const SuperText: React.FC = () => {
   const allowedCategories = ["Fun", "Life", "North Pole", "World Changers", "WebText", "BioText"];
 
   // Check if verification should be allowed
-  const canVerify = storyCode.trim() && category && thirdCondition;
+  const canVerify = storyCode.trim() && category;
 
   // Image resize function
   const resizeImage = (file: File, maxWidth = 800, maxHeight = 600, quality = 0.85): Promise<File> => {
@@ -270,10 +270,10 @@ const SuperText: React.FC = () => {
   // Debounce timer
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (storyCode.trim() && isValidStoryCode(storyCode.trim())) {
+      if (canVerify && storyCode.trim() && isValidStoryCode(storyCode.trim())) {
         debouncedLookup(storyCode);
-      } else if (storyCode.trim() && storyCode.trim().length >= 3) {
-        // Clear results if code is not valid format
+      } else {
+        // Clear results if can't verify or code is not valid format
         setFoundStoryTitle('');
         setFoundStory(null);
         setNoStoryFound(false);
@@ -281,7 +281,7 @@ const SuperText: React.FC = () => {
     }, 250);
 
     return () => clearTimeout(timer);
-  }, [storyCode, debouncedLookup]);
+  }, [storyCode, canVerify, debouncedLookup]);
 
   const handleSaveAndClear = async () => {
     // Check if we're in editing mode
