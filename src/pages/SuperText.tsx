@@ -63,6 +63,10 @@ const SuperText: React.FC = () => {
   const [fontSize, setFontSize] = React.useState<number>(21);
   const [previewContent, setPreviewContent] = React.useState<string | null>(null);
   
+  // Google Drive import state
+  const [googleDriveShareCode, setGoogleDriveShareCode] = React.useState<string>('');
+  const [isImportingFromDrive, setIsImportingFromDrive] = React.useState(false);
+  
   const { lookupStoryByCode } = useStoryCodeLookup();
   const { saveStory, isSaving } = useStorySave();
   const {
@@ -385,6 +389,7 @@ const SuperText: React.FC = () => {
     setPhotoAlts({ 1: '', 2: '', 3: '' });
     setVideoUrl('');
     setAudioUrl('');
+    setGoogleDriveShareCode('');
     setIsUpdatingText(false);
     setIsAddingText(false);
     
@@ -406,6 +411,90 @@ const SuperText: React.FC = () => {
   const handleConfirmNo = () => {
     setShowConfirmDialog(false);
     // Keep current scroll position
+  };
+
+  // Google Drive import handler
+  const handleGoogleDriveUpload = async () => {
+    console.log('🔧 Google Drive upload clicked');
+    
+    // Validate Step 1: Story Code and Category must be filled
+    if (!storyCode.trim() || !category) {
+      toast({
+        title: "ERROR",
+        description: "Must Complete Step 1 first, then enter the Google Drive Share Code, and then click on Submit.",
+        variant: "destructive",
+      });
+      // Clear form
+      setStoryCode('');
+      setCategory('');
+      setFoundStory(null);
+      setFoundStoryTitle('');
+      setNoStoryFound(false);
+      setStoryContent('');
+      setPreviewContent(null);
+      setPhotoLinks({ 1: '', 2: '', 3: '' });
+      setPhotoAlts({ 1: '', 2: '', 3: '' });
+      setVideoUrl('');
+      setAudioUrl('');
+      setGoogleDriveShareCode('');
+      setIsUpdatingText(false);
+      setIsAddingText(false);
+      return;
+    }
+
+    // Validate Google Drive share code is present
+    if (!googleDriveShareCode.trim()) {
+      toast({
+        title: "Missing Share Code",
+        description: "Enter the Google Drive Share Code first, then click on Submit.",
+        variant: "destructive",
+      });
+      // DO NOT clear form
+      return;
+    }
+
+    setIsImportingFromDrive(true);
+    
+    try {
+      console.log('📥 Importing from Google Drive:', googleDriveShareCode);
+      const { data, error } = await supabase.functions.invoke('import-google-drive-text', {
+        body: { googleDriveShareCode: googleDriveShareCode.trim() }
+      });
+
+      if (error) {
+        console.error('❌ Error calling function:', error);
+        throw new Error(error.message);
+      }
+
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to import text');
+      }
+
+      console.log('✅ Successfully imported text, length:', data.textContent?.length);
+      
+      // Set the imported content as story content
+      setStoryContent(data.textContent);
+      setIsAddingText(true); // Enable the editor
+      
+      // Clear Google Drive input after successful import
+      setGoogleDriveShareCode('');
+      
+      toast({
+        title: "Import Successful",
+        description: "Google Drive text has been loaded into the editor.",
+        variant: "default",
+      });
+
+    } catch (error) {
+      console.error('💥 Google Drive import error:', error);
+      toast({
+        title: "Import Failed",
+        description: error instanceof Error ? error.message : 'Failed to import from Google Drive',
+        variant: "destructive",
+      });
+    } finally {
+      setIsImportingFromDrive(false);
+    }
   };
 
   // Handle text action (Update/Add) decisions
@@ -1464,6 +1553,8 @@ const SuperText: React.FC = () => {
                   <div className="space-y-2">
                     <input 
                       type="text" 
+                      value={googleDriveShareCode}
+                      onChange={(e) => setGoogleDriveShareCode(e.target.value)}
                       placeholder="Paste Google Drive Share Code here" 
                       className="w-full p-3 text-base border rounded-md font-sans" 
                       style={{
@@ -1473,7 +1564,9 @@ const SuperText: React.FC = () => {
                       }} 
                     />
                     <button 
-                      className="w-full py-2 px-4 rounded-md font-bold text-base transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                      onClick={handleGoogleDriveUpload}
+                      disabled={isImportingFromDrive}
+                      className="w-full py-2 px-4 rounded-md font-bold text-base transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                       style={{
                         backgroundColor: '#A0522D',
                         color: 'white',
@@ -1481,7 +1574,7 @@ const SuperText: React.FC = () => {
                         fontSize: '16px'
                       }}
                     >
-                      Upload
+                      {isImportingFromDrive ? 'Uploading...' : 'Upload'}
                     </button>
                   </div>
                 </CardContent>
