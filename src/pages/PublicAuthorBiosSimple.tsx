@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,6 +8,15 @@ import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+interface Bio {
+  id: string;
+  bio_subject_name: string;
+  title: string;
+  author: string;
+  excerpt: string;
+  photo_link_1: string;
+}
+
 const PublicAuthorBiosSimple = () => {
   console.log('🔍 PublicAuthorBiosSimple: Component mounting');
 
@@ -17,21 +25,22 @@ const PublicAuthorBiosSimple = () => {
     queryFn: async () => {
       console.log('🔍 AuthorBiographies: Starting query');
       try {
-        const { data, error } = await supabase
+        // @ts-ignore - Bypass complex type inference issue
+        const response = await supabase
           .from('stories')
           .select('id, bio_subject_name, title, author, excerpt, photo_link_1')
           .eq('category', 'BioText')
           .eq('published', 'Y')
           .order('bio_subject_name');
         
-        console.log('🔍 AuthorBiographies: Query result', { data, error });
+        console.log('🔍 AuthorBiographies: Query result', response);
         
-        if (error) {
-          console.error('🚨 AuthorBiographies: Query error:', error);
-          throw error;
+        if (response.error) {
+          console.error('🚨 AuthorBiographies: Query error:', response.error);
+          throw response.error;
         }
         
-        return data || [];
+        return response.data || [];
       } catch (err) {
         console.error('🚨 AuthorBiographies: Catch block error:', err);
         throw err;

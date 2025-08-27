@@ -517,20 +517,36 @@ const SuperText: React.FC = () => {
       </div>
 
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <DialogContent>
+        <DialogContent className={saveAction === 'save-and-clear' ? 'max-w-md' : undefined}>
           <DialogHeader>
-            <DialogTitle>Confirm Save</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to save this story?
-              {saveAction === 'save-and-clear' && ' The form will be cleared after saving.'}
+            <DialogTitle className="text-lg font-bold">
+              {saveAction === 'save-and-clear' ? 'Confirm Save & Clear' : 'Confirm Save'}
+            </DialogTitle>
+            <DialogDescription className="text-sm">
+              {saveAction === 'save-and-clear' ? (
+                <>
+                  Are you sure you want to <span className="text-red-600 font-semibold">SAVE</span> this story
+                  <br />
+                  and then <span className="text-red-600 font-semibold">CLEAR</span> the form?
+                </>
+              ) : (
+                'Are you sure you want to save this story?'
+              )}
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => confirmSave(false)}>
-              Cancel
+          <DialogFooter className={saveAction === 'save-and-clear' ? 'gap-2' : undefined}>
+            <Button 
+              variant="outline" 
+              onClick={() => confirmSave(false)}
+              className={saveAction === 'save-and-clear' ? 'supertext-no-btn mt-2 sm:mt-0' : undefined}
+            >
+              NO
             </Button>
-            <Button onClick={() => confirmSave(true)}>
-              {saveAction === 'save-and-clear' ? 'Save & Clear' : 'Save Only'}
+            <Button 
+              onClick={() => confirmSave(true)}
+              className={saveAction === 'save-and-clear' ? 'supertext-yes-btn' : undefined}
+            >
+              YES
             </Button>
           </DialogFooter>
         </DialogContent>
