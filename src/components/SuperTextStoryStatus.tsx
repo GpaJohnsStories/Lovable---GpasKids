@@ -120,8 +120,8 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
       default: // 5
         return {
           ...baseStyle,
-          backgroundColor: '#D3D3D3', // Light gray (inactive state)
-          color: 'black'
+          backgroundColor: '#DC143C', // Red Crimson
+          color: '#FFD700' // Golden Yellow text
         };
     }
   };
