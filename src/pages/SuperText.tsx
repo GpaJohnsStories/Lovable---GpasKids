@@ -871,8 +871,8 @@ const SuperText: React.FC = () => {
                       </div>
 
                       {/* Copyright Status */}
-                      <div className="w-full mt-2">
-                        <Label className="block mb-2 font-bold text-white" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif' }}>
+                      <div className="w-full">
+                        <Label className="block mb-0 font-bold text-white" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif' }}>
                           Copyright Status
                         </Label>
                         <CopyrightControl
