@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
-import { Volume2, VideoIcon, ChevronDown, Check, X } from "lucide-react";
+import { Volume2, VideoIcon, ChevronDown, Check, X, Glasses } from "lucide-react";
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface Story {
@@ -228,27 +228,39 @@ const PublicStoriesTable: React.FC = () => {
   const MediaIcons: React.FC<{ story: Story }> = ({ story }) => {
     const hasAudio = story.audio_url;
     const hasVideo = story.video_url;
-    
-    if (!hasAudio && !hasVideo) return null;
+    const hasReadingTime = story.reading_time_minutes;
     
     return (
-      <div className="flex items-center gap-4 mt-1">
-        {hasAudio && (
-          <div className="flex items-center gap-1 text-blue-600">
-            <Volume2 className="h-5 w-5" />
+      <div className="flex flex-col items-center gap-2 mt-1">
+        {/* Reading Time with Glasses Icon - Always show if available */}
+        {hasReadingTime && (
+          <div className="flex items-center gap-1 text-gray-600">
+            <Glasses className="h-4 w-4" />
             <span className="text-sm font-medium">
-              {formatDuration(story.audio_duration_seconds)}
+              {hasReadingTime} min
             </span>
           </div>
         )}
-        {hasVideo && (
-          <div className="flex items-center gap-1 text-purple-600">
-            <VideoIcon className="h-5 w-5" />
-            <span className="text-sm font-medium">
-              {formatDuration(story.video_duration_seconds)}
-            </span>
-          </div>
-        )}
+        
+        {/* Audio and Video Icons */}
+        <div className="flex items-center gap-4">
+          {hasAudio && (
+            <div className="flex items-center gap-1 text-blue-600">
+              <Volume2 className="h-5 w-5" />
+              <span className="text-sm font-medium">
+                {formatDuration(story.audio_duration_seconds)}
+              </span>
+            </div>
+          )}
+          {hasVideo && (
+            <div className="flex items-center gap-1 text-purple-600">
+              <VideoIcon className="h-5 w-5" />
+              <span className="text-sm font-medium">
+                {formatDuration(story.video_duration_seconds)}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
     );
   };
