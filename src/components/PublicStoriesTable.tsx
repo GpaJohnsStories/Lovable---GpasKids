@@ -438,7 +438,7 @@ const PublicStoriesTable: React.FC = () => {
                 filteredAndSortedStories.map((story) => (
                   <TableRow key={story.id} className="hover:bg-gray-50">
                     {/* Code Column with Photo */}
-                    <TableCell className="p-2 text-center text-xs" style={{ width: '80px', minWidth: '80px' }}>
+                    <TableCell className="p-2 text-center text-xs align-top" style={{ width: '80px', minWidth: '80px' }}>
                       <div className="flex flex-col items-center gap-2">
                         {story.photo_link_1 ? (
                           <img 
@@ -459,7 +459,7 @@ const PublicStoriesTable: React.FC = () => {
                     </TableCell>
                     
                     {/* Title Column */}
-                    <TableCell className="p-2">
+                    <TableCell className="p-2 align-top">
                       <div className="cursor-pointer" onClick={() => handleStoryClick(story.story_code)}>
                         <div className="font-bold text-black" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>
                           {story.title}
