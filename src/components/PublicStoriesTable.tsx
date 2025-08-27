@@ -234,7 +234,7 @@ const PublicStoriesTable: React.FC = () => {
       <div className="flex flex-col items-center gap-2 mt-1">
         {/* Reading Time with Glasses Icon - Always show if available */}
         {hasReadingTime && (
-          <div className="flex items-center gap-1 text-gray-600">
+          <div className="flex items-center gap-1" style={{ color: '#9c441a' }}>
             <Glasses className="h-[21px] w-[21px]" />
             <span className="font-medium" style={{ fontSize: '21px' }}>
               {hasReadingTime} min
