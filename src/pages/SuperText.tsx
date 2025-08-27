@@ -761,27 +761,25 @@ const SuperText: React.FC = () => {
                           </div>
                         </div>
                       )}
-                  
-                  <div className="space-y-2">
-                    <div className="w-1/2">
-                       <Select value={category} onValueChange={setCategory} disabled={isUpdatingText || isAddingText}>
-                         <SelectTrigger className="w-full border-2 font-bold text-xl" style={{ borderColor: '#8B4513', color: '#FF8C00' }}>
-                           <SelectValue placeholder="Category" />
-                         </SelectTrigger>
-                      <SelectContent className="bg-white z-[100]">
-                        <SelectItem value="Fun">Fun</SelectItem>
-                        <SelectItem value="Life">Life</SelectItem>
-                        <SelectItem value="North Pole">North Pole</SelectItem>
-                        <SelectItem value="World Changers">World Changers</SelectItem>
-                        <SelectItem value="WebText">WebText</SelectItem>
-                        <SelectItem value="BioText">BioText</SelectItem>
-                      </SelectContent>
-                      </Select>
-                    </div>
-                   </div>
                    
-                   {/* Audio and Video Icons */}
-                   <div className="flex justify-end items-end mt-4">
+                   <div className="flex items-end gap-4">
+                     <div className="w-1/2">
+                        <Select value={category} onValueChange={setCategory} disabled={isUpdatingText || isAddingText}>
+                          <SelectTrigger className="w-full border-2 font-bold text-xl" style={{ borderColor: '#8B4513', color: '#FF8C00' }}>
+                            <SelectValue placeholder="Category" />
+                          </SelectTrigger>
+                       <SelectContent className="bg-white z-[100]">
+                         <SelectItem value="Fun">Fun</SelectItem>
+                         <SelectItem value="Life">Life</SelectItem>
+                         <SelectItem value="North Pole">North Pole</SelectItem>
+                         <SelectItem value="World Changers">World Changers</SelectItem>
+                         <SelectItem value="WebText">WebText</SelectItem>
+                         <SelectItem value="BioText">BioText</SelectItem>
+                       </SelectContent>
+                       </Select>
+                     </div>
+                     
+                     {/* Audio and Video Icons */}
                      <div className="flex items-center gap-2">
                        <div className="flex items-center justify-center w-10 h-10 rounded bg-gray-100 border border-gray-300">
                          <Headphones className="h-6 w-6 text-gray-400" />
