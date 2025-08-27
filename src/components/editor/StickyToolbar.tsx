@@ -38,7 +38,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onAddTokens,
   onInsertFontSize
 }) => {
-  return <div className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{
+  return <div id="format-menu" className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{
     backgroundColor: '#16a34a'
   }}>
       <div className="flex items-center gap-2 flex-wrap">
