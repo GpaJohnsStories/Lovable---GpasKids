@@ -29,7 +29,6 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import StoryVideoUpload from "@/components/StoryVideoUpload";
 
 const SuperText: React.FC = () => {
-  console.log('🔧 SuperText component rendering...');
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
   const [storyCode, setStoryCode] = React.useState('');
   const [category, setCategory] = React.useState('');
@@ -416,7 +415,7 @@ const SuperText: React.FC = () => {
 
   // Google Drive import handler
   const handleGoogleDriveUpload = async () => {
-    console.log('🔧 Google Drive upload clicked - function is defined correctly');
+    console.log('🔧 Google Drive upload clicked');
     
     // Validate Step 1: Story Code and Category must be filled
     if (!storyCode.trim() || !category) {
@@ -1565,10 +1564,7 @@ const SuperText: React.FC = () => {
                       }} 
                     />
                     <button 
-                      onClick={() => {
-                        console.log('🔧 Button clicked, calling handleGoogleDriveUpload');
-                        handleGoogleDriveUpload();
-                      }}
+                      onClick={handleGoogleDriveUpload}
                       disabled={isImportingFromDrive}
                       className="w-full py-2 px-4 rounded-md font-bold text-base transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                       style={{
