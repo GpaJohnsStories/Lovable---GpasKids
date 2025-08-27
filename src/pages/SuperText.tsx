@@ -16,6 +16,7 @@ import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import SplitViewEditor from '@/components/editor/SplitViewEditor';
 import ConditionalEditorStyles from '@/components/rich-text-editor/ConditionalEditorStyles';
 import SuperTextStoryStatus from '@/components/SuperTextStoryStatus';
+import LastUpdatesGrid from '@/components/LastUpdatesGrid';
 import { useAdminSession } from '@/hooks/useAdminSession';
 import './SuperText.css';
 
@@ -421,37 +422,18 @@ const SuperText: React.FC = () => {
 
             {/* Right Panel - Status and Actions */}
             <div className="space-y-6">
-              {/* Text Status Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6">
-                <h2 className="text-xl font-bold text-blue-700 mb-4">📋 Text Status</h2>
-                <SuperTextStoryStatus 
-                  story={formData}
-                  publicationStatusCode={publicationStatusCode}
-                  onStatusChange={(status) => {
-                    setPublicationStatusCode(status);
-                    handleInputChange('publication_status_code', status.toString());
-                  }}
-                />
-              </div>
-
               {/* Last Updates Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-4">
-                <h2 className="text-xl font-bold text-orange-600 mb-4">Last Updates</h2>
-                <div className="space-y-2">
-                  <div className="bg-yellow-300 p-2 text-center rounded">
-                    <div className="font-bold">Last Text</div>
-                    <div className="text-sm">--/--/-- --:--</div>
-                  </div>
-                  <div className="bg-red-500 text-white p-2 text-center rounded">
-                    <div className="font-bold">Last Audio</div>
-                    <div className="text-sm">--/--/-- --:--</div>
-                  </div>
-                  <div className="bg-blue-300 p-2 text-center rounded">
-                    <div className="font-bold">Original</div>
-                    <div className="text-sm">--/--/-- --:--</div>
-                  </div>
-                </div>
-              </div>
+              <LastUpdatesGrid story={formData} />
+              
+              {/* Text Status Section */}
+              <SuperTextStoryStatus 
+                story={formData}
+                publicationStatusCode={publicationStatusCode}
+                onStatusChange={(status) => {
+                  setPublicationStatusCode(status);
+                  handleInputChange('publication_status_code', status.toString());
+                }}
+              />
 
               {/* Create AI Audio Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6">

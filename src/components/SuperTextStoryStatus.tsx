@@ -138,101 +138,28 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
   return (
     <Card className="h-fit relative" style={{
       borderColor: '#3b82f6',
-      borderWidth: '4px',
-      minHeight: '500px'
+      borderWidth: '4px'
     }}>
-      <CardHeader className="flex flex-row justify-between items-center pb-2">
+      <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
           color: '#3b82f6'
         }}>
           <FileText className="h-5 w-5" />
           Text Status
         </CardTitle>
-        <h3 className="text-xl font-bold" style={{
-          color: '#F97316',
-          fontSize: '21px',
-          fontFamily: 'Arial, sans-serif'
-        }}>
-          Last Updates
-        </h3>
       </CardHeader>
-      <CardContent className="grid md:grid-cols-2 gap-4">
+      <CardContent>
         <div className="space-y-1">
-          <div className="space-y-1">
-            {statusLabels.map((label, index) => (
-              <button
-                key={index}
-                onClick={() => onStatusChange?.(index)}
-                style={getStatusButtonStyle(index)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          {statusLabels.map((label, index) => (
+            <button
+              key={index}
+              onClick={() => onStatusChange?.(index)}
+              style={getStatusButtonStyle(index)}
+            >
+              {label}
+            </button>
+          ))}
         </div>
-
-        <div className="flex flex-col items-center">
-          <table className="w-full text-xs" style={{
-            border: '2px solid #9c441a'
-          }}>
-            <tbody>
-              <tr>
-                <td className="text-center font-bold px-1 py-1" style={{
-                  ...getLastUpdateStyle()
-                }}>
-                  Last Text
-                </td>
-              </tr>
-              <tr>
-                <td className="text-center font-bold px-1 py-1" style={{
-                  borderTop: '1px solid #9c441a',
-                  ...getLastUpdateStyle()
-                }}>
-                  {formatDateTime(story?.updated_at).date} {formatDateTime(story?.updated_at).time}
-                </td>
-              </tr>
-              <tr>
-                <td className="text-center font-bold px-1 py-1" style={{
-                  borderTop: '1px solid #9c441a',
-                  ...getAudioStatusStyle()
-                }}>
-                  Last Audio
-                </td>
-              </tr>
-              <tr>
-                <td className="text-center font-bold px-1 py-1" style={{
-                  borderTop: '1px solid #9c441a',
-                  ...getAudioStatusStyle()
-                }}>
-                  {formatDateTime(story?.audio_generated_at).date} {formatDateTime(story?.audio_generated_at).time}
-                </td>
-              </tr>
-              <tr>
-                <td className="text-center font-bold px-1 py-1 text-gray-700" style={{
-                  borderTop: '1px solid #9c441a',
-                  backgroundColor: 'rgba(22, 156, 249, 0.3)',
-                  fontSize: '21px',
-                  fontFamily: 'Arial, sans-serif',
-                  fontWeight: 'bold'
-                }}>
-                  Original
-                </td>
-              </tr>
-              <tr>
-                <td className="text-center font-bold px-1 py-1 text-gray-600" style={{
-                  borderTop: '1px solid #9c441a',
-                  backgroundColor: 'rgba(22, 156, 249, 0.3)',
-                  fontSize: '21px',
-                  fontFamily: 'Arial, sans-serif',
-                  fontWeight: 'bold'
-                }}>
-                  {formatDateTime(story?.created_at).date} {formatDateTime(story?.created_at).time}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
       </CardContent>
     </Card>
   );
