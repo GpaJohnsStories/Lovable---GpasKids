@@ -862,21 +862,21 @@ const SuperText: React.FC = () => {
                       {/* Story Title Display Box - Always visible at bottom */}
                       <div className="w-full mt-4">
                         {foundStoryTitle ? (
-                          <div className="w-full p-4 border-2 rounded-md bg-blue-50" style={{ borderColor: '#22c55e' }}>
+                          <div className="w-full p-4 border-2 rounded-md bg-blue-50" style={{ borderColor: '#814d2e' }}>
                             <div className="text-sm font-bold text-gray-600 mb-2">Found Story Title:</div>
                             <div className="font-bold text-lg" style={{ color: '#22c55e', fontSize: '21px' }}>
                               {foundStoryTitle}
                             </div>
                           </div>
                         ) : noStoryFound && storyCode.trim().length >= 3 ? (
-                          <div className="w-full p-4 border-2 rounded-md bg-gray-50" style={{ borderColor: '#6b7280' }}>
+                          <div className="w-full p-4 border-2 rounded-md bg-gray-50" style={{ borderColor: '#814d2e' }}>
                             <div className="text-sm font-bold text-gray-600 mb-2">Lookup Result:</div>
                             <div className="font-bold text-lg text-gray-600" style={{ fontSize: '21px' }}>
                               No story found for this code
                             </div>
                           </div>
                         ) : (
-                          <div className="w-full p-4 border-2 rounded-md bg-gray-50" style={{ borderColor: '#e5e7eb' }}>
+                          <div className="w-full p-4 border-2 rounded-md bg-gray-50" style={{ borderColor: '#814d2e' }}>
                             <div className="text-sm font-bold text-gray-600 mb-2">Lookup Result:</div>
                             <div className="font-bold text-lg text-gray-400" style={{ fontSize: '21px' }}>
                               Enter code and category to search
