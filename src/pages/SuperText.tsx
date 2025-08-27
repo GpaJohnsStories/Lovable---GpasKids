@@ -31,7 +31,7 @@ import CopyrightControl from "@/components/story-form/CopyrightControl";
 
 const SuperText: React.FC = () => {
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
-  const [saveAction, setSaveAction] = React.useState<'save-and-clear' | 'save-only'>('save-and-clear');
+  const [saveAction, setSaveAction] = React.useState<'save-and-clear' | 'save-only' | 'cancel-all'>('save-and-clear');
   const [storyCode, setStoryCode] = React.useState('');
   const [category, setCategory] = React.useState('');
   const [copyrightStatus, setCopyrightStatus] = React.useState('©');
@@ -383,6 +383,12 @@ const SuperText: React.FC = () => {
     setShowConfirmDialog(true);
   };
 
+  const handleCancelAllEdits = () => {
+    // Show confirmation dialog for canceling all edits
+    setSaveAction('cancel-all');
+    setShowConfirmDialog(true);
+  };
+
   const handleConfirmYes = async () => {
     // Extract tokens from content for validation and data
     const { tokens, contentWithoutTokens } = extractHeaderTokens(storyContent);
@@ -461,6 +467,37 @@ const SuperText: React.FC = () => {
           toast({
             title: "Form Cleared",
             description: "Content saved and form cleared successfully"
+          });
+        } else if (saveAction === 'cancel-all') {
+          // Clear all form data for cancel action
+          setStoryCode('');
+          setCategory('');
+          setCopyrightStatus('©');
+          setPublicationStatusCode(5);
+          setFoundStory(null);
+          setFoundStoryTitle('');
+          setNoStoryFound(false);
+          setShowInvalidCode(false);
+          setIsUpdatingText(false);
+          setIsAddingText(false);
+          setStoryContent('');
+          setPreviewContent(null);
+          setPhotoLinks({ 1: '', 2: '', 3: '' });
+          setPhotoAlts({ 1: '', 2: '', 3: '' });
+          setVideoUrl('');
+          setAudioUrl('');
+          setGoogleDriveShareCode('');
+          setUploading({});
+          
+          // Scroll to top for cancel action
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+          
+          toast({
+            title: "All Edits Cancelled",
+            description: "Form has been cleared and all edits cancelled"
           });
         } else {
           toast({
@@ -748,26 +785,7 @@ const SuperText: React.FC = () => {
             </button>
             
             <button
-              onClick={() => {
-                // Clear all form fields and reset state
-                setStoryCode('');
-                setCategory('');
-                setCopyrightStatus('©');
-                setPublicationStatusCode(5);
-                setFoundStoryTitle('');
-                setFoundStory(null);
-                setNoStoryFound(false);
-                setShowInvalidCode(false);
-                setIsUpdatingText(false);
-                setIsAddingText(false);
-                // Clear photo state
-                setPhotoLinks({ 1: '', 2: '', 3: '' });
-                setPhotoAlts({ 1: '', 2: '', 3: '' });
-                setUploading({});
-                // Clear content state
-                setStoryContent('');
-                console.log('All edits cancelled and form cleared');
-              }}
+              onClick={handleCancelAllEdits}
               className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
               style={{
                 backgroundColor: '#dc2626', // Red Primary
