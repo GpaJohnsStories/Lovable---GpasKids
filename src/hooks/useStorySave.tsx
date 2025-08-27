@@ -136,13 +136,26 @@ export const useStorySave = () => {
         if (error) throw error;
         toast.success("Story updated successfully!");
       } else {
-        // Create new story
+        // Create new story - clean payload
         console.log('Creating new story');
-        console.log('Insert payload:', saveData);
+        
+        // Clone saveData and remove id field and undefined values
+        const insertData = { ...saveData };
+        delete insertData.id; // Remove id to let Postgres generate UUID
+        
+        // Remove undefined values to prevent database issues
+        Object.keys(insertData).forEach(key => {
+          if (insertData[key] === undefined) {
+            delete insertData[key];
+          }
+        });
+        
+        console.log('Insert payload keys:', Object.keys(insertData));
+        console.log('Insert payload (id should not be present):', insertData);
         
         const { data, error } = await supabase
           .from('stories')
-          .insert([saveData])
+          .insert([insertData])
           .select();
         
         console.log('Insert response - data:', data, 'error:', error);
