@@ -454,7 +454,7 @@ const PublicStoriesTable: React.FC = () => {
                             <span className="text-gray-500 text-xs">No Image</span>
                           </div>
                         )}
-                        <div className="text-xs font-medium">{story.story_code}</div>
+                        <div className="font-medium" style={{ fontSize: '21px' }}>{story.story_code}</div>
                       </div>
                     </TableCell>
                     
