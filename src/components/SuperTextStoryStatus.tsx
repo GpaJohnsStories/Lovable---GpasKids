@@ -102,7 +102,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
           </div>
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex flex-col items-center space-y-1">
           <table className="w-full text-xs" style={{
             border: '2px solid #9c441a'
           }}>
