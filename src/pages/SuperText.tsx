@@ -104,7 +104,7 @@ const SuperText: React.FC = () => {
     handleInputChange('category', initialCategory);
     handleInputChange('copyright_status', initialCopyrightStatus);
     handleInputChange('publication_status_code', initialPublicationStatusCode.toString());
-  }, [searchParams, handleInputChange]);
+  }, [searchParams]); // Removed handleInputChange to prevent infinite loop
 
   useEffect(() => {
     // Clear form after submit if 'clear' param is true
@@ -130,7 +130,7 @@ const SuperText: React.FC = () => {
       setCopyrightStatus('©');
       setPublicationStatusCode(5);
     }
-  }, [clear, handleInputChange]);
+  }, [clear]); // Removed handleInputChange to prevent infinite loop
 
   const handleStoryCodeLookup = useCallback(async () => {
     if (!storyCode.trim()) {
