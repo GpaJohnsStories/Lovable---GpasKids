@@ -75,7 +75,7 @@ const AdminOverview = () => {
           <CardTitle className="flex items-center justify-between text-green-700">
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5" />
-              Security Audit -- Gpa's TEST 1
+              Security Audit
             </div>
             <div className="text-sm font-mono text-gray-500">
               Build: {BUILD_ID}
