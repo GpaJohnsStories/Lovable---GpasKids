@@ -701,7 +701,7 @@ const SuperText: React.FC = () => {
           <div className="flex items-start justify-center gap-6 w-full max-w-7xl mx-auto">
             {/* Left Side: Story Details */}
             <div className="flex-1">
-              <Card className="bg-white border-4 h-fit relative" style={{ borderColor: '#22c55e' }}>
+              <Card className="bg-white border-4 h-fit relative" style={{ borderColor: '#228B22' }}>
                 {/* Blue dot with "1" in top left corner */}
                 <div className="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold z-10">
                   1
@@ -812,14 +812,14 @@ const SuperText: React.FC = () => {
                   <CardTitle 
                     className="flex items-center gap-2 font-bold" 
                     style={{
-                      color: '#22c55e',
+                      color: '#228B22',
                       fontSize: '24px',
                       lineHeight: '1.2',
                       fontWeight: '700'
                     }}
                   >
-                    <FileText className="h-5 w-5" style={{ color: '#22c55e' }} />
-                    <span style={{ color: '#22c55e' }}>Story Details</span>
+                    <FileText className="h-5 w-5" style={{ color: '#228B22' }} />
+                    <span style={{ color: '#228B22' }}>Text Details</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
