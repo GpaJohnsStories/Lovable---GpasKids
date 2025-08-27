@@ -310,6 +310,18 @@ const SuperText: React.FC = () => {
                         </SelectTrigger>
                         <SelectContent className="bg-white">
                           <SelectItem 
+                            value="WebText"
+                            style={{
+                              fontSize: '21px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            <div className="px-3 py-1 rounded w-full text-center text-white" style={{ backgroundColor: '#A0522D' }}>
+                              WebText
+                            </div>
+                          </SelectItem>
+                          <SelectItem 
                             value="Fun"
                             style={{
                               fontSize: '21px',
@@ -355,18 +367,6 @@ const SuperText: React.FC = () => {
                           >
                             <div className="bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500 px-3 py-1 rounded w-full text-center">
                               World Changers
-                            </div>
-                          </SelectItem>
-                          <SelectItem 
-                            value="WebText"
-                            style={{
-                              fontSize: '21px',
-                              fontFamily: 'Arial',
-                              fontWeight: 'bold'
-                            }}
-                          >
-                            <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">
-                              WebText
                             </div>
                           </SelectItem>
                           <SelectItem 
