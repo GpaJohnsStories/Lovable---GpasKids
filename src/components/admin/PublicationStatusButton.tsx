@@ -1,6 +1,7 @@
 import React from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface PublicationStatusButtonProps {
   storyId: string;
@@ -89,6 +90,32 @@ const PublicationStatusButton: React.FC<PublicationStatusButtonProps> = ({
     }
   };
 
+  const getStatusDescription = (status: number): string => {
+    const statusLabels = [
+      "0 - Ready to be Saved & Published — Approved and Reviewed",
+      "1 - Ready to be Saved & Published — Approved Only", 
+      "2 - Saved, NOT PUBLISHED — Not Reviewed by CoPilot",
+      "3 - Saved — NOT APPROVED by Gpa",
+      "4 - Saved — Still being formatted",
+      "5 - FILE NOT SAVED"
+    ];
+    return statusLabels[status] || statusLabels[5];
+  };
+
+  const getTooltipStyle = (status: number) => {
+    const statusStyle = getStatusButtonStyle(status);
+    return {
+      backgroundColor: statusStyle.backgroundColor,
+      color: statusStyle.color,
+      fontSize: '21px',
+      fontFamily: 'Arial, sans-serif',
+      fontWeight: 'bold',
+      border: 'none',
+      padding: '8px 12px',
+      borderRadius: '4px'
+    };
+  };
+
   const handleClick = async () => {
     const nextStatus = getNextStatus(currentStatus);
     
@@ -113,29 +140,37 @@ const PublicationStatusButton: React.FC<PublicationStatusButtonProps> = ({
   };
 
   return (
-    <button
-      onClick={handleClick}
-      style={getStatusButtonStyle(currentStatus)}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-2px)';
-        e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0px)';
-        e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.3)';
-      }}
-      onMouseDown={(e) => {
-        e.currentTarget.style.transform = 'translateY(1px)';
-        e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.2)';
-      }}
-      onMouseUp={(e) => {
-        e.currentTarget.style.transform = 'translateY(-2px)';
-        e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4)';
-      }}
-      title={`Publication Status: ${currentStatus} - Click to change to ${getNextStatus(currentStatus)}`}
-    >
-      {currentStatus}
-    </button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            onClick={handleClick}
+            style={getStatusButtonStyle(currentStatus)}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0px)';
+              e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.3)';
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = 'translateY(1px)';
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.2)';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4)';
+            }}
+          >
+            {currentStatus}
+          </button>
+        </TooltipTrigger>
+        <TooltipContent style={getTooltipStyle(currentStatus)}>
+          {getStatusDescription(currentStatus)}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 
