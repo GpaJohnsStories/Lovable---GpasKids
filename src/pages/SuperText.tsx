@@ -308,19 +308,67 @@ const SuperText: React.FC = () => {
                         >
                           <SelectValue placeholder="Category" />
                         </SelectTrigger>
-                        <SelectContent 
-                          style={{
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold'
-                          }}
-                        >
-                          <SelectItem value="Fun">Fun</SelectItem>
-                          <SelectItem value="Life">Life</SelectItem>
-                          <SelectItem value="North Pole">North Pole</SelectItem>
-                          <SelectItem value="World Changers">World Changers</SelectItem>
-                          <SelectItem value="WebText">WebText</SelectItem>
-                          <SelectItem value="BioText">BioText</SelectItem>
+                        <SelectContent className="bg-white">
+                          <SelectItem 
+                            value="Fun"
+                            style={{
+                              fontSize: '21px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            Fun
+                          </SelectItem>
+                          <SelectItem 
+                            value="Life"
+                            style={{
+                              fontSize: '21px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            Life
+                          </SelectItem>
+                          <SelectItem 
+                            value="North Pole"
+                            style={{
+                              fontSize: '21px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            North Pole
+                          </SelectItem>
+                          <SelectItem 
+                            value="World Changers"
+                            style={{
+                              fontSize: '21px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            World Changers
+                          </SelectItem>
+                          <SelectItem 
+                            value="WebText"
+                            style={{
+                              fontSize: '21px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            WebText
+                          </SelectItem>
+                          <SelectItem 
+                            value="BioText"
+                            style={{
+                              fontSize: '21px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            BioText
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
