@@ -21,14 +21,6 @@ const Library = () => {
           <h1 className="text-4xl font-bold text-orange-800 mb-2" style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}>
             Library of Stories, Videos and Audio Files
           </h1>
-          <div className="mt-4">
-            <button
-              onClick={() => navigate('/library/by-author')}
-              className="text-blue-600 hover:text-blue-800 underline text-lg font-medium transition-colors"
-            >
-              View by Author →
-            </button>
-          </div>
         </div>
         
         <div className="mb-8">

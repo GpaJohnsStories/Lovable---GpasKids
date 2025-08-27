@@ -13,7 +13,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Story from "./pages/Story";
 import Library from "./pages/Library";
-import LibraryByAuthor from "./pages/LibraryByAuthor";
+
 import Writing from "./pages/Writing";
 import Guide from "./pages/Guide";
 import HelpGpa from "./pages/HelpGpa";
@@ -118,7 +118,7 @@ function App() {
                       <Route path="/about" element={<About />} />
                       <Route path="/story/:storyCode" element={<Story />} />
                       <Route path="/library" element={<Library />} />
-                      <Route path="/library/by-author" element={<LibraryByAuthor />} />
+                      
                       <Route path="/writing" element={<Writing />} />
                       <Route path="/guide" element={<Guide />} />
                       <Route path="/help-gpa" element={<HelpGpa />} />

@@ -174,6 +174,36 @@ const PublicStoriesTable: React.FC = () => {
     return result;
   }, [stories, searchTerm, mediaFilter, sortOption, sortDirection]);
 
+  // Group stories by author when sorting by author
+  const groupedByAuthor = useMemo(() => {
+    if (sortOption !== 'author') return null;
+    
+    const groups: { [author: string]: Story[] } = {};
+    
+    filteredAndSortedStories.forEach(story => {
+      if (!groups[story.author]) {
+        groups[story.author] = [];
+      }
+      groups[story.author].push(story);
+    });
+    
+    // Sort stories within each author group by updated_at (newest first)
+    Object.keys(groups).forEach(author => {
+      groups[author].sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+    });
+    
+    // Convert to array and sort authors
+    const authorsArray = Object.keys(groups).sort((a, b) => {
+      return sortDirection === 'asc' ? a.localeCompare(b) : b.localeCompare(a);
+    });
+    
+    return authorsArray.map(author => ({
+      author,
+      stories: groups[author],
+      count: groups[author].length
+    }));
+  }, [filteredAndSortedStories, sortOption, sortDirection]);
+
   const handleStoryClick = (storyCode: string) => {
     navigate(`/story/${storyCode}`);
   };
@@ -456,7 +486,103 @@ const PublicStoriesTable: React.FC = () => {
                     No stories found matching your criteria.
                   </TableCell>
                 </TableRow>
+              ) : sortOption === 'author' && groupedByAuthor ? (
+                // Author-grouped view
+                groupedByAuthor.map((authorGroup) => (
+                  <React.Fragment key={authorGroup.author}>
+                    {/* Author Banner Row */}
+                    <TableRow>
+                      <TableCell colSpan={4} className="p-0">
+                        <div className="bg-blue-600 text-white text-center py-3 px-4">
+                          <div className="font-bold" style={{ fontSize: '24px', fontFamily: 'Georgia, serif' }}>
+                            {authorGroup.author} ({authorGroup.count} {authorGroup.count === 1 ? 'story' : 'stories'})
+                          </div>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                    {/* Stories for this author */}
+                    {authorGroup.stories.map((story) => (
+                      <TableRow key={story.id} className="hover:bg-gray-50">
+                        {/* Code Column with Photo */}
+                        <TableCell className="p-2 text-center text-xs align-top" style={{ width: '80px', minWidth: '80px' }}>
+                          <div className="flex flex-col items-center gap-2">
+                            {story.photo_link_1 ? (
+                              <img 
+                                src={story.photo_link_1} 
+                                alt={`${story.title} thumbnail`}
+                                className="w-[75px] h-[75px] object-cover rounded border border-gray-400"
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none';
+                                }}
+                              />
+                            ) : (
+                              <div className="w-[75px] h-[75px] bg-gray-200 border border-gray-300 rounded flex items-center justify-center">
+                                <span className="text-gray-500 text-xs">No Image</span>
+                              </div>
+                            )}
+                            <div className="font-medium" style={{ fontSize: '21px', lineHeight: '1.1' }}>{story.story_code}</div>
+                          </div>
+                        </TableCell>
+                        
+                        {/* Title Column */}
+                        <TableCell className="p-2 align-top">
+                          <div className="cursor-pointer" onClick={() => handleStoryClick(story.story_code)}>
+                            <div className="font-bold text-black" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>
+                              {story.title}
+                            </div>
+                            {story.tagline && (
+                              <div className="italic text-amber-700 mt-1" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>
+                                {story.tagline}
+                              </div>
+                            )}
+                            {story.excerpt && (
+                              <div className="text-black mt-1" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>
+                                {story.excerpt}
+                              </div>
+                            )}
+                          </div>
+                        </TableCell>
+                        
+                         {/* Author Column */}
+                         <TableCell className="p-2 text-center align-top" style={{ width: '220px', minWidth: '220px', maxWidth: '220px' }}>
+                           <Badge 
+                             className={`${getCategoryBadgeColor(story.category)} justify-center text-center px-3 py-1 rounded-sm`} 
+                             style={{ fontSize: '21px', width: '195px' }}
+                           >
+                             {getCategoryDisplayName(story.category)}
+                           </Badge>
+                           <div className="text-center mt-2" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>{story.author}</div>
+                           <MediaIcons story={story} />
+                         </TableCell>
+                        
+                         {/* Details Column */}
+                         <TableCell className="p-2 text-center align-top">
+                           <div className="space-y-2">
+                            <div className="text-blue-600 font-medium" style={{ fontSize: '21px' }}>
+                              Reads: {story.read_count || 0}
+                            </div>
+                            <div className="flex items-center justify-center gap-3">
+                              <div className="flex items-center gap-1">
+                                <span className="text-lg">👍</span>
+                                <span className="font-medium" style={{ fontSize: '21px' }}>{story.thumbs_up_count || 0}</span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <span className="text-lg">👎</span>
+                                <span className="font-medium" style={{ fontSize: '21px' }}>{story.thumbs_down_count || 0}</span>
+                              </div>
+                            </div>
+                            <div>
+                              <div className="text-blue-600 font-medium" style={{ fontSize: '21px' }}>Updated</div>
+                              <div className="text-black" style={{ fontSize: '21px' }}>{format(new Date(story.updated_at), 'M/d/yyyy')}</div>
+                            </div>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </React.Fragment>
+                ))
               ) : (
+                // Regular flat table view
                 filteredAndSortedStories.map((story) => (
                   <TableRow key={story.id} className="hover:bg-gray-50">
                     {/* Code Column with Photo */}
