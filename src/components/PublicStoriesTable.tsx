@@ -477,18 +477,18 @@ const PublicStoriesTable: React.FC = () => {
                       </div>
                     </TableCell>
                     
-                    {/* Author Column */}
-                    <TableCell className="p-2 text-center">
-                      <div className="text-center" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>{story.author}</div>
-                      <MediaIcons story={story} />
-                    </TableCell>
+                     {/* Author Column */}
+                     <TableCell className="p-2 text-center">
+                       <Badge className={`${getCategoryBadgeColor(story.category)} w-full justify-center text-center px-3 py-1 rounded-sm`} style={{ fontSize: '21px' }}>
+                         {getCategoryDisplayName(story.category)}
+                       </Badge>
+                       <div className="text-center mt-2" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>{story.author}</div>
+                       <MediaIcons story={story} />
+                     </TableCell>
                     
-                    {/* Details Column */}
-                    <TableCell className="p-2 text-center">
-                      <div className="space-y-2">
-                        <Badge className={`${getCategoryBadgeColor(story.category)} px-3 py-1 rounded-sm`} style={{ fontSize: '21px' }}>
-                          {getCategoryDisplayName(story.category)}
-                        </Badge>
+                     {/* Details Column */}
+                     <TableCell className="p-2 text-center align-top">
+                       <div className="space-y-2">
                         <div className="text-blue-600 font-medium" style={{ fontSize: '21px' }}>
                           Reads: {story.read_count || 0}
                         </div>
