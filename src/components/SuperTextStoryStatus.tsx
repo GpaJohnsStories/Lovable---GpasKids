@@ -80,6 +80,21 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
+        <div className="space-y-1">
+          <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
+          <div className="flex items-center gap-2">
+            <Select value={story?.published || "N"} onValueChange={() => {}}>
+              <SelectTrigger className={`w-full text-xs font-bold ${getPublishedColor(story?.published || 'N')}`}>
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent className="z-50 bg-white border shadow-lg">
+                <SelectItem value="N">Not Published</SelectItem>
+                <SelectItem value="Y">Published</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
         <table className="w-full text-xs" style={{
           border: '2px solid #9c441a'
         }}>
@@ -146,21 +161,6 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
             </tr>
           </tbody>
         </table>
-        
-        <div className="space-y-1">
-          <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
-          <div className="flex items-center gap-2">
-            <Select value={story?.published || "N"} onValueChange={() => {}}>
-              <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor(story?.published || 'N')}`}>
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent className="z-50 bg-white border shadow-lg">
-                <SelectItem value="N">Not Published</SelectItem>
-                <SelectItem value="Y">Published</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
 
       </CardContent>
     </Card>
