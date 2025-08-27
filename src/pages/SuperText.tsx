@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useSearchParams } from 'react-router-dom';
 import SecureAdminRoute from '@/components/admin/SecureAdminRoute';
 import SuperTextStoryStatus from '@/components/SuperTextStoryStatus';
 import SplitViewEditor from '@/components/editor/SplitViewEditor';
@@ -30,6 +31,7 @@ import StoryVideoUpload from "@/components/StoryVideoUpload";
 import CopyrightControl from "@/components/story-form/CopyrightControl";
 
 const SuperText: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
   const [saveAction, setSaveAction] = React.useState<'save-and-clear' | 'save-only' | 'cancel-all'>('save-and-clear');
   const [storyCode, setStoryCode] = React.useState('');
@@ -82,6 +84,31 @@ const SuperText: React.FC = () => {
   } = useVoiceTesting();
   
   const allowedCategories = ["Fun", "Life", "North Pole", "World Changers", "WebText", "BioText"];
+
+  // Initialize from URL parameters on component mount
+  useEffect(() => {
+    const code = searchParams.get('code');
+    const categoryParam = searchParams.get('category');
+    const psc = searchParams.get('psc');
+    
+    if (code) {
+      setStoryCode(code.toUpperCase());
+      console.log('🔧 SuperText initialized with story code from URL:', code);
+    }
+    
+    if (categoryParam && allowedCategories.includes(categoryParam)) {
+      setCategory(categoryParam);
+      console.log('🔧 SuperText initialized with category from URL:', categoryParam);
+    }
+    
+    if (psc && !isNaN(Number(psc))) {
+      const statusCode = Number(psc);
+      if (statusCode >= 0 && statusCode <= 5) {
+        setPublicationStatusCode(statusCode);
+        console.log('🔧 SuperText initialized with publication status from URL:', statusCode);
+      }
+    }
+  }, [searchParams]);
 
   // Check if verification should be allowed
   const canVerify = storyCode.trim() && category && copyrightStatus;

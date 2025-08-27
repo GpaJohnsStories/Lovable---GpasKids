@@ -21,9 +21,9 @@ const AdminStories = () => {
   const handleEditStory = (story: any) => {
     devLog.info('🎯 AdminStories: Editing story via super-text:', story.id, story.title, 'code:', story.story_code);
     
-    // Navigate to super-text with story code for editing
-    const editUrl = `/buddys_admin/super-text?code=${encodeURIComponent(story.story_code || '')}`;
-    navigate(editUrl);
+    // Open super-text in new tab with story code, category, and publication status
+    const editUrl = `/buddys_admin/super-text?code=${encodeURIComponent(story.story_code || '')}&category=${encodeURIComponent(story.category || '')}&psc=${story.publication_status_code || 5}`;
+    window.open(editUrl, '_blank');
   };
 
 
