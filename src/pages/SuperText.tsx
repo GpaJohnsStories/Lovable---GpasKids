@@ -31,6 +31,7 @@ import CopyrightControl from "@/components/story-form/CopyrightControl";
 
 const SuperText: React.FC = () => {
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
+  const [saveAction, setSaveAction] = React.useState<'save-and-clear' | 'save-only'>('save-and-clear');
   const [storyCode, setStoryCode] = React.useState('');
   const [category, setCategory] = React.useState('');
   const [copyrightStatus, setCopyrightStatus] = React.useState('©');
@@ -330,6 +331,55 @@ const SuperText: React.FC = () => {
     }
 
     // All validation passed, show confirmation dialog
+    setSaveAction('save-and-clear');
+    setShowConfirmDialog(true);
+  };
+
+  const handleSaveWithoutClear = async () => {
+    // Check if we're in editing mode
+    if (!isUpdatingText && !isAddingText) {
+      toast({
+        title: "No Content to Save",
+        description: "Please choose 'Update existing text' or 'Add new text' first",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate story code and category for new stories
+    if (!isValidStoryCode(storyCode)) {
+      toast({
+        title: "Invalid Story Code",
+        description: "Please enter a valid story code (format: ABC-123)",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (isAddingText && !category) {
+      toast({
+        title: "Category Required",
+        description: "Please select a category for the new story",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Extract tokens from content for validation and data
+    const { tokens, contentWithoutTokens } = extractHeaderTokens(storyContent);
+    
+    // Validate title token exists
+    if (!tokens.title) {
+      toast({
+        title: "Title Required",
+        description: "Please add a TITLE token to your story content",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // All validation passed, show confirmation dialog
+    setSaveAction('save-only');
     setShowConfirmDialog(true);
   };
 
@@ -384,36 +434,40 @@ const SuperText: React.FC = () => {
       
       if (success) {
         // Clear all form data after successful save
-        setStoryCode('');
-        setCategory('');
-        setCopyrightStatus('©');
-        setPublicationStatusCode(5);
-        setFoundStory(null);
-        setFoundStoryTitle('');
-        setNoStoryFound(false);
-        setStoryContent('');
-        setPreviewContent(null);
-        setPhotoLinks({ 1: '', 2: '', 3: '' });
-        setPhotoAlts({ 1: '', 2: '', 3: '' });
-        setVideoUrl('');
-        setAudioUrl('');
-        setGoogleDriveShareCode('');
-        setIsUpdatingText(false);
-        setIsAddingText(false);
-        
-        // Close dialog
-        setShowConfirmDialog(false);
-        
-        // Scroll to top
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-        
-        toast({
-          title: "Form Cleared",
-          description: "Content saved and form cleared successfully"
-        });
+        if (saveAction === 'save-and-clear') {
+          setStoryCode('');
+          setCategory('');
+          setCopyrightStatus('©');
+          setPublicationStatusCode(5);
+          setFoundStory(null);
+          setFoundStoryTitle('');
+          setNoStoryFound(false);
+          setStoryContent('');
+          setPreviewContent(null);
+          setPhotoLinks({ 1: '', 2: '', 3: '' });
+          setPhotoAlts({ 1: '', 2: '', 3: '' });
+          setVideoUrl('');
+          setAudioUrl('');
+          setGoogleDriveShareCode('');
+          setIsUpdatingText(false);
+          setIsAddingText(false);
+          
+          // Scroll to top for save and clear
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+          
+          toast({
+            title: "Form Cleared",
+            description: "Content saved and form cleared successfully"
+          });
+        } else {
+          toast({
+            title: "Success",
+            description: "Story saved successfully without clearing form."
+          });
+        }
       } else {
         console.log('❌ Save failed');
         setShowConfirmDialog(false);
@@ -638,91 +692,7 @@ const SuperText: React.FC = () => {
         <div className="w-full mb-6">
           <div className="flex justify-center items-center gap-6">
             <button
-              onClick={async () => {
-                // Check if we're in editing mode
-                if (!isUpdatingText && !isAddingText) {
-                  toast({
-                    title: "No Content to Save",
-                    description: "Please choose 'Update existing text' or 'Add new text' first",
-                    variant: "destructive"
-                  });
-                  return;
-                }
-
-                // Validate story code
-                if (!isValidStoryCode(storyCode)) {
-                  toast({
-                    title: "Invalid Story Code",
-                    description: "Please enter a valid story code (format: ABC-123)",
-                    variant: "destructive"
-                  });
-                  return;
-                }
-
-                // Validate category for new stories
-                if (isAddingText && !category) {
-                  toast({
-                    title: "Category Required",
-                    description: "Please select a category for the new story",
-                    variant: "destructive"
-                  });
-                  return;
-                }
-
-                // Extract tokens from content for validation and data
-                const { tokens, contentWithoutTokens } = extractHeaderTokens(storyContent);
-                
-                // Validate title token exists
-                if (!tokens.title) {
-                  toast({
-                    title: "Title Required",
-                    description: "Please add a TITLE token to your story content",
-                    variant: "destructive"
-                  });
-                  return;
-                }
-
-                // Build story payload with conditional id
-                const formData = {
-                  ...(foundStory?.id && { id: foundStory.id }),
-                  story_code: storyCode,
-                  category: category as "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText",
-                  title: tokens.title || '',
-                  tagline: tokens.tagline || '',
-                  author: tokens.author || '',
-                  excerpt: tokens.excerpt || '',
-                  content: storyContent,
-                  photo_link_1: photoLinks[1] || '',
-                  photo_link_2: photoLinks[2] || '',
-                  photo_link_3: photoLinks[3] || '',
-                  photo_alt_1: photoAlts[1] || '',
-                  photo_alt_2: photoAlts[2] || '',
-                  photo_alt_3: photoAlts[3] || '',
-                  video_url: videoUrl,
-                  audio_url: audioUrl,
-                  ai_voice_name: selectedVoice,
-                  ai_voice_model: 'tts-1',
-                  copyright_status: copyrightStatus,
-                  published: foundStory?.published || 'N',
-                  google_drive_link: foundStory?.google_drive_link || '',
-                  publication_status_code: publicationStatusCode
-                };
-
-                try {
-                  await saveStory(formData);
-                  toast({
-                    title: "Success",
-                    description: "Story saved successfully without clearing form.",
-                  });
-                } catch (error) {
-                  console.error('Error saving story:', error);
-                  toast({
-                    title: "Error",
-                    description: "Failed to save story. Please try again.",
-                    variant: "destructive"
-                  });
-                }
-              }}
+              onClick={handleSaveWithoutClear}
               className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
               style={{
                 backgroundColor: '#228B22', // Forest Green
