@@ -485,11 +485,11 @@ const PublicStoriesTable: React.FC = () => {
                     
                     {/* Details Column */}
                     <TableCell className="p-2 text-center">
-                      <div className="space-y-2 text-sm">
+                      <div className="space-y-2">
                         <Badge className={`${getCategoryBadgeColor(story.category)} text-sm px-3 py-1 rounded-sm`}>
                           {getCategoryDisplayName(story.category)}
                         </Badge>
-                        <div className="text-blue-600 font-medium">
+                        <div className="text-blue-600 font-medium" style={{ fontSize: '21px' }}>
                           Reads: {story.read_count || 0}
                         </div>
                         <div className="flex items-center justify-center gap-3">
@@ -503,8 +503,8 @@ const PublicStoriesTable: React.FC = () => {
                           </div>
                         </div>
                         <div>
-                          <div className="text-blue-600 font-medium">Updated</div>
-                          <div className="text-black">{format(new Date(story.updated_at), 'M/d/yyyy')}</div>
+                          <div className="text-blue-600 font-medium" style={{ fontSize: '21px' }}>Updated</div>
+                          <div className="text-black" style={{ fontSize: '21px' }}>{format(new Date(story.updated_at), 'M/d/yyyy')}</div>
                         </div>
                       </div>
                     </TableCell>
