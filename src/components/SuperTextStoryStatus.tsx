@@ -171,21 +171,6 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
           </div>
         </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="google_drive_link" className="text-xs font-bold text-gray-700">Google Drive Link</Label>
-          <input 
-            id="google_drive_link" 
-            type="url" 
-            value={story?.google_drive_link || ""} 
-            onChange={() => {}}
-            placeholder="https://drive.google.com/..." 
-            className="w-full p-2 text-xs border rounded-md" 
-            style={{
-              borderColor: '#9c441a',
-              borderWidth: '2px'
-            }} 
-          />
-        </div>
       </CardContent>
     </Card>
   );

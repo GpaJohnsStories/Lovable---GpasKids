@@ -1447,6 +1447,45 @@ const SuperText: React.FC = () => {
                   </table>
                 </CardContent>
               </Card>
+
+              {/* Google Drive Upload Box */}
+              <Card className="h-fit relative mt-6" style={{
+                borderColor: '#A0522D',
+                borderWidth: '4px'
+              }}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl font-semibold" style={{
+                    color: '#A0522D'
+                  }}>
+                    Upload Text From Google Drive
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <input 
+                      type="text" 
+                      placeholder="Paste Google Drive Share Code here" 
+                      className="w-full p-3 text-base border rounded-md font-sans" 
+                      style={{
+                        borderColor: '#A0522D',
+                        borderWidth: '2px',
+                        fontSize: '16px'
+                      }} 
+                    />
+                    <button 
+                      className="w-full py-2 px-4 rounded-md font-bold text-base transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                      style={{
+                        backgroundColor: '#A0522D',
+                        color: 'white',
+                        border: '2px solid #8B4513',
+                        fontSize: '16px'
+                      }}
+                    >
+                      Upload
+                    </button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
