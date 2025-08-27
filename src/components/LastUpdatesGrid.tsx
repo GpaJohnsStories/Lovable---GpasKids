@@ -70,10 +70,7 @@ const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story }) => {
   };
 
   return (
-    <Card className="w-full mb-4" style={{
-      borderColor: '#F97316',
-      borderWidth: '3px'
-    }}>
+    <Card className="w-full mb-4 border-0 bg-white">
       <CardHeader className="pb-2">
         <CardTitle className="text-center text-xl font-bold" style={{
           color: '#F97316',
@@ -83,7 +80,7 @@ const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story }) => {
           Last Updates
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         <table className="w-full" style={{
           border: '2px solid #9c441a'
         }}>
