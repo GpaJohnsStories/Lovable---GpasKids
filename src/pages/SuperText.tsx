@@ -329,6 +329,14 @@ const SuperText: React.FC = () => {
       return;
     }
 
+    // All validation passed, show confirmation dialog
+    setShowConfirmDialog(true);
+  };
+
+  const handleConfirmYes = async () => {
+    // Extract tokens from content for validation and data
+    const { tokens, contentWithoutTokens } = extractHeaderTokens(storyContent);
+    
     // Build story payload
     const storyPayload = {
       ...(foundStory?.id && { id: foundStory.id }), // Include ID for updates
@@ -355,7 +363,7 @@ const SuperText: React.FC = () => {
       publication_status_code: publicationStatusCode
     };
 
-    console.log('🚀 Saving story payload:', storyPayload);
+    console.log('🚀 Saving story payload after confirmation:', storyPayload);
 
     try {
       const success = await saveStory(storyPayload, async () => {
@@ -370,53 +378,50 @@ const SuperText: React.FC = () => {
           if (result.found && result.story) {
             setPreviewContent(result.story.content);
             console.log('🔍 Preview updated with saved content');
-            
-            // Show confirmation dialog after preview is updated
-            setShowConfirmDialog(true);
           }
         }, 200);
       });
       
-      if (!success) {
+      if (success) {
+        // Clear all form data after successful save
+        setStoryCode('');
+        setCategory('');
+        setCopyrightStatus('©');
+        setPublicationStatusCode(5);
+        setFoundStory(null);
+        setFoundStoryTitle('');
+        setNoStoryFound(false);
+        setStoryContent('');
+        setPreviewContent(null);
+        setPhotoLinks({ 1: '', 2: '', 3: '' });
+        setPhotoAlts({ 1: '', 2: '', 3: '' });
+        setVideoUrl('');
+        setAudioUrl('');
+        setGoogleDriveShareCode('');
+        setIsUpdatingText(false);
+        setIsAddingText(false);
+        
+        // Close dialog
+        setShowConfirmDialog(false);
+        
+        // Scroll to top
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+        
+        toast({
+          title: "Form Cleared",
+          description: "Content saved and form cleared successfully"
+        });
+      } else {
         console.log('❌ Save failed');
+        setShowConfirmDialog(false);
       }
     } catch (error) {
       console.error('💥 Error during save:', error);
+      setShowConfirmDialog(false);
     }
-  };
-
-  const handleConfirmYes = () => {
-    // Clear all form data
-    setStoryCode('');
-    setCategory('');
-    setCopyrightStatus('©');
-    setPublicationStatusCode(5);
-    setFoundStory(null);
-    setFoundStoryTitle('');
-    setNoStoryFound(false);
-    setStoryContent('');
-    setPreviewContent(null);
-    setPhotoLinks({ 1: '', 2: '', 3: '' });
-    setPhotoAlts({ 1: '', 2: '', 3: '' });
-    setVideoUrl('');
-    setAudioUrl('');
-    setGoogleDriveShareCode('');
-    setIsUpdatingText(false);
-    setIsAddingText(false);
-    
-    // Close dialog
-    setShowConfirmDialog(false);
-    
-    // Scroll to top
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-    
-    toast({
-      title: "Form Cleared",
-      description: "Ready for new content creation"
-    });
   };
 
   const handleConfirmNo = () => {
