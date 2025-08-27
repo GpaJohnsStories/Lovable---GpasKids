@@ -29,6 +29,7 @@ interface Story {
   thumbs_up_count?: number;
   thumbs_down_count?: number;
   ok_count?: number;
+  photo_link_1?: string;
 }
 
 type MediaFilter = 'all' | 'text' | 'audio' | 'video' | 'both';
@@ -82,7 +83,8 @@ const PublicStoriesTable: React.FC = () => {
           read_count,
           thumbs_up_count,
           thumbs_down_count,
-          ok_count
+          ok_count,
+          photo_link_1
         `)
         .lt('publication_status_code', 2)
         .not('category', 'in', '("WebText","BioText")')
@@ -407,9 +409,25 @@ const PublicStoriesTable: React.FC = () => {
               ) : (
                 filteredAndSortedStories.map((story) => (
                   <TableRow key={story.id} className="hover:bg-gray-50">
-                    {/* Code Column */}
-                    <TableCell className="p-2 text-center text-xs">
-                      {story.story_code}
+                    {/* Code Column with Photo */}
+                    <TableCell className="p-2 text-center text-xs" style={{ width: '80px', minWidth: '80px' }}>
+                      <div className="flex flex-col items-center gap-2">
+                        {story.photo_link_1 ? (
+                          <img 
+                            src={story.photo_link_1} 
+                            alt={`${story.title} thumbnail`}
+                            className="w-[75px] h-[75px] object-cover rounded border border-gray-400"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                        ) : (
+                          <div className="w-[75px] h-[75px] bg-gray-200 border border-gray-300 rounded flex items-center justify-center">
+                            <span className="text-gray-500 text-xs">No Image</span>
+                          </div>
+                        )}
+                        <div className="text-xs font-medium">{story.story_code}</div>
+                      </div>
                     </TableCell>
                     
                     {/* Title Column */}
