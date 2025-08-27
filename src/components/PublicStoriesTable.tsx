@@ -1,14 +1,14 @@
-
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import React, { useState, useEffect, useMemo } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { format } from 'date-fns';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Search, Clock, Volume2, VideoIcon, ChevronDown, ChevronRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
+import { Volume2, VideoIcon, ChevronDown, Check, X } from "lucide-react";
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface Story {
@@ -17,15 +17,22 @@ interface Story {
   author: string;
   category: string;
   story_code: string;
-  tagline: string;
-  excerpt: string;
+  tagline?: string;
+  excerpt?: string;
   updated_at: string;
-  reading_time_minutes: number;
+  reading_time_minutes?: number;
   audio_url?: string;
   audio_duration_seconds?: number;
   video_url?: string;
   video_duration_seconds?: number;
+  read_count?: number;
+  thumbs_up_count?: number;
+  thumbs_down_count?: number;
+  ok_count?: number;
 }
+
+type MediaFilter = 'all' | 'text' | 'audio' | 'video' | 'both';
+type SortOption = 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'reading_time' | 'updated_at' | 'copyright_status';
 
 const formatDuration = (seconds: number | undefined): string => {
   if (!seconds || seconds === 0) return '';
@@ -43,15 +50,11 @@ const formatDuration = (seconds: number | undefined): string => {
 
 const PublicStoriesTable: React.FC = () => {
   const [stories, setStories] = useState<Story[]>([]);
-  const [filteredStories, setFilteredStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [groupByAuthor, setGroupByAuthor] = useState(false);
-  const [expandedAuthors, setExpandedAuthors] = useState<Set<string>>(new Set());
+  const [mediaFilter, setMediaFilter] = useState<MediaFilter>('all');
+  const [sortOption, setSortOption] = useState<SortOption>('title');
   const navigate = useNavigate();
-
-  const categories = ['Fun', 'Life', 'North Pole', 'World Changers'];
 
   useEffect(() => {
     fetchStories();
@@ -75,10 +78,14 @@ const PublicStoriesTable: React.FC = () => {
           audio_url,
           audio_duration_seconds,
           video_url,
-          video_duration_seconds
+          video_duration_seconds,
+          read_count,
+          thumbs_up_count,
+          thumbs_down_count,
+          ok_count
         `)
-        .eq('publication_status_code', 1)
-        .not('category', 'eq', 'WebText')
+        .lt('publication_status_code', 2)
+        .not('category', 'in', '("WebText","BioText")')
         .order('updated_at', { ascending: false });
 
       if (error) throw error;
@@ -90,39 +97,114 @@ const PublicStoriesTable: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    let filtered = stories;
-
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(story =>
-        story.title.toLowerCase().includes(term) ||
-        story.author.toLowerCase().includes(term) ||
-        story.story_code.toLowerCase().includes(term) ||
-        story.tagline?.toLowerCase().includes(term) ||
-        story.excerpt?.toLowerCase().includes(term)
+  // Filter and sort stories
+  const filteredAndSortedStories = useMemo(() => {
+    let result = stories;
+    
+    // Apply search filter
+    if (searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase();
+      result = result.filter(story => 
+        story.title?.toLowerCase().includes(searchLower) ||
+        story.author?.toLowerCase().includes(searchLower) ||
+        story.story_code?.toLowerCase().includes(searchLower) ||
+        story.tagline?.toLowerCase().includes(searchLower) ||
+        story.excerpt?.toLowerCase().includes(searchLower)
       );
     }
-
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(story => story.category === selectedCategory);
+    
+    // Apply media filter
+    if (mediaFilter !== 'all') {
+      result = result.filter(story => {
+        const hasAudio = !!story.audio_url;
+        const hasVideo = !!story.video_url;
+        
+        switch (mediaFilter) {
+          case 'text':
+            return !hasAudio && !hasVideo;
+          case 'audio':
+            return hasAudio && !hasVideo;
+          case 'video':
+            return hasVideo;
+          case 'both':
+            return hasAudio && hasVideo;
+          default:
+            return true;
+        }
+      });
     }
-
-    setFilteredStories(filtered);
-  }, [stories, searchTerm, selectedCategory]);
-
-  const toggleAuthorExpansion = (author: string) => {
-    const newExpanded = new Set(expandedAuthors);
-    if (newExpanded.has(author)) {
-      newExpanded.delete(author);
-    } else {
-      newExpanded.add(author);
-    }
-    setExpandedAuthors(newExpanded);
-  };
+    
+    // Apply sorting
+    result.sort((a, b) => {
+      switch (sortOption) {
+        case 'title':
+          return a.title.localeCompare(b.title);
+        case 'author':
+          return a.author.localeCompare(b.author);
+        case 'category':
+          return a.category.localeCompare(b.category);
+        case 'read_count':
+          return (b.read_count || 0) - (a.read_count || 0);
+        case 'thumbs':
+          return (b.thumbs_up_count || 0) - (a.thumbs_up_count || 0);
+        case 'reading_time':
+          return (a.reading_time_minutes || 0) - (b.reading_time_minutes || 0);
+        case 'updated_at':
+          return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+        default:
+          return 0;
+      }
+    });
+    
+    return result;
+  }, [stories, searchTerm, mediaFilter, sortOption]);
 
   const handleStoryClick = (storyCode: string) => {
     navigate(`/story/${storyCode}`);
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+  };
+
+  const getMediaFilterDisplayName = (filter: MediaFilter) => {
+    switch (filter) {
+      case 'all': return 'All Stories';
+      case 'text': return 'Text Only';
+      case 'audio': return 'Has Text & Audio';
+      case 'video': return 'Has Video';
+      case 'both': return 'Has Text, Audio & Video';
+      default: return 'Media Filter';
+    }
+  };
+
+  const getSortOptionDisplayName = (option: SortOption) => {
+    switch (option) {
+      case 'title': return 'Title';
+      case 'author': return 'Author';
+      case 'category': return 'Category';
+      case 'read_count': return 'Times Story Read';
+      case 'thumbs': return 'Thumbs Up / Down';
+      case 'reading_time': return 'Time to Read';
+      case 'updated_at': return 'Date Updated';
+      case 'copyright_status': return 'Copyright Status';
+      default: return 'Sort by...';
+    }
+  };
+
+  const getCategoryBadgeColor = (category: string) => {
+    switch (category) {
+      case "Fun":
+        return "bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500";
+      case "Life":
+        return "bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500";
+      case "North Pole":
+        return "bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500";
+      case "World Changers":
+        return "bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500";
+      default:
+        return "bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500";
+    }
   };
 
   const MediaIcons: React.FC<{ story: Story }> = ({ story }) => {
@@ -132,19 +214,19 @@ const PublicStoriesTable: React.FC = () => {
     if (!hasAudio && !hasVideo) return null;
     
     return (
-      <div className="flex items-center gap-4 mt-2">
+      <div className="flex items-center gap-4 mt-1">
         {hasAudio && (
-          <div className="flex items-center gap-2 text-blue-600">
-            <Volume2 className="h-6 w-6" />
-            <span className="text-base font-medium">
+          <div className="flex items-center gap-1 text-blue-600">
+            <Volume2 className="h-5 w-5" />
+            <span className="text-sm font-medium">
               {formatDuration(story.audio_duration_seconds)}
             </span>
           </div>
         )}
         {hasVideo && (
-          <div className="flex items-center gap-2 text-purple-600">
-            <VideoIcon className="h-6 w-6" />
-            <span className="text-base font-medium">
+          <div className="flex items-center gap-1 text-purple-600">
+            <VideoIcon className="h-5 w-5" />
+            <span className="text-sm font-medium">
               {formatDuration(story.video_duration_seconds)}
             </span>
           </div>
@@ -157,151 +239,223 @@ const PublicStoriesTable: React.FC = () => {
     return <LoadingSpinner />;
   }
 
-  const renderGroupedByAuthor = () => {
-    const groupedStories = filteredStories.reduce((acc, story) => {
-      if (!acc[story.author]) {
-        acc[story.author] = [];
-      }
-      acc[story.author].push(story);
-      return acc;
-    }, {} as Record<string, Story[]>);
+  return (
+    <Card>
+      <CardContent className="p-6">
+        {/* Control Boxes - Copied from Admin */}
+        <div className="w-full flex justify-center mb-4">
+          <div className="grid gap-3 grid-cols-1 md:grid-cols-3 justify-items-center">
+            {/* Search Library */}
+            <div className="w-full max-w-[380px] h-16 relative">
+              <div className="absolute -top-5 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>1</span>
+              </div>
+              <Input
+                placeholder="Type Here to Search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="text-[16pt] text-[#8b4513] font-bold placeholder:text-[16pt] placeholder:text-[#8b4513]/70 rounded-lg h-10 px-2 py-0 flex items-center shadow-lg ring-1 ring-[#8b4513] focus:ring-2 focus:ring-[#8b4513] focus:ring-offset-0 border-0 z-40"
+                style={{ backgroundColor: '#FFEDD5' }}
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleClearSearch}
+                  className="absolute right-2 top-1 h-8 w-8 p-0 text-[#8b4513]/80 hover:text-[#8b4513] hover:bg-orange-200 rounded-full"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+              <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
+                {filteredAndSortedStories.length} Stories
+              </div>
+            </div>
 
-    return Object.entries(groupedStories).map(([author, authorStories]) => {
-      const isExpanded = expandedAuthors.has(author);
-      
-      return (
-        <div key={author} className="mb-6">
-          <div 
-            className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
-            onClick={() => toggleAuthorExpansion(author)}
-          >
-            {isExpanded ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
-            <h3 className="text-lg font-semibold">{author}</h3>
-            <span className="text-sm text-gray-600">({authorStories.length} stories)</span>
+            {/* Select Media */}
+            <div className="w-full max-w-[380px] h-16 relative">
+              <div className="absolute -top-5 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>2</span>
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                  >
+                    Select Media —
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="text-[18pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1">
+                  <DropdownMenuItem disabled className="text-white cursor-default font-medium">
+                    Select Media
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setMediaFilter('all')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    All Stories
+                    {mediaFilter === 'all' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setMediaFilter('text')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Text Only
+                    {mediaFilter === 'text' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setMediaFilter('audio')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Has Text & Audio
+                    {mediaFilter === 'audio' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setMediaFilter('both')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Has Text, Audio & Video
+                    {mediaFilter === 'both' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setMediaFilter('video')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Has Video
+                    {mediaFilter === 'video' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
+                Selected: {getMediaFilterDisplayName(mediaFilter)}
+              </div>
+            </div>
+
+            {/* Sort On */}
+            <div className="w-full max-w-[380px] h-16 relative">
+              <div className="absolute -top-5 -left-3 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center z-10">
+                <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>3</span>
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] w-full justify-between"
+                  >
+                    Sort On —
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="text-[18pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1">
+                  <DropdownMenuItem disabled className="text-white cursor-default font-medium">
+                    Sort On —
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setSortOption('title')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Title
+                    {sortOption === 'title' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setSortOption('author')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Author
+                    {sortOption === 'author' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setSortOption('category')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Category
+                    {sortOption === 'category' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setSortOption('read_count')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Times Story Read
+                    {sortOption === 'read_count' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setSortOption('thumbs')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Thumbs Up / Down
+                    {sortOption === 'thumbs' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setSortOption('reading_time')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Time to Read
+                    {sortOption === 'reading_time' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setSortOption('updated_at')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    Date Updated
+                    {sortOption === 'updated_at' && <Check className="h-4 w-4" />}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <div className="text-center mt-1 text-[14pt] text-[#8b4513] font-medium">
+                Sorted by: {getSortOptionDisplayName(sortOption)}
+              </div>
+            </div>
           </div>
-          
-          {isExpanded && (
-            <div className="mt-2 space-y-2">
-              {authorStories.map((story) => (
-                <Card key={story.id} className="hover:shadow-md transition-shadow cursor-pointer">
-                  <CardContent className="p-4" onClick={() => handleStoryClick(story.story_code)}>
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-lg mb-1">{story.title}</h4>
-                        <div className="text-sm text-gray-600 mb-2">
-                          <span className="font-medium">{story.author}</span>
+        </div>
+
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <Table>
+            {/* Table Header */}
+            <TableHeader>
+              <TableRow className="bg-background hover:bg-background">
+                <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '70px', minWidth: '70px', maxWidth: '70px' }}>
+                  <Button className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1" size="sm">
+                    Code
+                  </Button>
+                </TableHead>
+                <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '280px', minWidth: '280px', maxWidth: '280px' }}>
+                  <Button className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1" size="sm">
+                    Title
+                  </Button>
+                </TableHead>
+                <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
+                  <Button className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1" size="sm">
+                    Author
+                  </Button>
+                </TableHead>
+                <TableHead className="p-1 text-center bg-background" style={{ width: '200px', minWidth: '200px' }}>
+                  <Button className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1" size="sm">
+                    Details
+                  </Button>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+
+            {/* Table Body */}
+            <TableBody>
+              {filteredAndSortedStories.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center py-8 text-gray-500">
+                    No stories found matching your criteria.
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filteredAndSortedStories.map((story) => (
+                  <TableRow key={story.id} className="hover:bg-gray-50">
+                    {/* Code Column */}
+                    <TableCell className="p-2 text-center text-xs">
+                      {story.story_code}
+                    </TableCell>
+                    
+                    {/* Title Column */}
+                    <TableCell className="p-2">
+                      <div className="cursor-pointer" onClick={() => handleStoryClick(story.story_code)}>
+                        <div className="font-bold text-black text-sm">
+                          {story.title}
                         </div>
-                        <MediaIcons story={story} />
-                        <p className="text-gray-700 text-sm mb-2">{story.tagline}</p>
-                        <div className="flex items-center gap-4 text-xs text-gray-500">
-                          <Badge variant="secondary">{story.category}</Badge>
-                          <span>Code: {story.story_code}</span>
-                          <div className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            <span>{story.reading_time_minutes} min read</span>
+                        {story.tagline && (
+                          <div className="text-xs italic text-amber-700 mt-1">
+                            {story.tagline}
                           </div>
-                        </div>
+                        )}
                       </div>
-                      <div className="text-right text-xs text-gray-500 ml-4">
-                        <div>Last Updated</div>
+                    </TableCell>
+                    
+                    {/* Author Column */}
+                    <TableCell className="p-2 text-center">
+                      <div className="text-xs">{story.author}</div>
+                      <MediaIcons story={story} />
+                    </TableCell>
+                    
+                    {/* Details Column */}
+                    <TableCell className="p-2">
+                      <div className="space-y-1 text-xs">
+                        <Badge className={`${getCategoryBadgeColor(story.category)} text-xs`}>
+                          {story.category}
+                        </Badge>
+                        <div>About {story.reading_time_minutes || 1} Min</div>
+                        <div>{story.read_count || 0} Readers</div>
                         <div>{format(new Date(story.updated_at), 'MM/dd/yyyy')}</div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
         </div>
-      );
-    });
-  };
-
-  const renderRegularView = () => {
-    return filteredStories.map((story) => (
-      <Card key={story.id} className="hover:shadow-md transition-shadow cursor-pointer">
-        <CardContent className="p-4" onClick={() => handleStoryClick(story.story_code)}>
-          <div className="flex justify-between items-start">
-            <div className="flex-1">
-              <h3 className="font-semibold text-lg mb-1">{story.title}</h3>
-              <div className="text-sm text-gray-600 mb-2">
-                <span className="font-medium">{story.author}</span>
-              </div>
-              <MediaIcons story={story} />
-              <p className="text-gray-700 text-sm mb-2">{story.tagline}</p>
-              <div className="flex items-center gap-4 text-xs text-gray-500">
-                <Badge variant="secondary">{story.category}</Badge>
-                <span>Code: {story.story_code}</span>
-                <div className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  <span>{story.reading_time_minutes} min read</span>
-                </div>
-              </div>
-            </div>
-            <div className="text-right text-xs text-gray-500 ml-4">
-              <div>Last Updated</div>
-              <div>{format(new Date(story.updated_at), 'MM/dd/yyyy')}</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    ));
-  };
-
-  return (
-    <div className="space-y-6">
-      {/* Search and Filter Controls */}
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-          <Input
-            type="text"
-            placeholder="Search stories, authors, codes..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        
-        <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="px-3 py-2 border rounded-md"
-        >
-          <option value="all">All Categories</option>
-          {categories.map(category => (
-            <option key={category} value={category}>{category}</option>
-          ))}
-        </select>
-        
-        <Button
-          variant={groupByAuthor ? "default" : "outline"}
-          onClick={() => {
-            setGroupByAuthor(!groupByAuthor);
-            if (!groupByAuthor) {
-              // Expand all authors when switching to grouped view
-              const allAuthors = new Set(filteredStories.map(s => s.author));
-              setExpandedAuthors(allAuthors);
-            }
-          }}
-        >
-          Group by Author
-        </Button>
-      </div>
-
-      {/* Results */}
-      <div className="space-y-4">
-        {filteredStories.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
-            No stories found matching your criteria.
-          </div>
-        ) : groupByAuthor ? (
-          renderGroupedByAuthor()
-        ) : (
-          renderRegularView()
-        )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
