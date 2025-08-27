@@ -68,9 +68,11 @@ const queryClient = new QueryClient();
 
 // Component to handle conditional content protection based on route
 const ConditionalContentProtection = ({ children }: { children: React.ReactNode }) => {
-  // Content protection disabled site-wide to allow copy/paste functionality
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith('/buddys_admin');
+  
   return (
-    <ContentProtection enableProtection={false}>
+    <ContentProtection enableProtection={!isAdminPage}>
       {children}
     </ContentProtection>
   );
