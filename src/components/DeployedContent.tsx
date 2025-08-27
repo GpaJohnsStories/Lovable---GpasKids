@@ -30,6 +30,7 @@ interface DeployedContentProps {
   context?: string;
   fontSize?: number;
   onFontSizeChange?: (size: number) => void;
+  showHeaderPreview?: boolean;
 }
 
 export const DeployedContent = ({ 
@@ -43,7 +44,8 @@ export const DeployedContent = ({
   allowTextToSpeech = false,
   context = "default",
   fontSize = 16,
-  onFontSizeChange
+  onFontSizeChange,
+  showHeaderPreview = false
 }: DeployedContentProps) => {
   const [content, setContent] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -190,6 +192,7 @@ export const DeployedContent = ({
           fontSize={fontSize}
           onFontSizeChange={onFontSizeChange}
           useRichCleaning={true}
+          showHeaderPreview={showHeaderPreview}
         />
       )}
     </div>
