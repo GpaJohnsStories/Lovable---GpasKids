@@ -27,11 +27,13 @@ import { toast } from "@/hooks/use-toast";
 import { useVoiceTesting } from '@/hooks/useVoiceTesting';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import StoryVideoUpload from "@/components/StoryVideoUpload";
+import CopyrightControl from "@/components/story-form/CopyrightControl";
 
 const SuperText: React.FC = () => {
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
   const [storyCode, setStoryCode] = React.useState('');
   const [category, setCategory] = React.useState('');
+  const [copyrightStatus, setCopyrightStatus] = React.useState('©');
   const [foundStoryTitle, setFoundStoryTitle] = React.useState('');
   const [foundStory, setFoundStory] = React.useState<any>(null);
   const [noStoryFound, setNoStoryFound] = React.useState(false);
@@ -80,7 +82,7 @@ const SuperText: React.FC = () => {
   const allowedCategories = ["Fun", "Life", "North Pole", "World Changers", "WebText", "BioText"];
 
   // Check if verification should be allowed
-  const canVerify = storyCode.trim() && category;
+  const canVerify = storyCode.trim() && category && copyrightStatus;
 
   // Image resize function
   const resizeImage = (file: File, maxWidth = 800, maxHeight = 600, quality = 0.85): Promise<File> => {
@@ -346,6 +348,7 @@ const SuperText: React.FC = () => {
       audio_url: audioUrl,
       ai_voice_name: selectedVoice,
       ai_voice_model: 'tts-1',
+      copyright_status: copyrightStatus,
       published: foundStory?.published || 'N',
       google_drive_link: foundStory?.google_drive_link || ''
     };
@@ -384,6 +387,7 @@ const SuperText: React.FC = () => {
     // Clear all form data
     setStoryCode('');
     setCategory('');
+    setCopyrightStatus('©');
     setFoundStory(null);
     setFoundStoryTitle('');
     setNoStoryFound(false);
@@ -431,6 +435,7 @@ const SuperText: React.FC = () => {
       // Clear form
       setStoryCode('');
       setCategory('');
+      setCopyrightStatus('©');
       setFoundStory(null);
       setFoundStoryTitle('');
       setNoStoryFound(false);
@@ -528,6 +533,10 @@ const SuperText: React.FC = () => {
       setAudioUrl(foundStory.audio_url || '');
       setSelectedVoice(foundStory.ai_voice_name || 'Nova');
       
+      // Set copyright status (map 'S' to 'L' for backward compatibility)
+      const copyright = foundStory.copyright_status === 'S' ? 'L' : foundStory.copyright_status;
+      setCopyrightStatus(copyright || '©');
+      
       // Populate story content for editor
       setStoryContent(foundStory.content || '');
       
@@ -585,6 +594,7 @@ const SuperText: React.FC = () => {
     // Clear the form for both update and add cases
     setStoryCode('');
     setCategory('');
+    setCopyrightStatus('©');
     setFoundStoryTitle('');
     setFoundStory(null);
     setNoStoryFound(false);
@@ -645,6 +655,7 @@ const SuperText: React.FC = () => {
                 // Clear all form fields and reset state
                 setStoryCode('');
                 setCategory('');
+                setCopyrightStatus('©');
                 setFoundStoryTitle('');
                 setFoundStory(null);
                 setNoStoryFound(false);
@@ -857,7 +868,25 @@ const SuperText: React.FC = () => {
                           <Video className="h-6 w-6 text-gray-400" />
                         </div>
                       </div>
-                    </div>
+                      </div>
+
+                      {/* Copyright Status */}
+                      <div className="w-full mt-4">
+                        <Label className="block mb-2 font-bold text-white" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif' }}>
+                          Copyright Status
+                        </Label>
+                        <CopyrightControl
+                          value={copyrightStatus}
+                          onChange={setCopyrightStatus}
+                          fullWidth={true}
+                          triggerClassName="text-white"
+                          triggerStyle={{ 
+                            fontSize: '21px', 
+                            fontFamily: 'Arial, sans-serif',
+                            fontWeight: 'bold'
+                          }}
+                        />
+                      </div>
 
                       {/* Story Title Display Box - Always visible at bottom */}
                       <div className="w-full mt-4">

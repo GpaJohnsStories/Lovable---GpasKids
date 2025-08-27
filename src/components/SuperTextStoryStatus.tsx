@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { FileText, Headphones, Video } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import CopyrightControl from "@/components/story-form/CopyrightControl";
 
 interface Story {
   id?: string;
@@ -148,26 +147,18 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
           </tbody>
         </table>
         
-        <div className="flex gap-3">
-          <div className="space-y-1 flex-1">
-            <Label className="text-xs font-bold text-gray-700">Copyright Status</Label>
-            <CopyrightControl value={story?.copyright_status || "©"} onChange={() => {}} />
-          </div>
-          
-          <div className="space-y-1 flex-1">
-            <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
-            <div className="flex items-center gap-2">
-              <Select value={story?.published || "N"} onValueChange={() => {}}>
-                <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor(story?.published || 'N')}`}>
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent className="z-50 bg-white border shadow-lg">
-                  <SelectItem value="N">Not Published</SelectItem>
-                  <SelectItem value="Y">Published</SelectItem>
-                </SelectContent>
-              </Select>
-              
-            </div>
+        <div className="space-y-1">
+          <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
+          <div className="flex items-center gap-2">
+            <Select value={story?.published || "N"} onValueChange={() => {}}>
+              <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getPublishedColor(story?.published || 'N')}`}>
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent className="z-50 bg-white border shadow-lg">
+                <SelectItem value="N">Not Published</SelectItem>
+                <SelectItem value="Y">Published</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 

@@ -7,9 +7,12 @@ import { Info } from "lucide-react";
 interface CopyrightControlProps {
   value: string;
   onChange: (value: string) => void;
+  fullWidth?: boolean;
+  triggerClassName?: string;
+  triggerStyle?: React.CSSProperties;
 }
 
-const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
+const CopyrightControl = ({ value, onChange, fullWidth = false, triggerClassName = "", triggerStyle = {} }: CopyrightControlProps) => {
   const getCopyrightLabel = (status: string) => {
     switch (status) {
       case '©':
@@ -41,7 +44,10 @@ const CopyrightControl = ({ value, onChange }: CopyrightControlProps) => {
   return (
     <div className="flex items-center gap-2">
       <Select value={value || '©'} onValueChange={onChange}>
-        <SelectTrigger className={`w-auto min-w-[140px] text-xs font-bold ${getCopyrightColor(value || '©')}`}>
+        <SelectTrigger 
+          className={`${fullWidth ? 'w-full' : 'w-auto min-w-[140px]'} text-xs font-bold ${getCopyrightColor(value || '©')} ${triggerClassName}`}
+          style={triggerStyle}
+        >
           <SelectValue />
         </SelectTrigger>
         <SelectContent className="z-50 bg-white border shadow-lg">
