@@ -317,7 +317,9 @@ const SuperText: React.FC = () => {
                               fontWeight: 'bold'
                             }}
                           >
-                            Fun
+                            <div className="bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500 px-3 py-1 rounded w-full text-center">
+                              Fun
+                            </div>
                           </SelectItem>
                           <SelectItem 
                             value="Life"
@@ -327,7 +329,9 @@ const SuperText: React.FC = () => {
                               fontWeight: 'bold'
                             }}
                           >
-                            Life
+                            <div className="bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500 px-3 py-1 rounded w-full text-center">
+                              Life
+                            </div>
                           </SelectItem>
                           <SelectItem 
                             value="North Pole"
@@ -337,7 +341,9 @@ const SuperText: React.FC = () => {
                               fontWeight: 'bold'
                             }}
                           >
-                            North Pole
+                            <div className="bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500 px-3 py-1 rounded w-full text-center">
+                              North Pole
+                            </div>
                           </SelectItem>
                           <SelectItem 
                             value="World Changers"
@@ -347,7 +353,9 @@ const SuperText: React.FC = () => {
                               fontWeight: 'bold'
                             }}
                           >
-                            World Changers
+                            <div className="bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500 px-3 py-1 rounded w-full text-center">
+                              World Changers
+                            </div>
                           </SelectItem>
                           <SelectItem 
                             value="WebText"
@@ -357,7 +365,9 @@ const SuperText: React.FC = () => {
                               fontWeight: 'bold'
                             }}
                           >
-                            WebText
+                            <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">
+                              WebText
+                            </div>
                           </SelectItem>
                           <SelectItem 
                             value="BioText"
@@ -367,7 +377,9 @@ const SuperText: React.FC = () => {
                               fontWeight: 'bold'
                             }}
                           >
-                            BioText
+                            <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">
+                              BioText
+                            </div>
                           </SelectItem>
                         </SelectContent>
                       </Select>
