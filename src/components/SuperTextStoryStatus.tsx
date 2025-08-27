@@ -67,29 +67,25 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
   };
 
   return (
-    <div className="relative">
-      <div className="absolute top-0 right-0 z-10">
-        <h3 className="text-xl font-bold mb-2" style={{
+    <Card className="h-fit relative" style={{
+      borderColor: '#F97316',
+      borderWidth: '4px'
+    }}>
+      <CardHeader>
+        <h3 className="text-xl font-bold mb-2 self-end text-right" style={{
           color: '#4A7C59',
           fontSize: '21px',
           fontFamily: 'Arial, sans-serif'
         }}>
           Last Updates
         </h3>
-      </div>
-      
-      <Card className="h-fit relative mt-8" style={{
-        borderColor: '#F97316',
-        borderWidth: '4px'
-      }}>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
-            color: '#F97316'
-          }}>
-            <FileText className="h-5 w-5" />
-            Story Status
-          </CardTitle>
-        </CardHeader>
+        <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
+          color: '#F97316'
+        }}>
+          <FileText className="h-5 w-5" />
+          Story Status
+        </CardTitle>
+      </CardHeader>
       <CardContent className="space-y-3">
         <div className="space-y-1">
           <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
@@ -113,23 +109,28 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
             <tbody>
               <tr>
                 <td className="text-center font-bold px-1 py-1" style={{
-                  borderRight: '1px solid #9c441a',
                   ...getLastUpdateStyle()
                 }}>
                   Last Text
                 </td>
-                <td className="text-center font-bold px-1 py-1" style={getLastUpdateStyle()}>
+              </tr>
+              <tr>
+                <td className="text-center font-bold px-1 py-1" style={{
+                  borderTop: '1px solid #9c441a',
+                  ...getLastUpdateStyle()
+                }}>
                   {formatDateTime(story?.updated_at).date} {formatDateTime(story?.updated_at).time}
                 </td>
               </tr>
               <tr>
                 <td className="text-center font-bold px-1 py-1" style={{
-                  borderRight: '1px solid #9c441a',
                   borderTop: '1px solid #9c441a',
                   ...getAudioStatusStyle()
                 }}>
                   Last Audio
                 </td>
+              </tr>
+              <tr>
                 <td className="text-center font-bold px-1 py-1" style={{
                   borderTop: '1px solid #9c441a',
                   ...getAudioStatusStyle()
@@ -138,14 +139,15 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
                 </td>
               </tr>
               <tr>
-                <td className="text-center font-bold text-gray-700 px-1 py-1" style={{
-                  borderRight: '1px solid #9c441a',
+                <td className="text-center font-bold px-1 py-1 text-gray-700" style={{
                   borderTop: '1px solid #9c441a',
                   backgroundColor: 'rgba(22, 156, 249, 0.3)'
                 }}>
                   Original
                 </td>
-                <td className="text-center text-gray-600 font-bold px-1 py-1" style={{
+              </tr>
+              <tr>
+                <td className="text-center font-bold px-1 py-1 text-gray-600" style={{
                   borderTop: '1px solid #9c441a',
                   backgroundColor: 'rgba(22, 156, 249, 0.3)'
                 }}>
@@ -157,8 +159,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
         </div>
 
       </CardContent>
-      </Card>
-    </div>
+    </Card>
   );
 };
 
