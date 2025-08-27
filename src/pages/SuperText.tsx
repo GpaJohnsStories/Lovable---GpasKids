@@ -38,6 +38,7 @@ const SuperText: React.FC = () => {
   const [showInvalidCode, setShowInvalidCode] = React.useState(false);
   const [isUpdatingText, setIsUpdatingText] = React.useState(false);
   const [isAddingText, setIsAddingText] = React.useState(false);
+  const [thirdCondition, setThirdCondtion] = React.useState(false); // Placeholder for future condition
   
   // Photo state management
   const [photoLinks, setPhotoLinks] = React.useState<{[key: number]: string}>({
@@ -77,6 +78,9 @@ const SuperText: React.FC = () => {
   } = useVoiceTesting();
   
   const allowedCategories = ["Fun", "Life", "North Pole", "World Changers", "WebText", "BioText"];
+
+  // Check if verification should be allowed
+  const canVerify = storyCode.trim() && category && thirdCondition;
 
   // Image resize function
   const resizeImage = (file: File, maxWidth = 800, maxHeight = 600, quality = 0.85): Promise<File> => {
@@ -236,7 +240,15 @@ const SuperText: React.FC = () => {
     if (!code.trim() || code.trim().length < 3) {
       setFoundStoryTitle('');
       setFoundStory(null);
-      setCategory('');
+      setNoStoryFound(false);
+      return;
+    }
+
+    // Only proceed with lookup if verification conditions are met
+    if (!canVerify) {
+      console.log('🔧 Verification not allowed - clearing results');
+      setFoundStoryTitle('');
+      setFoundStory(null);
       setNoStoryFound(false);
       return;
     }
@@ -247,20 +259,13 @@ const SuperText: React.FC = () => {
     if (result.found && result.story) {
       setFoundStoryTitle(result.story.title);
       setFoundStory(result.story);
-      // Only set category if it's in the allowed list
-      if (allowedCategories.includes(result.story.category)) {
-        setCategory(result.story.category);
-      } else {
-        setCategory('');
-      }
       setNoStoryFound(false);
     } else if (!result.error) {
       setFoundStoryTitle('');
       setFoundStory(null);
-      setCategory('');
       setNoStoryFound(true);
     }
-  }, [lookupStoryByCode]);
+  }, [lookupStoryByCode, canVerify]);
 
   // Debounce timer
   useEffect(() => {
@@ -271,7 +276,6 @@ const SuperText: React.FC = () => {
         // Clear results if code is not valid format
         setFoundStoryTitle('');
         setFoundStory(null);
-        setCategory('');
         setNoStoryFound(false);
       }
     }, 250);
@@ -723,7 +727,7 @@ const SuperText: React.FC = () => {
                       Adding New Text
                     </div>
                   </div>
-                ) : isValidStoryCode(storyCode.trim()) && (foundStory || noStoryFound) ? (
+                ) : canVerify && isValidStoryCode(storyCode.trim()) && (foundStory || noStoryFound) ? (
                   <div className="absolute top-2 right-2 z-10">
                     <div className="flex flex-col items-end gap-2">
                       {/* Main Action Message Pill */}
@@ -827,8 +831,36 @@ const SuperText: React.FC = () => {
                         </div>
                       </div>
                       
-                      {/* Story Title Display Box */}
-                      {foundStoryTitle && (
+                    <div className="flex items-end gap-4">
+                      <div className="w-1/2">
+                         <Select value={category} onValueChange={setCategory} disabled={isUpdatingText || isAddingText}>
+                           <SelectTrigger className="w-full border-2 font-bold text-xl" style={{ borderColor: '#8B4513', color: '#FF8C00' }}>
+                             <SelectValue placeholder="Category" />
+                           </SelectTrigger>
+                        <SelectContent className="bg-white z-[100]">
+                          <SelectItem value="Fun">Fun</SelectItem>
+                          <SelectItem value="Life">Life</SelectItem>
+                          <SelectItem value="North Pole">North Pole</SelectItem>
+                          <SelectItem value="World Changers">World Changers</SelectItem>
+                          <SelectItem value="WebText">WebText</SelectItem>
+                          <SelectItem value="BioText">BioText</SelectItem>
+                        </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      {/* Audio and Video Icons */}
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-center w-10 h-10 rounded bg-gray-100 border border-gray-300">
+                          <Headphones className="h-6 w-6 text-gray-400" />
+                        </div>
+                        <div className="flex items-center justify-center w-10 h-10 rounded bg-gray-100 border border-gray-300">
+                          <Video className="h-6 w-6 text-gray-400" />
+                        </div>
+                      </div>
+                    </div>
+
+                      {/* Story Title Display Box - Moved below category/icons */}
+                      {canVerify && foundStoryTitle && (
                         <div className="w-full mt-4">
                           <div className="w-full p-4 border-2 rounded-md bg-blue-50" style={{ borderColor: '#22c55e' }}>
                             <div className="text-sm font-bold text-gray-600 mb-2">Found Story Title:</div>
@@ -839,8 +871,8 @@ const SuperText: React.FC = () => {
                         </div>
                       )}
                       
-                      {/* No Story Found Message */}
-                      {noStoryFound && storyCode.trim().length >= 3 && (
+                      {/* No Story Found Message - Moved below category/icons */}
+                      {canVerify && noStoryFound && storyCode.trim().length >= 3 && (
                         <div className="w-full mt-4">
                           <div className="w-full p-4 border-2 rounded-md bg-gray-50" style={{ borderColor: '#6b7280' }}>
                             <div className="text-sm font-bold text-gray-600 mb-2">Lookup Result:</div>
@@ -850,34 +882,6 @@ const SuperText: React.FC = () => {
                           </div>
                         </div>
                       )}
-                   
-                   <div className="flex items-end gap-4">
-                     <div className="w-1/2">
-                        <Select value={category} onValueChange={setCategory} disabled={isUpdatingText || isAddingText}>
-                          <SelectTrigger className="w-full border-2 font-bold text-xl" style={{ borderColor: '#8B4513', color: '#FF8C00' }}>
-                            <SelectValue placeholder="Category" />
-                          </SelectTrigger>
-                       <SelectContent className="bg-white z-[100]">
-                         <SelectItem value="Fun">Fun</SelectItem>
-                         <SelectItem value="Life">Life</SelectItem>
-                         <SelectItem value="North Pole">North Pole</SelectItem>
-                         <SelectItem value="World Changers">World Changers</SelectItem>
-                         <SelectItem value="WebText">WebText</SelectItem>
-                         <SelectItem value="BioText">BioText</SelectItem>
-                       </SelectContent>
-                       </Select>
-                     </div>
-                     
-                     {/* Audio and Video Icons */}
-                     <div className="flex items-center gap-2">
-                       <div className="flex items-center justify-center w-10 h-10 rounded bg-gray-100 border border-gray-300">
-                         <Headphones className="h-6 w-6 text-gray-400" />
-                       </div>
-                       <div className="flex items-center justify-center w-10 h-10 rounded bg-gray-100 border border-gray-300">
-                         <Video className="h-6 w-6 text-gray-400" />
-                       </div>
-                     </div>
-                   </div>
                 </CardContent>
               </Card>
               
