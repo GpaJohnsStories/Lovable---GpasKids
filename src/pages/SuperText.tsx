@@ -298,10 +298,23 @@ const SuperText: React.FC = () => {
                         setCategory(value);
                         handleInputChange('category', value);
                       }}>
-                        <SelectTrigger className="w-full border-orange-400 focus:border-orange-500">
+                        <SelectTrigger 
+                          className="w-full border-orange-400 focus:border-orange-500"
+                          style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}
+                        >
                           <SelectValue placeholder="Category" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent 
+                          style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}
+                        >
                           <SelectItem value="Fun">Fun</SelectItem>
                           <SelectItem value="Life">Life</SelectItem>
                           <SelectItem value="North Pole">North Pole</SelectItem>
