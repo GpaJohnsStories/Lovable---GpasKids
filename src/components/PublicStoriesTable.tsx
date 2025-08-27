@@ -437,7 +437,7 @@ const PublicStoriesTable: React.FC = () => {
                           {story.title}
                         </div>
                         {story.tagline && (
-                          <div className="text-xs italic text-amber-700 mt-1">
+                          <div className="text-xs italic text-amber-700 mt-1" style={{ fontFamily: 'Georgia, serif' }}>
                             {story.tagline}
                           </div>
                         )}
