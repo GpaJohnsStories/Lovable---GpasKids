@@ -467,7 +467,7 @@ const PublicStoriesTable: React.FC = () => {
                     
                     {/* Author Column */}
                     <TableCell className="p-2 text-center">
-                      <div className="text-xs">{story.author}</div>
+                      <div className="text-center" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>{story.author}</div>
                       <MediaIcons story={story} />
                     </TableCell>
                     
