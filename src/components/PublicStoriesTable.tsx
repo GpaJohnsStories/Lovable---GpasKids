@@ -392,7 +392,7 @@ const PublicStoriesTable: React.FC = () => {
                   </Button>
                 </TableHead>
                 <TableHead className="p-1 text-center bg-background" style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>
-                  <Button className="w-full h-6 px-1 py-1 text-white font-bold" size="sm" style={{ backgroundColor: '#228B22', fontSize: '21px' }}>
+                  <Button className="w-full h-6 px-1 py-1 text-white font-bold text-center" size="sm" style={{ backgroundColor: '#228B22', fontSize: '21px' }}>
                     Details
                   </Button>
                 </TableHead>
@@ -457,7 +457,7 @@ const PublicStoriesTable: React.FC = () => {
                     </TableCell>
                     
                     {/* Details Column */}
-                    <TableCell className="p-2">
+                    <TableCell className="p-2 text-center">
                       <div className="space-y-2 text-sm">
                         <Badge className={`${getCategoryBadgeColor(story.category)} text-sm px-3 py-1`}>
                           {story.category}
@@ -465,7 +465,7 @@ const PublicStoriesTable: React.FC = () => {
                         <div className="text-blue-600 font-medium">
                           Reads: {story.read_count || 0}
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center gap-3">
                           <div className="flex items-center gap-1">
                             <span className="text-lg">👍</span>
                             <span className="font-medium">{story.thumbs_up_count || 0}</span>
