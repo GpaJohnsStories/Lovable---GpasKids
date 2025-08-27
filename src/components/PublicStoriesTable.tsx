@@ -441,6 +441,11 @@ const PublicStoriesTable: React.FC = () => {
                             {story.tagline}
                           </div>
                         )}
+                        {story.excerpt && (
+                          <div className="text-black mt-1" style={{ fontFamily: 'Georgia, serif', fontSize: '21px' }}>
+                            {story.excerpt}
+                          </div>
+                        )}
                       </div>
                     </TableCell>
                     
