@@ -132,6 +132,13 @@ const SuperText: React.FC = () => {
     }
   }, [clear]); // Removed handleInputChange to prevent infinite loop
 
+  // Sync local publicationStatusCode with formData when it changes
+  useEffect(() => {
+    if (formData.publication_status_code !== undefined) {
+      setPublicationStatusCode(Number(formData.publication_status_code));
+    }
+  }, [formData.publication_status_code]);
+
   const handleStoryCodeLookup = useCallback(async () => {
     if (!storyCode.trim()) {
       toast.error("Please enter a story code to lookup.");
@@ -152,6 +159,12 @@ const SuperText: React.FC = () => {
 
     if (story) {
       populateFormWithStory(story, true);
+      
+      // Sync local state with story data
+      setCategory(story.category);
+      setCopyrightStatus(story.copyright_status || '©');
+      setPublicationStatusCode(story.publication_status_code || 5);
+      
       toast.success("Story data loaded successfully!");
     }
   }, [storyCode, lookupStoryByCode, populateFormWithStory]);
