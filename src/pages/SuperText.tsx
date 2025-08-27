@@ -272,7 +272,14 @@ const SuperText: React.FC = () => {
                           setStoryCode(e.target.value);
                           handleInputChange('story_code', e.target.value);
                         }}
-                        className="flex-1 border-orange-400 focus:border-orange-500"
+                        className="border-orange-400 focus:border-orange-500"
+                        style={{
+                          width: '192px',
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontStyle: 'normal',
+                          color: '#000000'
+                        }}
                       />
                       <Button 
                         onClick={handleStoryCodeLookup} 
