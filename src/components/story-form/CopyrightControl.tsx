@@ -87,3 +87,4 @@ const CopyrightControl = ({ value, onChange, fullWidth = false, triggerClassName
 };
 
 export default CopyrightControl;
+export { CopyrightControl };
