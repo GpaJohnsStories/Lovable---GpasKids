@@ -872,22 +872,20 @@ const SuperText: React.FC = () => {
 
                       {/* Copyright Status */}
                       <div className="w-full">
-                        <div className="flex items-center gap-3">
-                          <Label className="font-bold text-white whitespace-nowrap" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif' }}>
-                            Copyright Status
-                          </Label>
-                          <CopyrightControl
-                            value={copyrightStatus}
-                            onChange={setCopyrightStatus}
-                            fullWidth={true}
-                            triggerClassName="text-white"
-                            triggerStyle={{ 
-                              fontSize: '21px', 
-                              fontFamily: 'Arial, sans-serif',
-                              fontWeight: 'bold'
-                            }}
-                          />
-                        </div>
+                        <Label className="block mb-2 font-bold text-white" style={{ fontSize: '21px', fontFamily: 'Arial, sans-serif' }}>
+                          Copyright Status
+                        </Label>
+                        <CopyrightControl
+                          value={copyrightStatus}
+                          onChange={setCopyrightStatus}
+                          fullWidth={true}
+                          triggerClassName="text-white w-full"
+                          triggerStyle={{ 
+                            fontSize: '21px', 
+                            fontFamily: 'Arial, sans-serif',
+                            fontWeight: 'bold'
+                          }}
+                        />
                       </div>
 
                       {/* Story Title Display Box - Always visible at bottom */}
