@@ -78,6 +78,13 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
           <FileText className="h-5 w-5" />
           Text Status
         </CardTitle>
+        <h3 className="text-xl font-bold" style={{
+          color: '#F97316',
+          fontSize: '21px',
+          fontFamily: 'Arial, sans-serif'
+        }}>
+          Last Updates
+        </h3>
       </CardHeader>
       <CardContent className="grid md:grid-cols-2 gap-4">
         <div className="space-y-1">
@@ -96,14 +103,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
         </div>
 
         <div className="flex flex-col items-center">
-          <h3 className="text-xl font-bold mb-1" style={{
-            color: '#F97316',
-            fontSize: '21px',
-            fontFamily: 'Arial, sans-serif'
-          }}>
-            Last Updates
-          </h3>
-          <table className="w-full text-xs" style={{
+          <table className="w-auto text-xs" style={{
             border: '2px solid #9c441a'
           }}>
             <tbody>
