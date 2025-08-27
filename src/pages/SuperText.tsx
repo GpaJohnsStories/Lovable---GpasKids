@@ -313,7 +313,9 @@ const SuperText: React.FC = () => {
 
                   <div className="bg-gray-100 p-4 rounded border-2 border-orange-400">
                     <Label className="text-gray-600 font-medium">Lookup Result:</Label>
-                    <p className="text-gray-500 mt-1">Enter code and category to search</p>
+                    <p className="text-gray-500 mt-1">
+                      {formData.id ? `Story loaded: ${formData.title || 'Untitled'}` : 'Enter a story code and click Lookup'}
+                    </p>
                   </div>
                 </div>
               </div>
