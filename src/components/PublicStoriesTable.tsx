@@ -486,7 +486,7 @@ const PublicStoriesTable: React.FC = () => {
                     {/* Details Column */}
                     <TableCell className="p-2 text-center">
                       <div className="space-y-2">
-                        <Badge className={`${getCategoryBadgeColor(story.category)} text-sm px-3 py-1 rounded-sm`}>
+                        <Badge className={`${getCategoryBadgeColor(story.category)} px-3 py-1 rounded-sm`} style={{ fontSize: '21px' }}>
                           {getCategoryDisplayName(story.category)}
                         </Badge>
                         <div className="text-blue-600 font-medium" style={{ fontSize: '21px' }}>
