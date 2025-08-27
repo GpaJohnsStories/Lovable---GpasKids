@@ -210,6 +210,21 @@ const PublicStoriesTable: React.FC = () => {
     }
   };
 
+  const getCategoryDisplayName = (category: string) => {
+    switch (category) {
+      case "Fun":
+        return "Fun Stuff";
+      case "Life":
+        return "Life Lessons";
+      case "North Pole":
+        return "North Pole";
+      case "World Changers":
+        return "World Changers";
+      default:
+        return category;
+    }
+  };
+
   const MediaIcons: React.FC<{ story: Story }> = ({ story }) => {
     const hasAudio = story.audio_url;
     const hasVideo = story.video_url;
@@ -460,7 +475,7 @@ const PublicStoriesTable: React.FC = () => {
                     <TableCell className="p-2 text-center">
                       <div className="space-y-2 text-sm">
                         <Badge className={`${getCategoryBadgeColor(story.category)} text-sm px-3 py-1 rounded-sm`}>
-                          {story.category}
+                          {getCategoryDisplayName(story.category)}
                         </Badge>
                         <div className="text-blue-600 font-medium">
                           Reads: {story.read_count || 0}
