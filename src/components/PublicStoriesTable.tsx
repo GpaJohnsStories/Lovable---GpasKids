@@ -78,6 +78,7 @@ const PublicStoriesTable: React.FC = () => {
           video_duration_seconds
         `)
         .eq('publication_status_code', 1)
+        .not('category', 'eq', 'WebText')
         .order('updated_at', { ascending: false });
 
       if (error) throw error;

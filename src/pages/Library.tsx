@@ -8,8 +8,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Library = () => {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
-
   const handleViewAuthorBio = (authorName: string) => {
     // Navigate to the public author bio page
     navigate(`/author/${encodeURIComponent(authorName)}`);
@@ -26,11 +24,7 @@ const Library = () => {
         </div>
         
         <div className="mb-8">
-          <PublicStoriesTable 
-            onEditBio={handleViewAuthorBio} 
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-          />
+          <PublicStoriesTable />
         </div>
       </main>
       <CookieFreeFooter />

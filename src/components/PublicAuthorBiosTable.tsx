@@ -56,7 +56,7 @@ const PublicAuthorBiosTable = ({ bios, onViewBio, isLoading = false }: PublicAut
           .from('stories')
           .select('id, title, tagline, author')
           .in('author', authorNames)
-          .eq('published', 'Y')
+          .eq('publication_status_code', 1)
           .not('category', 'eq', 'WebText')
           .order('title', { ascending: true });
 
