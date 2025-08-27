@@ -157,7 +157,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
           <Button 
             type="button" 
             size="sm" 
-            onClick={() => onInsertText('<span style="font-family: \'Gloria Hallelujah\', cursive; color: #0B3D91; font-size: 24px;">Grandpa John</span>')} 
+            onClick={() => onInsertText('<span style="font-family: \'Gloria Hallelujah\', cursive; color: #0B3D91; font-size: 24px; font-weight: bold; font-style: italic;">Grandpa John</span>')} 
             className="h-8 px-3 text-sm btn-toolbar-golden font-medium" 
             title="Insert Grandpa John signature"
           >
