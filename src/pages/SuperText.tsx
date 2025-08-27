@@ -633,14 +633,83 @@ const SuperText: React.FC = () => {
         <div className="w-full mb-6">
           <div className="flex justify-center items-center gap-6">
             <button
-              onClick={handleSaveAndClear}
+              onClick={async () => {
+                // Save without clearing
+                const formData = {
+                  id: foundStory?.id,
+                  title: foundStoryTitle || 'Untitled',
+                  author: foundStory?.author || 'Unknown',
+                  category: category as "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText",
+                  content: storyContent,
+                  tagline: foundStory?.tagline || '',
+                  excerpt: foundStory?.excerpt || '',
+                  story_code: storyCode,
+                  google_drive_link: foundStory?.google_drive_link || '',
+                  photo_link_1: photoLinks[1] || '',
+                  photo_link_2: photoLinks[2] || '',
+                  photo_link_3: photoLinks[3] || '',
+                  photo_alt_1: photoAlts[1] || '',
+                  photo_alt_2: photoAlts[2] || '',
+                  photo_alt_3: photoAlts[3] || '',
+                  video_url: videoUrl,
+                  published: foundStory?.published || 'N',
+                  ai_voice_name: selectedVoice,
+                  audio_url: audioUrl,
+                  publication_status_code: publicationStatusCode
+                };
+
+                try {
+                  await saveStory(formData);
+                  toast({
+                    title: "Success",
+                    description: "Story saved successfully without clearing form.",
+                  });
+                } catch (error) {
+                  console.error('Error saving story:', error);
+                  toast({
+                    title: "Error",
+                    description: "Failed to save story. Please try again.",
+                    variant: "destructive"
+                  });
+                }
+              }}
               className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
               style={{
                 backgroundColor: '#228B22', // Forest Green
                 color: '#FFD700', // Golden Yellow
                 borderColor: '#1F7A1F', // Darker green for border
                 boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+                fontFamily: 'Arial',
+                fontSize: '21px'
+              }}
+              onMouseDown={(e) => {
+                e.currentTarget.style.transform = 'scale(0.98)';
+                e.currentTarget.style.boxShadow = '0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)';
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)';
+              }}
+            >
+              Save & Don't Clear
+            </button>
+            
+            <button
+              onClick={handleSaveAndClear}
+              className="w-80 h-16 px-8 py-4 rounded-full text-2xl font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-2 flex items-center justify-center"
+              style={{
+                backgroundColor: '#3b82f6', // Blue Primary
+                color: '#ffffff', // White font
+                borderColor: '#2563eb', // Darker blue for border
+                boxShadow: '0 6px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+                fontFamily: 'Arial',
+                fontSize: '21px'
               }}
               onMouseDown={(e) => {
                 e.currentTarget.style.transform = 'scale(0.98)';
