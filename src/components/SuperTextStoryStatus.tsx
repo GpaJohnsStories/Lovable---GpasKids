@@ -167,14 +167,6 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
                 </SelectContent>
               </Select>
               
-              <div className="flex items-center gap-1">
-                <div className="flex items-center justify-center w-6 h-6 rounded bg-gray-100 border border-gray-300">
-                  <Headphones className="h-3 w-3 text-gray-400" />
-                </div>
-                <div className="flex items-center justify-center w-6 h-6 rounded bg-gray-100 border border-gray-300">
-                  <Video className="h-3 w-3 text-gray-400" />
-                </div>
-              </div>
             </div>
           </div>
         </div>

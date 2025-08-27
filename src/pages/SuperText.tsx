@@ -18,7 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FileText, Image, Trash2, Volume2, Play, Square, Video } from "lucide-react";
+import { FileText, Image, Trash2, Volume2, Play, Square, Video, Headphones } from "lucide-react";
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { useStorySave } from '@/hooks/useStorySave';
 import { extractHeaderTokens } from "@/utils/headerTokens";
@@ -778,7 +778,19 @@ const SuperText: React.FC = () => {
                       </SelectContent>
                       </Select>
                     </div>
-                  </div>
+                   </div>
+                   
+                   {/* Audio and Video Icons */}
+                   <div className="flex justify-end items-end mt-4">
+                     <div className="flex items-center gap-2">
+                       <div className="flex items-center justify-center w-10 h-10 rounded bg-gray-100 border border-gray-300">
+                         <Headphones className="h-6 w-6 text-gray-400" />
+                       </div>
+                       <div className="flex items-center justify-center w-10 h-10 rounded bg-gray-100 border border-gray-300">
+                         <Video className="h-6 w-6 text-gray-400" />
+                       </div>
+                     </div>
+                   </div>
                 </CardContent>
               </Card>
               
