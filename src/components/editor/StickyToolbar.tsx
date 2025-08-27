@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package, FileCode, PenTool } from "lucide-react";
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package, FileCode } from "lucide-react";
 import InternalLinkDialog from "@/components/rich-text-editor/InternalLinkDialog";
 interface StickyToolbarProps {
   onFormat: (tag: string) => void;
@@ -145,24 +145,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
           </Button>
           <Button type="button" size="sm" onClick={() => onInsertList(true)} className="h-8 px-2 btn-toolbar-purple">
             <ListOrdered className="h-4 w-4" />
-          </Button>
-        </div>
-
-        <Separator orientation="vertical" className="h-6" style={{
-        backgroundColor: '#9c441a'
-      }} />
-
-        {/* Signature Button */}
-        <div className="flex items-center gap-1">
-          <Button 
-            type="button" 
-            size="sm" 
-            onClick={() => onInsertText('<span style="font-family: \'Gloria Hallelujah\', cursive; color: #0B3D91; font-size: 28px; font-weight: bold; font-style: italic;">Grandpa John</span>')} 
-            className="h-8 px-3 text-sm btn-toolbar-golden font-medium" 
-            title="Insert Grandpa John signature"
-          >
-            <PenTool className="h-4 w-4 mr-1" />
-            Signature
           </Button>
         </div>
 

@@ -18,7 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FileText, Image, Trash2, Volume2, Play, Square, Video, Headphones } from "lucide-react";
+import { FileText, Image, Trash2, Volume2, Play, Square, Video, Headphones, PenTool } from "lucide-react";
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { useStorySave } from '@/hooks/useStorySave';
 import { extractHeaderTokens } from "@/utils/headerTokens";
@@ -1769,6 +1769,38 @@ const SuperText: React.FC = () => {
               />
             </CardContent>
           </Card>
+
+          {/* Signature Button - Centered below editor */}
+          <div className="flex justify-center mt-6">
+            <button
+              type="button"
+              onClick={() => {
+                const textarea = document.querySelector('textarea');
+                if (textarea) {
+                  const start = textarea.selectionStart;
+                  const signatureHTML = '<span style="font-family: \'Gloria Hallelujah\', cursive; color: #0B3D91; font-size: 28px; font-weight: bold; font-style: italic;">Grandpa John</span>';
+                  const newContent = storyContent.substring(0, start) + signatureHTML + storyContent.substring(start);
+                  setStoryContent(newContent);
+                  
+                  // Set cursor position after the signature
+                  setTimeout(() => {
+                    textarea.selectionStart = textarea.selectionEnd = start + signatureHTML.length;
+                    textarea.focus();
+                  }, 0);
+                }
+              }}
+              className="h-16 w-48 px-6 text-lg font-bold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border-4"
+              style={{
+                backgroundColor: '#FFD700',
+                color: '#8B4513',
+                borderColor: '#B8860B'
+              }}
+              title="Insert Grandpa John signature"
+            >
+              <PenTool className="h-6 w-6 mr-2 inline" />
+              Signature
+            </button>
+          </div>
         </div>
       )}
 
