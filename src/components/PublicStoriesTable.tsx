@@ -379,17 +379,17 @@ const PublicStoriesTable: React.FC = () => {
             <TableHeader>
               <TableRow className="bg-background hover:bg-background">
                 <TableHead className="p-1 text-center bg-background border-r border-gray-200" colSpan={2} style={{ width: '350px', minWidth: '350px' }}>
-                  <Button className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1" size="sm">
+                  <Button className="w-full h-6 px-1 py-1 text-white font-bold" size="sm" style={{ backgroundColor: '#228B22', fontSize: '21px' }}>
                     Title
                   </Button>
                 </TableHead>
                 <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
-                  <Button className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1" size="sm">
+                  <Button className="w-full h-6 px-1 py-1 text-white font-bold" size="sm" style={{ backgroundColor: '#228B22', fontSize: '21px' }}>
                     Author
                   </Button>
                 </TableHead>
                 <TableHead className="p-1 text-center bg-background" style={{ width: '200px', minWidth: '200px' }}>
-                  <Button className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1" size="sm">
+                  <Button className="w-full h-6 px-1 py-1 text-white font-bold" size="sm" style={{ backgroundColor: '#228B22', fontSize: '21px' }}>
                     Details
                   </Button>
                 </TableHead>
