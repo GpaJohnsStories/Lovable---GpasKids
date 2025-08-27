@@ -457,13 +457,27 @@ const PublicStoriesTable: React.FC = () => {
                     
                     {/* Details Column */}
                     <TableCell className="p-2">
-                      <div className="space-y-1 text-xs">
-                        <Badge className={`${getCategoryBadgeColor(story.category)} text-xs`}>
+                      <div className="space-y-2 text-sm">
+                        <Badge className={`${getCategoryBadgeColor(story.category)} text-sm px-3 py-1`}>
                           {story.category}
                         </Badge>
-                        <div>About {story.reading_time_minutes || 1} Min</div>
-                        <div>{story.read_count || 0} Readers</div>
-                        <div>{format(new Date(story.updated_at), 'MM/dd/yyyy')}</div>
+                        <div className="text-blue-600 font-medium">
+                          Reads: {story.read_count || 0}
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-1">
+                            <span className="text-lg">👍</span>
+                            <span className="font-medium">{story.thumbs_up_count || 0}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="text-lg">👎</span>
+                            <span className="font-medium">{story.thumbs_down_count || 0}</span>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-blue-600 font-medium">Updated</div>
+                          <div className="text-black">{format(new Date(story.updated_at), 'M/d/yyyy')}</div>
+                        </div>
                       </div>
                     </TableCell>
                   </TableRow>
