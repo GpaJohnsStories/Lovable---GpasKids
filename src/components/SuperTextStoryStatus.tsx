@@ -79,7 +79,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
           Text Status
         </CardTitle>
         <h3 className="text-xl font-bold" style={{
-          color: '#4A7C59',
+          color: '#F97316',
           fontSize: '21px',
           fontFamily: 'Arial, sans-serif'
         }}>
