@@ -64,7 +64,6 @@ export interface Story {
   photo_alt_2: string;
   photo_alt_3: string;
   video_url: string;
-  published: string;
   ai_voice_name: string;
   ai_voice_model: string;
   copyright_status?: string;
@@ -91,7 +90,6 @@ const initialFormData: Story = {
   photo_alt_2: '',
   photo_alt_3: '',
   video_url: '',
-  published: 'N',
   ai_voice_name: 'Nova',
   ai_voice_model: 'tts-1',
   copyright_status: '©',

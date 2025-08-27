@@ -24,7 +24,7 @@ interface GroupedStory extends Record<string, any> {
   title: string;
   author: string;
   category: string;
-  published: string;
+  publication_status_code: number;
   read_count: number;
   thumbs_up_count: number;
   updated_at: string;
@@ -80,9 +80,9 @@ const AdminStoriesTable = ({
         .order(sortField, { ascending: sortDirection === 'asc' });
       
       if (publishedFilter === 'published') {
-        query = query.eq('published', 'Y');
+        query = query.in('publication_status_code', [0, 1]);
       } else if (publishedFilter === 'unpublished') {
-        query = query.eq('published', 'N');
+        query = query.not('publication_status_code', 'in', '(0,1)');
       }
       
       // Apply category filter

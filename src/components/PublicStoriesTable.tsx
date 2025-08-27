@@ -91,7 +91,7 @@ const PublicStoriesTable = ({
   } = useQuery({
     queryKey: ['public-stories', sortField, sortDirection, categoryFilter, localSearchTerm, mediaFilter, sortOption],
     queryFn: async () => {
-      let query = supabase.from('stories').select('id, story_code, title, author, category, read_count, updated_at, created_at, thumbs_up_count, thumbs_down_count, reading_time_minutes, audio_url, video_url, content, tagline, excerpt, photo_link_1, photo_alt_1, copyright_status').eq('published', 'Y').not('category', 'in', '("WebText","BioText")');
+      let query = supabase.from('stories').select('id, story_code, title, author, category, read_count, updated_at, created_at, thumbs_up_count, thumbs_down_count, reading_time_minutes, audio_url, video_url, content, tagline, excerpt, photo_link_1, photo_alt_1, copyright_status').in('publication_status_code', [0, 1]).not('category', 'in', '("WebText","BioText")');
 
       // Apply category filter
       if (categoryFilter !== 'all') {

@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 
 import { useState } from "react";
 import AuthorLink from "@/components/AuthorLink";
+import PublicationStatusButton from "./PublicationStatusButton";
 // import WebTextDeploymentDialog from "./WebTextDeploymentDialog";
 import { getCategoryShortName } from "@/utils/categoryUtils";
 
@@ -24,7 +25,7 @@ interface Story {
   tagline?: string;
   author: string;
   category: string;
-  published: string;
+  publication_status_code: number;
   read_count: number;
   thumbs_up_count?: number;
   thumbs_down_count?: number;
@@ -104,22 +105,8 @@ const StoriesTableRow = ({
   };
 
   const handleTogglePublished = async () => {
-    const newStatus = story.published === 'Y' ? 'N' : 'Y';
-    
-    const { error } = await supabase
-      .from('stories')
-      .update({ published: newStatus })
-      .eq('id', story.id);
-
-    if (error) {
-      toast.error("Error updating story status");
-      console.error(error);
-    } else {
-      toast.success(`Story ${newStatus === 'Y' ? 'published' : 'unpublished'} successfully`);
-      if (onStatusChange) {
-        onStatusChange();
-      }
-    }
+    // This function is no longer used - publication status is handled by status code
+    console.log('Legacy published toggle - should use publication status codes instead');
   };
 
   const handleEditDate = () => {
@@ -265,7 +252,14 @@ const StoriesTableRow = ({
   return (
     <TableRow>
       <TableCell className="p-1 text-left admin-table-cell" style={{ width: '70px', minWidth: '70px', maxWidth: '70px' }}>
-        <span className="text-xs">{story.story_code}</span>
+        <div className="flex flex-col items-center space-y-1">
+          <PublicationStatusButton 
+            storyId={story.id}
+            currentStatus={story.publication_status_code}
+            onStatusChange={onStatusChange}
+          />
+          <span className="text-xs">{story.story_code}</span>
+        </div>
       </TableCell>
       <TableCell className="p-1 admin-table-cell" style={{ width: '280px', minWidth: '280px', maxWidth: '280px' }}>
         <div className="flex items-center space-x-2">
@@ -473,7 +467,7 @@ const StoriesTableRow = ({
               <div className="flex items-center space-x-1">
                 {story.category === 'WebText' ? (
                   <div
-                    className={story.published === 'Y' 
+                    className={story.publication_status_code === 0 || story.publication_status_code === 1
                       ? 'bg-gradient-to-b from-blue-500 to-blue-700 border-blue-800 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded flex items-center justify-center gap-1' 
                       : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded flex items-center justify-center gap-1'
                     }
@@ -485,14 +479,14 @@ const StoriesTableRow = ({
                 ) : (
                   showPublishedColumn && (
                     <div
-                      className={story.published === 'Y' 
+                      className={story.publication_status_code === 0 || story.publication_status_code === 1
                         ? 'bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded flex items-center justify-center gap-1' 
                         : 'bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white px-2 py-1 text-xs font-bold h-6 w-16 rounded flex items-center justify-center gap-1'
                       }
                       style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
                     >
                       <BookOpen className="h-3 w-3" />
-                      {story.published === 'Y' ? 'Pub' : 'UnPub'}
+                      {story.publication_status_code === 0 || story.publication_status_code === 1 ? 'Pub' : 'UnPub'}
                     </div>
                   )
                 )}
