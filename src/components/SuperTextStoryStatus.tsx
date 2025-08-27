@@ -84,7 +84,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
           <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
           <div className="flex items-center gap-2">
             <Select value={story?.published || "N"} onValueChange={() => {}}>
-              <SelectTrigger className={`w-full text-xs font-bold ${getPublishedColor(story?.published || 'N')}`}>
+              <SelectTrigger className={`w-1/2 text-xs font-bold ${getPublishedColor(story?.published || 'N')}`}>
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
               <SelectContent className="z-50 bg-white border shadow-lg">
@@ -95,72 +95,55 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
           </div>
         </div>
 
-        <table className="w-full text-xs" style={{
-          border: '2px solid #9c441a'
-        }}>
-          <tbody>
-            <tr>
-              <td colSpan={2} className="text-center font-bold px-1 py-1" style={{
-                borderRight: '1px solid #9c441a',
-                ...getLastUpdateStyle()
-              }}>
-                Last Update
-              </td>
-              <td colSpan={2} className="text-center font-bold text-gray-700 px-1 py-1" style={{
-                borderRight: '1px solid #9c441a',
-                backgroundColor: 'rgba(22, 156, 249, 0.3)'
-              }}>
-                Original Upload
-              </td>
-              <td colSpan={2} className="text-center font-bold px-1 py-1" style={getAudioStatusStyle()}>
-                Last Audio Gen
-              </td>
-            </tr>
-            <tr>
-              <td className="text-center font-bold px-1 py-1" style={{
-                borderRight: '1px solid #9c441a',
-                borderTop: '1px solid #9c441a',
-                ...getLastUpdateStyle()
-              }}>
-                {formatDateTime(story?.updated_at).date}
-              </td>
-              <td className="text-center font-bold px-1 py-1" style={{
-                borderRight: '1px solid #9c441a',
-                borderTop: '1px solid #9c441a',
-                ...getLastUpdateStyle()
-              }}>
-                {formatDateTime(story?.updated_at).time}
-              </td>
-              <td className="text-center text-gray-600 font-bold px-1 py-1" style={{
-                borderRight: '1px solid #9c441a',
-                borderTop: '1px solid #9c441a',
-                backgroundColor: 'rgba(22, 156, 249, 0.3)'
-              }}>
-                {formatDateTime(story?.created_at).date}
-              </td>
-              <td className="text-center text-gray-600 font-bold px-1 py-1" style={{
-                borderRight: '1px solid #9c441a',
-                borderTop: '1px solid #9c441a',
-                backgroundColor: 'rgba(22, 156, 249, 0.3)'
-              }}>
-                {formatDateTime(story?.created_at).time}
-              </td>
-              <td className="text-center font-bold px-1 py-1" style={{
-                borderRight: '1px solid #9c441a',
-                borderTop: '1px solid #9c441a',
-                ...getAudioStatusStyle()
-              }}>
-                {formatDateTime(story?.audio_generated_at).date}
-              </td>
-              <td className="text-center font-bold px-1 py-1" style={{
-                borderTop: '1px solid #9c441a',
-                ...getAudioStatusStyle()
-              }}>
-                {formatDateTime(story?.audio_generated_at).time}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="flex justify-end">
+          <table className="w-1/2 text-xs" style={{
+            border: '2px solid #9c441a'
+          }}>
+            <tbody>
+              <tr>
+                <td className="text-center font-bold px-1 py-1" style={{
+                  borderRight: '1px solid #9c441a',
+                  ...getLastUpdateStyle()
+                }}>
+                  Last Text
+                </td>
+                <td className="text-center font-bold px-1 py-1" style={getLastUpdateStyle()}>
+                  {formatDateTime(story?.updated_at).date} {formatDateTime(story?.updated_at).time}
+                </td>
+              </tr>
+              <tr>
+                <td className="text-center font-bold px-1 py-1" style={{
+                  borderRight: '1px solid #9c441a',
+                  borderTop: '1px solid #9c441a',
+                  ...getAudioStatusStyle()
+                }}>
+                  Last Audio
+                </td>
+                <td className="text-center font-bold px-1 py-1" style={{
+                  borderTop: '1px solid #9c441a',
+                  ...getAudioStatusStyle()
+                }}>
+                  {formatDateTime(story?.audio_generated_at).date} {formatDateTime(story?.audio_generated_at).time}
+                </td>
+              </tr>
+              <tr>
+                <td className="text-center font-bold text-gray-700 px-1 py-1" style={{
+                  borderRight: '1px solid #9c441a',
+                  borderTop: '1px solid #9c441a',
+                  backgroundColor: 'rgba(22, 156, 249, 0.3)'
+                }}>
+                  Original
+                </td>
+                <td className="text-center text-gray-600 font-bold px-1 py-1" style={{
+                  borderTop: '1px solid #9c441a',
+                  backgroundColor: 'rgba(22, 156, 249, 0.3)'
+                }}>
+                  {formatDateTime(story?.created_at).date} {formatDateTime(story?.created_at).time}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
       </CardContent>
     </Card>
