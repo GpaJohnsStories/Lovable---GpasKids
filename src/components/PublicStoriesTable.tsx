@@ -10,6 +10,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useNavigate } from "react-router-dom";
 import { Volume2, VideoIcon, ChevronDown, Check, X, Glasses, ArrowUp, ArrowDown } from "lucide-react";
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { getCategoryShortName, getCategoryDisplayName as getUtilsCategoryDisplayName } from "@/utils/categoryUtils";
 
 interface Story {
   id: string;
@@ -113,7 +114,10 @@ const PublicStoriesTable: React.FC = () => {
         story.author?.toLowerCase().includes(searchLower) ||
         story.story_code?.toLowerCase().includes(searchLower) ||
         story.tagline?.toLowerCase().includes(searchLower) ||
-        story.excerpt?.toLowerCase().includes(searchLower)
+        story.excerpt?.toLowerCase().includes(searchLower) ||
+        story.category?.toLowerCase().includes(searchLower) ||
+        getCategoryShortName(story.category || '').toLowerCase().includes(searchLower) ||
+        getUtilsCategoryDisplayName(story.category || '').toLowerCase().includes(searchLower)
       );
     }
     
