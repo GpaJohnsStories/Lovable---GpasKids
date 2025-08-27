@@ -413,7 +413,7 @@ const PublicStoriesTable: React.FC = () => {
                     Title
                   </Button>
                 </TableHead>
-                <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
+                <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '220px', minWidth: '220px', maxWidth: '220px' }}>
                   <Button className="w-full h-6 px-1 py-1 text-white font-bold" size="sm" style={{ backgroundColor: '#228B22', fontSize: '21px' }}>
                     Author
                   </Button>
@@ -478,7 +478,7 @@ const PublicStoriesTable: React.FC = () => {
                     </TableCell>
                     
                      {/* Author Column */}
-                     <TableCell className="p-2 text-center">
+                     <TableCell className="p-2 text-center" style={{ width: '220px', minWidth: '220px', maxWidth: '220px' }}>
                        <Badge 
                          className={`${getCategoryBadgeColor(story.category)} justify-center text-center px-3 py-1 rounded-sm`} 
                          style={{ fontSize: '21px', width: '195px' }}
