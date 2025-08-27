@@ -62,7 +62,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { HelpProvider } from "./contexts/HelpContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useVisitTracker } from "./hooks/useVisitTracker";
-import BreakGuide from "./components/break/BreakGuide";
+
 
 const queryClient = new QueryClient();
 
@@ -99,7 +99,7 @@ function App() {
                         <GlobalHelpProvider>
                   <ConditionalContentProtection>
                     <ScrollToTop />
-                    <BreakGuide />
+                    
                     <Routes>
                       {/* Public Routes */}
                       <Route path="/" element={<Index />} />
