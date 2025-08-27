@@ -1,183 +1,156 @@
 
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Upload, X, Play, AlertCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
+import { VideoIcon, Trash2Icon } from 'lucide-react';
 
 interface StoryVideoUploadProps {
   videoUrl: string;
   onVideoUpload: (url: string) => void;
   onVideoRemove: () => void;
+  onDurationCalculated?: (duration: number) => void;
 }
 
 const StoryVideoUpload: React.FC<StoryVideoUploadProps> = ({
   videoUrl,
   onVideoUpload,
-  onVideoRemove
+  onVideoRemove,
+  onDurationCalculated
 }) => {
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
+  const [inputUrl, setInputUrl] = useState(videoUrl || '');
+  const [isCalculatingDuration, setIsCalculatingDuration] = useState(false);
 
-  const handleVideoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    // Validate file type
-    const allowedTypes = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo'];
-    if (!allowedTypes.includes(file.type)) {
-      toast.error("Please upload a valid video file (MP4, WebM, MOV, or AVI)");
-      return;
+  const extractVideoId = (url: string): { platform: string; id: string } | null => {
+    // YouTube patterns
+    const youtubePatterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+      /youtube\.com\/v\/([^&\n?#]+)/
+    ];
+    
+    for (const pattern of youtubePatterns) {
+      const match = url.match(pattern);
+      if (match) return { platform: 'youtube', id: match[1] };
     }
+    
+    // Vimeo patterns
+    const vimeoPattern = /vimeo\.com\/(?:video\/)?(\d+)/;
+    const vimeoMatch = url.match(vimeoPattern);
+    if (vimeoMatch) return { platform: 'vimeo', id: vimeoMatch[1] };
+    
+    return null;
+  };
 
-    // Validate file size (100MB)
-    const maxSize = 100 * 1024 * 1024;
-    if (file.size > maxSize) {
-      toast.error("Video file size must be less than 100MB");
-      return;
-    }
-
-    setIsUploading(true);
-    setUploadProgress(0);
+  const calculateVideoDuration = async (url: string): Promise<number | null> => {
+    const videoInfo = extractVideoId(url);
+    if (!videoInfo) return null;
 
     try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-      const filePath = `videos/${fileName}`;
-
-      const { data, error } = await supabase.storage
-        .from('story-videos')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: false
-        });
-
-      if (error) {
-        console.error('Upload error:', error);
-        throw error;
+      if (videoInfo.platform === 'youtube') {
+        // For YouTube, we'd need YouTube API key - for now, return null
+        // In production, you'd implement YouTube Data API v3 call here
+        console.log('YouTube video detected, duration calculation would require API key');
+        return null;
+      } else if (videoInfo.platform === 'vimeo') {
+        // For Vimeo, we can use their oEmbed API
+        const response = await fetch(`https://vimeo.com/api/oembed.json?url=${encodeURIComponent(url)}`);
+        if (response.ok) {
+          const data = await response.json();
+          return data.duration || null;
+        }
       }
+    } catch (error) {
+      console.error('Error calculating video duration:', error);
+    }
+    
+    return null;
+  };
 
-      // Get the public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('story-videos')
-        .getPublicUrl(filePath);
+  const handleUrlSubmit = async () => {
+    if (!inputUrl.trim()) {
+      toast.error('Please enter a video URL');
+      return;
+    }
 
-      onVideoUpload(publicUrl);
-      toast.success("Video uploaded successfully!");
-    } catch (error: any) {
-      console.error('Error uploading video:', error);
-      toast.error(`Failed to upload video: ${error.message}`);
+    const videoInfo = extractVideoId(inputUrl);
+    if (!videoInfo) {
+      toast.error('Please enter a valid YouTube or Vimeo URL');
+      return;
+    }
+
+    setIsCalculatingDuration(true);
+    
+    try {
+      // Calculate duration if possible
+      const duration = await calculateVideoDuration(inputUrl);
+      
+      // Update the video URL
+      onVideoUpload(inputUrl);
+      
+      // If we got a duration, notify parent component
+      if (duration && onDurationCalculated) {
+        onDurationCalculated(duration);
+        toast.success(`Video added with duration: ${Math.floor(duration / 60)}:${(duration % 60).toString().padStart(2, '0')}`);
+      } else {
+        toast.success('Video URL added successfully');
+      }
+    } catch (error) {
+      console.error('Error processing video:', error);
+      toast.error('Error processing video URL');
     } finally {
-      setIsUploading(false);
-      setUploadProgress(0);
+      setIsCalculatingDuration(false);
     }
   };
 
-  const handleRemoveVideo = async () => {
-    if (!videoUrl) return;
-
-    try {
-      // Extract file path from URL
-      const urlParts = videoUrl.split('/');
-      const filePath = urlParts.slice(-2).join('/'); // Get "videos/filename.ext"
-
-      const { error } = await supabase.storage
-        .from('story-videos')
-        .remove([filePath]);
-
-      if (error) {
-        console.error('Delete error:', error);
-        toast.error("Failed to delete video file");
-      }
-
-      onVideoRemove();
-      toast.success("Video removed successfully!");
-    } catch (error: any) {
-      console.error('Error removing video:', error);
-      toast.error(`Failed to remove video: ${error.message}`);
+  const handleRemove = () => {
+    setInputUrl('');
+    onVideoRemove();
+    if (onDurationCalculated) {
+      onDurationCalculated(0);
     }
+    toast.success('Video removed');
   };
 
   return (
     <div className="space-y-4">
-      
-      {videoUrl ? (
-        <div className="space-y-3">
-          <div className="relative">
-            <video
-              src={videoUrl}
-              controls
-              className="w-full max-w-md h-48 object-cover rounded-lg border-2 border-gray-200"
-              preload="metadata"
-            >
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <Button
-            type="button"
-            variant="destructive"
+      <div>
+        <Label htmlFor="video-url" className="text-base font-medium">
+          Video URL (YouTube or Vimeo)
+        </Label>
+        <div className="flex gap-2 mt-2">
+          <Input
+            id="video-url"
+            type="url"
+            value={inputUrl}
+            onChange={(e) => setInputUrl(e.target.value)}
+            placeholder="https://www.youtube.com/watch?v=... or https://vimeo.com/..."
+            className="flex-1"
+          />
+          <Button 
+            onClick={handleUrlSubmit}
+            disabled={!inputUrl.trim() || isCalculatingDuration}
             size="sm"
-            onClick={handleRemoveVideo}
-            className="flex items-center space-x-2"
           >
-            <X className="h-4 w-4" />
-            <span>Remove Video</span>
+            {isCalculatingDuration ? 'Processing...' : 'Add Video'}
           </Button>
         </div>
-      ) : (
-        <div className="space-y-3">
-          <div className="flex items-center justify-center w-full">
-            <label
-              htmlFor="video-upload"
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 hover:border-gray-400 transition-colors"
-            >
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                {isUploading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mb-2"></div>
-                    <p className="text-sm text-gray-500">Uploading video...</p>
-                    {uploadProgress > 0 && (
-                      <div className="w-32 bg-gray-200 rounded-full h-2 mt-2">
-                        <div 
-                          className="bg-orange-600 h-2 rounded-full transition-all duration-300" 
-                          style={{ width: `${uploadProgress}%` }}
-                        ></div>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <Upload className="w-8 h-8 mb-2 text-gray-400" />
-                    <p className="mb-2 text-sm text-gray-500">
-                      <span className="font-semibold">Click to upload video</span>
-                    </p>
-                  </>
-                )}
-              </div>
-              <input
-                id="video-upload"
-                type="file"
-                className="hidden"
-                accept="video/mp4,video/webm,video/quicktime,video/x-msvideo"
-                onChange={handleVideoUpload}
-                disabled={isUploading}
-              />
-            </label>
+      </div>
+
+      {videoUrl && (
+        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+          <div className="flex items-center gap-2">
+            <VideoIcon className="h-5 w-5 text-blue-600" />
+            <span className="text-sm text-gray-700">Video URL set</span>
           </div>
-          
-          <div className="flex items-start space-x-2 p-3 bg-blue-50 rounded-lg">
-            <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-            <div className="text-sm text-blue-800">
-              <p className="font-bold mb-1">Video Guidelines:</p>
-              <ul className="text-xs space-y-1">
-                <li>• Maximum file size: 100MB</li>
-                <li>• Supported formats: MP4, WebM, MOV, AVI</li>
-                <li>• Videos will be publicly accessible but not downloadable</li>
-                <li>• Keep content appropriate for children</li>
-              </ul>
-            </div>
-          </div>
+          <Button
+            onClick={handleRemove}
+            variant="destructive"
+            size="sm"
+          >
+            <Trash2Icon className="h-4 w-4 mr-1" />
+            Remove
+          </Button>
         </div>
       )}
     </div>
