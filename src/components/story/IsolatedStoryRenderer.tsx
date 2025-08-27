@@ -34,16 +34,13 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
     : "Georgia, serif";
 
   if (content) {
-    // Extract tokens if showing header preview
-    let tokens, contentWithoutTokens;
-    if (showHeaderPreview) {
-      const extracted = extractHeaderTokens(content);
-      tokens = extracted.tokens;
-      contentWithoutTokens = extracted.contentWithoutTokens;
-    }
+    // Always extract tokens to prevent duplication in body content
+    const extracted = extractHeaderTokens(content);
+    const tokens = extracted.tokens;
+    const contentWithoutTokens = extracted.contentWithoutTokens;
 
-    // Use the content without tokens if available (even if empty string), otherwise original content
-    let processedContent = (typeof contentWithoutTokens === 'string') ? contentWithoutTokens : content;
+    // Always use content without tokens for the body to prevent duplication
+    let processedContent = contentWithoutTokens;
     
     // Preprocess content to handle quote-wrapped strings
     if (typeof processedContent === 'string' && processedContent.startsWith('"') && processedContent.endsWith('"')) {

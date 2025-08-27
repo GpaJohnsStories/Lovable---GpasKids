@@ -123,6 +123,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
                   fontSize={fontSize}
                   onFontSizeChange={setFontSize}
                   useRichCleaning={true}
+                  showHeaderPreview={false}
                 />
               </div>
             </div>
@@ -212,6 +213,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             fontSize={fontSize}
             onFontSizeChange={setFontSize}
             useRichCleaning={true}
+            showHeaderPreview={false}
           />
           
           {/* Clear the float */}

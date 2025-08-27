@@ -22,6 +22,7 @@ const AdminStoryPreview: React.FC<AdminStoryPreviewProps> = ({ content, title })
         <IsolatedStoryRenderer
           content={content}
           useRichCleaning={true}
+          showHeaderPreview={true}
         />
       </CardContent>
     </Card>
