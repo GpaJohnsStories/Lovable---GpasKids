@@ -57,6 +57,7 @@ const SuperText: React.FC = () => {
   const [category, setCategory] = React.useState('');
   const [copyrightStatus, setCopyrightStatus] = React.useState('©');
   const [publicationStatusCode, setPublicationStatusCode] = React.useState(5);
+  const [lookupResult, setLookupResult] = React.useState<Story | null>(null);
 
   const {
     formData,
@@ -160,6 +161,7 @@ const SuperText: React.FC = () => {
 
     if (story) {
       populateFormWithStory(story, true);
+      setLookupResult(story); // Store the looked-up story
       
       // Sync local state with story data
       setCategory(story.category);
@@ -423,11 +425,11 @@ const SuperText: React.FC = () => {
             {/* Right Panel - Status and Actions */}
             <div className="space-y-6">
               {/* Last Updates Section */}
-              <LastUpdatesGrid story={formData} />
+              <LastUpdatesGrid story={lookupResult || formData} />
               
               {/* Text Status Section */}
               <SuperTextStoryStatus 
-                story={formData}
+                story={lookupResult || formData}
                 publicationStatusCode={publicationStatusCode}
                 onStatusChange={(status) => {
                   setPublicationStatusCode(status);
