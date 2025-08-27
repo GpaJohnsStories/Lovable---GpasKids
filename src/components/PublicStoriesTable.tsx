@@ -495,11 +495,11 @@ const PublicStoriesTable: React.FC = () => {
                         <div className="flex items-center justify-center gap-3">
                           <div className="flex items-center gap-1">
                             <span className="text-lg">👍</span>
-                            <span className="font-medium">{story.thumbs_up_count || 0}</span>
+                            <span className="font-medium" style={{ fontSize: '21px' }}>{story.thumbs_up_count || 0}</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <span className="text-lg">👎</span>
-                            <span className="font-medium">{story.thumbs_down_count || 0}</span>
+                            <span className="font-medium" style={{ fontSize: '21px' }}>{story.thumbs_down_count || 0}</span>
                           </div>
                         </div>
                         <div>
