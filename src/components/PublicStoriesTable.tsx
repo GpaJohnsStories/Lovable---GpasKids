@@ -378,12 +378,7 @@ const PublicStoriesTable: React.FC = () => {
             {/* Table Header */}
             <TableHeader>
               <TableRow className="bg-background hover:bg-background">
-                <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '70px', minWidth: '70px', maxWidth: '70px' }}>
-                  <Button className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1" size="sm">
-                    Code
-                  </Button>
-                </TableHead>
-                <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '280px', minWidth: '280px', maxWidth: '280px' }}>
+                <TableHead className="p-1 text-center bg-background border-r border-gray-200" colSpan={2} style={{ width: '350px', minWidth: '350px' }}>
                   <Button className="bg-green-500 hover:bg-green-600 text-white w-full h-6 text-xs px-1 py-1" size="sm">
                     Title
                   </Button>
