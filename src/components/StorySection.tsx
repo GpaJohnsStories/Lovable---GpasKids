@@ -15,9 +15,14 @@ const StorySection = () => {
         const {
           data,
           error
-        } = await supabase.from('stories').select('*').eq('published', 'Y').order('updated_at', {
-          ascending: false
-        });
+        } = await supabase.from('stories')
+          .select('*')
+          .eq('published', 'Y')
+          .neq('category', 'WebText')
+          .neq('category', 'BioText')
+          .order('updated_at', {
+            ascending: false
+          });
         if (error) {
           console.error('📚 StorySection: Database error details:', {
             message: error.message,
@@ -30,10 +35,36 @@ const StorySection = () => {
 
         // Filter stories based on visitor's local time
         const now = new Date();
-        const filteredStories = (data || []).filter(story => {
+        const timeFilteredStories = (data || []).filter(story => {
           const storyDate = new Date(story.updated_at);
           return storyDate <= now;
         });
+        
+        // Apply local safety filter to exclude WebText, BioText, and SYS-* stories
+        const filteredStories = timeFilteredStories.filter(story => {
+          const isWebText = story.category === 'WebText';
+          const isBioText = story.category === 'BioText';
+          const isSysStory = story.story_code?.startsWith('SYS-');
+          
+          if (isWebText || isBioText || isSysStory) {
+            console.log('📚 StorySection: Filtered out story:', {
+              id: story.id,
+              title: story.title,
+              category: story.category,
+              storyCode: story.story_code,
+              reason: isWebText ? 'WebText' : isBioText ? 'BioText' : 'SYS-story'
+            });
+            return false;
+          }
+          return true;
+        });
+        
+        console.log('📚 StorySection: Final story count after filtering:', {
+          total: data?.length || 0,
+          timeFiltered: timeFilteredStories.length,
+          finalFiltered: filteredStories.length
+        });
+        
         return filteredStories;
       } catch (err) {
         console.error('📚 StorySection: Query failed:', err);
@@ -89,6 +120,25 @@ const StorySection = () => {
   if (mostPopularStory) featuredStories.push({
     ...convertToStoryData(mostPopularStory),
     category: 'Most Popular Story'
+  });
+  
+  // Debug logging for featured stories
+  console.log('📚 StorySection: Featured stories selected:', {
+    mostReadStory: mostReadStory ? {
+      id: mostReadStory.id,
+      title: mostReadStory.title,
+      category: mostReadStory.category,
+      storyCode: mostReadStory.story_code,
+      readCount: mostReadStory.read_count
+    } : null,
+    mostPopularStory: mostPopularStory ? {
+      id: mostPopularStory.id,
+      title: mostPopularStory.title,
+      category: mostPopularStory.category,
+      storyCode: mostPopularStory.story_code,
+      thumbsUpCount: mostPopularStory.thumbs_up_count
+    } : null,
+    totalFeaturedStories: featuredStories.length
   });
   const scrollToTop = () => {
     window.scrollTo({
