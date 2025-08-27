@@ -1,8 +1,10 @@
+
 import { Button } from "@/components/ui/button";
 import StoryCard from "./StoryCard";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
+
 const StorySection = () => {
   const {
     data: realStories = [],
@@ -17,12 +19,12 @@ const StorySection = () => {
           error
         } = await supabase.from('stories')
           .select('*')
-          .eq('published', 'Y')
-          .neq('category', 'WebText')
-          .neq('category', 'BioText')
+          .in('publication_status_code', [0, 1])  // Only published stories
+          .not('category', 'in', '("WebText","BioText")')  // Exclude WebText and BioText
           .order('updated_at', {
             ascending: false
           });
+        
         if (error) {
           console.error('📚 StorySection: Database error details:', {
             message: error.message,
@@ -33,39 +35,9 @@ const StorySection = () => {
           throw error;
         }
 
-        // Filter stories based on visitor's local time
-        const now = new Date();
-        const timeFilteredStories = (data || []).filter(story => {
-          const storyDate = new Date(story.updated_at);
-          return storyDate <= now;
-        });
+        console.log('📚 StorySection: Final story count:', data?.length || 0);
         
-        // Apply local safety filter to exclude WebText, BioText, and SYS-* stories
-        const filteredStories = timeFilteredStories.filter(story => {
-          const isWebText = story.category === 'WebText';
-          const isBioText = story.category === 'BioText';
-          const isSysStory = story.story_code?.startsWith('SYS-');
-          
-          if (isWebText || isBioText || isSysStory) {
-            console.log('📚 StorySection: Filtered out story:', {
-              id: story.id,
-              title: story.title,
-              category: story.category,
-              storyCode: story.story_code,
-              reason: isWebText ? 'WebText' : isBioText ? 'BioText' : 'SYS-story'
-            });
-            return false;
-          }
-          return true;
-        });
-        
-        console.log('📚 StorySection: Final story count after filtering:', {
-          total: data?.length || 0,
-          timeFiltered: timeFilteredStories.length,
-          finalFiltered: filteredStories.length
-        });
-        
-        return filteredStories;
+        return data || [];
       } catch (err) {
         console.error('📚 StorySection: Query failed:', err);
         throw err;
@@ -98,7 +70,7 @@ const StorySection = () => {
     illustration: "📖",
     category: story.category,
     author: story.author,
-    published: story.published,
+    publication_status_code: story.publication_status_code,
     photo_link_1: story.photo_link_1,
     photo_link_2: story.photo_link_2,
     photo_link_3: story.photo_link_3,
@@ -129,17 +101,20 @@ const StorySection = () => {
       title: mostReadStory.title,
       category: mostReadStory.category,
       storyCode: mostReadStory.story_code,
-      readCount: mostReadStory.read_count
+      readCount: mostReadStory.read_count,
+      publicationStatusCode: mostReadStory.publication_status_code
     } : null,
     mostPopularStory: mostPopularStory ? {
       id: mostPopularStory.id,
       title: mostPopularStory.title,
       category: mostPopularStory.category,
       storyCode: mostPopularStory.story_code,
-      thumbsUpCount: mostPopularStory.thumbs_up_count
+      thumbsUpCount: mostPopularStory.thumbs_up_count,
+      publicationStatusCode: mostPopularStory.publication_status_code
     } : null,
     totalFeaturedStories: featuredStories.length
   });
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -176,6 +151,7 @@ const StorySection = () => {
         </div>
       </section>;
   }
+
   return <section className="pt-4 pb-16">
       {featuredStories.length > 0 ? <div className="mb-12">
           {/* Featured Stories Section */}
@@ -203,4 +179,5 @@ const StorySection = () => {
       </div>
     </section>;
 };
+
 export default StorySection;

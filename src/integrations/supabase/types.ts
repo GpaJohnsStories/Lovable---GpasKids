@@ -498,7 +498,6 @@ export type Database = {
           photo_link_2: string | null
           photo_link_3: string | null
           publication_status_code: number
-          published: string
           read_count: number
           reading_time_minutes: number | null
           story_code: string
@@ -540,7 +539,6 @@ export type Database = {
           photo_link_2?: string | null
           photo_link_3?: string | null
           publication_status_code?: number
-          published?: string
           read_count?: number
           reading_time_minutes?: number | null
           story_code: string
@@ -582,7 +580,6 @@ export type Database = {
           photo_link_2?: string | null
           photo_link_3?: string | null
           publication_status_code?: number
-          published?: string
           read_count?: number
           reading_time_minutes?: number | null
           story_code?: string

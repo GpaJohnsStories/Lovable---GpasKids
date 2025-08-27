@@ -7,7 +7,7 @@ export interface StoryData {
   illustration: string;
   category: string;
   author: string;
-  published?: string;
+  publication_status_code?: number;
   photo_link_1?: string;
   photo_link_2?: string;
   photo_link_3?: string;
@@ -32,7 +32,7 @@ export const getNewestStories = (realStories: any[] = []): StoryData[] => {
     illustration: "📖",
     category: story.category,
     author: story.author,
-    published: story.published,
+    publication_status_code: story.publication_status_code,
     photo_link_1: story.photo_link_1,
     photo_link_2: story.photo_link_2,
     photo_link_3: story.photo_link_3,

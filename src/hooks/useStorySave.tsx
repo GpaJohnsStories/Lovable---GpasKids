@@ -21,7 +21,6 @@ interface Story {
   photo_alt_2: string;
   photo_alt_3: string;
   video_url: string;
-  published: string;
   ai_voice_name?: string;
   ai_voice_model?: string;
   audio_url?: string;
@@ -38,6 +37,7 @@ export const useStorySave = () => {
     console.log('Form data received:', formData);
     console.log('Story ID:', formData.id);
     console.log('Story Code:', formData.story_code);
+    console.log('Publication Status Code:', formData.publication_status_code);
     console.log('Supabase client:', supabase);
     
     // Check admin session and RLS function
