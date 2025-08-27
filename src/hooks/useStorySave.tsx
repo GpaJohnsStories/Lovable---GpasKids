@@ -25,6 +25,7 @@ interface Story {
   ai_voice_name?: string;
   ai_voice_model?: string;
   audio_url?: string;
+  publication_status_code?: number;
 }
 
 export const useStorySave = () => {
@@ -87,6 +88,13 @@ export const useStorySave = () => {
       toast.error("Story content is required");
       return false;
     }
+    
+    // Publication status validation
+    if (formData.publication_status_code === undefined || formData.publication_status_code === 5) {
+      console.log('Validation failed: Publication status required');
+      toast.error("Please select a publication status before saving");
+      return false;
+    }
 
     console.log('Validation passed, setting loading state...');
     setIsSaving(true);
@@ -105,7 +113,8 @@ export const useStorySave = () => {
         // Keep original content with tokens for rendering
         content: formData.content,
         ai_voice_name: formData.ai_voice_name || 'Nova',
-        ai_voice_model: formData.ai_voice_model || 'tts-1'
+        ai_voice_model: formData.ai_voice_model || 'tts-1',
+        publication_status_code: formData.publication_status_code
       };
 
       if (formData.id) {

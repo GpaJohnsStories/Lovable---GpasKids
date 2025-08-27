@@ -15,13 +15,16 @@ interface Story {
   copyright_status?: string;
   published?: string;
   google_drive_link?: string;
+  publication_status_code?: number;
 }
 
 interface SuperTextStoryStatusProps {
   story?: Story | null;
+  publicationStatusCode?: number;
+  onStatusChange?: (status: number) => void;
 }
 
-const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) => {
+const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publicationStatusCode = 5, onStatusChange }) => {
   const formatDateTime = (dateString?: string | null) => {
     if (!dateString) return { date: '--/--/--', time: '--:--' };
     
@@ -61,21 +64,82 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
     };
   };
 
-  const getPublishedColor = (publishedStatus: string) => {
-    switch (publishedStatus) {
-      case 'Y':
-        return 'text-white bg-green-600 border-green-700';
-      case 'N':
-        return 'text-white bg-red-600 border-red-700';
-      default:
-        return 'text-white bg-red-600 border-red-700';
+  const getStatusButtonStyle = (buttonStatus: number) => {
+    const isActive = publicationStatusCode === buttonStatus;
+    const baseStyle = {
+      fontSize: '21px',
+      fontFamily: 'Arial, sans-serif',
+      fontWeight: 'bold' as const,
+      border: 'none',
+      cursor: 'pointer' as const,
+      padding: '8px 16px',
+      textAlign: 'center' as const,
+      width: '100%',
+      marginBottom: '4px'
+    };
+
+    if (!isActive) {
+      return {
+        ...baseStyle,
+        backgroundColor: '#D3D3D3', // Light gray
+        color: 'black'
+      };
+    }
+
+    switch (buttonStatus) {
+      case 0:
+        return {
+          ...baseStyle,
+          backgroundColor: '#228B22', // Forest Green
+          color: 'white'
+        };
+      case 1:
+        return {
+          ...baseStyle,
+          backgroundColor: '#FFD700', // Golden Yellow
+          color: '#228B22' // Forest Green text
+        };
+      case 2:
+        return {
+          ...baseStyle,
+          backgroundColor: '#3b82f6', // Blue Primary
+          color: 'white'
+        };
+      case 3:
+        return {
+          ...baseStyle,
+          backgroundColor: '#9c441a', // Brown Earth
+          color: 'white'
+        };
+      case 4:
+        return {
+          ...baseStyle,
+          backgroundColor: '#DC143C', // Red Crimson
+          color: '#FFD700' // Golden Yellow text
+        };
+      default: // 5
+        return {
+          ...baseStyle,
+          backgroundColor: '#D3D3D3', // Light gray (inactive state)
+          color: 'black'
+        };
     }
   };
+
+  const statusLabels = [
+    "0 - Ready to be Saved & Published — Approved and Reviewed",
+    "1 - Ready to be Saved & Published — Approved Only", 
+    "2 - Saved, NOT PUBLISHED — Not Reviewed by CoPilot",
+    "3 - Saved — NOT APPROVED by Gpa",
+    "4 - Saved — Still being formatted",
+    "5 - FILE NOT SAVED"
+  ];
 
   return (
     <Card className="h-fit relative" style={{
       borderColor: '#3b82f6',
-      borderWidth: '4px'
+      borderWidth: '4px',
+      minHeight: '500px'
     }}>
       <CardHeader className="flex flex-row justify-between items-center pb-2">
         <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
@@ -94,17 +158,16 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
       </CardHeader>
       <CardContent className="grid md:grid-cols-2 gap-4">
         <div className="space-y-1">
-          <Label htmlFor="published" className="text-xs font-bold text-gray-700">Publication Status</Label>
-          <div className="flex items-center gap-2">
-            <Select value={story?.published || "N"} onValueChange={() => {}}>
-              <SelectTrigger className={`w-1/2 text-xs font-bold ${getPublishedColor(story?.published || 'N')}`}>
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent className="z-50 bg-white border shadow-lg">
-                <SelectItem value="N">Not Published</SelectItem>
-                <SelectItem value="Y">Published</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="space-y-1">
+            {statusLabels.map((label, index) => (
+              <button
+                key={index}
+                onClick={() => onStatusChange?.(index)}
+                style={getStatusButtonStyle(index)}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </div>
 

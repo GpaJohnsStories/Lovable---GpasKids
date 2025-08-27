@@ -72,6 +72,7 @@ export interface Story {
   created_at?: string;
   updated_at?: string;
   audio_generated_at?: string;
+  publication_status_code?: number;
 }
 
 const initialFormData: Story = {
@@ -93,7 +94,8 @@ const initialFormData: Story = {
   published: 'N',
   ai_voice_name: 'Nova',
   ai_voice_model: 'tts-1',
-  copyright_status: '©'
+  copyright_status: '©',
+  publication_status_code: 5
 };
 
 export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {

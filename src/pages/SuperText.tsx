@@ -34,6 +34,7 @@ const SuperText: React.FC = () => {
   const [storyCode, setStoryCode] = React.useState('');
   const [category, setCategory] = React.useState('');
   const [copyrightStatus, setCopyrightStatus] = React.useState('©');
+  const [publicationStatusCode, setPublicationStatusCode] = React.useState<number>(5);
   const [foundStoryTitle, setFoundStoryTitle] = React.useState('');
   const [foundStory, setFoundStory] = React.useState<any>(null);
   const [noStoryFound, setNoStoryFound] = React.useState(false);
@@ -350,7 +351,8 @@ const SuperText: React.FC = () => {
       ai_voice_model: 'tts-1',
       copyright_status: copyrightStatus,
       published: foundStory?.published || 'N',
-      google_drive_link: foundStory?.google_drive_link || ''
+      google_drive_link: foundStory?.google_drive_link || '',
+      publication_status_code: publicationStatusCode
     };
 
     console.log('🚀 Saving story payload:', storyPayload);
@@ -388,6 +390,7 @@ const SuperText: React.FC = () => {
     setStoryCode('');
     setCategory('');
     setCopyrightStatus('©');
+    setPublicationStatusCode(5);
     setFoundStory(null);
     setFoundStoryTitle('');
     setNoStoryFound(false);
@@ -436,6 +439,7 @@ const SuperText: React.FC = () => {
       setStoryCode('');
       setCategory('');
       setCopyrightStatus('©');
+      setPublicationStatusCode(5);
       setFoundStory(null);
       setFoundStoryTitle('');
       setNoStoryFound(false);
@@ -537,6 +541,9 @@ const SuperText: React.FC = () => {
       const copyright = foundStory.copyright_status === 'S' ? 'L' : foundStory.copyright_status;
       setCopyrightStatus(copyright || '©');
       
+      // Set publication status code
+      setPublicationStatusCode(foundStory.publication_status_code || 2);
+      
       // Populate story content for editor
       setStoryContent(foundStory.content || '');
       
@@ -595,6 +602,7 @@ const SuperText: React.FC = () => {
     setStoryCode('');
     setCategory('');
     setCopyrightStatus('©');
+    setPublicationStatusCode(5);
     setFoundStoryTitle('');
     setFoundStory(null);
     setNoStoryFound(false);
@@ -656,6 +664,7 @@ const SuperText: React.FC = () => {
                 setStoryCode('');
                 setCategory('');
                 setCopyrightStatus('©');
+                setPublicationStatusCode(5);
                 setFoundStoryTitle('');
                 setFoundStory(null);
                 setNoStoryFound(false);
@@ -1131,7 +1140,11 @@ const SuperText: React.FC = () => {
             
             {/* Right Side: Story Status */}
             <div className="flex-1">
-              <SuperTextStoryStatus story={foundStory} />
+              <SuperTextStoryStatus 
+                story={foundStory} 
+                publicationStatusCode={publicationStatusCode}
+                onStatusChange={setPublicationStatusCode}
+              />
               
               {/* Create AI Audio File Box */}
               <Card className="h-fit border-2 relative mt-6" style={{ borderColor: '#2563eb' }}>
