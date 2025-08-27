@@ -535,19 +535,33 @@ const SuperText: React.FC = () => {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className={saveAction === 'save-and-clear' ? 'gap-2' : undefined}>
-            <Button 
-              variant="outline" 
-              onClick={() => confirmSave(false)}
-              className={saveAction === 'save-and-clear' ? 'supertext-no-btn mt-2 sm:mt-0' : undefined}
-            >
-              NO
-            </Button>
-            <Button 
-              onClick={() => confirmSave(true)}
-              className={saveAction === 'save-and-clear' ? 'supertext-yes-btn' : undefined}
-            >
-              YES
-            </Button>
+            {saveAction === 'save-and-clear' ? (
+              <>
+                <Button 
+                  variant="no"
+                  onClick={() => confirmSave(false)}
+                  className="min-w-[80px]"
+                >
+                  NO
+                </Button>
+                <Button 
+                  variant="yes"
+                  onClick={() => confirmSave(true)}
+                  className="min-w-[80px]"
+                >
+                  YES
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" onClick={() => confirmSave(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => confirmSave(true)}>
+                  Save Only
+                </Button>
+              </>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>
