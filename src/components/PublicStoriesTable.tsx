@@ -390,7 +390,7 @@ const PublicStoriesTable: React.FC = () => {
                     Author
                   </Button>
                 </TableHead>
-                <TableHead className="p-1 text-center bg-background" style={{ width: '200px', minWidth: '200px' }}>
+                <TableHead className="p-1 text-center bg-background" style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>
                   <Button className="w-full h-6 px-1 py-1 text-white font-bold" size="sm" style={{ backgroundColor: '#228B22', fontSize: '21px' }}>
                     Details
                   </Button>
