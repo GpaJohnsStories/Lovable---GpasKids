@@ -68,15 +68,15 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story }) =>
 
   return (
     <Card className="h-fit relative" style={{
-      borderColor: '#F97316',
+      borderColor: '#228B22',
       borderWidth: '4px'
     }}>
       <CardHeader className="flex flex-row justify-between items-center">
         <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
-          color: '#F97316'
+          color: '#228B22'
         }}>
           <FileText className="h-5 w-5" />
-          Story Status
+          Text Details
         </CardTitle>
         <h3 className="text-xl font-bold" style={{
           color: '#4A7C59',
