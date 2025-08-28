@@ -131,47 +131,19 @@ class IconCacheService {
         iconName = iconData.icon_name;
       }
 
-      console.log(`🔍 Attempting to download icon: ${iconPath}`);
-
-      // Try download method first
+      // Get the icon from Supabase storage with cache busting
+      const cacheBuster = `?t=${Date.now()}`;
       const { data, error } = await supabase.storage
         .from('icons')
-        .download(iconPath);
+        .download(iconPath + cacheBuster);
 
       if (error) {
-        console.warn(`❌ Download failed for ${iconPath}:`, error);
-        
-        // Fallback to public URL method
-        console.log(`🔄 Trying public URL fallback for: ${iconPath}`);
-        const { data: publicUrlData } = supabase.storage
-          .from('icons')
-          .getPublicUrl(iconPath);
-        
-        if (publicUrlData?.publicUrl) {
-          console.log(`✅ Using public URL for ${iconPath}: ${publicUrlData.publicUrl}`);
-          
-          // Fetch the image data from the public URL
-          const response = await fetch(publicUrlData.publicUrl);
-          if (!response.ok) {
-            throw new Error(`Failed to fetch icon from public URL: ${response.status} ${response.statusText}`);
-          }
-          
-          const blob = await response.blob();
-          const url = URL.createObjectURL(blob);
-          
-          // Cache the icon
-          this.cacheIcon(iconPath, blob, url, iconName);
-          return url;
-        }
-        
-        throw new Error(`Failed to download icon ${iconPath}: ${JSON.stringify(error)}`);
+        throw new Error(`Failed to download icon ${iconPath}: ${error.message}`);
       }
 
       if (!data) {
         throw new Error(`No data received for icon: ${iconPath}`);
       }
-
-      console.log(`✅ Successfully downloaded icon: ${iconPath}`);
 
       // Create blob URL
       const url = URL.createObjectURL(data);
@@ -181,7 +153,9 @@ class IconCacheService {
 
       return url;
     } catch (error) {
-      console.error(`💥 Failed to load icon ${iconPath}:`, error);
+      console.error(`Failed to load icon ${iconPath}:`, error);
+      
+      // No fallback - let components handle missing icons by showing text
       throw error;
     }
   }

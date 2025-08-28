@@ -1,12 +1,16 @@
 import React from 'react';
 import {
   AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { YesNoButtons } from "@/components/ui/YesNoButtons";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 interface StoryCodeDialogProps {
   open: boolean;
@@ -55,14 +59,20 @@ export const StoryCodeDialog: React.FC<StoryCodeDialogProps> = ({
             )}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <div className="flex justify-end pt-4">
-          <YesNoButtons
-            onNo={onNo}
-            onYes={isFound ? onEditExisting || onYes : onYes}
-            yesLabel="YES"
-            noLabel="NO"
-          />
-        </div>
+        <AlertDialogFooter className="gap-2">
+          <AlertDialogCancel 
+            onClick={onNo}
+            className={cn(buttonVariants({ variant: "destructive" }), "mt-2 sm:mt-0")}
+          >
+            No
+          </AlertDialogCancel>
+          <AlertDialogAction 
+            onClick={isFound ? onEditExisting : onYes}
+            className="!text-white !bg-green-600 !border-green-700 hover:!bg-green-700"
+          >
+            Yes
+          </AlertDialogAction>
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );

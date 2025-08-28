@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { YesNoButtons } from "@/components/ui/YesNoButtons";
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import SecureAdminRoute from '@/components/admin/SecureAdminRoute';
@@ -104,41 +103,31 @@ const SuperText: React.FC = () => {
     handleInputChange('publication_status_code', initialPublicationStatusCode.toString());
   }, [searchParams]); // Removed handleInputChange to prevent infinite loop
 
-  const clearForm = useCallback(() => {
-    // Reset form fields to initial values
-    handleInputChange('title', '');
-    handleInputChange('content', '');
-    handleInputChange('tagline', '');
-    handleInputChange('excerpt', '');
-    handleInputChange('google_drive_link', '');
-    handleInputChange('photo_link_1', '');
-    handleInputChange('photo_link_2', '');
-    handleInputChange('photo_link_3', '');
-    handleInputChange('photo_alt_1', '');
-    handleInputChange('photo_alt_2', '');
-    handleInputChange('photo_alt_3', '');
-    handleInputChange('video_url', '');
-    handleInputChange('ai_voice_name', 'Nova');
-    handleInputChange('ai_voice_model', 'tts-1');
-    handleInputChange('copyright_status', '');
-    handleInputChange('publication_status_code', '5');
-
-    // Reset local state
-    setStoryCode('');
-    setCategory('');
-    setCopyrightStatus('');
-    setPublicationStatusCode(5);
-    setLookupResult(null);
-    
-    toast.success("Form cleared successfully!");
-  }, [handleInputChange]);
-
   useEffect(() => {
     // Clear form after submit if 'clear' param is true
     if (clear) {
-      clearForm();
+      // Reset form fields to initial values
+      handleInputChange('title', '');
+      handleInputChange('content', '');
+      handleInputChange('tagline', '');
+      handleInputChange('excerpt', '');
+      handleInputChange('google_drive_link', '');
+      handleInputChange('photo_link_1', '');
+      handleInputChange('photo_link_2', '');
+      handleInputChange('photo_link_3', '');
+      handleInputChange('video_url', '');
+      handleInputChange('ai_voice_name', 'Nova');
+      handleInputChange('ai_voice_model', 'tts-1');
+      handleInputChange('copyright_status', '©');
+      handleInputChange('publication_status_code', '5');
+
+      // Reset local state
+      setStoryCode('');
+      setCategory('');
+      setCopyrightStatus('©');
+      setPublicationStatusCode(5);
     }
-  }, [clear, clearForm]);
+  }, [clear]); // Removed handleInputChange to prevent infinite loop
 
   // Sync local publicationStatusCode with formData when it changes
   useEffect(() => {
@@ -175,18 +164,13 @@ const SuperText: React.FC = () => {
       toast.success("Story data loaded successfully!");
     }
   }, [storyCode, lookupStoryByCode, populateFormWithStory]);
-  const handleSave = async (action: 'save-and-clear' | 'save-only' | 'cancel-all') => {
+  const handleSave = async (action: 'save-and-clear' | 'save-only') => {
     setSaveAction(action);
     setShowConfirmDialog(true);
   };
   const confirmSave = async (confirmed: boolean) => {
     setShowConfirmDialog(false);
     if (confirmed) {
-      if (saveAction === 'cancel-all') {
-        clearForm();
-        return;
-      }
-      
       if (!formData.title || !formData.content || !formData.story_code) {
         toast.error("Please fill in all required fields.");
         return;
@@ -232,7 +216,7 @@ const SuperText: React.FC = () => {
                 {isSaving ? 'Saving...' : 'Save & Clear Form'}
               </Button>
               
-              <Button onClick={() => handleSave('cancel-all')} className="supertext-no-btn px-8 py-3 text-lg font-semibold rounded-full">
+              <Button onClick={() => setSaveAction('cancel-all')} className="supertext-no-btn px-8 py-3 text-lg font-semibold rounded-full">
                 Cancel All Edits & Clear Form
               </Button>
             </div>
@@ -255,40 +239,16 @@ const SuperText: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>A</div>
                     <div className="flex-1">
-                      <Input 
-                        type="text" 
-                        placeholder="TEXT CODE" 
-                        value={storyCode}
-                        onChange={e => {
-                          const upperValue = e.target.value.toUpperCase();
-                          setStoryCode(upperValue);
-                          handleInputChange('story_code', upperValue);
-                        }} 
-                        onPaste={e => {
-                          const pastedText = e.clipboardData.getData('text');
-                          const upperValue = pastedText.toUpperCase();
-                          e.preventDefault();
-                          setStoryCode(upperValue);
-                          handleInputChange('story_code', upperValue);
-                        }}
-                        onBlur={e => {
-                          const upperValue = e.target.value.toUpperCase();
-                          if (upperValue !== e.target.value) {
-                            setStoryCode(upperValue);
-                            handleInputChange('story_code', upperValue);
-                          }
-                        }}
-                        className="border-orange-400 focus:border-orange-500" 
-                        style={{
-                          width: '192px',
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontStyle: 'normal',
-                          color: '#000000'
-                        }} 
-                        autoCapitalize="characters"
-                        spellCheck={false}
-                      />
+                      <Input type="text" placeholder="Text Code" value={storyCode} onChange={e => {
+                      setStoryCode(e.target.value);
+                      handleInputChange('story_code', e.target.value);
+                    }} className="border-orange-400 focus:border-orange-500" style={{
+                      width: '192px',
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontStyle: 'normal',
+                      color: '#000000'
+                    }} />
                     </div>
                   </div>
 
@@ -297,20 +257,17 @@ const SuperText: React.FC = () => {
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>B</div>
                     <div className="grid grid-cols-2 gap-4 flex-1">
                       <div>
-                         <Select value={formData.category} onValueChange={value => {
+                        <Select value={formData.category} onValueChange={value => {
                         setCategory(value);
                         handleInputChange('category', value);
                       }}>
-                           <SelectTrigger className="w-full border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                           fontSize: '21px',
-                           fontFamily: 'Arial',
-                           fontWeight: 'bold',
-                           backgroundColor: '#F97316',
-                           color: 'white',
-                           borderColor: '#ea580c'
-                         }}>
-                             <SelectValue placeholder="Category" />
-                           </SelectTrigger>
+                          <SelectTrigger className="w-full border-orange-400 focus:border-orange-500" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}>
+                            <SelectValue placeholder="Category" />
+                          </SelectTrigger>
                           <SelectContent className="bg-white">
                             <SelectItem value="WebText" style={{
                             fontSize: '21px',
@@ -382,20 +339,20 @@ const SuperText: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>C</div>
                     <div className="flex gap-3 flex-1">
-                       <Select value={formData.copyright_status || ''} onValueChange={value => {
+                      <Select value={formData.copyright_status || '©'} onValueChange={value => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
-                         <SelectTrigger className="w-[320px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                         fontSize: '21px',
-                         fontFamily: 'Arial',
-                         fontWeight: 'bold',
-                         textAlign: 'left',
-                         backgroundColor: !formData.copyright_status ? '#9c441a' : formData.copyright_status === '©' ? '#dc2626' : formData.copyright_status === 'L' ? '#F97316' : formData.copyright_status === 'O' ? '#228B22' : '#9c441a',
-                         borderColor: !formData.copyright_status ? '#7a2f19' : formData.copyright_status === '©' ? '#b91c1c' : formData.copyright_status === 'L' ? '#ea580c' : formData.copyright_status === 'O' ? '#166534' : '#7a2f19'
-                       }}>
-                           <SelectValue placeholder="Copyright Status" />
-                         </SelectTrigger>
+                        <SelectTrigger className="w-[320px] text-white text-left border-2" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold',
+                        textAlign: 'left',
+                        backgroundColor: formData.copyright_status === '©' || !formData.copyright_status ? '#dc2626' : formData.copyright_status === 'L' ? '#F97316' : formData.copyright_status === 'O' ? '#228B22' : '#dc2626',
+                        borderColor: formData.copyright_status === '©' || !formData.copyright_status ? '#b91c1c' : formData.copyright_status === 'L' ? '#ea580c' : formData.copyright_status === 'O' ? '#166534' : '#b91c1c'
+                      }}>
+                          <SelectValue placeholder="© Full Copyright" />
+                        </SelectTrigger>
                         <SelectContent className="bg-white">
                           <SelectItem value="©" style={{
                           fontSize: '21px',
@@ -640,40 +597,35 @@ const SuperText: React.FC = () => {
       </div>
 
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <DialogContent className="max-w-md">
+        <DialogContent className={saveAction === 'save-and-clear' ? 'max-w-md' : undefined}>
           <DialogHeader>
-            <DialogTitle className="text-lg font-bold" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
-              {saveAction === 'save-and-clear' ? 'Confirm Save & Clear' : 
-               saveAction === 'cancel-all' ? 'Confirm Cancel All & Clear' : 'Confirm Save'}
+            <DialogTitle className="text-lg font-bold">
+              {saveAction === 'save-and-clear' ? 'Confirm Save & Clear' : 'Confirm Save'}
             </DialogTitle>
-            <DialogDescription className="text-sm" style={{ fontSize: '21px', fontFamily: 'Arial' }}>
+            <DialogDescription className="text-sm">
               {saveAction === 'save-and-clear' ? <>
                   Are you sure you want to <span className="text-red-600 font-semibold">SAVE</span> this story
                   <br />
                   and then <span className="text-red-600 font-semibold">CLEAR</span> the form?
-                </> : saveAction === 'cancel-all' ? <>
-                  Are you sure you want to <span className="text-red-600 font-semibold">CANCEL ALL EDITS</span>
-                  <br />
-                  and <span className="text-red-600 font-semibold">CLEAR</span> the form? All unsaved changes will be lost!
                 </> : 'Are you sure you want to save this story?'}
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="gap-2">
-            {saveAction === 'save-and-clear' || saveAction === 'cancel-all' ? (
-              <YesNoButtons
-                onNo={() => confirmSave(false)}
-                onYes={() => confirmSave(true)}
-                yesLabel={saveAction === 'cancel-all' ? 'Clear Now' : 'YES'}
-                noLabel={saveAction === 'cancel-all' ? 'Keep Editing' : 'NO'}
-              />
-            ) : (
-              <YesNoButtons
-                onNo={() => confirmSave(false)}
-                onYes={() => confirmSave(true)}
-                yesLabel="Save Only"
-                noLabel="Cancel"
-              />
-            )}
+          <DialogFooter className={saveAction === 'save-and-clear' ? 'gap-2' : undefined}>
+            {saveAction === 'save-and-clear' ? <>
+                <Button variant="no" onClick={() => confirmSave(false)} className="min-w-[80px]">
+                  NO
+                </Button>
+                <Button variant="yes" onClick={() => confirmSave(true)} className="min-w-[80px]">
+                  YES
+                </Button>
+              </> : <>
+                <Button variant="outline" onClick={() => confirmSave(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => confirmSave(true)}>
+                  Save Only
+                </Button>
+              </>}
           </DialogFooter>
         </DialogContent>
       </Dialog>

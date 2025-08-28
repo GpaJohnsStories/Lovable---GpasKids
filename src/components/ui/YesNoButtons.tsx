@@ -29,12 +29,6 @@ export const YesNoButtons = React.forwardRef<
   noClassName,
   ...props
 }, ref) => {
-  const defaultButtonStyle = {
-    fontSize: '21px',
-    fontFamily: 'Arial',
-    fontWeight: 'bold' as const
-  };
-
   return (
     <div 
       ref={ref}
@@ -46,7 +40,6 @@ export const YesNoButtons = React.forwardRef<
         onClick={onNo}
         disabled={disabledNo}
         className={cn("min-w-[80px]", noClassName)}
-        style={defaultButtonStyle}
       >
         {noLabel}
       </Button>
@@ -55,7 +48,6 @@ export const YesNoButtons = React.forwardRef<
         onClick={onYes}
         disabled={disabledYes}
         className={cn("min-w-[80px]", yesClassName)}
-        style={defaultButtonStyle}
       >
         {yesLabel}
       </Button>
