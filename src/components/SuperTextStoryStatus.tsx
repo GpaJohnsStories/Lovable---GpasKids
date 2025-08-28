@@ -148,7 +148,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
           Text Status
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         <div className="space-y-1">
           {statusLabels.map((label, index) => (
             <button
