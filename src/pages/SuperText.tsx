@@ -343,11 +343,13 @@ const SuperText: React.FC = () => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
-                        <SelectTrigger className={`w-[320px] text-white text-left ${formData.copyright_status === '©' || !formData.copyright_status ? 'bg-red-600 border-red-700' : formData.copyright_status === 'L' ? 'bg-orange-500 border-orange-600' : formData.copyright_status === 'CC' ? 'bg-green-600 border-green-700' : formData.copyright_status === 'P' ? 'bg-blue-600 border-blue-700' : 'bg-red-600 border-red-700'}`} style={{
+                        <SelectTrigger className="w-[320px] text-white text-left border-2" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
-                        textAlign: 'left'
+                        textAlign: 'left',
+                        backgroundColor: formData.copyright_status === '©' || !formData.copyright_status ? '#dc2626' : formData.copyright_status === 'L' ? '#F97316' : formData.copyright_status === 'O' ? '#228B22' : '#dc2626',
+                        borderColor: formData.copyright_status === '©' || !formData.copyright_status ? '#b91c1c' : formData.copyright_status === 'L' ? '#ea580c' : formData.copyright_status === 'O' ? '#166534' : '#b91c1c'
                       }}>
                           <SelectValue placeholder="© Full Copyright" />
                         </SelectTrigger>
