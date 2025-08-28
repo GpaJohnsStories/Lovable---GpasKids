@@ -74,8 +74,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
       cursor: 'pointer' as const,
       padding: '8px 16px',
       textAlign: 'center' as const,
-      width: '100%',
-      marginBottom: '4px'
+      width: '100%'
     };
 
     if (!isActive) {
@@ -149,7 +148,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
-        <div className="space-y-1">
+        <div className="space-y-0">
           {statusLabels.map((label, index) => (
             <button
               key={index}
