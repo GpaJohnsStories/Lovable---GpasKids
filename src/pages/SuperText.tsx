@@ -235,8 +235,10 @@ const SuperText: React.FC = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <div>
-                    <div className="flex gap-2 mt-1">
+                  {/* Row A - Story Code */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold" style={{ backgroundColor: '#22c55e' }}>A</div>
+                    <div className="flex gap-2 flex-1">
                       <Input type="text" placeholder="Text Code" value={storyCode} onChange={e => {
                       setStoryCode(e.target.value);
                       handleInputChange('story_code', e.target.value);
@@ -253,131 +255,139 @@ const SuperText: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Select value={formData.category} onValueChange={value => {
-                      setCategory(value);
-                      handleInputChange('category', value);
+                  {/* Row B - Category */}
+                  <div className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold" style={{ backgroundColor: '#22c55e' }}>B</div>
+                    <div className="grid grid-cols-2 gap-4 flex-1">
+                      <div>
+                        <Select value={formData.category} onValueChange={value => {
+                        setCategory(value);
+                        handleInputChange('category', value);
+                      }}>
+                          <SelectTrigger className="w-full border-orange-400 focus:border-orange-500" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}>
+                            <SelectValue placeholder="Category" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-white">
+                            <SelectItem value="WebText" style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}>
+                              <div className="px-3 py-1 rounded w-full text-center text-white" style={{
+                              backgroundColor: '#A0522D'
+                            }}>
+                                WebText
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="Fun" style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}>
+                              <div className="bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500 px-3 py-1 rounded w-full text-center">
+                                Fun
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="Life" style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}>
+                              <div className="bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500 px-3 py-1 rounded w-full text-center">
+                                Life
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="North Pole" style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}>
+                              <div className="bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500 px-3 py-1 rounded w-full text-center">
+                                North Pole
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="World Changers" style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}>
+                              <div className="bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500 px-3 py-1 rounded w-full text-center">
+                                World Changers
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="BioText" style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}>
+                              <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">
+                                BioText
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" className="p-2">🎧</Button>
+                        <Button variant="outline" size="sm" className="p-2">📹</Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Row C - Copyright */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold" style={{ backgroundColor: '#22c55e' }}>C</div>
+                    <div className="flex-1">
+                      <Select value={formData.copyright_status || '©'} onValueChange={value => {
+                      setCopyrightStatus(value);
+                      handleInputChange('copyright_status', value);
                     }}>
-                        <SelectTrigger className="w-full border-orange-400 focus:border-orange-500" style={{
+                        <SelectTrigger className={`w-[260px] text-white ${formData.copyright_status === '©' || !formData.copyright_status ? 'bg-red-600 border-red-700' : formData.copyright_status === 'L' ? 'bg-orange-500 border-orange-600' : formData.copyright_status === 'CC' ? 'bg-green-600 border-green-700' : formData.copyright_status === 'P' ? 'bg-blue-600 border-blue-700' : 'bg-red-600 border-red-700'}`} style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold'
                       }}>
-                          <SelectValue placeholder="Category" />
+                          <SelectValue placeholder="© Full Copyright" />
                         </SelectTrigger>
                         <SelectContent className="bg-white">
-                          <SelectItem value="WebText" style={{
+                          <SelectItem value="©" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}>
+                            <div className="px-3 py-1 rounded w-full text-center text-white bg-red-600">
+                              © - Full Copyright
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="L" style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
                           fontWeight: 'bold'
                         }}>
                             <div className="px-3 py-1 rounded w-full text-center text-white" style={{
-                            backgroundColor: '#A0522D'
+                            backgroundColor: '#F97316'
                           }}>
-                              WebText
+                              L — Limited Use
                             </div>
                           </SelectItem>
-                          <SelectItem value="Fun" style={{
+                          <SelectItem value="O" style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
                           fontWeight: 'bold'
                         }}>
-                            <div className="bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500 px-3 py-1 rounded w-full text-center">
-                              Fun
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="Life" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
-                            <div className="bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500 px-3 py-1 rounded w-full text-center">
-                              Life
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="North Pole" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
-                            <div className="bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500 px-3 py-1 rounded w-full text-center">
-                              North Pole
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="World Changers" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
-                            <div className="bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500 px-3 py-1 rounded w-full text-center">
-                              World Changers
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="BioText" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
-                            <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">
-                              BioText
+                            <div className="px-3 py-1 rounded w-full text-center text-white" style={{
+                            backgroundColor: '#228B22'
+                          }}>
+                              O — Open Unlimited
                             </div>
                           </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="p-2">🎧</Button>
-                      <Button variant="outline" size="sm" className="p-2">📹</Button>
-                    </div>
-                  </div>
-
-                  <div>
-                    <Select value={formData.copyright_status || '©'} onValueChange={value => {
-                    setCopyrightStatus(value);
-                    handleInputChange('copyright_status', value);
-                  }}>
-                      <SelectTrigger className={`w-[260px] text-white ${formData.copyright_status === '©' || !formData.copyright_status ? 'bg-red-600 border-red-700' : formData.copyright_status === 'L' ? 'bg-orange-500 border-orange-600' : formData.copyright_status === 'CC' ? 'bg-green-600 border-green-700' : formData.copyright_status === 'P' ? 'bg-blue-600 border-blue-700' : 'bg-red-600 border-red-700'}`} style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                        <SelectValue placeholder="© Full Copyright" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="©" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}>
-                          <div className="px-3 py-1 rounded w-full text-center text-white bg-red-600">
-                            © - Full Copyright
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="L" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}>
-                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{
-                          backgroundColor: '#F97316'
-                        }}>
-                            L — Limited Use
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="O" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}>
-                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{
-                          backgroundColor: '#228B22'
-                        }}>
-                            O — Open Unlimited
-                          </div>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
                   </div>
 
                   <div className="bg-gray-100 p-4 rounded border-2 border-orange-400" style={{
