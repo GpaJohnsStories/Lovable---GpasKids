@@ -244,7 +244,12 @@ const SuperText: React.FC = () => {
             {/* Left Panel - Form Fields */}
             <div className="lg:col-span-2 space-y-6">
               {/* Text Details Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6">
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative">
+                <img 
+                  src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/icon/ICO-AD1.gif"
+                  alt="Test Icon"
+                  className="absolute top-2 right-2 w-8 h-8"
+                />
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
                   <h2 className="text-xl font-bold text-green-700">Text Details</h2>
