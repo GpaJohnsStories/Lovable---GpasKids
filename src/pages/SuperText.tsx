@@ -387,20 +387,23 @@ const SuperText: React.FC = () => {
                           </SelectItem>
                         </SelectContent>
                       </Select>
-                      <Button 
-                        onClick={handleStoryCodeLookup} 
-                        disabled={isLoadingStory} 
-                        variant="outline"
-                        className="text-white border-green-600 hover:bg-green-700"
-                        style={{
-                          background: 'linear-gradient(to bottom, #16a34a, #15803d)',
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        {isLoadingStory ? 'Loading...' : 'Load Text'}
-                      </Button>
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>D</div>
+                        <Button 
+                          onClick={handleStoryCodeLookup} 
+                          disabled={isLoadingStory} 
+                          variant="outline"
+                          className="text-white border-green-600 hover:bg-green-700"
+                          style={{
+                            background: 'linear-gradient(to bottom, #16a34a, #15803d)',
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          {isLoadingStory ? 'Loading...' : 'Load Text'}
+                        </Button>
+                      </div>
                     </div>
                   </div>
 
