@@ -124,18 +124,38 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
               <FormControl>
                 <Input
                   {...field}
+                  onChange={(e) => {
+                    const upperValue = e.target.value.toUpperCase();
+                    field.onChange(upperValue);
+                  }}
+                  onPaste={(e) => {
+                    const pastedText = e.clipboardData.getData('text');
+                    const upperValue = pastedText.toUpperCase();
+                    e.preventDefault();
+                    field.onChange(upperValue);
+                  }}
                   placeholder="Text Code"
                   className="w-full px-3 py-2 text-base border rounded-md font-bold border-orange-accent border-2"
                   autoComplete="off"
+                  autoCapitalize="characters"
+                  spellCheck={false}
                   aria-label="Text Code"
                   onBlur={(e) => {
+                    const upperValue = e.target.value.toUpperCase();
+                    if (upperValue !== e.target.value) {
+                      field.onChange(upperValue);
+                    }
                     field.onBlur();
-                    handleStoryCodeLookup(e.target.value);
+                    handleStoryCodeLookup(upperValue);
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();
-                      handleStoryCodeLookup(e.currentTarget.value);
+                      const upperValue = e.currentTarget.value.toUpperCase();
+                      if (upperValue !== e.currentTarget.value) {
+                        field.onChange(upperValue);
+                      }
+                      handleStoryCodeLookup(upperValue);
                     }
                   }}
                 />
@@ -165,23 +185,42 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
         <Input
           id="story_code"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            const upperValue = e.target.value.toUpperCase();
+            onChange(upperValue);
+          }}
+          onPaste={(e) => {
+            const pastedText = e.clipboardData.getData('text');
+            const upperValue = pastedText.toUpperCase();
+            e.preventDefault();
+            onChange(upperValue);
+          }}
           placeholder="Text Code"
           className="w-full px-3 py-2 text-base border rounded-md font-bold border-orange-accent border-2"
           aria-label="Text Code"
           autoComplete="off"
+          autoCapitalize="characters"
+          spellCheck={false}
           onBlur={(e) => {
-            handleStoryCodeLookup(e.target.value);
+            const upperValue = e.target.value.toUpperCase();
+            if (upperValue !== e.target.value) {
+              onChange(upperValue);
+            }
+            handleStoryCodeLookup(upperValue);
             if (onCodeLookup) {
-              onCodeLookup(e.target.value);
+              onCodeLookup(upperValue);
             }
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               e.preventDefault();
-              handleStoryCodeLookup(e.currentTarget.value);
+              const upperValue = e.currentTarget.value.toUpperCase();
+              if (upperValue !== e.currentTarget.value) {
+                onChange(upperValue);
+              }
+              handleStoryCodeLookup(upperValue);
               if (onCodeLookup) {
-                onCodeLookup(e.currentTarget.value);
+                onCodeLookup(upperValue);
               }
             }
           }}
