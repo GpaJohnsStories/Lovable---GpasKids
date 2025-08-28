@@ -257,8 +257,8 @@ const SuperText: React.FC = () => {
                     <div className="flex-1">
                       <Input 
                         type="text" 
-                        placeholder="Text Code" 
-                        value={storyCode} 
+                        placeholder="TEXT CODE" 
+                        value={storyCode}
                         onChange={e => {
                           const upperValue = e.target.value.toUpperCase();
                           setStoryCode(upperValue);
