@@ -73,7 +73,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
       border: 'none',
       cursor: 'pointer' as const,
       padding: '8px 16px',
-      textAlign: 'center' as const,
+      textAlign: 'left' as const,
       width: '100%'
     };
 
