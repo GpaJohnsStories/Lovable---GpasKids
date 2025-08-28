@@ -64,7 +64,7 @@ export const ConnectionTestPanel: React.FC = () => {
       setTestResults(prev => ({ ...prev, storage: `Error: ${err instanceof Error ? err.message : 'Unknown error'}` }));
     }
 
-    // Test 4: Icon Download Test
+    // Test 4: Icon Loading Test (using direct public URL method)
     try {
       setTests(prev => ({ ...prev, icons: 'pending' }));
       
@@ -79,17 +79,27 @@ export const ConnectionTestPanel: React.FC = () => {
         throw new Error('No test icon found in database');
       }
       
-      // Try to download the icon directly
-      const { data: iconData, error: downloadError } = await supabase.storage
+      // Test direct public URL method (more reliable than download)
+      const { data: publicUrlData } = supabase.storage
         .from('icons')
-        .download(testIcon.file_name_path);
+        .getPublicUrl(testIcon.file_name_path);
       
-      if (downloadError) {
-        throw new Error(`Failed to download icon: ${downloadError.message}`);
+      if (!publicUrlData?.publicUrl) {
+        throw new Error('Failed to get public URL');
       }
+
+      // Test if we can actually load the image
+      const img = new Image();
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = () => reject(new Error('Failed to load test icon'));
+        img.src = publicUrlData.publicUrl;
+        // Timeout after 3 seconds
+        setTimeout(() => reject(new Error('Icon load timeout')), 3000);
+      });
       
       setTests(prev => ({ ...prev, icons: 'success' }));
-      setTestResults(prev => ({ ...prev, icons: `Successfully downloaded: ${testIcon.file_name_path}` }));
+      setTestResults(prev => ({ ...prev, icons: `Successfully loaded via public URL: ${testIcon.file_name_path}` }));
     } catch (err) {
       setTests(prev => ({ ...prev, icons: 'error' }));
       setTestResults(prev => ({ ...prev, icons: `Error: ${err instanceof Error ? err.message : 'Unknown error'}` }));

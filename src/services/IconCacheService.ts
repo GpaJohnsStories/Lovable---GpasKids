@@ -141,30 +141,22 @@ class IconCacheService {
       if (error) {
         console.warn(`❌ Download failed for ${iconPath}:`, error);
         
-        // Fallback to public URL method
+        // Fallback to public URL method (no CORS issues)
         console.log(`🔄 Trying public URL fallback for: ${iconPath}`);
         const { data: publicUrlData } = supabase.storage
           .from('icons')
           .getPublicUrl(iconPath);
         
         if (publicUrlData?.publicUrl) {
-          console.log(`✅ Using public URL for ${iconPath}: ${publicUrlData.publicUrl}`);
+          console.log(`✅ Using direct public URL for ${iconPath}: ${publicUrlData.publicUrl}`);
           
-          // Fetch the image data from the public URL
-          const response = await fetch(publicUrlData.publicUrl);
-          if (!response.ok) {
-            throw new Error(`Failed to fetch icon from public URL: ${response.status} ${response.statusText}`);
-          }
-          
-          const blob = await response.blob();
-          const url = URL.createObjectURL(blob);
-          
-          // Cache the icon
-          this.cacheIcon(iconPath, blob, url, iconName);
-          return url;
+          // Return direct public URL to avoid CORS issues with blob creation
+          // Cache the direct URL instead of creating a blob
+          this.cacheDirectUrl(iconPath, publicUrlData.publicUrl, iconName);
+          return publicUrlData.publicUrl;
         }
         
-        throw new Error(`Failed to download icon ${iconPath}: ${JSON.stringify(error)}`);
+        throw new Error(`Failed to get public URL for icon ${iconPath}: ${JSON.stringify(error)}`);
       }
 
       if (!data) {
@@ -203,6 +195,28 @@ class IconCacheService {
     });
 
     console.log(`📦 Cached icon: ${iconPath} (cache size: ${this.cache.size})`);
+  }
+
+  /**
+   * Cache a direct URL (for public URLs that don't need blob conversion)
+   */
+  private cacheDirectUrl(iconPath: string, url: string, iconName?: string): void {
+    // Clean up old entries if cache is full
+    if (this.cache.size >= this.config.maxSize) {
+      this.evictOldestEntry();
+    }
+
+    // Create a minimal blob for consistency (not actually used)
+    const dummyBlob = new Blob([''], { type: 'text/plain' });
+
+    this.cache.set(iconPath, {
+      url,
+      blob: dummyBlob,
+      timestamp: Date.now(),
+      iconName
+    });
+
+    console.log(`📦 Cached direct URL: ${iconPath} (cache size: ${this.cache.size})`);
   }
 
   /**
