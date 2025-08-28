@@ -396,7 +396,7 @@ const SuperText: React.FC = () => {
                       handleInputChange('copyright_status', value);
                     }}>
                       <SelectTrigger 
-                        className="w-full bg-red-600 text-white border-red-700"
+                        className="bg-red-600 text-white border-red-700"
                         style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
