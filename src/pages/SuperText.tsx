@@ -249,9 +249,11 @@ const SuperText: React.FC = () => {
                       fontStyle: 'normal',
                       color: '#000000'
                     }} />
-                      <Button onClick={handleStoryCodeLookup} disabled={isLoadingStory} variant="outline" className="border-orange-400 text-orange-600 hover:bg-orange-50" style={{
+                      <Button onClick={handleStoryCodeLookup} disabled={isLoadingStory} className="text-white" style={{
+                        backgroundColor: '#16a34a',
                         fontSize: '21px',
-                        fontFamily: 'Arial'
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
                       }}>
                         {isLoadingStory ? 'Loading...' : 'Load Text'}
                       </Button>
