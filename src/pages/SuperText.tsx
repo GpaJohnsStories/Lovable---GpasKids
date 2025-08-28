@@ -237,7 +237,7 @@ const SuperText: React.FC = () => {
                 <div className="space-y-4">
                   {/* Row A - Story Code */}
                   <div className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold" style={{ backgroundColor: '#22c55e' }}>A</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>A</div>
                     <div className="flex gap-2 flex-1">
                       <Input type="text" placeholder="Text Code" value={storyCode} onChange={e => {
                       setStoryCode(e.target.value);
@@ -257,7 +257,7 @@ const SuperText: React.FC = () => {
 
                   {/* Row B - Category */}
                   <div className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold" style={{ backgroundColor: '#22c55e' }}>B</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>B</div>
                     <div className="grid grid-cols-2 gap-4 flex-1">
                       <div>
                         <Select value={formData.category} onValueChange={value => {
@@ -340,7 +340,7 @@ const SuperText: React.FC = () => {
 
                   {/* Row C - Copyright */}
                   <div className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold" style={{ backgroundColor: '#22c55e' }}>C</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>C</div>
                     <div className="flex-1">
                       <Select value={formData.copyright_status || '©'} onValueChange={value => {
                       setCopyrightStatus(value);
