@@ -238,7 +238,7 @@ const SuperText: React.FC = () => {
                   {/* Row A - Story Code */}
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>A</div>
-                    <div className="flex gap-2 flex-1">
+                    <div className="flex-1">
                       <Input type="text" placeholder="Text Code" value={storyCode} onChange={e => {
                       setStoryCode(e.target.value);
                       handleInputChange('story_code', e.target.value);
@@ -249,20 +249,6 @@ const SuperText: React.FC = () => {
                       fontStyle: 'normal',
                       color: '#000000'
                     }} />
-                      <Button 
-                        onClick={handleStoryCodeLookup} 
-                        disabled={isLoadingStory} 
-                        variant="outline"
-                        className="text-white border-green-600 hover:bg-green-700"
-                        style={{
-                          background: 'linear-gradient(to bottom, #16a34a, #15803d)',
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        {isLoadingStory ? 'Loading...' : 'Load Text'}
-                      </Button>
                     </div>
                   </div>
 
@@ -352,12 +338,12 @@ const SuperText: React.FC = () => {
                   {/* Row C - Copyright */}
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>C</div>
-                    <div className="flex-1">
+                    <div className="flex gap-3 flex-1">
                       <Select value={formData.copyright_status || '©'} onValueChange={value => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
-                        <SelectTrigger className={`w-[calc(100%-120px)] text-white ${formData.copyright_status === '©' || !formData.copyright_status ? 'bg-red-600 border-red-700' : formData.copyright_status === 'L' ? 'bg-orange-500 border-orange-600' : formData.copyright_status === 'CC' ? 'bg-green-600 border-green-700' : formData.copyright_status === 'P' ? 'bg-blue-600 border-blue-700' : 'bg-red-600 border-red-700'}`} style={{
+                        <SelectTrigger className={`w-[260px] text-white ${formData.copyright_status === '©' || !formData.copyright_status ? 'bg-red-600 border-red-700' : formData.copyright_status === 'L' ? 'bg-orange-500 border-orange-600' : formData.copyright_status === 'CC' ? 'bg-green-600 border-green-700' : formData.copyright_status === 'P' ? 'bg-blue-600 border-blue-700' : 'bg-red-600 border-red-700'}`} style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold'
@@ -398,6 +384,20 @@ const SuperText: React.FC = () => {
                           </SelectItem>
                         </SelectContent>
                       </Select>
+                      <Button 
+                        onClick={handleStoryCodeLookup} 
+                        disabled={isLoadingStory} 
+                        variant="outline"
+                        className="text-white border-green-600 hover:bg-green-700"
+                        style={{
+                          background: 'linear-gradient(to bottom, #16a34a, #15803d)',
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}
+                      >
+                        {isLoadingStory ? 'Loading...' : 'Load Text'}
+                      </Button>
                     </div>
                   </div>
 
