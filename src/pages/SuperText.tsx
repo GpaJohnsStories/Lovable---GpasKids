@@ -396,7 +396,13 @@ const SuperText: React.FC = () => {
                       handleInputChange('copyright_status', value);
                     }}>
                       <SelectTrigger 
-                        className="w-[260px] bg-red-600 text-white border-red-700"
+                        className={`w-[260px] text-white ${
+                          (formData.copyright_status === '©' || !formData.copyright_status) ? 'bg-red-600 border-red-700' :
+                          formData.copyright_status === 'L' ? 'bg-orange-500 border-orange-600' :
+                          formData.copyright_status === 'CC' ? 'bg-green-600 border-green-700' :
+                          formData.copyright_status === 'P' ? 'bg-blue-600 border-blue-700' :
+                          'bg-red-600 border-red-700'
+                        }`}
                         style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
