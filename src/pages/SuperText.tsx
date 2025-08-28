@@ -120,13 +120,13 @@ const SuperText: React.FC = () => {
     handleInputChange('video_url', '');
     handleInputChange('ai_voice_name', 'Nova');
     handleInputChange('ai_voice_model', 'tts-1');
-    handleInputChange('copyright_status', '©');
+    handleInputChange('copyright_status', '');
     handleInputChange('publication_status_code', '5');
 
     // Reset local state
     setStoryCode('');
     setCategory('');
-    setCopyrightStatus('©');
+    setCopyrightStatus('');
     setPublicationStatusCode(5);
     setLookupResult(null);
     
@@ -304,7 +304,10 @@ const SuperText: React.FC = () => {
                           <SelectTrigger className="w-full border-orange-400 focus:border-orange-500" style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
-                          fontWeight: 'bold'
+                          fontWeight: 'bold',
+                          backgroundColor: '#F97316',
+                          color: 'white',
+                          borderColor: '#ea580c'
                         }}>
                             <SelectValue placeholder="Category" />
                           </SelectTrigger>
@@ -379,7 +382,7 @@ const SuperText: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>C</div>
                     <div className="flex gap-3 flex-1">
-                      <Select value={formData.copyright_status || '©'} onValueChange={value => {
+                      <Select value={formData.copyright_status || ''} onValueChange={value => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
@@ -388,10 +391,10 @@ const SuperText: React.FC = () => {
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
                         textAlign: 'left',
-                        backgroundColor: formData.copyright_status === '©' || !formData.copyright_status ? '#dc2626' : formData.copyright_status === 'L' ? '#F97316' : formData.copyright_status === 'O' ? '#228B22' : '#dc2626',
-                        borderColor: formData.copyright_status === '©' || !formData.copyright_status ? '#b91c1c' : formData.copyright_status === 'L' ? '#ea580c' : formData.copyright_status === 'O' ? '#166534' : '#b91c1c'
+                        backgroundColor: !formData.copyright_status ? '#9c441a' : formData.copyright_status === '©' ? '#dc2626' : formData.copyright_status === 'L' ? '#F97316' : formData.copyright_status === 'O' ? '#228B22' : '#9c441a',
+                        borderColor: !formData.copyright_status ? '#7a2f19' : formData.copyright_status === '©' ? '#b91c1c' : formData.copyright_status === 'L' ? '#ea580c' : formData.copyright_status === 'O' ? '#166534' : '#7a2f19'
                       }}>
-                          <SelectValue placeholder="© Full Copyright" />
+                          <SelectValue placeholder="Copyright Status" />
                         </SelectTrigger>
                         <SelectContent className="bg-white">
                           <SelectItem value="©" style={{
