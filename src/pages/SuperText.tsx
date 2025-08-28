@@ -262,11 +262,10 @@ const SuperText: React.FC = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <Label className="text-orange-600 font-semibold text-base">Current or New Unique Code:</Label>
                     <div className="flex gap-2 mt-1">
                       <Input
                         type="text"
-                        placeholder="Code"
+                        placeholder="Text Code"
                         value={storyCode}
                         onChange={(e) => {
                           setStoryCode(e.target.value);
