@@ -67,7 +67,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
   const getStatusButtonStyle = (buttonStatus: number) => {
     const isActive = publicationStatusCode === buttonStatus;
     const baseStyle = {
-      fontSize: '21px',
+      fontSize: '19px',
       fontFamily: 'Arial, sans-serif',
       fontWeight: 'bold' as const,
       border: 'none',
