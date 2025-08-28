@@ -127,12 +127,12 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
   };
 
   const statusLabels = [
-    "0 - Ready to be Saved & Published — Approved and Reviewed",
-    "1 - Ready to be Saved & Published — Approved Only", 
-    "2 - Saved, NOT PUBLISHED — Not Reviewed by CoPilot",
-    "3 - Saved — NOT APPROVED by Gpa",
-    "4 - Saved — Still being formatted",
-    "5 - FILE NOT SAVED"
+    "0 - Save & Pub, App & Rev",
+    "1 - Save & Pub, App Only", 
+    "2 - Save, NO PUB, No CoP",
+    "3 - Save, NO Gpa APR",
+    "4 - Save, Formatting",
+    "5 - NOT SAVED"
   ];
 
   return (
