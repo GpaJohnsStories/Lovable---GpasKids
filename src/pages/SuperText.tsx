@@ -255,16 +255,40 @@ const SuperText: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>A</div>
                     <div className="flex-1">
-                      <Input type="text" placeholder="Text Code" value={storyCode} onChange={e => {
-                      setStoryCode(e.target.value);
-                      handleInputChange('story_code', e.target.value);
-                    }} className="border-orange-400 focus:border-orange-500" style={{
-                      width: '192px',
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontStyle: 'normal',
-                      color: '#000000'
-                    }} />
+                      <Input 
+                        type="text" 
+                        placeholder="Text Code" 
+                        value={storyCode} 
+                        onChange={e => {
+                          const upperValue = e.target.value.toUpperCase();
+                          setStoryCode(upperValue);
+                          handleInputChange('story_code', upperValue);
+                        }} 
+                        onPaste={e => {
+                          const pastedText = e.clipboardData.getData('text');
+                          const upperValue = pastedText.toUpperCase();
+                          e.preventDefault();
+                          setStoryCode(upperValue);
+                          handleInputChange('story_code', upperValue);
+                        }}
+                        onBlur={e => {
+                          const upperValue = e.target.value.toUpperCase();
+                          if (upperValue !== e.target.value) {
+                            setStoryCode(upperValue);
+                            handleInputChange('story_code', upperValue);
+                          }
+                        }}
+                        className="border-orange-400 focus:border-orange-500" 
+                        style={{
+                          width: '192px',
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontStyle: 'normal',
+                          color: '#000000'
+                        }} 
+                        autoCapitalize="characters"
+                        spellCheck={false}
+                      />
                     </div>
                   </div>
 
