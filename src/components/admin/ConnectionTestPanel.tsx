@@ -64,11 +64,32 @@ export const ConnectionTestPanel: React.FC = () => {
       setTestResults(prev => ({ ...prev, storage: `Error: ${err instanceof Error ? err.message : 'Unknown error'}` }));
     }
 
-    // Test icon cache service
+    // Test 4: Icon Download Test
     try {
-      const stats = iconCacheService.getCacheStats();
+      setTests(prev => ({ ...prev, icons: 'pending' }));
+      
+      // Get a test icon from database
+      const { data: testIcon, error: iconError } = await supabase
+        .from('icon_library')
+        .select('file_name_path')
+        .limit(1)
+        .single();
+      
+      if (iconError || !testIcon) {
+        throw new Error('No test icon found in database');
+      }
+      
+      // Try to download the icon directly
+      const { data: iconData, error: downloadError } = await supabase.storage
+        .from('icons')
+        .download(testIcon.file_name_path);
+      
+      if (downloadError) {
+        throw new Error(`Failed to download icon: ${downloadError.message}`);
+      }
+      
       setTests(prev => ({ ...prev, icons: 'success' }));
-      setTestResults(prev => ({ ...prev, icons: `Cache: ${stats.size}/${stats.maxSize} icons, ${stats.loadingCount} loading` }));
+      setTestResults(prev => ({ ...prev, icons: `Successfully downloaded: ${testIcon.file_name_path}` }));
     } catch (err) {
       setTests(prev => ({ ...prev, icons: 'error' }));
       setTestResults(prev => ({ ...prev, icons: `Error: ${err instanceof Error ? err.message : 'Unknown error'}` }));

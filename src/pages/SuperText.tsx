@@ -297,20 +297,20 @@ const SuperText: React.FC = () => {
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>B</div>
                     <div className="grid grid-cols-2 gap-4 flex-1">
                       <div>
-                        <Select value={formData.category} onValueChange={value => {
+                         <Select value={formData.category} onValueChange={value => {
                         setCategory(value);
                         handleInputChange('category', value);
                       }}>
-                          <SelectTrigger className="w-full border-orange-400 focus:border-orange-500" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold',
-                          backgroundColor: '#F97316',
-                          color: 'white',
-                          borderColor: '#ea580c'
-                        }}>
-                            <SelectValue placeholder="Category" />
-                          </SelectTrigger>
+                           <SelectTrigger className="w-full border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                           fontSize: '21px',
+                           fontFamily: 'Arial',
+                           fontWeight: 'bold',
+                           backgroundColor: '#F97316',
+                           color: 'white',
+                           borderColor: '#ea580c'
+                         }}>
+                             <SelectValue placeholder="Category" />
+                           </SelectTrigger>
                           <SelectContent className="bg-white">
                             <SelectItem value="WebText" style={{
                             fontSize: '21px',
@@ -382,20 +382,20 @@ const SuperText: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>C</div>
                     <div className="flex gap-3 flex-1">
-                      <Select value={formData.copyright_status || ''} onValueChange={value => {
+                       <Select value={formData.copyright_status || ''} onValueChange={value => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
-                        <SelectTrigger className="w-[320px] text-white text-left border-2" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold',
-                        textAlign: 'left',
-                        backgroundColor: !formData.copyright_status ? '#9c441a' : formData.copyright_status === '©' ? '#dc2626' : formData.copyright_status === 'L' ? '#F97316' : formData.copyright_status === 'O' ? '#228B22' : '#9c441a',
-                        borderColor: !formData.copyright_status ? '#7a2f19' : formData.copyright_status === '©' ? '#b91c1c' : formData.copyright_status === 'L' ? '#ea580c' : formData.copyright_status === 'O' ? '#166534' : '#7a2f19'
-                      }}>
-                          <SelectValue placeholder="Copyright Status" />
-                        </SelectTrigger>
+                         <SelectTrigger className="w-[320px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                         fontSize: '21px',
+                         fontFamily: 'Arial',
+                         fontWeight: 'bold',
+                         textAlign: 'left',
+                         backgroundColor: !formData.copyright_status ? '#9c441a' : formData.copyright_status === '©' ? '#dc2626' : formData.copyright_status === 'L' ? '#F97316' : formData.copyright_status === 'O' ? '#228B22' : '#9c441a',
+                         borderColor: !formData.copyright_status ? '#7a2f19' : formData.copyright_status === '©' ? '#b91c1c' : formData.copyright_status === 'L' ? '#ea580c' : formData.copyright_status === 'O' ? '#166534' : '#7a2f19'
+                       }}>
+                           <SelectValue placeholder="Copyright Status" />
+                         </SelectTrigger>
                         <SelectContent className="bg-white">
                           <SelectItem value="©" style={{
                           fontSize: '21px',

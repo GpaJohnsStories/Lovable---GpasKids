@@ -131,11 +131,10 @@ class IconCacheService {
         iconName = iconData.icon_name;
       }
 
-      // Get the icon from Supabase storage with cache busting
-      const cacheBuster = `?t=${Date.now()}`;
+      // Get the icon from Supabase storage
       const { data, error } = await supabase.storage
         .from('icons')
-        .download(iconPath + cacheBuster);
+        .download(iconPath);
 
       if (error) {
         throw new Error(`Failed to download icon ${iconPath}: ${error.message}`);
