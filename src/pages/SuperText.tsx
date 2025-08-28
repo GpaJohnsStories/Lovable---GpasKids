@@ -432,19 +432,19 @@ const SuperText: React.FC = () => {
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                  <h2 className="text-xl font-bold text-orange-700">🖼️ Story Photos</h2>
+                  <h2 className="text-xl font-bold text-orange-700" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>🖼️ Story Photos</h2>
                 </div>
                 
                 <div className="grid grid-cols-3 gap-4">
                   {[1, 2, 3].map(index => <div key={index} className="border-2 border-orange-400 rounded p-4 text-center">
                       <div className="bg-gray-100 h-32 flex items-center justify-center mb-2 rounded">
-                        <span className="text-gray-500">No Photo</span>
+                        <span className="text-gray-500" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>No Photo</span>
                       </div>
-                      <Button variant="outline" size="sm" className="w-full mb-2 text-red-600 border-red-400">
+                      <Button variant="outline" size="sm" className="w-full mb-2 text-red-600 border-red-400" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
                         Choose File
                       </Button>
-                      <span className="text-xs text-gray-500">N...en</span>
-                      <Input placeholder="Alt text" className="mt-2 text-sm" value={(formData as any)[`photo_alt_${index}`] || ''} onChange={e => handleInputChange(`photo_alt_${index}` as keyof Story, e.target.value)} />
+                      <span className="text-xs text-gray-500" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>N...en</span>
+                      <Input placeholder="Alt text" className="mt-2 text-sm" value={(formData as any)[`photo_alt_${index}`] || ''} onChange={e => handleInputChange(`photo_alt_${index}` as keyof Story, e.target.value)} style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }} />
                     </div>)}
                 </div>
               </div>
