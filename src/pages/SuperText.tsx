@@ -433,7 +433,7 @@ const SuperText: React.FC = () => {
                           }}
                         >
                           <div className="px-3 py-1 rounded w-full text-center text-white" style={{ backgroundColor: '#F97316' }}>
-                            L - Copyrighted, Limited Use
+                            L — Limited Use
                           </div>
                         </SelectItem>
                         <SelectItem 
@@ -445,7 +445,7 @@ const SuperText: React.FC = () => {
                           }}
                         >
                           <div className="px-3 py-1 rounded w-full text-center text-white" style={{ backgroundColor: '#228B22' }}>
-                            O - OPEN & Unlimited Use
+                            O — Open Unlimited
                           </div>
                         </SelectItem>
                       </SelectContent>
