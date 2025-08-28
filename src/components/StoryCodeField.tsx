@@ -120,29 +120,27 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
           control={control}
           name="story_code"
           render={({ field }) => (
-            <FormItem className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-2">
-              <FormLabel className="font-fun text-xl sm:text-left text-orange-accent">Enter Current or New Unique Story / Webtext Code *</FormLabel>
-              <div className="sm:col-span-2">
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="Enter story code..."
-                    className="w-full px-3 py-2 text-base border rounded-md font-bold border-orange-accent border-2"
-                    autoComplete="off"
-                    onBlur={(e) => {
-                      field.onBlur();
-                      handleStoryCodeLookup(e.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        handleStoryCodeLookup(e.currentTarget.value);
-                      }
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </div>
+            <FormItem>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="Text Code"
+                  className="w-full px-3 py-2 text-base border rounded-md font-bold border-orange-accent border-2"
+                  autoComplete="off"
+                  aria-label="Text Code"
+                  onBlur={(e) => {
+                    field.onBlur();
+                    handleStoryCodeLookup(e.target.value);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleStoryCodeLookup(e.currentTarget.value);
+                    }
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -163,16 +161,14 @@ const StoryCodeField: React.FC<StoryCodeFieldProps> = ({
   // Controlled component rendering
   return (
     <>
-      <div className="space-y-2">
-        <Label htmlFor="story_code" className={`font-bold ${labelSize} text-orange-accent`}>
-          Enter Current or New Unique Story / Webtext Code *
-        </Label>
+      <div>
         <Input
           id="story_code"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Enter story code..."
+          placeholder="Text Code"
           className="w-full px-3 py-2 text-base border rounded-md font-bold border-orange-accent border-2"
+          aria-label="Text Code"
           autoComplete="off"
           onBlur={(e) => {
             handleStoryCodeLookup(e.target.value);
