@@ -249,8 +249,9 @@ const SuperText: React.FC = () => {
                       fontStyle: 'normal',
                       color: '#000000'
                     }} />
-                      <Button onClick={handleStoryCodeLookup} disabled={isLoadingStory} className="text-white" style={{
-                        backgroundColor: '#16a34a',
+                      <Button onClick={handleStoryCodeLookup} disabled={isLoadingStory} className="text-white border-green-600" style={{
+                        background: '#16a34a !important',
+                        backgroundImage: 'none !important',
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold'
