@@ -395,14 +395,53 @@ const SuperText: React.FC = () => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
-                      <SelectTrigger className="w-full bg-red-600 text-white border-red-700">
+                      <SelectTrigger 
+                        className="w-full bg-red-600 text-white border-red-700"
+                        style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}
+                      >
                         <SelectValue placeholder="© Full Copyright" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="©">© Full Copyright</SelectItem>
-                        <SelectItem value="®">® Registered</SelectItem>
-                        <SelectItem value="™">™ Trademark</SelectItem>
-                        <SelectItem value="L">License</SelectItem>
+                      <SelectContent className="bg-white">
+                        <SelectItem 
+                          value="©"
+                          style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          <div className="px-3 py-1 rounded w-full text-center text-white bg-red-600">
+                            © - Full Copyright
+                          </div>
+                        </SelectItem>
+                        <SelectItem 
+                          value="L"
+                          style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{ backgroundColor: '#F97316' }}>
+                            L - Copyrighted, Limited Use
+                          </div>
+                        </SelectItem>
+                        <SelectItem 
+                          value="O"
+                          style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{ backgroundColor: '#228B22' }}>
+                            O - OPEN & Unlimited Use
+                          </div>
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
