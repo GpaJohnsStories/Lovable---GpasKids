@@ -54,6 +54,7 @@ import ResetPasswordRequest from "./components/auth/ResetPasswordRequest";
 
 import UnifiedStoryDeprecated from "./components/admin/UnifiedStoryDeprecated";
 import SuperText from "./pages/SuperText";
+import GpasChat from "./pages/GpasChat";
 
 // Security and Auth
 import GlobalHelpProvider from "./components/GlobalHelpProvider";
@@ -137,6 +138,9 @@ function App() {
                       <Route path="/public-author-bios" element={<PublicAuthorBios />} />
                       <Route path="/author-bios-simple" element={<PublicAuthorBiosSimple />} />
                       <Route path="/author/:id" element={<AuthorBio />} />
+                      
+                      {/* Gpa's Chat Room - No header/footer, standalone page */}
+                      <Route path="/GpasChat" element={<GpasChat />} />
 
                       {/* Auth Routes */}
                       <Route path="/auth/login" element={<Login />} />
