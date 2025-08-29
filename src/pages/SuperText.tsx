@@ -88,7 +88,14 @@ const SuperText: React.FC = () => {
   } = useStoryFormActions(storyId, refetchStory, handleStoryFormSave);
   useEffect(() => {
     // Initialize form with URL parameters on initial load
-    const initialStoryCode = searchParams.get('story_code') || '';
+    let initialStoryCode = searchParams.get('story_code') || '';
+    
+    // One-time display of BUDDYUP if no story code from URL and not shown before
+    if (!initialStoryCode && !sessionStorage.getItem('buddyup_shown')) {
+      initialStoryCode = 'BUDDYUP';
+      sessionStorage.setItem('buddyup_shown', 'true');
+    }
+    
     const initialCategory = searchParams.get('category') || 'Fun';
     const initialCopyrightStatus = searchParams.get('copyright_status') || '©';
     const initialPublicationStatusCode = Number(searchParams.get('publication_status_code')) || 5;
