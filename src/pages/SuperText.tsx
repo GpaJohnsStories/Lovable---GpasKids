@@ -378,7 +378,7 @@ const SuperText: React.FC = () => {
                     fontSize: '21px',
                     fontFamily: 'Arial'
                   }}>B</div>
-                    <div className="grid grid-cols-2 gap-4 flex-1">
+                    <div className="grid grid-cols-2 gap-8 flex-1">
                       <div>
                          <Select value={formData.category || ''} onValueChange={value => {
                         setCategory(value);
@@ -574,7 +574,7 @@ const SuperText: React.FC = () => {
                           </SelectItem>
                         </SelectContent>
                       </Select>
-                      <div className="flex items-center gap-3 justify-end">
+                      <div className="flex items-center gap-3 ml-8">
                         <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
                         backgroundColor: '#22c55e',
                         fontSize: '21px',
