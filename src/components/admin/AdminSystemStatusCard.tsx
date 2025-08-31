@@ -69,7 +69,7 @@ export const AdminSystemStatusCard: React.FC = () => {
         }
       }
 
-      // Test 2: Storage bucket availability - Test actual icon access instead of listing buckets
+      // Test 2: Storage bucket availability - Test actual icon access and get storage totals
       const storageStart = Date.now();
       try {
         // Try to access an icon directly from the icons bucket
@@ -87,19 +87,19 @@ export const AdminSystemStatusCard: React.FC = () => {
           if (publicUrlData?.publicUrl) {
             const storageDuration = Date.now() - storageStart;
             
-            // Get storage metrics
+            // Get total storage metrics across all buckets
             try {
-              const { data: storageMetrics } = await supabase.rpc('get_bucket_metrics', { bucket_name: 'icons' });
+              const { data: storageMetrics } = await supabase.rpc('get_storage_totals');
               const metrics = storageMetrics && storageMetrics.length > 0 
                 ? [
-                    { label: 'Objects', value: storageMetrics[0].object_count.toString() },
-                    { label: 'Size', value: storageMetrics[0].total_size_pretty }
+                    { label: 'Total Objects', value: storageMetrics[0].total_objects.toString() },
+                    { label: 'Total Size', value: storageMetrics[0].total_size_pretty }
                   ]
                 : [{ label: 'Metrics', value: 'n/a' }];
               
               setTests(prev => prev.map(test => 
                 test.name === 'Storage' 
-                  ? { ...test, status: 'success', message: 'Icons bucket accessible', duration: storageDuration, metrics }
+                  ? { ...test, status: 'success', message: 'All buckets accessible', duration: storageDuration, metrics }
                   : test
               ));
             } catch (metricsError) {

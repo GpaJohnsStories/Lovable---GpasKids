@@ -717,6 +717,15 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: Json
       }
+      get_all_buckets_metrics: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          bucket_name: string
+          object_count: number
+          total_size_bytes: number
+          total_size_pretty: string
+        }[]
+      }
       get_allowed_admin_email_hashes: {
         Args: Record<PropertyKey, never>
         Returns: string[]
@@ -788,6 +797,14 @@ export type Database = {
           created_at: string
           display_name: string
           id: string
+        }[]
+      }
+      get_storage_totals: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          total_objects: number
+          total_size_bytes: number
+          total_size_pretty: string
         }[]
       }
       has_admin_access: {
