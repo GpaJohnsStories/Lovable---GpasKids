@@ -793,7 +793,8 @@ const SuperText: React.FC = () => {
                             size="sm" 
                             className="flex-1 text-xs bg-green-600 hover:bg-green-700"
                             onClick={() => {
-                              handleInputChange('ai_voice_name', voice.voice);
+                              const capitalizedVoice = voice.voice.charAt(0).toUpperCase() + voice.voice.slice(1);
+                              handleInputChange('ai_voice_name', capitalizedVoice);
                               toast.success(`Selected ${voice.name} voice`);
                             }}
                           >
