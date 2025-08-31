@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import AdminLayout from './AdminLayout';
-import AdminHeaderBanner from './AdminHeaderBanner';
 import { SecurityAdminPanel } from './SecurityAdminPanel';
 import { ReferenceAdminPanel } from './ReferenceAdminPanel';
 import { DiagnosticsAdminPanel } from './DiagnosticsAdminPanel';
@@ -17,7 +16,6 @@ export const AdminDashboard: React.FC = () => {
   return (
     <AdminLayout>
       <div className="p-6">
-        <AdminHeaderBanner />
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-8">
