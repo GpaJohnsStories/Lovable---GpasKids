@@ -152,7 +152,7 @@ function App() {
                        <Route path="/dashboard" element={<ProtectedRoute><Navigate to="/buddys_admin" replace /></ProtectedRoute>} />
 
                       {/* Admin Routes */}
-                      <Route path="/buddys_admin" element={<SecureAdminRoute><AdminLayout><AdminOverview /></AdminLayout></SecureAdminRoute>} />
+                      <Route path="/buddys_admin" element={<SecureAdminRoute><AdminOverview /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/stories" element={<SecureAdminRoute><AdminStories /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/comments" element={<SecureAdminRoute><CommentsDashboard /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/security" element={<SecureAdminRoute><SecurityAuditDashboard /></SecureAdminRoute>} />
