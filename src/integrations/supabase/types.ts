@@ -725,6 +725,27 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string[]
       }
+      get_bucket_metrics: {
+        Args: { bucket_name: string }
+        Returns: {
+          object_count: number
+          total_size_bytes: number
+          total_size_pretty: string
+        }[]
+      }
+      get_database_size: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          size_bytes: number
+          size_pretty: string
+        }[]
+      }
+      get_icon_library_count: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          icon_count: number
+        }[]
+      }
       get_nickname_by_personal_id: {
         Args: { personal_id: string }
         Returns: string

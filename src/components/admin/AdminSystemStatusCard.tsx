@@ -8,6 +8,7 @@ interface ConnectionTest {
   status: 'checking' | 'success' | 'error' | 'untested';
   message: string;
   duration?: number;
+  metrics?: Array<{ label: string; value: string }>;
 }
 
 export const AdminSystemStatusCard: React.FC = () => {
@@ -47,11 +48,25 @@ export const AdminSystemStatusCard: React.FC = () => {
             : test
         ));
       } else {
-        setTests(prev => prev.map(test => 
-          test.name === 'Database' 
-            ? { ...test, status: 'success', message: 'Connected', duration: dbDuration }
-            : test
-        ));
+        // Get database size metrics
+        try {
+          const { data: dbMetrics } = await supabase.rpc('get_database_size');
+          const metrics = dbMetrics && dbMetrics.length > 0 
+            ? [{ label: 'Size', value: dbMetrics[0].size_pretty }]
+            : [{ label: 'Size', value: 'n/a' }];
+          
+          setTests(prev => prev.map(test => 
+            test.name === 'Database' 
+              ? { ...test, status: 'success', message: 'Connected', duration: dbDuration, metrics }
+              : test
+          ));
+        } catch (metricsError) {
+          setTests(prev => prev.map(test => 
+            test.name === 'Database' 
+              ? { ...test, status: 'success', message: 'Connected', duration: dbDuration, metrics: [{ label: 'Metrics', value: 'n/a' }] }
+              : test
+          ));
+        }
       }
 
       // Test 2: Storage bucket availability - Test actual icon access instead of listing buckets
@@ -71,11 +86,29 @@ export const AdminSystemStatusCard: React.FC = () => {
 
           if (publicUrlData?.publicUrl) {
             const storageDuration = Date.now() - storageStart;
-            setTests(prev => prev.map(test => 
-              test.name === 'Storage' 
-                ? { ...test, status: 'success', message: 'Icons bucket accessible', duration: storageDuration }
-                : test
-            ));
+            
+            // Get storage metrics
+            try {
+              const { data: storageMetrics } = await supabase.rpc('get_bucket_metrics', { bucket_name: 'icons' });
+              const metrics = storageMetrics && storageMetrics.length > 0 
+                ? [
+                    { label: 'Objects', value: storageMetrics[0].object_count.toString() },
+                    { label: 'Size', value: storageMetrics[0].total_size_pretty }
+                  ]
+                : [{ label: 'Metrics', value: 'n/a' }];
+              
+              setTests(prev => prev.map(test => 
+                test.name === 'Storage' 
+                  ? { ...test, status: 'success', message: 'Icons bucket accessible', duration: storageDuration, metrics }
+                  : test
+              ));
+            } catch (metricsError) {
+              setTests(prev => prev.map(test => 
+                test.name === 'Storage' 
+                  ? { ...test, status: 'success', message: 'Icons bucket accessible', duration: storageDuration, metrics: [{ label: 'Metrics', value: 'n/a' }] }
+                  : test
+              ));
+            }
           } else {
             const storageDuration = Date.now() - storageStart;
             setTests(prev => prev.map(test => 
@@ -126,11 +159,29 @@ export const AdminSystemStatusCard: React.FC = () => {
           });
           
           const iconDuration = Date.now() - iconStart;
-          setTests(prev => prev.map(test => 
-            test.name === 'Icons' 
-              ? { ...test, status: 'success', message: 'Loaded successfully', duration: iconDuration }
-              : test
-          ));
+          
+          // Get icon library metrics
+          try {
+            const { data: iconMetrics } = await supabase.rpc('get_icon_library_count');
+            const metrics = iconMetrics && iconMetrics.length > 0 
+              ? [
+                  { label: 'Records', value: iconMetrics[0].icon_count.toString() },
+                  { label: 'Sample load', value: `${iconDuration}ms` }
+                ]
+              : [{ label: 'Metrics', value: 'n/a' }];
+            
+            setTests(prev => prev.map(test => 
+              test.name === 'Icons' 
+                ? { ...test, status: 'success', message: 'Loaded successfully', duration: iconDuration, metrics }
+                : test
+            ));
+          } catch (metricsError) {
+            setTests(prev => prev.map(test => 
+              test.name === 'Icons' 
+                ? { ...test, status: 'success', message: 'Loaded successfully', duration: iconDuration, metrics: [{ label: 'Metrics', value: 'n/a' }] }
+                : test
+            ));
+          }
         } else {
           const iconDuration = Date.now() - iconStart;
           setTests(prev => prev.map(test => 
@@ -210,27 +261,39 @@ export const AdminSystemStatusCard: React.FC = () => {
       <CardContent>
         <div className="space-y-3">
           {tests.map((test) => (
-            <div key={test.name} className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                {getTestIcon(test.name)}
-                <span className="font-medium text-sm">{test.name}</span>
-                {getStatusIcon(test.status)}
-              </div>
-              <div className="flex items-center space-x-3 text-sm">
-                <span className={`${
-                  test.status === 'success' ? 'text-green-700' :
-                  test.status === 'error' ? 'text-red-700' : 
-                  test.status === 'checking' ? 'text-blue-700' : 'text-gray-500'
-                }`}>
-                  {test.message}
-                </span>
-                {test.duration && (
-                  <span className="text-gray-500 flex items-center">
-                    <Clock className="h-3 w-3 mr-1" />
-                    {test.duration}ms
+            <div key={test.name} className="space-y-1">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  {getTestIcon(test.name)}
+                  <span className="font-medium text-sm">{test.name}</span>
+                  {getStatusIcon(test.status)}
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <span className={`${
+                    test.status === 'success' ? 'text-green-700' :
+                    test.status === 'error' ? 'text-red-700' : 
+                    test.status === 'checking' ? 'text-blue-700' : 'text-gray-500'
+                  }`}>
+                    {test.message}
                   </span>
-                )}
+                  {test.duration && (
+                    <span className="text-gray-500 flex items-center">
+                      <Clock className="h-3 w-3 mr-1" />
+                      {test.duration}ms
+                    </span>
+                  )}
+                </div>
               </div>
+              {test.metrics && test.metrics.length > 0 && (
+                <div className="ml-7 text-xs text-muted-foreground">
+                  {test.metrics.map((metric, index) => (
+                    <span key={metric.label}>
+                      {metric.label}: {metric.value}
+                      {index < test.metrics!.length - 1 && ' • '}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
