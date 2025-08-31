@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { toast } from "sonner";
@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { YesNoButtons } from "@/components/ui/YesNoButtons";
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
@@ -57,6 +58,10 @@ const SuperText: React.FC = () => {
   const [copyrightStatus, setCopyrightStatus] = React.useState('©');
   const [publicationStatusCode, setPublicationStatusCode] = React.useState(5);
   const [lookupResult, setLookupResult] = React.useState<Story | null>(null);
+  
+  // Refs for section scrolling
+  const audioSectionRef = useRef<HTMLDivElement>(null);
+  const videoSectionRef = useRef<HTMLDivElement>(null);
   const {
     formData,
     isLoadingStory,
@@ -209,6 +214,51 @@ const SuperText: React.FC = () => {
   const handleVideoDurationCalculated = (duration: number) => {
     handleInputChange('video_duration_seconds', duration.toString());
   };
+
+  // Section scrolling handlers
+  const scrollToAudioSection = useCallback(() => {
+    if (!formData.content?.trim()) {
+      toast.message("Add your story content to generate audio");
+    }
+    
+    if (audioSectionRef.current) {
+      audioSectionRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+      });
+      
+      // Add highlight effect
+      audioSectionRef.current.style.outline = '3px solid #3b82f6';
+      audioSectionRef.current.style.outlineOffset = '4px';
+      
+      setTimeout(() => {
+        if (audioSectionRef.current) {
+          audioSectionRef.current.style.outline = '';
+          audioSectionRef.current.style.outlineOffset = '';
+        }
+      }, 1500);
+    }
+  }, [formData.content]);
+
+  const scrollToVideoSection = useCallback(() => {
+    if (videoSectionRef.current) {
+      videoSectionRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+      });
+      
+      // Add highlight effect
+      videoSectionRef.current.style.outline = '3px solid #8b5cf6';
+      videoSectionRef.current.style.outlineOffset = '4px';
+      
+      setTimeout(() => {
+        if (videoSectionRef.current) {
+          videoSectionRef.current.style.outline = '';
+          videoSectionRef.current.style.outlineOffset = '';
+        }
+      }, 1500);
+    }
+  }, []);
   return <SecureAdminRoute>
       <Helmet>
         <title>Super Text Manager</title>
@@ -374,8 +424,41 @@ const SuperText: React.FC = () => {
                         </Select>
                       </div>
                       <div className="flex gap-2">
-                        <Button variant="outline" size="sm" className="p-2">🎧</Button>
-                        <Button variant="outline" size="sm" className="p-2">📹</Button>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                className="p-2 hover:bg-blue-50 hover:border-blue-300" 
+                                onClick={scrollToAudioSection}
+                              >
+                                🎧
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Jump to Audio tools</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                        
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button 
+                                variant="outline" 
+                                size="sm" 
+                                className="p-2 hover:bg-purple-50 hover:border-purple-300" 
+                                onClick={scrollToVideoSection}
+                              >
+                                📹
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Jump to Video tools</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </div>
                     </div>
                   </div>
@@ -517,7 +600,7 @@ const SuperText: React.FC = () => {
               </div>
 
               {/* Story Video Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6">
+              <div ref={videoSectionRef} className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
                   <h2 className="text-xl font-bold text-purple-700">📹 Story Video</h2>
@@ -569,7 +652,7 @@ const SuperText: React.FC = () => {
             }} />
 
               {/* Create AI Audio Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6">
+              <div ref={audioSectionRef} className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6">
                 <h2 className="text-xl font-bold text-blue-700 mb-4">🔊 Create AI Audio File</h2>
                 
                 <div className="mb-4">
