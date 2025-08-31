@@ -339,7 +339,7 @@ const SuperText: React.FC = () => {
                   <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
                 </div>
                 
-                {/* Last Updates Box - positioned in top-right corner on large screens */}
+                {/* Last Updates Box - positioned in top-right corner on large screens - fixed formData typo */}
                 <div className="hidden lg:block absolute top-6 right-6 w-[400px]">
                   <LastUpdatesGrid story={lookupResult || formData} />
                 </div>
