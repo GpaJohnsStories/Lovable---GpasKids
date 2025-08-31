@@ -54,32 +54,51 @@ export const AdminSystemStatusCard: React.FC = () => {
         ));
       }
 
-      // Test 2: Storage bucket availability
+      // Test 2: Storage bucket availability - Test actual icon access instead of listing buckets
       const storageStart = Date.now();
-      const { data: buckets, error: bucketError } = await supabase.storage.listBuckets();
-      const storageDuration = Date.now() - storageStart;
-      
-      if (bucketError) {
-        setTests(prev => prev.map(test => 
-          test.name === 'Storage' 
-            ? { ...test, status: 'error', message: `Bucket access failed: ${bucketError.message}`, duration: storageDuration }
-            : test
-        ));
-      } else {
-        const iconsBucket = buckets?.find(b => b.name === 'icons');
-        if (iconsBucket) {
-          setTests(prev => prev.map(test => 
-            test.name === 'Storage' 
-              ? { ...test, status: 'success', message: `${buckets.length} buckets available`, duration: storageDuration }
-              : test
-          ));
+      try {
+        // Try to access an icon directly from the icons bucket
+        const { data: testIcon } = await supabase
+          .from('icon_library')
+          .select('file_name_path')
+          .limit(1)
+          .single();
+
+        if (testIcon?.file_name_path) {
+          const { data: publicUrlData } = supabase.storage
+            .from('icons')
+            .getPublicUrl(testIcon.file_name_path);
+
+          if (publicUrlData?.publicUrl) {
+            const storageDuration = Date.now() - storageStart;
+            setTests(prev => prev.map(test => 
+              test.name === 'Storage' 
+                ? { ...test, status: 'success', message: 'Icons bucket accessible', duration: storageDuration }
+                : test
+            ));
+          } else {
+            const storageDuration = Date.now() - storageStart;
+            setTests(prev => prev.map(test => 
+              test.name === 'Storage' 
+                ? { ...test, status: 'error', message: 'Cannot generate public URLs', duration: storageDuration }
+                : test
+            ));
+          }
         } else {
+          const storageDuration = Date.now() - storageStart;
           setTests(prev => prev.map(test => 
             test.name === 'Storage' 
-              ? { ...test, status: 'error', message: 'Icons bucket not found', duration: storageDuration }
+              ? { ...test, status: 'error', message: 'No icons found in library', duration: storageDuration }
               : test
           ));
         }
+      } catch (storageError) {
+        const storageDuration = Date.now() - storageStart;
+        setTests(prev => prev.map(test => 
+          test.name === 'Storage' 
+            ? { ...test, status: 'error', message: `Storage access failed: ${storageError instanceof Error ? storageError.message : 'Unknown error'}`, duration: storageDuration }
+            : test
+        ));
       }
 
       // Test 3: Icon loading
