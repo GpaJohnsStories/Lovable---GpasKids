@@ -567,12 +567,13 @@ const SuperText: React.FC = () => {
                       ref={loadTextBtnRef}
                       onClick={handleStoryCodeLookup} 
                       disabled={isLoadingStory}
-                      className="supertext-text-btn flex flex-col items-center justify-center h-20 w-16" 
+                      className="supertext-text-btn flex flex-col items-center justify-center px-2 py-1" 
                       style={{
-                        fontSize: '16px',
+                        fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
-                        padding: '8px'
+                        color: 'white',
+                        lineHeight: '1'
                       }} 
                       onKeyDown={e => {
                         if (e.key === 'Tab' && !e.shiftKey) {
@@ -582,8 +583,15 @@ const SuperText: React.FC = () => {
                       }}
                       tabIndex={4}
                     >
-                      <span>Load</span>
-                      <span>Text</span>
+                      <span>L</span>
+                      <span>O</span>
+                      <span>A</span>
+                      <span>D</span>
+                      <span style={{ height: '21px' }}></span>
+                      <span>T</span>
+                      <span>E</span>
+                      <span>X</span>
+                      <span>T</span>
                     </Button>
                   </div>
 
