@@ -702,15 +702,59 @@ const SuperText: React.FC = () => {
                 />
               </div>
 
+              {/* 3-Column Grid: Video, Audio, Google Drive */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+                {/* Column 1: Story Video */}
+                <div ref={videoSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
+                    <h2 className="text-xl font-bold text-purple-700">📹 Story Video</h2>
+                  </div>
+                  
+                  <StoryVideoUpload videoUrl={formData.video_url} onVideoUpload={handleVideoUpload} onVideoRemove={handleVideoRemove} onDurationCalculated={handleVideoDurationCalculated} />
+                </div>
 
-              {/* Google Drive Upload Section */}
-              <div className="bg-orange-100 border-2 border-orange-400 rounded-lg p-6">
-                <h2 className="text-xl font-bold text-orange-700 mb-4">Upload Text From Google Drive</h2>
-                <div className="space-y-3">
-                  <Input type="text" placeholder="Paste Google Drive Share Code here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} className="border-orange-400 focus:border-orange-500" />
-                  <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
-                    Upload
+                {/* Column 2: Audio Upload */}
+                <div ref={audioSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">C</div>
+                    <h2 className="text-xl font-bold text-blue-700">🔊 Audio Upload</h2>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <Label className="font-semibold">Choose Voice</Label>
+                    <Select value={formData.ai_voice_name} onValueChange={value => handleInputChange('ai_voice_name', value)}>
+                      <SelectTrigger className="w-full border-orange-400">
+                        <SelectValue placeholder="Select voice" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Nova">Nova</SelectItem>
+                        <SelectItem value="Alloy">Alloy</SelectItem>
+                        <SelectItem value="Echo">Echo</SelectItem>
+                        <SelectItem value="Fable">Fable</SelectItem>
+                        <SelectItem value="Onyx">Onyx</SelectItem>
+                        <SelectItem value="Shimmer">Shimmer</SelectItem>
+                        <SelectItem value="Sage">Sage</SelectItem>
+                        <SelectItem value="Ash">Ash</SelectItem>
+                        <SelectItem value="Coral">Coral</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <Button onClick={() => handleGenerateAudio()} disabled={isGeneratingAudio || !formData.content} className="w-full bg-gray-400 text-gray-600">
+                    🔊 {isGeneratingAudio ? 'Generating...' : 'Story Required'}
                   </Button>
+                </div>
+
+                {/* Column 3: Google Drive Upload */}
+                <div className="bg-orange-100 border-2 border-orange-400 rounded-lg p-6">
+                  <h2 className="text-xl font-bold text-orange-700 mb-4">Upload Text From Google Drive</h2>
+                  <div className="space-y-3">
+                    <Input type="text" placeholder="Paste Google Drive Share Code here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} className="border-orange-400 focus:border-orange-500" />
+                    <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
+                      Upload
+                    </Button>
+                  </div>
                 </div>
               </div>
 
@@ -739,34 +783,6 @@ const SuperText: React.FC = () => {
                 }} />
               </div>
 
-              {/* Create AI Audio Section */}
-              <div ref={audioSectionRef} className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6">
-                <h2 className="text-xl font-bold text-blue-700 mb-4">🔊 Create AI Audio File</h2>
-                
-                <div className="mb-4">
-                  <Label className="font-semibold">Choose Voice</Label>
-                  <Select value={formData.ai_voice_name} onValueChange={value => handleInputChange('ai_voice_name', value)}>
-                    <SelectTrigger className="w-full border-orange-400">
-                      <SelectValue placeholder="Select voice" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Nova">Nova</SelectItem>
-                      <SelectItem value="Alloy">Alloy</SelectItem>
-                      <SelectItem value="Echo">Echo</SelectItem>
-                      <SelectItem value="Fable">Fable</SelectItem>
-                      <SelectItem value="Onyx">Onyx</SelectItem>
-                      <SelectItem value="Shimmer">Shimmer</SelectItem>
-                      <SelectItem value="Sage">Sage</SelectItem>
-                      <SelectItem value="Ash">Ash</SelectItem>
-                      <SelectItem value="Coral">Coral</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <Button onClick={() => handleGenerateAudio()} disabled={isGeneratingAudio || !formData.content} className="w-full bg-gray-400 text-gray-600">
-                  🔊 {isGeneratingAudio ? 'Generating...' : 'Story Required'}
-                </Button>
-              </div>
 
               {/* Voice Previews Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6">
@@ -847,25 +863,6 @@ const SuperText: React.FC = () => {
                 </div>
               </div>
 
-              {/* Story Video Section - Moved from left panel to right panel */}
-              <div ref={videoSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
-                  <h2 className="text-xl font-bold text-purple-700">📹 Story Video</h2>
-                </div>
-                
-                <StoryVideoUpload videoUrl={formData.video_url} onVideoUpload={handleVideoUpload} onVideoRemove={handleVideoRemove} onDurationCalculated={handleVideoDurationCalculated} />
-              </div>
-
-              {/* Audio Upload Section - Moved from left panel to right panel */}
-              <div className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">C</div>
-                  <h2 className="text-xl font-bold text-green-700">🔊 Audio Upload</h2>
-                </div>
-                
-                <p className="text-gray-600">Audio upload functionality will be added back here.</p>
-              </div>
 
               {error && <div className="bg-red-100 border-2 border-red-400 rounded-lg p-4">
                   <h3 className="font-bold text-red-700">Error</h3>
