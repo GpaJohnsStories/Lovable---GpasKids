@@ -57,19 +57,12 @@ const AdminOverview = () => {
 
   return (
     <div className="space-y-6">
-      <div className="mb-0">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-black font-system">
-            Admin Dashboard
-          </h1>
-          {isViewer && (
-            <div className="flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-lg border border-blue-200">
-              <Eye className="h-4 w-4" />
-              <span className="text-sm font-medium">Read-Only Access</span>
-            </div>
-          )}
+      {isViewer && (
+        <div className="flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-lg border border-blue-200">
+          <Eye className="h-4 w-4" />
+          <span className="text-sm font-medium">Read-Only Access</span>
         </div>
-      </div>
+      )}
 
       {/* System Status */}
       <AdminSystemStatusCard />
