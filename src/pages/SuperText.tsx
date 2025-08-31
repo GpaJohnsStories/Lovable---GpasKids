@@ -465,6 +465,7 @@ const SuperText: React.FC = () => {
                               <Button 
                                 className="supertext-text-btn"
                                 onClick={scrollToTextEditorSection}
+                                tabIndex={-1}
                               >
                                 T
                               </Button>
@@ -482,6 +483,7 @@ const SuperText: React.FC = () => {
                                 size="sm" 
                                 className="supertext-audio-btn p-2"
                                 onClick={scrollToAudioSection}
+                                tabIndex={-1}
                               >
                                 A
                               </Button>
@@ -499,6 +501,7 @@ const SuperText: React.FC = () => {
                                 size="sm" 
                                 className="supertext-video-btn p-2"
                                 onClick={scrollToVideoSection}
+                                tabIndex={-1}
                               >
                                 V
                               </Button>
