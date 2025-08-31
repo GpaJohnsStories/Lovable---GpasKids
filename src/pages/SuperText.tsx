@@ -428,12 +428,16 @@ const SuperText: React.FC = () => {
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <Button 
-                                variant="outline" 
                                 size="sm" 
-                                className="p-2 border-blue-400 text-blue-700 hover:bg-blue-50 hover:border-blue-500" 
+                                className="p-2 bg-blue-400 text-white hover:bg-blue-500 border-blue-400" 
+                                style={{
+                                  fontSize: '21px',
+                                  fontFamily: 'Arial',
+                                  fontWeight: 'bold'
+                                }}
                                 onClick={scrollToAudioSection}
                               >
-                                🎧
+                                A
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
@@ -446,12 +450,16 @@ const SuperText: React.FC = () => {
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <Button 
-                                variant="outline" 
                                 size="sm" 
-                                className="p-2 border-purple-400 text-purple-700 hover:bg-purple-50 hover:border-purple-500" 
+                                className="p-2 bg-purple-400 text-white hover:bg-purple-500 border-purple-400" 
+                                style={{
+                                  fontSize: '21px',
+                                  fontFamily: 'Arial',
+                                  fontWeight: 'bold'
+                                }}
                                 onClick={scrollToVideoSection}
                               >
-                                📹
+                                V
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
