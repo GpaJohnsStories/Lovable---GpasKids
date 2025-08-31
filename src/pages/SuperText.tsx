@@ -157,6 +157,7 @@ const SuperText: React.FC = () => {
     handleInputChange('content', '');
     handleInputChange('tagline', '');
     handleInputChange('excerpt', '');
+    handleInputChange('story_code', '');
     handleInputChange('google_drive_link', '');
     handleInputChange('photo_link_1', '');
     handleInputChange('photo_link_2', '');
