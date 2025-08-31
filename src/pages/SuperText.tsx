@@ -670,7 +670,7 @@ const SuperText: React.FC = () => {
               {/* Story Photos Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
                   <h2 className="text-xl font-bold text-orange-700" style={{
                   fontSize: '21px',
                   fontFamily: 'Arial',
