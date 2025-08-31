@@ -335,52 +335,30 @@ const SuperText: React.FC = () => {
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative">
                 
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold" style={{
-                    fontSize: '21px',
-                    fontFamily: 'Arial'
-                  }}>1</div>
-                  <h2 className="text-xl font-bold text-green-700" style={{
-                    fontSize: '24px',
-                    fontFamily: 'Arial'
-                  }}>Text Details</h2>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">1</div>
+                  <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
                 </div>
                 
                 {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
                 <div className="grid grid-rows-4 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
                   {/* Column 1, Row 1: Green Dot A */}
                   <div className="row-start-1 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
-                      backgroundColor: '#22c55e',
-                      fontSize: '21px',
-                      fontFamily: 'Arial'
-                    }}>A</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{ backgroundColor: '#22c55e' }}>A</div>
                   </div>
                   
                   {/* Column 1, Row 2: Green Dot B */}
                   <div className="row-start-2 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
-                      backgroundColor: '#22c55e',
-                      fontSize: '21px',
-                      fontFamily: 'Arial'
-                    }}>B</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{ backgroundColor: '#22c55e' }}>B</div>
                   </div>
                   
                   {/* Column 1, Row 3: Green Dot C */}
                   <div className="row-start-3 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
-                      backgroundColor: '#22c55e',
-                      fontSize: '21px',
-                      fontFamily: 'Arial'
-                    }}>C</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{ backgroundColor: '#22c55e' }}>C</div>
                   </div>
 
                   {/* Column 1, Row 4: Green Dot D */}
                   <div className="row-start-4 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
-                      backgroundColor: '#22c55e',
-                      fontSize: '21px',
-                      fontFamily: 'Arial'
-                    }}>D</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{ backgroundColor: '#22c55e' }}>D</div>
                   </div>
 
                   {/* Column 2, Row 1: Text Code */}
@@ -415,14 +393,11 @@ const SuperText: React.FC = () => {
                           loadTextBtnRef.current?.focus();
                         }
                       }}
-                      className="border-4 border-orange-400 focus:border-orange-500" 
+                      className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black" 
                       style={{
                         width: '192px',
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontStyle: 'normal',
-                        color: '#000000'
-                      }} 
+                        fontStyle: 'normal'
+                      }}
                       autoCapitalize="characters" 
                       spellCheck={false} 
                       tabIndex={1} 

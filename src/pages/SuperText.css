@@ -1,6 +1,26 @@
 /* SuperText page specific styles */
 
-.supertext-yes-btn {
+/* Font size utility classes with descriptive names */
+.supertext-fs-21px-arial-white { /* 21px Arial font in white for buttons and inputs */
+  font-size: 21px !important;
+  font-family: Arial !important;
+  color: #ffffff !important;
+}
+
+.supertext-fs-21px-arial-black { /* 21px Arial font in black for input text */
+  font-size: 21px !important;
+  font-family: Arial !important;
+  color: #000000 !important;
+}
+
+.supertext-fs-24px-arial-green { /* 24px Arial font in green for section titles */
+  font-size: 24px !important;
+  font-family: Arial !important;
+  color: #15803d !important; /* Green-700 */
+}
+
+/* Button styling variants with descriptive comments */
+.supertext-yes-btn-21px-forestgreen-white { /* Forest green button with white 21px Arial text for confirmation actions */
   background-color: #228B22 !important; /* Forest Green */
   background-image: none !important;
   color: #ffffff !important; /* Pure White */
@@ -8,9 +28,12 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
   transition: all 0.2s ease !important;
+  font-size: 21px !important;
+  font-family: Arial !important;
+  font-weight: bold !important;
 }
 
-.supertext-yes-btn:hover {
+.supertext-yes-btn-21px-forestgreen-white:hover { /* Hover state for forest green confirmation button */
   background-color: #228B22 !important;
   background-image: none !important;
   color: #ffffff !important;
@@ -18,12 +41,12 @@
   box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
 }
 
-.supertext-yes-btn:active {
+.supertext-yes-btn-21px-forestgreen-white:active { /* Active state for forest green confirmation button */
   transform: scale(0.98) !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
 }
 
-.supertext-no-btn {
+.supertext-no-btn-21px-red-gold { /* Red button with gold 21px Arial text for cancellation actions */
   background-color: #dc2626 !important; /* Red Primary */
   background-image: none !important;
   color: #FFD700 !important; /* Golden Yellow */
@@ -31,9 +54,12 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
   transition: all 0.2s ease !important;
+  font-size: 21px !important;
+  font-family: Arial !important;
+  font-weight: bold !important;
 }
 
-.supertext-no-btn:hover {
+.supertext-no-btn-21px-red-gold:hover { /* Hover state for red cancellation button */
   background-color: #dc2626 !important;
   background-image: none !important;
   color: #FFD700 !important;
@@ -41,12 +67,12 @@
   box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
 }
 
-.supertext-no-btn:active {
+.supertext-no-btn-21px-red-gold:active { /* Active state for red cancellation button */
   transform: scale(0.98) !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
 }
 
-.supertext-audio-btn {
+.supertext-audio-btn-21px-blue-white { /* Blue button with white 21px Arial text for audio actions */
   background-color: #3b82f6 !important; /* Blue */
   background-image: none !important;
   color: #ffffff !important; /* Pure White */
@@ -59,7 +85,7 @@
   font-weight: bold !important;
 }
 
-.supertext-audio-btn:hover {
+.supertext-audio-btn-21px-blue-white:hover { /* Hover state for blue audio button */
   background-color: #2563eb !important;
   background-image: none !important;
   color: #ffffff !important;
@@ -67,12 +93,12 @@
   box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
 }
 
-.supertext-audio-btn:active {
+.supertext-audio-btn-21px-blue-white:active { /* Active state for blue audio button */
   transform: scale(0.98) !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
 }
 
-.supertext-video-btn {
+.supertext-video-btn-21px-purple-white { /* Purple button with white 21px Arial text for video actions */
   background-color: #8b5cf6 !important; /* Purple */
   background-image: none !important;
   color: #ffffff !important; /* Pure White */
@@ -85,7 +111,7 @@
   font-weight: bold !important;
 }
 
-.supertext-video-btn:hover {
+.supertext-video-btn-21px-purple-white:hover { /* Hover state for purple video button */
   background-color: #7c3aed !important;
   background-image: none !important;
   color: #ffffff !important;
@@ -93,12 +119,12 @@
   box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
 }
 
-.supertext-video-btn:active {
+.supertext-video-btn-21px-purple-white:active { /* Active state for purple video button */
   transform: scale(0.98) !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
 }
 
-.supertext-text-btn {
+.supertext-text-btn-21px-green-white { /* Green button with white 21px Arial text for text editing actions */
   background-color: #22c55e !important; /* Green */
   background-image: none !important;
   color: #ffffff !important; /* Pure White */
@@ -106,13 +132,13 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
   transition: all 0.2s ease !important;
-  font-size: 28px !important;
+  font-size: 21px !important;
   font-family: Arial !important;
   font-weight: bold !important;
   padding: 12px 16px !important;
 }
 
-.supertext-text-btn:hover {
+.supertext-text-btn-21px-green-white:hover { /* Hover state for green text editing button */
   background-color: #16a34a !important;
   background-image: none !important;
   color: #ffffff !important;
@@ -120,7 +146,28 @@
   box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
 }
 
-.supertext-text-btn:active {
+.supertext-text-btn-21px-green-white:active { /* Active state for green text editing button */
   transform: scale(0.98) !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
+}
+
+/* Legacy class aliases for backward compatibility - these redirect to the new descriptive classes */
+.supertext-yes-btn { /* Legacy alias - redirects to descriptive class */
+  @apply supertext-yes-btn-21px-forestgreen-white;
+}
+
+.supertext-no-btn { /* Legacy alias - redirects to descriptive class */
+  @apply supertext-no-btn-21px-red-gold;
+}
+
+.supertext-audio-btn { /* Legacy alias - redirects to descriptive class */
+  @apply supertext-audio-btn-21px-blue-white;
+}
+
+.supertext-video-btn { /* Legacy alias - redirects to descriptive class */
+  @apply supertext-video-btn-21px-purple-white;
+}
+
+.supertext-text-btn { /* Legacy alias - redirects to descriptive class */
+  @apply supertext-text-btn-21px-green-white;
 }
