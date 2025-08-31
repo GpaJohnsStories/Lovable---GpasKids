@@ -129,10 +129,8 @@ const SuperText: React.FC = () => {
     setCopyrightStatus('');
     setPublicationStatusCode(5);
     setLookupResult(null);
-    
     toast.success("Form cleared successfully!");
   }, [handleInputChange]);
-
   useEffect(() => {
     // Clear form after submit if 'clear' param is true
     if (clear) {
@@ -181,7 +179,6 @@ const SuperText: React.FC = () => {
       toast.error("Please enter a text code before saving.");
       return;
     }
-    
     setSaveAction(action);
     setShowConfirmDialog(true);
   };
@@ -192,7 +189,6 @@ const SuperText: React.FC = () => {
         clearForm();
         return;
       }
-      
       if (!formData.title || !formData.content || !formData.story_code) {
         toast.error("Please fill in all required fields.");
         return;
@@ -230,21 +226,11 @@ const SuperText: React.FC = () => {
           <div className="max-w-7xl mx-auto">
             <h1 className="text-3xl font-bold text-brown-800 mb-4">Super Text Manager</h1>
             <div className="flex gap-4 flex-wrap">
-              <Button 
-                onClick={() => handleSave('save-only')} 
-                disabled={isSaving || !storyCode.trim()} 
-                className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full"
-                title={!storyCode.trim() ? "Please enter a text code" : ""}
-              >
+              <Button onClick={() => handleSave('save-only')} disabled={isSaving || !storyCode.trim()} className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full" title={!storyCode.trim() ? "Please enter a text code" : ""}>
                 {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
               </Button>
               
-              <Button 
-                onClick={() => handleSave('save-and-clear')} 
-                disabled={isSaving || !storyCode.trim()} 
-                className="px-8 py-3 text-lg font-semibold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700"
-                title={!storyCode.trim() ? "Please enter a text code" : ""}
-              >
+              <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !storyCode.trim()} className="px-8 py-3 text-lg font-semibold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700" title={!storyCode.trim() ? "Please enter a text code" : ""}>
                 {isSaving ? 'Saving...' : 'Save & Clear Form'}
               </Button>
               
@@ -261,61 +247,56 @@ const SuperText: React.FC = () => {
             <div className="lg:col-span-2 space-y-6">
               {/* Text Details Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative">
-                <img 
-                  src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/icon/ICO-AD1.gif"
-                  alt="Test Icon"
-                  className="absolute top-2 right-2 w-8 h-8"
-                />
+                
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                  <h2 className="text-xl font-bold text-green-700">Text Details</h2>
+                  <h2 className="text-xl font-bold text-green-700">Text Details
+
+                </h2>
                 </div>
                 
                 <div className="space-y-4">
                   {/* Row A - Story Code */}
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>A</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
+                    backgroundColor: '#22c55e',
+                    fontSize: '21px',
+                    fontFamily: 'Arial'
+                  }}>A</div>
                     <div className="flex-1">
-                      <Input 
-                        type="text" 
-                        placeholder="TEXT CODE" 
-                        value={storyCode}
-                        onChange={e => {
-                          const upperValue = e.target.value.toUpperCase();
-                          setStoryCode(upperValue);
-                          handleInputChange('story_code', upperValue);
-                        }} 
-                        onPaste={e => {
-                          const pastedText = e.clipboardData.getData('text');
-                          const upperValue = pastedText.toUpperCase();
-                          e.preventDefault();
-                          setStoryCode(upperValue);
-                          handleInputChange('story_code', upperValue);
-                        }}
-                        onBlur={e => {
-                          const upperValue = e.target.value.toUpperCase();
-                          if (upperValue !== e.target.value) {
-                            setStoryCode(upperValue);
-                            handleInputChange('story_code', upperValue);
-                          }
-                        }}
-                        className="border-orange-400 focus:border-orange-500" 
-                        style={{
-                          width: '192px',
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontStyle: 'normal',
-                          color: '#000000'
-                        }} 
-                        autoCapitalize="characters"
-                        spellCheck={false}
-                      />
+                      <Input type="text" placeholder="TEXT CODE" value={storyCode} onChange={e => {
+                      const upperValue = e.target.value.toUpperCase();
+                      setStoryCode(upperValue);
+                      handleInputChange('story_code', upperValue);
+                    }} onPaste={e => {
+                      const pastedText = e.clipboardData.getData('text');
+                      const upperValue = pastedText.toUpperCase();
+                      e.preventDefault();
+                      setStoryCode(upperValue);
+                      handleInputChange('story_code', upperValue);
+                    }} onBlur={e => {
+                      const upperValue = e.target.value.toUpperCase();
+                      if (upperValue !== e.target.value) {
+                        setStoryCode(upperValue);
+                        handleInputChange('story_code', upperValue);
+                      }
+                    }} className="border-orange-400 focus:border-orange-500" style={{
+                      width: '192px',
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontStyle: 'normal',
+                      color: '#000000'
+                    }} autoCapitalize="characters" spellCheck={false} />
                     </div>
                   </div>
 
                   {/* Row B - Category */}
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>B</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
+                    backgroundColor: '#22c55e',
+                    fontSize: '21px',
+                    fontFamily: 'Arial'
+                  }}>B</div>
                     <div className="grid grid-cols-2 gap-4 flex-1">
                       <div>
                          <Select value={formData.category} onValueChange={value => {
@@ -323,13 +304,13 @@ const SuperText: React.FC = () => {
                         handleInputChange('category', value);
                       }}>
                            <SelectTrigger className="w-full border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                           fontSize: '21px',
-                           fontFamily: 'Arial',
-                           fontWeight: 'bold',
-                           backgroundColor: '#F97316',
-                           color: 'white',
-                           borderColor: '#ea580c'
-                         }}>
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold',
+                          backgroundColor: '#F97316',
+                          color: 'white',
+                          borderColor: '#ea580c'
+                        }}>
                              <SelectValue placeholder="Category" />
                            </SelectTrigger>
                           <SelectContent className="bg-white">
@@ -401,20 +382,24 @@ const SuperText: React.FC = () => {
 
                   {/* Row C - Copyright */}
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>C</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
+                    backgroundColor: '#22c55e',
+                    fontSize: '21px',
+                    fontFamily: 'Arial'
+                  }}>C</div>
                     <div className="flex gap-3 flex-1">
                        <Select value={formData.copyright_status || ''} onValueChange={value => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
                          <SelectTrigger className="w-[320px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                         fontSize: '21px',
-                         fontFamily: 'Arial',
-                         fontWeight: 'bold',
-                         textAlign: 'left',
-                         backgroundColor: !formData.copyright_status ? '#9c441a' : formData.copyright_status === '©' ? '#dc2626' : formData.copyright_status === 'L' ? '#F97316' : formData.copyright_status === 'O' ? '#228B22' : '#9c441a',
-                         borderColor: !formData.copyright_status ? '#7a2f19' : formData.copyright_status === '©' ? '#b91c1c' : formData.copyright_status === 'L' ? '#ea580c' : formData.copyright_status === 'O' ? '#166534' : '#7a2f19'
-                       }}>
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold',
+                        textAlign: 'left',
+                        backgroundColor: !formData.copyright_status ? '#9c441a' : formData.copyright_status === '©' ? '#dc2626' : formData.copyright_status === 'L' ? '#F97316' : formData.copyright_status === 'O' ? '#228B22' : '#9c441a',
+                        borderColor: !formData.copyright_status ? '#7a2f19' : formData.copyright_status === '©' ? '#b91c1c' : formData.copyright_status === 'L' ? '#ea580c' : formData.copyright_status === 'O' ? '#166534' : '#7a2f19'
+                      }}>
                            <SelectValue placeholder="Copyright Status" />
                          </SelectTrigger>
                         <SelectContent className="bg-white">
@@ -452,19 +437,17 @@ const SuperText: React.FC = () => {
                         </SelectContent>
                       </Select>
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#22c55e', fontSize: '21px', fontFamily: 'Arial' }}>D</div>
-                        <Button 
-                          onClick={handleStoryCodeLookup} 
-                          disabled={isLoadingStory} 
-                          variant="outline"
-                          className="text-white border-green-600 hover:bg-green-700"
-                          style={{
-                            background: 'linear-gradient(to bottom, #16a34a, #15803d)',
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold'
-                          }}
-                        >
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
+                        backgroundColor: '#22c55e',
+                        fontSize: '21px',
+                        fontFamily: 'Arial'
+                      }}>D</div>
+                        <Button onClick={handleStoryCodeLookup} disabled={isLoadingStory} variant="outline" className="text-white border-green-600 hover:bg-green-700" style={{
+                        background: 'linear-gradient(to bottom, #16a34a, #15803d)',
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }}>
                           {isLoadingStory ? 'Loading...' : 'Load Text'}
                         </Button>
                       </div>
@@ -496,19 +479,39 @@ const SuperText: React.FC = () => {
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                  <h2 className="text-xl font-bold text-orange-700" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>🖼️ Story Photos</h2>
+                  <h2 className="text-xl font-bold text-orange-700" style={{
+                  fontSize: '21px',
+                  fontFamily: 'Arial',
+                  fontWeight: 'bold'
+                }}>🖼️ Story Photos</h2>
                 </div>
                 
                 <div className="grid grid-cols-3 gap-4">
                   {[1, 2, 3].map(index => <div key={index} className="border-2 border-orange-400 rounded p-4 text-center">
                       <div className="bg-gray-100 h-32 flex items-center justify-center mb-2 rounded">
-                        <span className="text-gray-500" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>No Photo</span>
+                        <span className="text-gray-500" style={{
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>No Photo</span>
                       </div>
-                      <Button variant="outline" size="sm" className="w-full mb-2 text-red-600 border-red-400" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
+                      <Button variant="outline" size="sm" className="w-full mb-2 text-red-600 border-red-400" style={{
+                    fontSize: '21px',
+                    fontFamily: 'Arial',
+                    fontWeight: 'bold'
+                  }}>
                         Choose File
                       </Button>
-                      <span className="text-xs text-gray-500" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>N...en</span>
-                      <Input placeholder="Alt text" className="mt-2 text-sm" value={(formData as any)[`photo_alt_${index}`] || ''} onChange={e => handleInputChange(`photo_alt_${index}` as keyof Story, e.target.value)} style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }} />
+                      <span className="text-xs text-gray-500" style={{
+                    fontSize: '21px',
+                    fontFamily: 'Arial',
+                    fontWeight: 'bold'
+                  }}>N...en</span>
+                      <Input placeholder="Alt text" className="mt-2 text-sm" value={(formData as any)[`photo_alt_${index}`] || ''} onChange={e => handleInputChange(`photo_alt_${index}` as keyof Story, e.target.value)} style={{
+                    fontSize: '21px',
+                    fontFamily: 'Arial',
+                    fontWeight: 'bold'
+                  }} />
                     </div>)}
                 </div>
               </div>
@@ -663,11 +666,17 @@ const SuperText: React.FC = () => {
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-lg font-bold" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
-              {saveAction === 'save-and-clear' ? 'Confirm Save & Clear' : 
-               saveAction === 'cancel-all' ? 'Confirm Cancel All & Clear' : 'Confirm Save'}
+            <DialogTitle className="text-lg font-bold" style={{
+            fontSize: '21px',
+            fontFamily: 'Arial',
+            fontWeight: 'bold'
+          }}>
+              {saveAction === 'save-and-clear' ? 'Confirm Save & Clear' : saveAction === 'cancel-all' ? 'Confirm Cancel All & Clear' : 'Confirm Save'}
             </DialogTitle>
-            <DialogDescription className="text-sm" style={{ fontSize: '21px', fontFamily: 'Arial' }}>
+            <DialogDescription className="text-sm" style={{
+            fontSize: '21px',
+            fontFamily: 'Arial'
+          }}>
               {saveAction === 'save-and-clear' ? <>
                   Are you sure you want to <span className="text-red-600 font-semibold">SAVE</span> this story
                   <br />
@@ -680,21 +689,7 @@ const SuperText: React.FC = () => {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2">
-            {saveAction === 'save-and-clear' || saveAction === 'cancel-all' ? (
-              <YesNoButtons
-                onNo={() => confirmSave(false)}
-                onYes={() => confirmSave(true)}
-                yesLabel={saveAction === 'cancel-all' ? 'Clear Now' : 'YES'}
-                noLabel={saveAction === 'cancel-all' ? 'Keep Editing' : 'NO'}
-              />
-            ) : (
-              <YesNoButtons
-                onNo={() => confirmSave(false)}
-                onYes={() => confirmSave(true)}
-                yesLabel="Save Only"
-                noLabel="Cancel"
-              />
-            )}
+            {saveAction === 'save-and-clear' || saveAction === 'cancel-all' ? <YesNoButtons onNo={() => confirmSave(false)} onYes={() => confirmSave(true)} yesLabel={saveAction === 'cancel-all' ? 'Clear Now' : 'YES'} noLabel={saveAction === 'cancel-all' ? 'Keep Editing' : 'NO'} /> : <YesNoButtons onNo={() => confirmSave(false)} onYes={() => confirmSave(true)} yesLabel="Save Only" noLabel="Cancel" />}
           </DialogFooter>
         </DialogContent>
       </Dialog>
