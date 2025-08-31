@@ -79,7 +79,7 @@ const ReferenceDashboard = () => {
       {/* Floating Top Button */}
       <Button
         onClick={handleScrollToTop}
-        className="fixed bottom-6 right-6 z-50 rounded-full w-12 h-12 shadow-lg hover-scale"
+        className="fixed bottom-6 left-6 z-50 rounded-full w-12 h-12 shadow-lg hover-scale"
         size="icon"
         title="Scroll to top"
       >
