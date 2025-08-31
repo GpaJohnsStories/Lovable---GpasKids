@@ -342,7 +342,7 @@ const SuperText: React.FC = () => {
                 </div>
                 
                 {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
-                <div className="grid grid-rows-4 grid-cols-[32px_280px_1fr] gap-2">
+                <div className="grid grid-rows-4 grid-cols-[32px_280px_1fr] gap-y-2 gap-x-1">
                   {/* Column 1, Row 1: Green Dot A */}
                   <div className="row-start-1 col-start-1 place-self-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
