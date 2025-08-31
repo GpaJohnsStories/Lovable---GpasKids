@@ -193,6 +193,7 @@ export const DeployedContent = ({
           onFontSizeChange={onFontSizeChange}
           useRichCleaning={true}
           showHeaderPreview={showHeaderPreview}
+          enableProportionalSizing={true}
         />
       )}
     </div>

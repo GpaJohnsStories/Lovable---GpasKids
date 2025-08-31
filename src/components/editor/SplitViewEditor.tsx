@@ -415,6 +415,7 @@ ${content}`;
                 category={category}
                 fontSize={fontSize}
                 onFontSizeChange={onFontSizeChange}
+                enableProportionalSizing={true}
               />
             </div>
             <StoryContentScrollToTop scrollContainerRef={storyContentRef} targetSelector="#format-menu" />

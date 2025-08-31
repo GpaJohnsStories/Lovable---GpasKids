@@ -12,6 +12,7 @@ interface IsolatedStoryRendererProps {
   fontSize?: number;
   onFontSizeChange?: (fontSize: number) => void;
   showHeaderPreview?: boolean;
+  enableProportionalSizing?: boolean;
 }
 
 /**
@@ -26,7 +27,8 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
   category,
   fontSize = 16,
   onFontSizeChange,
-  showHeaderPreview = true
+  showHeaderPreview = true,
+  enableProportionalSizing = false
 }) => {
   const isWebText = category === "WebText";
   const baseFontFamily = isWebText 
@@ -54,6 +56,19 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
     
     // Wrap plain text in paragraphs if needed
     processedContent = wrapParagraphs(processedContent);
+    
+    // Convert inline px/pt font sizes to em if proportional sizing is enabled
+    if (enableProportionalSizing && typeof processedContent === 'string') {
+      const baseFontSize = 16; // Base font size in pixels
+      processedContent = processedContent.replace(
+        /font-size:\s*(\d+(?:\.\d+)?)(px|pt)/gi,
+        (match, size, unit) => {
+          const sizeInPx = unit === 'pt' ? parseFloat(size) * 1.333 : parseFloat(size);
+          const emSize = sizeInPx / baseFontSize;
+          return `font-size: ${emSize.toFixed(3)}em`;
+        }
+      );
+    }
     
     const safeHtml = createSafeHtml(processedContent);
     

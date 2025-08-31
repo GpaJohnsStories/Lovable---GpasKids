@@ -180,13 +180,23 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     if (titleHtml) {
                       return (
                         <h1 
-                          className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
+                          className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
+                          style={{ 
+                            fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
+                            fontSize: `${Math.floor(currentFontSize * 2.25)}px`
+                          }}
                           dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
                         />
                       );
                     } else {
                       return (
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-handwritten font-bold text-emerald-900 leading-tight break-words text-left">
+                        <h1 
+                          className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
+                          style={{ 
+                            fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
+                            fontSize: `${Math.floor(currentFontSize * 2.25)}px`
+                          }}
+                        >
                           {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
                         </h1>
                       );
@@ -204,6 +214,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                   fontSize={currentFontSize}
                   useRichCleaning={true}
                   showHeaderPreview={false} // Don't show header preview for SYS-WEL since we handle title separately
+                  enableProportionalSizing={true}
                 />
               </div>
             </div>
@@ -304,6 +315,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
             fontSize={currentFontSize}
             useRichCleaning={true}
             showHeaderPreview={false} // Don't show header preview since we handle title separately
+            enableProportionalSizing={true}
           />
           
           {/* Clear the float */}
