@@ -55,7 +55,7 @@ const SuperText: React.FC = () => {
   const [saveAction, setSaveAction] = React.useState<'save-and-clear' | 'save-only' | 'cancel-all'>('save-and-clear');
   const [storyCode, setStoryCode] = React.useState('');
   const [category, setCategory] = React.useState('');
-  const [copyrightStatus, setCopyrightStatus] = React.useState('©');
+  const [copyrightStatus, setCopyrightStatus] = React.useState('');
   const [publicationStatusCode, setPublicationStatusCode] = React.useState(5);
   const [lookupResult, setLookupResult] = React.useState<Story | null>(null);
   
@@ -96,7 +96,7 @@ const SuperText: React.FC = () => {
     // Initialize form with URL parameters on initial load
     const initialStoryCode = searchParams.get('story_code') || '';
     const initialCategory = searchParams.get('category') || ''; // Don't default to 'Fun'
-    const initialCopyrightStatus = searchParams.get('copyright_status') || '©';
+    const initialCopyrightStatus = searchParams.get('copyright_status') || ''; // Don't default to '©'
     const initialPublicationStatusCode = Number(searchParams.get('publication_status_code')) || 5;
     setStoryCode(initialStoryCode);
     setCategory(initialCategory);
@@ -513,7 +513,7 @@ const SuperText: React.FC = () => {
                     fontFamily: 'Arial'
                   }}>C</div>
                     <div className="flex gap-3 flex-1">
-                       <Select value={formData.copyright_status || ''} onValueChange={value => {
+                        <Select value={formData.copyright_status || ''} onValueChange={value => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
@@ -521,13 +521,16 @@ const SuperText: React.FC = () => {
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
-                        textAlign: 'left',
-                        backgroundColor: !formData.copyright_status ? '#9c441a' : formData.copyright_status === '©' ? '#dc2626' : formData.copyright_status === 'L' ? '#F97316' : formData.copyright_status === 'O' ? '#228B22' : '#9c441a',
-                        borderColor: !formData.copyright_status ? '#7a2f19' : formData.copyright_status === '©' ? '#b91c1c' : formData.copyright_status === 'L' ? '#ea580c' : formData.copyright_status === 'O' ? '#166534' : '#7a2f19'
+                        backgroundColor: '#2563eb',
+                        borderColor: '#1d4ed8'
                       }}>
-                           <SelectValue placeholder="Copyright Status" />
+                           <SelectValue placeholder="Copyright Status" className="text-white" style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }} />
                          </SelectTrigger>
-                        <SelectContent className="bg-white">
+                        <SelectContent className="bg-white z-50">
                           <SelectItem value="©" style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
