@@ -596,11 +596,11 @@ const SuperText: React.FC = () => {
                           <Button 
                             onClick={scrollToTextEditorSection} 
                             className="supertext-text-btn px-6 py-2 rounded-full"
-                            style={{
-                              fontSize: '18px',
-                              fontFamily: 'Arial',
-                              fontWeight: 'bold'
-                            }}
+                             style={{
+                               fontSize: '21px',
+                               fontFamily: 'Arial',
+                               fontWeight: 'bold'
+                             }}
                             tabIndex={-1}
                           >
                             Add/Edit Text
@@ -621,11 +621,11 @@ const SuperText: React.FC = () => {
                           <Button 
                             onClick={scrollToAudioSection} 
                             className="supertext-audio-btn px-6 py-2 rounded-full"
-                            style={{
-                              fontSize: '18px',
-                              fontFamily: 'Arial',
-                              fontWeight: 'bold'
-                            }}
+                             style={{
+                               fontSize: '21px',
+                               fontFamily: 'Arial',
+                               fontWeight: 'bold'
+                             }}
                             tabIndex={-1}
                           >
                             Add Audio File
@@ -646,11 +646,11 @@ const SuperText: React.FC = () => {
                           <Button 
                             onClick={scrollToVideoSection} 
                             className="supertext-video-btn px-6 py-2 rounded-full"
-                            style={{
-                              fontSize: '18px',
-                              fontFamily: 'Arial',
-                              fontWeight: 'bold'
-                            }}
+                             style={{
+                               fontSize: '21px',
+                               fontFamily: 'Arial',
+                               fontWeight: 'bold'
+                             }}
                             tabIndex={-1}
                           >
                             Add Video File
