@@ -46,8 +46,9 @@ const ReferenceDashboard = () => {
         <p className="text-sm text-muted-foreground">Build: {BUILD_ID}</p>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex flex-wrap gap-3 p-4 bg-muted/30 rounded-lg border">
+      {/* Navigation Buttons - Sticky Menu */}
+      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border/40 -mx-4 px-4 py-4">
+        <div className="flex flex-wrap gap-3 p-4 bg-muted/30 rounded-lg border">
         <Button
           variant="outline"
           onClick={() => handleSectionScroll("top")}
@@ -65,6 +66,7 @@ const ReferenceDashboard = () => {
             {section.label}
           </Button>
         ))}
+        </div>
       </div>
 
       {/* Section Content - Always show all sections */}
