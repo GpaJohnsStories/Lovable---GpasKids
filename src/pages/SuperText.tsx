@@ -64,6 +64,10 @@ const SuperText: React.FC = () => {
   const audioSectionRef = useRef<HTMLDivElement>(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
   const textEditorSectionRef = useRef<HTMLDivElement>(null);
+  
+  // Refs for tab cycling
+  const storyCodeRef = useRef<HTMLInputElement>(null);
+  const loadTextBtnRef = useRef<HTMLButtonElement>(null);
   const {
     formData,
     isLoadingStory,
@@ -345,29 +349,48 @@ const SuperText: React.FC = () => {
                     fontFamily: 'Arial'
                   }}>A</div>
                     <div className="flex-1">
-                      <Input type="text" placeholder="TEXT CODE" value={storyCode} onChange={e => {
-                      const upperValue = e.target.value.toUpperCase();
-                      setStoryCode(upperValue);
-                      handleInputChange('story_code', upperValue);
-                    }} onPaste={e => {
-                      const pastedText = e.clipboardData.getData('text');
-                      const upperValue = pastedText.toUpperCase();
-                      e.preventDefault();
-                      setStoryCode(upperValue);
-                      handleInputChange('story_code', upperValue);
-                    }} onBlur={e => {
-                      const upperValue = e.target.value.toUpperCase();
-                      if (upperValue !== e.target.value) {
-                        setStoryCode(upperValue);
-                        handleInputChange('story_code', upperValue);
-                      }
-                    }} className="border-4 border-orange-400 focus:border-orange-500" style={{
-                      width: '192px',
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontStyle: 'normal',
-                      color: '#000000'
-                    }} autoCapitalize="characters" spellCheck={false} tabIndex={1} />
+                      <Input 
+                        ref={storyCodeRef}
+                        type="text" 
+                        placeholder="TEXT CODE" 
+                        value={storyCode} 
+                        onChange={e => {
+                          const upperValue = e.target.value.toUpperCase();
+                          setStoryCode(upperValue);
+                          handleInputChange('story_code', upperValue);
+                        }} 
+                        onPaste={e => {
+                          const pastedText = e.clipboardData.getData('text');
+                          const upperValue = pastedText.toUpperCase();
+                          e.preventDefault();
+                          setStoryCode(upperValue);
+                          handleInputChange('story_code', upperValue);
+                        }} 
+                        onBlur={e => {
+                          const upperValue = e.target.value.toUpperCase();
+                          if (upperValue !== e.target.value) {
+                            setStoryCode(upperValue);
+                            handleInputChange('story_code', upperValue);
+                          }
+                        }}
+                        onKeyDown={e => {
+                          if (e.key === 'Tab' && e.shiftKey) {
+                            e.preventDefault();
+                            loadTextBtnRef.current?.focus();
+                          }
+                        }}
+                        className="border-4 border-orange-400 focus:border-orange-500" 
+                        style={{
+                          width: '192px',
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontStyle: 'normal',
+                          color: '#000000'
+                        }} 
+                        autoCapitalize="characters" 
+                        spellCheck={false} 
+                        tabIndex={1} 
+                      />
                     </div>
                   </div>
 
@@ -464,12 +487,26 @@ const SuperText: React.FC = () => {
                         fontSize: '21px',
                         fontFamily: 'Arial'
                       }}>D</div>
-                        <Button onClick={handleStoryCodeLookup} disabled={isLoadingStory} variant="outline" className="text-white border-green-600 hover:bg-green-700" style={{
-                        background: 'linear-gradient(to bottom, #16a34a, #15803d)',
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }} tabIndex={4}>
+                        <Button 
+                          ref={loadTextBtnRef}
+                          onClick={handleStoryCodeLookup} 
+                          disabled={isLoadingStory} 
+                          variant="outline" 
+                          className="text-white border-green-600 hover:bg-green-700" 
+                          style={{
+                            background: 'linear-gradient(to bottom, #16a34a, #15803d)',
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold'
+                          }} 
+                          tabIndex={4}
+                          onKeyDown={e => {
+                            if (e.key === 'Tab' && !e.shiftKey) {
+                              e.preventDefault();
+                              storyCodeRef.current?.focus();
+                            }
+                          }}
+                        >
                           {isLoadingStory ? 'Loading...' : 'Load Text'}
                         </Button>
                       </div>
