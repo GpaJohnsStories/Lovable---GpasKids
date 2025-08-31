@@ -431,7 +431,7 @@ const SuperText: React.FC = () => {
                       setCategory(value);
                       handleInputChange('category', value);
                     }}>
-                      <SelectTrigger className="w-[240px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                      <SelectTrigger className="w-[280px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
@@ -512,7 +512,7 @@ const SuperText: React.FC = () => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
-                      <SelectTrigger className="w-[240px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                      <SelectTrigger className="w-[280px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
@@ -567,7 +567,7 @@ const SuperText: React.FC = () => {
                       ref={loadTextBtnRef}
                       onClick={handleStoryCodeLookup} 
                       disabled={isLoadingStory}
-                      className="supertext-text-btn flex items-center justify-start px-2 py-1" 
+                      className="supertext-text-btn flex items-center justify-start px-2 py-1 w-[280px]" 
                       style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
