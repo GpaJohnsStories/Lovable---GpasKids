@@ -342,7 +342,7 @@ const SuperText: React.FC = () => {
                 </div>
                 
                 {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
-                <div className="grid grid-rows-4 grid-cols-[32px_280px_1fr] gap-y-2 gap-x-1">
+                <div className="grid grid-rows-4 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
                   {/* Column 1, Row 1: Green Dot A */}
                   <div className="row-start-1 col-start-1 place-self-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
@@ -431,7 +431,7 @@ const SuperText: React.FC = () => {
                       setCategory(value);
                       handleInputChange('category', value);
                     }}>
-                      <SelectTrigger className="w-[280px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                      <SelectTrigger className="w-[192px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
@@ -512,7 +512,7 @@ const SuperText: React.FC = () => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
-                      <SelectTrigger className="w-[280px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                      <SelectTrigger className="w-[192px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
@@ -567,7 +567,7 @@ const SuperText: React.FC = () => {
                       ref={loadTextBtnRef}
                       onClick={handleStoryCodeLookup} 
                       disabled={isLoadingStory}
-                      className="supertext-text-btn flex items-center justify-start px-2 py-1 w-[280px]" 
+                      className="supertext-text-btn flex items-center justify-start px-2 py-1 w-[192px]" 
                       style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
@@ -589,7 +589,7 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Column 3, Row 1: Add/Edit Text Button */}
-                  <div className="row-start-1 col-start-3 place-self-center">
+                  <div className="row-start-1 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -614,7 +614,7 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Column 3, Row 2: Add Audio File Button */}
-                  <div className="row-start-2 col-start-3 place-self-center">
+                  <div className="row-start-2 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -639,7 +639,7 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Column 3, Row 3: Add Video File Button */}
-                  <div className="row-start-3 col-start-3 place-self-center">
+                  <div className="row-start-3 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
