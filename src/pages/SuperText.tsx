@@ -430,7 +430,7 @@ const SuperText: React.FC = () => {
                               <Button 
                                 variant="outline" 
                                 size="sm" 
-                                className="p-2 hover:bg-blue-50 hover:border-blue-300" 
+                                className="p-2 border-blue-400 text-blue-700 hover:bg-blue-50 hover:border-blue-500" 
                                 onClick={scrollToAudioSection}
                               >
                                 🎧
@@ -448,7 +448,7 @@ const SuperText: React.FC = () => {
                               <Button 
                                 variant="outline" 
                                 size="sm" 
-                                className="p-2 hover:bg-purple-50 hover:border-purple-300" 
+                                className="p-2 border-purple-400 text-purple-700 hover:bg-purple-50 hover:border-purple-500" 
                                 onClick={scrollToVideoSection}
                               >
                                 📹
