@@ -1087,16 +1087,7 @@
   .deployed-story-content i,
   .deployed-story-content b,
   .deployed-story-content li,
-  .proportional-content p,
-  .proportional-content span,
-  .proportional-content em,
-  .proportional-content strong,
-  .proportional-content i,
-  .proportional-content b,
-  .proportional-content li {
-    font-size: 21px !important; /* 16pt */
-    line-height: 1.5 !important;
-  }
+  /* Removed proportional-content from forced font sizing to allow dynamic scaling */
   
   /* Keep titles and headings at larger sizes */
   .story-content h1,
@@ -1108,11 +1099,7 @@
   .deployed-story-content h1,
   .deployed-story-content h2,
   .deployed-story-content h3,
-  .proportional-content h3 {
-    font-size: 28px !important; /* Keep headings larger for hierarchy */
-    font-weight: bold !important;
-    margin-bottom: 1rem !important;
-  }
+  /* Removed proportional-content h3 from forced font sizing to allow dynamic scaling */
   
   /* Override any inline font sizes that might interfere */
   .story-content [style*="font-size"],
