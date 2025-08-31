@@ -458,59 +458,20 @@ const SuperText: React.FC = () => {
                           </SelectContent>
                         </Select>
                       </div>
-                      <div className="flex gap-2 items-center">
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button 
-                                className="supertext-text-btn"
-                                onClick={scrollToTextEditorSection}
-                                tabIndex={-1}
-                              >
-                                T
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Jump to Text Editor</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button 
-                                size="sm" 
-                                className="supertext-audio-btn p-2"
-                                onClick={scrollToAudioSection}
-                                tabIndex={-1}
-                              >
-                                A
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Jump to Audio tools</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button 
-                                size="sm" 
-                                className="supertext-video-btn p-2"
-                                onClick={scrollToVideoSection}
-                                tabIndex={-1}
-                              >
-                                V
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Jump to Video tools</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
+                      <div className="flex items-center gap-3 ml-8">
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
+                        backgroundColor: '#22c55e',
+                        fontSize: '21px',
+                        fontFamily: 'Arial'
+                      }}>D</div>
+                        <Button onClick={handleStoryCodeLookup} disabled={isLoadingStory} variant="outline" className="text-white border-green-600 hover:bg-green-700" style={{
+                        background: 'linear-gradient(to bottom, #16a34a, #15803d)',
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }}>
+                          {isLoadingStory ? 'Loading...' : 'Load Text'}
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -574,20 +535,59 @@ const SuperText: React.FC = () => {
                           </SelectItem>
                         </SelectContent>
                       </Select>
-                      <div className="flex items-center gap-3 ml-8">
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
-                        backgroundColor: '#22c55e',
-                        fontSize: '21px',
-                        fontFamily: 'Arial'
-                      }}>D</div>
-                        <Button onClick={handleStoryCodeLookup} disabled={isLoadingStory} variant="outline" className="text-white border-green-600 hover:bg-green-700" style={{
-                        background: 'linear-gradient(to bottom, #16a34a, #15803d)',
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}>
-                          {isLoadingStory ? 'Loading...' : 'Load Text'}
-                        </Button>
+                      <div className="flex gap-2 items-center">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button 
+                                className="supertext-text-btn"
+                                onClick={scrollToTextEditorSection}
+                                tabIndex={-1}
+                              >
+                                T
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Jump to Text Editor</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                        
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button 
+                                size="sm" 
+                                className="supertext-audio-btn p-2"
+                                onClick={scrollToAudioSection}
+                                tabIndex={-1}
+                              >
+                                A
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Jump to Audio tools</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                        
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button 
+                                size="sm" 
+                                className="supertext-video-btn p-2"
+                                onClick={scrollToVideoSection}
+                                tabIndex={-1}
+                              >
+                                V
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Jump to Video tools</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </div>
                     </div>
                   </div>
