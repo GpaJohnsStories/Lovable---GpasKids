@@ -759,15 +759,6 @@ const SuperText: React.FC = () => {
                   </div>
                 </div>
               </div>
-
-              {/* Split Editor Section */}
-              <div ref={textEditorSectionRef} className="bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4">
-                <div className="mb-4">
-                  <h2 className="text-xl font-bold text-green-700">📝 Creating New Story: {formData.story_code || 'SVS-AEW'}</h2>
-                </div>
-                
-                <SplitViewEditor content={formData.content} onChange={value => handleInputChange('content', value)} placeholder="Enter your story content here..." category={formData.category as any} previewContent={formData.content} />
-              </div>
             </div>
 
             {/* Right Panel - Status and Actions */}
@@ -946,9 +937,18 @@ const SuperText: React.FC = () => {
                 </div>}
              </div>
            </div>
-         </div>
+          </div>
 
-         <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+          {/* Full Width Split Editor Section */}
+          <div ref={textEditorSectionRef} className="w-full bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4 mt-6">
+            <div className="mb-4">
+              <h2 className="text-xl font-bold text-green-700">📝 Creating New Story: {formData.story_code || 'SVS-AEW'}</h2>
+            </div>
+            
+            <SplitViewEditor content={formData.content} onChange={value => handleInputChange('content', value)} placeholder="Enter your story content here..." category={formData.category as any} previewContent={formData.content} />
+          </div>
+
+          <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold" style={{
