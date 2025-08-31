@@ -180,8 +180,12 @@ const SuperText: React.FC = () => {
     // Clear category in form data
     handleInputChange('category', '');
     setLookupResult(null);
+
+    // Clear URL query parameters
+    navigate('/buddys_admin/super-text', { replace: true });
+
     toast.success("Form cleared successfully!");
-  }, [handleInputChange]);
+  }, [handleInputChange, navigate]);
   useEffect(() => {
     // Clear form after submit if 'clear' param is true
     if (clear) {
@@ -971,7 +975,7 @@ const SuperText: React.FC = () => {
           {/* Full Width Split Editor Section */}
           <div ref={textEditorSectionRef} className="w-full bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4 mt-6">
             <div className="mb-4">
-              <h2 className="text-xl font-bold text-green-700">📝 {lookupResult ? `Editing Story: ${formData.story_code || 'Unknown'}` : `Creating New Story: ${formData.story_code || 'SVS-AEW'}`}</h2>
+              <h2 className="text-xl font-bold text-green-700">📝 {lookupResult ? `Editing Story${formData.story_code ? `: ${formData.story_code}` : ''}` : `Creating New Story${formData.story_code ? `: ${formData.story_code}` : ''}`}</h2>
             </div>
             
             <SplitViewEditor content={formData.content} onChange={value => handleInputChange('content', value)} placeholder="Enter your story content here..." category={formData.category as any} previewContent={formData.content} />
