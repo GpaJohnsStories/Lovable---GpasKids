@@ -574,7 +574,7 @@ const SuperText: React.FC = () => {
                           </SelectItem>
                         </SelectContent>
                       </Select>
-                      <div className="flex items-center gap-3 ml-auto">
+                      <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
                         backgroundColor: '#22c55e',
                         fontSize: '21px',
