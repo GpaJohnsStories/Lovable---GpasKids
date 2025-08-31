@@ -95,7 +95,7 @@ const SuperText: React.FC = () => {
   useEffect(() => {
     // Initialize form with URL parameters on initial load
     const initialStoryCode = searchParams.get('story_code') || '';
-    const initialCategory = searchParams.get('category') || 'Fun';
+    const initialCategory = searchParams.get('category') || ''; // Don't default to 'Fun'
     const initialCopyrightStatus = searchParams.get('copyright_status') || '©';
     const initialPublicationStatusCode = Number(searchParams.get('publication_status_code')) || 5;
     setStoryCode(initialStoryCode);
@@ -134,6 +134,9 @@ const SuperText: React.FC = () => {
     setCategory('');
     setCopyrightStatus('');
     setPublicationStatusCode(5);
+    
+    // Clear category in form data
+    handleInputChange('category', '');
     setLookupResult(null);
     toast.success("Form cleared successfully!");
   }, [handleInputChange]);
@@ -382,14 +385,13 @@ const SuperText: React.FC = () => {
                           color: 'white',
                           borderColor: '#ea580c'
                         }}>
-                             <SelectValue placeholder="Category" style={{
+                             <SelectValue placeholder="Category" className="text-white" style={{
                               fontSize: '21px',
                               fontFamily: 'Arial',
-                              fontWeight: 'bold',
-                              color: 'white'
+                              fontWeight: 'bold'
                             }} />
                            </SelectTrigger>
-                          <SelectContent className="bg-white">
+                          <SelectContent className="bg-white z-50">
                             <SelectItem value="WebText" style={{
                             fontSize: '21px',
                             fontFamily: 'Arial',
