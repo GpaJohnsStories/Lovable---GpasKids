@@ -603,7 +603,7 @@ const SuperText: React.FC = () => {
                             }}
                             tabIndex={-1}
                           >
-                            Edit Text
+                            Add/Edit Text
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent side="bottom" className="text-lg">
