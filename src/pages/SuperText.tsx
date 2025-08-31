@@ -429,12 +429,7 @@ const SuperText: React.FC = () => {
                             <TooltipTrigger asChild>
                               <Button 
                                 size="sm" 
-                                className="p-2 bg-blue-400 text-white hover:bg-blue-500 border-blue-400" 
-                                style={{
-                                  fontSize: '21px',
-                                  fontFamily: 'Arial',
-                                  fontWeight: 'bold'
-                                }}
+                                className="supertext-audio-btn p-2"
                                 onClick={scrollToAudioSection}
                               >
                                 A
@@ -451,12 +446,7 @@ const SuperText: React.FC = () => {
                             <TooltipTrigger asChild>
                               <Button 
                                 size="sm" 
-                                className="p-2 bg-purple-400 text-white hover:bg-purple-500 border-purple-400" 
-                                style={{
-                                  fontSize: '21px',
-                                  fontFamily: 'Arial',
-                                  fontWeight: 'bold'
-                                }}
+                                className="supertext-video-btn p-2"
                                 onClick={scrollToVideoSection}
                               >
                                 V

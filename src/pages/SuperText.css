@@ -45,3 +45,55 @@
   transform: scale(0.98) !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
 }
+
+.supertext-audio-btn {
+  background-color: #3b82f6 !important; /* Blue */
+  background-image: none !important;
+  color: #ffffff !important; /* Pure White */
+  border-color: #2563eb !important; /* Darker blue for border */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+  transition: all 0.2s ease !important;
+  font-size: 21px !important;
+  font-family: Arial !important;
+  font-weight: bold !important;
+}
+
+.supertext-audio-btn:hover {
+  background-color: #2563eb !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
+}
+
+.supertext-audio-btn:active {
+  transform: scale(0.98) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
+}
+
+.supertext-video-btn {
+  background-color: #8b5cf6 !important; /* Purple */
+  background-image: none !important;
+  color: #ffffff !important; /* Pure White */
+  border-color: #7c3aed !important; /* Darker purple for border */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+  transition: all 0.2s ease !important;
+  font-size: 21px !important;
+  font-family: Arial !important;
+  font-weight: bold !important;
+}
+
+.supertext-video-btn:hover {
+  background-color: #7c3aed !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
+}
+
+.supertext-video-btn:active {
+  transform: scale(0.98) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
+}
