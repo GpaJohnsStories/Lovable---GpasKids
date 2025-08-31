@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertCircle, CheckCircle, Database, HardDrive, Clock, Activity } from 'lucide-react';
+import { AlertCircle, CheckCircle, Database, HardDrive, Clock, Activity, MemoryStick } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface ConnectionTest {
@@ -13,6 +13,7 @@ interface ConnectionTest {
 
 export const AdminSystemStatusCard: React.FC = () => {
   const [tests, setTests] = useState<ConnectionTest[]>([
+    { name: 'Memory', status: 'untested', message: 'Not tested' },
     { name: 'Database', status: 'untested', message: 'Not tested' },
     { name: 'Storage', status: 'untested', message: 'Not tested' },
     { name: 'Icons', status: 'untested', message: 'Not tested' }
@@ -26,13 +27,48 @@ export const AdminSystemStatusCard: React.FC = () => {
     
     // Reset all tests to checking
     setTests([
+      { name: 'Memory', status: 'checking', message: 'Testing...' },
       { name: 'Database', status: 'checking', message: 'Testing...' },
       { name: 'Storage', status: 'checking', message: 'Testing...' },
       { name: 'Icons', status: 'checking', message: 'Testing...' }
     ]);
 
     try {
-      // Test 1: Database connectivity
+      // Test 1: Memory usage
+      const memoryStart = Date.now();
+      try {
+        let totalMemoryMB = 0;
+        let memoryMessage = 'Measured';
+        
+        // Try to get memory from performance API
+        if ('memory' in performance && (performance as any).memory) {
+          totalMemoryMB = Math.round((performance as any).memory.usedJSHeapSize / (1024 * 1024));
+        } else {
+          // Fallback: estimate from resource sizes
+          const resources = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
+          const totalBytes = resources.reduce((sum, resource) => sum + (resource.transferSize || 0), 0);
+          totalMemoryMB = Math.round(totalBytes / (1024 * 1024));
+          memoryMessage = 'Estimated';
+        }
+        
+        const memoryDuration = Date.now() - memoryStart;
+        const metrics = [{ label: 'Total', value: `${totalMemoryMB} MB` }];
+        
+        setTests(prev => prev.map(test => 
+          test.name === 'Memory' 
+            ? { ...test, status: 'success', message: memoryMessage, duration: memoryDuration, metrics }
+            : test
+        ));
+      } catch (memoryError) {
+        const memoryDuration = Date.now() - memoryStart;
+        setTests(prev => prev.map(test => 
+          test.name === 'Memory' 
+            ? { ...test, status: 'error', message: 'Unavailable', duration: memoryDuration }
+            : test
+        ));
+      }
+
+      // Test 2: Database connectivity
       const dbStart = Date.now();
       const { error: dbError } = await supabase
         .from('stories')
@@ -69,7 +105,7 @@ export const AdminSystemStatusCard: React.FC = () => {
         }
       }
 
-      // Test 2: Storage bucket availability - Test actual icon access and get storage totals
+      // Test 3: Storage bucket availability - Test actual icon access and get storage totals
       const storageStart = Date.now();
       try {
         // Try to access an icon directly from the icons bucket
@@ -143,7 +179,7 @@ export const AdminSystemStatusCard: React.FC = () => {
         ));
       }
 
-      // Test 3: Icon loading
+      // Test 4: Icon loading
       const iconStart = Date.now();
       const { data: testIcon } = await supabase
         .from('icon_library')
@@ -234,6 +270,8 @@ export const AdminSystemStatusCard: React.FC = () => {
 
   const getTestIcon = (testName: string) => {
     switch (testName) {
+      case 'Memory':
+        return <MemoryStick className="h-4 w-4" />;
       case 'Database':
         return <Database className="h-4 w-4" />;
       case 'Storage':
