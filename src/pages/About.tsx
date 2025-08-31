@@ -128,6 +128,8 @@ const About = () => {
               storyCode="SYS-AGJ"
               includeAudio={false}
               className="text-lg text-black leading-relaxed font-normal"
+              fontSize={fontSize}
+              onFontSizeChange={setFontSize}
               fallbackContent={
                 <div>
                   {/* Fallback content if deployment hasn't happened yet */}
@@ -224,6 +226,8 @@ const About = () => {
               storyCode="SYS-BDY"
               includeAudio={false}
               className="text-lg text-black leading-relaxed font-normal"
+              fontSize={fontSize}
+              onFontSizeChange={setFontSize}
               fallbackContent={
                 <div>
                   {/* Fallback content if deployment hasn't happened yet */}
@@ -383,6 +387,8 @@ const About = () => {
               storyCode="SYS-THY"
               includeAudio={false}
               className="text-lg text-purple-800 leading-relaxed font-normal"
+              fontSize={fontSize}
+              onFontSizeChange={setFontSize}
               fallbackContent={
                 <div className="clear-both">
                   <p className="text-lg text-purple-800 leading-relaxed mb-6 font-normal" style={{ fontFamily: 'Georgia, serif' }}>
