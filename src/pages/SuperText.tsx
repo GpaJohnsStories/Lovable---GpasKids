@@ -477,24 +477,25 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Row C - Copyright */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-start gap-3">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
                     backgroundColor: '#22c55e',
                     fontSize: '21px',
                     fontFamily: 'Arial'
                   }}>C</div>
-                    <div className="flex gap-3 flex-1">
+                    <div className="grid grid-cols-2 gap-8 flex-1">
+                      <div>
                         <Select value={formData.copyright_status || ''} onValueChange={value => {
-                      setCopyrightStatus(value);
-                      handleInputChange('copyright_status', value);
-                    }}>
+                          setCopyrightStatus(value);
+                          handleInputChange('copyright_status', value);
+                        }}>
                          <SelectTrigger className="w-[240px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold',
-                        backgroundColor: '#2563eb',
-                        borderColor: '#1d4ed8'
-                      }}>
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold',
+                            backgroundColor: '#2563eb',
+                            borderColor: '#1d4ed8'
+                          }}>
                            <SelectValue placeholder="Copyright Status" className="text-white" style={{
                             fontSize: '21px',
                             fontFamily: 'Arial',
@@ -534,8 +535,10 @@ const SuperText: React.FC = () => {
                             </div>
                           </SelectItem>
                         </SelectContent>
-                      </Select>
-                      <div className="flex gap-2 items-center">
+                        </Select>
+                      </div>
+                      <div className="flex items-center gap-3 ml-8">
+                        <div className="flex gap-2 items-center">
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
@@ -588,6 +591,7 @@ const SuperText: React.FC = () => {
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
+                        </div>
                       </div>
                     </div>
                   </div>
