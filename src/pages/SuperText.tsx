@@ -11,6 +11,7 @@ import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/comp
 import { YesNoButtons } from "@/components/ui/YesNoButtons";
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
+import { useVoiceTesting } from '@/hooks/useVoiceTesting';
 import SecureAdminRoute from '@/components/admin/SecureAdminRoute';
 import StoryVideoUpload from '@/components/StoryVideoUpload';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
@@ -92,6 +93,12 @@ const SuperText: React.FC = () => {
     handleSaveOnly,
     isSaving
   } = useStoryFormActions(storyId, refetchStory, handleStoryFormSave);
+  const {
+    currentlyPlaying,
+    loadingVoice,
+    playVoice,
+    stopAudio
+  } = useVoiceTesting();
   useEffect(() => {
     // Initialize form with URL parameters on initial load
     const initialStoryCode = searchParams.get('story_code') || '';
@@ -767,10 +774,23 @@ const SuperText: React.FC = () => {
                       <div className="font-bold">{voice.name}</div>
                       <div className="text-xs text-gray-600 mb-2">{voice.desc}</div>
                       <div className="flex gap-1">
-                          <Button size="sm" variant="outline" className="flex-1 text-xs">
-                            ▶ Test
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="flex-1 text-xs"
+                            onClick={() => playVoice(voice.voice, formData.content, formData.title)}
+                            disabled={loadingVoice === voice.voice}
+                          >
+                            {loadingVoice === voice.voice ? "..." : currentlyPlaying === voice.voice ? "⏸ Stop" : "▶ Test"}
                           </Button>
-                          <Button size="sm" className="flex-1 text-xs bg-green-600 hover:bg-green-700">
+                          <Button 
+                            size="sm" 
+                            className="flex-1 text-xs bg-green-600 hover:bg-green-700"
+                            onClick={() => {
+                              handleInputChange('ai_voice_name', voice.voice);
+                              toast.success(`Selected ${voice.name} voice`);
+                            }}
+                          >
                             Use
                           </Button>
                         </div>
