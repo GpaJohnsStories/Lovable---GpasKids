@@ -121,7 +121,35 @@ const SuperText: React.FC = () => {
     handleInputChange('category', initialCategory);
     handleInputChange('copyright_status', initialCopyrightStatus);
     handleInputChange('publication_status_code', initialPublicationStatusCode.toString());
-  }, [searchParams]); // Removed handleInputChange to prevent infinite loop
+
+    // Auto-lookup story if story_code is provided in URL
+    if (initialStoryCode.trim()) {
+      console.log('🎯 SuperText: Auto-loading story from URL parameter:', initialStoryCode);
+      // Create a temporary lookup function to avoid dependency issues
+      const autoLookup = async () => {
+        const { found, story, error } = await lookupStoryByCode(initialStoryCode);
+        if (error) {
+          toast.error("Error looking up story by code.");
+          return;
+        }
+        if (!found) {
+          toast.message("No story found with that code.");
+          return;
+        }
+        if (story) {
+          populateFormWithStory(story, true);
+          setLookupResult(story);
+          setCategory(story.category);
+          setCopyrightStatus(story.copyright_status || '©');
+          setPublicationStatusCode(story.publication_status_code || 5);
+          toast.success("Story data loaded successfully!");
+        }
+      };
+      
+      // Trigger lookup after a brief delay to ensure all state is set
+      setTimeout(autoLookup, 100);
+    }
+  }, [searchParams, lookupStoryByCode, populateFormWithStory]);
 
   const clearForm = useCallback(() => {
     // Reset form fields to initial values
