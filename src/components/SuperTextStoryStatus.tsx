@@ -137,7 +137,7 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
   return (
     <Card className="h-fit relative w-fit max-w-xs" style={{
       borderColor: '#3b82f6',
-      borderWidth: '4px'
+      borderWidth: '2px'
     }}>
       <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2 text-2xl font-semibold" style={{
