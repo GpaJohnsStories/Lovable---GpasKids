@@ -702,25 +702,6 @@ const SuperText: React.FC = () => {
                 />
               </div>
 
-              {/* Story Video Section */}
-              <div ref={videoSectionRef} className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
-                  <h2 className="text-xl font-bold text-purple-700">📹 Story Video</h2>
-                </div>
-                
-                <StoryVideoUpload videoUrl={formData.video_url} onVideoUpload={handleVideoUpload} onVideoRemove={handleVideoRemove} onDurationCalculated={handleVideoDurationCalculated} />
-              </div>
-
-              {/* Audio Upload Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">C</div>
-                  <h2 className="text-xl font-bold text-green-700">🔊 Audio Upload</h2>
-                </div>
-                
-                <p className="text-gray-600">Audio upload functionality will be added back here.</p>
-              </div>
 
               {/* Google Drive Upload Section */}
               <div className="bg-orange-100 border-2 border-orange-400 rounded-lg p-6">
@@ -864,6 +845,26 @@ const SuperText: React.FC = () => {
                         </div>
                     </div>)}
                 </div>
+              </div>
+
+              {/* Story Video Section - Moved from left panel to right panel */}
+              <div ref={videoSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
+                  <h2 className="text-xl font-bold text-purple-700">📹 Story Video</h2>
+                </div>
+                
+                <StoryVideoUpload videoUrl={formData.video_url} onVideoUpload={handleVideoUpload} onVideoRemove={handleVideoRemove} onDurationCalculated={handleVideoDurationCalculated} />
+              </div>
+
+              {/* Audio Upload Section - Moved from left panel to right panel */}
+              <div className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">C</div>
+                  <h2 className="text-xl font-bold text-green-700">🔊 Audio Upload</h2>
+                </div>
+                
+                <p className="text-gray-600">Audio upload functionality will be added back here.</p>
               </div>
 
               {error && <div className="bg-red-100 border-2 border-red-400 rounded-lg p-4">
