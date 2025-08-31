@@ -367,7 +367,7 @@ const SuperText: React.FC = () => {
                       fontFamily: 'Arial',
                       fontStyle: 'normal',
                       color: '#000000'
-                    }} autoCapitalize="characters" spellCheck={false} />
+                    }} autoCapitalize="characters" spellCheck={false} tabIndex={1} />
                     </div>
                   </div>
 
@@ -384,14 +384,14 @@ const SuperText: React.FC = () => {
                         setCategory(value);
                         handleInputChange('category', value);
                       }}>
-                           <SelectTrigger className="w-[240px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                            <SelectTrigger className="w-[240px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
                           fontWeight: 'bold',
                           backgroundColor: '#F97316',
                           color: 'white',
                           borderColor: '#ea580c'
-                        }}>
+                        }} tabIndex={2}>
                              <SelectValue placeholder="Category" className="text-white" style={{
                               fontSize: '21px',
                               fontFamily: 'Arial',
@@ -469,7 +469,7 @@ const SuperText: React.FC = () => {
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold'
-                      }}>
+                      }} tabIndex={4}>
                           {isLoadingStory ? 'Loading...' : 'Load Text'}
                         </Button>
                       </div>
@@ -495,7 +495,7 @@ const SuperText: React.FC = () => {
                             fontWeight: 'bold',
                             backgroundColor: '#2563eb',
                             borderColor: '#1d4ed8'
-                          }}>
+                          }} tabIndex={3}>
                            <SelectValue placeholder="Copyright Status" className="text-white" style={{
                             fontSize: '21px',
                             fontFamily: 'Arial',
