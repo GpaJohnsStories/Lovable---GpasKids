@@ -169,8 +169,8 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
     const isUploading = uploading[photoNumber];
 
     return (
-      <Card key={photoNumber} className="p-4">
-        <CardContent className="space-y-4">
+      <Card key={photoNumber} className="p-4 w-full h-full">
+        <CardContent className="space-y-4 p-0">
           <div className="flex items-center justify-between">
             <Label className="text-sm font-bold">Photo {photoNumber}</Label>
             {photoUrl && (
@@ -214,7 +214,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
             </div>
           ) : (
             <div className="space-y-3">
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center w-full">
                 <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
                 <p className="text-sm text-gray-600 mb-3">
                   Upload an image (will be automatically resized to prevent cropping)
@@ -261,7 +261,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
         {[1, 2, 3].map(photoNumber => renderPhotoSection(photoNumber as 1 | 2 | 3))}
       </div>
     </div>
