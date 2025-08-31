@@ -377,7 +377,7 @@ const SuperText: React.FC = () => {
                         setCategory(value);
                         handleInputChange('category', value);
                       }}>
-                           <SelectTrigger className="w-full border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                           <SelectTrigger className="w-[320px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
                           fontWeight: 'bold',
