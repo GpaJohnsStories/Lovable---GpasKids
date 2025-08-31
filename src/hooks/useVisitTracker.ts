@@ -13,6 +13,7 @@ export const useVisitTracker = () => {
         
         const headers: Record<string, string> = {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         };
 
         // Include auth header if user is logged in

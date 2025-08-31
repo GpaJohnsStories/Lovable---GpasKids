@@ -161,7 +161,7 @@ function detectUnwantedBot(userAgent: string | null, headers: Headers): boolean 
   
   // Check for missing Accept header (common in unwanted bots, but search engines usually have this)
   const acceptHeader = headers.get('Accept');
-  if (!acceptHeader || !acceptHeader.includes('text/html')) {
+  if (!acceptHeader || (!acceptHeader.includes('text/html') && !acceptHeader.includes('application/json') && !acceptHeader.includes('*/*'))) {
     console.log('Unwanted bot detected: Missing or invalid Accept header');
     return true;
   }
