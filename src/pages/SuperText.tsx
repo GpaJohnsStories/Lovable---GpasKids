@@ -332,11 +332,16 @@ const SuperText: React.FC = () => {
             {/* Left Panel - Form Fields */}
             <div className="lg:col-span-2 space-y-6">
               {/* Text Details Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative">
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative lg:pr-[420px]">
                 
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">1</div>
                   <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
+                </div>
+                
+                {/* Last Updates Box - positioned in top-right corner on large screens */}
+                <div className="hidden lg:block absolute top-6 right-6 w-[400px]">
+                  <LastUpdatesGrid story={lookupResult || formData} />
                 </div>
                 
                 {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
@@ -741,8 +746,10 @@ const SuperText: React.FC = () => {
 
             {/* Right Panel - Status and Actions */}
             <div className="space-y-6">
-              {/* Last Updates Section */}
-              <LastUpdatesGrid story={lookupResult || formData} />
+              {/* Last Updates Section - Hidden on large screens, shown on smaller screens */}
+              <div className="lg:hidden">
+                <LastUpdatesGrid story={lookupResult || formData} />
+              </div>
               
               {/* Text Status Section */}
               <SuperTextStoryStatus story={lookupResult || formData} publicationStatusCode={publicationStatusCode} onStatusChange={status => {
