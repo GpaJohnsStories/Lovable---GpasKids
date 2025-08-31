@@ -341,8 +341,8 @@ const SuperText: React.FC = () => {
                 </h2>
                 </div>
                 
-                {/* 3x4 Grid Layout with explicit positioning */}
-                <div className="grid grid-rows-3 grid-cols-4 gap-y-4 gap-x-[10px]">
+                {/* 4x3 Grid Layout with explicit positioning */}
+                <div className="grid grid-rows-4 grid-cols-3 gap-y-4 gap-x-[10px]">
                   {/* Column 1, Row 1: Green Dot A */}
                   <div className="row-start-1 col-start-1 place-self-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
@@ -368,6 +368,15 @@ const SuperText: React.FC = () => {
                       fontSize: '21px',
                       fontFamily: 'Arial'
                     }}>C</div>
+                  </div>
+
+                  {/* Column 1, Row 4: Green Dot D */}
+                  <div className="row-start-4 col-start-1 place-self-center">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
+                      backgroundColor: '#22c55e',
+                      fontSize: '21px',
+                      fontFamily: 'Arial'
+                    }}>D</div>
                   </div>
 
                   {/* Column 2, Row 1: Text Code */}
@@ -552,17 +561,8 @@ const SuperText: React.FC = () => {
                     </Select>
                   </div>
 
-                  {/* Column 3, Row 1: Green Dot D */}
-                  <div className="row-start-1 col-start-3 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
-                      backgroundColor: '#22c55e',
-                      fontSize: '21px',
-                      fontFamily: 'Arial'
-                    }}>D</div>
-                  </div>
-
-                  {/* Column 3, Rows 2-3: Vertical Load Text Button */}
-                  <div className="row-start-2 col-start-3 row-span-2 flex flex-col justify-end ml-[10px]">
+                  {/* Column 2, Row 4: Load Text Button */}
+                  <div className="row-start-4 col-start-2 flex flex-col justify-center">
                     <Button 
                       ref={loadTextBtnRef}
                       onClick={handleStoryCodeLookup} 
@@ -595,8 +595,8 @@ const SuperText: React.FC = () => {
                     </Button>
                   </div>
 
-                  {/* Column 4, Row 1: Add/Edit Text Button */}
-                  <div className="row-start-1 col-start-4 place-self-center">
+                  {/* Column 3, Row 1: Add/Edit Text Button */}
+                  <div className="row-start-1 col-start-3 place-self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -620,8 +620,8 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  {/* Column 4, Row 2: Add Audio File Button */}
-                  <div className="row-start-2 col-start-4 place-self-center">
+                  {/* Column 3, Row 2: Add Audio File Button */}
+                  <div className="row-start-2 col-start-3 place-self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -645,8 +645,8 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  {/* Column 4, Row 3: Add Video File Button */}
-                  <div className="row-start-3 col-start-4 place-self-center">
+                  {/* Column 3, Row 3: Add Video File Button */}
+                  <div className="row-start-3 col-start-3 place-self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
