@@ -80,6 +80,23 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   // Get typography classes for current scale
   const typographyClasses = getTypographyClasses(fontScale);
   
+  // Convert font scale to pixel size for IsolatedStoryRenderer
+  const getFontSizeFromScale = (scale: FontScaleStep): number => {
+    const scaleMap = {
+      'xs': 12,
+      'sm': 14, 
+      'base': 16,
+      'lg': 18,
+      'xl': 20,
+      '2xl': 24,
+      '3xl': 30,
+      '4xl': 36
+    };
+    return scaleMap[scale] || 16;
+  };
+  
+  const currentFontSize = getFontSizeFromScale(fontScale);
+  
   // CSS custom properties for proportional scaling
   const getScaleStyles = () => {
     const scaleMap = {
@@ -184,7 +201,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                   content={getContent()}
                   className="proportional-content text-emerald-900 leading-relaxed break-words"
                   category="WebText"
-                  fontSize={16} // Base font size for scaling
+                  fontSize={currentFontSize}
                   useRichCleaning={true}
                   showHeaderPreview={false} // Don't show header preview for SYS-WEL since we handle title separately
                 />
@@ -284,7 +301,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
             content={getContent()}
             className="proportional-content text-amber-900 leading-relaxed"
             category="WebText"
-            fontSize={16} // Base font size for scaling
+            fontSize={currentFontSize}
             useRichCleaning={true}
             showHeaderPreview={false} // Don't show header preview since we handle title separately
           />
