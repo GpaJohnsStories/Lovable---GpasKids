@@ -331,9 +331,16 @@ const SuperText: React.FC = () => {
                   <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
                 </div>
                 
-                {/* Last Updates Box - positioned in top-right corner on large screens - fixed formData typo */}
-                <div className="hidden lg:block absolute top-6 right-6 w-[400px]">
-                  <LastUpdatesGrid story={lookupResult || formData} />
+                {/* Text Status Box - positioned in top-right corner on large screens */}
+                <div className="hidden lg:block absolute top-6 right-6">
+                  <SuperTextStoryStatus 
+                    story={lookupResult || formData} 
+                    publicationStatusCode={publicationStatusCode} 
+                    onStatusChange={status => {
+                      setPublicationStatusCode(status);
+                      handleInputChange('publication_status_code', status.toString());
+                    }} 
+                  />
                 </div>
                 
                 {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
@@ -738,16 +745,18 @@ const SuperText: React.FC = () => {
 
             {/* Right Panel - Status and Actions */}
             <div className="space-y-6">
-              {/* Last Updates Section - Hidden on large screens, shown on smaller screens */}
-              <div className="lg:hidden">
+              {/* Last Updates Section - Now visible on all screen sizes */}
+              <div>
                 <LastUpdatesGrid story={lookupResult || formData} />
               </div>
               
-              {/* Text Status Section */}
-              <SuperTextStoryStatus story={lookupResult || formData} publicationStatusCode={publicationStatusCode} onStatusChange={status => {
-              setPublicationStatusCode(status);
-              handleInputChange('publication_status_code', status.toString());
-            }} />
+              {/* Text Status Section - Hidden on large screens since it's now in Text Details box */}
+              <div className="lg:hidden">
+                <SuperTextStoryStatus story={lookupResult || formData} publicationStatusCode={publicationStatusCode} onStatusChange={status => {
+                  setPublicationStatusCode(status);
+                  handleInputChange('publication_status_code', status.toString());
+                }} />
+              </div>
 
               {/* Create AI Audio Section */}
               <div ref={audioSectionRef} className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6">
