@@ -332,7 +332,7 @@ const SuperText: React.FC = () => {
                 </div>
                 
                 {/* Text Status Box - positioned in top-right corner on large screens */}
-                <div className="hidden lg:block absolute top-6 right-6">
+                <div className="hidden lg:block absolute top-6 right-6 border-2 border-gray-300 rounded-lg">
                   <SuperTextStoryStatus 
                     story={lookupResult || formData} 
                     publicationStatusCode={publicationStatusCode} 
@@ -732,7 +732,7 @@ const SuperText: React.FC = () => {
               </div>
               
               {/* Text Status Section - Hidden on large screens since it's now in Text Details box */}
-              <div className="lg:hidden">
+              <div className="lg:hidden border-2 border-gray-300 rounded-lg">
                 <SuperTextStoryStatus story={lookupResult || formData} publicationStatusCode={publicationStatusCode} onStatusChange={status => {
                   setPublicationStatusCode(status);
                   handleInputChange('publication_status_code', status.toString());
