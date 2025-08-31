@@ -341,10 +341,10 @@ const SuperText: React.FC = () => {
                 </h2>
                 </div>
                 
-                {/* 3x4 Grid Layout */}
-                <div className="grid grid-rows-3 grid-cols-4 gap-4 items-end">
-                  {/* Column 1: Green Dots A-B-C */}
-                  <div className="place-self-center">
+                {/* 3x4 Grid Layout with explicit positioning */}
+                <div className="grid grid-rows-3 grid-cols-4 gap-y-4 gap-x-[10px]">
+                  {/* Column 1, Row 1: Green Dot A */}
+                  <div className="row-start-1 col-start-1 place-self-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
                       backgroundColor: '#22c55e',
                       fontSize: '21px',
@@ -352,7 +352,8 @@ const SuperText: React.FC = () => {
                     }}>A</div>
                   </div>
                   
-                  <div className="place-self-center">
+                  {/* Column 1, Row 2: Green Dot B */}
+                  <div className="row-start-2 col-start-1 place-self-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
                       backgroundColor: '#22c55e',
                       fontSize: '21px',
@@ -360,7 +361,8 @@ const SuperText: React.FC = () => {
                     }}>B</div>
                   </div>
                   
-                  <div className="place-self-center">
+                  {/* Column 1, Row 3: Green Dot C */}
+                  <div className="row-start-3 col-start-1 place-self-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
                       backgroundColor: '#22c55e',
                       fontSize: '21px',
@@ -368,8 +370,8 @@ const SuperText: React.FC = () => {
                     }}>C</div>
                   </div>
 
-                  {/* Column 2: Text Code, Category, Copyright Status */}
-                  <div className="self-end">
+                  {/* Column 2, Row 1: Text Code */}
+                  <div className="row-start-1 col-start-2 self-end">
                     <Input 
                       ref={storyCodeRef}
                       type="text" 
@@ -414,7 +416,8 @@ const SuperText: React.FC = () => {
                     />
                   </div>
 
-                  <div className="self-end">
+                  {/* Column 2, Row 2: Category Dropdown */}
+                  <div className="row-start-2 col-start-2 self-end">
                     <Select value={formData.category || ''} onValueChange={value => {
                       setCategory(value);
                       handleInputChange('category', value);
@@ -494,7 +497,8 @@ const SuperText: React.FC = () => {
                     </Select>
                   </div>
 
-                  <div className="self-end">
+                  {/* Column 2, Row 3: Copyright Status */}
+                  <div className="row-start-3 col-start-2 self-end">
                     <Select value={formData.copyright_status || ''} onValueChange={value => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
@@ -548,8 +552,8 @@ const SuperText: React.FC = () => {
                     </Select>
                   </div>
 
-                  {/* Column 3: D Green Dot and Vertical Load Text Button */}
-                  <div className="place-self-center">
+                  {/* Column 3, Row 1: Green Dot D */}
+                  <div className="row-start-1 col-start-3 place-self-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
                       backgroundColor: '#22c55e',
                       fontSize: '21px',
@@ -557,7 +561,8 @@ const SuperText: React.FC = () => {
                     }}>D</div>
                   </div>
 
-                  <div className="row-span-2 self-end ml-2">
+                  {/* Column 3, Rows 2-3: Vertical Load Text Button */}
+                  <div className="row-start-2 col-start-3 row-span-2 flex flex-col justify-end ml-[10px]">
                     <Button 
                       ref={loadTextBtnRef}
                       onClick={handleStoryCodeLookup} 
@@ -582,8 +587,8 @@ const SuperText: React.FC = () => {
                     </Button>
                   </div>
 
-                  {/* Column 4: Horizontal T-A-V Buttons */}
-                  <div className="place-self-center">
+                  {/* Column 4, Row 1: Add/Edit Text Button */}
+                  <div className="row-start-1 col-start-4 place-self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -607,7 +612,8 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  <div className="place-self-center">
+                  {/* Column 4, Row 2: Add Audio File Button */}
+                  <div className="row-start-2 col-start-4 place-self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -631,7 +637,8 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  <div className="place-self-center">
+                  {/* Column 4, Row 3: Add Video File Button */}
+                  <div className="row-start-3 col-start-4 place-self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
