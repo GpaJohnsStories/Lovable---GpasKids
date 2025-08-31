@@ -1,0 +1,227 @@
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AlertCircle, CheckCircle, Database, HardDrive, Clock, Activity } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+
+interface ConnectionTest {
+  name: string;
+  status: 'checking' | 'success' | 'error' | 'untested';
+  message: string;
+  duration?: number;
+}
+
+export const AdminSystemStatusCard: React.FC = () => {
+  const [tests, setTests] = useState<ConnectionTest[]>([
+    { name: 'Database', status: 'untested', message: 'Not tested' },
+    { name: 'Storage', status: 'untested', message: 'Not tested' },
+    { name: 'Icons', status: 'untested', message: 'Not tested' }
+  ]);
+  const [isRunning, setIsRunning] = useState(false);
+  const [lastTestTime, setLastTestTime] = useState<Date | null>(null);
+
+  const runTests = async () => {
+    setIsRunning(true);
+    setLastTestTime(new Date());
+    
+    // Reset all tests to checking
+    setTests([
+      { name: 'Database', status: 'checking', message: 'Testing...' },
+      { name: 'Storage', status: 'checking', message: 'Testing...' },
+      { name: 'Icons', status: 'checking', message: 'Testing...' }
+    ]);
+
+    try {
+      // Test 1: Database connectivity
+      const dbStart = Date.now();
+      const { error: dbError } = await supabase
+        .from('stories')
+        .select('id', { count: 'exact', head: true })
+        .limit(1);
+
+      const dbDuration = Date.now() - dbStart;
+      
+      if (dbError) {
+        setTests(prev => prev.map(test => 
+          test.name === 'Database' 
+            ? { ...test, status: 'error', message: `Failed: ${dbError.message}`, duration: dbDuration }
+            : test
+        ));
+      } else {
+        setTests(prev => prev.map(test => 
+          test.name === 'Database' 
+            ? { ...test, status: 'success', message: 'Connected', duration: dbDuration }
+            : test
+        ));
+      }
+
+      // Test 2: Storage bucket availability
+      const storageStart = Date.now();
+      const { data: buckets, error: bucketError } = await supabase.storage.listBuckets();
+      const storageDuration = Date.now() - storageStart;
+      
+      if (bucketError) {
+        setTests(prev => prev.map(test => 
+          test.name === 'Storage' 
+            ? { ...test, status: 'error', message: `Bucket access failed: ${bucketError.message}`, duration: storageDuration }
+            : test
+        ));
+      } else {
+        const iconsBucket = buckets?.find(b => b.name === 'icons');
+        if (iconsBucket) {
+          setTests(prev => prev.map(test => 
+            test.name === 'Storage' 
+              ? { ...test, status: 'success', message: `${buckets.length} buckets available`, duration: storageDuration }
+              : test
+          ));
+        } else {
+          setTests(prev => prev.map(test => 
+            test.name === 'Storage' 
+              ? { ...test, status: 'error', message: 'Icons bucket not found', duration: storageDuration }
+              : test
+          ));
+        }
+      }
+
+      // Test 3: Icon loading
+      const iconStart = Date.now();
+      const { data: testIcon } = await supabase
+        .from('icon_library')
+        .select('file_name_path')
+        .limit(1)
+        .single();
+
+      if (testIcon) {
+        const { data: publicUrlData } = supabase.storage
+          .from('icons')
+          .getPublicUrl(testIcon.file_name_path);
+
+        if (publicUrlData?.publicUrl) {
+          // Test if we can actually load the image
+          const img = new Image();
+          await new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = () => reject(new Error('Failed to load test icon'));
+            img.src = publicUrlData.publicUrl;
+            // Timeout after 5 seconds
+            setTimeout(() => reject(new Error('Icon load timeout')), 5000);
+          });
+          
+          const iconDuration = Date.now() - iconStart;
+          setTests(prev => prev.map(test => 
+            test.name === 'Icons' 
+              ? { ...test, status: 'success', message: 'Loaded successfully', duration: iconDuration }
+              : test
+          ));
+        } else {
+          const iconDuration = Date.now() - iconStart;
+          setTests(prev => prev.map(test => 
+            test.name === 'Icons' 
+              ? { ...test, status: 'error', message: 'No public URL available', duration: iconDuration }
+              : test
+          ));
+        }
+      } else {
+        const iconDuration = Date.now() - iconStart;
+        setTests(prev => prev.map(test => 
+          test.name === 'Icons' 
+            ? { ...test, status: 'error', message: 'No test icons found', duration: iconDuration }
+            : test
+        ));
+      }
+    } catch (error) {
+      // Update any remaining 'checking' tests to error state
+      setTests(prev => prev.map(test => 
+        test.status === 'checking' 
+          ? { ...test, status: 'error', message: 'Connection failed' }
+          : test
+      ));
+    }
+
+    setIsRunning(false);
+  };
+
+  const getStatusIcon = (status: 'checking' | 'success' | 'error' | 'untested') => {
+    switch (status) {
+      case 'checking':
+        return <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-600 border-t-transparent" />;
+      case 'success':
+        return <CheckCircle className="h-4 w-4 text-green-600" />;
+      case 'error':
+        return <AlertCircle className="h-4 w-4 text-red-600" />;
+      case 'untested':
+        return <div className="h-4 w-4 rounded-full bg-gray-300" />;
+    }
+  };
+
+  const getTestIcon = (testName: string) => {
+    switch (testName) {
+      case 'Database':
+        return <Database className="h-4 w-4" />;
+      case 'Storage':
+        return <HardDrive className="h-4 w-4" />;
+      case 'Icons':
+        return <span className="text-sm">🖼️</span>;
+      default:
+        return null;
+    }
+  };
+
+  const overallStatus = tests.every(t => t.status === 'success') ? 'success' 
+    : tests.some(t => t.status === 'error') ? 'error' 
+    : tests.some(t => t.status === 'checking') ? 'checking'
+    : 'untested';
+
+  return (
+    <Card className="mb-6 border-cyan-500 border-2">
+      <CardHeader>
+        <CardTitle className="flex items-center justify-between text-cyan-700">
+          <div className="flex items-center gap-2">
+            <Activity className="h-5 w-5" />
+            System Status
+          </div>
+          <button 
+            onClick={runTests} 
+            disabled={isRunning}
+            className="px-3 py-1 text-sm text-cyan-700 border border-cyan-700 rounded hover:bg-cyan-50 disabled:opacity-50"
+          >
+            {isRunning ? 'Running Tests...' : 'Run Tests'}
+          </button>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          {tests.map((test) => (
+            <div key={test.name} className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                {getTestIcon(test.name)}
+                <span className="font-medium text-sm">{test.name}</span>
+                {getStatusIcon(test.status)}
+              </div>
+              <div className="flex items-center space-x-3 text-sm">
+                <span className={`${
+                  test.status === 'success' ? 'text-green-700' :
+                  test.status === 'error' ? 'text-red-700' : 
+                  test.status === 'checking' ? 'text-blue-700' : 'text-gray-500'
+                }`}>
+                  {test.message}
+                </span>
+                {test.duration && (
+                  <span className="text-gray-500 flex items-center">
+                    <Clock className="h-3 w-3 mr-1" />
+                    {test.duration}ms
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {lastTestTime && (
+          <div className="text-xs text-gray-500 mt-3 pt-3 border-t border-gray-200">
+            Last checked: {lastTestTime.toLocaleTimeString()}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
