@@ -188,11 +188,11 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
 
           {photoUrl ? (
             <div className="space-y-3">
-              <div className="aspect-[4/3] w-full overflow-hidden">
+              <div className="w-full flex justify-center">
                   <img
                     src={photoUrl}
                     alt={photoAlt || `Story photo ${photoNumber}`}
-                    className="w-full h-full object-cover"
+                    className="max-h-[420px] w-auto object-contain"
                     onError={(e) => {
                       e.currentTarget.src = '/placeholder.svg';
                     }}
@@ -219,7 +219,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
               <div className="border-2 border-dashed border-gray-300 p-4 text-center w-full rounded-none mb-4">
                 <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
                 <p className="text-sm text-gray-600 mb-3">
-                  Upload an image (will be automatically resized to prevent cropping)
+                  Upload an image (image file is resized to reduce size; display is fit to prevent cropping)
                 </p>
                 
                 <div className="space-y-3">
