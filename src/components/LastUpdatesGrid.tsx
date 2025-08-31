@@ -17,9 +17,10 @@ interface Story {
 
 interface LastUpdatesGridProps {
   story?: Story | null;
+  hideTitle?: boolean;
 }
 
-const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story }) => {
+const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story, hideTitle = false }) => {
   const formatDateTime = (dateString?: string | null) => {
     if (!dateString) return { date: '--/--/--', time: '--:--' };
     
@@ -71,16 +72,18 @@ const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story }) => {
 
   return (
     <Card className="w-full mb-4 border-0 bg-white">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-center text-xl font-bold" style={{
-          color: '#F97316',
-          fontSize: '21px',
-          fontFamily: 'Arial, sans-serif'
-        }}>
-          Last Updates
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-0">
+      {!hideTitle && (
+        <CardHeader className="pb-2">
+          <CardTitle className="text-center text-xl font-bold" style={{
+            color: '#F97316',
+            fontSize: '21px',
+            fontFamily: 'Arial, sans-serif'
+          }}>
+            Last Updates
+          </CardTitle>
+        </CardHeader>
+      )}
+      <CardContent className={hideTitle ? "p-0" : "p-0"}>
         <table className="w-full" style={{
           border: '2px solid #9c441a'
         }}>

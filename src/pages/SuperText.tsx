@@ -303,7 +303,16 @@ const SuperText: React.FC = () => {
       
       {/* Header with title and action buttons */}
       <div className="bg-white/80 backdrop-blur-sm py-4 px-6 border-b border-orange-200/50 sticky top-0 z-10">
-        <h1 className="text-3xl font-bold text-orange-800 mb-4">Super Text Manager</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-3xl font-bold text-orange-800">Super Text Manager</h1>
+          <div className="text-xl font-bold" style={{
+            color: '#F97316',
+            fontSize: '21px',
+            fontFamily: 'Arial, sans-serif'
+          }}>
+            Last Updates
+          </div>
+        </div>
         <div className="flex gap-4 flex-wrap">
           <Button onClick={() => handleSave('save-only')} disabled={isSaving || !storyCode.trim()} className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full" title={!storyCode.trim() ? "Please enter a text code" : ""}>
             {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
@@ -726,9 +735,9 @@ const SuperText: React.FC = () => {
 
             {/* Right Panel - Status and Actions */}
             <div className="space-y-6">
-              {/* Last Updates Section - Now visible on all screen sizes, aligned with left panel */}
-              <div className="mt-0">
-                <LastUpdatesGrid story={lookupResult || formData} />
+              {/* Last Updates Section - Now aligned with text details box */}
+              <div className="mt-6">
+                <LastUpdatesGrid story={lookupResult || formData} hideTitle={true} />
               </div>
               
               {/* Text Status Section - Hidden on large screens since it's now in Text Details box */}
