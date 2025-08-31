@@ -301,33 +301,25 @@ const SuperText: React.FC = () => {
       </Helmet>
       <ConditionalEditorStyles category={formData.category} />
       
-      <div className="min-h-screen" style={{
-        backgroundImage: 'url("/lovable-uploads/paper-texture.png")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'repeat'
-      }}>
-        {/* Header with title and action buttons */}
-        <div className="bg-brown-100 py-4 px-6 border-b-2 border-brown-200">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl font-bold text-brown-800 mb-4">Super Text Manager</h1>
-            <div className="flex gap-4 flex-wrap">
-              <Button onClick={() => handleSave('save-only')} disabled={isSaving || !storyCode.trim()} className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full" title={!storyCode.trim() ? "Please enter a text code" : ""}>
-                {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
-              </Button>
-              
-              <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !storyCode.trim()} className="px-8 py-3 text-lg font-semibold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700" title={!storyCode.trim() ? "Please enter a text code" : ""}>
-                {isSaving ? 'Saving...' : 'Save & Clear Form'}
-              </Button>
-              
-              <Button onClick={() => handleSave('cancel-all')} className="supertext-no-btn px-8 py-3 text-lg font-semibold rounded-full">
-                Cancel All Edits & Clear Form
-              </Button>
-            </div>
-          </div>
+      {/* Header with title and action buttons */}
+      <div className="bg-white/80 backdrop-blur-sm py-4 px-6 border-b border-orange-200/50 sticky top-0 z-10">
+        <h1 className="text-3xl font-bold text-orange-800 mb-4">Super Text Manager</h1>
+        <div className="flex gap-4 flex-wrap">
+          <Button onClick={() => handleSave('save-only')} disabled={isSaving || !storyCode.trim()} className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full" title={!storyCode.trim() ? "Please enter a text code" : ""}>
+            {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
+          </Button>
+          
+          <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !storyCode.trim()} className="px-8 py-3 text-lg font-semibold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700" title={!storyCode.trim() ? "Please enter a text code" : ""}>
+            {isSaving ? 'Saving...' : 'Save & Clear Form'}
+          </Button>
+          
+          <Button onClick={() => handleSave('cancel-all')} className="supertext-no-btn px-8 py-3 text-lg font-semibold rounded-full">
+            Cancel All Edits & Clear Form
+          </Button>
         </div>
+      </div>
 
-        <div className="max-w-7xl mx-auto p-6">
+      <div className="p-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Panel - Form Fields */}
             <div className="lg:col-span-2 space-y-6">
@@ -869,12 +861,11 @@ const SuperText: React.FC = () => {
                   <h3 className="font-bold text-red-700">Error</h3>
                   <p className="text-red-600">{error}</p>
                 </div>}
-            </div>
-          </div>
-        </div>
-      </div>
+             </div>
+           </div>
+         </div>
 
-      <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+         <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold" style={{
