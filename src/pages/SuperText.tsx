@@ -176,6 +176,12 @@ const SuperText: React.FC = () => {
     }
   }, [storyCode, lookupStoryByCode, populateFormWithStory]);
   const handleSave = async (action: 'save-and-clear' | 'save-only' | 'cancel-all') => {
+    // Check if text code is empty for save actions
+    if ((action === 'save-and-clear' || action === 'save-only') && !storyCode.trim()) {
+      toast.error("Please enter a text code before saving.");
+      return;
+    }
+    
     setSaveAction(action);
     setShowConfirmDialog(true);
   };
@@ -224,11 +230,21 @@ const SuperText: React.FC = () => {
           <div className="max-w-7xl mx-auto">
             <h1 className="text-3xl font-bold text-brown-800 mb-4">Super Text Manager</h1>
             <div className="flex gap-4 flex-wrap">
-              <Button onClick={() => handleSave('save-only')} disabled={isSaving} className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full">
+              <Button 
+                onClick={() => handleSave('save-only')} 
+                disabled={isSaving || !storyCode.trim()} 
+                className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full"
+                title={!storyCode.trim() ? "Please enter a text code" : ""}
+              >
                 {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
               </Button>
               
-              <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving} className="px-8 py-3 text-lg font-semibold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700">
+              <Button 
+                onClick={() => handleSave('save-and-clear')} 
+                disabled={isSaving || !storyCode.trim()} 
+                className="px-8 py-3 text-lg font-semibold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700"
+                title={!storyCode.trim() ? "Please enter a text code" : ""}
+              >
                 {isSaving ? 'Saving...' : 'Save & Clear Form'}
               </Button>
               
