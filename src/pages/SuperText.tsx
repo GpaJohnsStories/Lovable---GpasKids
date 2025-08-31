@@ -567,7 +567,7 @@ const SuperText: React.FC = () => {
                       ref={loadTextBtnRef}
                       onClick={handleStoryCodeLookup} 
                       disabled={isLoadingStory}
-                      className="supertext-text-btn flex items-center justify-start px-2 py-1 w-[192px]" 
+                      className="supertext-text-btn flex items-center justify-start px-2 py-1 w-[192px] rounded-full" 
                       style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
@@ -595,7 +595,7 @@ const SuperText: React.FC = () => {
                         <TooltipTrigger asChild>
                           <Button 
                             onClick={scrollToTextEditorSection} 
-                            className="supertext-text-btn px-6 py-2" 
+                            className="supertext-text-btn px-6 py-2 rounded-full"
                             style={{
                               fontSize: '18px',
                               fontFamily: 'Arial',
@@ -603,7 +603,7 @@ const SuperText: React.FC = () => {
                             }}
                             tabIndex={-1}
                           >
-                            Add/Edit Text
+                            Edit Text
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent side="bottom" className="text-lg">
@@ -620,7 +620,7 @@ const SuperText: React.FC = () => {
                         <TooltipTrigger asChild>
                           <Button 
                             onClick={scrollToAudioSection} 
-                            className="supertext-audio-btn px-6 py-2" 
+                            className="supertext-audio-btn px-6 py-2 rounded-full"
                             style={{
                               fontSize: '18px',
                               fontFamily: 'Arial',
@@ -645,7 +645,7 @@ const SuperText: React.FC = () => {
                         <TooltipTrigger asChild>
                           <Button 
                             onClick={scrollToVideoSection} 
-                            className="supertext-video-btn px-6 py-2" 
+                            className="supertext-video-btn px-6 py-2 rounded-full"
                             style={{
                               fontSize: '18px',
                               fontFamily: 'Arial',
