@@ -704,6 +704,12 @@ const SuperText: React.FC = () => {
                       <SelectItem value="Nova">Nova</SelectItem>
                       <SelectItem value="Alloy">Alloy</SelectItem>
                       <SelectItem value="Echo">Echo</SelectItem>
+                      <SelectItem value="Fable">Fable</SelectItem>
+                      <SelectItem value="Onyx">Onyx</SelectItem>
+                      <SelectItem value="Shimmer">Shimmer</SelectItem>
+                      <SelectItem value="Sage">Sage</SelectItem>
+                      <SelectItem value="Ash">Ash</SelectItem>
+                      <SelectItem value="Coral">Coral</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -722,24 +728,24 @@ const SuperText: React.FC = () => {
                 
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   {[{
-                  name: 'Buddy',
-                  desc: 'Clear, neutral voice (Alloy)',
+                  name: 'Buddy / Alloy',
+                  desc: 'Clear, neutral voice',
                   voice: 'alloy'
                 }, {
-                  name: 'Gpa John',
-                  desc: 'Deep, resonant voice (Echo)',
+                  name: 'Gpa John / Echo',
+                  desc: 'Deep, resonant voice',
                   voice: 'echo'
                 }, {
-                  name: 'Fluffy',
-                  desc: 'British accent, storytelling (Fable)',
+                  name: 'Fluffy / Fable',
+                  desc: 'British accent, storytelling',
                   voice: 'fable'
                 }, {
                   name: 'Nova',
                   desc: 'Warm, friendly voice',
                   voice: 'nova'
                 }, {
-                  name: 'Max',
-                  desc: 'Deep, authoritative voice (Onyx)',
+                  name: 'Max / Onyx',
+                  desc: 'Deep, authoritative voice',
                   voice: 'onyx'
                 }, {
                   name: 'Shimmer',
@@ -754,24 +760,20 @@ const SuperText: React.FC = () => {
                   desc: 'Bright and clear, youthful tone',
                   voice: 'coral'
                 }, {
-                  name: 'Sparky',
-                  desc: 'Warm and thoughtful, reflective (Sage)',
+                  name: 'Sparky / Sage',
+                  desc: 'Warm and thoughtful, reflective',
                   voice: 'sage'
-                }, {
-                  name: '',
-                  desc: 'Available for future voices',
-                  voice: ''
                 }].map((voice, index) => <div key={index} className="border rounded p-2 text-center">
                       <div className="font-bold">{voice.name}</div>
                       <div className="text-xs text-gray-600 mb-2">{voice.desc}</div>
-                      {voice.voice && <div className="flex gap-1">
+                      <div className="flex gap-1">
                           <Button size="sm" variant="outline" className="flex-1 text-xs">
                             ▶ Test
                           </Button>
                           <Button size="sm" className="flex-1 text-xs bg-green-600 hover:bg-green-700">
                             Use
                           </Button>
-                        </div>}
+                        </div>
                     </div>)}
                 </div>
               </div>
