@@ -354,7 +354,7 @@ const SuperText: React.FC = () => {
                         setStoryCode(upperValue);
                         handleInputChange('story_code', upperValue);
                       }
-                    }} className="border-orange-400 focus:border-orange-500" style={{
+                    }} className="border-4 border-orange-400 focus:border-orange-500" style={{
                       width: '192px',
                       fontSize: '21px',
                       fontFamily: 'Arial',
