@@ -11,6 +11,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import ContentProtection from "@/components/ContentProtection";
 import ScrollToTop from "@/components/ScrollToTop";
 import AuthorStoriesTable from "@/components/AuthorStoriesTable";
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
 // Add print-friendly CSS styles
 const printStyles = `
@@ -61,7 +62,7 @@ const AuthorBio = () => {
         .select('*')
         .eq('category', 'BioText')
         .eq('bio_subject_name', decodedSubjectName)
-        .eq('published', 'Y')
+        .eq('publication_status_code', 1)
         .maybeSingle();
       
       if (error) {
@@ -83,7 +84,7 @@ const AuthorBio = () => {
         .from('stories')
         .select('id, story_code, title, author, category, read_count, updated_at, created_at, tagline, excerpt')
         .eq('author', authorBio.author)
-        .eq('published', 'Y')
+        .eq('publication_status_code', 1)
         .neq('id', authorBio.id) // Exclude the biography story itself
         .order('title', { ascending: true });
       
@@ -223,11 +224,13 @@ const AuthorBio = () => {
                 )}
                 
                 {authorBio ? (
-                  <div 
-                    className="text-amber-700 leading-relaxed whitespace-pre-wrap"
-                    style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontSize: '16px' }}
-                  >
-                    {authorBio.content}
+                  <div className="text-amber-700 leading-relaxed">
+                    <IsolatedStoryRenderer 
+                      content={authorBio.content}
+                      category="BioText"
+                      fontSize={16}
+                      showHeaderPreview={false}
+                    />
                   </div>
                 ) : (
                   <div className="text-amber-700" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>

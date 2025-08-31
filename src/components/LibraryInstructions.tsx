@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { createSafeHtml } from "@/utils/xssProtection";
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
 const LibraryInstructions = () => {
   const [content, setContent] = useState<string>("");
@@ -68,7 +68,12 @@ const LibraryInstructions = () => {
   return (
     <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 relative">
       <div className="text-18-system">
-        <div dangerouslySetInnerHTML={createSafeHtml(content)} />
+        <IsolatedStoryRenderer 
+          content={content}
+          category="WebText"
+          fontSize={18}
+          showHeaderPreview={false}
+        />
       </div>
       
       {/* Web-text code indicator */}

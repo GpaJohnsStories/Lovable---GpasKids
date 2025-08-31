@@ -7,7 +7,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { Database } from '@/integrations/supabase/types';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { getStoryPhotos } from '@/utils/storyUtils';
-import { createSafeHtml } from '@/utils/xssProtection';
+import IsolatedStoryRenderer from '@/components/story/IsolatedStoryRenderer';
 
 type Comment = Database['public']['Tables']['comments']['Row'];
 
@@ -134,10 +134,14 @@ const OrangeGangGallery = () => {
             
             {/* 3. Webtext Content */}
             {webtext && webtext.content && (
-              <div 
-                className="story-content text-amber-800 text-base leading-relaxed"
-                dangerouslySetInnerHTML={createSafeHtml(webtext.content)}
-              />
+              <div className="story-content text-amber-800 text-base leading-relaxed">
+                <IsolatedStoryRenderer 
+                  content={webtext.content}
+                  category="WebText"
+                  fontSize={16}
+                  showHeaderPreview={false}
+                />
+              </div>
             )}
             
             {/* 4. Grandpa's Team inside the webtext box */}

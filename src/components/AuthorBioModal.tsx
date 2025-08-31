@@ -1,6 +1,6 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { createSafeHtml } from "@/utils/xssProtection";
+import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
 interface AuthorBio {
   id: string;
@@ -32,41 +32,19 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
     return `${born} - ${died}`;
   };
 
-  const getBioContent = () => {
-    if (!bio.bio_content) return { __html: 'No biography content available.' };
-    
-    // Use safe HTML rendering for rich content
-    const safeHtml = createSafeHtml(bio.bio_content);
-    
-    // Check if content starts with "Buddy says:"
-    const htmlContent = safeHtml.__html;
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    const textContent = tempDiv.textContent || tempDiv.innerText || '';
-    
-    if (textContent.trim().toLowerCase().startsWith('buddy says:')) {
-      // Find the first paragraph and style it differently
-      const buddyRegex = /(.*?buddy says:.*?)(<\/p>|$)/i;
-      const match = htmlContent.match(buddyRegex);
-      
-      if (match) {
-        const buddyParagraph = match[0];
-        const restContent = htmlContent.replace(buddyParagraph, '');
-        
-        return {
-          __html: `
-            <div class="bg-orange-100 p-4 rounded-lg border-2 border-orange-300 mb-4">
-              <div class="text-orange-700 font-bold text-xl leading-relaxed" style="font-family: 'Kalam', cursive;">
-                ${buddyParagraph.replace(/^<p[^>]*>/, '').replace(/<\/p>$/, '')}
-              </div>
-            </div>
-            ${restContent}
-          `
-        };
-      }
+  const renderBioContent = () => {
+    if (!bio.bio_content) {
+      return <p>No biography content available.</p>;
     }
     
-    return safeHtml;
+    return (
+      <IsolatedStoryRenderer 
+        content={bio.bio_content}
+        category="BioText"
+        fontSize={16}
+        showHeaderPreview={false}
+      />
+    );
   };
 
   return (
@@ -117,10 +95,9 @@ const AuthorBioModal = ({ bio, isOpen, onClose }: AuthorBioModalProps) => {
             </div>
           )}
           
-          <div 
-            className="text-amber-700 leading-relaxed prose prose-amber max-w-none"
-            dangerouslySetInnerHTML={getBioContent()}
-          />
+          <div className="text-amber-700 leading-relaxed prose prose-amber max-w-none">
+            {renderBioContent()}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
