@@ -726,15 +726,8 @@ const SuperText: React.FC = () => {
 
             {/* Right Panel - Status and Actions */}
             <div className="space-y-6">
-              {/* Last Updates Section - Level with orange buttons, centered title */}
+              {/* Last Updates Section */}
               <div className="flex flex-col items-center">
-                <div className="text-xl font-bold mb-2" style={{
-                  color: '#F97316',
-                  fontSize: '21px',
-                  fontFamily: 'Arial, sans-serif'
-                }}>
-                  Last Updates
-                </div>
                 <LastUpdatesGrid story={lookupResult || formData} hideTitle={true} />
               </div>
               
