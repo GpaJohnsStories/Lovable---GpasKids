@@ -12,6 +12,7 @@ import { YesNoButtons } from "@/components/ui/YesNoButtons";
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useVoiceTesting } from '@/hooks/useVoiceTesting';
+import { getVoiceCharacter } from '@/utils/characterVoices';
 import SecureAdminRoute from '@/components/admin/SecureAdminRoute';
 import StoryVideoUpload from '@/components/StoryVideoUpload';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
@@ -41,6 +42,7 @@ interface Story {
   video_url: string;
   ai_voice_name: string;
   ai_voice_model: string;
+  ai_voice_url?: string;
   copyright_status?: string;
   audio_url?: string;
   audio_duration_seconds?: number;
@@ -783,6 +785,80 @@ const SuperText: React.FC = () => {
                 }} />
               </div>
 
+              {/* Create AI Voice File Section */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">🎵</div>
+                  <h2 className="text-xl font-bold text-green-700">🎵 Create AI Voice File</h2>
+                </div>
+                
+                <div className="space-y-4">
+                  {/* Current Voice Display */}
+                  <div className="text-sm">
+                    <span className="font-semibold">Current Voice: </span>
+                    <span className="text-blue-600">{formData.ai_voice_name || 'No voice selected'}</span>
+                    {formData.ai_voice_name && (
+                      <span className="text-gray-500 ml-2">
+                        ({getVoiceCharacter(formData.ai_voice_name.toLowerCase())})
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Audio Generation Button */}
+                  <Button 
+                    onClick={() => handleGenerateAudio()} 
+                    disabled={isGeneratingAudio || !formData.content || !formData.ai_voice_name} 
+                    className={`w-full ${isGeneratingAudio || !formData.content || !formData.ai_voice_name 
+                      ? 'bg-gray-400 text-gray-600' 
+                      : 'bg-green-600 hover:bg-green-700 text-white'
+                    }`}
+                  >
+                    🎵 {isGeneratingAudio 
+                      ? 'Generating Audio...' 
+                      : !formData.content 
+                        ? 'Story Content Required' 
+                        : !formData.ai_voice_name
+                          ? 'Voice Selection Required'
+                          : 'Generate Audio File'
+                    }
+                  </Button>
+
+                  {/* Existing Audio File Display */}
+                  {formData.ai_voice_url && (
+                    <div className="space-y-2">
+                      <div className="text-sm font-semibold text-green-700">Existing Audio File:</div>
+                      <audio controls className="w-full">
+                        <source src={formData.ai_voice_url} type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                      </audio>
+                    </div>
+                  )}
+
+                  {/* Voice Settings Link */}
+                  <div className="text-xs text-gray-500 text-center">
+                    <span>Change voice in </span>
+                    <button 
+                      onClick={scrollToAudioSection}
+                      className="text-blue-600 hover:text-blue-800 underline"
+                    >
+                      Audio Upload section
+                    </button>
+                    <span> or </span>
+                    <button 
+                      onClick={() => {
+                        const voiceSection = document.querySelector('[data-voice-previews]') || 
+                                           document.querySelector('h2:contains("Voice Previews")');
+                        if (voiceSection) {
+                          voiceSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                      }}
+                      className="text-blue-600 hover:text-blue-800 underline"
+                    >
+                      Voice Previews below
+                    </button>
+                  </div>
+                </div>
+              </div>
 
               {/* Voice Previews Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6">

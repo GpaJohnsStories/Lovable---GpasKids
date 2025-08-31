@@ -65,6 +65,7 @@ export interface Story {
   video_url: string;
   ai_voice_name: string;
   ai_voice_model: string;
+  ai_voice_url?: string;
   copyright_status?: string;
   audio_url?: string;
   audio_duration_seconds?: number;
@@ -93,6 +94,7 @@ const initialFormData: Story = {
   video_url: '',
   ai_voice_name: 'Nova',
   ai_voice_model: 'tts-1',
+  ai_voice_url: '',
   copyright_status: '©',
   publication_status_code: 5
 };
