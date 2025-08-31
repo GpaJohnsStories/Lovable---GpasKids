@@ -567,7 +567,7 @@ const SuperText: React.FC = () => {
                       ref={loadTextBtnRef}
                       onClick={handleStoryCodeLookup} 
                       disabled={isLoadingStory}
-                      className="supertext-text-btn flex flex-col items-center justify-center px-2 py-1" 
+                      className="supertext-text-btn flex items-center justify-center px-2 py-1" 
                       style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
@@ -583,15 +583,7 @@ const SuperText: React.FC = () => {
                       }}
                       tabIndex={4}
                     >
-                      <span>L</span>
-                      <span>O</span>
-                      <span>A</span>
-                      <span>D</span>
-                      <span style={{ height: '21px' }}></span>
-                      <span>T</span>
-                      <span>E</span>
-                      <span>X</span>
-                      <span>T</span>
+                      LOAD TEXT
                     </Button>
                   </div>
 
