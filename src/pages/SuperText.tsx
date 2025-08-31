@@ -294,18 +294,19 @@ const SuperText: React.FC = () => {
       }, 1500);
     }
   }, []);
-  return <SecureAdminRoute>
+  return (
+    <SecureAdminRoute>
       <Helmet>
         <title>Super Text Manager</title>
       </Helmet>
       <ConditionalEditorStyles category={formData.category} />
       
       <div className="min-h-screen" style={{
-      backgroundImage: 'url("/lovable-uploads/paper-texture.png")',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'repeat'
-    }}>
+        backgroundImage: 'url("/lovable-uploads/paper-texture.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'repeat'
+      }}>
         {/* Header with title and action buttons */}
         <div className="bg-brown-100 py-4 px-6 border-b-2 border-brown-200">
           <div className="max-w-7xl mx-auto">
@@ -340,317 +341,338 @@ const SuperText: React.FC = () => {
                 </h2>
                 </div>
                 
-                <div className="space-y-4">
-                  {/* Row A - Story Code */}
-                  <div className="flex items-center gap-3">
+                {/* 3x4 Grid Layout */}
+                <div className="grid grid-rows-3 grid-cols-4 gap-4 items-end">
+                  {/* Column 1: Green Dots A-B-C */}
+                  <div className="place-self-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
-                    backgroundColor: '#22c55e',
-                    fontSize: '21px',
-                    fontFamily: 'Arial'
-                  }}>A</div>
-                    <div className="flex-1">
-                      <Input 
-                        ref={storyCodeRef}
-                        type="text" 
-                        placeholder="TEXT CODE" 
-                        value={storyCode} 
-                        onChange={e => {
-                          const upperValue = e.target.value.toUpperCase();
+                      backgroundColor: '#22c55e',
+                      fontSize: '21px',
+                      fontFamily: 'Arial'
+                    }}>A</div>
+                  </div>
+                  
+                  <div className="place-self-center">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
+                      backgroundColor: '#22c55e',
+                      fontSize: '21px',
+                      fontFamily: 'Arial'
+                    }}>B</div>
+                  </div>
+                  
+                  <div className="place-self-center">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
+                      backgroundColor: '#22c55e',
+                      fontSize: '21px',
+                      fontFamily: 'Arial'
+                    }}>C</div>
+                  </div>
+
+                  {/* Column 2: Text Code, Category, Copyright Status */}
+                  <div className="self-end">
+                    <Input 
+                      ref={storyCodeRef}
+                      type="text" 
+                      placeholder="TEXT CODE" 
+                      value={storyCode} 
+                      onChange={e => {
+                        const upperValue = e.target.value.toUpperCase();
+                        setStoryCode(upperValue);
+                        handleInputChange('story_code', upperValue);
+                      }} 
+                      onPaste={e => {
+                        const pastedText = e.clipboardData.getData('text');
+                        const upperValue = pastedText.toUpperCase();
+                        e.preventDefault();
+                        setStoryCode(upperValue);
+                        handleInputChange('story_code', upperValue);
+                      }} 
+                      onBlur={e => {
+                        const upperValue = e.target.value.toUpperCase();
+                        if (upperValue !== e.target.value) {
                           setStoryCode(upperValue);
                           handleInputChange('story_code', upperValue);
-                        }} 
-                        onPaste={e => {
-                          const pastedText = e.clipboardData.getData('text');
-                          const upperValue = pastedText.toUpperCase();
+                        }
+                      }}
+                      onKeyDown={e => {
+                        if (e.key === 'Tab' && e.shiftKey) {
                           e.preventDefault();
-                          setStoryCode(upperValue);
-                          handleInputChange('story_code', upperValue);
-                        }} 
-                        onBlur={e => {
-                          const upperValue = e.target.value.toUpperCase();
-                          if (upperValue !== e.target.value) {
-                            setStoryCode(upperValue);
-                            handleInputChange('story_code', upperValue);
-                          }
-                        }}
-                        onKeyDown={e => {
-                          if (e.key === 'Tab' && e.shiftKey) {
-                            e.preventDefault();
-                            loadTextBtnRef.current?.focus();
-                          }
-                        }}
-                        className="border-4 border-orange-400 focus:border-orange-500" 
-                        style={{
-                          width: '192px',
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontStyle: 'normal',
-                          color: '#000000'
-                        }} 
-                        autoCapitalize="characters" 
-                        spellCheck={false} 
-                        tabIndex={1} 
-                      />
-                    </div>
-                  </div>
-
-                  {/* Row B - Category */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
-                    backgroundColor: '#22c55e',
-                    fontSize: '21px',
-                    fontFamily: 'Arial'
-                  }}>B</div>
-                    <div className="grid grid-cols-2 gap-8 flex-1">
-                      <div>
-                         <Select value={formData.category || ''} onValueChange={value => {
-                        setCategory(value);
-                        handleInputChange('category', value);
-                      }}>
-                            <SelectTrigger className="w-[240px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold',
-                          backgroundColor: '#F97316',
-                          color: 'white',
-                          borderColor: '#ea580c'
-                        }} tabIndex={2}>
-                             <SelectValue placeholder="Category" className="text-white" style={{
-                              fontSize: '21px',
-                              fontFamily: 'Arial',
-                              fontWeight: 'bold'
-                            }} />
-                           </SelectTrigger>
-                          <SelectContent className="bg-white z-50">
-                            <SelectItem value="WebText" style={{
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold'
-                          }}>
-                              <div className="px-3 py-1 rounded w-full text-center text-white" style={{
-                              backgroundColor: '#A0522D'
-                            }}>
-                                WebText
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="Fun" style={{
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold'
-                          }}>
-                              <div className="bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500 px-3 py-1 rounded w-full text-center">
-                                Fun
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="Life" style={{
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold'
-                          }}>
-                              <div className="bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500 px-3 py-1 rounded w-full text-center">
-                                Life
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="North Pole" style={{
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold'
-                          }}>
-                              <div className="bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500 px-3 py-1 rounded w-full text-center">
-                                North Pole
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="World Changers" style={{
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold'
-                          }}>
-                              <div className="bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500 px-3 py-1 rounded w-full text-center">
-                                World Changers
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="BioText" style={{
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold'
-                          }}>
-                              <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">
-                                BioText
-                              </div>
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="flex items-center gap-3 ml-8">
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
-                        backgroundColor: '#22c55e',
+                          loadTextBtnRef.current?.focus();
+                        }
+                      }}
+                      className="border-4 border-orange-400 focus:border-orange-500" 
+                      style={{
+                        width: '192px',
                         fontSize: '21px',
-                        fontFamily: 'Arial'
-                      }}>D</div>
-                        <Button 
-                          ref={loadTextBtnRef}
-                          onClick={handleStoryCodeLookup} 
-                          disabled={isLoadingStory} 
-                          variant="outline" 
-                          className="text-white border-green-600 hover:bg-green-700" 
-                          style={{
-                            background: 'linear-gradient(to bottom, #16a34a, #15803d)',
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold'
-                          }} 
-                          tabIndex={4}
-                          onKeyDown={e => {
-                            if (e.key === 'Tab' && !e.shiftKey) {
-                              e.preventDefault();
-                              storyCodeRef.current?.focus();
-                            }
-                          }}
-                        >
-                          {isLoadingStory ? 'Loading...' : 'Load Text'}
-                        </Button>
-                      </div>
-                    </div>
+                        fontFamily: 'Arial',
+                        fontStyle: 'normal',
+                        color: '#000000'
+                      }} 
+                      autoCapitalize="characters" 
+                      spellCheck={false} 
+                      tabIndex={1} 
+                    />
                   </div>
 
-                  {/* Row C - Copyright */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
-                    backgroundColor: '#22c55e',
-                    fontSize: '21px',
-                    fontFamily: 'Arial'
-                  }}>C</div>
-                    <div className="grid grid-cols-2 gap-8 flex-1">
-                      <div>
-                        <Select value={formData.copyright_status || ''} onValueChange={value => {
-                          setCopyrightStatus(value);
-                          handleInputChange('copyright_status', value);
-                        }}>
-                         <SelectTrigger className="w-[240px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold',
-                            backgroundColor: '#2563eb',
-                            borderColor: '#1d4ed8'
-                          }} tabIndex={3}>
-                           <SelectValue placeholder="Copyright Status" className="text-white" style={{
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold'
-                          }} />
-                         </SelectTrigger>
-                        <SelectContent className="bg-white z-50">
-                          <SelectItem value="©" style={{
+                  <div className="self-end">
+                    <Select value={formData.category || ''} onValueChange={value => {
+                      setCategory(value);
+                      handleInputChange('category', value);
+                    }}>
+                      <SelectTrigger className="w-[240px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold',
+                        backgroundColor: '#F97316',
+                        color: 'white',
+                        borderColor: '#ea580c'
+                      }} tabIndex={2}>
+                        <SelectValue placeholder="Category" className="text-white" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }} />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white z-50">
+                        <SelectItem value="WebText" style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
                           fontWeight: 'bold'
                         }}>
-                            <div className="px-3 py-1 rounded w-full text-center text-white bg-red-600">
-                              © - Full Copyright
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="L" style={{
+                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{
+                            backgroundColor: '#A0522D'
+                          }}>
+                            WebText
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="Fun" style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
                           fontWeight: 'bold'
                         }}>
-                            <div className="px-3 py-1 rounded w-full text-center text-white" style={{
+                          <div className="bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500 px-3 py-1 rounded w-full text-center">
+                            Fun
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="Life" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}>
+                          <div className="bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500 px-3 py-1 rounded w-full text-center">
+                            Life
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="North Pole" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}>
+                          <div className="bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500 px-3 py-1 rounded w-full text-center">
+                            North Pole
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="World Changers" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}>
+                          <div className="bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500 px-3 py-1 rounded w-full text-center">
+                            World Changers
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="BioText" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}>
+                          <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">
+                            BioText
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="self-end">
+                    <Select value={formData.copyright_status || ''} onValueChange={value => {
+                      setCopyrightStatus(value);
+                      handleInputChange('copyright_status', value);
+                    }}>
+                      <SelectTrigger className="w-[240px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold',
+                        backgroundColor: '#2563eb',
+                        borderColor: '#1d4ed8'
+                      }} tabIndex={3}>
+                        <SelectValue placeholder="Copyright Status" className="text-white" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }} />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white z-50">
+                        <SelectItem value="©" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}>
+                          <div className="px-3 py-1 rounded w-full text-center text-white bg-red-600">
+                            © - Full Copyright
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="L" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}>
+                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{
                             backgroundColor: '#F97316'
                           }}>
-                              L — Limited Use
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="O" style={{
+                            L — Limited Use
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="O" style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
                           fontWeight: 'bold'
                         }}>
-                            <div className="px-3 py-1 rounded w-full text-center text-white" style={{
+                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{
                             backgroundColor: '#228B22'
                           }}>
-                              O — Open Unlimited
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="flex items-center gap-3 ml-8">
-                        <div className="flex gap-2 items-center">
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button 
-                                className="supertext-text-btn"
-                                onClick={scrollToTextEditorSection}
-                                tabIndex={-1}
-                              >
-                                T
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Jump to Text Editor</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button 
-                                size="sm" 
-                                className="supertext-audio-btn p-2"
-                                onClick={scrollToAudioSection}
-                                tabIndex={-1}
-                              >
-                                A
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Jump to Audio tools</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button 
-                                size="sm" 
-                                className="supertext-video-btn p-2"
-                                onClick={scrollToVideoSection}
-                                tabIndex={-1}
-                              >
-                                V
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Jump to Video tools</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                        </div>
-                      </div>
-                    </div>
+                            O — Open Unlimited
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
 
-                  <div className="bg-gray-100 p-4 rounded border-2 border-orange-400" style={{
+                  {/* Column 3: D Green Dot and Vertical Load Text Button */}
+                  <div className="place-self-center">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style={{
+                      backgroundColor: '#22c55e',
+                      fontSize: '21px',
+                      fontFamily: 'Arial'
+                    }}>D</div>
+                  </div>
+
+                  <div className="row-span-2 self-end ml-2">
+                    <Button 
+                      ref={loadTextBtnRef}
+                      onClick={handleStoryCodeLookup} 
+                      disabled={isLoadingStory}
+                      className="supertext-text-btn flex flex-col items-center justify-center h-20 w-16" 
+                      style={{
+                        fontSize: '16px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold',
+                        padding: '8px'
+                      }} 
+                      onKeyDown={e => {
+                        if (e.key === 'Tab' && !e.shiftKey) {
+                          e.preventDefault();
+                          storyCodeRef.current?.focus();
+                        }
+                      }}
+                      tabIndex={4}
+                    >
+                      <span>Load</span>
+                      <span>Text</span>
+                    </Button>
+                  </div>
+
+                  {/* Column 4: Horizontal T-A-V Buttons */}
+                  <div className="place-self-center">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button 
+                            onClick={scrollToTextEditorSection} 
+                            className="supertext-text-btn px-6 py-2" 
+                            style={{
+                              fontSize: '18px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold'
+                            }}
+                            tabIndex={-1}
+                          >
+                            Add/Edit Text
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom" className="text-lg">
+                          <p>Add/Edit Text Content</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+
+                  <div className="place-self-center">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button 
+                            onClick={scrollToAudioSection} 
+                            className="supertext-audio-btn px-6 py-2" 
+                            style={{
+                              fontSize: '18px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold'
+                            }}
+                            tabIndex={-1}
+                          >
+                            Add Audio File
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom" className="text-lg">
+                          <p>Add or Generate Audio</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+
+                  <div className="place-self-center">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button 
+                            onClick={scrollToVideoSection} 
+                            className="supertext-video-btn px-6 py-2" 
+                            style={{
+                              fontSize: '18px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold'
+                            }}
+                            tabIndex={-1}
+                          >
+                            Add Video File
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom" className="text-lg">
+                          <p>Add Video Content</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                </div>
+
+                <div className="bg-gray-100 p-4 rounded border-2 border-orange-400 mt-4" style={{
                   fontSize: '21px',
                   fontFamily: 'Arial',
                   fontWeight: 'bold'
                 }}>
-                    <Label className="text-gray-600 font-medium" style={{
+                  <Label className="text-gray-600 font-medium" style={{
                     fontSize: '21px',
                     fontFamily: 'Arial',
                     fontWeight: 'bold'
                   }}></Label>
-                    <p className="text-gray-500 mt-1" style={{
+                  <p className="text-gray-500 mt-1" style={{
                     fontSize: '21px',
                     fontFamily: 'Arial',
                     fontWeight: 'bold'
                   }}>
-                      {formData.id ? `Story loaded: ${formData.title || 'Untitled'}` : 'Enter Text Code, Category & Copyright, then Click Lookup'}
-                    </p>
-                  </div>
+                    {formData.id ? `Story loaded: ${formData.title || 'Untitled'}` : 'Enter Text Code, Category & Copyright, then Click Lookup'}
+                  </p>
                 </div>
               </div>
 
@@ -888,6 +910,7 @@ const SuperText: React.FC = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </SecureAdminRoute>;
+    </SecureAdminRoute>
+  );
 };
 export default SuperText;
