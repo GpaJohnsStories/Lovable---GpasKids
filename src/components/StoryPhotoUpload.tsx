@@ -169,7 +169,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
     const isUploading = uploading[photoNumber];
 
     return (
-      <Card key={photoNumber} className="p-4 w-full h-full">
+      <Card key={photoNumber} className="p-4 w-full h-full overflow-hidden">
         <CardContent className="space-y-4 p-0">
           <div className="flex items-center justify-between">
             <Label className="text-sm font-bold">Photo {photoNumber}</Label>
@@ -188,14 +188,18 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
 
           {photoUrl ? (
             <div className="space-y-3">
-              <img
-                src={photoUrl}
-                alt={photoAlt || `Story photo ${photoNumber}`}
-                className="w-full h-32 object-cover rounded border"
-                onError={(e) => {
-                  e.currentTarget.src = '/placeholder.svg';
-                }}
-              />
+              <div className="-mx-4">
+                <div className="aspect-[4/3] w-full overflow-hidden">
+                  <img
+                    src={photoUrl}
+                    alt={photoAlt || `Story photo ${photoNumber}`}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = '/placeholder.svg';
+                    }}
+                  />
+                </div>
+              </div>
                <div className="bg-amber-50 p-3 rounded-lg border">
                  <Label htmlFor={`alt_${photoNumber}`} className="text-sm font-medium text-orange-800">
                    📝 Picture Description/Alt Text (required for accessibility)
@@ -214,7 +218,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
             </div>
           ) : (
             <div className="space-y-3">
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center w-full">
+              <div className="-mx-4 border-2 border-dashed border-gray-300 p-4 text-center w-full">
                 <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
                 <p className="text-sm text-gray-600 mb-3">
                   Upload an image (will be automatically resized to prevent cropping)
