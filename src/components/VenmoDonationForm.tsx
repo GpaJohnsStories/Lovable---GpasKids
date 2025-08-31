@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import ThankYouModal from "./ThankYouModal";
+import DonationConfirmationDialog from "./DonationConfirmationDialog";
 import { QRCodeSVG } from 'qrcode.react';
 
 const VenmoDonationForm = () => {
@@ -16,8 +18,10 @@ const VenmoDonationForm = () => {
   const [customAmount, setCustomAmount] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [finalAmount, setFinalAmount] = useState<string>('');
   const { toast } = useToast();
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
 
   // Device detection
@@ -138,22 +142,27 @@ const VenmoDonationForm = () => {
     setFinalAmount(amount);
 
     try {
-      // Record donation attempt in database
-      const { error } = await supabase.functions.invoke('track-donation', {
-        body: { amount: parseFloat(amount) }
-      });
-
-      if (error) {
-        console.error('Error tracking donation:', error);
-        // Don't block the donation process if tracking fails
-      }
-
       // Generate and open Venmo link
       const { url, type } = generateVenmoLink(amount);
       
       if (type === 'app') {
         // Try to open the app, with fallback
-        const linkOpened = window.open(url, '_blank');
+        window.open(url, '_blank');
+        
+        // Set up visibility listener for mobile app redirect
+        const handleVisibilityChange = () => {
+          if (!document.hidden) {
+            // User returned to browser, auto-redirect to library
+            navigate('/library', { state: { fromDonation: true } });
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+          }
+        };
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        
+        // Clean up listener after 5 minutes
+        setTimeout(() => {
+          document.removeEventListener('visibilitychange', handleVisibilityChange);
+        }, 300000);
         
         // If app fails to open, show app store QR code
         setTimeout(() => {
@@ -170,8 +179,8 @@ const VenmoDonationForm = () => {
         window.open(url, '_blank');
       }
 
-      // Show thank you modal
-      setShowThankYou(true);
+      // Show confirmation dialog instead of thank you modal
+      setShowConfirmation(true);
       
       // Reset form
       setSelectedAmount('');
@@ -187,6 +196,35 @@ const VenmoDonationForm = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleDonationConfirm = async () => {
+    try {
+      // Record donation in database
+      const { error } = await supabase.functions.invoke('track-donation', {
+        body: { amount: parseFloat(finalAmount) }
+      });
+
+      if (error) {
+        console.error('Error tracking donation:', error);
+        // Don't block the user experience if tracking fails
+      }
+
+      setShowConfirmation(false);
+      setShowThankYou(true);
+    } catch (error) {
+      console.error('Error processing donation confirmation:', error);
+      setShowConfirmation(false);
+      setShowThankYou(true); // Still show thank you since user confirmed
+    }
+  };
+
+  const handleDonationCancel = () => {
+    setShowConfirmation(false);
+    toast({
+      title: "No problem!",
+      description: "You can try again anytime. Thanks for considering a donation!",
+    });
   };
 
   return (
@@ -332,6 +370,13 @@ const VenmoDonationForm = () => {
           </form>
         </CardContent>
       </Card>
+
+      <DonationConfirmationDialog
+        isOpen={showConfirmation}
+        amount={finalAmount}
+        onConfirm={handleDonationConfirm}
+        onCancel={handleDonationCancel}
+      />
 
       <ThankYouModal
         isOpen={showThankYou}

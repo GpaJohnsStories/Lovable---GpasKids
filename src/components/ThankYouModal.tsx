@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import { Heart, Star } from "lucide-react";
 
 interface ThankYouModalProps {
@@ -9,6 +10,7 @@ interface ThankYouModalProps {
 }
 
 const ThankYouModal = ({ isOpen, onClose, amount }: ThankYouModalProps) => {
+  const navigate = useNavigate();
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md mx-auto bg-gradient-to-b from-yellow-50 to-orange-50 border-2 border-orange-200">
@@ -44,7 +46,10 @@ const ThankYouModal = ({ isOpen, onClose, amount }: ThankYouModalProps) => {
           </div>
           
           <Button 
-            onClick={onClose}
+            onClick={() => {
+              onClose();
+              navigate('/library');
+            }}
             className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold px-8 py-2 shadow-lg hover:shadow-xl transition-all duration-200"
           >
             Continue Reading Stories

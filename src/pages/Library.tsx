@@ -1,6 +1,7 @@
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import PublicStoriesTable from "@/components/PublicStoriesTable";
 import WelcomeHeader from "@/components/WelcomeHeader";
@@ -8,10 +9,27 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Library = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { toast } = useToast();
+
   const handleViewAuthorBio = (authorName: string) => {
     // Navigate to the public author bio page
     navigate(`/author/${encodeURIComponent(authorName)}`);
   };
+
+  useEffect(() => {
+    // Show thank you toast if user was redirected from donation
+    if (location.state?.fromDonation) {
+      toast({
+        title: "Thanks for your support! 💝",
+        description: "Your generosity helps keep these wonderful stories free for all children.",
+        duration: 5000,
+      });
+      
+      // Clear the state to prevent showing toast on refresh
+      navigate('/library', { replace: true, state: {} });
+    }
+  }, [location.state, toast, navigate]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
