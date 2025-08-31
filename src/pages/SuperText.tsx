@@ -778,7 +778,13 @@ const SuperText: React.FC = () => {
                             size="sm" 
                             variant="outline" 
                             className="flex-1 text-xs"
-                            onClick={() => playVoice(voice.voice, formData.content, formData.title)}
+                            onClick={() => {
+                              if (currentlyPlaying === voice.voice) {
+                                stopAudio();
+                              } else {
+                                playVoice(voice.voice, formData.content, formData.title);
+                              }
+                            }}
                             disabled={loadingVoice === voice.voice}
                           >
                             {loadingVoice === voice.voice ? "..." : currentlyPlaying === voice.voice ? "⏸ Stop" : "▶ Test"}
