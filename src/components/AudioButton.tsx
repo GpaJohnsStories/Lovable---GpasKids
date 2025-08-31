@@ -43,17 +43,17 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
               padding: 0
             }}
           >
-            {/* Show loading spinner while icon loads */}
+            {/* Show consistent loading skeleton while icon loads */}
             {candyLoading && (
-              <div className="w-full h-full rounded-full bg-red-100 flex items-center justify-center">
-                <div className="w-6 h-6 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-full h-full rounded-full bg-muted animate-pulse flex items-center justify-center">
+                <div className="w-6 h-6 bg-muted-foreground/20 rounded-full"></div>
               </div>
             )}
             
-            {/* Show text if no icon available, otherwise show candy image */}
+            {/* Show enhanced fallback if no icon available, otherwise show candy image */}
             {(candyError || !candyIconUrl) && !candyLoading ? (
-              <div className="w-full h-full bg-red-200 flex items-center justify-center text-red-800 text-xs font-bold rounded-full">
-                !CO-RPC
+              <div className="w-full h-full bg-destructive/10 border-2 border-destructive/20 flex items-center justify-center text-destructive text-xs font-bold rounded-full">
+                <span className="rotate-12">🍬</span>
               </div>
             ) : candyIconUrl && !candyLoading && !candyError ? (
               <img
@@ -65,6 +65,7 @@ export const AudioButton: React.FC<AudioButtonProps> = ({ code, onClick, classNa
                   display: 'block',
                   objectFit: 'cover'
                 }}
+                onError={() => console.warn('🍬 AudioButton icon failed to load')}
               />
             ) : null}
           </button>

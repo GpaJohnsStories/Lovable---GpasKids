@@ -114,68 +114,121 @@ class IconCacheService {
   }
 
   /**
-   * Load icon from Supabase storage and cache it
+   * Load icon from Supabase storage and cache it with retries
    */
   private async loadIcon(iconPath: string): Promise<string> {
-    try {
-      // First, try to get icon metadata from database
-      let iconName = iconPath; // Default fallback
-      
-      const { data: iconData, error: dbError } = await supabase
-        .from('icon_library')
-        .select('icon_name')
-        .eq('file_name_path', iconPath)
-        .single();
-      
-      if (!dbError && iconData) {
-        iconName = iconData.icon_name;
-      }
+    const maxRetries = 3;
+    const retryDelay = 500; // Start with 500ms
 
-      console.log(`🔍 Attempting to download icon: ${iconPath}`);
-
-      // Try download method first
-      const { data, error } = await supabase.storage
-        .from('icons')
-        .download(iconPath);
-
-      if (error) {
-        console.warn(`❌ Download failed for ${iconPath}:`, error);
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        // First, try to get icon metadata from database
+        let iconName = iconPath; // Default fallback
         
-        // Fallback to public URL method (no CORS issues)
-        console.log(`🔄 Trying public URL fallback for: ${iconPath}`);
-        const { data: publicUrlData } = supabase.storage
+        const { data: iconData, error: dbError } = await supabase
+          .from('icon_library')
+          .select('icon_name')
+          .eq('file_name_path', iconPath)
+          .single();
+        
+        if (!dbError && iconData) {
+          iconName = iconData.icon_name;
+        }
+
+        console.log(`🔍 Attempting to download icon: ${iconPath} (attempt ${attempt}/${maxRetries})`);
+
+        // Try download method first
+        const { data, error } = await supabase.storage
           .from('icons')
-          .getPublicUrl(iconPath);
-        
-        if (publicUrlData?.publicUrl) {
-          console.log(`✅ Using direct public URL for ${iconPath}: ${publicUrlData.publicUrl}`);
+          .download(iconPath);
+
+        if (error) {
+          console.warn(`❌ Download failed for ${iconPath}:`, error);
           
-          // Return direct public URL to avoid CORS issues with blob creation
-          // Cache the direct URL instead of creating a blob
-          this.cacheDirectUrl(iconPath, publicUrlData.publicUrl, iconName);
-          return publicUrlData.publicUrl;
+          // Fallback to public URL method with cache-busting
+          console.log(`🔄 Trying public URL fallback for: ${iconPath}`);
+          const { data: publicUrlData } = supabase.storage
+            .from('icons')
+            .getPublicUrl(iconPath);
+          
+          if (publicUrlData?.publicUrl) {
+            // Add cache-busting parameter
+            const cacheBustedUrl = this.addCacheBusting(publicUrlData.publicUrl);
+            console.log(`✅ Using cache-busted public URL for ${iconPath}: ${cacheBustedUrl}`);
+            
+            // Test if URL actually loads before caching
+            await this.testImageLoad(cacheBustedUrl);
+            
+            // Cache the direct URL
+            this.cacheDirectUrl(iconPath, cacheBustedUrl, iconName);
+            return cacheBustedUrl;
+          }
+          
+          throw new Error(`Failed to get public URL for icon ${iconPath}: ${JSON.stringify(error)}`);
+        }
+
+        if (!data) {
+          throw new Error(`No data received for icon: ${iconPath}`);
+        }
+
+        console.log(`✅ Successfully downloaded icon: ${iconPath}`);
+
+        // Create blob URL
+        const url = URL.createObjectURL(data);
+
+        // Cache the icon with its name
+        this.cacheIcon(iconPath, data, url, iconName);
+
+        return url;
+      } catch (error) {
+        console.warn(`💥 Attempt ${attempt} failed for icon ${iconPath}:`, error);
+        
+        if (attempt === maxRetries) {
+          console.error(`💥 All attempts failed for icon ${iconPath}:`, error);
+          throw error;
         }
         
-        throw new Error(`Failed to get public URL for icon ${iconPath}: ${JSON.stringify(error)}`);
+        // Exponential backoff delay
+        const delay = retryDelay * Math.pow(2, attempt - 1);
+        console.log(`⏳ Waiting ${delay}ms before retry...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
       }
-
-      if (!data) {
-        throw new Error(`No data received for icon: ${iconPath}`);
-      }
-
-      console.log(`✅ Successfully downloaded icon: ${iconPath}`);
-
-      // Create blob URL
-      const url = URL.createObjectURL(data);
-
-      // Cache the icon with its name
-      this.cacheIcon(iconPath, data, url, iconName);
-
-      return url;
-    } catch (error) {
-      console.error(`💥 Failed to load icon ${iconPath}:`, error);
-      throw error;
     }
+    
+    throw new Error(`Failed to load icon ${iconPath} after ${maxRetries} attempts`);
+  }
+
+  /**
+   * Add cache-busting parameter to URL
+   */
+  private addCacheBusting(url: string): string {
+    const separator = url.includes('?') ? '&' : '?';
+    const timestamp = Date.now();
+    return `${url}${separator}v=${timestamp}`;
+  }
+
+  /**
+   * Test if an image URL actually loads
+   */
+  private async testImageLoad(url: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const timeout = setTimeout(() => {
+        reject(new Error('Image load timeout'));
+      }, 5000);
+      
+      img.onload = () => {
+        clearTimeout(timeout);
+        resolve();
+      };
+      
+      img.onerror = () => {
+        clearTimeout(timeout);
+        reject(new Error('Image failed to load'));
+      };
+      
+      img.src = url;
+    });
   }
 
   /**
