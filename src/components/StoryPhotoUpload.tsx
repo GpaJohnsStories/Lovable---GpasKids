@@ -218,7 +218,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
             </div>
           ) : (
             <div className="space-y-3">
-              <div className="-mx-4 border-2 border-dashed border-gray-300 p-4 text-center w-full">
+              <div className="border-2 border-dashed border-gray-300 p-4 text-center w-full rounded-lg">
                 <ImageIcon className="h-8 w-8 mx-auto text-gray-400 mb-2" />
                 <p className="text-sm text-gray-600 mb-3">
                   Upload an image (will be automatically resized to prevent cropping)
