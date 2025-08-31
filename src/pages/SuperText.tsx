@@ -370,7 +370,7 @@ const SuperText: React.FC = () => {
                   }}>B</div>
                     <div className="grid grid-cols-2 gap-4 flex-1">
                       <div>
-                         <Select value={formData.category} onValueChange={value => {
+                         <Select value={formData.category || ''} onValueChange={value => {
                         setCategory(value);
                         handleInputChange('category', value);
                       }}>
@@ -382,7 +382,12 @@ const SuperText: React.FC = () => {
                           color: 'white',
                           borderColor: '#ea580c'
                         }}>
-                             <SelectValue placeholder="Category" />
+                             <SelectValue placeholder="Category" style={{
+                              fontSize: '21px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold',
+                              color: 'white'
+                            }} />
                            </SelectTrigger>
                           <SelectContent className="bg-white">
                             <SelectItem value="WebText" style={{
