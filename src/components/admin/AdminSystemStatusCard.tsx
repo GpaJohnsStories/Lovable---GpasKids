@@ -89,7 +89,15 @@ export const AdminSystemStatusCard: React.FC = () => {
             
             // Get total storage metrics across all buckets
             try {
-              const { data: storageMetrics } = await supabase.rpc('get_storage_totals');
+              console.log('🔍 Calling get_storage_totals RPC...');
+              const { data: storageMetrics, error: storageError } = await supabase.rpc('get_storage_totals');
+              console.log('📊 Storage RPC response:', { data: storageMetrics, error: storageError });
+              
+              if (storageError) {
+                console.error('❌ Storage RPC error:', storageError);
+                throw storageError;
+              }
+              
               const metrics = storageMetrics && storageMetrics.length > 0 
                 ? [
                     { label: 'Total Objects', value: storageMetrics[0].total_objects.toString() },
@@ -103,6 +111,7 @@ export const AdminSystemStatusCard: React.FC = () => {
                   : test
               ));
             } catch (metricsError) {
+              console.error('❌ Storage metrics error:', metricsError);
               setTests(prev => prev.map(test => 
                 test.name === 'Storage' 
                   ? { ...test, status: 'success', message: 'Icons bucket accessible', duration: storageDuration, metrics: [{ label: 'Metrics', value: 'n/a' }] }
