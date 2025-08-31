@@ -62,6 +62,7 @@ const SuperText: React.FC = () => {
   // Refs for section scrolling
   const audioSectionRef = useRef<HTMLDivElement>(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
+  const textEditorSectionRef = useRef<HTMLDivElement>(null);
   const {
     formData,
     isLoadingStory,
@@ -259,6 +260,26 @@ const SuperText: React.FC = () => {
       }, 1500);
     }
   }, []);
+
+  const scrollToTextEditorSection = useCallback(() => {
+    if (textEditorSectionRef.current) {
+      textEditorSectionRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+      });
+      
+      // Add highlight effect
+      textEditorSectionRef.current.style.outline = '3px solid #22c55e';
+      textEditorSectionRef.current.style.outlineOffset = '4px';
+      
+      setTimeout(() => {
+        if (textEditorSectionRef.current) {
+          textEditorSectionRef.current.style.outline = '';
+          textEditorSectionRef.current.style.outlineOffset = '';
+        }
+      }, 1500);
+    }
+  }, []);
   return <SecureAdminRoute>
       <Helmet>
         <title>Super Text Manager</title>
@@ -423,7 +444,23 @@ const SuperText: React.FC = () => {
                           </SelectContent>
                         </Select>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 items-center">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button 
+                                className="supertext-text-btn"
+                                onClick={scrollToTextEditorSection}
+                              >
+                                T
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Jump to Text Editor</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                        
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
@@ -629,7 +666,7 @@ const SuperText: React.FC = () => {
               </div>
 
               {/* Split Editor Section */}
-              <div className="bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4">
+              <div ref={textEditorSectionRef} className="bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4">
                 <div className="mb-4">
                   <h2 className="text-xl font-bold text-green-700">📝 Creating New Story: {formData.story_code || 'SVS-AEW'}</h2>
                 </div>
