@@ -335,10 +335,14 @@ const SuperText: React.FC = () => {
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative">
                 
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                  <h2 className="text-xl font-bold text-green-700">Text Details
-
-                </h2>
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold" style={{
+                    fontSize: '21px',
+                    fontFamily: 'Arial'
+                  }}>1</div>
+                  <h2 className="text-xl font-bold text-green-700" style={{
+                    fontSize: '24px',
+                    fontFamily: 'Arial'
+                  }}>Text Details</h2>
                 </div>
                 
                 {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
