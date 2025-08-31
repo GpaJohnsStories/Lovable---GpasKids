@@ -726,8 +726,8 @@ const SuperText: React.FC = () => {
 
             {/* Right Panel - Status and Actions */}
             <div className="space-y-6">
-              {/* Last Updates Section - Now visible on all screen sizes */}
-              <div>
+              {/* Last Updates Section - Now visible on all screen sizes, aligned with left panel */}
+              <div className="mt-0">
                 <LastUpdatesGrid story={lookupResult || formData} />
               </div>
               
