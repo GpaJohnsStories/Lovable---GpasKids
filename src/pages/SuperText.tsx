@@ -20,6 +20,7 @@ import ConditionalEditorStyles from '@/components/rich-text-editor/ConditionalEd
 import SuperTextStoryStatus from '@/components/SuperTextStoryStatus';
 import LastUpdatesGrid from '@/components/LastUpdatesGrid';
 import { useAdminSession } from '@/hooks/useAdminSession';
+import StoryPhotoUpload from '@/components/StoryPhotoUpload';
 import './SuperText.css';
 interface Story {
   id?: string;
@@ -614,34 +615,28 @@ const SuperText: React.FC = () => {
                 }}>🖼️ Story Photos</h2>
                 </div>
                 
-                <div className="grid grid-cols-3 gap-4">
-                  {[1, 2, 3].map(index => <div key={index} className="border-2 border-orange-400 rounded p-4 text-center">
-                      <div className="bg-gray-100 h-32 flex items-center justify-center mb-2 rounded">
-                        <span className="text-gray-500" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>No Photo</span>
-                      </div>
-                      <Button variant="outline" size="sm" className="w-full mb-2 text-red-600 border-red-400" style={{
-                    fontSize: '21px',
-                    fontFamily: 'Arial',
-                    fontWeight: 'bold'
-                  }}>
-                        Choose File
-                      </Button>
-                      <span className="text-xs text-gray-500" style={{
-                    fontSize: '21px',
-                    fontFamily: 'Arial',
-                    fontWeight: 'bold'
-                  }}>N...en</span>
-                      <Input placeholder="Alt text" className="mt-2 text-sm" value={(formData as any)[`photo_alt_${index}`] || ''} onChange={e => handleInputChange(`photo_alt_${index}` as keyof Story, e.target.value)} style={{
-                    fontSize: '21px',
-                    fontFamily: 'Arial',
-                    fontWeight: 'bold'
-                  }} />
-                    </div>)}
-                </div>
+                <StoryPhotoUpload
+                  photoUrls={{
+                    photo_link_1: formData.photo_link_1,
+                    photo_link_2: formData.photo_link_2,
+                    photo_link_3: formData.photo_link_3
+                  }}
+                  photoAlts={{
+                    photo_alt_1: formData.photo_alt_1,
+                    photo_alt_2: formData.photo_alt_2,
+                    photo_alt_3: formData.photo_alt_3
+                  }}
+                  onPhotoUpload={(photoNumber, url) => {
+                    handleInputChange(`photo_link_${photoNumber}` as keyof Story, url);
+                  }}
+                  onPhotoRemove={(photoNumber) => {
+                    handleInputChange(`photo_link_${photoNumber}` as keyof Story, '');
+                    handleInputChange(`photo_alt_${photoNumber}` as keyof Story, '');
+                  }}
+                  onAltTextChange={(field, value) => {
+                    handleInputChange(field as keyof Story, value);
+                  }}
+                />
               </div>
 
               {/* Story Video Section */}
