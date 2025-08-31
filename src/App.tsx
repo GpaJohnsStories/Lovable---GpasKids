@@ -39,8 +39,8 @@ import AdminSiteMapContent from "./components/admin/AdminSiteMapContent";
 
 // Admin components
 import SecureAdminRoute from "./components/admin/SecureAdminRoute";
-import { AdminDashboard } from "./components/admin/AdminDashboard";
 import AdminOverview from "./components/admin/AdminOverview";
+import AdminLayout from "./components/admin/AdminLayout";
 import AdminStories from "./components/admin/AdminStories";
 import CommentsDashboard from "./components/admin/CommentsDashboard";
 import AdminCommentDetail from "./components/admin/AdminCommentDetail";
@@ -152,7 +152,7 @@ function App() {
                        <Route path="/dashboard" element={<ProtectedRoute><Navigate to="/buddys_admin" replace /></ProtectedRoute>} />
 
                       {/* Admin Routes */}
-                      <Route path="/buddys_admin" element={<SecureAdminRoute><AdminDashboard /></SecureAdminRoute>} />
+                      <Route path="/buddys_admin" element={<SecureAdminRoute><AdminLayout><AdminOverview /></AdminLayout></SecureAdminRoute>} />
                       <Route path="/buddys_admin/stories" element={<SecureAdminRoute><AdminStories /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/comments" element={<SecureAdminRoute><CommentsDashboard /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/security" element={<SecureAdminRoute><SecurityAuditDashboard /></SecureAdminRoute>} />
