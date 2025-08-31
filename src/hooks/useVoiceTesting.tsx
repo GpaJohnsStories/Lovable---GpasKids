@@ -34,7 +34,7 @@ export const useVoiceTesting = () => {
       }
       
       // Ensure text is within word limit before sending
-      const textToSend = truncateToWordLimit(textToSpeak, 50); // Shorter for quick testing
+      const textToSend = truncateToWordLimit(textToSpeak, 30); // Limited to 30 words for testing
       
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
