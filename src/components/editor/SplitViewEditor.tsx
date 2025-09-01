@@ -462,7 +462,7 @@ ${content}`;
         <Button
           type="button"
           onClick={handleInsertSignature}
-          className="h-10 px-4 text-[16px] font-bold text-white rounded-md shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+          className="h-12 px-6 text-[21px] font-bold text-white rounded-md shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
           style={{ 
             backgroundColor: '#0B3D91',
             border: '2px solid #ffffff',
