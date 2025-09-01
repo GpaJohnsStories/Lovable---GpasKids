@@ -361,16 +361,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               <Key className="h-3 w-3" />
             </Button>
           </ConditionalTooltip>
-          <ConditionalTooltip content="Select All in Live Preview Pane Only">
-            <Button 
-              type="button" 
-              onClick={onSelectAllPreview} 
-              className="h-6 w-36 px-3 text-xs font-bold text-white hover:opacity-80 transition-opacity rounded-md" 
-              style={{ backgroundColor: '#16a34a' }}
-            >
-              Select all LIVE Preview
-            </Button>
-          </ConditionalTooltip>
         </div>
       </div>
     </div>

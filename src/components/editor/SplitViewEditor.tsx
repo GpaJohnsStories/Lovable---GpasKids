@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import StickyToolbar from './StickyToolbar';
 import HTMLEditor from './HTMLEditor';
 import IsolatedStoryRenderer from '@/components/story/IsolatedStoryRenderer';
@@ -420,8 +421,16 @@ ${content}`;
         
         <ResizablePanel defaultSize={50} minSize={30}>
           <div className="h-full flex flex-col relative">
-            <div className="bg-gray-50 px-3 py-2 border-b border-gray-200">
+            <div className="bg-gray-50 px-3 py-2 border-b border-gray-200 flex items-center justify-between">
               <span className="text-sm font-medium text-gray-600">Live Preview</span>
+              <Button 
+                type="button" 
+                onClick={handleSelectAllPreview} 
+                className="h-8 w-48 px-4 text-sm font-bold text-white hover:opacity-80 transition-opacity rounded-md" 
+                style={{ backgroundColor: '#16a34a' }}
+              >
+                Select all LIVE Preview
+              </Button>
             </div>
             <div 
               ref={storyContentRef}
