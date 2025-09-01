@@ -873,7 +873,7 @@ const SuperText: React.FC = () => {
             }} />
               </div>
 
-              {/* Create AI Voice File Section */}
+              {/* Combined AI Voice File & Voice Previews Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">🎵</div>
@@ -910,89 +910,76 @@ const SuperText: React.FC = () => {
                     <button onClick={scrollToAudioSection} className="text-blue-600 hover:text-blue-800 underline">
                       Audio Upload section
                     </button>
-                    <span> or </span>
-                    <button onClick={() => {
-                  const voiceSection = document.querySelector('[data-voice-previews]') || document.querySelector('h2:contains("Voice Previews")');
-                  if (voiceSection) {
-                    voiceSection.scrollIntoView({
-                      behavior: 'smooth',
-                      block: 'center'
-                    });
-                  }
-                }} className="text-blue-600 hover:text-blue-800 underline">
-                      Voice Previews below
-                    </button>
+                    <span> or Voice Previews below</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Voice Previews Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6 relative">
-                {/* Orange Dot A in top left corner */}
-                <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">A</div>
-                <div className="flex items-center gap-2 mb-4">
-                  <h2 className="text-xl font-bold text-blue-700">🔊 Voice Previews</h2>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-3 text-sm">
-                  {[{
-                name: 'Buddy / Alloy',
-                desc: 'Clear, neutral voice',
-                voice: 'alloy'
-              }, {
-                name: 'Gpa John / Echo',
-                desc: 'Deep, resonant voice',
-                voice: 'echo'
-              }, {
-                name: 'Fluffy / Fable',
-                desc: 'British accent, storytelling',
-                voice: 'fable'
-              }, {
-                name: 'Nova',
-                desc: 'Warm, friendly voice',
-                voice: 'nova'
-              }, {
-                name: 'Max / Onyx',
-                desc: 'Deep, authoritative voice',
-                voice: 'onyx'
-              }, {
-                name: 'Shimmer',
-                desc: 'Soft, gentle voice',
-                voice: 'shimmer'
-              }, {
-                name: 'Ash',
-                desc: 'Gentle and neutral, calming',
-                voice: 'ash'
-              }, {
-                name: 'Coral',
-                desc: 'Bright and clear, youthful tone',
-                voice: 'coral'
-              }, {
-                name: 'Sparky / Sage',
-                desc: 'Warm and thoughtful, reflective',
-                voice: 'sage'
-              }].map((voice, index) => <div key={index} className="border rounded p-2 text-center">
-                      <div className="font-bold">{voice.name}</div>
-                      <div className="text-xs text-gray-600 mb-2">{voice.desc}</div>
-                      <div className="flex gap-1">
-                          <Button size="sm" variant="outline" className="flex-1 text-xs" onClick={() => {
-                    if (currentlyPlaying === voice.voice) {
-                      stopAudio();
-                    } else {
-                      playVoice(voice.voice, formData.content, formData.title);
-                    }
-                  }} disabled={loadingVoice === voice.voice}>
-                            {loadingVoice === voice.voice ? "..." : currentlyPlaying === voice.voice ? "⏸ Stop" : "▶ Test"}
-                          </Button>
-                          <Button size="sm" className="flex-1 text-xs bg-green-600 hover:bg-green-700" onClick={() => {
-                    const capitalizedVoice = voice.voice.charAt(0).toUpperCase() + voice.voice.slice(1);
-                    handleInputChange('ai_voice_name', capitalizedVoice);
-                    toast.success(`Selected ${voice.name} voice`);
-                  }}>
-                            Use
-                          </Button>
-                        </div>
-                    </div>)}
+                {/* Voice Previews Section - Integrated */}
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <div className="flex items-center gap-2 mb-4">
+                    <h3 className="text-xl font-bold text-blue-700">🔊 Voice Previews</h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    {[{
+                  name: 'Buddy / Alloy',
+                  desc: 'Clear, neutral voice',
+                  voice: 'alloy'
+                }, {
+                  name: 'Gpa John / Echo',
+                  desc: 'Deep, resonant voice',
+                  voice: 'echo'
+                }, {
+                  name: 'Fluffy / Fable',
+                  desc: 'British accent, storytelling',
+                  voice: 'fable'
+                }, {
+                  name: 'Nova',
+                  desc: 'Warm, friendly voice',
+                  voice: 'nova'
+                }, {
+                  name: 'Max / Onyx',
+                  desc: 'Deep, authoritative voice',
+                  voice: 'onyx'
+                }, {
+                  name: 'Shimmer',
+                  desc: 'Soft, gentle voice',
+                  voice: 'shimmer'
+                }, {
+                  name: 'Ash',
+                  desc: 'Gentle and neutral, calming',
+                  voice: 'ash'
+                }, {
+                  name: 'Coral',
+                  desc: 'Bright and clear, youthful tone',
+                  voice: 'coral'
+                }, {
+                  name: 'Sparky / Sage',
+                  desc: 'Warm and thoughtful, reflective',
+                  voice: 'sage'
+                }].map((voice, index) => <div key={index} className="border rounded p-2 text-center">
+                        <div className="font-bold">{voice.name}</div>
+                        <div className="text-xs text-gray-600 mb-2">{voice.desc}</div>
+                        <div className="flex gap-1">
+                            <Button size="sm" variant="outline" className="flex-1 text-xs" onClick={() => {
+                      if (currentlyPlaying === voice.voice) {
+                        stopAudio();
+                      } else {
+                        playVoice(voice.voice, formData.content, formData.title);
+                      }
+                    }} disabled={loadingVoice === voice.voice}>
+                              {loadingVoice === voice.voice ? "..." : currentlyPlaying === voice.voice ? "⏸ Stop" : "▶ Test"}
+                            </Button>
+                            <Button size="sm" className="flex-1 text-xs bg-green-600 hover:bg-green-700" onClick={() => {
+                      const capitalizedVoice = voice.voice.charAt(0).toUpperCase() + voice.voice.slice(1);
+                      handleInputChange('ai_voice_name', capitalizedVoice);
+                      toast.success(`Selected ${voice.name} voice`);
+                    }}>
+                              Use
+                            </Button>
+                          </div>
+                      </div>)}
+                  </div>
                 </div>
               </div>
 
@@ -1008,7 +995,7 @@ const SuperText: React.FC = () => {
           {/* Full Width Split Editor Section */}
           <div ref={textEditorSectionRef} className="w-full bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4 mt-6 relative">
             {/* Blue Dot 4 in top left corner */}
-            <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-30">3</div>
+            <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-30">4</div>
             <div className="mb-4">
               <h2 className="text-xl font-bold text-green-700">{lookupResult ? `Editing Story${formData.story_code ? `: ${formData.story_code}` : ''}` : `Creating New Story${formData.story_code ? `: ${formData.story_code}` : ''}`}</h2>
             </div>
