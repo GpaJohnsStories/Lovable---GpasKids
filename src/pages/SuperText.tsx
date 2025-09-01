@@ -957,7 +957,7 @@ const SuperText: React.FC = () => {
                 
                 <div className="space-y-4">
                   {/* Current Voice Display */}
-                  <div className="text-sm">
+                  <div className="supertext-fs-21px-arial-black">
                     <span className="font-semibold">Current Voice: </span>
                     <span className="text-blue-600 font-bold">{formData.ai_voice_name || 'No voice selected'}</span>
                     {formData.ai_voice_name && <span className="text-gray-500 ml-2 font-bold">
@@ -966,13 +966,13 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Audio Generation Button */}
-                  <Button onClick={() => handleGenerateAudio()} disabled={isGeneratingAudio || !formData.content || !formData.ai_voice_name} className={`w-full ${isGeneratingAudio || !formData.content || !formData.ai_voice_name ? 'bg-gray-400 text-gray-600' : 'bg-green-600 hover:bg-green-700 text-white'}`}>
+                  <Button onClick={() => handleGenerateAudio()} disabled={isGeneratingAudio || !formData.content || !formData.ai_voice_name} className={`w-full ${isGeneratingAudio || !formData.content || !formData.ai_voice_name ? 'bg-gray-400 text-gray-600' : 'bg-green-600 hover:bg-green-700 text-white'} supertext-fs-21px-arial-white`}>
                     🎵 {isGeneratingAudio ? 'Generating Audio...' : !formData.content ? 'Story Content Required' : !formData.ai_voice_name ? 'Voice Selection Required' : 'Generate Audio File'}
                   </Button>
 
                   {/* Existing Audio File Display */}
                   {formData.ai_voice_url && <div className="space-y-2">
-                      <div className="text-sm font-semibold text-green-700">Existing Audio File:</div>
+                      <div className="supertext-fs-21px-arial-black font-semibold text-green-700">Existing Audio File:</div>
                       <audio controls className="w-full">
                         <source src={formData.ai_voice_url} type="audio/mpeg" />
                         Your browser does not support the audio element.
@@ -980,7 +980,7 @@ const SuperText: React.FC = () => {
                     </div>}
 
                   {/* Voice Settings Link */}
-                  <div className="text-xs text-gray-500 text-center">
+                  <div className="supertext-fs-21px-arial-black text-gray-500 text-center">
                     <span>Change voice in </span>
                     <button onClick={scrollToAudioSection} className="text-blue-600 hover:text-blue-800 underline">
                       Audio Upload section
@@ -995,7 +995,7 @@ const SuperText: React.FC = () => {
                     <h3 className="text-xl font-bold text-blue-700">🔊 Voice Previews</h3>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="grid grid-cols-2 gap-3 supertext-fs-21px-arial-black">
                     {[{
                   name: 'Buddy / Alloy',
                   desc: 'Clear, neutral voice',
@@ -1034,9 +1034,9 @@ const SuperText: React.FC = () => {
                   voice: 'sage'
                 }].map((voice, index) => <div key={index} className="border rounded p-2 text-center">
                         <div className="font-bold">{voice.name}</div>
-                        <div className="text-xs text-gray-600 mb-2">{voice.desc}</div>
+                        <div className="supertext-fs-21px-arial-black text-gray-600 mb-2">{voice.desc}</div>
                         <div className="flex gap-1">
-                            <Button size="sm" variant="outline" className="flex-1 text-xs" onClick={() => {
+                            <Button size="sm" variant="outline" className="flex-1 supertext-fs-21px-arial-black" onClick={() => {
                       if (currentlyPlaying === voice.voice) {
                         stopAudio();
                       } else {
@@ -1045,7 +1045,7 @@ const SuperText: React.FC = () => {
                     }} disabled={loadingVoice === voice.voice}>
                               {loadingVoice === voice.voice ? "..." : currentlyPlaying === voice.voice ? "⏸ Stop" : "▶ Test"}
                             </Button>
-                            <Button size="sm" className="flex-1 text-xs bg-green-600 hover:bg-green-700" onClick={() => {
+                            <Button size="sm" className="flex-1 supertext-fs-21px-arial-white bg-green-600 hover:bg-green-700" onClick={() => {
                       const capitalizedVoice = voice.voice.charAt(0).toUpperCase() + voice.voice.slice(1);
                       handleInputChange('ai_voice_name', capitalizedVoice);
                       toast.success(`Selected ${voice.name} voice`);
