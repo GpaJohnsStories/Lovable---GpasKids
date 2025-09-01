@@ -846,9 +846,10 @@ const SuperText: React.FC = () => {
               {/* 3-Column Grid: Video, Audio, Google Drive */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
                 {/* Column 1: Story Video */}
-                <div ref={videoSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6">
+                <div ref={videoSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6 relative">
+                  {/* Orange Dot B in top left corner */}
+                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
                   <div className="flex items-center gap-2 mb-4">
-                    <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
                     <h2 className="text-xl font-bold text-purple-700">📹 Story Video</h2>
                   </div>
                   
