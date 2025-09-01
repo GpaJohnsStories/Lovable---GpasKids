@@ -1033,9 +1033,10 @@ const SuperText: React.FC = () => {
               </div>
 
               {/* Voice Previews Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6">
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6 relative">
+                {/* Orange Dot A in top left corner */}
+                <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">A</div>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">A</div>
                   <h2 className="text-xl font-bold text-blue-700">🔊 Voice Previews</h2>
                 </div>
                 
