@@ -401,7 +401,7 @@ const SuperText: React.FC = () => {
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative z-20 lg:pr-[420px]">
                 
                 {/* Blue Dot 1 in top left corner */}
-                <div className="absolute -top-4 -left-4 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30" style={{ width: '21px', height: '21px' }}>1</div>
+                <div className="absolute -top-4 -left-4 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30" style={{ width: '24px', height: '24px' }}>1</div>
                 
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
