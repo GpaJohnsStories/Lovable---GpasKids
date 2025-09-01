@@ -13,6 +13,12 @@
   color: #000000 !important;
 }
 
+.supertext-fs-21px-arial-blue { /* 21px Arial font in blue for special text */
+  font-size: 21px !important;
+  font-family: Arial !important;
+  color: #3b82f6 !important; /* Blue-500 */
+}
+
 .supertext-fs-24px-arial-green { /* 24px Arial font in green for section titles */
   font-size: 24px !important;
   font-family: Arial !important;
