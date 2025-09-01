@@ -360,6 +360,11 @@ ${content}`;
     }
   };
 
+  const handleInsertSignature = () => {
+    const signatureHtml = `<span style="font-family: 'Gloria Hallelujah', cursive; color: #0B3D91; font-size: 28px; font-weight: bold; font-style: italic;">Grandpa John</span>`;
+    insertTextAtCursor(signatureHtml);
+  };
+
   const shortcuts = [
     { key: 'Ctrl + B', action: 'Bold' },
     { key: 'Ctrl + C', action: 'Copy' },
@@ -407,14 +412,31 @@ ${content}`;
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
         <ResizablePanel defaultSize={50} minSize={30}>
-          <HTMLEditor
-            ref={editorRef}
-            content={content}
-            onChange={onChange}
-            placeholder={placeholder}
-            onSave={onSave}
-            category={category}
-          />
+          <div className="h-full flex flex-col">
+            <HTMLEditor
+              ref={editorRef}
+              content={content}
+              onChange={onChange}
+              placeholder={placeholder}
+              onSave={onSave}
+              category={category}
+            />
+            <div className="p-2 border-t border-gray-200 bg-gray-50">
+              <Button
+                type="button"
+                onClick={handleInsertSignature}
+                className="h-10 px-4 text-[16px] font-bold text-white rounded-md shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+                style={{ 
+                  backgroundColor: '#0B3D91',
+                  border: '2px solid #ffffff',
+                  boxShadow: '0 4px 8px rgba(11, 61, 145, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                  textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
+                }}
+              >
+                Insert Gpa's Signature
+              </Button>
+            </div>
+          </div>
         </ResizablePanel>
         
         <ResizableHandle withHandle />
