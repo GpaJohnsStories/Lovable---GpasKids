@@ -139,8 +139,8 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
       borderColor: '#3b82f6',
       borderWidth: '2px'
     }}>
-      <CardHeader className="pb-2">
-        <CardTitle className="flex flex-col items-center gap-1 text-2xl font-bold rounded" style={{
+      <CardHeader className="p-0">
+        <CardTitle className="flex flex-col items-center gap-1 text-2xl font-bold py-3" style={{
           color: '#FFD700',
           backgroundColor: '#228B22'
         }}>
