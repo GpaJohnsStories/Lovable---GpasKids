@@ -140,11 +140,40 @@ Contact the system administrator for assistance.`;
         return;
       }
 
+      // Check for processing issues and show appropriate messages
+      let backupInfo = null;
       if (typeof data === 'string') {
         const parsedData = JSON.parse(data);
+        backupInfo = parsedData.entries?.find((entry: any) => entry.name === 'backup-info.json');
+        if (backupInfo?.content) {
+          backupInfo = JSON.parse(atob(backupInfo.content));
+        }
         downloadJsonAsZip(data, parsedData.filename || `${bucketName}_backup.zip`);
       } else {
+        backupInfo = data?.entries?.find((entry: any) => entry.name === 'backup-info.json');
+        if (backupInfo?.content) {
+          backupInfo = JSON.parse(atob(backupInfo.content));
+        }
         downloadJsonAsZip(JSON.stringify(data), data.filename || `${bucketName}_backup.zip`);
+      }
+
+      // Show appropriate success/warning message
+      if (backupInfo) {
+        const { skipped_files, error_files } = backupInfo;
+        
+        if (skipped_files > 0 || error_files > 0) {
+          let message = `Backup completed with issues: `;
+          if (skipped_files > 0) message += `${skipped_files} files skipped (too large), `;
+          if (error_files > 0) message += `${error_files} files had errors`;
+          
+          toast(`Backup completed with issues for ${bucketName}`, {
+            description: message,
+          });
+        } else {
+          toast.success(`Successfully backed up bucket: ${bucketName}`);
+        }
+      } else {
+        toast.success(`Successfully backed up bucket: ${bucketName}`);
       }
 
     } catch (error) {
