@@ -960,7 +960,7 @@ const SuperText: React.FC = () => {
                   <div className="text-sm">
                     <span className="font-semibold">Current Voice: </span>
                     <span className="text-blue-600 font-bold">{formData.ai_voice_name || 'No voice selected'}</span>
-                    {formData.ai_voice_name && <span className="text-gray-500 ml-2">
+                    {formData.ai_voice_name && <span className="text-gray-500 ml-2 font-bold">
                         ({getVoiceCharacter(formData.ai_voice_name.toLowerCase())})
                       </span>}
                   </div>
