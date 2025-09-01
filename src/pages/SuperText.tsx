@@ -807,7 +807,7 @@ const SuperText: React.FC = () => {
                         }}
                         className="w-full border border-blue-400 rounded-md p-2 text-sm"
                       />
-                      <p className="text-xs text-gray-500 mt-1">Supported formats: MP3, WAV, M4A, OGG</p>
+                      <p className="text-xs text-gray-500 mt-1">Supported formats: MP3, WAV, M4A, OGG • Max size: 50MB</p>
                     </div>
                     
                     {/* URL Input */}
