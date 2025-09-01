@@ -779,7 +779,61 @@ const SuperText: React.FC = () => {
                     <h2 className="text-xl font-bold text-purple-700">📹 Story Video</h2>
                   </div>
                   
-                  <StoryVideoUpload videoUrl={formData.video_url} onVideoUpload={handleVideoUpload} onVideoRemove={handleVideoRemove} onDurationCalculated={handleVideoDurationCalculated} />
+                  <div className="space-y-4">
+                    {/* File Upload */}
+                    <div>
+                      <Label className="font-semibold mb-2 block">Upload Video File</Label>
+                      <input
+                        type="file"
+                        accept="video/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            // Handle file upload to story-videos bucket
+                            console.log('Video file selected:', file.name);
+                            // TODO: Implement file upload to Supabase storage
+                          }
+                        }}
+                        className="w-full border border-purple-400 rounded-md p-2 text-sm"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Supported formats: MP4, MOV, AVI, WMV • Max size: 100MB</p>
+                    </div>
+                    
+                    {/* URL Input */}
+                    <div>
+                      <Label className="font-semibold mb-2 block">Or Paste Video URL</Label>
+                      <Input
+                        type="url"
+                        placeholder="https://www.youtube.com/watch?v=... or https://vimeo.com/..."
+                        value={formData.video_url || ''}
+                        onChange={(e) => handleInputChange('video_url', e.target.value)}
+                        className="border-purple-400 focus:border-purple-500"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">YouTube, Vimeo, or direct video file links</p>
+                    </div>
+
+                    {/* Current Video Display */}
+                    {formData.video_url && (
+                      <div className="space-y-2">
+                        <div className="text-sm font-semibold text-purple-700">Current Video:</div>
+                        <div className="bg-gray-50 rounded-lg p-3">
+                          <div className="text-sm text-gray-700 mb-2">
+                            {formData.video_url.includes('youtube.com') || formData.video_url.includes('youtu.be') ? '📺 YouTube Video' :
+                             formData.video_url.includes('vimeo.com') ? '📺 Vimeo Video' : '📹 Video File'}
+                          </div>
+                          <div className="text-xs text-gray-500 break-all">{formData.video_url}</div>
+                        </div>
+                        <Button
+                          onClick={() => handleInputChange('video_url', '')}
+                          variant="outline"
+                          size="sm"
+                          className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400"
+                        >
+                          Remove Video
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Column 2: Audio Upload */}
