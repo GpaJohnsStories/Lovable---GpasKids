@@ -528,7 +528,13 @@ const PublicStoriesTable: React.FC = () => {
                                 <span className="text-gray-500 text-xs">No Image</span>
                               </div>
                             )}
-                        <div style={{ fontSize: '19px', lineHeight: '1.1' }}>{story.story_code}</div>
+                        <div 
+                          className="cursor-pointer hover:text-blue-600 transition-colors"
+                          style={{ fontSize: '19px', lineHeight: '1.1' }}
+                          onClick={() => handleStoryClick(story.story_code)}
+                        >
+                          {story.story_code}
+                        </div>
                           </div>
                         </TableCell>
                         
@@ -614,7 +620,13 @@ const PublicStoriesTable: React.FC = () => {
                             <span className="text-gray-500 text-xs">No Image</span>
                           </div>
                         )}
-                        <div style={{ fontSize: '19px', lineHeight: '1.1' }}>{story.story_code}</div>
+                        <div 
+                          className="cursor-pointer hover:text-blue-600 transition-colors"
+                          style={{ fontSize: '19px', lineHeight: '1.1' }}
+                          onClick={() => handleStoryClick(story.story_code)}
+                        >
+                          {story.story_code}
+                        </div>
                       </div>
                     </TableCell>
                     
