@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Button } from '@/components/ui/button';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { BreakTimerPopup } from '../BreakTimerPopup';
+import { useBreakTimer } from '@/contexts/BreakTimerContext';
 const BreakGuide: React.FC = () => {
+  const { minutesLeft, isBreakReminderOpen, openBreakReminder, closeBreakReminder, onBreakComplete, isTimerActive } = useBreakTimer();
+  
   const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
-  const [minutesLeft, setMinutesLeft] = useState(55); // Default 55 minutes
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const panelRef = useRef<HTMLDivElement>(null);
   
   // SYS-BT2: Back Door functionality - Break Reminder access via triple-click
-  const [isBreakReminderOpen, setIsBreakReminderOpen] = useState(false);
   const [sparkyClickCount, setSparkyClickCount] = useState(0);
   const [sparkyClickTimer, setSparkyClickTimer] = useState<NodeJS.Timeout | null>(null);
   
@@ -27,22 +28,7 @@ const BreakGuide: React.FC = () => {
     iconName: sparkyName
   } = useCachedIcon('!CO-SPT.gif');
 
-  // Countdown timer effect
-  useEffect(() => {
-    if (!isBreakTimerOpen) return;
-    const timer = setInterval(() => {
-      setMinutesLeft(prev => {
-        if (prev <= 1) {
-          // Timer reached zero, auto-open break reminder
-          setIsBreakReminderOpen(true);
-          return 55; // Reset to 55 minutes
-        }
-        return prev - 1;
-      });
-    }, 60000); // Update every minute
-
-    return () => clearInterval(timer);
-  }, [isBreakTimerOpen]);
+  // Timer is now managed by context, no local countdown needed
   
   const handleBreakButtonClick = () => {
     setIsBreakTimerOpen(true);
@@ -52,8 +38,7 @@ const BreakGuide: React.FC = () => {
     setPosition({ x: 0, y: 0 }); // Reset position when closing
   };
 
-  // SYS-BT2: Back Door - Triple-click Sparky to open Break Reminder and set timer to zero
-  // This allows viewing the Break Reminder without waiting for the 55-minute countdown
+  // SYS-BT2: Back Door - Triple-click Sparky to open Break Reminder instantly
   const handleSparkyClick = () => {
     setSparkyClickCount(prev => prev + 1);
     
@@ -70,23 +55,12 @@ const BreakGuide: React.FC = () => {
     
     // Check for triple-click (3 clicks within 1 second)
     if (sparkyClickCount === 2) { // This will be the 3rd click
-      setIsBreakReminderOpen(true);
-      setMinutesLeft(0); // Set timer to zero as requested
+      openBreakReminder();
       setSparkyClickCount(0); // Reset click counter
       if (sparkyClickTimer) {
         clearTimeout(sparkyClickTimer);
       }
     }
-  };
-
-  const handleCloseBreakReminder = () => {
-    setIsBreakReminderOpen(false);
-  };
-
-  const handleBreakComplete = () => {
-    setIsBreakReminderOpen(false);
-    // Reset the break timer back to 55 minutes
-    setMinutesLeft(55);
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -129,6 +103,11 @@ const BreakGuide: React.FC = () => {
       }
     };
   }, [sparkyClickTimer]);
+  // Don't render if timer is not active (e.g., on admin pages)
+  if (!isTimerActive) {
+    return null;
+  }
+
   return <TooltipProvider delayDuration={200}>
       {/* Break Button - positioned bottom-left, same height and alignment as "Top & Menu" button */}
       <Button
@@ -249,11 +228,11 @@ const BreakGuide: React.FC = () => {
           </div>
         </div>}
 
-      {/* SYS-BT2: Break Reminder popup - opened via Back Door triple-click on Sparky */}
+      {/* SYS-BT2: Break Reminder popup - managed by context */}
       <BreakTimerPopup 
         isOpen={isBreakReminderOpen}
-        onClose={handleCloseBreakReminder}
-        onBreakComplete={handleBreakComplete}
+        onClose={closeBreakReminder}
+        onBreakComplete={onBreakComplete}
       />
 
     </TooltipProvider>;

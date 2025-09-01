@@ -66,6 +66,7 @@ import { HelpProvider } from "./contexts/HelpContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useVisitTracker } from "./hooks/useVisitTracker";
 import BreakGuide from "./components/break/BreakGuide";
+import { BreakTimerProvider } from "./contexts/BreakTimerContext";
 
 const queryClient = new QueryClient();
 
@@ -81,12 +82,16 @@ const ConditionalContentProtection = ({ children }: { children: React.ReactNode 
   );
 };
 
-// Component to conditionally render BreakGuide on public pages only
+// Component to conditionally render BreakGuide and timer on public pages only
 const ConditionalBreakGuide = () => {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/buddys_admin');
   
-  return !isAdminPage ? <BreakGuide /> : null;
+  return !isAdminPage ? (
+    <BreakTimerProvider>
+      <BreakGuide />
+    </BreakTimerProvider>
+  ) : null;
 };
 
 function App() {
