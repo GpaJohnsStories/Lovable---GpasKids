@@ -368,7 +368,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               className="h-6 w-36 px-3 text-xs font-bold text-white hover:opacity-80 transition-opacity rounded-md" 
               style={{ backgroundColor: '#16a34a' }}
             >
-              Select All Preview
+              Select all LIVE Preview
             </Button>
           </ConditionalTooltip>
         </div>
