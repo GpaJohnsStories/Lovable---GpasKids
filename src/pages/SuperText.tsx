@@ -986,9 +986,9 @@ const SuperText: React.FC = () => {
                 </div>
 
                 {/* Voice Previews Section - Integrated */}
-                <div>
+                <div className="-mx-6">
                   
-                  <div className="grid grid-cols-2 gap-1 supertext-fs-21px-arial-black">
+                  <div className="grid grid-cols-2 gap-1 supertext-fs-21px-arial-black px-6">
                     {[{
                   name: 'Buddy / Alloy',
                   desc: 'Clear, neutral voice',
