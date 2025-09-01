@@ -1125,9 +1125,11 @@ const SuperText: React.FC = () => {
           </div>
 
           {/* Full Width Split Editor Section */}
-          <div ref={textEditorSectionRef} className="w-full bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4 mt-6">
+          <div ref={textEditorSectionRef} className="w-full bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4 mt-6 relative">
+            {/* Blue Dot 4 in top left corner */}
+            <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-30">4</div>
             <div className="mb-4">
-              <h2 className="text-xl font-bold text-green-700">📝 {lookupResult ? `Editing Story${formData.story_code ? `: ${formData.story_code}` : ''}` : `Creating New Story${formData.story_code ? `: ${formData.story_code}` : ''}`}</h2>
+              <h2 className="text-xl font-bold text-green-700">{lookupResult ? `Editing Story${formData.story_code ? `: ${formData.story_code}` : ''}` : `Creating New Story${formData.story_code ? `: ${formData.story_code}` : ''}`}</h2>
             </div>
             
             <SplitViewEditor content={formData.content} onChange={value => handleInputChange('content', value)} placeholder="Enter your story content here..." category={formData.category as any} previewContent={formData.content} />
