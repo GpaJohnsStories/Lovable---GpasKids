@@ -61,12 +61,12 @@ const SuperText: React.FC = () => {
   const [copyrightStatus, setCopyrightStatus] = React.useState('');
   const [publicationStatusCode, setPublicationStatusCode] = React.useState(5);
   const [lookupResult, setLookupResult] = React.useState<Story | null>(null);
-  
+
   // Refs for section scrolling
   const audioSectionRef = useRef<HTMLDivElement>(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
   const textEditorSectionRef = useRef<HTMLDivElement>(null);
-  
+
   // Refs for tab cycling
   const storyCodeRef = useRef<HTMLInputElement>(null);
   const loadTextBtnRef = useRef<HTMLButtonElement>(null);
@@ -127,7 +127,11 @@ const SuperText: React.FC = () => {
       console.log('🎯 SuperText: Auto-loading story from URL parameter:', initialStoryCode);
       // Create a temporary lookup function to avoid dependency issues
       const autoLookup = async () => {
-        const { found, story, error } = await lookupStoryByCode(initialStoryCode);
+        const {
+          found,
+          story,
+          error
+        } = await lookupStoryByCode(initialStoryCode);
         if (error) {
           toast.error("Error looking up story by code.");
           return;
@@ -145,12 +149,11 @@ const SuperText: React.FC = () => {
           toast.success("Story data loaded successfully!");
         }
       };
-      
+
       // Trigger lookup after a brief delay to ensure all state is set
       setTimeout(autoLookup, 100);
     }
   }, [searchParams, lookupStoryByCode, populateFormWithStory]);
-
   const clearForm = useCallback(() => {
     // Reset form fields to initial values
     handleInputChange('title', '');
@@ -176,14 +179,15 @@ const SuperText: React.FC = () => {
     setCategory('');
     setCopyrightStatus('');
     setPublicationStatusCode(5);
-    
+
     // Clear category in form data
     handleInputChange('category', '');
     setLookupResult(null);
 
     // Clear URL query parameters
-    navigate('/buddys_admin/super-text', { replace: true });
-
+    navigate('/buddys_admin/super-text', {
+      replace: true
+    });
     toast.success("Form cleared successfully!");
   }, [handleInputChange, navigate]);
   useEffect(() => {
@@ -270,17 +274,15 @@ const SuperText: React.FC = () => {
     if (!formData.content?.trim()) {
       toast.message("Add your story content to generate audio");
     }
-    
     if (audioSectionRef.current) {
-      audioSectionRef.current.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'center' 
+      audioSectionRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
       });
-      
+
       // Add highlight effect
       audioSectionRef.current.style.outline = '3px solid #3b82f6';
       audioSectionRef.current.style.outlineOffset = '4px';
-      
       setTimeout(() => {
         if (audioSectionRef.current) {
           audioSectionRef.current.style.outline = '';
@@ -289,18 +291,16 @@ const SuperText: React.FC = () => {
       }, 1500);
     }
   }, [formData.content]);
-
   const scrollToVideoSection = useCallback(() => {
     if (videoSectionRef.current) {
-      videoSectionRef.current.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'center' 
+      videoSectionRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
       });
-      
+
       // Add highlight effect
       videoSectionRef.current.style.outline = '3px solid #8b5cf6';
       videoSectionRef.current.style.outlineOffset = '4px';
-      
       setTimeout(() => {
         if (videoSectionRef.current) {
           videoSectionRef.current.style.outline = '';
@@ -309,18 +309,16 @@ const SuperText: React.FC = () => {
       }, 1500);
     }
   }, []);
-
   const scrollToTextEditorSection = useCallback(() => {
     if (textEditorSectionRef.current) {
-      textEditorSectionRef.current.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'center' 
+      textEditorSectionRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
       });
-      
+
       // Add highlight effect
       textEditorSectionRef.current.style.outline = '3px solid #22c55e';
       textEditorSectionRef.current.style.outlineOffset = '4px';
-      
       setTimeout(() => {
         if (textEditorSectionRef.current) {
           textEditorSectionRef.current.style.outline = '';
@@ -329,8 +327,7 @@ const SuperText: React.FC = () => {
       }, 1500);
     }
   }, []);
-  return (
-    <SecureAdminRoute>
+  return <SecureAdminRoute>
       <Helmet>
         <title>Super Text Manager</title>
       </Helmet>
@@ -347,17 +344,12 @@ const SuperText: React.FC = () => {
                    {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
                  </Button>
                </TooltipTrigger>
-               <TooltipContent 
-                 side="bottom" 
-                 align="center"
-                 className="bg-white border border-gray-300 shadow-lg"
-                 style={{ 
-                   fontFamily: 'Arial', 
-                   fontSize: '21px', 
-                   color: 'black',
-                   backgroundColor: 'white'
-                 }}
-               >
+               <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+              fontFamily: 'Arial',
+              fontSize: '21px',
+              color: 'black',
+              backgroundColor: 'white'
+            }}>
                  Save story and keep form open for editing
                </TooltipContent>
              </Tooltip>
@@ -370,17 +362,12 @@ const SuperText: React.FC = () => {
                    {isSaving ? 'Saving...' : 'Save & Clear Form'}
                  </Button>
                </TooltipTrigger>
-               <TooltipContent 
-                 side="bottom" 
-                 align="center"
-                 className="bg-white border border-gray-300 shadow-lg"
-                 style={{ 
-                   fontFamily: 'Arial', 
-                   fontSize: '21px', 
-                   color: 'black',
-                   backgroundColor: 'white'
-                 }}
-               >
+               <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+              fontFamily: 'Arial',
+              fontSize: '21px',
+              color: 'black',
+              backgroundColor: 'white'
+            }}>
                  Save story and clear form for new entry
                </TooltipContent>
              </Tooltip>
@@ -393,17 +380,12 @@ const SuperText: React.FC = () => {
                    Cancel All Edits & Clear Form
                  </Button>
                </TooltipTrigger>
-               <TooltipContent 
-                 side="bottom" 
-                 align="center"
-                 className="bg-white border border-gray-300 shadow-lg"
-                 style={{ 
-                   fontFamily: 'Arial', 
-                   fontSize: '21px', 
-                   color: 'black',
-                   backgroundColor: 'white'
-                 }}
-               >
+               <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+              fontFamily: 'Arial',
+              fontSize: '21px',
+              color: 'black',
+              backgroundColor: 'white'
+            }}>
                  Discard all changes and clear form
                </TooltipContent>
              </Tooltip>
@@ -427,154 +409,144 @@ const SuperText: React.FC = () => {
                 
                 {/* Text Status Box - positioned in top-right corner on large screens */}
                 <div className="hidden lg:block absolute top-6 right-6">
-                  <SuperTextStoryStatus 
-                    story={lookupResult || formData} 
-                    publicationStatusCode={publicationStatusCode} 
-                    onStatusChange={status => {
-                      setPublicationStatusCode(status);
-                      handleInputChange('publication_status_code', status.toString());
-                    }} 
-                  />
+                  <SuperTextStoryStatus story={lookupResult || formData} publicationStatusCode={publicationStatusCode} onStatusChange={status => {
+                setPublicationStatusCode(status);
+                handleInputChange('publication_status_code', status.toString());
+              }} />
                 </div>
                 
                 {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
                 <div className="grid grid-rows-4 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
                   {/* Column 1, Row 1: Green Dot A */}
                   <div className="row-start-1 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{ backgroundColor: '#22c55e' }}>A</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#22c55e'
+                }}>A</div>
                   </div>
                   
                   {/* Column 1, Row 2: Green Dot B */}
                   <div className="row-start-2 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{ backgroundColor: '#22c55e' }}>B</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#22c55e'
+                }}>B</div>
                   </div>
                   
                   {/* Column 1, Row 3: Green Dot C */}
                   <div className="row-start-3 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{ backgroundColor: '#22c55e' }}>C</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#22c55e'
+                }}>C</div>
                   </div>
 
                   {/* Column 1, Row 4: Green Dot D */}
                   <div className="row-start-4 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{ backgroundColor: '#22c55e' }}>D</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#22c55e'
+                }}>D</div>
                   </div>
 
                   {/* Column 2, Row 1: Text Code */}
                   <div className="row-start-1 col-start-2 self-end">
-                    <Input 
-                      ref={storyCodeRef}
-                      type="text" 
-                      placeholder="TEXT CODE" 
-                      value={storyCode} 
-                      onChange={e => {
-                        const upperValue = e.target.value.toUpperCase();
-                        setStoryCode(upperValue);
-                        handleInputChange('story_code', upperValue);
-                      }} 
-                      onPaste={e => {
-                        const pastedText = e.clipboardData.getData('text');
-                        const upperValue = pastedText.toUpperCase();
-                        e.preventDefault();
-                        setStoryCode(upperValue);
-                        handleInputChange('story_code', upperValue);
-                      }} 
-                      onBlur={e => {
-                        const upperValue = e.target.value.toUpperCase();
-                        if (upperValue !== e.target.value) {
-                          setStoryCode(upperValue);
-                          handleInputChange('story_code', upperValue);
-                        }
-                      }}
-                      onKeyDown={e => {
-                        if (e.key === 'Tab' && e.shiftKey) {
-                          e.preventDefault();
-                          loadTextBtnRef.current?.focus();
-                        }
-                      }}
-                      className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black" 
-                      style={{
-                        width: '192px',
-                        fontStyle: 'normal'
-                      }}
-                      autoCapitalize="characters" 
-                      spellCheck={false} 
-                      tabIndex={1} 
-                    />
+                    <Input ref={storyCodeRef} type="text" placeholder="TEXT CODE" value={storyCode} onChange={e => {
+                  const upperValue = e.target.value.toUpperCase();
+                  setStoryCode(upperValue);
+                  handleInputChange('story_code', upperValue);
+                }} onPaste={e => {
+                  const pastedText = e.clipboardData.getData('text');
+                  const upperValue = pastedText.toUpperCase();
+                  e.preventDefault();
+                  setStoryCode(upperValue);
+                  handleInputChange('story_code', upperValue);
+                }} onBlur={e => {
+                  const upperValue = e.target.value.toUpperCase();
+                  if (upperValue !== e.target.value) {
+                    setStoryCode(upperValue);
+                    handleInputChange('story_code', upperValue);
+                  }
+                }} onKeyDown={e => {
+                  if (e.key === 'Tab' && e.shiftKey) {
+                    e.preventDefault();
+                    loadTextBtnRef.current?.focus();
+                  }
+                }} className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black" style={{
+                  width: '192px',
+                  fontStyle: 'normal'
+                }} autoCapitalize="characters" spellCheck={false} tabIndex={1} />
                   </div>
 
                   {/* Column 2, Row 2: Category Dropdown */}
                   <div className="row-start-2 col-start-2 self-end">
                     <Select value={formData.category || ''} onValueChange={value => {
-                      setCategory(value);
-                      handleInputChange('category', value);
-                    }}>
+                  setCategory(value);
+                  handleInputChange('category', value);
+                }}>
                       <SelectTrigger className="w-[192px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold',
-                        backgroundColor: '#F97316',
-                        color: 'white',
-                        borderColor: '#ea580c'
-                      }} tabIndex={2}>
+                    fontSize: '21px',
+                    fontFamily: 'Arial',
+                    fontWeight: 'bold',
+                    backgroundColor: '#F97316',
+                    color: 'white',
+                    borderColor: '#ea580c'
+                  }} tabIndex={2}>
                         <SelectValue placeholder="Category" className="text-white" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }} />
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }} />
                       </SelectTrigger>
                       <SelectContent className="bg-white z-50">
                         <SelectItem value="WebText" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>
                           <div className="px-3 py-1 rounded w-full text-center text-white" style={{
-                            backgroundColor: '#A0522D'
-                          }}>
+                        backgroundColor: '#A0522D'
+                      }}>
                             WebText
                           </div>
                         </SelectItem>
                         <SelectItem value="Fun" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>
                           <div className="bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500 px-3 py-1 rounded w-full text-center">
                             Fun
                           </div>
                         </SelectItem>
                         <SelectItem value="Life" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>
                           <div className="bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500 px-3 py-1 rounded w-full text-center">
                             Life
                           </div>
                         </SelectItem>
                         <SelectItem value="North Pole" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>
                           <div className="bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500 px-3 py-1 rounded w-full text-center">
                             North Pole
                           </div>
                         </SelectItem>
                         <SelectItem value="World Changers" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>
                           <div className="bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500 px-3 py-1 rounded w-full text-center">
                             World Changers
                           </div>
                         </SelectItem>
                         <SelectItem value="BioText" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>
                           <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">
                             BioText
                           </div>
@@ -586,51 +558,51 @@ const SuperText: React.FC = () => {
                   {/* Column 2, Row 3: Copyright Status */}
                   <div className="row-start-3 col-start-2 self-end">
                     <Select value={formData.copyright_status || ''} onValueChange={value => {
-                      setCopyrightStatus(value);
-                      handleInputChange('copyright_status', value);
-                    }}>
+                  setCopyrightStatus(value);
+                  handleInputChange('copyright_status', value);
+                }}>
                       <SelectTrigger className="w-[192px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold',
-                        backgroundColor: '#2563eb',
-                        borderColor: '#1d4ed8'
-                      }} tabIndex={3}>
+                    fontSize: '21px',
+                    fontFamily: 'Arial',
+                    fontWeight: 'bold',
+                    backgroundColor: '#2563eb',
+                    borderColor: '#1d4ed8'
+                  }} tabIndex={3}>
                         <SelectValue placeholder="Copyright Status" className="text-white" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }} />
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }} />
                       </SelectTrigger>
                       <SelectContent className="bg-white z-50">
                         <SelectItem value="©" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>
                           <div className="px-3 py-1 rounded w-full text-center text-white bg-red-600">
                             © - Full Copyright
                           </div>
                         </SelectItem>
                         <SelectItem value="L" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>
                           <div className="px-3 py-1 rounded w-full text-center text-white" style={{
-                            backgroundColor: '#F97316'
-                          }}>
+                        backgroundColor: '#F97316'
+                      }}>
                             L — Limited Use
                           </div>
                         </SelectItem>
                         <SelectItem value="O" style={{
-                          fontSize: '21px',
-                          fontFamily: 'Arial',
-                          fontWeight: 'bold'
-                        }}>
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>
                           <div className="px-3 py-1 rounded w-full text-center text-white" style={{
-                            backgroundColor: '#228B22'
-                          }}>
+                        backgroundColor: '#228B22'
+                      }}>
                             O — Open Unlimited
                           </div>
                         </SelectItem>
@@ -643,41 +615,28 @@ const SuperText: React.FC = () => {
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button 
-                            ref={loadTextBtnRef}
-                            onClick={handleStoryCodeLookup} 
-                            disabled={isLoadingStory}
-                            className="supertext-text-btn flex items-center justify-start px-2 py-1 w-[192px] rounded-full" 
-                            style={{
-                              fontSize: '21px',
-                              fontFamily: 'Arial',
-                              fontWeight: 'bold',
-                              color: 'white',
-                              lineHeight: '1',
-                              textAlign: 'left'
-                            }} 
-                            onKeyDown={e => {
-                              if (e.key === 'Tab' && !e.shiftKey) {
-                                e.preventDefault();
-                                storyCodeRef.current?.focus();
-                              }
-                            }}
-                            tabIndex={4}
-                          >
+                          <Button ref={loadTextBtnRef} onClick={handleStoryCodeLookup} disabled={isLoadingStory} className="supertext-text-btn flex items-center justify-start px-2 py-1 w-[192px] rounded-full" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold',
+                        color: 'white',
+                        lineHeight: '1',
+                        textAlign: 'left'
+                      }} onKeyDown={e => {
+                        if (e.key === 'Tab' && !e.shiftKey) {
+                          e.preventDefault();
+                          storyCodeRef.current?.focus();
+                        }
+                      }} tabIndex={4}>
                             Load Text
                           </Button>
                         </TooltipTrigger>
-                        <TooltipContent 
-                          side="bottom" 
-                          align="center"
-                          className="bg-white border border-gray-300 shadow-lg"
-                          style={{ 
-                            fontFamily: 'Arial', 
-                            fontSize: '21px', 
-                            color: 'black',
-                            backgroundColor: 'white'
-                          }}
-                        >
+                        <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+                      fontFamily: 'Arial',
+                      fontSize: '21px',
+                      color: 'black',
+                      backgroundColor: 'white'
+                    }}>
                           Load existing text using the code above
                         </TooltipContent>
                       </Tooltip>
@@ -689,30 +648,20 @@ const SuperText: React.FC = () => {
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button 
-                            onClick={scrollToTextEditorSection} 
-                            className="supertext-text-btn px-6 py-2 rounded-full"
-                             style={{
-                               fontSize: '21px',
-                               fontFamily: 'Arial',
-                               fontWeight: 'bold'
-                             }}
-                            tabIndex={-1}
-                          >
+                          <Button onClick={scrollToTextEditorSection} className="supertext-text-btn px-6 py-2 rounded-full" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }} tabIndex={-1}>
                             Add/Edit Text
                           </Button>
                         </TooltipTrigger>
-                         <TooltipContent 
-                           side="bottom" 
-                           align="center"
-                           className="bg-white border border-gray-300 shadow-lg"
-                           style={{ 
-                             fontFamily: 'Arial', 
-                             fontSize: '21px', 
-                             color: 'black',
-                             backgroundColor: 'white'
-                           }}
-                         >
+                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+                      fontFamily: 'Arial',
+                      fontSize: '21px',
+                      color: 'black',
+                      backgroundColor: 'white'
+                    }}>
                            Add/Edit Text Content
                          </TooltipContent>
                       </Tooltip>
@@ -724,30 +673,20 @@ const SuperText: React.FC = () => {
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button 
-                            onClick={scrollToAudioSection} 
-                            className="supertext-audio-btn px-6 py-2 rounded-full"
-                             style={{
-                               fontSize: '21px',
-                               fontFamily: 'Arial',
-                               fontWeight: 'bold'
-                             }}
-                            tabIndex={-1}
-                          >
+                          <Button onClick={scrollToAudioSection} className="supertext-audio-btn px-6 py-2 rounded-full" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }} tabIndex={-1}>
                             Add Audio File
                           </Button>
                         </TooltipTrigger>
-                         <TooltipContent 
-                           side="bottom" 
-                           align="center"
-                           className="bg-white border border-gray-300 shadow-lg"
-                           style={{ 
-                             fontFamily: 'Arial', 
-                             fontSize: '21px', 
-                             color: 'black',
-                             backgroundColor: 'white'
-                           }}
-                         >
+                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+                      fontFamily: 'Arial',
+                      fontSize: '21px',
+                      color: 'black',
+                      backgroundColor: 'white'
+                    }}>
                            Add or Generate Audio
                          </TooltipContent>
                       </Tooltip>
@@ -759,30 +698,20 @@ const SuperText: React.FC = () => {
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Button 
-                            onClick={scrollToVideoSection} 
-                            className="supertext-video-btn px-6 py-2 rounded-full"
-                             style={{
-                               fontSize: '21px',
-                               fontFamily: 'Arial',
-                               fontWeight: 'bold'
-                             }}
-                            tabIndex={-1}
-                          >
+                          <Button onClick={scrollToVideoSection} className="supertext-video-btn px-6 py-2 rounded-full" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }} tabIndex={-1}>
                             Add Video File
                           </Button>
                         </TooltipTrigger>
-                         <TooltipContent 
-                           side="bottom" 
-                           align="center"
-                           className="bg-white border border-gray-300 shadow-lg"
-                           style={{ 
-                             fontFamily: 'Arial', 
-                             fontSize: '21px', 
-                             color: 'black',
-                             backgroundColor: 'white'
-                           }}
-                         >
+                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+                      fontFamily: 'Arial',
+                      fontSize: '21px',
+                      color: 'black',
+                      backgroundColor: 'white'
+                    }}>
                            Add Video Content
                          </TooltipContent>
                       </Tooltip>
@@ -791,20 +720,20 @@ const SuperText: React.FC = () => {
                 </div>
 
                 <div className="bg-gray-100 p-4 rounded border-2 border-orange-400 mt-4" style={{
-                  fontSize: '21px',
-                  fontFamily: 'Arial',
-                  fontWeight: 'bold'
-                }}>
+              fontSize: '21px',
+              fontFamily: 'Arial',
+              fontWeight: 'bold'
+            }}>
                   <Label className="text-gray-600 font-medium" style={{
-                    fontSize: '21px',
-                    fontFamily: 'Arial',
-                    fontWeight: 'bold'
-                  }}></Label>
+                fontSize: '21px',
+                fontFamily: 'Arial',
+                fontWeight: 'bold'
+              }}></Label>
                   <p className="text-gray-500 mt-1" style={{
-                    fontSize: '21px',
-                    fontFamily: 'Arial',
-                    fontWeight: 'bold'
-                  }}>
+                fontSize: '21px',
+                fontFamily: 'Arial',
+                fontWeight: 'bold'
+              }}>
                     {formData.id ? `Story loaded: ${formData.title || 'Untitled'}` : 'Enter Text Code, Category & Copyright, then Click Lookup'}
                   </p>
                 </div>
@@ -816,34 +745,28 @@ const SuperText: React.FC = () => {
                 <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-30">2</div>
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-bold text-orange-700" style={{
-                  fontSize: '21px',
-                  fontFamily: 'Arial',
-                  fontWeight: 'bold'
-                }}>🖼️ Story Photos</h2>
+                fontSize: '21px',
+                fontFamily: 'Arial',
+                fontWeight: 'bold'
+              }}>🖼️ Story Photos</h2>
                 </div>
                 
-                <StoryPhotoUpload
-                  photoUrls={{
-                    photo_link_1: formData.photo_link_1,
-                    photo_link_2: formData.photo_link_2,
-                    photo_link_3: formData.photo_link_3
-                  }}
-                  photoAlts={{
-                    photo_alt_1: formData.photo_alt_1,
-                    photo_alt_2: formData.photo_alt_2,
-                    photo_alt_3: formData.photo_alt_3
-                  }}
-                  onPhotoUpload={(photoNumber, url) => {
-                    handleInputChange(`photo_link_${photoNumber}` as keyof Story, url);
-                  }}
-                  onPhotoRemove={(photoNumber) => {
-                    handleInputChange(`photo_link_${photoNumber}` as keyof Story, '');
-                    handleInputChange(`photo_alt_${photoNumber}` as keyof Story, '');
-                  }}
-                  onAltTextChange={(field, value) => {
-                    handleInputChange(field as keyof Story, value);
-                  }}
-                />
+                <StoryPhotoUpload photoUrls={{
+              photo_link_1: formData.photo_link_1,
+              photo_link_2: formData.photo_link_2,
+              photo_link_3: formData.photo_link_3
+            }} photoAlts={{
+              photo_alt_1: formData.photo_alt_1,
+              photo_alt_2: formData.photo_alt_2,
+              photo_alt_3: formData.photo_alt_3
+            }} onPhotoUpload={(photoNumber, url) => {
+              handleInputChange(`photo_link_${photoNumber}` as keyof Story, url);
+            }} onPhotoRemove={photoNumber => {
+              handleInputChange(`photo_link_${photoNumber}` as keyof Story, '');
+              handleInputChange(`photo_alt_${photoNumber}` as keyof Story, '');
+            }} onAltTextChange={(field, value) => {
+              handleInputChange(field as keyof Story, value);
+            }} />
               </div>
 
               {/* 3-Column Grid: Video, Audio, Google Drive */}
@@ -894,17 +817,12 @@ const SuperText: React.FC = () => {
                            🔊 {isGeneratingAudio ? 'Generating...' : 'Story Required'}
                          </Button>
                        </TooltipTrigger>
-                       <TooltipContent 
-                         side="bottom" 
-                         align="center"
-                         className="bg-white border border-gray-300 shadow-lg"
-                         style={{ 
-                           fontFamily: 'Arial', 
-                           fontSize: '21px', 
-                           color: 'black',
-                           backgroundColor: 'white'
-                         }}
-                       >
+                       <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+                    fontFamily: 'Arial',
+                    fontSize: '21px',
+                    color: 'black',
+                    backgroundColor: 'white'
+                  }}>
                          Generate AI audio from story content
                        </TooltipContent>
                      </Tooltip>
@@ -925,17 +843,12 @@ const SuperText: React.FC = () => {
                              Upload
                            </Button>
                          </TooltipTrigger>
-                         <TooltipContent 
-                           side="bottom" 
-                           align="center"
-                           className="bg-white border border-gray-300 shadow-lg"
-                           style={{ 
-                             fontFamily: 'Arial', 
-                             fontSize: '21px', 
-                             color: 'black',
-                             backgroundColor: 'white'
-                           }}
-                         >
+                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+                      fontFamily: 'Arial',
+                      fontSize: '21px',
+                      color: 'black',
+                      backgroundColor: 'white'
+                    }}>
                            Import text from Google Drive
                          </TooltipContent>
                        </Tooltip>
@@ -955,9 +868,9 @@ const SuperText: React.FC = () => {
               {/* Text Status Section - Hidden on large screens since it's now in Text Details box */}
               <div className="lg:hidden">
                 <SuperTextStoryStatus story={lookupResult || formData} publicationStatusCode={publicationStatusCode} onStatusChange={status => {
-                  setPublicationStatusCode(status);
-                  handleInputChange('publication_status_code', status.toString());
-                }} />
+              setPublicationStatusCode(status);
+              handleInputChange('publication_status_code', status.toString());
+            }} />
               </div>
 
               {/* Create AI Voice File Section */}
@@ -972,63 +885,41 @@ const SuperText: React.FC = () => {
                   <div className="text-sm">
                     <span className="font-semibold">Current Voice: </span>
                     <span className="text-blue-600">{formData.ai_voice_name || 'No voice selected'}</span>
-                    {formData.ai_voice_name && (
-                      <span className="text-gray-500 ml-2">
+                    {formData.ai_voice_name && <span className="text-gray-500 ml-2">
                         ({getVoiceCharacter(formData.ai_voice_name.toLowerCase())})
-                      </span>
-                    )}
+                      </span>}
                   </div>
 
                   {/* Audio Generation Button */}
-                  <Button 
-                    onClick={() => handleGenerateAudio()} 
-                    disabled={isGeneratingAudio || !formData.content || !formData.ai_voice_name} 
-                    className={`w-full ${isGeneratingAudio || !formData.content || !formData.ai_voice_name 
-                      ? 'bg-gray-400 text-gray-600' 
-                      : 'bg-green-600 hover:bg-green-700 text-white'
-                    }`}
-                  >
-                    🎵 {isGeneratingAudio 
-                      ? 'Generating Audio...' 
-                      : !formData.content 
-                        ? 'Story Content Required' 
-                        : !formData.ai_voice_name
-                          ? 'Voice Selection Required'
-                          : 'Generate Audio File'
-                    }
+                  <Button onClick={() => handleGenerateAudio()} disabled={isGeneratingAudio || !formData.content || !formData.ai_voice_name} className={`w-full ${isGeneratingAudio || !formData.content || !formData.ai_voice_name ? 'bg-gray-400 text-gray-600' : 'bg-green-600 hover:bg-green-700 text-white'}`}>
+                    🎵 {isGeneratingAudio ? 'Generating Audio...' : !formData.content ? 'Story Content Required' : !formData.ai_voice_name ? 'Voice Selection Required' : 'Generate Audio File'}
                   </Button>
 
                   {/* Existing Audio File Display */}
-                  {formData.ai_voice_url && (
-                    <div className="space-y-2">
+                  {formData.ai_voice_url && <div className="space-y-2">
                       <div className="text-sm font-semibold text-green-700">Existing Audio File:</div>
                       <audio controls className="w-full">
                         <source src={formData.ai_voice_url} type="audio/mpeg" />
                         Your browser does not support the audio element.
                       </audio>
-                    </div>
-                  )}
+                    </div>}
 
                   {/* Voice Settings Link */}
                   <div className="text-xs text-gray-500 text-center">
                     <span>Change voice in </span>
-                    <button 
-                      onClick={scrollToAudioSection}
-                      className="text-blue-600 hover:text-blue-800 underline"
-                    >
+                    <button onClick={scrollToAudioSection} className="text-blue-600 hover:text-blue-800 underline">
                       Audio Upload section
                     </button>
                     <span> or </span>
-                    <button 
-                      onClick={() => {
-                        const voiceSection = document.querySelector('[data-voice-previews]') || 
-                                           document.querySelector('h2:contains("Voice Previews")');
-                        if (voiceSection) {
-                          voiceSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                      }}
-                      className="text-blue-600 hover:text-blue-800 underline"
-                    >
+                    <button onClick={() => {
+                  const voiceSection = document.querySelector('[data-voice-previews]') || document.querySelector('h2:contains("Voice Previews")');
+                  if (voiceSection) {
+                    voiceSection.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'center'
+                    });
+                  }
+                }} className="text-blue-600 hover:text-blue-800 underline">
                       Voice Previews below
                     </button>
                   </div>
@@ -1045,69 +936,59 @@ const SuperText: React.FC = () => {
                 
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   {[{
-                  name: 'Buddy / Alloy',
-                  desc: 'Clear, neutral voice',
-                  voice: 'alloy'
-                }, {
-                  name: 'Gpa John / Echo',
-                  desc: 'Deep, resonant voice',
-                  voice: 'echo'
-                }, {
-                  name: 'Fluffy / Fable',
-                  desc: 'British accent, storytelling',
-                  voice: 'fable'
-                }, {
-                  name: 'Nova',
-                  desc: 'Warm, friendly voice',
-                  voice: 'nova'
-                }, {
-                  name: 'Max / Onyx',
-                  desc: 'Deep, authoritative voice',
-                  voice: 'onyx'
-                }, {
-                  name: 'Shimmer',
-                  desc: 'Soft, gentle voice',
-                  voice: 'shimmer'
-                }, {
-                  name: 'Ash',
-                  desc: 'Gentle and neutral, calming',
-                  voice: 'ash'
-                }, {
-                  name: 'Coral',
-                  desc: 'Bright and clear, youthful tone',
-                  voice: 'coral'
-                }, {
-                  name: 'Sparky / Sage',
-                  desc: 'Warm and thoughtful, reflective',
-                  voice: 'sage'
-                }].map((voice, index) => <div key={index} className="border rounded p-2 text-center">
+                name: 'Buddy / Alloy',
+                desc: 'Clear, neutral voice',
+                voice: 'alloy'
+              }, {
+                name: 'Gpa John / Echo',
+                desc: 'Deep, resonant voice',
+                voice: 'echo'
+              }, {
+                name: 'Fluffy / Fable',
+                desc: 'British accent, storytelling',
+                voice: 'fable'
+              }, {
+                name: 'Nova',
+                desc: 'Warm, friendly voice',
+                voice: 'nova'
+              }, {
+                name: 'Max / Onyx',
+                desc: 'Deep, authoritative voice',
+                voice: 'onyx'
+              }, {
+                name: 'Shimmer',
+                desc: 'Soft, gentle voice',
+                voice: 'shimmer'
+              }, {
+                name: 'Ash',
+                desc: 'Gentle and neutral, calming',
+                voice: 'ash'
+              }, {
+                name: 'Coral',
+                desc: 'Bright and clear, youthful tone',
+                voice: 'coral'
+              }, {
+                name: 'Sparky / Sage',
+                desc: 'Warm and thoughtful, reflective',
+                voice: 'sage'
+              }].map((voice, index) => <div key={index} className="border rounded p-2 text-center">
                       <div className="font-bold">{voice.name}</div>
                       <div className="text-xs text-gray-600 mb-2">{voice.desc}</div>
                       <div className="flex gap-1">
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="flex-1 text-xs"
-                            onClick={() => {
-                              if (currentlyPlaying === voice.voice) {
-                                stopAudio();
-                              } else {
-                                playVoice(voice.voice, formData.content, formData.title);
-                              }
-                            }}
-                            disabled={loadingVoice === voice.voice}
-                          >
+                          <Button size="sm" variant="outline" className="flex-1 text-xs" onClick={() => {
+                    if (currentlyPlaying === voice.voice) {
+                      stopAudio();
+                    } else {
+                      playVoice(voice.voice, formData.content, formData.title);
+                    }
+                  }} disabled={loadingVoice === voice.voice}>
                             {loadingVoice === voice.voice ? "..." : currentlyPlaying === voice.voice ? "⏸ Stop" : "▶ Test"}
                           </Button>
-                          <Button 
-                            size="sm" 
-                            className="flex-1 text-xs bg-green-600 hover:bg-green-700"
-                            onClick={() => {
-                              const capitalizedVoice = voice.voice.charAt(0).toUpperCase() + voice.voice.slice(1);
-                              handleInputChange('ai_voice_name', capitalizedVoice);
-                              toast.success(`Selected ${voice.name} voice`);
-                            }}
-                          >
+                          <Button size="sm" className="flex-1 text-xs bg-green-600 hover:bg-green-700" onClick={() => {
+                    const capitalizedVoice = voice.voice.charAt(0).toUpperCase() + voice.voice.slice(1);
+                    handleInputChange('ai_voice_name', capitalizedVoice);
+                    toast.success(`Selected ${voice.name} voice`);
+                  }}>
                             Use
                           </Button>
                         </div>
@@ -1127,7 +1008,7 @@ const SuperText: React.FC = () => {
           {/* Full Width Split Editor Section */}
           <div ref={textEditorSectionRef} className="w-full bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4 mt-6 relative">
             {/* Blue Dot 4 in top left corner */}
-            <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-30">4</div>
+            <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-30">3</div>
             <div className="mb-4">
               <h2 className="text-xl font-bold text-green-700">{lookupResult ? `Editing Story${formData.story_code ? `: ${formData.story_code}` : ''}` : `Creating New Story${formData.story_code ? `: ${formData.story_code}` : ''}`}</h2>
             </div>
@@ -1165,7 +1046,6 @@ const SuperText: React.FC = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </SecureAdminRoute>
-  );
+    </SecureAdminRoute>;
 };
 export default SuperText;
