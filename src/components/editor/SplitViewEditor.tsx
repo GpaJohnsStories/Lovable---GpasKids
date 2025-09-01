@@ -258,31 +258,31 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     
     switch (fontType) {
       case 'footer':
-        fontSize = '14px';
+        fontSize = '19px';
         lineHeight = '19px';
         margin = '8px 0';
         fontWeight = 'normal';
         break;
       case 'body':
-        fontSize = '16px';
+        fontSize = '21px';
         lineHeight = '21px';
         margin = '10px 0';
         fontWeight = 'normal';
         break;
       case 'h3':
-        fontSize = '18px';
+        fontSize = '24px';
         lineHeight = '24px';
         margin = '12px 0';
         fontWeight = 'bold';
         break;
       case 'h2':
-        fontSize = '23px';
+        fontSize = '30px';
         lineHeight = '30px';
         margin = '16px 0';
         fontWeight = 'bold';
         break;
       case 'h1':
-        fontSize = '30px';
+        fontSize = '40px';
         lineHeight = '40px';
         margin = '20px 0';
         fontWeight = 'bold';
