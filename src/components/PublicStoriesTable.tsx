@@ -514,13 +514,17 @@ const PublicStoriesTable: React.FC = () => {
                               <img 
                                 src={story.photo_link_1} 
                                 alt={`${story.title} thumbnail`}
-                                className="w-[75px] h-[75px] object-cover rounded border border-gray-400"
+                                className="w-[75px] h-[75px] object-cover rounded border border-gray-400 cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={() => handleStoryClick(story.story_code)}
                                 onError={(e) => {
                                   e.currentTarget.style.display = 'none';
                                 }}
                               />
                             ) : (
-                              <div className="w-[75px] h-[75px] bg-gray-200 border border-gray-300 rounded flex items-center justify-center">
+                              <div 
+                                className="w-[75px] h-[75px] bg-gray-200 border border-gray-300 rounded flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-colors"
+                                onClick={() => handleStoryClick(story.story_code)}
+                              >
                                 <span className="text-gray-500 text-xs">No Image</span>
                               </div>
                             )}
@@ -596,13 +600,17 @@ const PublicStoriesTable: React.FC = () => {
                           <img 
                             src={story.photo_link_1} 
                             alt={`${story.title} thumbnail`}
-                            className="w-[75px] h-[75px] object-cover rounded border border-gray-400"
+                            className="w-[75px] h-[75px] object-cover rounded border border-gray-400 cursor-pointer hover:opacity-80 transition-opacity"
+                            onClick={() => handleStoryClick(story.story_code)}
                             onError={(e) => {
                               e.currentTarget.style.display = 'none';
                             }}
                           />
                         ) : (
-                          <div className="w-[75px] h-[75px] bg-gray-200 border border-gray-300 rounded flex items-center justify-center">
+                          <div 
+                            className="w-[75px] h-[75px] bg-gray-200 border border-gray-300 rounded flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-colors"
+                            onClick={() => handleStoryClick(story.story_code)}
+                          >
                             <span className="text-gray-500 text-xs">No Image</span>
                           </div>
                         )}
