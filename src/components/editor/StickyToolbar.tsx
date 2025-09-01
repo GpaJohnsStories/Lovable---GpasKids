@@ -232,10 +232,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
           </InternalLinkDialog>
         </div>
 
-        <Separator orientation="vertical" className="h-6" style={{
-          backgroundColor: '#9c441a'
-        }} />
-
         {/* Page Break and Content Tools */}
         <div className="flex items-center gap-1">
           <ConditionalTooltip content="Insert Horizontal Line">
