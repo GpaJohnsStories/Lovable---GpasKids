@@ -419,29 +419,29 @@ const SuperText: React.FC = () => {
                 <div className="grid grid-rows-4 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
                   {/* Column 1, Row 1: Green Dot A */}
                   <div className="row-start-1 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#22c55e'
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
                 }}>A</div>
                   </div>
                   
                   {/* Column 1, Row 2: Green Dot B */}
                   <div className="row-start-2 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#22c55e'
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
                 }}>B</div>
                   </div>
                   
                   {/* Column 1, Row 3: Green Dot C */}
                   <div className="row-start-3 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#22c55e'
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
                 }}>C</div>
                   </div>
 
                   {/* Column 1, Row 4: Green Dot D */}
                   <div className="row-start-4 col-start-1 place-self-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#22c55e'
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
                 }}>D</div>
                   </div>
 
