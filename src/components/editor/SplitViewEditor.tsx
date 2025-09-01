@@ -422,7 +422,7 @@ ${content}`;
         <ResizablePanel defaultSize={50} minSize={30}>
           <div className="h-full flex flex-col relative">
             <div className="bg-gray-50 px-3 py-2 border-b border-gray-200 flex items-center">
-              <span className="font-bold" style={{ fontSize: '21px', fontFamily: 'Arial', color: '#F97316' }}>Live Preview</span>
+              <span style={{ fontSize: '21px !important', fontFamily: 'Arial !important', color: '#F97316 !important', fontWeight: 'bold !important' }}>Live Preview</span>
               <div className="flex-1 flex justify-center">
                 <Button 
                   type="button" 
