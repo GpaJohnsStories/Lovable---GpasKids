@@ -150,8 +150,8 @@ const Guide = () => {
             })} className="w-20 h-16 px-1 py-1 bg-gradient-to-b from-emerald-100 to-emerald-200 hover:from-emerald-200 hover:to-emerald-300 active:from-emerald-300 active:to-emerald-400 text-white border-2 rounded-full text-xs font-bold transition-all duration-200 flex flex-col items-center justify-center text-center leading-tight break-words shadow-[0_6px_12px_rgba(0,0,0,0.15),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]" style={{
               borderColor: "#4A7C59"
             }}>
-                <span className="text-orange-800 text-[10px]">Guide To</span>
                 <span className="text-orange-800 text-[10px]">Your Safety</span>
+                <span className="text-orange-800 text-[10px]">Here</span>
               </button>
             </div>
           </div>
