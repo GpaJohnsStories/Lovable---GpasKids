@@ -339,19 +339,76 @@ const SuperText: React.FC = () => {
       {/* Header with title and action buttons */}
       <div className="bg-white/80 backdrop-blur-sm py-4 px-6 border-b border-orange-200/50 sticky top-0 z-10">
         <h1 className="text-3xl font-bold text-orange-800 mb-4">Super Text Manager</h1>
-        <div className="flex gap-4 flex-wrap">
-          <Button onClick={() => handleSave('save-only')} disabled={isSaving || !storyCode.trim()} className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full" title={!storyCode.trim() ? "Please enter a text code" : ""}>
-            {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
-          </Button>
-          
-          <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !storyCode.trim()} className="px-8 py-3 text-lg font-semibold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700" title={!storyCode.trim() ? "Please enter a text code" : ""}>
-            {isSaving ? 'Saving...' : 'Save & Clear Form'}
-          </Button>
-          
-          <Button onClick={() => handleSave('cancel-all')} className="supertext-no-btn px-8 py-3 text-lg font-semibold rounded-full">
-            Cancel All Edits & Clear Form
-          </Button>
-        </div>
+         <div className="flex gap-4 flex-wrap">
+           <TooltipProvider>
+             <Tooltip>
+               <TooltipTrigger asChild>
+                 <Button onClick={() => handleSave('save-only')} disabled={isSaving || !storyCode.trim()} className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full">
+                   {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
+                 </Button>
+               </TooltipTrigger>
+               <TooltipContent 
+                 side="bottom" 
+                 align="center"
+                 className="bg-white border border-gray-300 shadow-lg"
+                 style={{ 
+                   fontFamily: 'Arial', 
+                   fontSize: '21px', 
+                   color: 'black',
+                   backgroundColor: 'white'
+                 }}
+               >
+                 Save story and keep form open for editing
+               </TooltipContent>
+             </Tooltip>
+           </TooltipProvider>
+           
+           <TooltipProvider>
+             <Tooltip>
+               <TooltipTrigger asChild>
+                 <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !storyCode.trim()} className="px-8 py-3 text-lg font-semibold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700">
+                   {isSaving ? 'Saving...' : 'Save & Clear Form'}
+                 </Button>
+               </TooltipTrigger>
+               <TooltipContent 
+                 side="bottom" 
+                 align="center"
+                 className="bg-white border border-gray-300 shadow-lg"
+                 style={{ 
+                   fontFamily: 'Arial', 
+                   fontSize: '21px', 
+                   color: 'black',
+                   backgroundColor: 'white'
+                 }}
+               >
+                 Save story and clear form for new entry
+               </TooltipContent>
+             </Tooltip>
+           </TooltipProvider>
+           
+           <TooltipProvider>
+             <Tooltip>
+               <TooltipTrigger asChild>
+                 <Button onClick={() => handleSave('cancel-all')} className="supertext-no-btn px-8 py-3 text-lg font-semibold rounded-full">
+                   Cancel All Edits & Clear Form
+                 </Button>
+               </TooltipTrigger>
+               <TooltipContent 
+                 side="bottom" 
+                 align="center"
+                 className="bg-white border border-gray-300 shadow-lg"
+                 style={{ 
+                   fontFamily: 'Arial', 
+                   fontSize: '21px', 
+                   color: 'black',
+                   backgroundColor: 'white'
+                 }}
+               >
+                 Discard all changes and clear form
+               </TooltipContent>
+             </Tooltip>
+           </TooltipProvider>
+         </div>
       </div>
 
       <div className="pb-6">
@@ -581,29 +638,48 @@ const SuperText: React.FC = () => {
 
                   {/* Column 2, Row 4: Load Text Button */}
                   <div className="row-start-4 col-start-2 flex flex-col justify-center">
-                    <Button 
-                      ref={loadTextBtnRef}
-                      onClick={handleStoryCodeLookup} 
-                      disabled={isLoadingStory}
-                      className="supertext-text-btn flex items-center justify-start px-2 py-1 w-[192px] rounded-full" 
-                      style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold',
-                        color: 'white',
-                        lineHeight: '1',
-                        textAlign: 'left'
-                      }} 
-                      onKeyDown={e => {
-                        if (e.key === 'Tab' && !e.shiftKey) {
-                          e.preventDefault();
-                          storyCodeRef.current?.focus();
-                        }
-                      }}
-                      tabIndex={4}
-                    >
-                      Load Text
-                    </Button>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button 
+                            ref={loadTextBtnRef}
+                            onClick={handleStoryCodeLookup} 
+                            disabled={isLoadingStory}
+                            className="supertext-text-btn flex items-center justify-start px-2 py-1 w-[192px] rounded-full" 
+                            style={{
+                              fontSize: '21px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold',
+                              color: 'white',
+                              lineHeight: '1',
+                              textAlign: 'left'
+                            }} 
+                            onKeyDown={e => {
+                              if (e.key === 'Tab' && !e.shiftKey) {
+                                e.preventDefault();
+                                storyCodeRef.current?.focus();
+                              }
+                            }}
+                            tabIndex={4}
+                          >
+                            Load Text
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent 
+                          side="bottom" 
+                          align="center"
+                          className="bg-white border border-gray-300 shadow-lg"
+                          style={{ 
+                            fontFamily: 'Arial', 
+                            fontSize: '21px', 
+                            color: 'black',
+                            backgroundColor: 'white'
+                          }}
+                        >
+                          Load existing text using the code above
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
 
                   {/* Column 3, Row 1: Add/Edit Text Button */}
@@ -624,9 +700,19 @@ const SuperText: React.FC = () => {
                             Add/Edit Text
                           </Button>
                         </TooltipTrigger>
-                        <TooltipContent side="bottom" className="text-lg">
-                          <p>Add/Edit Text Content</p>
-                        </TooltipContent>
+                         <TooltipContent 
+                           side="bottom" 
+                           align="center"
+                           className="bg-white border border-gray-300 shadow-lg"
+                           style={{ 
+                             fontFamily: 'Arial', 
+                             fontSize: '21px', 
+                             color: 'black',
+                             backgroundColor: 'white'
+                           }}
+                         >
+                           Add/Edit Text Content
+                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
                   </div>
@@ -649,9 +735,19 @@ const SuperText: React.FC = () => {
                             Add Audio File
                           </Button>
                         </TooltipTrigger>
-                        <TooltipContent side="bottom" className="text-lg">
-                          <p>Add or Generate Audio</p>
-                        </TooltipContent>
+                         <TooltipContent 
+                           side="bottom" 
+                           align="center"
+                           className="bg-white border border-gray-300 shadow-lg"
+                           style={{ 
+                             fontFamily: 'Arial', 
+                             fontSize: '21px', 
+                             color: 'black',
+                             backgroundColor: 'white'
+                           }}
+                         >
+                           Add or Generate Audio
+                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
                   </div>
@@ -674,9 +770,19 @@ const SuperText: React.FC = () => {
                             Add Video File
                           </Button>
                         </TooltipTrigger>
-                        <TooltipContent side="bottom" className="text-lg">
-                          <p>Add Video Content</p>
-                        </TooltipContent>
+                         <TooltipContent 
+                           side="bottom" 
+                           align="center"
+                           className="bg-white border border-gray-300 shadow-lg"
+                           style={{ 
+                             fontFamily: 'Arial', 
+                             fontSize: '21px', 
+                             color: 'black',
+                             backgroundColor: 'white'
+                           }}
+                         >
+                           Add Video Content
+                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
                   </div>
@@ -776,9 +882,28 @@ const SuperText: React.FC = () => {
                     </Select>
                   </div>
 
-                  <Button onClick={() => handleGenerateAudio()} disabled={isGeneratingAudio || !formData.content} className="w-full bg-gray-400 text-gray-600">
-                    🔊 {isGeneratingAudio ? 'Generating...' : 'Story Required'}
-                  </Button>
+                   <TooltipProvider>
+                     <Tooltip>
+                       <TooltipTrigger asChild>
+                         <Button onClick={() => handleGenerateAudio()} disabled={isGeneratingAudio || !formData.content} className="w-full bg-gray-400 text-gray-600">
+                           🔊 {isGeneratingAudio ? 'Generating...' : 'Story Required'}
+                         </Button>
+                       </TooltipTrigger>
+                       <TooltipContent 
+                         side="bottom" 
+                         align="center"
+                         className="bg-white border border-gray-300 shadow-lg"
+                         style={{ 
+                           fontFamily: 'Arial', 
+                           fontSize: '21px', 
+                           color: 'black',
+                           backgroundColor: 'white'
+                         }}
+                       >
+                         Generate AI audio from story content
+                       </TooltipContent>
+                     </Tooltip>
+                   </TooltipProvider>
                 </div>
 
                 {/* Column 3: Google Drive Upload */}
@@ -786,9 +911,28 @@ const SuperText: React.FC = () => {
                   <h2 className="text-xl font-bold text-orange-700 mb-4">Upload Text From Google Drive</h2>
                   <div className="space-y-3">
                     <Input type="text" placeholder="Paste Google Drive Share Code here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} className="border-orange-400 focus:border-orange-500" />
-                    <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
-                      Upload
-                    </Button>
+                     <TooltipProvider>
+                       <Tooltip>
+                         <TooltipTrigger asChild>
+                           <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
+                             Upload
+                           </Button>
+                         </TooltipTrigger>
+                         <TooltipContent 
+                           side="bottom" 
+                           align="center"
+                           className="bg-white border border-gray-300 shadow-lg"
+                           style={{ 
+                             fontFamily: 'Arial', 
+                             fontSize: '21px', 
+                             color: 'black',
+                             backgroundColor: 'white'
+                           }}
+                         >
+                           Import text from Google Drive
+                         </TooltipContent>
+                       </Tooltip>
+                     </TooltipProvider>
                   </div>
                 </div>
               </div>
