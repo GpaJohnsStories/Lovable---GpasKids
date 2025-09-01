@@ -776,7 +776,7 @@ const SuperText: React.FC = () => {
                   {/* Orange Dot B in top left corner */}
                   <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
                   <div className="flex items-center gap-2 mb-4">
-                    <h2 className="text-xl font-bold text-purple-700">📹 Story Video</h2>
+                    <h2 className="text-xl font-bold text-purple-700">📹 Video Upload</h2>
                   </div>
                   
                   <div className="space-y-4">
