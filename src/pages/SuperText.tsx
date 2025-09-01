@@ -774,7 +774,7 @@ const SuperText: React.FC = () => {
                 {/* Column 1: Audio Upload */}
                 <div ref={audioSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6 relative">
                   {/* Orange Dot b in top left corner */}
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">b</div>
+                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
                   <div className="flex items-center gap-2 mb-4">
                     <h2 className="text-xl font-bold text-blue-700">🔊 Audio Upload</h2>
                   </div>
@@ -798,7 +798,10 @@ const SuperText: React.FC = () => {
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full border-2 border-blue-400 focus:border-blue-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
+                        <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full border-2 border-blue-400 focus:border-blue-500 rounded-md px-3 py-2 text-sm resize-none" style={{
+                      whiteSpace: 'pre-wrap',
+                      wordWrap: 'break-word'
+                    }} />
                         <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
                           Upload
                         </button>
@@ -823,7 +826,7 @@ const SuperText: React.FC = () => {
                 {/* Column 2: Video Upload */}
                 <div ref={videoSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6 relative">
                   {/* Orange Dot c in top left corner */}
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">c</div>
+                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">C</div>
                   <div className="flex items-center gap-2 mb-4">
                     <h2 className="text-xl font-bold text-purple-700">📹 Video Upload</h2>
                   </div>
@@ -847,7 +850,10 @@ const SuperText: React.FC = () => {
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full border-2 border-purple-400 focus:border-purple-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
+                        <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full border-2 border-purple-400 focus:border-purple-500 rounded-md px-3 py-2 text-sm resize-none" style={{
+                      whiteSpace: 'pre-wrap',
+                      wordWrap: 'break-word'
+                    }} />
                         <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
                           Upload
                         </button>
@@ -873,7 +879,7 @@ const SuperText: React.FC = () => {
                 {/* Column 3: Text Upload */}
                 <div className="bg-white/90 backdrop-blur-sm border-2 border-orange-400 rounded-lg p-6 relative">
                   {/* Orange Dot d in top left corner */}
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">d</div>
+                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">D</div>
                   <div className="flex items-center gap-2 mb-4">
                     <h2 className="text-xl font-bold text-orange-700">📄 Text Upload</h2>
                   </div>
@@ -897,7 +903,10 @@ const SuperText: React.FC = () => {
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <textarea placeholder="Paste Google Drive Share Code Here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} rows={3} className="w-full border-2 border-orange-400 focus:border-orange-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
+                        <textarea placeholder="Paste Google Drive Share Code Here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} rows={3} className="w-full border-2 border-orange-400 focus:border-orange-500 rounded-md px-3 py-2 text-sm resize-none" style={{
+                      whiteSpace: 'pre-wrap',
+                      wordWrap: 'break-word'
+                    }} />
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
@@ -906,11 +915,11 @@ const SuperText: React.FC = () => {
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-                      fontFamily: 'Arial',
-                      fontSize: '21px',
-                      color: 'black',
-                      backgroundColor: 'white'
-                    }}>
+                          fontFamily: 'Arial',
+                          fontSize: '21px',
+                          color: 'black',
+                          backgroundColor: 'white'
+                        }}>
                               Import text from Google Drive
                             </TooltipContent>
                           </Tooltip>
