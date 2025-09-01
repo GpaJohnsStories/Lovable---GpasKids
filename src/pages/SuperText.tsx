@@ -798,7 +798,7 @@ const SuperText: React.FC = () => {
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <Input type="text" placeholder="Paste Google Drive Share Code" className="border-purple-400 focus:border-purple-500" />
+                        <textarea placeholder="Paste Google Drive Share Code" rows={3} className="w-full border-purple-400 focus:border-purple-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
                         <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
                           🔄 Fetch & Upload
                         </button>
@@ -848,7 +848,7 @@ const SuperText: React.FC = () => {
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <Input type="text" placeholder="Paste Google Drive Share Code" className="border-blue-400 focus:border-blue-500" />
+                        <textarea placeholder="Paste Google Drive Share Code" rows={3} className="w-full border-blue-400 focus:border-blue-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
                         <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
                           🔄 Fetch & Upload
                         </button>
@@ -876,7 +876,7 @@ const SuperText: React.FC = () => {
                    <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">D</div>
                    <h2 className="text-xl font-bold text-orange-700 mb-4">Upload Text From Google Drive</h2>
                   <div className="space-y-3">
-                    <Input type="text" placeholder="Paste Google Drive Share Code here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} className="border-orange-400 focus:border-orange-500" />
+                    <textarea placeholder="Paste Google Drive Share Code here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} rows={3} className="w-full border-orange-400 focus:border-orange-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
                      <TooltipProvider>
                        <Tooltip>
                          <TooltipTrigger asChild>
