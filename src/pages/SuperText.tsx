@@ -906,9 +906,11 @@ const SuperText: React.FC = () => {
                    </TooltipProvider>
                 </div>
 
-                {/* Column 3: Google Drive Upload */}
-                <div className="bg-orange-100 border-2 border-orange-400 rounded-lg p-6">
-                  <h2 className="text-xl font-bold text-orange-700 mb-4">Upload Text From Google Drive</h2>
+                 {/* Column 3: Google Drive Upload */}
+                 <div className="bg-orange-100 border-2 border-orange-400 rounded-lg p-6 relative">
+                   {/* Orange Dot D in top left corner */}
+                   <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">D</div>
+                   <h2 className="text-xl font-bold text-orange-700 mb-4">Upload Text From Google Drive</h2>
                   <div className="space-y-3">
                     <Input type="text" placeholder="Paste Google Drive Share Code here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} className="border-orange-400 focus:border-orange-500" />
                      <TooltipProvider>
