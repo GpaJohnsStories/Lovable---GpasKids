@@ -260,7 +260,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
       {/* Second row for font size insertions */}
       <div className="flex items-center gap-2 mt-2 flex-wrap">
         <div className="flex items-center gap-1">
-          <ConditionalTooltip content="Insert Footer Text Style">
+          <ConditionalTooltip content="Insert Footer Text Style — 19px (14pt)">
             <Button 
               type="button" 
               size="sm" 
@@ -270,7 +270,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               Footer
             </Button>
           </ConditionalTooltip>
-          <ConditionalTooltip content="Insert Body Text Style">
+          <ConditionalTooltip content="Insert Body Text Style — 21px (16pt)">
             <Button 
               type="button" 
               size="sm" 
@@ -280,7 +280,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               Body
             </Button>
           </ConditionalTooltip>
-          <ConditionalTooltip content="Insert Heading 3 Style">
+          <ConditionalTooltip content="Insert Heading 3 Style — 24px (18pt)">
             <Button 
               type="button" 
               size="sm" 
@@ -290,7 +290,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               H3
             </Button>
           </ConditionalTooltip>
-          <ConditionalTooltip content="Insert Heading 2 Style">
+          <ConditionalTooltip content="Insert Heading 2 Style — 30px (23pt)">
             <Button 
               type="button" 
               size="sm" 
@@ -300,7 +300,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               H2
             </Button>
           </ConditionalTooltip>
-          <ConditionalTooltip content="Insert Heading 1 Style">
+          <ConditionalTooltip content="Insert Heading 1 Style — 40px (30pt)">
             <Button 
               type="button" 
               size="sm" 
