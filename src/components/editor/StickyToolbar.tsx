@@ -248,16 +248,16 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               <FileText className="h-4 w-4" />
             </Button>
           </ConditionalTooltip>
+        </div>
+
+        {/* Keep Together button on new line */}
+        <div className="flex items-center gap-1 w-full mt-1">
           <ConditionalTooltip content="Keep Selected Content Together">
             <Button type="button" size="sm" onClick={onWrapKeepTogether} className="h-8 px-2 btn-toolbar-purple">
               <Package className="h-4 w-4" />
             </Button>
           </ConditionalTooltip>
         </div>
-
-        <Separator orientation="vertical" className="h-6" style={{
-          backgroundColor: '#9c441a'
-        }} />
         
         {/* Clear buttons */}
         <div className="flex items-center gap-1">
