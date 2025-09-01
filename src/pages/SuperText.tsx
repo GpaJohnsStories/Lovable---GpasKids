@@ -808,7 +808,7 @@ const SuperText: React.FC = () => {
                       whiteSpace: 'pre-wrap',
                       wordWrap: 'break-word'
                     }} />
-                        <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
+                        <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 text-sm font-medium">
                           Upload
                         </button>
                       </div>
@@ -860,7 +860,7 @@ const SuperText: React.FC = () => {
                       whiteSpace: 'pre-wrap',
                       wordWrap: 'break-word'
                     }} />
-                        <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
+                        <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 text-sm font-medium">
                           Upload
                         </button>
                       </div>
@@ -916,7 +916,7 @@ const SuperText: React.FC = () => {
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
-                              <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
+                              <Button className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-full text-sm font-medium">
                                 Upload
                               </Button>
                             </TooltipTrigger>
