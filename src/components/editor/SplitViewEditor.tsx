@@ -421,8 +421,10 @@ ${content}`;
         
         <ResizablePanel defaultSize={50} minSize={30}>
           <div className="h-full flex flex-col relative">
-            <div className="bg-gray-50 px-3 py-2 border-b border-gray-200 flex items-center justify-between">
+            <div className="bg-gray-50 px-3 py-2 border-b border-gray-200">
               <span className="text-sm font-medium text-gray-600">Live Preview</span>
+            </div>
+            <div className="bg-gray-100 px-3 py-2 border-b border-gray-200 flex justify-center">
               <Button 
                 type="button" 
                 onClick={handleSelectAllPreview} 
