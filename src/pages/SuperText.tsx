@@ -815,9 +815,6 @@ const SuperText: React.FC = () => {
                           🔄 Fetch & Upload
                         </button>
                       </div>
-                      <p className="text-xs text-gray-600 mt-2">
-                        All files are securely hosted on our servers. <a href="/privacy" className="text-blue-600 hover:text-blue-800 underline">Read our security policy</a>
-                      </p>
                     </div>
 
                     {/* Current Video Display */}
@@ -888,9 +885,6 @@ const SuperText: React.FC = () => {
                           🔄 Fetch & Upload
                         </button>
                       </div>
-                      <p className="text-xs text-gray-600 mt-2">
-                        All files are securely hosted on our servers. <a href="/privacy" className="text-blue-600 hover:text-blue-800 underline">Read our security policy</a>
-                      </p>
                     </div>
 
                     {/* Current Audio Display */}
