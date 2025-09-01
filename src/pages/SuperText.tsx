@@ -769,12 +769,61 @@ const SuperText: React.FC = () => {
             }} />
               </div>
 
-              {/* 3-Column Grid: Video, Audio, Google Drive */}
+              {/* 3-Column Grid: Audio, Video, Text */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-                {/* Column 1: Story Video */}
+                {/* Column 1: Audio Upload */}
+                <div ref={audioSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6 relative">
+                  {/* Orange Dot b in top left corner */}
+                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">b</div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <h2 className="text-xl font-bold text-blue-700">🔊 Audio Upload</h2>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {/* File Upload */}
+                    <div>
+                      <Label className="font-semibold mb-2 block">Upload Audio File</Label>
+                      <input type="file" accept="audio/*" onChange={e => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      // Handle file upload to story-audio bucket
+                      console.log('Audio file selected:', file.name);
+                      // TODO: Implement file upload to Supabase storage
+                    }
+                  }} className="w-full border border-blue-400 rounded-md p-2 text-sm" />
+                      <p className="text-xs text-gray-500 mt-1">Supported formats: MP3, WAV, M4A, OGG • Max size: 50MB</p>
+                    </div>
+                    
+                    {/* Google Drive Upload */}
+                    <div>
+                      <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
+                      <div className="space-y-2">
+                        <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full border-2 border-blue-400 focus:border-blue-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
+                        <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
+                          Upload
+                        </button>
+                      </div>
+                      
+                    </div>
+
+                    {/* Current Audio Display */}
+                    {formData.audio_url && <div className="space-y-2">
+                        <div className="text-sm font-semibold text-blue-700">Current Audio File:</div>
+                        <audio controls className="w-full">
+                          <source src={formData.audio_url} type="audio/mpeg" />
+                          Your browser does not support the audio element.
+                        </audio>
+                        <Button onClick={() => handleInputChange('audio_url', '')} variant="outline" size="sm" className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400">
+                          Remove Audio
+                        </Button>
+                      </div>}
+                  </div>
+                </div>
+
+                {/* Column 2: Video Upload */}
                 <div ref={videoSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6 relative">
-                  {/* Orange Dot B in top left corner */}
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
+                  {/* Orange Dot c in top left corner */}
+                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">c</div>
                   <div className="flex items-center gap-2 mb-4">
                     <h2 className="text-xl font-bold text-purple-700">📹 Video Upload</h2>
                   </div>
@@ -821,104 +870,55 @@ const SuperText: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Column 2: Audio Upload */}
-                <div ref={audioSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6 relative">
-                  {/* Orange Dot C in top left corner */}
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">C</div>
+                {/* Column 3: Text Upload */}
+                <div className="bg-white/90 backdrop-blur-sm border-2 border-orange-400 rounded-lg p-6 relative">
+                  {/* Orange Dot d in top left corner */}
+                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">d</div>
                   <div className="flex items-center gap-2 mb-4">
-                    <h2 className="text-xl font-bold text-blue-700">🔊 Audio Upload</h2>
+                    <h2 className="text-xl font-bold text-orange-700">📄 Text Upload</h2>
                   </div>
                   
                   <div className="space-y-4">
                     {/* File Upload */}
                     <div>
-                      <Label className="font-semibold mb-2 block">Upload Audio File</Label>
-                      <input type="file" accept="audio/*" onChange={e => {
+                      <Label className="font-semibold mb-2 block">Upload Text File</Label>
+                      <input type="file" accept=".txt,.rtf" onChange={e => {
                     const file = e.target.files?.[0];
                     if (file) {
-                      // Handle file upload to story-audio bucket
-                      console.log('Audio file selected:', file.name);
-                      // TODO: Implement file upload to Supabase storage
+                      // Handle file upload to story-text bucket or process content
+                      console.log('Text file selected:', file.name);
+                      // TODO: Implement file upload to Supabase storage or read content
                     }
-                  }} className="w-full border border-blue-400 rounded-md p-2 text-sm" />
-                      <p className="text-xs text-gray-500 mt-1">Supported formats: MP3, WAV, M4A, OGG • Max size: 50MB</p>
+                  }} className="w-full border border-orange-400 rounded-md p-2 text-sm" />
+                      <p className="text-xs text-gray-500 mt-1">Supported formats: TXT, RTF • Max size: 10MB</p>
                     </div>
                     
                     {/* Google Drive Upload */}
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full border-2 border-blue-400 focus:border-blue-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
-                        <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
-                          Upload
-                        </button>
+                        <textarea placeholder="Paste Google Drive Share Code Here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} rows={3} className="w-full border-2 border-orange-400 focus:border-orange-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
+                                Upload
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+                      fontFamily: 'Arial',
+                      fontSize: '21px',
+                      color: 'black',
+                      backgroundColor: 'white'
+                    }}>
+                              Import text from Google Drive
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </div>
-                      
                     </div>
-
-                    {/* Current Audio Display */}
-                    {formData.audio_url && <div className="space-y-2">
-                        <div className="text-sm font-semibold text-blue-700">Current Audio File:</div>
-                        <audio controls className="w-full">
-                          <source src={formData.audio_url} type="audio/mpeg" />
-                          Your browser does not support the audio element.
-                        </audio>
-                        <Button onClick={() => handleInputChange('audio_url', '')} variant="outline" size="sm" className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400">
-                          Remove Audio
-                        </Button>
-                      </div>}
                   </div>
                 </div>
-
-                 {/* Column 3: Text Upload */}
-                 <div className="bg-white/90 backdrop-blur-sm border-2 border-orange-400 rounded-lg p-6 relative">
-                   {/* Orange Dot D in top left corner */}
-                   <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">D</div>
-                   <div className="flex items-center gap-2 mb-4">
-                     <h2 className="text-xl font-bold text-orange-700">📄 Text Upload</h2>
-                   </div>
-                   
-                   <div className="space-y-4">
-                     {/* File Upload */}
-                     <div>
-                       <Label className="font-semibold mb-2 block">Upload Text File</Label>
-                       <input type="file" accept=".txt,.rtf" onChange={e => {
-                     const file = e.target.files?.[0];
-                     if (file) {
-                       // Handle file upload to story-text bucket or process content
-                       console.log('Text file selected:', file.name);
-                       // TODO: Implement file upload to Supabase storage or read content
-                     }
-                   }} className="w-full border border-orange-400 rounded-md p-2 text-sm" />
-                       <p className="text-xs text-gray-500 mt-1">Supported formats: TXT, RTF • Max size: 10MB</p>
-                     </div>
-                     
-                     {/* Google Drive Upload */}
-                     <div>
-                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
-                       <div className="space-y-2">
-                         <textarea placeholder="Paste Google Drive Share Code Here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} rows={3} className="w-full border-2 border-orange-400 focus:border-orange-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
-                         <TooltipProvider>
-                           <Tooltip>
-                             <TooltipTrigger asChild>
-                               <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
-                                 Upload
-                               </Button>
-                             </TooltipTrigger>
-                             <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-                       fontFamily: 'Arial',
-                       fontSize: '21px',
-                       color: 'black',
-                       backgroundColor: 'white'
-                     }}>
-                               Import text from Google Drive
-                             </TooltipContent>
-                           </Tooltip>
-                         </TooltipProvider>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
               </div>
             </div>
 
