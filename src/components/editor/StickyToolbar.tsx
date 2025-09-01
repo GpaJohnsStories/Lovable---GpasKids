@@ -85,7 +85,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
             <Button 
               type="button" 
               onClick={onAddTokens} 
-              className="h-16 w-32 px-4 btn-toolbar-golden text-lg font-bold"
+              className="h-8 w-32 px-4 btn-toolbar-golden text-lg font-bold"
             >
               Add Tokens
             </Button>
