@@ -463,7 +463,7 @@ ${content}`;
           type="button"
           onClick={handleInsertSignature}
           variant="signature"
-          className="h-12 px-6 text-21px font-bold rounded-md"
+          className="h-12 px-6 text-[21px] font-bold text-white rounded-md"
         >
           Insert Gpa's Signature
         </Button>
