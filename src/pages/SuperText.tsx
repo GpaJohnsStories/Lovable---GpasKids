@@ -951,7 +951,7 @@ const SuperText: React.FC = () => {
                 {/* Blue Dot 4 in top left corner */}
                 <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">4</div>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">🎵</div>
+                  
                   <h2 className="text-xl font-bold text-green-700">Create AI Voice File</h2>
                 </div>
                 
