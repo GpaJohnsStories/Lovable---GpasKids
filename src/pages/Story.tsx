@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -227,20 +226,6 @@ const Story = () => {
                 author: story.author,
                 category: story.category
               }}
-            />
-          )}
-
-          {/* Top Voting Section - Hide in print mode */}
-          {!isPrintMode && (
-            <StoryVotingSection
-              storyId={story.id}
-              storyCode={story.story_code}
-              storyTitle={story.title}
-              thumbsUpCount={story.thumbs_up_count}
-              thumbsDownCount={story.thumbs_down_count}
-              okCount={story.ok_count}
-              currentVote={currentVote}
-              onVoteUpdate={handleVoteUpdate}
             />
           )}
 
