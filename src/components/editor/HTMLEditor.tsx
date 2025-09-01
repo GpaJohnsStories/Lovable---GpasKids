@@ -219,7 +219,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + K', action: 'Clear HTML (Clear style)' },
     { key: 'Ctrl + L', action: 'Bullets' },
     { key: 'Ctrl + M', action: 'M-dash — (long pause)' },
-    { key: 'Ctrl + N', action: 'N-dash – (short pause)' },
+    { key: 'Ctrl + N', action: 'New Browser Window' },
     { key: 'Ctrl + P', action: 'Paragraph' },
     { key: 'Ctrl + Q', action: 'Font Reference' },
     { key: 'Ctrl + S', action: 'Save Story' },
