@@ -24,7 +24,7 @@ const VenmoDonationForm = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
-  // Device detection
+  // Enhanced device and browser detection
   const getDeviceType = () => {
     const userAgent = navigator.userAgent;
     if (/iPad|iPhone|iPod/.test(userAgent)) return 'ios';
@@ -32,7 +32,14 @@ const VenmoDonationForm = () => {
     return 'unknown';
   };
 
+  const isInAppBrowser = () => {
+    const userAgent = navigator.userAgent;
+    // Common in-app browsers that might have issues with deep links
+    return /FBAN|FBAV|Instagram|Twitter|LinkedIn|Snapchat|TikTok|WeChat/.test(userAgent);
+  };
+
   const deviceType = getDeviceType();
+  const inAppBrowser = isInAppBrowser();
 
   const getAppStoreLink = () => {
     if (deviceType === 'ios') {
@@ -94,16 +101,22 @@ const VenmoDonationForm = () => {
     const venmoUsername = 'GpaJohn-Buddy';
     const note = encodeURIComponent('Donation for Gpa\'s Kids Stories');
     
-    if (isMobile) {
-      // Try Venmo app first on mobile
+    console.log('🔗 Generating Venmo link:', { isMobile, deviceType, inAppBrowser, amount });
+    
+    if (isMobile && !inAppBrowser) {
+      // Try Venmo app first on mobile (but not in-app browsers)
+      const deepLink = `venmo://paycharge?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${note}`;
+      console.log('📱 Using mobile deep link:', deepLink);
       return {
-        url: `venmo://paycharge?txn=pay&recipients=${venmoUsername}&amount=${amount}&note=${note}`,
+        url: deepLink,
         type: 'app'
       };
     } else {
-      // Desktop users go to Venmo web interface
+      // Desktop users or in-app browsers go to Venmo web interface
+      const webLink = `https://venmo.com/${venmoUsername}`;
+      console.log('🌐 Using web link:', webLink);
       return {
-        url: `https://venmo.com/${venmoUsername}`,
+        url: webLink,
         type: 'web'
       };
     }
@@ -145,15 +158,26 @@ const VenmoDonationForm = () => {
       // Generate and open Venmo link
       const { url, type } = generateVenmoLink(amount);
       
+      console.log('🚀 Opening Venmo link:', { url, type });
+      
       if (type === 'app') {
-        // Try to open the app, with fallback
-        window.open(url, '_blank');
+        // Enhanced mobile app opening with better fallbacks
+        const startTime = Date.now();
+        
+        // Try to open the app
+        const openResult = window.open(url, '_blank');
+        console.log('📱 App open result:', openResult);
         
         // Set up visibility listener for mobile app redirect
         const handleVisibilityChange = () => {
           if (!document.hidden) {
-            // User returned to browser, auto-redirect to library
-            navigate('/library', { state: { fromDonation: true } });
+            const timeAway = Date.now() - startTime;
+            console.log('👀 User returned to browser after:', timeAway, 'ms');
+            
+            // Only auto-redirect if they were away for more than 3 seconds (likely used the app)
+            if (timeAway > 3000) {
+              navigate('/library', { state: { fromDonation: true } });
+            }
             document.removeEventListener('visibilitychange', handleVisibilityChange);
           }
         };
@@ -164,19 +188,29 @@ const VenmoDonationForm = () => {
           document.removeEventListener('visibilitychange', handleVisibilityChange);
         }, 300000);
         
-        // If app fails to open, show app store QR code
+        // Improved fallback detection
         setTimeout(() => {
-          const appStoreLink = getAppStoreLink();
-          if (appStoreLink) {
+          if (document.hasFocus()) {
+            console.log('⚠️ Still in browser after 2 seconds, app likely not installed');
             toast({
-              title: "Venmo App Not Found",
-              description: "Scan the QR code below to download Venmo from your app store",
+              title: "Having trouble opening Venmo?",
+              description: "Try downloading the app first or use the web version below",
+              duration: 8000,
             });
           }
-        }, 1000);
+        }, 2000);
       } else {
-        // Open web version for desktop
-        window.open(url, '_blank');
+        // Open web version for desktop or in-app browsers
+        const openResult = window.open(url, '_blank');
+        console.log('🌐 Web open result:', openResult);
+        
+        if (!openResult) {
+          toast({
+            title: "Pop-up blocked?",
+            description: "Please allow pop-ups or manually visit venmo.com/@GpaJohn-Buddy",
+            variant: "destructive",
+          });
+        }
       }
 
       // Show confirmation dialog instead of thank you modal
@@ -313,6 +347,18 @@ const VenmoDonationForm = () => {
             </Button>
 
             <div className="text-center space-y-2">
+              {/* In-app browser warning */}
+              {inAppBrowser && (
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
+                  <p className="text-xs font-medium text-amber-800 mb-1">
+                    ⚠️ Using {isMobile ? 'social media' : 'in-app'} browser detected
+                  </p>
+                  <p className="text-xs text-amber-700">
+                    For best results, open this page in Safari (iOS) or Chrome (Android)
+                  </p>
+                </div>
+              )}
+              
               <p className="text-xs text-gray-500">
                 {isMobile 
                   ? "You'll be redirected to the Venmo app or website"
@@ -342,6 +388,32 @@ const VenmoDonationForm = () => {
                   </p>
                 </div>
               )}
+
+              {/* Having Trouble Section */}
+              <details className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <summary className="text-xs font-medium text-blue-800 cursor-pointer hover:text-blue-900">
+                  💡 Having trouble? Click for help
+                </summary>
+                <div className="mt-2 space-y-2 text-xs text-blue-700">
+                  <div className="space-y-1">
+                    <p className="font-medium">If Venmo app won't open:</p>
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Make sure Venmo app is installed and updated</li>
+                      <li>Try opening in Safari (iOS) or Chrome (Android)</li>
+                      <li>Disable "Request Desktop Website" in browser settings</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <p className="font-medium">Alternative methods:</p>
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Open Venmo app manually and search "@GpaJohn-Buddy"</li>
+                      <li>Visit venmo.com in your browser</li>
+                      <li>Use the QR code below (mobile only)</li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
 
               {/* Mobile App Store QR Code */}
               {isMobile && getAppStoreLink() && (
