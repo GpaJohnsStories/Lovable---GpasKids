@@ -269,16 +269,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
         
         {/* Clear buttons */}
         <div className="flex items-center gap-1">
-          <ConditionalTooltip content="Clear HTML from Selection">
-            <Button type="button" size="sm" onClick={onClearHtml} className="h-8 px-2 btn-toolbar-orange">
-              <span className="text-sm font-bold">&lt;X&gt;</span>
-            </Button>
-          </ConditionalTooltip>
-          <ConditionalTooltip content="Clear All Text (Start Over)">
-            <Button type="button" size="sm" onClick={onClearAll} className="h-8 px-2 btn-toolbar-red">
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          </ConditionalTooltip>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
@@ -287,11 +277,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
 
         {/* Help */}
         <div className="flex items-center gap-1">
-          <ConditionalTooltip content="Show Help">
-            <Button type="button" size="sm" onClick={onShowHelp} className="h-8 px-2 btn-toolbar-yellow">
-              <Key className="h-4 w-4" />
-            </Button>
-          </ConditionalTooltip>
         </div>
       </div>
 
@@ -376,6 +361,23 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               className="h-6 px-3 text-xs btn-toolbar-slate"
             >
               H1
+            </Button>
+          </ConditionalTooltip>
+          
+          {/* Moved Clear and Help buttons to end */}
+          <ConditionalTooltip content="Clear HTML from Selection">
+            <Button type="button" size="sm" onClick={onClearHtml} className="h-6 px-2 text-xs btn-toolbar-orange">
+              <span className="text-xs font-bold">&lt;X&gt;</span>
+            </Button>
+          </ConditionalTooltip>
+          <ConditionalTooltip content="Clear All Text (Start Over)">
+            <Button type="button" size="sm" onClick={onClearAll} className="h-6 px-2 text-xs btn-toolbar-red">
+              <Trash2 className="h-3 w-3" />
+            </Button>
+          </ConditionalTooltip>
+          <ConditionalTooltip content="Show Help">
+            <Button type="button" size="sm" onClick={onShowHelp} className="h-6 px-2 text-xs btn-toolbar-yellow">
+              <Key className="h-3 w-3" />
             </Button>
           </ConditionalTooltip>
         </div>
