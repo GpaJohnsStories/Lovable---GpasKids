@@ -246,10 +246,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
           </ConditionalTooltip>
         </div>
 
-        <Separator orientation="vertical" className="h-6" style={{
-          backgroundColor: '#9c441a'
-        }} />
-
         {/* Keep Together button */}
         <div className="flex items-center gap-1">
           <ConditionalTooltip content="Keep Selected Content Together">
