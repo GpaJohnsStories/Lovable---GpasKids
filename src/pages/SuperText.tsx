@@ -981,11 +981,7 @@ const SuperText: React.FC = () => {
 
                   {/* Voice Settings Link */}
                   <div className="supertext-fs-21px-arial-black text-gray-500 text-center">
-                    <span>Change voice in </span>
-                    <button onClick={scrollToAudioSection} className="text-blue-600 hover:text-blue-800 underline">
-                      Audio Upload section
-                    </button>
-                    <span> or Voice Previews below</span>
+                    <span>Change voice in Voice Previews below</span>
                   </div>
                 </div>
 
