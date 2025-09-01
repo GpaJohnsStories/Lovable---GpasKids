@@ -877,7 +877,7 @@ const SuperText: React.FC = () => {
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">🎵</div>
-                  <h2 className="text-xl font-bold text-green-700">🎵 Create AI Voice File</h2>
+                  <h2 className="text-xl font-bold text-green-700">Create AI Voice File</h2>
                 </div>
                 
                 <div className="space-y-4">
