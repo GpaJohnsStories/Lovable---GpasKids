@@ -90,17 +90,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               Add Tokens
             </Button>
           </ConditionalTooltip>
-          <ConditionalTooltip content="Select All in Live Preview Pane Only">
-            <Button 
-              type="button" 
-              onClick={onSelectAllPreview} 
-              className="h-16 w-32 px-4 text-lg font-bold text-white hover:opacity-80 transition-opacity flex flex-col justify-center leading-tight" 
-              style={{ backgroundColor: '#16a34a' }}
-            >
-              <span>Select All</span>
-              <span>Preview</span>
-            </Button>
-          </ConditionalTooltip>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
@@ -370,6 +359,16 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
           <ConditionalTooltip content="Show Help">
             <Button type="button" size="sm" onClick={onShowHelp} className="h-6 px-2 text-xs btn-toolbar-yellow">
               <Key className="h-3 w-3" />
+            </Button>
+          </ConditionalTooltip>
+          <ConditionalTooltip content="Select All in Live Preview Pane Only">
+            <Button 
+              type="button" 
+              onClick={onSelectAllPreview} 
+              className="h-6 w-28 px-2 text-xs font-bold text-white hover:opacity-80 transition-opacity" 
+              style={{ backgroundColor: '#16a34a' }}
+            >
+              Select All Preview
             </Button>
           </ConditionalTooltip>
         </div>
