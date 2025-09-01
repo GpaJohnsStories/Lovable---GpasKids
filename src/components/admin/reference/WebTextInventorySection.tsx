@@ -8,8 +8,8 @@ import { RefreshCw } from "lucide-react";
 
 // Registry of all webtext usage across public pages
 const WEBTEXT_USAGE = [
-  { code: 'SYS-AGJ', path: '/about', fallbackTitle: 'About Grandpa John' },
   { code: 'SYS-ABO', path: '/about', fallbackTitle: 'About Page Content' },
+  { code: 'SYS-AGJ', path: '/about', fallbackTitle: 'About Grandpa John' },
   { code: 'SYS-BDY', path: '/about', fallbackTitle: 'Buddy Introduction' },
   { code: 'SYS-THY', path: '/about', fallbackTitle: 'Thank You Message' },
   { code: 'SYS-CLB', path: '/club', fallbackTitle: 'Club Information' },
