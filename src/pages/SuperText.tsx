@@ -988,7 +988,7 @@ const SuperText: React.FC = () => {
                 {/* Voice Previews Section - Integrated */}
                 <div>
                   
-                  <div className="grid grid-cols-2 gap-3 supertext-fs-21px-arial-black">
+                  <div className="grid grid-cols-2 gap-1 supertext-fs-21px-arial-black">
                     {[{
                   name: 'Buddy / Alloy',
                   desc: 'Clear, neutral voice',
@@ -1025,7 +1025,7 @@ const SuperText: React.FC = () => {
                   name: 'Sparky / Sage',
                   desc: 'Warm and thoughtful, reflective',
                   voice: 'sage'
-                }].map((voice, index) => <div key={index} className="border rounded p-2 text-center">
+                }].map((voice, index) => <div key={index} className="border rounded p-1 text-center">
                         <div className="font-bold">{voice.name}</div>
                         <div className="supertext-fs-21px-arial-black text-gray-600 mb-2">{voice.desc}</div>
                         <div className="flex gap-1">
