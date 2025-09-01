@@ -779,8 +779,8 @@ const SuperText: React.FC = () => {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
                 {/* Column 1: Audio Upload */}
                 <div ref={audioSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-blue-400 p-6 relative">
-                  {/* Orange Dot b in top left corner */}
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
+                  {/* Orange Dot A in top left corner */}
+                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">A</div>
                   <div className="flex items-center gap-2 mb-4">
                     <h2 className="text-xl font-bold text-blue-700">🔊 Audio Upload</h2>
                   </div>
@@ -831,8 +831,8 @@ const SuperText: React.FC = () => {
 
                 {/* Column 2: Video Upload */}
                 <div ref={videoSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6 relative">
-                  {/* Orange Dot c in top left corner */}
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
+                  {/* Orange Dot B in top left corner */}
+                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">B</div>
                   <div className="flex items-center gap-2 mb-4">
                     <h2 className="text-xl font-bold text-purple-700">📹 Video Upload</h2>
                   </div>
