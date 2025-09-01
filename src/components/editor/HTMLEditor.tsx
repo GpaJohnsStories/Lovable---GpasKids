@@ -166,15 +166,15 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           break;
         case '1':
           e.preventDefault();
-          wrapSelectedText('<p style="font-size: 32px; font-weight: bold; margin: 16px 0;">', '</p>');
+          wrapSelectedText('<span style="font-size: 40px; line-height: 40px; margin: 20px 0; font-weight: bold; display: inline-block;">', '</span>');
           break;
         case '2':
           e.preventDefault();
-          wrapSelectedText('<p style="font-size: 24px; font-weight: bold; margin: 12px 0;">', '</p>');
+          wrapSelectedText('<span style="font-size: 30px; line-height: 30px; margin: 16px 0; font-weight: bold; display: inline-block;">', '</span>');
           break;
         case '3':
           e.preventDefault();
-          wrapSelectedText('<p style="font-size: 20px; font-weight: bold; margin: 8px 0;">', '</p>');
+          wrapSelectedText('<span style="font-size: 24px; line-height: 24px; margin: 12px 0; font-weight: bold; display: inline-block;">', '</span>');
           break;
         case 'f':
           e.preventDefault();
@@ -216,7 +216,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + F', action: 'Georgia Font' },
     { key: 'Ctrl + H', action: 'Help' },
     { key: 'Ctrl + I', action: 'Italics' },
-    { key: 'Ctrl + K', action: 'Clear HTML' },
+    { key: 'Ctrl + K', action: 'Clear HTML (Clear style)' },
     { key: 'Ctrl + L', action: 'Bullets' },
     { key: 'Ctrl + M', action: 'M-dash — (long pause)' },
     { key: 'Ctrl + N', action: 'N-dash – (short pause)' },
@@ -227,9 +227,9 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     { key: 'Ctrl + X', action: 'Cut' },
     { key: 'Ctrl + V', action: 'Paste' },
     { key: 'Ctrl + #', action: 'Numbered List' },
-    { key: 'Ctrl + 1', action: 'Big Text' },
-    { key: 'Ctrl + 2', action: 'Med Text' },
-    { key: 'Ctrl + 3', action: 'Large Text' },
+    { key: 'Ctrl + 1', action: 'H1 — 40px (30pt)' },
+    { key: 'Ctrl + 2', action: 'H2 — 30px (23pt)' },
+    { key: 'Ctrl + 3', action: 'H3 — 24px (18pt)' },
   ];
 
   return (
@@ -364,7 +364,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;h1&gt;Story Heading 1&lt;/h1&gt;</code>
                   </div>
                   <div className="font-georgia-2xl">
-                    Story Heading 1
+                    Story Heading 1 (40px / 30pt)
                   </div>
                 </div>
                 
@@ -373,7 +373,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;h2&gt;Story Heading 2&lt;/h2&gt;</code>
                   </div>
                   <div className="font-georgia-xl">
-                    Story Heading 2
+                    Story Heading 2 (30px / 23pt)
                   </div>
                 </div>
                 
@@ -382,7 +382,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;h3&gt;Story Heading 3&lt;/h3&gt;</code>
                   </div>
                   <div className="font-georgia-lg">
-                    Story Heading 3
+                    Story Heading 3 (24px / 18pt)
                   </div>
                 </div>
                 
@@ -391,7 +391,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p&gt;Story paragraph text&lt;/p&gt;</code>
                   </div>
                   <div className="font-georgia-base">
-                    Story paragraph text (main content)
+                    Story paragraph text (21px / 16pt)
                   </div>
                 </div>
                 
@@ -460,7 +460,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
                     <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 14px;"&gt;Minimum text&lt;/p&gt;</code>
                   </div>
                   <div className="font-georgia-14">
-                    Minimum text (14px)
+                    Footer text (19px / 14pt)
                   </div>
                 </div>
                 
