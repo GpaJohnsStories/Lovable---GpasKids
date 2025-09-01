@@ -44,6 +44,10 @@
     --medium-brown: 25 73% 31%; /* #8B4513 */
     --light-brown: 19 56% 40%; /* #A0522D */
     
+    /* Signature blue (Gloria Hallelujah signature color) */
+    --signature-blue: 217 86% 31%; /* #0B3D91 */
+    --signature-blue-dark: 217 86% 24%;
+    
     /* Story photo tooltip styling */
     --story-photo-tooltip-bg: 19 56% 40%; /* #A0522D saddle brown */
     --story-photo-tooltip-text: 0 0% 100%; /* white */

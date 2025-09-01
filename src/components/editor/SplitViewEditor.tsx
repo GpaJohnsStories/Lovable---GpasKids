@@ -462,13 +462,8 @@ ${content}`;
         <Button
           type="button"
           onClick={handleInsertSignature}
-          className="h-12 px-6 text-[21px] font-bold text-white rounded-md shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
-          style={{ 
-            backgroundColor: '#0B3D91',
-            border: '2px solid #ffffff',
-            boxShadow: '0 4px 8px rgba(11, 61, 145, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-            textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)'
-          }}
+          variant="signature"
+          className="h-12 px-6 text-21px font-bold rounded-md"
         >
           Insert Gpa's Signature
         </Button>
