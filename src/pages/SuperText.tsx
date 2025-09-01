@@ -783,19 +783,14 @@ const SuperText: React.FC = () => {
                     {/* File Upload */}
                     <div>
                       <Label className="font-semibold mb-2 block">Upload Video File</Label>
-                      <input
-                        type="file"
-                        accept="video/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            // Handle file upload to story-videos bucket
-                            console.log('Video file selected:', file.name);
-                            // TODO: Implement file upload to Supabase storage
-                          }
-                        }}
-                        className="w-full border border-purple-400 rounded-md p-2 text-sm"
-                      />
+                      <input type="file" accept="video/*" onChange={e => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      // Handle file upload to story-videos bucket
+                      console.log('Video file selected:', file.name);
+                      // TODO: Implement file upload to Supabase storage
+                    }
+                  }} className="w-full border border-purple-400 rounded-md p-2 text-sm" />
                       <p className="text-xs text-gray-500 mt-1">Supported formats: MP4, MOV, AVI, WMV • Max size: 100MB</p>
                     </div>
                     
@@ -803,41 +798,26 @@ const SuperText: React.FC = () => {
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <Input
-                          type="text"
-                          placeholder="Paste Google Drive Share Code"
-                          className="border-purple-400 focus:border-purple-500"
-                        />
-                        <button
-                          type="button"
-                          className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium"
-                        >
+                        <Input type="text" placeholder="Paste Google Drive Share Code" className="border-purple-400 focus:border-purple-500" />
+                        <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
                           🔄 Fetch & Upload
                         </button>
                       </div>
                     </div>
 
                     {/* Current Video Display */}
-                    {formData.video_url && (
-                      <div className="space-y-2">
+                    {formData.video_url && <div className="space-y-2">
                         <div className="text-sm font-semibold text-purple-700">Current Video:</div>
                         <div className="bg-gray-50 rounded-lg p-3">
                           <div className="text-sm text-gray-700 mb-2">
-                            {formData.video_url.includes('youtube.com') || formData.video_url.includes('youtu.be') ? '📺 YouTube Video' :
-                             formData.video_url.includes('vimeo.com') ? '📺 Vimeo Video' : '📹 Video File'}
+                            {formData.video_url.includes('youtube.com') || formData.video_url.includes('youtu.be') ? '📺 YouTube Video' : formData.video_url.includes('vimeo.com') ? '📺 Vimeo Video' : '📹 Video File'}
                           </div>
                           <div className="text-xs text-gray-500 break-all">{formData.video_url}</div>
                         </div>
-                        <Button
-                          onClick={() => handleInputChange('video_url', '')}
-                          variant="outline"
-                          size="sm"
-                          className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400"
-                        >
+                        <Button onClick={() => handleInputChange('video_url', '')} variant="outline" size="sm" className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400">
                           Remove Video
                         </Button>
-                      </div>
-                    )}
+                      </div>}
                   </div>
                 </div>
 
@@ -853,19 +833,14 @@ const SuperText: React.FC = () => {
                     {/* File Upload */}
                     <div>
                       <Label className="font-semibold mb-2 block">Upload Audio File</Label>
-                      <input
-                        type="file"
-                        accept="audio/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            // Handle file upload to story-audio bucket
-                            console.log('Audio file selected:', file.name);
-                            // TODO: Implement file upload to Supabase storage
-                          }
-                        }}
-                        className="w-full border border-blue-400 rounded-md p-2 text-sm"
-                      />
+                      <input type="file" accept="audio/*" onChange={e => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      // Handle file upload to story-audio bucket
+                      console.log('Audio file selected:', file.name);
+                      // TODO: Implement file upload to Supabase storage
+                    }
+                  }} className="w-full border border-blue-400 rounded-md p-2 text-sm" />
                       <p className="text-xs text-gray-500 mt-1">Supported formats: MP3, WAV, M4A, OGG • Max size: 50MB</p>
                     </div>
                     
@@ -873,38 +848,25 @@ const SuperText: React.FC = () => {
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <Input
-                          type="text"
-                          placeholder="Paste Google Drive Share Code"
-                          className="border-blue-400 focus:border-blue-500"
-                        />
-                        <button
-                          type="button"
-                          className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium"
-                        >
+                        <Input type="text" placeholder="Paste Google Drive Share Code" className="border-blue-400 focus:border-blue-500" />
+                        <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
                           🔄 Fetch & Upload
                         </button>
                       </div>
+                      
                     </div>
 
                     {/* Current Audio Display */}
-                    {formData.audio_url && (
-                      <div className="space-y-2">
+                    {formData.audio_url && <div className="space-y-2">
                         <div className="text-sm font-semibold text-blue-700">Current Audio File:</div>
                         <audio controls className="w-full">
                           <source src={formData.audio_url} type="audio/mpeg" />
                           Your browser does not support the audio element.
                         </audio>
-                        <Button
-                          onClick={() => handleInputChange('audio_url', '')}
-                          variant="outline"
-                          size="sm"
-                          className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400"
-                        >
+                        <Button onClick={() => handleInputChange('audio_url', '')} variant="outline" size="sm" className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400">
                           Remove Audio
                         </Button>
-                      </div>
-                    )}
+                      </div>}
                   </div>
                 </div>
 
