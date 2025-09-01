@@ -730,7 +730,7 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string[]
       }
-      get_allowed_admin_emails: {
+      get_allowed_admin_email_hashes_secure: {
         Args: Record<PropertyKey, never>
         Returns: string[]
       }
