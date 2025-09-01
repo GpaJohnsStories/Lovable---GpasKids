@@ -870,32 +870,55 @@ const SuperText: React.FC = () => {
                   </div>
                 </div>
 
-                 {/* Column 3: Google Drive Upload */}
+                 {/* Column 3: Text Upload */}
                  <div className="bg-white/90 backdrop-blur-sm border-2 border-orange-400 rounded-lg p-6 relative">
                    {/* Orange Dot D in top left corner */}
                    <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">D</div>
-                   <h2 className="text-xl font-bold text-orange-700 mb-4">Upload Text From Google Drive</h2>
-                  <div className="space-y-3">
-                    <textarea placeholder="Paste Google Drive Share Code Here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} rows={3} className="w-full border-2 border-orange-400 focus:border-orange-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
-                     <TooltipProvider>
-                       <Tooltip>
-                         <TooltipTrigger asChild>
-                           <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
-                             Upload
-                           </Button>
-                         </TooltipTrigger>
-                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-                      fontFamily: 'Arial',
-                      fontSize: '21px',
-                      color: 'black',
-                      backgroundColor: 'white'
-                    }}>
-                           Import text from Google Drive
-                         </TooltipContent>
-                       </Tooltip>
-                     </TooltipProvider>
-                  </div>
-                </div>
+                   <div className="flex items-center gap-2 mb-4">
+                     <h2 className="text-xl font-bold text-orange-700">📄 Text Upload</h2>
+                   </div>
+                   
+                   <div className="space-y-4">
+                     {/* File Upload */}
+                     <div>
+                       <Label className="font-semibold mb-2 block">Upload Text File</Label>
+                       <input type="file" accept=".txt,.doc,.docx,.rtf,.odt" onChange={e => {
+                     const file = e.target.files?.[0];
+                     if (file) {
+                       // Handle file upload to story-text bucket or process content
+                       console.log('Text file selected:', file.name);
+                       // TODO: Implement file upload to Supabase storage or read content
+                     }
+                   }} className="w-full border border-orange-400 rounded-md p-2 text-sm" />
+                       <p className="text-xs text-gray-500 mt-1">Supported formats: TXT, DOC, DOCX, RTF, ODT • Max size: 10MB</p>
+                     </div>
+                     
+                     {/* Google Drive Upload */}
+                     <div>
+                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
+                       <div className="space-y-2">
+                         <textarea placeholder="Paste Google Drive Share Code Here" value={formData.google_drive_link} onChange={e => handleInputChange('google_drive_link', e.target.value)} rows={3} className="w-full border-2 border-orange-400 focus:border-orange-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
+                         <TooltipProvider>
+                           <Tooltip>
+                             <TooltipTrigger asChild>
+                               <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
+                                 Upload
+                               </Button>
+                             </TooltipTrigger>
+                             <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+                       fontFamily: 'Arial',
+                       fontSize: '21px',
+                       color: 'black',
+                       backgroundColor: 'white'
+                     }}>
+                               Import text from Google Drive
+                             </TooltipContent>
+                           </Tooltip>
+                         </TooltipProvider>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
               </div>
             </div>
 
