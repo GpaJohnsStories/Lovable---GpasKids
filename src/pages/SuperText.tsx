@@ -882,7 +882,7 @@ const SuperText: React.FC = () => {
                      {/* File Upload */}
                      <div>
                        <Label className="font-semibold mb-2 block">Upload Text File</Label>
-                       <input type="file" accept=".txt,.doc,.docx,.rtf,.odt" onChange={e => {
+                       <input type="file" accept=".txt,.rtf" onChange={e => {
                      const file = e.target.files?.[0];
                      if (file) {
                        // Handle file upload to story-text bucket or process content
@@ -890,7 +890,7 @@ const SuperText: React.FC = () => {
                        // TODO: Implement file upload to Supabase storage or read content
                      }
                    }} className="w-full border border-orange-400 rounded-md p-2 text-sm" />
-                       <p className="text-xs text-gray-500 mt-1">Supported formats: TXT, DOC, DOCX, RTF, ODT • Max size: 10MB</p>
+                       <p className="text-xs text-gray-500 mt-1">Supported formats: TXT, RTF • Max size: 10MB</p>
                      </div>
                      
                      {/* Google Drive Upload */}
