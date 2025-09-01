@@ -7,7 +7,7 @@ import { MonthlyVisitsCard } from "./MonthlyVisitsCard";
 import { CountryVisitsCard } from "./CountryVisitsCard";
 import { AdminSystemStatusCard } from "./AdminSystemStatusCard";
 import { BackupCenter } from "./BackupCenter";
-import AdminHeaderBanner from "./AdminHeaderBanner";
+// import AdminHeaderBanner from "./AdminHeaderBanner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Settings, Shield, Key, BookOpen, Eye, EyeOff, Tag, Video, Volume2, AlertTriangle, ArrowUp, Database, HardDrive, Monitor, Wrench } from "lucide-react";
@@ -60,8 +60,8 @@ const AdminOverview = () => {
 
   return (
     <div className="min-h-screen bg-amber-50">
-      {/* Admin Header Banner */}
-      <AdminHeaderBanner />
+      {/* Admin Header Banner - temporarily commented out */}
+      {/* <AdminHeaderBanner /> */}
       
       {/* Sticky Submenu */}
       <div className="sticky top-16 z-40 bg-amber-50/95 backdrop-blur-sm border-b border-amber-200 py-3">
