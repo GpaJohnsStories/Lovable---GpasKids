@@ -20,6 +20,7 @@ interface StickyToolbarProps {
   onWrapKeepTogether: () => void;
   onAddTokens: () => void;
   onInsertFontSize: (fontType: string) => void;
+  onSelectAllPreview: () => void;
 }
 const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onFormat,
@@ -36,7 +37,8 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onInsertPageBreak,
   onWrapKeepTogether,
   onAddTokens,
-  onInsertFontSize
+  onInsertFontSize,
+  onSelectAllPreview
 }) => {
   return <div id="format-menu" className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{
     backgroundColor: '#16a34a'
@@ -51,6 +53,15 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
             title="Insert Story Tokens"
           >
             Add Tokens
+          </Button>
+          <Button 
+            type="button" 
+            onClick={onSelectAllPreview} 
+            className="h-16 w-32 px-4 text-lg font-bold text-white hover:bg-[#047857] transition-colors" 
+            style={{ backgroundColor: '#16a34a' }}
+            title="Select All in Live Preview Pane Only"
+          >
+            Select All Preview
           </Button>
         </div>
 

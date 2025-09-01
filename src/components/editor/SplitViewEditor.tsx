@@ -342,6 +342,23 @@ ${content}`;
     }, 0);
   };
 
+  const handleSelectAllPreview = () => {
+    const previewPane = storyContentRef.current;
+    if (!previewPane) return;
+
+    // Create a selection range for all content in the preview pane
+    const selection = window.getSelection();
+    const range = document.createRange();
+    
+    try {
+      range.selectNodeContents(previewPane);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    } catch (error) {
+      console.warn('Could not select preview content:', error);
+    }
+  };
+
   const shortcuts = [
     { key: 'Ctrl + B', action: 'Bold' },
     { key: 'Ctrl + C', action: 'Copy' },
@@ -384,6 +401,7 @@ ${content}`;
           onWrapKeepTogether={handleWrapKeepTogether}
           onAddTokens={handleAddTokens}
           onInsertFontSize={handleInsertFontSize}
+          onSelectAllPreview={handleSelectAllPreview}
         />
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
