@@ -7,6 +7,7 @@ import { Download, Database, HardDrive, Calendar, FileText, Loader2, Cloud, Pack
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import JSZip from 'jszip';
+import BackupProgressModal from './BackupProgressModal';
 
 export const BackupCenter = () => {
   const [isExportingDb, setIsExportingDb] = useState(false);
@@ -15,6 +16,10 @@ export const BackupCenter = () => {
   const [isRunningNightlyBackup, setIsRunningNightlyBackup] = useState(false);
   const [backupHistory, setBackupHistory] = useState<any[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
+  const [showProgressModal, setShowProgressModal] = useState(false);
+  const [backupSteps, setBackupSteps] = useState<any[]>([]);
+  const [currentStep, setCurrentStep] = useState('');
+  const [overallProgress, setOverallProgress] = useState(0);
 
   const storageBuckets = [
     { name: 'story-photos', description: 'Story photo attachments', public: true },
@@ -127,7 +132,6 @@ Contact the system administrator for assistance.`;
       console.log(`Calling download-bucket-zip for bucket: ${bucketName}...`);
       
       const { data, error } = await supabase.functions.invoke('download-bucket-zip', {
-        method: 'GET',
         body: { bucket: bucketName }
       });
 
@@ -154,18 +158,49 @@ Contact the system administrator for assistance.`;
 
   const handleFullBackupDownload = async () => {
     setIsCreatingFullBackup(true);
+    setShowProgressModal(true);
+    
+    // Initialize progress steps
+    const steps = [
+      { id: 'db', label: 'Export Database', status: 'pending' as const },
+      ...storageBuckets.map(bucket => ({
+        id: bucket.name,
+        label: `Backup ${bucket.name}`,
+        status: 'pending' as const
+      })),
+      { id: 'package', label: 'Package ZIP File', status: 'pending' as const }
+    ];
+    
+    setBackupSteps(steps);
+    setOverallProgress(0);
+    
     try {
       console.log('Creating comprehensive full backup...');
       
-      // Get database backup
+      // Step 1: Database backup
+      setCurrentStep('db');
+      setBackupSteps(prev => prev.map(s => s.id === 'db' ? { ...s, status: 'running' } : s));
+      
       const { data: dbData, error: dbError } = await supabase.functions.invoke('export-db-backup');
       if (dbError) {
+        setBackupSteps(prev => prev.map(s => s.id === 'db' ? { ...s, status: 'error', details: dbError.message } : s));
         throw new Error(`Database backup failed: ${dbError.message}`);
       }
+      
+      setBackupSteps(prev => prev.map(s => s.id === 'db' ? { 
+        ...s, 
+        status: 'completed',
+        details: `${dbData?.entries?.length || 0} tables exported`
+      } : s));
+      setOverallProgress(10);
 
-      // Get all storage buckets
+      // Step 2: Storage buckets
       const bucketBackups: any = {};
-      for (const bucket of storageBuckets) {
+      for (let i = 0; i < storageBuckets.length; i++) {
+        const bucket = storageBuckets[i];
+        setCurrentStep(bucket.name);
+        setBackupSteps(prev => prev.map(s => s.id === bucket.name ? { ...s, status: 'running' } : s));
+        
         try {
           const { data: bucketData, error: bucketError } = await supabase.functions.invoke('download-bucket-zip', {
             body: { bucket: bucket.name }
@@ -174,16 +209,40 @@ Contact the system administrator for assistance.`;
           if (bucketError) {
             console.warn(`Bucket ${bucket.name} backup failed:`, bucketError.message);
             bucketBackups[bucket.name] = { error: bucketError.message };
+            setBackupSteps(prev => prev.map(s => s.id === bucket.name ? { 
+              ...s, 
+              status: 'error',
+              details: bucketError.message
+            } : s));
           } else {
             bucketBackups[bucket.name] = bucketData;
+            const fileCount = bucketData?.entries?.length || 0;
+            const totalSize = bucketData?.entries?.reduce((sum: number, entry: any) => sum + (entry.size || 0), 0) || 0;
+            
+            setBackupSteps(prev => prev.map(s => s.id === bucket.name ? { 
+              ...s, 
+              status: 'completed',
+              fileCount,
+              totalSize: totalSize > 0 ? `${Math.round(totalSize / 1024)} KB` : '0 KB'
+            } : s));
           }
         } catch (err) {
           console.warn(`Bucket ${bucket.name} error:`, err);
           bucketBackups[bucket.name] = { error: 'Backup failed' };
+          setBackupSteps(prev => prev.map(s => s.id === bucket.name ? { 
+            ...s, 
+            status: 'error',
+            details: 'Backup failed'
+          } : s));
         }
+        
+        setOverallProgress(10 + ((i + 1) / storageBuckets.length) * 80);
       }
 
-      // Create comprehensive backup
+      // Step 3: Package ZIP
+      setCurrentStep('package');
+      setBackupSteps(prev => prev.map(s => s.id === 'package' ? { ...s, status: 'running' } : s));
+      
       const fullBackup = {
         backup_info: {
           created_at: new Date().toISOString(),
@@ -200,11 +259,27 @@ Contact the system administrator for assistance.`;
 
       await downloadJsonAsZip(JSON.stringify(fullBackup), `gpaskids_full_backup_${new Date().toISOString().replace(/[:.]/g, '-')}.zip`);
       
+      setBackupSteps(prev => prev.map(s => s.id === 'package' ? { 
+        ...s, 
+        status: 'completed',
+        details: 'ZIP file created and downloaded'
+      } : s));
+      setOverallProgress(100);
+      
+      // Show success summary
+      const successfulBuckets = Object.entries(bucketBackups).filter(([_, data]: [string, any]) => !data.error).length;
+      const errorBuckets = Object.entries(bucketBackups).filter(([_, data]: [string, any]) => data.error).length;
+      
+      toast.success(`Full backup completed! ${successfulBuckets} buckets backed up successfully${errorBuckets > 0 ? `, ${errorBuckets} had errors` : ''}`);
+      
     } catch (error) {
       console.error('Full backup error:', error);
       toast.error('Failed to create full backup');
     } finally {
       setIsCreatingFullBackup(false);
+      setTimeout(() => {
+        setShowProgressModal(false);
+      }, 2000); // Keep modal open for 2 seconds to show completion
     }
   };
 
@@ -219,7 +294,12 @@ Contact the system administrator for assistance.`;
         throw new Error(`Nightly backup failed: ${error.message}`);
       }
 
-      toast.success('Nightly backup completed and saved to storage');
+      // Show detailed success message
+      const successMessage = data?.components_backed_up ? 
+        `Nightly backup completed! Database: ${data.components_backed_up.database ? 'included' : 'failed'}, Storage buckets: ${data.components_backed_up.storage_buckets || 0}` :
+        'Nightly backup completed and saved to storage';
+      
+      toast.success(successMessage);
       
       // Refresh backup history
       await loadBackupHistory();
@@ -520,6 +600,15 @@ Contact the system administrator for assistance.`;
           </div>
         </CardContent>
       </Card>
+
+      {/* Progress Modal */}
+      <BackupProgressModal
+        isOpen={showProgressModal}
+        onClose={() => setShowProgressModal(false)}
+        steps={backupSteps}
+        currentStep={currentStep}
+        overallProgress={overallProgress}
+      />
     </div>
   );
 };

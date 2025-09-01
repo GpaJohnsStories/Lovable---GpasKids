@@ -15,11 +15,21 @@ serve(async (req) => {
 
   try {
     const url = new URL(req.url);
-    const bucketName = url.searchParams.get('bucket');
+    let bucketName = url.searchParams.get('bucket');
+
+    // If no bucket in query params, try to get it from request body
+    if (!bucketName && req.method === 'POST') {
+      try {
+        const body = await req.json();
+        bucketName = body.bucket;
+      } catch {
+        // If JSON parsing fails, continue with null bucketName
+      }
+    }
 
     if (!bucketName) {
       return new Response(
-        JSON.stringify({ error: 'Bucket name is required' }), 
+        JSON.stringify({ error: 'Bucket name is required in query parameter or request body' }), 
         { 
           status: 400, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
