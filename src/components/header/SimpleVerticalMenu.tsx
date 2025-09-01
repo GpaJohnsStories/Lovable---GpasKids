@@ -76,24 +76,24 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
 
   const mainMenuItems: MainMenuItem[] = [
     {
-      id: "guide", 
-      icon: "!CO-MM1.jpg", // Guide icon - Main Menu 1
-      text: "!CO-MM1.jpg",
-      tooltipText: guideIconName || "Guide",
-      color: "#F97316",
-      onClick: () => {
-        window.location.href = "/guide";
-        onClose();
-      }
-    },
-    {
       id: "home",
-      icon: "!CO-MM2.jpg", // Home icon - Main Menu 2
+      icon: "!CO-MM2.jpg", // Home icon - Main Menu 1 (moved from position 2)
       text: "!CO-MM2.jpg",
       tooltipText: homeIconName || "Home",
       color: "#F97316",
       onClick: () => {
         window.location.href = "/";
+        onClose();
+      }
+    },
+    {
+      id: "guide", 
+      icon: "!CO-MM1.jpg", // Guide icon - Main Menu 2 (moved from position 1)
+      text: "!CO-MM1.jpg",
+      tooltipText: guideIconName || "Guide",
+      color: "#F97316",
+      onClick: () => {
+        window.location.href = "/guide";
         onClose();
       }
     },
