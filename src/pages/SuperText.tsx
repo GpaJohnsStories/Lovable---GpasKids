@@ -790,43 +790,58 @@ const SuperText: React.FC = () => {
                     <h2 className="text-xl font-bold text-blue-700">🔊 Audio Upload</h2>
                   </div>
                   
-                  <div className="mb-4">
-                    <Label className="font-semibold">Choose Voice</Label>
-                    <Select value={formData.ai_voice_name} onValueChange={value => handleInputChange('ai_voice_name', value)}>
-                      <SelectTrigger className="w-full border-orange-400">
-                        <SelectValue placeholder="Select voice" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Nova">Nova</SelectItem>
-                        <SelectItem value="Alloy">Alloy</SelectItem>
-                        <SelectItem value="Echo">Echo</SelectItem>
-                        <SelectItem value="Fable">Fable</SelectItem>
-                        <SelectItem value="Onyx">Onyx</SelectItem>
-                        <SelectItem value="Shimmer">Shimmer</SelectItem>
-                        <SelectItem value="Sage">Sage</SelectItem>
-                        <SelectItem value="Ash">Ash</SelectItem>
-                        <SelectItem value="Coral">Coral</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <div className="space-y-4">
+                    {/* File Upload */}
+                    <div>
+                      <Label className="font-semibold mb-2 block">Upload Audio File</Label>
+                      <input
+                        type="file"
+                        accept="audio/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            // Handle file upload to story-audio bucket
+                            console.log('Audio file selected:', file.name);
+                            // TODO: Implement file upload to Supabase storage
+                          }
+                        }}
+                        className="w-full border border-blue-400 rounded-md p-2 text-sm"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Supported formats: MP3, WAV, M4A, OGG</p>
+                    </div>
+                    
+                    {/* URL Input */}
+                    <div>
+                      <Label className="font-semibold mb-2 block">Or Paste Audio URL</Label>
+                      <Input
+                        type="url"
+                        placeholder="https://example.com/audio.mp3"
+                        value={formData.audio_url || ''}
+                        onChange={(e) => handleInputChange('audio_url', e.target.value)}
+                        className="border-blue-400 focus:border-blue-500"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Direct link to audio file hosted elsewhere</p>
+                    </div>
 
-                   <TooltipProvider>
-                     <Tooltip>
-                       <TooltipTrigger asChild>
-                         <Button onClick={() => handleGenerateAudio()} disabled={isGeneratingAudio || !formData.content} className="w-full bg-gray-400 text-gray-600">
-                           🔊 {isGeneratingAudio ? 'Generating...' : 'Story Required'}
-                         </Button>
-                       </TooltipTrigger>
-                       <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-                    fontFamily: 'Arial',
-                    fontSize: '21px',
-                    color: 'black',
-                    backgroundColor: 'white'
-                  }}>
-                         Generate AI audio from story content
-                       </TooltipContent>
-                     </Tooltip>
-                   </TooltipProvider>
+                    {/* Current Audio Display */}
+                    {formData.audio_url && (
+                      <div className="space-y-2">
+                        <div className="text-sm font-semibold text-blue-700">Current Audio File:</div>
+                        <audio controls className="w-full">
+                          <source src={formData.audio_url} type="audio/mpeg" />
+                          Your browser does not support the audio element.
+                        </audio>
+                        <Button
+                          onClick={() => handleInputChange('audio_url', '')}
+                          variant="outline"
+                          size="sm"
+                          className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400"
+                        >
+                          Remove Audio
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                  {/* Column 3: Google Drive Upload */}
