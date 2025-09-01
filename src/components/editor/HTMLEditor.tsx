@@ -236,7 +236,7 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
     <>
       <div className="h-full flex flex-col">
         <div className="bg-gray-50 px-3 py-2 border-b border-gray-200">
-          <span className="text-sm font-medium text-gray-600">HTML Source</span>
+          <span className="text-[21px] font-bold text-[#F97316]">HTML Source</span>
         </div>
         <div className="flex-1 relative">
           <textarea
