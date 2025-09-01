@@ -168,35 +168,37 @@ const Guide = () => {
               showReturn={true}
               onReturnClick={() => {
                 // Smart return behavior
-                const handleReturn = () => {
-                  // First try: Close tab if opened by our site
-                  if (window.opener) {
-                    try {
-                      window.close();
-                      return;
-                    } catch (e) {
-                      console.log('Cannot close tab:', e);
-                    }
-                  }
-                  
-                  // Second try: Go back in history if there is history
-                  if (window.history.length > 1) {
-                    try {
+                const handleSmartReturn = () => {
+                  // First try: Close tab (works for script-opened tabs even with noopener)
+                  try {
+                    window.close();
+                    // Brief delay to check if tab actually closed
+                    setTimeout(() => {
+                      // If we're still here, tab didn't close, try history
+                      if (window.history.length > 1) {
+                        window.history.back();
+                      } else {
+                        // Fallback: Scroll to navigation
+                        const navElement = document.getElementById('guide-navigation');
+                        if (navElement) {
+                          navElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }
+                    }, 100);
+                  } catch (e) {
+                    // If close() throws, try history or scroll
+                    if (window.history.length > 1) {
                       window.history.back();
-                      return;
-                    } catch (e) {
-                      console.log('Cannot go back:', e);
+                    } else {
+                      const navElement = document.getElementById('guide-navigation');
+                      if (navElement) {
+                        navElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
                     }
-                  }
-                  
-                  // Fallback: Scroll to navigation area
-                  const navElement = document.getElementById('guide-navigation');
-                  if (navElement) {
-                    navElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }
                 };
                 
-                handleReturn();
+                handleSmartReturn();
               }}
             />)}
           </div>
