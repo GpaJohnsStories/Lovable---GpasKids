@@ -11,11 +11,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status';
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status' | 'publication_status_code';
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText';
-type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'reading_time' | 'copyright_status';
+type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'reading_time' | 'copyright_status' | 'publication_status' | 'text_code';
 type MediaFilter = 'all' | 'text' | 'audio' | 'video' | 'both';
 
 interface GroupedStory extends Record<string, any> {
@@ -244,6 +244,10 @@ const AdminStoriesTable = ({
         return 'Time to Read';
       case 'copyright_status':
         return 'Copyright Status';
+      case 'publication_status':
+        return 'Publication Status';
+      case 'text_code':
+        return 'Text Code';
       default:
         return 'Sort by...';
     }
@@ -283,6 +287,12 @@ const AdminStoriesTable = ({
       setSortDirection('desc');
     } else if (option === 'copyright_status') {
       setSortField('copyright_status');
+      setSortDirection('asc');
+    } else if (option === 'publication_status') {
+      setSortField('publication_status_code' as SortField);
+      setSortDirection('asc');
+    } else if (option === 'text_code') {
+      setSortField('story_code');
       setSortDirection('asc');
     } else {
       setSortField(option as SortField);
@@ -420,6 +430,14 @@ const AdminStoriesTable = ({
                    <DropdownMenuItem onSelect={() => handleSortOptionChange('copyright_status')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                      Copyright Status
                      {sortOption === 'copyright_status' && <Check className="h-4 w-4" />}
+                   </DropdownMenuItem>
+                   <DropdownMenuItem onSelect={() => handleSortOptionChange('publication_status')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                     Publication Status
+                     {sortOption === 'publication_status' && <Check className="h-4 w-4" />}
+                   </DropdownMenuItem>
+                   <DropdownMenuItem onSelect={() => handleSortOptionChange('text_code')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                     Text Code
+                     {sortOption === 'text_code' && <Check className="h-4 w-4" />}
                    </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
