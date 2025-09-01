@@ -57,11 +57,12 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
           <Button 
             type="button" 
             onClick={onSelectAllPreview} 
-            className="h-16 w-32 px-4 text-lg font-bold text-white hover:bg-[#047857] transition-colors" 
+            className="h-16 w-32 px-4 text-lg font-bold text-white hover:opacity-80 transition-opacity flex flex-col justify-center leading-tight" 
             style={{ backgroundColor: '#16a34a' }}
             title="Select All in Live Preview Pane Only"
           >
-            Select All Preview
+            <span>Select All</span>
+            <span>Preview</span>
           </Button>
         </div>
 
