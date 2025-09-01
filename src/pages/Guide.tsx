@@ -93,7 +93,7 @@ const Guide = () => {
           </div>
 
           {/* Navigation Menu */}
-          <div className="bg-gray-100 rounded-lg p-3 mb-6 shadow-sm">
+          <div id="guide-navigation" className="bg-gray-100 rounded-lg p-3 mb-6 shadow-sm">
             <div className="flex flex-wrap justify-center gap-1.5">
               <button onClick={() => document.getElementById('SYS-G1A')?.scrollIntoView({
               behavior: 'smooth'
@@ -167,13 +167,36 @@ const Guide = () => {
               id={box.webtextCode}
               showReturn={true}
               onReturnClick={() => {
-                // Try to close the tab first (if opened from another tab)
-                try {
-                  window.close();
-                } catch (e) {
-                  // If closing fails or not allowed, go back in history
-                  window.history.back();
-                }
+                // Smart return behavior
+                const handleReturn = () => {
+                  // First try: Close tab if opened by our site
+                  if (window.opener) {
+                    try {
+                      window.close();
+                      return;
+                    } catch (e) {
+                      console.log('Cannot close tab:', e);
+                    }
+                  }
+                  
+                  // Second try: Go back in history if there is history
+                  if (window.history.length > 1) {
+                    try {
+                      window.history.back();
+                      return;
+                    } catch (e) {
+                      console.log('Cannot go back:', e);
+                    }
+                  }
+                  
+                  // Fallback: Scroll to navigation area
+                  const navElement = document.getElementById('guide-navigation');
+                  if (navElement) {
+                    navElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                };
+                
+                handleReturn();
               }}
             />)}
           </div>
