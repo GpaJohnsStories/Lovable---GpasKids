@@ -352,6 +352,10 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
             </Button>
           </ConditionalTooltip>
           
+          <Separator orientation="vertical" className="h-6" style={{
+            backgroundColor: '#9c441a'
+          }} />
+          
           {/* Moved Clear and Help buttons to end */}
           <ConditionalTooltip content="Clear HTML from Selection">
             <Button type="button" size="sm" onClick={onClearHtml} className="h-6 px-2 text-xs btn-toolbar-orange">
