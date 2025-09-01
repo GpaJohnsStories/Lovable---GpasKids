@@ -986,7 +986,7 @@ const SuperText: React.FC = () => {
                 </div>
 
                 {/* Voice Previews Section - Integrated */}
-                <div className="mt-6 pt-6 border-t border-gray-200">
+                <div>
                   
                   <div className="grid grid-cols-2 gap-3 supertext-fs-21px-arial-black">
                     {[{
