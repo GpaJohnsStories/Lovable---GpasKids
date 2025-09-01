@@ -524,7 +524,7 @@ const PublicStoriesTable: React.FC = () => {
                                 <span className="text-gray-500 text-xs">No Image</span>
                               </div>
                             )}
-                            <div className="font-medium" style={{ fontSize: '21px', lineHeight: '1.1' }}>{story.story_code}</div>
+                            <div style={{ fontSize: '21px', lineHeight: '1.1' }}>{story.story_code}</div>
                           </div>
                         </TableCell>
                         
@@ -606,7 +606,7 @@ const PublicStoriesTable: React.FC = () => {
                             <span className="text-gray-500 text-xs">No Image</span>
                           </div>
                         )}
-                        <div className="font-medium" style={{ fontSize: '21px', lineHeight: '1.1' }}>{story.story_code}</div>
+                        <div style={{ fontSize: '21px', lineHeight: '1.1' }}>{story.story_code}</div>
                       </div>
                     </TableCell>
                     
