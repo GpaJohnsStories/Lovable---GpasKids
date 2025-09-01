@@ -800,7 +800,7 @@ const SuperText: React.FC = () => {
                       <div className="space-y-2">
                         <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full border-2 border-purple-400 focus:border-purple-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
                         <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
-                          🔄 Fetch & Upload
+                          Upload
                         </button>
                       </div>
                     </div>
@@ -850,7 +850,7 @@ const SuperText: React.FC = () => {
                       <div className="space-y-2">
                         <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full border-2 border-blue-400 focus:border-blue-500 rounded-md px-3 py-2 text-sm resize-none" style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}} />
                         <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium">
-                          🔄 Fetch & Upload
+                          Upload
                         </button>
                       </div>
                       
