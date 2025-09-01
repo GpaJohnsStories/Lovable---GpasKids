@@ -808,9 +808,9 @@ const SuperText: React.FC = () => {
                       whiteSpace: 'pre-wrap',
                       wordWrap: 'break-word'
                     }} />
-                        <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 text-sm font-medium">
+                        <Button variant="yes" className="w-full rounded-full text-sm font-medium">
                           Upload
-                        </button>
+                        </Button>
                       </div>
                       
                     </div>
@@ -860,9 +860,9 @@ const SuperText: React.FC = () => {
                       whiteSpace: 'pre-wrap',
                       wordWrap: 'break-word'
                     }} />
-                        <button type="button" className="w-full px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 text-sm font-medium">
+                        <Button variant="yes" className="w-full rounded-full text-sm font-medium">
                           Upload
-                        </button>
+                        </Button>
                       </div>
                     </div>
 
