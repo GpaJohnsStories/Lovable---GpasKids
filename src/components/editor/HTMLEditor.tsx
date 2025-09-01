@@ -280,77 +280,60 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
           </DialogHeader>
           <div className="space-y-6 max-h-[70vh] overflow-y-auto pr-4">
             
-            {/* Kalam Font Family */}
+            {/* Kalam Font Family - UI Elements MUST BE 21px+ */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold border-b pb-2">Kalam Font Family (UI Elements)</h3>
+              <h3 className="text-lg font-semibold border-b pb-2">Kalam Font Family (UI Elements) - ALL TEXT MUST BE 21px+ FOR CHILDREN</h3>
+              <div className="bg-red-50 border border-red-200 rounded p-3 mb-4">
+                <p className="text-red-800 font-semibold">⚠️ IMPORTANT: All UI text must be 16 POINT / 21px font or larger per accessibility requirements for children.</p>
+              </div>
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
                   <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h1&gt;Heading 1&lt;/h1&gt;</code>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h1 class="font-kalam text-2xl font-bold"&gt;Heading 1&lt;/h1&gt;</code>
                   </div>
                   <div className="font-kalam text-2xl font-bold">
-                    Heading 1
+                    Heading 1 (32px+)
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
                   <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h2&gt;Heading 2&lt;/h2&gt;</code>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h2 class="font-kalam text-xl font-bold"&gt;Heading 2&lt;/h2&gt;</code>
                   </div>
                   <div className="font-kalam text-xl font-bold">
-                    Heading 2
+                    Heading 2 (24px+)
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
                   <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h3&gt;Heading 3&lt;/h3&gt;</code>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;h3 class="font-kalam text-lg font-bold"&gt;Heading 3&lt;/h3&gt;</code>
                   </div>
                   <div className="font-kalam text-lg font-bold">
-                    Heading 3
+                    Heading 3 (21px) - MINIMUM SIZE
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
                   <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p&gt;UI Text&lt;/p&gt;</code>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p class="font-kalam text-lg"&gt;UI Text&lt;/p&gt;</code>
                   </div>
-                  <div className="font-kalam text-sm leading-relaxed">
-                    UI Text (Navigation, Buttons, etc.)
+                  <div className="font-kalam text-lg leading-relaxed">
+                    UI Text - Navigation, Buttons, etc. (21px minimum)
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Home Page Header Elements */}
+            {/* Current Font System Overview */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold border-b pb-2">Home Page Header Elements</h3>
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
-                  <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;div class="text-blue-900 font-handwritten text-2xl font-bold"&gt;Grandpa John's&lt;/div&gt;</code>
-                  </div>
-                  <div className="font-kalam text-2xl font-bold text-blue-900">
-                    Grandpa John's
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
-                  <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;div class="text-white font-handwritten text-3xl font-bold"&gt;Stories for Kids&lt;/div&gt;</code>
-                  </div>
-                  <div className="font-kalam text-3xl font-bold text-white bg-gray-800 px-2 py-1 rounded">
-                    Stories for Kids
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
-                  <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p class="text-amber-100 text-sm font-medium"&gt;Where every story feels like a new adventure&lt;/p&gt;</code>
-                  </div>
-                  <div className="font-kalam text-sm font-medium text-amber-100 bg-gray-800 px-2 py-1 rounded">
-                    Where every story feels like a new adventure
-                  </div>
+              <h3 className="text-lg font-semibold border-b pb-2">Current Font System Overview</h3>
+              <div className="bg-blue-50 border border-blue-200 rounded p-4">
+                <div className="space-y-2">
+                  <p className="font-semibold text-blue-900">✓ Kalam Font: Child-friendly handwritten style for UI elements (21px+)</p>
+                  <p className="font-semibold text-blue-900">✓ Georgia Font: Professional serif for story content (21px+)</p>
+                  <p className="font-semibold text-blue-900">✓ All fonts sized for children's accessibility (16pt/21px minimum)</p>
+                  <p className="font-semibold text-blue-900">✓ Must use CSS classes, not inline styles per site rules</p>
                 </div>
               </div>
             </div>
@@ -442,61 +425,46 @@ const HTMLEditor = forwardRef<HTMLTextAreaElement, HTMLEditorProps>(({
               </div>
             </div>
 
-            {/* Font Sizes */}
+            {/* Font Sizes - MINIMUM 21px for Children's Accessibility */}
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold border-b pb-2">Font Sizes (Georgia Serif for Stories)</h3>
+              <h3 className="text-lg font-semibold border-b pb-2">Font Sizes (Georgia Serif for Stories) - ALL TEXT MUST BE 21px+ FOR CHILDREN</h3>
+              <div className="bg-red-50 border border-red-200 rounded p-3 mb-4">
+                <p className="text-red-800 font-semibold">⚠️ IMPORTANT: All text must be 16 POINT / 21px font or larger per accessibility requirements for children.</p>
+              </div>
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
                   <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 12px;"&gt;Small text&lt;/p&gt;</code>
-                  </div>
-                  <div className="font-georgia-12">
-                    Small text (12px)
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
-                  <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 14px;"&gt;Minimum text&lt;/p&gt;</code>
-                  </div>
-                  <div className="font-georgia-14">
-                    Footer text (19px / 14pt)
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
-                  <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 16px;"&gt;Regular text&lt;/p&gt;</code>
-                  </div>
-                  <div className="font-georgia-16">
-                    Regular text (16px)
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
-                  <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p&gt;Default story text&lt;/p&gt;</code>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p class="font-georgia-base"&gt;Default story text&lt;/p&gt;</code>
                   </div>
                   <div className="font-georgia-base">
-                    Default story text (18px)
+                    Default story text (21px / 16pt) - MINIMUM SIZE
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
                   <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 20px;"&gt;Large text&lt;/p&gt;</code>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p class="font-georgia-lg"&gt;Large text&lt;/p&gt;</code>
                   </div>
-                  <div className="font-georgia-20">
-                    Large text (20px)
+                  <div className="font-georgia-lg">
+                    Large text (24px / 18pt)
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
                   <div>
-                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p style="font-size: 24px;"&gt;Extra large text&lt;/p&gt;</code>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p class="font-georgia-xl"&gt;Extra large text&lt;/p&gt;</code>
                   </div>
-                  <div className="font-georgia-24">
-                    Extra large text (24px)
+                  <div className="font-georgia-xl">
+                    Extra large text (30px / 23pt)
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded">
+                  <div>
+                    <code className="text-sm bg-white px-2 py-1 rounded">&lt;p class="font-georgia-2xl"&gt;Heading size text&lt;/p&gt;</code>
+                  </div>
+                  <div className="font-georgia-2xl">
+                    Heading size text (40px / 30pt)
                   </div>
                 </div>
               </div>
