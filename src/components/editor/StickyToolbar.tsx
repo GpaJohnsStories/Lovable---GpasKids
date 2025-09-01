@@ -280,36 +280,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               Body
             </Button>
           </ConditionalTooltip>
-          <ConditionalTooltip content="Insert Heading 6 Style">
-            <Button 
-              type="button" 
-              size="sm" 
-              onClick={() => onInsertFontSize('h6')} 
-              className="h-6 px-3 text-xs btn-toolbar-slate"
-            >
-              H6
-            </Button>
-          </ConditionalTooltip>
-          <ConditionalTooltip content="Insert Heading 5 Style">
-            <Button 
-              type="button" 
-              size="sm" 
-              onClick={() => onInsertFontSize('h5')} 
-              className="h-6 px-3 text-xs btn-toolbar-slate"
-            >
-              H5
-            </Button>
-          </ConditionalTooltip>
-          <ConditionalTooltip content="Insert Heading 4 Style">
-            <Button 
-              type="button" 
-              size="sm" 
-              onClick={() => onInsertFontSize('h4')} 
-              className="h-6 px-3 text-xs btn-toolbar-slate"
-            >
-              H4
-            </Button>
-          </ConditionalTooltip>
           <ConditionalTooltip content="Insert Heading 3 Style">
             <Button 
               type="button" 
