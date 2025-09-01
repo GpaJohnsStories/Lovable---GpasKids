@@ -254,6 +254,40 @@ const Privacy = () => {
               </div>
             </div>
 
+            {/* Secure Hosting Section */}
+            <div className="bg-teal-50 p-6 rounded-lg relative">
+              {/* Audio Button - Always visible in top right corner */}
+              <div className="absolute top-4 right-4">
+                <AudioButton code="SYS-PR4A" onClick={() => setShowSuperAV(true)} />
+              </div>
+              
+              <div className="flex items-center space-x-3 mb-4">
+                <Shield className="h-6 w-6 text-teal-600" />
+                <h2 className="text-xl font-semibold text-teal-800">Secure Hosting of Stories, Audio, and Video (No External Links)</h2>
+              </div>
+              <p className="!text-teal-700 !text-base !font-normal leading-relaxed">
+                After we completely review it, all audio, video and text files are stored safely in our secure storage. 
+                We NEVER permit links to third‑party sites.
+              </p>
+              
+              {/* Web-text code indicator */}
+              <div style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                right: '12px',
+                fontSize: '12px',
+                color: '#333',
+                fontFamily: 'monospace',
+                fontWeight: 'bold',
+                opacity: 0.8,
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                padding: '2px 4px',
+                borderRadius: '3px'
+              }}>
+                SYS-PR4A
+              </div>
+            </div>
+
             {/* Data Collection Section */}
             <div className="bg-purple-50 p-6 rounded-lg relative">
               {/* Audio Button - Always visible in top right corner */}

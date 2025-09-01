@@ -799,17 +799,25 @@ const SuperText: React.FC = () => {
                       <p className="text-xs text-gray-500 mt-1">Supported formats: MP4, MOV, AVI, WMV • Max size: 100MB</p>
                     </div>
                     
-                    {/* URL Input */}
+                    {/* Google Drive Upload */}
                     <div>
-                      <Label className="font-semibold mb-2 block">Or Paste Video URL</Label>
-                      <Input
-                        type="url"
-                        placeholder="https://www.youtube.com/watch?v=... or https://vimeo.com/..."
-                        value={formData.video_url || ''}
-                        onChange={(e) => handleInputChange('video_url', e.target.value)}
-                        className="border-purple-400 focus:border-purple-500"
-                      />
-                      <p className="text-xs text-gray-500 mt-1">YouTube, Vimeo, or direct video file links</p>
+                      <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
+                      <div className="space-y-2">
+                        <Input
+                          type="text"
+                          placeholder="Paste Google Drive Share Code"
+                          className="border-purple-400 focus:border-purple-500"
+                        />
+                        <button
+                          type="button"
+                          className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium"
+                        >
+                          🔄 Fetch & Upload
+                        </button>
+                      </div>
+                      <p className="text-xs text-gray-600 mt-2">
+                        All files are securely hosted on our servers. <a href="/privacy" className="text-blue-600 hover:text-blue-800 underline">Read our security policy</a>
+                      </p>
                     </div>
 
                     {/* Current Video Display */}
@@ -864,17 +872,25 @@ const SuperText: React.FC = () => {
                       <p className="text-xs text-gray-500 mt-1">Supported formats: MP3, WAV, M4A, OGG • Max size: 50MB</p>
                     </div>
                     
-                    {/* URL Input */}
+                    {/* Google Drive Upload */}
                     <div>
-                      <Label className="font-semibold mb-2 block">Or Paste Audio URL</Label>
-                      <Input
-                        type="url"
-                        placeholder="https://example.com/audio.mp3"
-                        value={formData.audio_url || ''}
-                        onChange={(e) => handleInputChange('audio_url', e.target.value)}
-                        className="border-blue-400 focus:border-blue-500"
-                      />
-                      <p className="text-xs text-gray-500 mt-1">Direct link to audio file hosted elsewhere</p>
+                      <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
+                      <div className="space-y-2">
+                        <Input
+                          type="text"
+                          placeholder="Paste Google Drive Share Code"
+                          className="border-blue-400 focus:border-blue-500"
+                        />
+                        <button
+                          type="button"
+                          className="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm font-medium"
+                        >
+                          🔄 Fetch & Upload
+                        </button>
+                      </div>
+                      <p className="text-xs text-gray-600 mt-2">
+                        All files are securely hosted on our servers. <a href="/privacy" className="text-blue-600 hover:text-blue-800 underline">Read our security policy</a>
+                      </p>
                     </div>
 
                     {/* Current Audio Display */}
