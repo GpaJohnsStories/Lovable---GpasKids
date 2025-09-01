@@ -11,7 +11,7 @@ import {
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status';
 type SortDirection = 'asc' | 'desc';
-type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'BioText';
+type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText';
 
 interface StoriesTableHeaderProps {
   sortField: SortField;
@@ -62,7 +62,7 @@ const StoriesTableHeader = ({
       return ['all', 'Fun', 'Life', 'North Pole', 'World Changers']; // Public library - no WebText or BioText
     }
     
-    return ['all', 'WebText', 'Fun', 'Life', 'North Pole', 'World Changers', 'BioText']; // Admin library - WebText after Show All
+    return ['all', 'WebText', 'Stories', 'Fun', 'Life', 'North Pole', 'World Changers', 'BioText']; // Admin library - WebText after Show All
   };
 
   const getCategoryDisplayName = (category: CategoryFilter) => {
@@ -79,6 +79,8 @@ const StoriesTableHeader = ({
         return 'World Changers';
       case 'WebText':
         return 'WebText';
+      case 'Stories':
+        return 'Stories';
       case 'BioText':
         return 'BioText';
       default:
@@ -100,6 +102,8 @@ const StoriesTableHeader = ({
         return 'bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500';
       case 'WebText':
         return 'bg-gradient-to-b from-amber-700 to-amber-900 text-white border-amber-900';
+      case 'Stories':
+        return 'bg-gradient-to-b from-emerald-600 to-emerald-800 text-white border-emerald-700';
       case 'BioText':
         return 'bg-gradient-to-b from-yellow-800 to-yellow-900 text-white border-yellow-800';
       default:

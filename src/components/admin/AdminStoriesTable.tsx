@@ -14,7 +14,7 @@ import StoriesTableRow from "./StoriesTableRow";
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status';
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
-type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'BioText';
+type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText';
 type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'reading_time' | 'copyright_status';
 type MediaFilter = 'all' | 'text' | 'audio' | 'video' | 'both';
 
@@ -87,7 +87,11 @@ const AdminStoriesTable = ({
       
       // Apply category filter
       if (categoryFilter !== 'all') {
-        query = query.eq('category', categoryFilter);
+        if (categoryFilter === 'Stories') {
+          query = query.in('category', ['Fun', 'Life', 'North Pole', 'World Changers']);
+        } else {
+          query = query.eq('category', categoryFilter);
+        }
       }
       
       const { data, error } = await query;
