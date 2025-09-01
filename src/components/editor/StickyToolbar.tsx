@@ -255,10 +255,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
           </ConditionalTooltip>
         </div>
 
-        <Separator orientation="vertical" className="h-6" style={{
-          backgroundColor: '#9c441a'
-        }} />
-        
         {/* Clear buttons */}
         <div className="flex items-center gap-1">
         </div>
