@@ -365,7 +365,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
             <Button 
               type="button" 
               onClick={onSelectAllPreview} 
-              className="h-6 w-28 px-2 text-xs font-bold text-white hover:opacity-80 transition-opacity" 
+              className="h-6 w-36 px-3 text-xs font-bold text-white hover:opacity-80 transition-opacity rounded-md" 
               style={{ backgroundColor: '#16a34a' }}
             >
               Select All Preview
