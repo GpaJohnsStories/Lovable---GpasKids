@@ -401,10 +401,7 @@ const SuperText: React.FC = () => {
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative z-20 lg:pr-[420px]">
                 
                 {/* Blue Dot 1 in top left corner */}
-                <div className="absolute -top-4 -left-4 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30" style={{
-              width: '21px',
-              height: '21px'
-            }}>1</div>
+                 <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">1</div>
                 
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
@@ -745,10 +742,7 @@ const SuperText: React.FC = () => {
               {/* Story Photos Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6 relative">
                 {/* Blue Dot 2 in top left corner */}
-                <div className="absolute -top-4 -left-4 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-30" style={{
-              width: '21px',
-              height: '21px'
-            }}>2</div>
+                 <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">2</div>
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-bold text-orange-700" style={{
                 fontSize: '21px',
@@ -1074,7 +1068,7 @@ const SuperText: React.FC = () => {
           {/* Full Width Split Editor Section */}
           <div ref={textEditorSectionRef} className="w-full bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4 mt-6 relative">
             {/* Blue Dot 4 in top left corner */}
-            <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-30">3</div>
+            <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">3</div>
             <div className="mb-4">
               <h2 className="text-xl font-bold text-green-700">{lookupResult ? `Editing Story${formData.story_code ? `: ${formData.story_code}` : ''}` : `Creating New Story${formData.story_code ? `: ${formData.story_code}` : ''}`}</h2>
             </div>
