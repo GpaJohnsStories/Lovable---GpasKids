@@ -33,23 +33,44 @@ export const MonthlyVisitsCard = () => {
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
   });
 
-  // Transform data for multi-line chart
-  const chartData = monthlyVisits?.map((visit) => ({
-    period: `${visit.year}-${visit.month.toString().padStart(2, '0')} |`,
-    approved: visit.visit_count,
-    searchEngines: visit.search_engine_visits_count || 0,
-    bots: visit.bot_visits_count || 0,
-    admin: visit.admin_visits_count || 0,
-    other: visit.other_excluded_count || 0,
-    fullDate: new Date(visit.year, visit.month - 1, 1),
-  })) || [];
+  // Create 15 months of data starting from 14 months ago
+  const generateMonthRange = () => {
+    const months = [];
+    const now = new Date();
+    
+    for (let i = 14; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      
+      // Find existing data for this month/year
+      const existingData = monthlyVisits?.find(visit => 
+        visit.year === year && visit.month === month
+      );
+      
+      months.push({
+        period: `${year}-${month.toString().padStart(2, '0')} |`,
+        approved: existingData?.visit_count || 0,
+        searchEngines: existingData?.search_engine_visits_count || 0,
+        bots: existingData?.bot_visits_count || 0,
+        admin: existingData?.admin_visits_count || 0,
+        other: existingData?.other_excluded_count || 0,
+        fullDate: date,
+      });
+    }
+    
+    return months;
+  };
+
+  // Transform data for multi-line chart with 15 months pre-filled
+  const chartData = generateMonthRange();
 
   // Calculate total approved visits for main display
   const totalApprovedVisits = monthlyVisits?.reduce((sum, visit) => sum + visit.visit_count, 0) || 0;
   
   const currentMonth = chartData[chartData.length - 1];
   const previousMonth = chartData[chartData.length - 2];
-  const growth = previousMonth && currentMonth 
+  const growth = previousMonth && currentMonth && previousMonth.approved > 0
     ? ((currentMonth.approved - previousMonth.approved) / previousMonth.approved * 100)
     : 0;
 
