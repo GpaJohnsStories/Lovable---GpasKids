@@ -33,13 +33,13 @@ export const MonthlyVisitsCard = () => {
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
   });
 
-  // Create 15 months of data starting from 14 months ago
+  // Create 15 months of data starting from September 2025
   const generateMonthRange = () => {
     const months = [];
-    const now = new Date();
+    const startDate = new Date(2025, 8, 1); // September 2025 (month 8 = September, 0-indexed)
     
-    for (let i = 14; i >= 0; i--) {
-      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    for (let i = 0; i < 15; i++) {
+      const date = new Date(startDate.getFullYear(), startDate.getMonth() + i, 1);
       const year = date.getFullYear();
       const month = date.getMonth() + 1;
       
