@@ -143,7 +143,8 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
         <CardTitle className="flex flex-col items-center gap-1 font-bold py-3" style={{
           color: '#FFD700',
           backgroundColor: '#228B22',
-          fontSize: '24px'
+          fontSize: '24px',
+          textShadow: '2px 2px 0px #B8860B, 4px 4px 0px #8B6914, 6px 6px 0px #654321, 8px 8px 15px rgba(0,0,0,0.4)'
         }}>
           <span>Set Text Status</span>
           <span>BEFORE Saving</span>
