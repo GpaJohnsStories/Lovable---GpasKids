@@ -44,6 +44,54 @@ const WEBTEXT_USAGE = [
   { code: 'SYS-CPR', path: '/writing', fallbackTitle: 'Writing Instructions' },
 ];
 
+// Hardcoded content for webtext codes not in database
+const HARD_CODED_TEXTS: Record<string, string> = {
+  'SYS-P2Y': `Safety First: This website is designed with children's safety in mind. There are no advertisements, no personal data collection, and strict security measures.
+
+Quality Content: Many of these stories are written by me but all stories and other content are edited by me to be engaging, age-appropriate for grade school students, encouraging, and meaningful.
+
+A Comfortable Space: I want you to feel at home here – like you're sitting in a cozy chair listening to your own grandparent tell you a story.
+
+Thank you for visiting! I hope you enjoy the stories and come back often to see what's new.
+
+Grandpa John`,
+
+  'SYS-PR1': `We are proud to operate a completely cookie-free website. When you visit Grandpa John's Stories to read our stories, no cookies are stored on your device. No tracking, no analytics, no third-party cookies — just pure, uninterrupted storytelling.`,
+
+  'SYS-PR2': `Our website hosting service (Supabase) uses Cloudflare for security protection. Cloudflare may set a temporary security cookie called __cf_bm to protect against malicious bot traffic and ensure the website remains safe and accessible. This cookie is essential for security, expires within 30 minutes, contains no personal information, and is managed entirely by Cloudflare's security systems. It helps keep our stories safe for children to enjoy.`,
+
+  'SYS-PR3': `To improve your reading experience, we store a small piece of information called currentStoryPath in your browser's session storage. This helps you easily return to the story you were reading through our "Current Story" menu option. This information stays only in your browser, is never sent to our servers, and automatically disappears when you close your browser tab. It contains no personal information — just the path to the story you were reading.`,
+
+  'SYS-PR4': `We don't use Google Analytics, Facebook Pixel, or any other tracking tools. Your reading habits, preferences, and browsing behavior remain completely private. We believe in respecting your digital privacy while you enjoy our stories.`,
+
+  'SYS-PR4A': `After we completely review it, all audio, video and text files are stored safely in our secure storage. We NEVER permit links to third‑party sites.`,
+
+  'SYS-PR5': `• Personal information
+• Email addresses (no newsletter signups required)
+• IP addresses for tracking
+• Browsing history
+• Device fingerprints
+• Location data`,
+
+  'SYS-PR6': `Our content management system uses cookie-free authentication exclusively for administrative purposes. Admin sessions are stored locally on authorized devices only and never transmitted as cookies. This ensures secure content management while maintaining our cookie-free promise to visitors. Additionally, administrative access requires a special external authentication key that is never stored on the website itself. This external key system provides an extra layer of security, ensuring that only authorized personnel can access the site's administrative functions while keeping all visitor interactions completely secure and private.`,
+
+  'SYS-PR7': `If you have any questions about our cookie-free approach or privacy practices, please feel free to contact us by leaving a comment on our Comment Page. We're always happy to discuss our commitment to protecting your privacy while sharing Grandpa's stories.`,
+
+  'SYS-PRQ': `"Privacy is not about hiding something. It's about protecting everything that matters."`,
+
+  'SYS-AGJ': `With over 60 years of marriage and a lifetime of experiences, I've collected stories that I'm excited to share with children around the world. My journey has taught me valuable lessons about kindness, perseverance, and the importance of imagination.`,
+
+  'SYS-BDY': `Buddy joined me at the end of July, 2024. It has been a rough year so far — I fell in June and broke 5 ribs — and I felt I deserved a comfort dog. He talks with me, growls, his whine is the most pathetic thing you've ever heard, and he barks from soft to loud.`,
+
+  'SYS-THY': `None of this would have been possible without the incredible assistance of three amazing AI partners who have helped bring this vision to life. Each one has contributed their unique strengths to make this website a reality.`,
+
+  'SYS-LIB': `Hover over a story title and it will turn red. Click on a story title and it will take you to the story page where you may enjoy it.
+
+Click on any column heading to sort the library by that column. The first click will always sort down and the next click will sort up.
+
+As more stories are loaded, you may want to keep a note on your device or even use pencil and paper to record the Story Code so you can find it easily in the future.`
+};
+
 const countWords = (text: string): number => {
   if (!text) return 0;
   // Strip HTML tags and count words
@@ -117,7 +165,11 @@ export const WebTextInventorySection: React.FC = () => {
             <TableBody>
               {WEBTEXT_USAGE.map((item, index) => {
                 const story = storiesMap.get(item.code);
-                const wordCount = story ? countWords(story.content || '') : 0;
+                const wordCount = story 
+                  ? countWords(story.content || '') 
+                  : HARD_CODED_TEXTS[item.code] 
+                    ? countWords(HARD_CODED_TEXTS[item.code])
+                    : 0;
                 const status = story ? story.publication_status_code.toString() : 'N/A';
                 const heading = story ? getHeading(story, item.fallbackTitle) : item.fallbackTitle;
 
