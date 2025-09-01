@@ -916,7 +916,7 @@ const SuperText: React.FC = () => {
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
-                              <Button className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-full text-sm font-medium">
+                              <Button variant="yes" className="w-full rounded-full text-sm font-medium">
                                 Upload
                               </Button>
                             </TooltipTrigger>
