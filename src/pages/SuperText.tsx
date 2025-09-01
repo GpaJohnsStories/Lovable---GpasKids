@@ -981,7 +981,7 @@ const SuperText: React.FC = () => {
 
                   {/* Voice Settings Link */}
                   <div className="supertext-fs-21px-arial-black text-gray-500 text-center">
-                    <span>Change voice in<br />Voice Previews below</span>
+                    <span>Change voice in<br />Voice Previews below:</span>
                   </div>
                 </div>
 
