@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package, FileCode } from "lucide-react";
 import InternalLinkDialog from "@/components/rich-text-editor/InternalLinkDialog";
 interface StickyToolbarProps {
@@ -40,30 +41,63 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onInsertFontSize,
   onSelectAllPreview
 }) => {
-  return <div id="format-menu" className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{
+  return <TooltipProvider>
+    <div id="format-menu" className="sticky top-0 z-10 border-b border-gray-200 p-3 shadow-sm" style={{
     backgroundColor: '#16a34a'
   }}>
       <div className="flex items-center gap-2 flex-wrap">
         {/* Add Tokens Button - First on the left, spans full toolbar height */}
         <div className="flex items-center gap-1">
-          <Button 
-            type="button" 
-            onClick={onAddTokens} 
-            className="h-16 w-32 px-4 btn-toolbar-golden text-lg font-bold" 
-            title="Insert Story Tokens"
-          >
-            Add Tokens
-          </Button>
-          <Button 
-            type="button" 
-            onClick={onSelectAllPreview} 
-            className="h-16 w-32 px-4 text-lg font-bold text-white hover:opacity-80 transition-opacity flex flex-col justify-center leading-tight" 
-            style={{ backgroundColor: '#16a34a' }}
-            title="Select All in Live Preview Pane Only"
-          >
-            <span>Select All</span>
-            <span>Preview</span>
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                type="button" 
+                onClick={onAddTokens} 
+                className="h-16 w-32 px-4 btn-toolbar-golden text-lg font-bold"
+              >
+                Add Tokens
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert Story Tokens
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                type="button" 
+                onClick={onSelectAllPreview} 
+                className="h-16 w-32 px-4 text-lg font-bold text-white hover:opacity-80 transition-opacity flex flex-col justify-center leading-tight" 
+                style={{ backgroundColor: '#16a34a' }}
+              >
+                <span>Select All</span>
+                <span>Preview</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Select All in Live Preview Pane Only
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
@@ -110,23 +144,108 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
 
         {/* Text Formatting */}
         <div className="flex items-center gap-1">
-          <Button type="button" size="sm" onClick={() => onFormat('strong')} className="h-8 px-2 btn-toolbar-orange">
-            <Bold className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" onClick={() => onFormat('em')} className="h-8 px-2 btn-toolbar-orange">
-            <Italic className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" onClick={() => onFormat('u')} className="h-8 px-2 btn-toolbar-orange">
-            <Underline className="h-4 w-4" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onFormat('strong')} className="h-8 px-2 btn-toolbar-orange">
+                <Bold className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Bold Text
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onFormat('em')} className="h-8 px-2 btn-toolbar-orange">
+                <Italic className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Italic Text
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onFormat('u')} className="h-8 px-2 btn-toolbar-orange">
+                <Underline className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Underline Text
+            </TooltipContent>
+          </Tooltip>
           
           {/* Dash buttons moved here for better accessibility */}
-          <Button type="button" size="sm" onClick={() => onInsertText('–')} className="h-8 px-3 text-sm font-bold btn-toolbar-orange" title="Insert N-dash (short pause for audio)">
-            –
-          </Button>
-          <Button type="button" size="sm" onClick={() => onInsertText('—')} className="h-8 px-3 text-sm font-bold btn-toolbar-orange" title="Insert M-dash (long pause for audio)">
-            —
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onInsertText('–')} className="h-8 px-3 text-sm font-bold btn-toolbar-orange">
+                –
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert N-dash (short pause for audio)
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onInsertText('—')} className="h-8 px-3 text-sm font-bold btn-toolbar-orange">
+                —
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert M-dash (long pause for audio)
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
@@ -135,15 +254,66 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
 
         {/* Text Alignment */}
         <div className="flex items-center gap-1">
-          <Button type="button" size="sm" onClick={() => onAlign('left')} className="h-8 px-2 btn-toolbar-blue">
-            <AlignLeft className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" onClick={() => onAlign('center')} className="h-8 px-2 btn-toolbar-blue">
-            <AlignCenter className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" onClick={() => onAlign('right')} className="h-8 px-2 btn-toolbar-blue">
-            <AlignRight className="h-4 w-4" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onAlign('left')} className="h-8 px-2 btn-toolbar-blue">
+                <AlignLeft className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Align Left
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onAlign('center')} className="h-8 px-2 btn-toolbar-blue">
+                <AlignCenter className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Align Center
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onAlign('right')} className="h-8 px-2 btn-toolbar-blue">
+                <AlignRight className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Align Right
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
@@ -152,12 +322,46 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
 
         {/* Lists */}
         <div className="flex items-center gap-1">
-          <Button type="button" size="sm" onClick={() => onInsertList(false)} className="h-8 px-2 btn-toolbar-purple">
-            <List className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" onClick={() => onInsertList(true)} className="h-8 px-2 btn-toolbar-purple">
-            <ListOrdered className="h-4 w-4" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onInsertList(false)} className="h-8 px-2 btn-toolbar-purple">
+                <List className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert Bullet List
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onInsertList(true)} className="h-8 px-2 btn-toolbar-purple">
+                <ListOrdered className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert Numbered List
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
@@ -167,9 +371,26 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
         {/* Internal Link */}
         <div className="flex items-center gap-1">
           <InternalLinkDialog onInsertLink={onInsertLink}>
-            <Button type="button" size="sm" className="h-8 px-2 btn-toolbar-yellow" title="Insert internal link">
-              <Link2 className="h-4 w-4" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button type="button" size="sm" className="h-8 px-2 btn-toolbar-yellow">
+                  <Link2 className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent 
+                side="bottom" 
+                align="center"
+                className="bg-white border border-gray-300 shadow-lg"
+                style={{ 
+                  fontFamily: 'Arial', 
+                  fontSize: '21px', 
+                  color: 'black',
+                  backgroundColor: 'white'
+                }}
+              >
+                Insert Internal Link
+              </TooltipContent>
+            </Tooltip>
           </InternalLinkDialog>
         </div>
 
@@ -179,15 +400,66 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
 
         {/* Page Break and Content Tools */}
         <div className="flex items-center gap-1">
-          <Button type="button" size="sm" onClick={onInsertHorizontalLine} className="h-8 px-2 btn-toolbar-slate" title="Insert horizontal line">
-            <Minus className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" onClick={onInsertPageBreak} className="h-8 px-2 btn-toolbar-indigo" title="Insert page break (for printing)">
-            <FileText className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" onClick={onWrapKeepTogether} className="h-8 px-2 btn-toolbar-purple" title="Keep selected content together">
-            <Package className="h-4 w-4" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={onInsertHorizontalLine} className="h-8 px-2 btn-toolbar-slate">
+                <Minus className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert Horizontal Line
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={onInsertPageBreak} className="h-8 px-2 btn-toolbar-indigo">
+                <FileText className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert Page Break (for printing)
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={onWrapKeepTogether} className="h-8 px-2 btn-toolbar-purple">
+                <Package className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Keep Selected Content Together
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
@@ -196,12 +468,46 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
         
         {/* Clear buttons */}
         <div className="flex items-center gap-1">
-          <Button type="button" size="sm" onClick={onClearHtml} className="h-8 px-2 btn-toolbar-orange" title="Clear HTML from selection">
-            <span className="text-sm font-bold">&lt;X&gt;</span>
-          </Button>
-          <Button type="button" size="sm" onClick={onClearAll} className="h-8 px-2 btn-toolbar-red" title="Clear all content">
-            <Trash2 className="h-4 w-4" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={onClearHtml} className="h-8 px-2 btn-toolbar-orange">
+                <span className="text-sm font-bold">&lt;X&gt;</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Clear HTML from Selection
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={onClearAll} className="h-8 px-2 btn-toolbar-red">
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Clear All Content
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
@@ -210,9 +516,26 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
         
         {/* Help button */}
         <div className="flex items-center gap-1">
-          <Button type="button" size="sm" onClick={onShowHelp} className="h-8 px-2 btn-toolbar-green" title="Show keyboard shortcuts (Ctrl+H)">
-            <Key className="h-4 w-4" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={onShowHelp} className="h-8 px-2 btn-toolbar-green">
+                <Key className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Show Keyboard Shortcuts (Ctrl+H)
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
 
@@ -220,41 +543,126 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
       <div className="flex items-center gap-2 flex-wrap mt-2">
         {/* Font Size Buttons */}
         <div className="flex items-center gap-1">
-          <Button 
-            type="button" 
-            onClick={() => onInsertFontSize('footer')} 
-            className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
-          >
-            Footer 14 PT 19px
-          </Button>
-          <Button 
-            type="button" 
-            onClick={() => onInsertFontSize('body')} 
-            className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
-          >
-            BODY 16 PT 21px
-          </Button>
-          <Button 
-            type="button" 
-            onClick={() => onInsertFontSize('h3')} 
-            className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
-          >
-            H3 18 PT 24px
-          </Button>
-          <Button 
-            type="button" 
-            onClick={() => onInsertFontSize('h2')} 
-            className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
-          >
-            H2 23 PT 30px
-          </Button>
-          <Button 
-            type="button" 
-            onClick={() => onInsertFontSize('h1')} 
-            className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
-          >
-            H1 30 PT 40px
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                type="button" 
+                onClick={() => onInsertFontSize('footer')} 
+                className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
+              >
+                Footer 14 PT 19px
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert Footer Size Text (14 PT 19px)
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                type="button" 
+                onClick={() => onInsertFontSize('body')} 
+                className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
+              >
+                BODY 16 PT 21px
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert Body Size Text (16 PT 21px)
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                type="button" 
+                onClick={() => onInsertFontSize('h3')} 
+                className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
+              >
+                H3 18 PT 24px
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert H3 Heading (18 PT 24px)
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                type="button" 
+                onClick={() => onInsertFontSize('h2')} 
+                className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
+              >
+                H2 23 PT 30px
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert H2 Heading (23 PT 30px)
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                type="button" 
+                onClick={() => onInsertFontSize('h1')} 
+                className="h-8 w-32 px-2 text-xs btn-toolbar-blue font-medium"
+              >
+                H1 30 PT 40px
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert H1 Heading (30 PT 40px)
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
@@ -263,11 +671,29 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
 
         {/* Paragraph Button */}
         <div className="flex items-center gap-1">
-          <Button type="button" size="sm" onClick={() => onFormat('p')} className="h-8 px-3 text-sm btn-toolbar-indigo">
-            ¶
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button type="button" size="sm" onClick={() => onFormat('p')} className="h-8 px-3 text-sm btn-toolbar-indigo">
+                ¶
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent 
+              side="bottom" 
+              align="center"
+              className="bg-white border border-gray-300 shadow-lg"
+              style={{ 
+                fontFamily: 'Arial', 
+                fontSize: '21px', 
+                color: 'black',
+                backgroundColor: 'white'
+              }}
+            >
+              Insert Paragraph
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
-    </div>;
+    </div>
+  </TooltipProvider>;
 };
 export default StickyToolbar;
