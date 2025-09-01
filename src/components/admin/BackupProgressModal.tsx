@@ -56,16 +56,16 @@ const BackupProgressModal: React.FC<BackupProgressModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+      <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
+        <DialogHeader className="pb-2">
+          <DialogTitle className="flex items-center gap-2 text-base">
             <Loader2 className="w-5 h-5 animate-spin" />
             Creating Full System Backup
           </DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-4">
-          <div className="space-y-2">
+        <div className="space-y-3">
+          <div className="space-y-1">
             <div className="flex justify-between text-sm">
               <span>Overall Progress</span>
               <span>{Math.round(overallProgress)}%</span>
@@ -73,19 +73,19 @@ const BackupProgressModal: React.FC<BackupProgressModalProps> = ({
             <Progress value={overallProgress} />
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
             {steps.map((step) => (
-              <div key={step.id} className="flex items-start gap-3 p-3 border rounded-lg">
+              <div key={step.id} className="flex items-start gap-2 p-2 border rounded text-sm">
                 <div className="mt-0.5">
                   {getStepIcon(step)}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-1">
-                    <h4 className="font-medium text-sm truncate">{step.label}</h4>
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-medium text-xs truncate">{step.label}</h4>
                     {getStepBadge(step)}
                   </div>
                   {step.details && (
-                    <p className="text-xs text-gray-600 mb-1">{step.details}</p>
+                    <p className="text-xs text-gray-600">{step.details}</p>
                   )}
                   {step.fileCount !== undefined && (
                     <div className="flex gap-2 text-xs text-gray-500">
