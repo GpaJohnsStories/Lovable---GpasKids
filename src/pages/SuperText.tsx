@@ -938,7 +938,7 @@ const SuperText: React.FC = () => {
             <div className="space-y-3">
               {/* Last Updates Section */}
               <div className="flex flex-col items-center">
-                <LastUpdatesGrid story={lookupResult || formData} hideTitle={true} />
+                <LastUpdatesGrid story={formData} hideTitle={true} />
               </div>
               
               {/* Text Status Section - Hidden on large screens since it's now in Text Details box */}

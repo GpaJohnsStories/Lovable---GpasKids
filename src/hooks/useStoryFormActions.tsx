@@ -16,8 +16,9 @@ export const useStoryFormActions = (
       const success = await saveStory(formData, async () => {
         console.log('=== SAVE SUCCESSFUL - REFRESHING DATA ===');
         // Refresh the story data to show updated timestamps
-        if (storyId && refetchStory) {
+        if (refetchStory) {
           await refetchStory();
+          console.log('=== REFETCH COMPLETED - TIMESTAMP SHOULD BE UPDATED ===');
         }
         // Don't call onSave() - just stay on the edit page
       });
@@ -43,8 +44,9 @@ export const useStoryFormActions = (
       const success = await saveStory(formData, async () => {
         console.log('=== SAVE SUCCESSFUL - REFRESHING DATA ===');
         // Refresh the story data to show updated content
-        if (storyId && refetchStory) {
+        if (refetchStory) {
           await refetchStory();
+          console.log('=== REFETCH COMPLETED - TIMESTAMP SHOULD BE UPDATED ===');
         }
         if (onSave) {
           onSave(); // Navigate back to admin list
