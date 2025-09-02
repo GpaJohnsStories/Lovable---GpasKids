@@ -814,11 +814,7 @@ const SuperText: React.FC = () => {
 
                     {/* Current Audio Display */}
                     {formData.audio_url && <div className="space-y-2">
-                        <div className="text-sm font-semibold text-blue-700">Current Audio File:</div>
-                        <audio controls className="w-full">
-                          <source src={formData.audio_url} type="audio/mpeg" />
-                          Your browser does not support the audio element.
-                        </audio>
+                        <div className="text-sm font-semibold text-blue-700">Audio File Available - Use red SuperAV button to play</div>
                         <Button onClick={() => handleInputChange('audio_url', '')} variant="outline" size="sm" className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400">
                           Remove Audio
                         </Button>
@@ -977,11 +973,7 @@ const SuperText: React.FC = () => {
 
                   {/* Existing Audio File Display */}
                   {formData.audio_url && <div className="space-y-2">
-                      <div className="supertext-fs-21px-arial-black font-semibold text-green-700">Existing Audio File:</div>
-                      <audio controls className="w-full">
-                        <source src={formData.audio_url} type="audio/mpeg" />
-                        Your browser does not support the audio element.
-                      </audio>
+                      <div className="supertext-fs-21px-arial-black font-semibold text-green-700">Audio File Ready - Use red SuperAV button above to play</div>
                     </div>}
 
                   {/* Voice Settings Link */}
