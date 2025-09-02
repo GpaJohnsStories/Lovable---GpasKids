@@ -19,6 +19,7 @@ interface Story {
   book_title?: string;
   chapter_number?: number;
   chapter_title?: string;
+  publication_status_code?: number;
 }
 
 export const validateStoryForm = (formData: Story): boolean => {
@@ -39,6 +40,14 @@ export const validateStoryForm = (formData: Story): boolean => {
   if (!formData.content.trim()) {
     console.log('Content validation failed');
     toast.error("Story content is required");
+    return false;
+  }
+
+  // Publication status validation - convert to number and check if valid (0-4)
+  const statusCode = Number(formData.publication_status_code);
+  if (isNaN(statusCode) || statusCode >= 5) {
+    console.log('Publication status validation failed');
+    toast.error("Set Publication Code Before Save");
     return false;
   }
 

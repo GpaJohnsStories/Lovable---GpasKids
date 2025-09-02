@@ -89,10 +89,11 @@ export const useStorySave = () => {
       return false;
     }
     
-    // Publication status validation
-    if (formData.publication_status_code === undefined || formData.publication_status_code === 5) {
+    // Publication status validation - convert to number and check if valid (0-4)
+    const statusCode = Number(formData.publication_status_code);
+    if (isNaN(statusCode) || statusCode >= 5) {
       console.log('Validation failed: Publication status required');
-      toast.error("Please select a publication status before saving");
+      toast.error("Set Publication Code Before Save");
       return false;
     }
 
