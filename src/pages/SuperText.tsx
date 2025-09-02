@@ -862,12 +862,19 @@ const SuperText: React.FC = () => {
                     {/* Current Video Display */}
                     {formData.video_url && <div className="space-y-2">
                         <div className="text-sm font-semibold text-purple-700">Current Video:</div>
-                        <div className="bg-gray-50 rounded-lg p-3">
-                          <div className="text-sm text-gray-700 mb-2">
-                            {formData.video_url.includes('youtube.com') || formData.video_url.includes('youtu.be') ? '📺 YouTube Video' : formData.video_url.includes('vimeo.com') ? '📺 Vimeo Video' : '📹 Video File'}
+                        {formData.video_url.includes('youtube.com') || formData.video_url.includes('youtu.be') || formData.video_url.includes('vimeo.com') ? (
+                          <div className="bg-gray-50 rounded-lg p-3">
+                            <div className="text-sm text-gray-700 mb-2">
+                              {formData.video_url.includes('youtube.com') || formData.video_url.includes('youtu.be') ? '📺 YouTube Video' : '📺 Vimeo Video'}
+                            </div>
+                            <div className="text-xs text-gray-500 break-all">{formData.video_url}</div>
                           </div>
-                          <div className="text-xs text-gray-500 break-all">{formData.video_url}</div>
-                        </div>
+                        ) : (
+                          <video controls className="w-full max-h-64 rounded-lg">
+                            <source src={formData.video_url} type="video/mp4" />
+                            Your browser does not support the video element.
+                          </video>
+                        )}
                         <Button onClick={() => handleInputChange('video_url', '')} variant="outline" size="sm" className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400">
                           Remove Video
                         </Button>
