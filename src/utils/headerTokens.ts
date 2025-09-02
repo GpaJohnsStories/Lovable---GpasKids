@@ -18,9 +18,7 @@ export interface ExtractedTokens {
 
 /**
  * Extracts header tokens from story content
- * Supports both formats:
- * - Colon style: {{TITLE: content}}
- * - Block style: {{TITLE}}content{{/TITLE}}
+ * Supports block style format only: {{TITLE}}content{{/TITLE}}
  * Each token can contain HTML/CSS which will be sanitized on render
  */
 export const extractHeaderTokens = (content: string): ExtractedTokens => {
@@ -34,31 +32,18 @@ export const extractHeaderTokens = (content: string): ExtractedTokens => {
   const tokens: HeaderTokens = {};
   let cleanedContent = content;
 
-  // Define ALL token patterns that need to be removed from preview
+  // Define block style token patterns that need to be removed from preview
   const allTokenPatterns = [
-    // Block style patterns (with content)
     /\{\{TITLE\}\}([\s\S]*?)\{\{\/TITLE\}\}/gi,
     /\{\{TAGLINE\}\}([\s\S]*?)\{\{\/TAGLINE\}\}/gi,
     /\{\{AUTHOR\}\}([\s\S]*?)\{\{\/AUTHOR\}\}/gi,
-    /\{\{EXCERPT\}\}([\s\S]*?)\{\{\/EXCERPT\}\}/gi,
-    // Colon style patterns
-    /\{\{TITLE:\s*([\s\S]*?)\}\}/gi,
-    /\{\{TAGLINE:\s*([\s\S]*?)\}\}/gi,
-    /\{\{AUTHOR:\s*([\s\S]*?)\}\}/gi,
-    /\{\{EXCERPT:\s*([\s\S]*?)\}\}/gi
+    /\{\{EXCERPT\}\}([\s\S]*?)\{\{\/EXCERPT\}\}/gi
   ];
 
-  // Extract token content first (block style takes precedence)
+  // Extract token content from block style patterns only
   ['title', 'tagline', 'author', 'excerpt'].forEach(key => {
-    // Try block style first
     const blockPattern = new RegExp(`\\{\\{${key.toUpperCase()}\\}\\}([\\s\\S]*?)\\{\\{\\/${key.toUpperCase()}\\}\\}`, 'gi');
-    let matches = Array.from(content.matchAll(blockPattern));
-    
-    if (matches.length === 0) {
-      // Try colon style
-      const colonPattern = new RegExp(`\\{\\{${key.toUpperCase()}:\\s*([\\s\\S]*?)\\}\\}`, 'gi');
-      matches = Array.from(content.matchAll(colonPattern));
-    }
+    const matches = Array.from(content.matchAll(blockPattern));
     
     if (matches.length > 0) {
       // Use the last match if multiple exist
@@ -73,7 +58,7 @@ export const extractHeaderTokens = (content: string): ExtractedTokens => {
     }
   });
 
-  // Remove ALL token patterns from content (including empty ones)
+  // Remove all block style token patterns from content (including empty ones)
   allTokenPatterns.forEach(pattern => {
     cleanedContent = cleanedContent.replace(pattern, '');
   });

@@ -96,6 +96,14 @@ export const useStorySave = () => {
       return false;
     }
 
+    // Check for invalid colon-style header tokens
+    const colonTokenPattern = /\{\{(TITLE|TAGLINE|AUTHOR|EXCERPT):\s*[^}]+?\}\}/i;
+    if (colonTokenPattern.test(formData.content)) {
+      console.log('Validation failed: Colon-style header tokens detected');
+      toast.error("Invalid header tokens detected. Use block-style tokens like {{TITLE}}...{{/TITLE}} instead of colon format.");
+      return false;
+    }
+
     console.log('Validation passed, setting loading state...');
     setIsSaving(true);
     

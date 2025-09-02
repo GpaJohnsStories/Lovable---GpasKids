@@ -44,6 +44,7 @@ serve(async (req) => {
     
     /**
      * Extract header tokens from content (TITLE, TAGLINE, AUTHOR, EXCERPT)
+     * Block style only: {{TITLE}}content{{/TITLE}}
      */
     const extractHeaderTokens = (content: string) => {
       const tokens: any = {}
@@ -63,23 +64,6 @@ serve(async (req) => {
         }
       }
       
-      // Extract colon-style tokens like {{TITLE: content}}
-      const colonPatterns = {
-        title: /\{\{TITLE:\s*([^}]+?)\}\}/gi,
-        tagline: /\{\{TAGLINE:\s*([^}]+?)\}\}/gi,
-        author: /\{\{AUTHOR:\s*([^}]+?)\}\}/gi,
-        excerpt: /\{\{EXCERPT:\s*([^}]+?)\}\}/gi
-      }
-      
-      for (const [key, pattern] of Object.entries(colonPatterns)) {
-        if (!tokens[key]) { // Only use if not already found
-          const match = pattern.exec(content)
-          if (match) {
-            tokens[key] = match[1].trim()
-          }
-        }
-      }
-      
       return tokens
     }
     
@@ -89,15 +73,11 @@ serve(async (req) => {
     const cleanContentForTTS = (content: string) => {
       let cleaned = content
       
-      // Strip header tokens (both block and colon style)
+      // Strip header tokens (block style only)
       cleaned = cleaned.replace(/\{\{TITLE\}\}[\s\S]*?\{\{\/TITLE\}\}/gi, '')
       cleaned = cleaned.replace(/\{\{TAGLINE\}\}[\s\S]*?\{\{\/TAGLINE\}\}/gi, '')
       cleaned = cleaned.replace(/\{\{AUTHOR\}\}[\s\S]*?\{\{\/AUTHOR\}\}/gi, '')
       cleaned = cleaned.replace(/\{\{EXCERPT\}\}[\s\S]*?\{\{\/EXCERPT\}\}/gi, '')
-      cleaned = cleaned.replace(/\{\{TITLE:\s*[^}]+?\}\}/gi, '')
-      cleaned = cleaned.replace(/\{\{TAGLINE:\s*[^}]+?\}\}/gi, '')
-      cleaned = cleaned.replace(/\{\{AUTHOR:\s*[^}]+?\}\}/gi, '')
-      cleaned = cleaned.replace(/\{\{EXCERPT:\s*[^}]+?\}\}/gi, '')
       
       // Strip icon tokens (both block and colon style)  
       cleaned = cleaned.replace(/\{\{ICON\}\}[^{]*?\{\{\/ICON\}\}/gi, '')
