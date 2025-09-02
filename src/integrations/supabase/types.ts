@@ -670,7 +670,42 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      scheduled_backups: {
+        Row: {
+          active: boolean | null
+          command: string | null
+          database: string | null
+          jobid: number | null
+          jobname: string | null
+          nodename: string | null
+          nodeport: number | null
+          schedule: string | null
+          username: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          command?: string | null
+          database?: string | null
+          jobid?: number | null
+          jobname?: string | null
+          nodename?: string | null
+          nodeport?: number | null
+          schedule?: string | null
+          username?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          command?: string | null
+          database?: string | null
+          jobid?: number | null
+          jobname?: string | null
+          nodename?: string | null
+          nodeport?: number | null
+          schedule?: string | null
+          username?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       add_privileged_admin_secure: {
