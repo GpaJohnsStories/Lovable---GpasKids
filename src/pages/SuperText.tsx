@@ -894,15 +894,29 @@ const SuperText: React.FC = () => {
                     {/* File Upload */}
                     <div>
                       <Label className="font-semibold mb-2 block">Upload Text File</Label>
-                      <input type="file" accept=".txt,.rtf" onChange={e => {
+                      <input type="file" accept=".txt,.rtf,.doc,.docx" onChange={e => {
                     const file = e.target.files?.[0];
                     if (file) {
-                      // Handle file upload to story-text bucket or process content
                       console.log('Text file selected:', file.name);
-                      // TODO: Implement file upload to Supabase storage or read content
+                      const reader = new FileReader();
+                      reader.onload = (event) => {
+                        const content = event.target?.result as string;
+                        if (content) {
+                          handleInputChange('content', content);
+                          toast.success(`Text file "${file.name}" loaded into editor`);
+                          // Auto-scroll to text editor section
+                          setTimeout(() => {
+                            scrollToTextEditorSection();
+                          }, 500);
+                        }
+                      };
+                      reader.onerror = () => {
+                        toast.error('Failed to read text file');
+                      };
+                      reader.readAsText(file);
                     }
                   }} className="w-full border border-orange-400 rounded-md p-2 text-sm" />
-                      <p className="text-xs text-gray-500 mt-1">Supported formats: TXT, RTF • Max size: 10MB</p>
+                      <p className="text-xs text-gray-500 mt-1">Supported formats: TXT, RTF, DOC, DOCX • Max size: 10MB</p>
                     </div>
                     
                     {/* Google Drive Upload */}
