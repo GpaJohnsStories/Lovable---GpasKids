@@ -148,11 +148,9 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               width: 55px;
               height: 55px;
               display: inline-block;
-              float: right;
-              margin-left: 8px;
-              margin-bottom: 4px;
+              margin: 0 4px;
               object-fit: contain;
-              vertical-align: top;
+              vertical-align: middle;
             }
             
             /* Preserve inline font-family styles - no overrides */
