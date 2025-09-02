@@ -57,15 +57,55 @@ serve(async (req) => {
       throw new Error('Text is required')
     }
 
+    // ===== COMPREHENSIVE TEXT CLEANING FOR TTS =====
+    
+    /**
+     * Strip all tokens and clean content for TTS
+     */
+    const cleanContentForTTS = (content: string) => {
+      let cleaned = content
+      
+      // Strip header tokens (both block and colon style)
+      cleaned = cleaned.replace(/\{\{TITLE\}\}[\s\S]*?\{\{\/TITLE\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{TAGLINE\}\}[\s\S]*?\{\{\/TAGLINE\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{AUTHOR\}\}[\s\S]*?\{\{\/AUTHOR\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{EXCERPT\}\}[\s\S]*?\{\{\/EXCERPT\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{TITLE:\s*[^}]+?\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{TAGLINE:\s*[^}]+?\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{AUTHOR:\s*[^}]+?\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{EXCERPT:\s*[^}]+?\}\}/gi, '')
+      
+      // Strip icon tokens (both block and colon style)  
+      cleaned = cleaned.replace(/\{\{ICON\}\}[^{]*?\{\{\/ICON\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{ICON:\s*[^}]+?\}\}/gi, '')
+      
+      // Strip any other generic tokens {{ANYTHING}}...{{/ANYTHING}} or {{ANYTHING: value}}
+      cleaned = cleaned.replace(/\{\{[^}]+?\}\}[\s\S]*?\{\{\/[^}]+?\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{[^}]+?:\s*[^}]+?\}\}/gi, '')
+      
+      // Strip all HTML tags and entities
+      cleaned = cleaned.replace(/<[^>]*>/g, '')
+      cleaned = cleaned.replace(/&[^;]+;/g, ' ')
+      
+      // Normalize whitespace
+      cleaned = cleaned.replace(/\s+/g, ' ').trim()
+      
+      return cleaned
+    }
+    
+    // Clean the input text before processing
+    const cleanedText = cleanContentForTTS(text)
+    console.log(`🎵 Text cleaning - Original length: ${text.length}, Cleaned length: ${cleanedText.length}`)
+    
     // Server-side validation and truncation for cost control
-    const wordCount = countWords(text);
+    const wordCount = countWords(cleanedText);
     console.log(`📊 Text analysis: ${wordCount} words`);
     
-    let processedText = text;
+    let processedText = cleanedText;
     const wordLimit = 30;
     if (wordCount > wordLimit) {
       console.log(`⚠️ Text exceeds ${wordLimit} words (${wordCount}), truncating for cost control`);
-      processedText = truncateToWordLimit(text, wordLimit);
+      processedText = truncateToWordLimit(cleanedText, wordLimit);
       console.log(`✂️ Text truncated to ${countWords(processedText)} words`);
     }
 

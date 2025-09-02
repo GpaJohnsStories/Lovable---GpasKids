@@ -40,29 +40,116 @@ serve(async (req) => {
       throw new Error('Story not found')
     }
 
-    // Prepare text for reading - combine title, subtitle, author, description, and content
-    let textToRead = `${story.title}`
+    // ===== COMPREHENSIVE TEXT CLEANING FOR TTS =====
     
-    // Add tagline/subtitle if available
-    if (story.tagline) {
-      textToRead += `. ${story.tagline}`
+    /**
+     * Extract header tokens from content (TITLE, TAGLINE, AUTHOR, EXCERPT)
+     */
+    const extractHeaderTokens = (content: string) => {
+      const tokens: any = {}
+      
+      // Extract block-style tokens like {{TITLE}}content{{/TITLE}}
+      const blockPatterns = {
+        title: /\{\{TITLE\}\}([\s\S]*?)\{\{\/TITLE\}\}/gi,
+        tagline: /\{\{TAGLINE\}\}([\s\S]*?)\{\{\/TAGLINE\}\}/gi,
+        author: /\{\{AUTHOR\}\}([\s\S]*?)\{\{\/AUTHOR\}\}/gi,
+        excerpt: /\{\{EXCERPT\}\}([\s\S]*?)\{\{\/EXCERPT\}\}/gi
+      }
+      
+      for (const [key, pattern] of Object.entries(blockPatterns)) {
+        const match = pattern.exec(content)
+        if (match) {
+          tokens[key] = match[1].trim()
+        }
+      }
+      
+      // Extract colon-style tokens like {{TITLE: content}}
+      const colonPatterns = {
+        title: /\{\{TITLE:\s*([^}]+?)\}\}/gi,
+        tagline: /\{\{TAGLINE:\s*([^}]+?)\}\}/gi,
+        author: /\{\{AUTHOR:\s*([^}]+?)\}\}/gi,
+        excerpt: /\{\{EXCERPT:\s*([^}]+?)\}\}/gi
+      }
+      
+      for (const [key, pattern] of Object.entries(colonPatterns)) {
+        if (!tokens[key]) { // Only use if not already found
+          const match = pattern.exec(content)
+          if (match) {
+            tokens[key] = match[1].trim()
+          }
+        }
+      }
+      
+      return tokens
     }
     
-    // Add author information with m-dash separator
-    textToRead += `. By ${story.author} —`
-    
-    
-    // Add description/excerpt if available
-    if (story.excerpt) {
-      textToRead += `. ${story.excerpt}`
+    /**
+     * Strip all tokens and clean content for TTS
+     */
+    const cleanContentForTTS = (content: string) => {
+      let cleaned = content
+      
+      // Strip header tokens (both block and colon style)
+      cleaned = cleaned.replace(/\{\{TITLE\}\}[\s\S]*?\{\{\/TITLE\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{TAGLINE\}\}[\s\S]*?\{\{\/TAGLINE\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{AUTHOR\}\}[\s\S]*?\{\{\/AUTHOR\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{EXCERPT\}\}[\s\S]*?\{\{\/EXCERPT\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{TITLE:\s*[^}]+?\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{TAGLINE:\s*[^}]+?\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{AUTHOR:\s*[^}]+?\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{EXCERPT:\s*[^}]+?\}\}/gi, '')
+      
+      // Strip icon tokens (both block and colon style)  
+      cleaned = cleaned.replace(/\{\{ICON\}\}[^{]*?\{\{\/ICON\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{ICON:\s*[^}]+?\}\}/gi, '')
+      
+      // Strip any other generic tokens {{ANYTHING}}...{{/ANYTHING}} or {{ANYTHING: value}}
+      cleaned = cleaned.replace(/\{\{[^}]+?\}\}[\s\S]*?\{\{\/[^}]+?\}\}/gi, '')
+      cleaned = cleaned.replace(/\{\{[^}]+?:\s*[^}]+?\}\}/gi, '')
+      
+      // Strip all HTML tags and entities
+      cleaned = cleaned.replace(/<[^>]*>/g, '')
+      cleaned = cleaned.replace(/&[^;]+;/g, ' ')
+      
+      // Normalize whitespace
+      cleaned = cleaned.replace(/\s+/g, ' ').trim()
+      
+      return cleaned
     }
     
-    // Add main content
-    if (story.content) {
-      // Strip HTML tags from content for better speech using regex (Deno-compatible)
-      const cleanContent = story.content.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ')
-      textToRead += ` ${cleanContent}`
+    // Extract header information from content tokens first
+    const headerTokens = extractHeaderTokens(story.content || '')
+    console.log(`🎵 Extracted header tokens:`, headerTokens)
+    
+    // Use extracted headers or fall back to story fields
+    const finalTitle = headerTokens.title || story.title || 'Untitled'
+    const finalTagline = headerTokens.tagline || story.tagline
+    const finalAuthor = headerTokens.author || story.author || 'Unknown Author'
+    const finalExcerpt = headerTokens.excerpt || story.excerpt
+    
+    // Clean the main content (strip all tokens and HTML)
+    const cleanedContent = cleanContentForTTS(story.content || '')
+    console.log(`🎵 Content cleaning - Original length: ${(story.content || '').length}, Cleaned length: ${cleanedContent.length}`)
+    
+    // Compose final text for TTS
+    let textToRead = `${finalTitle}`
+    
+    if (finalTagline) {
+      textToRead += `. ${finalTagline}`
     }
+    
+    textToRead += `. By ${finalAuthor} —`
+    
+    if (finalExcerpt) {
+      textToRead += `. ${finalExcerpt}`
+    }
+    
+    if (cleanedContent) {
+      textToRead += ` ${cleanedContent}`
+    }
+    
+    console.log(`🎵 Final TTS text preview: "${textToRead.substring(0, 200)}..."`)
+    console.log(`🎵 Story content preserved unchanged in database`)
 
     // Convert dashes to natural pauses for better speech flow
     const processTextForSpeech = (text: string) => {
