@@ -2,6 +2,7 @@ import React from 'react';
 import { createSafeHtml } from "@/utils/xssProtection";
 import { wrapParagraphs } from "@/utils/textUtils";
 import { extractHeaderTokens, createSafeHeaderHtml } from "@/utils/headerTokens";
+import { processIconTokens } from "@/utils/iconTokens";
 
 interface IsolatedStoryRendererProps {
   content?: string;
@@ -53,6 +54,9 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
         // If parsing fails, use the content as-is
       }
     }
+    
+    // Process icon tokens before other processing
+    processedContent = processIconTokens(processedContent);
     
     // Wrap plain text in paragraphs if needed
     processedContent = wrapParagraphs(processedContent);
@@ -139,6 +143,18 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
         />
         <style dangerouslySetInnerHTML={{
           __html: `
+            /* Inline icon styling for {{ICON}} tokens */
+            .inline-icon-55 {
+              width: 55px;
+              height: 55px;
+              display: inline-block;
+              float: right;
+              margin-left: 8px;
+              margin-bottom: 4px;
+              object-fit: contain;
+              vertical-align: top;
+            }
+            
             /* Preserve inline font-family styles - no overrides */
             span[style*="font-family"] {
               /* Let inline styles work naturally */
