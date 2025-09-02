@@ -234,9 +234,20 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
         throw new Error(data.error);
       }
       
-      // Refresh the story data to get the updated audio URL
+      // Optimistically update formData with new audio timestamp
+      const now = new Date().toISOString();
+      setFormData(prev => ({
+        ...prev,
+        audio_generated_at: now,
+        // If the response includes audio URL, update it too
+        ...(data?.audioUrl && { audio_url: data.audioUrl })
+      }));
+      console.log('=== AUDIO GENERATION SUCCESSFUL - OPTIMISTIC UPDATE APPLIED ===');
+      
+      // Refresh the story data to get the updated audio URL and other metadata
       if (refetchStory) {
         await refetchStory();
+        console.log('=== AUDIO REFETCH COMPLETED - TIMESTAMP SHOULD BE UPDATED ===');
       }
       
     } catch (error) {
