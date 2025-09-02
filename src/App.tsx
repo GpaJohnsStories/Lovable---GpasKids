@@ -9,6 +9,7 @@ import { TooltipProvider as CustomTooltipProvider } from "@/contexts/TooltipCont
 import { SuperAVProvider } from '@/contexts/SuperAVContext';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { useProfileEnsurance } from "@/hooks/useProfileEnsurance";
+import ReportProblemButton from "./components/ReportProblemButton";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Story from "./pages/Story";
@@ -82,6 +83,13 @@ const ConditionalContentProtection = ({ children }: { children: React.ReactNode 
   );
 };
 
+// Component to conditionally render ReportProblemButton
+const ConditionalReportButton = () => {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith('/buddys_admin');
+  
+  return !isAdminPage ? <ReportProblemButton /> : null;
+};
 // Component to conditionally render BreakGuide and timer on public pages only
 const ConditionalBreakGuide = () => {
   const location = useLocation();
@@ -118,6 +126,7 @@ function App() {
                   <ConditionalContentProtection>
                     <ScrollToTop />
                     <ConditionalBreakGuide />
+                    <ConditionalReportButton />
                     
                     <Routes>
                       {/* Public Routes */}

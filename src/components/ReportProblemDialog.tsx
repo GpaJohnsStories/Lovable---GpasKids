@@ -1,0 +1,262 @@
+import React, { useState, useEffect } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { WordLimitedTextarea } from "@/components/ui/word-limited-textarea";
+import ThankYouModal from './ThankYouModal';
+import { containsBadWord } from '@/utils/profanity';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
+import { WebTextBox } from './WebTextBox';
+
+interface ReportProblemDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
+  isOpen,
+  onClose
+}) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    description: '',
+    whoAreYou: '',
+    pageUrl: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
+  const [profanityError, setProfanityError] = useState('');
+  const [startTime, setStartTime] = useState<number>(0);
+
+  useEffect(() => {
+    if (isOpen) {
+      setStartTime(Date.now());
+      setFormData(prev => ({
+        ...prev,
+        pageUrl: window.location.href
+      }));
+    }
+  }, [isOpen]);
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    
+    // Check for profanity in text fields
+    if (['name', 'email', 'subject', 'description'].includes(field) && value) {
+      if (containsBadWord(value)) {
+        setProfanityError('Please use appropriate language in your message.');
+        return;
+      }
+    }
+    setProfanityError('');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validation
+    if (!formData.name.trim() || !formData.subject.trim() || !formData.description.trim()) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in your name, subject, and description.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.whoAreYou) {
+      toast({
+        title: "Please tell us who you are",
+        description: "This helps us know you're not a robot.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Check minimum interaction time (3 seconds)
+    const interactionTime = Date.now() - startTime;
+    if (interactionTime < 3000) {
+      toast({
+        title: "Please take your time",
+        description: "Please spend a moment reviewing your message.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Final profanity check
+    const fieldsToCheck = [formData.name, formData.email, formData.subject, formData.description];
+    if (fieldsToCheck.some(field => containsBadWord(field))) {
+      setProfanityError('Please use appropriate language in your message.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.functions.invoke('report-problem', {
+        body: {
+          ...formData,
+          userAgent: navigator.userAgent,
+          viewport: `${window.innerWidth}x${window.innerHeight}`,
+          timestamp: new Date().toISOString(),
+          interactionTime
+        }
+      });
+
+      if (error) throw error;
+
+      setShowThankYou(true);
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        description: '',
+        whoAreYou: '',
+        pageUrl: window.location.href
+      });
+    } catch (error) {
+      console.error('Error submitting report:', error);
+      toast({
+        title: "Submission failed",
+        description: "Please try again in a moment.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleClose = () => {
+    setShowThankYou(false);
+    onClose();
+    setProfanityError('');
+  };
+
+  if (showThankYou) {
+    return (
+      <ThankYouModal
+        isOpen={isOpen}
+        onClose={handleClose}
+        amount="your message"
+        customMessage="Thank you for reaching out! We'll get back to you soon."
+      />
+    );
+  }
+
+  return (
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="text-left">
+          <DialogTitle className="text-lg font-semibold">Report a Problem</DialogTitle>
+        </DialogHeader>
+
+        {/* Webtext section - placeholder for SYS-CGJ */}
+        <div className="mb-4">
+          <WebTextBox 
+            webtextCode="SYS-CGJ" 
+            borderColor="#f59e0b"
+            backgroundColor="bg-amber-50"
+            title="Report Guidelines"
+          />
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Label htmlFor="name" className="text-sm font-medium">Your Name</Label>
+            <Input
+              id="name"
+              value={formData.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              placeholder="What should we call you?"
+              className="mt-1"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="email" className="text-sm font-medium">Email (optional)</Label>
+            <Input
+              id="email"
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              placeholder="If you want us to write back"
+              className="mt-1"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="subject" className="text-sm font-medium">What's the problem?</Label>
+            <Input
+              id="subject"
+              value={formData.subject}
+              onChange={(e) => handleInputChange('subject', e.target.value)}
+              placeholder="Tell us in a few words"
+              className="mt-1"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="description" className="text-sm font-medium">Tell us more</Label>
+            <WordLimitedTextarea
+              id="description"
+              value={formData.description}
+              onChange={(e) => handleInputChange('description', e.target.value)}
+              placeholder="What happened? What did you expect to happen?"
+              wordLimit={200}
+              className="mt-1 min-h-[80px]"
+            />
+          </div>
+
+          <div>
+            <Label className="text-sm font-medium">Who are you?</Label>
+            <RadioGroup
+              value={formData.whoAreYou}
+              onValueChange={(value) => handleInputChange('whoAreYou', value)}
+              className="mt-2"
+            >
+              {['Kid', 'Adult', 'Teacher', 'Parent', 'Rather not say'].map((option) => (
+                <div key={option} className="flex items-center space-x-2">
+                  <RadioGroupItem value={option} id={option} />
+                  <Label htmlFor={option} className="text-sm">{option}</Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+
+          {profanityError && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-md">
+              <div className="flex items-center space-x-2">
+                <span className="text-red-600 text-sm">{profanityError}</span>
+              </div>
+            </div>
+          )}
+
+          <div className="flex justify-end space-x-3 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleClose}
+              disabled={isSubmitting}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={isSubmitting || !!profanityError}
+              className="bg-primary hover:bg-primary/90"
+            >
+              {isSubmitting ? 'Sending...' : 'Send Report'}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};

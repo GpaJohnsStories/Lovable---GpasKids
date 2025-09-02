@@ -7,9 +7,10 @@ interface ThankYouModalProps {
   isOpen: boolean;
   onClose: () => void;
   amount: string;
+  customMessage?: string;
 }
 
-const ThankYouModal = ({ isOpen, onClose, amount }: ThankYouModalProps) => {
+const ThankYouModal: React.FC<ThankYouModalProps> = ({ isOpen, onClose, amount, customMessage }) => {
   const navigate = useNavigate();
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -28,12 +29,18 @@ const ThankYouModal = ({ isOpen, onClose, amount }: ThankYouModalProps) => {
           </DialogTitle>
           
           <DialogDescription className="text-lg text-gray-700 space-y-3">
-            <p>
-              Your generous donation of <span className="font-bold text-green-600">${amount}</span> means the world to Grandpa John and all the children who love these stories!
-            </p>
-            <p className="text-base">
-              Your support helps keep these wonderful tales free and accessible for families everywhere.
-            </p>
+            {customMessage ? (
+              <p>{customMessage}</p>
+            ) : (
+              <>
+                <p>
+                  Your generous donation of <span className="font-bold text-green-600">${amount}</span> means the world to Grandpa John and all the children who love these stories!
+                </p>
+                <p className="text-base">
+                  Your support helps keep these wonderful tales free and accessible for families everywhere.
+                </p>
+              </>
+            )}
           </DialogDescription>
         </DialogHeader>
         
