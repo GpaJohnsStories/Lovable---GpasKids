@@ -117,35 +117,46 @@ serve(async (req) => {
       return cleaned
     }
     
-    // Extract header information from content tokens first
+    // Extract header information from content tokens only
     const headerTokens = extractHeaderTokens(story.content || '')
     console.log(`🎵 Extracted header tokens:`, headerTokens)
     
-    // Use extracted headers or fall back to story fields
-    const finalTitle = headerTokens.title || story.title || 'Untitled'
-    const finalTagline = headerTokens.tagline || story.tagline
-    const finalAuthor = headerTokens.author || story.author || 'Unknown Author'
-    const finalExcerpt = headerTokens.excerpt || story.excerpt
+    // Use only tokens - no fallbacks to database fields
+    const finalTitle = headerTokens.title || ''
+    const finalTagline = headerTokens.tagline || ''
+    const finalAuthor = headerTokens.author || ''
+    const finalExcerpt = headerTokens.excerpt || ''
     
     // Clean the main content (strip all tokens and HTML)
     const cleanedContent = cleanContentForTTS(story.content || '')
     console.log(`🎵 Content cleaning - Original length: ${(story.content || '').length}, Cleaned length: ${cleanedContent.length}`)
     
-    // Compose final text for TTS
-    let textToRead = `${finalTitle}`
+    // Compose final text for TTS using only tokens
+    let textToRead = ''
     
-    if (finalTagline) {
-      textToRead += `. ${finalTagline}`
-    }
-    
-    textToRead += `. By ${finalAuthor} —`
-    
-    if (finalExcerpt) {
-      textToRead += `. ${finalExcerpt}`
-    }
-    
-    if (cleanedContent) {
-      textToRead += ` ${cleanedContent}`
+    // Only add intro if we have token content
+    if (finalTitle) {
+      textToRead = finalTitle
+      
+      if (finalTagline) {
+        textToRead += `. ${finalTagline}`
+      }
+      
+      if (finalAuthor) {
+        textToRead += `. By ${finalAuthor} —`
+      }
+      
+      if (finalExcerpt) {
+        textToRead += `. ${finalExcerpt}`
+      }
+      
+      if (cleanedContent) {
+        textToRead += ` ${cleanedContent}`
+      }
+    } else {
+      // No tokens found - just read the cleaned content if available
+      textToRead = cleanedContent || ''
+      console.log(`⚠️ No header tokens found - reading content only`)
     }
     
     console.log(`🎵 Final TTS text preview: "${textToRead.substring(0, 200)}..."`)

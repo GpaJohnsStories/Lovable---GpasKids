@@ -2,49 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { useStoryData } from '@/hooks/useStoryData';
 import { supabase } from "@/integrations/supabase/client";
 
-/* 
- * ==========================================================================
- * TEMPORARY TOKEN NORMALIZATION CODE - TO BE REMOVED AFTER MIGRATION
- * ==========================================================================
- * This code automatically adds header tokens to existing stories that don't have them.
- * Once all existing stories/webtext have been updated with tokens, this entire section
- * can be safely removed. The code ensures backward compatibility during the transition
- * period by automatically inserting and pre-filling header tokens when missing.
- * ==========================================================================
- */
-
-/**
- * TEMPORARY: Checks if content starts with header tokens
- * This function will be removed once all stories have been migrated
- */
-const hasHeaderTokens = (content: string): boolean => {
-  if (!content || typeof content !== 'string') return false;
-  const trimmed = content.trim();
-  return trimmed.startsWith('{{TITLE}}') || 
-         trimmed.startsWith('<p>{{TITLE}}') ||
-         trimmed.includes('{{TITLE}}') && trimmed.indexOf('{{TITLE}}') < 50; // Allow some whitespace/formatting
-};
-
-/**
- * TEMPORARY: Automatically inserts header tokens with story data
- * This function will be removed once all stories have been migrated
- */
-const normalizeContentWithTokens = (content: string, storyData: any): string => {
-  if (hasHeaderTokens(content)) {
-    return content; // Already has tokens, don't modify
-  }
-
-  // Create header tokens pre-filled with story data
-  const headerTokens = `{{TITLE}}${storyData.title || ''}{{/TITLE}}
-{{TAGLINE}}${storyData.tagline || ''}{{/TAGLINE}}
-{{AUTHOR}}${storyData.author || ''}{{/AUTHOR}}
-{{EXCERPT}}${storyData.excerpt || ''}{{/EXCERPT}}
-
-`;
-
-  // Prepend tokens to existing content
-  return headerTokens + (content || '');
-};
 
 export interface Story {
   id?: string;
@@ -108,15 +65,8 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
   const populateFormWithStory = useCallback((storyData: Story, fromCodeLookup = false) => {
     console.log('🎯 useStoryFormState: Populating form with story data:', storyData, 'fromCodeLookup:', fromCodeLookup);
     
-    /* 
-     * TEMPORARY: Apply token normalization to ensure header tokens are present
-     * This will be removed once all stories have been migrated
-     */
-    const normalizedContent = normalizeContentWithTokens(storyData.content || '', storyData);
-    
     setFormData({
       ...storyData,
-      content: normalizedContent, // Use normalized content with tokens
       ai_voice_name: storyData.ai_voice_name || 'Nova',
       ai_voice_model: storyData.ai_voice_model || 'tts-1',
       copyright_status: storyData.copyright_status === 'S' ? 'L' : (storyData.copyright_status || '©')
@@ -137,15 +87,8 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     if (story) {
       console.log('🎯 useStoryFormState: Loading story data into form:', story);
       
-      /* 
-       * TEMPORARY: Apply token normalization to ensure header tokens are present
-       * This will be removed once all stories have been migrated
-       */
-      const normalizedContent = normalizeContentWithTokens(story.content || '', story);
-      
       setFormData({
         ...story,
-        content: normalizedContent, // Use normalized content with tokens
         ai_voice_name: story.ai_voice_name || 'Nova',
         ai_voice_model: story.ai_voice_model || 'tts-1',
         copyright_status: story.copyright_status === 'S' ? 'L' : (story.copyright_status || '©')
@@ -275,13 +218,3 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
   };
 };
 
-/* 
- * ==========================================================================
- * END OF TEMPORARY TOKEN NORMALIZATION CODE
- * ==========================================================================
- * All code between the start and end markers above is temporary and should
- * be removed once all existing stories have been migrated to include header
- * tokens. This includes the hasHeaderTokens and normalizeContentWithTokens
- * functions, as well as their usage in populateFormWithStory and useEffect.
- * ==========================================================================
- */
