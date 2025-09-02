@@ -953,9 +953,11 @@ const SuperText: React.FC = () => {
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative">
                 {/* Blue Dot 4 in top left corner */}
                 <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">4</div>
-                <div className="flex items-center gap-2 mb-4">
-                  
+                <div className="flex items-center justify-between gap-2 mb-4">
                   <h2 className="text-xl font-bold text-green-700">Create AI Voice File</h2>
+                  {formData.audio_url && (
+                    <AudioButton code="AUDIO-PLAY" onClick={() => setShowSuperAV(true)} className="flex-shrink-0" />
+                  )}
                 </div>
                 
                 <div className="space-y-4">
@@ -976,13 +978,10 @@ const SuperText: React.FC = () => {
                   {/* Existing Audio File Display */}
                   {formData.audio_url && <div className="space-y-2">
                       <div className="supertext-fs-21px-arial-black font-semibold text-green-700">Existing Audio File:</div>
-                      <div className="flex items-center gap-3">
-                        <AudioButton code="AUDIO-PLAY" onClick={() => setShowSuperAV(true)} className="flex-shrink-0" />
-                        <audio controls className="flex-grow">
-                          <source src={formData.audio_url} type="audio/mpeg" />
-                          Your browser does not support the audio element.
-                        </audio>
-                      </div>
+                      <audio controls className="w-full">
+                        <source src={formData.audio_url} type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                      </audio>
                     </div>}
 
                   {/* Voice Settings Link */}
