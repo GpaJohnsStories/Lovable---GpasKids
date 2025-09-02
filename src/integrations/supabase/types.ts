@@ -670,42 +670,7 @@ export type Database = {
       }
     }
     Views: {
-      scheduled_backups: {
-        Row: {
-          active: boolean | null
-          command: string | null
-          database: string | null
-          jobid: number | null
-          jobname: string | null
-          nodename: string | null
-          nodeport: number | null
-          schedule: string | null
-          username: string | null
-        }
-        Insert: {
-          active?: boolean | null
-          command?: string | null
-          database?: string | null
-          jobid?: number | null
-          jobname?: string | null
-          nodename?: string | null
-          nodeport?: number | null
-          schedule?: string | null
-          username?: string | null
-        }
-        Update: {
-          active?: boolean | null
-          command?: string | null
-          database?: string | null
-          jobid?: number | null
-          jobname?: string | null
-          nodename?: string | null
-          nodeport?: number | null
-          schedule?: string | null
-          username?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       add_privileged_admin_secure: {
@@ -832,6 +797,16 @@ export type Database = {
           created_at: string
           display_name: string
           id: string
+        }[]
+      }
+      get_scheduled_backups: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          active: boolean
+          command: string
+          jobid: number
+          jobname: string
+          schedule: string
         }[]
       }
       get_storage_totals: {

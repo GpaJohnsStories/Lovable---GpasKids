@@ -15,6 +15,8 @@ export const BackupCenter = () => {
   const [isRunningNightlyBackup, setIsRunningNightlyBackup] = useState(false);
   const [backupHistory, setBackupHistory] = useState<any[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
+  const [scheduledBackups, setScheduledBackups] = useState<any[]>([]);
+  const [loadingSchedule, setLoadingSchedule] = useState(true);
   const [showProgressModal, setShowProgressModal] = useState(false);
   const [backupSteps, setBackupSteps] = useState<any[]>([]);
   const [currentStep, setCurrentStep] = useState('');
@@ -29,9 +31,10 @@ export const BackupCenter = () => {
     { name: 'orange-gang-pending', description: 'Pending Orange Gang photos', public: false }
   ];
 
-  // Load backup history on component mount
+  // Load backup history and scheduled backups on component mount
   useEffect(() => {
     loadBackupHistory();
+    loadScheduledBackups();
   }, []);
 
   const loadBackupHistory = async () => {
@@ -51,6 +54,24 @@ export const BackupCenter = () => {
       console.error('Error loading backup history:', error);
     } finally {
       setLoadingHistory(false);
+    }
+  };
+
+  const loadScheduledBackups = async () => {
+    try {
+      setLoadingSchedule(true);
+      const { data, error } = await supabase.rpc('get_scheduled_backups');
+      
+      if (error) {
+        console.error('Error loading scheduled backups:', error);
+        return;
+      }
+
+      setScheduledBackups(data || []);
+    } catch (error) {
+      console.error('Error loading scheduled backups:', error);
+    } finally {
+      setLoadingSchedule(false);
     }
   };
 
@@ -437,9 +458,22 @@ Contact the system administrator for assistance.`;
                 <Badge variant="secondary" className="bg-green-100 text-green-800">Cloud Storage</Badge>
                 <Badge variant="secondary" className="bg-green-100 text-green-800">Scheduled</Badge>
               </div>
-              <p className="text-sm text-green-700 mt-2">
-                💡 Tip: Use cron scheduling for daily 2 AM backups
-              </p>
+              {loadingSchedule ? (
+                <p className="text-sm text-green-700 mt-2">
+                  <Loader2 className="w-4 h-4 inline mr-1 animate-spin" />
+                  Checking schedule status...
+                </p>
+              ) : scheduledBackups.length > 0 ? (
+                <div className="text-sm text-green-700 mt-2">
+                  ✅ <strong>Daily backups active!</strong> Next backup: Today at 2:00 AM UTC
+                  <br />
+                  <span className="text-xs">Schedule: {scheduledBackups[0]?.schedule} (Job ID: {scheduledBackups[0]?.jobid})</span>
+                </div>
+              ) : (
+                <p className="text-sm text-green-700 mt-2">
+                  ⚠️ No scheduled backups found. Run manual backup above.
+                </p>
+              )}
             </div>
             <Button 
               onClick={handleNightlyBackup}
