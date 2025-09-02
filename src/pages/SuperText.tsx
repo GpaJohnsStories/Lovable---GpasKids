@@ -22,6 +22,8 @@ import SuperTextStoryStatus from '@/components/SuperTextStoryStatus';
 import LastUpdatesGrid from '@/components/LastUpdatesGrid';
 import { useAdminSession } from '@/hooks/useAdminSession';
 import StoryPhotoUpload from '@/components/StoryPhotoUpload';
+import { AudioButton } from '@/components/AudioButton';
+import { SuperAV } from '@/components/SuperAV';
 import './SuperText.css';
 interface Story {
   id?: string;
@@ -61,6 +63,7 @@ const SuperText: React.FC = () => {
   const [copyrightStatus, setCopyrightStatus] = React.useState('');
   const [publicationStatusCode, setPublicationStatusCode] = React.useState(5);
   const [lookupResult, setLookupResult] = React.useState<Story | null>(null);
+  const [showSuperAV, setShowSuperAV] = React.useState(false);
 
   // Refs for section scrolling
   const audioSectionRef = useRef<HTMLDivElement>(null);
@@ -971,12 +974,15 @@ const SuperText: React.FC = () => {
                   </Button>
 
                   {/* Existing Audio File Display */}
-                  {formData.ai_voice_url && <div className="space-y-2">
+                  {formData.audio_url && <div className="space-y-2">
                       <div className="supertext-fs-21px-arial-black font-semibold text-green-700">Existing Audio File:</div>
-                      <audio controls className="w-full">
-                        <source src={formData.ai_voice_url} type="audio/mpeg" />
-                        Your browser does not support the audio element.
-                      </audio>
+                      <div className="flex items-center gap-3">
+                        <AudioButton code="AUDIO-PLAY" onClick={() => setShowSuperAV(true)} className="flex-shrink-0" />
+                        <audio controls className="flex-grow">
+                          <source src={formData.audio_url} type="audio/mpeg" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </div>
                     </div>}
 
                   {/* Voice Settings Link */}
@@ -1101,6 +1107,18 @@ const SuperText: React.FC = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      
+      {/* SuperAV Modal */}
+      {showSuperAV && formData.audio_url && (
+        <SuperAV
+          isOpen={showSuperAV}
+          onClose={() => setShowSuperAV(false)}
+          title={formData.title || "Story Audio"}
+          author={formData.author}
+          voiceName={formData.ai_voice_name}
+          audioUrl={formData.audio_url}
+        />
+      )}
     </SecureAdminRoute>;
 };
 export default SuperText;
