@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Download, Database, HardDrive, Calendar, FileText, Loader2, Cloud, Package, Clock, Play } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Progress } from '@/components/ui/progress';
+import { Download, Database, HardDrive, Calendar, FileText, Loader2, Cloud, Package, Clock, Play, Filter, Eye, FolderDown, FileSpreadsheet } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import JSZip from 'jszip';
@@ -21,6 +25,19 @@ export const BackupCenter = () => {
   const [backupSteps, setBackupSteps] = useState<any[]>([]);
   const [currentStep, setCurrentStep] = useState('');
   const [overallProgress, setOverallProgress] = useState(0);
+  
+  // Audio backup state
+  const [audioFilterMode, setAudioFilterMode] = useState<'all' | 'sinceDate'>('all');
+  const [audioFilterDate, setAudioFilterDate] = useState<string>('');
+  const [audioManifest, setAudioManifest] = useState<any>(null);
+  const [showAudioPreview, setShowAudioPreview] = useState(false);
+  const [isGeneratingAudioManifest, setIsGeneratingAudioManifest] = useState(false);
+  const [browserDownloadProgress, setBrowserDownloadProgress] = useState<{
+    total: number;
+    completed: number;
+    failed: number;
+    isActive: boolean;
+  }>({ total: 0, completed: 0, failed: 0, isActive: false });
 
   const storageBuckets = [
     { name: 'story-photos', description: 'Story photo attachments', public: true },
@@ -388,6 +405,167 @@ Contact the system administrator for assistance.`;
     }
   };
 
+  // Audio backup functions
+  const generateAudioManifest = async () => {
+    setIsGeneratingAudioManifest(true);
+    try {
+      const requestBody = {
+        bucket: 'story-audio',
+        mode: audioFilterMode,
+        sinceDate: audioFilterMode === 'sinceDate' ? audioFilterDate : undefined,
+        includeSignedUrls: true,
+        expiresInSeconds: 172800 // 48 hours
+      };
+
+      console.log('Generating audio manifest with:', requestBody);
+
+      const { data, error } = await supabase.functions.invoke('storage-manifest-signed-urls', {
+        body: requestBody
+      });
+
+      if (error) {
+        console.error('Audio manifest error:', error);
+        toast.error('Failed to generate audio manifest');
+        return;
+      }
+
+      setAudioManifest(data);
+      setShowAudioPreview(true);
+
+      console.log(`Generated manifest: ${data.totals.count} files, ${data.totals.size_pretty}`);
+      
+    } catch (error) {
+      console.error('Audio manifest generation error:', error);
+      toast.error('Failed to generate audio manifest');
+    } finally {
+      setIsGeneratingAudioManifest(false);
+    }
+  };
+
+  const downloadAudioCSV = () => {
+    if (!audioManifest?.entries) return;
+
+    const csvContent = [
+      // Header row
+      'filename,url,size_bytes,size_pretty,updated_at,story_id,story_code,title',
+      // Data rows
+      ...audioManifest.entries.map((entry: any) => {
+        const row = [
+          `"${entry.filename}"`,
+          `"${entry.signed_url}"`,
+          entry.size_bytes,
+          `"${(entry.size_bytes / 1024 / 1024).toFixed(2)} MB"`,
+          `"${entry.updated_at}"`,
+          `"${entry.story_id || ''}"`,
+          `"${entry.story_code || ''}"`,
+          `"${entry.title || ''}"`
+        ];
+        return row.join(',');
+      })
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    
+    const filterSuffix = audioFilterMode === 'sinceDate' ? `_since_${audioFilterDate}` : '_all';
+    const filename = `story_audio_manifest${filterSuffix}_${new Date().toISOString().slice(0, 10)}.csv`;
+    
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    toast.success(`CSV downloaded: ${filename}`);
+    setShowAudioPreview(false);
+  };
+
+  const downloadAudioViaFiles = async () => {
+    if (!audioManifest?.entries) return;
+
+    // Check for File System Access API support
+    if (!('showDirectoryPicker' in window)) {
+      toast.error('Browser download requires a Chromium-based browser (Chrome, Edge, etc.). Please use the CSV download option instead.');
+      return;
+    }
+
+    try {
+      // Prompt user to select a directory
+      const directoryHandle = await (window as any).showDirectoryPicker();
+      
+      setBrowserDownloadProgress({
+        total: audioManifest.entries.length,
+        completed: 0,
+        failed: 0,
+        isActive: true
+      });
+
+      const maxConcurrency = 3; // Limit concurrent downloads
+      let completed = 0;
+      let failed = 0;
+
+      // Process files in batches
+      for (let i = 0; i < audioManifest.entries.length; i += maxConcurrency) {
+        const batch = audioManifest.entries.slice(i, i + maxConcurrency);
+        
+        await Promise.allSettled(batch.map(async (entry: any) => {
+          try {
+            // Check if file already exists
+            try {
+              await directoryHandle.getFileHandle(entry.filename);
+              console.log(`File already exists, skipping: ${entry.filename}`);
+              completed++;
+              return;
+            } catch {
+              // File doesn't exist, proceed with download
+            }
+
+            // Fetch the file
+            const response = await fetch(entry.signed_url);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
+            const blob = await response.blob();
+            
+            // Create file in selected directory
+            const fileHandle = await directoryHandle.getFileHandle(entry.filename, { create: true });
+            const writable = await fileHandle.createWritable();
+            await writable.write(blob);
+            await writable.close();
+            
+            completed++;
+          } catch (error) {
+            console.error(`Failed to download ${entry.filename}:`, error);
+            failed++;
+          } finally {
+            setBrowserDownloadProgress(prev => ({
+              ...prev,
+              completed: completed,
+              failed: failed
+            }));
+          }
+        }));
+      }
+
+      setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
+      
+      if (failed === 0) {
+        toast.success(`Successfully downloaded ${completed} audio files!`);
+      } else {
+        toast(`Download completed: ${completed} successful, ${failed} failed`, {
+          description: 'Check console for details on failed downloads.'
+        });
+      }
+
+    } catch (error) {
+      console.error('Browser download error:', error);
+      toast.error('Failed to download files via browser');
+      setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
+    }
+  };
+
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex items-center gap-3 mb-6">
@@ -591,31 +769,171 @@ Contact the system administrator for assistance.`;
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {storageBuckets.map((bucket) => (
-              <div key={bucket.name} className="p-4 border rounded-lg bg-gray-50">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium">{bucket.name}</h4>
-                  <Badge variant={bucket.public ? "default" : "secondary"}>
-                    {bucket.public ? "Public" : "Private"}
-                  </Badge>
+            {storageBuckets.map((bucket) => {
+              // Special handling for story-audio bucket
+              if (bucket.name === 'story-audio') {
+                return (
+                  <div key={bucket.name} className="p-4 border-2 border-orange-200 rounded-lg bg-orange-50 md:col-span-2">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-medium text-orange-800">{bucket.name}</h4>
+                      <Badge variant="default" className="bg-orange-600">
+                        Enhanced Backup
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-orange-700 mb-4">{bucket.description} - Enhanced with date filtering and individual file downloads</p>
+                    
+                    {/* Filter Controls */}
+                    <div className="space-y-3 mb-4 p-3 bg-white rounded border">
+                      <div className="flex items-center gap-4">
+                        <Filter className="w-4 h-4 text-orange-600" />
+                        <Label className="text-sm font-medium">Filter Options:</Label>
+                      </div>
+                      
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="flex gap-2">
+                          <label className="flex items-center gap-2 text-sm">
+                            <input
+                              type="radio"
+                              name="audioFilter"
+                              value="all"
+                              checked={audioFilterMode === 'all'}
+                              onChange={(e) => setAudioFilterMode(e.target.value as 'all' | 'sinceDate')}
+                              className="text-orange-600"
+                            />
+                            All audio files
+                          </label>
+                          <label className="flex items-center gap-2 text-sm">
+                            <input
+                              type="radio"
+                              name="audioFilter"
+                              value="sinceDate"
+                              checked={audioFilterMode === 'sinceDate'}
+                              onChange={(e) => setAudioFilterMode(e.target.value as 'all' | 'sinceDate')}
+                              className="text-orange-600"
+                            />
+                            Updated after
+                          </label>
+                        </div>
+                        
+                        {audioFilterMode === 'sinceDate' && (
+                          <div className="flex items-center gap-2">
+                            <Input
+                              type="date"
+                              value={audioFilterDate}
+                              onChange={(e) => setAudioFilterDate(e.target.value)}
+                              className="w-auto text-sm"
+                            />
+                            <span className="text-xs text-gray-500">at 00:00:00</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="space-y-2">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={generateAudioManifest}
+                        disabled={isGeneratingAudioManifest || (audioFilterMode === 'sinceDate' && !audioFilterDate)}
+                        className="w-full bg-orange-100 border-orange-300 text-orange-800 hover:bg-orange-200"
+                      >
+                        {isGeneratingAudioManifest ? (
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        ) : (
+                          <FileSpreadsheet className="w-4 h-4 mr-2" />
+                        )}
+                        Get Download Links (CSV)
+                      </Button>
+                      
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => {
+                          generateAudioManifest().then(() => {
+                            if (audioManifest) {
+                              downloadAudioViaFiles();
+                            }
+                          });
+                        }}
+                        disabled={isGeneratingAudioManifest || (audioFilterMode === 'sinceDate' && !audioFilterDate) || browserDownloadProgress.isActive}
+                        className="w-full bg-blue-100 border-blue-300 text-blue-800 hover:bg-blue-200"
+                      >
+                        {isGeneratingAudioManifest || browserDownloadProgress.isActive ? (
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        ) : (
+                          <FolderDown className="w-4 h-4 mr-2" />
+                        )}
+                        Download via Browser (Chromium only)
+                      </Button>
+                      
+                      {/* Browser Download Progress */}
+                      {browserDownloadProgress.isActive && (
+                        <div className="p-3 bg-blue-50 rounded border border-blue-200">
+                          <div className="flex items-center justify-between text-sm mb-2">
+                            <span>Downloading files...</span>
+                            <span>{browserDownloadProgress.completed + browserDownloadProgress.failed}/{browserDownloadProgress.total}</span>
+                          </div>
+                          <Progress 
+                            value={(browserDownloadProgress.completed + browserDownloadProgress.failed) / browserDownloadProgress.total * 100} 
+                            className="mb-2"
+                          />
+                          <div className="text-xs text-gray-600">
+                            ✅ {browserDownloadProgress.completed} completed
+                            {browserDownloadProgress.failed > 0 && (
+                              <span className="ml-2">❌ {browserDownloadProgress.failed} failed</span>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Traditional ZIP Download */}
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => handleBucketBackup(bucket.name)}
+                        disabled={downloadingBucket === bucket.name}
+                        className="w-full"
+                      >
+                        {downloadingBucket === bucket.name ? (
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        ) : (
+                          <Download className="w-4 h-4 mr-2" />
+                        )}
+                        Download as ZIP (Traditional)
+                      </Button>
+                    </div>
+                  </div>
+                );
+              }
+              
+              // Regular bucket display
+              return (
+                <div key={bucket.name} className="p-4 border rounded-lg bg-gray-50">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium">{bucket.name}</h4>
+                    <Badge variant={bucket.public ? "default" : "secondary"}>
+                      {bucket.public ? "Public" : "Private"}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-3">{bucket.description}</p>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={() => handleBucketBackup(bucket.name)}
+                    disabled={downloadingBucket === bucket.name}
+                    className="w-full"
+                  >
+                    {downloadingBucket === bucket.name ? (
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <Download className="w-4 h-4 mr-2" />
+                    )}
+                    Download {bucket.name}
+                  </Button>
                 </div>
-                <p className="text-sm text-gray-600 mb-3">{bucket.description}</p>
-                <Button 
-                  size="sm" 
-                  variant="outline"
-                  onClick={() => handleBucketBackup(bucket.name)}
-                  disabled={downloadingBucket === bucket.name}
-                  className="w-full"
-                >
-                  {downloadingBucket === bucket.name ? (
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  ) : (
-                    <Download className="w-4 h-4 mr-2" />
-                  )}
-                  Download {bucket.name}
-                </Button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
@@ -671,6 +989,70 @@ Contact the system administrator for assistance.`;
         currentStep={currentStep}
         overallProgress={overallProgress}
       />
+
+      {/* Audio Preview Modal */}
+      <Dialog open={showAudioPreview} onOpenChange={setShowAudioPreview}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Eye className="w-5 h-5" />
+              Audio Files Preview
+            </DialogTitle>
+            <DialogDescription>
+              {audioManifest && (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-4 text-lg font-medium">
+                    <span>📁 {audioManifest.totals.count} files</span>
+                    <span>💾 {audioManifest.totals.size_pretty}</span>
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    {audioFilterMode === 'all' 
+                      ? 'All audio files in the story-audio bucket'
+                      : `Files updated after ${audioFilterDate} at 00:00:00`
+                    }
+                  </p>
+                </div>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {audioManifest?.entries && (
+            <div>
+              <h4 className="font-medium mb-3">Preview (first 10 files):</h4>
+              <div className="space-y-2 max-h-64 overflow-y-auto border rounded p-3 bg-gray-50">
+                {audioManifest.entries.slice(0, 10).map((entry: any, index: number) => (
+                  <div key={index} className="text-sm border-b pb-2 last:border-b-0">
+                    <div className="font-medium truncate">{entry.filename}</div>
+                    <div className="text-gray-600 text-xs">
+                      {(entry.size_bytes / 1024 / 1024).toFixed(2)} MB • 
+                      Story: {entry.story_code || 'Unknown'} • 
+                      Updated: {new Date(entry.updated_at).toLocaleDateString()}
+                    </div>
+                  </div>
+                ))}
+                {audioManifest.entries.length > 10 && (
+                  <div className="text-center text-gray-500 text-sm pt-2">
+                    ... and {audioManifest.entries.length - 10} more files
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          <DialogFooter className="gap-2">
+            <Button variant="outline" onClick={() => setShowAudioPreview(false)}>
+              Cancel
+            </Button>
+            <Button 
+              onClick={downloadAudioCSV}
+              className="bg-orange-600 hover:bg-orange-700 text-white"
+            >
+              <FileSpreadsheet className="w-4 h-4 mr-2" />
+              Download CSV
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

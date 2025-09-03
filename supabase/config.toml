@@ -1,6 +1,6 @@
 project_id = "hlywucxwpzbqmzssmwpj"
 
-# Security Configuration for Edge Functions
+# Security Configuration for Edge Functions  
 # Functions that handle sensitive data now require authentication
 
 [functions.export-db-backup]
@@ -10,6 +10,9 @@ verify_jwt = true
 verify_jwt = true
 
 [functions.full-backup-to-bucket]
+verify_jwt = true
+
+[functions.storage-manifest-signed-urls]
 verify_jwt = true
 
 [functions.approve-comment-photo]
