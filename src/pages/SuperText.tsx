@@ -358,7 +358,7 @@ const SuperText: React.FC = () => {
            <TooltipProvider>
              <Tooltip>
                <TooltipTrigger asChild>
-                 <Button onClick={() => handleSave('save-only')} disabled={isSaving || !storyCode.trim()} className="supertext-yes-btn px-8 py-3 text-lg font-semibold rounded-full">
+                 <Button onClick={() => handleSave('save-only')} disabled={isSaving || !storyCode.trim()} className="supertext-orange-btn px-8 py-3 rounded-full">
                    {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
                  </Button>
                </TooltipTrigger>
@@ -394,7 +394,7 @@ const SuperText: React.FC = () => {
            <TooltipProvider>
              <Tooltip>
                <TooltipTrigger asChild>
-                 <Button onClick={() => handleSave('cancel-all')} className="supertext-no-btn px-8 py-3 text-lg font-semibold rounded-full">
+                 <Button onClick={() => handleSave('cancel-all')} className="supertext-orange-btn px-8 py-3 rounded-full">
                    Cancel All Edits & Clear Form
                  </Button>
                </TooltipTrigger>
