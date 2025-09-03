@@ -123,8 +123,8 @@ serve(async (req) => {
       try {
         console.log(`Processing file: ${file.name}...`);
         
-        // Check individual file size limit
-        const fileSize = file.metadata?.size ? parseInt(file.metadata.size) : 0;
+        // Check individual file size limit - handle missing metadata gracefully
+        const fileSize = file.metadata?.size ? parseInt(file.metadata.size.toString()) : 0;
         if (fileSize > maxFileSize) {
           console.warn(`Skipping large file ${file.name} (${fileSize} bytes)`);
           zipEntries.push({
