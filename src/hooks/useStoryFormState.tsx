@@ -232,13 +232,13 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     setIsUploadingAudio(true);
     
     try {
-      // Create canonical storage path: stories/{storyId}.audio
-      const canonicalPath = `stories/${formData.id}.audio`;
+      // Create storage path using story code: {STORY_CODE}.mp3
+      const audioFileName = `${formData.story_code}.mp3`;
       
       // Upload to story-audio bucket with upsert to replace existing
       const { error: uploadError } = await supabase.storage
         .from('story-audio')
-        .upload(canonicalPath, file, {
+        .upload(audioFileName, file, {
           contentType: file.type,
           upsert: true // This will overwrite existing file
         });
@@ -251,7 +251,7 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
       // Get public URL
       const { data: { publicUrl } } = supabase.storage
         .from('story-audio')
-        .getPublicUrl(canonicalPath);
+        .getPublicUrl(audioFileName);
 
       // Calculate duration (rough estimate based on file size)
       const estimatedDuration = Math.ceil(file.size / 16000); // ~16KB per second for compressed audio
