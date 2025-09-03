@@ -254,13 +254,15 @@ Deno.serve(async (req) => {
 
     console.log(`After filtering: ${entries.length} files, total size: ${formatFileSize(totalSize)}`);
 
+    // Initialize error tracking
+    let totalErrors = 0;
+
     // Generate signed URLs if requested
     if (includeSignedUrls) {
       console.log('Generating signed URLs...');
       
       // Process in batches to avoid timeouts
       const batchSize = 50;
-      let totalErrors = 0;
       
       for (let i = 0; i < entries.length; i += batchSize) {
         const batch = entries.slice(i, i + batchSize);
@@ -331,7 +333,8 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         error: 'Internal server error', 
-        details: error.message 
+        details: error.message,
+        request_id: crypto.randomUUID()
       }),
       { 
         status: 500,
