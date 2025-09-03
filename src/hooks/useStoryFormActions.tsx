@@ -38,13 +38,14 @@ export const useStoryFormActions = (
     }
   };
 
-  const handleSubmit = async (formData: Story) => {
+  const handleSubmit = async (formData: Story, customOnSave?: () => void | Promise<void>) => {
     const timestamp = new Date().toISOString();
     console.log(`=== FORM SUBMITTED AT ${timestamp} ===`);
     console.log('❗ FORM SUBMIT TRIGGERED - Check if this is being called repeatedly');
     console.log('Form data at submission:', formData);
     console.log('Story ID:', storyId);
     console.log('onSave callback:', typeof onSave);
+    console.log('customOnSave callback:', typeof customOnSave);
     
     try {
       console.log('About to call saveStory...');
@@ -55,7 +56,12 @@ export const useStoryFormActions = (
           await refetchStory();
           console.log('=== REFETCH COMPLETED - TIMESTAMP SHOULD BE UPDATED ===');
         }
-        if (onSave) {
+        
+        // Use customOnSave if provided, otherwise use the default onSave
+        if (customOnSave) {
+          await customOnSave();
+          console.log('=== CUSTOM ONSAVE COMPLETED ===');
+        } else if (onSave) {
           onSave(); // Navigate back to admin list
         }
       });

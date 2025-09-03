@@ -261,7 +261,17 @@ const SuperText: React.FC = () => {
         return;
       }
       if (saveAction === 'save-and-clear') {
-        await handleSubmit(formData);
+        // Create custom onSave callback that clears form after successful save
+        const customOnSave = async () => {
+          // Call the original handleStoryFormSave if needed (for admin navigation)
+          if (handleStoryFormSave) {
+            await handleStoryFormSave();
+          }
+          // Clear the form after successful save
+          clearForm();
+        };
+        // Pass the custom callback to handleSubmit
+        await handleSubmit(formData, customOnSave);
       } else if (saveAction === 'save-only') {
         await handleSaveOnly(formData);
       }
