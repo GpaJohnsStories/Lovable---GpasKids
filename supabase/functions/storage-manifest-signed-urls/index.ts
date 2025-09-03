@@ -69,14 +69,10 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    );
-
     // Verify admin access
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
+      console.log('❌ No authorization header provided');
       return new Response(
         JSON.stringify({ error: 'Authorization header required' }),
         { 
@@ -86,12 +82,32 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Set JWT context for admin check
-    const { data: { user }, error: authError } = await supabase.auth.getUser(
-      authHeader.replace('Bearer ', '')
+    console.log('🔑 Authorization header present, validating...');
+
+    // Create user-scoped client for admin validation
+    const userClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      {
+        global: {
+          headers: {
+            Authorization: authHeader,
+          },
+        },
+      }
     );
 
+    // Create service client for storage operations
+    const serviceClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+
+    // Get user info using user-scoped client
+    const { data: { user }, error: authError } = await userClient.auth.getUser();
+
     if (authError || !user) {
+      console.log('❌ Auth validation failed:', authError?.message || 'No user found');
       return new Response(
         JSON.stringify({ error: 'Invalid authorization' }),
         { 
@@ -101,11 +117,16 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Check if user is admin
-    const { data: isAdminResult, error: adminError } = await supabase
+    console.log(`✅ User authenticated: ${user.email} (ID: ${user.id})`);
+
+    // Check if user is admin using user-scoped client
+    const { data: isAdminResult, error: adminError } = await userClient
       .rpc('is_admin_safe');
 
+    console.log(`🔍 Admin check result: ${isAdminResult}, error: ${adminError?.message || 'none'}`);
+
     if (adminError || !isAdminResult) {
+      console.log(`❌ Admin access denied for user: ${user.email}`);
       return new Response(
         JSON.stringify({ error: 'Admin access required' }),
         { 
@@ -114,6 +135,10 @@ Deno.serve(async (req) => {
         }
       );
     }
+
+    console.log(`✅ Admin access confirmed for user: ${user.email}`);
+
+    // Use serviceClient for all storage operations below
 
     const { 
       bucket = 'story-audio',
@@ -134,7 +159,7 @@ Deno.serve(async (req) => {
     }
 
     // List all objects in the bucket
-    const { data: files, error: listError } = await supabase.storage
+    const { data: files, error: listError } = await serviceClient.storage
       .from(bucket)
       .list('', {
         limit: 1000,
@@ -171,7 +196,7 @@ Deno.serve(async (req) => {
     // Fetch story data for all story IDs
     const storyData = new Map<string, StoryData>();
     if (storyIds.size > 0) {
-      const { data: stories, error: storyError } = await supabase
+      const { data: stories, error: storyError } = await serviceClient
         .from('stories')
         .select('id, story_code, title, audio_generated_at')
         .in('id', Array.from(storyIds));
@@ -240,7 +265,7 @@ Deno.serve(async (req) => {
         
         for (const entry of batch) {
           try {
-            const { data: signedUrl, error: urlError } = await supabase.storage
+            const { data: signedUrl, error: urlError } = await serviceClient.storage
               .from(bucket)
               .createSignedUrl(entry.path, expiresInSeconds, {
                 download: entry.filename // This sets the download filename
