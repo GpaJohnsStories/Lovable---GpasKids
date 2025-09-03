@@ -22,10 +22,10 @@ export interface Story {
   video_url: string;
   ai_voice_name: string;
   ai_voice_model: string;
-  ai_voice_url?: string;
   copyright_status?: string;
   audio_url?: string;
   audio_duration_seconds?: number;
+  audio_segments?: number;
   video_duration_seconds?: number;
   created_at?: string;
   updated_at?: string;
@@ -51,7 +51,6 @@ const initialFormData: Story = {
   video_url: '',
   ai_voice_name: 'Nova',
   ai_voice_model: 'tts-1',
-  ai_voice_url: '',
   copyright_status: '©',
   publication_status_code: 5
 };
@@ -59,6 +58,7 @@ const initialFormData: Story = {
 export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
   const [formData, setFormData] = useState<Story>(initialFormData);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+  const [isUploadingAudio, setIsUploadingAudio] = useState(false);
   const [currentStoryId, setCurrentStoryId] = useState<string | undefined>(storyId);
   const { story, isLoading: isLoadingStory, refetch: refetchStory, error } = useStoryData(skipDataFetch ? undefined : currentStoryId);
 
@@ -201,10 +201,111 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     }
   };
 
+  const handleAudioUpload = async (file: File): Promise<boolean> => {
+    console.log('🎯 useStoryFormState: Starting audio upload for story:', formData.id);
+    
+    if (!formData.id) {
+      throw new Error('Story must be saved before uploading audio. Please save your story first.');
+    }
+
+    // Validate file type and size
+    const allowedTypes = ['audio/mp3', 'audio/mpeg', 'audio/wav', 'audio/m4a', 'audio/aac'];
+    if (!allowedTypes.includes(file.type)) {
+      throw new Error('Please upload an audio file (MP3, WAV, M4A, or AAC).');
+    }
+
+    const maxSize = 50 * 1024 * 1024; // 50MB
+    if (file.size > maxSize) {
+      throw new Error('Audio file must be smaller than 50MB.');
+    }
+
+    // Check if audio exists and get confirmation if needed
+    if (formData.audio_url) {
+      const confirmed = window.confirm(
+        'An audio recording already exists for this story. Do you want to replace it with the uploaded file?'
+      );
+      if (!confirmed) {
+        return false; // User cancelled
+      }
+    }
+
+    setIsUploadingAudio(true);
+    
+    try {
+      // Create canonical storage path: stories/{storyId}.audio
+      const canonicalPath = `stories/${formData.id}.audio`;
+      
+      // Upload to story-audio bucket with upsert to replace existing
+      const { error: uploadError } = await supabase.storage
+        .from('story-audio')
+        .upload(canonicalPath, file, {
+          contentType: file.type,
+          upsert: true // This will overwrite existing file
+        });
+
+      if (uploadError) {
+        console.error('🎯 useStoryFormState: Error uploading audio:', uploadError);
+        throw new Error(`Failed to upload audio: ${uploadError.message}`);
+      }
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('story-audio')
+        .getPublicUrl(canonicalPath);
+
+      // Calculate duration (rough estimate based on file size)
+      const estimatedDuration = Math.ceil(file.size / 16000); // ~16KB per second for compressed audio
+
+      console.log('🎯 useStoryFormState: Audio uploaded successfully, updating database');
+
+      // Update story record with audio information
+      const { error: updateError } = await supabase
+        .from('stories')
+        .update({
+          audio_url: publicUrl,
+          audio_generated_at: new Date().toISOString(), // Track when audio was last updated
+          audio_duration_seconds: estimatedDuration,
+          audio_segments: 1 // Uploaded files are single segment
+        })
+        .eq('id', formData.id);
+
+      if (updateError) {
+        console.error('🎯 useStoryFormState: Error updating story with audio info:', updateError);
+        throw new Error(`Failed to update story: ${updateError.message}`);
+      }
+
+      // Update form data optimistically
+      setFormData(prev => ({
+        ...prev,
+        audio_url: publicUrl,
+        audio_generated_at: new Date().toISOString(),
+        audio_duration_seconds: estimatedDuration,
+        audio_segments: 1
+      }));
+
+      console.log('=== AUDIO UPLOAD SUCCESSFUL - OPTIMISTIC UPDATE APPLIED ===');
+      
+      // Refresh the story data to get the updated audio URL and metadata
+      if (refetchStory) {
+        await refetchStory();
+        console.log('=== AUDIO REFETCH COMPLETED - DATA SHOULD BE UPDATED ===');
+      }
+
+      return true; // Upload successful
+      
+    } catch (error) {
+      console.error('🎯 useStoryFormState: Error uploading audio:', error);
+      throw error;
+    } finally {
+      setIsUploadingAudio(false);
+    }
+  };
+
   return {
     formData,
     isLoadingStory,
     isGeneratingAudio,
+    isUploadingAudio,
     refetchStory,
     populateFormWithStory,
     handleInputChange,
@@ -214,6 +315,7 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     handleVideoRemove,
     handleVoiceChange,
     handleGenerateAudio,
+    handleAudioUpload,
     error
   };
 };

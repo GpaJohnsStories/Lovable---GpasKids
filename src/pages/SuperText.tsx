@@ -44,7 +44,6 @@ interface Story {
   video_url: string;
   ai_voice_name: string;
   ai_voice_model: string;
-  ai_voice_url?: string;
   copyright_status?: string;
   audio_url?: string;
   audio_duration_seconds?: number;
@@ -77,6 +76,7 @@ const SuperText: React.FC = () => {
     formData,
     isLoadingStory,
     isGeneratingAudio,
+    isUploadingAudio,
     refetchStory,
     populateFormWithStory,
     handleInputChange,
@@ -86,6 +86,7 @@ const SuperText: React.FC = () => {
     handleVideoRemove,
     handleVoiceChange,
     handleGenerateAudio,
+    handleAudioUpload,
     error
   } = useStoryFormState(undefined, true);
   const navigate = useNavigate();
@@ -782,18 +783,37 @@ const SuperText: React.FC = () => {
                   </div>
                   
                   <div className="space-y-4">
-                    {/* File Upload */}
+                     {/* File Upload */}
                     <div>
                       <Label className="font-semibold mb-2 block">Upload Audio File</Label>
-                      <input type="file" accept="audio/*" onChange={e => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      // Handle file upload to story-audio bucket
-                      console.log('Audio file selected:', file.name);
-                      // TODO: Implement file upload to Supabase storage
-                    }
-                  }} className="w-full border border-blue-400 rounded-md p-2 text-sm" />
-                      <p className="text-xs text-gray-500 mt-1">Supported formats: MP3, WAV, M4A, OGG • Max size: 50MB</p>
+                      <input 
+                        type="file" 
+                        accept="audio/*" 
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            try {
+                              await handleAudioUpload(file);
+                              toast.success("Audio uploaded successfully!");
+                              e.target.value = ''; // Clear input
+                            } catch (error) {
+                              console.error('Audio upload error:', error);
+                              toast.error(error instanceof Error ? error.message : "Failed to upload audio");
+                              e.target.value = ''; // Clear input even on error
+                            }
+                          }
+                        }} 
+                        disabled={isUploadingAudio || !formData.id}
+                        className="w-full border border-blue-400 rounded-md p-2 text-sm disabled:opacity-50" 
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        {!formData.id 
+                          ? "Save story first before uploading audio" 
+                          : isUploadingAudio 
+                            ? "Uploading..." 
+                            : "Supported formats: MP3, WAV, M4A, AAC • Max size: 50MB"
+                        }
+                      </p>
                     </div>
                     
                     {/* Google Drive Upload */}
@@ -987,8 +1007,18 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Audio Generation Button */}
-                  <Button onClick={() => handleGenerateAudio()} disabled={isGeneratingAudio || !formData.content || !formData.ai_voice_name} className={`w-full ${isGeneratingAudio || !formData.content || !formData.ai_voice_name ? 'bg-gray-400 text-gray-600' : 'bg-green-600 hover:bg-green-700 text-white'} supertext-fs-21px-arial-white`}>
-                    🎵 {isGeneratingAudio ? 'Generating Audio...' : !formData.content ? 'Story Content Required' : !formData.ai_voice_name ? 'Voice Selection Required' : 'Generate Audio File'}
+                  <Button 
+                    onClick={() => handleGenerateAudio()} 
+                    disabled={isGeneratingAudio || !formData.id || !formData.content || !formData.ai_voice_name} 
+                    className={`w-full ${isGeneratingAudio || !formData.id || !formData.content || !formData.ai_voice_name ? 'bg-gray-400 text-gray-600' : 'bg-green-600 hover:bg-green-700 text-white'} supertext-fs-21px-arial-white`}
+                  >
+                    🎵 {
+                      isGeneratingAudio ? 'Generating Audio...' : 
+                      !formData.id ? 'Save Story First' :
+                      !formData.content ? 'Story Content Required' : 
+                      !formData.ai_voice_name ? 'Voice Selection Required' : 
+                      'Generate Audio File'
+                    }
                   </Button>
 
                   {/* Existing Audio File Display */}

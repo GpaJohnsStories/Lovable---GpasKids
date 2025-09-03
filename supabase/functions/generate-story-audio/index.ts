@@ -234,13 +234,13 @@ serve(async (req) => {
 
     console.log(`🎵 Combined audio file size: ${combinedAudio.length} bytes`)
 
-    // Upload combined audio to Supabase storage
-    const audioFileName = `${storyId}-${Date.now()}.mp3`
+    // Upload combined audio to Supabase storage using canonical path
+    const canonicalPath = `stories/${storyId}.audio`
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from('story-audio')
-      .upload(audioFileName, combinedAudio.buffer, {
+      .upload(canonicalPath, combinedAudio.buffer, {
         contentType: 'audio/mpeg',
-        upsert: false
+        upsert: true // Overwrite existing audio
       })
 
     if (uploadError) {
@@ -251,7 +251,7 @@ serve(async (req) => {
     // Get public URL for the uploaded audio
     const { data: { publicUrl } } = supabase.storage
       .from('story-audio')
-      .getPublicUrl(audioFileName)
+      .getPublicUrl(canonicalPath)
 
     console.log(`✅ Audio uploaded successfully: ${publicUrl}`)
 
