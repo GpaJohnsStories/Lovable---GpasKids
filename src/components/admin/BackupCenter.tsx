@@ -910,10 +910,6 @@ Contact the system administrator for assistance.`;
                           </div>
                         </div>
                       )}
-                      
-                      <p className="text-xs text-gray-600 mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded">
-                        ⚠️ Note: Traditional ZIP download is not available for audio files due to large file sizes. Use the enhanced options above for reliable downloads.
-                      </p>
                     </div>
                   </div>
                 );
