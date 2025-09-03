@@ -51,9 +51,15 @@ const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story, hideTitle = fa
 
   const getAudioStatusStyle = () => {
     const hasAudio = story?.audio_generated_at;
+    const isAudioOutdated = hasAudio && story?.updated_at && 
+      new Date(story.audio_generated_at) < new Date(story.updated_at);
+    
+    // Red background if no audio or if audio is outdated
+    const shouldBeRed = !hasAudio || isAudioOutdated;
+    
     return {
-      backgroundColor: hasAudio ? '#22c55e' : '#DC2626',
-      color: hasAudio ? 'black' : '#FFFF00',
+      backgroundColor: shouldBeRed ? '#DC2626' : '#22c55e',
+      color: shouldBeRed ? '#FFFF00' : 'black',
       fontSize: '21px',
       fontFamily: 'Arial, sans-serif',
       fontWeight: 'bold'
