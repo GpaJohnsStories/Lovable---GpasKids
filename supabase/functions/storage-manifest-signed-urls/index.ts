@@ -260,8 +260,12 @@ Deno.serve(async (req) => {
       
       // Process in batches to avoid timeouts
       const batchSize = 50;
+      let totalErrors = 0;
+      
       for (let i = 0; i < entries.length; i += batchSize) {
         const batch = entries.slice(i, i + batchSize);
+        const batchIndex = Math.floor(i/batchSize);
+        let batchErrors = 0;
         
         for (const entry of batch) {
           try {
@@ -271,30 +275,49 @@ Deno.serve(async (req) => {
                 download: entry.filename // This sets the download filename
               });
 
-            if (!urlError && signedUrl) {
+            if (urlError) {
+              const errorMsg = `Failed to create signed URL: ${urlError.message}`;
+              console.error(`❌ ${entry.path}: ${errorMsg}`);
+              batchErrors++;
+              continue;
+            }
+
+            if (signedUrl) {
               entry.signed_url = signedUrl.signedUrl;
+              console.log(`✅ Generated signed URL for: ${entry.path}`);
             } else {
-              console.error(`Failed to create signed URL for ${entry.path}:`, urlError);
+              console.error(`❌ ${entry.path}: No signed URL returned`);
+              batchErrors++;
             }
           } catch (error) {
-            console.error(`Error creating signed URL for ${entry.path}:`, error);
+            const errorMsg = `Processing error: ${error.message}`;
+            console.error(`❌ ${entry.path}: ${errorMsg}`);
+            batchErrors++;
           }
         }
-
-        console.log(`Generated signed URLs for batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(entries.length/batchSize)}`);
+        
+        totalErrors += batchErrors;
+        const batchNum = batchIndex + 1;
+        const totalBatches = Math.ceil(entries.length/batchSize);
+        console.log(`📦 Batch ${batchNum}/${totalBatches}: ${batch.length - batchErrors} succeeded, ${batchErrors} failed`);
       }
     }
 
+    console.log(`📊 Manifest generation complete: ${entries.length} files processed, ${totalErrors} errors`);
+
     const result = {
+      bucket,
+      mode,
+      entries: entries,
       totals: {
         count: entries.length,
         size_bytes: totalSize,
-        size_pretty: formatFileSize(totalSize)
+        size_pretty: formatFileSize(totalSize),
+        errors: totalErrors
       },
-      entries: entries
+      generated_at: new Date().toISOString(),
+      request_id: crypto.randomUUID()
     };
-
-    console.log(`Returning manifest with ${result.totals.count} entries, ${result.totals.size_pretty}`);
 
     return new Response(
       JSON.stringify(result),

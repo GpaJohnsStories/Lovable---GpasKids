@@ -429,18 +429,33 @@ Contact the system administrator for assistance.`;
 
       if (error) {
         console.error('Audio manifest error:', error);
-        toast.error('Failed to generate audio manifest');
+        const errorMsg = error.message || 'Unknown error occurred';
+        const requestId = error.context?.request_id || 'N/A';
+        toast.error(`Failed to generate audio manifest: ${errorMsg} (Request ID: ${requestId})`);
+        return;
+      }
+
+      if (!data) {
+        toast.error('No data returned from audio manifest generation');
         return;
       }
 
       setAudioManifest(data);
       setShowAudioPreview(true);
 
-      console.log(`Generated manifest: ${data.totals.count} files, ${data.totals.size_pretty}`);
+      const errorInfo = data.totals?.errors > 0 ? ` (${data.totals.errors} errors)` : '';
+      console.log(`Generated manifest: ${data.totals.count} files, ${data.totals.size_pretty}${errorInfo}`);
+      
+      if (data.totals?.errors > 0) {
+        toast.warning(`Manifest generated with ${data.totals.errors} file errors - check logs for details`);
+      } else {
+        toast.success(`Audio manifest generated: ${data.totals.count} files`);
+      }
       
     } catch (error) {
       console.error('Audio manifest generation error:', error);
-      toast.error('Failed to generate audio manifest');
+      const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+      toast.error(`Audio manifest generation failed: ${errorMsg}`);
     } finally {
       setIsGeneratingAudioManifest(false);
     }
