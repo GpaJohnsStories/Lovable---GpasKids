@@ -116,7 +116,7 @@ const PhotoAttachmentSection: React.FC<PhotoAttachmentSectionProps> = ({
       </p>
 
       <div>
-        <Label htmlFor="photo-attachment" className="text-sm font-medium text-gray-700">
+        <Label htmlFor="photo-attachment" className="text-[21px] font-fun text-orange-800">
           Upload Photo
         </Label>
         <Input
@@ -125,7 +125,7 @@ const PhotoAttachmentSection: React.FC<PhotoAttachmentSectionProps> = ({
           accept="image/jpeg,image/png,image/webp"
           onChange={handleFileChange}
           disabled={disabled}
-          className="mt-1"
+          className="mt-1 text-[21px] md:text-[21px]"
         />
         <p className="text-xs text-gray-500 mt-1">
           JPEG, PNG, or WebP files. Large images will be automatically compressed to WebP format.
@@ -161,7 +161,7 @@ const PhotoAttachmentSection: React.FC<PhotoAttachmentSectionProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="photo-caption" className="text-sm font-medium text-gray-700">
+            <Label htmlFor="photo-caption" className="text-[21px] font-fun text-orange-800">
               Photo Caption (Optional)
             </Label>
             <Textarea
@@ -171,7 +171,7 @@ const PhotoAttachmentSection: React.FC<PhotoAttachmentSectionProps> = ({
               placeholder="Tell us about your orange shirt photo..."
               maxLength={200}
               disabled={disabled}
-              className="mt-1"
+              className="mt-1 text-[21px] md:text-[21px]"
               rows={2}
             />
             <p className="text-xs text-gray-500 mt-1">

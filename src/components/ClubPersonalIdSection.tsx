@@ -144,7 +144,7 @@ const ClubPersonalIdSection: React.FC<ClubPersonalIdSectionProps> = ({
         <TabsContent value="existing" className="pt-4">
           <div className="space-y-4">
             <div>
-              <Label htmlFor="existing-id" className="text-sm font-medium text-gray-700">
+              <Label htmlFor="existing-id" className="text-[21px] font-fun text-orange-800">
                 Enter your 6-character Personal ID
               </Label>
               <Input
@@ -160,7 +160,7 @@ const ClubPersonalIdSection: React.FC<ClubPersonalIdSectionProps> = ({
                   validateExistingPersonalId(e.target.value.toUpperCase());
                 }}
                 maxLength={6}
-                className="mt-1 text-center font-mono text-lg"
+                className="mt-1 text-center font-mono text-[21px] md:text-[21px]"
                 disabled={isValidating}
               />
               {isValidating && (
@@ -176,7 +176,7 @@ const ClubPersonalIdSection: React.FC<ClubPersonalIdSectionProps> = ({
         <TabsContent value="create" className="pt-4">
           <div className="space-y-4">
             <div>
-              <Label htmlFor="prefix-code" className="text-sm font-medium text-gray-700">
+              <Label htmlFor="prefix-code" className="text-[21px] font-fun text-orange-800">
                 Enter any 4 letters or numbers
               </Label>
               <Input
@@ -189,7 +189,7 @@ const ClubPersonalIdSection: React.FC<ClubPersonalIdSectionProps> = ({
                   if (prefixError) setPrefixError(null);
                 }}
                 maxLength={4}
-                className="mt-1 text-center font-mono text-lg"
+                className="mt-1 text-center font-mono text-[21px] md:text-[21px]"
                 disabled={isGenerating}
               />
               <p className="text-xs text-gray-500 mt-1">

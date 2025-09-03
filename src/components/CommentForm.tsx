@@ -128,7 +128,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ prefilledStoryCode = '' }) =>
         />
 
         <div>
-          <Label htmlFor="subject" className="text-xl font-fun text-orange-800">
+          <Label htmlFor="subject" className="text-[21px] font-fun text-orange-800">
             Subject *
           </Label>
           <Input
@@ -139,7 +139,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ prefilledStoryCode = '' }) =>
             placeholder="What's your comment about?"
             maxLength={100}
             disabled={isSubmitting}
-            className="mt-1 font-fun text-xl"
+            className="mt-1 font-fun text-[21px] md:text-[21px]"
             required
           />
           <p className="text-xs text-gray-500 mt-1">
@@ -148,7 +148,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ prefilledStoryCode = '' }) =>
         </div>
 
         <div>
-          <Label htmlFor="content" className="text-xl font-fun text-orange-800">
+          <Label htmlFor="content" className="text-[21px] font-fun text-orange-800">
             Your Comment *
           </Label>
           <Textarea
@@ -158,7 +158,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ prefilledStoryCode = '' }) =>
             placeholder="Share your thoughts, questions, or stories..."
             maxLength={1000}
             disabled={isSubmitting}
-            className="mt-1 font-fun text-xl"
+            className="mt-1 font-fun text-[21px] md:text-[21px]"
             rows={6}
             required
           />
