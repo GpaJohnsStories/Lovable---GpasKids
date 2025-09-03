@@ -887,21 +887,9 @@ Contact the system administrator for assistance.`;
                         </div>
                       )}
                       
-                      {/* Traditional ZIP Download */}
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={() => handleBucketBackup(bucket.name)}
-                        disabled={downloadingBucket === bucket.name}
-                        className="w-full"
-                      >
-                        {downloadingBucket === bucket.name ? (
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        ) : (
-                          <Download className="w-4 h-4 mr-2" />
-                        )}
-                        Download as ZIP (Traditional)
-                      </Button>
+                      <p className="text-xs text-gray-600 mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded">
+                        ⚠️ Note: Traditional ZIP download is not available for audio files due to large file sizes. Use the enhanced options above for reliable downloads.
+                      </p>
                     </div>
                   </div>
                 );
