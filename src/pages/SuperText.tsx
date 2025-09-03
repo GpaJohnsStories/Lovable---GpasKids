@@ -376,7 +376,7 @@ const SuperText: React.FC = () => {
            <TooltipProvider>
              <Tooltip>
                <TooltipTrigger asChild>
-                 <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !storyCode.trim()} className="px-8 py-3 text-lg font-semibold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700">
+                 <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !storyCode.trim()} className="px-8 py-3 supertext-fs-21px-arial-white font-bold rounded-full bg-blue-600 hover:bg-blue-700 text-white border-blue-700">
                    {isSaving ? 'Saving...' : 'Save & Clear Form'}
                  </Button>
                </TooltipTrigger>
