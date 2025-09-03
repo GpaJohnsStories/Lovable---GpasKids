@@ -742,7 +742,7 @@ const SuperText: React.FC = () => {
                 fontFamily: 'Arial',
                 fontWeight: 'bold'
               }}>
-                    {formData.id ? `Story loaded: ${formData.story_code || 'Unknown Code'}` : 'Enter Text Code, Category & Copyright, then Click Lookup'}
+                    {formData.id ? `Story loaded: ${formData.title || 'No Title'}` : 'Enter Text Code, Category & Copyright, then Click Lookup'}
                   </p>
                 </div>
               </div>
