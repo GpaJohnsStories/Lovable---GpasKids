@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
-import { Download, Database, HardDrive, Calendar, FileText, Loader2, Cloud, Package, Clock, Play, Filter, Eye, FolderDown, FileSpreadsheet } from 'lucide-react';
+import { Download, Database, HardDrive, Calendar, FileText, Loader2, Cloud, Package, Clock, Play, Filter, Eye, FolderDown, FileSpreadsheet, AlertCircle } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import JSZip from 'jszip';
@@ -38,6 +39,9 @@ export const BackupCenter = () => {
     failed: number;
     isActive: boolean;
   }>({ total: 0, completed: 0, failed: 0, isActive: false });
+
+  // Browser compatibility detection
+  const isFileSystemAccessSupported = typeof window !== 'undefined' && 'showDirectoryPicker' in window;
 
   const storageBuckets = [
     { name: 'story-photos', description: 'Story photo attachments', public: true },
@@ -846,26 +850,46 @@ Contact the system administrator for assistance.`;
                         Get Download Links (CSV)
                       </Button>
                       
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={() => {
-                          generateAudioManifest().then(() => {
-                            if (audioManifest) {
-                              downloadAudioViaFiles();
-                            }
-                          });
-                        }}
-                        disabled={isGeneratingAudioManifest || (audioFilterMode === 'sinceDate' && !audioFilterDate) || browserDownloadProgress.isActive}
-                        className="w-full bg-blue-100 border-blue-300 text-blue-800 hover:bg-blue-200"
-                      >
-                        {isGeneratingAudioManifest || browserDownloadProgress.isActive ? (
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        ) : (
-                          <FolderDown className="w-4 h-4 mr-2" />
-                        )}
-                        Download via Browser (Chrome, Edge, etc.)
-                      </Button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div>
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => {
+                                  generateAudioManifest().then(() => {
+                                    if (audioManifest) {
+                                      downloadAudioViaFiles();
+                                    }
+                                  });
+                                }}
+                                disabled={!isFileSystemAccessSupported || isGeneratingAudioManifest || (audioFilterMode === 'sinceDate' && !audioFilterDate) || browserDownloadProgress.isActive}
+                                className={`w-full ${!isFileSystemAccessSupported 
+                                  ? 'bg-gray-100 border-gray-300 text-gray-500' 
+                                  : 'bg-blue-100 border-blue-300 text-blue-800 hover:bg-blue-200'
+                                }`}
+                              >
+                                {isGeneratingAudioManifest || browserDownloadProgress.isActive ? (
+                                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                ) : !isFileSystemAccessSupported ? (
+                                  <AlertCircle className="w-4 h-4 mr-2" />
+                                ) : (
+                                  <FolderDown className="w-4 h-4 mr-2" />
+                                )}
+                                Download via Browser
+                                {!isFileSystemAccessSupported && ' (Unsupported)'}
+                              </Button>
+                            </div>
+                          </TooltipTrigger>
+                          {!isFileSystemAccessSupported && (
+                            <TooltipContent>
+                              <p className="text-sm">Browser download requires Chrome, Edge, or another Chromium-based browser.<br />
+                              Firefox users: Please use "Get Download Links (CSV)" instead.</p>
+                            </TooltipContent>
+                          )}
+                        </Tooltip>
+                      </TooltipProvider>
                       
                       {/* Browser Download Progress */}
                       {browserDownloadProgress.isActive && (
