@@ -407,8 +407,26 @@ const SuperText: React.FC = () => {
                  Discard all changes and clear form
                </TooltipContent>
              </Tooltip>
-           </TooltipProvider>
-         </div>
+            </TooltipProvider>
+            
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="supertext-orange-btn px-8 py-3 rounded-full">
+                    Return To Top
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+              fontFamily: 'Arial',
+              fontSize: '21px',
+              color: 'black',
+              backgroundColor: 'white'
+            }}>
+                  Scroll to the top of the page
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
       </div>
 
       <div className="pb-6">
