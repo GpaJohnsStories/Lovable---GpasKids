@@ -4,7 +4,8 @@ import type { Story } from '@/hooks/useStoryFormState';
 export const useStoryFormActions = (
   storyId?: string,
   refetchStory?: () => Promise<any>,
-  onSave?: () => void
+  onSave?: () => void,
+  updateFormData?: (updates: Partial<Story>) => void
 ) => {
   const { saveStory, isSaving } = useStorySave();
 
@@ -13,7 +14,7 @@ export const useStoryFormActions = (
     console.log(`=== SAVE ONLY (Ctrl+S) AT ${timestamp} ===`);
     console.log('❗ SAVE ONLY TRIGGERED - Check if this is being called repeatedly');
     try {
-      const success = await saveStory(formData, async () => {
+      const result = await saveStory(formData, async () => {
         console.log('=== SAVE SUCCESSFUL - REFRESHING DATA ===');
         // Refresh the story data to show updated timestamps
         if (refetchStory) {
@@ -23,7 +24,13 @@ export const useStoryFormActions = (
         // Don't call onSave() - just stay on the edit page
       });
       
-      if (success) {
+      // If this was a new story creation, update the form with the new ID
+      if (result && result.success && result.story && !formData.id && updateFormData) {
+        console.log('=== BINDING NEW STORY ID TO FORM ===', result.story.id);
+        updateFormData({ id: result.story.id });
+      }
+      
+      if (result && result.success) {
         console.log('=== SAVE SUCCESSFUL (stayed on page) ===');
       }
     } catch (error) {
@@ -41,7 +48,7 @@ export const useStoryFormActions = (
     
     try {
       console.log('About to call saveStory...');
-      const success = await saveStory(formData, async () => {
+      const result = await saveStory(formData, async () => {
         console.log('=== SAVE SUCCESSFUL - REFRESHING DATA ===');
         // Refresh the story data to show updated content
         if (refetchStory) {
@@ -52,9 +59,15 @@ export const useStoryFormActions = (
           onSave(); // Navigate back to admin list
         }
       });
-      console.log('saveStory returned:', success);
+      console.log('saveStory returned:', result);
       
-      if (success) {
+      // If this was a new story creation, update the form with the new ID
+      if (result && result.success && result.story && !formData.id && updateFormData) {
+        console.log('=== BINDING NEW STORY ID TO FORM ===', result.story.id);
+        updateFormData({ id: result.story.id });
+      }
+      
+      if (result && result.success) {
         console.log('=== SAVE SUCCESSFUL ===');
       } else {
         console.log('=== SAVE FAILED ===');

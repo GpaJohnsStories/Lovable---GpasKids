@@ -102,7 +102,12 @@ const SuperText: React.FC = () => {
     handleSubmit,
     handleSaveOnly,
     isSaving
-  } = useStoryFormActions(storyId, refetchStory, handleStoryFormSave);
+  } = useStoryFormActions(storyId, refetchStory, handleStoryFormSave, (updates) => {
+    // Update formData using handleInputChange for each field
+    Object.entries(updates).forEach(([key, value]) => {
+      handleInputChange(key as keyof Story, value as string);
+    });
+  });
   const {
     currentlyPlaying,
     loadingVoice,

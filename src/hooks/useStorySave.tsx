@@ -148,6 +148,11 @@ export const useStorySave = () => {
         
         if (error) throw error;
         toast.success("Story updated successfully!");
+        
+        // Return the updated story data
+        if (data && data[0]) {
+          return { success: true, story: data[0] };
+        }
       } else {
         // Create new story - clean payload
         console.log('Creating new story');
@@ -175,18 +180,23 @@ export const useStorySave = () => {
         
         if (error) throw error;
         toast.success("Story created successfully!");
+        
+        // Return the created story data to enable ID binding
+        if (data && data[0]) {
+          return { success: true, story: data[0] };
+        }
       }
       
       console.log('About to call onSuccess callback...');
       onSuccess?.();
       console.log('onSuccess callback completed');
-      return true;
+      return { success: true };
     } catch (error: any) {
       console.error('Save error details:', error);
       console.error('Error message:', error.message);
       console.error('Error code:', error.code);
       toast.error(`Error saving story: ${error.message}`);
-      return false;
+      return { success: false };
     } finally {
       console.log('Setting loading state to false...');
       setIsSaving(false);
