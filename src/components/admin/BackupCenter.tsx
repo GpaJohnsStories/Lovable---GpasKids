@@ -864,7 +864,7 @@ Contact the system administrator for assistance.`;
                         ) : (
                           <FolderDown className="w-4 h-4 mr-2" />
                         )}
-                        Download via Browser (Chromium only)
+                        Download via Browser (Chrome, Edge, etc.)
                       </Button>
                       
                       {/* Browser Download Progress */}
