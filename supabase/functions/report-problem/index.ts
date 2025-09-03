@@ -1,8 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -93,38 +91,81 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
-    // Prepare email content
-    const emailHtml = `
-      <h2>New Problem Report</h2>
-      
-      <h3>Report Details:</h3>
-      <p><strong>From:</strong> ${reportData.name}</p>
-      <p><strong>Email:</strong> ${reportData.email || 'Not provided'}</p>
-      <p><strong>Who they are:</strong> ${reportData.whoAreYou}</p>
-      <p><strong>Subject:</strong> ${reportData.subject}</p>
-      
-      <h3>Description:</h3>
-      <p>${reportData.description.replace(/\n/g, '<br>')}</p>
-      
-      <h3>Technical Details:</h3>
-      <p><strong>Page URL:</strong> ${reportData.pageUrl}</p>
-      <p><strong>Timestamp:</strong> ${reportData.timestamp || 'Not provided'}</p>
-      <p><strong>User Agent:</strong> ${reportData.userAgent || 'Not provided'}</p>
-      <p><strong>Viewport:</strong> ${reportData.viewport || 'Not provided'}</p>
-      <p><strong>Interaction Time:</strong> ${reportData.interactionTime ? Math.round(reportData.interactionTime / 1000) + 's' : 'Not provided'}</p>
-      <p><strong>Client IP:</strong> ${clientIP}</p>
-    `;
+    // Forward to Google Apps Script webhook
+    const gasWebhookUrl = Deno.env.get("GAS_WEBHOOK_URL");
+    const gasSharedSecret = Deno.env.get("GAS_SHARED_SECRET");
+    
+    if (gasWebhookUrl && gasSharedSecret) {
+      try {
+        const gasPayload = {
+          reportData,
+          clientIP,
+          serverTimestamp: new Date().toISOString(),
+          sharedSecret: gasSharedSecret
+        };
 
-    // Send email
-    const emailResponse = await resend.emails.send({
-      from: "Problem Reports <onboarding@resend.dev>",
-      to: ["ContactGpaJohn@gmail.com"],
-      subject: `Problem Report: ${reportData.subject}`,
-      html: emailHtml,
-      replyTo: reportData.email || undefined
-    });
+        const gasResponse = await fetch(gasWebhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(gasPayload)
+        });
 
-    console.log("Problem report email sent successfully:", emailResponse);
+        if (gasResponse.ok) {
+          console.log("Successfully forwarded to GAS webhook");
+        } else {
+          console.error("GAS webhook failed:", gasResponse.status, await gasResponse.text());
+        }
+      } catch (gasError) {
+        console.error("Error forwarding to GAS webhook:", gasError);
+      }
+    } else {
+      console.log("GAS webhook not configured, skipping forward");
+    }
+
+    // Send email if Resend is configured
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (resendApiKey) {
+      try {
+        const resend = new Resend(resendApiKey);
+        
+        const emailHtml = `
+          <h2>New Problem Report</h2>
+          
+          <h3>Report Details:</h3>
+          <p><strong>From:</strong> ${reportData.name}</p>
+          <p><strong>Email:</strong> ${reportData.email || 'Not provided'}</p>
+          <p><strong>Who they are:</strong> ${reportData.whoAreYou}</p>
+          <p><strong>Subject:</strong> ${reportData.subject}</p>
+          
+          <h3>Description:</h3>
+          <p>${reportData.description.replace(/\n/g, '<br>')}</p>
+          
+          <h3>Technical Details:</h3>
+          <p><strong>Page URL:</strong> ${reportData.pageUrl}</p>
+          <p><strong>Timestamp:</strong> ${reportData.timestamp || 'Not provided'}</p>
+          <p><strong>User Agent:</strong> ${reportData.userAgent || 'Not provided'}</p>
+          <p><strong>Viewport:</strong> ${reportData.viewport || 'Not provided'}</p>
+          <p><strong>Interaction Time:</strong> ${reportData.interactionTime ? Math.round(reportData.interactionTime / 1000) + 's' : 'Not provided'}</p>
+          <p><strong>Client IP:</strong> ${clientIP}</p>
+        `;
+
+        const emailResponse = await resend.emails.send({
+          from: "Problem Reports <onboarding@resend.dev>",
+          to: ["ContactGpaJohn@gmail.com"],
+          subject: `Problem Report: ${reportData.subject}`,
+          html: emailHtml,
+          replyTo: reportData.email || undefined
+        });
+
+        console.log("Problem report email sent successfully:", emailResponse);
+      } catch (emailError) {
+        console.error("Error sending email:", emailError);
+      }
+    } else {
+      console.log("Resend not configured, skipping email");
+    }
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,

@@ -31,3 +31,6 @@ verify_jwt = false
 
 [functions.track-donation]
 verify_jwt = false
+
+[functions.report-problem]
+verify_jwt = false
