@@ -25,12 +25,8 @@ interface Story {
 export const validateStoryForm = (formData: Story): boolean => {
   console.log('Validating story form...', formData);
   
-  if (!formData.title.trim()) {
-    console.log('Title validation failed');
-    toast.error("Title is required");
-    return false;
-  }
-
+  // Note: Title field is no longer required - we rely on tokens from content
+  
   if (!formData.story_code.trim()) {
     console.log('Story code validation failed');
     toast.error("Story code is required");

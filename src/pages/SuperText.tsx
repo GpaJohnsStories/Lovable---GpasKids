@@ -158,8 +158,7 @@ const SuperText: React.FC = () => {
     }
   }, [searchParams, lookupStoryByCode, populateFormWithStory]);
   const clearForm = useCallback(() => {
-    // Reset form fields to initial values
-    handleInputChange('title', '');
+    // Reset form fields to initial values (no title field needed)
     handleInputChange('content', '');
     handleInputChange('tagline', '');
     handleInputChange('excerpt', '');
@@ -251,8 +250,8 @@ const SuperText: React.FC = () => {
         clearForm();
         return;
       }
-      if (!formData.title || !formData.content || !formData.story_code) {
-        toast.error("Please fill in all required fields.");
+      if (!formData.content || !formData.story_code) {
+        toast.error("Please fill in Story Code and Content.");
         return;
       }
       if (saveAction === 'save-and-clear') {
@@ -737,7 +736,7 @@ const SuperText: React.FC = () => {
                 fontFamily: 'Arial',
                 fontWeight: 'bold'
               }}>
-                    {formData.id ? `Story loaded: ${formData.title || 'Untitled'}` : 'Enter Text Code, Category & Copyright, then Click Lookup'}
+                    {formData.id ? `Story loaded: ${formData.story_code || 'Unknown Code'}` : 'Enter Text Code, Category & Copyright, then Click Lookup'}
                   </p>
                 </div>
               </div>
@@ -1051,7 +1050,7 @@ const SuperText: React.FC = () => {
                       if (currentlyPlaying === voice.voice) {
                         stopAudio();
                       } else {
-                        playVoice(voice.voice, formData.content, formData.title);
+                        playVoice(voice.voice, formData.content, formData.story_code);
                       }
                     }} disabled={loadingVoice === voice.voice}>
                               {loadingVoice === voice.voice ? "..." : currentlyPlaying === voice.voice ? "⏸ Stop" : "▶ Test"}
@@ -1125,7 +1124,7 @@ const SuperText: React.FC = () => {
         <SuperAV
           isOpen={showSuperAV}
           onClose={() => setShowSuperAV(false)}
-          title={formData.title || "Story Audio"}
+          title={formData.story_code || "Story Audio"}
           author={formData.author}
           voiceName={formData.ai_voice_name}
           audioUrl={formData.audio_url}

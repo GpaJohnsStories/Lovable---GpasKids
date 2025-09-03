@@ -72,12 +72,7 @@ export const useStorySave = () => {
       console.log('Fetch error:', fetchError);
     }
     
-    // Basic validation
-    if (!formData.title.trim()) {
-      console.log('Validation failed: Title required');
-      toast.error("Title is required");
-      return false;
-    }
+    // Basic validation (title no longer required - extracted from tokens)
     if (!formData.story_code.trim()) {
       console.log('Validation failed: Story code required');
       toast.error("Story code is required");
@@ -112,12 +107,21 @@ export const useStorySave = () => {
       // Extract header tokens from content and merge with form data
       const { tokens, contentWithoutTokens } = extractHeaderTokens(formData.content);
       
+      // Create effective title for database (required field)
+      const effectiveTitle = tokens.title || formData.story_code;
+      
+      // Handle author based on category - WebText can have no author
+      let effectiveAuthor = tokens.author || formData.author;
+      if (!effectiveAuthor && formData.category !== 'WebText') {
+        effectiveAuthor = 'Grandpa John'; // Safe fallback for non-WebText
+      }
+
       const saveData = {
         ...formData,
-        // Override with token values if they exist (plain text for DB fields)
-        title: tokens.title || formData.title,
+        // Use computed values for required database fields
+        title: effectiveTitle,
         tagline: tokens.tagline || formData.tagline,
-        author: tokens.author || formData.author,
+        author: effectiveAuthor,
         excerpt: tokens.excerpt || formData.excerpt,
         // Keep original content with tokens for rendering
         content: formData.content,
