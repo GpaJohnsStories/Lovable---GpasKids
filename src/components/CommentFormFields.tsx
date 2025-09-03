@@ -24,14 +24,14 @@ const CommentFormFields = ({ form, hideSubject = false }: CommentFormFieldsProps
           name="subject"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-orange-800 font-fun text-base">
+              <FormLabel className="text-orange-800 font-fun text-xl">
                 Subject
               </FormLabel>
               <FormControl>
                 <Input 
                   placeholder="What would you like to talk about?" 
                   {...field} 
-                  className="font-fun"
+                  className="font-fun text-xl"
                 />
               </FormControl>
               <FormMessage />
@@ -45,13 +45,13 @@ const CommentFormFields = ({ form, hideSubject = false }: CommentFormFieldsProps
         name="content"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-orange-800 font-fun text-base">
+            <FormLabel className="text-orange-800 font-fun text-xl">
               {hideSubject ? "Your Reply" : "Your Comment"}
             </FormLabel>
             <FormControl>
               <Textarea
                 placeholder={hideSubject ? "Share your thoughts on this comment..." : "Share your thoughts, ask a question, or tell us about your experience..."}
-                className="min-h-[120px] font-fun"
+                className="min-h-[120px] font-fun text-xl"
                 {...field}
               />
             </FormControl>
