@@ -116,23 +116,30 @@ const BreakGuide: React.FC = () => {
 
   return <TooltipProvider delayDuration={200}>
       {/* Break Button - positioned bottom-left, same height and alignment as "Top & Menu" button */}
-      <div
-        onClick={handleBreakButtonClick}
-        data-allow-superav-passthrough="true"
-        className="fixed bottom-20 left-4 z-50 cursor-pointer transition-all duration-300 hover:scale-105 print:hidden"
-        aria-label="Break Guide"
-        data-testid="break-button"
-      >
-        {breakGuideIconUrl ? (
-          <img 
-            src={breakGuideIconUrl} 
-            alt={breakGuideName ?? 'Break Guide'} 
-            className="w-[65px] h-[65px] object-contain"
-          />
-        ) : (
-          <span className="font-bold font-fun text-21px">Break Guide</span>
-        )}
-      </div>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div
+            onClick={handleBreakButtonClick}
+            data-allow-superav-passthrough="true"
+            className="fixed bottom-20 left-4 z-50 cursor-pointer transition-all duration-300 hover:scale-105 print:hidden"
+            aria-label="Break Guide"
+            data-testid="break-button"
+          >
+            {breakGuideIconUrl ? (
+              <img 
+                src={breakGuideIconUrl} 
+                alt={breakGuideName ?? 'Break Guide'} 
+                className="w-[65px] h-[65px] object-contain"
+              />
+            ) : (
+              <span className="font-bold font-fun text-21px">Break Guide</span>
+            )}
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Break Timer</p>
+        </TooltipContent>
+      </Tooltip>
 
       {/* Break Timer Panel - same width as SuperAV, extended height for SYS-BT2 code */}
       {isBreakTimerOpen && <div 
