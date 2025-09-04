@@ -149,22 +149,22 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="name" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Your Name (optional)</Label>
-            <Input id="name" value={formData.name} onChange={e => handleInputChange('name', e.target.value)} placeholder="What should we call you?" className="mt-1 text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}} />
+            <Input id="name" value={formData.name} onChange={e => handleInputChange('name', e.target.value)} placeholder="What should we call you?" className="mt-1 text-[21px] font-normal border-2" style={{fontFamily: 'Arial, sans-serif', borderColor: '#f59e0b'}} />
           </div>
 
           <div>
             <Label htmlFor="email" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Email (optional)</Label>
-            <Input id="email" type="email" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} placeholder="If you want us to write back" className="mt-1 text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}} />
+            <Input id="email" type="email" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} placeholder="If you want us to write back" className="mt-1 text-[21px] font-normal border-2" style={{fontFamily: 'Arial, sans-serif', borderColor: '#f59e0b'}} />
           </div>
 
           <div>
             <Label htmlFor="subject" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>What's do you want to talk about with Grandpa John?</Label>
-            <Input id="subject" value={formData.subject} onChange={e => handleInputChange('subject', e.target.value)} placeholder="Tell us in a few words" className="mt-1 text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}} />
+            <Input id="subject" value={formData.subject} onChange={e => handleInputChange('subject', e.target.value)} placeholder="Tell us in a few words" className="mt-1 text-[21px] font-normal border-2" style={{fontFamily: 'Arial, sans-serif', borderColor: '#f59e0b'}} />
           </div>
 
           <div>
             <Label htmlFor="description" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Tell us more</Label>
-            <WordLimitedTextarea id="description" value={formData.description} onChange={e => handleInputChange('description', e.target.value)} placeholder="Is something broken? Is something wrong? Tell Grandpa John the whole story." wordLimit={200} className="mt-1 min-h-[80px] text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}} />
+            <WordLimitedTextarea id="description" value={formData.description} onChange={e => handleInputChange('description', e.target.value)} placeholder="Is something broken? Is something wrong? Tell Grandpa John the whole story." wordLimit={200} className="mt-1 min-h-[80px] text-[21px] font-normal border-2" style={{fontFamily: 'Arial, sans-serif', borderColor: '#f59e0b'}} />
           </div>
 
           <div>
