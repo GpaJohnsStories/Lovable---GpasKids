@@ -186,7 +186,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                 <img 
                   src={iconMap[formData.whoAreYou]} 
                   alt={`${formData.whoAreYou} icon`}
-                  className="w-15 h-15 object-contain"
+                  className="w-14 h-14 object-contain"
                 />
               </div>
             )}
