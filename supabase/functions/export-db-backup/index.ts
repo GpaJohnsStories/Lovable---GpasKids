@@ -13,7 +13,7 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // SECURITY: Verify admin access
+  // SECURITY: Verify admin access or service role
   const authHeader = req.headers.get('Authorization');
   if (!authHeader) {
     return new Response(JSON.stringify({ error: 'Authorization required' }), {
@@ -22,27 +22,35 @@ serve(async (req) => {
     });
   }
 
-  const tempSupabaseClient = createClient(
-    Deno.env.get('SUPABASE_URL') ?? '',
-    Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-    { global: { headers: { Authorization: authHeader } } }
-  );
+  // Check if this is a service role call (system mode for cron jobs)
+  const isServiceRole = authHeader.includes(Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '');
+  
+  if (!isServiceRole) {
+    // For user requests, verify admin access
+    const tempSupabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { Authorization: authHeader } } }
+    );
 
-  // Verify user is admin
-  const { data: user } = await tempSupabaseClient.auth.getUser();
-  if (!user.user) {
-    return new Response(JSON.stringify({ error: 'Authentication failed' }), {
-      status: 401,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
+    // Verify user is admin
+    const { data: user } = await tempSupabaseClient.auth.getUser();
+    if (!user.user) {
+      return new Response(JSON.stringify({ error: 'Authentication failed' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
-  const { data: isAdmin } = await tempSupabaseClient.rpc('is_admin');
-  if (!isAdmin) {
-    return new Response(JSON.stringify({ error: 'Admin access required' }), {
-      status: 403,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    const { data: isAdmin } = await tempSupabaseClient.rpc('is_admin');
+    if (!isAdmin) {
+      return new Response(JSON.stringify({ error: 'Admin access required' }), {
+        status: 403,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+  } else {
+    console.log('🤖 Service role detected - bypassing admin check for automatic backup');
   }
 
   try {
