@@ -38,8 +38,8 @@ const ScrollToTop = () => {
             <Button
               onClick={scrollToTop}
               data-allow-superav-passthrough="true"
-              size="sm"
-              className="bg-transparent hover:bg-transparent border-none shadow-none p-0 transition-all duration-300 hover:scale-105"
+              variant="link"
+              className="p-0 m-0 bg-transparent hover:bg-transparent border-none shadow-none h-auto w-auto focus:ring-0 focus:outline-none no-underline hover:no-underline cursor-pointer"
               aria-label="Go to top of page and menu"
             >
               {iconUrl ? (
