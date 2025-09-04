@@ -168,7 +168,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
             <RadioGroup value={formData.whoAreYou} onValueChange={value => handleInputChange('whoAreYou', value)} className="mt-2">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  {['Unicorn', 'Elephant', 'Eagle'].map(option => 
+                  {['Unicorn', 'Elephant', 'Eagle', 'Important Person'].map(option => 
                     <div key={option} className="flex items-center space-x-2">
                       <RadioGroupItem value={option} id={option} />
                       <Label htmlFor={option} className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>{option}</Label>
