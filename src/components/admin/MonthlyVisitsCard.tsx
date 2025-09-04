@@ -81,7 +81,7 @@ export const MonthlyVisitsCard = () => {
         <span>Approved</span>
       </div>
       <div className="flex items-center gap-1.5">
-        <div className="w-4 h-1 bg-emerald-500 rounded-sm"></div>
+        <div className="w-4 h-1 bg-blue-400 rounded-sm"></div>
         <span>Search Engines</span>
       </div>
       <div className="flex items-center gap-1.5">
@@ -184,20 +184,20 @@ export const MonthlyVisitsCard = () => {
                   />
                 </Line>
                 
-                {/* Search Engine visits line - Emerald */}
+                {/* Search Engine visits line - Light Blue */}
                 <Line 
                   type="monotone" 
                   dataKey="searchEngines" 
                   name="Search Engines"
-                  stroke="#10b981" 
+                  stroke="#60a5fa" 
                   strokeWidth={2}
-                  dot={{ fill: "#10b981", strokeWidth: 2, r: 3 }}
-                  activeDot={{ r: 5, stroke: "#10b981", strokeWidth: 2 }}
+                  dot={{ fill: "#60a5fa", strokeWidth: 2, r: 3 }}
+                  activeDot={{ r: 5, stroke: "#60a5fa", strokeWidth: 2 }}
                 >
                   <LabelList 
                     dataKey="searchEngines" 
                     position="top" 
-                    style={{ fontSize: '14px', fontWeight: 'bold', fill: '#10b981' }}
+                    style={{ fontSize: '14px', fontWeight: 'bold', fill: '#60a5fa' }}
                     offset={8}
                   />
                 </Line>
