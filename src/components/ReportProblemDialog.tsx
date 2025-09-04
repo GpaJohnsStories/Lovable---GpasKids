@@ -10,8 +10,13 @@ import { containsBadWord } from '@/utils/profanity';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { WebTextBox } from './WebTextBox';
-import { useCachedIcon } from '@/hooks/useCachedIcon';
-import { IconSkeleton } from './IconSkeleton';
+import unicornIcon from '@/assets/unicorn-icon.png';
+import elephantIcon from '@/assets/elephant-icon.png';
+import eagleIcon from '@/assets/eagle-icon.png';
+import vipIcon from '@/assets/vip-icon.png';
+import giraffeIcon from '@/assets/giraffe-icon.png';
+import reindeerIcon from '@/assets/reindeer-icon.png';
+import questionIcon from '@/assets/question-icon.png';
 interface ReportProblemDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -35,17 +40,14 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
 
   // Icon mapping for "Who are you?" choices
   const iconMap: Record<string, string> = {
-    'Unicorn': 'animals/unicorn.png',
-    'Elephant': 'animals/elephant.png', 
-    'Eagle': 'animals/eagle.png',
-    'Important Person': 'people/vip.png',
-    'Giraffe': 'animals/giraffe.png',
-    'Reindeer': 'animals/reindeer.png',
-    'Rather not say': 'symbols/question.png'
+    'Unicorn': unicornIcon,
+    'Elephant': elephantIcon, 
+    'Eagle': eagleIcon,
+    'Important Person': vipIcon,
+    'Giraffe': giraffeIcon,
+    'Reindeer': reindeerIcon,
+    'Rather not say': questionIcon
   };
-
-  const selectedIconPath = formData.whoAreYou ? iconMap[formData.whoAreYou] : null;
-  const { iconUrl, isLoading: iconLoading } = useCachedIcon(selectedIconPath);
   useEffect(() => {
     if (isOpen) {
       setStartTime(Date.now());
@@ -181,17 +183,11 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
             {/* Dynamic icon display after selection */}
             {formData.whoAreYou && (
               <div className="absolute -bottom-8 right-0 flex items-center">
-                {iconLoading ? (
-                  <IconSkeleton size="lg" className="w-12 h-12" />
-                ) : iconUrl ? (
-                  <img 
-                    src={iconUrl} 
-                    alt={`${formData.whoAreYou} icon`}
-                    className="w-12 h-12 object-contain"
-                  />
-                ) : (
-                  <div className="w-12 h-12 flex items-center justify-center text-2xl">❓</div>
-                )}
+                <img 
+                  src={iconMap[formData.whoAreYou]} 
+                  alt={`${formData.whoAreYou} icon`}
+                  className="w-12 h-12 object-contain"
+                />
               </div>
             )}
           </div>
