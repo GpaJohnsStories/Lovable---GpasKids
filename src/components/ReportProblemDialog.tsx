@@ -187,12 +187,6 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
             </RadioGroup>
           </div>
 
-          {profanityError && <div className="p-3 bg-red-50 border border-red-200 rounded-md">
-              <div className="flex items-center space-x-2">
-                <span className="text-red-600 text-sm">{profanityError}</span>
-              </div>
-            </div>}
-
           <div className="flex justify-end space-x-3 pt-4">
             <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>
               Cancel
@@ -201,6 +195,12 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
               {isSubmitting ? 'Sending...' : 'Send Report'}
             </Button>
           </div>
+
+          {profanityError && <div className="p-3 bg-red-50 border border-red-200 rounded-md">
+              <div className="flex items-center space-x-2">
+                <span className="text-red-600 text-sm">{profanityError}</span>
+              </div>
+            </div>}
         </form>
       </DialogContent>
     </Dialog>;
