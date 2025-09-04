@@ -46,7 +46,7 @@ const ScrollToTop = () => {
                 <img 
                   src={iconUrl} 
                   alt="Go to top" 
-                  className="h-12 w-12"
+                  className="h-[65px] w-[65px]"
                 />
               ) : (
                 <ArrowUp className="h-8 w-8 text-orange-500" />
