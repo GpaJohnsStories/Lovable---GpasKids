@@ -28,6 +28,12 @@ const BreakGuide: React.FC = () => {
     iconName: sparkyName
   } = useCachedIcon('!CO-SPT.gif');
 
+  // Get Break Guide icon for the button
+  const {
+    iconUrl: breakGuideIconUrl,
+    iconName: breakGuideName
+  } = useCachedIcon('!CO-BRK.gif');
+
   // Timer is now managed by context, no local countdown needed
   
   const handleBreakButtonClick = () => {
@@ -118,7 +124,15 @@ const BreakGuide: React.FC = () => {
         aria-label="Break Guide"
         data-testid="break-button"
       >
-        <span className="font-bold font-fun text-21px">Break Guide</span>
+        {breakGuideIconUrl ? (
+          <img 
+            src={breakGuideIconUrl} 
+            alt={breakGuideName ?? 'Break Guide'} 
+            className="w-15 h-15 object-contain"
+          />
+        ) : (
+          <span className="font-bold font-fun text-21px">Break Guide</span>
+        )}
       </Button>
 
       {/* Break Timer Panel - same width as SuperAV, extended height for SYS-BT2 code */}
