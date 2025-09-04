@@ -67,15 +67,18 @@ serve(async (req) => {
       throw new Error(`Database backup failed: ${dbError.message}`);
     }
 
-    // Step 2: Get all storage buckets backup
-    const storageBuckets = ['story-photos', 'story-videos', 'story-audio', 'icons', 'orange-gang', 'orange-gang-pending'];
+    // Step 2: Get all storage buckets backup (excluding orange-gang buckets, with 5MB size limit)
+    const storageBuckets = ['story-photos', 'story-videos', 'story-audio', 'icons'];
     const bucketBackups: any = {};
 
     for (const bucketName of storageBuckets) {
       console.log(`🗂️ Backing up bucket: ${bucketName}...`);
       try {
         const { data: bucketData, error: bucketError } = await supabaseClient.functions.invoke('download-bucket-zip', {
-          body: { bucket: bucketName }
+          body: { 
+            bucket: bucketName,
+            maxFileSize: 5 * 1024 * 1024 // 5MB limit for full backup
+          }
         });
         
         if (bucketError) {

@@ -32,6 +32,7 @@ export const BackupCenter = () => {
   const [selectedBucket, setSelectedBucket] = useState<'story-audio' | 'story-photos' | 'story-videos' | 'icons'>('story-audio');
   const [filterMode, setFilterMode] = useState<'all' | 'sinceDate'>('all');
   const [filterDate, setFilterDate] = useState<string>('');
+  const [sizeFilter, setSizeFilter] = useState<'all' | 'over5mb'>('all');
   const [manifest, setManifest] = useState<any>(null);
   const [showPreview, setShowPreview] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -433,6 +434,7 @@ Contact the system administrator for assistance.`;
         bucket: selectedBucket,
         mode: filterMode,
         sinceDate: filterMode === 'sinceDate' ? filterDate : undefined,
+        minSizeBytes: sizeFilter === 'over5mb' ? 5 * 1024 * 1024 : 0,
         includeSignedUrls: true,
         expiresInSeconds: 172800 // 48 hours
       };
@@ -859,6 +861,21 @@ Contact the system administrator for assistance.`;
             )}
           </div>
 
+          {/* Size Filter */}
+          <div className="space-y-3">
+            <Label className="text-sm font-medium">File Size Filter</Label>
+            <RadioGroup value={sizeFilter} onValueChange={(value) => setSizeFilter(value as any)}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="all" id="size-all" />
+                <Label htmlFor="size-all" className="cursor-pointer">All files</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="over5mb" id="size-over5mb" />
+                <Label htmlFor="size-over5mb" className="cursor-pointer">Files over 5 MB only</Label>
+              </div>
+            </RadioGroup>
+          </div>
+
           {/* Action Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <Button
@@ -902,8 +919,13 @@ Contact the system administrator for assistance.`;
 
             <Button
               onClick={async () => {
-                if (!manifest) await generateManifest();
-                else await downloadMediaAsZip(manifest);
+                if (!manifest) {
+                  await generateManifest();
+                  // The generateManifest function will generate the manifest,
+                  // and the user can then click the button again to download
+                } else {
+                  await downloadMediaAsZip(manifest);
+                }
               }}
               disabled={isGenerating || (filterMode === 'sinceDate' && !filterDate)}
               className="flex items-center gap-2"

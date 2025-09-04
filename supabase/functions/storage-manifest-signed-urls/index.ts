@@ -146,10 +146,11 @@ Deno.serve(async (req) => {
       mode = 'all',
       sinceDate,
       includeSignedUrls = true,
-      expiresInSeconds = 172800 // 48 hours
+      expiresInSeconds = 172800, // 48 hours
+      minSizeBytes = 0 // New parameter for minimum file size filtering
     } = await req.json();
 
-    console.log(`Processing audio backup request: bucket=${bucket}, mode=${mode}, sinceDate=${sinceDate}`);
+    console.log(`Processing backup request: bucket=${bucket}, mode=${mode}, sinceDate=${sinceDate}, minSizeBytes=${minSizeBytes}`);
 
     // Convert sinceDate to timestamp for comparison if provided
     let filterDate: Date | null = null;
@@ -221,8 +222,11 @@ Deno.serve(async (req) => {
     let totalSize = 0;
 
     for (const file of files || []) {
-      // Handle both .mp3 (audio) and .mp4 (video) files
-      if (!file.name.endsWith('.mp3') && !file.name.endsWith('.mp4')) continue;
+      // Skip files that don't meet the minimum size requirement
+      const fileSize = file.metadata?.size ? parseInt(file.metadata.size.toString()) : 0;
+      if (fileSize < minSizeBytes) {
+        continue;
+      }
 
       // Get story data by story code
       const storyCode = extractStoryCode(file.name);
@@ -244,8 +248,6 @@ Deno.serve(async (req) => {
       if (filterDate && fileUpdatedDate < filterDate) {
         continue;
       }
-
-      const fileSize = file.metadata?.size ? parseInt(file.metadata.size.toString()) : 0;
       
       // Generate custom filename with proper fallbacks
       const displayStoryCode = story?.story_code || fileStoryCode || 'unknown';

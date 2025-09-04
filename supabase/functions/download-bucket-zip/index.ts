@@ -48,12 +48,17 @@ serve(async (req) => {
   try {
     const url = new URL(req.url);
     let bucketName = url.searchParams.get('bucket');
+    let maxFileSize = 5 * 1024 * 1024; // Default 5MB limit
 
     // If no bucket in query params, try to get it from request body
     if (!bucketName && req.method === 'POST') {
       try {
         const body = await req.json();
         bucketName = body.bucket;
+        // Allow custom maxFileSize from request body
+        if (body.maxFileSize && typeof body.maxFileSize === 'number') {
+          maxFileSize = body.maxFileSize;
+        }
       } catch {
         // If JSON parsing fails, continue with null bucketName
       }
@@ -114,7 +119,6 @@ serve(async (req) => {
 
     const zipEntries: { name: string, content: string | null, size: number, checksum?: string, skipped?: boolean, reason?: string, error?: string }[] = [];
     const errors: string[] = [];
-    const maxFileSize = 5 * 1024 * 1024; // 5MB per file
     const maxTotalSize = 50 * 1024 * 1024; // 50MB total
     let totalProcessedSize = 0;
 
