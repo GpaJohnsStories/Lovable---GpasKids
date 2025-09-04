@@ -127,7 +127,7 @@ const BreakGuide: React.FC = () => {
           <img 
             src={breakGuideIconUrl} 
             alt={breakGuideName ?? 'Break Guide'} 
-            className="w-[55px] h-[55px] object-contain"
+            className="w-[65px] h-[65px] object-contain"
           />
         ) : (
           <span className="font-bold font-fun text-21px">Break Guide</span>
