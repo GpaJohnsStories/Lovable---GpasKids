@@ -37,3 +37,6 @@ verify_jwt = false
 
 [functions.report-problem]
 verify_jwt = false
+
+[functions.send-comment]
+verify_jwt = false
