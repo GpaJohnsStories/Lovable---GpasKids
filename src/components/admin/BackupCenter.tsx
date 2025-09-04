@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Download, Database, HardDrive, Calendar, FileText, Loader2, Cloud, Package, Clock, Play, Filter, Eye, FolderDown, FileSpreadsheet, AlertCircle } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { supabase } from '@/integrations/supabase/client';
@@ -27,21 +28,14 @@ export const BackupCenter = () => {
   const [currentStep, setCurrentStep] = useState('');
   const [overallProgress, setOverallProgress] = useState(0);
   
-  // Audio backup state
-  const [audioFilterMode, setAudioFilterMode] = useState<'all' | 'sinceDate'>('all');
-  const [audioFilterDate, setAudioFilterDate] = useState<string>('');
-  const [audioManifest, setAudioManifest] = useState<any>(null);
-  const [showAudioPreview, setShowAudioPreview] = useState(false);
-  const [isGeneratingAudioManifest, setIsGeneratingAudioManifest] = useState(false);
+  // Unified media backup state
+  const [selectedBucket, setSelectedBucket] = useState<'story-audio' | 'story-photos' | 'story-videos' | 'icons'>('story-audio');
+  const [filterMode, setFilterMode] = useState<'all' | 'sinceDate'>('all');
+  const [filterDate, setFilterDate] = useState<string>('');
+  const [manifest, setManifest] = useState<any>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [showDownloadConfirmation, setShowDownloadConfirmation] = useState(false);
-  const [confirmationManifest, setConfirmationManifest] = useState<any>(null);
-  
-  // Video backup state  
-  const [videoFilterMode, setVideoFilterMode] = useState<'all' | 'sinceDate'>('all');
-  const [videoFilterDate, setVideoFilterDate] = useState<string>('');
-  const [videoManifest, setVideoManifest] = useState<any>(null);
-  const [showVideoPreview, setShowVideoPreview] = useState(false);
-  const [isGeneratingVideoManifest, setIsGeneratingVideoManifest] = useState(false);
   const [browserDownloadProgress, setBrowserDownloadProgress] = useState<{
     total: number;
     completed: number;
@@ -59,9 +53,14 @@ export const BackupCenter = () => {
     { name: 'story-photos', description: 'Story photo attachments', public: true },
     { name: 'story-videos', description: 'Story video files', public: true },
     { name: 'story-audio', description: 'Generated story audio files', public: true },
-    { name: 'icons', description: 'UI icons and graphics', public: true },
-    { name: 'orange-gang', description: 'Approved Orange Gang photos', public: true },
-    { name: 'orange-gang-pending', description: 'Pending Orange Gang photos', public: false }
+    { name: 'icons', description: 'UI icons and graphics', public: true }
+  ];
+
+  const bucketOptions = [
+    { value: 'story-audio' as const, label: 'Audios', description: 'Generated story audio files' },
+    { value: 'story-photos' as const, label: 'Photos', description: 'Story photo attachments' },
+    { value: 'story-videos' as const, label: 'Videos', description: 'Story video files' },
+    { value: 'icons' as const, label: 'Icons', description: 'UI icons and graphics' }
   ];
 
   // Load backup history and scheduled backups on component mount
@@ -421,40 +420,44 @@ Contact the system administrator for assistance.`;
     }
   };
 
-  // Audio backup functions
-  const generateAudioManifest = async () => {
-    setIsGeneratingAudioManifest(true);
+  // Unified media backup functions
+  const getBucketLabel = (bucket: string) => {
+    const option = bucketOptions.find(opt => opt.value === bucket);
+    return option?.label || bucket;
+  };
+
+  const generateManifest = async () => {
+    setIsGenerating(true);
     try {
       const requestBody = {
-        bucket: 'story-audio',
-        mode: audioFilterMode,
-        sinceDate: audioFilterMode === 'sinceDate' ? audioFilterDate : undefined,
+        bucket: selectedBucket,
+        mode: filterMode,
+        sinceDate: filterMode === 'sinceDate' ? filterDate : undefined,
         includeSignedUrls: true,
         expiresInSeconds: 172800 // 48 hours
       };
 
-      console.log('Generating audio manifest with:', requestBody);
+      console.log('Generating manifest with:', requestBody);
 
       const { data, error } = await supabase.functions.invoke('storage-manifest-signed-urls', {
         body: requestBody
       });
 
       if (error) {
-        console.error('Audio manifest error:', error);
+        console.error('Manifest error:', error);
         const errorMsg = error.message || 'Unknown error occurred';
         const requestId = error.context?.request_id || 'N/A';
-        toast.error(`Failed to generate audio manifest: ${errorMsg} (Request ID: ${requestId})`);
+        toast.error(`Failed to generate ${getBucketLabel(selectedBucket).toLowerCase()} manifest: ${errorMsg} (Request ID: ${requestId})`);
         return;
       }
 
       if (!data) {
-        toast.error('No data returned from audio manifest generation');
+        toast.error('No data returned from manifest generation');
         return;
       }
 
-      setAudioManifest(data);
-      setConfirmationManifest(data);
-      setShowAudioPreview(true);
+      setManifest(data);
+      setShowPreview(true);
 
       const errorInfo = data.totals?.errors > 0 ? ` (${data.totals.errors} errors)` : '';
       console.log(`Generated manifest: ${data.totals.count} files, ${data.totals.size_pretty}${errorInfo}`);
@@ -462,78 +465,26 @@ Contact the system administrator for assistance.`;
       if (data.totals?.errors > 0) {
         toast.warning(`Manifest generated with ${data.totals.errors} file errors - check logs for details`);
       } else {
-        toast.success(`Audio manifest generated: ${data.totals.count} files`);
+        toast.success(`${getBucketLabel(selectedBucket)} manifest generated: ${data.totals.count} files`);
       }
       
     } catch (error) {
-      console.error('Audio manifest generation error:', error);
+      console.error('Manifest generation error:', error);
       const errorMsg = error instanceof Error ? error.message : 'Unknown error';
-      toast.error(`Audio manifest generation failed: ${errorMsg}`);
+      toast.error(`${getBucketLabel(selectedBucket)} manifest generation failed: ${errorMsg}`);
     } finally {
-      setIsGeneratingAudioManifest(false);
+      setIsGenerating(false);
     }
   };
 
-  // Video backup functions
-  const generateVideoManifest = async () => {
-    setIsGeneratingVideoManifest(true);
-    try {
-      const requestBody = {
-        bucket: 'story-videos',
-        mode: videoFilterMode,
-        sinceDate: videoFilterMode === 'sinceDate' ? videoFilterDate : undefined,
-        includeSignedUrls: true,
-        expiresInSeconds: 172800 // 48 hours
-      };
-
-      console.log('Generating video manifest with:', requestBody);
-
-      const { data, error } = await supabase.functions.invoke('storage-manifest-signed-urls', {
-        body: requestBody
-      });
-
-      if (error) {
-        console.error('Video manifest error:', error);
-        const errorMsg = error.message || 'Unknown error occurred';
-        const requestId = error.context?.request_id || 'N/A';
-        toast.error(`Failed to generate video manifest: ${errorMsg} (Request ID: ${requestId})`);
-        return;
-      }
-
-      if (!data) {
-        toast.error('No data returned from video manifest generation');
-        return;
-      }
-
-      setVideoManifest(data);
-      setShowVideoPreview(true);
-
-      const errorInfo = data.totals?.errors > 0 ? ` (${data.totals.errors} errors)` : '';
-      console.log(`Generated manifest: ${data.totals.count} files, ${data.totals.size_pretty}${errorInfo}`);
-      
-      if (data.totals?.errors > 0) {
-        toast.warning(`Manifest generated with ${data.totals.errors} file errors - check logs for details`);
-      } else {
-        toast.success(`Video manifest generated: ${data.totals.count} files`);
-      }
-      
-    } catch (error) {
-      console.error('Video manifest generation error:', error);
-      const errorMsg = error instanceof Error ? error.message : 'Unknown error';
-      toast.error(`Video manifest generation failed: ${errorMsg}`);
-    } finally {
-      setIsGeneratingVideoManifest(false);
-    }
-  };
-
-  const downloadAudioCSV = () => {
-    if (!audioManifest?.entries) return;
+  const downloadCSV = () => {
+    if (!manifest?.entries) return;
 
     const csvContent = [
       // Header row
       'filename,url,size_bytes,size_pretty,updated_at,story_id,story_code,title',
       // Data rows
-      ...audioManifest.entries.map((entry: any) => {
+      ...manifest.entries.map((entry: any) => {
         const row = [
           `"${entry.filename}"`,
           `"${entry.signed_url}"`,
@@ -553,8 +504,8 @@ Contact the system administrator for assistance.`;
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
     
-    const filterSuffix = audioFilterMode === 'sinceDate' ? `_since_${audioFilterDate}` : '_all';
-    const filename = `story_audio_manifest${filterSuffix}_${new Date().toISOString().slice(0, 10)}.csv`;
+    const filterSuffix = filterMode === 'sinceDate' ? `_since_${filterDate}` : '_all';
+    const filename = `${selectedBucket.replace('-', '_')}_manifest${filterSuffix}_${new Date().toISOString().slice(0, 10)}.csv`;
     
     link.setAttribute('download', filename);
     link.style.visibility = 'hidden';
@@ -564,422 +515,451 @@ Contact the system administrator for assistance.`;
     URL.revokeObjectURL(url);
 
     toast.success(`CSV downloaded: ${filename}`);
-    setShowAudioPreview(false);
-  };
-
-  const downloadVideoCSV = () => {
-    if (!videoManifest?.entries) return;
-
-    const csvContent = [
-      // Header row
-      'filename,url,size_bytes,size_pretty,updated_at,story_id,story_code,title',
-      // Data rows
-      ...videoManifest.entries.map((entry: any) => {
-        const row = [
-          `"${entry.filename}"`,
-          `"${entry.signed_url}"`,
-          entry.size_bytes,
-          `"${(entry.size_bytes / 1024 / 1024).toFixed(2)} MB"`,
-          `"${entry.updated_at}"`,
-          `"${entry.story_id || ''}"`,
-          `"${entry.story_code || ''}"`,
-          `"${entry.title || ''}"`
-        ];
-        return row.join(',');
-      })
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    
-    const filterSuffix = videoFilterMode === 'sinceDate' ? `_since_${videoFilterDate}` : '_all';
-    const filename = `story_video_manifest${filterSuffix}_${new Date().toISOString().slice(0, 10)}.csv`;
-    
-    link.setAttribute('download', filename);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
-    toast.success(`CSV downloaded: ${filename}`);
-    setShowVideoPreview(false);
+    setShowPreview(false);
   };
 
   const handleDownloadViaFilesClick = async () => {
-    if (!confirmationManifest?.entries) {
-      // Generate manifest first if we don't have one
-      await generateAudioManifest();
+    if (!manifest) {
+      await generateManifest();
       return;
     }
-    
     setShowDownloadConfirmation(true);
   };
 
-  const downloadAudioViaFiles = async (manifest?: any) => {
-    const manifestToUse = manifest || confirmationManifest;
-    if (!manifestToUse?.entries) return;
-
-    // Enhanced browser compatibility checks
-    if (isInCrossOriginFrame) {
-      toast.error('Direct browser downloads are not available in this environment. Please open the admin panel in a new tab or use the CSV download option.');
-      return;
-    }
-
-    if (!('showDirectoryPicker' in window)) {
-      toast.error('Browser download requires a Chromium-based browser (Chrome, Edge, etc.). Please use the CSV download option instead.');
+  const downloadMediaViaFiles = async (manifestData: any) => {
+    if (!manifestData?.entries?.length) {
+      toast.error('No files to download');
       return;
     }
 
     try {
-      // Prompt user to select a directory
+      setBrowserDownloadProgress({ total: 0, completed: 0, failed: 0, isActive: true });
+      
+      // Request directory picker
       const directoryHandle = await (window as any).showDirectoryPicker();
       
-      setBrowserDownloadProgress({
-        total: manifestToUse.entries.length,
-        completed: 0,
-        failed: 0,
-        isActive: true
-      });
-
-      const maxConcurrency = 3; // Limit concurrent downloads
+      const entries = manifestData.entries;
+      setBrowserDownloadProgress(prev => ({ ...prev, total: entries.length }));
+      
+      const concurrency = 3; // Download 3 files at a time
       let completed = 0;
       let failed = 0;
-
-      // Process files in batches
-      for (let i = 0; i < manifestToUse.entries.length; i += maxConcurrency) {
-        const batch = manifestToUse.entries.slice(i, i + maxConcurrency);
+      
+      for (let i = 0; i < entries.length; i += concurrency) {
+        const batch = entries.slice(i, i + concurrency);
         
-        await Promise.allSettled(batch.map(async (entry: any) => {
-          try {
-            // Check if file already exists
+        await Promise.allSettled(
+          batch.map(async (entry: any) => {
             try {
-              await directoryHandle.getFileHandle(entry.filename);
-              console.log(`File already exists, skipping: ${entry.filename}`);
+              const response = await fetch(entry.signed_url);
+              if (!response.ok) throw new Error(`HTTP ${response.status}`);
+              
+              const blob = await response.blob();
+              const filename = entry.custom_filename || entry.filename;
+              const fileHandle = await directoryHandle.getFileHandle(filename, { create: true });
+              const writable = await fileHandle.createWritable();
+              await writable.write(blob);
+              await writable.close();
+              
               completed++;
-              return;
-            } catch {
-              // File doesn't exist, proceed with download
+            } catch (error) {
+              console.error(`Failed to download ${entry.filename}:`, error);
+              failed++;
             }
-
-            // Fetch the file
-            const response = await fetch(entry.signed_url);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             
-            const blob = await response.blob();
-            
-            // Create file in selected directory
-            const fileHandle = await directoryHandle.getFileHandle(entry.filename, { create: true });
-            const writable = await fileHandle.createWritable();
-            await writable.write(blob);
-            await writable.close();
-            
-            completed++;
-          } catch (error) {
-            console.error(`Failed to download ${entry.filename}:`, error);
-            failed++;
-          } finally {
-            setBrowserDownloadProgress(prev => ({
-              ...prev,
-              completed: completed,
-              failed: failed
+            setBrowserDownloadProgress(prev => ({ 
+              ...prev, 
+              completed: completed, 
+              failed: failed 
             }));
-          }
-        }));
+          })
+        );
       }
-
+      
+      // Final update
       setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
       
       if (failed === 0) {
-        toast.success(`Successfully downloaded ${completed} audio files!`);
+        toast.success(`Successfully downloaded ${completed} ${getBucketLabel(selectedBucket).toLowerCase()} files to your selected folder`);
       } else {
-        toast(`Download completed: ${completed} successful, ${failed} failed`, {
-          description: 'Check console for details on failed downloads.'
-        });
+        toast.warning(`Downloaded ${completed} files, ${failed} failed`);
       }
-
+      
     } catch (error) {
       console.error('Browser download error:', error);
+      setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
       
-      if (error instanceof Error) {
-        if (error.name === 'AbortError') {
-          toast.error('Download was cancelled by user');
-        } else if (error.message.includes('Permission')) {
-          toast.error('Permission denied. Please try opening the admin panel in a new tab.');
-        } else {
-          toast.error(`Download failed: ${error.message}`);
-        }
+      if (error instanceof Error && error.name === 'AbortError') {
+        toast.error('Download cancelled by user');
       } else {
         toast.error('Failed to download files via browser');
       }
-      
-      setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
     }
   };
 
-  // JSZip fallback download for audio files
-  const downloadAudioAsZip = async (manifest?: any) => {
-    const manifestToUse = manifest || confirmationManifest;
-    if (!manifestToUse?.entries) return;
-
-    setBrowserDownloadProgress({
-      total: manifestToUse.entries.length,
-      completed: 0,
-      failed: 0,
-      isActive: true
-    });
+  const downloadMediaAsZip = async (manifestData: any) => {
+    if (!manifestData?.entries?.length) {
+      toast.error('No files to download');
+      return;
+    }
 
     try {
+      setBrowserDownloadProgress({ total: 0, completed: 0, failed: 0, isActive: true });
+      
+      const entries = manifestData.entries;
+      setBrowserDownloadProgress(prev => ({ ...prev, total: entries.length }));
+      
       const zip = new JSZip();
+      
       let completed = 0;
       let failed = 0;
-
-      toast.info('Creating ZIP file... This may take a few minutes for large collections.');
-
-      // Download and add files to ZIP
-      for (const entry of manifestToUse.entries) {
-        try {
-          const response = await fetch(entry.signed_url);
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          
-          const blob = await response.blob();
-          zip.file(entry.custom_filename, blob);
-          completed++;
-          
-          setBrowserDownloadProgress(prev => ({
-            ...prev,
-            completed: completed,
-            failed: failed
-          }));
-        } catch (error) {
-          console.error(`Failed to download ${entry.filename}:`, error);
-          failed++;
-          setBrowserDownloadProgress(prev => ({
-            ...prev,
-            completed: completed,
-            failed: failed
-          }));
-        }
-      }
-
-      if (completed === 0) {
-        toast.error('No files could be downloaded');
-        setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
-        return;
-      }
-
-      toast.info('Generating ZIP file...');
       
-      // Generate ZIP and trigger download
+      // Download files in batches
+      const concurrency = 5;
+      for (let i = 0; i < entries.length; i += concurrency) {
+        const batch = entries.slice(i, i + concurrency);
+        
+        await Promise.allSettled(
+          batch.map(async (entry: any) => {
+            try {
+              const response = await fetch(entry.signed_url);
+              if (!response.ok) throw new Error(`HTTP ${response.status}`);
+              
+              const blob = await response.blob();
+              const filename = entry.custom_filename || entry.filename;
+              zip.file(filename, blob);
+              
+              completed++;
+            } catch (error) {
+              console.error(`Failed to add ${entry.filename} to ZIP:`, error);
+              failed++;
+            }
+            
+            setBrowserDownloadProgress(prev => ({ 
+              ...prev, 
+              completed: completed, 
+              failed: failed 
+            }));
+          })
+        );
+      }
+      
+      // Generate and download ZIP
       const zipBlob = await zip.generateAsync({ type: 'blob' });
-      const link = document.createElement('a');
       const url = URL.createObjectURL(zipBlob);
-      link.setAttribute('href', url);
+      const a = document.createElement('a');
+      a.href = url;
       
-      const filterSuffix = audioFilterMode === 'sinceDate' ? `_since_${audioFilterDate}` : '_all';
-      const filename = `story_audio_backup${filterSuffix}_${new Date().toISOString().slice(0, 10)}.zip`;
+      const filterSuffix = filterMode === 'sinceDate' ? `_since_${filterDate}` : '_all';
+      const filename = `${selectedBucket.replace('-', '_')}_backup${filterSuffix}_${new Date().toISOString().slice(0, 10)}.zip`;
       
-      link.setAttribute('download', filename);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
       URL.revokeObjectURL(url);
-
+      
       setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
       
       if (failed === 0) {
-        toast.success(`Successfully created ZIP with ${completed} audio files!`);
+        toast.success(`Successfully created ZIP with ${completed} ${getBucketLabel(selectedBucket).toLowerCase()} files`);
       } else {
-        toast(`ZIP created: ${completed} files included, ${failed} failed`, {
-          description: 'Check console for details on failed files.'
-        });
+        toast.warning(`Created ZIP with ${completed} files, ${failed} failed`);
       }
       
-      setShowDownloadConfirmation(false);
-
     } catch (error) {
-      console.error('ZIP download error:', error);
-      toast.error('Failed to create ZIP file');
+      console.error('ZIP creation error:', error);
       setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
+      toast.error('Failed to create ZIP file');
     }
   };
 
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div className="flex items-center gap-3 mb-6">
-        <HardDrive className="w-8 h-8 text-blue-600" />
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Backup Center</h1>
-          <p className="text-gray-600">Download your data and assets for safekeeping</p>
-        </div>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold">Backup Center</h1>
+        <Badge variant="secondary">Admin Tools</Badge>
       </div>
 
-      {/* Full System Backup Section */}
-      <Card className="border-2 border-blue-200 bg-blue-50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-800">
-            <Package className="w-5 h-5" />
-            Full System Backup (Recommended)
-          </CardTitle>
-          <CardDescription className="text-blue-700">
-            One-click download of everything: database, all storage buckets, and metadata. Perfect for complete system backup.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-            <div className="space-y-2">
-              <h4 className="font-medium text-blue-800">Complete backup includes:</h4>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="default" className="bg-blue-600">Database Export</Badge>
-                <Badge variant="default" className="bg-blue-600">All Storage Buckets</Badge>
-                <Badge variant="default" className="bg-blue-600">Schema & Policies</Badge>
-                <Badge variant="default" className="bg-blue-600">File Checksums</Badge>
-                <Badge variant="default" className="bg-blue-600">Restore Instructions</Badge>
-              </div>
-            </div>
-            <Button 
-              onClick={handleFullBackupDownload}
-              disabled={isCreatingFullBackup}
-              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700"
-            >
-              {isCreatingFullBackup ? (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              ) : (
-                <Download className="w-4 h-4 mr-2" />
-              )}
-              Create Full Backup (ZIP)
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Automated Backup Section */}
-      <Card className="border-2 border-green-200 bg-green-50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-green-800">
-            <Cloud className="w-5 h-5" />
-            Automated Nightly Backup
-          </CardTitle>
-          <CardDescription className="text-green-700">
-            Automatically save backups to secure cloud storage. Run manually or schedule for nightly execution.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-            <div className="space-y-2">
-              <h4 className="font-medium text-green-800">Features:</h4>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary" className="bg-green-100 text-green-800">30-Day Retention</Badge>
-                <Badge variant="secondary" className="bg-green-100 text-green-800">Auto Cleanup</Badge>
-                <Badge variant="secondary" className="bg-green-100 text-green-800">Cloud Storage</Badge>
-                <Badge variant="secondary" className="bg-green-100 text-green-800">Scheduled</Badge>
-              </div>
-              {loadingSchedule ? (
-                <p className="text-sm text-green-700 mt-2">
-                  <Loader2 className="w-4 h-4 inline mr-1 animate-spin" />
-                  Checking schedule status...
-                </p>
-              ) : scheduledBackups.length > 0 ? (
-                <div className="text-sm text-green-700 mt-2">
-                  ✅ <strong>Daily backups active!</strong> Next backup: Today at 2:00 AM UTC
-                  <br />
-                  <span className="text-xs">Schedule: {scheduledBackups[0]?.schedule} (Job ID: {scheduledBackups[0]?.jobid})</span>
-                </div>
-              ) : (
-                <p className="text-sm text-green-700 mt-2">
-                  ⚠️ No scheduled backups found. Run manual backup above.
-                </p>
-              )}
-            </div>
-            <Button 
-              onClick={handleNightlyBackup}
-              disabled={isRunningNightlyBackup}
-              className="w-full sm:w-auto bg-green-600 hover:bg-green-700"
-            >
-              {isRunningNightlyBackup ? (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              ) : (
-                <Play className="w-4 h-4 mr-2" />
-              )}
-              Run Backup to Supabase Cloud
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Individual Database Backup Section */}
+      {/* Full System Backup */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Database className="w-5 h-5" />
+            <Package className="h-5 w-5" />
+            Full System Backup
+          </CardTitle>
+          <CardDescription>
+            Create a comprehensive backup including database and all storage buckets
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-sm text-muted-foreground">
+            Creates a complete backup of your entire GPA Stories system, including the database 
+            and all file storage. The backup is packaged as a downloadable ZIP file.
+          </p>
+          <Button 
+            onClick={handleFullBackupDownload}
+            disabled={isCreatingFullBackup}
+            className="w-full"
+          >
+            {isCreatingFullBackup ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Creating Full Backup...
+              </>
+            ) : (
+              <>
+                <Download className="mr-2 h-4 w-4" />
+                Create Full Backup
+              </>
+            )}
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* Automated Nightly Backup */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Cloud className="h-5 w-5" />
+            Automated Nightly Backup
+          </CardTitle>
+          <CardDescription>
+            Run the automated backup process that saves to cloud storage
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">
+              This creates a backup in the cloud storage bucket for automated retention. 
+              The backup includes database and storage files.
+            </p>
+            
+            {!loadingSchedule && scheduledBackups.length > 0 && (
+              <div className="bg-muted p-3 rounded-md">
+                <p className="text-sm font-medium">Scheduled Backup Status:</p>
+                {scheduledBackups.map((job, index) => (
+                  <div key={index} className="text-sm text-muted-foreground">
+                    {job.jobname}: {job.active ? 'Active' : 'Inactive'} - {job.schedule}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          
+          <Button 
+            onClick={handleNightlyBackup}
+            disabled={isRunningNightlyBackup}
+            variant="outline"
+            className="w-full"
+          >
+            {isRunningNightlyBackup ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Running Nightly Backup...
+              </>
+            ) : (
+              <>
+                <Clock className="mr-2 h-4 w-4" />
+                Run Nightly Backup Now
+              </>
+            )}
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* Database Only Backup */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Database className="h-5 w-5" />
             Database Only Backup
           </CardTitle>
           <CardDescription>
-            Export only database tables, schema definitions, and RLS policies. Includes asset metadata but not the actual files.
+            Export only the database content and schema
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-            <div className="space-y-2">
-              <h4 className="font-medium">Includes:</h4>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Stories & Comments</Badge>
-                <Badge variant="secondary">User Profiles</Badge>
-                <Badge variant="secondary">Voting Data</Badge>
-                <Badge variant="secondary">Schema & Policies</Badge>
-                <Badge variant="secondary">Asset Manifest</Badge>
-              </div>
-            </div>
-            <Button 
-              onClick={handleDatabaseBackup}
-              disabled={isExportingDb}
-              variant="outline"
-              className="w-full sm:w-auto"
-            >
-              {isExportingDb ? (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              ) : (
-                <Download className="w-4 h-4 mr-2" />
-              )}
-              Download DB Backup (ZIP)
-            </Button>
-          </div>
+        <CardContent className="space-y-4">
+          <p className="text-sm text-muted-foreground">
+            Creates a backup of just the database, including all tables, data, schema definitions, 
+            and RLS policies. Does not include storage bucket files.
+          </p>
+          <Button 
+            onClick={handleDatabaseBackup}
+            disabled={isExportingDb}
+            variant="outline"
+            className="w-full"
+          >
+            {isExportingDb ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Exporting Database...
+              </>
+            ) : (
+              <>
+                <FileText className="mr-2 h-4 w-4" />
+                Export Database
+              </>
+            )}
+          </Button>
         </CardContent>
       </Card>
 
-      {/* Backup History Section */}
+      {/* Media & Assets Backup */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Clock className="w-5 h-5" />
+            <HardDrive className="h-5 w-5" />
+            Media & Assets Backup
+          </CardTitle>
+          <CardDescription>
+            Download files from individual storage buckets with advanced options
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Bucket Selection */}
+          <div className="space-y-3">
+            <Label className="text-sm font-medium">Select Media Type</Label>
+            <RadioGroup value={selectedBucket} onValueChange={(value) => setSelectedBucket(value as any)}>
+              {bucketOptions.map((option) => (
+                <div key={option.value} className="flex items-center space-x-2">
+                  <RadioGroupItem value={option.value} id={option.value} />
+                  <Label htmlFor={option.value} className="flex-1 cursor-pointer">
+                    <div className="text-sm font-medium">{option.label}</div>
+                    <div className="text-xs text-muted-foreground">{option.description}</div>
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+
+          {/* Filter Controls */}
+          <div className="space-y-3">
+            <Label className="text-sm font-medium">Filter Options</Label>
+            <RadioGroup value={filterMode} onValueChange={(value) => setFilterMode(value as any)}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="all" id="all" />
+                <Label htmlFor="all" className="cursor-pointer">All files</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="sinceDate" id="sinceDate" />
+                <Label htmlFor="sinceDate" className="cursor-pointer">Updated after date</Label>
+              </div>
+            </RadioGroup>
+            
+            {filterMode === 'sinceDate' && (
+              <div className="ml-6">
+                <Input
+                  type="date"
+                  value={filterDate}
+                  onChange={(e) => setFilterDate(e.target.value)}
+                  className="w-48"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <Button
+              onClick={generateManifest}
+              disabled={isGenerating || (filterMode === 'sinceDate' && !filterDate)}
+              variant="outline"
+              className="flex items-center gap-2"
+            >
+              {isGenerating ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <FileSpreadsheet className="h-4 w-4" />
+              )}
+              Get Download Links (CSV)
+            </Button>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    onClick={handleDownloadViaFilesClick}
+                    disabled={isGenerating || (filterMode === 'sinceDate' && !filterDate) || !isBrowserDownloadAvailable}
+                    variant="outline"
+                    className="flex items-center gap-2"
+                  >
+                    <FolderDown className="h-4 w-4" />
+                    Download via Browser
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {!isBrowserDownloadAvailable ? (
+                    isInCrossOriginFrame ? 
+                      "Not available in iframe. Open in new tab." :
+                      "Requires Chrome/Edge browser for direct folder download"
+                  ) : (
+                    "Download files directly to a folder of your choice"
+                  )}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <Button
+              onClick={async () => {
+                if (!manifest) await generateManifest();
+                else await downloadMediaAsZip(manifest);
+              }}
+              disabled={isGenerating || (filterMode === 'sinceDate' && !filterDate)}
+              className="flex items-center gap-2"
+            >
+              <Download className="h-4 w-4" />
+              Download as ZIP
+            </Button>
+          </div>
+
+          {/* Progress Display */}
+          {browserDownloadProgress.isActive && (
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Downloading {getBucketLabel(selectedBucket).toLowerCase()} files...</span>
+                <span>{browserDownloadProgress.completed}/{browserDownloadProgress.total}</span>
+              </div>
+              <Progress 
+                value={(browserDownloadProgress.completed / browserDownloadProgress.total) * 100} 
+                className="w-full"
+              />
+              {browserDownloadProgress.failed > 0 && (
+                <p className="text-sm text-destructive">
+                  {browserDownloadProgress.failed} files failed to download
+                </p>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Backup History */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="h-5 w-5" />
             Backup History
           </CardTitle>
           <CardDescription>
-            Download previous backup files stored in cloud storage. Kept for 30 days.
+            Recent backups stored in cloud storage
           </CardDescription>
         </CardHeader>
         <CardContent>
           {loadingHistory ? (
             <div className="flex items-center justify-center py-8">
-              <Loader2 className="w-6 h-6 animate-spin mr-2" />
-              Loading backup history...
+              <Loader2 className="h-6 w-6 animate-spin" />
             </div>
           ) : backupHistory.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              No backup files found. Run your first nightly backup to see history here.
-            </div>
+            <p className="text-center text-muted-foreground py-8">No backup history found</p>
           ) : (
-            <div className="space-y-3">
-              {backupHistory.map((file) => (
-                <div key={file.name} className="flex items-center justify-between p-3 border rounded-lg bg-gray-50">
-                  <div>
-                    <h4 className="font-medium text-sm">{file.name}</h4>
-                    <p className="text-xs text-gray-500">
-                      Created: {new Date(file.created_at).toLocaleString()}
-                      {file.metadata?.size && ` • Size: ${Math.round(file.metadata.size / 1024)} KB`}
+            <div className="space-y-2">
+              {backupHistory.map((file, index) => (
+                <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div className="flex-1">
+                    <p className="font-medium">{file.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(file.created_at).toLocaleString()} • {(file.metadata?.size / 1024 / 1024)?.toFixed(1) || '0'} MB
                     </p>
                   </div>
                   <Button
@@ -987,316 +967,12 @@ Contact the system administrator for assistance.`;
                     variant="outline"
                     onClick={() => downloadBackupFromHistory(file.name)}
                   >
-                    <Download className="w-4 h-4 mr-1" />
-                    Download
+                    <Download className="h-4 w-4" />
                   </Button>
                 </div>
               ))}
             </div>
           )}
-        </CardContent>
-      </Card>
-
-      {/* Individual Storage Buckets Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="w-5 h-5" />
-            Individual Storage Buckets
-          </CardTitle>
-          <CardDescription>
-            Download individual storage buckets with all files and checksums. Each bucket is downloaded separately.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {storageBuckets.map((bucket) => {
-              // Special handling for story-audio bucket
-              if (bucket.name === 'story-audio') {
-                return (
-                  <div key={bucket.name} className="p-4 border-2 border-orange-200 rounded-lg bg-orange-50 md:col-span-2">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-orange-800">{bucket.name}</h4>
-                      <Badge variant="default" className="bg-orange-600">
-                        Enhanced Backup
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-orange-700 mb-4">{bucket.description} - Enhanced with date filtering and individual file downloads</p>
-                    
-                    {/* Filter Controls */}
-                    <div className="space-y-3 mb-4 p-3 bg-white rounded border">
-                      <div className="flex items-center gap-4">
-                        <Filter className="w-4 h-4 text-orange-600" />
-                        <Label className="text-sm font-medium">Filter Options:</Label>
-                      </div>
-                      
-                      <div className="flex flex-col sm:flex-row gap-4">
-                        <div className="flex gap-2">
-                          <label className="flex items-center gap-2 text-sm">
-                            <input
-                              type="radio"
-                              name="audioFilter"
-                              value="all"
-                              checked={audioFilterMode === 'all'}
-                              onChange={(e) => setAudioFilterMode(e.target.value as 'all' | 'sinceDate')}
-                              className="text-orange-600"
-                            />
-                            All audio files
-                          </label>
-                          <label className="flex items-center gap-2 text-sm">
-                            <input
-                              type="radio"
-                              name="audioFilter"
-                              value="sinceDate"
-                              checked={audioFilterMode === 'sinceDate'}
-                              onChange={(e) => setAudioFilterMode(e.target.value as 'all' | 'sinceDate')}
-                              className="text-orange-600"
-                            />
-                            Updated after
-                          </label>
-                        </div>
-                        
-                        {audioFilterMode === 'sinceDate' && (
-                          <div className="flex items-center gap-2">
-                            <Input
-                              type="date"
-                              value={audioFilterDate}
-                              onChange={(e) => setAudioFilterDate(e.target.value)}
-                              className="w-auto text-sm"
-                            />
-                            <span className="text-xs text-gray-500">at 00:00:00</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="space-y-2">
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={generateAudioManifest}
-                        disabled={isGeneratingAudioManifest || (audioFilterMode === 'sinceDate' && !audioFilterDate)}
-                        className="w-full bg-orange-100 border-orange-300 text-orange-800 hover:bg-orange-200"
-                      >
-                        {isGeneratingAudioManifest ? (
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        ) : (
-                          <FileSpreadsheet className="w-4 h-4 mr-2" />
-                        )}
-                        Get Download Links (CSV)
-                      </Button>
-                      
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <div>
-                               <Button 
-                                size="sm" 
-                                variant="outline"
-                                onClick={handleDownloadViaFilesClick}
-                                disabled={!isFileSystemAccessSupported || isGeneratingAudioManifest || (audioFilterMode === 'sinceDate' && !audioFilterDate) || browserDownloadProgress.isActive}
-                                className={`w-full ${!isFileSystemAccessSupported 
-                                  ? 'bg-gray-100 border-gray-300 text-gray-500' 
-                                  : 'bg-blue-100 border-blue-300 text-blue-800 hover:bg-blue-200'
-                                }`}
-                              >
-                                {isGeneratingAudioManifest || browserDownloadProgress.isActive ? (
-                                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                ) : !isFileSystemAccessSupported ? (
-                                  <AlertCircle className="w-4 h-4 mr-2" />
-                                ) : (
-                                  <FolderDown className="w-4 h-4 mr-2" />
-                                )}
-                                Download via Browser
-                                {!isFileSystemAccessSupported && ' (Unsupported)'}
-                              </Button>
-                            </div>
-                          </TooltipTrigger>
-                          {!isFileSystemAccessSupported && (
-                            <TooltipContent>
-                              <p className="text-sm">Browser download requires Chrome, Edge, or another Chromium-based browser.<br />
-                              Firefox users: Please use "Get Download Links (CSV)" instead.</p>
-                            </TooltipContent>
-                          )}
-                        </Tooltip>
-                      </TooltipProvider>
-                      
-                      {/* Browser Download Progress */}
-                      {browserDownloadProgress.isActive && (
-                        <div className="p-3 bg-blue-50 rounded border border-blue-200">
-                          <div className="flex items-center justify-between text-sm mb-2">
-                            <span>Downloading files...</span>
-                            <span>{browserDownloadProgress.completed + browserDownloadProgress.failed}/{browserDownloadProgress.total}</span>
-                          </div>
-                          <Progress 
-                            value={(browserDownloadProgress.completed + browserDownloadProgress.failed) / browserDownloadProgress.total * 100} 
-                            className="mb-2"
-                          />
-                          <div className="text-xs text-gray-600">
-                            ✅ {browserDownloadProgress.completed} completed
-                            {browserDownloadProgress.failed > 0 && (
-                              <span className="ml-2">❌ {browserDownloadProgress.failed} failed</span>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              }
-
-              // Special handling for story-videos bucket
-              if (bucket.name === 'story-videos') {
-                return (
-                  <div key={bucket.name} className="p-4 border-2 border-blue-200 rounded-lg bg-blue-50 md:col-span-2">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-blue-800">{bucket.name}</h4>
-                      <Badge variant="default" className="bg-blue-600">
-                        Enhanced Backup
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-blue-700 mb-4">{bucket.description} - Enhanced with date filtering and individual file downloads</p>
-                    
-                    {/* Video Filter Controls */}
-                    <div className="space-y-3 mb-4 p-3 bg-white rounded border">
-                      <div className="flex items-center gap-4">
-                        <Filter className="w-4 h-4 text-blue-600" />
-                        <Label className="text-sm font-medium">Filter Options:</Label>
-                      </div>
-                      
-                      <div className="flex flex-col sm:flex-row gap-4">
-                        <div className="flex gap-2">
-                          <label className="flex items-center gap-2 text-sm">
-                            <input
-                              type="radio"
-                              name="videoFilter"
-                              value="all"
-                              checked={videoFilterMode === 'all'}
-                              onChange={(e) => setVideoFilterMode(e.target.value as 'all' | 'sinceDate')}
-                              className="text-blue-600"
-                            />
-                            All video files
-                          </label>
-                          <label className="flex items-center gap-2 text-sm">
-                            <input
-                              type="radio"
-                              name="videoFilter"
-                              value="sinceDate"
-                              checked={videoFilterMode === 'sinceDate'}
-                              onChange={(e) => setVideoFilterMode(e.target.value as 'all' | 'sinceDate')}
-                              className="text-blue-600"
-                            />
-                            Updated after
-                          </label>
-                        </div>
-                        
-                        {videoFilterMode === 'sinceDate' && (
-                          <div className="flex items-center gap-2">
-                            <Input
-                              type="date"
-                              value={videoFilterDate}
-                              onChange={(e) => setVideoFilterDate(e.target.value)}
-                              className="w-auto text-sm"
-                            />
-                            <span className="text-xs text-gray-500">at 00:00:00</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Video Action Buttons */}
-                    <div className="space-y-2">
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={generateVideoManifest}
-                        disabled={isGeneratingVideoManifest || (videoFilterMode === 'sinceDate' && !videoFilterDate)}
-                        className="w-full bg-blue-100 border-blue-300 text-blue-800 hover:bg-blue-200"
-                      >
-                        {isGeneratingVideoManifest ? (
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        ) : (
-                          <FileSpreadsheet className="w-4 h-4 mr-2" />
-                        )}
-                        Get Video Download Links (CSV)
-                      </Button>
-                    </div>
-                  </div>
-                );
-              }
-              
-              // Regular bucket display
-              return (
-                <div key={bucket.name} className="p-4 border rounded-lg bg-gray-50">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium">{bucket.name}</h4>
-                    <Badge variant={bucket.public ? "default" : "secondary"}>
-                      {bucket.public ? "Public" : "Private"}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-3">{bucket.description}</p>
-                  <Button 
-                    size="sm" 
-                    variant="outline"
-                    onClick={() => handleBucketBackup(bucket.name)}
-                    disabled={downloadingBucket === bucket.name}
-                    className="w-full"
-                  >
-                    {downloadingBucket === bucket.name ? (
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    ) : (
-                      <Download className="w-4 h-4 mr-2" />
-                    )}
-                    Download {bucket.name}
-                  </Button>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Backup Information */}
-      <Card className="bg-blue-50 border-blue-200">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-800">
-            <Calendar className="w-5 h-5" />
-            Backup Information & Scheduling
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="text-blue-700">
-          <div className="space-y-4">
-            <div>
-              <h4 className="font-medium mb-2">Backup Features:</h4>
-              <ul className="space-y-1 text-sm">
-                <li>• Full system backups include everything in one ZIP file</li>
-                <li>• Nightly backups are stored securely in cloud storage</li>
-                <li>• 30-day retention policy with automatic cleanup</li>
-                <li>• SHA-256 checksums for file integrity verification</li>
-                <li>• Timestamps in filenames for easy identification</li>
-              </ul>
-            </div>
-            
-            <div className="border-t pt-4">
-              <h4 className="font-medium mb-2">Automated Scheduling:</h4>
-              <p className="text-sm mb-2">
-                To set up nightly backups at 2 AM, configure this cron job in your Supabase project:
-              </p>
-              <div className="bg-blue-100 p-3 rounded font-mono text-xs overflow-x-auto">
-                {`SELECT cron.schedule(
-  'nightly-backup',
-  '0 2 * * *',
-  $$
-  SELECT net.http_post(
-    url:='https://hlywucxwpzbqmzssmwpj.supabase.co/functions/v1/full-backup-to-bucket',
-    headers:='{"Authorization": "Bearer YOUR_SERVICE_ROLE_KEY"}'::jsonb
-  );
-  $$
-);`}
-              </div>
-            </div>
-          </div>
         </CardContent>
       </Card>
 
@@ -1309,303 +985,161 @@ Contact the system administrator for assistance.`;
         overallProgress={overallProgress}
       />
 
-      {/* Audio Preview Modal */}
-      <Dialog open={showAudioPreview} onOpenChange={setShowAudioPreview}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+      {/* Preview Modal */}
+      <Dialog open={showPreview} onOpenChange={setShowPreview}>
+        <DialogContent className="max-w-2xl max-h-[80vh]">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Eye className="w-5 h-5" />
-              Audio Files Preview
-            </DialogTitle>
+            <DialogTitle>Files Preview — {getBucketLabel(selectedBucket)}</DialogTitle>
             <DialogDescription>
-              {audioManifest && (
-                <div className="space-y-2">
-                  <div className="flex items-center gap-4 text-lg font-medium">
-                    <span>📁 {audioManifest.totals.count} files</span>
-                    <span>💾 {audioManifest.totals.size_pretty}</span>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    {audioFilterMode === 'all' 
-                      ? 'All audio files in the story-audio bucket'
-                      : `Files updated after ${audioFilterDate} at 00:00:00`
-                    }
-                  </p>
-                </div>
+              {manifest && (
+                <>
+                  Found {manifest.totals.count} files • {manifest.totals.size_pretty}
+                  {filterMode === 'sinceDate' && (
+                    <> • Updated after {filterDate}</>
+                  )}
+                </>
               )}
             </DialogDescription>
           </DialogHeader>
           
-          {audioManifest?.entries && (
-            <div>
-              <h4 className="font-medium mb-3">Preview (first 10 files):</h4>
-              <div className="space-y-2 max-h-64 overflow-y-auto border rounded p-3 bg-gray-50">
-                {audioManifest.entries.slice(0, 10).map((entry: any, index: number) => (
-                  <div key={index} className="text-sm border-b pb-2 last:border-b-0">
-                    <div className="font-medium truncate">{entry.filename}</div>
-                    <div className="text-gray-600 text-xs">
-                      {(entry.size_bytes / 1024 / 1024).toFixed(2)} MB • 
-                      Story: {entry.story_code || 'Unknown'} • 
-                      Updated: {new Date(entry.updated_at).toLocaleDateString()}
-                    </div>
+          {manifest && (
+            <div className="space-y-4">
+              <div className="max-h-60 overflow-y-auto border rounded-md p-3">
+                <div className="text-sm font-medium mb-2">First 10 files:</div>
+                {manifest.entries.slice(0, 10).map((entry: any, index: number) => (
+                  <div key={index} className="text-sm text-muted-foreground">
+                    {entry.custom_filename || entry.filename} • {(entry.size_bytes / 1024 / 1024).toFixed(2)} MB
                   </div>
                 ))}
-                {audioManifest.entries.length > 10 && (
-                  <div className="text-center text-gray-500 text-sm pt-2">
-                    ... and {audioManifest.entries.length - 10} more files
+                {manifest.entries.length > 10 && (
+                  <div className="text-sm text-muted-foreground font-medium">
+                    ... and {manifest.entries.length - 10} more files
                   </div>
                 )}
               </div>
             </div>
           )}
-
-          <DialogFooter className="gap-2">
-            <Button variant="outline" onClick={() => setShowAudioPreview(false)}>
+          
+          <DialogFooter className="flex flex-wrap gap-2">
+            <Button variant="outline" onClick={() => setShowPreview(false)}>
               Cancel
             </Button>
-            <Button 
-              onClick={downloadAudioCSV}
-              className="bg-orange-600 hover:bg-orange-700 text-white"
-            >
+            <Button variant="outline" onClick={downloadCSV}>
               <FileSpreadsheet className="w-4 h-4 mr-2" />
               Download CSV
             </Button>
-            <Button 
-              onClick={() => {
-                setShowAudioPreview(false);
-                setConfirmationManifest(audioManifest);
-                downloadAudioAsZip(audioManifest);
-              }}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              <Package className="w-4 h-4 mr-2" />
+            <Button variant="outline" onClick={() => downloadMediaAsZip(manifest)}>
+              <Download className="w-4 h-4 mr-2" />
               Download as ZIP
             </Button>
-            {isBrowserDownloadAvailable ? (
-              <Button 
-                onClick={() => {
-                  setShowAudioPreview(false);
-                  setConfirmationManifest(audioManifest);
-                  setShowDownloadConfirmation(true);
-                }}
-                className="bg-green-600 hover:bg-green-700 text-white"
-              >
-                <FolderDown className="w-4 h-4 mr-2" />
-                Download via Browser
-              </Button>
-            ) : (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div>
-                      <Button 
-                        disabled
-                        className="bg-gray-400 text-gray-600 cursor-not-allowed"
-                      >
-                        <FolderDown className="w-4 h-4 mr-2" />
-                        Download via Browser
-                      </Button>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{isInCrossOriginFrame 
-                      ? 'Not available in iframe. Open admin panel in new tab.' 
-                      : 'Requires Chrome/Edge browser for File System Access API.'
-                    }</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            )}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    disabled={!isBrowserDownloadAvailable}
+                    onClick={() => {
+                      setShowPreview(false);
+                      setShowDownloadConfirmation(true);
+                    }}
+                  >
+                    <FolderDown className="w-4 h-4 mr-2" />
+                    Download via Browser
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {!isBrowserDownloadAvailable ? (
+                    isInCrossOriginFrame ? 
+                      "Not available in iframe. Open in new tab." :
+                      "Requires Chrome/Edge browser"
+                  ) : (
+                    "Download directly to folder"
+                  )}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Video Preview Modal */}
-      <Dialog open={showVideoPreview} onOpenChange={setShowVideoPreview}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+      {/* Confirmation Modal */}
+      <Dialog open={showDownloadConfirmation} onOpenChange={setShowDownloadConfirmation}>
+        <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Eye className="w-5 h-5" />
-              Video Files Preview
-            </DialogTitle>
+            <DialogTitle>Confirm Download — {getBucketLabel(selectedBucket)}</DialogTitle>
             <DialogDescription>
-              {videoManifest && (
-                <div className="space-y-2">
-                  <div className="flex items-center gap-4 text-lg font-medium">
-                    <span>📁 {videoManifest.totals.count} files</span>
-                    <span>💾 {videoManifest.totals.size_pretty}</span>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    {videoFilterMode === 'all' 
-                      ? 'All video files in the story-videos bucket'
-                      : `Files updated after ${videoFilterDate} at 00:00:00`
-                    }
-                  </p>
-                </div>
+              {manifest && (
+                <>
+                  Ready to download {manifest.totals.count} files ({manifest.totals.size_pretty})
+                </>
               )}
             </DialogDescription>
           </DialogHeader>
           
-          {videoManifest?.entries && (
-            <div>
-              <h4 className="font-medium mb-3">Preview (first 10 files):</h4>
-              <div className="space-y-2 max-h-64 overflow-y-auto border rounded p-3 bg-gray-50">
-                {videoManifest.entries.slice(0, 10).map((entry: any, index: number) => (
-                  <div key={index} className="text-sm border-b pb-2 last:border-b-0">
-                    <div className="font-medium truncate">{entry.filename}</div>
-                    <div className="text-gray-600 text-xs">
-                      {(entry.size_bytes / 1024 / 1024).toFixed(2)} MB • 
-                      Story: {entry.story_code || 'Unknown'} • 
-                      Updated: {new Date(entry.updated_at).toLocaleDateString()}
-                    </div>
+          {manifest && (
+            <div className="space-y-4">
+              <div className="max-h-40 overflow-y-auto border rounded-md p-3">
+                <div className="text-sm font-medium mb-2">Files to download:</div>
+                {manifest.entries.slice(0, 10).map((entry: any, index: number) => (
+                  <div key={index} className="text-sm text-muted-foreground">
+                    {entry.custom_filename || entry.filename}
                   </div>
                 ))}
-                {videoManifest.entries.length > 10 && (
-                  <div className="text-center text-gray-500 text-sm pt-2">
-                    ... and {videoManifest.entries.length - 10} more files
+                {manifest.entries.length > 10 && (
+                  <div className="text-sm text-muted-foreground font-medium">
+                    ... and {manifest.entries.length - 10} more
                   </div>
                 )}
               </div>
             </div>
           )}
-
-          <DialogFooter className="gap-2">
-            <Button variant="outline" onClick={() => setShowVideoPreview(false)}>
-              Cancel
-            </Button>
-            <Button 
-              onClick={downloadVideoCSV}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              <FileSpreadsheet className="w-4 h-4 mr-2" />
-              Download CSV
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Download Confirmation Modal */}
-      <Dialog open={showDownloadConfirmation} onOpenChange={setShowDownloadConfirmation}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <FolderDown className="w-5 h-5" />
-              Confirm Audio Download
-            </DialogTitle>
-            <DialogDescription>
-              You're about to download audio files directly to your computer. Please review the details below:
-            </DialogDescription>
-          </DialogHeader>
-
-          {confirmationManifest && (
-            <div className="space-y-4">
-              {/* Summary Stats */}
-              <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-bold text-blue-600">{confirmationManifest.totals.count}</div>
-                    <div className="text-sm text-blue-700">Total Files</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-blue-600">{confirmationManifest.totals.size_pretty}</div>
-                    <div className="text-sm text-blue-700">Total Size</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* First 10 Files Preview */}
-              <div>
-                <h4 className="font-medium mb-2 text-gray-700">First 10 files to be downloaded:</h4>
-                <div className="space-y-1 max-h-48 overflow-y-auto border rounded p-3 bg-gray-50">
-                  {confirmationManifest.entries.slice(0, 10).map((entry: any, index: number) => (
-                    <div key={index} className="text-sm py-1 border-b border-gray-200 last:border-b-0">
-                      <div className="font-mono text-xs truncate text-gray-800">{entry.filename}</div>
-                      <div className="text-gray-500 text-xs">
-                        {(entry.size_bytes / 1024 / 1024).toFixed(2)} MB • Story: {entry.story_code || 'Unknown'}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                {confirmationManifest.entries.length > 10 && (
-                  <div className="text-center text-gray-500 text-sm mt-2">
-                    ... and {confirmationManifest.entries.length - 10} more files will be downloaded
-                  </div>
-                )}
-              </div>
-
-              {/* Download Options Info */}
-              <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
-                <h5 className="font-medium text-blue-800 mb-2">Download Options:</h5>
-                <div className="grid md:grid-cols-2 gap-3 text-sm">
-                  <div className="bg-white p-2 rounded border">
-                    <div className="font-medium text-blue-700 mb-1">📦 ZIP Download (Recommended)</div>
-                    <ul className="text-blue-600 space-y-1 text-xs">
-                      <li>• Creates a single ZIP file</li>
-                      <li>• Works in all browsers</li>
-                      <li>• Best for large collections</li>
-                    </ul>
-                  </div>
-                  <div className="bg-white p-2 rounded border">
-                    <div className="font-medium text-green-700 mb-1">📁 Direct to Folder</div>
-                    <ul className="text-green-600 space-y-1 text-xs">
-                      <li>• Downloads directly to a folder</li>
-                      <li>• Requires Chrome/Edge browser</li>
-                      <li>• Individual file control</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <DialogFooter className="gap-2">
-            <Button variant="outline" onClick={() => setShowDownloadConfirmation(false)}>
-              Cancel
-            </Button>
-            <Button 
-              onClick={() => {
-                setShowDownloadConfirmation(false);
-                downloadAudioAsZip(confirmationManifest);
-              }}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              <Package className="w-4 h-4 mr-2" />
-              Download as ZIP (Recommended)
-            </Button>
-            {isBrowserDownloadAvailable ? (
-              <Button 
+          
+          <DialogFooter className="flex flex-col gap-2">
+            <div className="flex gap-2 w-full">
+              <Button
+                variant="outline"
+                className="flex-1"
                 onClick={() => {
                   setShowDownloadConfirmation(false);
-                  downloadAudioViaFiles(confirmationManifest);
+                  downloadMediaAsZip(manifest);
                 }}
-                className="bg-green-600 hover:bg-green-700 text-white"
               >
-                <FolderDown className="w-4 h-4 mr-2" />
-                Download to Folder
+                <Download className="w-4 h-4 mr-2" />
+                Download as ZIP (Recommended)
               </Button>
-            ) : (
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div>
-                      <Button 
-                        disabled
-                        className="bg-gray-400 text-gray-600 cursor-not-allowed"
-                      >
-                        <FolderDown className="w-4 h-4 mr-2" />
-                        Download to Folder
-                        <AlertCircle className="w-3 h-3 ml-1" />
-                      </Button>
-                    </div>
+                    <Button
+                      className="flex-1"
+                      disabled={!isBrowserDownloadAvailable}
+                      onClick={() => {
+                        setShowDownloadConfirmation(false);
+                        downloadMediaViaFiles(manifest);
+                      }}
+                    >
+                      <FolderDown className="w-4 h-4 mr-2" />
+                      Download to Folder
+                    </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{isInCrossOriginFrame 
-                      ? 'Not available in iframe environment' 
-                      : 'Requires Chrome/Edge browser'
-                    }</p>
+                    {!isBrowserDownloadAvailable ? (
+                      isInCrossOriginFrame ? 
+                        "Not available in iframe. Open in new tab." :
+                        "Requires Chrome/Edge browser"
+                    ) : (
+                      "Choose folder to save files"
+                    )}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
-            )}
+            </div>
+            <Button
+              variant="ghost"
+              className="w-full"
+              onClick={() => setShowDownloadConfirmation(false)}
+            >
+              Cancel
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
