@@ -164,7 +164,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
 
           <div>
             <Label htmlFor="description" className="text-sm font-medium">Tell us more</Label>
-            <WordLimitedTextarea id="description" value={formData.description} onChange={e => handleInputChange('description', e.target.value)} placeholder="What happened? What did you expect to happen?" wordLimit={200} className="mt-1 min-h-[80px]" />
+            <WordLimitedTextarea id="description" value={formData.description} onChange={e => handleInputChange('description', e.target.value)} placeholder="Is something broken? Is something wrong? Tell Grandpa John the whole story." wordLimit={200} className="mt-1 min-h-[80px]" />
           </div>
 
           <div>
