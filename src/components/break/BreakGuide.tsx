@@ -4,7 +4,11 @@ import { Button } from '@/components/ui/button';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { BreakTimerPopup } from '../BreakTimerPopup';
 import { useBreakTimer } from '@/contexts/BreakTimerContext';
-const BreakGuide: React.FC = () => {
+interface BreakGuideProps {
+  inline?: boolean;
+}
+
+const BreakGuide: React.FC<BreakGuideProps> = ({ inline = false }) => {
   const { minutesLeft, isBreakReminderOpen, openBreakReminder, closeBreakReminder, onBreakComplete, isTimerActive } = useBreakTimer();
   
   const [isBreakTimerOpen, setIsBreakTimerOpen] = useState(false);
@@ -121,7 +125,10 @@ const BreakGuide: React.FC = () => {
           <div
             onClick={handleBreakButtonClick}
             data-allow-superav-passthrough="true"
-            className="fixed bottom-[150px] left-4 z-50 cursor-pointer transition-all duration-300 hover:scale-105 print:hidden"
+            className={inline 
+              ? "cursor-pointer transition-all duration-300 hover:scale-105 print:hidden w-[65px] h-[65px] flex items-center justify-center" 
+              : "fixed bottom-[150px] left-4 z-50 cursor-pointer transition-all duration-300 hover:scale-105 print:hidden"
+            }
             aria-label="Break Guide"
             data-testid="break-button"
           >
@@ -129,7 +136,7 @@ const BreakGuide: React.FC = () => {
               <img 
                 src={breakGuideIconUrl} 
                 alt={breakGuideName ?? 'Break Guide'} 
-                className="w-[65px] h-[65px] object-contain"
+                className="w-[65px] h-[65px] object-contain block"
               />
             ) : (
               <span className="font-bold font-fun text-21px">Break Guide</span>

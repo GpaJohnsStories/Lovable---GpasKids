@@ -66,7 +66,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { HelpProvider } from "./contexts/HelpContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useVisitTracker } from "./hooks/useVisitTracker";
-import BreakGuide from "./components/break/BreakGuide";
+import FloatingActionStack from "./components/FloatingActionStack";
 import { BreakTimerProvider } from "./contexts/BreakTimerContext";
 
 const queryClient = new QueryClient();
@@ -90,17 +90,6 @@ const ConditionalReportButton = () => {
   
   return !isAdminPage ? <ReportProblemButton /> : null;
 };
-// Component to conditionally render BreakGuide and timer on public pages only
-const ConditionalBreakGuide = () => {
-  const location = useLocation();
-  const isAdminPage = location.pathname.startsWith('/buddys_admin');
-  
-  return !isAdminPage ? (
-    <BreakTimerProvider>
-      <BreakGuide />
-    </BreakTimerProvider>
-  ) : null;
-};
 
 function App() {
   // Activate visit tracking for the entire app
@@ -123,10 +112,9 @@ function App() {
                     <SuperAVProvider>
                       <AuthProvider>
                         <GlobalHelpProvider>
+                          <BreakTimerProvider>
                   <ConditionalContentProtection>
-                    <ScrollToTop />
-                    <ConditionalBreakGuide />
-                    <ConditionalReportButton />
+                            <FloatingActionStack />
                     
                     <Routes>
                       {/* Public Routes */}
@@ -182,7 +170,8 @@ function App() {
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                    </ConditionalContentProtection>
-                        </GlobalHelpProvider>
+                          </BreakTimerProvider>
+                         </GlobalHelpProvider>
                       </AuthProvider>
                     </SuperAVProvider>
                </BrowserRouter>
