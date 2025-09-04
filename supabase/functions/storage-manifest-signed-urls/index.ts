@@ -53,12 +53,6 @@ function extractStoryCode(filename: string): string | null {
   return match ? match[1] : null;
 }
 
-// Helper to extract legacy story ID from audio filename
-function extractStoryId(filename: string): string | null {
-  // Legacy format: {story_id}-{timestamp}.mp3 or stories/{uuid}.audio
-  const match = filename.match(/^([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/);
-  return match ? match[1] : null;
-}
 
 // Helper to format file size
 function formatFileSize(bytes: number): string {
@@ -186,35 +180,24 @@ Deno.serve(async (req) => {
 
     console.log(`Found ${files?.length || 0} total files in bucket`);
 
-    // Extract unique story IDs and story codes from filenames
-    const storyIds = new Set<string>();
+    // Extract story codes from filenames
     const storyCodes = new Set<string>();
     const fileMap = new Map<string, any>();
 
     for (const file of files || []) {
-      // Try new story code format first
       const storyCode = extractStoryCode(file.name);
       if (storyCode) {
         storyCodes.add(storyCode);
         console.log(`📝 Found story code: ${storyCode} for file: ${file.name}`);
-      } else {
-        // Fall back to legacy UUID format
-        const storyId = extractStoryId(file.name);
-        if (storyId) {
-          storyIds.add(storyId);
-          console.log(`🔍 Found legacy story ID: ${storyId} for file: ${file.name}`);
-        }
       }
       fileMap.set(file.name, file);
     }
 
-    console.log(`Found ${storyCodes.size} story codes and ${storyIds.size} legacy story IDs`);
+    console.log(`Found ${storyCodes.size} story codes`);
 
-    // Fetch story data for both story codes and legacy IDs
-    const storyDataById = new Map<string, StoryData>();
+    // Fetch story data by story codes
     const storyDataByCode = new Map<string, StoryData>();
     
-    // Query by story codes first
     if (storyCodes.size > 0) {
       const { data: stories, error: storyError } = await serviceClient
         .from('stories')
@@ -231,24 +214,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Query by legacy IDs
-    if (storyIds.size > 0) {
-      const { data: stories, error: storyError } = await serviceClient
-        .from('stories')
-        .select('id, story_code, title, audio_generated_at')
-        .in('id', Array.from(storyIds));
-
-      if (storyError) {
-        console.error('Error fetching stories by ID:', storyError);
-      } else {
-        for (const story of stories || []) {
-          storyDataById.set(story.id, story);
-          console.log(`📖 Loaded story by ID: ${story.id} - "${story.title}"`);
-        }
-      }
-    }
-
-    console.log(`Loaded ${storyDataByCode.size} stories by code, ${storyDataById.size} stories by ID`);
+    console.log(`Loaded ${storyDataByCode.size} stories by code`);
 
     // Process files and build entries
     const entries: FileEntry[] = [];
@@ -257,22 +223,16 @@ Deno.serve(async (req) => {
     for (const file of files || []) {
       if (!file.name.endsWith('.mp3')) continue;
 
-      // Try to get story data by story code first, then fall back to legacy ID
+      // Get story data by story code
       const storyCode = extractStoryCode(file.name);
-      const storyId = extractStoryId(file.name);
       
       let story: StoryData | null = null;
       let fileStoryCode: string | null = null;
-      let fileStoryId: string | null = null;
 
       if (storyCode) {
         story = storyDataByCode.get(storyCode) || null;
         fileStoryCode = storyCode;
         console.log(`🔍 Processing by story code: ${storyCode} → ${story ? `"${story.title}"` : 'Not found'}`);
-      } else if (storyId) {
-        story = storyDataById.get(storyId) || null;
-        fileStoryId = storyId;
-        console.log(`🔍 Processing by legacy ID: ${storyId} → ${story ? `"${story.title}"` : 'Not found'}`);
       }
       
       // Determine the "last updated" timestamp for this audio file
@@ -287,7 +247,7 @@ Deno.serve(async (req) => {
       const fileSize = file.metadata?.size ? parseInt(file.metadata.size.toString()) : 0;
       
       // Generate custom filename with proper fallbacks
-      const displayStoryCode = story?.story_code || fileStoryCode || (fileStoryId ? fileStoryId.split('-')[0] : 'unknown');
+      const displayStoryCode = story?.story_code || fileStoryCode || 'unknown';
       const titlePart = story?.title ? truncateTitle(sanitizeFilename(story.title)) : 'Unknown Title';
       const datePart = formatDateForFilename(fileUpdatedDate);
       const customFilename = `${sanitizeFilename(displayStoryCode)} - ${titlePart} - ${datePart}.mp3`;
@@ -296,7 +256,7 @@ Deno.serve(async (req) => {
         path: file.name,
         size_bytes: fileSize,
         updated_at: audioUpdated,
-        story_id: fileStoryId,
+        story_id: null, // No legacy IDs anymore
         story_code: story?.story_code || fileStoryCode,
         title: story?.title || null,
         filename: customFilename
