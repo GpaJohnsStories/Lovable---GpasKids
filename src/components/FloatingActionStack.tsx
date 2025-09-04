@@ -12,7 +12,7 @@ const FloatingActionStack = () => {
 
   return (
     <div className="fixed bottom-[86px] left-4 z-50 flex flex-col items-center gap-[5px] print:hidden">
-      <ScrollToTop inline />
+      <ScrollToTop inline alwaysVisible />
       <BreakGuide inline />
       <ReportProblemButton inline />
     </div>

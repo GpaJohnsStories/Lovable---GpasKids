@@ -8,9 +8,10 @@ import { useCachedIcon } from '@/hooks/useCachedIcon';
 
 interface ScrollToTopProps {
   inline?: boolean;
+  alwaysVisible?: boolean;
 }
 
-const ScrollToTop: React.FC<ScrollToTopProps> = ({ inline = false }) => {
+const ScrollToTop: React.FC<ScrollToTopProps> = ({ inline = false, alwaysVisible = false }) => {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/buddys_admin');
   const [showButton, setShowButton] = useState(false);
@@ -32,7 +33,7 @@ const ScrollToTop: React.FC<ScrollToTopProps> = ({ inline = false }) => {
     });
   };
 
-  if (!showButton || isAdminPage) return null;
+  if ((!showButton && !alwaysVisible) || isAdminPage) return null;
 
   const buttonContent = (
     <TooltipProvider>
