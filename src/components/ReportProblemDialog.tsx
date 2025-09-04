@@ -158,7 +158,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
           </div>
 
           <div>
-            <Label htmlFor="subject" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>What's do you want to talk about with Grandpa John?</Label>
+            <Label htmlFor="subject" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>What do you want to talk about?</Label>
             <Input id="subject" value={formData.subject} onChange={e => handleInputChange('subject', e.target.value)} placeholder="Tell us in a few words" className="mt-1 text-[21px] font-normal border-2" style={{fontFamily: 'Arial, sans-serif', borderColor: '#f59e0b'}} />
           </div>
 
