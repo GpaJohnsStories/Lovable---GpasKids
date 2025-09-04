@@ -126,7 +126,7 @@ const BreakGuide: React.FC<BreakGuideProps> = ({ inline = false }) => {
             onClick={handleBreakButtonClick}
             data-allow-superav-passthrough="true"
             className={inline 
-              ? "cursor-pointer transition-all duration-300 hover:scale-105 print:hidden w-[65px] h-[65px] flex items-center justify-center" 
+              ? "cursor-pointer transition-all duration-300 hover:scale-105 print:hidden w-[70px] h-[70px] flex items-center justify-center" 
               : "fixed bottom-[150px] left-4 z-50 cursor-pointer transition-all duration-300 hover:scale-105 print:hidden"
             }
             aria-label="Break Guide"
@@ -136,7 +136,7 @@ const BreakGuide: React.FC<BreakGuideProps> = ({ inline = false }) => {
               <img 
                 src={breakGuideIconUrl} 
                 alt={breakGuideName ?? 'Break Guide'} 
-                className="w-[65px] h-[65px] object-contain block"
+                className="w-[70px] h-[70px] object-contain block"
               />
             ) : (
               <span className="font-bold font-fun text-21px">Break Guide</span>

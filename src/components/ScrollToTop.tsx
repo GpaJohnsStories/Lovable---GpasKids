@@ -46,12 +46,12 @@ const ScrollToTop: React.FC<ScrollToTopProps> = ({ inline = false, alwaysVisible
             className="p-0 m-0 bg-transparent hover:bg-transparent border-none shadow-none h-auto w-auto focus:ring-0 focus:outline-none no-underline hover:no-underline cursor-pointer"
             aria-label="Go to top of page and menu"
           >
-            <div className="w-[65px] h-[65px] flex items-center justify-center">
+            <div className="w-[70px] h-[70px] flex items-center justify-center">
               {iconUrl ? (
                 <img 
                   src={iconUrl} 
                   alt="Go to top" 
-                  className="h-[65px] w-[65px] block"
+                  className="h-[70px] w-[70px] block"
                 />
               ) : (
                 <ArrowUp className="h-8 w-8 text-orange-500" />
