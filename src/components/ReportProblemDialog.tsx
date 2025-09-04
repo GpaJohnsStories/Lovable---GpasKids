@@ -46,7 +46,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
     }));
 
     // Check for profanity in text fields
-    if (['name', 'email', 'subject', 'description'].includes(field) && value) {
+    if (['name', 'email', 'description'].includes(field) && value) {
       if (containsBadWord(value)) {
         setProfanityError('Please use appropriate language in your message.');
         return;
@@ -58,10 +58,10 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
     e.preventDefault();
 
     // Validation
-    if (!formData.name.trim() || !formData.subject.trim() || !formData.description.trim()) {
+    if (!formData.name.trim() || !formData.description.trim()) {
       toast({
         title: "Missing information",
-        description: "Please fill in your name, subject, and description.",
+        description: "Please fill in your name and description.",
         variant: "destructive"
       });
       return;
@@ -87,7 +87,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
     }
 
     // Final profanity check
-    const fieldsToCheck = [formData.name, formData.email, formData.subject, formData.description];
+    const fieldsToCheck = [formData.name, formData.email, formData.description];
     if (fieldsToCheck.some(field => containsBadWord(field))) {
       setProfanityError('Please use appropriate language in your message.');
       return;
@@ -157,10 +157,6 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
             <Input id="email" type="email" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} placeholder="Only if you want a reply" className="mt-1 text-[21px] font-normal border-2" style={{fontFamily: 'Arial, sans-serif', borderColor: '#f59e0b'}} />
           </div>
 
-          <div>
-            <Label htmlFor="subject" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>What do you want to talk about?</Label>
-            <Input id="subject" value={formData.subject} onChange={e => handleInputChange('subject', e.target.value)} placeholder="Tell us in a few words" className="mt-1 text-[21px] font-normal border-2" style={{fontFamily: 'Arial, sans-serif', borderColor: '#f59e0b'}} />
-          </div>
 
           <div>
             <Label htmlFor="description" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Tell us more</Label>
