@@ -49,8 +49,11 @@ export const BackupCenter = () => {
     isActive: boolean;
   }>({ total: 0, completed: 0, failed: 0, isActive: false });
 
-  // Browser compatibility detection
+  // Browser compatibility and environment detection
   const isFileSystemAccessSupported = typeof window !== 'undefined' && 'showDirectoryPicker' in window;
+  const isInCrossOriginFrame = typeof window !== 'undefined' && 
+    window.location !== window.parent.location;
+  const isBrowserDownloadAvailable = isFileSystemAccessSupported && !isInCrossOriginFrame;
 
   const storageBuckets = [
     { name: 'story-photos', description: 'Story photo attachments', public: true },
@@ -619,7 +622,12 @@ Contact the system administrator for assistance.`;
     const manifestToUse = manifest || confirmationManifest;
     if (!manifestToUse?.entries) return;
 
-    // Check for File System Access API support
+    // Enhanced browser compatibility checks
+    if (isInCrossOriginFrame) {
+      toast.error('Direct browser downloads are not available in this environment. Please open the admin panel in a new tab or use the CSV download option.');
+      return;
+    }
+
     if (!('showDirectoryPicker' in window)) {
       toast.error('Browser download requires a Chromium-based browser (Chrome, Edge, etc.). Please use the CSV download option instead.');
       return;
@@ -694,7 +702,107 @@ Contact the system administrator for assistance.`;
 
     } catch (error) {
       console.error('Browser download error:', error);
-      toast.error('Failed to download files via browser');
+      
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          toast.error('Download was cancelled by user');
+        } else if (error.message.includes('Permission')) {
+          toast.error('Permission denied. Please try opening the admin panel in a new tab.');
+        } else {
+          toast.error(`Download failed: ${error.message}`);
+        }
+      } else {
+        toast.error('Failed to download files via browser');
+      }
+      
+      setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
+    }
+  };
+
+  // JSZip fallback download for audio files
+  const downloadAudioAsZip = async (manifest?: any) => {
+    const manifestToUse = manifest || confirmationManifest;
+    if (!manifestToUse?.entries) return;
+
+    setBrowserDownloadProgress({
+      total: manifestToUse.entries.length,
+      completed: 0,
+      failed: 0,
+      isActive: true
+    });
+
+    try {
+      const zip = new JSZip();
+      let completed = 0;
+      let failed = 0;
+
+      toast.info('Creating ZIP file... This may take a few minutes for large collections.');
+
+      // Download and add files to ZIP
+      for (const entry of manifestToUse.entries) {
+        try {
+          const response = await fetch(entry.signed_url);
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          
+          const blob = await response.blob();
+          zip.file(entry.custom_filename, blob);
+          completed++;
+          
+          setBrowserDownloadProgress(prev => ({
+            ...prev,
+            completed: completed,
+            failed: failed
+          }));
+        } catch (error) {
+          console.error(`Failed to download ${entry.filename}:`, error);
+          failed++;
+          setBrowserDownloadProgress(prev => ({
+            ...prev,
+            completed: completed,
+            failed: failed
+          }));
+        }
+      }
+
+      if (completed === 0) {
+        toast.error('No files could be downloaded');
+        setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
+        return;
+      }
+
+      toast.info('Generating ZIP file...');
+      
+      // Generate ZIP and trigger download
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(zipBlob);
+      link.setAttribute('href', url);
+      
+      const filterSuffix = audioFilterMode === 'sinceDate' ? `_since_${audioFilterDate}` : '_all';
+      const filename = `story_audio_backup${filterSuffix}_${new Date().toISOString().slice(0, 10)}.zip`;
+      
+      link.setAttribute('download', filename);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
+      
+      if (failed === 0) {
+        toast.success(`Successfully created ZIP with ${completed} audio files!`);
+      } else {
+        toast(`ZIP created: ${completed} files included, ${failed} failed`, {
+          description: 'Check console for details on failed files.'
+        });
+      }
+      
+      setShowDownloadConfirmation(false);
+
+    } catch (error) {
+      console.error('ZIP download error:', error);
+      toast.error('Failed to create ZIP file');
       setBrowserDownloadProgress(prev => ({ ...prev, isActive: false }));
     }
   };
@@ -1261,7 +1369,18 @@ Contact the system administrator for assistance.`;
               <FileSpreadsheet className="w-4 h-4 mr-2" />
               Download CSV
             </Button>
-            {isFileSystemAccessSupported ? (
+            <Button 
+              onClick={() => {
+                setShowAudioPreview(false);
+                setConfirmationManifest(audioManifest);
+                downloadAudioAsZip(audioManifest);
+              }}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              <Package className="w-4 h-4 mr-2" />
+              Download as ZIP
+            </Button>
+            {isBrowserDownloadAvailable ? (
               <Button 
                 onClick={() => {
                   setShowAudioPreview(false);
@@ -1271,18 +1390,30 @@ Contact the system administrator for assistance.`;
                 className="bg-green-600 hover:bg-green-700 text-white"
               >
                 <FolderDown className="w-4 h-4 mr-2" />
-                Continue and Download via Browser
+                Download via Browser
               </Button>
             ) : (
-              <div data-tooltip="File System Access API not available in this browser. Use Chrome or Edge for direct downloads.">
-                <Button 
-                  disabled
-                  className="bg-gray-400 text-gray-600 cursor-not-allowed"
-                >
-                  <FolderDown className="w-4 h-4 mr-2" />
-                  Download via Browser (Unavailable)
-                </Button>
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div>
+                      <Button 
+                        disabled
+                        className="bg-gray-400 text-gray-600 cursor-not-allowed"
+                      >
+                        <FolderDown className="w-4 h-4 mr-2" />
+                        Download via Browser
+                      </Button>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{isInCrossOriginFrame 
+                      ? 'Not available in iframe. Open admin panel in new tab.' 
+                      : 'Requires Chrome/Edge browser for File System Access API.'
+                    }</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             )}
           </DialogFooter>
         </DialogContent>
@@ -1401,15 +1532,27 @@ Contact the system administrator for assistance.`;
                 )}
               </div>
 
-              {/* Download Process Info */}
-              <div className="bg-yellow-50 rounded-lg p-3 border border-yellow-200">
-                <h5 className="font-medium text-yellow-800 mb-2">Download Process:</h5>
-                <ul className="text-sm text-yellow-700 space-y-1">
-                  <li>• You'll be prompted to select a folder on your computer</li>
-                  <li>• Files will download automatically to that folder</li>
-                  <li>• Existing files with the same name will be skipped</li>
-                  <li>• Progress will be shown during download</li>
-                </ul>
+              {/* Download Options Info */}
+              <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                <h5 className="font-medium text-blue-800 mb-2">Download Options:</h5>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  <div className="bg-white p-2 rounded border">
+                    <div className="font-medium text-blue-700 mb-1">📦 ZIP Download (Recommended)</div>
+                    <ul className="text-blue-600 space-y-1 text-xs">
+                      <li>• Creates a single ZIP file</li>
+                      <li>• Works in all browsers</li>
+                      <li>• Best for large collections</li>
+                    </ul>
+                  </div>
+                  <div className="bg-white p-2 rounded border">
+                    <div className="font-medium text-green-700 mb-1">📁 Direct to Folder</div>
+                    <ul className="text-green-600 space-y-1 text-xs">
+                      <li>• Downloads directly to a folder</li>
+                      <li>• Requires Chrome/Edge browser</li>
+                      <li>• Individual file control</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -1421,13 +1564,48 @@ Contact the system administrator for assistance.`;
             <Button 
               onClick={() => {
                 setShowDownloadConfirmation(false);
-                downloadAudioViaFiles(confirmationManifest);
+                downloadAudioAsZip(confirmationManifest);
               }}
               className="bg-blue-600 hover:bg-blue-700 text-white"
             >
-              <FolderDown className="w-4 h-4 mr-2" />
-              Continue and Download via Browser
+              <Package className="w-4 h-4 mr-2" />
+              Download as ZIP (Recommended)
             </Button>
+            {isBrowserDownloadAvailable ? (
+              <Button 
+                onClick={() => {
+                  setShowDownloadConfirmation(false);
+                  downloadAudioViaFiles(confirmationManifest);
+                }}
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
+                <FolderDown className="w-4 h-4 mr-2" />
+                Download to Folder
+              </Button>
+            ) : (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div>
+                      <Button 
+                        disabled
+                        className="bg-gray-400 text-gray-600 cursor-not-allowed"
+                      >
+                        <FolderDown className="w-4 h-4 mr-2" />
+                        Download to Folder
+                        <AlertCircle className="w-3 h-3 ml-1" />
+                      </Button>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{isInCrossOriginFrame 
+                      ? 'Not available in iframe environment' 
+                      : 'Requires Chrome/Edge browser'
+                    }</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>
