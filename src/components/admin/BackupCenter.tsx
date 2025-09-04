@@ -73,18 +73,27 @@ export const BackupCenter = () => {
   const loadBackupHistory = async () => {
     try {
       setLoadingHistory(true);
+      console.log('Loading backup history from storage...');
+      
       const { data: files, error } = await supabase.storage
         .from('backups')
         .list('', { limit: 30, sortBy: { column: 'created_at', order: 'desc' } });
 
       if (error) {
         console.error('Error loading backup history:', error);
+        toast.error(`Failed to load backup history: ${error.message}`);
         return;
       }
 
+      console.log('Backup files found:', files?.length || 0, files);
       setBackupHistory(files || []);
+      
+      if (files?.length === 0) {
+        console.log('No backup files found in storage bucket');
+      }
     } catch (error) {
       console.error('Error loading backup history:', error);
+      toast.error('Failed to load backup history');
     } finally {
       setLoadingHistory(false);
     }
@@ -973,26 +982,44 @@ Contact the system administrator for assistance.`;
               <Loader2 className="h-6 w-6 animate-spin" />
             </div>
           ) : backupHistory.length === 0 ? (
-            <p className="text-center text-muted-foreground py-8">No backup history found</p>
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">No backup history found</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                Automatic backups will appear here once created
+              </p>
+            </div>
           ) : (
             <div className="space-y-2">
-              {backupHistory.map((file, index) => (
-                <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
-                  <div className="flex-1">
-                    <p className="font-medium">{file.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(file.created_at).toLocaleString()} • {(file.metadata?.size / 1024 / 1024)?.toFixed(1) || '0'} MB
-                    </p>
+              {backupHistory.map((file, index) => {
+                const isAutoBackup = file.name.includes('full_backup');
+                const isNightlyBackup = file.name.includes('nightly') || isAutoBackup;
+                const fileSize = file.metadata?.size ? (file.metadata.size / 1024 / 1024).toFixed(1) : '0';
+                
+                return (
+                  <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <p className="font-medium">{file.name}</p>
+                        {isNightlyBackup && (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                            Automatic
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {new Date(file.created_at).toLocaleString()} • {fileSize} MB
+                      </p>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => downloadBackupFromHistory(file.name)}
+                    >
+                      <Download className="h-4 w-4" />
+                    </Button>
                   </div>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => downloadBackupFromHistory(file.name)}
-                  >
-                    <Download className="h-4 w-4" />
-                  </Button>
-                </div>
-              ))}
+                 );
+               })}
             </div>
           )}
         </CardContent>
