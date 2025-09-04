@@ -7,7 +7,7 @@ export interface Story {
   id?: string;
   title: string;
   author: string;
-  category: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText";
+  category: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "Admin";
   content: string;
   tagline: string;
   excerpt: string;
