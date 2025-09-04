@@ -90,7 +90,7 @@ const PublicStoriesTable: React.FC = () => {
           photo_link_1
         `)
         .lt('publication_status_code', 2)
-        .not('category', 'in', '("WebText","BioText")')
+        .not('category', 'in', '("WebText","BioText","Admin")')
         .order('updated_at', { ascending: false });
 
       if (error) throw error;

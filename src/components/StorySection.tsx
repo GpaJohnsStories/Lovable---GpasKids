@@ -20,7 +20,7 @@ const StorySection = () => {
         } = await supabase.from('stories')
           .select('*')
           .in('publication_status_code', [0, 1])  // Only published stories
-          .not('category', 'in', '("WebText","BioText")')  // Exclude WebText and BioText
+          .not('category', 'in', '("WebText","BioText","Admin")')  // Exclude WebText, BioText, and Admin
           .order('updated_at', {
             ascending: false
           });

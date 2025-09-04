@@ -908,6 +908,7 @@ export type Database = {
         | "World Changers"
         | "WebText"
         | "BioText"
+        | "Admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1043,6 +1044,7 @@ export const Constants = {
         "World Changers",
         "WebText",
         "BioText",
+        "Admin",
       ],
     },
   },

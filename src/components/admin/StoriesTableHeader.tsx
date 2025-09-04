@@ -11,7 +11,7 @@ import {
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status' | 'publication_status_code';
 type SortDirection = 'asc' | 'desc';
-type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText';
+type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText' | 'Admin';
 
 interface StoriesTableHeaderProps {
   sortField: SortField;
@@ -62,7 +62,7 @@ const StoriesTableHeader = ({
       return ['all', 'Fun', 'Life', 'North Pole', 'World Changers']; // Public library - no WebText or BioText
     }
     
-    return ['all', 'WebText', 'Stories', 'Fun', 'Life', 'North Pole', 'World Changers', 'BioText']; // Admin library - WebText after Show All
+    return ['all', 'WebText', 'Admin', 'Stories', 'Fun', 'Life', 'North Pole', 'World Changers', 'BioText']; // Admin library - WebText after Show All
   };
 
   const getCategoryDisplayName = (category: CategoryFilter) => {
@@ -83,6 +83,8 @@ const StoriesTableHeader = ({
         return 'Stories';
       case 'BioText':
         return 'BioText';
+      case 'Admin':
+        return 'Admin';
       default:
         return category;
     }
@@ -106,6 +108,8 @@ const StoriesTableHeader = ({
         return 'bg-gradient-to-b from-emerald-600 to-emerald-800 text-white border-emerald-700';
       case 'BioText':
         return 'bg-gradient-to-b from-yellow-800 to-yellow-900 text-white border-yellow-800';
+      case 'Admin':
+        return 'bg-gradient-to-b from-yellow-400 to-yellow-600 border-[#eab308] text-[#3b82f6]';
       default:
         return 'bg-gray-100 text-gray-700 border-gray-300';
     }

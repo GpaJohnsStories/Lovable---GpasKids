@@ -13,6 +13,8 @@ export const getCategoryStyles = (category: string) => {
       return "bg-gradient-to-b from-purple-400 to-purple-600 border-purple-700 shadow-[0_6px_12px_rgba(147,51,234,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] text-white";
     case "BioText":
       return "bg-gradient-to-b from-teal-400 to-teal-600 border-teal-700 shadow-[0_6px_12px_rgba(20,184,166,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] text-white";
+    case "Admin":
+      return "bg-gradient-to-b from-yellow-400 to-yellow-600 border-[#eab308] shadow-[0_6px_12px_rgba(234,179,8,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] text-[#3b82f6]";
     default:
       return "bg-gradient-to-b from-gray-400 to-gray-600 border-gray-700 shadow-[0_6px_12px_rgba(75,85,99,0.3),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.3)] text-white";
   }
@@ -31,6 +33,8 @@ export const getCategoryDisplayName = (category: string) => {
       return "Fun Stuff — Fun Jokes, Poems, Games & More";
     case "BioText":
       return "Biographies — Life Stories of Remarkable People";
+    case "Admin":
+      return "Admin";
     default:
       return category;
   }
@@ -49,6 +53,8 @@ export const getCategoryShortName = (category: string) => {
       return "Fun Stuff";
     case "BioText":
       return "Biographies";
+    case "Admin":
+      return "Admin";
     default:
       return category;
   }

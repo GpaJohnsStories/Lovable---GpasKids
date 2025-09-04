@@ -9,7 +9,7 @@ interface StoryFormFieldsProps {
   formData: {
     title: string;
     author: string;
-    category: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText";
+    category: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "Admin";
     tagline: string;
     excerpt: string;
     story_code: string;
@@ -107,6 +107,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
             <SelectItem value="World Changers">World Changers</SelectItem>
             <SelectItem value="WebText">WebText</SelectItem>
             <SelectItem value="BioText">BioText</SelectItem>
+            <SelectItem value="Admin">Admin</SelectItem>
           </SelectContent>
         </Select>
       </div>
