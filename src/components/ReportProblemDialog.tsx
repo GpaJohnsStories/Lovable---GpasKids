@@ -168,29 +168,36 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
             <RadioGroup value={formData.whoAreYou} onValueChange={value => handleInputChange('whoAreYou', value)} className="mt-2">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  {['Unicorn', 'Elephant', 'Eagle', 'Important Person'].map(option => 
+                  {['Unicorn', 'Elephant', 'Eagle'].map(option => 
                     <div key={option} className="flex items-center space-x-2">
                       <RadioGroupItem value={option} id={option} />
                       <Label htmlFor={option} className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>{option}</Label>
                     </div>
                   )}
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="Important Person" id="Important Person" />
+                    <Label htmlFor="Important Person" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Important Person</Label>
+                  </div>
                 </div>
                 <div className="space-y-2">
-                  {['Giraffe', 'Reindeer', 'Rather not say'].map(option => 
+                  {['Giraffe', 'Reindeer'].map(option => 
                     <div key={option} className="flex items-center space-x-2">
                       <RadioGroupItem value={option} id={option} />
                       <Label htmlFor={option} className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>{option}</Label>
                     </div>
                   )}
-                </div>
-                {/* Action buttons aligned under the right column (below "Rather not say") */}
-                <div className="col-start-2 flex justify-end space-x-3 pt-2">
-                  <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>
-                    Cancel
-                  </Button>
-                  <Button type="submit" disabled={isSubmitting || !!profanityError} className="bg-primary hover:bg-primary/90">
-                    {isSubmitting ? 'Sending...' : 'Send Report'}
-                  </Button>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="Rather not say" id="Rather not say" />
+                    <Label htmlFor="Rather not say" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Rather not say</Label>
+                  </div>
+                  <div className="flex justify-end space-x-3 pt-2">
+                    <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>
+                      Cancel
+                    </Button>
+                    <Button type="submit" disabled={isSubmitting || !!profanityError} className="bg-primary hover:bg-primary/90">
+                      {isSubmitting ? 'Sending...' : 'Send Report'}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </RadioGroup>
