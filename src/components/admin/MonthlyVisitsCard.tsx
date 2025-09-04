@@ -172,7 +172,7 @@ export const MonthlyVisitsCard = () => {
                   dataKey="approved" 
                   name="Approved"
                   stroke="#16a34a" 
-                  strokeWidth={2}
+                  strokeWidth={3}
                   dot={{ fill: "#16a34a", strokeWidth: 2, r: 3 }}
                   activeDot={{ r: 5, stroke: "#16a34a", strokeWidth: 2 }}
                 >
