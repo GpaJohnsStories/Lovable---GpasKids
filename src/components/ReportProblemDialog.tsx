@@ -148,31 +148,31 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="name" className="text-sm font-medium">Your Name (optional)</Label>
-            <Input id="name" value={formData.name} onChange={e => handleInputChange('name', e.target.value)} placeholder="What should we call you?" className="mt-1" />
+            <Label htmlFor="name" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Your Name (optional)</Label>
+            <Input id="name" value={formData.name} onChange={e => handleInputChange('name', e.target.value)} placeholder="What should we call you?" className="mt-1 text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}} />
           </div>
 
           <div>
-            <Label htmlFor="email" className="text-sm font-medium">Email (optional)</Label>
-            <Input id="email" type="email" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} placeholder="If you want us to write back" className="mt-1" />
+            <Label htmlFor="email" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Email (optional)</Label>
+            <Input id="email" type="email" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} placeholder="If you want us to write back" className="mt-1 text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}} />
           </div>
 
           <div>
-            <Label htmlFor="subject" className="text-sm font-medium">What's do you want to talk about with Grandpa John?</Label>
-            <Input id="subject" value={formData.subject} onChange={e => handleInputChange('subject', e.target.value)} placeholder="Tell us in a few words" className="mt-1" />
+            <Label htmlFor="subject" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>What's do you want to talk about with Grandpa John?</Label>
+            <Input id="subject" value={formData.subject} onChange={e => handleInputChange('subject', e.target.value)} placeholder="Tell us in a few words" className="mt-1 text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}} />
           </div>
 
           <div>
-            <Label htmlFor="description" className="text-sm font-medium">Tell us more</Label>
-            <WordLimitedTextarea id="description" value={formData.description} onChange={e => handleInputChange('description', e.target.value)} placeholder="Is something broken? Is something wrong? Tell Grandpa John the whole story." wordLimit={200} className="mt-1 min-h-[80px]" />
+            <Label htmlFor="description" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Tell us more</Label>
+            <WordLimitedTextarea id="description" value={formData.description} onChange={e => handleInputChange('description', e.target.value)} placeholder="Is something broken? Is something wrong? Tell Grandpa John the whole story." wordLimit={200} className="mt-1 min-h-[80px] text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}} />
           </div>
 
           <div>
-            <Label className="text-sm font-medium">Who are you?</Label>
+            <Label className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Who are you?</Label>
             <RadioGroup value={formData.whoAreYou} onValueChange={value => handleInputChange('whoAreYou', value)} className="mt-2">
               {['Kid', 'Adult', 'Teacher', 'Parent', 'Rather not say'].map(option => <div key={option} className="flex items-center space-x-2">
                   <RadioGroupItem value={option} id={option} />
-                  <Label htmlFor={option} className="text-sm">{option}</Label>
+                  <Label htmlFor={option} className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>{option}</Label>
                 </div>)}
             </RadioGroup>
           </div>
