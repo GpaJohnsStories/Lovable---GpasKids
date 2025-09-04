@@ -46,10 +46,10 @@ function formatDateForFilename(date: Date): string {
     .replace(/\.\d{3}Z$/, ' UTC');
 }
 
-// Helper to extract story code from audio filename (AAA-BBB.mp3 format)
+// Helper to extract story code from filename (AAA-BBB.mp3/mp4 format)
 function extractStoryCode(filename: string): string | null {
-  // New format: story codes like AAA-BBB.mp3 or AAA-123.mp3
-  const match = filename.match(/^([A-Z]{3}-[A-Z0-9]{3})\.mp3$/);
+  // New format: story codes like AAA-BBB.mp3, AAA-123.mp4, etc.
+  const match = filename.match(/^([A-Z]{3}-[A-Z0-9]{3})\.(mp3|mp4)$/);
   return match ? match[1] : null;
 }
 
@@ -221,7 +221,8 @@ Deno.serve(async (req) => {
     let totalSize = 0;
 
     for (const file of files || []) {
-      if (!file.name.endsWith('.mp3')) continue;
+      // Handle both .mp3 (audio) and .mp4 (video) files
+      if (!file.name.endsWith('.mp3') && !file.name.endsWith('.mp4')) continue;
 
       // Get story data by story code
       const storyCode = extractStoryCode(file.name);
@@ -250,7 +251,8 @@ Deno.serve(async (req) => {
       const displayStoryCode = story?.story_code || fileStoryCode || 'unknown';
       const titlePart = story?.title ? truncateTitle(sanitizeFilename(story.title)) : 'Unknown Title';
       const datePart = formatDateForFilename(fileUpdatedDate);
-      const customFilename = `${sanitizeFilename(displayStoryCode)} - ${titlePart} - ${datePart}.mp3`;
+      const fileExtension = file.name.endsWith('.mp4') ? '.mp4' : '.mp3';
+      const customFilename = `${sanitizeFilename(displayStoryCode)} - ${titlePart} - ${datePart}${fileExtension}`;
 
       const entry: FileEntry = {
         path: file.name,

@@ -66,14 +66,22 @@ export const handleStorySubmission = async (
   console.log('Story code check passed');
 
   try {
+    // Ensure only Supabase bucket URLs are saved for videos
+    const safeFormData = {
+      ...processedFormData,
+      video_url: processedFormData.video_url && processedFormData.video_url.includes('supabase') 
+        ? processedFormData.video_url 
+        : '' // Clear external URLs
+    };
+
     if (story?.id) {
       // Update existing story
       console.log('Updating existing story with ID:', story.id);
-      console.log('Update data:', formData);
+      console.log('Update data:', safeFormData);
       const { error } = await supabase
         .from('stories')
         .update({
-          ...processedFormData,
+          ...safeFormData,
           updated_at: new Date().toISOString()
         })
         .eq('id', story.id);
@@ -87,10 +95,10 @@ export const handleStorySubmission = async (
     } else {
       // Create new story
       console.log('Creating new story');
-      console.log('Insert data:', formData);
+      console.log('Insert data:', safeFormData);
       const { error } = await supabase
         .from('stories')
-        .insert([processedFormData]);
+        .insert([safeFormData]);
       
       if (error) {
         console.error('Insert error:', error);

@@ -33,6 +33,13 @@ export const BackupCenter = () => {
   const [audioManifest, setAudioManifest] = useState<any>(null);
   const [showAudioPreview, setShowAudioPreview] = useState(false);
   const [isGeneratingAudioManifest, setIsGeneratingAudioManifest] = useState(false);
+  
+  // Video backup state  
+  const [videoFilterMode, setVideoFilterMode] = useState<'all' | 'sinceDate'>('all');
+  const [videoFilterDate, setVideoFilterDate] = useState<string>('');
+  const [videoManifest, setVideoManifest] = useState<any>(null);
+  const [showVideoPreview, setShowVideoPreview] = useState(false);
+  const [isGeneratingVideoManifest, setIsGeneratingVideoManifest] = useState(false);
   const [browserDownloadProgress, setBrowserDownloadProgress] = useState<{
     total: number;
     completed: number;
@@ -461,6 +468,58 @@ Contact the system administrator for assistance.`;
     }
   };
 
+  // Video backup functions
+  const generateVideoManifest = async () => {
+    setIsGeneratingVideoManifest(true);
+    try {
+      const requestBody = {
+        bucket: 'story-videos',
+        mode: videoFilterMode,
+        sinceDate: videoFilterMode === 'sinceDate' ? videoFilterDate : undefined,
+        includeSignedUrls: true,
+        expiresInSeconds: 172800 // 48 hours
+      };
+
+      console.log('Generating video manifest with:', requestBody);
+
+      const { data, error } = await supabase.functions.invoke('storage-manifest-signed-urls', {
+        body: requestBody
+      });
+
+      if (error) {
+        console.error('Video manifest error:', error);
+        const errorMsg = error.message || 'Unknown error occurred';
+        const requestId = error.context?.request_id || 'N/A';
+        toast.error(`Failed to generate video manifest: ${errorMsg} (Request ID: ${requestId})`);
+        return;
+      }
+
+      if (!data) {
+        toast.error('No data returned from video manifest generation');
+        return;
+      }
+
+      setVideoManifest(data);
+      setShowVideoPreview(true);
+
+      const errorInfo = data.totals?.errors > 0 ? ` (${data.totals.errors} errors)` : '';
+      console.log(`Generated manifest: ${data.totals.count} files, ${data.totals.size_pretty}${errorInfo}`);
+      
+      if (data.totals?.errors > 0) {
+        toast.warning(`Manifest generated with ${data.totals.errors} file errors - check logs for details`);
+      } else {
+        toast.success(`Video manifest generated: ${data.totals.count} files`);
+      }
+      
+    } catch (error) {
+      console.error('Video manifest generation error:', error);
+      const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+      toast.error(`Video manifest generation failed: ${errorMsg}`);
+    } finally {
+      setIsGeneratingVideoManifest(false);
+    }
+  };
+
   const downloadAudioCSV = () => {
     if (!audioManifest?.entries) return;
 
@@ -500,6 +559,47 @@ Contact the system administrator for assistance.`;
 
     toast.success(`CSV downloaded: ${filename}`);
     setShowAudioPreview(false);
+  };
+
+  const downloadVideoCSV = () => {
+    if (!videoManifest?.entries) return;
+
+    const csvContent = [
+      // Header row
+      'filename,url,size_bytes,size_pretty,updated_at,story_id,story_code,title',
+      // Data rows
+      ...videoManifest.entries.map((entry: any) => {
+        const row = [
+          `"${entry.filename}"`,
+          `"${entry.signed_url}"`,
+          entry.size_bytes,
+          `"${(entry.size_bytes / 1024 / 1024).toFixed(2)} MB"`,
+          `"${entry.updated_at}"`,
+          `"${entry.story_id || ''}"`,
+          `"${entry.story_code || ''}"`,
+          `"${entry.title || ''}"`
+        ];
+        return row.join(',');
+      })
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    
+    const filterSuffix = videoFilterMode === 'sinceDate' ? `_since_${videoFilterDate}` : '_all';
+    const filename = `story_video_manifest${filterSuffix}_${new Date().toISOString().slice(0, 10)}.csv`;
+    
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    toast.success(`CSV downloaded: ${filename}`);
+    setShowVideoPreview(false);
   };
 
   const downloadAudioViaFiles = async () => {
@@ -929,6 +1029,86 @@ Contact the system administrator for assistance.`;
                   </div>
                 );
               }
+
+              // Special handling for story-videos bucket
+              if (bucket.name === 'story-videos') {
+                return (
+                  <div key={bucket.name} className="p-4 border-2 border-blue-200 rounded-lg bg-blue-50 md:col-span-2">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-medium text-blue-800">{bucket.name}</h4>
+                      <Badge variant="default" className="bg-blue-600">
+                        Enhanced Backup
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-blue-700 mb-4">{bucket.description} - Enhanced with date filtering and individual file downloads</p>
+                    
+                    {/* Video Filter Controls */}
+                    <div className="space-y-3 mb-4 p-3 bg-white rounded border">
+                      <div className="flex items-center gap-4">
+                        <Filter className="w-4 h-4 text-blue-600" />
+                        <Label className="text-sm font-medium">Filter Options:</Label>
+                      </div>
+                      
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="flex gap-2">
+                          <label className="flex items-center gap-2 text-sm">
+                            <input
+                              type="radio"
+                              name="videoFilter"
+                              value="all"
+                              checked={videoFilterMode === 'all'}
+                              onChange={(e) => setVideoFilterMode(e.target.value as 'all' | 'sinceDate')}
+                              className="text-blue-600"
+                            />
+                            All video files
+                          </label>
+                          <label className="flex items-center gap-2 text-sm">
+                            <input
+                              type="radio"
+                              name="videoFilter"
+                              value="sinceDate"
+                              checked={videoFilterMode === 'sinceDate'}
+                              onChange={(e) => setVideoFilterMode(e.target.value as 'all' | 'sinceDate')}
+                              className="text-blue-600"
+                            />
+                            Updated after
+                          </label>
+                        </div>
+                        
+                        {videoFilterMode === 'sinceDate' && (
+                          <div className="flex items-center gap-2">
+                            <Input
+                              type="date"
+                              value={videoFilterDate}
+                              onChange={(e) => setVideoFilterDate(e.target.value)}
+                              className="w-auto text-sm"
+                            />
+                            <span className="text-xs text-gray-500">at 00:00:00</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Video Action Buttons */}
+                    <div className="space-y-2">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={generateVideoManifest}
+                        disabled={isGeneratingVideoManifest || (videoFilterMode === 'sinceDate' && !videoFilterDate)}
+                        className="w-full bg-blue-100 border-blue-300 text-blue-800 hover:bg-blue-200"
+                      >
+                        {isGeneratingVideoManifest ? (
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        ) : (
+                          <FileSpreadsheet className="w-4 h-4 mr-2" />
+                        )}
+                        Get Video Download Links (CSV)
+                      </Button>
+                    </div>
+                  </div>
+                );
+              }
               
               // Regular bucket display
               return (
@@ -1069,6 +1249,70 @@ Contact the system administrator for assistance.`;
             <Button 
               onClick={downloadAudioCSV}
               className="bg-orange-600 hover:bg-orange-700 text-white"
+            >
+              <FileSpreadsheet className="w-4 h-4 mr-2" />
+              Download CSV
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Video Preview Modal */}
+      <Dialog open={showVideoPreview} onOpenChange={setShowVideoPreview}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Eye className="w-5 h-5" />
+              Video Files Preview
+            </DialogTitle>
+            <DialogDescription>
+              {videoManifest && (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-4 text-lg font-medium">
+                    <span>📁 {videoManifest.totals.count} files</span>
+                    <span>💾 {videoManifest.totals.size_pretty}</span>
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    {videoFilterMode === 'all' 
+                      ? 'All video files in the story-videos bucket'
+                      : `Files updated after ${videoFilterDate} at 00:00:00`
+                    }
+                  </p>
+                </div>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {videoManifest?.entries && (
+            <div>
+              <h4 className="font-medium mb-3">Preview (first 10 files):</h4>
+              <div className="space-y-2 max-h-64 overflow-y-auto border rounded p-3 bg-gray-50">
+                {videoManifest.entries.slice(0, 10).map((entry: any, index: number) => (
+                  <div key={index} className="text-sm border-b pb-2 last:border-b-0">
+                    <div className="font-medium truncate">{entry.filename}</div>
+                    <div className="text-gray-600 text-xs">
+                      {(entry.size_bytes / 1024 / 1024).toFixed(2)} MB • 
+                      Story: {entry.story_code || 'Unknown'} • 
+                      Updated: {new Date(entry.updated_at).toLocaleDateString()}
+                    </div>
+                  </div>
+                ))}
+                {videoManifest.entries.length > 10 && (
+                  <div className="text-center text-gray-500 text-sm pt-2">
+                    ... and {videoManifest.entries.length - 10} more files
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          <DialogFooter className="gap-2">
+            <Button variant="outline" onClick={() => setShowVideoPreview(false)}>
+              Cancel
+            </Button>
+            <Button 
+              onClick={downloadVideoCSV}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
             >
               <FileSpreadsheet className="w-4 h-4 mr-2" />
               Download CSV

@@ -87,6 +87,7 @@ const SuperText: React.FC = () => {
     handleVoiceChange,
     handleGenerateAudio,
     handleAudioUpload,
+    handleVideoFileUpload,
     error
   } = useStoryFormState(undefined, true);
   const navigate = useNavigate();
@@ -883,18 +884,37 @@ const SuperText: React.FC = () => {
                   </div>
                   
                   <div className="space-y-4">
-                    {/* File Upload */}
+                     {/* File Upload */}
                     <div>
-                      <Label className="font-semibold mb-2 block">Upload Video File</Label>
-                      <input type="file" accept="video/*" onChange={e => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      // Handle file upload to story-videos bucket
-                      console.log('Video file selected:', file.name);
-                      // TODO: Implement file upload to Supabase storage
-                    }
-                  }} className="w-full border border-purple-400 rounded-md p-2 text-sm" />
-                      <p className="text-xs text-gray-500 mt-1">Supported formats: MP4, MOV, AVI, WMV • Max size: 100MB</p>
+                      <Label className="font-semibold mb-2 block">Upload MP4 File</Label>
+                      <input 
+                        type="file" 
+                        accept=".mp4,video/mp4" 
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            try {
+                              await handleVideoFileUpload(file);
+                              toast.success("Video uploaded successfully!");
+                              e.target.value = ''; // Clear input
+                            } catch (error) {
+                              console.error('Video upload error:', error);
+                              toast.error(error instanceof Error ? error.message : "Failed to upload video");
+                              e.target.value = ''; // Clear input even on error
+                            }
+                          }
+                        }} 
+                        disabled={isUploadingAudio || !formData.id}
+                        className="w-full border border-purple-400 rounded-md p-2 text-sm disabled:opacity-50" 
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        {!formData.id 
+                          ? "Save story first before uploading video" 
+                          : isUploadingAudio 
+                            ? "Uploading..." 
+                            : "Only MP4 format • Max size: 100MB"
+                        }
+                      </p>
                     </div>
                     
                     {/* Google Drive Upload */}
@@ -912,25 +932,18 @@ const SuperText: React.FC = () => {
                     </div>
 
                     {/* Current Video Display */}
-                    {formData.video_url && <div className="space-y-2">
-                        <div className="text-sm font-semibold text-purple-700">Current Video:</div>
-                        {formData.video_url.includes('youtube.com') || formData.video_url.includes('youtu.be') || formData.video_url.includes('vimeo.com') ? (
-                          <div className="bg-gray-50 rounded-lg p-3">
-                            <div className="text-sm text-gray-700 mb-2">
-                              {formData.video_url.includes('youtube.com') || formData.video_url.includes('youtu.be') ? '📺 YouTube Video' : '📺 Vimeo Video'}
-                            </div>
-                            <div className="text-xs text-gray-500 break-all">{formData.video_url}</div>
-                          </div>
-                        ) : (
-                          <video controls className="w-full max-h-64 rounded-lg">
-                            <source src={formData.video_url} type="video/mp4" />
-                            Your browser does not support the video element.
-                          </video>
-                        )}
+                    {formData.video_url && (
+                      <div className="space-y-2">
+                        <div className="text-sm font-semibold text-purple-700">Video File Available</div>
+                        <video controls className="w-full max-h-64 rounded-lg border border-purple-200">
+                          <source src={formData.video_url} type="video/mp4" />
+                          Your browser does not support the video element.
+                        </video>
                         <Button onClick={() => handleInputChange('video_url', '')} variant="outline" size="sm" className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400">
                           Remove Video
                         </Button>
-                      </div>}
+                      </div>
+                    )}
                   </div>
                 </div>
 

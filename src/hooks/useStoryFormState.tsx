@@ -316,6 +316,101 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     handleVoiceChange,
     handleGenerateAudio,
     handleAudioUpload,
+    handleVideoFileUpload: async (file: File): Promise<boolean> => {
+      console.log('🎥 useStoryFormState: Starting video upload for story:', formData.id);
+      
+      if (!formData.id) {
+        throw new Error('Story must be saved before uploading video. Please save your story first.');
+      }
+
+      // Validate file type and size
+      const allowedTypes = ['video/mp4'];
+      if (!allowedTypes.includes(file.type)) {
+        throw new Error('Please upload an MP4 video file.');
+      }
+
+      const maxSize = 100 * 1024 * 1024; // 100MB
+      if (file.size > maxSize) {
+        throw new Error('Video file must be smaller than 100MB.');
+      }
+
+      // Check if video exists and get confirmation if needed
+      if (formData.video_url) {
+        const confirmed = window.confirm(
+          'A video already exists for this story. Do you want to replace it with the uploaded file?'
+        );
+        if (!confirmed) {
+          return false; // User cancelled
+        }
+      }
+
+      setIsUploadingAudio(true); // Reuse loading state
+      
+      try {
+        // Create storage path using story code: {STORY_CODE}.mp4
+        const videoFileName = `${formData.story_code}.mp4`;
+        
+        // Upload to story-videos bucket with upsert to replace existing
+        const { error: uploadError } = await supabase.storage
+          .from('story-videos')
+          .upload(videoFileName, file, {
+            contentType: file.type,
+            upsert: true // This will overwrite existing file
+          });
+
+        if (uploadError) {
+          console.error('🎥 useStoryFormState: Error uploading video:', uploadError);
+          throw new Error(`Failed to upload video: ${uploadError.message}`);
+        }
+
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('story-videos')
+          .getPublicUrl(videoFileName);
+
+        // Calculate duration (rough estimate based on file size - will need proper duration calculation)
+        const estimatedDuration = Math.ceil(file.size / 1000000) * 10; // Rough estimate
+
+        console.log('🎥 useStoryFormState: Video uploaded successfully, updating database');
+
+        // Update story record with video information
+        const { error: updateError } = await supabase
+          .from('stories')
+          .update({
+            video_url: publicUrl,
+            video_duration_seconds: estimatedDuration
+          })
+          .eq('id', formData.id);
+
+        if (updateError) {
+          console.error('🎥 useStoryFormState: Error updating story with video info:', updateError);
+          throw new Error(`Failed to update story: ${updateError.message}`);
+        }
+
+        // Update form data optimistically
+        setFormData(prev => ({
+          ...prev,
+          video_url: publicUrl,
+          video_duration_seconds: estimatedDuration
+        }));
+
+        console.log('=== VIDEO UPLOAD SUCCESSFUL - OPTIMISTIC UPDATE APPLIED ===');
+        
+        // Refresh the story data to get the updated video URL and metadata
+        if (refetchStory) {
+          await refetchStory();
+          console.log('=== VIDEO REFETCH COMPLETED - DATA SHOULD BE UPDATED ===');
+        }
+
+        return true; // Upload successful
+        
+      } catch (error) {
+        console.error('🎥 useStoryFormState: Error uploading video:', error);
+        throw error;
+      } finally {
+        setIsUploadingAudio(false); // Reuse loading state
+      }
+    },
     error
   };
 };
