@@ -137,7 +137,9 @@ const BreakGuide: React.FC = () => {
           </div>
         </TooltipTrigger>
         <TooltipContent>
-          <p className="font-fun text-21px font-bold">Break Timer</p>
+          <p className="font-fun text-21px font-bold text-white" style={{
+            textShadow: '2px 2px 0px #666, 4px 4px 0px #333, 6px 6px 8px rgba(0,0,0,0.3)'
+          }}>Break Timer</p>
         </TooltipContent>
       </Tooltip>
 
