@@ -31,7 +31,7 @@ const ScrollToTop = () => {
   if (!showButton || isAdminPage) return null;
 
   return (
-    <div className="fixed bottom-20 right-4 z-50">
+    <div className="fixed bottom-[220px] left-4 z-50">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>

@@ -121,7 +121,7 @@ const BreakGuide: React.FC = () => {
           <div
             onClick={handleBreakButtonClick}
             data-allow-superav-passthrough="true"
-            className="fixed bottom-20 left-4 z-50 cursor-pointer transition-all duration-300 hover:scale-105 print:hidden"
+            className="fixed bottom-[150px] left-4 z-50 cursor-pointer transition-all duration-300 hover:scale-105 print:hidden"
             aria-label="Break Guide"
             data-testid="break-button"
           >
