@@ -2,7 +2,7 @@
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import CommentsList from "@/components/CommentsList";
-import ScrollToTop from "@/components/ScrollToTop";
+
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -44,7 +44,6 @@ const ViewComments = () => {
         </div>
       </main>
       <CookieFreeFooter />
-      <ScrollToTop />
     </div>
   );
 };

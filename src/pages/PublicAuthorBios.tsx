@@ -6,7 +6,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ContentProtection from "@/components/ContentProtection";
-import ScrollToTop from "@/components/ScrollToTop";
+
 import PublicAuthorBiosTable from "@/components/PublicAuthorBiosTable";
 import AuthorBioModal from "@/components/AuthorBioModal";
 import { Card, CardContent } from "@/components/ui/card";
@@ -105,7 +105,6 @@ const PublicAuthorBios = () => {
           </Card>
         </div>
         <CookieFreeFooter />
-        <ScrollToTop />
       </div>
     );
   }
@@ -131,7 +130,6 @@ const PublicAuthorBios = () => {
         />
         
         <CookieFreeFooter />
-        <ScrollToTop />
       </div>
   );
 };

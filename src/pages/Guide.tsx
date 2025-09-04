@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
-import ScrollToTop from "@/components/ScrollToTop";
+
 import { WebTextBox } from "@/components/WebTextBox";
 import { supabase } from "@/integrations/supabase/client";
 const Guide = () => {
@@ -206,7 +206,6 @@ const Guide = () => {
       </main>
 
       <CookieFreeFooter />
-      <ScrollToTop />
     </div>;
 };
 export default Guide;

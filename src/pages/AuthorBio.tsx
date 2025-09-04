@@ -9,7 +9,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ContentProtection from "@/components/ContentProtection";
-import ScrollToTop from "@/components/ScrollToTop";
+
 import AuthorStoriesTable from "@/components/AuthorStoriesTable";
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 
@@ -104,7 +104,6 @@ const AuthorBio = () => {
         <WelcomeHeader />
         <LoadingSpinner message="Loading biography..." />
         <CookieFreeFooter />
-        <ScrollToTop />
       </div>
     );
   }
@@ -260,7 +259,6 @@ const AuthorBio = () => {
         
         <div className="no-print">
           <CookieFreeFooter />
-          <ScrollToTop />
         </div>
       </div>
     </>

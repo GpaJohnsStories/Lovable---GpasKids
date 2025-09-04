@@ -9,7 +9,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import StoryHeader from "@/components/StoryHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ContentProtection from "@/components/ContentProtection";
-import ScrollToTop from "@/components/ScrollToTop";
+
 import { Button } from "@/components/ui/button";
 import StoryPhotosGallery from "@/components/StoryPhotosGallery";
 import StoryVideoPlayer from "@/components/StoryVideoPlayer";
@@ -191,7 +191,6 @@ const Story = () => {
   return (
       <div className="min-h-screen bg-white">
         {!isPrintMode && <WelcomeHeader />}
-        {!isPrintMode && <ScrollToTop />}
         <div className={`container mx-auto px-4 pt-0 ${isPrintMode && story.copyright_status === 'O' ? 'print-footer-spacer' : ''}`}>
           <StoryHeader
             title={story.title}

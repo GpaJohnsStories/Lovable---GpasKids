@@ -2,7 +2,7 @@
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import ContentProtection from "@/components/ContentProtection";
-import ScrollToTop from "@/components/ScrollToTop";
+
 import VoicePreview from "@/components/VoicePreview";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -27,7 +27,6 @@ const VoicePreviewPage = () => {
       </main>
       
       <CookieFreeFooter />
-      <ScrollToTop />
     </div>
   );
 };

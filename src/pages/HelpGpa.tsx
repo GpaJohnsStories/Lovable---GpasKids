@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
-import ScrollToTop from "@/components/ScrollToTop";
+
 import { WebTextBox } from "@/components/WebTextBox";
 import VenmoDonationForm from "@/components/VenmoDonationForm";
 
@@ -34,7 +34,6 @@ const HelpGpa = () => {
         </main>
 
         <CookieFreeFooter />
-        <ScrollToTop />
       </div>
     </>
   );

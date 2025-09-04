@@ -1,7 +1,7 @@
 import React from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
-import ScrollToTop from "@/components/ScrollToTop";
+
 import { WebTextBox } from "@/components/WebTextBox";
 import ClubPersonalIdSection from "@/components/ClubPersonalIdSection";
 import ClubNicknameSection from "@/components/ClubNicknameSection";
@@ -71,7 +71,6 @@ const Club = () => {
       </main>
       
       <CookieFreeFooter />
-      <ScrollToTop />
     </div>
   );
 };

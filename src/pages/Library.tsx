@@ -5,7 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import PublicStoriesTable from "@/components/PublicStoriesTable";
 import WelcomeHeader from "@/components/WelcomeHeader";
-import ScrollToTop from "@/components/ScrollToTop";
+
 
 const Library = () => {
   const navigate = useNavigate();
@@ -46,7 +46,6 @@ const Library = () => {
         </div>
       </main>
       <CookieFreeFooter />
-      <ScrollToTop />
     </div>
   );
 };

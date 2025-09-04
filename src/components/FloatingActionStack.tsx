@@ -11,7 +11,7 @@ const FloatingActionStack = () => {
   if (isAdminPage) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 flex flex-col items-center gap-[5px]">
+    <div className="fixed bottom-[86px] left-4 z-50 flex flex-col items-center gap-[5px] print:hidden">
       <ScrollToTop inline />
       <BreakGuide inline />
       <ReportProblemButton inline />

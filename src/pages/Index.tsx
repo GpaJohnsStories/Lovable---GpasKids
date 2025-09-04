@@ -4,7 +4,7 @@ import { ProportionalWebTextBox } from "@/components/ProportionalWebTextBox";
 import StorySection from "@/components/StorySection";
 import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
-import ScrollToTop from "@/components/ScrollToTop";
+
 
 const Index = () => {
   
@@ -27,7 +27,6 @@ const Index = () => {
       </main>
       
       <CookieFreeFooter />
-      <ScrollToTop />
     </div>
   );
 };

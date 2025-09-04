@@ -5,7 +5,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ContentProtection from "@/components/ContentProtection";
-import ScrollToTop from "@/components/ScrollToTop";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Bio {
@@ -71,7 +71,6 @@ const PublicAuthorBiosSimple = () => {
           </Card>
         </div>
         <CookieFreeFooter />
-        <ScrollToTop />
       </div>
     );
   }
@@ -83,7 +82,6 @@ const PublicAuthorBiosSimple = () => {
         <WelcomeHeader />
         <LoadingSpinner message="Loading biographies..." />
         <CookieFreeFooter />
-        <ScrollToTop />
       </div>
     );
   }
@@ -155,7 +153,6 @@ const PublicAuthorBiosSimple = () => {
         </div>
         
         <CookieFreeFooter />
-        <ScrollToTop />
       </div>
   );
 };
