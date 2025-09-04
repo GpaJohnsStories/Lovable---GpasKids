@@ -116,11 +116,10 @@ const BreakGuide: React.FC = () => {
 
   return <TooltipProvider delayDuration={200}>
       {/* Break Button - positioned bottom-left, same height and alignment as "Top & Menu" button */}
-      <Button
+      <div
         onClick={handleBreakButtonClick}
         data-allow-superav-passthrough="true"
-        size="sm"
-        className="fixed bottom-20 left-4 z-50 bg-transparent hover:bg-transparent border-0 p-0 shadow-none hover:shadow-none transition-all duration-300 hover:scale-105 print:hidden"
+        className="fixed bottom-20 left-4 z-50 cursor-pointer transition-all duration-300 hover:scale-105 print:hidden"
         aria-label="Break Guide"
         data-testid="break-button"
       >
@@ -133,7 +132,7 @@ const BreakGuide: React.FC = () => {
         ) : (
           <span className="font-bold font-fun text-21px">Break Guide</span>
         )}
-      </Button>
+      </div>
 
       {/* Break Timer Panel - same width as SuperAV, extended height for SYS-BT2 code */}
       {isBreakTimerOpen && <div 
