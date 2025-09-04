@@ -1261,6 +1261,29 @@ Contact the system administrator for assistance.`;
               <FileSpreadsheet className="w-4 h-4 mr-2" />
               Download CSV
             </Button>
+            {isFileSystemAccessSupported ? (
+              <Button 
+                onClick={() => {
+                  setShowAudioPreview(false);
+                  setConfirmationManifest(audioManifest);
+                  setShowDownloadConfirmation(true);
+                }}
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
+                <FolderDown className="w-4 h-4 mr-2" />
+                Continue and Download via Browser
+              </Button>
+            ) : (
+              <div data-tooltip="File System Access API not available in this browser. Use Chrome or Edge for direct downloads.">
+                <Button 
+                  disabled
+                  className="bg-gray-400 text-gray-600 cursor-not-allowed"
+                >
+                  <FolderDown className="w-4 h-4 mr-2" />
+                  Download via Browser (Unavailable)
+                </Button>
+              </div>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>
