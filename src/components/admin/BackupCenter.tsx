@@ -33,6 +33,8 @@ export const BackupCenter = () => {
   const [audioManifest, setAudioManifest] = useState<any>(null);
   const [showAudioPreview, setShowAudioPreview] = useState(false);
   const [isGeneratingAudioManifest, setIsGeneratingAudioManifest] = useState(false);
+  const [showDownloadConfirmation, setShowDownloadConfirmation] = useState(false);
+  const [confirmationManifest, setConfirmationManifest] = useState<any>(null);
   
   // Video backup state  
   const [videoFilterMode, setVideoFilterMode] = useState<'all' | 'sinceDate'>('all');
@@ -448,6 +450,7 @@ Contact the system administrator for assistance.`;
       }
 
       setAudioManifest(data);
+      setConfirmationManifest(data);
       setShowAudioPreview(true);
 
       const errorInfo = data.totals?.errors > 0 ? ` (${data.totals.errors} errors)` : '';
@@ -602,8 +605,19 @@ Contact the system administrator for assistance.`;
     setShowVideoPreview(false);
   };
 
-  const downloadAudioViaFiles = async () => {
-    if (!audioManifest?.entries) return;
+  const handleDownloadViaFilesClick = async () => {
+    if (!confirmationManifest?.entries) {
+      // Generate manifest first if we don't have one
+      await generateAudioManifest();
+      return;
+    }
+    
+    setShowDownloadConfirmation(true);
+  };
+
+  const downloadAudioViaFiles = async (manifest?: any) => {
+    const manifestToUse = manifest || confirmationManifest;
+    if (!manifestToUse?.entries) return;
 
     // Check for File System Access API support
     if (!('showDirectoryPicker' in window)) {
@@ -616,7 +630,7 @@ Contact the system administrator for assistance.`;
       const directoryHandle = await (window as any).showDirectoryPicker();
       
       setBrowserDownloadProgress({
-        total: audioManifest.entries.length,
+        total: manifestToUse.entries.length,
         completed: 0,
         failed: 0,
         isActive: true
@@ -627,8 +641,8 @@ Contact the system administrator for assistance.`;
       let failed = 0;
 
       // Process files in batches
-      for (let i = 0; i < audioManifest.entries.length; i += maxConcurrency) {
-        const batch = audioManifest.entries.slice(i, i + maxConcurrency);
+      for (let i = 0; i < manifestToUse.entries.length; i += maxConcurrency) {
+        const batch = manifestToUse.entries.slice(i, i + maxConcurrency);
         
         await Promise.allSettled(batch.map(async (entry: any) => {
           try {
@@ -969,16 +983,10 @@ Contact the system administrator for assistance.`;
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <div>
-                              <Button 
+                               <Button 
                                 size="sm" 
                                 variant="outline"
-                                onClick={() => {
-                                  generateAudioManifest().then(() => {
-                                    if (audioManifest) {
-                                      downloadAudioViaFiles();
-                                    }
-                                  });
-                                }}
+                                onClick={handleDownloadViaFilesClick}
                                 disabled={!isFileSystemAccessSupported || isGeneratingAudioManifest || (audioFilterMode === 'sinceDate' && !audioFilterDate) || browserDownloadProgress.isActive}
                                 className={`w-full ${!isFileSystemAccessSupported 
                                   ? 'bg-gray-100 border-gray-300 text-gray-500' 
@@ -1316,6 +1324,86 @@ Contact the system administrator for assistance.`;
             >
               <FileSpreadsheet className="w-4 h-4 mr-2" />
               Download CSV
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Download Confirmation Modal */}
+      <Dialog open={showDownloadConfirmation} onOpenChange={setShowDownloadConfirmation}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <FolderDown className="w-5 h-5" />
+              Confirm Audio Download
+            </DialogTitle>
+            <DialogDescription>
+              You're about to download audio files directly to your computer. Please review the details below:
+            </DialogDescription>
+          </DialogHeader>
+
+          {confirmationManifest && (
+            <div className="space-y-4">
+              {/* Summary Stats */}
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                <div className="grid grid-cols-2 gap-4 text-center">
+                  <div>
+                    <div className="text-2xl font-bold text-blue-600">{confirmationManifest.totals.count}</div>
+                    <div className="text-sm text-blue-700">Total Files</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-blue-600">{confirmationManifest.totals.size_pretty}</div>
+                    <div className="text-sm text-blue-700">Total Size</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* First 10 Files Preview */}
+              <div>
+                <h4 className="font-medium mb-2 text-gray-700">First 10 files to be downloaded:</h4>
+                <div className="space-y-1 max-h-48 overflow-y-auto border rounded p-3 bg-gray-50">
+                  {confirmationManifest.entries.slice(0, 10).map((entry: any, index: number) => (
+                    <div key={index} className="text-sm py-1 border-b border-gray-200 last:border-b-0">
+                      <div className="font-mono text-xs truncate text-gray-800">{entry.filename}</div>
+                      <div className="text-gray-500 text-xs">
+                        {(entry.size_bytes / 1024 / 1024).toFixed(2)} MB • Story: {entry.story_code || 'Unknown'}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {confirmationManifest.entries.length > 10 && (
+                  <div className="text-center text-gray-500 text-sm mt-2">
+                    ... and {confirmationManifest.entries.length - 10} more files will be downloaded
+                  </div>
+                )}
+              </div>
+
+              {/* Download Process Info */}
+              <div className="bg-yellow-50 rounded-lg p-3 border border-yellow-200">
+                <h5 className="font-medium text-yellow-800 mb-2">Download Process:</h5>
+                <ul className="text-sm text-yellow-700 space-y-1">
+                  <li>• You'll be prompted to select a folder on your computer</li>
+                  <li>• Files will download automatically to that folder</li>
+                  <li>• Existing files with the same name will be skipped</li>
+                  <li>• Progress will be shown during download</li>
+                </ul>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter className="gap-2">
+            <Button variant="outline" onClick={() => setShowDownloadConfirmation(false)}>
+              Cancel
+            </Button>
+            <Button 
+              onClick={() => {
+                setShowDownloadConfirmation(false);
+                downloadAudioViaFiles(confirmationManifest);
+              }}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              <FolderDown className="w-4 h-4 mr-2" />
+              Continue and Download via Browser
             </Button>
           </DialogFooter>
         </DialogContent>
