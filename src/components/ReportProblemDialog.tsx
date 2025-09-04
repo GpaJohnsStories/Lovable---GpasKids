@@ -183,18 +183,19 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                     </div>
                   )}
                 </div>
+                {/* Action buttons aligned under the right column (below "Rather not say") */}
+                <div className="col-start-2 flex justify-end space-x-3 pt-2">
+                  <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={isSubmitting || !!profanityError} className="bg-primary hover:bg-primary/90">
+                    {isSubmitting ? 'Sending...' : 'Send Report'}
+                  </Button>
+                </div>
               </div>
             </RadioGroup>
           </div>
 
-          <div className="flex justify-end space-x-3 pt-4">
-            <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isSubmitting || !!profanityError} className="bg-primary hover:bg-primary/90">
-              {isSubmitting ? 'Sending...' : 'Send Report'}
-            </Button>
-          </div>
 
           {profanityError && <div className="p-3 bg-red-50 border border-red-200 rounded-md">
               <div className="flex items-center space-x-2">
