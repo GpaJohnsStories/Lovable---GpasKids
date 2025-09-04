@@ -166,10 +166,24 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
           <div>
             <Label className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Who are you?</Label>
             <RadioGroup value={formData.whoAreYou} onValueChange={value => handleInputChange('whoAreYou', value)} className="mt-2">
-              {['Kid', 'Adult', 'Teacher', 'Parent', 'Rather not say'].map(option => <div key={option} className="flex items-center space-x-2">
-                  <RadioGroupItem value={option} id={option} />
-                  <Label htmlFor={option} className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>{option}</Label>
-                </div>)}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  {['Unicorn', 'Elephant', 'Eagle'].map(option => 
+                    <div key={option} className="flex items-center space-x-2">
+                      <RadioGroupItem value={option} id={option} />
+                      <Label htmlFor={option} className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>{option}</Label>
+                    </div>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  {['Giraffe', 'Reindeer', 'Rather not say'].map(option => 
+                    <div key={option} className="flex items-center space-x-2">
+                      <RadioGroupItem value={option} id={option} />
+                      <Label htmlFor={option} className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>{option}</Label>
+                    </div>
+                  )}
+                </div>
+              </div>
             </RadioGroup>
           </div>
 
