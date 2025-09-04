@@ -53,7 +53,6 @@ export const MonthlyVisitsCard = () => {
         approved: existingData?.visit_count || 0,
         searchEngines: existingData?.search_engine_visits_count || 0,
         bots: existingData?.bot_visits_count || 0,
-        admin: existingData?.admin_visits_count || 0,
         other: existingData?.other_excluded_count || 0,
         fullDate: date,
       });
@@ -88,10 +87,6 @@ export const MonthlyVisitsCard = () => {
       <div className="flex items-center gap-1.5">
         <div className="w-4 h-1 bg-red-600 rounded-sm"></div>
         <span>Bots</span>
-      </div>
-      <div className="flex items-center gap-1.5">
-        <div className="w-4 h-1 bg-blue-600 rounded-sm"></div>
-        <span>Admin</span>
       </div>
       <div className="flex items-center gap-1.5">
         <div className="w-4 h-1 bg-orange-500 rounded-sm"></div>
@@ -225,23 +220,6 @@ export const MonthlyVisitsCard = () => {
                   />
                 </Line>
                 
-                {/* Admin visits line - Blue */}
-                <Line 
-                  type="monotone" 
-                  dataKey="admin" 
-                  name="Admin"
-                  stroke="#3b82f6" 
-                  strokeWidth={2}
-                  dot={{ fill: "#3b82f6", strokeWidth: 2, r: 3 }}
-                  activeDot={{ r: 5, stroke: "#3b82f6", strokeWidth: 2 }}
-                >
-                  <LabelList 
-                    dataKey="admin" 
-                    position="top" 
-                    style={{ fontSize: '14px', fontWeight: 'bold', fill: '#3b82f6' }}
-                    offset={8}
-                  />
-                </Line>
                 
                 {/* Other excluded line - Orange */}
                 <Line 

@@ -331,10 +331,9 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Skip tracking if user is admin
+    // Skip tracking if user is admin - don't track admin visits at all
     if (isAdmin) {
       console.log('Visit excluded: Admin user')
-      await trackExcludedVisit(supabase, year, month, 'admin_visits_count');
       return new Response(
         JSON.stringify({ 
           success: true, 
