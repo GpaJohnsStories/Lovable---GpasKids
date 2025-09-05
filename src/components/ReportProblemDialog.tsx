@@ -296,7 +296,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                     >
                       {isSubmitting ? 'Sending...' : (
                         <>
-                          Send Message to<br />Gpa John
+                          Send Message<br />to Gpa John
                         </>
                       )}
                     </Button>
