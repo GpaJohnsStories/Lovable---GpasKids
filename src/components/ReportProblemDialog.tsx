@@ -292,8 +292,13 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                       type="submit" 
                       variant="successPill"
                       disabled={isSubmitting || !!profanityError}
+                      className="min-h-[70px] py-4"
                     >
-                      {isSubmitting ? 'Sending...' : 'Send Message to Gpa John'}
+                      {isSubmitting ? 'Sending...' : (
+                        <>
+                          Send Message to<br />Gpa John
+                        </>
+                      )}
                     </Button>
                   </div>
                 </div>
