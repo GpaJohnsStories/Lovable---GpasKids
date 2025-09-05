@@ -93,8 +93,9 @@ const ToastTitle = React.forwardRef<
   <ToastPrimitives.Title
     ref={ref}
     className={cn(
-      "text-sm font-semibold", 
+      "text-sm font-semibold",
       "group-[.destructive]:font-bold group-[.destructive]:text-[21px] group-[.destructive]:font-['Arial']",
+      "group-[.emerald-toast]:text-[21px] group-[.emerald-toast]:font-bold group-[.emerald-toast]:font-kalam group-[.emerald-toast]:text-white group-[.emerald-toast]:leading-tight",
       className
     )}
     {...props}
@@ -109,8 +110,9 @@ const ToastDescription = React.forwardRef<
   <ToastPrimitives.Description
     ref={ref}
     className={cn(
-      "text-sm opacity-90", 
+      "text-sm opacity-90",
       "group-[.destructive]:font-bold group-[.destructive]:text-[21px] group-[.destructive]:font-['Arial'] group-[.destructive]:opacity-100",
+      "group-[.emerald-toast]:text-[21px] group-[.emerald-toast]:font-bold group-[.emerald-toast]:font-kalam group-[.emerald-toast]:text-white group-[.emerald-toast]:opacity-100 group-[.emerald-toast]:leading-tight",
       className
     )}
     {...props}
