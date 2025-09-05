@@ -161,19 +161,19 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   return <Dialog open={isOpen} onOpenChange={() => {}}>
       <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto [&>button]:hidden">
         {/* Custom close button with exit icon */}
-        <div className="absolute top-4 right-4 z-10">
+        <div className="absolute top-2 right-2 z-20">
           <button
             onClick={handleClose}
             className="flex items-center justify-center hover:opacity-80 transition-opacity"
             aria-label="Close dialog"
           >
             {exitIconLoading ? (
-              <div className="w-[50px] h-[25px] bg-gray-200 animate-pulse rounded"></div>
+              <div className="w-[60px] h-[35px] bg-gray-200 animate-pulse rounded"></div>
             ) : exitIconUrl ? (
               <img 
                 src={exitIconUrl} 
                 alt="Exit" 
-                className="w-[50px] h-[25px] object-contain"
+                className="w-[60px] h-[35px] object-contain"
               />
             ) : (
               <X className="w-6 h-6 text-gray-500" />
