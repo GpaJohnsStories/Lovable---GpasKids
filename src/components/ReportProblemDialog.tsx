@@ -211,7 +211,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
             
             {/* Dynamic icon display after selection */}
             {formData.whoAreYou && (
-              <div className="absolute -bottom-8 right-0 flex items-center">
+              <div className="absolute right-0 flex items-center" style={{bottom: '-30px'}}>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
