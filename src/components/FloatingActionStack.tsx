@@ -11,7 +11,7 @@ const FloatingActionStack = () => {
   if (isAdminPage) return null;
 
   return (
-    <div className="fixed bottom-[86px] left-4 z-50 flex flex-col items-center gap-0 print:hidden">
+    <div className="fixed bottom-[86px] left-4 z-50 flex flex-col items-center gap-0 print:hidden bg-[#F9731633] border-2 border-[#F97316] rounded-lg p-2">
       <div className="-mb-[8px]">
         <ScrollToTop inline alwaysVisible />
       </div>
