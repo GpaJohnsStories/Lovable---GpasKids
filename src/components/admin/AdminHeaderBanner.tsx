@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus, BookOpen, Unlock } from "lucide-react";
+import { LogOut, FileText, MessageSquare, LayoutDashboard, Volume2, Globe, ChevronDown, Users, Plus, BookOpen, Unlock, Home } from "lucide-react";
 import { toast } from "sonner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -515,10 +515,37 @@ const AdminHeaderBanner = () => {
                     </div>
                   )}
                 </div>
-              );
-            })}
-          </nav>
-        </div>
+               );
+             })}
+           </nav>
+           
+           {/* Right section: Home button */}
+           <div className="absolute right-0 flex items-center">
+             <div 
+               className="relative"
+               onMouseEnter={() => setHoveredButton('home')}
+               onMouseLeave={() => setHoveredButton(null)}
+             >
+               <Link to="/" onClick={scrollToTop}>
+                 <div
+                   className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-green-300/50 hover:scale-105 transition-transform cursor-pointer"
+                   style={{ 
+                     backgroundColor: '#16a34a',
+                     minWidth: '55px',
+                     minHeight: '55px'
+                   }}
+                 >
+                   <Home className="w-8 h-8 text-white" />
+                 </div>
+               </Link>
+               {hoveredButton === 'home' && (
+                 <div className="nav-bubble opacity-100 visible">
+                   <b>Home</b>
+                 </div>
+               )}
+             </div>
+           </div>
+         </div>
       </div>
     </div>
   );
