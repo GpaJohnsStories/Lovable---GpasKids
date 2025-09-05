@@ -10,6 +10,8 @@ import { containsBadWord } from '@/utils/profanity';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { WebTextBox } from './WebTextBox';
+import { useCachedIcon } from '@/hooks/useCachedIcon';
+import { X } from 'lucide-react';
 import unicornIcon from '@/assets/unicorn-icon.png';
 import elephantIcon from '@/assets/elephant-icon.png';
 import eagleIcon from '@/assets/eagle-icon.png';
@@ -37,6 +39,9 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   const [showThankYou, setShowThankYou] = useState(false);
   const [profanityError, setProfanityError] = useState('');
   const [startTime, setStartTime] = useState<number>(0);
+
+  // Load exit icon
+  const { iconUrl: exitIconUrl, isLoading: exitIconLoading } = useCachedIcon('!CO-XIT.gif');
 
   // Icon mapping for "Who are you?" choices
   const iconMap: Record<string, string> = {
@@ -155,6 +160,27 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   }
   return <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">
+        {/* Custom close button with exit icon */}
+        <div className="absolute top-4 right-4 z-10">
+          <button
+            onClick={handleClose}
+            className="flex items-center justify-center hover:opacity-80 transition-opacity"
+            aria-label="Close dialog"
+          >
+            {exitIconLoading ? (
+              <div className="w-[50px] h-[25px] bg-gray-200 animate-pulse rounded"></div>
+            ) : exitIconUrl ? (
+              <img 
+                src={exitIconUrl} 
+                alt="Exit" 
+                className="w-[50px] h-[25px] object-contain"
+              />
+            ) : (
+              <X className="w-6 h-6 text-gray-500" />
+            )}
+          </button>
+        </div>
+        
         <DialogHeader className="text-left">
         </DialogHeader>
 
