@@ -288,8 +288,21 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                     <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>
                       Cancel
                     </Button>
-                    <Button type="submit" disabled={isSubmitting || !!profanityError} className="bg-primary hover:bg-primary/90">
-                      {isSubmitting ? 'Sending...' : 'Send Report'}
+                    <Button 
+                      type="submit" 
+                      disabled={isSubmitting || !!profanityError} 
+                      className="
+                        bg-[#228B22] hover:bg-[#1E7B1E] text-white text-[21px] font-bold font-fun
+                        rounded-full px-6 py-3 min-h-[50px]
+                        shadow-[0_6px_0_#0F5A0F,0_8px_8px_rgba(0,0,0,0.3)] 
+                        hover:shadow-[0_4px_0_#0F5A0F,0_6px_6px_rgba(0,0,0,0.3)]
+                        active:shadow-[0_2px_0_#0F5A0F,0_3px_3px_rgba(0,0,0,0.3)]
+                        active:translate-y-[2px]
+                        transform transition-all duration-150 ease-in-out
+                        border-0
+                      "
+                    >
+                      {isSubmitting ? 'Sending...' : 'Send Message to Gpa John'}
                     </Button>
                   </div>
                 </div>
