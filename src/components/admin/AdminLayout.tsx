@@ -12,7 +12,7 @@ interface AdminLayoutWithHeaderBannerProps {
 const AdminLayoutWithHeaderBanner = ({ children }: AdminLayoutWithHeaderBannerProps) => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
-      <Helmet titleTemplate="GpasKids | %s" defaultTitle="GpasKids | Admin" />
+      <Helmet titleTemplate="GpasKids | %s" />
       {/* Header Banner */}
       <AdminHeaderBanner />
 
