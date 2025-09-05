@@ -218,7 +218,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                       <img 
                         src={iconMap[formData.whoAreYou]} 
                         alt={`${formData.whoAreYou} icon`}
-                        className={`${formData.whoAreYou === 'Unicorn' ? 'w-14 h-14' : 'w-10 h-10'} object-contain`}
+                        className={`${formData.whoAreYou === 'Unicorn' ? 'w-16 h-16' : 'w-10 h-10'} object-contain`}
                       />
                     </TooltipTrigger>
                     <TooltipContent className="bg-amber-50 border border-amber-200 shadow-md">
