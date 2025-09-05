@@ -137,33 +137,33 @@ export const CountryVisitsCard = () => {
       <Table className="text-xs">
         <TableHeader>
           <TableRow className="border-b-2 border-amber-600">
-            <TableHead className="w-16 text-center font-bold">Code</TableHead>
-            <TableHead className="w-32 font-bold">Country</TableHead>
-            <TableHead className="w-16 text-center font-bold">Count</TableHead>
-            <TableHead className="w-16 text-center font-bold">Code</TableHead>
-            <TableHead className="w-32 font-bold">Country</TableHead>
-            <TableHead className="w-16 text-center font-bold">Count</TableHead>
-            <TableHead className="w-16 text-center font-bold">Code</TableHead>
-            <TableHead className="w-32 font-bold">Country</TableHead>
-            <TableHead className="w-16 text-center font-bold">Count</TableHead>
-            <TableHead className="w-16 text-center font-bold">Code</TableHead>
-            <TableHead className="w-32 font-bold">Country</TableHead>
-            <TableHead className="w-16 text-center font-bold">Count</TableHead>
+            <TableHead className="w-16 text-center font-bold h-8">Code</TableHead>
+            <TableHead className="w-32 font-bold h-8">Country</TableHead>
+            <TableHead className="w-16 text-center font-bold h-8">Count</TableHead>
+            <TableHead className="w-16 text-center font-bold h-8">Code</TableHead>
+            <TableHead className="w-32 font-bold h-8">Country</TableHead>
+            <TableHead className="w-16 text-center font-bold h-8">Count</TableHead>
+            <TableHead className="w-16 text-center font-bold h-8">Code</TableHead>
+            <TableHead className="w-32 font-bold h-8">Country</TableHead>
+            <TableHead className="w-16 text-center font-bold h-8">Count</TableHead>
+            <TableHead className="w-16 text-center font-bold h-8">Code</TableHead>
+            <TableHead className="w-32 font-bold h-8">Country</TableHead>
+            <TableHead className="w-16 text-center font-bold h-8">Count</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {rows.map((row, rowIndex) => (
-            <TableRow key={rowIndex} className="border-b border-amber-300">
+            <TableRow key={rowIndex} className="border-b border-amber-300 h-6">
               {row.map((country, colIndex) => (
                 <React.Fragment key={colIndex}>
-                  <TableCell className="text-center font-mono text-xs">
-                    {country?.code || ''}
+                  <TableCell className="text-center font-mono text-xs py-1 h-6">
+                    {country?.code || '\u00A0'}
                   </TableCell>
-                  <TableCell className="text-xs">
-                    {country?.name || ''}
+                  <TableCell className="text-xs py-1 h-6">
+                    {country?.name || '\u00A0'}
                   </TableCell>
-                  <TableCell className="text-center text-xs font-semibold">
-                    {country?.count || ''}
+                  <TableCell className="text-center text-xs font-semibold py-1 h-6">
+                    {country?.count || '\u00A0'}
                   </TableCell>
                 </React.Fragment>
               ))}
