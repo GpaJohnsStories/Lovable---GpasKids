@@ -7,7 +7,6 @@ import { DiagnosticsAdminPanel } from './DiagnosticsAdminPanel';
 import { EmergencyAdminPanel } from './EmergencyAdminPanel';
 import { OverviewAdminPanel } from './OverviewAdminPanel';
 import { StoriesAdminPanel } from './StoriesAdminPanel';
-import { CommentsAdminPanel } from './CommentsAdminPanel';
 import { BackupCenter } from './BackupCenter';
 
 export const AdminDashboard: React.FC = () => {
@@ -18,10 +17,9 @@ export const AdminDashboard: React.FC = () => {
       <div className="p-6">
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-8">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="stories">Stories</TabsTrigger>
-            <TabsTrigger value="comments">Comments</TabsTrigger>
             <TabsTrigger value="security">Security</TabsTrigger>
             <TabsTrigger value="reference">Reference</TabsTrigger>
             <TabsTrigger value="diagnostics">Diagnostics</TabsTrigger>
@@ -35,10 +33,6 @@ export const AdminDashboard: React.FC = () => {
 
           <TabsContent value="stories" className="space-y-6">
             <StoriesAdminPanel />
-          </TabsContent>
-
-          <TabsContent value="comments" className="space-y-6">
-            <CommentsAdminPanel />
           </TabsContent>
 
           <TabsContent value="security" className="space-y-6">

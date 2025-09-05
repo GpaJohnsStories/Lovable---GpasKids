@@ -128,59 +128,6 @@ export type Database = {
         }
         Relationships: []
       }
-      comments: {
-        Row: {
-          attachment_bucket: string | null
-          attachment_caption: string | null
-          attachment_mime: string | null
-          attachment_path: string | null
-          content: string
-          created_at: string
-          id: string
-          parent_id: string | null
-          personal_id: string
-          status: Database["public"]["Enums"]["comment_status"]
-          subject: string
-          updated_at: string
-        }
-        Insert: {
-          attachment_bucket?: string | null
-          attachment_caption?: string | null
-          attachment_mime?: string | null
-          attachment_path?: string | null
-          content: string
-          created_at?: string
-          id?: string
-          parent_id?: string | null
-          personal_id: string
-          status?: Database["public"]["Enums"]["comment_status"]
-          subject: string
-          updated_at?: string
-        }
-        Update: {
-          attachment_bucket?: string | null
-          attachment_caption?: string | null
-          attachment_mime?: string | null
-          attachment_path?: string | null
-          content?: string
-          created_at?: string
-          id?: string
-          parent_id?: string | null
-          personal_id?: string
-          status?: Database["public"]["Enums"]["comment_status"]
-          subject?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "comments_parent_id_fkey"
-            columns: ["parent_id"]
-            isOneToOne: false
-            referencedRelation: "comments"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       database_operations_audit: {
         Row: {
           client_type: string | null
@@ -241,30 +188,6 @@ export type Database = {
           total_amount?: number
           updated_at?: string
           year?: number
-        }
-        Relationships: []
-      }
-      friend_names: {
-        Row: {
-          created_at: string
-          id: string
-          nickname: string
-          personal_id_hash: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          nickname: string
-          personal_id_hash: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          nickname?: string
-          personal_id_hash?: string
-          updated_at?: string
         }
         Relationships: []
       }
@@ -650,24 +573,6 @@ export type Database = {
           },
         ]
       }
-      used_personal_ids: {
-        Row: {
-          created_at: string
-          id: string
-          personal_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          personal_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          personal_id?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
@@ -685,21 +590,9 @@ export type Database = {
         Args: { new_role: string; reason?: string; target_email: string }
         Returns: string
       }
-      check_personal_id_exists: {
-        Args: { p_personal_id: string }
-        Returns: boolean
-      }
       debug_auth_context: {
         Args: Record<PropertyKey, never>
         Returns: Json
-      }
-      derive_nickname_key: {
-        Args: { personal_id: string }
-        Returns: string
-      }
-      derive_personal_id_hash: {
-        Args: { personal_id: string }
-        Returns: string
       }
       emergency_admin_reset: {
         Args: Record<PropertyKey, never>
@@ -753,50 +646,6 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: {
           icon_count: number
-        }[]
-      }
-      get_nickname_by_personal_id: {
-        Args: { personal_id: string }
-        Returns: string
-      }
-      get_nickname_pepper: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      get_or_create_nickname: {
-        Args: { desired_nickname?: string; personal_id: string }
-        Returns: string
-      }
-      get_public_approved_comment_by_id: {
-        Args: { comment_id: string }
-        Returns: {
-          content: string
-          created_at: string
-          id: string
-          parent_id: string
-          subject: string
-          updated_at: string
-        }[]
-      }
-      get_public_approved_comments: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          content: string
-          created_at: string
-          id: string
-          parent_id: string
-          subject: string
-          updated_at: string
-        }[]
-      }
-      get_public_orange_gang_photos: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          attachment_caption: string
-          attachment_path: string
-          created_at: string
-          display_name: string
-          id: string
         }[]
       }
       get_scheduled_backups: {
@@ -890,17 +739,12 @@ export type Database = {
         Args: { user_email: string }
         Returns: string
       }
-      update_nickname: {
-        Args: { new_nickname: string; personal_id: string }
-        Returns: string
-      }
       validate_admin_context: {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
     }
     Enums: {
-      comment_status: "pending" | "approved" | "rejected" | "archived"
       story_category:
         | "Fun"
         | "Life"
@@ -1036,7 +880,6 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      comment_status: ["pending", "approved", "rejected", "archived"],
       story_category: [
         "Fun",
         "Life",

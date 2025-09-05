@@ -1,27 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import { AspectRatio } from './ui/aspect-ratio';
-import LoadingSpinner from './LoadingSpinner';
-import { Database } from '@/integrations/supabase/types';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { getStoryPhotos } from '@/utils/storyUtils';
 import IsolatedStoryRenderer from '@/components/story/IsolatedStoryRenderer';
-
-type Comment = Database['public']['Tables']['comments']['Row'];
-
-type OrangeGangPhoto = {
-  id: string;
-  attachment_path: string;
-  attachment_caption: string | null;
-  created_at: string;
-  display_name: string;
-};
-
-interface PhotoComment extends Comment {
-  nickname?: string;
-}
 
 const OrangeGangGallery = () => {
   // State for SYS-OSP webtext content
@@ -51,56 +33,6 @@ const OrangeGangGallery = () => {
     };
     fetchWebtext();
   }, [lookupStoryByCode]);
-
-  
-  const { data: photos, isLoading, error } = useQuery<OrangeGangPhoto[]>({
-    queryKey: ['orange-gang-photos'],
-    queryFn: async () => {
-      // Use secure RPC to get public orange gang photos
-      const { data, error } = await supabase
-        .rpc('get_public_orange_gang_photos');
-
-      if (error) {
-        throw new Error(`Failed to fetch photos: ${error.message}`);
-      }
-
-      return data || [];
-    },
-  });
-
-  const getPhotoUrl = (attachmentPath: string) => {
-    const { data } = supabase.storage
-      .from('orange-gang')
-      .getPublicUrl(attachmentPath);
-    return data.publicUrl;
-  };
-
-  const getDisplayName = (photo: OrangeGangPhoto) => {
-    return photo.display_name;
-  };
-
-  // Sort photos newest first
-  const sortedPhotos = photos ? [...photos].sort((a, b) => 
-    new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-  ) : [];
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center py-12">
-        <LoadingSpinner />
-        <span className="ml-3 text-amber-700">Loading Orange Shirt Gang photos...</span>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-red-600 font-medium">Failed to load photos</p>
-        <p className="text-sm text-gray-600 mt-2">{(error as Error).message}</p>
-      </div>
-    );
-  }
 
   return (
     <TooltipProvider>
@@ -187,69 +119,21 @@ const OrangeGangGallery = () => {
           </div>
         </div>
 
-        {/* New Members Gallery (user-submitted photos) */}
-        <div className="text-center space-y-6">
-          <h3 className="text-2xl font-semibold text-amber-800">
-            New Members Gallery
-          </h3>
-          <p className="text-amber-700 max-w-2xl mx-auto">
-            Here are photos from friends who've joined 
-            Grandpa's Orange Shirt Gang by sharing their orange shirt pictures.
-          </p>
-          
-          {(!sortedPhotos || sortedPhotos.length === 0) ? (
-            <div className="text-center py-12 bg-amber-50 rounded-lg border border-amber-200">
-              <p className="text-amber-700 font-medium text-lg">No photos yet!</p>
-              <p className="text-amber-600 mt-2">
-                Be the first to share a photo of yourself in an orange shirt!
-              </p>
-            </div>
-          ) : (
-            <div className={`grid ${sortedPhotos.length > 24 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'}`}>
-              {sortedPhotos.map((photo) => (
-                <Tooltip key={photo.id}>
-                  <TooltipTrigger asChild>
-                    <div className="cursor-pointer">
-                      <AspectRatio ratio={3/2} className="overflow-hidden rounded border-4 border-amber-600 bg-amber-50">
-                        <img
-                          src={getPhotoUrl(photo.attachment_path!)}
-                          alt={photo.attachment_caption || 'Orange Shirt Gang Photo'}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
-                      </AspectRatio>
-                      <div className="mt-2 text-center">
-                        <p className="text-sm font-medium text-amber-800">
-                          {getDisplayName(photo)}
-                        </p>
-                        <p className="text-xs text-amber-600 mt-1">
-                          {new Date(photo.created_at).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent side="bottom" className="max-w-xs">
-                    <div className="text-center space-y-1">
-                      <p className="font-medium">{photo.attachment_caption || 'Orange Shirt Gang Photo'}</p>
-                      <p className="text-sm opacity-90">Shared by: {getDisplayName(photo)}</p>
-                      <p className="text-xs opacity-75">
-                        {new Date(photo.created_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="text-center text-sm text-amber-600 bg-amber-50 rounded-lg p-4 border border-amber-200">
-          <p>
-            Want to join the Orange Shirt Gang? Share a photo of yourself wearing 
-            an orange shirt through our comment form and it will appear here once approved!
-          </p>
+        {/* New Members Gallery - Static message */}
+        <div className="bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 rounded-lg p-8 text-center">
+          <div className="mb-4">
+            <div className="text-6xl mb-4">🍊</div>
+            <h3 className="text-xl font-bold text-orange-800 mb-3">New Members Gallery Coming Soon!</h3>
+            <p className="text-orange-700 leading-relaxed">
+              We're preparing a special photo gallery to showcase our amazing Orange Gang members. 
+              Check back soon to see all the wonderful faces in our community!
+            </p>
+          </div>
+          <div className="mt-6 p-4 bg-white/60 rounded-lg border border-orange-200">
+            <p className="text-sm text-orange-600 font-medium">
+              📸 Photos will be carefully curated and uploaded by our team
+            </p>
+          </div>
         </div>
       </div>
     </TooltipProvider>

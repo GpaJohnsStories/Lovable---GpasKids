@@ -1,26 +1,9 @@
 import React from 'react';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
-
 import { WebTextBox } from "@/components/WebTextBox";
-import ClubPersonalIdSection from "@/components/ClubPersonalIdSection";
-import ClubNicknameSection from "@/components/ClubNicknameSection";
-import { usePersonalId } from "@/hooks/usePersonalId";
 
 const Club = () => {
-  const { personalId, setPersonalId } = usePersonalId();
-
-  const handlePersonalIdGenerated = (newPersonalId: string) => {
-    setPersonalId(newPersonalId);
-    // Store in sessionStorage for other forms
-    sessionStorage.setItem('tempPersonalId', newPersonalId);
-  };
-
-  const handleNicknameSet = (nickname: string) => {
-    // Store in sessionStorage for other forms
-    sessionStorage.setItem('tempNickname', nickname);
-  };
-
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
       <WelcomeHeader />
@@ -34,24 +17,23 @@ const Club = () => {
           title="Welcome to Grandpa's Club!"
         />
 
-        {/* Personal ID Section */}
-        <div className="mt-8 bg-white/90 rounded-lg shadow-sm border border-amber-200 p-6">
-          <ClubPersonalIdSection 
-            onPersonalIdGenerated={handlePersonalIdGenerated}
-            showExplanation={true}
-            className="space-y-4"
-          />
+        {/* Personal ID Section - Temporarily Disabled */}
+        <div className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-6 text-center mb-8">
+          <h3 className="text-lg font-semibold text-yellow-800 mb-2">Personal ID Feature</h3>
+          <p className="text-yellow-700">
+            The Personal ID system is temporarily offline while we implement new security measures. 
+            Check back soon!
+          </p>
         </div>
 
-        {/* Nickname Section - Only show if Personal ID exists */}
-        {personalId && personalId.length === 6 && (
-          <div className="mt-8 bg-white/90 rounded-lg shadow-sm border border-amber-200 p-6">
-            <ClubNicknameSection
-              personalId={personalId}
-              onNicknameSet={handleNicknameSet}
-            />
-          </div>
-        )}
+        {/* Nickname Section - Temporarily Disabled */}
+        <div className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-6 text-center mb-8">
+          <h3 className="text-lg font-semibold text-yellow-800 mb-2">Nickname Feature</h3>
+          <p className="text-yellow-700">
+            The Nickname system is temporarily offline while we implement new security measures. 
+            Check back soon!
+          </p>
+        </div>
 
         {/* Instructions */}
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">

@@ -19,9 +19,6 @@ import Writing from "./pages/Writing";
 import Guide from "./pages/Guide";
 import HelpGpa from "./pages/HelpGpa";
 
-import MakeComment from "./pages/MakeComment";
-import ViewComments from "./pages/ViewComments";
-import CommentDetail from "./pages/CommentDetail";
 import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 import RobotsTxt from "./pages/RobotsTxt";
@@ -43,9 +40,6 @@ import SecureAdminRoute from "./components/admin/SecureAdminRoute";
 import AdminOverview from "./components/admin/AdminOverview";
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminStories from "./components/admin/AdminStories";
-import CommentsDashboard from "./components/admin/CommentsDashboard";
-import AdminCommentDetail from "./components/admin/AdminCommentDetail";
-import CreateAdminComment from "./components/admin/CreateAdminComment";
 import SecurityAuditDashboard from "./components/admin/SecurityAuditDashboard";
 
 // Auth components
@@ -56,7 +50,7 @@ import ResetPasswordRequest from "./components/auth/ResetPasswordRequest";
 
 import UnifiedStoryDeprecated from "./components/admin/UnifiedStoryDeprecated";
 import SuperText from "./pages/SuperText";
-import GpasChat from "./pages/GpasChat";
+
 
 // Security and Auth
 import GlobalHelpProvider from "./components/GlobalHelpProvider";
@@ -129,9 +123,6 @@ function App() {
                       <Route path="/club" element={<Club />} />
                       <Route path="/club/photos" element={<OrangeGangPhotos />} />
                       
-                      <Route path="/make-comment" element={<MakeComment />} />
-                      <Route path="/view-comments" element={<ViewComments />} />
-                      <Route path="/comment/:id" element={<CommentDetail />} />
                       <Route path="/security" element={<Privacy />} />
                       <Route path="/robots.txt" element={<RobotsTxt />} />
                       <Route path="/sitemap.xml" element={<SitemapXml />} />
@@ -141,11 +132,7 @@ function App() {
                       <Route path="/public-author-bios" element={<PublicAuthorBios />} />
                       <Route path="/author-bios-simple" element={<PublicAuthorBiosSimple />} />
                       <Route path="/author/:id" element={<AuthorBio />} />
-                      
-                      {/* Gpa's Chat Room - No header/footer, standalone page */}
-                      <Route path="/GpasChat" element={<GpasChat />} />
-
-                      {/* Auth Routes */}
+                       {/* Auth Routes */}
                       <Route path="/auth/login" element={<Login />} />
                       <Route path="/auth/register" element={<Register />} />
                       <Route path="/auth/forgot-password" element={<ResetPasswordRequest />} />
@@ -156,8 +143,7 @@ function App() {
                       {/* Admin Routes */}
                       <Route path="/buddys_admin" element={<SecureAdminRoute><AdminOverview /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/stories" element={<SecureAdminRoute><AdminStories /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/comments" element={<SecureAdminRoute><CommentsDashboard /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/security" element={<SecureAdminRoute><SecurityAuditDashboard /></SecureAdminRoute>} />
+                       <Route path="/buddys_admin/security" element={<SecureAdminRoute><SecurityAuditDashboard /></SecureAdminRoute>} />
                       
                       <Route path="/buddys_admin/reference" element={<SecureAdminRoute><ReferenceDashboard /></SecureAdminRoute>} />
                       <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMapContent /></SecureAdminRoute>} />

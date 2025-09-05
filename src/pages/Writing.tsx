@@ -4,7 +4,6 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { WebTextBox } from "@/components/WebTextBox";
-import StorySubmissionForm from "@/components/story-submission/StorySubmissionForm";
 import copyrightSign from "@/assets/copyright-sign.jpg";
 
 const Writing = () => {

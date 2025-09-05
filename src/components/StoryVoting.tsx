@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ThumbsUp, ThumbsDown, MessageSquare } from "lucide-react";
+import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import CreateCommentButton from "./CreateCommentButton";
 interface StoryVotingProps {
   storyId: string;
   storyCode: string;
@@ -106,9 +106,10 @@ const StoryVoting = ({
         </div>
 
         {/* Comment Button */}
-        <Link to={`/make-comment?storyCode=${encodedStoryCode}`}>
-          
-        </Link>
+        <CreateCommentButton 
+          storyCode={storyCode}
+          storyTitle={storyTitle}
+        />
       </div>
     </div>;
 };
