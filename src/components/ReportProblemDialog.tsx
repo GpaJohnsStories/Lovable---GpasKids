@@ -285,7 +285,13 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                     <Label htmlFor="Rather not say" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Rather not say</Label>
                   </div>
                   <div className="flex justify-end space-x-3 pt-2">
-                    <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>
+                    <Button 
+                      type="button" 
+                      variant="default" 
+                      onClick={handleClose} 
+                      disabled={isSubmitting}
+                      className="min-h-[70px] py-4 text-[21px] font-bold font-fun text-white"
+                    >
                       Cancel
                     </Button>
                     <Button 
