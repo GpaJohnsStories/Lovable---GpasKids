@@ -11,7 +11,6 @@ interface CreateCommentButtonProps {
 
 const CreateCommentButton = ({ storyCode, storyTitle }: CreateCommentButtonProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const prefilledSubject = `Comment about "${storyTitle}"`;
 
   return (
     <>
@@ -26,7 +25,6 @@ const CreateCommentButton = ({ storyCode, storyTitle }: CreateCommentButtonProps
       <CommentPopupDialog
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
-        prefilledSubject={prefilledSubject}
       />
     </>
   );

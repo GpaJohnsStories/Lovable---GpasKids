@@ -31,7 +31,6 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
     description: '',
     whoAreYou: '',
     pageUrl: ''
@@ -182,7 +181,6 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
       setFormData({
         name: '',
         email: '',
-        subject: '',
         description: '',
         whoAreYou: '',
         pageUrl: window.location.href
@@ -206,7 +204,6 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
     setFormData({
       name: '',
       email: '',
-      subject: '',
       description: '',
       whoAreYou: '',
       pageUrl: window.location.href

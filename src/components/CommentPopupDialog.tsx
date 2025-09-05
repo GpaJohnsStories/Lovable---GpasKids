@@ -13,18 +13,15 @@ import { WebTextBox } from './WebTextBox';
 interface CommentPopupDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  prefilledSubject?: string;
 }
 
 export const CommentPopupDialog: React.FC<CommentPopupDialogProps> = ({
   isOpen,
-  onClose,
-  prefilledSubject
+  onClose
 }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: prefilledSubject || '',
     message: '',
     pageUrl: ''
   });
@@ -38,17 +35,16 @@ export const CommentPopupDialog: React.FC<CommentPopupDialogProps> = ({
       setStartTime(Date.now());
       setFormData(prev => ({
         ...prev,
-        subject: prefilledSubject || '',
         pageUrl: window.location.href
       }));
     }
-  }, [isOpen, prefilledSubject]);
+  }, [isOpen]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     
     // Check for profanity in text fields
-    if (['name', 'email', 'subject', 'message'].includes(field) && value) {
+    if (['name', 'email', 'message'].includes(field) && value) {
       if (containsBadWord(value)) {
         setProfanityError('Oops! It looks like your message used words not allowed here. Please say it a little more kindly? Thanks, Buddy!');
       } else {
@@ -63,15 +59,6 @@ export const CommentPopupDialog: React.FC<CommentPopupDialogProps> = ({
     if (isSubmitting) return;
 
     // Validation
-    if (!formData.subject.trim() || formData.subject.length < 2) {
-      toast({
-        title: "Subject Required",
-        description: "Please enter a subject of at least 2 characters.",
-        variant: "destructive"
-      });
-      return;
-    }
-
     if (!formData.message.trim() || formData.message.length < 10) {
       toast({
         title: "Message Required", 
@@ -82,7 +69,7 @@ export const CommentPopupDialog: React.FC<CommentPopupDialogProps> = ({
     }
 
     // Final profanity check
-    const allText = [formData.name, formData.email, formData.subject, formData.message]
+    const allText = [formData.name, formData.email, formData.message]
       .filter(Boolean)
       .join(' ');
     
@@ -108,7 +95,6 @@ export const CommentPopupDialog: React.FC<CommentPopupDialogProps> = ({
         body: {
           name: formData.name.trim() || undefined,
           email: formData.email.trim() || undefined,
-          subject: formData.subject.trim(),
           message: formData.message.trim(),
           pageUrl: formData.pageUrl,
           userAgent: navigator.userAgent,
@@ -131,7 +117,6 @@ export const CommentPopupDialog: React.FC<CommentPopupDialogProps> = ({
       setFormData({
         name: '',
         email: '',
-        subject: '',
         message: '',
         pageUrl: ''
       });
@@ -154,7 +139,6 @@ export const CommentPopupDialog: React.FC<CommentPopupDialogProps> = ({
     setFormData({
       name: '',
       email: '',
-      subject: '',
       message: '',
       pageUrl: ''
     });
@@ -240,20 +224,6 @@ export const CommentPopupDialog: React.FC<CommentPopupDialogProps> = ({
                 className="font-fun text-[21px]"
               />
             </div>
-          </div>
-
-          <div>
-            <Label htmlFor="subject" className="text-[21px] font-fun text-orange-800">
-              Subject *
-            </Label>
-            <Input
-              id="subject"
-              value={formData.subject}
-              onChange={(e) => handleInputChange('subject', e.target.value)}
-              placeholder="What would you like to talk about?"
-              required
-              className="font-fun text-[21px]"
-            />
           </div>
 
           <div>

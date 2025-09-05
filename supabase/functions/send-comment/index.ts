@@ -9,7 +9,6 @@ const corsHeaders = {
 interface CommentRequest {
   name?: string;
   email?: string;
-  subject: string;
   message: string;
   pageUrl: string;
   userAgent: string;
@@ -32,16 +31,9 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const requestData: CommentRequest = await req.json();
-    const { name, email, subject, message, pageUrl, userAgent, timestamp, interactionTime } = requestData;
+    const { name, email, message, pageUrl, userAgent, timestamp, interactionTime } = requestData;
 
     // Basic validation
-    if (!subject || subject.length < 2) {
-      return new Response(JSON.stringify({ error: 'Subject must be at least 2 characters' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
-    }
-
     if (!message || message.length < 10) {
       return new Response(JSON.stringify({ error: 'Message must be at least 10 characters' }), {
         status: 400,
@@ -59,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Profanity check
-    const textToCheck = [name, email, subject, message].filter(Boolean).join(' ');
+    const textToCheck = [name, email, message].filter(Boolean).join(' ');
     if (containsBadWord(textToCheck)) {
       return new Response(JSON.stringify({ error: 'Message contains inappropriate content' }), {
         status: 400,
@@ -83,14 +75,40 @@ const handler = async (req: Request): Promise<Response> => {
     const clientIP = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
     const maskedIP = clientIP !== 'unknown' ? clientIP.split('.').slice(0, 2).join('.') + '.***' : 'unknown';
 
+    // Generate standardized subject using US Central time
+    const centralTime = new Date().toLocaleString('en-US', {
+      timeZone: 'America/Chicago',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+    const standardizedSubject = `Gpa's Kids – ${centralTime}`;
+
+    // Prepare technical details section
+    const technicalDetails = [
+      `Page URL: ${pageUrl}`,
+      `Browser/OS: ${userAgent}`,
+      `Interaction Time: ${Math.round(interactionTime / 1000)}s`,
+      `Client IP: ${maskedIP}`,
+      `Local Time: ${new Date(timestamp).toLocaleString()}`,
+      `UTC Time: ${new Date(timestamp).toISOString()}`,
+      `Server Time: ${new Date().toISOString()}`
+    ].join('\n');
+
+    // Structure email body: message first, then technical details
+    const emailBody = `${message}\n\n--- Technical Details ---\n${technicalDetails}`;
+
     // Prepare payload for Google Apps Script
     const payload = {
       type: "comment",
       commentData: {
         name: name || 'Anonymous',
         email: email || 'Not provided',
-        subject,
-        message,
+        subject: standardizedSubject,
+        message: emailBody,
         pageUrl,
         userAgent,
         timestamp: new Date(timestamp).toISOString(),
@@ -106,6 +124,7 @@ const handler = async (req: Request): Promise<Response> => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-Shared-Secret': gasSharedSecret
       },
       body: JSON.stringify(payload)
     });
@@ -123,7 +142,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('Comment sent successfully', {
       hasName: !!name,
       hasEmail: !!email,
-      subjectLength: subject.length,
+      subject: standardizedSubject,
       messageLength: message.length,
       maskedIP,
       pageUrl: pageUrl.replace(/\/[A-Z0-9]{7}$/, '/[STORY_CODE]'), // Mask story codes

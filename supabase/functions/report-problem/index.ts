@@ -7,9 +7,8 @@ const corsHeaders = {
 };
 
 interface ReportData {
-  name: string;
+  name?: string;
   email?: string;
-  subject: string;
   description: string;
   whoAreYou: string;
   pageUrl: string;
@@ -68,9 +67,10 @@ const handler = async (req: Request): Promise<Response> => {
 
     const reportData: ReportData = await req.json();
 
-    // Basic validation
-    if (!reportData.name?.trim() || !reportData.subject?.trim() || !reportData.description?.trim()) {
-      return new Response(JSON.stringify({ error: "Missing required fields" }), {
+    // Basic validation - require at least 3 words in description
+    const wordCount = reportData.description?.trim().split(/\s+/).filter(word => word.length > 0).length || 0;
+    if (wordCount < 3) {
+      return new Response(JSON.stringify({ error: "Description must contain at least a few words" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders }
       });
@@ -91,6 +91,36 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
+    // Generate standardized subject using US Central time
+    const centralTime = new Date().toLocaleString('en-US', {
+      timeZone: 'America/Chicago',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+    const standardizedSubject = `Gpa's Kids – ${centralTime}`;
+
+    // Get client IP (with privacy masking)
+    const maskedIP = clientIP !== 'unknown' ? clientIP.split('.').slice(0, 2).join('.') + '.***' : 'unknown';
+
+    // Prepare technical details section
+    const technicalDetails = [
+      `Who are you: ${reportData.whoAreYou}`,
+      `Page URL: ${reportData.pageUrl}`,
+      `Browser/OS: ${reportData.userAgent || 'Not provided'}`,
+      `Viewport: ${reportData.viewport || 'Not provided'}`,
+      `Interaction Time: ${reportData.interactionTime ? Math.round(reportData.interactionTime / 1000) + 's' : 'Not provided'}`,
+      `Client IP: ${maskedIP}`,
+      `Local Time: ${reportData.timestamp || 'Not provided'}`,
+      `Server Time: ${new Date().toISOString()}`
+    ].join('\n');
+
+    // Structure email body: description first, then technical details
+    const emailBody = `${reportData.description}\n\n--- Technical Details ---\n${technicalDetails}`;
+
     // Forward to Google Apps Script webhook
     const gasWebhookUrl = Deno.env.get("GAS_WEBHOOK_URL");
     const gasSharedSecret = Deno.env.get("GAS_SHARED_SECRET");
@@ -98,8 +128,20 @@ const handler = async (req: Request): Promise<Response> => {
     if (gasWebhookUrl && gasSharedSecret) {
       try {
         const gasPayload = {
-          reportData,
-          clientIP,
+          type: "problem_report",
+          reportData: {
+            name: reportData.name || 'Anonymous',
+            email: reportData.email || 'Not provided',
+            subject: standardizedSubject,
+            description: emailBody,
+            whoAreYou: reportData.whoAreYou,
+            pageUrl: reportData.pageUrl,
+            userAgent: reportData.userAgent,
+            viewport: reportData.viewport,
+            timestamp: reportData.timestamp,
+            interactionTime: reportData.interactionTime
+          },
+          clientIP: maskedIP,
           serverTimestamp: new Date().toISOString(),
           sharedSecret: gasSharedSecret
         };
@@ -108,6 +150,7 @@ const handler = async (req: Request): Promise<Response> => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'X-Shared-Secret': gasSharedSecret
           },
           body: JSON.stringify(gasPayload)
         });
@@ -131,30 +174,26 @@ const handler = async (req: Request): Promise<Response> => {
         const resend = new Resend(resendApiKey);
         
         const emailHtml = `
-          <h2>New Problem Report</h2>
-          
-          <h3>Report Details:</h3>
-          <p><strong>From:</strong> ${reportData.name}</p>
+          <h2>Problem Report</h2>
+          <p><strong>Name:</strong> ${reportData.name || 'Anonymous'}</p>
           <p><strong>Email:</strong> ${reportData.email || 'Not provided'}</p>
-          <p><strong>Who they are:</strong> ${reportData.whoAreYou}</p>
-          <p><strong>Subject:</strong> ${reportData.subject}</p>
-          
-          <h3>Description:</h3>
+          <p><strong>Message:</strong></p>
           <p>${reportData.description.replace(/\n/g, '<br>')}</p>
-          
-          <h3>Technical Details:</h3>
+          <hr>
+          <p><strong>Technical Details:</strong></p>
+          <p><strong>Who are you:</strong> ${reportData.whoAreYou}</p>
           <p><strong>Page URL:</strong> ${reportData.pageUrl}</p>
-          <p><strong>Timestamp:</strong> ${reportData.timestamp || 'Not provided'}</p>
           <p><strong>User Agent:</strong> ${reportData.userAgent || 'Not provided'}</p>
           <p><strong>Viewport:</strong> ${reportData.viewport || 'Not provided'}</p>
+          <p><strong>Client IP:</strong> ${maskedIP}</p>
+          <p><strong>Timestamp:</strong> ${reportData.timestamp || 'Not provided'}</p>
           <p><strong>Interaction Time:</strong> ${reportData.interactionTime ? Math.round(reportData.interactionTime / 1000) + 's' : 'Not provided'}</p>
-          <p><strong>Client IP:</strong> ${clientIP}</p>
         `;
 
         const emailResponse = await resend.emails.send({
           from: "Problem Reports <onboarding@resend.dev>",
           to: ["ContactGpaJohn@gmail.com"],
-          subject: `Problem Report: ${reportData.subject}`,
+          subject: standardizedSubject,
           html: emailHtml,
           replyTo: reportData.email || undefined
         });
