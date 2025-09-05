@@ -24,7 +24,6 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
     { value: '/library', label: 'Story Library' },
     { value: '/about', label: 'About Page' },
     { value: '/writing', label: 'Writing Page' },
-    { value: '/view-comments', label: 'Comments Page' },
     { value: '/help-gpa', label: 'Help Gpa Page' },
     { value: '/guide', label: 'Guide Page' },
     { value: '/public-author-bios', label: 'Author Bios' },
@@ -51,10 +50,6 @@ const InternalLinkDialog: React.FC<InternalLinkDialogProps> = ({ onInsertLink, c
       { value: '#copyright', label: 'Copyright Section' },
       { value: '#write-story', label: 'Write a Story Section' },
       { value: '#submission-guidelines', label: 'Submission Guidelines' }
-    ],
-    '/view-comments': [
-      { value: '#recent-comments', label: 'Recent Comments' },
-      { value: '#comment-rules', label: 'Comment Rules' }
     ],
     '/help-gpa': [
       { value: '#getting-started', label: 'Getting Started' },

@@ -68,15 +68,12 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
   const getPageTitle = (route: string): string => {
     if (route.startsWith('/story/')) return 'Story Page';
     if (route.startsWith('/author/')) return 'Author Bio';
-    if (route.startsWith('/comment/')) return 'Comment Details';
     if (route.startsWith('/buddys_admin')) return 'Admin Dashboard';
     
     const titles: Record<string, string> = {
       '/': 'Home Page',
       '/library': 'Library',
       '/about': 'About Page',
-      '/make-comment': 'Make Comment',
-      '/view-comments': 'View Comments',
       '/writing': 'Story Writing',
       '/security': 'Privacy Policy',
       '/help-gpa': 'Help Grandpa',

@@ -7,8 +7,6 @@ const ROUTE_HELP_MAP: Record<string, string> = {
   '/library': 'HLP-LIB',
   '/story': 'STORY_HELP',
   '/about': 'HLP-ABT',
-  '/make-comment': 'HLP-COM1',
-  '/view-comments': 'HLP-COM2',
   '/writing': 'HLP-WR',
   '/security': 'HLP-PRV',
   '/help-gpa': 'HELP_GPA_HELP',
@@ -22,8 +20,6 @@ const ROUTE_HELP_MAP: Record<string, string> = {
 const ROUTE_GUIDE_ANCHOR_MAP: Record<string, string> = {
   '/': 'SYS-G2A', // Home Page
   '/library': 'SYS-G3A', // Story Library
-  '/view-comments': 'SYS-G4A', // Comments List Page
-  '/make-comment': 'SYS-G4B', // Write a Comment Page
   '/writing': 'SYS-G5A', // Writing
   '/about': 'SYS-G6A', // About Us
   '/public-author-bios': 'SYS-G6A',
@@ -64,7 +60,6 @@ export const HelpProvider: React.FC<HelpProviderProps> = ({ children }) => {
     // Handle dynamic routes
     if (route.startsWith('/story/')) return 'STORY_HELP';
     if (route.startsWith('/author/')) return 'AUTHOR_HELP';
-    if (route.startsWith('/comment/')) return 'COMMENT_HELP';
     if (route.startsWith('/buddys_admin')) return 'ADMIN_HELP';
     
     return ROUTE_HELP_MAP[route] || 'HLP-HOME';
