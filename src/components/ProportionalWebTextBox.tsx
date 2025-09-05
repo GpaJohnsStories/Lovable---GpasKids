@@ -153,7 +153,6 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
       await navigator.clipboard.writeText(email);
       
       toast({
-        title: "Success!",
         description: "Buddy's secret copied to clipboard. Now paste it into email \"Send To\" box.",
         variant: "default"
       });
