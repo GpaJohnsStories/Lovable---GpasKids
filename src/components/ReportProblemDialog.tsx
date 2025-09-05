@@ -158,7 +158,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   if (showThankYou) {
     return <ThankYouModal isOpen={isOpen} onClose={handleClose} amount="your message" customMessage="Thank you for reaching out! We'll get back to you soon." />;
   }
-  return <Dialog open={isOpen} onOpenChange={handleClose}>
+  return <Dialog open={isOpen} onOpenChange={() => {}}>
       <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">
         {/* Custom close button with exit icon */}
         <div className="absolute top-4 right-4 z-10">
