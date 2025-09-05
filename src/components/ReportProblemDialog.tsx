@@ -12,6 +12,7 @@ import { toast } from '@/hooks/use-toast';
 import { WebTextBox } from './WebTextBox';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { X } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import unicornIcon from '@/assets/unicorn-icon.png';
 import elephantIcon from '@/assets/elephant-icon.png';
 import eagleIcon from '@/assets/eagle-icon.png';
@@ -43,9 +44,12 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   // Load exit icon
   const { iconUrl: exitIconUrl, isLoading: exitIconLoading } = useCachedIcon('!CO-XIT.gif');
 
+  // Load Unicorn icon from icon library
+  const { iconUrl: unicornIconUrl, iconName: unicornIconName, isLoading: unicornIconLoading } = useCachedIcon('!CO-UNI.gif');
+
   // Icon mapping for "Who are you?" choices
   const iconMap: Record<string, string> = {
-    'Unicorn': unicornIcon,
+    'Unicorn': unicornIconUrl || unicornIcon,
     'Elephant': elephantIcon, 
     'Eagle': eagleIcon,
     'Important Person': vipIcon,
@@ -208,11 +212,22 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
             {/* Dynamic icon display after selection */}
             {formData.whoAreYou && (
               <div className="absolute -bottom-8 right-0 flex items-center">
-                <img 
-                  src={iconMap[formData.whoAreYou]} 
-                  alt={`${formData.whoAreYou} icon`}
-                  className="w-14 h-14 object-contain"
-                />
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <img 
+                        src={iconMap[formData.whoAreYou]} 
+                        alt={`${formData.whoAreYou} icon`}
+                        className="w-10 h-10 object-contain"
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-amber-50 border border-amber-200 shadow-md">
+                      <p className="font-fun font-bold text-[21px]">
+                        {formData.whoAreYou === 'Unicorn' && unicornIconName ? unicornIconName : formData.whoAreYou}
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             )}
           </div>
