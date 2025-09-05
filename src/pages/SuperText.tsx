@@ -358,7 +358,7 @@ const SuperText: React.FC = () => {
   }, []);
   return <SecureAdminRoute>
       <Helmet>
-        <title>Super Text Manager</title>
+        <title>Text Edit</title>
       </Helmet>
       <ConditionalEditorStyles category={formData.category} />
       

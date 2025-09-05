@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import AdminStoriesTable from "./AdminStoriesTable";
 
 import { useUserRole } from "@/hooks/useUserRole";
@@ -28,7 +29,9 @@ const AdminStories = () => {
 
 
   return (
-    <div className="space-y-4">
+    <>
+      <Helmet><title>Library</title></Helmet>
+      <div className="space-y-4">
       <AdminStoriesTable
         onEditStory={handleEditStory}
         onCreateStory={handleCreateStory}
@@ -36,7 +39,8 @@ const AdminStories = () => {
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
       />
-    </div>
+      </div>
+    </>
   );
 };
 

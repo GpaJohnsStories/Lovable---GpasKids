@@ -1,9 +1,12 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const OverviewAdminPanel: React.FC = () => {
   return (
-    <Card>
+    <>
+      <Helmet><title>Dashboard</title></Helmet>
+      <Card>
       <CardHeader>
         <CardTitle>Overview Administration</CardTitle>
       </CardHeader>
@@ -11,5 +14,6 @@ export const OverviewAdminPanel: React.FC = () => {
         <p>System overview and statistics will be displayed here.</p>
       </CardContent>
     </Card>
+    </>
   );
 };

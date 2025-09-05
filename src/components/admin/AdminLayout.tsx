@@ -1,6 +1,7 @@
 
 import React from "react";
 import { Outlet } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import AdminHeaderBanner from "./AdminHeaderBanner";
 import ScrollToTop from "@/components/ScrollToTop";
 
@@ -11,6 +12,7 @@ interface AdminLayoutWithHeaderBannerProps {
 const AdminLayoutWithHeaderBanner = ({ children }: AdminLayoutWithHeaderBannerProps) => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-amber-100">
+      <Helmet titleTemplate="GpasKids | %s" defaultTitle="GpasKids | Admin" />
       {/* Header Banner */}
       <AdminHeaderBanner />
 

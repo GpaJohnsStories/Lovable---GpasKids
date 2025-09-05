@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import IconLibraryDisplay from "./IconLibraryDisplay";
 import ColorReferenceTable from "./reference/ColorReferenceTable";
 import IconUploadSection from "./reference/IconUploadSection";
@@ -40,7 +41,9 @@ const ReferenceDashboard = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <>
+      <Helmet><title>Reference</title></Helmet>
+      <div className="space-y-8">
       <div>
         <h2 className="text-3xl font-bold text-black mb-2 font-system">
           Admin Reference
@@ -89,7 +92,8 @@ const ReferenceDashboard = () => {
       >
         Top
       </Button>
-    </div>
+      </div>
+    </>
   );
 };
 

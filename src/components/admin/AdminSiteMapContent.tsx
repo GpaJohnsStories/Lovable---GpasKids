@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -78,7 +79,9 @@ const AdminSiteMapContent = () => {
   );
 
   return (
-    <div className="space-y-8">
+    <>
+      <Helmet><title>Site Map</title></Helmet>
+      <div className="space-y-8">
       <div>
         <h2 className="text-3xl font-bold text-black mb-2 font-system">
           Site Map
@@ -145,6 +148,7 @@ const AdminSiteMapContent = () => {
         </CardContent>
       </Card>
     </div>
+    </>
   );
 };
 
