@@ -127,11 +127,12 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation
-    if (!formData.name.trim() || !formData.description.trim()) {
+    // Validation - require at least 3 words in description
+    const wordCount = formData.description.trim().split(/\s+/).filter(word => word.length > 0).length;
+    if (wordCount < 3) {
       toast({
-        title: "Missing information",
-        description: "Please fill in your name and description.",
+        title: "Please add more details",
+        description: "Please write at least a few words to describe your message.",
         variant: "destructive"
       });
       return;
