@@ -25,7 +25,7 @@ const ThankYouModal: React.FC<ThankYouModalProps> = ({ isOpen, onClose, amount, 
           </div>
           
           <DialogTitle className="text-2xl font-bold text-orange-800">
-            Thank You So Much!
+            Thank you for your message.
           </DialogTitle>
           
           <DialogDescription className="text-lg text-gray-700 space-y-3">
