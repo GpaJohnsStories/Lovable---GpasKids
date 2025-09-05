@@ -156,7 +156,6 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   return <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto">
         <DialogHeader className="text-left">
-          <DialogTitle className="text-lg font-semibold">Report a Problem</DialogTitle>
         </DialogHeader>
 
         {/* Webtext section - placeholder for SYS-CGJ */}
