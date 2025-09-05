@@ -253,7 +253,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
         style={{ borderColor }}
       >
         {/* Audio Button - Always visible in top right corner */}
-        <div className="absolute top-4 right-4 z-[5]">
+        <div className="absolute top-1 right-1 z-[5]">
           <AudioButton code={webtextCode} onClick={() => setShowSuperAV(true)} />
         </div>
 

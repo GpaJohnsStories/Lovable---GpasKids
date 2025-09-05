@@ -77,7 +77,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
       <>
         <div id={id} className="bg-blue-100 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
           {/* Peppermint Audio Button - Always visible in top right corner */}
-          <div className="absolute top-4 right-4 z-[5] flex items-center gap-2">
+          <div className="absolute top-1 right-1 z-[5] flex items-center gap-2">
             <div className="text-base sm:text-lg font-handwritten font-bold text-green-800">
               Click to listen or change word size
             </div>
@@ -189,7 +189,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         style={{ borderColor }}
       >
         {/* Audio Button - Always visible in top right corner */}
-        <div className="absolute top-4 right-4 z-[5]">
+        <div className="absolute top-1 right-1 z-[5]">
           <AudioButton code={webtextCode} onClick={() => setShowSuperAV(true)} />
         </div>
 
