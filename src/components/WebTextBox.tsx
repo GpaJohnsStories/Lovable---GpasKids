@@ -258,7 +258,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         </div>
 
         {/* Bottom section with return button and webtext code */}
-        <div className="flex justify-between items-end mt-6">
+        <div className="flex justify-between items-end mt-2">
           {showReturn && (
             <button
               onClick={onReturnClick}
