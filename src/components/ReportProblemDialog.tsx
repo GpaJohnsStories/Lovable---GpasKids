@@ -261,7 +261,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
             <Label className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Who are you?</Label>
             <RadioGroup value={formData.whoAreYou} onValueChange={value => handleInputChange('whoAreYou', value)} className="mt-2">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {['Unicorn', 'Elephant', 'Eagle'].map(option => 
                     <div key={option} className="flex items-center space-x-2">
                       <RadioGroupItem value={option} id={option} />
@@ -273,7 +273,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                     <Label htmlFor="Important Person" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Important Person</Label>
                   </div>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {['Giraffe', 'Reindeer'].map(option => 
                     <div key={option} className="flex items-center space-x-2">
                       <RadioGroupItem value={option} id={option} />
