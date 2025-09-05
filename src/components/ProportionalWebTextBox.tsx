@@ -154,7 +154,13 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
       
       toast({
         description: "Buddy's secret copied to clipboard. Now paste it into email \"Send To\" box.",
-        variant: "default"
+        variant: "default",
+        className: "bg-emerald-500 text-white border-none",
+        style: {
+          fontFamily: 'Kalam, cursive',
+          fontWeight: 'bold',
+          fontSize: '21px'
+        }
       });
       
     } catch (error) {
