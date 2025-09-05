@@ -96,7 +96,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <HelmetProvider>
-            <Helmet defaultTitle="GpasKids.com | Stories & More for Kids" titleTemplate="%s" />
+            <Helmet defaultTitle="GpasKids.com | Stories & More for Kids" titleTemplate="%s | GpasKids.com" />
             <HelpProvider>
               <IconCacheProvider>
                 <CustomTooltipProvider>
