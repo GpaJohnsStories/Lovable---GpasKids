@@ -1,5 +1,25 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { containsBadWord } from "../../../src/utils/profanity.ts";
+
+// Profanity checking - copied from src/utils/profanity.ts since edge functions can't import from src
+const badWords = [
+  'poop', 'butt', 'fart', 'stupid', 'dumb', 'hate',
+  // Profanity
+  'fuck', 'shit', 'ass', 'asshole', 'bitch', 'damn', 'dick', 'cunt', 'hell',
+  // Slurs
+  'nigger', 'nigga', 'retard', 'faggot', 'tranny', 'kike', 'gook', 'spic', 'paki', 'chink',
+  // Sexually suggestive
+  'penis', 'vagina',
+  // General insults
+  'idiot', 'moron', 'loser', 'pathetic', 'jerk', 'creep', 'weakling', 'coward',
+];
+
+const containsBadWord = (text: string): boolean => {
+  if (!text) return false;
+  
+  // Use word boundaries to match only complete words
+  const regex = new RegExp(`\\b(${badWords.join('|')})\\b`, 'gi');
+  return regex.test(text);
+};
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
