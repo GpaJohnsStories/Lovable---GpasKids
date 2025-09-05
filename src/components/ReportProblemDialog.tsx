@@ -44,27 +44,35 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   // Load exit icon
   const { iconUrl: exitIconUrl, isLoading: exitIconLoading } = useCachedIcon('!CO-XIT.gif');
 
-  // Load Unicorn icon from icon library
-  const { iconUrl: unicornIconUrl, iconName: unicornIconName, isLoading: unicornIconLoading } = useCachedIcon('!CO-UNI.gif');
-  
-  // Load remaining icons from icon library
-  const { iconUrl: elephantIconUrl } = useCachedIcon('!CO-ELE.gif');
-  const { iconUrl: eagleIconUrl } = useCachedIcon('!CO-EGL.gif');
-  const { iconUrl: vipIconUrl } = useCachedIcon('!CO-VIP.gif');
-  const { iconUrl: giraffeIconUrl } = useCachedIcon('!CO-GRF.gif');
-  const { iconUrl: reindeerIconUrl } = useCachedIcon('!CO-RDR.gif');
-  const { iconUrl: questionIconUrl } = useCachedIcon('!CO-WRU.gif');
+  // Central WHO_META mapping for all options
+  const WHO_META = [
+    { value: 'Unicorn', iconPath: '!CO-UNI.gif', fallbackIcon: unicornIcon },
+    { value: 'Elephant', iconPath: '!CO-ELE.gif', fallbackIcon: elephantIcon },
+    { value: 'Eagle', iconPath: '!CO-EGL.gif', fallbackIcon: eagleIcon },
+    { value: 'Important Person', iconPath: '!CO-VIP.gif', fallbackIcon: vipIcon },
+    { value: 'Giraffe', iconPath: '!CO-GRF.gif', fallbackIcon: giraffeIcon },
+    { value: 'Reindeer', iconPath: '!CO-RDR.gif', fallbackIcon: reindeerIcon },
+    { value: 'Rather not say', iconPath: '!CO-WRU.gif', fallbackIcon: questionIcon }
+  ];
 
-  // Icon mapping for "Who are you?" choices
-  const iconMap: Record<string, string> = {
-    'Unicorn': unicornIconUrl || unicornIcon,
-    'Elephant': elephantIconUrl || elephantIcon, 
-    'Eagle': eagleIconUrl || eagleIcon,
-    'Important Person': vipIconUrl || vipIcon,
-    'Giraffe': giraffeIconUrl || giraffeIcon,
-    'Reindeer': reindeerIconUrl || reindeerIcon,
-    'Rather not say': questionIconUrl || questionIcon
-  };
+  // Load all icons using central mapping
+  const iconData = WHO_META.map(meta => {
+    const { iconUrl, iconName, isLoading } = useCachedIcon(meta.iconPath);
+    return {
+      ...meta,
+      iconUrl: iconUrl || meta.fallbackIcon,
+      tooltip: iconName || meta.value,
+      isLoading
+    };
+  });
+
+  // Create maps for easy lookup
+  const iconMap: Record<string, string> = {};
+  const tooltipMap: Record<string, string> = {};
+  iconData.forEach(item => {
+    iconMap[item.value] = item.iconUrl;
+    tooltipMap[item.value] = item.tooltip;
+  });
   useEffect(() => {
     if (isOpen) {
       setStartTime(Date.now());
@@ -240,7 +248,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                     </TooltipTrigger>
                     <TooltipContent className="bg-amber-50 border border-amber-200 shadow-md text-amber-900">
                       <p className="font-fun font-bold text-[21px]">
-                        {formData.whoAreYou === 'Unicorn' && unicornIconName ? unicornIconName : formData.whoAreYou}
+                        {tooltipMap[formData.whoAreYou]}
                       </p>
                     </TooltipContent>
                   </Tooltip>

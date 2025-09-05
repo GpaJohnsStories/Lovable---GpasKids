@@ -4,6 +4,7 @@ import { MessageCircle } from "lucide-react";
 import { ReportProblemDialog } from './ReportProblemDialog';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { iconCacheService } from '@/services/IconCacheService';
 
 interface ReportProblemButtonProps {
   inline?: boolean;
@@ -13,12 +14,22 @@ const ReportProblemButton: React.FC<ReportProblemButtonProps> = ({ inline = fals
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { iconUrl, isLoading } = useCachedIcon('!CO-CUS.gif');
 
+  const handleOpenDialog = () => {
+    // Clear cache for all report dialog icons to ensure fresh tooltips
+    const reportDialogIcons = [
+      '!CO-UNI.gif', '!CO-ELE.gif', '!CO-EGL.gif', 
+      '!CO-VIP.gif', '!CO-GRF.gif', '!CO-RDR.gif', '!CO-WRU.gif'
+    ];
+    iconCacheService.clearSpecificIcons(reportDialogIcons);
+    setIsDialogOpen(true);
+  };
+
   const buttonContent = (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            onClick={() => setIsDialogOpen(true)}
+            onClick={handleOpenDialog}
             variant="link"
             className="p-0 m-0 bg-transparent hover:bg-transparent border-none shadow-none h-auto w-auto focus:ring-0 focus:outline-none no-underline hover:no-underline cursor-pointer"
             aria-label="Contact us"
@@ -56,10 +67,12 @@ const ReportProblemButton: React.FC<ReportProblemButtonProps> = ({ inline = fals
         </div>
       )}
 
-      <ReportProblemDialog 
-        isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-      />
+      {isDialogOpen && (
+        <ReportProblemDialog 
+          isOpen={isDialogOpen} 
+          onClose={() => setIsDialogOpen(false)} 
+        />
+      )}
     </>
   );
 };
