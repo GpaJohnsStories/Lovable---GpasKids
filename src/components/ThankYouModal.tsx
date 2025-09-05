@@ -24,7 +24,7 @@ const ThankYouModal: React.FC<ThankYouModalProps> = ({ isOpen, onClose, amount, 
             </div>
           </div>
           
-          <DialogTitle className="text-2xl font-bold text-orange-800">
+          <DialogTitle className="font-handwritten text-[#0B3D91] text-3xl font-bold italic text-center">
             Thank you for your message.
           </DialogTitle>
           
