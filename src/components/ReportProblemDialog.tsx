@@ -158,6 +158,15 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
     setShowThankYou(false);
     onClose();
     setProfanityError('');
+    // Clear all form data for security
+    setFormData({
+      name: '',
+      email: '',
+      subject: '',
+      description: '',
+      whoAreYou: '',
+      pageUrl: window.location.href
+    });
   };
   if (showThankYou) {
     return <ThankYouModal isOpen={isOpen} onClose={handleClose} amount="your message" customMessage="Thank you for reaching out! We'll get back to you soon." />;
