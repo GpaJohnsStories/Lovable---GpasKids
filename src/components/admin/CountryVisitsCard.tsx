@@ -185,14 +185,9 @@ export const CountryVisitsCard = () => {
   return (
     <Card className="border-2 border-blue-200">
       <CardHeader>
-        <CardTitle className="flex items-center justify-between text-blue-700">
-          <div className="flex items-center gap-2">
-            <Globe className="h-5 w-5" />
-            Country Visits
-          </div>
-          <Badge variant="outline" className="text-blue-600 border-blue-300">
-            {totalRolling24} total (24mo)
-          </Badge>
+        <CardTitle className="flex items-center gap-2 text-blue-700">
+          <Globe className="h-5 w-5" />
+          Country Visits
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -215,8 +210,11 @@ export const CountryVisitsCard = () => {
 
         {/* Rolling 24 months */}
         <div>
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">
-            Top Countries (Rolling 24 Months)
+          <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center justify-between">
+            <span>Top Countries (Rolling 24 Months)</span>
+            <Badge variant="outline" className="text-blue-600 border-blue-300">
+              {totalRolling24} total (24mo)
+            </Badge>
           </h4>
           {renderCountryTable(topCountries, false)}
         </div>
