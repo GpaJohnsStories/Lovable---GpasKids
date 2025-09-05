@@ -383,7 +383,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
               <img
                 src={secretEmailIconUrl}
                 alt={secretEmailIconName || 'Secret email button'}
-                className="w-[60px] h-[60px] object-contain"
+                className="w-[70px] h-[70px] object-contain"
               />
             </button>
           )}
