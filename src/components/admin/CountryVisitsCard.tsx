@@ -140,13 +140,13 @@ export const CountryVisitsCard = () => {
             <TableRow className="border-b border-amber-400">
               <TableHead className="w-12 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
               <TableHead className="w-32 font-bold h-8 border-r border-amber-300">Country</TableHead>
-              <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-400">Count</TableHead>
+              <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-600">Count</TableHead>
               <TableHead className="w-12 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
               <TableHead className="w-32 font-bold h-8 border-r border-amber-300">Country</TableHead>
-              <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-400">Count</TableHead>
+              <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-600">Count</TableHead>
               <TableHead className="w-12 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
               <TableHead className="w-32 font-bold h-8 border-r border-amber-300">Country</TableHead>
-              <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-400">Count</TableHead>
+              <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-600">Count</TableHead>
               <TableHead className="w-12 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
               <TableHead className="w-32 font-bold h-8 border-r border-amber-300">Country</TableHead>
               <TableHead className="w-16 text-center font-bold h-8">Count</TableHead>
@@ -154,21 +154,21 @@ export const CountryVisitsCard = () => {
           </TableHeader>
           <TableBody>
             {rows.map((row, rowIndex) => (
-              <TableRow key={rowIndex} className="border-b border-amber-200 h-6">
-                {row.map((country, colIndex) => (
-                  <React.Fragment key={colIndex}>
-                    <TableCell className={`text-center font-mono text-xs py-1 h-6 ${colIndex < 3 && colIndex !== 2 ? 'border-r border-amber-200' : colIndex === 2 ? 'border-r border-amber-300' : ''}`}>
-                      {country?.code || '\u00A0'}
-                    </TableCell>
-                    <TableCell className={`text-xs py-1 h-6 ${colIndex < 3 && colIndex !== 2 ? 'border-r border-amber-200' : colIndex === 2 ? 'border-r border-amber-300' : ''}`}>
-                      {country?.name || '\u00A0'}
-                    </TableCell>
-                    <TableCell className={`text-center text-xs font-semibold py-1 h-6 ${colIndex < 3 ? 'border-r border-amber-300' : ''}`}>
-                      {country?.count || '\u00A0'}
-                    </TableCell>
-                  </React.Fragment>
-                ))}
-              </TableRow>
+            <TableRow key={rowIndex} className="border-b border-amber-200 h-6">
+              {row.map((country, colIndex) => (
+                <React.Fragment key={colIndex}>
+                  <TableCell className="text-center font-mono text-xs py-1 h-6 border-r border-amber-200">
+                    {country?.code || '\u00A0'}
+                  </TableCell>
+                  <TableCell className="text-xs py-1 h-6 border-r border-amber-200">
+                    {country?.name || '\u00A0'}
+                  </TableCell>
+                  <TableCell className={`text-center text-xs font-semibold py-1 h-6 ${colIndex < 3 ? 'border-r border-amber-600' : ''}`}>
+                    {country?.count || '\u00A0'}
+                  </TableCell>
+                </React.Fragment>
+              ))}
+            </TableRow>
             ))}
           </TableBody>
         </Table>
