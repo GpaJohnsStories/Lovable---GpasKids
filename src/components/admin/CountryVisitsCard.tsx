@@ -1,9 +1,11 @@
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Globe, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface CountryVisit {
   year: number;
@@ -95,10 +97,82 @@ export const CountryVisitsCard = () => {
 
   const topCountries = Object.values(countryTotals)
     .sort((a, b) => b.total_visits - a.total_visits)
-    .slice(0, 10);
+    .slice(0, 84); // Up to 84 countries to fill 21 rows x 4 columns
+
+  // Sort current month visits by count
+  const sortedCurrentMonth = [...currentMonthVisits]
+    .sort((a, b) => b.visit_count - a.visit_count)
+    .slice(0, 84); // Up to 84 countries to fill 21 rows x 4 columns
 
   const totalCurrentMonth = currentMonthVisits.reduce((sum, visit) => sum + visit.visit_count, 0);
   const totalRolling24 = topCountries.reduce((sum, country) => sum + country.total_visits, 0);
+
+  // Helper function to render country table
+  const renderCountryTable = (countries: any[], isCurrentMonth = false) => {
+    if (countries.length === 0) {
+      return <p className="text-sm text-gray-500 italic">No data available</p>;
+    }
+
+    // Create 21 rows with 4 columns each (3 data columns per section)
+    const rows = [];
+    for (let i = 0; i < 21; i++) {
+      const row = [];
+      for (let j = 0; j < 4; j++) {
+        const index = i + (j * 21);
+        if (index < countries.length) {
+          const country = countries[index];
+          row.push({
+            code: country.country_code,
+            name: country.country_name,
+            count: isCurrentMonth ? country.visit_count : country.total_visits
+          });
+        } else {
+          row.push(null);
+        }
+      }
+      rows.push(row);
+    }
+
+    return (
+      <Table className="text-xs">
+        <TableHeader>
+          <TableRow className="border-b-2 border-amber-600">
+            <TableHead className="w-16 text-center font-bold">Code</TableHead>
+            <TableHead className="w-32 font-bold">Country</TableHead>
+            <TableHead className="w-16 text-center font-bold">Count</TableHead>
+            <TableHead className="w-16 text-center font-bold">Code</TableHead>
+            <TableHead className="w-32 font-bold">Country</TableHead>
+            <TableHead className="w-16 text-center font-bold">Count</TableHead>
+            <TableHead className="w-16 text-center font-bold">Code</TableHead>
+            <TableHead className="w-32 font-bold">Country</TableHead>
+            <TableHead className="w-16 text-center font-bold">Count</TableHead>
+            <TableHead className="w-16 text-center font-bold">Code</TableHead>
+            <TableHead className="w-32 font-bold">Country</TableHead>
+            <TableHead className="w-16 text-center font-bold">Count</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map((row, rowIndex) => (
+            <TableRow key={rowIndex} className="border-b border-amber-300">
+              {row.map((country, colIndex) => (
+                <React.Fragment key={colIndex}>
+                  <TableCell className="text-center font-mono text-xs">
+                    {country?.code || ''}
+                  </TableCell>
+                  <TableCell className="text-xs">
+                    {country?.name || ''}
+                  </TableCell>
+                  <TableCell className="text-center text-xs font-semibold">
+                    {country?.count || ''}
+                  </TableCell>
+                </React.Fragment>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    );
+  };
 
   return (
     <Card className="border-2 border-blue-200">
@@ -120,23 +194,7 @@ export const CountryVisitsCard = () => {
             <TrendingUp className="h-4 w-4" />
             This Month ({currentMonth}/{currentYear}) - {totalCurrentMonth} visits
           </h4>
-          {currentMonthVisits.length > 0 ? (
-            <div className="space-y-2">
-              {currentMonthVisits.slice(0, 5).map((visit) => (
-                <div key={`${visit.country_code}-current`} className="flex justify-between items-center text-sm">
-                  <span className="flex items-center gap-2">
-                    <span className="font-mono text-xs text-gray-500 w-8">{visit.country_code}</span>
-                    <span>{visit.country_name}</span>
-                  </span>
-                  <Badge variant="secondary" className="text-xs">
-                    {visit.visit_count}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-gray-500 italic">No visits this month yet</p>
-          )}
+          {renderCountryTable(sortedCurrentMonth, true)}
         </div>
 
         {/* Rolling 24 months */}
@@ -144,23 +202,7 @@ export const CountryVisitsCard = () => {
           <h4 className="text-sm font-semibold text-gray-700 mb-3">
             Top Countries (Rolling 24 Months)
           </h4>
-          {topCountries.length > 0 ? (
-            <div className="space-y-2">
-              {topCountries.map((country) => (
-                <div key={`${country.country_code}-rolling`} className="flex justify-between items-center text-sm">
-                  <span className="flex items-center gap-2">
-                    <span className="font-mono text-xs text-gray-500 w-8">{country.country_code}</span>
-                    <span>{country.country_name}</span>
-                  </span>
-                  <Badge variant="outline" className="text-xs">
-                    {country.total_visits}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-gray-500 italic">No country data available</p>
-          )}
+          {renderCountryTable(topCountries, false)}
         </div>
       </CardContent>
     </Card>
