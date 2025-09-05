@@ -138,16 +138,16 @@ export const CountryVisitsCard = () => {
         <Table className="text-xs">
           <TableHeader>
             <TableRow className="border-b border-amber-400">
-              <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
+              <TableHead className="w-12 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
               <TableHead className="w-32 font-bold h-8 border-r border-amber-300">Country</TableHead>
               <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-400">Count</TableHead>
-              <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
+              <TableHead className="w-12 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
               <TableHead className="w-32 font-bold h-8 border-r border-amber-300">Country</TableHead>
               <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-400">Count</TableHead>
-              <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
+              <TableHead className="w-12 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
               <TableHead className="w-32 font-bold h-8 border-r border-amber-300">Country</TableHead>
               <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-400">Count</TableHead>
-              <TableHead className="w-16 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
+              <TableHead className="w-12 text-center font-bold h-8 border-r border-amber-300">Code</TableHead>
               <TableHead className="w-32 font-bold h-8 border-r border-amber-300">Country</TableHead>
               <TableHead className="w-16 text-center font-bold h-8">Count</TableHead>
             </TableRow>
