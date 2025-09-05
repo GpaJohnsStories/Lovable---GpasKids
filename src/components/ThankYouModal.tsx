@@ -28,20 +28,6 @@ const ThankYouModal: React.FC<ThankYouModalProps> = ({ isOpen, onClose, amount, 
             Thank you for your message.
           </DialogTitle>
           
-          <DialogDescription className="text-lg text-gray-700 space-y-3">
-            {customMessage ? (
-              <p>{customMessage}</p>
-            ) : (
-              <>
-                <p>
-                  Your generous donation of <span className="font-bold text-green-600">${amount}</span> means the world to Grandpa John and all the children who love these stories!
-                </p>
-                <p className="text-base">
-                  Your support helps keep these wonderful tales free and accessible for families everywhere.
-                </p>
-              </>
-            )}
-          </DialogDescription>
         </DialogHeader>
         
         <div className="flex flex-col items-center space-y-4 mt-6">
