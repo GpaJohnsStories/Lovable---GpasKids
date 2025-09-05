@@ -33,6 +33,7 @@ const IconLibraryDisplay = () => {
   const [replaceDialogOpen, setReplaceDialogOpen] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<IconLibraryItem | null>(null);
   const [newFile, setNewFile] = useState<File | null>(null);
+  const [newTooltip, setNewTooltip] = useState('');
   const [sortColumn, setSortColumn] = useState<SortColumn>('file_name_path');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [searchTerm, setSearchTerm] = useState('');
@@ -120,44 +121,61 @@ const IconLibraryDisplay = () => {
     },
   });
 
-  // Replace icon mutation
+  // Replace icon and/or tooltip mutation
   const replaceMutation = useMutation({
-    mutationFn: async ({ icon, file }: { icon: IconLibraryItem, file: File }) => {
-      const fileExt = file.name.split('.').pop();
-      const baseName = icon.file_name_path.split('.')[0];
-      const fileName = `${baseName}.${fileExt}`;
+    mutationFn: async ({ icon, file, tooltip }: { icon: IconLibraryItem, file?: File, tooltip?: string }) => {
+      let fileName = icon.file_name_path;
       
-      // Upload new file to storage (overwrite)
-      const { error: uploadError } = await supabase.storage
-        .from('icons')
-        .upload(fileName, file, {
-          cacheControl: '0', // Disable caching to force refresh
-          upsert: true
-        });
+      // Handle file replacement if provided
+      if (file) {
+        const fileExt = file.name.split('.').pop();
+        const baseName = icon.file_name_path.split('.')[0];
+        fileName = `${baseName}.${fileExt}`;
+        
+        // Upload new file to storage (overwrite)
+        const { error: uploadError } = await supabase.storage
+          .from('icons')
+          .upload(fileName, file, {
+            cacheControl: '0', // Disable caching to force refresh
+            upsert: true
+          });
 
-      if (uploadError) {
-        throw new Error(`Upload failed: ${uploadError.message}`);
-      }
-
-      // Update database record with new file path if extension changed
-      if (fileName !== icon.file_name_path) {
-        const { error: dbError } = await supabase
-          .from('icon_library')
-          .update({ file_name_path: fileName, updated_at: new Date().toISOString() })
-          .eq('file_name_path', icon.file_name_path);
-
-        if (dbError) {
-          throw new Error(`Database update failed: ${dbError.message}`);
+        if (uploadError) {
+          throw new Error(`Upload failed: ${uploadError.message}`);
         }
       }
 
-      return { icon, fileName };
+      // Prepare update data
+      const updateData: any = { updated_at: new Date().toISOString() };
+      
+      // Update file path if extension changed
+      if (fileName !== icon.file_name_path) {
+        updateData.file_name_path = fileName;
+      }
+      
+      // Update tooltip if provided
+      if (tooltip !== undefined) {
+        updateData.icon_name = tooltip;
+      }
+
+      // Update database record
+      const { error: dbError } = await supabase
+        .from('icon_library')
+        .update(updateData)
+        .eq('file_name_path', icon.file_name_path);
+
+      if (dbError) {
+        throw new Error(`Database update failed: ${dbError.message}`);
+      }
+
+      return { icon, fileName, tooltip };
     },
     onSuccess: (data) => {
-      toast.success(`Icon "${data.icon.icon_name}" replaced successfully!`);
+      toast.success(`Icon "${data.tooltip || data.icon.icon_name}" updated successfully!`);
       setReplaceDialogOpen(false);
       setSelectedIcon(null);
       setNewFile(null);
+      setNewTooltip('');
       queryClient.invalidateQueries({ queryKey: ['icon-library'] });
     },
     onError: (error) => {
@@ -177,29 +195,41 @@ const IconLibraryDisplay = () => {
 
   const handleReplace = (icon: IconLibraryItem) => {
     setSelectedIcon(icon);
+    setNewTooltip(icon.icon_name); // Pre-fill with current tooltip
     setReplaceDialogOpen(true);
   };
 
   const handleReplaceSubmit = () => {
-    if (!selectedIcon || !newFile) {
-      toast.error('Please select a file');
+    if (!selectedIcon) {
+      toast.error('No icon selected');
       return;
     }
 
-    // Validate file type
-    const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
-    if (!validTypes.includes(newFile.type)) {
-      toast.error('Please select a valid image file (PNG, JPG, JPEG, or SVG)');
-      return;
-    }
-    
-    // Validate file size (max 2MB)
-    if (newFile.size > 2 * 1024 * 1024) {
-      toast.error('File size must be less than 2MB');
+    // Validate tooltip is required
+    if (!newTooltip.trim()) {
+      toast.error('Tooltip is required');
       return;
     }
 
-    replaceMutation.mutate({ icon: selectedIcon, file: newFile });
+    // If file is provided, validate it
+    if (newFile) {
+      const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
+      if (!validTypes.includes(newFile.type)) {
+        toast.error('Please select a valid image file (PNG, JPG, JPEG, or SVG)');
+        return;
+      }
+      
+      if (newFile.size > 2 * 1024 * 1024) {
+        toast.error('File size must be less than 2MB');
+        return;
+      }
+    }
+
+    replaceMutation.mutate({ 
+      icon: selectedIcon, 
+      file: newFile || undefined, 
+      tooltip: newTooltip.trim() 
+    });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -493,11 +523,11 @@ const IconLibraryDisplay = () => {
           </Table>
         )}
 
-        {/* Replace Icon Dialog */}
+        {/* Edit Icon Dialog */}
         <Dialog open={replaceDialogOpen} onOpenChange={setReplaceDialogOpen}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Replace Icon</DialogTitle>
+              <DialogTitle>Edit Icon</DialogTitle>
             </DialogHeader>
             {selectedIcon && (
               <div className="space-y-4">
@@ -516,7 +546,22 @@ const IconLibraryDisplay = () => {
                  </div>
                 
                 <div>
-                  <Label htmlFor="replaceFile">New Icon File</Label>
+                  <Label htmlFor="icon-tooltip">Tooltip (shown on hover) *</Label>
+                  <Input
+                    id="icon-tooltip"
+                    type="text"
+                    value={newTooltip}
+                    onChange={(e) => setNewTooltip(e.target.value)}
+                    placeholder="Enter tooltip text"
+                    className="mt-1"
+                  />
+                  <p className="text-sm text-muted-foreground mt-1">
+                    This text appears when users hover over the icon
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="replaceFile">Replace Icon File (optional)</Label>
                   <Input
                     id="replaceFile"
                     type="file"
@@ -524,6 +569,9 @@ const IconLibraryDisplay = () => {
                     onChange={handleFileChange}
                     className="mt-1"
                   />
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Supports PNG, JPG, JPEG, SVG (max 2MB)
+                  </p>
                   {newFile && (
                     <p className="text-sm text-muted-foreground mt-1">
                       Selected: {newFile.name} ({(newFile.size / 1024).toFixed(1)} KB)
@@ -538,15 +586,16 @@ const IconLibraryDisplay = () => {
                       setReplaceDialogOpen(false);
                       setSelectedIcon(null);
                       setNewFile(null);
+                      setNewTooltip('');
                     }}
                   >
                     Cancel
                   </Button>
                   <Button
                     onClick={handleReplaceSubmit}
-                    disabled={!newFile || replaceMutation.isPending}
+                    disabled={!newTooltip.trim() || replaceMutation.isPending}
                   >
-                    {replaceMutation.isPending ? 'Replacing...' : 'Replace Icon'}
+                    {replaceMutation.isPending ? 'Saving...' : 'Save Changes'}
                   </Button>
                 </div>
               </div>
