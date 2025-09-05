@@ -95,7 +95,7 @@ const ToastTitle = React.forwardRef<
     className={cn(
       "text-sm font-semibold",
       "group-[.destructive]:font-bold group-[.destructive]:text-[21px] group-[.destructive]:font-['Arial']",
-      "group-[.emerald-toast]:text-[21px] group-[.emerald-toast]:font-bold group-[.emerald-toast]:font-kalam group-[.emerald-toast]:text-white group-[.emerald-toast]:leading-tight",
+      "group-[.emerald-toast]:text-[21px] group-[.emerald-toast]:font-bold group-[.emerald-toast]:font-kalam group-[.emerald-toast]:text-white group-[.emerald-toast]:leading-tight group-[.emerald-toast]:[text-shadow:_2px_2px_4px_rgba(0,0,0,0.8),_1px_1px_2px_rgba(0,0,0,0.9)]",
       className
     )}
     {...props}
@@ -112,7 +112,7 @@ const ToastDescription = React.forwardRef<
     className={cn(
       "text-sm opacity-90",
       "group-[.destructive]:font-bold group-[.destructive]:text-[21px] group-[.destructive]:font-['Arial'] group-[.destructive]:opacity-100",
-      "group-[.emerald-toast]:text-[21px] group-[.emerald-toast]:font-bold group-[.emerald-toast]:font-kalam group-[.emerald-toast]:text-white group-[.emerald-toast]:opacity-100 group-[.emerald-toast]:leading-tight",
+      "group-[.emerald-toast]:text-[21px] group-[.emerald-toast]:font-bold group-[.emerald-toast]:font-kalam group-[.emerald-toast]:text-white group-[.emerald-toast]:opacity-100 group-[.emerald-toast]:leading-tight group-[.emerald-toast]:[text-shadow:_2px_2px_4px_rgba(0,0,0,0.8),_1px_1px_2px_rgba(0,0,0,0.9)]",
       className
     )}
     {...props}
