@@ -49,11 +49,11 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   
   // Load remaining icons from icon library
   const { iconUrl: elephantIconUrl } = useCachedIcon('!CO-ELE.gif');
-  const { iconUrl: eagleIconUrl } = useCachedIcon('!CO-EAG.gif');
+  const { iconUrl: eagleIconUrl } = useCachedIcon('!CO-EGL.gif');
   const { iconUrl: vipIconUrl } = useCachedIcon('!CO-VIP.gif');
-  const { iconUrl: giraffeIconUrl } = useCachedIcon('!CO-GIR.gif');
-  const { iconUrl: reindeerIconUrl } = useCachedIcon('!CO-REI.gif');
-  const { iconUrl: questionIconUrl } = useCachedIcon('!CO-QUE.gif');
+  const { iconUrl: giraffeIconUrl } = useCachedIcon('!CO-GRF.gif');
+  const { iconUrl: reindeerIconUrl } = useCachedIcon('!CO-RDR.gif');
+  const { iconUrl: questionIconUrl } = useCachedIcon('!CO-WRU.gif');
 
   // Icon mapping for "Who are you?" choices
   const iconMap: Record<string, string> = {
