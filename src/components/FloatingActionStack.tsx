@@ -15,10 +15,7 @@ const FloatingActionStack = () => {
       <div className="-mb-[8px]">
         <ScrollToTop inline alwaysVisible />
       </div>
-      <div className="-mb-[2px]">
-        <BreakGuide inline />
-      </div>
-      <ReportProblemButton inline />
+      <BreakGuide inline />
     </div>
   );
 };

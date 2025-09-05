@@ -26,6 +26,17 @@ const Index = () => {
         <StorySection />
       </main>
       
+      {/* Contact Email Section - Mobile Width */}
+      <div className="container mx-auto px-4 pb-4 flex justify-center">
+        <div className="max-w-sm w-full">
+          <ProportionalWebTextBox 
+            webtextCode="SYS-CEM"
+            borderColor="#f97316"
+            backgroundColor="bg-orange-50"
+          />
+        </div>
+      </div>
+      
       <CookieFreeFooter />
     </div>
   );
