@@ -210,7 +210,7 @@ export const CountryVisitsCard = () => {
 
         {/* Rolling 24 months */}
         <div>
-          <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center justify-between">
+          <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
             <span>Top Countries (Rolling 24 Months)</span>
             <Badge variant="outline" className="text-blue-600 border-blue-300">
               {totalRolling24} total (24mo)
