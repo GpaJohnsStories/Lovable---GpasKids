@@ -42,22 +42,49 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
   const [startTime, setStartTime] = useState<number>(0);
 
   // Load exit icon
-  const { iconUrl: exitIconUrl, isLoading: exitIconLoading } = useCachedIcon('!CO-XIT.gif');
+  const {
+    iconUrl: exitIconUrl,
+    isLoading: exitIconLoading
+  } = useCachedIcon('!CO-XIT.gif');
 
   // Central WHO_META mapping for all options
-  const WHO_META = [
-    { value: 'Unicorn', iconPath: '!CO-UNI.gif', fallbackIcon: unicornIcon },
-    { value: 'Elephant', iconPath: '!CO-ELE.gif', fallbackIcon: elephantIcon },
-    { value: 'Eagle', iconPath: '!CO-EGL.gif', fallbackIcon: eagleIcon },
-    { value: 'Important Person', iconPath: '!CO-VIP.gif', fallbackIcon: vipIcon },
-    { value: 'Giraffe', iconPath: '!CO-GRF.gif', fallbackIcon: giraffeIcon },
-    { value: 'Reindeer', iconPath: '!CO-RDR.gif', fallbackIcon: reindeerIcon },
-    { value: 'Rather not say', iconPath: '!CO-WRU.gif', fallbackIcon: questionIcon }
-  ];
+  const WHO_META = [{
+    value: 'Unicorn',
+    iconPath: '!CO-UNI.gif',
+    fallbackIcon: unicornIcon
+  }, {
+    value: 'Elephant',
+    iconPath: '!CO-ELE.gif',
+    fallbackIcon: elephantIcon
+  }, {
+    value: 'Eagle',
+    iconPath: '!CO-EGL.gif',
+    fallbackIcon: eagleIcon
+  }, {
+    value: 'Important Person',
+    iconPath: '!CO-VIP.gif',
+    fallbackIcon: vipIcon
+  }, {
+    value: 'Giraffe',
+    iconPath: '!CO-GRF.gif',
+    fallbackIcon: giraffeIcon
+  }, {
+    value: 'Reindeer',
+    iconPath: '!CO-RDR.gif',
+    fallbackIcon: reindeerIcon
+  }, {
+    value: 'Rather not say',
+    iconPath: '!CO-WRU.gif',
+    fallbackIcon: questionIcon
+  }];
 
   // Load all icons using central mapping
   const iconData = WHO_META.map(meta => {
-    const { iconUrl, iconName, isLoading } = useCachedIcon(meta.iconPath);
+    const {
+      iconUrl,
+      iconName,
+      isLoading
+    } = useCachedIcon(meta.iconPath);
     return {
       ...meta,
       iconUrl: iconUrl || meta.fallbackIcon,
@@ -191,22 +218,8 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
       <DialogContent className="max-w-md mx-auto max-h-[90vh] overflow-y-auto [&>button]:hidden">
         {/* Custom close button with exit icon */}
         <div className="absolute top-2 right-2 z-20">
-          <button
-            onClick={handleClose}
-            className="flex items-center justify-center hover:opacity-80 transition-opacity"
-            aria-label="Close dialog"
-          >
-            {exitIconLoading ? (
-              <div className="w-[60px] h-[35px] bg-gray-200 animate-pulse rounded"></div>
-            ) : exitIconUrl ? (
-              <img 
-                src={exitIconUrl} 
-                alt="Exit" 
-                className="w-[60px] h-[35px] object-contain"
-              />
-            ) : (
-              <X className="w-6 h-6 text-gray-500" />
-            )}
+          <button onClick={handleClose} className="flex items-center justify-center hover:opacity-80 transition-opacity" aria-label="Close dialog">
+            {exitIconLoading ? <div className="w-[60px] h-[35px] bg-gray-200 animate-pulse rounded"></div> : exitIconUrl ? <img src={exitIconUrl} alt="Exit" className="w-[60px] h-[35px] object-contain" /> : <X className="w-6 h-6 text-gray-500" />}
           </button>
         </div>
         
@@ -220,31 +233,43 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="name" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Your Name (optional)</Label>
-            <Input id="name" value={formData.name} onChange={e => handleInputChange('name', e.target.value)} placeholder="What should we call you?" className="mt-1 text-[21px] font-normal border-2" style={{fontFamily: 'Arial, sans-serif', borderColor: '#f59e0b'}} />
+            <Label htmlFor="name" className="text-[21px] font-normal" style={{
+            fontFamily: 'Arial, sans-serif'
+          }}>Your Name (optional)</Label>
+            <Input id="name" value={formData.name} onChange={e => handleInputChange('name', e.target.value)} placeholder="What should we call you?" className="mt-1 text-[21px] font-normal border-2" style={{
+            fontFamily: 'Arial, sans-serif',
+            borderColor: '#f59e0b'
+          }} />
           </div>
 
           <div>
-            <Label htmlFor="email" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Email (optional)</Label>
-            <Input id="email" type="email" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} placeholder="Only if you want a reply" className="mt-1 text-[21px] font-normal border-2" style={{fontFamily: 'Arial, sans-serif', borderColor: '#f59e0b'}} />
+            <Label htmlFor="email" className="text-[21px] font-normal" style={{
+            fontFamily: 'Arial, sans-serif'
+          }}>Email (optional)</Label>
+            <Input id="email" type="email" value={formData.email} onChange={e => handleInputChange('email', e.target.value)} placeholder="Only if you want a reply" className="mt-1 text-[21px] font-normal border-2" style={{
+            fontFamily: 'Arial, sans-serif',
+            borderColor: '#f59e0b'
+          }} />
           </div>
 
 
           <div className="relative">
-            <Label htmlFor="description" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>What can we fix? How can we help?</Label>
-            <WordLimitedTextarea id="description" value={formData.description} onChange={e => handleInputChange('description', e.target.value)} placeholder="Write it all here" wordLimit={200} className="mt-1 min-h-[80px] text-[21px] font-normal border-2" style={{fontFamily: 'Arial, sans-serif', borderColor: '#f59e0b'}} />
+            <Label htmlFor="description" className="text-[21px] font-normal" style={{
+            fontFamily: 'Arial, sans-serif'
+          }}>What can we fix? How can we help?</Label>
+            <WordLimitedTextarea id="description" value={formData.description} onChange={e => handleInputChange('description', e.target.value)} placeholder="Write it all here" wordLimit={200} className="mt-1 min-h-[80px] text-[21px] font-normal border-2" style={{
+            fontFamily: 'Arial, sans-serif',
+            borderColor: '#f59e0b'
+          }} />
             
             {/* Dynamic icon display after selection */}
-            {formData.whoAreYou && (
-              <div className="absolute right-0 flex items-center" style={{bottom: '-38px'}}>
+            {formData.whoAreYou && <div className="absolute right-0 flex items-center" style={{
+            bottom: '-38px'
+          }}>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <img 
-                        src={iconMap[formData.whoAreYou]} 
-                        alt={`${formData.whoAreYou} icon`}
-                        className="w-16 h-16 object-contain"
-                      />
+                      <img src={iconMap[formData.whoAreYou]} alt={`${formData.whoAreYou} icon`} className="w-16 h-16 object-contain" />
                     </TooltipTrigger>
                     <TooltipContent className="bg-amber-50 border border-amber-200 shadow-md text-amber-900">
                       <p className="font-fun font-bold text-[21px]">
@@ -253,58 +278,48 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-              </div>
-            )}
+              </div>}
           </div>
 
           <div>
-            <Label className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Who are you?</Label>
+            <Label className="text-[21px] font-normal" style={{
+            fontFamily: 'Arial, sans-serif'
+          }}>What are you?</Label>
             <RadioGroup value={formData.whoAreYou} onValueChange={value => handleInputChange('whoAreYou', value)} className="mt-2">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-0.5">
-                  {['Unicorn', 'Elephant', 'Eagle'].map(option => 
-                    <div key={option} className="flex items-center space-x-2">
+                <div className="space-y-1">
+                  {['Unicorn', 'Elephant', 'Eagle'].map(option => <div key={option} className="flex items-center space-x-2">
                       <RadioGroupItem value={option} id={option} />
-                      <Label htmlFor={option} className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>{option}</Label>
-                    </div>
-                  )}
+                      <Label htmlFor={option} className="text-[21px] font-normal" style={{
+                    fontFamily: 'Arial, sans-serif'
+                  }}>{option}</Label>
+                    </div>)}
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="Important Person" id="Important Person" />
-                    <Label htmlFor="Important Person" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Important Person</Label>
+                    <Label htmlFor="Important Person" className="text-[21px] font-normal" style={{
+                    fontFamily: 'Arial, sans-serif'
+                  }}>Important Person</Label>
                   </div>
                 </div>
-                <div className="space-y-0.5">
-                  {['Giraffe', 'Reindeer'].map(option => 
-                    <div key={option} className="flex items-center space-x-2">
+                <div className="space-y-1">
+                  {['Giraffe', 'Reindeer'].map(option => <div key={option} className="flex items-center space-x-2">
                       <RadioGroupItem value={option} id={option} />
-                      <Label htmlFor={option} className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>{option}</Label>
-                    </div>
-                  )}
+                      <Label htmlFor={option} className="text-[21px] font-normal" style={{
+                    fontFamily: 'Arial, sans-serif'
+                  }}>{option}</Label>
+                    </div>)}
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="Rather not say" id="Rather not say" />
-                    <Label htmlFor="Rather not say" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Rather not say</Label>
+                    <Label htmlFor="Rather not say" className="text-[21px] font-normal" style={{
+                    fontFamily: 'Arial, sans-serif'
+                  }}>Rather not say</Label>
                   </div>
-                  <div className="flex justify-end space-x-3 pt-8 pb-4">
-                    <Button 
-                      type="button" 
-                      variant="default" 
-                      onClick={handleClose} 
-                      disabled={isSubmitting}
-                      className="min-h-[70px] py-4 text-[21px] font-bold font-fun text-white rounded-full px-6 shadow-[0_6px_0_#C2410C,0_8px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_0_#C2410C,0_6px_6px_rgba(0,0,0,0.3)] active:shadow-[0_2px_0_#C2410C,0_3px_3px_rgba(0,0,0,0.3)] active:translate-y-[2px] transform transition-all duration-150 ease-in-out"
-                    >
+                  <div className="flex justify-end space-x-3 pt-2">
+                    <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>
                       Cancel
                     </Button>
-                    <Button 
-                      type="submit" 
-                      variant="successPill"
-                      disabled={isSubmitting || !!profanityError}
-                      className="min-h-[70px] py-4"
-                    >
-                      {isSubmitting ? 'Sending...' : (
-                        <>
-                          Send Message<br />to Gpa John
-                        </>
-                      )}
+                    <Button type="submit" disabled={isSubmitting || !!profanityError} className="bg-primary hover:bg-primary/90">
+                      {isSubmitting ? 'Sending...' : 'Send Report'}
                     </Button>
                   </div>
                 </div>
