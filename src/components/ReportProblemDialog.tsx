@@ -287,7 +287,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
           }}>What are you?</Label>
             <RadioGroup value={formData.whoAreYou} onValueChange={value => handleInputChange('whoAreYou', value)} className="mt-2">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   {['Unicorn', 'Elephant', 'Eagle'].map(option => <div key={option} className="flex items-center space-x-2">
                       <RadioGroupItem value={option} id={option} />
                       <Label htmlFor={option} className="text-[21px] font-normal" style={{
@@ -301,7 +301,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                   }}>Important Person</Label>
                   </div>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   {['Giraffe', 'Reindeer'].map(option => <div key={option} className="flex items-center space-x-2">
                       <RadioGroupItem value={option} id={option} />
                       <Label htmlFor={option} className="text-[21px] font-normal" style={{
@@ -314,19 +314,20 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                     fontFamily: 'Arial, sans-serif'
                   }}>Rather not say</Label>
                   </div>
-                  <div className="flex justify-end space-x-3 pt-2">
-                    <Button type="button" variant="outline" onClick={handleClose} disabled={isSubmitting}>
-                      Cancel
-                    </Button>
-                    <Button type="submit" disabled={isSubmitting || !!profanityError} className="bg-primary hover:bg-primary/90">
-                      {isSubmitting ? 'Sending...' : 'Send Report'}
-                    </Button>
-                  </div>
                 </div>
               </div>
             </RadioGroup>
           </div>
 
+          {/* Full-width button section */}
+          <div className="w-full flex justify-center space-x-4 pt-8 pb-4">
+            <Button type="button" variant="orangePill" onClick={handleClose} disabled={isSubmitting}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="successPill" disabled={isSubmitting || !!profanityError}>
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </Button>
+          </div>
 
           {profanityError && <div className="p-3 bg-red-50 border border-red-200 rounded-md">
               <div className="flex items-center space-x-2">
