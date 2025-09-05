@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { extractHeaderTokens, createSafeHeaderHtml } from '@/utils/headerTokens';
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
+import { toast } from '@/hooks/use-toast';
 
 interface ProportionalWebTextBoxProps {
   webtextCode: string;
@@ -35,9 +36,13 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   
   // Define isSysWel first, before using it
   const isSysWel = webtextCode === "SYS-WEL";
+  const isSysCem = webtextCode === "SYS-CEM";
   
   // Load Buddy's new icon for SYS-WEL
   const { iconUrl: buddyIconUrl, iconName: buddyIconName, isLoading: buddyIconLoading } = useCachedIcon(isSysWel ? '!CO-BG1.jpg' : null);
+  
+  // Load the secret email button icon for SYS-CEM
+  const { iconUrl: secretEmailIconUrl, iconName: secretEmailIconName, isLoading: secretEmailIconLoading } = useCachedIcon(isSysCem ? '!CO-CEZ.gif' : null);
   
   // Audio controls state for peppermint button
   const [showSuperAV, setShowSuperAV] = useState(false);
@@ -117,6 +122,50 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
       '--p-size': scale.p,
       '--p-line-height': scale.pLine,
     } as React.CSSProperties;
+  };
+
+  // Secret email copy functionality for SYS-CEM
+  const handleSecretEmailCopy = async () => {
+    try {
+      // Fetch SYS-CES webtext content
+      const sysCesData = await lookupStoryByCode('SYS-CES', true);
+      if (!sysCesData.story?.content) {
+        toast({
+          title: "Error",
+          description: "Could not retrieve secret email",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Decode the obfuscated email
+      let email = sysCesData.story.content;
+      // Remove all slashes
+      email = email.replace(/\//g, '');
+      // Replace "dot" with "."
+      email = email.replace(/dot/g, '.');
+      // Replace "at" with "@"
+      email = email.replace(/at/g, '@');
+      // Clean up any extra whitespace
+      email = email.trim();
+
+      // Copy to clipboard
+      await navigator.clipboard.writeText(email);
+      
+      toast({
+        title: "Success!",
+        description: "Secret email copied to clipboard",
+        variant: "default"
+      });
+      
+    } catch (error) {
+      // Fallback if clipboard API fails
+      toast({
+        title: "Copy manually",
+        description: "Please manually copy: Contact Gpa John at gmail.com",
+        variant: "default"
+      });
+    }
   };
 
   // Special styling for SYS-WEL content
@@ -322,8 +371,28 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           <div className="clear-both"></div>
         </div>
 
-        {/* Bottom Right: Webtext Code */}
-        <div className="flex justify-end mt-6">
+        {/* Bottom section with webtext code and secret email button for SYS-CEM */}
+        <div className="flex justify-between items-end mt-6">
+          {/* Bottom Left: Secret Email Button for SYS-CEM */}
+          {isSysCem && secretEmailIconUrl && (
+            <button
+              onClick={handleSecretEmailCopy}
+              className="transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-xl bg-gradient-to-br from-yellow-400 to-yellow-600 p-1 border-2 border-yellow-700"
+              style={{
+                boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
+                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+              }}
+              title={secretEmailIconName || 'Copy secret email'}
+            >
+              <img
+                src={secretEmailIconUrl}
+                alt={secretEmailIconName || 'Secret email button'}
+                className="w-[75px] h-[75px] object-contain rounded border border-yellow-800"
+              />
+            </button>
+          )}
+          
+          {/* Bottom Right: Webtext Code */}
           <div className="bg-white/70 rounded px-3 py-1 text-sm font-mono text-amber-700 border border-amber-300">
             {webtextCode}
           </div>
