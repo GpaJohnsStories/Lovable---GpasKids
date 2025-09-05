@@ -31,11 +31,10 @@ const ThankYouModal: React.FC<ThankYouModalProps> = ({ isOpen, onClose, amount, 
         </DialogHeader>
         
         <div className="flex flex-col items-center space-y-4 mt-6">
-          <div className="bg-white/60 p-4 rounded-lg border border-orange-200 text-center">
-            <p className="text-sm text-gray-600 italic">
-              "Every story shared is a gift of love and imagination to a child's heart."
-            </p>
-            <p className="text-xs text-gray-500 mt-1">- Grandpa John</p>
+          <div className="text-center">
+            <span className="font-handwritten text-[#0B3D91] text-3xl font-bold italic">
+              Grandpa John
+            </span>
           </div>
           
           <Button 
