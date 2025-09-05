@@ -50,7 +50,7 @@ export const CommentPopupDialog: React.FC<CommentPopupDialogProps> = ({
     // Check for profanity in text fields
     if (['name', 'email', 'subject', 'message'].includes(field) && value) {
       if (containsBadWord(value)) {
-        setProfanityError(`Please keep your ${field} appropriate for all audiences.`);
+        setProfanityError('Oops! It looks like your message used words not allowed here. Please say it a little more kindly? Thanks, Buddy!');
       } else {
         setProfanityError('');
       }
@@ -87,7 +87,7 @@ export const CommentPopupDialog: React.FC<CommentPopupDialogProps> = ({
       .join(' ');
     
     if (containsBadWord(allText)) {
-      setProfanityError('Please keep your message appropriate for all audiences.');
+      setProfanityError('Oops! It looks like your message used words not allowed here. Please say it a little more kindly? Thanks, Buddy!');
       return;
     }
 
