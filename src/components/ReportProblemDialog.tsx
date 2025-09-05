@@ -284,7 +284,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                     <RadioGroupItem value="Rather not say" id="Rather not say" />
                     <Label htmlFor="Rather not say" className="text-[21px] font-normal" style={{fontFamily: 'Arial, sans-serif'}}>Rather not say</Label>
                   </div>
-                  <div className="flex justify-end space-x-3 pt-2">
+                  <div className="flex justify-end space-x-3 pt-8 pb-4">
                     <Button 
                       type="button" 
                       variant="default" 
