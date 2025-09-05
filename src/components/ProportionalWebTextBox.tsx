@@ -377,10 +377,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           {isSysCem && secretEmailIconUrl && (
             <button
               onClick={handleSecretEmailCopy}
-              className="w-[75px] h-[75px] rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 border-2 border-yellow-700 transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center justify-center"
-              style={{
-                boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)'
-              }}
+              className="w-[75px] h-[75px] transform transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center"
               title={secretEmailIconName || 'Copy secret email'}
             >
               <img
