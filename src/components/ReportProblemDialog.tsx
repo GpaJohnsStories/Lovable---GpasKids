@@ -290,7 +290,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                       variant="default" 
                       onClick={handleClose} 
                       disabled={isSubmitting}
-                      className="min-h-[70px] py-4 text-[21px] font-bold font-fun text-white"
+                      className="min-h-[70px] py-4 text-[21px] font-bold font-fun text-white rounded-full px-6 shadow-[0_6px_0_#C2410C,0_8px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_4px_0_#C2410C,0_6px_6px_rgba(0,0,0,0.3)] active:shadow-[0_2px_0_#C2410C,0_3px_3px_rgba(0,0,0,0.3)] active:translate-y-[2px] transform transition-all duration-150 ease-in-out"
                     >
                       Cancel
                     </Button>
