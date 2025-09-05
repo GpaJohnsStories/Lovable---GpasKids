@@ -166,6 +166,7 @@ const SuperText: React.FC = () => {
   }, [searchParams, lookupStoryByCode, populateFormWithStory]);
   const clearForm = useCallback(() => {
     // Reset form fields to initial values (no title field needed)
+    handleInputChange('id', ''); // CRITICAL: Clear the ID to prevent updating existing stories
     handleInputChange('content', '');
     handleInputChange('tagline', '');
     handleInputChange('excerpt', '');
@@ -261,6 +262,15 @@ const SuperText: React.FC = () => {
         toast.error("Please fill in Story Code and Content.");
         return;
       }
+
+      // SAFEGUARD: If story_code changed but id is still present, treat as new story
+      let formDataToSave = formData;
+      if (formData.id && lookupResult && lookupResult.story_code !== formData.story_code) {
+        console.log('🛡️ SAFEGUARD: Story code changed from', lookupResult.story_code, 'to', formData.story_code, '- treating as new story');
+        formDataToSave = { ...formData, id: '' };
+        toast.success(`Creating new story with code ${formData.story_code}`);
+      }
+
       if (saveAction === 'save-and-clear') {
         // Create custom onSave callback that clears form after successful save
         const customOnSave = async () => {
@@ -272,9 +282,9 @@ const SuperText: React.FC = () => {
           clearForm();
         };
         // Pass the custom callback to handleSubmit
-        await handleSubmit(formData, customOnSave);
+        await handleSubmit(formDataToSave, customOnSave);
       } else if (saveAction === 'save-only') {
-        await handleSaveOnly(formData);
+        await handleSaveOnly(formDataToSave);
       }
     }
   };
