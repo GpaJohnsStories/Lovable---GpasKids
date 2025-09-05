@@ -118,7 +118,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
     // Check for profanity in text fields
     if (['name', 'email', 'description'].includes(field) && value) {
       if (containsBadWord(value)) {
-        setProfanityError('Please use appropriate language in your message.');
+        setProfanityError('Oops! It looks like your message used words not allowed here. Please say it a little more kindly? Thanks, Buddy!');
         return;
       }
     }
@@ -159,7 +159,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
     // Final profanity check
     const fieldsToCheck = [formData.name, formData.email, formData.description];
     if (fieldsToCheck.some(field => containsBadWord(field))) {
-      setProfanityError('Please use appropriate language in your message.');
+      setProfanityError('Oops! It looks like your message used words not allowed here. Please say it a little more kindly? Thanks, Buddy!');
       return;
     }
     setIsSubmitting(true);
@@ -329,9 +329,20 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
             </Button>
           </div>
 
-          {profanityError && <div className="p-3 bg-red-50 border border-red-200 rounded-md">
-              <div className="flex items-center space-x-2">
-                <span className="text-red-600 text-sm">{profanityError}</span>
+          {profanityError && <div className="p-4 rounded-lg shadow-lg" style={{
+              backgroundColor: '#9c441a',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+            }}>
+              <div className="flex items-center justify-center">
+                <span 
+                  className="text-white font-bold text-center"
+                  style={{
+                    fontFamily: 'Kalam, cursive',
+                    fontSize: '21px'
+                  }}
+                >
+                  {profanityError}
+                </span>
               </div>
             </div>}
         </form>
