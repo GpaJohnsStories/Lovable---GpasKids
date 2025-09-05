@@ -526,7 +526,7 @@ const AdminHeaderBanner = () => {
                onMouseEnter={() => setHoveredButton('home')}
                onMouseLeave={() => setHoveredButton(null)}
              >
-               <Link to="/" onClick={scrollToTop}>
+               <a href="https://gpaskids.com" target="_blank" rel="noopener noreferrer">
                  <div
                    className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-green-300/50 hover:scale-105 transition-transform cursor-pointer"
                    style={{ 
@@ -537,7 +537,7 @@ const AdminHeaderBanner = () => {
                  >
                    <Home className="w-8 h-8 text-white" />
                  </div>
-               </Link>
+               </a>
                {hoveredButton === 'home' && (
                  <div className="nav-bubble opacity-100 visible">
                    <b>Home</b>
