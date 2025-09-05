@@ -46,16 +46,24 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
 
   // Load Unicorn icon from icon library
   const { iconUrl: unicornIconUrl, iconName: unicornIconName, isLoading: unicornIconLoading } = useCachedIcon('!CO-UNI.gif');
+  
+  // Load remaining icons from icon library
+  const { iconUrl: elephantIconUrl } = useCachedIcon('!CO-ELE.gif');
+  const { iconUrl: eagleIconUrl } = useCachedIcon('!CO-EAG.gif');
+  const { iconUrl: vipIconUrl } = useCachedIcon('!CO-VIP.gif');
+  const { iconUrl: giraffeIconUrl } = useCachedIcon('!CO-GIR.gif');
+  const { iconUrl: reindeerIconUrl } = useCachedIcon('!CO-REI.gif');
+  const { iconUrl: questionIconUrl } = useCachedIcon('!CO-QUE.gif');
 
   // Icon mapping for "Who are you?" choices
   const iconMap: Record<string, string> = {
     'Unicorn': unicornIconUrl || unicornIcon,
-    'Elephant': elephantIcon, 
-    'Eagle': eagleIcon,
-    'Important Person': vipIcon,
-    'Giraffe': giraffeIcon,
-    'Reindeer': reindeerIcon,
-    'Rather not say': questionIcon
+    'Elephant': elephantIconUrl || elephantIcon, 
+    'Eagle': eagleIconUrl || eagleIcon,
+    'Important Person': vipIconUrl || vipIcon,
+    'Giraffe': giraffeIconUrl || giraffeIcon,
+    'Reindeer': reindeerIconUrl || reindeerIcon,
+    'Rather not say': questionIconUrl || questionIcon
   };
   useEffect(() => {
     if (isOpen) {
