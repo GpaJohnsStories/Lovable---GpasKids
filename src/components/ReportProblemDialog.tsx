@@ -238,7 +238,7 @@ export const ReportProblemDialog: React.FC<ReportProblemDialogProps> = ({
                         className="w-16 h-16 object-contain"
                       />
                     </TooltipTrigger>
-                    <TooltipContent className="bg-amber-50 border border-amber-200 shadow-md">
+                    <TooltipContent className="bg-amber-50 border border-amber-200 shadow-md text-amber-900">
                       <p className="font-fun font-bold text-[21px]">
                         {formData.whoAreYou === 'Unicorn' && unicornIconName ? unicornIconName : formData.whoAreYou}
                       </p>
