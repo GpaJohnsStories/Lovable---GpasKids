@@ -104,6 +104,12 @@ export const CountryVisitsCard = () => {
     .sort((a, b) => b.visit_count - a.visit_count)
     .slice(0, 84); // Up to 84 countries to fill 21 rows x 4 columns
 
+  // Sort current month visits by country code (only countries with visits)
+  const sortedCurrentMonthByCode = [...currentMonthVisits]
+    .filter(visit => visit.visit_count > 0)
+    .sort((a, b) => a.country_code.localeCompare(b.country_code))
+    .slice(0, 84); // Up to 84 countries to fill 21 rows x 4 columns
+
   const totalCurrentMonth = currentMonthVisits.reduce((sum, visit) => sum + visit.visit_count, 0);
   const totalRolling24 = topCountries.reduce((sum, country) => sum + country.total_visits, 0);
 
@@ -197,6 +203,14 @@ export const CountryVisitsCard = () => {
             This Month ({currentMonth}/{currentYear}) - {totalCurrentMonth} visits
           </h4>
           {renderCountryTable(sortedCurrentMonth, true)}
+        </div>
+
+        {/* Current Month by Country Code */}
+        <div>
+          <h4 className="text-sm font-semibold text-gray-700 mb-3">
+            This Month by Country Code (Countries with visits)
+          </h4>
+          {renderCountryTable(sortedCurrentMonthByCode, true)}
         </div>
 
         {/* Rolling 24 months */}
