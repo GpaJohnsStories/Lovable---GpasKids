@@ -16,12 +16,12 @@ const ThankYouModal: React.FC<ThankYouModalProps> = ({ isOpen, onClose, amount, 
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md mx-auto bg-gradient-to-b from-yellow-50 to-orange-50 border-2 border-orange-200">
         <DialogHeader className="text-center space-y-4">
-          <div className="mx-auto w-24 h-24 bg-gradient-to-b from-yellow-200 to-orange-200 rounded-full flex items-center justify-center border-4 border-orange-300">
-            {/* Placeholder for special thank you photo */}
-            <div className="flex items-center justify-center">
-              <Heart className="h-12 w-12 text-red-500" />
-              <Star className="h-8 w-8 text-yellow-500 absolute ml-6 mt-6" />
-            </div>
+          <div className="mx-auto w-32 h-32 rounded-full overflow-hidden border-4 border-orange-300 shadow-lg">
+            <img 
+              src="/lovable-uploads/9e9298d1-6c77-49d4-8d81-a38c9ac28737.png" 
+              alt="Grandpa John with his dog and cat" 
+              className="w-full h-full object-cover"
+            />
           </div>
           
           <DialogTitle className="font-handwritten text-[#0B3D91] text-3xl font-bold italic text-center">
