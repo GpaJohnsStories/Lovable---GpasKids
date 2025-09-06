@@ -62,7 +62,7 @@ const StoriesTableHeader = ({
       return ['all', 'Fun', 'Life', 'North Pole', 'World Changers']; // Public library - no WebText or BioText
     }
     
-    return ['all', 'All Stories', 'WebText', 'Admin', 'Stories', 'Fun', 'Life', 'North Pole', 'World Changers', 'BioText']; // Admin library - All Stories excludes WebText and Admin
+    return ['all', 'All Stories', 'WebText', 'Admin', 'Fun', 'Life', 'North Pole', 'World Changers', 'BioText']; // Admin library - All Stories excludes WebText and Admin
   };
 
   const getCategoryDisplayName = (category: CategoryFilter) => {
@@ -81,8 +81,6 @@ const StoriesTableHeader = ({
         return 'World Changers';
       case 'WebText':
         return 'WebText';
-      case 'Stories':
-        return 'Stories';
       case 'BioText':
         return 'BioText';
       case 'Admin':
