@@ -10,9 +10,9 @@ import { useQuery } from "@tanstack/react-query";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import StoriesTableHeader from "./StoriesTableHeader";
 import StoriesTableRow from "./StoriesTableRow";
-import { getWebtextPath } from "@/utils/webtextPaths";
 
-type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status' | 'publication_status_code';
+
+type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status' | 'publication_status_code' | 'page_path';
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
 type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText';
@@ -141,10 +141,6 @@ const AdminStoriesTable = ({
       });
     }
     
-    // Apply page path sorting for WebText
-    if (sortOption === 'page_path') {
-      result.sort((a, b) => getWebtextPath(a.story_code || '').localeCompare(getWebtextPath(b.story_code || '')));
-    }
     
     return result;
   }, [stories, searchTerm, mediaFilter]);
@@ -303,8 +299,7 @@ const AdminStoriesTable = ({
       setSortField('story_code');
       setSortDirection('asc');
     } else if (option === 'page_path') {
-      // Page path sorting is handled in filteredStories memo
-      setSortField('story_code'); // Use story_code as base field for page path sorting
+      setSortField('page_path' as SortField);
       setSortDirection('asc');
     } else {
       setSortField(option as SortField);

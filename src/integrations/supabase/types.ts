@@ -414,6 +414,7 @@ export type Database = {
           native_country: string | null
           native_language: string | null
           ok_count: number
+          page_path: string | null
           photo_alt_1: string | null
           photo_alt_2: string | null
           photo_alt_3: string | null
@@ -456,6 +457,7 @@ export type Database = {
           native_country?: string | null
           native_language?: string | null
           ok_count?: number
+          page_path?: string | null
           photo_alt_1?: string | null
           photo_alt_2?: string | null
           photo_alt_3?: string | null
@@ -498,6 +500,7 @@ export type Database = {
           native_country?: string | null
           native_language?: string | null
           ok_count?: number
+          page_path?: string | null
           photo_alt_1?: string | null
           photo_alt_2?: string | null
           photo_alt_3?: string | null

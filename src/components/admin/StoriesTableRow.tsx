@@ -17,7 +17,7 @@ import AuthorLink from "@/components/AuthorLink";
 import PublicationStatusButton from "./PublicationStatusButton";
 // import WebTextDeploymentDialog from "./WebTextDeploymentDialog";
 import { getCategoryShortName } from "@/utils/categoryUtils";
-import { getWebtextPath } from "@/utils/webtextPaths";
+
 
 interface Story {
   id: string;
@@ -47,6 +47,7 @@ interface Story {
   ai_voice_name?: string;
   ai_voice_model?: string;
   copyright_status?: string;
+  page_path?: string;
 }
 
 interface StoriesTableRowProps {
@@ -297,7 +298,7 @@ const StoriesTableRow = ({
         <TableCell className="p-1 text-center admin-table-cell" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
           <div className="flex flex-col items-center gap-1">
             <span className="text-xs">
-              {categoryFilter === 'WebText' ? getWebtextPath(story.story_code || '') : story.author}
+              {categoryFilter === 'WebText' ? (story.page_path || 'No path set') : story.author}
             </span>
           </div>
         </TableCell>
