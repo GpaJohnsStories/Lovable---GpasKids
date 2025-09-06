@@ -47,6 +47,7 @@ const ReferenceDashboard = () => {
       fontWeight: 'bold',
       border: '2px solid',
       backgroundImage: 'none',
+      borderRadius: '50px',
     };
 
     switch (sectionId) {
