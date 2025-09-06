@@ -378,6 +378,24 @@ ${content}`;
     insertTextAtCursor(iconTokensText);
   };
 
+  const handleInsertBigIcon = () => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const bigIconText = `{{BIGICON}}icon-name.gif{{/BIGICON}}`;
+    insertTextAtCursor(bigIconText);
+    
+    // Position cursor to select the icon name for immediate editing
+    setTimeout(() => {
+      const selectionStart = textarea.value.lastIndexOf('icon-name.gif');
+      if (selectionStart !== -1) {
+        textarea.selectionStart = selectionStart;
+        textarea.selectionEnd = selectionStart + 'icon-name.gif'.length;
+        textarea.focus();
+      }
+    }, 0);
+  };
+
   const handleSelectAllPreview = () => {
     const previewPane = storyContentRef.current;
     if (!previewPane) return;
@@ -444,6 +462,7 @@ ${content}`;
           onInsertFontSize={handleInsertFontSize}
           onSelectAllPreview={handleSelectAllPreview}
           onInsertIconTokens={handleInsertIconTokens}
+          onInsertBigIcon={handleInsertBigIcon}
           category={category}
         />
       

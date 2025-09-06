@@ -9,6 +9,7 @@ export interface HeaderTokens {
   authorHtml?: string;
   excerpt?: string;
   excerptHtml?: string;
+  bigIcon?: string;
 }
 
 export interface ExtractedTokens {
@@ -37,8 +38,20 @@ export const extractHeaderTokens = (content: string): ExtractedTokens => {
     /\{\{TITLE\}\}([\s\S]*?)\{\{\/TITLE\}\}/gi,
     /\{\{TAGLINE\}\}([\s\S]*?)\{\{\/TAGLINE\}\}/gi,
     /\{\{AUTHOR\}\}([\s\S]*?)\{\{\/AUTHOR\}\}/gi,
-    /\{\{EXCERPT\}\}([\s\S]*?)\{\{\/EXCERPT\}\}/gi
+    /\{\{EXCERPT\}\}([\s\S]*?)\{\{\/EXCERPT\}\}/gi,
+    /\{\{BIGICON\}\}([\s\S]*?)\{\{\/BIGICON\}\}/gi
   ];
+
+  // Extract BIGICON token separately (just the icon path, no HTML)
+  const bigIconPattern = /\{\{BIGICON\}\}([\s\S]*?)\{\{\/BIGICON\}\}/gi;
+  const bigIconMatches = Array.from(content.matchAll(bigIconPattern));
+  if (bigIconMatches.length > 0) {
+    const lastMatch = bigIconMatches[bigIconMatches.length - 1];
+    const iconPath = lastMatch[1].trim();
+    if (iconPath) {
+      tokens.bigIcon = iconPath;
+    }
+  }
 
   // Extract token content from block style patterns only
   ['title', 'tagline', 'author', 'excerpt'].forEach(key => {

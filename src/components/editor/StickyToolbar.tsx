@@ -25,6 +25,7 @@ interface StickyToolbarProps {
   onInsertFontSize: (fontType: string) => void;
   onSelectAllPreview: () => void;
   onInsertIconTokens: () => void;
+  onInsertBigIcon: () => void;
   category?: string;
 }
 
@@ -46,6 +47,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onInsertFontSize,
   onSelectAllPreview,
   onInsertIconTokens,
+  onInsertBigIcon,
   category
 }) => {
   const { shouldShowTooltips } = useTooltipContext();
@@ -196,6 +198,21 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               }}
             >
               Icons
+            </Button>
+          </ConditionalTooltip>
+          <ConditionalTooltip content="Insert Big Icon Token">
+            <Button 
+              type="button" 
+              size="sm" 
+              onClick={onInsertBigIcon} 
+              className="h-8 px-3 text-sm font-bold"
+              style={{
+                backgroundColor: '#2563eb',
+                color: 'white',
+                border: 'none'
+              }}
+            >
+              BigIcon
             </Button>
           </ConditionalTooltip>
         </div>

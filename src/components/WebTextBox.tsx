@@ -6,6 +6,7 @@ import { SuperAV } from '@/components/SuperAV';
 import { ArrowRight } from 'lucide-react';
 import { extractHeaderTokens, createSafeHeaderHtml } from '@/utils/headerTokens';
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
+import { useIconCache } from '@/contexts/IconCacheContext';
 
 interface WebTextBoxProps {
   webtextCode: string;
@@ -31,9 +32,51 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
   const [iconUrl, setIconUrl] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [fontSize, setFontSize] = useState(16);
+  const [displayImage, setDisplayImage] = useState<{url: string, alt: string} | null>(null);
   
   // Audio controls state for peppermint button
   const [showSuperAV, setShowSuperAV] = useState(false);
+  
+  const { getIconUrl, getIconName } = useIconCache();
+
+  // Effect to determine display image priority: BIGICON > mainPhoto > iconUrl fallback
+  useEffect(() => {
+    const loadDisplayImage = async () => {
+      if (!webtext) return;
+      
+      // Extract header tokens to check for BIGICON
+      const { tokens } = extractHeaderTokens(webtext.content || '');
+      
+      // Priority: BIGICON > mainPhoto > iconUrl fallback
+      if (tokens.bigIcon) {
+        try {
+          const iconUrlFromCache = await getIconUrl(tokens.bigIcon);
+          const iconName = getIconName(tokens.bigIcon);
+          setDisplayImage({ url: iconUrlFromCache, alt: iconName || 'Big Icon' });
+          return;
+        } catch (error) {
+          console.warn('Failed to load BIGICON:', error);
+        }
+      }
+      
+      const photos = webtext ? getStoryPhotos(webtext) : [];
+      const mainPhoto = photos[0];
+      
+      if (mainPhoto?.url) {
+        setDisplayImage({ url: mainPhoto.url, alt: mainPhoto.alt || 'Story Photo' });
+        return;
+      }
+      
+      if (iconUrl) {
+        setDisplayImage({ url: iconUrl, alt: 'Icon' });
+        return;
+      }
+      
+      setDisplayImage(null);
+    };
+
+    loadDisplayImage();
+  }, [webtext, iconUrl, getIconUrl, getIconName]);
 
   const getContent = () => {
     if (loading) return "Loading...";
@@ -88,12 +131,12 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
           {/* Top section with photo and title */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             {/* Photo in left column on tablets+ */}
-            {mainPhoto && (
+            {displayImage && (
               <div className="w-fit flex-shrink-0">
                 <div className="group relative">
                   <img
-                    src={mainPhoto.url}
-                    alt={mainPhoto.alt}
+                    src={displayImage.url}
+                    alt={displayImage.alt}
                     className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded-lg border-2 border-blue-500 shadow-lg cursor-pointer transition-transform hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 rounded-lg"></div>

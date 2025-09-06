@@ -12,6 +12,7 @@ import { extractHeaderTokens, createSafeHeaderHtml } from '@/utils/headerTokens'
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 import { buildCacheBustedUrl, getAssetVersionFromStory } from '@/utils/storyUtils';
 import { toast } from '@/hooks/use-toast';
+import { useIconCache } from '@/contexts/IconCacheContext';
 
 interface ProportionalWebTextBoxProps {
   webtextCode: string;
@@ -47,6 +48,49 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   
   // Audio controls state for peppermint button
   const [showSuperAV, setShowSuperAV] = useState(false);
+  const [displayImage, setDisplayImage] = useState<{url: string, alt: string} | null>(null);
+  
+  const { getIconUrl, getIconName } = useIconCache();
+  
+  const photos = webtext ? getStoryPhotos(webtext) : [];
+  const mainPhoto = photos[0];
+
+  // Effect to determine display image priority: BIGICON > mainPhoto > buddyIcon fallback
+  useEffect(() => {
+    const loadDisplayImage = async () => {
+      if (!webtext) return;
+      
+      // Extract header tokens to check for BIGICON
+      const { tokens } = extractHeaderTokens(webtext.content || '');
+      
+      // Priority: BIGICON > mainPhoto > fallback (buddyIcon for SYS-WEL)
+      if (tokens.bigIcon) {
+        try {
+          const iconUrl = await getIconUrl(tokens.bigIcon);
+          const iconName = getIconName(tokens.bigIcon);
+          setDisplayImage({ url: iconUrl, alt: iconName || 'Big Icon' });
+          return;
+        } catch (error) {
+          console.warn('Failed to load BIGICON:', error);
+        }
+      }
+      
+      if (mainPhoto?.url) {
+        setDisplayImage({ url: mainPhoto.url, alt: mainPhoto.alt || 'Story Photo' });
+        return;
+      }
+      
+      // For SYS-WEL, fallback to Buddy icon
+      if (isSysWel && buddyIconUrl) {
+        setDisplayImage({ url: buddyIconUrl, alt: buddyIconName || 'Buddy' });
+        return;
+      }
+      
+      setDisplayImage(null);
+    };
+
+    loadDisplayImage();
+  }, [webtext, mainPhoto, buddyIconUrl, buddyIconName, isSysWel, getIconUrl, getIconName]);
 
   const getContent = () => {
     if (loading) return "Loading...";
@@ -79,9 +123,6 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
 
     fetchData();
   }, [webtextCode, lookupStoryByCode]);
-
-  const photos = webtext ? getStoryPhotos(webtext) : [];
-  const mainPhoto = photos[0];
 
   // Get typography classes for current scale
   const typographyClasses = getTypographyClasses(fontScale);
@@ -190,7 +231,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           {/* Top section with photo and title */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             {/* Photo in left column on tablets+ */}
-            {buddyIconUrl && (
+            {displayImage && (
               <div className="w-fit flex-shrink-0">
                 <div className="inline-block group">
                   <button 
@@ -203,8 +244,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     }}
                   >
                     <img
-                      src={buddyIconUrl}
-                      alt={buddyIconName || 'Buddy'}
+                      src={displayImage.url}
+                      alt={displayImage.alt}
                       className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded border border-emerald-800"
                     />
                   </button>
