@@ -106,7 +106,7 @@ const StoryFormFields: React.FC<StoryFormFieldsProps> = ({
             <SelectItem value="North Pole">North Pole</SelectItem>
             <SelectItem value="World Changers">World Changers</SelectItem>
             <SelectItem value="WebText">WebText</SelectItem>
-            <SelectItem value="BioText">BioText</SelectItem>
+            <SelectItem value="BioText">Biographies</SelectItem>
             <SelectItem value="Admin">Admin</SelectItem>
           </SelectContent>
         </Select>

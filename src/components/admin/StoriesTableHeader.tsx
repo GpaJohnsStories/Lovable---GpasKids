@@ -11,7 +11,7 @@ import {
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status' | 'publication_status_code' | 'page_path';
 type SortDirection = 'asc' | 'desc';
-type CategoryFilter = 'all' | 'All Stories' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText' | 'Admin';
+type CategoryFilter = 'all' | 'All Stories' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Biographies' | 'Admin';
 
 interface StoriesTableHeaderProps {
   sortField: SortField;
@@ -62,7 +62,7 @@ const StoriesTableHeader = ({
       return ['all', 'Fun', 'Life', 'North Pole', 'World Changers']; // Public library - no WebText or BioText
     }
     
-    return ['all', 'All Stories', 'WebText', 'Admin', 'Fun', 'Life', 'North Pole', 'World Changers', 'BioText']; // Admin library - All Stories excludes WebText and Admin
+    return ['all', 'All Stories', 'WebText', 'Admin', 'Fun', 'Life', 'North Pole', 'World Changers', 'Biographies']; // Admin library - All Stories excludes WebText and Admin
   };
 
   const getCategoryDisplayName = (category: CategoryFilter) => {
@@ -81,8 +81,8 @@ const StoriesTableHeader = ({
         return 'World Changers';
       case 'WebText':
         return 'WebText';
-      case 'BioText':
-        return 'BioText';
+      case 'Biographies':
+        return 'Biographies';
       case 'Admin':
         return 'Admin';
       default:
@@ -106,9 +106,7 @@ const StoriesTableHeader = ({
         return 'bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500';
       case 'WebText':
         return 'bg-gradient-to-b from-amber-700 to-amber-900 text-white border-amber-900';
-      case 'Stories':
-        return 'bg-gradient-to-b from-emerald-600 to-emerald-800 text-white border-emerald-700';
-      case 'BioText':
+      case 'Biographies':
         return 'bg-gradient-to-b from-yellow-800 to-yellow-900 text-white border-yellow-800';
       case 'Admin':
         return 'bg-gradient-to-b from-yellow-400 to-yellow-600 border-[#eab308] text-[#3b82f6]';

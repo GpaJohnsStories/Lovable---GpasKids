@@ -1,4 +1,3 @@
-
 export const getCategoryStyles = (category: string) => {
   switch (category) {
     case "Fun":
