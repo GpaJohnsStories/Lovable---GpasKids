@@ -320,11 +320,12 @@ export const SuperAV: React.FC<SuperAVProps> = ({
       lookupStoryByCode('SYS-AVX', true).then(result => {
         if (result.found && result.story?.audio_url) {
           console.log('✅ SYS-AVX found with audio:', result.story);
+          const { buildCacheBustedUrl, getAssetVersionFromStory } = require('@/utils/storyUtils');
           setSysAvx({
             title: result.story.title || 'SYS-AVX',
             content: result.story.content || '',
-            audioUrl: result.story.audio_url,
-            photoUrl: result.story.photo_link_1,
+            audioUrl: buildCacheBustedUrl(result.story.audio_url, getAssetVersionFromStory(result.story)),
+            photoUrl: result.story.photo_link_1 ? buildCacheBustedUrl(result.story.photo_link_1, getAssetVersionFromStory(result.story)) : undefined,
             photoAlt: result.story.photo_alt_1 || 'Buddy with headphones'
           });
           setUseSysAvx(true);

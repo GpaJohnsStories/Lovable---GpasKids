@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import StoryPhotosGallery from "@/components/StoryPhotosGallery";
 import StoryVideoPlayer from "@/components/StoryVideoPlayer";
 import StoryVotingSection from "@/components/StoryVotingSection";
-import { getStoryPhotos } from "@/utils/storyUtils";
+import { getStoryPhotos, buildCacheBustedUrl, getAssetVersionFromStory } from "@/utils/storyUtils";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
 import PrintWatermark from "@/components/PrintWatermark";
@@ -49,6 +49,7 @@ interface StoryData {
   thumbs_down_count: number;
   ok_count: number;
   copyright_status?: string;
+  updated_at?: string;
 }
 
 const Story = () => {
@@ -236,7 +237,7 @@ const Story = () => {
             {story.video_url && (
               <div className="mb-8">
                 <StoryVideoPlayer
-                  videoUrl={story.video_url}
+                  videoUrl={buildCacheBustedUrl(story.video_url, getAssetVersionFromStory(story))}
                   title={story.title}
                 />
               </div>
@@ -295,7 +296,7 @@ const Story = () => {
             title={story.title}
             author={story.author}
             voiceName={story.ai_voice_name}
-            audioUrl={story.audio_url}
+            audioUrl={story.audio_url ? buildCacheBustedUrl(story.audio_url, getAssetVersionFromStory(story)) : undefined}
             fontSize={fontSize}
             onFontSizeChange={setFontSize}
           />

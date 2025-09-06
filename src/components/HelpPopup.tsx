@@ -164,7 +164,12 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
                   {(storyData?.photo_link_1 || cachedIconUrl) && (
                     <div className="float-left mr-4 mb-2">
                       <img
-                        src={storyData?.photo_link_1 || cachedIconUrl}
+                        src={storyData?.photo_link_1 ? 
+                          (() => {
+                            const { buildCacheBustedUrl, getAssetVersionFromStory } = require('@/utils/storyUtils');
+                            return buildCacheBustedUrl(storyData.photo_link_1, getAssetVersionFromStory(storyData));
+                          })() 
+                          : cachedIconUrl}
                         alt={storyData?.photo_alt_1 || `${storyData?.title || 'Help'} - Icon`}
                         className="w-auto h-16 md:h-24 lg:h-28 object-contain border rounded border-orange-300 shadow-sm"
                         onError={(e) => {
@@ -215,7 +220,12 @@ const HelpPopup: React.FC<HelpPopupProps> = ({
         title={storyData?.title || `Help: ${getPageTitle(currentRoute)}`}
         author={storyData?.author}
         voiceName={storyData?.ai_voice_name}
-        audioUrl={storyData?.audio_url}
+        audioUrl={storyData?.audio_url ? 
+          (() => {
+            const { buildCacheBustedUrl, getAssetVersionFromStory } = require('@/utils/storyUtils');
+            return buildCacheBustedUrl(storyData.audio_url, getAssetVersionFromStory(storyData));
+          })() 
+          : undefined}
         fontSize={fontSize}
         onFontSizeChange={setFontSize}
       />

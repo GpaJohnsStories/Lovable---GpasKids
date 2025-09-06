@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
-import { getStoryPhotos } from '@/utils/storyUtils';
+import { getStoryPhotos, buildCacheBustedUrl, getAssetVersionFromStory } from '@/utils/storyUtils';
 import { AudioButton } from '@/components/AudioButton';
 import { SuperAV } from '@/components/SuperAV';
 import { ArrowRight } from 'lucide-react';
@@ -171,7 +171,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
             author={webtext?.author}
             voiceName={webtext?.ai_voice_name}
             showAuthor={false}
-            audioUrl={webtext?.audio_url}
+            audioUrl={webtext?.audio_url ? buildCacheBustedUrl(webtext.audio_url, getAssetVersionFromStory(webtext)) : undefined}
             fontSize={fontSize}
             onFontSizeChange={setFontSize}
           />
@@ -281,7 +281,7 @@ export const WebTextBox: React.FC<WebTextBoxProps> = ({
         author={webtext?.author}
         voiceName={webtext?.ai_voice_name}
         showAuthor={false}
-        audioUrl={webtext?.audio_url}
+        audioUrl={webtext?.audio_url ? buildCacheBustedUrl(webtext.audio_url, getAssetVersionFromStory(webtext)) : undefined}
         fontSize={fontSize}
         onFontSizeChange={setFontSize}
       />

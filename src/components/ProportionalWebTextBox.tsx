@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { extractHeaderTokens, createSafeHeaderHtml } from '@/utils/headerTokens';
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
+import { buildCacheBustedUrl, getAssetVersionFromStory } from '@/utils/storyUtils';
 import { toast } from '@/hooks/use-toast';
 
 interface ProportionalWebTextBoxProps {
@@ -284,7 +285,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
             author={webtext?.author}
             voiceName={webtext?.ai_voice_name}
             showAuthor={false}
-            audioUrl={webtext?.audio_url}
+            audioUrl={webtext?.audio_url ? buildCacheBustedUrl(webtext.audio_url, getAssetVersionFromStory(webtext)) : undefined}
             fontScale={fontScale}
             onFontScaleChange={setFontScale}
           />
@@ -403,7 +404,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           author={webtext?.author}
           voiceName={webtext?.ai_voice_name}
           showAuthor={false}
-          audioUrl={webtext?.audio_url}
+          audioUrl={webtext?.audio_url ? buildCacheBustedUrl(webtext.audio_url, getAssetVersionFromStory(webtext)) : undefined}
           fontScale={fontScale}
           onFontScaleChange={setFontScale}
         />

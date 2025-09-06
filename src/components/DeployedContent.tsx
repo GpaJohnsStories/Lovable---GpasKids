@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { SuperAV } from '@/components/SuperAV';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
+import { buildCacheBustedUrl, getAssetVersionFromStory } from '@/utils/storyUtils';
 
 interface StoryData {
   id: string;
@@ -126,7 +127,7 @@ export const DeployedContent = ({
             title={content.title || ''}
             author={content.author || ''}
             voiceName="Default"
-            audioUrl={content.audio_url || ''}
+            audioUrl={content.audio_url ? buildCacheBustedUrl(content.audio_url, getAssetVersionFromStory(content)) : ''}
             fontSize={fontSize}
             onFontSizeChange={onFontSizeChange || (() => {})}
           />
@@ -153,7 +154,7 @@ export const DeployedContent = ({
               title={content.title || ''}
               author={content.author || ''}
               voiceName="Default"
-              audioUrl={content.audio_url || ''}
+              audioUrl={content.audio_url ? buildCacheBustedUrl(content.audio_url, getAssetVersionFromStory(content)) : ''}
               fontSize={fontSize}
               onFontSizeChange={onFontSizeChange || (() => {})}
             />
@@ -168,7 +169,7 @@ export const DeployedContent = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <img 
-                  src={content.photo_link_1} 
+                  src={buildCacheBustedUrl(content.photo_link_1, getAssetVersionFromStory(content))} 
                   alt={content.photo_alt_1 || content.title || 'Story image'}
                   className="w-full h-auto rounded-lg shadow-lg border-4 border-white cursor-pointer"
                 />
