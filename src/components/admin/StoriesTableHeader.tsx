@@ -175,23 +175,29 @@ const StoriesTableHeader = ({
         </TableHead>
         {!hideAuthorColumn && (
           <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
-            <Button
-              onClick={onToggleGroupByAuthor || (() => onSort('author'))}
-              className={`${groupByAuthor ? 'bg-green-600 hover:bg-green-700' : getButtonColor('author')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1 admin-table-font`}
-              size="sm"
-            >
-              {groupByAuthor ? (
-                <>
-                  <Users className="h-3 w-3" />
-                  Group
-                </>
-              ) : (
-                <>
-                  Author
-                  {getSortIcon('author')}
-                </>
-              )}
-            </Button>
+            {categoryFilter === 'WebText' ? (
+              <div className="h-6 px-1 py-1 flex items-center justify-center text-xs font-medium admin-table-font text-center">
+                Page Path
+              </div>
+            ) : (
+              <Button
+                onClick={onToggleGroupByAuthor || (() => onSort('author'))}
+                className={`${groupByAuthor ? 'bg-green-600 hover:bg-green-700' : getButtonColor('author')} w-full h-6 text-xs px-1 py-1 flex items-center justify-center gap-1 admin-table-font`}
+                size="sm"
+              >
+                {groupByAuthor ? (
+                  <>
+                    <Users className="h-3 w-3" />
+                    Group
+                  </>
+                ) : (
+                  <>
+                    Author
+                    {getSortIcon('author')}
+                  </>
+                )}
+              </Button>
+            )}
           </TableHead>
         )}
         <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>

@@ -17,6 +17,7 @@ import AuthorLink from "@/components/AuthorLink";
 import PublicationStatusButton from "./PublicationStatusButton";
 // import WebTextDeploymentDialog from "./WebTextDeploymentDialog";
 import { getCategoryShortName } from "@/utils/categoryUtils";
+import { getWebtextPath } from "@/utils/webtextPaths";
 
 interface Story {
   id: string;
@@ -52,17 +53,18 @@ interface StoriesTableRowProps {
   story: Story;
   showActions: boolean;
   showPublishedColumn?: boolean;
+  categoryFilter?: string;
   onEdit: (story: Story) => void;
   onDelete: (id: string) => void;
   onStatusChange?: () => void;
   hideAuthor?: boolean;
-  
 }
 
 const StoriesTableRow = ({ 
   story, 
   showActions, 
   showPublishedColumn = true, 
+  categoryFilter,
   onEdit, 
   onDelete,
   onStatusChange,
@@ -294,7 +296,9 @@ const StoriesTableRow = ({
       {!hideAuthor && (
         <TableCell className="p-1 text-center admin-table-cell" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
           <div className="flex flex-col items-center gap-1">
-            <span className="text-xs">{story.author}</span>
+            <span className="text-xs">
+              {categoryFilter === 'WebText' ? getWebtextPath(story.story_code || '') : story.author}
+            </span>
           </div>
         </TableCell>
       )}
