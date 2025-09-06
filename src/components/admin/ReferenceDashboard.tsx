@@ -64,19 +64,16 @@ const ReferenceDashboard = () => {
         {sections.map((section) => (
           <Button
             key={section.id}
-            variant={section.id === 'colors' || section.id === 'fonts' ? 'default' : 'outline'}
+            variant="outline"
             onClick={() => handleSectionScroll(section.id)}
-            className={`min-w-[120px] ${
+            className="min-w-[120px]"
+            style={
               section.id === 'colors' 
-                ? '!bg-orange-600 !text-white !border-orange-600 hover:!bg-orange-700' 
+                ? { backgroundColor: '#F97316', color: 'white', borderColor: '#F97316' }
                 : section.id === 'fonts'
-                ? '!text-white !font-bold'
-                : ''
-            }`}
-            style={section.id === 'fonts' ? { 
-              backgroundColor: '#1e40af', 
-              borderColor: '#1e40af' 
-            } : undefined}
+                ? { backgroundColor: '#1e40af', color: 'white', borderColor: '#1e40af', fontWeight: 'bold' }
+                : {}
+            }
           >
             {section.label}
           </Button>
