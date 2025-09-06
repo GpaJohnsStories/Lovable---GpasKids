@@ -85,9 +85,10 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
   const [currentStoryId, setCurrentStoryId] = useState<string | undefined>(storyId);
   const { story, isLoading: isLoadingStory, refetch: refetchStory, error } = useStoryData(skipDataFetch ? undefined : currentStoryId);
 
-  const populateFormWithStory = useCallback((storyData: Story, fromCodeLookup = false) => {
+  const populateFormWithStory = useCallback(async (storyData: Story, fromCodeLookup = false) => {
     console.log('🎯 useStoryFormState: Populating form with story data:', storyData, 'fromCodeLookup:', fromCodeLookup);
     
+    // First set the initial form data
     setFormData({
       ...storyData,
       ai_voice_name: storyData.ai_voice_name || 'Nova',
@@ -99,7 +100,155 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     if (fromCodeLookup && storyData.id) {
       setCurrentStoryId(storyData.id);
     }
+
+    // Migrate photos to deterministic paths if needed
+    if (fromCodeLookup && storyData.story_code) {
+      await migratePhotosToNewFormat(storyData);
+    }
   }, []);
+
+  // Helper function to migrate photos to the new deterministic format
+  const migratePhotosToNewFormat = async (storyData: Story) => {
+    if (!storyData.story_code) return;
+    
+    const baseStorageUrl = 'https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/';
+    const updates: Record<string, string> = {};
+    let migrationCount = 0;
+
+    for (let i = 1; i <= 3; i++) {
+      const photoUrl = storyData[`photo_link_${i}` as keyof Story] as string;
+      if (!photoUrl) continue;
+
+      const expectedPath = `stories/${storyData.story_code}/photo-${i}.webp`;
+      const expectedUrl = `${baseStorageUrl}${expectedPath}`;
+
+      // Check if photo needs migration (exists but doesn't match new format)
+      if (photoUrl.startsWith(baseStorageUrl) && !photoUrl.includes(expectedPath)) {
+        console.log(`📸 Migrating photo ${i} from old to new format...`);
+        
+        try {
+          const oldKey = extractStorageKeyFromPublicUrl(photoUrl);
+          if (oldKey) {
+            // Try to copy within bucket first
+            const { error: copyError } = await supabase.storage
+              .from('story-photos')
+              .copy(oldKey, expectedPath);
+
+            if (!copyError) {
+              // Success - update with new URL and cache busting
+              const newUrl = `${expectedUrl}?v=${Date.now()}`;
+              updates[`photo_link_${i}`] = newUrl;
+              migrationCount++;
+              console.log(`✅ Photo ${i} migrated successfully via copy`);
+            } else {
+              console.log(`⚠️ Copy failed for photo ${i}, trying fetch/upload method:`, copyError);
+              // Fallback to fetch/upload method
+              await migratePhotoViaFetchUpload(photoUrl, expectedPath, i, updates);
+              migrationCount++;
+            }
+          }
+        } catch (error) {
+          console.error(`❌ Failed to migrate photo ${i}:`, error);
+          toast.error(`Failed to migrate photo ${i}`);
+        }
+      } else if (!photoUrl.startsWith(baseStorageUrl)) {
+        // External URL - fetch and upload
+        console.log(`📸 Migrating external photo ${i} to new format...`);
+        try {
+          await migratePhotoViaFetchUpload(photoUrl, expectedPath, i, updates);
+          migrationCount++;
+        } catch (error) {
+          console.error(`❌ Failed to migrate external photo ${i}:`, error);
+          toast.error(`Failed to migrate external photo ${i}`);
+        }
+      }
+    }
+
+    // Apply updates to form data if any migrations occurred
+    if (Object.keys(updates).length > 0) {
+      console.log(`🔄 Applying photo migrations (${migrationCount} photos):`, updates);
+      
+      // Convert updates to proper Story partial
+      const storyUpdates: Partial<Story> = {};
+      Object.entries(updates).forEach(([key, value]) => {
+        (storyUpdates as any)[key] = value;
+      });
+      
+      setFormData(prev => ({ ...prev, ...storyUpdates }));
+      toast.success(`Migrated ${migrationCount} photo(s) to new deterministic format`);
+    }
+  };
+
+  // Helper function to migrate photo via fetch/upload
+  const migratePhotoViaFetchUpload = async (sourceUrl: string, targetPath: string, photoNumber: number, updates: Record<string, string>) => {
+    // Fetch the image
+    const response = await fetch(sourceUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.status}`);
+    }
+    
+    const blob = await response.blob();
+    
+    // Convert to WebP and resize if needed
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d')!;
+    const img = new Image();
+    
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = URL.createObjectURL(blob);
+    });
+    
+    // Set canvas size (max 800x600 to keep file sizes reasonable)
+    const maxWidth = 800;
+    const maxHeight = 600;
+    let { width, height } = img;
+    
+    if (width > maxWidth || height > maxHeight) {
+      const ratio = Math.min(maxWidth / width, maxHeight / height);
+      width *= ratio;
+      height *= ratio;
+    }
+    
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+    
+    // Convert to WebP
+    const webpBlob = await new Promise<Blob>((resolve) => {
+      canvas.toBlob(resolve as BlobCallback, 'image/webp', 0.8);
+    });
+    
+    if (!webpBlob) {
+      throw new Error('Failed to convert image to WebP');
+    }
+    
+    // Create File object
+    const webpFile = new File([webpBlob], `photo-${photoNumber}.webp`, { type: 'image/webp' });
+    
+    // Upload to storage
+    const { error: uploadError } = await supabase.storage
+      .from('story-photos')
+      .upload(targetPath, webpFile, {
+        contentType: 'image/webp',
+        upsert: true
+      });
+    
+    if (uploadError) {
+      throw new Error(`Failed to upload converted image: ${uploadError.message}`);
+    }
+    
+    // Get public URL with cache busting
+    const baseStorageUrl = 'https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/';
+    const newUrl = `${baseStorageUrl}${targetPath}?v=${Date.now()}`;
+    updates[`photo_link_${photoNumber}`] = newUrl;
+    
+    console.log(`✅ Photo ${photoNumber} migrated successfully via fetch/upload`);
+    
+    // Clean up
+    URL.revokeObjectURL(img.src);
+  };
 
   console.log('🎯 useStoryFormState: Hook called with storyId:', storyId);
   console.log('🎯 useStoryFormState: Story data:', story);

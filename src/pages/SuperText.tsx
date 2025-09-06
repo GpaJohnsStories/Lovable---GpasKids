@@ -153,7 +153,7 @@ const SuperText: React.FC = () => {
           return;
         }
         if (story) {
-          populateFormWithStory(story, true);
+          await populateFormWithStory(story, true);
           setLookupResult(story);
           setCategory(story.category);
           setCopyrightStatus(story.copyright_status || '©');
@@ -234,7 +234,7 @@ const SuperText: React.FC = () => {
       return;
     }
     if (story) {
-      populateFormWithStory(story, true);
+      await populateFormWithStory(story, true);
       setLookupResult(story); // Store the looked-up story
 
       // Sync local state with story data
