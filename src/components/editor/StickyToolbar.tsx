@@ -24,6 +24,7 @@ interface StickyToolbarProps {
   onAddTokens: () => void;
   onInsertFontSize: (fontType: string) => void;
   onSelectAllPreview: () => void;
+  onInsertIconTokens: () => void;
   category?: string;
 }
 
@@ -44,6 +45,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onAddTokens,
   onInsertFontSize,
   onSelectAllPreview,
+  onInsertIconTokens,
   category
 }) => {
   const { shouldShowTooltips } = useTooltipContext();
@@ -178,6 +180,25 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
         <Separator orientation="vertical" className="h-6" style={{
           backgroundColor: '#9c441a'
         }} />
+
+        {/* Icon Tokens Button */}
+        <div className="flex items-center gap-1">
+          <ConditionalTooltip content="Insert Icon Tokens">
+            <Button 
+              type="button" 
+              size="sm" 
+              onClick={onInsertIconTokens} 
+              className="h-8 px-3 text-sm font-bold"
+              style={{
+                backgroundColor: '#D2691E',
+                color: 'white',
+                border: 'none'
+              }}
+            >
+              Icons
+            </Button>
+          </ConditionalTooltip>
+        </div>
 
         {/* Internal Link */}
         <div className="flex items-center gap-1">

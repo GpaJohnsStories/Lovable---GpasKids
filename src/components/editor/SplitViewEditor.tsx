@@ -355,9 +355,27 @@ ${content}`;
     
     // Position cursor between {{TITLE}} and {{/TITLE}} for immediate editing
     setTimeout(() => {
-      textarea.selectionStart = textarea.selectionEnd = 9; // Position after "{{TITLE}}"
+      textarea.selectionStart = 9; // After {{TITLE}}
+      textarea.selectionEnd = 9;
       textarea.focus();
     }, 0);
+  };
+
+  const handleInsertIconTokens = () => {
+    const textarea = editorRef.current;
+    if (!textarea) return;
+
+    const iconTokensText = `{{ICO-HOM}}{{/ICO-HOM}}
+{{ICO-N2K}}{{/ICO-N2K}}
+{{ICO-STO}}{{/ICO-STO}}
+{{ICO-LIB}}{{/ICO-LIB}}
+{{ICO-WRI}}{{/ICO-WRI}}
+{{ICO-ABT}}{{/ICO-ABT}}
+{{ICO-CLB}}{{/ICO-CLB}}
+
+`;
+
+    insertTextAtCursor(iconTokensText);
   };
 
   const handleSelectAllPreview = () => {
@@ -425,6 +443,7 @@ ${content}`;
           onAddTokens={handleAddTokens}
           onInsertFontSize={handleInsertFontSize}
           onSelectAllPreview={handleSelectAllPreview}
+          onInsertIconTokens={handleInsertIconTokens}
           category={category}
         />
       
