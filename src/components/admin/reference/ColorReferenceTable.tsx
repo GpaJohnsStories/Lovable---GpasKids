@@ -409,6 +409,16 @@ const ColorReferenceTable = () => {
       howUsed: ["Border", "Subtle dividers"],
       whereUsed: ["Home Page, Announcement Box - Border"],
       notes: "Light blue borders for announcement boxes. Subtle but clear definition."
+    },
+    
+    // SuperText Page Colors
+    {
+      name: "Purple - Video",
+      hex: "#8b5cf6",
+      grouping: "Primary",
+      howUsed: ["Video buttons", "Media upload elements"],
+      whereUsed: ["SuperText Page, Add Video File Button"],
+      notes: "Purple color for video-related buttons and media upload elements. Strong, creative color for multimedia content."
     }
   ];
 
