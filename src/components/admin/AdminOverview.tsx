@@ -74,6 +74,11 @@ const AdminOverview = () => {
                 variant="outline"
                 size="sm"
                 className="flex-shrink-0 rounded-full px-4 py-2 bg-white hover:bg-amber-100 border-amber-300 hover:border-amber-400 text-amber-800 hover:text-amber-900 shadow-sm hover:shadow transition-all duration-200 hover:scale-105"
+                style={{
+                  fontFamily: 'Arial, sans-serif',
+                  fontSize: '21px',
+                  fontWeight: 'bold'
+                }}
               >
                 <item.icon className="h-4 w-4 mr-2" />
                 {item.label}
