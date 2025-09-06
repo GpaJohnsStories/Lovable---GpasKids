@@ -114,20 +114,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               }}>Arial (titles & headings)</SelectItem>
             </SelectContent>
           </Select>
-          <Select onValueChange={onFontSizeChange} defaultValue="4">
-            <SelectTrigger className="h-8 w-20 text-sm btn-toolbar-slate">
-              <SelectValue placeholder="Size" />
-            </SelectTrigger>
-            <SelectContent className="bg-white z-50">
-              <SelectItem value="1">12px - Very Small</SelectItem>
-              <SelectItem value="2">14px - Small</SelectItem>
-              <SelectItem value="3">16px - Medium</SelectItem>
-              <SelectItem value="4">18px - Large</SelectItem>
-              <SelectItem value="5">20px - Very Large</SelectItem>
-              <SelectItem value="6">24px - Extra Large</SelectItem>
-              <SelectItem value="7">28px - Huge</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
 
         <Separator orientation="vertical" className="h-6" style={{
