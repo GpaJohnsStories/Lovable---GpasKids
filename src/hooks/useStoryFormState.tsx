@@ -301,6 +301,11 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     }
   };
 
+  // Function to update form data externally
+  const updateFormData = (updates: Partial<Story>) => {
+    setFormData(prev => ({ ...prev, ...updates }));
+  };
+
   return {
     formData,
     isLoadingStory,
@@ -309,6 +314,7 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     refetchStory,
     populateFormWithStory,
     handleInputChange,
+    updateFormData,
     handlePhotoUpload,
     handlePhotoRemove,
     handleVideoUpload,

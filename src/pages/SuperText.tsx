@@ -91,7 +91,7 @@ const SuperText: React.FC = () => {
     handleAudioUpload,
     handleVideoFileUpload,
     error
-  } = useStoryFormState(undefined, true);
+  } = useStoryFormState(undefined, false);
   const navigate = useNavigate();
   const {
     lookupStoryByCode
@@ -300,17 +300,23 @@ const SuperText: React.FC = () => {
 
     setIsForcingRefresh(true);
     try {
+      const newTimestamp = new Date().toISOString();
+      
       // Update the story's updated_at timestamp to force cache refresh
       const { error } = await supabase
         .from('stories')
-        .update({ updated_at: new Date().toISOString() })
+        .update({ updated_at: newTimestamp })
         .eq('story_code', formData.story_code.trim());
 
       if (error) {
         console.error('Error forcing cache refresh:', error);
         toast.error("Failed to refresh cache");
       } else {
+        // Update the form data immediately to reflect the new timestamp
+        handleInputChange('updated_at', newTimestamp);
+        
         toast.success("Cache refreshed! All media files for this story will now use the latest versions.");
+        console.log('🔄 Updated form timestamp to:', newTimestamp);
       }
     } catch (error) {
       console.error('Error in handleForceCacheRefresh:', error);

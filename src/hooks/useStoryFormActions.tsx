@@ -30,6 +30,12 @@ export const useStoryFormActions = (
         updateFormData({ id: result.story.id });
       }
       
+      // Update the form timestamp if the save was successful
+      if (result && result.success && result.story && updateFormData) {
+        console.log('=== UPDATING FORM TIMESTAMP ===', result.story.updated_at);
+        updateFormData({ updated_at: result.story.updated_at });
+      }
+      
       if (result && result.success) {
         console.log('=== SAVE SUCCESSFUL (stayed on page) ===');
       }
@@ -71,6 +77,12 @@ export const useStoryFormActions = (
       if (result && result.success && result.story && !formData.id && updateFormData) {
         console.log('=== BINDING NEW STORY ID TO FORM ===', result.story.id);
         updateFormData({ id: result.story.id });
+      }
+      
+      // Update the form timestamp if the save was successful
+      if (result && result.success && result.story && updateFormData) {
+        console.log('=== UPDATING FORM TIMESTAMP ===', result.story.updated_at);
+        updateFormData({ updated_at: result.story.updated_at });
       }
       
       if (result && result.success) {
