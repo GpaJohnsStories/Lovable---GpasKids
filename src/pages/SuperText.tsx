@@ -672,7 +672,9 @@ const SuperText: React.FC = () => {
                       }} onKeyDown={e => {
                         if (e.key === 'Tab' && !e.shiftKey) {
                           e.preventDefault();
-                          storyCodeRef.current?.focus();
+                          // Focus on Add/Edit Text button instead of cycling back to Text Code
+                          const addEditTextBtn = document.querySelector('[data-add-edit-text]') as HTMLButtonElement;
+                          addEditTextBtn?.focus();
                         }
                       }} tabIndex={4}>
                             Load Text
@@ -699,7 +701,12 @@ const SuperText: React.FC = () => {
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold'
-                      }} tabIndex={-1}>
+                      }} tabIndex={5} data-add-edit-text onKeyDown={e => {
+                        if (e.key === 'Tab' && !e.shiftKey) {
+                          e.preventDefault();
+                          storyCodeRef.current?.focus();
+                        }
+                      }}>
                             Add/Edit Text
                           </Button>
                         </TooltipTrigger>
