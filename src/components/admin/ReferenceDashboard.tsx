@@ -40,6 +40,64 @@ const ReferenceDashboard = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const getButtonStyle = (sectionId: string) => {
+    const baseStyle = {
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '21px',
+      fontWeight: 'bold',
+      border: '2px solid',
+    };
+
+    switch (sectionId) {
+      case 'top':
+        return {
+          ...baseStyle,
+          backgroundColor: '#facc15',
+          color: 'black',
+          borderColor: '#facc15',
+        };
+      case 'colors':
+        return {
+          ...baseStyle,
+          backgroundColor: '#F97316',
+          color: 'black',
+          borderColor: '#F97316',
+        };
+      case 'upload':
+        return {
+          ...baseStyle,
+          backgroundColor: '#22c55e',
+          color: '#F97316',
+          borderColor: '#22c55e',
+        };
+      case 'icons':
+        return {
+          ...baseStyle,
+          backgroundColor: '#228B22',
+          color: '#F97316',
+          borderColor: '#228B22',
+        };
+      case 'fonts':
+        return {
+          ...baseStyle,
+          backgroundColor: '#3b82f6',
+          color: 'white',
+          borderColor: '#3b82f6',
+        };
+      case 'webtext':
+      case 'css':
+      case 'cssxx':
+        return {
+          ...baseStyle,
+          backgroundColor: '#8B4513',
+          color: 'white',
+          borderColor: '#8B4513',
+        };
+      default:
+        return baseStyle;
+    }
+  };
+
   return (
     <>
       <Helmet><title>Reference</title></Helmet>
@@ -58,6 +116,7 @@ const ReferenceDashboard = () => {
           variant="outline"
           onClick={() => handleSectionScroll("top")}
           className="min-w-[120px]"
+          style={getButtonStyle('top')}
         >
           Scroll to Top
         </Button>
@@ -66,7 +125,8 @@ const ReferenceDashboard = () => {
             key={section.id}
             variant="outline"
             onClick={() => handleSectionScroll(section.id)}
-            className="min-w-[120px] text-black"
+            className="min-w-[120px]"
+            style={getButtonStyle(section.id)}
           >
             {section.label}
           </Button>
