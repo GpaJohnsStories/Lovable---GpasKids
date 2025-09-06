@@ -70,9 +70,13 @@ const ReferenceDashboard = () => {
               section.id === 'colors' 
                 ? '!bg-orange-600 !text-white !border-orange-600 hover:!bg-orange-700' 
                 : section.id === 'fonts'
-                ? '!bg-blue-800 !text-white !font-bold !border-blue-800 hover:!bg-blue-900'
+                ? '!text-white !font-bold'
                 : ''
             }`}
+            style={section.id === 'fonts' ? { 
+              backgroundColor: '#1e40af', 
+              borderColor: '#1e40af' 
+            } : undefined}
           >
             {section.label}
           </Button>
