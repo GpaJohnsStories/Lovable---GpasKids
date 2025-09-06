@@ -1195,13 +1195,14 @@ const SuperText: React.FC = () => {
             </DialogTitle>
             {(saveAction === 'save-and-clear' || saveAction === 'save-only') && (
               <div style={{
-                fontSize: '21px',
+                fontSize: formData.publication_status_code === 0 || formData.publication_status_code === 1 ? '24px' : '21px',
                 fontFamily: 'Arial',
                 fontWeight: 'bold',
-                color: '#DC143C',
+                fontStyle: formData.publication_status_code === 0 || formData.publication_status_code === 1 ? 'italic' : 'normal',
+                color: formData.publication_status_code === 0 || formData.publication_status_code === 1 ? '#DC143C' : '#3b82f6',
                 marginTop: '8px'
               }}>
-                Is Publication Status Set Correctly?
+                Publication Status Code is <u>{formData.publication_status_code}</u> and will {formData.publication_status_code === 0 || formData.publication_status_code === 1 ? <u>IMMEDIATELY</u> : <u>NOT</u>} be available to the public!
               </div>
             )}
             <DialogDescription className="text-sm" style={{
