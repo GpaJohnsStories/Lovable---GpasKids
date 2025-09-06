@@ -126,9 +126,9 @@ const SuperTextStoryStatus: React.FC<SuperTextStoryStatusProps> = ({ story, publ
   };
 
   const statusLabels = [
-    "0 - Save & Pub, App & Rev",
-    "1 - Save & Pub, App Only", 
-    "2 - Save, NO PUB, No CoP",
+    "0 - Save & Publish, App & Rev",
+    "1 - Save & Publish, App Only", 
+    "2 - Save, NO Publish, No CoP",
     "3 - Save, NO Gpa APR",
     "4 - Save, Formatting",
     "5 - NOT SAVED"
