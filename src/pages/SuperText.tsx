@@ -855,7 +855,8 @@ const SuperText: React.FC = () => {
                           }
                         }} 
                         disabled={isUploadingAudio || !formData.id}
-                        className="w-full border border-blue-400 rounded-md p-2 text-sm disabled:opacity-50" 
+                        className="w-full rounded-md p-2 text-sm disabled:opacity-50" 
+                        style={{ border: '2px solid #8B4513' }}
                       />
                       <p className="text-xs text-gray-500 mt-1">
                         {!formData.id 
@@ -871,9 +872,10 @@ const SuperText: React.FC = () => {
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full border-2 border-blue-400 focus:border-blue-500 rounded-md px-3 py-2 text-sm resize-none" style={{
+                        <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full rounded-md px-3 py-2 text-sm resize-none" style={{
                       whiteSpace: 'pre-wrap',
-                      wordWrap: 'break-word'
+                      wordWrap: 'break-word',
+                      border: '2px solid #8B4513'
                     }} />
                         <Button variant="yes" className="w-full rounded-full text-sm font-medium text-white">
                           Upload
