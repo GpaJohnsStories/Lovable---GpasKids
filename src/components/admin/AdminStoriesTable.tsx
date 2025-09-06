@@ -15,7 +15,7 @@ import StoriesTableRow from "./StoriesTableRow";
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status' | 'publication_status_code' | 'page_path';
 type SortDirection = 'asc' | 'desc';
 type PublishedFilter = 'all' | 'published' | 'unpublished';
-type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText';
+type CategoryFilter = 'all' | 'All Stories' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText' | 'Admin';
 type SortOption = 'story_code' | 'title' | 'author' | 'category' | 'read_count' | 'thumbs' | 'updated_at' | 'reading_time' | 'copyright_status' | 'publication_status' | 'text_code' | 'page_path';
 type MediaFilter = 'all' | 'text' | 'audio' | 'video' | 'both';
 
@@ -88,7 +88,10 @@ const AdminStoriesTable = ({
       
       // Apply category filter
       if (categoryFilter !== 'all') {
-        if (categoryFilter === 'Stories') {
+        if (categoryFilter === 'All Stories') {
+          // Exclude WebText and Admin categories - show everything else
+          query = query.not('category', 'in', '(WebText,Admin)');
+        } else if (categoryFilter === 'Stories') {
           query = query.in('category', ['Fun', 'Life', 'North Pole', 'World Changers']);
         } else {
           query = query.eq('category', categoryFilter);

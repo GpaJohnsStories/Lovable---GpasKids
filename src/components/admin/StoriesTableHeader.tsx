@@ -11,7 +11,7 @@ import {
 
 type SortField = 'story_code' | 'title' | 'author' | 'category' | 'published' | 'read_count' | 'thumbs_up_count' | 'thumbs_down_count' | 'ok_count' | 'reading_time_minutes' | 'updated_at' | 'copyright_status' | 'publication_status_code' | 'page_path';
 type SortDirection = 'asc' | 'desc';
-type CategoryFilter = 'all' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText' | 'Admin';
+type CategoryFilter = 'all' | 'All Stories' | 'Fun' | 'Life' | 'North Pole' | 'World Changers' | 'WebText' | 'Stories' | 'BioText' | 'Admin';
 
 interface StoriesTableHeaderProps {
   sortField: SortField;
@@ -62,13 +62,15 @@ const StoriesTableHeader = ({
       return ['all', 'Fun', 'Life', 'North Pole', 'World Changers']; // Public library - no WebText or BioText
     }
     
-    return ['all', 'WebText', 'Admin', 'Stories', 'Fun', 'Life', 'North Pole', 'World Changers', 'BioText']; // Admin library - WebText after Show All
+    return ['all', 'All Stories', 'WebText', 'Admin', 'Stories', 'Fun', 'Life', 'North Pole', 'World Changers', 'BioText']; // Admin library - All Stories excludes WebText and Admin
   };
 
   const getCategoryDisplayName = (category: CategoryFilter) => {
     switch (category) {
       case 'all':
         return 'Show All';
+      case 'All Stories':
+        return 'All Stories';
       case 'Fun':
         return 'Fun Stuff';
       case 'Life':
@@ -94,6 +96,8 @@ const StoriesTableHeader = ({
     switch (category) {
       case 'all':
         return 'bg-gradient-to-b from-orange-400 to-orange-600 text-white border-orange-500';
+      case 'All Stories':
+        return 'bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500';
       case 'Fun':
         return 'bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500';
       case 'Life':
