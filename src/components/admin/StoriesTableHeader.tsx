@@ -176,9 +176,14 @@ const StoriesTableHeader = ({
         {!hideAuthorColumn && (
           <TableHead className="p-1 text-center bg-background border-r border-gray-200" style={{ width: '100px', minWidth: '100px', maxWidth: '100px' }}>
             {categoryFilter === 'WebText' ? (
-              <div className="h-6 px-1 py-1 flex items-center justify-center text-xs font-medium admin-table-font text-center">
+              <Button
+                onClick={() => onSort('page_path')}
+                className="bg-gradient-to-b from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white w-full h-6 text-xs px-1 py-1 admin-table-font"
+                size="sm"
+              >
                 Page Path
-              </div>
+                {getSortIcon('page_path')}
+              </Button>
             ) : (
               <Button
                 onClick={onToggleGroupByAuthor || (() => onSort('author'))}
