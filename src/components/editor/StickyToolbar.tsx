@@ -96,25 +96,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
           backgroundColor: '#9c441a'
         }} />
 
-        {/* Font Controls */}
-        <div className="flex items-center gap-1">
-          <Select onValueChange={onFontChange}>
-            <SelectTrigger className="h-8 w-24 text-sm btn-toolbar-slate">
-              <SelectValue placeholder="Font" />
-            </SelectTrigger>
-            <SelectContent className="bg-white z-50">
-              <SelectItem value="Kalam" style={{
-                fontFamily: 'Kalam'
-              }}>Kalam (child-friendly)</SelectItem>
-              <SelectItem value="Georgia" style={{
-                fontFamily: 'Georgia'
-              }}>Georgia (story content)</SelectItem>
-              <SelectItem value="Arial" style={{
-                fontFamily: 'Arial'
-              }}>Arial (titles & headings)</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
 
         <Separator orientation="vertical" className="h-6" style={{
           backgroundColor: '#9c441a'
@@ -246,6 +227,24 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
       {/* Second row for font size insertions */}
       <div className="flex items-center gap-2 mt-2 flex-wrap">
         <div className="flex items-center gap-1">
+          {/* Font selector moved from top row */}
+          <Select onValueChange={onFontChange}>
+            <SelectTrigger className="h-6 w-24 text-xs btn-toolbar-slate">
+              <SelectValue placeholder="Font" />
+            </SelectTrigger>
+            <SelectContent className="bg-white z-50">
+              <SelectItem value="Kalam" style={{
+                fontFamily: 'Kalam'
+              }}>Kalam (child-friendly)</SelectItem>
+              <SelectItem value="Georgia" style={{
+                fontFamily: 'Georgia'
+              }}>Georgia (story content)</SelectItem>
+              <SelectItem value="Arial" style={{
+                fontFamily: 'Arial'
+              }}>Arial (titles & headings)</SelectItem>
+            </SelectContent>
+          </Select>
+          
           <ConditionalTooltip content="Insert Footer Text Style — 19px (14pt)">
             <Button 
               type="button" 
