@@ -24,6 +24,7 @@ interface StickyToolbarProps {
   onAddTokens: () => void;
   onInsertFontSize: (fontType: string) => void;
   onSelectAllPreview: () => void;
+  category?: string;
 }
 
 const StickyToolbar: React.FC<StickyToolbarProps> = ({
@@ -42,7 +43,8 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onWrapKeepTogether,
   onAddTokens,
   onInsertFontSize,
-  onSelectAllPreview
+  onSelectAllPreview,
+  category
 }) => {
   const { shouldShowTooltips } = useTooltipContext();
 

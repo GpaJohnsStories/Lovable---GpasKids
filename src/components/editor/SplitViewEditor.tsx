@@ -326,7 +326,24 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
       return;
     }
 
-    // Insert block-style tokens at the top with blank line after excerpt
+    // For webtext category, only add TITLE token
+    if (category === 'WebText') {
+      const tokensText = `{{TITLE}}{{/TITLE}}
+
+${content}`;
+      
+      onChange(tokensText);
+      
+      // Position cursor between {{TITLE}} and {{/TITLE}} for immediate editing
+      setTimeout(() => {
+        textarea.selectionStart = 9; // After {{TITLE}}
+        textarea.selectionEnd = 9;
+        textarea.focus();
+      }, 0);
+      return;
+    }
+
+    // Insert all tokens for other categories
     const tokensText = `{{TITLE}}{{/TITLE}}
 {{TAGLINE}}{{/TAGLINE}}
 {{AUTHOR}}{{/AUTHOR}}
@@ -408,6 +425,7 @@ ${content}`;
           onAddTokens={handleAddTokens}
           onInsertFontSize={handleInsertFontSize}
           onSelectAllPreview={handleSelectAllPreview}
+          category={category}
         />
       
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
