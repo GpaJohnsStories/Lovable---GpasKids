@@ -135,9 +135,9 @@ const ReferenceDashboard = () => {
             ))}
           </div>
           
-          {/* Second row - Last 2 brown buttons */}
+          {/* Second row - Last 3 brown buttons */}
           <div className="flex flex-wrap gap-3">
-            {sections.slice(4).map((section) => (
+            {sections.slice(3).map((section) => (
               <Button
                 key={section.id}
                 variant="outline"
