@@ -113,26 +113,44 @@ const ReferenceDashboard = () => {
 
       {/* Navigation Buttons - Sticky Menu */}
       <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border/40 py-1">
-        <div className="flex flex-wrap gap-3 p-4 bg-muted/30 rounded-lg border">
-        <Button
-          variant="outline"
-          onClick={() => handleSectionScroll("top")}
-          className="min-w-[120px]"
-          style={getButtonStyle('top')}
-        >
-          Scroll to Top
-        </Button>
-        {sections.map((section) => (
-          <Button
-            key={section.id}
-            variant="outline"
-            onClick={() => handleSectionScroll(section.id)}
-            className="min-w-[120px]"
-            style={getButtonStyle(section.id)}
-          >
-            {section.label}
-          </Button>
-        ))}
+        <div className="flex flex-col gap-3 p-4 bg-muted/30 rounded-lg border">
+          {/* First row - Top 4 buttons */}
+          <div className="flex flex-wrap gap-3">
+            <Button
+              variant="outline"
+              onClick={() => handleSectionScroll("top")}
+              className="min-w-[120px]"
+              style={getButtonStyle('top')}
+            >
+              Scroll to Top
+            </Button>
+            {sections.slice(0, 3).map((section) => (
+              <Button
+                key={section.id}
+                variant="outline"
+                onClick={() => handleSectionScroll(section.id)}
+                className="min-w-[120px]"
+                style={getButtonStyle(section.id)}
+              >
+                {section.label}
+              </Button>
+            ))}
+          </div>
+          
+          {/* Second row - Last 3 brown buttons */}
+          <div className="flex flex-wrap gap-3">
+            {sections.slice(3).map((section) => (
+              <Button
+                key={section.id}
+                variant="outline"
+                onClick={() => handleSectionScroll(section.id)}
+                className="min-w-[120px]"
+                style={getButtonStyle(section.id)}
+              >
+                {section.label}
+              </Button>
+            ))}
+          </div>
         </div>
       </div>
 
