@@ -722,8 +722,8 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  {/* Column 3, Row 2: Add Audio File Button */}
-                  <div className="row-start-2 col-start-3 justify-self-start self-center">
+                  {/* Column 3, Row 3: Add Audio File Button */}
+                  <div className="row-start-3 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -747,8 +747,8 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  {/* Column 3, Row 3: Add Video File Button */}
-                  <div className="row-start-3 col-start-3 justify-self-start self-center">
+                  {/* Column 3, Row 4: Add Video File Button */}
+                  <div className="row-start-4 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
