@@ -103,16 +103,16 @@ const ReferenceDashboard = () => {
   return (
     <>
       <Helmet><title>Reference</title></Helmet>
-      <div className="space-y-8">
-      <div>
-        <h2 className="text-3xl font-bold text-black mb-2 font-system">
+      <div className="space-y-2">
+      <div className="flex justify-between items-center">
+        <h2 className="text-3xl font-bold text-black font-system">
           Admin Reference
         </h2>
         <p className="text-sm text-muted-foreground">Build: {BUILD_ID}</p>
       </div>
 
       {/* Navigation Buttons - Sticky Menu */}
-      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border/40 py-4">
+      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm border-b border-border/40 py-1">
         <div className="flex flex-wrap gap-3 p-4 bg-muted/30 rounded-lg border">
         <Button
           variant="outline"
