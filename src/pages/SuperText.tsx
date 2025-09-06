@@ -1184,6 +1184,17 @@ const SuperText: React.FC = () => {
           }}>
               {saveAction === 'save-and-clear' ? 'Confirm Save & Clear' : saveAction === 'cancel-all' ? 'Confirm Cancel All & Clear' : 'Confirm Save'}
             </DialogTitle>
+            {(saveAction === 'save-and-clear' || saveAction === 'save-only') && (
+              <div style={{
+                fontSize: '21px',
+                fontFamily: 'Arial',
+                fontWeight: 'bold',
+                color: '#DC143C',
+                marginTop: '8px'
+              }}>
+                Is Publication Status Set Correctly?
+              </div>
+            )}
             <DialogDescription className="text-sm" style={{
             fontSize: '21px',
             fontFamily: 'Arial'
@@ -1192,27 +1203,11 @@ const SuperText: React.FC = () => {
                   Are you sure you want to <span className="text-red-600 font-semibold">SAVE</span> this story
                   <br />
                   and then <span className="text-red-600 font-semibold">CLEAR</span> the form?
-                  <br />
-                  <span style={{
-                    fontSize: '21px',
-                    fontFamily: 'Arial',
-                    fontWeight: 'bold',
-                    color: '#D2691E'
-                  }}>Is Publication Status Set Correctly?</span>
                 </> : saveAction === 'cancel-all' ? <>
                   Are you sure you want to <span className="text-red-600 font-semibold">CANCEL ALL EDITS</span>
                   <br />
                   and <span className="text-red-600 font-semibold">CLEAR</span> the form? All unsaved changes will be lost!
-                </> : <>
-                  Are you sure you want to save this story?
-                  <br />
-                  <span style={{
-                    fontSize: '21px',
-                    fontFamily: 'Arial',
-                    fontWeight: 'bold',
-                    color: '#D2691E'
-                  }}>Is Publication Status Set Correctly?</span>
-                </>}
+                </> : 'Are you sure you want to save this story?'}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2">
