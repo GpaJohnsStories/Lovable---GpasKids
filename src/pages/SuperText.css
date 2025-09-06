@@ -104,7 +104,7 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
 }
 
-.supertext-video-btn-21px-purple-white { /* Purple button with white 21px Arial text for video actions */
+.supertext-video-btn, .supertext-video-btn-21px-purple-white { /* Purple button with white 21px Arial text for video actions */
   background-color: #8b5cf6 !important; /* Purple */
   background-image: none !important;
   color: #ffffff !important; /* Pure White */
@@ -117,7 +117,7 @@
   font-weight: bold !important;
 }
 
-.supertext-video-btn-21px-purple-white:hover { /* Hover state for purple video button */
+.supertext-video-btn:hover, .supertext-video-btn-21px-purple-white:hover { /* Hover state for purple video button */
   background-color: #7c3aed !important;
   background-image: none !important;
   color: #ffffff !important;
@@ -125,7 +125,7 @@
   box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
 }
 
-.supertext-video-btn-21px-purple-white:active { /* Active state for purple video button */
+.supertext-video-btn:active, .supertext-video-btn-21px-purple-white:active { /* Active state for purple video button */
   transform: scale(0.98) !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
 }
@@ -166,7 +166,7 @@
   @apply supertext-no-btn-21px-red-gold;
 }
 
-.supertext-audio-btn-21px-brown-white { /* Brown button with white 21px Arial text for audio actions */
+.supertext-audio-btn, .supertext-audio-btn-21px-brown-white { /* Brown button with white 21px Arial text for audio actions */
   background-color: #8B4513 !important; /* Saddle Brown */
   background-image: none !important;
   color: #ffffff !important; /* Pure White */
@@ -179,7 +179,7 @@
   font-weight: bold !important;
 }
 
-.supertext-audio-btn-21px-brown-white:hover { /* Hover state for brown audio button */
+.supertext-audio-btn:hover, .supertext-audio-btn-21px-brown-white:hover { /* Hover state for brown audio button */
   background-color: #654321 !important;
   background-image: none !important;
   color: #ffffff !important;
@@ -187,18 +187,14 @@
   box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2) !important;
 }
 
-.supertext-audio-btn-21px-brown-white:active { /* Active state for brown audio button */
+.supertext-audio-btn:active, .supertext-audio-btn-21px-brown-white:active { /* Active state for brown audio button */
   transform: scale(0.98) !important;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3) !important;
 }
 
-.supertext-audio-btn { /* Legacy alias - redirects to descriptive class */
-  @apply supertext-audio-btn-21px-brown-white;
-}
+/* .supertext-audio-btn now defined with concrete CSS above */
 
-.supertext-video-btn { /* Legacy alias - redirects to descriptive class */
-  @apply supertext-video-btn-21px-purple-white;
-}
+/* .supertext-video-btn now defined with concrete CSS above */
 
 .supertext-orange-btn-21px-orange-white { /* Orange button with white 21px Arial text for save actions */
   background-color: #ea580c !important; /* Orange-600 */
