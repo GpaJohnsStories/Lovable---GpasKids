@@ -66,7 +66,8 @@ const ReferenceDashboard = () => {
             key={section.id}
             variant="outline"
             onClick={() => handleSectionScroll(section.id)}
-            className="min-w-[120px]"
+            className="min-w-[120px] border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white"
+            style={{ borderColor: '#F97316', color: '#F97316' }}
           >
             {section.label}
           </Button>
