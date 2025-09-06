@@ -5,11 +5,11 @@ import IconUploadSection from "./reference/IconUploadSection";
 import FontLibrarySection from "./reference/FontLibrarySection";
 import CssLibrarySection from "./reference/CssLibrarySection";
 import CssExceptionsSection from "./reference/CssExceptionsSection";
-import WebTextInventorySection from "./reference/WebTextInventorySection";
+
 import { Button } from "@/components/ui/button";
 import { BUILD_ID } from "@/utils/buildInfo";
 
-type SectionType = "colors" | "upload" | "icons" | "fonts" | "css" | "cssxx" | "webtext" | "top";
+type SectionType = "colors" | "upload" | "icons" | "fonts" | "css" | "cssxx" | "top";
 
 const ReferenceDashboard = () => {
   const sections = [
@@ -17,7 +17,6 @@ const ReferenceDashboard = () => {
     { id: "upload" as const, label: "Upload Icon", component: <IconUploadSection /> },
     { id: "icons" as const, label: "Icon Library", component: <IconLibraryDisplay /> },
     { id: "fonts" as const, label: "Font Library", component: <FontLibrarySection /> },
-    { id: "webtext" as const, label: "WebText Inventory", component: <WebTextInventorySection /> },
     { id: "css" as const, label: "CSS Library", component: <CssLibrarySection /> },
     { id: "cssxx" as const, label: "CSS XX", component: <CssExceptionsSection /> },
   ];
@@ -86,7 +85,6 @@ const ReferenceDashboard = () => {
           color: 'white',
           borderColor: '#3b82f6',
         };
-      case 'webtext':
       case 'css':
       case 'cssxx':
         return {
@@ -137,9 +135,9 @@ const ReferenceDashboard = () => {
             ))}
           </div>
           
-          {/* Second row - Last 3 brown buttons */}
+          {/* Second row - Last 2 brown buttons */}
           <div className="flex flex-wrap gap-3">
-            {sections.slice(3).map((section) => (
+            {sections.slice(4).map((section) => (
               <Button
                 key={section.id}
                 variant="outline"
