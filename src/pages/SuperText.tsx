@@ -1193,18 +1193,22 @@ const SuperText: React.FC = () => {
           }}>
               {saveAction === 'save-and-clear' ? 'Confirm Save & Clear' : saveAction === 'cancel-all' ? 'Confirm Cancel All & Clear' : 'Confirm Save'}
             </DialogTitle>
-            {(saveAction === 'save-and-clear' || saveAction === 'save-only') && (
-              <div style={{
-                fontSize: formData.publication_status_code === 0 || formData.publication_status_code === 1 ? '24px' : '21px',
-                fontFamily: 'Arial',
-                fontWeight: 'bold',
-                fontStyle: formData.publication_status_code === 0 || formData.publication_status_code === 1 ? 'italic' : 'normal',
-                color: formData.publication_status_code === 0 || formData.publication_status_code === 1 ? '#DC143C' : '#3b82f6',
-                marginTop: '8px'
-              }}>
-                Publication Status Code is <u>{formData.publication_status_code}</u> and will {formData.publication_status_code === 0 || formData.publication_status_code === 1 ? <u>IMMEDIATELY</u> : <u>NOT</u>} be available to the public!
-              </div>
-            )}
+            {(saveAction === 'save-and-clear' || saveAction === 'save-only') && (() => {
+              const pubCode = Number(formData.publication_status_code);
+              const isPublic = pubCode === 0 || pubCode === 1;
+              return (
+                <div style={{
+                  fontSize: isPublic ? '24px' : '21px',
+                  fontFamily: 'Arial',
+                  fontWeight: 'bold',
+                  fontStyle: isPublic ? 'italic' : 'normal',
+                  color: isPublic ? '#ef4444' : '#3b82f6',
+                  marginTop: '8px'
+                }}>
+                  Publication Status Code is <u>{formData.publication_status_code}</u> and will {isPublic ? <><u>IMMEDIATELY</u></> : <><u>NOT</u></>} be available to the public!
+                </div>
+              );
+            })()}
             <DialogDescription className="text-sm" style={{
             fontSize: '21px',
             fontFamily: 'Arial'
