@@ -730,7 +730,9 @@ const SuperText: React.FC = () => {
                           <Button onClick={scrollToAudioSection} className="supertext-audio-btn px-6 py-2 rounded-full" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        backgroundColor: '#8B4513',
+                        color: 'white'
                       }} tabIndex={-1}>
                             Add Audio File
                           </Button>
@@ -755,7 +757,9 @@ const SuperText: React.FC = () => {
                           <Button onClick={scrollToVideoSection} className="supertext-video-btn px-6 py-2 rounded-full" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        backgroundColor: '#8b5cf6',
+                        color: 'white'
                       }} tabIndex={-1}>
                             Add Video File
                           </Button>
