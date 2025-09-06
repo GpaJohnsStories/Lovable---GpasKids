@@ -292,6 +292,7 @@ const SuperText: React.FC = () => {
   };
 
   const handleForceCacheRefresh = async () => {
+    console.log('🔄 Force cache refresh button clicked');
     if (!formData.story_code.trim()) {
       toast.error("Please enter a text code to refresh cache.");
       return;
