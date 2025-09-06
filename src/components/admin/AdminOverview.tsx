@@ -77,7 +77,8 @@ const AdminOverview = () => {
                 style={{
                   fontFamily: 'Arial, sans-serif',
                   fontSize: '21px',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  borderWidth: '3px'
                 }}
               >
                 <item.icon className="h-4 w-4 mr-2" />
