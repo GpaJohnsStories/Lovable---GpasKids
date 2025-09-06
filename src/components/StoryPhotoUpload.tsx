@@ -19,6 +19,7 @@ interface StoryPhotoUploadProps {
     photo_alt_2: string;
     photo_alt_3: string;
   };
+  storyCode?: string; // Required for deterministic photo paths
   onPhotoUpload: (photoNumber: 1 | 2 | 3, url: string) => void;
   onPhotoRemove: (photoNumber: 1 | 2 | 3) => void;
   onAltTextChange: (field: string, value: string) => void;
@@ -27,13 +28,14 @@ interface StoryPhotoUploadProps {
 const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
   photoUrls,
   photoAlts,
+  storyCode,
   onPhotoUpload,
   onPhotoRemove,
   onAltTextChange
 }) => {
   const [uploading, setUploading] = useState<{ [key: number]: boolean }>({});
 
-  const resizeImage = (file: File, maxWidth: number = 800, maxHeight: number = 600, quality: number = 0.8): Promise<File> => {
+  const resizeImageToWebP = (file: File, maxWidth: number = 800, maxHeight: number = 600, quality: number = 0.8): Promise<File> => {
     return new Promise((resolve) => {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d')!;
@@ -62,17 +64,17 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
         // Draw and resize image
         ctx.drawImage(img, 0, 0, width, height);
         
-        // Convert canvas to blob
+        // Convert canvas to WebP blob
         canvas.toBlob((blob) => {
           if (blob) {
-            // Create new file with same name and type
-            const resizedFile = new File([blob], file.name, {
-              type: file.type,
+            // Create new WebP file
+            const webpFile = new File([blob], 'photo.webp', {
+              type: 'image/webp',
               lastModified: Date.now(),
             });
-            resolve(resizedFile);
+            resolve(webpFile);
           }
-        }, file.type, quality);
+        }, 'image/webp', quality);
       };
       
       // Load the image
@@ -82,8 +84,14 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
 
   const handleFileUpload = async (file: File, photoNumber: 1 | 2 | 3) => {
     console.log('🖼️ Photo upload started for photo', photoNumber, 'with file:', file);
+    
     if (!file) {
       console.log('❌ No file provided');
+      return;
+    }
+
+    if (!storyCode?.trim()) {
+      toast.error('Story code is required before uploading photos. Please save the story first.');
       return;
     }
 
@@ -106,32 +114,28 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
     setUploading(prev => ({ ...prev, [photoNumber]: true }));
 
     try {
-      // Check admin status first
-      const { data: session } = await supabase.auth.getSession();
-      console.log('📝 Current session:', session?.session?.user?.id ? 'User logged in' : 'No user');
-      
-      const { data: isAdmin, error: adminError } = await supabase.rpc('is_admin_safe');
-      console.log('👑 Admin status check:', isAdmin, 'Error:', adminError);
-      
-      // Resize the image to prevent cropping and reduce file size
-      console.log('🔄 Starting image resize...');
-      toast.info('Resizing image...');
-      const resizedFile = await resizeImage(file, 800, 600, 0.85);
-      console.log('✅ Image resized:', {
+      // Resize and convert to WebP
+      console.log('🔄 Starting image resize and WebP conversion...');
+      toast.info('Resizing and optimizing image...');
+      const webpFile = await resizeImageToWebP(file, 800, 600, 0.85);
+      console.log('✅ Image converted to WebP:', {
         originalSize: (file.size / 1024 / 1024).toFixed(2) + 'MB',
-        resizedSize: (resizedFile.size / 1024 / 1024).toFixed(2) + 'MB'
+        webpSize: (webpFile.size / 1024 / 1024).toFixed(2) + 'MB'
       });
       
-      // Generate unique filename
-      const fileExt = resizedFile.name.split('.').pop();
-      const fileName = `story-photos/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
-      console.log('📝 Generated filename:', fileName);
+      // Use deterministic filename: stories/{STORY_CODE}/photo-{1|2|3}.webp
+      const fileName = `stories/${storyCode.trim()}/photo-${photoNumber}.webp`;
+      console.log('📝 Using deterministic filename:', fileName);
 
-      // Upload resized file to Supabase storage
+      // Upload WebP file to Supabase storage with upsert to replace existing
       console.log('☁️ Starting upload to Supabase storage...');
       const { data, error } = await supabase.storage
         .from('story-photos')
-        .upload(fileName, resizedFile);
+        .upload(fileName, webpFile, {
+          contentType: 'image/webp',
+          upsert: true, // Replace existing file
+          cacheControl: '3600' // 1 hour cache
+        });
 
       console.log('📤 Upload response:', { data, error });
 
@@ -148,7 +152,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
 
       console.log('✅ Public URL generated:', publicUrl);
       onPhotoUpload(photoNumber, publicUrl);
-      toast.success(`Photo resized and uploaded successfully! Original: ${(file.size / 1024 / 1024).toFixed(1)}MB → Resized: ${(resizedFile.size / 1024 / 1024).toFixed(1)}MB`);
+      toast.success(`Photo optimized and uploaded! Original: ${(file.size / 1024 / 1024).toFixed(1)}MB → WebP: ${(webpFile.size / 1024 / 1024).toFixed(1)}MB`);
     } catch (error) {
       console.error('❌ Upload error details:', error);
       console.error('Error message:', error instanceof Error ? error.message : error);
@@ -178,7 +182,14 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
                 type="button"
                 size="sm"
                 variant="destructive"
-                onClick={() => onPhotoRemove(photoNumber)}
+                onClick={async () => {
+                  try {
+                    await onPhotoRemove(photoNumber);
+                    toast.success('Photo removed successfully');
+                  } catch (error) {
+                    toast.error(`Failed to remove photo: ${error instanceof Error ? error.message : 'Unknown error'}`);
+                  }
+                }}
               >
                 <X className="h-3 w-3 mr-1" />
                 Remove

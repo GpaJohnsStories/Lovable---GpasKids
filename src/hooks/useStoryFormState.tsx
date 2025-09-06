@@ -1,6 +1,29 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useStoryData } from '@/hooks/useStoryData';
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+
+// Helper function to extract storage key from public URL
+const extractStorageKeyFromPublicUrl = (publicUrl: string): string | null => {
+  if (!publicUrl) return null;
+  
+  try {
+    // Handle both old format (story-photos/...) and new format (story-photos/stories/...)
+    const baseUrl = 'https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/';
+    
+    if (!publicUrl.startsWith(baseUrl)) {
+      console.log('❌ URL does not match expected format:', publicUrl);
+      return null;
+    }
+    
+    // Extract the path after the base URL, remove any query parameters
+    const path = publicUrl.replace(baseUrl, '').split('?')[0];
+    return path;
+  } catch (error) {
+    console.error('❌ Error extracting storage key:', error);
+    return null;
+  }
+};
 
 
 export interface Story {
@@ -110,8 +133,36 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     handleInputChange(`photo_link_${photoNumber}` as keyof Story, url);
   };
 
-  const handlePhotoRemove = (photoNumber: 1 | 2 | 3) => {
+  const handlePhotoRemove = async (photoNumber: 1 | 2 | 3) => {
+    const photoUrl = formData[`photo_link_${photoNumber}` as keyof Story] as string;
+    
+    // If there's a photo URL, try to delete it from storage
+    if (photoUrl) {
+      try {
+        const storageKey = extractStorageKeyFromPublicUrl(photoUrl);
+        if (storageKey) {
+          console.log('🗑️ Deleting photo from storage:', storageKey);
+          const { error } = await supabase.storage
+            .from('story-photos')
+            .remove([storageKey]);
+          
+          // Treat 404 as success (file already missing)
+          if (error && !error.message.includes('not found')) {
+            console.error('❌ Error deleting photo:', error);
+            throw new Error(`Failed to delete photo: ${error.message}`);
+          }
+          
+          console.log('✅ Photo deleted successfully from storage');
+        }
+      } catch (error) {
+        console.error('❌ Error in photo deletion:', error);
+        // Don't throw here - we still want to remove from form even if storage delete fails
+      }
+    }
+    
+    // Clear from form data
     handleInputChange(`photo_link_${photoNumber}` as keyof Story, '');
+    handleInputChange(`photo_alt_${photoNumber}` as keyof Story, '');
   };
 
   const handleVideoUpload = (url: string) => {
