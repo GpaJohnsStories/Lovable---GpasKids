@@ -72,7 +72,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   return (
     <div className="min-h-[140px]">
       {/* Single compartment layout */}
-      <div className="relative flex items-start justify-between h-full pt-1">
+      <div className="relative flex items-start justify-between h-full pt-px sm:pt-1">
         
         {/* LEFT SECTION: Buddy + Title */}
         <div className="flex items-start gap-4 justify-start">
@@ -160,7 +160,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
         {!isAdminPage && (
           <div className="flex items-start gap-4 justify-end relative" ref={menuRef}>
             {/* Mobile: Vertical stack of HGJ and Safe for Kids */}
-            <div className="sm:hidden flex flex-col gap-2 items-center mt-px">
+            <div className="sm:hidden flex flex-col gap-2 items-center mt-0">
               {/* ICO-HGJ Button - Help Grandpa John */}
               <Tooltip>
                 <TooltipTrigger asChild>
