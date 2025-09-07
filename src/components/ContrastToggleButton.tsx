@@ -44,15 +44,15 @@ const ContrastToggleButton: React.FC<ContrastToggleButtonProps> = ({ inline = fa
       className="p-0 m-0 bg-transparent hover:bg-transparent border-none shadow-none h-auto w-auto focus:ring-0 focus:outline-none no-underline hover:no-underline cursor-pointer"
       aria-label={isHighContrast ? "Turn off high contrast" : "Turn on high contrast"}
     >
-      <div className="w-[70px] h-[70px] flex items-center justify-center">
+      <div className="w-[85px] h-[85px] flex items-center justify-center">
         {iconUrl ? (
           <img 
             src={iconUrl} 
             alt="Contrast Toggle" 
-            className="h-[70px] w-[70px] block object-contain"
+            className="h-[85px] w-[85px] block object-contain"
           />
         ) : (
-          <Eye className="h-8 w-8 text-orange-500" />
+          <Eye className="h-10 w-10 text-orange-500" />
         )}
       </div>
     </Button>
