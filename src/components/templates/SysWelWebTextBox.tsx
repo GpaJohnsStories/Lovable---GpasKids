@@ -117,7 +117,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
           {/* Title */}
           {(title || webtextData.title) && (
             <h2 
-              className="font-bold mb-3 text-20-system"
+              className="font-bold mb-1 text-20-system"
               style={{ color: theme.colors.primary }}
             >
               {title || webtextData.title}

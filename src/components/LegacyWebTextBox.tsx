@@ -150,7 +150,7 @@ export const WebTextBox: React.FC<LegacyWebTextBoxProps> = ({
             {/* Title and content section */}
             <div className="flex-1 min-w-0 flex flex-col">
               {/* Title section */}
-              <div className="mb-4">
+              <div className="mb-2">
                 <div className="flex items-start gap-3 justify-start">
                   {(() => {
                     const content = getContent();
