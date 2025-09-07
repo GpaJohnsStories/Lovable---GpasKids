@@ -38,8 +38,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const [loading, setLoading] = useState(true);
   const [fontScale, setFontScale] = useState<FontScaleStep>(DEFAULT_FONT_SCALE);
   
-  // Define isSysWel first, before using it (emerald template for SYS-WEL and SYS-WE2)
-  const isSysWel = webtextCode === "SYS-WEL" || webtextCode === "SYS-WE2";
+  // Define isSysWel only for SYS-WEL (blue template)
+  const isSysWel = webtextCode === "SYS-WEL";
   const isSysCem = webtextCode === "SYS-CEM";
   
   // No longer loading Buddy's icon as fallback for SYS-WEL
