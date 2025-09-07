@@ -13,6 +13,7 @@ import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 import { buildCacheBustedUrl, getAssetVersionFromStory } from '@/utils/storyUtils';
 import { toast } from '@/hooks/use-toast';
 import { useIconCache } from '@/contexts/IconCacheContext';
+import { classifyImageAspect, getResponsiveImageGutterClass, type ImageAspectType } from '@/utils/imageUtils';
 
 interface ProportionalWebTextBoxProps {
   webtextCode: string;
@@ -49,6 +50,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   // Audio controls state for peppermint button
   const [showSuperAV, setShowSuperAV] = useState(false);
   const [displayImage, setDisplayImage] = useState<{url: string, alt: string} | null>(null);
+  const [imageAspect, setImageAspect] = useState<ImageAspectType>('square');
   
   const { getIconUrl, getIconName } = useIconCache();
   
@@ -374,17 +376,22 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           </div>
         )}
 
-        {/* Photo and Content Section with true text wrapping */}
+          {/* Photo and Content Section with adaptive text wrapping */}
         <div className="relative">
-          {/* Photo floated to the left */}
+          {/* Photo floated to the left with adaptive gutter */}
           {iconUrl && (
-            <div className="float-left mr-6 mb-4">
+            <div className={`float-left ${getResponsiveImageGutterClass(imageAspect)} mb-4`}>
               <div className="group relative">
                 <img 
                   src={iconUrl} 
                   alt={photos[0]?.alt || "webtext icon"}
                   className="w-auto h-48 md:h-64 lg:h-80 object-contain border rounded transition-transform hover:scale-105"
                   style={{ borderColor }}
+                  onLoad={(e) => {
+                    const img = e.currentTarget;
+                    const aspect = classifyImageAspect(img.naturalWidth, img.naturalHeight);
+                    setImageAspect(aspect);
+                  }}
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}

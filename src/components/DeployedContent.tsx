@@ -5,6 +5,7 @@ import { SuperAV } from '@/components/SuperAV';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 import { buildCacheBustedUrl, getAssetVersionFromStory } from '@/utils/storyUtils';
+import { classifyImageAspect, getResponsiveImageGutterClass, type ImageAspectType } from '@/utils/imageUtils';
 
 interface StoryData {
   id: string;
@@ -52,6 +53,7 @@ export const DeployedContent = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showSuperAV, setShowSuperAV] = useState(false);
+  const [imageAspect, setImageAspect] = useState<ImageAspectType>('square');
 
   useEffect(() => {
     const fetchStoryContent = async () => {
@@ -162,9 +164,9 @@ export const DeployedContent = ({
         </div>
       )}
 
-      {/* Photo if available - positioned to float left with Tooltip */}
+      {/* Photo if available - positioned to float left with adaptive gutter */}
       {!audioOnly && !hidePhotos && content.photo_link_1 && (
-        <div className="float-left mr-8 mb-6 w-full max-w-xs">
+        <div className={`float-left ${getResponsiveImageGutterClass(imageAspect)} mb-4 w-full max-w-xs`}>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -172,6 +174,11 @@ export const DeployedContent = ({
                   src={buildCacheBustedUrl(content.photo_link_1, getAssetVersionFromStory(content))} 
                   alt={content.photo_alt_1 || content.title || 'Story image'}
                   className="w-full h-auto rounded-lg shadow-lg border-4 border-white cursor-pointer"
+                  onLoad={(e) => {
+                    const img = e.currentTarget;
+                    const aspect = classifyImageAspect(img.naturalWidth, img.naturalHeight);
+                    setImageAspect(aspect);
+                  }}
                 />
               </TooltipTrigger>
               <TooltipContent>
@@ -197,6 +204,9 @@ export const DeployedContent = ({
           enableProportionalSizing={true}
         />
       )}
+      
+      {/* Clear float after content */}
+      <div className="clear-both"></div>
     </div>
   );
 };
