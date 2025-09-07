@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { iconCacheService } from '@/services/IconCacheService';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
@@ -112,8 +113,10 @@ const IconLibraryDisplay = () => {
       console.log('✅ Database record deleted successfully');
       return icon;
     },
-    onSuccess: (deletedIcon) => {
+    onSuccess: async (deletedIcon) => {
       toast.success(`Icon "${deletedIcon.icon_name}" deleted successfully!`);
+      // Force refresh entire icon cache and library
+      await iconCacheService.refreshAllIcons();
       queryClient.invalidateQueries({ queryKey: ['icon-library'] });
     },
     onError: (error) => {
@@ -170,12 +173,14 @@ const IconLibraryDisplay = () => {
 
       return { icon, fileName, tooltip };
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast.success(`Icon "${data.tooltip || data.icon.icon_name}" updated successfully!`);
       setReplaceDialogOpen(false);
       setSelectedIcon(null);
       setNewFile(null);
       setNewTooltip('');
+      // Force refresh entire icon cache and library
+      await iconCacheService.refreshAllIcons();
       queryClient.invalidateQueries({ queryKey: ['icon-library'] });
     },
     onError: (error) => {

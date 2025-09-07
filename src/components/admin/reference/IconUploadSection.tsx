@@ -8,6 +8,7 @@ import { Upload, Loader2 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { iconCacheService } from "@/services/IconCacheService";
 
 const IconUploadSection = () => {
   const [iconCode, setIconCode] = useState("");
@@ -44,7 +45,7 @@ const IconUploadSection = () => {
 
       return { fileName, path: uploadData.path };
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast({
         title: "Icon uploaded successfully",
         description: `${data.fileName} has been saved to the icon library.`,
@@ -55,7 +56,8 @@ const IconUploadSection = () => {
       setIconName("");
       setSelectedFile(null);
       
-      // Invalidate queries to refresh icon library
+      // Force refresh entire icon cache and library
+      await iconCacheService.refreshAllIcons();
       queryClient.invalidateQueries({ queryKey: ['icon-library'] });
     },
     onError: (error) => {

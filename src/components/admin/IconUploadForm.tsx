@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { iconCacheService } from '@/services/IconCacheService';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -60,12 +61,14 @@ const IconUploadForm = () => {
 
       return { fileName, code, name };
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast.success(`Icon "${data.name}" uploaded successfully!`);
       setIconCode('');
       setIconName('');
       setSelectedFile(null);
       setIsPriority(false);
+      // Force refresh entire icon cache and library
+      await iconCacheService.refreshAllIcons();
       queryClient.invalidateQueries({ queryKey: ['icon-library'] });
       setIsUploading(false);
     },
