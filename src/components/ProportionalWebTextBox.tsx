@@ -213,17 +213,9 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
     return (
       <>
         <div id={id} className="bg-emerald-50 border-4 border-emerald-600 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
-          {/* Top Right Control Box - Always visible */}
+          {/* Top Right Audio Button */}
           <div className="absolute z-[5]" style={{ top: -1, right: -1 }}>
-            <div className="bg-white/90 border-4 border-emerald-600 rounded-lg px-2 py-1 shadow-lg">
-              <div className="flex items-center justify-end gap-2">
-                <div className="text-base font-handwritten font-bold text-emerald-900 leading-tight">
-                  Click to listen or<br />change word size
-                </div>
-                <ChevronRight className="w-8 h-8 text-emerald-800 font-bold" strokeWidth={4} />
-                <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
-              </div>
-            </div>
+            <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
           </div>
 
           {/* Content with floating image layout */}
