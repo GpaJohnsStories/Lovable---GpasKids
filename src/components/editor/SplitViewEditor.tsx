@@ -497,7 +497,7 @@ ${content}`;
             </div>
             <div 
               ref={storyContentRef}
-              className="flex-1 p-4 overflow-auto bg-white"
+              className="supertext-preview flex-1 p-4 overflow-auto bg-white"
             >
               <IsolatedStoryRenderer
                 content={previewContent !== null ? previewContent : content}

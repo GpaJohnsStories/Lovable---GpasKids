@@ -1,5 +1,14 @@
 /* SuperText page specific styles */
 
+/* Tighten spacing under title in preview */
+.supertext-preview .header-preview {
+  margin-bottom: 0.25rem !important; /* was mb-6 */
+  padding-bottom: 0.25rem !important; /* was pb-4 */
+}
+.supertext-preview .header-preview h1 {
+  margin-bottom: 0.25rem !important; /* was mb-2 */
+}
+
 /* Font size utility classes with descriptive names */
 .supertext-fs-21px-arial-white { /* 21px Arial font in white for buttons and inputs */
   font-size: 21px !important;
