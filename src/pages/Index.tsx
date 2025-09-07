@@ -20,6 +20,11 @@ const Index = () => {
           backgroundColor="bg-[#ADD8E6]"
         />
         
+        <ProportionalWebTextBox 
+          webtextCode="SYS-WEL"
+          borderColor="#facc15"
+          backgroundColor="bg-[#ADD8E6]"
+        />
         
         {/* GpaJohn's Banner - Keeping the wide blue button */}
         <GpaJohnComments />
