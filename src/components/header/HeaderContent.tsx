@@ -112,7 +112,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
               <div className="text-blue-900">Grandpa John's</div>
               <div className="text-left text-white text-xl sm:text-3xl">Kid's Stories</div>
             </div>
-            <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story feels like a new adventure</p>
+            <p className="text-amber-100 text-xs sm:text-sm font-medium">Where every story<br />feels like a new adventure</p>
           </div>
         </div>
 
