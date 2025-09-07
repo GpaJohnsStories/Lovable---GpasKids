@@ -19,7 +19,8 @@ export interface ExtractedTokens {
 
 /**
  * Extracts header tokens from story content
- * Supports block style format only: {{TITLE}}content{{/TITLE}}
+ * Supports block style format: {{TITLE}}content{{/TITLE}}
+ * Also detects and preserves outer HTML wrappers around tokens
  * Each token can contain HTML/CSS which will be sanitized on render
  */
 export const extractHeaderTokens = (content: string): ExtractedTokens => {
@@ -33,15 +34,6 @@ export const extractHeaderTokens = (content: string): ExtractedTokens => {
   const tokens: HeaderTokens = {};
   let cleanedContent = content;
 
-  // Define block style token patterns that need to be removed from preview
-  const allTokenPatterns = [
-    /\{\{TITLE\}\}([\s\S]*?)\{\{\/TITLE\}\}/gi,
-    /\{\{TAGLINE\}\}([\s\S]*?)\{\{\/TAGLINE\}\}/gi,
-    /\{\{AUTHOR\}\}([\s\S]*?)\{\{\/AUTHOR\}\}/gi,
-    /\{\{EXCERPT\}\}([\s\S]*?)\{\{\/EXCERPT\}\}/gi,
-    /\{\{BIGICON\}\}([\s\S]*?)\{\{\/BIGICON\}\}/gi
-  ];
-
   // Extract BIGICON token separately (just the icon path, no HTML)
   const bigIconPattern = /\{\{BIGICON\}\}([\s\S]*?)\{\{\/BIGICON\}\}/gi;
   const bigIconMatches = Array.from(content.matchAll(bigIconPattern));
@@ -53,25 +45,64 @@ export const extractHeaderTokens = (content: string): ExtractedTokens => {
     }
   }
 
-  // Extract token content from block style patterns only
+  // Extract token content from block style patterns, including outer HTML wrappers
   ['title', 'tagline', 'author', 'excerpt'].forEach(key => {
-    const blockPattern = new RegExp(`\\{\\{${key.toUpperCase()}\\}\\}([\\s\\S]*?)\\{\\{\\/${key.toUpperCase()}\\}\\}`, 'gi');
-    const matches = Array.from(content.matchAll(blockPattern));
+    // Pattern to detect outer HTML wrapper around the token
+    // Matches: <any-tag style="...">{{TITLE}}content{{/TITLE}}</any-tag>
+    const wrappedPattern = new RegExp(`(<[^>]+>)\\{\\{${key.toUpperCase()}\\}\\}([\\s\\S]*?)\\{\\{\\/${key.toUpperCase()}\\}\\}(<\\/[^>]+>)`, 'gi');
+    const wrappedMatches = Array.from(content.matchAll(wrappedPattern));
     
-    if (matches.length > 0) {
+    if (wrappedMatches.length > 0) {
       // Use the last match if multiple exist
-      const lastMatch = matches[matches.length - 1];
-      const htmlValue = lastMatch[1].trim();
+      const lastMatch = wrappedMatches[wrappedMatches.length - 1];
+      const openTag = lastMatch[1];
+      const innerContent = lastMatch[2].trim();
+      const closeTag = lastMatch[3];
       
-      // Store both HTML and plain text versions (only if not empty)
-      if (htmlValue) {
-        tokens[`${key}Html` as keyof HeaderTokens] = htmlValue;
-        tokens[key as keyof HeaderTokens] = stripHtmlTags(htmlValue);
+      if (innerContent) {
+        // Normalize font-weight: half-bold to 600 in style attributes
+        let normalizedOpenTag = openTag.replace(/font-weight:\s*half-bold/gi, 'font-weight: 600');
+        
+        // Store the complete wrapped HTML and extract plain text
+        const fullHtml = `${normalizedOpenTag}${innerContent}${closeTag}`;
+        tokens[`${key}Html` as keyof HeaderTokens] = fullHtml;
+        tokens[key as keyof HeaderTokens] = stripHtmlTags(innerContent);
+      }
+    } else {
+      // Fallback to standard block pattern if no wrapper found
+      const blockPattern = new RegExp(`\\{\\{${key.toUpperCase()}\\}\\}([\\s\\S]*?)\\{\\{\\/${key.toUpperCase()}\\}\\}`, 'gi');
+      const matches = Array.from(content.matchAll(blockPattern));
+      
+      if (matches.length > 0) {
+        // Use the last match if multiple exist
+        const lastMatch = matches[matches.length - 1];
+        const htmlValue = lastMatch[1].trim();
+        
+        // Store both HTML and plain text versions (only if not empty)
+        if (htmlValue) {
+          tokens[`${key}Html` as keyof HeaderTokens] = htmlValue;
+          tokens[key as keyof HeaderTokens] = stripHtmlTags(htmlValue);
+        }
       }
     }
   });
 
-  // Remove all block style token patterns from content (including empty ones)
+  // Define all token patterns for removal (both wrapped and unwrapped)
+  const allTokenPatterns = [
+    // Wrapped patterns
+    /<[^>]+>\{\{TITLE\}\}[\s\S]*?\{\{\/TITLE\}\}<\/[^>]+>/gi,
+    /<[^>]+>\{\{TAGLINE\}\}[\s\S]*?\{\{\/TAGLINE\}\}<\/[^>]+>/gi,
+    /<[^>]+>\{\{AUTHOR\}\}[\s\S]*?\{\{\/AUTHOR\}\}<\/[^>]+>/gi,
+    /<[^>]+>\{\{EXCERPT\}\}[\s\S]*?\{\{\/EXCERPT\}\}<\/[^>]+>/gi,
+    // Standard patterns
+    /\{\{TITLE\}\}([\s\S]*?)\{\{\/TITLE\}\}/gi,
+    /\{\{TAGLINE\}\}([\s\S]*?)\{\{\/TAGLINE\}\}/gi,
+    /\{\{AUTHOR\}\}([\s\S]*?)\{\{\/AUTHOR\}\}/gi,
+    /\{\{EXCERPT\}\}([\s\S]*?)\{\{\/EXCERPT\}\}/gi,
+    /\{\{BIGICON\}\}([\s\S]*?)\{\{\/BIGICON\}\}/gi
+  ];
+
+  // Remove all token patterns from content (including empty ones)
   allTokenPatterns.forEach(pattern => {
     cleanedContent = cleanedContent.replace(pattern, '');
   });

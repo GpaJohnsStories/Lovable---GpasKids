@@ -463,6 +463,7 @@ ${content}`;
           onSelectAllPreview={handleSelectAllPreview}
           onInsertIconTokens={handleInsertIconTokens}
           onInsertBigIcon={handleInsertBigIcon}
+          onInsertTitle={insertTextAtCursor}
           category={category}
         />
       

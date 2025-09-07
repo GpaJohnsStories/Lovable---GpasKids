@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package, FileCode } from "lucide-react";
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package, FileCode, Type } from "lucide-react";
 import InternalLinkDialog from "@/components/rich-text-editor/InternalLinkDialog";
+import TitleToolsDialog from "./TitleToolsDialog";
 import { useTooltipContext } from "@/contexts/TooltipContext";
 
 interface StickyToolbarProps {
@@ -26,6 +27,7 @@ interface StickyToolbarProps {
   onSelectAllPreview: () => void;
   onInsertIconTokens: () => void;
   onInsertBigIcon: () => void;
+  onInsertTitle: (titleHtml: string) => void;
   category?: string;
 }
 
@@ -48,6 +50,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onSelectAllPreview,
   onInsertIconTokens,
   onInsertBigIcon,
+  onInsertTitle,
   category
 }) => {
   const { shouldShowTooltips } = useTooltipContext();
@@ -102,6 +105,20 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
           backgroundColor: '#9c441a'
         }} />
 
+        {/* Title Tools Button */}
+        <div className="flex items-center gap-1">
+          <TitleToolsDialog onInsertTitle={onInsertTitle}>
+            <ConditionalTooltip content="Title/Tagline Styling Tools">
+              <Button 
+                type="button" 
+                className="h-8 w-28 px-4 btn-toolbar-purple text-lg font-bold"
+              >
+                <Type className="h-4 w-4 mr-1" />
+                Title
+              </Button>
+            </ConditionalTooltip>
+          </TitleToolsDialog>
+        </div>
 
         <Separator orientation="vertical" className="h-6" style={{
           backgroundColor: '#9c441a'
