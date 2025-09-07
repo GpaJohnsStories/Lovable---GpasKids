@@ -9,7 +9,7 @@ interface ContrastToggleButtonProps {
 
 const ContrastToggleButton: React.FC<ContrastToggleButtonProps> = ({ inline = false }) => {
   const [isHighContrast, setIsHighContrast] = useState(false);
-  const { iconUrl, iconName } = useCachedIcon('!CO-VCB.png', true);
+  const { iconUrl, iconName } = useCachedIcon('!CO-VC2.gif', true);
 
   // Load saved contrast preference on mount
   useEffect(() => {
