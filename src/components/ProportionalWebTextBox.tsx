@@ -212,7 +212,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   if (isSysWel) {
     return (
       <>
-        <div id={id} className="bg-emerald-50 border-4 border-emerald-600 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
+        <div id={id} className="bg-blue-50/20 border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
           {/* Top Right Audio Button */}
           <div className="absolute z-[5]" style={{ top: -1, right: -1 }}>
             <AudioButton code={webtextCode} onClick={() => setShowSuperAV(true)} />
@@ -228,7 +228,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     <div className={`group relative inline-block float-left ${getResponsiveImageGutterClass(imageAspect)} mb-4`}>
                       <button 
                         onClick={() => navigate('/guide')}
-                        className="relative block transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 p-1 border-2 border-emerald-700"
+                        className="relative block transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-2xl bg-gradient-to-br from-blue-400 to-blue-600 p-1 border-2 border-blue-700"
                         style={{
                           boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
                           filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
@@ -237,7 +237,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                         <img
                           src={displayImage.url}
                           alt={displayImage.alt}
-                          className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded border border-emerald-800"
+                          className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded border border-blue-800"
                           onLoad={(e) => {
                             const img = e.currentTarget;
                             const aspect = classifyImageAspect(img.naturalWidth, img.naturalHeight);
@@ -253,7 +253,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     <TooltipContent
                       side="bottom"
                       align="start"
-                      className="bg-emerald-900/90 text-yellow-100 border-emerald-700 shadow-lg backdrop-blur-sm z-50"
+                      className="bg-blue-900/90 text-yellow-100 border-blue-700 shadow-lg backdrop-blur-sm z-50"
                       style={{ 
                         fontSize: '21px', 
                         fontFamily: 'Kalam, Comic Sans MS, cursive, sans-serif',
@@ -283,7 +283,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     if (titleHtml) {
                       return (
                         <h1 
-                          className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
+                          className="font-handwritten font-bold text-blue-900 leading-tight break-words text-left"
                           style={{ 
                             fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
                             fontSize: `${Math.floor(currentFontSize * 2.25)}px`
@@ -294,7 +294,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     } else {
                       return (
                         <h1 
-                          className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
+                          className="font-handwritten font-bold text-blue-900 leading-tight break-words text-left"
                           style={{ 
                             fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
                             fontSize: `${Math.floor(currentFontSize * 2.25)}px`
@@ -313,7 +313,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
             {webtextCode === "SYS-WEL" && (
               <IsolatedStoryRenderer
                 content={getContent()}
-                className="proportional-content text-emerald-900 leading-relaxed break-words"
+                className="proportional-content text-blue-900 leading-relaxed break-words"
                 category="WebText"
                 fontSize={currentFontSize}
                 useRichCleaning={true}
@@ -328,7 +328,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
 
           {/* Bottom right: Webtext code */}
           <div className="flex justify-end">
-            <div className="bg-emerald-100/70 rounded px-3 py-1 text-sm font-mono text-emerald-800 border border-emerald-500">
+            <div className="bg-blue-100/70 rounded px-3 py-1 text-sm font-mono text-blue-800 border border-blue-500">
               {webtextCode}
             </div>
           </div>
