@@ -21,7 +21,7 @@ const Index = () => {
         />
         
         <ProportionalWebTextBox 
-          webtextCode="SYS-WEL"
+          webtextCode="SYS-WE2"
           borderColor="#facc15"
           backgroundColor="bg-[#ADD8E6]"
         />
