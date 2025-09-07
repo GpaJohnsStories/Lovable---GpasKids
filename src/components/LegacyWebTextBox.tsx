@@ -176,7 +176,7 @@ export const WebTextBox: React.FC<LegacyWebTextBoxProps> = ({
               </div>
 
               {/* Content below title */}
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 syswel-box-content">
                 <IsolatedStoryRenderer
                   content={getContent()}
                   className="font-handwritten text-blue-800 leading-relaxed break-words"
@@ -188,6 +188,13 @@ export const WebTextBox: React.FC<LegacyWebTextBoxProps> = ({
                   enableProportionalSizing={true}
                 />
               </div>
+              <style dangerouslySetInnerHTML={{
+                __html: `
+                  .syswel-box-content .rendered-story-content > *:first-child {
+                    margin-top: 0.125rem !important;
+                  }
+                `
+              }} />
             </div>
           </div>
 

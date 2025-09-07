@@ -125,7 +125,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
           )}
 
           {/* Content */}
-          <div className="text-18-system">
+          <div className="text-18-system syswel-box-content">
             <IsolatedStoryRenderer 
               content={webtextData.content}
               category="WebText"
@@ -133,6 +133,13 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
               showHeaderPreview={false}
             />
           </div>
+          <style dangerouslySetInnerHTML={{
+            __html: `
+              .syswel-box-content .rendered-story-content > *:first-child {
+                margin-top: 0.125rem !important;
+              }
+            `
+          }} />
         </div>
       </div>
 
