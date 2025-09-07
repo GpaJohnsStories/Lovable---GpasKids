@@ -160,7 +160,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
         {!isAdminPage && (
           <div className="flex items-start gap-4 justify-end relative" ref={menuRef}>
             {/* Mobile: Vertical stack of HGJ and Safe for Kids */}
-            <div className="sm:hidden flex flex-col gap-2 items-center mt-0">
+            <div className="sm:hidden flex flex-col items-center mt-0">
               {/* ICO-HGJ Button - Help Grandpa John */}
               <Tooltip>
                 <TooltipTrigger asChild>
