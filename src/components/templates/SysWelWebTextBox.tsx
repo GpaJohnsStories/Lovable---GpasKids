@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStoryCodeLookup } from "@/hooks/useStoryCodeLookup";
 import { getWebtextTheme } from "@/utils/webtextTheme";
@@ -6,6 +6,7 @@ import { getAssetVersionFromStory, buildCacheBustedUrl } from "@/utils/storyUtil
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
+import { useCachedIcon } from "@/hooks/useCachedIcon";
 
 interface SysWelWebTextBoxProps {
   code: string;
@@ -65,8 +66,28 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
   }
 
   const theme = getWebtextTheme(webtextData);
-  const version = getAssetVersionFromStory(webtextData);
-  const imageUrl = theme.image ? buildCacheBustedUrl(theme.image, version) : null;
+  
+  // Determine if we have an icon code that needs resolution
+  const isIconCode = theme.image && !theme.image.startsWith('http') && !theme.image.startsWith('/');
+  const { iconUrl } = useCachedIcon(isIconCode ? theme.image : null);
+  
+  // Calculate the final image URL
+  const finalImageUrl = useMemo(() => {
+    if (!theme.image) return null;
+    
+    // If it's an icon code, use the resolved URL from cache
+    if (isIconCode && iconUrl) {
+      return iconUrl;
+    }
+    
+    // If it's already a full URL, use with cache busting
+    if (theme.image.startsWith('http') || theme.image.startsWith('/')) {
+      const version = getAssetVersionFromStory(webtextData);
+      return buildCacheBustedUrl(theme.image, version);
+    }
+    
+    return null;
+  }, [theme.image, isIconCode, iconUrl, webtextData]);
 
   return (
     <div
@@ -89,7 +110,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
       {/* Main Content Area */}
       <div className="flex gap-4">
         {/* Left Side - Image */}
-        {imageUrl && (
+        {finalImageUrl && (
           <div className="flex-shrink-0">
             <div
               className="w-24 h-24 rounded-lg overflow-hidden cursor-pointer transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl border-2"
@@ -103,7 +124,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
               title="Click to visit the Guide page"
             >
               <img
-                src={imageUrl}
+                src={finalImageUrl}
                 alt={webtextData.title || "Webtext illustration"}
                 className="w-full h-full object-contain"
                 style={{ imageRendering: 'crisp-edges' }}

@@ -60,9 +60,22 @@ export const selectBestImage = (story: any): string | null => {
   
   // Check for BIGICON in content first
   if (story.content && story.content.includes('BIGICON')) {
-    const bigiconMatch = story.content.match(/BIGICON\s*=\s*([^\s<]+)/);
-    if (bigiconMatch && bigiconMatch[1]) {
-      return bigiconMatch[1].trim();
+    // Try {{BIGICON}}path{{/BIGICON}} format first
+    const blockMatch = story.content.match(/\{\{BIGICON\}\}([^{]+?)\{\{\/BIGICON\}\}/);
+    if (blockMatch && blockMatch[1]) {
+      return blockMatch[1].trim();
+    }
+    
+    // Try {{BIGICON: path}} format
+    const colonMatch = story.content.match(/\{\{BIGICON:\s*([^}]+?)\}\}/);
+    if (colonMatch && colonMatch[1]) {
+      return colonMatch[1].trim();
+    }
+    
+    // Try BIGICON = path format
+    const equalsMatch = story.content.match(/BIGICON\s*=\s*([^\s<]+)/);
+    if (equalsMatch && equalsMatch[1]) {
+      return equalsMatch[1].trim();
     }
   }
   
