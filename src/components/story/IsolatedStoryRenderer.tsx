@@ -80,10 +80,10 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
       <>
         {/* Header Preview Section */}
         {showHeaderPreview && tokens && (tokens.titleHtml || tokens.taglineHtml || tokens.authorHtml || tokens.excerptHtml) && (
-          <div className={`header-preview ${isWebText ? 'mb-2 pb-1' : 'mb-6 pb-4'} border-b border-border`}>
+          <div className={`header-preview ${isWebText ? 'mb-0 pb-0' : 'mb-0 pb-0'} border-b border-border`}>
             {tokens.titleHtml && (
               <h1 
-                className={`text-2xl font-bold ${isWebText ? 'mb-1' : 'mb-2'} text-foreground`}
+                className={`text-2xl font-bold ${isWebText ? 'mb-0' : 'mb-0'} text-foreground`}
                 style={{ 
                   fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
                   fontSize: `${Math.floor(fontSize * 1.5)}px`
