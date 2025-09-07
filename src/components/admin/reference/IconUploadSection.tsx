@@ -116,11 +116,11 @@ const IconUploadSection = () => {
         return;
       }
 
-      // Validate file size (2MB limit)
-      if (file.size > 2 * 1024 * 1024) {
+      // Validate file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
         toast({
           title: "File too large",
-          description: "Please select a file smaller than 2MB.",
+          description: "Please select a file smaller than 5MB.",
           variant: "destructive",
         });
         return;

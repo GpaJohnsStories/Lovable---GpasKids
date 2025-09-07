@@ -219,8 +219,8 @@ const IconLibraryDisplay = () => {
         return;
       }
       
-      if (newFile.size > 2 * 1024 * 1024) {
-        toast.error('File size must be less than 2MB');
+      if (newFile.size > 5 * 1024 * 1024) {
+        toast.error('File size must be less than 5MB');
         return;
       }
     }
