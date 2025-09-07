@@ -51,6 +51,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const [showSuperAV, setShowSuperAV] = useState(false);
   const [displayImage, setDisplayImage] = useState<{url: string, alt: string} | null>(null);
   const [imageAspect, setImageAspect] = useState<ImageAspectType>('square');
+  const [imageWidth, setImageWidth] = useState<number | null>(null);
   
   const { getIconUrl, getIconName } = useIconCache();
   
@@ -249,6 +250,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                             const img = e.currentTarget;
                             const aspect = classifyImageAspect(img.naturalWidth, img.naturalHeight);
                             setImageAspect(aspect);
+                            // Measure the rendered image width for tooltip sizing
+                            setImageWidth(img.getBoundingClientRect().width);
                           }}
                         />
                       </button>
@@ -259,7 +262,15 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                       side="bottom"
                       align="start"
                       className="bg-emerald-900/90 text-yellow-100 border-emerald-700 shadow-lg backdrop-blur-sm z-50"
-                      style={{ fontSize: '13pt', fontFamily: 'Kalam, Comic Sans MS, cursive, sans-serif' }}
+                      style={{ 
+                        fontSize: '13pt', 
+                        fontFamily: 'Kalam, Comic Sans MS, cursive, sans-serif',
+                        width: imageWidth ? `${imageWidth}px` : 'auto',
+                        maxWidth: imageWidth ? `${imageWidth}px` : 'auto',
+                        whiteSpace: 'normal',
+                        overflowWrap: 'anywhere',
+                        wordBreak: 'break-word'
+                      }}
                     >
                       {displayImage.alt}
                     </TooltipContent>
