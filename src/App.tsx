@@ -57,6 +57,8 @@ import GlobalHelpProvider from "./components/GlobalHelpProvider";
 import ContentProtection from "./components/ContentProtection";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
+import CanonicalLink from "./components/seo/CanonicalLink";
+import HostRedirect from "./components/seo/HostRedirect";
 import { HelpProvider } from "./contexts/HelpContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useVisitTracker } from "./hooks/useVisitTracker";
@@ -103,6 +105,8 @@ function App() {
                     <Toaster />
                     <ShadcnToaster />
                   <BrowserRouter>
+                    <HostRedirect />
+                    <CanonicalLink />
                     <SuperAVProvider>
                       <AuthProvider>
                         <GlobalHelpProvider>
