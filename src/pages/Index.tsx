@@ -26,7 +26,8 @@ const Index = () => {
         
         {/* ===== BOX 1 COPY START ===== */}
         <ProportionalWebTextBox 
-          webtextCode="SYS-WEL"
+          key="home-box-1-copy-SYS-WE2"
+          webtextCode="SYS-WE2"
           borderColor="#facc15"
           backgroundColor="bg-[#ADD8E6]"
           id="home-box-1-copy"
