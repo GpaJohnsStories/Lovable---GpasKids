@@ -208,11 +208,40 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
     }
   };
 
+  // Helper to extract first color from content for SYS-WEL
+  const extractFirstColor = (content: string): string => {
+    const colorMatch = content.match(/color:\s*#([0-9a-fA-F]{6})/);
+    return colorMatch ? `#${colorMatch[1]}` : '#0B3D91'; // fallback to original
+  };
+
+  // Helper to derive colors from base color for SYS-WEL
+  const deriveColorsFromBase = (baseHex: string) => {
+    // Convert hex to RGB for manipulation
+    const r = parseInt(baseHex.slice(1, 3), 16);
+    const g = parseInt(baseHex.slice(3, 5), 16);
+    const b = parseInt(baseHex.slice(5, 7), 16);
+    
+    // Derive lighter border color (increase brightness by 40)
+    const borderR = Math.min(255, r + 40);
+    const borderG = Math.min(255, g + 40);
+    const borderB = Math.min(255, b + 40);
+    const borderColor = `#${borderR.toString(16).padStart(2, '0')}${borderG.toString(16).padStart(2, '0')}${borderB.toString(16).padStart(2, '0')}`;
+    
+    // Derive background tint (20% opacity of border color)
+    const bgTint = `${borderColor}33`;
+    
+    return { baseHex, borderColor, bgTint };
+  };
+
   // Special styling for SYS-WEL content
   if (isSysWel) {
+    // Extract and derive colors for SYS-WEL
+    const extractedColor = extractFirstColor(webtext?.content || '');
+    const { baseHex: textColor, borderColor, bgTint } = deriveColorsFromBase(extractedColor);
+    
     return (
       <>
-        <div id={id} className="sys-wel-box border-4 border-blue-500 rounded-lg pt-4 pr-4 pb-0 pl-4 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 mb-8 overflow-hidden relative" style={{backgroundColor: '#3b82f633'}}>
+        <div id={id} className="sys-wel-box border-4 rounded-lg pt-4 pr-4 pb-0 pl-4 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 mb-8 overflow-hidden relative" style={{borderColor, backgroundColor: bgTint}}>
           {/* Top Right Audio Button */}
           <div className="absolute z-[5]" style={{ top: -1, right: -1 }}>
             <AudioButton code={webtextCode} onClick={() => setShowSuperAV(true)} />
@@ -228,8 +257,10 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     <div className={`group relative inline-block float-left ${getResponsiveImageGutterClass(imageAspect)} mb-4`}>
                       <button 
                         onClick={() => navigate('/guide')}
-                        className="relative block transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-2xl bg-gradient-to-br from-blue-400 to-blue-600 p-1 border-2 border-blue-700"
+                        className="relative block transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-2xl p-1 border-2"
                         style={{
+                          background: `linear-gradient(135deg, ${borderColor}66, ${borderColor})`,
+                          borderColor: textColor,
                           boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
                           filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
                         }}
@@ -283,10 +314,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     if (titleHtml) {
                       return (
                         <h1 
-                          className="font-handwritten font-bold text-blue-900 leading-tight break-words text-left"
+                          className="font-handwritten font-bold leading-tight break-words text-left"
                           style={{ 
                             fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
-                            fontSize: `${Math.floor(currentFontSize * 2.25)}px`
+                            fontSize: `${Math.floor(currentFontSize * 2.25)}px`,
+                            color: textColor
                           }}
                           dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
                         />
@@ -294,10 +326,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     } else {
                       return (
                         <h1 
-                          className="font-handwritten font-bold text-blue-900 leading-tight break-words text-left"
+                          className="font-handwritten font-bold leading-tight break-words text-left"
                           style={{ 
                             fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
-                            fontSize: `${Math.floor(currentFontSize * 2.25)}px`
+                            fontSize: `${Math.floor(currentFontSize * 2.25)}px`,
+                            color: textColor
                           }}
                         >
                           {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
@@ -330,7 +363,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           <div className="h-7"></div>
 
           {/* Bottom right: Webtext code - flush against corner with explicit height */}
-          <div className="absolute bottom-0 right-0 rounded px-3 py-1 text-sm font-mono text-blue-800 z-[5] h-7 flex items-center">
+          <div className="absolute bottom-0 right-0 rounded px-3 py-1 text-sm font-mono z-[5] h-7 flex items-center" style={{ color: textColor }}>
             {webtextCode}
           </div>
           
