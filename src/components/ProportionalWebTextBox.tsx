@@ -42,8 +42,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const isSysWel = webtextCode === "SYS-WEL";
   const isSysCem = webtextCode === "SYS-CEM";
   
-  // Load Buddy's new icon for SYS-WEL
-  const { iconUrl: buddyIconUrl, iconName: buddyIconName, isLoading: buddyIconLoading } = useCachedIcon(isSysWel ? '!CO-BG1.jpg' : null);
+  // No longer loading Buddy's icon as fallback for SYS-WEL
   
   // Load the secret email button icon for SYS-CEM
   const { iconUrl: secretEmailIconUrl, iconName: secretEmailIconName, isLoading: secretEmailIconLoading } = useCachedIcon(isSysCem ? '!CO-CEZ.gif' : null);
@@ -58,7 +57,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const photos = webtext ? getStoryPhotos(webtext) : [];
   const mainPhoto = photos[0];
 
-  // Effect to determine display image priority: BIGICON > mainPhoto > buddyIcon fallback
+  // Effect to determine display image priority: BIGICON > mainPhoto > none (no fallback)
   useEffect(() => {
     const loadDisplayImage = async () => {
       if (!webtext) return;
@@ -66,7 +65,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
       // Extract header tokens to check for BIGICON
       const { tokens } = extractHeaderTokens(webtext.content || '');
       
-      // Priority: BIGICON > mainPhoto > fallback (buddyIcon for SYS-WEL)
+      // Priority: BIGICON > mainPhoto > none
       if (tokens.bigIcon) {
         try {
           const iconUrl = await getIconUrl(tokens.bigIcon);
@@ -83,17 +82,12 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
         return;
       }
       
-      // For SYS-WEL, fallback to Buddy icon
-      if (isSysWel && buddyIconUrl) {
-        setDisplayImage({ url: buddyIconUrl, alt: buddyIconName || 'Buddy' });
-        return;
-      }
-      
+      // No fallback - if no BIGICON and no Photo 1, show no image
       setDisplayImage(null);
     };
 
     loadDisplayImage();
-  }, [webtext, mainPhoto, buddyIconUrl, buddyIconName, isSysWel, getIconUrl, getIconName]);
+  }, [webtext, mainPhoto, isSysWel, getIconUrl, getIconName]);
 
   const getContent = () => {
     if (loading) return "Loading...";
@@ -260,14 +254,14 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                       </button>
                     </div>
                   </TooltipTrigger>
-                  {buddyIconName && (
+                  {displayImage && (
                     <TooltipContent
                       side="bottom"
                       align="start"
                       className="bg-emerald-900/90 text-yellow-100 border-emerald-700 shadow-lg backdrop-blur-sm z-50"
                       style={{ fontSize: '13pt', fontFamily: 'Kalam, Comic Sans MS, cursive, sans-serif' }}
                     >
-                      {buddyIconName}
+                      {displayImage.alt}
                     </TooltipContent>
                   )}
                 </Tooltip>
