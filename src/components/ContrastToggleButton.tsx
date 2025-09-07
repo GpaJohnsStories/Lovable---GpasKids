@@ -47,7 +47,7 @@ const ContrastToggleButton: React.FC<ContrastToggleButtonProps> = ({ inline = fa
         <img 
           src={iconUrl || ''} 
           alt="Contrast Toggle" 
-          className="h-[70px] w-[70px] block object-cover bg-transparent"
+          className="w-[70px] h-[70px] block object-cover bg-transparent"
         />
       </div>
     </Button>
