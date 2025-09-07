@@ -326,11 +326,9 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           {/* Clear float before bottom section */}
           <div className="clear-both"></div>
 
-          {/* Bottom right: Webtext code */}
-          <div className="flex justify-end">
-            <div className="bg-blue-100/70 rounded px-3 py-1 text-sm font-mono text-blue-800 border border-blue-500">
-              {webtextCode}
-            </div>
+          {/* Bottom right: Webtext code - flush against corner */}
+          <div className="absolute bottom-0 right-0 bg-blue-100/70 rounded px-3 py-1 text-sm font-mono text-blue-800 border border-blue-500 z-[5]">
+            {webtextCode}
           </div>
           
           {/* SuperAV Floating Popup with scale support */}
