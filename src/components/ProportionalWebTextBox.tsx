@@ -363,9 +363,9 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           <div className="h-7"></div>
 
           {/* Bottom right: Webtext code - flush against corner with explicit height */}
-          <div className="absolute bottom-0 right-0 rounded px-3 py-1 text-sm font-mono z-[5] h-7 flex items-center" style={{ color: textColor }}>
-            {webtextCode}
-          </div>
+           <div className="absolute bottom-0 right-0 rounded px-3 py-1 text-sm font-mono z-[5] h-7 flex items-center" style={{ color: textColor }}>
+             SYS-WE2
+           </div>
           
           {/* SuperAV Floating Popup with scale support */}
           <SuperAV
