@@ -5,11 +5,20 @@
 
 /**
  * Extracts the first hex color from HTML content
+ * Prioritizes style attributes, font tags, then any hex color
  */
 export const extractFirstColor = (content: string): string | null => {
   if (!content) return null;
   
-  // Look for hex colors in style attributes, color properties, etc.
+  // Priority 1: Colors in style attributes (style="color: #123456")
+  const styleColorMatch = content.match(/style\s*=\s*["'][^"']*color\s*:\s*(#[0-9A-Fa-f]{6})/i);
+  if (styleColorMatch) return styleColorMatch[1];
+  
+  // Priority 2: Colors in font tags (<font color="#123456">)
+  const fontColorMatch = content.match(/<font[^>]+color\s*=\s*["']?(#[0-9A-Fa-f]{6})["']?[^>]*>/i);
+  if (fontColorMatch) return fontColorMatch[1];
+  
+  // Priority 3: Any hex color in the content
   const hexColorRegex = /#[0-9A-Fa-f]{6}/g;
   const matches = content.match(hexColorRegex);
   

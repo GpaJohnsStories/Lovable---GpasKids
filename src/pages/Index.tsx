@@ -15,11 +15,9 @@ const Index = () => {
       <WelcomeHeader />
       
       <main className="container mx-auto px-4 pt-0">
-        {/* ===== BOX 1 START (HomePage SYS-WEL, ProportionalWebTextBox) ===== */}
-        <ProportionalWebTextBox 
-          webtextCode="SYS-WEL"
-          borderColor="#facc15"
-          backgroundColor="bg-[#ADD8E6]"
+        {/* ===== BOX 1 START (HomePage Auto-themed WebTextBox) ===== */}
+        <WebTextBox 
+          code="SYS-WEL"
           id="home-box-1"
         />
         {/* ===== BOX 1 END ===== */}
