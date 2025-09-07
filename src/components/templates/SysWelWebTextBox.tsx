@@ -81,8 +81,10 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
     return (
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 relative">
         <div className="text-18-system">Loading...</div>
-        {/* Code indicator */}
-        <div className="code-indicator">{code}</div>
+        {/* Code Display in Bottom Right */}
+        <div className="absolute bottom-2 right-2 px-2 py-1 rounded text-xs font-mono bg-black/80 text-white shadow-sm">
+          {code}
+        </div>
       </div>
     );
   }
@@ -91,8 +93,10 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
     return (
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 relative">
         <div className="text-18-system">Coming Soon</div>
-        {/* Code indicator */}
-        <div className="code-indicator">{code}</div>
+        {/* Code Display in Bottom Right */}
+        <div className="absolute bottom-2 right-2 px-2 py-1 rounded text-xs font-mono bg-black/80 text-white shadow-sm">
+          {code}
+        </div>
       </div>
     );
   }
@@ -182,16 +186,13 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
         </div>
       </div>
 
-      {/* Bottom Right Badge */}
-      <div 
-        className="absolute bottom-2 right-2 px-2 py-1 rounded text-xs font-medium text-white shadow-sm"
-        style={{ backgroundColor: theme!.colors.badgeColor }}
-      >
-        WebText
-      </div>
 
-      {/* Code Indicator */}
-      <div className="code-indicator">{code}</div>
+      {/* Code Display in Bottom Right */}
+      <div 
+        className="absolute bottom-2 right-2 px-2 py-1 rounded text-xs font-mono bg-black/80 text-white shadow-sm"
+      >
+        {code}
+      </div>
 
       {/* SuperAV Popup */}
       <SuperAV
