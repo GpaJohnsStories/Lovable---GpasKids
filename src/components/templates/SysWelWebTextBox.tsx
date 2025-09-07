@@ -82,7 +82,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 relative">
         <div className="text-18-system">Loading...</div>
         {/* Code Display in Bottom Right */}
-        <div className="absolute bottom-2 right-2 px-2 py-1 rounded text-xs font-mono bg-black/80 text-white shadow-sm">
+        <div className="absolute bottom-2 right-2 text-xs font-mono text-amber-700">
           {code}
         </div>
       </div>
@@ -94,7 +94,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 relative">
         <div className="text-18-system">Coming Soon</div>
         {/* Code Display in Bottom Right */}
-        <div className="absolute bottom-2 right-2 px-2 py-1 rounded text-xs font-mono bg-black/80 text-white shadow-sm">
+        <div className="absolute bottom-2 right-2 text-xs font-mono text-amber-700">
           {code}
         </div>
       </div>
@@ -189,7 +189,8 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
 
       {/* Code Display in Bottom Right */}
       <div 
-        className="absolute bottom-2 right-2 px-2 py-1 rounded text-xs font-mono bg-black/80 text-white shadow-sm"
+        className="absolute bottom-2 right-2 text-xs font-mono"
+        style={{ color: theme!.colors.primary }}
       >
         {code}
       </div>
