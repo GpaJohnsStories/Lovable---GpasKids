@@ -121,7 +121,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
         {finalImageUrl && (
           <div className="flex-shrink-0">
             <div
-              className="rounded-lg overflow-hidden cursor-pointer transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl border-2"
+              className="rounded-lg overflow-hidden cursor-pointer transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl border-4"
               style={{
                 backgroundColor: theme!.colors.photoMatColor,
                 borderColor: theme!.colors.primary,
