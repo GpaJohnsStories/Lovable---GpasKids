@@ -71,6 +71,66 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
 
   return (
     <div className="min-h-[140px]">
+      {/* Mobile-only buttons outside orange box */}
+      <div className="sm:hidden flex flex-col gap-2 mb-2">
+        {/* ICO-HGJ Button - Help Grandpa John (Mobile) */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button 
+              onClick={handleHgjClick}
+              className="group relative z-10 flex items-center justify-center w-16 h-16 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+            >
+              {hgjLoading && (
+                <div className="w-full h-full bg-orange-300 animate-pulse rounded-md" />
+              )}
+              {(hgjError || !hgjIconUrl) && !hgjLoading ? (
+                <div className="w-full h-full flex items-center justify-center text-orange-800 text-xs font-bold">
+                  !CO-HGJ.gif
+                </div>
+              ) : hgjIconUrl && !hgjLoading && !hgjError ? (
+                <img 
+                  src={hgjIconUrl}
+                  alt="Click to Help Grandpa John"
+                  className="w-full h-full object-contain"
+                />
+              ) : null}
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Click to Help Grandpa John</p>
+          </TooltipContent>
+        </Tooltip>
+
+        {/* Safe For Kids Icon (Mobile) */}
+        <div className="flex items-center">
+          {sfkLoading && (
+            <div className="w-16 h-16 bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
+          )}
+          {(sfkError || !safeForKidsIconUrl) && !sfkLoading ? (
+            <div className="w-16 h-16 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-full border-2 border-green-500">
+              !CO-SFK.gif
+            </div>
+          ) : safeForKidsIconUrl && !sfkLoading && !sfkError ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link to="/security">
+                  <button className="transition-transform duration-200 hover:scale-105 active:scale-95">
+                    <img 
+                      src={safeForKidsIconUrl}
+                      alt="Safe For Kids Shield - Click for Security Info"
+                      className="w-16 h-16 object-contain cursor-pointer"
+                    />
+                  </button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Click to read Grandpa John's Safety Promise to you!</p>
+              </TooltipContent>
+            </Tooltip>
+          ) : null}
+        </div>
+      </div>
+
       {/* Single compartment layout */}
       <div className="relative flex items-center justify-between h-full pt-1">
         
@@ -159,36 +219,38 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
         {/* RIGHT SECTION: ICO-HGJ + Safe For Kids + Gold Menu Button - Hidden on admin pages */}
         {!isAdminPage && (
           <div className="flex items-center gap-4 justify-end relative" ref={menuRef}>
-            {/* ICO-HGJ Button - Help Grandpa John */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button 
-                  onClick={handleHgjClick}
-                  className="group relative z-10 flex items-center justify-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
-                >
-                  {hgjLoading && (
-                    <div className="w-full h-full bg-orange-300 animate-pulse rounded-md" />
-                  )}
-                  {(hgjError || !hgjIconUrl) && !hgjLoading ? (
-                    <div className="w-full h-full flex items-center justify-center text-orange-800 text-xs font-bold">
-                      !CO-HGJ.gif
-                    </div>
-                  ) : hgjIconUrl && !hgjLoading && !hgjError ? (
-                    <img 
-                      src={hgjIconUrl}
-                      alt="Click to Help Grandpa John"
-                      className="w-full h-full object-contain"
-                    />
-                  ) : null}
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Click to Help Grandpa John</p>
-              </TooltipContent>
-            </Tooltip>
+            {/* ICO-HGJ Button - Help Grandpa John (Hidden on mobile) */}
+            <div className="hidden sm:block">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button 
+                    onClick={handleHgjClick}
+                    className="group relative z-10 flex items-center justify-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+                  >
+                    {hgjLoading && (
+                      <div className="w-full h-full bg-orange-300 animate-pulse rounded-md" />
+                    )}
+                    {(hgjError || !hgjIconUrl) && !hgjLoading ? (
+                      <div className="w-full h-full flex items-center justify-center text-orange-800 text-xs font-bold">
+                        !CO-HGJ.gif
+                      </div>
+                    ) : hgjIconUrl && !hgjLoading && !hgjError ? (
+                      <img 
+                        src={hgjIconUrl}
+                        alt="Click to Help Grandpa John"
+                        className="w-full h-full object-contain"
+                      />
+                    ) : null}
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Click to Help Grandpa John</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
             
-            {/* Safe For Kids Icon */}
-            <div className="flex items-center">
+            {/* Safe For Kids Icon (Hidden on mobile) */}
+            <div className="hidden sm:flex items-center">
               {sfkLoading && (
                 <div className="w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] bg-green-300 animate-pulse rounded-full border-2 border-green-500" />
               )}
