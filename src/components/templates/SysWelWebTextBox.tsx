@@ -112,7 +112,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
         {finalImageUrl && (
           <div className="flex-shrink-0">
             <div
-              className="w-24 h-24 rounded-lg overflow-hidden cursor-pointer transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl border-2"
+              className="rounded-lg overflow-hidden cursor-pointer transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl border-2"
               style={{
                 backgroundColor: theme!.colors.photoMatColor,
                 borderColor: theme!.colors.primary,
@@ -125,7 +125,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
               <img
                 src={finalImageUrl}
                 alt={webtextData.title || "Webtext illustration"}
-                className="w-full h-full object-contain"
+                className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain"
                 style={{ imageRendering: 'crisp-edges' }}
               />
             </div>
