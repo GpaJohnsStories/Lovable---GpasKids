@@ -76,42 +76,6 @@ export const AccessibilityEnhancements: React.FC<AccessibilityEnhancementsProps>
   );
 };
 
-// High contrast mode toggle component
-export const HighContrastToggle: React.FC = () => {
-  const [highContrast, setHighContrast] = useState(false);
-
-  useEffect(() => {
-    const saved = localStorage.getItem('high-contrast-mode');
-    if (saved === 'true') {
-      setHighContrast(true);
-      document.documentElement.setAttribute('data-high-contrast', 'true');
-    }
-  }, []);
-
-  const toggleHighContrast = () => {
-    const newMode = !highContrast;
-    setHighContrast(newMode);
-    
-    if (newMode) {
-      document.documentElement.setAttribute('data-high-contrast', 'true');
-      localStorage.setItem('high-contrast-mode', 'true');
-    } else {
-      document.documentElement.removeAttribute('data-high-contrast');
-      localStorage.setItem('high-contrast-mode', 'false');
-    }
-  };
-
-  return (
-    <button
-      onClick={toggleHighContrast}
-      className="fixed top-2 right-2 z-50 bg-white text-black border-2 border-black px-3 py-2 rounded font-bold text-base hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-      aria-label={highContrast ? 'Turn off high contrast mode' : 'Turn on high contrast mode'}
-      title={highContrast ? 'Turn off high contrast mode' : 'Turn on high contrast mode'}
-    >
-      {highContrast ? '🌙' : '☀️'} Contrast
-    </button>
-  );
-};
 
 // Font size controls for better readability
 export const FontSizeControls: React.FC = () => {

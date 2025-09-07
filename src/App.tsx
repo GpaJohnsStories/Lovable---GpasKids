@@ -64,7 +64,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { useVisitTracker } from "./hooks/useVisitTracker";
 import FloatingActionStack from "./components/FloatingActionStack";
 import { BreakTimerProvider } from "./contexts/BreakTimerContext";
-import { AccessibilityEnhancements, HighContrastToggle } from "./components/accessibility/AccessibilityEnhancements";
+import { AccessibilityEnhancements } from "./components/accessibility/AccessibilityEnhancements";
 
 const queryClient = new QueryClient();
 
@@ -114,7 +114,6 @@ function App() {
                           <BreakTimerProvider>
                             <ConditionalContentProtection>
                               <AccessibilityEnhancements>
-                                <HighContrastToggle />
                                 <FloatingActionStack />
                          
                                 <Routes>
