@@ -212,7 +212,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   if (isSysWel) {
     return (
       <>
-        <div id={id} className="border-4 border-blue-500 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative" style={{backgroundColor: '#3b82f633'}}>
+        <div id={id} className="border-4 border-blue-500 rounded-lg pt-4 pr-4 pb-2 pl-4 sm:pt-6 sm:pr-6 sm:pb-3 sm:pl-6 mb-8 overflow-hidden relative" style={{backgroundColor: '#3b82f633'}}>
           {/* Top Right Audio Button */}
           <div className="absolute z-[5]" style={{ top: -1, right: -1 }}>
             <AudioButton code={webtextCode} onClick={() => setShowSuperAV(true)} />
@@ -353,7 +353,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
     <>
       <div 
         id={id}
-        className={`rounded-lg p-6 ${backgroundColor} relative w-full min-h-fit`}
+        className={`rounded-lg pt-6 pr-6 pb-3 pl-6 ${backgroundColor} relative w-full min-h-fit`}
         style={{ borderColor }}
       >
         {/* Audio Button - Always visible in top right corner */}
