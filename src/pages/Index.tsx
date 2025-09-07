@@ -24,12 +24,12 @@ const Index = () => {
         />
         {/* ===== BOX 1 END ===== */}
         
-        {/* ===== BOX 2 START (Exact copy of BOX 1) ===== */}
+        {/* ===== BOX 2 START (Different webtext code) ===== */}
         <ProportionalWebTextBox 
-          webtextCode="SYS-WEL"
+          webtextCode="SYS-WE2"
           borderColor="#facc15"
           backgroundColor="bg-[#ADD8E6]"
-          id="home-box-1"
+          id="home-box-2"
         />
         {/* ===== BOX 2 END ===== */}
         
