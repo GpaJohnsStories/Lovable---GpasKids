@@ -50,7 +50,7 @@ const ContrastToggleButton: React.FC<ContrastToggleButtonProps> = ({ inline = fa
               <img 
                 src={iconUrl || ''} 
                 alt="Contrast Toggle" 
-                className="w-[60px] h-[60px] block object-cover bg-transparent cursor-pointer"
+                className="w-[60px] h-[60px] block object-contain cursor-pointer"
               />
             </TooltipTrigger>
             <TooltipContent className="bg-black border-black">
