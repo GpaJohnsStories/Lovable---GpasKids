@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import ReportProblemButton from './ReportProblemButton';
 import ScrollToTop from './ScrollToTop';
 import BreakGuide from './break/BreakGuide';
+import ContrastToggleButton from './ContrastToggleButton';
 
 const FloatingActionStack = () => {
   const location = useLocation();
@@ -16,6 +17,7 @@ const FloatingActionStack = () => {
         <ScrollToTop inline alwaysVisible />
       </div>
       <BreakGuide inline />
+      <ContrastToggleButton inline />
     </div>
   );
 };
