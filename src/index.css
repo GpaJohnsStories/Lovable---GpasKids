@@ -213,6 +213,11 @@
   .deployed-story-content p:last-child {
     margin-bottom: 0 !important;
   }
+
+  /* SYS-WEL specific: Remove bottom margin from last content element for precise badge alignment */
+  .sys-wel-box .rendered-story-content > :where(p,div,ul,ol,blockquote,h1,h2,h3,h4,h5,h6):last-child {
+    margin-bottom: 0 !important;
+  }
 }
 
 /* Enhanced scrollbar visibility for help popup */

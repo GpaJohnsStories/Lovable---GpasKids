@@ -212,14 +212,14 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   if (isSysWel) {
     return (
       <>
-        <div id={id} className="border-4 border-blue-500 rounded-lg pt-4 pr-4 pb-1 pl-4 sm:pt-6 sm:pr-6 sm:pb-1.5 sm:pl-6 mb-8 overflow-hidden relative" style={{backgroundColor: '#3b82f633'}}>
+        <div id={id} className="sys-wel-box border-4 border-blue-500 rounded-lg pt-4 pr-4 pb-0 pl-4 sm:pt-6 sm:pr-6 sm:pb-0 sm:pl-6 mb-8 overflow-hidden relative" style={{backgroundColor: '#3b82f633'}}>
           {/* Top Right Audio Button */}
           <div className="absolute z-[5]" style={{ top: -1, right: -1 }}>
             <AudioButton code={webtextCode} onClick={() => setShowSuperAV(true)} />
           </div>
 
           {/* Content with floating image layout */}
-          <div className="flow-root mb-6">
+          <div className="flow-root mb-0">
             {/* Photo floated to the left with adaptive gutter */}
             {displayImage && (
               <TooltipProvider>
@@ -326,8 +326,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           {/* Clear float before bottom section */}
           <div className="clear-both"></div>
 
-          {/* Bottom right: Webtext code - flush against corner */}
-          <div className="absolute bottom-0 right-0 rounded px-3 py-1 text-sm font-mono text-blue-800 z-[5]">
+          {/* Invisible spacer for imaginary full-width badge row */}
+          <div className="h-7"></div>
+
+          {/* Bottom right: Webtext code - flush against corner with explicit height */}
+          <div className="absolute bottom-0 right-0 rounded px-3 py-1 text-sm font-mono text-blue-800 z-[5] h-7 flex items-center">
             {webtextCode}
           </div>
           
