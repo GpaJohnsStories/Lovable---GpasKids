@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './ui/button';
-import { useCachedIcon } from '@/hooks/useCachedIcon';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
-import { Eye } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import contrastIcon from '@/assets/contrast-toggle-cropped.png';
 
 interface ContrastToggleButtonProps {
   inline?: boolean;
@@ -10,7 +9,6 @@ interface ContrastToggleButtonProps {
 
 const ContrastToggleButton: React.FC<ContrastToggleButtonProps> = ({ inline = false }) => {
   const [isHighContrast, setIsHighContrast] = useState(false);
-  const { iconUrl, isLoading } = useCachedIcon('!CO-VCB.png', true);
 
   // Load saved contrast preference on mount
   useEffect(() => {
@@ -45,15 +43,11 @@ const ContrastToggleButton: React.FC<ContrastToggleButtonProps> = ({ inline = fa
       aria-label={isHighContrast ? "Turn off high contrast" : "Turn on high contrast"}
     >
       <div className="w-[85px] h-[85px] flex items-center justify-center">
-        {iconUrl ? (
-          <img 
-            src={iconUrl} 
-            alt="Contrast Toggle" 
-            className="h-[85px] w-[85px] block object-contain"
-          />
-        ) : (
-          <Eye className="h-10 w-10 text-orange-500" />
-        )}
+        <img 
+          src={contrastIcon} 
+          alt="Contrast Toggle" 
+          className="h-[85px] w-[85px] block object-contain"
+        />
       </div>
     </Button>
   );
