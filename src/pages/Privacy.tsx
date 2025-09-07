@@ -138,45 +138,6 @@ const Privacy = () => {
               </div>
             </div>
 
-            {/* Cloudflare Security Cookie */}
-            <div className="bg-orange-50 p-6 rounded-lg relative">
-              {/* Audio Button - Always visible in top right corner */}
-              <div className="absolute top-4 right-4">
-                <AudioButton code="SYS-PR2" onClick={() => setShowSuperAV(true)} />
-              </div>
-              
-              <div className="flex items-center space-x-3 mb-4">
-                <Shield className="h-6 w-6 text-orange-600" />
-                <h2 className="text-xl font-semibold text-orange-800">Cloudflare Security Protection</h2>
-              </div>
-              <p className="!text-orange-700 !text-base !font-normal leading-relaxed mb-3">
-                Our website hosting service (Supabase) uses Cloudflare for security protection. 
-                Cloudflare may set a temporary security cookie called <code className="bg-orange-100 px-1 rounded">__cf_bm</code> 
-                to protect against malicious bot traffic and ensure the website remains safe and accessible.
-              </p>
-              <p className="!text-orange-700 !text-base !font-normal leading-relaxed">
-                This cookie is <strong>essential for security</strong>, expires within 30 minutes, 
-                contains no personal information, and is managed entirely by Cloudflare's security systems. 
-                It helps keep our stories safe for children to enjoy.
-              </p>
-              
-              {/* Web-text code indicator */}
-              <div style={{ 
-                position: 'absolute',
-                bottom: '8px',
-                right: '12px',
-                fontSize: '12px',
-                color: '#333',
-                fontFamily: 'monospace',
-                fontWeight: 'bold',
-                opacity: 0.8,
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                padding: '2px 4px',
-                borderRadius: '3px'
-              }}>
-                SYS-PR2
-              </div>
-            </div>
 
             {/* Local Storage Section */}
             <div className="bg-indigo-50 p-6 rounded-lg relative">
