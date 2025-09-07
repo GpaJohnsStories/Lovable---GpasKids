@@ -38,8 +38,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const [loading, setLoading] = useState(true);
   const [fontScale, setFontScale] = useState<FontScaleStep>(DEFAULT_FONT_SCALE);
   
-  // Define isSysWel first, before using it
-  const isSysWel = webtextCode === "SYS-WEL";
+  // Define isSysWel first, before using it (emerald template for SYS-WEL and SYS-WE2)
+  const isSysWel = webtextCode === "SYS-WEL" || webtextCode === "SYS-WE2";
   const isSysCem = webtextCode === "SYS-CEM";
   
   // No longer loading Buddy's icon as fallback for SYS-WEL
@@ -215,7 +215,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
         <div id={id} className="bg-emerald-50 border-4 border-emerald-600 rounded-lg p-4 sm:p-6 mb-8 overflow-hidden relative">
           {/* Top Right Audio Button */}
           <div className="absolute z-[5]" style={{ top: -1, right: -1 }}>
-            <AudioButton code="SYS-WEL" onClick={() => setShowSuperAV(true)} />
+            <AudioButton code={webtextCode} onClick={() => setShowSuperAV(true)} />
           </div>
 
           {/* Content with floating image layout */}
