@@ -1,6 +1,7 @@
 
 import WelcomeHeader from "@/components/WelcomeHeader";
 import { ProportionalWebTextBox } from "@/components/ProportionalWebTextBox";
+import WebTextBox from "@/components/WebTextBox";
 import StorySection from "@/components/StorySection";
 import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -19,6 +20,8 @@ const Index = () => {
           borderColor="#facc15"
           backgroundColor="bg-[#ADD8E6]"
         />
+        
+        <WebTextBox code="SYS-WEL" />
         
         {/* GpaJohn's Banner - Keeping the wide blue button */}
         <GpaJohnComments />
