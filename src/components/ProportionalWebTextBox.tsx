@@ -230,12 +230,12 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
             </div>
           </div>
 
-          {/* Top section with photo and title */}
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
-            {/* Photo in left column on tablets+ */}
+          {/* Content with floating image layout */}
+          <div className="flow-root mb-6">
+            {/* Photo floated to the left with adaptive gutter */}
             {displayImage && (
-              <div className="w-fit flex-shrink-0">
-                <div className="inline-block group">
+              <div className={`float-left ${getResponsiveImageGutterClass(imageAspect)} mb-4`}>
+                <div className="group">
                   <button 
                     onClick={() => navigate('/guide')}
                     title={buddyIconName || ''}
@@ -249,6 +249,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                       src={displayImage.url}
                       alt={displayImage.alt}
                       className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded border border-emerald-800"
+                      onLoad={(e) => {
+                        const img = e.currentTarget;
+                        const aspect = classifyImageAspect(img.naturalWidth, img.naturalHeight);
+                        setImageAspect(aspect);
+                      }}
                     />
                   </button>
                   {buddyIconName && (
@@ -260,58 +265,56 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
               </div>
             )}
 
-            {/* Title and content section */}
-            <div className="flex-1 min-w-0 flex flex-col">
-              {/* Title section */}
-              <div className="mb-4">
-                <div className="flex items-start gap-3 justify-start">
-                  {(() => {
-                    const content = getContent();
-                    const { tokens } = extractHeaderTokens(content);
-                    const titleHtml = tokens.titleHtml;
-                    
-                    if (titleHtml) {
-                      return (
-                        <h1 
-                          className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
-                          style={{ 
-                            fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
-                            fontSize: `${Math.floor(currentFontSize * 2.25)}px`
-                          }}
-                          dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
-                        />
-                      );
-                    } else {
-                      return (
-                        <h1 
-                          className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
-                          style={{ 
-                            fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
-                            fontSize: `${Math.floor(currentFontSize * 2.25)}px`
-                          }}
-                        >
-                          {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
-                        </h1>
-                      );
-                    }
-                  })()}
-                </div>
-              </div>
-
-              {/* Content below title with proportional scaling */}
-              <div className="flex-1 min-w-0">
-                <IsolatedStoryRenderer
-                  content={getContent()}
-                  className="proportional-content text-emerald-900 leading-relaxed break-words"
-                  category="WebText"
-                  fontSize={currentFontSize}
-                  useRichCleaning={true}
-                  showHeaderPreview={false} // Don't show header preview for SYS-WEL since we handle title separately
-                  enableProportionalSizing={true}
-                />
+            {/* Title section */}
+            <div className="mb-4">
+              <div className="flex items-start gap-3 justify-start">
+                {(() => {
+                  const content = getContent();
+                  const { tokens } = extractHeaderTokens(content);
+                  const titleHtml = tokens.titleHtml;
+                  
+                  if (titleHtml) {
+                    return (
+                      <h1 
+                        className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
+                        style={{ 
+                          fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
+                          fontSize: `${Math.floor(currentFontSize * 2.25)}px`
+                        }}
+                        dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
+                      />
+                    );
+                  } else {
+                    return (
+                      <h1 
+                        className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
+                        style={{ 
+                          fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
+                          fontSize: `${Math.floor(currentFontSize * 2.25)}px`
+                        }}
+                      >
+                        {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
+                      </h1>
+                    );
+                  }
+                })()}
               </div>
             </div>
+
+            {/* Content that wraps around the floated photo */}
+            <IsolatedStoryRenderer
+              content={getContent()}
+              className="proportional-content text-emerald-900 leading-relaxed break-words"
+              category="WebText"
+              fontSize={currentFontSize}
+              useRichCleaning={true}
+              showHeaderPreview={false} // Don't show header preview for SYS-WEL since we handle title separately
+              enableProportionalSizing={true}
+            />
           </div>
+
+          {/* Clear float before bottom section */}
+          <div className="clear-both"></div>
 
           {/* Bottom right: Webtext code */}
           <div className="flex justify-end">
