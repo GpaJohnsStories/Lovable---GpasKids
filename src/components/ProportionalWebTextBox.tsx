@@ -271,52 +271,56 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
               </TooltipProvider>
             )}
 
-            {/* Title section */}
-            <div className="mb-4">
-              <div className="flex items-start gap-3 justify-start">
-                {(() => {
-                  const content = getContent();
-                  const { tokens } = extractHeaderTokens(content);
-                  const titleHtml = tokens.titleHtml;
-                  
-                  if (titleHtml) {
-                    return (
-                      <h1 
-                        className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
-                        style={{ 
-                          fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
-                          fontSize: `${Math.floor(currentFontSize * 2.25)}px`
-                        }}
-                        dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
-                      />
-                    );
-                  } else {
-                    return (
-                      <h1 
-                        className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
-                        style={{ 
-                          fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
-                          fontSize: `${Math.floor(currentFontSize * 2.25)}px`
-                        }}
-                      >
-                        {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
-                      </h1>
-                    );
-                  }
-                })()}
+            {/* Title section - only for SYS-WEL */}
+            {webtextCode === "SYS-WEL" && (
+              <div className="mb-4">
+                <div className="flex items-start gap-3 justify-start">
+                  {(() => {
+                    const content = getContent();
+                    const { tokens } = extractHeaderTokens(content);
+                    const titleHtml = tokens.titleHtml;
+                    
+                    if (titleHtml) {
+                      return (
+                        <h1 
+                          className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
+                          style={{ 
+                            fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
+                            fontSize: `${Math.floor(currentFontSize * 2.25)}px`
+                          }}
+                          dangerouslySetInnerHTML={createSafeHeaderHtml(titleHtml)}
+                        />
+                      );
+                    } else {
+                      return (
+                        <h1 
+                          className="font-handwritten font-bold text-emerald-900 leading-tight break-words text-left"
+                          style={{ 
+                            fontFamily: "'Kalam', 'Comic Sans MS', 'Arial', sans-serif",
+                            fontSize: `${Math.floor(currentFontSize * 2.25)}px`
+                          }}
+                        >
+                          {webtext?.title || "Welcome to Grandpa John's Story Corner!"}
+                        </h1>
+                      );
+                    }
+                  })()}
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* Content that wraps around the floated photo */}
-            <IsolatedStoryRenderer
-              content={getContent()}
-              className="proportional-content text-emerald-900 leading-relaxed break-words"
-              category="WebText"
-              fontSize={currentFontSize}
-              useRichCleaning={true}
-              showHeaderPreview={false} // Don't show header preview for SYS-WEL since we handle title separately
-              enableProportionalSizing={true}
-            />
+            {/* Content that wraps around the floated photo - only for SYS-WEL */}
+            {webtextCode === "SYS-WEL" && (
+              <IsolatedStoryRenderer
+                content={getContent()}
+                className="proportional-content text-emerald-900 leading-relaxed break-words"
+                category="WebText"
+                fontSize={currentFontSize}
+                useRichCleaning={true}
+                showHeaderPreview={false} // Don't show header preview for SYS-WEL since we handle title separately
+                enableProportionalSizing={true}
+              />
+            )}
           </div>
 
           {/* Clear float before bottom section */}
