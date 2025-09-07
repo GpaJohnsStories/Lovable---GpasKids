@@ -327,7 +327,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           <div className="clear-both"></div>
 
           {/* Bottom right: Webtext code - flush against corner */}
-          <div className="absolute bottom-0 right-0 bg-blue-100/70 rounded px-3 py-1 text-sm font-mono text-blue-800 z-[5]">
+          <div className="absolute bottom-0 right-0 rounded px-3 py-1 text-sm font-mono text-blue-800 z-[5]">
             {webtextCode}
           </div>
           
