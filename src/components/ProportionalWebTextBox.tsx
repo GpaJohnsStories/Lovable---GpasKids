@@ -234,34 +234,32 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           <div className="flow-root mb-6">
             {/* Photo floated to the left with adaptive gutter */}
             {displayImage && (
-              <div className={`float-left ${getResponsiveImageGutterClass(imageAspect)} mb-4`}>
-                <div className="group">
-                  <button 
-                    onClick={() => navigate('/guide')}
-                    title={buddyIconName || ''}
-                    className="relative block transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 p-1 border-2 border-emerald-700"
-                    style={{
-                      boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
-                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+              <div className={`group relative inline-block float-left ${getResponsiveImageGutterClass(imageAspect)} mb-4`}>
+                <button 
+                  onClick={() => navigate('/guide')}
+                  title={buddyIconName || ''}
+                  className="relative block transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 p-1 border-2 border-emerald-700"
+                  style={{
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+                  }}
+                >
+                  <img
+                    src={displayImage.url}
+                    alt={displayImage.alt}
+                    className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded border border-emerald-800"
+                    onLoad={(e) => {
+                      const img = e.currentTarget;
+                      const aspect = classifyImageAspect(img.naturalWidth, img.naturalHeight);
+                      setImageAspect(aspect);
                     }}
-                  >
-                    <img
-                      src={displayImage.url}
-                      alt={displayImage.alt}
-                      className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain rounded border border-emerald-800"
-                      onLoad={(e) => {
-                        const img = e.currentTarget;
-                        const aspect = classifyImageAspect(img.naturalWidth, img.naturalHeight);
-                        setImageAspect(aspect);
-                      }}
-                    />
-                  </button>
-                  {buddyIconName && (
-                    <div className="mt-2 bg-emerald-900/90 backdrop-blur-sm rounded-lg px-3 py-2 text-sm text-yellow-100 text-center font-bold shadow-lg border border-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ fontSize: '13pt', fontFamily: 'Kalam, Comic Sans MS, cursive, sans-serif' }}>
-                      {buddyIconName}
-                    </div>
-                  )}
-                </div>
+                  />
+                </button>
+                {buddyIconName && (
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-emerald-900/90 backdrop-blur-sm rounded-lg px-3 py-2 text-sm text-yellow-100 text-center font-bold shadow-lg border border-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-50" style={{ fontSize: '13pt', fontFamily: 'Kalam, Comic Sans MS, cursive, sans-serif' }}>
+                    {buddyIconName}
+                  </div>
+                )}
               </div>
             )}
 
