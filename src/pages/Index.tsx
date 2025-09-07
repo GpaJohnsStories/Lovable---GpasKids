@@ -24,8 +24,6 @@ const Index = () => {
         />
         {/* ===== BOX 1 END ===== */}
         
-        <WebTextBox code="SYS-WEL" />
-        
         {/* GpaJohn's Banner - Keeping the wide blue button */}
         <GpaJohnComments />
         
