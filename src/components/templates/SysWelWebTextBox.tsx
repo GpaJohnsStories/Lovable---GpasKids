@@ -45,6 +45,29 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
     }
   }, [code, lookupStoryByCode]);
 
+  // Prepare theme and image resolution hooks unconditionally to preserve hook order
+  const theme = useMemo(() => (webtextData ? getWebtextTheme(webtextData) : null), [webtextData]);
+  const isIconCode = !!(theme?.image && !theme.image.startsWith('http') && !theme.image.startsWith('/'));
+  const { iconUrl } = useCachedIcon(isIconCode ? theme!.image : null);
+  
+  // Calculate the final image URL
+  const finalImageUrl = useMemo(() => {
+    if (!theme?.image) return null;
+    
+    // If it's an icon code, use the resolved URL from cache
+    if (isIconCode && iconUrl) {
+      return iconUrl;
+    }
+    
+    // If it's already a full URL, use with cache busting
+    if (theme.image.startsWith('http') || theme.image.startsWith('/')) {
+      const version = getAssetVersionFromStory(webtextData);
+      return buildCacheBustedUrl(theme.image, version);
+    }
+    
+    return null;
+  }, [theme?.image, isIconCode, iconUrl, webtextData]);
+
   if (loading) {
     return (
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 relative">
@@ -65,36 +88,12 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
     );
   }
 
-  const theme = getWebtextTheme(webtextData);
-  
-  // Determine if we have an icon code that needs resolution
-  const isIconCode = theme.image && !theme.image.startsWith('http') && !theme.image.startsWith('/');
-  const { iconUrl } = useCachedIcon(isIconCode ? theme.image : null);
-  
-  // Calculate the final image URL
-  const finalImageUrl = useMemo(() => {
-    if (!theme.image) return null;
-    
-    // If it's an icon code, use the resolved URL from cache
-    if (isIconCode && iconUrl) {
-      return iconUrl;
-    }
-    
-    // If it's already a full URL, use with cache busting
-    if (theme.image.startsWith('http') || theme.image.startsWith('/')) {
-      const version = getAssetVersionFromStory(webtextData);
-      return buildCacheBustedUrl(theme.image, version);
-    }
-    
-    return null;
-  }, [theme.image, isIconCode, iconUrl, webtextData]);
-
   return (
     <div
       className="rounded-lg p-6 mb-4 relative border-4"
       style={{
-        backgroundColor: theme.colors.backgroundTint,
-        borderColor: theme.colors.lighterBorder,
+        backgroundColor: theme!.colors.backgroundTint,
+        borderColor: theme!.colors.lighterBorder,
         boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
       }}
       id={id}
@@ -115,8 +114,8 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
             <div
               className="w-24 h-24 rounded-lg overflow-hidden cursor-pointer transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl border-2"
               style={{
-                backgroundColor: theme.colors.photoMatColor,
-                borderColor: theme.colors.primary,
+                backgroundColor: theme!.colors.photoMatColor,
+                borderColor: theme!.colors.primary,
                 boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
               }}
@@ -139,7 +138,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
           {(title || webtextData.title) && (
             <h2 
               className="font-bold mb-1 text-20-system"
-              style={{ color: theme.colors.primary }}
+              style={{ color: theme!.colors.primary }}
             >
               {title || webtextData.title}
             </h2>
@@ -167,7 +166,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
       {/* Bottom Right Badge */}
       <div 
         className="absolute bottom-2 right-2 px-2 py-1 rounded text-xs font-medium text-white shadow-sm"
-        style={{ backgroundColor: theme.colors.badgeColor }}
+        style={{ backgroundColor: theme!.colors.badgeColor }}
       >
         WebText
       </div>
