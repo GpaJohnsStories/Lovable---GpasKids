@@ -259,7 +259,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                         onClick={() => navigate('/guide')}
                         className="relative block transform transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg shadow-lg hover:shadow-2xl p-1 border-2"
                         style={{
-                          background: `linear-gradient(135deg, ${borderColor}66, ${borderColor})`,
+                          backgroundColor: `${borderColor}66`,
                           borderColor: textColor,
                           boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
                           filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
