@@ -44,52 +44,36 @@ const ContrastToggleButton: React.FC<ContrastToggleButtonProps> = ({ inline = fa
       aria-label={isHighContrast ? "Turn off high contrast" : "Turn on high contrast"}
     >
       <div className="w-[70px] h-[70px] flex items-center justify-center bg-transparent">
-        <img 
-          src={iconUrl || ''} 
-          alt="Contrast Toggle" 
-          className="w-[60px] h-[60px] block object-cover bg-transparent"
-        />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <img 
+                src={iconUrl || ''} 
+                alt="Contrast Toggle" 
+                className="w-[60px] h-[60px] block object-cover bg-transparent cursor-pointer"
+              />
+            </TooltipTrigger>
+            <TooltipContent className="bg-[#60a5fa] border-[#60a5fa]">
+              <p className="font-fun text-21px font-bold text-white" style={{
+                textShadow: '2px 2px 0px #666, 4px 4px 0px #333, 6px 6px 8px rgba(0,0,0,0.3)',
+                fontFamily: 'Arial, sans-serif'
+              }}>
+                {isHighContrast ? "Turn off high contrast" : "Turn on high contrast"}
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
     </Button>
   );
 
   if (inline) {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            {buttonContent}
-          </TooltipTrigger>
-          <TooltipContent className="bg-[#60a5fa] border-[#60a5fa]">
-            <p className="font-fun text-21px font-bold text-white" style={{
-              textShadow: '2px 2px 0px #666, 4px 4px 0px #333, 6px 6px 8px rgba(0,0,0,0.3)',
-              fontFamily: 'Arial, sans-serif'
-            }}>
-              {isHighContrast ? "Turn off high contrast" : "Turn on high contrast"}
-            </p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
+    return buttonContent;
   }
 
   return (
     <div className="fixed bottom-4 left-4 z-50 print:hidden">
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            {buttonContent}
-          </TooltipTrigger>
-          <TooltipContent className="bg-[#60a5fa] border-[#60a5fa]">
-            <p className="font-fun text-21px font-bold text-white" style={{
-              textShadow: '2px 2px 0px #666, 4px 4px 0px #333, 6px 6px 8px rgba(0,0,0,0.3)',
-              fontFamily: 'Arial, sans-serif'
-            }}>
-              {isHighContrast ? "Turn off high contrast" : "Turn on high contrast"}
-            </p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      {buttonContent}
     </div>
   );
 };
