@@ -109,7 +109,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
           {/* Website Title and Subtitle */}
           <div className="text-left self-end">
             <div className="text-lg sm:text-2xl font-bold font-handwritten">
-              <div className="text-left text-white text-xl sm:text-3xl">Stories for<br />Kids</div>
+              <div className="text-left text-white text-xl sm:text-3xl">Stories<br />for<br />Kids</div>
             </div>
             
           </div>
