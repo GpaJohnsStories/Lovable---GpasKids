@@ -24,6 +24,15 @@ const Index = () => {
         />
         {/* ===== BOX 1 END ===== */}
         
+        {/* ===== BOX 1 COPY START ===== */}
+        <ProportionalWebTextBox 
+          webtextCode="SYS-WEL"
+          borderColor="#facc15"
+          backgroundColor="bg-[#ADD8E6]"
+          id="home-box-1-copy"
+        />
+        {/* ===== BOX 1 COPY END ===== */}
+        
         
         {/* GpaJohn's Banner - Keeping the wide blue button */}
         <GpaJohnComments />
