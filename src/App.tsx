@@ -64,6 +64,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { useVisitTracker } from "./hooks/useVisitTracker";
 import FloatingActionStack from "./components/FloatingActionStack";
 import { BreakTimerProvider } from "./contexts/BreakTimerContext";
+import { AccessibilityEnhancements, HighContrastToggle, FontSizeControls } from "./components/accessibility/AccessibilityEnhancements";
 
 const queryClient = new QueryClient();
 
@@ -111,55 +112,59 @@ function App() {
                       <AuthProvider>
                         <GlobalHelpProvider>
                           <BreakTimerProvider>
-                  <ConditionalContentProtection>
-                            <FloatingActionStack />
-                    
-                    <Routes>
-                      {/* Public Routes */}
-                      <Route path="/" element={<Index />} />
-                      <Route path="/about" element={<About />} />
-                      <Route path="/story/:storyCode" element={<Story />} />
-                      <Route path="/library" element={<Library />} />
-                      
-                      <Route path="/writing" element={<Writing />} />
-                      <Route path="/guide" element={<Guide />} />
-                      <Route path="/help-gpa" element={<HelpGpa />} />
-                      <Route path="/club" element={<Club />} />
-                      <Route path="/club/photos" element={<OrangeGangPhotos />} />
-                      
-                      <Route path="/security" element={<Privacy />} />
-                      <Route path="/robots.txt" element={<RobotsTxt />} />
-                      <Route path="/sitemap.xml" element={<SitemapXml />} />
-                      <Route path="/voice-preview" element={<VoicePreview />} />
-                      <Route path="/forgot-password" element={<ForgotPassword />} />
-                      <Route path="/reset-password" element={<ResetPassword />} />
-                      <Route path="/public-author-bios" element={<PublicAuthorBios />} />
-                      <Route path="/author-bios-simple" element={<PublicAuthorBiosSimple />} />
-                      <Route path="/author/:id" element={<AuthorBio />} />
-                       {/* Auth Routes */}
-                      <Route path="/auth/login" element={<Login />} />
-                      <Route path="/auth/register" element={<Register />} />
-                      <Route path="/auth/forgot-password" element={<ResetPasswordRequest />} />
-                      
-                       {/* Protected Routes - Redirect to Admin */}
-                       <Route path="/dashboard" element={<ProtectedRoute><Navigate to="/buddys_admin" replace /></ProtectedRoute>} />
+                            <ConditionalContentProtection>
+                              <AccessibilityEnhancements>
+                                <HighContrastToggle />
+                                <FontSizeControls />
+                                <FloatingActionStack />
+                         
+                                <Routes>
+                                  {/* Public Routes */}
+                                  <Route path="/" element={<Index />} />
+                                  <Route path="/about" element={<About />} />
+                                  <Route path="/story/:storyCode" element={<Story />} />
+                                  <Route path="/library" element={<Library />} />
+                                  
+                                  <Route path="/writing" element={<Writing />} />
+                                  <Route path="/guide" element={<Guide />} />
+                                  <Route path="/help-gpa" element={<HelpGpa />} />
+                                  <Route path="/club" element={<Club />} />
+                                  <Route path="/club/photos" element={<OrangeGangPhotos />} />
+                                  
+                                  <Route path="/security" element={<Privacy />} />
+                                  <Route path="/robots.txt" element={<RobotsTxt />} />
+                                  <Route path="/sitemap.xml" element={<SitemapXml />} />
+                                  <Route path="/voice-preview" element={<VoicePreview />} />
+                                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                                  <Route path="/reset-password" element={<ResetPassword />} />
+                                  <Route path="/public-author-bios" element={<PublicAuthorBios />} />
+                                  <Route path="/author-bios-simple" element={<PublicAuthorBiosSimple />} />
+                                  <Route path="/author/:id" element={<AuthorBio />} />
+                                   {/* Auth Routes */}
+                                  <Route path="/auth/login" element={<Login />} />
+                                  <Route path="/auth/register" element={<Register />} />
+                                  <Route path="/auth/forgot-password" element={<ResetPasswordRequest />} />
+                                  
+                                   {/* Protected Routes - Redirect to Admin */}
+                                   <Route path="/dashboard" element={<ProtectedRoute><Navigate to="/buddys_admin" replace /></ProtectedRoute>} />
 
-                      {/* Admin Routes */}
-                      <Route path="/buddys_admin" element={<SecureAdminRoute><AdminOverview /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/stories" element={<SecureAdminRoute><AdminStories /></SecureAdminRoute>} />
-                       <Route path="/buddys_admin/security" element={<SecureAdminRoute><SecurityAuditDashboard /></SecureAdminRoute>} />
-                      
-                      <Route path="/buddys_admin/reference" element={<SecureAdminRoute><ReferenceDashboard /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMapContent /></SecureAdminRoute>} />
-                      <Route path="/buddys_admin/super-text" element={<SuperText />} />
+                                  {/* Admin Routes */}
+                                  <Route path="/buddys_admin" element={<SecureAdminRoute><AdminOverview /></SecureAdminRoute>} />
+                                  <Route path="/buddys_admin/stories" element={<SecureAdminRoute><AdminStories /></SecureAdminRoute>} />
+                                   <Route path="/buddys_admin/security" element={<SecureAdminRoute><SecurityAuditDashboard /></SecureAdminRoute>} />
+                                  
+                                  <Route path="/buddys_admin/reference" element={<SecureAdminRoute><ReferenceDashboard /></SecureAdminRoute>} />
+                                  <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMapContent /></SecureAdminRoute>} />
+                                  <Route path="/buddys_admin/super-text" element={<SuperText />} />
 
-                       {/* Deprecated Unified Story System - Redirects to Super Text */}
-                       <Route path="/buddys_admin/unified_story_system/*" element={<SecureAdminRoute><UnifiedStoryDeprecated /></SecureAdminRoute>} />
+                                   {/* Deprecated Unified Story System - Redirects to Super Text */}
+                                   <Route path="/buddys_admin/unified_story_system/*" element={<SecureAdminRoute><UnifiedStoryDeprecated /></SecureAdminRoute>} />
 
-                      {/* Catch-all route */}
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                   </ConditionalContentProtection>
+                                  {/* Catch-all route */}
+                                  <Route path="*" element={<NotFound />} />
+                                </Routes>
+                              </AccessibilityEnhancements>
+                            </ConditionalContentProtection>
                           </BreakTimerProvider>
                          </GlobalHelpProvider>
                       </AuthProvider>
