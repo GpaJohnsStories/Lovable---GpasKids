@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useIconCache } from '@/contexts/IconCacheContext';
+import { iconCacheService } from '@/services/IconCacheService';
 
 interface UseCachedIconResult {
   iconUrl: string | null;
@@ -11,7 +12,7 @@ interface UseCachedIconResult {
 /**
  * Hook to load and cache an icon
  */
-export const useCachedIcon = (iconPath: string | null): UseCachedIconResult => {
+export const useCachedIcon = (iconPath: string | null, forceRefresh?: boolean): UseCachedIconResult => {
   const [iconUrl, setIconUrl] = useState<string | null>(null);
   const [iconName, setIconName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +33,11 @@ export const useCachedIcon = (iconPath: string | null): UseCachedIconResult => {
       setError(null);
 
       try {
+        // Force refresh by clearing cache if requested
+        if (forceRefresh) {
+          await iconCacheService.refreshIcon(iconPath);
+        }
+        
         const url = await getIconUrl(iconPath);
         setIconUrl(url);
         
@@ -48,7 +54,7 @@ export const useCachedIcon = (iconPath: string | null): UseCachedIconResult => {
     };
 
     loadIcon();
-  }, [iconPath, getIconUrl, getIconName]);
+  }, [iconPath, getIconUrl, getIconName, forceRefresh]);
 
   return {
     iconUrl,

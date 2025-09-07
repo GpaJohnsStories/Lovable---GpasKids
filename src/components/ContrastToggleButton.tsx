@@ -10,7 +10,7 @@ interface ContrastToggleButtonProps {
 
 const ContrastToggleButton: React.FC<ContrastToggleButtonProps> = ({ inline = false }) => {
   const [isHighContrast, setIsHighContrast] = useState(false);
-  const { iconUrl, isLoading } = useCachedIcon('!CO-VCB.png');
+  const { iconUrl, isLoading } = useCachedIcon('!CO-VCB.png', true);
 
   // Load saved contrast preference on mount
   useEffect(() => {
@@ -44,12 +44,12 @@ const ContrastToggleButton: React.FC<ContrastToggleButtonProps> = ({ inline = fa
       className="p-0 m-0 bg-transparent hover:bg-transparent border-none shadow-none h-auto w-auto focus:ring-0 focus:outline-none no-underline hover:no-underline cursor-pointer"
       aria-label={isHighContrast ? "Turn off high contrast" : "Turn on high contrast"}
     >
-      <div className="w-[70px] h-[70px] flex items-center justify-center">
+      <div className="w-[55px] h-[55px] flex items-center justify-center">
         {iconUrl ? (
           <img 
             src={iconUrl} 
             alt="Contrast Toggle" 
-            className="h-[70px] w-[70px] block"
+            className="h-[55px] w-[55px] block object-contain"
           />
         ) : (
           <Eye className="h-8 w-8 text-orange-500" />
