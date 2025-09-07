@@ -256,7 +256,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                   />
                 </button>
                 {buddyIconName && (
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-emerald-900/90 backdrop-blur-sm rounded-lg px-3 py-2 text-sm text-yellow-100 text-center font-bold shadow-lg border border-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-50" style={{ fontSize: '13pt', fontFamily: 'Kalam, Comic Sans MS, cursive, sans-serif' }}>
+                  <div className="absolute top-full mt-2 left-0 md:left-1/2 transform md:-translate-x-1/2 bg-emerald-900/90 backdrop-blur-sm rounded-lg px-3 py-2 text-sm text-yellow-100 text-center font-bold shadow-lg border border-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-normal break-words max-w-[calc(100vw-1rem)] md:max-w-xs z-50" style={{ fontSize: '13pt', fontFamily: 'Kalam, Comic Sans MS, cursive, sans-serif' }}>
                     {buddyIconName}
                   </div>
                 )}
