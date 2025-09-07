@@ -261,11 +261,10 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                     <TooltipContent
                       side="bottom"
                       align="start"
-                      className="bg-emerald-900/90 text-yellow-100 border-emerald-700 shadow-lg backdrop-blur-sm z-50 font-bold"
+                      className="bg-emerald-900/90 text-yellow-100 border-emerald-700 shadow-lg backdrop-blur-sm z-50"
                       style={{ 
                         fontSize: '21px', 
                         fontFamily: 'Kalam, Comic Sans MS, cursive, sans-serif',
-                        fontWeight: '700',
                         width: imageWidth ? `${imageWidth}px` : 'auto',
                         maxWidth: imageWidth ? `${imageWidth}px` : 'auto',
                         whiteSpace: 'normal',
