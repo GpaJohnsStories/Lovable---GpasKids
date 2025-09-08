@@ -155,7 +155,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
                     lineHeight: '1.4'
                   }}
                 >
-                  {webtextData.title || "Click to learn more"}
+                  {webtextData.photo_alt_1 || webtextData.title || "Click to learn more"}
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
