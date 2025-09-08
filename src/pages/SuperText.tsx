@@ -643,8 +643,9 @@ const SuperText: React.FC = () => {
 
                   {/* Column 2, Row 2: New Field (spans to column 3) */}
                   <div className="row-start-2 col-start-2 col-span-2 self-end">
-                    <Input type="text" placeholder="NEW FIELD" className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black w-full" style={{
-                  fontStyle: 'normal'
+                    <Input type="text" placeholder="NEW FIELD" className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black" style={{
+                  fontStyle: 'normal',
+                  width: 'calc(100% - 5px)'
                 }} />
                   </div>
 
