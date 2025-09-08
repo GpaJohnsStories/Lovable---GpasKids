@@ -578,8 +578,8 @@ const SuperText: React.FC = () => {
               }} />
                 </div>
                 
-                {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
-                <div className="grid grid-rows-4 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
+                {/* 5x3 Grid Layout with explicit positioning - aligned with blue dot above */}
+                <div className="grid grid-rows-5 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
                   {/* Column 1, Row 1: Green Dot A */}
                   <div className="row-start-1 col-start-1 place-self-center">
                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
@@ -587,22 +587,29 @@ const SuperText: React.FC = () => {
                 }}>A</div>
                   </div>
                   
-                  {/* Column 1, Row 2: Green Dot B */}
+                  {/* Column 1, Row 2: New Row (placeholder) */}
                   <div className="row-start-2 col-start-1 place-self-center">
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
+                }}>E</div>
+                  </div>
+                  
+                  {/* Column 1, Row 3: Green Dot B */}
+                  <div className="row-start-3 col-start-1 place-self-center">
                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                   backgroundColor: '#3b82f6'
                 }}>B</div>
                   </div>
                   
-                  {/* Column 1, Row 3: Green Dot C */}
-                  <div className="row-start-3 col-start-1 place-self-center">
+                  {/* Column 1, Row 4: Green Dot C */}
+                  <div className="row-start-4 col-start-1 place-self-center">
                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                   backgroundColor: '#3b82f6'
                 }}>C</div>
                   </div>
 
-                  {/* Column 1, Row 4: Green Dot D */}
-                  <div className="row-start-4 col-start-1 place-self-center">
+                  {/* Column 1, Row 5: Green Dot D */}
+                  <div className="row-start-5 col-start-1 place-self-center">
                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                   backgroundColor: '#3b82f6'
                 }}>D</div>
@@ -634,8 +641,16 @@ const SuperText: React.FC = () => {
                 }} autoCapitalize="characters" spellCheck={false} tabIndex={1} />
                   </div>
 
-                  {/* Column 2, Row 2: Category Dropdown */}
+                  {/* Column 2, Row 2: New Field (placeholder) */}
                   <div className="row-start-2 col-start-2 self-end">
+                    <Input type="text" placeholder="NEW FIELD" className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black" style={{
+                  width: '192px',
+                  fontStyle: 'normal'
+                }} />
+                  </div>
+
+                  {/* Column 2, Row 3: Category Dropdown */}
+                  <div className="row-start-3 col-start-2 self-end">
                     <Select value={formData.category || ''} onValueChange={value => {
                   setCategory(value);
                   handleInputChange('category', value);
@@ -715,8 +730,8 @@ const SuperText: React.FC = () => {
                     </Select>
                   </div>
 
-                  {/* Column 2, Row 3: Copyright Status */}
-                  <div className="row-start-3 col-start-2 self-end">
+                  {/* Column 2, Row 4: Copyright Status */}
+                  <div className="row-start-4 col-start-2 self-end">
                     <Select value={formData.copyright_status || ''} onValueChange={value => {
                   setCopyrightStatus(value);
                   handleInputChange('copyright_status', value);
@@ -770,8 +785,8 @@ const SuperText: React.FC = () => {
                     </Select>
                   </div>
 
-                  {/* Column 2, Row 4: Load Text Button */}
-                  <div className="row-start-4 col-start-2 flex flex-col justify-center">
+                  {/* Column 2, Row 5: Load Text Button */}
+                  <div className="row-start-5 col-start-2 flex flex-col justify-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -835,8 +850,19 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  {/* Column 3, Row 3: Add Audio File Button */}
-                  <div className="row-start-3 col-start-3 justify-self-start self-center">
+                  {/* Column 3, Row 2: New Button (placeholder) */}
+                  <div className="row-start-2 col-start-3 justify-self-start self-center">
+                    <Button className="supertext-text-btn px-6 py-2 rounded-full" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }}>
+                      New Button
+                    </Button>
+                  </div>
+
+                  {/* Column 3, Row 4: Add Audio File Button */}
+                  <div className="row-start-4 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -860,8 +886,8 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  {/* Column 3, Row 4: Add Video File Button */}
-                  <div className="row-start-4 col-start-3 justify-self-start self-center">
+                  {/* Column 3, Row 5: Add Video File Button */}
+                  <div className="row-start-5 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
