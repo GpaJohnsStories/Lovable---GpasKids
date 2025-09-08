@@ -6,6 +6,7 @@ import { extractHeaderTokens, createSafeHeaderHtml } from "@/utils/headerTokens"
 import { getWebtextTheme } from "@/utils/webtextTheme";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface SysWe2WebTextBoxProps {
   code: string;
@@ -115,24 +116,40 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
         {/* Image - Floated Left */}
         {finalImageUrl && (
           <div className="float-left mr-4 mb-2">
-            <div
-              className="rounded-lg overflow-hidden cursor-pointer transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl"
-              style={{
-                backgroundColor: orangeTheme.photoMatColor,
-                padding: '4px'
-              }}
-              onClick={handleImageClick}
-              title={webtextData.title || "Click to learn more"}
-            >
-              <img
-                src={finalImageUrl}
-                alt={webtextData.photo_alt_1 || webtextData.title || "Story image"}
-                className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain"
-                style={{
-                  imageRendering: 'crisp-edges'
-                }}
-              />
-            </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div
+                    className="rounded-lg overflow-hidden cursor-pointer shadow-lg"
+                    style={{
+                      backgroundColor: orangeTheme.photoMatColor,
+                      padding: '4px'
+                    }}
+                    onClick={handleImageClick}
+                  >
+                    <img
+                      src={finalImageUrl}
+                      alt={webtextData.photo_alt_1 || webtextData.title || "Story image"}
+                      className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain"
+                      style={{
+                        imageRendering: 'crisp-edges'
+                      }}
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent 
+                  className="max-w-none bg-white border border-gray-300 shadow-lg text-black"
+                  style={{ 
+                    fontSize: '24px',
+                    maxWidth: 'min(400px, 90vw)',
+                    whiteSpace: 'pre-wrap',
+                    lineHeight: '1.4'
+                  }}
+                >
+                  {webtextData.photo_alt_1 || webtextData.title || "Click to learn more"}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         )}
 

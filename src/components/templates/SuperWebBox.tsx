@@ -5,6 +5,7 @@ import { AudioButton } from "@/components/AudioButton";
 import { StoryContentRenderer } from "@/components/story-content/StoryContentRenderer";
 import { getSuperWebTheme } from "@/utils/superWebTheme";
 import { useQuery } from "@tanstack/react-query";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 /* ===== SUPER-WEB-BOX TEMPLATE START ===== */
 interface SuperWebBoxProps {
@@ -111,16 +112,33 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
           {/* Image Section */}
           {iconUrl && (
             <div className="flex-shrink-0">
-              <div 
-                className="rounded overflow-hidden"
-                style={{ border: `3px solid ${color}` }}
-              >
-                <img
-                  src={iconUrl}
-                  alt={iconName || displayTitle}
-                  className="w-24 h-24 object-cover"
-                />
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div 
+                      className="rounded overflow-hidden"
+                      style={{ border: `3px solid ${color}` }}
+                    >
+                      <img
+                        src={iconUrl}
+                        alt={iconName || displayTitle}
+                        className="w-24 h-24 object-cover"
+                      />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent 
+                    className="max-w-none bg-white border border-gray-300 shadow-lg text-black"
+                    style={{ 
+                      fontSize: '24px',
+                      maxWidth: 'min(200px, 90vw)',
+                      whiteSpace: 'pre-wrap',
+                      lineHeight: '1.4'
+                    }}
+                  >
+                    {iconName || displayTitle}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           )}
 
