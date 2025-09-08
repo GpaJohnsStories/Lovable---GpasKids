@@ -41,6 +41,7 @@ import AdminOverview from "./components/admin/AdminOverview";
 import AdminLayout from "./components/admin/AdminLayout";
 import AdminStories from "./components/admin/AdminStories";
 import SecurityAuditDashboard from "./components/admin/SecurityAuditDashboard";
+import AdminManual from "./pages/AdminManual";
 
 // Auth components
 import ProtectedRoute from "./components/auth/ProtectedRoute";
@@ -147,12 +148,13 @@ function App() {
                                    <Route path="/dashboard" element={<ProtectedRoute><Navigate to="/buddys_admin" replace /></ProtectedRoute>} />
 
                                   {/* Admin Routes */}
-                                  <Route path="/buddys_admin" element={<SecureAdminRoute><AdminOverview /></SecureAdminRoute>} />
-                                  <Route path="/buddys_admin/stories" element={<SecureAdminRoute><AdminStories /></SecureAdminRoute>} />
-                                   <Route path="/buddys_admin/security" element={<SecureAdminRoute><SecurityAuditDashboard /></SecureAdminRoute>} />
-                                  
-                                  <Route path="/buddys_admin/reference" element={<SecureAdminRoute><ReferenceDashboard /></SecureAdminRoute>} />
-                                  <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMapContent /></SecureAdminRoute>} />
+                                   <Route path="/buddys_admin" element={<SecureAdminRoute><AdminOverview /></SecureAdminRoute>} />
+                                   <Route path="/buddys_admin/stories" element={<SecureAdminRoute><AdminStories /></SecureAdminRoute>} />
+                                    <Route path="/buddys_admin/security" element={<SecureAdminRoute><SecurityAuditDashboard /></SecureAdminRoute>} />
+                                   <Route path="/buddys_admin/manual" element={<SecureAdminRoute><AdminManual /></SecureAdminRoute>} />
+                                   
+                                   <Route path="/buddys_admin/reference" element={<SecureAdminRoute><ReferenceDashboard /></SecureAdminRoute>} />
+                                   <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMapContent /></SecureAdminRoute>} />
                                   <Route path="/buddys_admin/super-text" element={<SuperText />} />
 
                                    {/* Deprecated Unified Story System - Redirects to Super Text */}
