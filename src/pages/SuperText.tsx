@@ -850,16 +850,6 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  {/* Column 3, Row 2: New Button (placeholder) */}
-                  <div className="row-start-2 col-start-3 justify-self-start self-center">
-                    <Button className="supertext-text-btn px-6 py-2 rounded-full" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}>
-                      New Button
-                    </Button>
-                  </div>
 
                   {/* Column 3, Row 4: Add Audio File Button */}
                   <div className="row-start-4 col-start-3 justify-self-start self-center">
