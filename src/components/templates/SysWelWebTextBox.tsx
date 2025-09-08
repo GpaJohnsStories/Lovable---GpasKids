@@ -120,11 +120,11 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
         />
       </div>
 
-      {/* Main Content Area */}
-      <div className="flex gap-4">
-        {/* Left Side - Image */}
+      {/* Main Content Area - Using flow-root to contain floated image */}
+      <div className="flow-root">
+        {/* Image - Floated Left */}
         {finalImageUrl && (
-          <div className="flex-shrink-0">
+          <div className="float-left mr-4 mb-2">
             <div
               className="rounded-lg overflow-hidden cursor-pointer transform transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl"
               style={{
@@ -146,8 +146,8 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
           </div>
         )}
 
-        {/* Right Side - Content */}
-        <div className="flex-1 min-w-0">
+        {/* Content - Flows around the floated image */}
+        <div>
           {/* Title */}
           {(headerTokens.titleHtml || title || webtextData.title) && (
             <h2 
