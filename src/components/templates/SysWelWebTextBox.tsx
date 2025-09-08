@@ -152,7 +152,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
           {(headerTokens.titleHtml || title || webtextData.title) && (
             <h2 
               className="font-handwritten font-bold leading-tight break-words text-left m-0 p-0"
-              style={{ color: theme!.colors.primary }}
+              style={{ color: "#0B3D91" }}
             >
               {headerTokens.titleHtml ? (
                 <span dangerouslySetInnerHTML={createSafeHeaderHtml(headerTokens.titleHtml)} />
@@ -182,6 +182,9 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
                 margin-top: 0 !important;
                 padding-top: 0 !important;
               }
+              .syswel-box-content .rendered-story-content * {
+                color: #0B3D91 !important;
+              }
             `
           }} />
         </div>
@@ -191,7 +194,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
       {/* Code Display in Bottom Right */}
       <div 
         className="absolute bottom-2 right-2 text-xs font-mono"
-        style={{ color: theme!.colors.primary }}
+        style={{ color: "#0B3D91" }}
       >
         {code}
       </div>
