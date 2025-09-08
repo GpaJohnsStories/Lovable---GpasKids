@@ -149,8 +149,8 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
         <div className="flex-1 min-w-0">
           {/* Title */}
           {(headerTokens.titleHtml || title || webtextData.title) && (
-            <h1 
-              className="font-handwritten font-bold leading-tight break-words text-left mb-1 text-24-system"
+            <h3 
+              className="font-handwritten font-bold leading-tight break-words text-left mb-1 text-24-system m-0 p-0"
               style={{ color: theme!.colors.primary }}
             >
               {headerTokens.titleHtml ? (
@@ -158,7 +158,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
               ) : (
                 title || webtextData.title
               )}
-            </h1>
+            </h3>
           )}
 
           {/* Content */}
