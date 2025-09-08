@@ -13,7 +13,7 @@ const StaticWebtextBox: React.FC<StaticWebtextBoxProps> = ({
   borderColor,
   backgroundColor,
   textColor,
-  children = "Content coming soon."
+  children
 }) => {
   return (
     <div className="mb-6 max-w-4xl mx-auto">
