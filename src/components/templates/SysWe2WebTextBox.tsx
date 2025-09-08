@@ -69,23 +69,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
   }
 
   if (!webtextData) {
-    return (
-      <div 
-        className="relative p-6 rounded-lg shadow-lg mb-6 text-center"
-        style={{
-          backgroundColor: orangeTheme.backgroundColor,
-          border: `3px solid ${orangeTheme.borderColor}`,
-          color: orangeTheme.primaryColor
-        }}
-        id={id}
-      >
-        <h2 className="text-xl font-bold mb-4">Coming Soon</h2>
-        <p>This content is being prepared for you!</p>
-        <div className="absolute bottom-2 right-2 text-xs opacity-70">
-          {code}
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (
@@ -93,7 +77,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
       className="relative p-6 rounded-lg shadow-lg mb-6"
       style={{
         backgroundColor: orangeTheme.backgroundColor,
-        border: `3px solid ${orangeTheme.borderColor}`
+        border: `4px solid ${orangeTheme.borderColor}`
       }}
       id={id}
     >

@@ -91,15 +91,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
   }
 
   if (!webtextData) {
-    return (
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 relative">
-        <div className="text-18-system">Coming Soon</div>
-        {/* Code Display in Bottom Right */}
-        <div className="absolute bottom-2 right-2 text-xs font-mono text-amber-700">
-          {code}
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (
