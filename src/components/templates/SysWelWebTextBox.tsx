@@ -107,7 +107,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
       className="rounded-lg p-6 mb-4 relative border-4"
       style={{
         backgroundColor: theme!.colors.backgroundTint,
-        borderColor: theme!.colors.lighterBorder,
+        borderColor: "#0B3D91",
         boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
       }}
       id={id}
