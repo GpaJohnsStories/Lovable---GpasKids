@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useStoryCodeLookup } from "@/hooks/useStoryCodeLookup";
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
-import { extractHeaderTokens, createSafeHeaderHtml } from "@/utils/headerTokens";
+
 import { getWebtextTheme } from "@/utils/webtextTheme";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
@@ -55,10 +55,6 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
     return `${baseUrl}${cacheBuster}`;
   }, [webtextData?.photo_link_1]);
 
-  const headerTokens = useMemo(() => {
-    if (!webtextData?.content) return { tokens: {}, contentWithoutTokens: "" };
-    return extractHeaderTokens(webtextData.content);
-  }, [webtextData?.content]);
 
   if (loading) {
     return (
@@ -135,21 +131,16 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
         {/* Content - Flows around the floated image */}
         <div>
           {/* Title */}
-          {(headerTokens.tokens?.titleHtml || title || webtextData.title) && (
+          {(title || webtextData.title) && (
             <h2 
-              className="text-3xl font-bold mb-4"
-              style={{ color: orangeTheme.primaryColor }}
+              className="text-3xl font-bold mb-4 syswe2-title"
             >
-              {headerTokens.tokens?.titleHtml ? (
-                <span dangerouslySetInnerHTML={createSafeHeaderHtml(headerTokens.tokens.titleHtml)} />
-              ) : (
-                title || webtextData.title
-              )}
+              {title || webtextData.title}
             </h2>
           )}
 
           {/* Story Content */}
-          <div style={{ color: orangeTheme.primaryColor }}>
+          <div className="syswe2-content">
             <IsolatedStoryRenderer
               content={webtextData.content}
               useRichCleaning={true}
@@ -163,9 +154,24 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
       </div>
 
       {/* Code Display - Bottom Right */}
-      <div className="absolute bottom-2 right-2 text-xs opacity-70" style={{ color: orangeTheme.primaryColor }}>
+      <div className="absolute bottom-2 right-2 text-xs opacity-70 syswe2-code">
         {code}
       </div>
+
+      {/* CSS Styles */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .syswe2-title {
+            color: ${orangeTheme.primaryColor};
+          }
+          .syswe2-content {
+            color: ${orangeTheme.primaryColor};
+          }
+          .syswe2-code {
+            color: ${orangeTheme.primaryColor};
+          }
+        `
+      }} />
 
       {/* SuperAV Modal */}
       {showSuperAV && (

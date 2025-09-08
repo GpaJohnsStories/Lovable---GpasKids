@@ -80,6 +80,32 @@
   color: cyan !important;
 }
 
+/* Stronger overrides for webtext content areas */
+[data-high-contrast="true"] .syswel-box-content,
+[data-high-contrast="true"] .syswel-box-content *,
+[data-high-contrast="true"] .syswel-box-content .rendered-story-content,
+[data-high-contrast="true"] .syswel-box-content .rendered-story-content *,
+[data-high-contrast="true"] .super-web-text-content,
+[data-high-contrast="true"] .super-web-text-content *,
+[data-high-contrast="true"] .super-web-text-content .rendered-story-content,
+[data-high-contrast="true"] .super-web-text-content .rendered-story-content * {
+  background-color: black !important;
+  color: white !important;
+  border-color: white !important;
+}
+
+[data-high-contrast="true"] .syswel-box-content a,
+[data-high-contrast="true"] .super-web-text-content a {
+  color: yellow !important;
+  text-decoration: underline !important;
+  font-weight: bold !important;
+}
+
+[data-high-contrast="true"] .syswel-box-content a:hover,
+[data-high-contrast="true"] .super-web-text-content a:hover {
+  color: cyan !important;
+}
+
 /* Focus indicators for keyboard navigation */
 *:focus {
   outline: 3px solid #0066cc !important;

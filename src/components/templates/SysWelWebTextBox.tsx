@@ -6,7 +6,7 @@ import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
-import { extractHeaderTokens, createSafeHeaderHtml } from "@/utils/headerTokens";
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface SysWelWebTextBoxProps {
@@ -52,13 +52,6 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
   const isIconCode = !!(theme?.image && !theme.image.startsWith('http') && !theme.image.startsWith('/'));
   const { iconUrl } = useCachedIcon(isIconCode ? theme!.image : null);
   
-  // Extract header tokens from content
-  const extractedData = useMemo(() => {
-    if (!webtextData?.content) return { tokens: {}, contentWithoutTokens: '' };
-    return extractHeaderTokens(webtextData.content);
-  }, [webtextData?.content]);
-  
-  const { tokens: headerTokens, contentWithoutTokens: remainingContent } = extractedData;
   
   // Calculate the final image URL
   const finalImageUrl = useMemo(() => {
@@ -157,23 +150,18 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
         {/* Content - Flows around the floated image */}
         <div>
           {/* Title */}
-          {(headerTokens.titleHtml || title || webtextData.title) && (
+          {(title || webtextData.title) && (
             <h2 
-              className="font-handwritten font-bold leading-tight break-words text-left m-0 p-0"
-              style={{ color: "#0B3D91" }}
+              className="font-handwritten font-bold leading-tight break-words text-left m-0 p-0 syswel-title"
             >
-              {headerTokens.titleHtml ? (
-                <span dangerouslySetInnerHTML={createSafeHeaderHtml(headerTokens.titleHtml)} />
-              ) : (
-                title || webtextData.title
-              )}
+              {title || webtextData.title}
             </h2>
           )}
 
           {/* Content */}
           <div className="text-18-system syswel-box-content">
             <IsolatedStoryRenderer 
-              content={remainingContent || webtextData.content}
+              content={webtextData.content}
               category="WebText"
               fontSize={contentFontSize}
               showHeaderPreview={false}
@@ -181,6 +169,9 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
           </div>
           <style dangerouslySetInnerHTML={{
             __html: `
+              .syswel-title {
+                color: #0B3D91;
+              }
               .syswel-box-content .rendered-story-content > *:first-child {
                 margin-top: 0.125rem !important;
               }
@@ -207,7 +198,10 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
               .syswel-box-content .rendered-story-content b,
               .syswel-box-content .rendered-story-content i,
               .syswel-box-content .rendered-story-content a {
-                color: #0B3D91 !important;
+                color: #0B3D91;
+              }
+              .syswel-code-display {
+                color: #0B3D91;
               }
             `
           }} />
@@ -216,10 +210,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
 
 
       {/* Code Display in Bottom Right */}
-      <div 
-        className="absolute bottom-2 right-2 text-xs font-mono"
-        style={{ color: "#0B3D91" }}
-      >
+      <div className="absolute bottom-2 right-2 text-xs font-mono syswel-code-display">
         {code}
       </div>
 

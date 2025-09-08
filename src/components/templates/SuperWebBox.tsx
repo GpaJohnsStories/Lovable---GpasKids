@@ -200,10 +200,10 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
         .super-web-text-content .rendered-story-content b,
         .super-web-text-content .rendered-story-content i,
         .super-web-text-content .rendered-story-content a {
-          color: ${color} !important;
-          font-size: 24px !important;
-          font-weight: normal !important;
-          line-height: 1.4 !important;
+          color: ${color};
+          font-size: 24px;
+          font-weight: normal;
+          line-height: 1.4;
         }
         
         /* Override for bold elements */
