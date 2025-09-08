@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useStoryCodeLookup } from "@/hooks/useStoryCodeLookup";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { AudioButton } from "@/components/AudioButton";
@@ -21,6 +21,7 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
   title,
   id 
 }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
   const { lookupStoryByCode } = useStoryCodeLookup();
   
   const { data: story, isLoading, error } = useQuery({
@@ -113,11 +114,12 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
           {iconUrl && (
             <div className="flex-shrink-0">
               <TooltipProvider>
-                <Tooltip>
+                <Tooltip open={showTooltip} onOpenChange={setShowTooltip}>
                   <TooltipTrigger asChild>
                     <div 
                       className="rounded overflow-hidden"
                       style={{ border: `3px solid ${color}` }}
+                      onClick={() => setShowTooltip(!showTooltip)}
                     >
                       <img
                         src={iconUrl}

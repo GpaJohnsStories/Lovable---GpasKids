@@ -24,6 +24,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
   const [loading, setLoading] = useState(true);
   const [showSuperAV, setShowSuperAV] = useState(false);
   const [contentFontSize, setContentFontSize] = useState(24);
+  const [showTooltip, setShowTooltip] = useState(false);
   const { lookupStoryByCode } = useStoryCodeLookup();
 
   useEffect(() => {
@@ -125,7 +126,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
         {finalImageUrl && (
           <div className="float-left mr-4 mb-2">
             <TooltipProvider>
-              <Tooltip>
+              <Tooltip open={showTooltip} onOpenChange={setShowTooltip}>
                 <TooltipTrigger asChild>
                   <div
                     className="rounded-lg overflow-hidden shadow-lg"
@@ -135,6 +136,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
                       boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
                       filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
                     }}
+                    onClick={() => setShowTooltip(!showTooltip)}
                   >
                     <img
                       src={finalImageUrl}

@@ -18,6 +18,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
   const [loading, setLoading] = useState(true);
   const [showSuperAV, setShowSuperAV] = useState(false);
   const [contentFontSize, setContentFontSize] = useState(24);
+  const [showTooltip, setShowTooltip] = useState(false);
   const { lookupStoryByCode } = useStoryCodeLookup();
 
   useEffect(() => {
@@ -111,7 +112,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
         {finalImageUrl && (
           <div className="float-left mr-4 mb-2">
             <TooltipProvider>
-              <Tooltip>
+              <Tooltip open={showTooltip} onOpenChange={setShowTooltip}>
                 <TooltipTrigger asChild>
                   <div
                     className="rounded-lg overflow-hidden shadow-lg"
@@ -119,6 +120,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
                       backgroundColor: orangeTheme.photoMatColor,
                       padding: '4px'
                     }}
+                    onClick={() => setShowTooltip(!showTooltip)}
                   >
                     <img
                       src={finalImageUrl}
