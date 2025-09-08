@@ -3,7 +3,7 @@ import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { usePersonalId } from '@/hooks/usePersonalId';
 import SecureStoryContent from '@/components/secure/SecureStoryContent';
 import { replaceTokens, TokenReplacementContext } from '@/utils/printTokens';
-import { extractHeaderTokens, createSafeHeaderHtml } from '@/utils/headerTokens';
+import { stripLegacyTokens } from '@/utils/legacyTokenStripper';
 
 interface PrintBlackBoxProps {
   storyContext?: {
@@ -26,18 +26,17 @@ const PrintBlackBox: React.FC<PrintBlackBoxProps> = ({ storyContext }) => {
       try {
         const result = await lookupStoryByCode('PRT-CRO', true);
         if (result.found && result.story) {
-          // Extract header tokens and get clean content
-          const extracted = extractHeaderTokens(result.story.content || '');
+          // Use story title from database and strip legacy tokens from content
+          setTitle(result.story.title || '');
           
-          // Set title for display above the black box
-          setTitle(extracted.tokens.title || '');
+          const cleanContent = stripLegacyTokens(result.story.content || '');
           
           // Process the cleaned content with print tokens
           const tokenContext: TokenReplacementContext = {
             personalId,
             story: storyContext
           };
-          const processedContent = replaceTokens(extracted.contentWithoutTokens, tokenContext);
+          const processedContent = replaceTokens(cleanContent, tokenContext);
           setContent(processedContent);
         }
       } catch (error) {

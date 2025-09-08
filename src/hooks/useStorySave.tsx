@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { extractHeaderTokens } from "@/utils/headerTokens";
 
 interface Story {
   id?: string;
@@ -72,7 +71,12 @@ export const useStorySave = () => {
       console.log('Fetch error:', fetchError);
     }
     
-    // Basic validation (title no longer required - extracted from tokens)
+    // Basic validation
+    if (!formData.title.trim()) {
+      console.log('Validation failed: Title required');
+      toast.error("Title is required");
+      return false;
+    }
     if (!formData.story_code.trim()) {
       console.log('Validation failed: Story code required');
       toast.error("Story code is required");
@@ -92,39 +96,12 @@ export const useStorySave = () => {
       return false;
     }
 
-    // Check for invalid colon-style header tokens
-    const colonTokenPattern = /\{\{(TITLE|TAGLINE|AUTHOR|EXCERPT):\s*[^}]+?\}\}/i;
-    if (colonTokenPattern.test(formData.content)) {
-      console.log('Validation failed: Colon-style header tokens detected');
-      toast.error("Invalid header tokens detected. Use block-style tokens like {{TITLE}}...{{/TITLE}} instead of colon format.");
-      return false;
-    }
-
     console.log('Validation passed, setting loading state...');
     setIsSaving(true);
     
     try {
-      // Extract header tokens from content and merge with form data
-      const { tokens, contentWithoutTokens } = extractHeaderTokens(formData.content);
-      
-      // Create effective title for database (required field)
-      const effectiveTitle = tokens.title || formData.story_code;
-      
-      // Handle author based on category - WebText can have no author
-      let effectiveAuthor = tokens.author || formData.author;
-      if (!effectiveAuthor && formData.category !== 'WebText') {
-        effectiveAuthor = 'Grandpa John'; // Safe fallback for non-WebText
-      }
-
       const saveData = {
         ...formData,
-        // Use computed values for required database fields
-        title: effectiveTitle,
-        tagline: tokens.tagline || formData.tagline,
-        author: effectiveAuthor,
-        excerpt: tokens.excerpt || formData.excerpt,
-        // Keep original content with tokens for rendering
-        content: formData.content,
         ai_voice_name: formData.ai_voice_name || 'Nova',
         ai_voice_model: formData.ai_voice_model || 'tts-1',
         publication_status_code: formData.publication_status_code

@@ -2,7 +2,6 @@
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { validateStoryForm, checkStoryCodeExists } from "./StoryFormValidation";
-import { extractHeaderTokens } from "@/utils/headerTokens";
 
 interface Story {
   id?: string;
@@ -33,22 +32,8 @@ export const handleStorySubmission = async (
   console.log('Story content length:', formData.content?.length || 0);
   console.log('Story content preview:', formData.content?.substring(0, 200) + (formData.content?.length > 200 ? '...' : ''));
   
-  // Extract header tokens from content and merge with form data
-  const { tokens } = extractHeaderTokens(formData.content);
-  
-  // Update formData with token values (plain text for DB fields)
-  const processedFormData = {
-    ...formData,
-    title: tokens.title || formData.title,
-    tagline: tokens.tagline || formData.tagline,
-    author: tokens.author || formData.author,
-    excerpt: tokens.excerpt || formData.excerpt,
-    // Keep original content with tokens
-    content: formData.content
-  };
-  
-  // Validate form data (after token processing)
-  if (!validateStoryForm(processedFormData)) {
+  // Validate form data (title now required)
+  if (!validateStoryForm(formData)) {
     console.log('Form validation failed');
     return;
   }
@@ -56,7 +41,7 @@ export const handleStorySubmission = async (
   console.log('Form validation passed');
 
   // Check for duplicate story code
-  const isDuplicate = await checkStoryCodeExists(processedFormData.story_code, story?.id);
+  const isDuplicate = await checkStoryCodeExists(formData.story_code, story?.id);
   if (isDuplicate) {
     console.log('Duplicate story code detected');
     toast.error("Story code already exists. Please choose a different code.");
@@ -68,9 +53,9 @@ export const handleStorySubmission = async (
   try {
     // Ensure only Supabase bucket URLs are saved for videos
     const safeFormData = {
-      ...processedFormData,
-      video_url: processedFormData.video_url && processedFormData.video_url.includes('supabase') 
-        ? processedFormData.video_url 
+      ...formData,
+      video_url: formData.video_url && formData.video_url.includes('supabase') 
+        ? formData.video_url 
         : '' // Clear external URLs
     };
 

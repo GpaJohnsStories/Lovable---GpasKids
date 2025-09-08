@@ -46,33 +46,12 @@ export const createBackgroundTint = (hexColor: string): string => {
 
 /**
  * Extract the best image from story data for Super-Web-Box
- * Priority: BIGICON > photo_link_1 > null
+ * Uses photo_link_1 from the database
  */
 export const selectSuperWebImage = (story: any): string | null => {
   if (!story) return null;
   
-  // Check for BIGICON in content first
-  if (story.content && story.content.includes('BIGICON')) {
-    // Try {{BIGICON}}path{{/BIGICON}} format first
-    const blockMatch = story.content.match(/\{\{BIGICON\}\}([^{]+?)\{\{\/BIGICON\}\}/);
-    if (blockMatch && blockMatch[1]) {
-      return blockMatch[1].trim();
-    }
-    
-    // Try {{BIGICON: path}} format
-    const colonMatch = story.content.match(/\{\{BIGICON:\s*([^}]+?)\}\}/);
-    if (colonMatch && colonMatch[1]) {
-      return colonMatch[1].trim();
-    }
-    
-    // Try BIGICON = path format
-    const equalsMatch = story.content.match(/BIGICON\s*=\s*([^\s<]+)/);
-    if (equalsMatch && equalsMatch[1]) {
-      return equalsMatch[1].trim();
-    }
-  }
-  
-  // Fallback to photo_link_1
+  // Use photo_link_1 from database
   return story.photo_link_1 || null;
 };
 

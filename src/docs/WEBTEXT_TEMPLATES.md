@@ -1,183 +1,50 @@
-# WebText Templates Documentation
+# WEBTEXT TEMPLATES
 
-## Overview
+Templates for creating web text boxes in the application.
 
-The WebText template system provides a consistent, beautiful way to display webtext content with automatic styling derived from the content itself.
+## Available Templates
 
-## Super-Web-Box Template
+### SuperWebBox
+Modern template with color theming and proportional layout.
 
-The `SuperWebBox` component is a standardized template for creating consistently styled content boxes with custom colors.
-
-### Usage
+**Usage:**
 ```jsx
 <SuperWebBox 
-  code="YOUR-CODE" 
+  code="STORY_CODE" 
   color="#FF6B35" 
-  title="Optional Custom Title"
-  id="optional-id" 
+  title="Optional Title Override"
 />
 ```
 
-### Features
-- **Box Border**: 4px solid border in specified color
-- **Photo Border**: 3px solid border in specified color  
-- **Title**: 30px, bold, required (uses story title or custom title)
-- **Tagline**: 24px, optional (from story data)
-- **Author**: 24px, bold, optional (from story data)
-- **Content Text**: 24px, regular, all in specified color
-- **No Excerpt**: Content displays full text, no excerpts
-- **Background Tint**: Auto-calculated based on color luminance for optimal readability
+**Features:**
+- Uses direct database fields (title, tagline, author, excerpt)
+- 4px border color matching
+- 3px image border
+- Luminance-based background tinting
+- Responsive image layout
+- 24px text content with theme color
+- Audio button integration
 
-### Color Handling
-The background tint is automatically calculated using luminance-based alpha:
-- Dark colors: 12-18% opacity tint
-- Light colors: 6-12% opacity tint (prevents readability issues)
+**Field Sources:**
+- Title: story.title (database field)
+- Tagline: story.tagline (database field) 
+- Author: story.author (database field)
+- Image: story.photo_link_1 (database field)
+- Content: story.content (with legacy tokens stripped)
 
-### Template Code Location
-```
-/* ===== SUPER-WEB-BOX TEMPLATE START ===== */
-Located in: src/components/templates/SuperWebBox.tsx
-/* ===== SUPER-WEB-BOX TEMPLATE END ===== */
-```
+## Token System
 
-## Usage
+### Supported Tokens
+- `{{ICON}}filename.ext{{/ICON}}` - Inline icons (55px x 55px)
+- `{{ICON: filename.ext}}` - Alternative icon syntax
+- `{{PRT-*}}` tokens - Print system tokens
 
-### Simple Usage (Recommended)
-```tsx
-import WebTextBox from "@/components/WebTextBox";
+### Removed Tokens
+- `{{TITLE}}`, `{{TAGLINE}}`, `{{AUTHOR}}`, `{{EXCERPT}}` - Use database fields
+- `{{BIGICON}}` - Use photo_link_1 database field
 
-// Auto-styled webtext box
-<WebTextBox code="SYS-WEL" />
-<WebTextBox code="AAA-BBB" title="Custom Title" />
-```
-
-### Legacy Usage (Backward Compatible)
-```tsx
-// Still works for existing code
-<WebTextBox 
-  webtextCode="SYS-WEL" 
-  borderColor="#0B3D91" 
-  backgroundColor="#f0f8ff" 
-/>
-```
-
-## Auto-Styling Features
-
-The new WebText template automatically:
-
-1. **Extracts Primary Color**: Finds the first hex color (`#RRGGBB`) in the webtext content
-2. **Derives Theme Colors**:
-   - Border: Lighter shade of primary color
-   - Background: 20% opacity tint of primary color
-   - Photo Mat: 33% opacity of primary color
-   - Badge: 90% opacity of primary color
-
-3. **Selects Best Image**:
-   - Priority 1: `BIGICON=url` from content
-   - Priority 2: `photo_link_1` from story record
-   - Fallback: No image
-
-4. **Applies SYS-WEL Layout**:
-   - Rounded container with derived border and background
-   - Top-right audio button
-   - Left-side image with 3D frame effect
-   - Right-side content with title and body
-   - Bottom-right "WebText" badge
-   - Code indicator overlay
-
-## Content Authoring Guidelines
-
-To create a new webtext that uses the template system:
-
-### 1. Create Story Record
-```sql
-INSERT INTO stories (story_code, title, content, photo_link_1, ...)
-VALUES ('ABC-DEF', 'My Title', '...content...', 'image-url', ...);
-```
-
-### 2. Include Primary Color in Content
-The first hex color found in the content will be used for theming:
-```html
-<span style="color: #1E5A96;">This blue will theme the entire box</span>
-<p>Regular content follows...</p>
-```
-
-### 3. Optional: Include BIGICON
-For a specific display image, include in content:
-```html
-BIGICON = /path/to/special-image.png
-<p>Rest of content...</p>
-```
-
-### 4. Use in Components
-```tsx
-<WebTextBox code="ABC-DEF" />
-```
-
-## Components
-
-### WebTextBox (Main Component)
-- **Props**: `code`, `title?`, `id?`
-- **Features**: Auto-routing to appropriate template, backward compatibility
-- **Usage**: Primary interface for all webtext display
-
-### SysWelWebTextBox (Template Component)
-- **Props**: `code`, `title?`, `id?`
-- **Features**: SYS-WEL styling, auto-theming, image handling
-- **Usage**: Used internally by WebTextBox for new-style webtexts
-
-### ProportionalWebTextBox (Legacy Component)
-- **Props**: Full legacy prop set including `borderColor`, `backgroundColor`
-- **Features**: Original webtext display logic
-- **Usage**: Used for backward compatibility when legacy props provided
-
-## Theme Utilities
-
-### `src/utils/webtextTheme.ts`
-
-#### `extractFirstColor(content: string): string | null`
-Finds the first hex color in HTML content.
-
-#### `deriveColorsFromBase(baseColor: string): ColorTheme`
-Creates a complete color theme from a base color.
-
-#### `selectBestImage(story: any): string | null`
-Chooses the best available image from story data.
-
-#### `getWebtextTheme(story: any): WebtextTheme`
-Complete theme extraction for a story.
-
-## Migration Strategy
-
-1. **Existing Code**: All existing `ProportionalWebTextBox` usage continues to work unchanged
-2. **New Code**: Use `<WebTextBox code="..." />` for auto-styled boxes
-3. **Gradual Migration**: Replace existing boxes one at a time when convenient
-
-## Error Handling
-
-- **Missing Code**: Shows "Error: No webtext code provided"
-- **Code Not Found**: Shows "Coming Soon" with code indicator
-- **Loading State**: Shows "Loading..." while fetching
-- **Missing Colors**: Falls back to SYS-WEL blue (`#0B3D91`)
-- **Missing Images**: Omits image section gracefully
-
-## Examples
-
-### Basic Auto-Styled Box
-```tsx
-<WebTextBox code="WEL-COM" />
-```
-
-### With Custom Title
-```tsx
-<WebTextBox code="NEW-BOX" title="Welcome Message" />
-```
-
-### Legacy Compatibility
-```tsx
-<WebTextBox 
-  webtextCode="OLD-BOX"
-  borderColor="#333"
-  backgroundColor="#f9f9f9"
-/>
-```
+## Implementation Notes
+- All header information comes from database fields
+- Legacy token wrappers are stripped from content during rendering
+- Icon tokens continue to work for inline content icons
+- Print tokens remain functional for print system

@@ -2,6 +2,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 /**
  * Process {{ICON}}...{{/ICON}} tokens in content
+ * Note: {{BIGICON}} tokens are no longer supported and will be ignored
  */
 export const processIconTokens = (content: string): string => {
   // Handle {{ICON}}filename.ext{{/ICON}} format

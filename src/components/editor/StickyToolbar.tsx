@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package, FileCode, Type } from "lucide-react";
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package, FileCode } from "lucide-react";
 import InternalLinkDialog from "@/components/rich-text-editor/InternalLinkDialog";
-import TitleToolsDialog from "./TitleToolsDialog";
 import { useTooltipContext } from "@/contexts/TooltipContext";
 
 interface StickyToolbarProps {
@@ -22,12 +21,9 @@ interface StickyToolbarProps {
   onInsertHorizontalLine: () => void;
   onInsertPageBreak: () => void;
   onWrapKeepTogether: () => void;
-  onAddTokens: () => void;
   onInsertFontSize: (fontType: string) => void;
   onSelectAllPreview: () => void;
   onInsertIconTokens: () => void;
-  onInsertBigIcon: () => void;
-  onInsertTitle: (titleHtml: string) => void;
   category?: string;
 }
 
@@ -45,12 +41,9 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onInsertHorizontalLine,
   onInsertPageBreak,
   onWrapKeepTogether,
-  onAddTokens,
   onInsertFontSize,
   onSelectAllPreview,
   onInsertIconTokens,
-  onInsertBigIcon,
-  onInsertTitle,
   category
 }) => {
   const { shouldShowTooltips } = useTooltipContext();
@@ -88,42 +81,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
       backgroundColor: '#16a34a'
     }}>
       <div className="flex items-center gap-2 flex-wrap">
-        {/* Add Tokens Button - First on the left, spans full toolbar height */}
-        <div className="flex items-center gap-1">
-          <ConditionalTooltip content="Insert Story Tokens">
-            <Button 
-              type="button" 
-              onClick={onAddTokens} 
-              className="h-8 w-32 px-4 btn-toolbar-golden text-lg font-bold"
-            >
-              Add Tokens
-            </Button>
-          </ConditionalTooltip>
-        </div>
-
-        <Separator orientation="vertical" className="h-6" style={{
-          backgroundColor: '#9c441a'
-        }} />
-
-        {/* Title Tools Button */}
-        <div className="flex items-center gap-1">
-          <TitleToolsDialog onInsertTitle={onInsertTitle}>
-            <ConditionalTooltip content="Title/Tagline Styling Tools">
-              <Button 
-                type="button" 
-                className="h-8 w-28 px-4 btn-toolbar-purple text-lg font-bold"
-              >
-                <Type className="h-4 w-4 mr-1" />
-                Title
-              </Button>
-            </ConditionalTooltip>
-          </TitleToolsDialog>
-        </div>
-
-        <Separator orientation="vertical" className="h-6" style={{
-          backgroundColor: '#9c441a'
-        }} />
-
         {/* Text Formatting */}
         <div className="flex items-center gap-1">
           <ConditionalTooltip content="Bold Text">
@@ -215,21 +172,6 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
               }}
             >
               Icons
-            </Button>
-          </ConditionalTooltip>
-          <ConditionalTooltip content="Insert Big Icon Token">
-            <Button 
-              type="button" 
-              size="sm" 
-              onClick={onInsertBigIcon} 
-              className="h-8 px-3 text-sm font-bold"
-              style={{
-                backgroundColor: '#2563eb',
-                color: 'white',
-                border: 'none'
-              }}
-            >
-              BigIcon
             </Button>
           </ConditionalTooltip>
         </div>

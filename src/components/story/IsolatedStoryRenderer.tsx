@@ -1,8 +1,8 @@
 import React from 'react';
 import { createSafeHtml } from "@/utils/xssProtection";
 import { wrapParagraphs } from "@/utils/textUtils";
-import { extractHeaderTokens, createSafeHeaderHtml } from "@/utils/headerTokens";
 import { processIconTokens } from "@/utils/iconTokens";
+import { stripLegacyTokens } from "@/utils/legacyTokenStripper";
 
 interface IsolatedStoryRendererProps {
   content?: string;
@@ -12,7 +12,7 @@ interface IsolatedStoryRendererProps {
   category?: "Fun" | "Life" | "North Pole" | "World Changers" | "WebText" | "BioText" | "STORY";
   fontSize?: number;
   onFontSizeChange?: (fontSize: number) => void;
-  showHeaderPreview?: boolean;
+  showHeaderPreview?: boolean; // Keep for compatibility but unused
   enableProportionalSizing?: boolean;
 }
 
@@ -28,7 +28,7 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
   category,
   fontSize = 16,
   onFontSizeChange,
-  showHeaderPreview = true,
+  showHeaderPreview = true, // Keep for compatibility but ignore
   enableProportionalSizing = false
 }) => {
   const isWebText = category === "WebText";
@@ -37,13 +37,8 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
     : "Georgia, serif";
 
   if (content) {
-    // Always extract tokens to prevent duplication in body content
-    const extracted = extractHeaderTokens(content);
-    const tokens = extracted.tokens;
-    const contentWithoutTokens = extracted.contentWithoutTokens;
-
-    // Always use content without tokens for the body to prevent duplication
-    let processedContent = contentWithoutTokens;
+    // Strip legacy tokens from content for clean display
+    let processedContent = stripLegacyTokens(content);
     
     // Preprocess content to handle quote-wrapped strings
     if (typeof processedContent === 'string' && processedContent.startsWith('"') && processedContent.endsWith('"')) {
@@ -78,58 +73,6 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
     
     return (
       <>
-        {/* Header Preview Section */}
-        {showHeaderPreview && tokens && (tokens.titleHtml || tokens.taglineHtml || tokens.authorHtml || tokens.excerptHtml) && (
-          <div className={`header-preview border-b border-border`} style={{ margin: 0, padding: 0 }}>
-            {tokens.titleHtml && (
-              <div 
-                role="heading" 
-                aria-level={1}
-                className="text-2xl font-bold text-foreground"
-                style={{ 
-                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
-                  fontSize: `${Math.floor(fontSize * 1.5)}px`,
-                  margin: 0,
-                  padding: 0,
-                  lineHeight: 1
-                }}
-                dangerouslySetInnerHTML={createSafeHtml(tokens.titleHtml)}
-              />
-            )}
-            {tokens.taglineHtml && (
-              <div 
-                className="text-lg italic mb-2 text-muted-foreground"
-                style={{ 
-                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
-                  fontSize: `${Math.floor(fontSize * 1.1)}px`
-                }}
-                dangerouslySetInnerHTML={createSafeHtml(tokens.taglineHtml)}
-              />
-            )}
-            {tokens.authorHtml && (
-              <div 
-                className="text-base mb-2 text-foreground"
-                style={{ 
-                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
-                  fontSize: `${fontSize}px`
-                }}
-                dangerouslySetInnerHTML={createSafeHtml(tokens.authorHtml)}
-              />
-            )}
-            {tokens.excerptHtml && (
-              <div 
-                className="text-sm text-muted-foreground"
-                style={{ 
-                  fontFamily: isWebText ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" : "Georgia, serif",
-                  fontSize: `${Math.floor(fontSize * 0.9)}px`
-                }}
-                dangerouslySetInnerHTML={createSafeHtml(tokens.excerptHtml)}
-              />
-            )}
-          </div>
-        )}
-        
-        {/* Main Content Section */}
         <div 
           className={`rendered-story-content ${className}`}
           style={{

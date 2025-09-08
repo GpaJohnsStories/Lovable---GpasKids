@@ -302,64 +302,6 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
     }, 0);
   };
 
-  const handleAddTokens = () => {
-    const textarea = editorRef.current;
-    if (!textarea) return;
-
-    // Check if block-style or colon-style tokens already exist
-    const hasBlockTokens = content.includes('{{TITLE}}') || 
-                          content.includes('{{TAGLINE}}') || 
-                          content.includes('{{AUTHOR}}') || 
-                          content.includes('{{EXCERPT}}');
-                          
-    const hasColonTokens = content.includes('{{TITLE:') || 
-                          content.includes('{{TAGLINE:') || 
-                          content.includes('{{AUTHOR:') || 
-                          content.includes('{{EXCERPT:');
-    
-    if (hasBlockTokens || hasColonTokens) {
-      // Position cursor at the beginning for editing existing tokens
-      setTimeout(() => {
-        textarea.selectionStart = textarea.selectionEnd = 0;
-        textarea.focus();
-      }, 0);
-      return;
-    }
-
-    // For webtext category, only add TITLE token
-    if (category === 'WebText') {
-      const tokensText = `{{TITLE}}{{/TITLE}}
-
-${content}`;
-      
-      onChange(tokensText);
-      
-      // Position cursor between {{TITLE}} and {{/TITLE}} for immediate editing
-      setTimeout(() => {
-        textarea.selectionStart = 9; // After {{TITLE}}
-        textarea.selectionEnd = 9;
-        textarea.focus();
-      }, 0);
-      return;
-    }
-
-    // Insert all tokens for other categories
-    const tokensText = `{{TITLE}}{{/TITLE}}
-{{TAGLINE}}{{/TAGLINE}}
-{{AUTHOR}}{{/AUTHOR}}
-{{EXCERPT}}{{/EXCERPT}}
-
-${content}`;
-    
-    onChange(tokensText);
-    
-    // Position cursor between {{TITLE}} and {{/TITLE}} for immediate editing
-    setTimeout(() => {
-      textarea.selectionStart = 9; // After {{TITLE}}
-      textarea.selectionEnd = 9;
-      textarea.focus();
-    }, 0);
-  };
 
   const handleInsertIconTokens = () => {
     const textarea = editorRef.current;
@@ -378,23 +320,6 @@ ${content}`;
     insertTextAtCursor(iconTokensText);
   };
 
-  const handleInsertBigIcon = () => {
-    const textarea = editorRef.current;
-    if (!textarea) return;
-
-    const bigIconText = `{{BIGICON}}icon-name.gif{{/BIGICON}}`;
-    insertTextAtCursor(bigIconText);
-    
-    // Position cursor to select the icon name for immediate editing
-    setTimeout(() => {
-      const selectionStart = textarea.value.lastIndexOf('icon-name.gif');
-      if (selectionStart !== -1) {
-        textarea.selectionStart = selectionStart;
-        textarea.selectionEnd = selectionStart + 'icon-name.gif'.length;
-        textarea.focus();
-      }
-    }, 0);
-  };
 
   const handleSelectAllPreview = () => {
     const previewPane = storyContentRef.current;
@@ -458,12 +383,9 @@ ${content}`;
           onInsertHorizontalLine={handleInsertHorizontalLine}
           onInsertPageBreak={handleInsertPageBreak}
           onWrapKeepTogether={handleWrapKeepTogether}
-          onAddTokens={handleAddTokens}
           onInsertFontSize={handleInsertFontSize}
           onSelectAllPreview={handleSelectAllPreview}
           onInsertIconTokens={handleInsertIconTokens}
-          onInsertBigIcon={handleInsertBigIcon}
-          onInsertTitle={insertTextAtCursor}
           category={category}
         />
       
