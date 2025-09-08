@@ -23,12 +23,10 @@ const Index = () => {
         />
         {/* ===== BOX 1 END ===== */}
         
-        {/* ===== BOX 2 START (New Orange WebText Box) ===== */}
-        <StaticWebtextBox 
+        {/* ===== BOX 2 START (Orange WebText Box) ===== */}
+        <WebTextBox 
           code="SYS-WE2"
-          borderColor="#D2691E"
-          backgroundColor="#F9731633"
-          textColor="#F97316"
+          id="home-box-2"
         />
         {/* ===== BOX 2 END ===== */}
         

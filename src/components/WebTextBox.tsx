@@ -1,5 +1,6 @@
 import React from "react";
 import SysWelWebTextBox from "@/components/templates/SysWelWebTextBox";
+import SysWe2WebTextBox from "@/components/templates/SysWe2WebTextBox";
 import { WebTextBox as LegacyWebTextBox } from "@/components/LegacyWebTextBox";
 
 interface WebTextBoxProps {
@@ -43,6 +44,17 @@ const WebTextBox: React.FC<WebTextBoxProps> = ({
         id={id}
         showReturn={showReturn}
         onReturnClick={onReturnClick}
+      />
+    );
+  }
+
+  // Route specific codes to their templates
+  if (actualCode === "SYS-WE2") {
+    return (
+      <SysWe2WebTextBox
+        code={actualCode}
+        title={title}
+        id={id}
       />
     );
   }
