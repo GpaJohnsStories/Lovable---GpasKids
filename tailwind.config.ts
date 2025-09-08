@@ -19,6 +19,10 @@ export default {
 		},
 		extend: {
 			fontSize: {
+				// Standard heading sizes (industry standard)
+				'h1': ['40px', { lineHeight: '1.2' }], // 30pt = ~40px
+				'h2': ['30px', { lineHeight: '1.3' }], // 22pt = ~30px  
+				'h3': ['24px', { lineHeight: '1.4' }], // 18pt = ~24px
 				// Typography scale for proportional font sizing
 				'story-xs': ['0.75rem', { lineHeight: '1.2' }],
 				'story-sm': ['0.875rem', { lineHeight: '1.3' }],
@@ -39,6 +43,10 @@ export default {
 				'story-h3-4xl': ['3rem', { lineHeight: '1.8' }],
 				// Standard 21px font sizes
 				'21px': ['21px', { lineHeight: '1.5' }],
+				// Legacy system font classes
+				'24-system': ['24px', { lineHeight: '1.4' }],
+				'30-system': ['30px', { lineHeight: '1.3' }],
+				'40-system': ['40px', { lineHeight: '1.2' }],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -166,11 +174,12 @@ export default {
 	plugins: [require("tailwindcss-animate")],
 	safelist: [
 		// Ensure all typography scale classes are compiled
+		'text-h1', 'text-h2', 'text-h3',
 		'text-story-xs', 'text-story-sm', 'text-story-base', 'text-story-lg', 
 		'text-story-xl', 'text-story-2xl', 'text-story-3xl', 'text-story-4xl',
 		'text-story-h3-xs', 'text-story-h3-sm', 'text-story-h3-base', 'text-story-h3-lg',
 		'text-story-h3-xl', 'text-story-h3-2xl', 'text-story-h3-3xl', 'text-story-h3-4xl',
-		// Standard 21px classes
-		'text-21px', 'font-fun', 'font-georgia',
+		// Standard 21px classes and legacy system classes
+		'text-21px', 'text-24-system', 'text-30-system', 'text-40-system', 'font-fun', 'font-georgia',
 	],
 } satisfies Config;

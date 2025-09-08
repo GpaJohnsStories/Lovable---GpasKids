@@ -150,7 +150,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
           {/* Title */}
           {(headerTokens.titleHtml || title || webtextData.title) && (
             <h3 
-              className="font-handwritten font-bold leading-tight break-words text-left mb-1 text-24-system m-0 p-0"
+              className="font-handwritten font-bold leading-tight break-words text-left"
               style={{ color: theme!.colors.primary }}
             >
               {headerTokens.titleHtml ? (

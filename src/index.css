@@ -136,6 +136,34 @@
     @apply bg-background text-foreground;
   }
 
+  /* Standard heading styles with industry standard sizes and spacing */
+  h1 {
+    font-size: 40px; /* 30pt */
+    line-height: 1.2;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 1rem; /* 16px */
+    font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
+  }
+
+  h2 {
+    font-size: 30px; /* 22pt */
+    line-height: 1.3;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0.75rem; /* 12px */
+    font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
+  }
+
+  h3 {
+    font-size: 24px; /* 18pt */
+    line-height: 1.4;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0.5rem; /* 8px */
+    font-family: 'Kalam', 'Comic Sans MS', 'Arial', sans-serif;
+  }
+
   /* Proportional typography scaling classes */
   .proportional-content h3 {
     font-size: var(--h3-size);
