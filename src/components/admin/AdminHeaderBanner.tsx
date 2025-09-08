@@ -115,6 +115,17 @@ const AdminHeaderBanner = () => {
       description: 'Reference materials and resources for administration'
     },
     {
+      name: 'Manual',
+      path: '/buddys_admin/manual',
+      icon: BookOpen,
+      bgColor: 'bg-gradient-to-b from-indigo-500 via-indigo-600 to-indigo-700',
+      hoverColor: 'hover:from-indigo-600 hover:via-indigo-700 hover:to-indigo-800',
+      shadowColor: 'shadow-[0_6px_0_#4338ca,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#4338ca,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-white',
+      description: 'Complete administration manual with templates and procedures'
+    },
+    {
       name: 'Site Map',
       path: '/buddys_admin/sitemap',
       icon: Globe,
@@ -435,6 +446,54 @@ const AdminHeaderBanner = () => {
                 );
                 
                 return referenceButton;
+              }
+
+              // Special handling for Manual button as square icon button
+              if (button.name === 'Manual') {
+                const { iconUrl: manualIconUrl, isLoading: manualLoading, error: manualError } = useCachedIcon('ICO-MAN.gif');
+                
+                const manualButton = (
+                  <div 
+                    key={button.name}
+                    className="relative"
+                    onMouseEnter={() => setHoveredButton(button.name)}
+                    onMouseLeave={() => setHoveredButton(null)}
+                  >
+                    <Link to={button.path} onClick={scrollToTop}>
+                      <div
+                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-indigo-300/50 hover:scale-105 transition-transform cursor-pointer"
+                        style={{ 
+                          backgroundColor: '#4338ca',
+                          minWidth: '55px',
+                          minHeight: '55px'
+                        }}
+                      >
+                         {manualIconUrl && !manualLoading && !manualError ? (
+                           <img 
+                             src={manualIconUrl}
+                             alt="Manual"
+                             className="w-12 h-12 object-contain"
+                             onError={(e) => {
+                               console.warn('Failed to load ICO-MAN.gif icon');
+                               e.currentTarget.style.display = 'none';
+                             }}
+                           />
+                         ) : manualLoading ? (
+                           <div className="w-10 h-10 bg-indigo-300 animate-pulse rounded" />
+                         ) : (
+                           <BookOpen className="w-12 h-12 text-white" />
+                         )}
+                      </div>
+                    </Link>
+                    {hoveredButton === button.name && (
+                      <div className="nav-bubble opacity-100 visible">
+                        <b>Manual</b>
+                      </div>
+                    )}
+                  </div>
+                );
+                
+                return manualButton;
               }
 
               // Special handling for Site Map button as square icon button
