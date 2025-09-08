@@ -766,39 +766,7 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Column 2, Row 4: Load Text Button */}
-                  <div className="row-start-4 col-start-2 flex flex-col justify-center">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button ref={loadTextBtnRef} onClick={handleStoryCodeLookup} disabled={isLoadingStory} className="supertext-text-btn flex items-center justify-start px-2 py-1 w-[192px] rounded-full" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold',
-                        color: 'white',
-                        lineHeight: '1',
-                        textAlign: 'left'
-                      }} onKeyDown={e => {
-                        if (e.key === 'Tab' && !e.shiftKey) {
-                          e.preventDefault();
-                          // Focus on Add/Edit Text button instead of cycling back to Text Code
-                          const addEditTextBtn = document.querySelector('[data-add-edit-text]') as HTMLButtonElement;
-                          addEditTextBtn?.focus();
-                        }
-                      }} tabIndex={4}>
-                            Load Text
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-                      fontFamily: 'Arial',
-                      fontSize: '21px',
-                      color: 'black',
-                      backgroundColor: 'white'
-                    }}>
-                          Load existing text using the code above
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
+                  
 
                   {/* Column 3, Row 1: Add/Edit Text Button */}
                   <div className="row-start-1 col-start-3 justify-self-start self-center">
@@ -831,54 +799,10 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Column 3, Row 3: Add Audio File Button */}
-                  <div className="row-start-3 col-start-3 justify-self-start self-center">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button onClick={scrollToAudioSection} className="supertext-audio-btn px-6 py-2 rounded-full" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }} tabIndex={-1}>
-                            Add Audio File
-                          </Button>
-                        </TooltipTrigger>
-                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-                      fontFamily: 'Arial',
-                      fontSize: '21px',
-                      color: 'black',
-                      backgroundColor: 'white'
-                    }}>
-                           Add or Generate Audio
-                         </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
+                  
 
                   {/* Column 3, Row 4: Add Video File Button */}
-                  <div className="row-start-4 col-start-3 justify-self-start self-center">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button onClick={scrollToVideoSection} className="supertext-video-btn px-6 py-2 rounded-full" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }} tabIndex={-1}>
-                            Add Video File
-                          </Button>
-                        </TooltipTrigger>
-                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-                      fontFamily: 'Arial',
-                      fontSize: '21px',
-                      color: 'black',
-                      backgroundColor: 'white'
-                    }}>
-                           Add Video Content
-                         </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
+                  
                  </div>
 
 
