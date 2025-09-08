@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { useStoryCodeLookup } from "@/hooks/useStoryCodeLookup";
 import { getWebtextTheme } from "@/utils/webtextTheme";
 import { getAssetVersionFromStory, buildCacheBustedUrl } from "@/utils/storyUtils";
@@ -26,7 +25,6 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
   const [showSuperAV, setShowSuperAV] = useState(false);
   const [contentFontSize, setContentFontSize] = useState(24);
   const { lookupStoryByCode } = useStoryCodeLookup();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWebtext = async () => {
@@ -130,14 +128,13 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div
-                    className="rounded-lg overflow-hidden cursor-pointer shadow-lg"
+                    className="rounded-lg overflow-hidden shadow-lg"
                     style={{
                       backgroundColor: theme!.colors.photoMatColor,
                       border: "3px solid #0B3D91",
                       boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
                       filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
                     }}
-                    onClick={() => navigate('/guide')}
                   >
                     <img
                       src={finalImageUrl}

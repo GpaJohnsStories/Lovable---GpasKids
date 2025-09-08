@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { useStoryCodeLookup } from "@/hooks/useStoryCodeLookup";
 import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 import { extractHeaderTokens, createSafeHeaderHtml } from "@/utils/headerTokens";
@@ -20,7 +19,6 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
   const [showSuperAV, setShowSuperAV] = useState(false);
   const [contentFontSize, setContentFontSize] = useState(24);
   const { lookupStoryByCode } = useStoryCodeLookup();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,10 +87,6 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
     );
   }
 
-  const handleImageClick = () => {
-    navigate('/guide');
-  };
-
   return (
     <div 
       className="relative p-6 rounded-lg shadow-lg mb-6"
@@ -120,12 +114,11 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div
-                    className="rounded-lg overflow-hidden cursor-pointer shadow-lg"
+                    className="rounded-lg overflow-hidden shadow-lg"
                     style={{
                       backgroundColor: orangeTheme.photoMatColor,
                       padding: '4px'
                     }}
-                    onClick={handleImageClick}
                   >
                     <img
                       src={finalImageUrl}
