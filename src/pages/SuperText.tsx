@@ -445,7 +445,8 @@ const SuperText: React.FC = () => {
       }, 1500);
     }
   }, []);
-  return <SecureAdminRoute>
+  return (
+    <SecureAdminRoute>
     <div>
       <Helmet>
         <title>Text Edit</title>
@@ -1414,6 +1415,7 @@ const SuperText: React.FC = () => {
           audioUrl={formData.audio_url}
         />
       )}
+        </div>
       </div>
     </div>
     </SecureAdminRoute>
