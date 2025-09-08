@@ -118,6 +118,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
                     className="rounded-lg overflow-hidden shadow-lg"
                     style={{
                       backgroundColor: orangeTheme.photoMatColor,
+                      border: `2px solid ${orangeTheme.borderColor}`,
                       padding: '4px'
                     }}
                     onClick={() => setShowTooltip(!showTooltip)}
