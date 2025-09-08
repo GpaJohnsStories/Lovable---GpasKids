@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { YesNoButtons } from "@/components/ui/YesNoButtons";
+import { WordLimitedTextarea } from "@/components/ui/word-limited-textarea";
+import { AuthorCombobox } from "@/components/AuthorCombobox";
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
 import { useVoiceTesting } from '@/hooks/useVoiceTesting';
@@ -573,252 +575,262 @@ const SuperText: React.FC = () => {
               }} />
                 </div>
                 
-                {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
-                <div className="grid grid-rows-4 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
-                  {/* Column 1, Row 1: Green Dot A */}
+                {/* 7x3 Grid Layout - aligned with blue dot above */}
+                <div className="grid grid-cols-[32px_192px_minmax(0,1fr)] grid-rows-7 gap-0 items-start">
+                
+                  {/* Row 1: A, Text Code, Empty */}
                   <div className="row-start-1 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>A</div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                      backgroundColor: '#3b82f6'
+                    }}>A</div>
                   </div>
                   
-                  {/* Column 1, Row 2: Green Dot B */}
-                  <div className="row-start-2 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>B</div>
-                  </div>
-                  
-                  {/* Column 1, Row 3: Green Dot C */}
-                  <div className="row-start-3 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>C</div>
-                  </div>
-
-                  {/* Column 1, Row 4: Green Dot D */}
-                  <div className="row-start-4 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>D</div>
-                  </div>
-
-                  {/* Column 2, Row 1: Text Code */}
-                  <div className="row-start-1 col-start-2 self-end">
-                    <Input ref={storyCodeRef} type="text" placeholder="TEXT CODE" value={storyCode} onChange={e => {
-                  const upperValue = e.target.value.toUpperCase();
-                  handleStoryCodeChange(upperValue);
-                }} onPaste={e => {
-                  const pastedText = e.clipboardData.getData('text');
-                  const upperValue = pastedText.toUpperCase();
-                  e.preventDefault();
-                  handleStoryCodeChange(upperValue);
-                }} onBlur={e => {
-                  const upperValue = e.target.value.toUpperCase();
-                  if (upperValue !== e.target.value) {
-                    handleStoryCodeChange(upperValue);
-                  }
-                }} onKeyDown={e => {
-                  if (e.key === 'Tab' && e.shiftKey) {
-                    e.preventDefault();
-                    loadTextBtnRef.current?.focus();
-                  }
-                }} className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black" style={{
-                  width: '192px',
-                  fontStyle: 'normal'
-                }} autoCapitalize="characters" spellCheck={false} tabIndex={1} />
+                  <div className="row-start-1 col-start-2 self-start">
+                    <Input 
+                      ref={storyCodeRef} 
+                      type="text" 
+                      placeholder="TEXT CODE" 
+                      value={storyCode} 
+                      onChange={e => {
+                        const upperValue = e.target.value.toUpperCase();
+                        handleStoryCodeChange(upperValue);
+                      }} 
+                      onPaste={e => {
+                        const pastedText = e.clipboardData.getData('text');
+                        const upperValue = pastedText.toUpperCase();
+                        e.preventDefault();
+                        handleStoryCodeChange(upperValue);
+                      }} 
+                      onBlur={e => {
+                        const upperValue = e.target.value.toUpperCase();
+                        if (upperValue !== e.target.value) {
+                          handleStoryCodeChange(upperValue);
+                        }
+                      }} 
+                      className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black h-[44px]" 
+                      style={{
+                        width: '192px',
+                        fontStyle: 'normal'
+                      }} 
+                      autoCapitalize="characters" 
+                      spellCheck={false} 
+                      tabIndex={1} 
+                    />
                   </div>
 
-                  {/* Column 2, Row 2: Category Dropdown */}
-                  <div className="row-start-2 col-start-2 self-end">
-                    <Select value={formData.category || ''} onValueChange={value => {
-                  setCategory(value);
-                  handleInputChange('category', value);
-                }}>
-                      <SelectTrigger className="w-[192px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                    fontSize: '21px',
-                    fontFamily: 'Arial',
-                    fontWeight: 'bold',
-                    backgroundColor: '#F97316',
-                    color: 'white',
-                    borderColor: '#ea580c'
-                  }} tabIndex={2}>
-                        <SelectValue placeholder="Category" className="text-white" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }} />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white z-50">
-                        <SelectItem value="WebText" style={{
+                  {/* Row 2: Blank, Status Display (spanning col 2-3) */}
+                  <div className="row-start-2 col-start-2 col-span-2 self-start">
+                    <div className="bg-gray-100 p-4 rounded border-2 border-orange-400" style={{
                       fontSize: '21px',
                       fontFamily: 'Arial',
                       fontWeight: 'bold'
                     }}>
-                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{
-                        backgroundColor: '#A0522D'
-                      }}>
-                            WebText
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="Fun" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                          <div className="bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500 px-3 py-1 rounded w-full text-center">
-                            Fun
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="Life" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                          <div className="bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500 px-3 py-1 rounded w-full text-center">
-                            Life
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="North Pole" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                          <div className="bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500 px-3 py-1 rounded w-full text-center">
-                            North Pole
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="World Changers" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                          <div className="bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500 px-3 py-1 rounded w-full text-center">
-                            World Changers
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="BioText" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                          <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">
-                            BioText
-                          </div>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {/* Column 2, Row 3: Copyright Status */}
-                  <div className="row-start-3 col-start-2 self-end">
-                    <Select value={formData.copyright_status || ''} onValueChange={value => {
-                  setCopyrightStatus(value);
-                  handleInputChange('copyright_status', value);
-                }}>
-                      <SelectTrigger className="w-[192px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
-                    fontSize: '21px',
-                    fontFamily: 'Arial',
-                    fontWeight: 'bold',
-                    backgroundColor: '#2563eb',
-                    borderColor: '#1d4ed8'
-                  }} tabIndex={3}>
-                        <SelectValue placeholder="Copyright Status" className="text-white" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }} />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white z-50">
-                        <SelectItem value="©" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                          <div className="px-3 py-1 rounded w-full text-center text-white bg-red-600">
-                            © - Full Copyright
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="L" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{
-                        backgroundColor: '#F97316'
-                      }}>
-                            L — Limited Use
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="O" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{
-                        backgroundColor: '#228B22'
-                      }}>
-                            O — Open Unlimited
-                          </div>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {/* Column 2, Row 4: Load Text Button */}
-                  
-
-                  {/* Column 3, Row 1: Add/Edit Text Button */}
-                  <div className="row-start-1 col-start-3 justify-self-start self-center">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button onClick={scrollToTextEditorSection} className="supertext-text-btn px-6 py-2 rounded-full" style={{
+                      <p className="text-gray-500" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold'
-                      }} tabIndex={5} data-add-edit-text onKeyDown={e => {
-                        if (e.key === 'Tab' && !e.shiftKey) {
-                          e.preventDefault();
-                          storyCodeRef.current?.focus();
-                        }
                       }}>
-                            Add/Edit Text
-                          </Button>
-                        </TooltipTrigger>
-                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-                      fontFamily: 'Arial',
-                      fontSize: '21px',
-                      color: 'black',
-                      backgroundColor: 'white'
-                    }}>
-                           Add/Edit Text Content
-                         </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                        {formData.id ? `Story loaded: ${formData.title || 'No Title'}` : 'Enter Text Code, Category & Copyright, then Click Lookup'}
+                      </p>
+                      
+                      {/* YES/NO Buttons for Story Code Lookup */}
+                      {lookupStatus !== 'idle' && (
+                        <div className="mt-4 p-3 rounded" style={{
+                          backgroundColor: lookupStatus === 'found' ? '#dff0d8' : '#f2dede',
+                          border: `2px solid ${lookupStatus === 'found' ? '#d6e9c6' : '#ebccd1'}`
+                        }}>
+                          <p style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold',
+                            color: lookupStatus === 'found' ? '#3c763d' : '#a94442'
+                          }}>
+                            {lookupStatus === 'found' 
+                              ? `Found story: "${lookupResult?.title || 'Untitled'}". Load it?`
+                              : "Story code not found. Create new story?"
+                            }
+                          </p>
+                          <div className="mt-3">
+                            <YesNoButtons
+                              onYes={handleConfirmYes}
+                              onNo={handleConfirmNo}
+                              className="justify-center gap-4"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Column 3, Row 3: Add Audio File Button */}
-                  
+                  {/* Row 3: B, Category, Copyright */}
+                  <div className="row-start-3 col-start-1 place-self-center">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                      backgroundColor: '#3b82f6'
+                    }}>B</div>
+                  </div>
 
-                  {/* Column 3, Row 4: Add Video File Button */}
-                  
-                 </div>
+                  <div className="row-start-3 col-start-2 self-start">
+                    <Select value={formData.category || ''} onValueChange={value => {
+                      setCategory(value);
+                      handleInputChange('category', value);
+                    }}>
+                      <SelectTrigger className="w-[192px] h-[44px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold',
+                        backgroundColor: '#F97316',
+                        color: 'white',
+                        borderColor: '#ea580c'
+                      }} tabIndex={2}>
+                        <SelectValue placeholder="Category" className="text-white" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }} />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white z-50">
+                        <SelectItem value="WebText" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
+                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{ backgroundColor: '#A0522D' }}>WebText</div>
+                        </SelectItem>
+                        <SelectItem value="Fun" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
+                          <div className="bg-gradient-to-b from-blue-400 to-blue-600 text-white border-blue-500 px-3 py-1 rounded w-full text-center">Fun</div>
+                        </SelectItem>
+                        <SelectItem value="Life" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
+                          <div className="bg-gradient-to-b from-green-400 to-green-600 text-white border-green-500 px-3 py-1 rounded w-full text-center">Life</div>
+                        </SelectItem>
+                        <SelectItem value="North Pole" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
+                          <div className="bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500 px-3 py-1 rounded w-full text-center">North Pole</div>
+                        </SelectItem>
+                        <SelectItem value="World Changers" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
+                          <div className="bg-gradient-to-b from-purple-400 to-purple-600 text-white border-purple-500 px-3 py-1 rounded w-full text-center">World Changers</div>
+                        </SelectItem>
+                        <SelectItem value="BioText" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
+                          <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">BioText</div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
+                  <div className="row-start-3 col-start-3 self-start">
+                    <Select value={formData.copyright_status || ''} onValueChange={value => {
+                      setCopyrightStatus(value);
+                      handleInputChange('copyright_status', value);
+                    }}>
+                      <SelectTrigger className="w-[192px] h-[44px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold',
+                        backgroundColor: '#2563eb',
+                        borderColor: '#1d4ed8'
+                      }} tabIndex={3}>
+                        <SelectValue placeholder="Copyright Status" className="text-white" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }} />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white z-50">
+                        <SelectItem value="©" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
+                          <div className="px-3 py-1 rounded w-full text-center text-white bg-red-600">© - Full Copyright</div>
+                        </SelectItem>
+                        <SelectItem value="L" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
+                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{ backgroundColor: '#F97316' }}>L — Limited Use</div>
+                        </SelectItem>
+                        <SelectItem value="O" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
+                          <div className="px-3 py-1 rounded w-full text-center text-white" style={{ backgroundColor: '#228B22' }}>O — Open Unlimited</div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                <div className="bg-gray-100 p-4 rounded border-2 border-orange-400 mt-4" style={{
-              fontSize: '21px',
-              fontFamily: 'Arial',
-              fontWeight: 'bold'
-            }}>
-                  
-                  <p className="text-gray-500 mt-1" style={{
-                fontSize: '21px',
-                fontFamily: 'Arial',
-                fontWeight: 'bold'
-              }}>
-                    {formData.id ? `Story loaded: ${formData.title || 'No Title'}` : 'Enter Text Code, Category & Copyright, then Click Lookup'}
-                  </p>
+                  {/* Row 4: C, Title (spanning col 2-3) */}
+                  <div className="row-start-4 col-start-1 place-self-center">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                      backgroundColor: '#3b82f6'
+                    }}>C</div>
+                  </div>
+
+                  <div className="row-start-4 col-start-2 col-span-2 self-start">
+                    <WordLimitedTextarea
+                      value={formData.title || ''}
+                      onChange={(e) => handleInputChange('title', e.target.value)}
+                      placeholder="Story Title"
+                      wordLimit={20}
+                      className="min-h-[44px] resize-none border-2 border-purple-400 focus:border-purple-500"
+                      style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }}
+                      rows={1}
+                    />
+                  </div>
+
+                  {/* Row 5: D, Tagline (spanning col 2-3) */}
+                  <div className="row-start-5 col-start-1 place-self-center">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                      backgroundColor: '#3b82f6'
+                    }}>D</div>
+                  </div>
+
+                  <div className="row-start-5 col-start-2 col-span-2 self-start">
+                    <WordLimitedTextarea
+                      value={formData.tagline || ''}
+                      onChange={(e) => handleInputChange('tagline', e.target.value)}
+                      placeholder="Story Tagline"
+                      wordLimit={15}
+                      className="min-h-[44px] resize-none border-2 border-green-400 focus:border-green-500"
+                      style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }}
+                      rows={1}
+                    />
+                  </div>
+
+                  {/* Row 6: E, Author (spanning col 2-3) */}
+                  <div className="row-start-6 col-start-1 place-self-center">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                      backgroundColor: '#3b82f6'
+                    }}>E</div>
+                  </div>
+
+                  <div className="row-start-6 col-start-2 col-span-2 self-start">
+                    <AuthorCombobox 
+                      value={formData.author || ''}
+                      onValueChange={(value) => handleInputChange('author', value)}
+                      className="min-h-[44px] border-2 border-yellow-400 hover:border-yellow-500"
+                      style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }}
+                    />
+                  </div>
+
+                  {/* Row 7: F, Excerpt (spanning col 2-3) */}
+                  <div className="row-start-7 col-start-1 place-self-center">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                      backgroundColor: '#3b82f6'
+                    }}>F</div>
+                  </div>
+
+                  <div className="row-start-7 col-start-2 col-span-2 self-start">
+                    <WordLimitedTextarea
+                      value={formData.excerpt || ''}
+                      onChange={(e) => handleInputChange('excerpt', e.target.value)}
+                      placeholder="Story Excerpt"
+                      wordLimit={50}
+                      className="min-h-[44px] resize-none border-2 border-blue-400 focus:border-blue-500"
+                      style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }}
+                      rows={2}
+                    />
+                  </div>
                 </div>
               </div>
 
