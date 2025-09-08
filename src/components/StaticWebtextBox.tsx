@@ -24,13 +24,10 @@ const StaticWebtextBox: React.FC<StaticWebtextBoxProps> = ({
           backgroundColor: backgroundColor 
         }}
       >
-        {/* Code indicator */}
+        {/* Code indicator - bottom right like SYS-WEL */}
         <div 
-          className="absolute -top-3 left-4 px-2 py-1 text-xs font-mono rounded"
-          style={{ 
-            backgroundColor: borderColor,
-            color: '#ffffff'
-          }}
+          className="absolute bottom-2 right-2 text-xs font-mono"
+          style={{ color: textColor }}
         >
           {code}
         </div>
