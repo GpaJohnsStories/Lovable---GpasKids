@@ -886,60 +886,6 @@ const SuperText: React.FC = () => {
                   </div>
                  </div>
 
-                {/* Always-visible Preview/Confirm Panel */}
-                <div className="mt-6 bg-gray-50 border-2 border-gray-300 rounded-lg p-4" style={{ width: 'calc(100% - 200px)' }}>
-                  {lookupStatus === 'idle' && (
-                    <div className="text-gray-500 text-center py-4" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                      Enter a 7-character text code (AAA-BBB) to preview
-                    </div>
-                  )}
-                  
-                  {lookupStatus === 'found' && lookupResult && (
-                    <div>
-                      <p className="text-gray-700 mb-2" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}>
-                        Is this the text you want to work on?
-                      </p>
-                      <p className="font-semibold text-lg mb-4" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold',
-                        color: 'black'
-                      }}>
-                        {lookupResult.title ? lookupResult.title.split(' ').slice(0, 10).join(' ') + (lookupResult.title.split(' ').length > 10 ? '...' : '') : 'Untitled'}
-                      </p>
-                    </div>
-                  )}
-                  
-                  {lookupStatus === 'not-found' && (
-                    <div>
-                      <p className="text-gray-700 mb-4" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}>
-                        Text Code Not Found. Add new webtext?
-                      </p>
-                    </div>
-                  )}
-                  
-                  {(lookupStatus === 'found' || lookupStatus === 'not-found') && (
-                    <YesNoButtons
-                      onYes={handleConfirmYes}
-                      onNo={handleConfirmNo}
-                      yesLabel="YES"
-                      noLabel="NO"
-                      className="mt-4"
-                    />
-                  )}
-                </div>
 
                 <div className="bg-gray-100 p-4 rounded border-2 border-orange-400 mt-4" style={{
               fontSize: '21px',
