@@ -578,45 +578,17 @@ const SuperText: React.FC = () => {
               }} />
                 </div>
                 
-                {/* 5x3 Grid Layout with explicit positioning - aligned with blue dot above */}
-                <div className="grid grid-rows-5 grid-cols-[32px_192px_auto] gap-y-1 gap-x-1">
+                {/* 5x3 Grid Layout - tight alignment with no gaps */}
+                <div className="grid grid-cols-[32px_192px_auto] items-start">
                   {/* Column 1, Row 1: Green Dot A */}
-                  <div className="row-start-1 col-start-1 place-self-center">
+                  <div className="self-start">
                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                   backgroundColor: '#3b82f6'
                 }}>A</div>
                   </div>
                   
-                  {/* Column 1, Row 2: New Row (placeholder) */}
-                  <div className="row-start-2 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>E</div>
-                  </div>
-                  
-                  {/* Column 1, Row 3: Green Dot B */}
-                  <div className="row-start-3 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>B</div>
-                  </div>
-                  
-                  {/* Column 1, Row 4: Green Dot C */}
-                  <div className="row-start-4 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>C</div>
-                  </div>
-
-                  {/* Column 1, Row 5: Green Dot D */}
-                  <div className="row-start-5 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>D</div>
-                  </div>
-
                   {/* Column 2, Row 1: Text Code */}
-                  <div className="row-start-1 col-start-2 self-end">
+                  <div className="self-start">
                     <Input ref={storyCodeRef} type="text" placeholder="TEXT CODE" value={storyCode} onChange={e => {
                    const upperValue = e.target.value.toUpperCase();
                    handleStoryCodeChange(upperValue);
@@ -641,17 +613,61 @@ const SuperText: React.FC = () => {
                 }} autoCapitalize="characters" spellCheck={false} tabIndex={1} />
                   </div>
 
+                  {/* Column 3, Row 1: Add/Edit Text Button */}
+                  <div className="self-start ml-1">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button onClick={scrollToTextEditorSection} className="supertext-text-btn px-6 py-2 rounded-full" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }} tabIndex={5} data-add-edit-text onKeyDown={e => {
+                        if (e.key === 'Tab' && !e.shiftKey) {
+                          e.preventDefault();
+                          storyCodeRef.current?.focus();
+                        }
+                      }}>
+                            Add/Edit Text
+                          </Button>
+                        </TooltipTrigger>
+                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+                      fontFamily: 'Arial',
+                      fontSize: '21px',
+                      color: 'black',
+                      backgroundColor: 'white'
+                    }}>
+                           Add/Edit Text Content
+                         </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  
+                  {/* Column 1, Row 2: Green Dot E */}
+                  <div className="self-start">
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
+                }}>E</div>
+                  </div>
+
                   {/* Column 2, Row 2: New Field (spans to column 3) */}
-                  <div className="row-start-2 col-start-2 col-span-2 self-end">
+                  <div className="col-span-2 self-start">
                     <Input type="text" placeholder="NEW FIELD" className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black py-4" style={{
                   fontStyle: 'normal',
                   width: 'calc(100% - 5px)',
                   height: '80px'
                 }} />
                   </div>
+                  
+                  {/* Column 1, Row 3: Green Dot B */}
+                  <div className="self-start">
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
+                }}>B</div>
+                  </div>
 
                   {/* Column 2, Row 3: Category Dropdown */}
-                  <div className="row-start-3 col-start-2 self-end">
+                  <div className="self-start">
                     <Select value={formData.category || ''} onValueChange={value => {
                   setCategory(value);
                   handleInputChange('category', value);
@@ -730,9 +746,19 @@ const SuperText: React.FC = () => {
                       </SelectContent>
                     </Select>
                   </div>
+                  
+                  {/* Empty space to maintain grid structure */}
+                  <div className="self-start"></div>
+                  
+                  {/* Column 1, Row 4: Green Dot C */}
+                  <div className="self-start">
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
+                }}>C</div>
+                  </div>
 
                   {/* Column 2, Row 4: Copyright Status */}
-                  <div className="row-start-4 col-start-2 self-end">
+                  <div className="self-start">
                     <Select value={formData.copyright_status || ''} onValueChange={value => {
                   setCopyrightStatus(value);
                   handleInputChange('copyright_status', value);
@@ -785,9 +811,19 @@ const SuperText: React.FC = () => {
                       </SelectContent>
                     </Select>
                   </div>
+                  
+                  {/* Empty space to maintain grid structure */}
+                  <div className="self-start"></div>
+                  
+                  {/* Column 1, Row 5: Green Dot D */}
+                  <div className="self-start">
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
+                }}>D</div>
+                  </div>
 
                   {/* Column 2, Row 5: Load Text Button */}
-                  <div className="row-start-5 col-start-2 flex flex-col justify-center">
+                  <div className="self-start">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -820,9 +856,9 @@ const SuperText: React.FC = () => {
                       </Tooltip>
                     </TooltipProvider>
                   </div>
-
-                  {/* Column 3, Row 1: Add/Edit Text Button */}
-                  <div className="row-start-1 col-start-3 justify-self-start self-center">
+                  
+                  {/* Empty space to maintain grid structure */}
+                  <div className="self-start">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -848,12 +884,11 @@ const SuperText: React.FC = () => {
                            Add/Edit Text Content
                          </TooltipContent>
                       </Tooltip>
-                    </TooltipProvider>
+                     </TooltipProvider>
                   </div>
-
-
+                  
                   {/* Column 3, Row 4: Add Audio File Button */}
-                  <div className="row-start-4 col-start-3 justify-self-start self-center">
+                  <div className="self-start ml-1">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -876,9 +911,9 @@ const SuperText: React.FC = () => {
                       </Tooltip>
                     </TooltipProvider>
                   </div>
-
+                  
                   {/* Column 3, Row 5: Add Video File Button */}
-                  <div className="row-start-5 col-start-3 justify-self-start self-center">
+                  <div className="self-start ml-1">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -901,7 +936,7 @@ const SuperText: React.FC = () => {
                       </Tooltip>
                     </TooltipProvider>
                   </div>
-                 </div>
+                </div>
 
 
                 <div className="bg-gray-100 p-4 rounded border-2 border-orange-400 mt-4" style={{
