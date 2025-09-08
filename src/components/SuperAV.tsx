@@ -428,7 +428,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     if (onFontSizeChange) {
       // Convert scale to approximate pixel size for legacy components
       const pixelSizes = { xs: 12, sm: 14, base: 16, lg: 18, xl: 20, '2xl': 24, '3xl': 30, '4xl': 36 };
-      onFontSizeChange(pixelSizes[nextScale] || 16);
+      const newSize = Math.min(40, Math.max(13, pixelSizes[nextScale] || 16)); // Clamp between 13px and 40px
+      onFontSizeChange(newSize);
     }
   };
 
@@ -443,7 +444,8 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     if (onFontSizeChange) {
       // Convert scale to approximate pixel size for legacy components
       const pixelSizes = { xs: 12, sm: 14, base: 16, lg: 18, xl: 20, '2xl': 24, '3xl': 30, '4xl': 36 };
-      onFontSizeChange(pixelSizes[nextScale] || 16);
+      const newSize = Math.min(40, Math.max(13, pixelSizes[nextScale] || 16)); // Clamp between 13px and 40px
+      onFontSizeChange(newSize);
     }
   };
 
