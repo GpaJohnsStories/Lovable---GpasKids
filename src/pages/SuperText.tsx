@@ -579,7 +579,7 @@ const SuperText: React.FC = () => {
                 </div>
                 
                  {/* 5x3 Grid Layout with explicit positioning - aligned with blue dot above */}
-                 <div className="grid grid-rows-5 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
+                 <div className="grid grid-rows-5 grid-cols-[32px_192px_auto] gap-y-1 gap-x-1">
                    {/* Column 1, Row 1: Green Dot A */}
                    <div className="row-start-1 col-start-1 place-self-center">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
@@ -635,7 +635,7 @@ const SuperText: React.FC = () => {
                    </div>
 
                    {/* Column 2-3, Row 2: Always-visible Preview/Confirm Panel */}
-                   <div className="row-start-2 col-start-2 col-span-2 self-center">
+                   <div className="row-start-2 col-start-2 col-span-2 self-center pr-[6px]">
                      <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-4">
                        {lookupStatus === 'idle' && (
                          <div className="text-gray-500 text-center py-4" style={{
