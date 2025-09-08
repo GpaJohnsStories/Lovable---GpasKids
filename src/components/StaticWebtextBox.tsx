@@ -18,7 +18,7 @@ const StaticWebtextBox: React.FC<StaticWebtextBoxProps> = ({
   return (
     <div className="mb-6 max-w-4xl mx-auto">
       <div 
-        className="border-2 rounded-lg p-6 relative"
+        className="border-4 rounded-lg p-6 relative"
         style={{ 
           borderColor: borderColor,
           backgroundColor: backgroundColor 
