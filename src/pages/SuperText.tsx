@@ -63,6 +63,7 @@ const SuperText: React.FC = () => {
   const [copyrightStatus, setCopyrightStatus] = React.useState('');
   const [publicationStatusCode, setPublicationStatusCode] = React.useState(5);
   const [lookupResult, setLookupResult] = React.useState<Story | null>(null);
+  const [lookupStatus, setLookupStatus] = React.useState<'idle' | 'found' | 'not-found'>('idle');
   const [showSuperAV, setShowSuperAV] = React.useState(false);
   const [isForcingRefresh, setIsForcingRefresh] = React.useState(false);
 
@@ -195,6 +196,7 @@ const SuperText: React.FC = () => {
     // Clear category in form data
     handleInputChange('category', '');
     setLookupResult(null);
+    setLookupStatus('idle');
 
     // Clear URL query parameters
     navigate('/buddys_admin/super-text', {
@@ -215,6 +217,33 @@ const SuperText: React.FC = () => {
       setPublicationStatusCode(Number(formData.publication_status_code));
     }
   }, [formData.publication_status_code]);
+  // Auto-lookup when story code reaches 7 characters
+  const handleStoryCodeChange = useCallback(async (newCode: string) => {
+    setStoryCode(newCode);
+    handleInputChange('story_code', newCode);
+    
+    if (newCode.length === 7 && newCode.includes('-')) {
+      const { found, story, error } = await lookupStoryByCode(newCode);
+      
+      if (error) {
+        setLookupStatus('idle');
+        setLookupResult(null);
+        return;
+      }
+      
+      if (found && story) {
+        setLookupResult(story);
+        setLookupStatus('found');
+      } else {
+        setLookupResult(null);
+        setLookupStatus('not-found');
+      }
+    } else {
+      setLookupStatus('idle');
+      setLookupResult(null);
+    }
+  }, [lookupStoryByCode, handleInputChange]);
+
   const handleStoryCodeLookup = useCallback(async () => {
     if (!storyCode.trim()) {
       toast.error("Please enter a story code to lookup.");
@@ -244,6 +273,28 @@ const SuperText: React.FC = () => {
       toast.success("Story data loaded successfully!");
     }
   }, [storyCode, lookupStoryByCode, populateFormWithStory]);
+
+  // Confirmation handlers for the preview panel
+  const handleConfirmYes = useCallback(async () => {
+    if (lookupStatus === 'found' && lookupResult) {
+      // Load the found story
+      await populateFormWithStory(lookupResult, true);
+      setCategory(lookupResult.category);
+      setCopyrightStatus(lookupResult.copyright_status || '©');
+      setPublicationStatusCode(lookupResult.publication_status_code || 5);
+      toast.success("Story data loaded successfully!");
+    } else if (lookupStatus === 'not-found') {
+      // Ready for new story - just show message
+      toast.success("Complete steps B, C, and D to create new webtext.");
+    }
+  }, [lookupStatus, lookupResult, populateFormWithStory]);
+
+  const handleConfirmNo = useCallback(() => {
+    // Clear the form completely
+    clearForm();
+    setLookupStatus('idle');
+    setLookupResult(null);
+  }, [clearForm]);
   const handleSave = async (action: 'save-and-clear' | 'save-only' | 'cancel-all') => {
     // Check if text code is empty for save actions
     if ((action === 'save-and-clear' || action === 'save-only') && !storyCode.trim()) {
@@ -560,21 +611,18 @@ const SuperText: React.FC = () => {
                   {/* Column 2, Row 1: Text Code */}
                   <div className="row-start-1 col-start-2 self-end">
                     <Input ref={storyCodeRef} type="text" placeholder="TEXT CODE" value={storyCode} onChange={e => {
-                  const upperValue = e.target.value.toUpperCase();
-                  setStoryCode(upperValue);
-                  handleInputChange('story_code', upperValue);
+                   const upperValue = e.target.value.toUpperCase();
+                   handleStoryCodeChange(upperValue);
                 }} onPaste={e => {
-                  const pastedText = e.clipboardData.getData('text');
-                  const upperValue = pastedText.toUpperCase();
-                  e.preventDefault();
-                  setStoryCode(upperValue);
-                  handleInputChange('story_code', upperValue);
+                   const pastedText = e.clipboardData.getData('text');
+                   const upperValue = pastedText.toUpperCase();
+                   e.preventDefault();
+                   handleStoryCodeChange(upperValue);
                 }} onBlur={e => {
-                  const upperValue = e.target.value.toUpperCase();
-                  if (upperValue !== e.target.value) {
-                    setStoryCode(upperValue);
-                    handleInputChange('story_code', upperValue);
-                  }
+                   const upperValue = e.target.value.toUpperCase();
+                   if (upperValue !== e.target.value) {
+                     handleStoryCodeChange(upperValue);
+                   }
                 }} onKeyDown={e => {
                   if (e.key === 'Tab' && e.shiftKey) {
                     e.preventDefault();
@@ -836,6 +884,61 @@ const SuperText: React.FC = () => {
                       </Tooltip>
                     </TooltipProvider>
                   </div>
+                 </div>
+
+                {/* Always-visible Preview/Confirm Panel */}
+                <div className="mt-6 bg-gray-50 border-2 border-gray-300 rounded-lg p-4" style={{ width: 'calc(100% - 200px)' }}>
+                  {lookupStatus === 'idle' && (
+                    <div className="text-gray-500 text-center py-4" style={{
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }}>
+                      Enter a 7-character text code (AAA-BBB) to preview
+                    </div>
+                  )}
+                  
+                  {lookupStatus === 'found' && lookupResult && (
+                    <div>
+                      <p className="text-gray-700 mb-2" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }}>
+                        Is this the text you want to work on?
+                      </p>
+                      <p className="font-semibold text-lg mb-4" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold',
+                        color: 'black'
+                      }}>
+                        {lookupResult.title ? lookupResult.title.split(' ').slice(0, 10).join(' ') + (lookupResult.title.split(' ').length > 10 ? '...' : '') : 'Untitled'}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {lookupStatus === 'not-found' && (
+                    <div>
+                      <p className="text-gray-700 mb-4" style={{
+                        fontSize: '21px',
+                        fontFamily: 'Arial',
+                        fontWeight: 'bold'
+                      }}>
+                        Text Code Not Found. Add new webtext?
+                      </p>
+                    </div>
+                  )}
+                  
+                  {(lookupStatus === 'found' || lookupStatus === 'not-found') && (
+                    <YesNoButtons
+                      onYes={handleConfirmYes}
+                      onNo={handleConfirmNo}
+                      yesLabel="YES"
+                      noLabel="NO"
+                      className="mt-4"
+                    />
+                  )}
                 </div>
 
                 <div className="bg-gray-100 p-4 rounded border-2 border-orange-400 mt-4" style={{
