@@ -127,10 +127,9 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
               <img
                 src={finalImageUrl}
                 alt={webtextData.photo_alt_1 || webtextData.title || "Story image"}
-                className="w-24 h-24 object-cover rounded"
+                className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain"
                 style={{
-                  minWidth: '96px',
-                  minHeight: '96px'
+                  imageRendering: 'crisp-edges'
                 }}
               />
             </div>
