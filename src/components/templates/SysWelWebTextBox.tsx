@@ -182,7 +182,20 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
                 margin-top: 0 !important;
                 padding-top: 0 !important;
               }
-              .syswel-box-content .rendered-story-content * {
+              .syswel-box-content .rendered-story-content p,
+              .syswel-box-content .rendered-story-content div,
+              .syswel-box-content .rendered-story-content span,
+              .syswel-box-content .rendered-story-content h1,
+              .syswel-box-content .rendered-story-content h2,
+              .syswel-box-content .rendered-story-content h3,
+              .syswel-box-content .rendered-story-content h4,
+              .syswel-box-content .rendered-story-content h5,
+              .syswel-box-content .rendered-story-content h6,
+              .syswel-box-content .rendered-story-content li,
+              .syswel-box-content .rendered-story-content strong,
+              .syswel-box-content .rendered-story-content em,
+              .syswel-box-content .rendered-story-content b,
+              .syswel-box-content .rendered-story-content i {
                 color: #0B3D91 !important;
               }
             `
