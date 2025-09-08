@@ -182,6 +182,8 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
                 margin-top: 0 !important;
                 padding-top: 0 !important;
               }
+              .syswel-box-content .rendered-story-content,
+              .syswel-box-content .rendered-story-content *,
               .syswel-box-content .rendered-story-content p,
               .syswel-box-content .rendered-story-content div,
               .syswel-box-content .rendered-story-content span,
@@ -195,7 +197,8 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
               .syswel-box-content .rendered-story-content strong,
               .syswel-box-content .rendered-story-content em,
               .syswel-box-content .rendered-story-content b,
-              .syswel-box-content .rendered-story-content i {
+              .syswel-box-content .rendered-story-content i,
+              .syswel-box-content .rendered-story-content a {
                 color: #0B3D91 !important;
               }
             `
