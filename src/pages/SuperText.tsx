@@ -578,38 +578,38 @@ const SuperText: React.FC = () => {
               }} />
                 </div>
                 
-                {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
-                <div className="grid grid-rows-4 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
-                  {/* Column 1, Row 1: Green Dot A */}
-                  <div className="row-start-1 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                 {/* 5x3 Grid Layout with explicit positioning - aligned with blue dot above */}
+                 <div className="grid grid-rows-5 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
+                   {/* Column 1, Row 1: Green Dot A */}
+                   <div className="row-start-1 col-start-1 place-self-center">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                   backgroundColor: '#3b82f6'
                 }}>A</div>
-                  </div>
-                  
-                  {/* Column 1, Row 2: Green Dot B */}
-                  <div className="row-start-2 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                   </div>
+                   
+                   {/* Column 1, Row 3: Green Dot B */}
+                   <div className="row-start-3 col-start-1 place-self-center">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                   backgroundColor: '#3b82f6'
                 }}>B</div>
-                  </div>
-                  
-                  {/* Column 1, Row 3: Green Dot C */}
-                  <div className="row-start-3 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                   </div>
+                   
+                   {/* Column 1, Row 4: Green Dot C */}
+                   <div className="row-start-4 col-start-1 place-self-center">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                   backgroundColor: '#3b82f6'
                 }}>C</div>
-                  </div>
+                   </div>
 
-                  {/* Column 1, Row 4: Green Dot D */}
-                  <div className="row-start-4 col-start-1 place-self-center">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                   {/* Column 1, Row 5: Green Dot D */}
+                   <div className="row-start-5 col-start-1 place-self-center">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                   backgroundColor: '#3b82f6'
                 }}>D</div>
-                  </div>
+                   </div>
 
-                  {/* Column 2, Row 1: Text Code */}
-                  <div className="row-start-1 col-start-2 self-end">
+                   {/* Column 2, Row 1: Text Code */}
+                   <div className="row-start-1 col-start-2 self-end">
                     <Input ref={storyCodeRef} type="text" placeholder="TEXT CODE" value={storyCode} onChange={e => {
                    const upperValue = e.target.value.toUpperCase();
                    handleStoryCodeChange(upperValue);
@@ -632,10 +632,67 @@ const SuperText: React.FC = () => {
                   width: '192px',
                   fontStyle: 'normal'
                 }} autoCapitalize="characters" spellCheck={false} tabIndex={1} />
-                  </div>
+                   </div>
 
-                  {/* Column 2, Row 2: Category Dropdown */}
-                  <div className="row-start-2 col-start-2 self-end">
+                   {/* Column 2-3, Row 2: Always-visible Preview/Confirm Panel */}
+                   <div className="row-start-2 col-start-2 col-span-2 self-center">
+                     <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-4">
+                       {lookupStatus === 'idle' && (
+                         <div className="text-gray-500 text-center py-4" style={{
+                           fontSize: '21px',
+                           fontFamily: 'Arial',
+                           fontWeight: 'bold'
+                         }}>
+                           Enter a 7-character text code (AAA-BBB) to preview
+                         </div>
+                       )}
+                       
+                       {lookupStatus === 'found' && lookupResult && (
+                         <div>
+                           <p className="text-gray-700 mb-2" style={{
+                             fontSize: '21px',
+                             fontFamily: 'Arial',
+                             fontWeight: 'bold'
+                           }}>
+                             Is this the text you want to work on?
+                           </p>
+                           <p className="font-semibold text-lg mb-4" style={{
+                             fontSize: '21px',
+                             fontFamily: 'Arial',
+                             fontWeight: 'bold',
+                             color: 'black'
+                           }}>
+                             {lookupResult.title ? lookupResult.title.split(' ').slice(0, 10).join(' ') + (lookupResult.title.split(' ').length > 10 ? '...' : '') : 'Untitled'}
+                           </p>
+                         </div>
+                       )}
+                       
+                       {lookupStatus === 'not-found' && (
+                         <div>
+                           <p className="text-gray-700 mb-4" style={{
+                             fontSize: '21px',
+                             fontFamily: 'Arial',
+                             fontWeight: 'bold'
+                           }}>
+                             Text Code Not Found. Add new webtext?
+                           </p>
+                         </div>
+                       )}
+                       
+                       {(lookupStatus === 'found' || lookupStatus === 'not-found') && (
+                         <YesNoButtons
+                           onYes={handleConfirmYes}
+                           onNo={handleConfirmNo}
+                           yesLabel="YES"
+                           noLabel="NO"
+                           className="mt-4"
+                         />
+                       )}
+                     </div>
+                   </div>
+
+                   {/* Column 2, Row 3: Category Dropdown */}
+                   <div className="row-start-3 col-start-2 self-end">
                     <Select value={formData.category || ''} onValueChange={value => {
                   setCategory(value);
                   handleInputChange('category', value);
@@ -715,8 +772,8 @@ const SuperText: React.FC = () => {
                     </Select>
                   </div>
 
-                  {/* Column 2, Row 3: Copyright Status */}
-                  <div className="row-start-3 col-start-2 self-end">
+                   {/* Column 2, Row 4: Copyright Status */}
+                   <div className="row-start-4 col-start-2 self-end">
                     <Select value={formData.copyright_status || ''} onValueChange={value => {
                   setCopyrightStatus(value);
                   handleInputChange('copyright_status', value);
@@ -770,8 +827,8 @@ const SuperText: React.FC = () => {
                     </Select>
                   </div>
 
-                  {/* Column 2, Row 4: Load Text Button */}
-                  <div className="row-start-4 col-start-2 flex flex-col justify-center">
+                   {/* Column 2, Row 5: Load Text Button */}
+                   <div className="row-start-5 col-start-2 flex flex-col justify-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -835,8 +892,8 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  {/* Column 3, Row 3: Add Audio File Button */}
-                  <div className="row-start-3 col-start-3 justify-self-start self-center">
+                   {/* Column 3, Row 4: Add Audio File Button */}
+                   <div className="row-start-4 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -860,8 +917,8 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
 
-                  {/* Column 3, Row 4: Add Video File Button */}
-                  <div className="row-start-4 col-start-3 justify-self-start self-center">
+                   {/* Column 3, Row 5: Add Video File Button */}
+                   <div className="row-start-5 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -885,61 +942,6 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
                  </div>
-
-                {/* Always-visible Preview/Confirm Panel */}
-                <div className="mt-6 bg-gray-50 border-2 border-gray-300 rounded-lg p-4" style={{ width: 'calc(100% - 200px)' }}>
-                  {lookupStatus === 'idle' && (
-                    <div className="text-gray-500 text-center py-4" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                      Enter a 7-character text code (AAA-BBB) to preview
-                    </div>
-                  )}
-                  
-                  {lookupStatus === 'found' && lookupResult && (
-                    <div>
-                      <p className="text-gray-700 mb-2" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}>
-                        Is this the text you want to work on?
-                      </p>
-                      <p className="font-semibold text-lg mb-4" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold',
-                        color: 'black'
-                      }}>
-                        {lookupResult.title ? lookupResult.title.split(' ').slice(0, 10).join(' ') + (lookupResult.title.split(' ').length > 10 ? '...' : '') : 'Untitled'}
-                      </p>
-                    </div>
-                  )}
-                  
-                  {lookupStatus === 'not-found' && (
-                    <div>
-                      <p className="text-gray-700 mb-4" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}>
-                        Text Code Not Found. Add new webtext?
-                      </p>
-                    </div>
-                  )}
-                  
-                  {(lookupStatus === 'found' || lookupStatus === 'not-found') && (
-                    <YesNoButtons
-                      onYes={handleConfirmYes}
-                      onNo={handleConfirmNo}
-                      yesLabel="YES"
-                      noLabel="NO"
-                      className="mt-4"
-                    />
-                  )}
-                </div>
 
                 <div className="bg-gray-100 p-4 rounded border-2 border-orange-400 mt-4" style={{
               fontSize: '21px',
