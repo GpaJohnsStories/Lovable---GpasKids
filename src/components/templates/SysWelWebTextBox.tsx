@@ -132,9 +132,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
                     className="rounded-lg overflow-hidden shadow-lg"
                     style={{
                       backgroundColor: theme!.colors.photoMatColor,
-                      border: "3px solid #0B3D91",
-                      boxShadow: '0 4px 15px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
-                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+                      padding: '4px'
                     }}
                     onClick={() => setShowTooltip(!showTooltip)}
                   >
@@ -142,7 +140,9 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
                       src={finalImageUrl}
                       alt={webtextData.title || "Webtext illustration"}
                       className="w-auto h-auto max-h-48 md:max-h-64 lg:max-h-80 object-contain"
-                      style={{ imageRendering: 'crisp-edges' }}
+                      style={{
+                        imageRendering: 'crisp-edges'
+                      }}
                     />
                   </div>
                 </TooltipTrigger>
@@ -155,7 +155,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
                     lineHeight: '1.4'
                   }}
                 >
-                  {webtextData.title || "Click to visit the Guide page"}
+                  {webtextData.title || "Click to learn more"}
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
