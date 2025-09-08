@@ -166,7 +166,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
             <IsolatedStoryRenderer 
               content={remainingContent || webtextData.content}
               category="WebText"
-              fontSize={18}
+              fontSize={21}
               showHeaderPreview={false}
             />
           </div>
