@@ -566,7 +566,7 @@ const SuperText: React.FC = () => {
                 {/* Blue Dot 1 in top left corner */}
                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">1</div>
                 
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-2">
                   <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
                 </div>
                 
@@ -609,7 +609,7 @@ const SuperText: React.FC = () => {
                    </div>
 
                    {/* Column 2, Row 1: Text Code */}
-                   <div className="row-start-1 col-start-2 self-end">
+                   <div className="row-start-1 col-start-2 self-center">
                     <Input ref={storyCodeRef} type="text" placeholder="TEXT CODE" value={storyCode} onChange={e => {
                    const upperValue = e.target.value.toUpperCase();
                    handleStoryCodeChange(upperValue);
