@@ -106,7 +106,7 @@ const SuperText: React.FC = () => {
     handleSubmit,
     handleSaveOnly,
     isSaving
-  } = useStoryFormActions(storyId, refetchStory, handleStoryFormSave, (updates) => {
+  } = useStoryFormActions(storyId, refetchStory, handleStoryFormSave, updates => {
     // Update formData using handleInputChange for each field
     Object.entries(updates).forEach(([key, value]) => {
       handleInputChange(key as keyof Story, value as string);
@@ -221,16 +221,17 @@ const SuperText: React.FC = () => {
   const handleStoryCodeChange = useCallback(async (newCode: string) => {
     setStoryCode(newCode);
     handleInputChange('story_code', newCode);
-    
     if (newCode.length === 7 && newCode.includes('-')) {
-      const { found, story, error } = await lookupStoryByCode(newCode);
-      
+      const {
+        found,
+        story,
+        error
+      } = await lookupStoryByCode(newCode);
       if (error) {
         setLookupStatus('idle');
         setLookupResult(null);
         return;
       }
-      
       if (found && story) {
         setLookupResult(story);
         setLookupStatus('found');
@@ -243,7 +244,6 @@ const SuperText: React.FC = () => {
       setLookupResult(null);
     }
   }, [lookupStoryByCode, handleInputChange]);
-
   const handleStoryCodeLookup = useCallback(async () => {
     if (!storyCode.trim()) {
       toast.error("Please enter a story code to lookup.");
@@ -288,7 +288,6 @@ const SuperText: React.FC = () => {
       toast.success("Complete steps B, C, and D to create new webtext.");
     }
   }, [lookupStatus, lookupResult, populateFormWithStory]);
-
   const handleConfirmNo = useCallback(() => {
     // Clear the form completely
     clearForm();
@@ -320,10 +319,12 @@ const SuperText: React.FC = () => {
       let formDataToSave = formData;
       if (formData.id && lookupResult && lookupResult.story_code !== formData.story_code) {
         console.log('🛡️ SAFEGUARD: Story code changed from', lookupResult.story_code, 'to', formData.story_code, '- treating as new story');
-        formDataToSave = { ...formData, id: '' };
+        formDataToSave = {
+          ...formData,
+          id: ''
+        };
         toast.success(`Creating new story with code ${formData.story_code}`);
       }
-
       if (saveAction === 'save-and-clear') {
         // Create custom onSave callback that clears form after successful save
         const customOnSave = async () => {
@@ -341,31 +342,28 @@ const SuperText: React.FC = () => {
       }
     }
   };
-
   const handleForceCacheRefresh = async () => {
     console.log('🔄 Force cache refresh button clicked');
     if (!formData.story_code.trim()) {
       toast.error("Please enter a text code to refresh cache.");
       return;
     }
-
     setIsForcingRefresh(true);
     try {
       const newTimestamp = new Date().toISOString();
-      
-      // Update the story's updated_at timestamp to force cache refresh
-      const { error } = await supabase
-        .from('stories')
-        .update({ updated_at: newTimestamp })
-        .eq('story_code', formData.story_code.trim());
 
+      // Update the story's updated_at timestamp to force cache refresh
+      const {
+        error
+      } = await supabase.from('stories').update({
+        updated_at: newTimestamp
+      }).eq('story_code', formData.story_code.trim());
       if (error) {
         console.error('Error forcing cache refresh:', error);
         toast.error("Failed to refresh cache");
       } else {
         // Update the form data immediately to reflect the new timestamp
         handleInputChange('updated_at', newTimestamp);
-        
         toast.success("Cache refreshed! All media files for this story will now use the latest versions.");
         console.log('🔄 Updated form timestamp to:', newTimestamp);
       }
@@ -376,7 +374,6 @@ const SuperText: React.FC = () => {
       setIsForcingRefresh(false);
     }
   };
-
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     if ((event.ctrlKey || event.metaKey) && event.key === 's') {
       event.preventDefault();
@@ -512,16 +509,11 @@ const SuperText: React.FC = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button 
-                    onClick={handleForceCacheRefresh} 
-                    disabled={isForcingRefresh || !storyCode.trim()} 
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full"
-                    style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}
-                  >
+                  <Button onClick={handleForceCacheRefresh} disabled={isForcingRefresh || !storyCode.trim()} className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full" style={{
+                fontSize: '21px',
+                fontFamily: 'Arial',
+                fontWeight: 'bold'
+              }}>
                     {isForcingRefresh ? 'Refreshing...' : 'Force Cache Refresh'}
                   </Button>
                 </TooltipTrigger>
@@ -539,7 +531,10 @@ const SuperText: React.FC = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="supertext-orange-btn px-8 py-3 rounded-full">
+                  <Button onClick={() => window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              })} className="supertext-orange-btn px-8 py-3 rounded-full">
                     Return To Top
                   </Button>
                 </TooltipTrigger>
@@ -578,30 +573,51 @@ const SuperText: React.FC = () => {
               }} />
                 </div>
                 
-                {/* 5x3 Grid Layout - tight alignment with no gaps */}
-                <div className="grid grid-cols-[32px_192px_auto] items-start">
+                {/* 4x3 Grid Layout with explicit positioning - aligned with blue dot above */}
+                <div className="grid grid-rows-4 grid-cols-[32px_192px_auto] gap-y-2 gap-x-1">
                   {/* Column 1, Row 1: Green Dot A */}
-                  <div className="self-start">
+                  <div className="row-start-1 col-start-1 place-self-center">
                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                   backgroundColor: '#3b82f6'
                 }}>A</div>
                   </div>
                   
+                  {/* Column 1, Row 2: Green Dot B */}
+                  <div className="row-start-2 col-start-1 place-self-center">
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
+                }}>B</div>
+                  </div>
+                  
+                  {/* Column 1, Row 3: Green Dot C */}
+                  <div className="row-start-3 col-start-1 place-self-center">
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
+                }}>C</div>
+                  </div>
+
+                  {/* Column 1, Row 4: Green Dot D */}
+                  <div className="row-start-4 col-start-1 place-self-center">
+                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                  backgroundColor: '#3b82f6'
+                }}>D</div>
+                  </div>
+
                   {/* Column 2, Row 1: Text Code */}
-                  <div className="self-start">
+                  <div className="row-start-1 col-start-2 self-end">
                     <Input ref={storyCodeRef} type="text" placeholder="TEXT CODE" value={storyCode} onChange={e => {
-                   const upperValue = e.target.value.toUpperCase();
-                   handleStoryCodeChange(upperValue);
+                  const upperValue = e.target.value.toUpperCase();
+                  handleStoryCodeChange(upperValue);
                 }} onPaste={e => {
-                   const pastedText = e.clipboardData.getData('text');
-                   const upperValue = pastedText.toUpperCase();
-                   e.preventDefault();
-                   handleStoryCodeChange(upperValue);
+                  const pastedText = e.clipboardData.getData('text');
+                  const upperValue = pastedText.toUpperCase();
+                  e.preventDefault();
+                  handleStoryCodeChange(upperValue);
                 }} onBlur={e => {
-                   const upperValue = e.target.value.toUpperCase();
-                   if (upperValue !== e.target.value) {
-                     handleStoryCodeChange(upperValue);
-                   }
+                  const upperValue = e.target.value.toUpperCase();
+                  if (upperValue !== e.target.value) {
+                    handleStoryCodeChange(upperValue);
+                  }
                 }} onKeyDown={e => {
                   if (e.key === 'Tab' && e.shiftKey) {
                     e.preventDefault();
@@ -613,61 +629,8 @@ const SuperText: React.FC = () => {
                 }} autoCapitalize="characters" spellCheck={false} tabIndex={1} />
                   </div>
 
-                  {/* Column 3, Row 1: Add/Edit Text Button */}
-                  <div className="self-start ml-1">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button onClick={scrollToTextEditorSection} className="supertext-text-btn px-6 py-2 rounded-full" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }} tabIndex={5} data-add-edit-text onKeyDown={e => {
-                        if (e.key === 'Tab' && !e.shiftKey) {
-                          e.preventDefault();
-                          storyCodeRef.current?.focus();
-                        }
-                      }}>
-                            Add/Edit Text
-                          </Button>
-                        </TooltipTrigger>
-                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-                      fontFamily: 'Arial',
-                      fontSize: '21px',
-                      color: 'black',
-                      backgroundColor: 'white'
-                    }}>
-                           Add/Edit Text Content
-                         </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                  
-                  {/* Column 1, Row 2: Green Dot E */}
-                  <div className="self-start">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>E</div>
-                  </div>
-
-                  {/* Column 2, Row 2: New Field (spans to column 3) */}
-                  <div className="col-span-2 self-start">
-                    <Input type="text" placeholder="NEW FIELD" className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black py-4" style={{
-                  fontStyle: 'normal',
-                  width: 'calc(100% - 5px)',
-                  height: '80px'
-                }} />
-                  </div>
-                  
-                  {/* Column 1, Row 3: Green Dot B */}
-                  <div className="self-start">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>B</div>
-                  </div>
-
-                  {/* Column 2, Row 3: Category Dropdown */}
-                  <div className="self-start">
+                  {/* Column 2, Row 2: Category Dropdown */}
+                  <div className="row-start-2 col-start-2 self-end">
                     <Select value={formData.category || ''} onValueChange={value => {
                   setCategory(value);
                   handleInputChange('category', value);
@@ -746,19 +709,9 @@ const SuperText: React.FC = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  
-                  {/* Empty space to maintain grid structure */}
-                  <div className="self-start"></div>
-                  
-                  {/* Column 1, Row 4: Green Dot C */}
-                  <div className="self-start">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>C</div>
-                  </div>
 
-                  {/* Column 2, Row 4: Copyright Status */}
-                  <div className="self-start">
+                  {/* Column 2, Row 3: Copyright Status */}
+                  <div className="row-start-3 col-start-2 self-end">
                     <Select value={formData.copyright_status || ''} onValueChange={value => {
                   setCopyrightStatus(value);
                   handleInputChange('copyright_status', value);
@@ -811,19 +764,9 @@ const SuperText: React.FC = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  
-                  {/* Empty space to maintain grid structure */}
-                  <div className="self-start"></div>
-                  
-                  {/* Column 1, Row 5: Green Dot D */}
-                  <div className="self-start">
-                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                  backgroundColor: '#3b82f6'
-                }}>D</div>
-                  </div>
 
-                  {/* Column 2, Row 5: Load Text Button */}
-                  <div className="self-start">
+                  {/* Column 2, Row 4: Load Text Button */}
+                  <div className="row-start-4 col-start-2 flex flex-col justify-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -856,9 +799,9 @@ const SuperText: React.FC = () => {
                       </Tooltip>
                     </TooltipProvider>
                   </div>
-                  
-                  {/* Empty space to maintain grid structure */}
-                  <div className="self-start">
+
+                  {/* Column 3, Row 1: Add/Edit Text Button */}
+                  <div className="row-start-1 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -884,11 +827,11 @@ const SuperText: React.FC = () => {
                            Add/Edit Text Content
                          </TooltipContent>
                       </Tooltip>
-                     </TooltipProvider>
+                    </TooltipProvider>
                   </div>
-                  
-                  {/* Column 3, Row 4: Add Audio File Button */}
-                  <div className="self-start ml-1">
+
+                  {/* Column 3, Row 3: Add Audio File Button */}
+                  <div className="row-start-3 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -911,9 +854,9 @@ const SuperText: React.FC = () => {
                       </Tooltip>
                     </TooltipProvider>
                   </div>
-                  
-                  {/* Column 3, Row 5: Add Video File Button */}
-                  <div className="self-start ml-1">
+
+                  {/* Column 3, Row 4: Add Video File Button */}
+                  <div className="row-start-4 col-start-3 justify-self-start self-center">
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
@@ -936,7 +879,7 @@ const SuperText: React.FC = () => {
                       </Tooltip>
                     </TooltipProvider>
                   </div>
-                </div>
+                 </div>
 
 
                 <div className="bg-gray-100 p-4 rounded border-2 border-orange-400 mt-4" style={{
@@ -944,11 +887,7 @@ const SuperText: React.FC = () => {
               fontFamily: 'Arial',
               fontWeight: 'bold'
             }}>
-                  <Label className="text-gray-600 font-medium" style={{
-                fontSize: '21px',
-                fontFamily: 'Arial',
-                fontWeight: 'bold'
-              }}></Label>
+                  
                   <p className="text-gray-500 mt-1" style={{
                 fontSize: '21px',
                 fontFamily: 'Arial',
@@ -971,70 +910,57 @@ const SuperText: React.FC = () => {
               }}>🖼️ Story Photos</h2>
                 </div>
                 
-                <StoryPhotoUpload 
-                  photoUrls={{
-                    photo_link_1: formData.photo_link_1,
-                    photo_link_2: formData.photo_link_2,
-                    photo_link_3: formData.photo_link_3
-                  }} 
-                  photoAlts={{
-                    photo_alt_1: formData.photo_alt_1,
-                    photo_alt_2: formData.photo_alt_2,
-                    photo_alt_3: formData.photo_alt_3
-                  }} 
-                  storyCode={formData.story_code}
-                  onPhotoUpload={(photoNumber, url) => {
-                    handleInputChange(`photo_link_${photoNumber}` as keyof Story, url);
-                  }} 
-                  onPhotoRemove={handlePhotoRemove}
-                  onAltTextChange={(field, value) => {
-                    handleInputChange(field as keyof Story, value);
-                  }} 
-                />
+                <StoryPhotoUpload photoUrls={{
+              photo_link_1: formData.photo_link_1,
+              photo_link_2: formData.photo_link_2,
+              photo_link_3: formData.photo_link_3
+            }} photoAlts={{
+              photo_alt_1: formData.photo_alt_1,
+              photo_alt_2: formData.photo_alt_2,
+              photo_alt_3: formData.photo_alt_3
+            }} storyCode={formData.story_code} onPhotoUpload={(photoNumber, url) => {
+              handleInputChange(`photo_link_${photoNumber}` as keyof Story, url);
+            }} onPhotoRemove={handlePhotoRemove} onAltTextChange={(field, value) => {
+              handleInputChange(field as keyof Story, value);
+            }} />
               </div>
 
               {/* 3-Column Grid: Audio, Video, Text */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
                 {/* Column 1: Audio Upload */}
-                <div ref={audioSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 p-6 relative" style={{ borderColor: '#8B4513' }}>
+                <div ref={audioSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 p-6 relative" style={{
+              borderColor: '#8B4513'
+            }}>
                   {/* Orange Dot A in top left corner */}
                   <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">A</div>
                   <div className="flex items-center gap-2 mb-4">
-                    <h2 className="text-xl font-bold" style={{ color: '#8B4513' }}>🔊 Audio Upload</h2>
+                    <h2 className="text-xl font-bold" style={{
+                  color: '#8B4513'
+                }}>🔊 Audio Upload</h2>
                   </div>
                   
                   <div className="space-y-4">
                      {/* File Upload */}
                     <div>
                       <Label className="font-semibold mb-2 block">Upload Audio File</Label>
-                      <input 
-                        type="file" 
-                        accept="audio/*" 
-                        onChange={async (e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            try {
-                              await handleAudioUpload(file);
-                              toast.success("Audio uploaded successfully!");
-                              e.target.value = ''; // Clear input
-                            } catch (error) {
-                              console.error('Audio upload error:', error);
-                              toast.error(error instanceof Error ? error.message : "Failed to upload audio");
-                              e.target.value = ''; // Clear input even on error
-                            }
-                          }
-                        }} 
-                        disabled={isUploadingAudio || !formData.id}
-                        className="w-full rounded-md p-2 text-sm disabled:opacity-50" 
-                        style={{ border: '2px solid #8B4513' }}
-                      />
+                      <input type="file" accept="audio/*" onChange={async e => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      try {
+                        await handleAudioUpload(file);
+                        toast.success("Audio uploaded successfully!");
+                        e.target.value = ''; // Clear input
+                      } catch (error) {
+                        console.error('Audio upload error:', error);
+                        toast.error(error instanceof Error ? error.message : "Failed to upload audio");
+                        e.target.value = ''; // Clear input even on error
+                      }
+                    }
+                  }} disabled={isUploadingAudio || !formData.id} className="w-full rounded-md p-2 text-sm disabled:opacity-50" style={{
+                    border: '2px solid #8B4513'
+                  }} />
                       <p className="text-xs text-gray-500 mt-1">
-                        {!formData.id 
-                          ? "Save story first before uploading audio" 
-                          : isUploadingAudio 
-                            ? "Uploading..." 
-                            : "Supported formats: MP3, WAV, M4A, AAC • Max size: 50MB"
-                        }
+                        {!formData.id ? "Save story first before uploading audio" : isUploadingAudio ? "Uploading..." : "Supported formats: MP3, WAV, M4A, AAC • Max size: 50MB"}
                       </p>
                     </div>
                     
@@ -1076,33 +1002,22 @@ const SuperText: React.FC = () => {
                      {/* File Upload */}
                     <div>
                       <Label className="font-semibold mb-2 block">Upload MP4 File</Label>
-                      <input 
-                        type="file" 
-                        accept=".mp4,video/mp4" 
-                        onChange={async (e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            try {
-                              await handleVideoFileUpload(file);
-                              toast.success("Video uploaded successfully!");
-                              e.target.value = ''; // Clear input
-                            } catch (error) {
-                              console.error('Video upload error:', error);
-                              toast.error(error instanceof Error ? error.message : "Failed to upload video");
-                              e.target.value = ''; // Clear input even on error
-                            }
-                          }
-                        }} 
-                        disabled={isUploadingAudio || !formData.id}
-                        className="w-full border border-purple-400 rounded-md p-2 text-sm disabled:opacity-50" 
-                      />
+                      <input type="file" accept=".mp4,video/mp4" onChange={async e => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      try {
+                        await handleVideoFileUpload(file);
+                        toast.success("Video uploaded successfully!");
+                        e.target.value = ''; // Clear input
+                      } catch (error) {
+                        console.error('Video upload error:', error);
+                        toast.error(error instanceof Error ? error.message : "Failed to upload video");
+                        e.target.value = ''; // Clear input even on error
+                      }
+                    }
+                  }} disabled={isUploadingAudio || !formData.id} className="w-full border border-purple-400 rounded-md p-2 text-sm disabled:opacity-50" />
                       <p className="text-xs text-gray-500 mt-1">
-                        {!formData.id 
-                          ? "Save story first before uploading video" 
-                          : isUploadingAudio 
-                            ? "Uploading..." 
-                            : "Only MP4 format • Max size: 100MB"
-                        }
+                        {!formData.id ? "Save story first before uploading video" : isUploadingAudio ? "Uploading..." : "Only MP4 format • Max size: 100MB"}
                       </p>
                     </div>
                     
@@ -1121,8 +1036,7 @@ const SuperText: React.FC = () => {
                     </div>
 
                     {/* Current Video Display */}
-                    {formData.video_url && (
-                      <div className="space-y-2">
+                    {formData.video_url && <div className="space-y-2">
                         <div className="text-sm font-semibold text-purple-700">Video File Available</div>
                         <video controls className="w-full max-h-64 rounded-lg border border-purple-200">
                           <source src={formData.video_url} type="video/mp4" />
@@ -1131,8 +1045,7 @@ const SuperText: React.FC = () => {
                         <Button onClick={() => handleInputChange('video_url', '')} variant="outline" size="sm" className="text-red-600 hover:text-red-700 border-red-300 hover:border-red-400">
                           Remove Video
                         </Button>
-                      </div>
-                    )}
+                      </div>}
                   </div>
                 </div>
 
@@ -1153,7 +1066,7 @@ const SuperText: React.FC = () => {
                     if (file) {
                       console.log('Text file selected:', file.name);
                       const reader = new FileReader();
-                      reader.onload = (event) => {
+                      reader.onload = event => {
                         const content = event.target?.result as string;
                         if (content) {
                           handleInputChange('content', content);
@@ -1227,9 +1140,7 @@ const SuperText: React.FC = () => {
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-bold text-green-700">Create AI Voice File</h2>
                 </div>
-                {formData.audio_url && (
-                  <AudioButton code="AUDIO-PLAY" onClick={() => setShowSuperAV(true)} className="absolute top-2 right-2 z-10" />
-                )}
+                {formData.audio_url && <AudioButton code="AUDIO-PLAY" onClick={() => setShowSuperAV(true)} className="absolute top-2 right-2 z-10" />}
                 
                 <div className="space-y-4">
                   {/* Current Voice Display */}
@@ -1242,18 +1153,8 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Audio Generation Button */}
-                  <Button 
-                    onClick={() => handleGenerateAudio()} 
-                    disabled={isGeneratingAudio || !formData.id || !formData.content || !formData.ai_voice_name} 
-                    className={`w-full ${isGeneratingAudio || !formData.id || !formData.content || !formData.ai_voice_name ? 'bg-gray-400 text-gray-600' : 'bg-green-600 hover:bg-green-700 text-white'} supertext-fs-21px-arial-white`}
-                  >
-                    🎵 {
-                      isGeneratingAudio ? 'Generating Audio...' : 
-                      !formData.id ? 'Save Story First' :
-                      !formData.content ? 'Story Content Required' : 
-                      !formData.ai_voice_name ? 'Voice Selection Required' : 
-                      'Generate Audio File'
-                    }
+                  <Button onClick={() => handleGenerateAudio()} disabled={isGeneratingAudio || !formData.id || !formData.content || !formData.ai_voice_name} className={`w-full ${isGeneratingAudio || !formData.id || !formData.content || !formData.ai_voice_name ? 'bg-gray-400 text-gray-600' : 'bg-green-600 hover:bg-green-700 text-white'} supertext-fs-21px-arial-white`}>
+                    🎵 {isGeneratingAudio ? 'Generating Audio...' : !formData.id ? 'Save Story First' : !formData.content ? 'Story Content Required' : !formData.ai_voice_name ? 'Voice Selection Required' : 'Generate Audio File'}
                   </Button>
 
                   {/* Existing Audio File Display */}
@@ -1364,21 +1265,19 @@ const SuperText: React.FC = () => {
               {saveAction === 'save-and-clear' ? 'Confirm Save & Clear' : saveAction === 'cancel-all' ? 'Confirm Cancel All & Clear' : 'Confirm Save'}
             </DialogTitle>
             {(saveAction === 'save-and-clear' || saveAction === 'save-only') && (() => {
-              const pubCode = Number(formData.publication_status_code);
-              const isPublic = pubCode === 0 || pubCode === 1;
-              return (
-                <div style={{
-                  fontSize: isPublic ? '24px' : '21px',
-                  fontFamily: 'Arial',
-                  fontWeight: 'bold',
-                  fontStyle: isPublic ? 'italic' : 'normal',
-                  color: isPublic ? '#ef4444' : '#3b82f6',
-                  marginTop: '8px'
-                }}>
+            const pubCode = Number(formData.publication_status_code);
+            const isPublic = pubCode === 0 || pubCode === 1;
+            return <div style={{
+              fontSize: isPublic ? '24px' : '21px',
+              fontFamily: 'Arial',
+              fontWeight: 'bold',
+              fontStyle: isPublic ? 'italic' : 'normal',
+              color: isPublic ? '#ef4444' : '#3b82f6',
+              marginTop: '8px'
+            }}>
                   Publication Status Code is <u>{formData.publication_status_code}</u> and will {isPublic ? <><u>IMMEDIATELY</u></> : <><u>NOT</u></>} be available to the public!
-                </div>
-              );
-            })()}
+                </div>;
+          })()}
             <DialogDescription className="text-sm" style={{
             fontSize: '21px',
             fontFamily: 'Arial'
@@ -1401,16 +1300,7 @@ const SuperText: React.FC = () => {
       </Dialog>
       
       {/* SuperAV Modal */}
-      {showSuperAV && formData.audio_url && (
-        <SuperAV
-          isOpen={showSuperAV}
-          onClose={() => setShowSuperAV(false)}
-          title={formData.story_code || "Story Audio"}
-          author={formData.author}
-          voiceName={formData.ai_voice_name}
-          audioUrl={formData.audio_url}
-        />
-      )}
+      {showSuperAV && formData.audio_url && <SuperAV isOpen={showSuperAV} onClose={() => setShowSuperAV(false)} title={formData.story_code || "Story Audio"} author={formData.author} voiceName={formData.ai_voice_name} audioUrl={formData.audio_url} />}
     </SecureAdminRoute>;
 };
 export default SuperText;
