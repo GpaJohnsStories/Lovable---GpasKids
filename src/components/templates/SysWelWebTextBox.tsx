@@ -23,6 +23,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
   const [webtextData, setWebtextData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showSuperAV, setShowSuperAV] = useState(false);
+  const [contentFontSize, setContentFontSize] = useState(24);
   const { lookupStoryByCode } = useStoryCodeLookup();
   const navigate = useNavigate();
 
@@ -166,7 +167,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
             <IsolatedStoryRenderer 
               content={remainingContent || webtextData.content}
               category="WebText"
-              fontSize={24}
+              fontSize={contentFontSize}
               showHeaderPreview={false}
             />
           </div>
@@ -203,6 +204,8 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
         author={webtextData?.author}
         voiceName={webtextData?.ai_voice_name}
         showAuthor={false}
+        fontSize={contentFontSize}
+        onFontSizeChange={setContentFontSize}
         audioUrl={webtextData?.audio_url ? buildCacheBustedUrl(webtextData.audio_url, getAssetVersionFromStory(webtextData)) : undefined}
       />
     </div>
