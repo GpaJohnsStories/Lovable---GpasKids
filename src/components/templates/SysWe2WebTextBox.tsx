@@ -17,7 +17,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
   const [webtextData, setWebtextData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showSuperAV, setShowSuperAV] = useState(false);
-  const [contentFontSize, setContentFontSize] = useState(16);
+  const [contentFontSize, setContentFontSize] = useState(24);
   const { lookupStoryByCode } = useStoryCodeLookup();
   const navigate = useNavigate();
 
@@ -141,7 +141,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
           {/* Title */}
           {(headerTokens.tokens?.titleHtml || title || webtextData.title) && (
             <h2 
-              className="text-xl font-bold mb-4"
+              className="text-3xl font-bold mb-4"
               style={{ color: orangeTheme.primaryColor }}
             >
               {headerTokens.tokens?.titleHtml ? (
