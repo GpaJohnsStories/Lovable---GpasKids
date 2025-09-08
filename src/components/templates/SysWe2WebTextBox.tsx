@@ -74,7 +74,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
         className="relative p-6 rounded-lg shadow-lg mb-6 text-center"
         style={{
           backgroundColor: orangeTheme.backgroundColor,
-          border: `2px solid ${orangeTheme.borderColor}`,
+          border: `4px solid ${orangeTheme.borderColor}`,
           color: orangeTheme.primaryColor
         }}
         id={id}
@@ -93,7 +93,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
       className="relative p-6 rounded-lg shadow-lg mb-6"
       style={{
         backgroundColor: orangeTheme.backgroundColor,
-        border: `2px solid ${orangeTheme.borderColor}`
+        border: `4px solid ${orangeTheme.borderColor}`
       }}
       id={id}
     >
@@ -118,7 +118,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
                     className="rounded-lg overflow-hidden shadow-lg"
                     style={{
                       backgroundColor: orangeTheme.photoMatColor,
-                      border: `2px solid ${orangeTheme.borderColor}`,
+                      border: `4px solid ${orangeTheme.borderColor}`,
                       padding: '4px'
                     }}
                     onClick={() => setShowTooltip(!showTooltip)}
