@@ -132,8 +132,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
                     className="rounded-lg overflow-hidden shadow-lg"
                     style={{
                       backgroundColor: theme!.colors.photoMatColor,
-                      border: "4px solid #0B3D91",
-                      padding: '4px'
+                      border: "3px solid #0B3D91"
                     }}
                     onClick={() => setShowTooltip(!showTooltip)}
                   >
