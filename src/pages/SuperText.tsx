@@ -446,6 +446,7 @@ const SuperText: React.FC = () => {
     }
   }, []);
   return <SecureAdminRoute>
+    <div>
       <Helmet>
         <title>Text Edit</title>
       </Helmet>
@@ -576,6 +577,31 @@ const SuperText: React.FC = () => {
                 setPublicationStatusCode(status);
                 handleInputChange('publication_status_code', status.toString());
               }} />
+                </div>
+                
+                {/* Add Video File Button - positioned below status box */}
+                <div className="mt-4">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button onClick={scrollToVideoSection} className="supertext-video-btn px-6 py-2 rounded-full" style={{
+                      fontSize: '21px',
+                      fontFamily: 'Arial',
+                      fontWeight: 'bold'
+                    }} tabIndex={-1}>
+                          Add Video File
+                        </Button>
+                      </TooltipTrigger>
+                       <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+                    fontFamily: 'Arial',
+                    fontSize: '21px',
+                    color: 'black',
+                    backgroundColor: 'white'
+                  }}>
+                         Add Video Content
+                       </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
                 
                 {/* 5x3 Grid Layout - tight alignment with no gaps */}
@@ -912,29 +938,6 @@ const SuperText: React.FC = () => {
                     </TooltipProvider>
                   </div>
                   
-                  {/* Column 3, Row 5: Add Video File Button */}
-                  <div className="self-start ml-1">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button onClick={scrollToVideoSection} className="supertext-video-btn px-6 py-2 rounded-full" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }} tabIndex={-1}>
-                            Add Video File
-                          </Button>
-                        </TooltipTrigger>
-                         <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-                      fontFamily: 'Arial',
-                      fontSize: '21px',
-                      color: 'black',
-                      backgroundColor: 'white'
-                    }}>
-                           Add Video Content
-                         </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
                   </div>
                 </div>
 
@@ -1411,6 +1414,9 @@ const SuperText: React.FC = () => {
           audioUrl={formData.audio_url}
         />
       )}
-    </SecureAdminRoute>;
+      </div>
+    </div>
+    </SecureAdminRoute>
+  );
 };
 export default SuperText;
