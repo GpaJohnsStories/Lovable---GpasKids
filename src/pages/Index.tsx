@@ -2,6 +2,7 @@
 import WelcomeHeader from "@/components/WelcomeHeader";
 import { ProportionalWebTextBox } from "@/components/ProportionalWebTextBox";
 import WebTextBox from "@/components/WebTextBox";
+import StaticWebtextBox from "@/components/StaticWebtextBox";
 import StorySection from "@/components/StorySection";
 import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
@@ -22,7 +23,14 @@ const Index = () => {
         />
         {/* ===== BOX 1 END ===== */}
         
-        
+        {/* ===== BOX 2 START (New Orange WebText Box) ===== */}
+        <StaticWebtextBox 
+          code="SYS-WE2"
+          borderColor="#D2691E"
+          backgroundColor="#F9731633"
+          textColor="#F97316"
+        />
+        {/* ===== BOX 2 END ===== */}
         
         {/* GpaJohn's Banner - Keeping the wide blue button */}
         <GpaJohnComments />
