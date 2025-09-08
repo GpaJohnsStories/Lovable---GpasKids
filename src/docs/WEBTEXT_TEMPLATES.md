@@ -4,6 +4,42 @@
 
 The WebText template system provides a consistent, beautiful way to display webtext content with automatic styling derived from the content itself.
 
+## Super-Web-Box Template
+
+The `SuperWebBox` component is a standardized template for creating consistently styled content boxes with custom colors.
+
+### Usage
+```jsx
+<SuperWebBox 
+  code="YOUR-CODE" 
+  color="#FF6B35" 
+  title="Optional Custom Title"
+  id="optional-id" 
+/>
+```
+
+### Features
+- **Box Border**: 4px solid border in specified color
+- **Photo Border**: 3px solid border in specified color  
+- **Title**: 30px, bold, required (uses story title or custom title)
+- **Tagline**: 24px, optional (from story data)
+- **Author**: 24px, bold, optional (from story data)
+- **Content Text**: 24px, regular, all in specified color
+- **No Excerpt**: Content displays full text, no excerpts
+- **Background Tint**: Auto-calculated based on color luminance for optimal readability
+
+### Color Handling
+The background tint is automatically calculated using luminance-based alpha:
+- Dark colors: 12-18% opacity tint
+- Light colors: 6-12% opacity tint (prevents readability issues)
+
+### Template Code Location
+```
+/* ===== SUPER-WEB-BOX TEMPLATE START ===== */
+Located in: src/components/templates/SuperWebBox.tsx
+/* ===== SUPER-WEB-BOX TEMPLATE END ===== */
+```
+
 ## Usage
 
 ### Simple Usage (Recommended)
