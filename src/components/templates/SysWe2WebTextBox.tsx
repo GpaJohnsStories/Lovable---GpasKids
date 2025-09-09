@@ -164,7 +164,32 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
           .syswe2-title {
             color: ${orangeTheme.primaryColor};
           }
-          .syswe2-content {
+          .syswe2-content .rendered-story-content > *:first-child {
+            margin-top: 0.125rem !important;
+          }
+          .syswe2-content .rendered-story-content h1:first-child,
+          .syswe2-content .rendered-story-content h2:first-child,
+          .syswe2-content .rendered-story-content h3:first-child {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+          }
+          .syswe2-content .rendered-story-content,
+          .syswe2-content .rendered-story-content *,
+          .syswe2-content .rendered-story-content p,
+          .syswe2-content .rendered-story-content div,
+          .syswe2-content .rendered-story-content span,
+          .syswe2-content .rendered-story-content h1,
+          .syswe2-content .rendered-story-content h2,
+          .syswe2-content .rendered-story-content h3,
+          .syswe2-content .rendered-story-content h4,
+          .syswe2-content .rendered-story-content h5,
+          .syswe2-content .rendered-story-content h6,
+          .syswe2-content .rendered-story-content li,
+          .syswe2-content .rendered-story-content strong,
+          .syswe2-content .rendered-story-content em,
+          .syswe2-content .rendered-story-content b,
+          .syswe2-content .rendered-story-content i,
+          .syswe2-content .rendered-story-content a {
             color: ${orangeTheme.primaryColor};
           }
           .syswe2-code {
