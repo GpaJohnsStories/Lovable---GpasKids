@@ -64,7 +64,7 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
       className="super-web-box rounded-lg overflow-hidden mb-6"
       style={{
         border: `4px solid ${color}`,
-        backgroundColor: theme.backgroundTint
+        backgroundColor: 'rgba(255, 255, 255, 0.9)'
       }}
     >
       {/* Header Section */}
