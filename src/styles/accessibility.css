@@ -85,6 +85,10 @@
 [data-high-contrast="true"] .syswel-box-content *,
 [data-high-contrast="true"] .syswel-box-content .rendered-story-content,
 [data-high-contrast="true"] .syswel-box-content .rendered-story-content *,
+[data-high-contrast="true"] .syswe2-box-content,
+[data-high-contrast="true"] .syswe2-box-content *,
+[data-high-contrast="true"] .syswe2-box-content .rendered-story-content,
+[data-high-contrast="true"] .syswe2-box-content .rendered-story-content *,
 [data-high-contrast="true"] .super-web-text-content,
 [data-high-contrast="true"] .super-web-text-content *,
 [data-high-contrast="true"] .super-web-text-content .rendered-story-content,
@@ -95,6 +99,7 @@
 }
 
 [data-high-contrast="true"] .syswel-box-content a,
+[data-high-contrast="true"] .syswe2-box-content a,
 [data-high-contrast="true"] .super-web-text-content a {
   color: yellow !important;
   text-decoration: underline !important;
@@ -102,6 +107,7 @@
 }
 
 [data-high-contrast="true"] .syswel-box-content a:hover,
+[data-high-contrast="true"] .syswe2-box-content a:hover,
 [data-high-contrast="true"] .super-web-text-content a:hover {
   color: cyan !important;
 }
