@@ -189,6 +189,7 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
           {(title || webtextData.title) && (
             <h2 
               className={`font-handwritten font-bold leading-tight break-words text-left m-0 p-0 ${cssClassPrefix}-title`}
+              style={{ fontSize: `${Math.floor(currentFontSize * 2.25)}px` }}
             >
               {title || webtextData.title}
             </h2>
@@ -201,6 +202,7 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
               category="WebText"
               fontSize={currentFontSize}
               showHeaderPreview={false}
+              enableProportionalSizing={true}
             />
           </div>
         </div>

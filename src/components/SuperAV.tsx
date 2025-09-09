@@ -5,6 +5,7 @@ import { useSuperAVContext } from '@/contexts/SuperAVContext';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import { createSafeHtml } from '@/utils/xssProtection';
+import { buildCacheBustedUrl, getAssetVersionFromStory } from '@/utils/storyUtils';
 import { 
   FontScaleStep, 
   DEFAULT_FONT_SCALE, 
@@ -320,7 +321,6 @@ export const SuperAV: React.FC<SuperAVProps> = ({
       lookupStoryByCode('SYS-AVX', true).then(result => {
         if (result.found && result.story?.audio_url) {
           console.log('✅ SYS-AVX found with audio:', result.story);
-          const { buildCacheBustedUrl, getAssetVersionFromStory } = require('@/utils/storyUtils');
           setSysAvx({
             title: result.story.title || 'SYS-AVX',
             content: result.story.content || '',
