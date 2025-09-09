@@ -558,7 +558,7 @@ const SuperText: React.FC = () => {
             {/* Left Panel - Form Fields */}
             <div className="lg:col-span-2 space-y-6">
               {/* Text Details Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative z-20 lg:pr-[420px]">
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative z-20 lg:pr-[225px]">
                 
                 {/* Blue Dot 1 in top left corner */}
                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">1</div>
@@ -576,7 +576,7 @@ const SuperText: React.FC = () => {
                 </div>
                 
                 {/* 7x3 Grid Layout - NO padding, NO gaps */}
-                <div className="grid grid-cols-[32px_192px_minmax(0,1fr)] auto-rows-min gap-0 lg:mr-[225px]">
+                <div className="grid grid-cols-[32px_192px_minmax(0,1fr)] auto-rows-min gap-0">
                 
                   {/* Row 1: A, Text Code, Empty */}
                   <div className="flex items-center justify-center h-8">
