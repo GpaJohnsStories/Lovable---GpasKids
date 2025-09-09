@@ -69,42 +69,59 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
     >
       {/* Header Section */}
       <div className="super-web-header p-4 pb-2">
-        {/* Title - Required, 30px, bold */}
-        <h2 
-          className="super-web-title font-bold leading-tight mb-2"
-          style={{
-            color: color,
-            fontSize: '30px'
-          }}
-        >
-          {displayTitle}
-        </h2>
-        
-        {/* Tagline - Optional, 24px */}
-        {hasTagline && (
-          <h3 
-            className="super-web-tagline leading-tight mb-2"
-            style={{
-              color: color,
-              fontSize: '24px'
-            }}
-          >
-            {story.tagline}
-          </h3>
-        )}
-        
-        {/* Author - Optional, 24px, bold */}
-        {hasAuthor && (
-          <p 
-            className="super-web-author font-bold mb-3"
-            style={{
-              color: color,
-              fontSize: '24px'
-            }}
-          >
-            by {story.author}
-          </p>
-        )}
+        <div className="flex justify-between items-start">
+          <div className="flex-1">
+            {/* Title - Required, 30px, bold */}
+            <h2 
+              className="super-web-title font-bold leading-tight mb-2"
+              style={{
+                color: color,
+                fontSize: '30px'
+              }}
+            >
+              {displayTitle}
+            </h2>
+            
+            {/* Tagline - Optional, 24px */}
+            {hasTagline && (
+              <h3 
+                className="super-web-tagline leading-tight mb-2"
+                style={{
+                  color: color,
+                  fontSize: '24px'
+                }}
+              >
+                {story.tagline}
+              </h3>
+            )}
+            
+            {/* Author - Optional, 24px, bold */}
+            {hasAuthor && (
+              <p 
+                className="super-web-author font-bold mb-3"
+                style={{
+                  color: color,
+                  fontSize: '24px'
+                }}
+              >
+                by {story.author}
+              </p>
+            )}
+          </div>
+          
+          {/* Audio Button in top right */}
+          {story.story_code && (
+            <div className="flex-shrink-0 ml-4">
+              <AudioButton 
+                code={story.story_code}
+                onClick={() => {
+                  console.log('Super-Web-Box audio clicked for:', story.story_code);
+                }}
+                className="super-web-audio-btn"
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Content Section */}
@@ -155,18 +172,6 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
               )}
             </div>
 
-            {/* Audio Button */}
-            {story.story_code && (
-              <div className="mt-4">
-                <AudioButton 
-                  code={story.story_code}
-                  onClick={() => {
-                    console.log('Super-Web-Box audio clicked for:', story.story_code);
-                  }}
-                  className="super-web-audio-btn"
-                />
-              </div>
-            )}
           </div>
         </div>
       </div>
