@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { countWords, truncateToWordLimit } from "@/utils/textUtils";
@@ -8,12 +7,13 @@ interface WordLimitedTextareaProps extends React.ComponentProps<typeof Textarea>
   wordLimit: number;
   showWordCount?: boolean;
   onWordLimitExceeded?: () => void;
+  compact?: boolean;
 }
 
 const WordLimitedTextarea = React.forwardRef<
   HTMLTextAreaElement,
   WordLimitedTextareaProps
->(({ className, wordLimit, showWordCount = true, onWordLimitExceeded, onChange, onPaste, ...props }, ref) => {
+>(({ className, wordLimit, showWordCount = true, onWordLimitExceeded, compact = false, onChange, onPaste, ...props }, ref) => {
   const [wordCount, setWordCount] = React.useState(0);
 
   // Update word count when value changes
@@ -86,7 +86,7 @@ const WordLimitedTextarea = React.forwardRef<
   const isNearLimit = wordCount >= wordLimit * 0.9; // 90% of limit
 
   return (
-    <div className="space-y-2">
+    <div className={compact ? "" : "space-y-2"}>
       <Textarea
         className={cn(
           className,
@@ -98,7 +98,7 @@ const WordLimitedTextarea = React.forwardRef<
         onPaste={handlePaste}
         {...props}
       />
-      {showWordCount && (
+      {showWordCount && !compact && (
         <div className="flex justify-between text-xs">
           <span className={cn(
             "font-medium",

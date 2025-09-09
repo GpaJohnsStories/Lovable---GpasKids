@@ -575,8 +575,8 @@ const SuperText: React.FC = () => {
               }} />
                 </div>
                 
-                {/* 7x3 Grid Layout - aligned with blue dot above */}
-                <div className="grid grid-cols-[32px_192px_minmax(0,1fr)] grid-rows-7 gap-y-2 gap-x-2 items-center">
+                {/* 7x3 Grid Layout - NO padding, NO gaps */}
+                <div className="grid grid-cols-[32px_192px_minmax(0,1fr)] grid-rows-7 items-stretch">
                 
                   {/* Row 1: A, Text Code, Empty */}
                   <div className="row-start-1 col-start-1 flex items-center justify-center">
@@ -750,7 +750,7 @@ const SuperText: React.FC = () => {
                     }}>C</div>
                   </div>
 
-                  <div className="row-start-4 col-start-2 col-span-2">
+                  <div className="row-start-4 col-start-2 col-span-2 border-b border-blue-200 p-2">
                     <WordLimitedTextarea
                       value={formData.title || ''}
                       onChange={(e) => handleInputChange('title', e.target.value)}
@@ -763,17 +763,16 @@ const SuperText: React.FC = () => {
                         fontWeight: 'bold'
                       }}
                       rows={1}
+                      compact
                     />
                   </div>
 
                   {/* Row 5: D, Tagline (spanning col 2-3) */}
-                  <div className="row-start-5 col-start-1 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                      backgroundColor: '#3b82f6'
-                    }}>D</div>
+                  <div className="row-start-5 col-start-1 flex items-center justify-center border-r border-b border-blue-200">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                   </div>
 
-                  <div className="row-start-5 col-start-2 col-span-2">
+                  <div className="row-start-5 col-start-2 col-span-2 border-b border-blue-200 p-2">
                     <WordLimitedTextarea
                       value={formData.tagline || ''}
                       onChange={(e) => handleInputChange('tagline', e.target.value)}
@@ -786,17 +785,16 @@ const SuperText: React.FC = () => {
                         fontWeight: 'bold'
                       }}
                       rows={1}
+                      compact
                     />
                   </div>
 
                   {/* Row 6: E, Author (spanning col 2-3) */}
-                  <div className="row-start-6 col-start-1 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                      backgroundColor: '#3b82f6'
-                    }}>E</div>
+                  <div className="row-start-6 col-start-1 flex items-center justify-center border-r border-b border-blue-200">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                   </div>
 
-                  <div className="row-start-6 col-start-2 col-span-2">
+                  <div className="row-start-6 col-start-2 col-span-2 border-b border-blue-200 p-2">
                     <AuthorCombobox 
                       value={formData.author || ''}
                       onValueChange={(value) => handleInputChange('author', value)}
@@ -810,13 +808,11 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Row 7: F, Excerpt (spanning col 2-3) */}
-                  <div className="row-start-7 col-start-1 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                      backgroundColor: '#3b82f6'
-                    }}>F</div>
+                  <div className="row-start-7 col-start-1 flex items-center justify-center border-r">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                   </div>
 
-                  <div className="row-start-7 col-start-2 col-span-2">
+                  <div className="row-start-7 col-start-2 col-span-2 p-2">
                     <WordLimitedTextarea
                       value={formData.excerpt || ''}
                       onChange={(e) => handleInputChange('excerpt', e.target.value)}
@@ -829,6 +825,7 @@ const SuperText: React.FC = () => {
                         fontWeight: 'bold'
                       }}
                       rows={2}
+                      compact
                     />
                   </div>
                 </div>
