@@ -801,16 +801,21 @@ const SuperText: React.FC = () => {
                     }}>E</div>
                   </div>
 
-                  <div className="col-span-2">
+                  <div className="col-span-2 flex items-center h-10 gap-2">
+                    <span className="text-blue-600 text-[21px] font-bold" style={{fontFamily: 'Arial, sans-serif'}}>
+                      E
+                    </span>
+                    <span className="text-[21px] font-bold" style={{fontFamily: 'Arial, sans-serif'}}>
+                      Author:
+                    </span>
                     <AuthorCombobox 
                       value={formData.author || ''}
                       onValueChange={(value) => handleInputChange('author', value)}
-                      placeholder="Author"
-                      className="border-2 border-yellow-400 hover:border-yellow-500"
+                      placeholder=""
+                      className="flex-1 border-2 border-yellow-400 hover:border-yellow-500 h-10"
                       style={{
                         fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
+                        fontFamily: 'Arial, sans-serif'
                       }}
                     />
                   </div>
