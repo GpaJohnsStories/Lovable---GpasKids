@@ -229,6 +229,7 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
           .${cssClassPrefix}-box-content .rendered-story-content i,
           .${cssClassPrefix}-box-content .rendered-story-content a {
             color: ${theme.primaryColor} !important;
+            ${cssClassPrefix === 'syswe2' ? 'font-weight: bold !important;' : ''}
           }
           .${cssClassPrefix}-code-display {
             color: ${theme.primaryColor};
