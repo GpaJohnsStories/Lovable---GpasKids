@@ -576,16 +576,16 @@ const SuperText: React.FC = () => {
                 </div>
                 
                 {/* 7x3 Grid Layout - NO padding, NO gaps */}
-                <div className="grid grid-cols-[32px_192px_minmax(0,1fr)] grid-rows-7 items-stretch">
+                <div className="grid grid-cols-[32px_192px_minmax(0,1fr)] auto-rows-min gap-0">
                 
                   {/* Row 1: A, Text Code, Empty */}
-                  <div className="row-start-1 col-start-1 flex items-center justify-center">
+                  <div className="flex items-center justify-center h-8">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                       backgroundColor: '#3b82f6'
                     }}>A</div>
                   </div>
                   
-                  <div className="row-start-1 col-start-2">
+                  <div className="h-8 flex items-center">
                     <Input 
                       ref={storyCodeRef} 
                       type="text" 
@@ -617,15 +617,18 @@ const SuperText: React.FC = () => {
                       tabIndex={1} 
                     />
                   </div>
+                  
+                  <div className="h-8"></div>
 
                   {/* Row 2: Blank, Status Display (spanning col 2-3) */}
-                  <div className="row-start-2 col-start-2 col-span-2">
-                    <div className="bg-gray-100 p-4 rounded border-2 border-orange-400" style={{
+                  <div></div>
+                  <div className="col-span-2">
+                    <div className="bg-gray-100 border-2 border-orange-400" style={{
                       fontSize: '21px',
                       fontFamily: 'Arial',
                       fontWeight: 'bold'
                     }}>
-                      <p className="text-gray-500" style={{
+                      <p className="text-gray-500 m-0 p-4" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold'
@@ -635,11 +638,11 @@ const SuperText: React.FC = () => {
                       
                       {/* YES/NO Buttons for Story Code Lookup */}
                       {lookupStatus !== 'idle' && (
-                        <div className="mt-4 p-3 rounded" style={{
+                        <div className="mx-4 mb-4" style={{
                           backgroundColor: lookupStatus === 'found' ? '#dff0d8' : '#f2dede',
                           border: `2px solid ${lookupStatus === 'found' ? '#d6e9c6' : '#ebccd1'}`
                         }}>
-                          <p style={{
+                          <p className="p-3 m-0" style={{
                             fontSize: '21px',
                             fontFamily: 'Arial',
                             fontWeight: 'bold',
@@ -650,7 +653,7 @@ const SuperText: React.FC = () => {
                               : "Story code not found. Create new story?"
                             }
                           </p>
-                          <div className="mt-3">
+                          <div className="pb-3 px-3">
                             <YesNoButtons
                               onYes={handleConfirmYes}
                               onNo={handleConfirmNo}
@@ -663,18 +666,18 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Row 3: B, Category, Copyright */}
-                  <div className="row-start-3 col-start-1 flex items-center justify-center">
+                  <div className="flex items-center justify-center h-10">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                       backgroundColor: '#3b82f6'
                     }}>B</div>
                   </div>
 
-                  <div className="row-start-3 col-start-2">
+                  <div className="h-10 flex items-center">
                     <Select value={formData.category || ''} onValueChange={value => {
                       setCategory(value);
                       handleInputChange('category', value);
                     }}>
-                      <SelectTrigger className="w-[192px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                      <SelectTrigger className="w-[192px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100 h-10" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
@@ -711,12 +714,12 @@ const SuperText: React.FC = () => {
                     </Select>
                   </div>
 
-                  <div className="row-start-3 col-start-3">
+                  <div className="h-10 flex items-center">
                     <Select value={formData.copyright_status || ''} onValueChange={value => {
                       setCopyrightStatus(value);
                       handleInputChange('copyright_status', value);
                     }}>
-                      <SelectTrigger className="w-[192px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100" style={{
+                      <SelectTrigger className="w-[192px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100 h-10" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
@@ -744,13 +747,13 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Row 4: C, Title (spanning col 2-3) */}
-                  <div className="row-start-4 col-start-1 flex items-center justify-center">
+                  <div className="flex items-center justify-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
                       backgroundColor: '#3b82f6'
                     }}>C</div>
                   </div>
 
-                  <div className="row-start-4 col-start-2 col-span-2 border-b border-blue-200 p-2">
+                  <div className="col-span-2">
                     <WordLimitedTextarea
                       value={formData.title || ''}
                       onChange={(e) => handleInputChange('title', e.target.value)}
@@ -768,11 +771,11 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Row 5: D, Tagline (spanning col 2-3) */}
-                  <div className="row-start-5 col-start-1 flex items-center justify-center border-r border-b border-blue-200">
+                  <div className="flex items-center justify-center">
                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                   </div>
 
-                  <div className="row-start-5 col-start-2 col-span-2 border-b border-blue-200 p-2">
+                  <div className="col-span-2">
                     <WordLimitedTextarea
                       value={formData.tagline || ''}
                       onChange={(e) => handleInputChange('tagline', e.target.value)}
@@ -790,11 +793,11 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Row 6: E, Author (spanning col 2-3) */}
-                  <div className="row-start-6 col-start-1 flex items-center justify-center border-r border-b border-blue-200">
+                  <div className="flex items-center justify-center">
                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                   </div>
 
-                  <div className="row-start-6 col-start-2 col-span-2 border-b border-blue-200 p-2">
+                  <div className="col-span-2">
                     <AuthorCombobox 
                       value={formData.author || ''}
                       onValueChange={(value) => handleInputChange('author', value)}
@@ -808,11 +811,11 @@ const SuperText: React.FC = () => {
                   </div>
 
                   {/* Row 7: F, Excerpt (spanning col 2-3) */}
-                  <div className="row-start-7 col-start-1 flex items-center justify-center border-r">
+                  <div className="flex items-center justify-center">
                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                   </div>
 
-                  <div className="row-start-7 col-start-2 col-span-2 p-2">
+                  <div className="col-span-2">
                     <WordLimitedTextarea
                       value={formData.excerpt || ''}
                       onChange={(e) => handleInputChange('excerpt', e.target.value)}
