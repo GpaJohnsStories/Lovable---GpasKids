@@ -42,9 +42,11 @@ export function SearchableCombobox({
   const [open, setOpen] = React.useState(false);
   const [inputValue, setInputValue] = React.useState("");
 
-  const filteredOptions = options.filter((option) =>
-    option.toLowerCase().includes(inputValue.toLowerCase())
-  );
+  const filteredOptions = options.filter((option) => {
+    const searchTerms = inputValue.toLowerCase().split(' ').filter(term => term.length > 0);
+    const optionLower = option.toLowerCase();
+    return searchTerms.every(term => optionLower.includes(term));
+  });
 
   const handleSelect = (selectedValue: string) => {
     onValueChange(selectedValue === value ? "" : selectedValue);

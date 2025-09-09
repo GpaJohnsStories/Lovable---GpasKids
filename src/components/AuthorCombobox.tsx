@@ -30,8 +30,8 @@ export function AuthorCombobox({ value, onValueChange, placeholder = "Select or 
           return;
         }
 
-        // Get unique authors
-        const uniqueAuthors = [...new Set(data.map(story => story.author))].sort();
+        // Get unique authors and trim whitespace
+        const uniqueAuthors = [...new Set(data.map(story => story.author?.trim()).filter(Boolean))].sort();
         setAuthors(uniqueAuthors);
       } catch (error) {
         console.error('Error in fetchAuthors:', error);
