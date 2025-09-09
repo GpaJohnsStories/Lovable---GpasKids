@@ -249,21 +249,31 @@ const BreakGuide: React.FC<BreakGuideProps> = ({ inline = false }) => {
           
           {/* Close button row at bottom - full width like SuperAV */}
           <div className="h-12">
-            <button onClick={handleCloseBreakTimer} className="w-full h-full bg-gradient-to-b from-gray-200 via-gray-300 to-gray-400 hover:from-gray-300 hover:via-gray-400 hover:to-gray-500 border border-gray-400 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center">
-              {closeIconLoading ? (
-                <span className="text-gray-700 font-semibold">Loading...</span>
-              ) : closeIconError ? (
-                <span className="text-gray-700 font-semibold text-xs">!CO-CLS.jpg (Error: {closeIconError})</span>
-              ) : closeIconUrl ? (
-                <img src={closeIconUrl} alt="Close" style={{
-                  height: '60px',
-                  width: '100%',
-                  objectFit: 'fill'
-                }} />
-              ) : (
-                <span className="text-gray-700 font-semibold">Close</span>
-              )}
-            </button>
+            {closeIconUrl ? (
+              <button 
+                onClick={handleCloseBreakTimer} 
+                className="w-full h-full bg-gradient-to-b from-gray-200 via-gray-300 to-gray-400 hover:from-gray-300 hover:via-gray-400 hover:to-gray-500 border border-gray-400 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center"
+              >
+                <img 
+                  src={closeIconUrl} 
+                  alt="Close" 
+                  style={{
+                    height: '60px',
+                    width: '100%',
+                    objectFit: 'fill'
+                  }} 
+                />
+              </button>
+            ) : (
+              <button 
+                onClick={handleCloseBreakTimer} 
+                className="w-full h-full bg-gradient-to-b from-gray-200 via-gray-300 to-gray-400 hover:from-gray-300 hover:via-gray-400 hover:to-gray-500 border border-gray-400 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center"
+              >
+                <span className="text-gray-700 font-semibold">
+                  {closeIconLoading ? 'Loading...' : closeIconError ? `!CO-CLS.jpg Error` : 'Close'}
+                </span>
+              </button>
+            )}
           </div>
         </div>}
 
