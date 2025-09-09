@@ -24,6 +24,7 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [isSuperAVOpen, setIsSuperAVOpen] = useState(false);
+  const [fontSize, setFontSize] = useState(16);
   const { lookupStoryByCode } = useStoryCodeLookup();
   
   const { data: story, isLoading, error } = useQuery({
@@ -171,10 +172,10 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
                 <StoryContentRenderer 
                   content={story.content}
                   className="rendered-story-content"
+                  fontSize={fontSize}
                 />
               )}
             </div>
-
           </div>
         </div>
       </div>
@@ -188,6 +189,8 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
         voiceName={story.ai_voice_name || undefined}
         showAuthor={false}
         audioUrl={story.audio_url || undefined}
+        fontSize={fontSize}
+        onFontSizeChange={setFontSize}
       />
 
       {/* CSS Styles */}
