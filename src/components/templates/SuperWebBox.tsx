@@ -223,7 +223,7 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
         .super-web-text-content .rendered-story-content i,
         .super-web-text-content .rendered-story-content a {
           color: ${color};
-          font-size: 24px;
+          font-size: ${fontSize}px;
           font-weight: bold;
           line-height: 1.4;
         }
