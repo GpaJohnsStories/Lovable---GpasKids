@@ -7,6 +7,7 @@ import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
 import { useCachedIcon } from "@/hooks/useCachedIcon";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { FontScaleStep, DEFAULT_FONT_SCALE, pixelSizeToScale } from "@/utils/fontScaleUtils";
 
 interface BaseWebTextBoxTheme {
   primaryColor: string;
@@ -33,9 +34,26 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
   const [webtextData, setWebtextData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showSuperAV, setShowSuperAV] = useState(false);
-  const [contentFontSize, setContentFontSize] = useState(24);
+  const [fontScale, setFontScale] = useState<FontScaleStep>(DEFAULT_FONT_SCALE);
   const [showTooltip, setShowTooltip] = useState(false);
   const { lookupStoryByCode } = useStoryCodeLookup();
+  
+  // Convert font scale to pixel size for IsolatedStoryRenderer
+  const getFontSizeFromScale = (scale: FontScaleStep): number => {
+    const scaleMap = {
+      'xs': 12,
+      'sm': 14, 
+      'base': 16,
+      'lg': 18,
+      'xl': 20,
+      '2xl': 24,
+      '3xl': 30,
+      '4xl': 36
+    };
+    return scaleMap[scale] || 16;
+  };
+  
+  const currentFontSize = getFontSizeFromScale(fontScale);
 
   useEffect(() => {
     const fetchWebtext = async () => {
@@ -181,7 +199,7 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
             <IsolatedStoryRenderer 
               content={webtextData.content}
               category="WebText"
-              fontSize={contentFontSize}
+              fontSize={currentFontSize}
               showHeaderPreview={false}
             />
           </div>
@@ -201,7 +219,7 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
           }
           .${cssClassPrefix}-box-content.text-18-system {
             color: ${theme.primaryColor} !important;
-            font-size: ${contentFontSize}px !important;
+            font-size: ${currentFontSize}px !important;
           }
           .${cssClassPrefix}-box-content .rendered-story-content > *:first-child {
             margin-top: 0.125rem !important;
@@ -246,8 +264,8 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
         author={webtextData?.author}
         voiceName={webtextData?.ai_voice_name}
         showAuthor={false}
-        fontSize={contentFontSize}
-        onFontSizeChange={setContentFontSize}
+        fontScale={fontScale}
+        onFontScaleChange={setFontScale}
         audioUrl={webtextData?.audio_url ? buildCacheBustedUrl(webtextData.audio_url, getAssetVersionFromStory(webtextData)) : undefined}
       />
     </div>
