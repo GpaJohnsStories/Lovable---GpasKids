@@ -199,6 +199,9 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
           .${cssClassPrefix}-title {
             color: ${theme.primaryColor};
           }
+          .${cssClassPrefix}-box-content.text-18-system {
+            color: ${theme.primaryColor} !important;
+          }
           .${cssClassPrefix}-box-content .rendered-story-content > *:first-child {
             margin-top: 0.125rem !important;
           }
@@ -225,7 +228,7 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
           .${cssClassPrefix}-box-content .rendered-story-content b,
           .${cssClassPrefix}-box-content .rendered-story-content i,
           .${cssClassPrefix}-box-content .rendered-story-content a {
-            color: ${theme.primaryColor};
+            color: ${theme.primaryColor} !important;
           }
           .${cssClassPrefix}-code-display {
             color: ${theme.primaryColor};
