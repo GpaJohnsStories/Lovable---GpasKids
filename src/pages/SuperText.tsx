@@ -225,7 +225,9 @@ const SuperText: React.FC = () => {
   const handleStoryCodeChange = useCallback(async (newCode: string) => {
     setStoryCode(newCode);
     handleInputChange('story_code', newCode);
-    if (newCode.length === 7 && newCode.includes('-')) {
+    
+    // Auto-lookup when story code reaches 7 characters (with or without dash)
+    if (newCode.length === 7) {
       const {
         found,
         story,
@@ -234,14 +236,17 @@ const SuperText: React.FC = () => {
       if (error) {
         setLookupStatus('idle');
         setLookupResult(null);
+        toast.error("Error looking up story code");
         return;
       }
       if (found && story) {
         setLookupResult(story);
         setLookupStatus('found');
+        toast.success(`Found story: "${story.title}"`);
       } else {
         setLookupResult(null);
         setLookupStatus('not-found');
+        toast.message(`Story code "${newCode}" not found. Ready to create new story.`);
       }
     } else {
       setLookupStatus('idle');
