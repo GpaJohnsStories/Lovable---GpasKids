@@ -225,7 +225,6 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
         
         /* Audio button styling */
         .super-web-audio-btn {
-          border: 2px solid ${color};
           color: ${color};
           background: transparent;
         }
