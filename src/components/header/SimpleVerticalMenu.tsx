@@ -210,7 +210,8 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
     <>
       {/* Menu Container - positioned below gold button, scrolls with page */}
       <div 
-        className="absolute top-full right-0 z-[10000] mt-2"
+        className="absolute top-full right-0 mt-2"
+        style={{ zIndex: 10001 }}
         onClick={handleMenuContainerClick}
       >
         <div className="relative">
@@ -231,13 +232,13 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                 {/* Submenu buttons arranged horizontally in a line going left */}
                 {item.submenus && activeSubmenu === item.id && (
                   <>
-                    {item.submenus.map((submenuItem, index) => (
-                      <div 
-                        key={submenuItem.id}
-                        className="absolute top-0 z-40"
-                        style={{ 
-                          right: `${(index + 1) * 68}px`,
-                          width: '64px',
+                     {item.submenus.map((submenuItem, index) => (
+                       <div 
+                         key={submenuItem.id}
+                         className="absolute top-0 z-[10001]"
+                         style={{ 
+                           right: `${(index + 1) * 68}px`,
+                           width: '64px',
                           height: '64px'
                         }}
                       >
