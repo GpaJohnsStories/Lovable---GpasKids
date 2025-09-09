@@ -630,13 +630,6 @@ const SuperText: React.FC = () => {
                       fontFamily: 'Arial',
                       fontWeight: 'bold'
                     }}>
-                      <p className="text-gray-500 m-0 p-4" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}>
-                        {formData.id ? `Story loaded: ${formData.title || 'No Title'}` : 'Enter Text Code, Category & Copyright, then Click Lookup'}
-                      </p>
                       
                       {/* YES/NO Buttons for Story Code Lookup */}
                       {lookupStatus !== 'idle' && (
