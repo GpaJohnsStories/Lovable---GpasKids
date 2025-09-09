@@ -576,7 +576,7 @@ const SuperText: React.FC = () => {
                 </div>
                 
                 {/* 7x3 Grid Layout - NO padding, NO gaps */}
-                <div className="grid grid-cols-[32px_192px_minmax(0,1fr)] auto-rows-min gap-0">
+                <div className="grid grid-cols-[32px_192px_minmax(0,1fr)] auto-rows-min gap-0 lg:mr-[225px]">
                 
                   {/* Row 1: A, Text Code, Empty */}
                   <div className="flex items-center justify-center h-8">
