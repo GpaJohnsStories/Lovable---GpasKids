@@ -41,10 +41,10 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
 
   // Orange theme colors
   const orangeTheme = useMemo(() => ({
-    primaryColor: "#F97316",
+    primaryColor: "#D2691E",
     borderColor: "#D2691E", 
-    backgroundColor: "#F9731633",
-    photoMatColor: "#F9731633"
+    backgroundColor: "#D2691E33",
+    photoMatColor: "#D2691E33"
   }), []);
 
   const finalImageUrl = useMemo(() => {
