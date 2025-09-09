@@ -222,6 +222,7 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
           .${cssClassPrefix}-box-content.text-18-system {
             color: ${theme.primaryColor} !important;
             font-size: ${currentFontSize}px !important;
+            font-style: normal !important;
           }
           .${cssClassPrefix}-box-content .rendered-story-content > *:first-child {
             margin-top: 0.125rem !important;
