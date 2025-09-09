@@ -8,12 +8,12 @@ interface SysWe2WebTextBoxProps {
 }
 
 const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) => {
-  // SYS-WE2 theme - green colors
+  // SYS-WE2 theme - dark green colors
   const greenTheme = useMemo(() => ({
-    primaryColor: "#228B22",
-    borderColor: "#228B22", 
-    backgroundColor: "#228B2233",
-    photoMatColor: "#228B2233"
+    primaryColor: "#4A7C59",
+    borderColor: "#4A7C59", 
+    backgroundColor: "#4A7C5933",
+    photoMatColor: "#4A7C5933"
   }), []);
 
   return (
