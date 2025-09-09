@@ -170,8 +170,10 @@ const SuperText: React.FC = () => {
     }
   }, [searchParams, lookupStoryByCode, populateFormWithStory]);
   const clearForm = useCallback(() => {
-    // Reset form fields to initial values (no title field needed)
+    // Reset form fields to initial values
     handleInputChange('id', ''); // CRITICAL: Clear the ID to prevent updating existing stories
+    handleInputChange('title', ''); // Clear title
+    handleInputChange('author', ''); // Clear author
     handleInputChange('content', '');
     handleInputChange('tagline', '');
     handleInputChange('excerpt', '');
