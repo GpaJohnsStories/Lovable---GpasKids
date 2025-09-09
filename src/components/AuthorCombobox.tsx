@@ -6,11 +6,12 @@ import { toast } from "sonner";
 interface AuthorComboboxProps {
   value: string;
   onValueChange: (value: string) => void;
+  placeholder?: string;
   className?: string;
   style?: React.CSSProperties;
 }
 
-export function AuthorCombobox({ value, onValueChange, className, style }: AuthorComboboxProps) {
+export function AuthorCombobox({ value, onValueChange, placeholder = "Select or create author...", className, style }: AuthorComboboxProps) {
   const [authors, setAuthors] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -64,7 +65,7 @@ export function AuthorCombobox({ value, onValueChange, className, style }: Autho
       value={value}
       onValueChange={onValueChange}
       options={authors}
-      placeholder="Select or create author..."
+      placeholder={placeholder}
       emptyText="No authors found."
       allowCreate={true}
       onCreateNew={handleCreateNew}

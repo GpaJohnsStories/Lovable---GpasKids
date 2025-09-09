@@ -802,10 +802,10 @@ const SuperText: React.FC = () => {
                   </div>
 
                   <div className="col-span-2">
-                    <Label className="supertext-fs-21px-arial-black font-bold mb-2 block">Author</Label>
                     <AuthorCombobox 
                       value={formData.author || ''}
                       onValueChange={(value) => handleInputChange('author', value)}
+                      placeholder="Author"
                       className="border-2 border-yellow-400 hover:border-yellow-500"
                       style={{
                         fontSize: '21px',
