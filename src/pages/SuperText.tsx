@@ -772,7 +772,9 @@ const SuperText: React.FC = () => {
 
                   {/* Row 5: D, Tagline (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
+                      backgroundColor: '#3b82f6'
+                    }}>D</div>
                   </div>
 
                   <div className="col-span-2">
