@@ -6,6 +6,7 @@ import { StoryContentRenderer } from "@/components/story-content/StoryContentRen
 import { getSuperWebTheme } from "@/utils/superWebTheme";
 import { useQuery } from "@tanstack/react-query";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { SuperAV } from "@/components/SuperAV";
 
 /* ===== SUPER-WEB-BOX TEMPLATE START ===== */
 interface SuperWebBoxProps {
@@ -22,6 +23,7 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
   id 
 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
+  const [isSuperAVOpen, setIsSuperAVOpen] = useState(false);
   const { lookupStoryByCode } = useStoryCodeLookup();
   
   const { data: story, isLoading, error } = useQuery({
@@ -116,6 +118,7 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
                 code={story.story_code}
                 onClick={() => {
                   console.log('Super-Web-Box audio clicked for:', story.story_code);
+                  setIsSuperAVOpen(true);
                 }}
                 className="super-web-audio-btn"
               />
@@ -176,6 +179,17 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
         </div>
       </div>
 
+      {/* SuperAV Floating Popup */}
+      <SuperAV
+        isOpen={isSuperAVOpen}
+        onClose={() => setIsSuperAVOpen(false)}
+        title={displayTitle}
+        author={story.author || undefined}
+        voiceName={story.ai_voice_name || undefined}
+        showAuthor={false}
+        audioUrl={story.audio_url || undefined}
+      />
+
       {/* CSS Styles */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -230,8 +244,8 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
         }
         
         .super-web-audio-btn:hover {
-          background: ${color};
-          color: white;
+          background: transparent;
+          color: inherit;
         }
       `}} />
     </div>
