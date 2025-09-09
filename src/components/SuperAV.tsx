@@ -518,7 +518,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
                 height: '490px',
                 left: `calc(10% + ${position.x}px)`,
                 top: `calc(5% + ${position.y}px)`,
-                zIndex: 9999,
+                zIndex: 9500,
                 maxWidth: 'none',
                 maxHeight: 'none',
                 

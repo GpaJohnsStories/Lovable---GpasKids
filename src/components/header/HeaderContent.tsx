@@ -158,7 +158,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
 
         {/* RIGHT SECTION: ICO-HGJ + Safe For Kids + Gold Menu Button - Hidden on admin pages */}
         {!isAdminPage && (
-          <div className="flex items-start gap-4 justify-end relative" ref={menuRef}>
+          <div className="flex items-start gap-4 justify-end relative" ref={menuRef} style={{ zIndex: 10001 }}>
             {/* Mobile: Vertical stack of HGJ and Safe for Kids */}
             <div className="sm:hidden flex flex-col items-center mt-0">
               {/* ICO-HGJ Button - Help Grandpa John */}
