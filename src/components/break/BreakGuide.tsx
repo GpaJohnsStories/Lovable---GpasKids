@@ -28,6 +28,14 @@ const BreakGuide: React.FC<BreakGuideProps> = ({ inline = false }) => {
     error: closeIconError
   } = useCachedIcon('!CO-CLS.jpg');
 
+  useEffect(() => {
+    console.info('BreakGuide: close icon status', {
+      url: closeIconUrl,
+      loading: closeIconLoading,
+      error: closeIconError
+    });
+  }, [closeIconUrl, closeIconLoading, closeIconError]);
+
   // Get Sparky icon for the Break Timer
   const {
     iconUrl: sparkyIconUrl,
@@ -172,7 +180,7 @@ const BreakGuide: React.FC<BreakGuideProps> = ({ inline = false }) => {
           />
           {/* Main area below Sparky */}
           <div
-            className="absolute top-[90px] left-0 right-0 bottom-12 cursor-grab active:cursor-grabbing z-30"
+            className="absolute top-[90px] left-0 right-0 bottom-[60px] cursor-grab active:cursor-grabbing z-30"
             onMouseDown={handleMouseDown}
           />
           {/* Screen panel that almost fills the dialog */}
@@ -248,7 +256,7 @@ const BreakGuide: React.FC<BreakGuideProps> = ({ inline = false }) => {
           </div>
           
           {/* Close button row at bottom - full width like SuperAV */}
-          <div className="h-12">
+          <div className="h-[60px]">
             {closeIconUrl ? (
               <button 
                 onClick={handleCloseBreakTimer} 
