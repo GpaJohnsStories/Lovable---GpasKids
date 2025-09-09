@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 import { BreakTimerPopup } from '../BreakTimerPopup';
 import { useBreakTimer } from '@/contexts/BreakTimerContext';
+import { OrangeCandyButton } from '@/components/ui/OrangeCandyButton';
 interface BreakGuideProps {
   inline?: boolean;
 }
@@ -21,21 +22,6 @@ const BreakGuide: React.FC<BreakGuideProps> = ({ inline = false }) => {
   const [sparkyClickCount, setSparkyClickCount] = useState(0);
   const [sparkyClickTimer, setSparkyClickTimer] = useState<NodeJS.Timeout | null>(null);
   
-  // Get close icon for the Break Timer
-  const {
-    iconUrl: closeIconUrl,
-    isLoading: closeIconLoading,
-    error: closeIconError
-  } = useCachedIcon('!CO-CLS.jpg');
-
-  useEffect(() => {
-    console.info('BreakGuide: close icon status', {
-      url: closeIconUrl,
-      loading: closeIconLoading,
-      error: closeIconError
-    });
-  }, [closeIconUrl, closeIconLoading, closeIconError]);
-
   // Get Sparky icon for the Break Timer
   const {
     iconUrl: sparkyIconUrl,
@@ -257,31 +243,9 @@ const BreakGuide: React.FC<BreakGuideProps> = ({ inline = false }) => {
           
           {/* Close button row at bottom - full width like SuperAV */}
           <div className="h-[60px]">
-            {closeIconUrl ? (
-              <button 
-                onClick={handleCloseBreakTimer} 
-                className="w-full h-full bg-gradient-to-b from-gray-200 via-gray-300 to-gray-400 hover:from-gray-300 hover:via-gray-400 hover:to-gray-500 border border-gray-400 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center"
-              >
-                <img 
-                  src={closeIconUrl} 
-                  alt="Close" 
-                  style={{
-                    height: '60px',
-                    width: '100%',
-                    objectFit: 'fill'
-                  }} 
-                />
-              </button>
-            ) : (
-              <button 
-                onClick={handleCloseBreakTimer} 
-                className="w-full h-full bg-gradient-to-b from-gray-200 via-gray-300 to-gray-400 hover:from-gray-300 hover:via-gray-400 hover:to-gray-500 border border-gray-400 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center"
-              >
-                <span className="text-gray-700 font-semibold">
-                  {closeIconLoading ? 'Loading...' : closeIconError ? `!CO-CLS.jpg Error` : 'Close'}
-                </span>
-              </button>
-            )}
+            <OrangeCandyButton onClick={handleCloseBreakTimer}>
+              CLOSE
+            </OrangeCandyButton>
           </div>
         </div>}
 

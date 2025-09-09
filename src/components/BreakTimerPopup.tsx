@@ -22,6 +22,7 @@ import React, { useState, useEffect } from 'react';
 import { Clock, Coffee, X } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
+import { OrangeCandyButton } from '@/components/ui/OrangeCandyButton';
 
 // Character definitions for celebration mode
 const CHARACTERS = [
@@ -74,12 +75,6 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
     iconUrl: sparkyIconUrl,
     iconName: sparkyName
   } = useCachedIcon('!CO-SPT.gif');
-
-  // Get Close icon
-  const {
-    iconUrl: closeIconUrl,
-    iconName: closeName
-  } = useCachedIcon('!CO-CLS.jpg');
 
   // Get selected character icon
   const {
@@ -473,62 +468,29 @@ export const BreakTimerPopup: React.FC<BreakTimerPopupProps> = ({
         </div>
 
         {/* Close Button - Full width at bottom like break timer */}
-        {closeIconUrl && (
-          <div style={{ 
-            height: '60px',
-            position: 'relative'
-          }}>
-            {/* Static bright light behind close button */}
-            {glowActive && selectedCharacter && (
-              <div style={{
-                position: 'absolute',
-                inset: '-8px',
-                background: `radial-gradient(circle, ${selectedCharacter.accentColor}40 0%, ${selectedCharacter.accentColor}20 30%, transparent 70%)`,
-                borderRadius: '24px',
-                filter: 'blur(8px)',
-                zIndex: -1
-              }} />
-            )}
-            
-            <button 
-              onClick={allowClose ? handleBreakComplete : undefined}
-              disabled={!allowClose}
-              style={{
-                width: '100%',
-                height: '100%',
-                background: 'transparent',
-                border: 'none',
-                padding: '0',
-                cursor: allowClose ? 'pointer' : 'not-allowed',
-                transition: 'transform 0.2s',
-                borderRadius: '16px',
-                overflow: 'hidden',
-                opacity: allowClose ? 1 : 0.5
-              }}
-              onMouseOver={e => {
-                if (allowClose) {
-                  e.currentTarget.style.transform = 'scale(1.02)';
-                }
-              }}
-              onMouseOut={e => {
-                if (allowClose) {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }
-              }}
-            >
-              <img 
-                src={closeIconUrl} 
-                alt={closeName ?? 'Close'} 
-                style={{
-                  height: '60px',
-                  width: '100%',
-                  objectFit: 'fill',
-                  borderRadius: '16px'
-                }}
-              />
-            </button>
-          </div>
-        )}
+        <div style={{ 
+          height: '60px',
+          position: 'relative'
+        }}>
+          {/* Static bright light behind close button */}
+          {glowActive && selectedCharacter && (
+            <div style={{
+              position: 'absolute',
+              inset: '-8px',
+              background: `radial-gradient(circle, ${selectedCharacter.accentColor}40 0%, ${selectedCharacter.accentColor}20 30%, transparent 70%)`,
+              borderRadius: '24px',
+              filter: 'blur(8px)',
+              zIndex: -1
+            }} />
+          )}
+          
+          <OrangeCandyButton 
+            onClick={handleBreakComplete}
+            disabled={!allowClose}
+          >
+            CLOSE
+          </OrangeCandyButton>
+        </div>
       </div>
     </TooltipProvider>;
 };
