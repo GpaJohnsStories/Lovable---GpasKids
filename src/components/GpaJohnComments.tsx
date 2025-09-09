@@ -6,7 +6,7 @@ const GpaJohnComments = () => {
     <div className="mb-8">
       <ProportionalWebTextBox 
         webtextCode="SYS-LAA" 
-        borderColor="#FF8C42"
+        borderColor="transparent"
         backgroundColor="bg-orange-100"
       />
     </div>
