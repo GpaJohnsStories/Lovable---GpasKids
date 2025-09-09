@@ -802,9 +802,6 @@ const SuperText: React.FC = () => {
                   </div>
 
                   <div className="col-span-2 flex items-center h-10 gap-2">
-                    <span className="text-blue-600 text-[21px] font-bold" style={{fontFamily: 'Arial, sans-serif'}}>
-                      E
-                    </span>
                     <span className="text-[21px] font-bold" style={{fontFamily: 'Arial, sans-serif'}}>
                       Author:
                     </span>
