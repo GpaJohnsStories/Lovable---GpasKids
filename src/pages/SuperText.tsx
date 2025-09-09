@@ -1096,7 +1096,7 @@ const SuperText: React.FC = () => {
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-bold text-green-700">Create AI Voice File</h2>
                 </div>
-                {formData.audio_url && <AudioButton code="AUDIO-PLAY" onClick={() => setShowSuperAV(true)} className="absolute top-2 right-2 z-10" />}
+                {formData.audio_url && <AudioButton code="AUDIO-PLAY" onClick={() => setShowSuperAV(true)} className="absolute top-2 right-2 z-0" />}
                 
                 <div className="space-y-4">
                   {/* Current Voice Display */}
