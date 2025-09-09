@@ -98,7 +98,7 @@ const SysWelWebTextBox: React.FC<SysWelWebTextBoxProps> = ({
       id={id}
     >
       {/* Audio Button - Top Right */}
-      <div className="absolute top-2 right-2 z-10">
+      <div className="absolute top-2 right-2 z-0">
         <AudioButton 
           code={code}
           onClick={() => setShowSuperAV(true)}
