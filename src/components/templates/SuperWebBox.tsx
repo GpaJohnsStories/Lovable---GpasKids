@@ -64,7 +64,7 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
       className="super-web-box rounded-lg overflow-hidden mb-6"
       style={{
         border: `4px solid ${color}`,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)'
+        backgroundColor: theme.backgroundTint
       }}
     >
       {/* Header Section */}
@@ -183,7 +183,7 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
           font-family: inherit;
         }
         
-        /* Text Content Styling - All text 24px regular with theme color */
+        /* Text Content Styling - All text 24px bold with theme color */
         .super-web-text-content,
         .super-web-text-content *,
         .super-web-text-content .rendered-story-content,
@@ -207,7 +207,7 @@ const SuperWebBox: React.FC<SuperWebBoxProps> = ({
         .super-web-text-content .rendered-story-content a {
           color: ${color};
           font-size: 24px;
-          font-weight: normal;
+          font-weight: bold;
           line-height: 1.4;
         }
         
