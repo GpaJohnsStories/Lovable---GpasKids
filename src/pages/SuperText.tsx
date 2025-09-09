@@ -607,7 +607,7 @@ const SuperText: React.FC = () => {
                           handleStoryCodeChange(upperValue);
                         }
                       }} 
-                      className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black" 
+                      className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black py-0 h-8 leading-[21px]" 
                       style={{
                         width: '192px',
                         fontStyle: 'normal'
