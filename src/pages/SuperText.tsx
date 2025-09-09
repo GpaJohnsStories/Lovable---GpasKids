@@ -223,6 +223,7 @@ const SuperText: React.FC = () => {
   }, [formData.publication_status_code]);
   // Auto-lookup when story code reaches 7 characters
   const handleStoryCodeChange = useCallback(async (newCode: string) => {
+    console.log('🔧 Story code changed:', newCode, 'Length:', newCode.length, '4th char:', newCode.charAt(3));
     setStoryCode(newCode);
     handleInputChange('story_code', newCode);
     
@@ -230,12 +231,14 @@ const SuperText: React.FC = () => {
     if (newCode.length === 7) {
       // Check if 4th position (index 3) is a dash
       if (newCode.charAt(3) !== '-') {
+        console.log('🚫 Invalid format - 4th position is not a dash:', newCode.charAt(3));
         setLookupStatus('idle');
         setLookupResult(null);
         toast.error("Invalid story code format. 4th position must be a dash (e.g., ABC-123)");
         return;
       }
       
+      console.log('✅ Valid format, proceeding with lookup');
       const {
         found,
         story,
