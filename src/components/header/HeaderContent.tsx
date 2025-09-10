@@ -84,34 +84,40 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
         
         {/* LEFT SECTION: Buddy + Title */}
         <div className="flex items-start gap-4 justify-start">
-          <Tooltip delayDuration={0}>
+          <Tooltip delayDuration={0} disableHoverableContent={false}>
             <TooltipTrigger asChild>
               <button 
                 onClick={handleHelpClick}
                 onMouseDown={() => console.log('🐕 Buddy button mouse down!')}
                 onMouseUp={() => console.log('🐕 Buddy button mouse up!')}
-                className="group relative z-10 bg-gradient-to-br from-green-600/80 to-green-700/60 hover:from-red-600/80 hover:to-red-700/60 backdrop-blur-sm rounded-lg p-1 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-[3px] border-green-600 hover:border-red-600 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+                onTouchStart={() => console.log('🐕 Buddy button touch start!')}
+                onTouchEnd={() => console.log('🐕 Buddy button touch end!')}
+                className="group relative z-10 bg-gradient-to-br from-green-600/80 to-green-700/60 hover:from-red-600/80 hover:to-red-700/60 backdrop-blur-sm rounded-lg p-[2px] flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-[2px] border-green-600 hover:border-red-600 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
               >
                 {/* Loading state for Buddy */}
                 {buddyLoading && (
-                  <div className="w-full h-full bg-green-300 animate-pulse rounded-md" />
+                  <div className="w-full h-full bg-green-300 animate-pulse rounded-[6px]" />
                 )}
                 
                 {/* Show icon code if no icon available, otherwise show Buddy image */}
                 {(buddyError || !buddyIconUrl) && !buddyLoading ? (
-                  <div className="w-full h-full bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-md">
+                  <div className="w-full h-full bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-[6px]">
                     !CO-BG1.jpg
                   </div>
                 ) : buddyIconUrl && !buddyLoading && !buddyError ? (
                   <img 
                     src={buddyIconUrl}
                     alt="Buddy the Helper Dog"
-                    className="w-full h-full object-cover rounded-md"
+                    className="w-full h-full object-cover rounded-[6px]"
                   />
                 ) : null}
               </button>
             </TooltipTrigger>
-            <TooltipContent side="bottom" className="bg-yellow-100 text-black border-2 border-yellow-600 font-bold">
+            <TooltipContent 
+              side="bottom" 
+              className="bg-yellow-100 text-black border-2 border-yellow-600 font-bold text-base px-3 py-2"
+              sideOffset={8}
+            >
               <p>Click for Buddy's Help</p>
             </TooltipContent>
           </Tooltip>
