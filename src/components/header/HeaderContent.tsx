@@ -21,7 +21,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Use cached icons for Buddy and Menu button - v2.0 with proper icon caching
-  const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('!CO-TB1.gif');
+  const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('!CO-BG1.jpg');
   const { iconUrl: menuIconUrl, isLoading: menuLoading, error: menuError } = useCachedIcon('!CO-TB2.gif');
   const { iconUrl: safeForKidsIconUrl, isLoading: sfkLoading, error: sfkError } = useCachedIcon('!CO-SFK.gif');
   const { iconUrl: hgjIconUrl, isLoading: hgjLoading, error: hgjError } = useCachedIcon('!CO-HGJ.gif');
@@ -76,35 +76,37 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
         
         {/* LEFT SECTION: Buddy + Title */}
         <div className="flex items-start gap-4 justify-start">
-          <button 
-            onClick={handleHelpClick}
-            onMouseDown={() => console.log('🐕 Buddy button mouse down!')}
-            onMouseUp={() => console.log('🐕 Buddy button mouse up!')}
-            className="group relative z-10 bg-gradient-to-br from-green-600/80 to-green-700/60 hover:from-red-600/80 hover:to-red-700/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-green-600 hover:border-red-600 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
-          >
-            {/* Loading state for Buddy */}
-            {buddyLoading && (
-              <div className="w-full h-12 sm:h-18 md:h-24 bg-green-300 animate-pulse rounded-md group-hover:hidden" />
-            )}
-            
-            {/* Show icon code if no icon available, otherwise show Buddy image - hidden on hover */}
-            {(buddyError || !buddyIconUrl) && !buddyLoading ? (
-              <div className="w-full h-12 sm:h-18 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-md group-hover:hidden">
-                !CO-TB1.gif
-              </div>
-            ) : buddyIconUrl && !buddyLoading && !buddyError ? (
-              <img 
-                src={buddyIconUrl}
-                alt="Buddy the Helper Dog"
-                className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md group-hover:hidden"
-              />
-            ) : null}
-            
-            {/* Help text - shown on hover */}
-            <div className="hidden group-hover:flex items-center justify-center h-full text-[#EAB308] text-xs sm:text-sm md:text-base font-bold text-center">
-              Click for Buddy's Help
-            </div>
-          </button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button 
+                onClick={handleHelpClick}
+                onMouseDown={() => console.log('🐕 Buddy button mouse down!')}
+                onMouseUp={() => console.log('🐕 Buddy button mouse up!')}
+                className="group relative z-10 bg-gradient-to-br from-green-600/80 to-green-700/60 hover:from-red-600/80 hover:to-red-700/60 backdrop-blur-sm rounded-lg p-2 flex flex-col items-center text-center w-16 h-16 sm:w-[5.5rem] sm:h-[5.5rem] md:w-[7rem] md:h-[7rem] min-w-16 sm:min-w-[5.5rem] md:min-w-[7rem] flex-shrink-0 shadow-[0_8px_16px_rgba(0,0,0,0.3),0_4px_8px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3)] border-2 border-green-600 hover:border-red-600 transform hover:scale-105 transition-all duration-200 cursor-pointer active:scale-95"
+              >
+                {/* Loading state for Buddy */}
+                {buddyLoading && (
+                  <div className="w-full h-12 sm:h-18 md:h-24 bg-green-300 animate-pulse rounded-md" />
+                )}
+                
+                {/* Show icon code if no icon available, otherwise show Buddy image */}
+                {(buddyError || !buddyIconUrl) && !buddyLoading ? (
+                  <div className="w-full h-12 sm:h-18 md:h-24 bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-md">
+                    !CO-BG1.jpg
+                  </div>
+                ) : buddyIconUrl && !buddyLoading && !buddyError ? (
+                  <img 
+                    src={buddyIconUrl}
+                    alt="Buddy the Helper Dog"
+                    className="w-full h-12 sm:h-18 md:h-24 object-cover rounded-md"
+                  />
+                ) : null}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Click for Buddy's Help</p>
+            </TooltipContent>
+          </Tooltip>
           
           {/* Website Title and Subtitle */}
           <div className="text-left self-end">
