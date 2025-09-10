@@ -115,7 +115,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
             </TooltipTrigger>
             <TooltipContent 
               side="bottom" 
-              className="bg-yellow-100 text-black border-2 border-yellow-600 font-bold text-base px-3 py-2"
+              className="bg-yellow-100 text-black border-2 border-yellow-600 font-bold text-base px-3 py-2 z-[10030]"
               sideOffset={8}
             >
               <p>Click for Buddy's Help</p>
