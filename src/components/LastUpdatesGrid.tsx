@@ -77,62 +77,68 @@ const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story, hideTitle = fa
   };
 
   return (
-    <Card className="w-full mb-4 border-0 bg-white">
+    <Card className="w-auto mb-0 border-0 bg-white">
       {!hideTitle && (
-        <CardHeader className="pb-2">
-          <CardTitle className="text-center text-xl font-bold" style={{
+        <CardHeader className="pb-1">
+          <CardTitle className="text-center text-lg font-bold" style={{
             color: '#F97316',
-            fontSize: '21px',
+            fontSize: '18px',
             fontFamily: 'Arial, sans-serif'
           }}>
             Last Updates
           </CardTitle>
         </CardHeader>
       )}
-      <CardContent className={hideTitle ? "p-0" : "p-0"}>
+      <CardContent className="p-0">
         <table className="w-full" style={{
           border: '2px solid #9c441a'
         }}>
           <tbody>
             {/* First Row - Headers */}
             <tr>
-              <td className="text-center font-bold px-2 py-1 w-1/3" style={{
+              <td className="text-center font-bold px-1 py-1 w-1/3" style={{
                 borderRight: '1px solid #9c441a',
-                ...getLastUpdateStyle()
+                ...getLastUpdateStyle(),
+                fontSize: '16px'
               }}>
                 Last Text
               </td>
-              <td className="text-center font-bold px-2 py-1 w-1/3" style={{
+              <td className="text-center font-bold px-1 py-1 w-1/3" style={{
                 borderRight: '1px solid #9c441a',
-                ...getAudioStatusStyle()
+                ...getAudioStatusStyle(),
+                fontSize: '16px'
               }}>
                 Last Audio
               </td>
-              <td className="text-center font-bold px-2 py-1 w-1/3" style={{
-                ...getOriginalStyle()
+              <td className="text-center font-bold px-1 py-1 w-1/3" style={{
+                ...getOriginalStyle(),
+                fontSize: '16px'
               }}>
                 Original
               </td>
             </tr>
             {/* Second Row - Values */}
             <tr>
-              <td className="text-center font-bold px-2 py-1" style={{
+              <td className="text-center font-bold px-1 py-1" style={{
                 borderTop: '1px solid #9c441a',
                 borderRight: '1px solid #9c441a',
-                ...getLastUpdateStyle()
+                ...getLastUpdateStyle(),
+                fontSize: '16px'
               }}>
                 {formatDateTime(story?.updated_at).date} {formatDateTime(story?.updated_at).time}
               </td>
-              <td className="text-center font-bold px-2 py-1" style={{
+              <td className="text-center font-bold px-1 py-1" style={{
                 borderTop: '1px solid #9c441a',
                 borderRight: '1px solid #9c441a',
-                ...getAudioStatusStyle()
+                ...getAudioStatusStyle(),
+                fontSize: '16px'
               }}>
                 {formatDateTime(story?.audio_generated_at).date} {formatDateTime(story?.audio_generated_at).time}
               </td>
-              <td className="text-center font-bold px-2 py-1" style={{
+              <td className="text-center font-bold px-1 py-1" style={{
                 borderTop: '1px solid #9c441a',
-                ...getOriginalStyle()
+                ...getOriginalStyle(),
+                fontSize: '16px'
               }}>
                 {formatDateTime(story?.created_at).date} {formatDateTime(story?.created_at).time}
               </td>

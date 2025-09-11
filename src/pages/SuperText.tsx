@@ -471,7 +471,8 @@ const SuperText: React.FC = () => {
       {/* Header with title and action buttons */}
       <div className="bg-white/80 backdrop-blur-sm py-4 px-6 border-b border-orange-200/50 sticky top-0 z-10">
         <h1 className="text-3xl font-bold text-orange-800 mb-4">Super Text Manager</h1>
-         <div className="flex gap-4 flex-wrap">
+         <div className="flex gap-4 flex-wrap items-center justify-between w-full">
+           <div className="flex gap-4 flex-wrap">
            <TooltipProvider>
              <Tooltip>
                <TooltipTrigger asChild>
@@ -567,11 +568,17 @@ const SuperText: React.FC = () => {
                   Scroll to the top of the page
                 </TooltipContent>
               </Tooltip>
-            </TooltipProvider>
+             </TooltipProvider>
+           </div>
+           
+           {/* Last Updates Grid - positioned at right end of buttons */}
+           <div className="flex-shrink-0">
+             <LastUpdatesGrid story={formData} hideTitle={true} />
+           </div>
           </div>
-      </div>
+        </div>
 
-      <div className="pb-6">
+        <div className="pb-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Panel - Form Fields */}
             <div className="lg:col-span-2 space-y-6">
@@ -1076,10 +1083,6 @@ const SuperText: React.FC = () => {
 
             {/* Right Panel - Status and Actions */}
             <div className="space-y-3">
-              {/* Last Updates Section */}
-              <div className="flex flex-col items-center">
-                <LastUpdatesGrid story={formData} hideTitle={true} />
-              </div>
               
               {/* Text Status Section - Hidden on large screens since it's now in Text Details box */}
               <div className="lg:hidden">
