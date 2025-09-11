@@ -398,9 +398,13 @@ export type Database = {
           audio_segments: number | null
           audio_url: string | null
           author: string
+          background_color_hex: string
+          background_color_name: string
           bio_subject_name: string | null
           book_title: string | null
           born_date: string | null
+          box_border_color_hex: string | null
+          box_border_color_name: string | null
           category: Database["public"]["Enums"]["story_category"]
           chapter_number: number | null
           chapter_title: string | null
@@ -418,6 +422,8 @@ export type Database = {
           photo_alt_1: string | null
           photo_alt_2: string | null
           photo_alt_3: string | null
+          photo_border_color_hex: string | null
+          photo_border_color_name: string | null
           photo_link_1: string | null
           photo_link_2: string | null
           photo_link_3: string | null
@@ -429,6 +435,8 @@ export type Database = {
           thumbs_down_count: number
           thumbs_up_count: number
           title: string
+          title_font_color_hex: string | null
+          title_font_color_name: string | null
           updated_at: string
           video_duration_seconds: number | null
           video_url: string | null
@@ -441,9 +449,13 @@ export type Database = {
           audio_segments?: number | null
           audio_url?: string | null
           author: string
+          background_color_hex?: string
+          background_color_name?: string
           bio_subject_name?: string | null
           book_title?: string | null
           born_date?: string | null
+          box_border_color_hex?: string | null
+          box_border_color_name?: string | null
           category: Database["public"]["Enums"]["story_category"]
           chapter_number?: number | null
           chapter_title?: string | null
@@ -461,6 +473,8 @@ export type Database = {
           photo_alt_1?: string | null
           photo_alt_2?: string | null
           photo_alt_3?: string | null
+          photo_border_color_hex?: string | null
+          photo_border_color_name?: string | null
           photo_link_1?: string | null
           photo_link_2?: string | null
           photo_link_3?: string | null
@@ -472,6 +486,8 @@ export type Database = {
           thumbs_down_count?: number
           thumbs_up_count?: number
           title: string
+          title_font_color_hex?: string | null
+          title_font_color_name?: string | null
           updated_at?: string
           video_duration_seconds?: number | null
           video_url?: string | null
@@ -484,9 +500,13 @@ export type Database = {
           audio_segments?: number | null
           audio_url?: string | null
           author?: string
+          background_color_hex?: string
+          background_color_name?: string
           bio_subject_name?: string | null
           book_title?: string | null
           born_date?: string | null
+          box_border_color_hex?: string | null
+          box_border_color_name?: string | null
           category?: Database["public"]["Enums"]["story_category"]
           chapter_number?: number | null
           chapter_title?: string | null
@@ -504,6 +524,8 @@ export type Database = {
           photo_alt_1?: string | null
           photo_alt_2?: string | null
           photo_alt_3?: string | null
+          photo_border_color_hex?: string | null
+          photo_border_color_name?: string | null
           photo_link_1?: string | null
           photo_link_2?: string | null
           photo_link_3?: string | null
@@ -515,6 +537,8 @@ export type Database = {
           thumbs_down_count?: number
           thumbs_up_count?: number
           title?: string
+          title_font_color_hex?: string | null
+          title_font_color_name?: string | null
           updated_at?: string
           video_duration_seconds?: number | null
           video_url?: string | null
