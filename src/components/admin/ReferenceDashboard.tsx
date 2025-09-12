@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import IconLibraryDisplay from "./IconLibraryDisplay";
 import ColorReferenceTable from "./reference/ColorReferenceTable";
+import ColorPresetsSection from "./reference/ColorPresetsSection";
 import IconUploadSection from "./reference/IconUploadSection";
 import FontLibrarySection from "./reference/FontLibrarySection";
 import CssLibrarySection from "./reference/CssLibrarySection";
@@ -9,10 +10,11 @@ import CssExceptionsSection from "./reference/CssExceptionsSection";
 import { Button } from "@/components/ui/button";
 import { BUILD_ID } from "@/utils/buildInfo";
 
-type SectionType = "colors" | "upload" | "icons" | "fonts" | "css" | "cssxx" | "top";
+type SectionType = "presets" | "colors" | "upload" | "icons" | "fonts" | "css" | "cssxx" | "top";
 
 const ReferenceDashboard = () => {
   const sections = [
+    { id: "presets" as const, label: "Color Presets", component: <ColorPresetsSection /> },
     { id: "colors" as const, label: "Color Library", component: <ColorReferenceTable /> },
     { id: "upload" as const, label: "Upload Icon", component: <IconUploadSection /> },
     { id: "icons" as const, label: "Icon Library", component: <IconLibraryDisplay /> },
@@ -56,6 +58,13 @@ const ReferenceDashboard = () => {
           backgroundColor: '#facc15',
           color: 'black',
           borderColor: '#facc15',
+        };
+      case 'presets':
+        return {
+          ...baseStyle,
+          backgroundColor: '#a855f7',
+          color: 'white',
+          borderColor: '#a855f7',
         };
       case 'colors':
         return {
@@ -122,7 +131,7 @@ const ReferenceDashboard = () => {
             >
               Scroll to Top
             </Button>
-            {sections.slice(0, 3).map((section) => (
+            {sections.slice(0, 4).map((section) => (
               <Button
                 key={section.id}
                 variant="outline"
@@ -137,7 +146,7 @@ const ReferenceDashboard = () => {
           
           {/* Second row - Last 3 brown buttons */}
           <div className="flex flex-wrap gap-3">
-            {sections.slice(3).map((section) => (
+            {sections.slice(4).map((section) => (
               <Button
                 key={section.id}
                 variant="outline"
