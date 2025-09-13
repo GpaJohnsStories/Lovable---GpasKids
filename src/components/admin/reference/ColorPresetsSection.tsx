@@ -69,6 +69,58 @@ const ColorPresetsSection = () => {
         { name: 'Background', code: 'rgba(99, 102, 241, 0.2)', pages: '' },
         { name: 'Font', code: '#333333', pages: '' }
       ]
+    },
+    {
+      number: 5,
+      name: 'To be set',
+      borderColor: '#9ca3af',
+      backgroundColor: 'rgba(156, 163, 175, 0.2)',
+      fontColor: '#333333',
+      colorDetails: [
+        { name: 'Border', code: 'To be set', pages: '' },
+        { name: 'Photo Border', code: 'To be set', pages: '' },
+        { name: 'Background', code: 'To be set', pages: '' },
+        { name: 'Font', code: 'To be set', pages: '' }
+      ]
+    },
+    {
+      number: 6,
+      name: 'To be set',
+      borderColor: '#9ca3af',
+      backgroundColor: 'rgba(156, 163, 175, 0.2)',
+      fontColor: '#333333',
+      colorDetails: [
+        { name: 'Border', code: 'To be set', pages: '' },
+        { name: 'Photo Border', code: 'To be set', pages: '' },
+        { name: 'Background', code: 'To be set', pages: '' },
+        { name: 'Font', code: 'To be set', pages: '' }
+      ]
+    },
+    {
+      number: 7,
+      name: 'To be set',
+      borderColor: '#9ca3af',
+      backgroundColor: 'rgba(156, 163, 175, 0.2)',
+      fontColor: '#333333',
+      colorDetails: [
+        { name: 'Border', code: 'To be set', pages: '' },
+        { name: 'Photo Border', code: 'To be set', pages: '' },
+        { name: 'Background', code: 'To be set', pages: '' },
+        { name: 'Font', code: 'To be set', pages: '' }
+      ]
+    },
+    {
+      number: 8,
+      name: 'To be set',
+      borderColor: '#9ca3af',
+      backgroundColor: 'rgba(156, 163, 175, 0.2)',
+      fontColor: '#333333',
+      colorDetails: [
+        { name: 'Border', code: 'To be set', pages: '' },
+        { name: 'Photo Border', code: 'To be set', pages: '' },
+        { name: 'Background', code: 'To be set', pages: '' },
+        { name: 'Font', code: 'To be set', pages: '' }
+      ]
     }
   ];
 
@@ -145,9 +197,9 @@ const ColorPresetsSection = () => {
 
           {/* Render each preset */}
           {colorPresets.map((preset, presetIndex) => {
-            const isLeftColumn = presetIndex < 2; // Presets 1-2 on left, 3-4 on right
+            const isLeftColumn = presetIndex < 4; // Presets 1-4 on left, 5-8 on right
             const colStart = isLeftColumn ? 1 : 6;
-            const rowStart = isLeftColumn ? 2 + (presetIndex * 4) : 2 + ((presetIndex - 2) * 4);
+            const rowStart = isLeftColumn ? 2 + (presetIndex * 4) : 2 + ((presetIndex - 4) * 4);
             
             return (
               <React.Fragment key={`preset-${preset.number}`}>
