@@ -16,22 +16,23 @@ const Index = () => {
       <WelcomeHeader />
       
       <main className="container mx-auto px-4 pt-0">
-        {/* ===== BOX 1 START (HomePage Auto-themed WebTextBox) ===== */}
-        <WebTextBox 
-          code="SYS-WEL"
-          id="home-box-1"
-        />
+        {/* ===== BOX 1 START (Orange Announcements Box) ===== */}
+        <GpaJohnComments />
         {/* ===== BOX 1 END ===== */}
         
-        {/* ===== BOX 2 START (Orange WebText Box) ===== */}
+        {/* ===== BOX 2 START (Green Buddy Box) ===== */}
         <WebTextBox 
           code="SYS-WE2"
           id="home-box-2"
         />
         {/* ===== BOX 2 END ===== */}
         
-        {/* GpaJohn's Banner - Keeping the wide blue button */}
-        <GpaJohnComments />
+        {/* ===== BOX 3 START (Blue Hi There Box) ===== */}
+        <WebTextBox 
+          code="SYS-WEL"
+          id="home-box-3"
+        />
+        {/* ===== BOX 3 END ===== */}
         
         <StorySection />
       </main>
