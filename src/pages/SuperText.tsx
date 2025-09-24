@@ -67,7 +67,7 @@ const SuperText: React.FC = () => {
   const [lookupResult, setLookupResult] = React.useState<Story | null>(null);
   const [lookupStatus, setLookupStatus] = React.useState<'idle' | 'found' | 'not-found'>('idle');
   const [showSuperAV, setShowSuperAV] = React.useState(false);
-  const [isForcingRefresh, setIsForcingRefresh] = React.useState(false);
+  
 
   // Refs for section scrolling
   const audioSectionRef = useRef<HTMLDivElement>(null);
@@ -362,38 +362,6 @@ const SuperText: React.FC = () => {
       }
     }
   };
-  const handleForceCacheRefresh = async () => {
-    console.log('🔄 Force cache refresh button clicked');
-    if (!formData.story_code.trim()) {
-      toast.error("Please enter a text code to refresh cache.");
-      return;
-    }
-    setIsForcingRefresh(true);
-    try {
-      const newTimestamp = new Date().toISOString();
-
-      // Update the story's updated_at timestamp to force cache refresh
-      const {
-        error
-      } = await supabase.from('stories').update({
-        updated_at: newTimestamp
-      }).eq('story_code', formData.story_code.trim());
-      if (error) {
-        console.error('Error forcing cache refresh:', error);
-        toast.error("Failed to refresh cache");
-      } else {
-        // Update the form data immediately to reflect the new timestamp
-        handleInputChange('updated_at', newTimestamp);
-        toast.success("Cache refreshed! All media files for this story will now use the latest versions.");
-        console.log('🔄 Updated form timestamp to:', newTimestamp);
-      }
-    } catch (error) {
-      console.error('Error in handleForceCacheRefresh:', error);
-      toast.error("An error occurred while refreshing cache");
-    } finally {
-      setIsForcingRefresh(false);
-    }
-  };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     if ((event.ctrlKey || event.metaKey) && event.key === 's') {
       event.preventDefault();
@@ -527,27 +495,6 @@ const SuperText: React.FC = () => {
               </Tooltip>
             </TooltipProvider>
 
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button onClick={handleForceCacheRefresh} disabled={isForcingRefresh || !storyCode.trim()} className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full" style={{
-                fontSize: '21px',
-                fontFamily: 'Arial',
-                fontWeight: 'bold'
-              }}>
-                    {isForcingRefresh ? 'Refreshing...' : 'Force Cache Refresh'}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
-              fontFamily: 'Arial',
-              fontSize: '21px',
-              color: 'black',
-              backgroundColor: 'white'
-            }}>
-                  Force all media files (photos, audio, video) to refresh their cache
-               </TooltipContent>
-             </Tooltip>
-            </TooltipProvider>
             
             <TooltipProvider>
               <Tooltip>
