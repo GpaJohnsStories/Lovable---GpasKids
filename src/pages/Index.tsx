@@ -27,12 +27,6 @@ const Index = () => {
         />
         {/* ===== BOX 2 END ===== */}
         
-        {/* ===== BOX 3 START (Blue Hi There Box) ===== */}
-        <WebTextBox 
-          code="SYS-WEL"
-          id="home-box-3"
-        />
-        {/* ===== BOX 3 END ===== */}
         
         <StorySection />
       </main>
