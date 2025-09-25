@@ -1,6 +1,7 @@
 import React from "react";
 import SysWelWebTextBox from "@/components/templates/SysWelWebTextBox";
 import SysWe2WebTextBox from "@/components/templates/SysWe2WebTextBox";
+import SysLaaWebTextBox from "@/components/templates/SysLaaWebTextBox";
 import { WebTextBox as LegacyWebTextBox } from "@/components/LegacyWebTextBox";
 
 interface WebTextBoxProps {
@@ -52,6 +53,16 @@ const WebTextBox: React.FC<WebTextBoxProps> = ({
   if (actualCode === "SYS-WE2") {
     return (
       <SysWe2WebTextBox
+        code={actualCode}
+        title={title}
+        id={id}
+      />
+    );
+  }
+
+  if (actualCode === "SYS-LAA") {
+    return (
+      <SysLaaWebTextBox
         code={actualCode}
         title={title}
         id={id}

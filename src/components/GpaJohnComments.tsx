@@ -1,12 +1,12 @@
-import SuperWebBox from './templates/SuperWebBox';
+import WebTextBox from './WebTextBox';
 
 const GpaJohnComments = () => {
-  // Static banner - no comments rendered or stored locally
+  // Uses new WebTextBox template with photo layout and HTML formatting
   return (
     <div className="mb-8">
-      <SuperWebBox 
-        code="SYS-LAA" 
-        color="#FF8C42"
+      <WebTextBox 
+        code="SYS-LAA"
+        id="home-box-1"
       />
     </div>
   );
