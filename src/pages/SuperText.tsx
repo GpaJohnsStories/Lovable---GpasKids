@@ -348,15 +348,27 @@ const SuperText: React.FC = () => {
       if (saveAction === 'save-and-clear') {
         // Create custom onSave callback that clears form after successful save
         const customOnSave = async () => {
-          // Call the original handleStoryFormSave if needed (for admin navigation)
-          if (handleStoryFormSave) {
-            await handleStoryFormSave();
+          try {
+            // Call the original handleStoryFormSave if needed (for admin navigation)
+            if (handleStoryFormSave) {
+              await handleStoryFormSave();
+            }
+            
+            // Add a small delay to ensure save operation is fully complete
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Clear the form after successful save
+            console.log('✅ Save completed successfully, clearing form...');
+            clearForm();
+          } catch (error) {
+            console.error('❌ Error in save operation, not clearing form:', error);
+            toast.error('Save operation failed, form not cleared');
           }
-          // Clear the form after successful save
-          clearForm();
         };
-        // Pass the custom callback to handleSubmit
-        await handleSubmit(formDataToSave, customOnSave);
+        
+        // Pass the custom callback to handleSubmit and wait for it to complete
+        const result = await handleSubmit(formDataToSave, customOnSave);
+        console.log('🔄 handleSubmit completed with result:', result);
       } else if (saveAction === 'save-only') {
         await handleSaveOnly(formDataToSave);
       }
