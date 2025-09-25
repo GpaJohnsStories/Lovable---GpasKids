@@ -389,6 +389,16 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
           category={category}
         />
       
+      {/* Screen Size Indicator Line - Desktop Only */}
+      <div className="hidden xl:block w-full h-3 bg-gray-100 border-t border-gray-200 relative">
+        {/* Horizontal line */}
+        <div className="absolute top-1/2 w-full h-px bg-gray-400 transform -translate-y-1/2"></div>
+        {/* Mobile mark (~480px equivalent at ~40% from left) */}
+        <div className="absolute top-0 h-full w-px bg-gray-600" style={{ left: '40%' }}></div>
+        {/* Tablet mark (~768px equivalent at ~65% from left) */}
+        <div className="absolute top-0 h-full w-px bg-gray-600" style={{ left: '65%' }}></div>
+      </div>
+      
       <ResizablePanelGroup direction="horizontal" className="min-h-[500px]">
         <ResizablePanel defaultSize={50} minSize={30}>
           <HTMLEditor
