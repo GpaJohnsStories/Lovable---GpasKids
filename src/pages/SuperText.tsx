@@ -1095,7 +1095,7 @@ const SuperText: React.FC = () => {
                   desc: 'Clear, neutral voice',
                   voice: 'alloy'
                 }, {
-                  name: 'Gpa John / Echo',
+                  name: 'Echo',
                   desc: 'Deep, resonant voice',
                   voice: 'echo'
                 }, {
@@ -1115,7 +1115,7 @@ const SuperText: React.FC = () => {
                   desc: 'Soft, gentle voice',
                   voice: 'shimmer'
                 }, {
-                  name: 'Ash',
+                  name: 'Gpa John / Ash',
                   desc: 'Gentle and neutral, calming',
                   voice: 'ash'
                 }, {
