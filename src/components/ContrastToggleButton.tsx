@@ -56,7 +56,7 @@ const ContrastToggleButton: React.FC<ContrastToggleButtonProps> = ({ inline = fa
             <TooltipContent className="bg-black border-black">
               <p className="font-fun text-21px font-bold text-white" style={{
                 textShadow: '2px 2px 0px #666, 4px 4px 0px #333, 6px 6px 8px rgba(0,0,0,0.3)',
-                fontFamily: 'Arial, sans-serif'
+                fontFamily: "'Lexend', Arial, sans-serif"
               }}>
                 {iconName || "High Contrast Toggle Button"}
               </p>

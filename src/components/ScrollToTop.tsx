@@ -62,7 +62,7 @@ const ScrollToTop: React.FC<ScrollToTopProps> = ({ inline = false, alwaysVisible
         <TooltipContent className="bg-[#60a5fa] border-[#60a5fa]">
           <p className="font-fun text-21px font-bold text-white" style={{
             textShadow: '2px 2px 0px #666, 4px 4px 0px #333, 6px 6px 8px rgba(0,0,0,0.3)',
-            fontFamily: 'Arial, sans-serif'
+            fontFamily: "'Lexend', Arial, sans-serif"
           }}>Go to Top of Page & the Menu</p>
         </TooltipContent>
       </Tooltip>

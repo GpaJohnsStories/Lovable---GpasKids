@@ -44,7 +44,7 @@ const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story, hideTitle = fa
       backgroundColor: '#F2BA15',
       color: 'black',
       fontSize: '21px',
-      fontFamily: 'Arial, sans-serif',
+      fontFamily: "'Lexend', Arial, sans-serif",
       fontWeight: 'bold'
     };
   };
@@ -61,7 +61,7 @@ const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story, hideTitle = fa
       backgroundColor: shouldBeRed ? '#DC2626' : '#22c55e',
       color: shouldBeRed ? '#FFFF00' : 'black',
       fontSize: '21px',
-      fontFamily: 'Arial, sans-serif',
+      fontFamily: "'Lexend', Arial, sans-serif",
       fontWeight: 'bold'
     };
   };
@@ -71,7 +71,7 @@ const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story, hideTitle = fa
       backgroundColor: 'rgba(22, 156, 249, 0.3)',
       color: '#333',
       fontSize: '21px',
-      fontFamily: 'Arial, sans-serif',
+      fontFamily: "'Lexend', Arial, sans-serif",
       fontWeight: 'bold'
     };
   };
@@ -83,7 +83,7 @@ const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story, hideTitle = fa
           <CardTitle className="text-center text-lg font-bold" style={{
             color: '#F97316',
             fontSize: '18px',
-            fontFamily: 'Arial, sans-serif'
+            fontFamily: "'Lexend', Arial, sans-serif"
           }}>
             Last Updates
           </CardTitle>
