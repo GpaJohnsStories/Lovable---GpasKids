@@ -21,7 +21,7 @@ export const CHARACTER_VOICE_ASSIGNMENTS: CharacterVoice[] = [
     description: 'Warm and storytelling - Ideal for gentle cat stories'
   },
   {
-    character: 'Max',
+    character: 'Gpa John',
     voice: 'onyx', 
     description: 'Deep and authoritative - Great for strong character presence'
   },
@@ -29,11 +29,6 @@ export const CHARACTER_VOICE_ASSIGNMENTS: CharacterVoice[] = [
     character: 'Sparky',
     voice: 'sage',
     description: 'Wise and thoughtful - Perfect for energetic yet wise characters'
-  },
-  {
-    character: 'Grandpa John',
-    voice: 'echo',
-    description: 'Clear and crisp - Ideal for our main storyteller'
   }
 ];
 
