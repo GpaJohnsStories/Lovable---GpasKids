@@ -1,4 +1,6 @@
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 interface ColorDetail {
   name: string;
@@ -16,113 +18,58 @@ interface ColorPreset {
 }
 
 const ColorPresetsSection = () => {
-  // Color presets data based on existing implementations
-  const colorPresets: ColorPreset[] = [
-    {
-      number: 1,
-      name: 'Orange',
-      borderColor: '#F97316',
-      backgroundColor: 'rgba(249, 115, 22, 0.2)',
-      fontColor: '#333333',
-      colorDetails: [
-        { name: 'Border', code: '#F97316', pages: '/guide - SYS-GeA' },
-        { name: 'Photo Border', code: '#F97316', pages: '' },
-        { name: 'Background', code: 'rgba(249, 115, 22, 0.2)', pages: '' },
-        { name: 'Font', code: '#333333', pages: '' }
-      ]
-    },
-    {
-      number: 2,
-      name: 'Green',
-      borderColor: '#16a34a',
-      backgroundColor: 'rgba(22, 163, 74, 0.2)',
-      fontColor: '#333333',
-      colorDetails: [
-        { name: 'Border', code: '#16a34a', pages: '/guide - SYS-G1A' },
-        { name: 'Photo Border', code: '#16a34a', pages: '' },
-        { name: 'Background', code: 'rgba(22, 163, 74, 0.2)', pages: '' },
-        { name: 'Font', code: '#333333', pages: '' }
-      ]
-    },
-    {
-      number: 3,
-      name: 'Blue',
-      borderColor: '#3b82f6',
-      backgroundColor: 'rgba(59, 130, 246, 0.2)',
-      fontColor: '#333333',
-      colorDetails: [
-        { name: 'Border', code: '#3b82f6', pages: '/guide - SYS-G3B' },
-        { name: 'Photo Border', code: '#3b82f6', pages: '' },
-        { name: 'Background', code: 'rgba(59, 130, 246, 0.2)', pages: '' },
-        { name: 'Font', code: '#333333', pages: '' }
-      ]
-    },
-    {
-      number: 4,
-      name: 'Purple',
-      borderColor: '#6366f1',
-      backgroundColor: 'rgba(99, 102, 241, 0.2)',
-      fontColor: '#333333',
-      colorDetails: [
-        { name: 'Border', code: '#6366f1', pages: '/privacy - SYS-PR3' },
-        { name: 'Photo Border', code: '#6366f1', pages: '' },
-        { name: 'Background', code: 'rgba(99, 102, 241, 0.2)', pages: '' },
-        { name: 'Font', code: '#333333', pages: '' }
-      ]
-    },
-    {
-      number: 5,
-      name: 'To be set',
-      borderColor: '#9ca3af',
-      backgroundColor: 'rgba(156, 163, 175, 0.2)',
-      fontColor: '#333333',
-      colorDetails: [
-        { name: 'Border', code: 'To be set', pages: '' },
-        { name: 'Photo Border', code: 'To be set', pages: '' },
-        { name: 'Background', code: 'To be set', pages: '' },
-        { name: 'Font', code: 'To be set', pages: '' }
-      ]
-    },
-    {
-      number: 6,
-      name: 'To be set',
-      borderColor: '#9ca3af',
-      backgroundColor: 'rgba(156, 163, 175, 0.2)',
-      fontColor: '#333333',
-      colorDetails: [
-        { name: 'Border', code: 'To be set', pages: '' },
-        { name: 'Photo Border', code: 'To be set', pages: '' },
-        { name: 'Background', code: 'To be set', pages: '' },
-        { name: 'Font', code: 'To be set', pages: '' }
-      ]
-    },
-    {
-      number: 7,
-      name: 'To be set',
-      borderColor: '#9ca3af',
-      backgroundColor: 'rgba(156, 163, 175, 0.2)',
-      fontColor: '#333333',
-      colorDetails: [
-        { name: 'Border', code: 'To be set', pages: '' },
-        { name: 'Photo Border', code: 'To be set', pages: '' },
-        { name: 'Background', code: 'To be set', pages: '' },
-        { name: 'Font', code: 'To be set', pages: '' }
-      ]
-    },
-    {
-      number: 8,
-      name: 'To be set',
-      borderColor: '#9ca3af',
-      backgroundColor: 'rgba(156, 163, 175, 0.2)',
-      fontColor: '#333333',
-      colorDetails: [
-        { name: 'Border', code: 'To be set', pages: '' },
-        { name: 'Photo Border', code: 'To be set', pages: '' },
-        { name: 'Background', code: 'To be set', pages: '' },
-        { name: 'Font', code: 'To be set', pages: '' }
-      ]
+  // Fetch color presets from Supabase
+  const { data: colorPresetsData, isLoading, error } = useQuery({
+    queryKey: ['color-presets'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('color_presets')
+        .select('*')
+        .order('id');
+      
+      if (error) throw error;
+      return data;
     }
-  ];
+  });
+
+  // Transform Supabase data to match ColorPreset interface
+  const colorPresets: ColorPreset[] = colorPresetsData?.map(preset => ({
+    number: parseInt(preset.id),
+    name: preset.name,
+    borderColor: preset.box_border_color_hex || '#9ca3af',
+    backgroundColor: preset.background_color_hex || 'rgba(156, 163, 175, 0.2)',
+    fontColor: preset.font_color_hex || '#333333',
+    colorDetails: [
+      { name: preset.box_border_color_name || 'Border', code: preset.box_border_color_hex || 'To be set', pages: preset.pages || '' },
+      { name: preset.photo_border_color_name || 'Photo Border', code: preset.photo_border_color_hex || 'To be set', pages: '' },
+      { name: preset.background_color_name || 'Background', code: preset.background_color_hex || 'To be set', pages: '' },
+      { name: preset.font_color_name || 'Font', code: preset.font_color_hex || 'To be set', pages: '' }
+    ]
+  })) || [];
+
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <h3 className="text-2xl font-bold text-black" style={{ fontSize: '21px' }}>
+          Color Presets
+        </h3>
+        <div className="p-4 text-center">Loading color presets...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-4">
+        <h3 className="text-2xl font-bold text-black" style={{ fontSize: '21px' }}>
+          Color Presets
+        </h3>
+        <div className="p-4 text-center text-red-600">
+          Error loading color presets: {error.message}
+        </div>
+      </div>
+    );
+  }
 
   const ColorSwatch: React.FC<{ preset: ColorPreset }> = ({ preset }) => (
     <div
