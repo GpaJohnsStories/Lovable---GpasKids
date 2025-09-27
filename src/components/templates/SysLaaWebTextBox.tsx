@@ -1,4 +1,5 @@
-import React, { useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import BaseWebTextBox from "./BaseWebTextBox";
 
 interface SysLaaWebTextBoxProps {
@@ -12,20 +13,75 @@ const SysLaaWebTextBox: React.FC<SysLaaWebTextBoxProps> = ({
   title,
   id 
 }) => {
-  // SYS-LAA theme - orange colors
-  const orangeTheme = useMemo(() => ({
-    primaryColor: "#FF8C42",
-    borderColor: "#FF8C42", 
-    backgroundColor: "#FF8C4233",
-    photoMatColor: "#FF8C4233"
-  }), []);
+  const [colorPreset, setColorPreset] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchColorPreset = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('color_presets')
+          .select('*')
+          .eq('id', '1')
+          .single();
+        
+        if (error) {
+          console.error('Error fetching color preset:', error);
+          // Fallback to original orange theme
+          setColorPreset({
+            box_border_color_hex: "#FF8C42",
+            background_color_hex: "#FF8C42",
+            font_color_hex: "#FF8C42"
+          });
+        } else {
+          setColorPreset(data);
+        }
+      } catch (error) {
+        console.error('Error fetching color preset:', error);
+        // Fallback to original orange theme
+        setColorPreset({
+          box_border_color_hex: "#FF8C42",
+          background_color_hex: "#FF8C42", 
+          font_color_hex: "#FF8C42"
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchColorPreset();
+  }, []);
+
+  // Convert color preset to theme format
+  const theme = useMemo(() => {
+    if (!colorPreset) return null;
+    
+    const borderColor = colorPreset.box_border_color_hex || "#FF8C42";
+    const backgroundColor = colorPreset.background_color_hex || "#FF8C42";
+    const fontColor = colorPreset.font_color_hex || "#FF8C42";
+    
+    return {
+      primaryColor: fontColor,
+      borderColor: borderColor,
+      backgroundColor: backgroundColor + "33", // Add transparency
+      photoMatColor: backgroundColor + "33"   // Add transparency
+    };
+  }, [colorPreset]);
+
+  if (loading || !theme) {
+    return (
+      <div className="rounded-lg border p-4 mb-4">
+        <div className="text-18-system">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <BaseWebTextBox
       code={code}
-      title={title}
+      title={title}  
       id={id}
-      theme={orangeTheme}
+      theme={theme}
       cssClassPrefix="syslaa"
     />
   );
