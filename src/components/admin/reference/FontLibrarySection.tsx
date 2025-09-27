@@ -16,9 +16,9 @@ const FontLibrarySection = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
 
   const fontData: FontData[] = [
-    { fontFamily: "Arial", fontName: "Arial", style: "Regular" },
-    { fontFamily: "Arial", fontName: "Arial", style: "Bold" },
-    { fontFamily: "Arial", fontName: "Arial", style: "Italic" },
+    { fontFamily: "Arial", fontName: "Lexend", style: "Regular" },
+    { fontFamily: "Arial", fontName: "Lexend", style: "Bold" },
+    { fontFamily: "Arial", fontName: "Lexend", style: "Italic" },
     { fontFamily: "Georgia", fontName: "Georgia", style: "Regular" },
     { fontFamily: "Georgia", fontName: "Georgia", style: "Bold" },
     { fontFamily: "Georgia", fontName: "Georgia", style: "Italic" },
@@ -58,7 +58,7 @@ const FontLibrarySection = () => {
 
   const getFontStyle = (fontName: string, style: FontStyle): React.CSSProperties => {
     const baseStyle: React.CSSProperties = {
-      fontFamily: fontName === "Arial" ? "Arial, sans-serif" :
+      fontFamily: fontName === "Lexend" ? "'Lexend', Arial, sans-serif" :
                   fontName === "Georgia" ? "Georgia, serif" :
                   fontName === "Kalam" ? "Kalam, cursive" : fontName,
       color: "black",
