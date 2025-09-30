@@ -215,10 +215,10 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         onClick={handleMenuContainerClick}
       >
         <div className="relative">
-          {/* Main Menu - 1x7 vertical layout with hardcoded sizing */}
-          <div className="flex flex-col gap-0" style={{ width: '64px' }}>
+          {/* Main Menu - 1x7 vertical layout with 75x75px sizing */}
+          <div className="flex flex-col gap-0" style={{ width: '75px' }}>
             {mainMenuItems.map((item) => (
-              <div key={item.id} className="relative" style={{ width: '64px', height: '64px', flexShrink: 0 }}>
+              <div key={item.id} className="relative" style={{ width: '75px', height: '75px', flexShrink: 0 }}>
                 <MenuButton
                   icon={item.icon}
                   text={item.text}
@@ -237,9 +237,9 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                          key={submenuItem.id}
                          className="absolute top-0 z-[10001]"
                          style={{ 
-                           right: `${(index + 1) * 68}px`,
-                           width: '64px',
-                          height: '64px'
+                           right: `${(index + 1) * 79}px`,
+                           width: '75px',
+                          height: '75px'
                         }}
                       >
                         <MenuButton
