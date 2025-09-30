@@ -57,14 +57,14 @@ const SysLaaWebTextBox: React.FC<SysLaaWebTextBoxProps> = ({
     if (!colorPreset) return null;
     
     const borderColor = colorPreset.box_border_color_hex || "#FF8C42";
-    const backgroundColor = colorPreset.background_color_hex || "#FF8C42";
+    const backgroundColor = colorPreset.background_color_hex || "rgba(255, 140, 66, 0.2)";
     const fontColor = colorPreset.font_color_hex || "#FF8C42";
     
     return {
       primaryColor: fontColor,
       borderColor: borderColor,
-      backgroundColor: backgroundColor + "33", // Add transparency
-      photoMatColor: backgroundColor + "33"   // Add transparency
+      backgroundColor: backgroundColor,
+      photoMatColor: backgroundColor
     };
   }, [colorPreset]);
 

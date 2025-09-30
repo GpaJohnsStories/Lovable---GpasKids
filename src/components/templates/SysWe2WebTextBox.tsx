@@ -53,14 +53,14 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
     if (!colorPreset) return null;
     
     const borderColor = colorPreset.box_border_color_hex || "#4A7C59";
-    const backgroundColor = colorPreset.background_color_hex || "#4A7C59";
+    const backgroundColor = colorPreset.background_color_hex || "rgba(74, 124, 89, 0.2)";
     const fontColor = colorPreset.font_color_hex || "#4A7C59";
     
     return {
       primaryColor: fontColor,
       borderColor: borderColor,
-      backgroundColor: backgroundColor + "33", // Add transparency
-      photoMatColor: backgroundColor + "33"   // Add transparency
+      backgroundColor: backgroundColor,
+      photoMatColor: backgroundColor
     };
   }, [colorPreset]);
 
