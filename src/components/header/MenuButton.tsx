@@ -40,15 +40,15 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
 
   const getButtonStyle = () => {
     const baseColor = disabled ? disabledColor : color;
-    // Hardcoded exact pixel dimensions - 64x64px
+    // Hardcoded exact pixel dimensions - 75x75px
     return {
       background: `linear-gradient(135deg, ${baseColor}dd, ${baseColor}bb)`,
       boxShadow: disabled 
         ? `0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1)` 
         : `0 8px 16px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3)`,
       border: `2px solid ${baseColor}`,
-      width: '64px',
-      height: '64px',
+      width: '75px',
+      height: '75px',
       opacity: disabled ? 0.6 : 1,
       cursor: disabled ? 'not-allowed' : 'pointer'
     };
@@ -80,12 +80,12 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
           style={{
             ...getButtonStyle(),
             // AGGRESSIVE exact dimensions - override everything
-            width: '64px !important',
-            height: '64px !important',
-            minWidth: '64px !important',
-            maxWidth: '64px !important', 
-            minHeight: '64px !important',
-            maxHeight: '64px !important',
+            width: '75px !important',
+            height: '75px !important',
+            minWidth: '75px !important',
+            maxWidth: '75px !important', 
+            minHeight: '75px !important',
+            maxHeight: '75px !important',
             boxSizing: 'border-box',
             overflow: 'hidden',
             flexShrink: 0,
@@ -112,8 +112,8 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
             <div 
               className="flex items-center justify-center text-white text-xs font-bold"
               style={{
-                width: '56px',
-                height: '56px',
+                width: '67px',
+                height: '67px',
               }}
             >
               <span className="text-center leading-tight break-words">
@@ -128,8 +128,8 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
               src={iconUrl}
               alt={text}
               style={{
-                width: '56px',
-                height: '56px',
+                width: '67px',
+                height: '67px',
                 opacity: disabled ? 0.5 : 1
               }}
               className="object-contain"
@@ -138,8 +138,8 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
             <div 
               className="flex items-center justify-center text-white text-xs font-bold px-1"
               style={{
-                width: '56px',
-                height: '56px',
+                width: '67px',
+                height: '67px',
               }}
             >
               <span className="text-center leading-tight break-words hyphens-auto max-w-full">
