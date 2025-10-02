@@ -260,7 +260,8 @@ const Story = () => {
               )}
               
               <div 
-                className="bg-[#F5E6D3] border-2 border-[#9c441a] rounded-lg p-6 md:p-8 shadow-sm"
+                className="bg-[rgba(156,163,175,0.2)] border-2 border-[#9ca3af] rounded-lg p-6 md:p-8 shadow-sm"
+                style={{ color: '#333333' }}
               >
                 <IsolatedStoryRenderer 
                   content={contentWithoutTokens || story.content || "No content available."}
