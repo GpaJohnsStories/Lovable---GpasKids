@@ -154,34 +154,34 @@ const ColorPresetsSection = () => {
           }}
         >
           {/* Headers Row */}
-          <div className="col-span-1 font-bold border p-2 text-center bg-gray-100">
+          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Preset #<br />Name
           </div>
-          <div className="col-span-1 font-bold border p-2 text-center bg-gray-100">
+          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Color Swatch
           </div>
-          <div className="col-span-1 font-bold border p-2 text-center bg-gray-100">
+          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Names
           </div>
-          <div className="col-span-1 font-bold border p-2 text-center bg-gray-100">
+          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Codes
           </div>
-          <div className="col-span-1 font-bold border p-2 text-center bg-gray-100">
+          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Pages
           </div>
-          <div className="col-span-1 font-bold border p-2 text-center bg-gray-100">
+          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Preset #<br />Name
           </div>
-          <div className="col-span-1 font-bold border p-2 text-center bg-gray-100">
+          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Color Swatch
           </div>
-          <div className="col-span-1 font-bold border p-2 text-center bg-gray-100">
+          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Names
           </div>
-          <div className="col-span-1 font-bold border p-2 text-center bg-gray-100">
+          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Codes
           </div>
-          <div className="col-span-1 font-bold border p-2 text-center bg-gray-100">
+          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Pages
           </div>
 
@@ -197,7 +197,7 @@ const ColorPresetsSection = () => {
               <React.Fragment key={`preset-${preset.number}`}>
                 {/* Preset number and name - spans 4 rows */}
                 <div 
-                  className="border p-2 text-center font-bold flex flex-col items-center justify-center bg-gray-50 gap-2"
+                  className="border px-2 py-1 text-center font-bold flex flex-col items-center justify-center bg-gray-50 gap-1"
                   style={{ 
                     gridColumn: `${colStart} / ${colStart + 1}`,
                     gridRow: `${rowStart} / ${rowStart + 4}`
@@ -237,7 +237,7 @@ const ColorPresetsSection = () => {
                 
                 {/* Color swatch - spans 4 rows */}
                 <div 
-                  className="border p-2 flex items-center justify-center"
+                  className="border px-2 py-1 flex items-center justify-center"
                   style={{ 
                     gridColumn: `${colStart + 1} / ${colStart + 2}`,
                     gridRow: `${rowStart} / ${rowStart + 4}`
@@ -258,42 +258,25 @@ const ColorPresetsSection = () => {
                   return (
                     <React.Fragment key={`preset-${preset.number}-detail-${detailIndex}`}>
                       <div 
-                        className="border p-2 text-sm"
+                        className="border px-2 py-0.5 text-sm"
                         style={{ 
                           gridColumn: `${colStart + 2} / ${colStart + 3}`,
                           gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
                         }}
                       >
-                        {isEditing ? (
-                          <Input
-                            value={editValues[fieldMap.nameKey] || ''}
-                            onChange={(e) => setEditValues({ ...editValues, [fieldMap.nameKey]: e.target.value })}
-                            className="h-7 text-sm"
-                          />
-                        ) : (
-                          detail.name
-                        )}
+...
                       </div>
                       <div 
-                        className="border p-2 text-xs font-mono"
+                        className="border px-2 py-0.5 text-xs font-mono"
                         style={{ 
                           gridColumn: `${colStart + 3} / ${colStart + 4}`,
                           gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
                         }}
                       >
-                        {isEditing ? (
-                          <Input
-                            value={editValues[fieldMap.hexKey] || ''}
-                            onChange={(e) => setEditValues({ ...editValues, [fieldMap.hexKey]: e.target.value })}
-                            className="h-7 text-xs font-mono"
-                            placeholder="#RRGGBB"
-                          />
-                        ) : (
-                          detail.code
-                        )}
+...
                       </div>
                       <div 
-                        className="border p-2 text-xs"
+                        className="border px-2 py-0.5 text-xs"
                         style={{ 
                           gridColumn: `${colStart + 4} / ${colStart + 5}`,
                           gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
