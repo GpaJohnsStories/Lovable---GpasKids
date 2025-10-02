@@ -264,7 +264,15 @@ const ColorPresetsSection = () => {
                           gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
                         }}
                       >
-...
+                        {isEditing ? (
+                          <Input
+                            value={editValues[fieldMap.nameKey] || ''}
+                            onChange={(e) => setEditValues({ ...editValues, [fieldMap.nameKey]: e.target.value })}
+                            className="h-7 text-sm"
+                          />
+                        ) : (
+                          detail.name
+                        )}
                       </div>
                       <div 
                         className="border px-2 py-0.5 text-xs font-mono"
@@ -273,7 +281,16 @@ const ColorPresetsSection = () => {
                           gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
                         }}
                       >
-...
+                        {isEditing ? (
+                          <Input
+                            value={editValues[fieldMap.hexKey] || ''}
+                            onChange={(e) => setEditValues({ ...editValues, [fieldMap.hexKey]: e.target.value })}
+                            className="h-7 text-xs font-mono"
+                            placeholder="#RRGGBB"
+                          />
+                        ) : (
+                          detail.code
+                        )}
                       </div>
                       <div 
                         className="border px-2 py-0.5 text-xs"
