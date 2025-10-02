@@ -1,6 +1,10 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React, { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
+import { Pencil, Save, X } from 'lucide-react';
 
 interface ColorDetail {
   name: string;
@@ -18,6 +22,10 @@ interface ColorPreset {
 }
 
 const ColorPresetsSection = () => {
+  const queryClient = useQueryClient();
+  const [editingPreset, setEditingPreset] = useState<string | null>(null);
+  const [editValues, setEditValues] = useState<any>({});
+
   // Fetch color presets from Supabase
   const { data: colorPresetsData, isLoading, error } = useQuery({
     queryKey: ['color-presets'],
@@ -46,6 +54,41 @@ const ColorPresetsSection = () => {
       { name: preset.font_color_name || 'Font', code: preset.font_color_hex || 'To be set', pages: '' }
     ]
   })) || [];
+
+  // Mutation to update color preset
+  const updatePresetMutation = useMutation({
+    mutationFn: async ({ id, updates }: { id: string; updates: any }) => {
+      const { error } = await supabase
+        .from('color_presets')
+        .update(updates)
+        .eq('id', id);
+      
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['color-presets'] });
+      toast.success('Color preset updated successfully');
+      setEditingPreset(null);
+      setEditValues({});
+    },
+    onError: (error: any) => {
+      toast.error(`Failed to update preset: ${error.message}`);
+    }
+  });
+
+  const startEdit = (presetId: string, currentData: any) => {
+    setEditingPreset(presetId);
+    setEditValues(currentData);
+  };
+
+  const cancelEdit = () => {
+    setEditingPreset(null);
+    setEditValues({});
+  };
+
+  const saveEdit = (presetId: string) => {
+    updatePresetMutation.mutate({ id: presetId, updates: editValues });
+  };
 
   if (isLoading) {
     return (
@@ -147,12 +190,14 @@ const ColorPresetsSection = () => {
             const isLeftColumn = presetIndex < 4; // Presets 1-4 on left, 5-8 on right
             const colStart = isLeftColumn ? 1 : 6;
             const rowStart = isLeftColumn ? 2 + (presetIndex * 4) : 2 + ((presetIndex - 4) * 4);
+            const presetData = colorPresetsData?.find(p => p.id === preset.number.toString());
+            const isEditing = editingPreset === preset.number.toString();
             
             return (
               <React.Fragment key={`preset-${preset.number}`}>
                 {/* Preset number and name - spans 4 rows */}
                 <div 
-                  className="border p-2 text-center font-bold flex flex-col items-center justify-center bg-gray-50"
+                  className="border p-2 text-center font-bold flex flex-col items-center justify-center bg-gray-50 gap-2"
                   style={{ 
                     gridColumn: `${colStart} / ${colStart + 1}`,
                     gridRow: `${rowStart} / ${rowStart + 4}`
@@ -160,6 +205,34 @@ const ColorPresetsSection = () => {
                 >
                   <div className="text-lg">{preset.number}</div>
                   <div className="text-sm">{preset.name}</div>
+                  {!isEditing ? (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => startEdit(preset.number.toString(), presetData)}
+                      className="mt-2"
+                    >
+                      <Pencil className="h-3 w-3" />
+                    </Button>
+                  ) : (
+                    <div className="flex gap-1">
+                      <Button
+                        size="sm"
+                        variant="default"
+                        onClick={() => saveEdit(preset.number.toString())}
+                        disabled={updatePresetMutation.isPending}
+                      >
+                        <Save className="h-3 w-3" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={cancelEdit}
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
                 
                 {/* Color swatch - spans 4 rows */}
@@ -174,37 +247,71 @@ const ColorPresetsSection = () => {
                 </div>
                 
                 {/* Color details - 4 individual rows */}
-                {preset.colorDetails.map((detail, detailIndex) => (
-                  <React.Fragment key={`preset-${preset.number}-detail-${detailIndex}`}>
-                    <div 
-                      className="border p-2 text-sm"
-                      style={{ 
-                        gridColumn: `${colStart + 2} / ${colStart + 3}`,
-                        gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
-                      }}
-                    >
-                      {detail.name}
-                    </div>
-                    <div 
-                      className="border p-2 text-xs font-mono"
-                      style={{ 
-                        gridColumn: `${colStart + 3} / ${colStart + 4}`,
-                        gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
-                      }}
-                    >
-                      {detail.code}
-                    </div>
-                    <div 
-                      className="border p-2 text-xs"
-                      style={{ 
-                        gridColumn: `${colStart + 4} / ${colStart + 5}`,
-                        gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
-                      }}
-                    >
-                      {detail.pages}
-                    </div>
-                  </React.Fragment>
-                ))}
+                {preset.colorDetails.map((detail, detailIndex) => {
+                  const fieldMap = [
+                    { nameKey: 'box_border_color_name', hexKey: 'box_border_color_hex' },
+                    { nameKey: 'photo_border_color_name', hexKey: 'photo_border_color_hex' },
+                    { nameKey: 'background_color_name', hexKey: 'background_color_hex' },
+                    { nameKey: 'font_color_name', hexKey: 'font_color_hex' }
+                  ][detailIndex];
+
+                  return (
+                    <React.Fragment key={`preset-${preset.number}-detail-${detailIndex}`}>
+                      <div 
+                        className="border p-2 text-sm"
+                        style={{ 
+                          gridColumn: `${colStart + 2} / ${colStart + 3}`,
+                          gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
+                        }}
+                      >
+                        {isEditing ? (
+                          <Input
+                            value={editValues[fieldMap.nameKey] || ''}
+                            onChange={(e) => setEditValues({ ...editValues, [fieldMap.nameKey]: e.target.value })}
+                            className="h-7 text-sm"
+                          />
+                        ) : (
+                          detail.name
+                        )}
+                      </div>
+                      <div 
+                        className="border p-2 text-xs font-mono"
+                        style={{ 
+                          gridColumn: `${colStart + 3} / ${colStart + 4}`,
+                          gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
+                        }}
+                      >
+                        {isEditing ? (
+                          <Input
+                            value={editValues[fieldMap.hexKey] || ''}
+                            onChange={(e) => setEditValues({ ...editValues, [fieldMap.hexKey]: e.target.value })}
+                            className="h-7 text-xs font-mono"
+                            placeholder="#RRGGBB"
+                          />
+                        ) : (
+                          detail.code
+                        )}
+                      </div>
+                      <div 
+                        className="border p-2 text-xs"
+                        style={{ 
+                          gridColumn: `${colStart + 4} / ${colStart + 5}`,
+                          gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
+                        }}
+                      >
+                        {isEditing && detailIndex === 0 ? (
+                          <Input
+                            value={editValues.pages || ''}
+                            onChange={(e) => setEditValues({ ...editValues, pages: e.target.value })}
+                            className="h-7 text-xs"
+                          />
+                        ) : (
+                          detail.pages
+                        )}
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
               </React.Fragment>
             );
           })}
