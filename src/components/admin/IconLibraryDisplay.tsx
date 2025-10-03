@@ -481,24 +481,22 @@ const IconLibraryDisplay = () => {
                       <span className="text-muted-foreground text-sm">Not assigned</span>
                     )}
                   </TableCell>
-                  <TableCell className="align-top">
-                    <div className="flex gap-2 items-start pt-2">
+                  <TableCell className="align-top pt-2">
+                    <div className="flex gap-2 items-start">
                       <Button
                         size="sm"
-                        variant="outline"
                         onClick={() => handleReplace(icon)}
-                        className="h-8"
+                        className="h-12 w-12 bg-green-500 hover:bg-green-600 text-white"
                       >
-                        <Edit3 className="h-3 w-3" />
+                        <Edit3 className="h-4 w-4" />
                       </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <Button
                             size="sm"
-                            variant="outline"
-                            className="h-8"
+                            className="h-12 w-12 bg-red-500 hover:bg-red-600 text-white"
                           >
-                            <Trash2 className="h-3 w-3" />
+                            <Trash2 className="h-4 w-4" />
                           </Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
