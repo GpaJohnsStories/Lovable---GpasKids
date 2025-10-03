@@ -56,9 +56,27 @@ const SysLaaWebTextBox: React.FC<SysLaaWebTextBoxProps> = ({
   const theme = useMemo(() => {
     if (!colorPreset) return null;
     
-    const borderColor = colorPreset.box_border_color_hex || "#FF8C42";
-    const backgroundColor = colorPreset.background_color_hex || "rgba(255, 140, 66, 0.2)";
-    const fontColor = colorPreset.font_color_hex || "#FF8C42";
+    const borderColor = colorPreset.box_border_color_hex || "#f97316";
+    const fontColor = colorPreset.font_color_hex || "#f97316";
+    
+    // Always use rgba with 20% opacity for background
+    // Convert hex to rgba if needed
+    let backgroundColor = "rgba(249, 115, 22, 0.2)"; // Default orange with transparency
+    
+    if (colorPreset.background_color_hex) {
+      const bgHex = colorPreset.background_color_hex;
+      // If it's already rgba, use it
+      if (bgHex.startsWith('rgba')) {
+        backgroundColor = bgHex;
+      } else if (bgHex.startsWith('#')) {
+        // Convert hex to rgba with 0.2 opacity
+        const hex = bgHex.replace('#', '');
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        backgroundColor = `rgba(${r}, ${g}, ${b}, 0.2)`;
+      }
+    }
     
     return {
       primaryColor: fontColor,
