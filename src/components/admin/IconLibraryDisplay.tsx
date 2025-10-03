@@ -481,8 +481,8 @@ const IconLibraryDisplay = () => {
                       <span className="text-muted-foreground text-sm">Not assigned</span>
                     )}
                   </TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
+                  <TableCell className="align-top">
+                    <div className="flex gap-2 items-start pt-2">
                       <Button
                         size="sm"
                         variant="outline"
