@@ -564,22 +564,18 @@ const StoriesTableRow = ({
             
             <Popover open={presetPopoverOpen} onOpenChange={setPresetPopoverOpen}>
               <PopoverTrigger asChild>
-                <Button
-                  size="sm"
-                  className="w-full h-7 px-2"
+                <button
+                  className="w-full h-7 px-2 rounded-lg font-bold text-sm cursor-pointer hover:opacity-80 transition-opacity"
                   style={{
-                    borderRadius: '8px',
                     borderWidth: '2px',
-                    fontFamily: 'Arial',
-                    fontWeight: 'bold',
-                    fontSize: '14px',
+                    borderStyle: 'solid',
                     borderColor: currentPreset ? currentPreset.box_border_color_hex : '#9ca3af',
                     backgroundColor: currentPreset ? currentPreset.background_color_hex : 'rgba(156, 163, 175, 0.2)',
                     color: currentPreset ? currentPreset.font_color_hex : '#6b7280',
                   }}
                 >
                   {currentPreset ? `${currentPreset.id} - ${currentPreset.name}` : 'NONE'}
-                </Button>
+                </button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0 bg-white z-50" align="start">
                 <div className="p-2">
