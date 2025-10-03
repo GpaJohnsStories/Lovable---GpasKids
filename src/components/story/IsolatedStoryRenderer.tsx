@@ -3,6 +3,8 @@ import { createSafeHtml } from "@/utils/xssProtection";
 import { wrapParagraphs } from "@/utils/textUtils";
 import { processIconTokens } from "@/utils/iconTokens";
 import { stripLegacyTokens } from "@/utils/legacyTokenStripper";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 interface IsolatedStoryRendererProps {
   content?: string;
@@ -14,6 +16,7 @@ interface IsolatedStoryRendererProps {
   onFontSizeChange?: (fontSize: number) => void;
   showHeaderPreview?: boolean; // Keep for compatibility but unused
   enableProportionalSizing?: boolean;
+  colorPresetId?: string;
 }
 
 /**
@@ -29,12 +32,38 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
   fontSize = 16,
   onFontSizeChange,
   showHeaderPreview = true, // Keep for compatibility but ignore
-  enableProportionalSizing = false
+  enableProportionalSizing = false,
+  colorPresetId
 }) => {
+  // Fetch color preset if provided
+  const { data: colorPreset } = useQuery({
+    queryKey: ['color-preset', colorPresetId],
+    queryFn: async () => {
+      if (!colorPresetId) return null;
+      const { data, error } = await supabase
+        .from('color_presets')
+        .select('background_color_hex, box_border_color_hex, font_color_hex, photo_border_color_hex')
+        .eq('id', colorPresetId)
+        .maybeSingle();
+      
+      if (error) {
+        console.error('Error fetching color preset:', error);
+        return null;
+      }
+      return data;
+    },
+    enabled: !!colorPresetId
+  });
+
   const isWebText = category === "WebText";
   const baseFontFamily = isWebText 
     ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" 
     : "Georgia, serif";
+
+  // Apply color preset if available
+  const backgroundColor = colorPreset?.background_color_hex || '#FFFFFF';
+  const borderColor = colorPreset?.box_border_color_hex || 'transparent';
+  const textColor = colorPreset?.font_color_hex || '#000000';
 
   if (content) {
     // Strip legacy tokens from content for clean display
@@ -78,13 +107,15 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
           style={{
             // Targeted resets that preserve HTML element defaults
             margin: 0,
-            padding: 0,
-            border: 0,
+            padding: colorPreset ? '16px' : 0,
+            border: colorPreset ? `3px solid ${borderColor}` : 0,
             boxSizing: 'border-box',
             display: 'block',
+            backgroundColor: backgroundColor,
+            borderRadius: colorPreset ? '8px' : 0,
             // Remove fontFamily from container to allow inline styles to work
             fontSize: `${fontSize}px`,
-            color: '#000000',
+            color: textColor,
             lineHeight: '1.5',
           }}
           dangerouslySetInnerHTML={safeHtml}

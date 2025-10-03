@@ -452,6 +452,7 @@ export type Database = {
           category: Database["public"]["Enums"]["story_category"]
           chapter_number: number | null
           chapter_title: string | null
+          color_preset_id: string | null
           content: string | null
           copyright_status: string | null
           created_at: string
@@ -495,6 +496,7 @@ export type Database = {
           category: Database["public"]["Enums"]["story_category"]
           chapter_number?: number | null
           chapter_title?: string | null
+          color_preset_id?: string | null
           content?: string | null
           copyright_status?: string | null
           created_at?: string
@@ -538,6 +540,7 @@ export type Database = {
           category?: Database["public"]["Enums"]["story_category"]
           chapter_number?: number | null
           chapter_title?: string | null
+          color_preset_id?: string | null
           content?: string | null
           copyright_status?: string | null
           created_at?: string
@@ -567,7 +570,15 @@ export type Database = {
           video_duration_seconds?: number | null
           video_url?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "stories_color_preset_id_fkey"
+            columns: ["color_preset_id"]
+            isOneToOne: false
+            referencedRelation: "color_presets"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       story_reads: {
         Row: {

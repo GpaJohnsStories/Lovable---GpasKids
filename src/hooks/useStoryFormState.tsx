@@ -54,6 +54,7 @@ export interface Story {
   updated_at?: string;
   audio_generated_at?: string;
   publication_status_code?: number;
+  color_preset_id?: string;
 }
 
 const initialFormData: Story = {

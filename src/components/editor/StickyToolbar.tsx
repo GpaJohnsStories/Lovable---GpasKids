@@ -6,6 +6,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, List, ListOrdered, Trash2, Link2, Key, Minus, FileText, Package, FileCode } from "lucide-react";
 import InternalLinkDialog from "@/components/rich-text-editor/InternalLinkDialog";
 import { useTooltipContext } from "@/contexts/TooltipContext";
+import ColorPresetSelector from "./ColorPresetSelector";
 
 interface StickyToolbarProps {
   onFormat: (tag: string) => void;
@@ -25,6 +26,8 @@ interface StickyToolbarProps {
   onSelectAllPreview: () => void;
   onInsertIconTokens: () => void;
   category?: string;
+  colorPresetId?: string;
+  onColorPresetChange?: (presetId: string) => void;
 }
 
 const StickyToolbar: React.FC<StickyToolbarProps> = ({
@@ -44,7 +47,9 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   onInsertFontSize,
   onSelectAllPreview,
   onInsertIconTokens,
-  category
+  category,
+  colorPresetId,
+  onColorPresetChange
 }) => {
   const { shouldShowTooltips } = useTooltipContext();
 
@@ -223,9 +228,9 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
         </div>
       </div>
 
-      {/* Second row for font size insertions */}
-      <div className="flex items-center gap-2 mt-2 flex-wrap">
-        <div className="flex items-center gap-1">
+      {/* Second row for font size insertions and color preset */}
+      <div className="flex items-center gap-2 mt-2 flex-wrap justify-between">
+        <div className="flex items-center gap-1 flex-1">
           {/* Font selector moved from top row */}
           <Select onValueChange={onFontChange}>
             <SelectTrigger className="h-6 w-24 text-xs btn-toolbar-slate">
@@ -316,6 +321,20 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
             </Button>
           </ConditionalTooltip>
         </div>
+        
+        {/* Color Preset Selector - aligned right */}
+        {onColorPresetChange && (
+          <div className="flex items-center gap-2">
+            <ConditionalTooltip content="Select color scheme for Live Preview">
+              <div>
+                <ColorPresetSelector
+                  value={colorPresetId || ''}
+                  onChange={onColorPresetChange}
+                />
+              </div>
+            </ConditionalTooltip>
+          </div>
+        )}
       </div>
     </div>
   );

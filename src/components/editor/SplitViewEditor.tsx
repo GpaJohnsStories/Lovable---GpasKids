@@ -16,6 +16,8 @@ interface SplitViewEditorProps {
   fontSize?: number;
   onFontSizeChange?: (fontSize: number) => void;
   previewContent?: string | null;
+  colorPresetId?: string;
+  onColorPresetChange?: (presetId: string) => void;
 }
 
 const SplitViewEditor: React.FC<SplitViewEditorProps> = ({ 
@@ -26,7 +28,9 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   category,
   fontSize = 21,
   onFontSizeChange,
-  previewContent = null
+  previewContent = null,
+  colorPresetId,
+  onColorPresetChange
 }) => {
   console.log('🎯 SplitViewEditor: Rendering with content:', {
     content: content ? `"${content.substring(0, 100)}..."` : 'undefined/empty',
@@ -387,6 +391,8 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
           onSelectAllPreview={handleSelectAllPreview}
           onInsertIconTokens={handleInsertIconTokens}
           category={category}
+          colorPresetId={colorPresetId}
+          onColorPresetChange={onColorPresetChange}
         />
       
       {/* Screen Size Indicator Line - Desktop Only */}
@@ -439,6 +445,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
                 fontSize={fontSize}
                 onFontSizeChange={onFontSizeChange}
                 enableProportionalSizing={true}
+                colorPresetId={colorPresetId}
               />
             </div>
             <StoryContentScrollToTop scrollContainerRef={storyContentRef} targetSelector="#format-menu" />

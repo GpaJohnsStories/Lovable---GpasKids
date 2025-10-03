@@ -55,6 +55,7 @@ interface Story {
   updated_at?: string;
   audio_generated_at?: string;
   publication_status_code?: number;
+  color_preset_id?: string;
 }
 const SuperText: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -67,6 +68,7 @@ const SuperText: React.FC = () => {
   const [lookupResult, setLookupResult] = React.useState<Story | null>(null);
   const [lookupStatus, setLookupStatus] = React.useState<'idle' | 'found' | 'not-found'>('idle');
   const [showSuperAV, setShowSuperAV] = React.useState(false);
+  const [colorPresetId, setColorPresetId] = React.useState<string>('');
   
 
   // Refs for section scrolling
@@ -161,6 +163,7 @@ const SuperText: React.FC = () => {
           setCategory(story.category);
           setCopyrightStatus(story.copyright_status || '©');
           setPublicationStatusCode(story.publication_status_code || 5);
+          setColorPresetId(story.color_preset_id || '');
           toast.success("Story data loaded successfully!");
         }
       };
@@ -196,6 +199,7 @@ const SuperText: React.FC = () => {
     setCategory('');
     setCopyrightStatus('');
     setPublicationStatusCode(5);
+    setColorPresetId('');
 
     // Clear category in form data
     handleInputChange('category', '');
@@ -290,6 +294,7 @@ const SuperText: React.FC = () => {
       setCategory(story.category);
       setCopyrightStatus(story.copyright_status || '©');
       setPublicationStatusCode(story.publication_status_code || 5);
+      setColorPresetId(story.color_preset_id || '');
       toast.success("Story data loaded successfully!");
     }
   }, [storyCode, lookupStoryByCode, populateFormWithStory]);
@@ -302,6 +307,7 @@ const SuperText: React.FC = () => {
       setCategory(lookupResult.category);
       setCopyrightStatus(lookupResult.copyright_status || '©');
       setPublicationStatusCode(lookupResult.publication_status_code || 5);
+      setColorPresetId(lookupResult.color_preset_id || '');
       toast.success("Story data loaded successfully!");
     } else if (lookupStatus === 'not-found') {
       // Ready for new story - just show message
@@ -335,12 +341,21 @@ const SuperText: React.FC = () => {
         return;
       }
 
+      // Validate color preset is selected
+      if (!colorPresetId) {
+        toast.error("Please select a color preset before saving.");
+        return;
+      }
+
       // SAFEGUARD: If story_code changed but id is still present, treat as new story
-      let formDataToSave = formData;
+      let formDataToSave = {
+        ...formData,
+        color_preset_id: colorPresetId
+      };
       if (formData.id && lookupResult && lookupResult.story_code !== formData.story_code) {
         console.log('🛡️ SAFEGUARD: Story code changed from', lookupResult.story_code, 'to', formData.story_code, '- treating as new story');
         formDataToSave = {
-          ...formData,
+          ...formDataToSave,
           id: ''
         };
         toast.success(`Creating new story with code ${formData.story_code}`);
@@ -1169,7 +1184,18 @@ const SuperText: React.FC = () => {
               <h2 className="text-xl font-bold text-green-700">{lookupResult ? `Editing Story${formData.story_code ? `: ${formData.story_code}` : ''}` : `Creating New Story${formData.story_code ? `: ${formData.story_code}` : ''}`}</h2>
             </div>
             
-            <SplitViewEditor content={formData.content} onChange={value => handleInputChange('content', value)} placeholder="Enter your story content here..." category={formData.category as any} previewContent={formData.content} />
+            <SplitViewEditor 
+              content={formData.content} 
+              onChange={value => handleInputChange('content', value)} 
+              placeholder="Enter your story content here..." 
+              category={formData.category as any} 
+              previewContent={formData.content}
+              colorPresetId={colorPresetId}
+              onColorPresetChange={(presetId) => {
+                setColorPresetId(presetId);
+                handleInputChange('color_preset_id', presetId);
+              }}
+            />
           </div>
 
           <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
