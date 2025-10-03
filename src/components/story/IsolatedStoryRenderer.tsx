@@ -60,10 +60,10 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
     ? "'Kalam', 'Comic Sans MS', 'Arial', sans-serif" 
     : "Georgia, serif";
 
-  // Apply color preset if available
-  const backgroundColor = colorPreset?.background_color_hex || '#FFFFFF';
+  // Apply color preset if available, otherwise transparent/inherit
+  const backgroundColor = colorPreset?.background_color_hex || 'transparent';
   const borderColor = colorPreset?.box_border_color_hex || 'transparent';
-  const textColor = colorPreset?.font_color_hex || '#000000';
+  const textColor = colorPreset?.font_color_hex || 'inherit';
 
   if (content) {
     // Strip legacy tokens from content for clean display
