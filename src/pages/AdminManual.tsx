@@ -1,12 +1,11 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import AdminLayout from '@/components/admin/AdminLayout';
 import SysWelWebTextBox from '@/components/templates/SysWelWebTextBox';  
 import SysWe2WebTextBox from '@/components/templates/SysWe2WebTextBox';
 
 const AdminManual: React.FC = () => {
   return (
-    <AdminLayout>
+    <>
       <Helmet>
         <title>Admin Manual - GpasKids.com Administration Guide</title>
         <meta name="description" content="Comprehensive administration manual for GpasKids.com with templates, standards, and procedures." />
@@ -83,7 +82,7 @@ const AdminManual: React.FC = () => {
           id="maintenance-schedule"
         />
       </div>
-    </AdminLayout>
+    </>
   );
 };
 
