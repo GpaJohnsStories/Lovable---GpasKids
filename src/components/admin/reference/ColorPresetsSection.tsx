@@ -87,7 +87,14 @@ const ColorPresetsSection = () => {
   };
 
   const saveEdit = (presetId: string) => {
-    updatePresetMutation.mutate({ id: presetId, updates: editValues });
+    // Trim all 7-character hex fields to remove trailing spaces
+    const trimmedUpdates = {
+      ...editValues,
+      box_border_color_hex: editValues.box_border_color_hex?.trim() || editValues.box_border_color_hex,
+      photo_border_color_hex: editValues.photo_border_color_hex?.trim() || editValues.photo_border_color_hex,
+      font_color_hex: editValues.font_color_hex?.trim() || editValues.font_color_hex,
+    };
+    updatePresetMutation.mutate({ id: presetId, updates: trimmedUpdates });
   };
 
   if (isLoading) {
