@@ -152,19 +152,16 @@ const ColorPresetsSection = () => {
       {/* Color Presets Grid */}
       <div className="overflow-x-auto">
         <div 
-          className="grid gap-2 min-w-[1200px]"
+          className="grid gap-2 min-w-[1000px]"
           style={{ 
-            gridTemplateColumns: 'repeat(10, 1fr)',
-            gridTemplateRows: 'repeat(17, minmax(0, 1fr))',
+            gridTemplateColumns: 'repeat(8, 1fr)',
+            gridTemplateRows: 'repeat(25, minmax(0, 1fr))',
             fontSize: '21px'
           }}
         >
           {/* Headers Row */}
           <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
-            Preset #<br />Name
-          </div>
-          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
-            Color Swatch
+            Preset #<br />Name<br />Color Swatch
           </div>
           <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Names
@@ -176,10 +173,7 @@ const ColorPresetsSection = () => {
             Pages
           </div>
           <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
-            Preset #<br />Name
-          </div>
-          <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
-            Color Swatch
+            Preset #<br />Name<br />Color Swatch
           </div>
           <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Names
@@ -194,19 +188,19 @@ const ColorPresetsSection = () => {
           {/* Render each preset */}
           {colorPresets.map((preset, presetIndex) => {
             const isLeftColumn = presetIndex < 4; // Presets 1-4 on left, 5-8 on right
-            const colStart = isLeftColumn ? 1 : 6;
-            const rowStart = isLeftColumn ? 2 + (presetIndex * 4) : 2 + ((presetIndex - 4) * 4);
+            const colStart = isLeftColumn ? 1 : 5;
+            const rowStart = isLeftColumn ? 2 + (presetIndex * 6) : 2 + ((presetIndex - 4) * 6);
             const presetData = colorPresetsData?.find(p => p.id === preset.number.toString());
             const isEditing = editingPreset === preset.number.toString();
             
             return (
               <React.Fragment key={`preset-${preset.number}`}>
-                {/* Preset number and name - spans 4 rows */}
+                {/* Preset number and name - 1 row */}
                 <div 
-                  className="border px-2 py-1 text-center font-bold flex flex-col items-start justify-start bg-gray-50 gap-1"
+                  className="border px-2 py-1 text-center font-bold flex flex-col items-center justify-center bg-gray-50 gap-1"
                   style={{ 
                     gridColumn: `${colStart} / ${colStart + 1}`,
-                    gridRow: `${rowStart} / ${rowStart + 4}`
+                    gridRow: `${rowStart} / ${rowStart + 1}`
                   }}
                 >
                   <div className="text-lg">{preset.number}</div>
@@ -224,7 +218,7 @@ const ColorPresetsSection = () => {
                       size="sm"
                       variant="outline"
                       onClick={() => startEdit(preset.number.toString(), presetData)}
-                      className="mt-2"
+                      className="mt-1"
                     >
                       <Pencil className="h-3 w-3" />
                     </Button>
@@ -249,12 +243,12 @@ const ColorPresetsSection = () => {
                   )}
                 </div>
                 
-                {/* Color swatch - spans 4 rows */}
+                {/* Color swatch - 1 row */}
                 <div 
-                  className="border px-2 py-1 flex items-start justify-center pt-2"
+                  className="border px-2 py-1 flex items-center justify-center"
                   style={{ 
-                    gridColumn: `${colStart + 1} / ${colStart + 2}`,
-                    gridRow: `${rowStart} / ${rowStart + 4}`
+                    gridColumn: `${colStart} / ${colStart + 1}`,
+                    gridRow: `${rowStart + 1} / ${rowStart + 2}`
                   }}
                 >
                   <ColorSwatch preset={preset} />
@@ -274,8 +268,8 @@ const ColorPresetsSection = () => {
                       <div 
                         className="border px-2 py-0.5 text-sm"
                         style={{ 
-                          gridColumn: `${colStart + 2} / ${colStart + 3}`,
-                          gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
+                          gridColumn: `${colStart + 1} / ${colStart + 2}`,
+                          gridRow: `${rowStart + 2 + detailIndex} / ${rowStart + 3 + detailIndex}`
                         }}
                       >
                         {isEditing ? (
@@ -291,8 +285,8 @@ const ColorPresetsSection = () => {
                       <div 
                         className="border px-2 py-0.5 text-xs font-mono"
                         style={{ 
-                          gridColumn: `${colStart + 3} / ${colStart + 4}`,
-                          gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
+                          gridColumn: `${colStart + 2} / ${colStart + 3}`,
+                          gridRow: `${rowStart + 2 + detailIndex} / ${rowStart + 3 + detailIndex}`
                         }}
                       >
                         {isEditing ? (
@@ -309,8 +303,8 @@ const ColorPresetsSection = () => {
                       <div 
                         className="border px-2 py-0.5 text-xs"
                         style={{ 
-                          gridColumn: `${colStart + 4} / ${colStart + 5}`,
-                          gridRow: `${rowStart + detailIndex} / ${rowStart + detailIndex + 1}`
+                          gridColumn: `${colStart + 3} / ${colStart + 4}`,
+                          gridRow: `${rowStart + 2 + detailIndex} / ${rowStart + 3 + detailIndex}`
                         }}
                       >
                         {isEditing && detailIndex === 0 ? (
