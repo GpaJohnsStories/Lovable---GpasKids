@@ -155,13 +155,13 @@ const ColorPresetsSection = () => {
           className="grid gap-2 min-w-[1000px]"
           style={{ 
             gridTemplateColumns: 'repeat(8, 1fr)',
-            gridTemplateRows: 'repeat(25, minmax(0, 1fr))',
+            gridTemplateRows: 'repeat(17, minmax(0, 1fr))',
             fontSize: '21px'
           }}
         >
           {/* Headers Row */}
           <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
-            Preset #<br />Name<br />Color Swatch
+            Preset #
           </div>
           <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Names
@@ -173,7 +173,7 @@ const ColorPresetsSection = () => {
             Pages
           </div>
           <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
-            Preset #<br />Name<br />Color Swatch
+            Preset #
           </div>
           <div className="col-span-1 font-bold border px-2 py-0.5 text-center bg-gray-100">
             Names
@@ -187,17 +187,24 @@ const ColorPresetsSection = () => {
 
           {/* Render each preset */}
           {colorPresets.map((preset, presetIndex) => {
-            const isLeftColumn = presetIndex < 4; // Presets 1-4 on left, 5-8 on right
+            const isLeftColumn = presetIndex < 4;
             const colStart = isLeftColumn ? 1 : 5;
-            const rowStart = isLeftColumn ? 2 + (presetIndex * 6) : 2 + ((presetIndex - 4) * 6);
+            const rowStart = isLeftColumn ? 2 + (presetIndex * 4) : 2 + ((presetIndex - 4) * 4);
             const presetData = colorPresetsData?.find(p => p.id === preset.number.toString());
             const isEditing = editingPreset === preset.number.toString();
             
+            const fieldMap = [
+              { nameKey: 'box_border_color_name', hexKey: 'box_border_color_hex' },
+              { nameKey: 'photo_border_color_name', hexKey: 'photo_border_color_hex' },
+              { nameKey: 'background_color_name', hexKey: 'background_color_hex' },
+              { nameKey: 'font_color_name', hexKey: 'font_color_hex' }
+            ];
+            
             return (
               <React.Fragment key={`preset-${preset.number}`}>
-                {/* Preset number and name - 1 row */}
+                {/* ROW 1, COL 1: Preset # */}
                 <div 
-                  className="border px-2 py-1 text-center font-bold flex flex-col items-center justify-center bg-gray-50 gap-1"
+                  className="border px-2 py-1 text-center font-bold flex flex-col items-center justify-center bg-gray-50"
                   style={{ 
                     gridColumn: `${colStart} / ${colStart + 1}`,
                     gridRow: `${rowStart} / ${rowStart + 1}`
@@ -208,42 +215,68 @@ const ColorPresetsSection = () => {
                     <Input
                       value={editValues.name || ''}
                       onChange={(e) => setEditValues({ ...editValues, name: e.target.value })}
-                      className="h-7 text-sm text-center"
+                      className="h-7 text-sm text-center mt-1"
                     />
                   ) : (
                     <div className="text-sm">{preset.name}</div>
                   )}
-                  {!isEditing ? (
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => startEdit(preset.number.toString(), presetData)}
-                      className="mt-1"
-                    >
-                      <Pencil className="h-3 w-3" />
-                    </Button>
-                  ) : (
-                    <div className="flex gap-1">
-                      <Button
-                        size="sm"
-                        variant="default"
-                        onClick={() => saveEdit(preset.number.toString())}
-                        disabled={updatePresetMutation.isPending}
-                      >
-                        <Save className="h-3 w-3" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={cancelEdit}
-                      >
-                        <X className="h-3 w-3" />
-                      </Button>
-                    </div>
-                  )}
                 </div>
                 
-                {/* Color swatch - 1 row */}
+                {/* ROW 1: Box Border detail */}
+                <div 
+                  className="border px-2 py-0.5 text-sm"
+                  style={{ 
+                    gridColumn: `${colStart + 1} / ${colStart + 2}`,
+                    gridRow: `${rowStart} / ${rowStart + 1}`
+                  }}
+                >
+                  {isEditing ? (
+                    <Input
+                      value={editValues[fieldMap[0].nameKey] || ''}
+                      onChange={(e) => setEditValues({ ...editValues, [fieldMap[0].nameKey]: e.target.value })}
+                      className="h-7 text-sm"
+                    />
+                  ) : (
+                    preset.colorDetails[0].name
+                  )}
+                </div>
+                <div 
+                  className="border px-2 py-0.5 text-xs font-mono"
+                  style={{ 
+                    gridColumn: `${colStart + 2} / ${colStart + 3}`,
+                    gridRow: `${rowStart} / ${rowStart + 1}`
+                  }}
+                >
+                  {isEditing ? (
+                    <Input
+                      value={editValues[fieldMap[0].hexKey] || ''}
+                      onChange={(e) => setEditValues({ ...editValues, [fieldMap[0].hexKey]: e.target.value })}
+                      className="h-7 text-xs font-mono"
+                      placeholder="#RRGGBB"
+                    />
+                  ) : (
+                    preset.colorDetails[0].code
+                  )}
+                </div>
+                <div 
+                  className="border px-2 py-0.5 text-xs"
+                  style={{ 
+                    gridColumn: `${colStart + 3} / ${colStart + 4}`,
+                    gridRow: `${rowStart} / ${rowStart + 1}`
+                  }}
+                >
+                  {isEditing ? (
+                    <Input
+                      value={editValues.pages || ''}
+                      onChange={(e) => setEditValues({ ...editValues, pages: e.target.value })}
+                      className="h-7 text-xs"
+                    />
+                  ) : (
+                    preset.colorDetails[0].pages
+                  )}
+                </div>
+
+                {/* ROW 2, COL 1: Color Swatch */}
                 <div 
                   className="border px-2 py-1 flex items-center justify-center"
                   style={{ 
@@ -254,72 +287,186 @@ const ColorPresetsSection = () => {
                   <ColorSwatch preset={preset} />
                 </div>
                 
-                {/* Color details - 4 individual rows */}
-                {preset.colorDetails.map((detail, detailIndex) => {
-                  const fieldMap = [
-                    { nameKey: 'box_border_color_name', hexKey: 'box_border_color_hex' },
-                    { nameKey: 'photo_border_color_name', hexKey: 'photo_border_color_hex' },
-                    { nameKey: 'background_color_name', hexKey: 'background_color_hex' },
-                    { nameKey: 'font_color_name', hexKey: 'font_color_hex' }
-                  ][detailIndex];
+                {/* ROW 2: Photo Border detail */}
+                <div 
+                  className="border px-2 py-0.5 text-sm"
+                  style={{ 
+                    gridColumn: `${colStart + 1} / ${colStart + 2}`,
+                    gridRow: `${rowStart + 1} / ${rowStart + 2}`
+                  }}
+                >
+                  {isEditing ? (
+                    <Input
+                      value={editValues[fieldMap[1].nameKey] || ''}
+                      onChange={(e) => setEditValues({ ...editValues, [fieldMap[1].nameKey]: e.target.value })}
+                      className="h-7 text-sm"
+                    />
+                  ) : (
+                    preset.colorDetails[1].name
+                  )}
+                </div>
+                <div 
+                  className="border px-2 py-0.5 text-xs font-mono"
+                  style={{ 
+                    gridColumn: `${colStart + 2} / ${colStart + 3}`,
+                    gridRow: `${rowStart + 1} / ${rowStart + 2}`
+                  }}
+                >
+                  {isEditing ? (
+                    <Input
+                      value={editValues[fieldMap[1].hexKey] || ''}
+                      onChange={(e) => setEditValues({ ...editValues, [fieldMap[1].hexKey]: e.target.value })}
+                      className="h-7 text-xs font-mono"
+                      placeholder="#RRGGBB"
+                    />
+                  ) : (
+                    preset.colorDetails[1].code
+                  )}
+                </div>
+                <div 
+                  className="border px-2 py-0.5"
+                  style={{ 
+                    gridColumn: `${colStart + 3} / ${colStart + 4}`,
+                    gridRow: `${rowStart + 1} / ${rowStart + 2}`
+                  }}
+                />
 
-                  return (
-                    <React.Fragment key={`preset-${preset.number}-detail-${detailIndex}`}>
-                      <div 
-                        className="border px-2 py-0.5 text-sm"
-                        style={{ 
-                          gridColumn: `${colStart + 1} / ${colStart + 2}`,
-                          gridRow: `${rowStart + 2 + detailIndex} / ${rowStart + 3 + detailIndex}`
-                        }}
+                {/* ROW 3, COL 1: Edit/Save/Cancel Buttons */}
+                <div 
+                  className="border px-2 py-1 flex items-center justify-center bg-gray-50"
+                  style={{ 
+                    gridColumn: `${colStart} / ${colStart + 1}`,
+                    gridRow: `${rowStart + 2} / ${rowStart + 3}`
+                  }}
+                >
+                  {!isEditing ? (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => startEdit(preset.number.toString(), presetData)}
+                      className="w-full"
+                    >
+                      <Pencil className="h-3 w-3" />
+                    </Button>
+                  ) : (
+                    <div className="flex gap-1 w-full">
+                      <Button
+                        size="sm"
+                        variant="default"
+                        onClick={() => saveEdit(preset.number.toString())}
+                        disabled={updatePresetMutation.isPending}
+                        className="flex-1"
                       >
-                        {isEditing ? (
-                          <Input
-                            value={editValues[fieldMap.nameKey] || ''}
-                            onChange={(e) => setEditValues({ ...editValues, [fieldMap.nameKey]: e.target.value })}
-                            className="h-7 text-sm"
-                          />
-                        ) : (
-                          detail.name
-                        )}
-                      </div>
-                      <div 
-                        className="border px-2 py-0.5 text-xs font-mono"
-                        style={{ 
-                          gridColumn: `${colStart + 2} / ${colStart + 3}`,
-                          gridRow: `${rowStart + 2 + detailIndex} / ${rowStart + 3 + detailIndex}`
-                        }}
+                        <Save className="h-3 w-3" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={cancelEdit}
+                        className="flex-1"
                       >
-                        {isEditing ? (
-                          <Input
-                            value={editValues[fieldMap.hexKey] || ''}
-                            onChange={(e) => setEditValues({ ...editValues, [fieldMap.hexKey]: e.target.value })}
-                            className="h-7 text-xs font-mono"
-                            placeholder="#RRGGBB"
-                          />
-                        ) : (
-                          detail.code
-                        )}
-                      </div>
-                      <div 
-                        className="border px-2 py-0.5 text-xs"
-                        style={{ 
-                          gridColumn: `${colStart + 3} / ${colStart + 4}`,
-                          gridRow: `${rowStart + 2 + detailIndex} / ${rowStart + 3 + detailIndex}`
-                        }}
-                      >
-                        {isEditing && detailIndex === 0 ? (
-                          <Input
-                            value={editValues.pages || ''}
-                            onChange={(e) => setEditValues({ ...editValues, pages: e.target.value })}
-                            className="h-7 text-xs"
-                          />
-                        ) : (
-                          detail.pages
-                        )}
-                      </div>
-                    </React.Fragment>
-                  );
-                })}
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                
+                {/* ROW 3: Background detail */}
+                <div 
+                  className="border px-2 py-0.5 text-sm"
+                  style={{ 
+                    gridColumn: `${colStart + 1} / ${colStart + 2}`,
+                    gridRow: `${rowStart + 2} / ${rowStart + 3}`
+                  }}
+                >
+                  {isEditing ? (
+                    <Input
+                      value={editValues[fieldMap[2].nameKey] || ''}
+                      onChange={(e) => setEditValues({ ...editValues, [fieldMap[2].nameKey]: e.target.value })}
+                      className="h-7 text-sm"
+                    />
+                  ) : (
+                    preset.colorDetails[2].name
+                  )}
+                </div>
+                <div 
+                  className="border px-2 py-0.5 text-xs font-mono"
+                  style={{ 
+                    gridColumn: `${colStart + 2} / ${colStart + 3}`,
+                    gridRow: `${rowStart + 2} / ${rowStart + 3}`
+                  }}
+                >
+                  {isEditing ? (
+                    <Input
+                      value={editValues[fieldMap[2].hexKey] || ''}
+                      onChange={(e) => setEditValues({ ...editValues, [fieldMap[2].hexKey]: e.target.value })}
+                      className="h-7 text-xs font-mono"
+                      placeholder="#RRGGBB"
+                    />
+                  ) : (
+                    preset.colorDetails[2].code
+                  )}
+                </div>
+                <div 
+                  className="border px-2 py-0.5"
+                  style={{ 
+                    gridColumn: `${colStart + 3} / ${colStart + 4}`,
+                    gridRow: `${rowStart + 2} / ${rowStart + 3}`
+                  }}
+                />
+
+                {/* ROW 4, COL 1: Blank */}
+                <div 
+                  className="border px-2 py-0.5"
+                  style={{ 
+                    gridColumn: `${colStart} / ${colStart + 1}`,
+                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                  }}
+                />
+                
+                {/* ROW 4: Font detail */}
+                <div 
+                  className="border px-2 py-0.5 text-sm"
+                  style={{ 
+                    gridColumn: `${colStart + 1} / ${colStart + 2}`,
+                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                  }}
+                >
+                  {isEditing ? (
+                    <Input
+                      value={editValues[fieldMap[3].nameKey] || ''}
+                      onChange={(e) => setEditValues({ ...editValues, [fieldMap[3].nameKey]: e.target.value })}
+                      className="h-7 text-sm"
+                    />
+                  ) : (
+                    preset.colorDetails[3].name
+                  )}
+                </div>
+                <div 
+                  className="border px-2 py-0.5 text-xs font-mono"
+                  style={{ 
+                    gridColumn: `${colStart + 2} / ${colStart + 3}`,
+                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                  }}
+                >
+                  {isEditing ? (
+                    <Input
+                      value={editValues[fieldMap[3].hexKey] || ''}
+                      onChange={(e) => setEditValues({ ...editValues, [fieldMap[3].hexKey]: e.target.value })}
+                      className="h-7 text-xs font-mono"
+                      placeholder="#RRGGBB"
+                    />
+                  ) : (
+                    preset.colorDetails[3].code
+                  )}
+                </div>
+                <div 
+                  className="border px-2 py-0.5"
+                  style={{ 
+                    gridColumn: `${colStart + 3} / ${colStart + 4}`,
+                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                  }}
+                />
               </React.Fragment>
             );
           })}
