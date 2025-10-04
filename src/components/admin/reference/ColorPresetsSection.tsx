@@ -138,9 +138,8 @@ const ColorPresetsSection = () => {
           fontWeight: 'bold',
           lineHeight: '1.2'
         }}
-      >
-        ABC\abc\123
-      </div>
+        dangerouslySetInnerHTML={{ __html: 'ABC<br>abc<br>123' }}
+      />
     </div>
   );
 
@@ -204,7 +203,7 @@ const ColorPresetsSection = () => {
               <React.Fragment key={`preset-${preset.number}`}>
                 {/* Preset number and name - spans 4 rows */}
                 <div 
-                  className="border px-2 py-1 text-center font-bold flex flex-col items-center justify-center bg-gray-50 gap-1"
+                  className="border px-2 py-1 text-center font-bold flex flex-col items-start justify-start bg-gray-50 gap-1"
                   style={{ 
                     gridColumn: `${colStart} / ${colStart + 1}`,
                     gridRow: `${rowStart} / ${rowStart + 4}`
@@ -252,7 +251,7 @@ const ColorPresetsSection = () => {
                 
                 {/* Color swatch - spans 4 rows */}
                 <div 
-                  className="border px-2 py-1 flex items-center justify-center"
+                  className="border px-2 py-1 flex items-start justify-center pt-2"
                   style={{ 
                     gridColumn: `${colStart + 1} / ${colStart + 2}`,
                     gridRow: `${rowStart} / ${rowStart + 4}`
