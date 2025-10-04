@@ -211,7 +211,15 @@ const ColorPresetsSection = () => {
                   }}
                 >
                   <div className="text-lg">{preset.number}</div>
-                  <div className="text-sm">{preset.name}</div>
+                  {isEditing ? (
+                    <Input
+                      value={editValues.name || ''}
+                      onChange={(e) => setEditValues({ ...editValues, name: e.target.value })}
+                      className="h-7 text-sm text-center"
+                    />
+                  ) : (
+                    <div className="text-sm">{preset.name}</div>
+                  )}
                   {!isEditing ? (
                     <Button
                       size="sm"
