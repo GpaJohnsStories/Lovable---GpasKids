@@ -149,8 +149,8 @@ const ColorPresetsSection = () => {
         Color Presets
       </h3>
       
-      {/* Desktop Grid - Big Screen Only */}
-      <div className="hidden lg:block overflow-x-auto">
+      {/* Color Presets Grid */}
+      <div className="overflow-x-auto">
         <div 
           className="grid gap-2 min-w-[1200px]"
           style={{ 
@@ -332,10 +332,6 @@ const ColorPresetsSection = () => {
         </div>
       </div>
 
-      {/* Mobile/Tablet Notice */}
-      <div className="lg:hidden p-4 bg-yellow-100 border border-yellow-400 rounded">
-        <p className="text-sm">Color Presets grid is available on large screens only.</p>
-      </div>
     </div>
   );
 };
