@@ -261,7 +261,7 @@ const SuperText: React.FC = () => {
       } else {
         setLookupResult(null);
         setLookupStatus('not-found');
-        toast.message(`Story code "${newCode}" not found. Ready to create new story.`);
+        // Panel will show the message, no need for duplicate toast
       }
     } else {
       setLookupStatus('idle');
@@ -310,8 +310,8 @@ const SuperText: React.FC = () => {
       setColorPresetId(lookupResult.color_preset_id || '');
       toast.success("Story data loaded successfully!");
     } else if (lookupStatus === 'not-found') {
-      // Ready for new story - just show message
-      toast.success("Complete steps B, C, and D to create new webtext.");
+      // Ready for new story - just dismiss the panel
+      setLookupStatus('idle');
     }
   }, [lookupStatus, lookupResult, populateFormWithStory]);
   const handleConfirmNo = useCallback(() => {
@@ -336,14 +336,21 @@ const SuperText: React.FC = () => {
         clearForm();
         return;
       }
-      if (!formData.content || !formData.story_code) {
-        toast.error("Please fill in Story Code and Content.");
-        return;
-      }
 
-      // Validate color preset is selected
-      if (!colorPresetId) {
-        toast.error("Please select a color preset before saving.");
+      // Import validation functions
+      const { validateBasicSave, validatePublishedSave } = await import('@/components/story-form/StoryFormValidation');
+      
+      const statusCode = Number(formData.publication_status_code);
+      
+      // Use appropriate validation based on publication status
+      let isValid = false;
+      if (statusCode === 0 || statusCode === 1) {
+        isValid = validatePublishedSave(formData, colorPresetId);
+      } else {
+        isValid = validateBasicSave(formData);
+      }
+      
+      if (!isValid) {
         return;
       }
 
