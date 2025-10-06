@@ -647,7 +647,7 @@ const SuperText: React.FC = () => {
                 {/* Grid Layout with instruction box extending beyond */}
                 <div className="flex gap-0">
                   {/* 7x2 Grid Layout - Extended width for C, D, F fields */}
-                  <div className="grid grid-cols-[32px_1fr] auto-rows-min gap-0 flex-1 pr-4">
+                  <div className="grid grid-cols-[32px_1fr] auto-rows-min gap-0 flex-1">
                   
                     {/* Row 1: A, Text Code, Empty */}
                     <div className="flex items-center justify-center h-8">
