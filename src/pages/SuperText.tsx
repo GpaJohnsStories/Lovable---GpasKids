@@ -813,6 +813,7 @@ const SuperText: React.FC = () => {
                         fontSize: '21px',
                         fontFamily: 'Arial, sans-serif'
                       }}
+                      showAddButton={true}
                     />
                   </div>
 

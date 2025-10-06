@@ -21,9 +21,10 @@ interface AuthorComboboxProps {
   placeholder?: string;
   className?: string;
   style?: React.CSSProperties;
+  showAddButton?: boolean;
 }
 
-export function AuthorCombobox({ value, onValueChange, placeholder = "Select author...", className, style }: AuthorComboboxProps) {
+export function AuthorCombobox({ value, onValueChange, placeholder = "Select author...", className, style, showAddButton = false }: AuthorComboboxProps) {
   const [authors, setAuthors] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -92,55 +93,62 @@ export function AuthorCombobox({ value, onValueChange, placeholder = "Select aut
 
   return (
     <div className="flex gap-2 items-center w-full">
+      {showAddButton && (
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogTrigger asChild>
+            <Button 
+              variant="outline" 
+              className="h-10 px-3 flex flex-col items-center justify-center gap-0 leading-none py-1" 
+              type="button"
+            >
+              <span className="text-[10px] font-bold">New</span>
+              <Plus className="h-4 w-4" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Add New Author</DialogTitle>
+              <DialogDescription>
+                Enter the full name of the new author (minimum 4 characters).
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="author-name">Author Name</Label>
+                <Input
+                  id="author-name"
+                  value={newAuthorName}
+                  onChange={(e) => setNewAuthorName(e.target.value)}
+                  placeholder="Enter full author name..."
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddAuthor();
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleAddAuthor}>
+                Add Author
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
       <SearchableCombobox
         value={value}
         onValueChange={onValueChange}
         options={['', ...authors]}
-        placeholder=""
+        placeholder={placeholder}
         emptyText="No authors found."
         allowCreate={false}
         className={className}
         style={style}
       />
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogTrigger asChild>
-          <Button variant="outline" size="icon" type="button">
-            <Plus className="h-4 w-4" />
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Add New Author</DialogTitle>
-            <DialogDescription>
-              Enter the full name of the new author (minimum 4 characters).
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="author-name">Author Name</Label>
-              <Input
-                id="author-name"
-                value={newAuthorName}
-                onChange={(e) => setNewAuthorName(e.target.value)}
-                placeholder="Enter full author name..."
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleAddAuthor();
-                  }
-                }}
-              />
-            </div>
-          </div>
-          <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleAddAuthor}>
-              Add Author
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
