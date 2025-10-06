@@ -473,8 +473,8 @@ const SuperText: React.FC = () => {
       {/* Header with title and action buttons */}
       <div className="bg-white/80 backdrop-blur-sm py-4 px-6 border-b border-orange-200/50 sticky top-0 z-10">
         <h1 className="text-3xl font-bold text-orange-800 mb-4">Super Text Manager</h1>
-         <div className="flex gap-4 flex-wrap items-center justify-between w-full">
-           <div className="flex gap-4 flex-wrap">
+         <div className="flex gap-4 flex-wrap items-start w-full">
+           <div className="flex gap-4 flex-wrap flex-1">
            <TooltipProvider>
              <Tooltip>
                <TooltipTrigger asChild>
@@ -551,15 +551,15 @@ const SuperText: React.FC = () => {
               </Tooltip>
              </TooltipProvider>
            </div>
-           
-           {/* Last Updates Grid - positioned at right end of buttons */}
-           <div className="flex-shrink-0">
-             <LastUpdatesGrid story={formData} hideTitle={true} />
-           </div>
           </div>
         </div>
 
         <div className="pb-6">
+          {/* Last Updates Grid - positioned to align with right edge of box 4 */}
+          <div className="flex justify-end mb-4 lg:pr-[calc((100%-66.666667%)/2)]">
+            <LastUpdatesGrid story={formData} hideTitle={true} />
+          </div>
+          
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Panel - Form Fields */}
             <div className="lg:col-span-2 space-y-6">
