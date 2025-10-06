@@ -915,15 +915,17 @@ const SuperText: React.FC = () => {
                 
                 {/* Instruction Box - positioned to the right with 4px gap */}
                 <div className="flex items-start ml-1">
-                  <div className="bg-gradient-to-br from-yellow-300 to-yellow-400 border-2 border-orange-500 rounded px-4 py-2 shadow-md whitespace-nowrap" style={{
-                    fontSize: '18px',
-                    fontFamily: 'Arial',
+                  <div className="border-2 border-orange-500 rounded px-4 py-2 shadow-md whitespace-nowrap" style={{
+                    fontSize: '20px',
+                    fontFamily: 'Comic Sans MS, cursive, Arial',
                     fontWeight: 'bold',
                     lineHeight: '1.3',
-                    minWidth: '280px'
+                    minWidth: '280px',
+                    backgroundColor: '#9333ea',
+                    textShadow: '2px 2px 0px rgba(0,0,0,0.2)'
                   }}>
                     <div style={{ color: '#DC143C' }}>Red dots are REQUIRED</div>
-                    <div style={{ color: '#228B22' }}>Orange dots are OPTIONAL</div>
+                    <div style={{ color: '#F97316' }}>Orange dots are OPTIONAL</div>
                   </div>
                 </div>
               </div>
