@@ -688,7 +688,7 @@ const SuperText: React.FC = () => {
                     />
                   </div>
                   
-                  <div className="h-8 flex items-center justify-end">
+                  <div className="h-8 flex items-center" style={{ paddingLeft: '100px' }}>
                     <div className="bg-gradient-to-br from-yellow-300 to-yellow-400 border-2 border-orange-500 rounded px-4 py-2 shadow-md whitespace-nowrap" style={{
                       fontSize: '18px',
                       fontFamily: 'Arial',
