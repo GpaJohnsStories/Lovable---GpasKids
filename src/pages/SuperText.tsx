@@ -870,8 +870,8 @@ const SuperText: React.FC = () => {
                   {/* Row 6: E, Author (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
-                      backgroundColor: '#DC143C',
-                      color: '#3b82f6'
+                      backgroundColor: '#FFA500',
+                      color: '#228B22'
                     }}>E</div>
                   </div>
 
@@ -895,8 +895,8 @@ const SuperText: React.FC = () => {
                   {/* Row 7: F, Excerpt (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
-                      backgroundColor: '#DC143C',
-                      color: '#3b82f6'
+                      backgroundColor: '#FFA500',
+                      color: '#228B22'
                     }}>F</div>
                   </div>
 
