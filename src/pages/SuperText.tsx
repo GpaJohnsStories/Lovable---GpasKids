@@ -634,7 +634,7 @@ const SuperText: React.FC = () => {
             {/* Left Panel - Form Fields */}
             <div className="lg:col-span-2 space-y-6">
               {/* Text Details Section */}
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative z-20 lg:pr-[225px]">
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative z-20">
                 
                 {/* Red Dot 1 - Required field */}
                  <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full flex items-center justify-center font-bold z-30" style={{ backgroundColor: '#DC143C', color: '#FFD700' }}>1</div>
