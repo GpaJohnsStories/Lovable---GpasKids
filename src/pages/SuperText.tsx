@@ -921,7 +921,7 @@ const SuperText: React.FC = () => {
                     fontWeight: 'bold',
                     lineHeight: '1.3',
                     minWidth: '280px',
-                    backgroundColor: '#e9d5ff',
+                    backgroundColor: 'transparent',
                     textShadow: '2px 2px 0px rgba(0,0,0,0.2)'
                   }}>
                     <div style={{ color: '#DC143C' }}>Red dots are REQUIRED</div>
