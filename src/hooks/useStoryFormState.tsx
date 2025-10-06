@@ -59,7 +59,7 @@ export interface Story {
 
 const initialFormData: Story = {
   title: '',
-  author: 'Grandpa John',
+  author: '',
   category: 'Fun',
   content: '',
   tagline: '',
