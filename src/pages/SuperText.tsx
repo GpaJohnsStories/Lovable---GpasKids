@@ -646,8 +646,8 @@ const SuperText: React.FC = () => {
                 
                 {/* Grid Layout with instruction box extending beyond */}
                 <div className="flex gap-0">
-                  {/* 7x3 Grid Layout - NO padding, NO gaps */}
-                  <div className="grid grid-cols-[32px_192px_192px] w-[416px] auto-rows-min gap-0">
+                  {/* 7x2 Grid Layout - Extended width for C, D, F fields */}
+                  <div className="grid grid-cols-[32px_1fr] auto-rows-min gap-0 flex-1 pr-4">
                   
                     {/* Row 1: A, Text Code, Empty */}
                     <div className="flex items-center justify-center h-8">
@@ -689,12 +689,10 @@ const SuperText: React.FC = () => {
                         tabIndex={1} 
                       />
                     </div>
-                    
-                    <div className="h-8"></div>
   
-                    {/* Row 2: Blank, Status Display (spanning col 2-3) */}
+                    {/* Row 2: Blank, Status Display */}
                     <div></div>
-                    <div className="col-span-2">
+                    <div className="grid grid-cols-[192px_192px] gap-0">
                       <div className="bg-gray-100 border-2 border-orange-400" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
@@ -738,7 +736,7 @@ const SuperText: React.FC = () => {
                       }}>B</div>
                     </div>
   
-                    <div className="h-10 flex items-center">
+                    <div className="h-10 grid grid-cols-[192px_192px] gap-0">
                       <Select value={formData.category || ''} onValueChange={value => {
                         setCategory(value);
                         handleInputChange('category', value);
@@ -776,16 +774,14 @@ const SuperText: React.FC = () => {
                         <SelectItem value="BioText" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
                           <div className="bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 px-3 py-1 rounded w-full text-center">BioText</div>
                         </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="h-10 flex items-center">
-                    <Select value={formData.copyright_status || ''} onValueChange={value => {
-                      setCopyrightStatus(value);
-                      handleInputChange('copyright_status', value);
-                    }}>
-                      <SelectTrigger className="w-[192px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100 h-10" style={{
+                        </SelectContent>
+                      </Select>
+  
+                      <Select value={formData.copyright_status || ''} onValueChange={value => {
+                        setCopyrightStatus(value);
+                        handleInputChange('copyright_status', value);
+                      }}>
+                        <SelectTrigger className="w-[192px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100 h-10" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
@@ -807,10 +803,10 @@ const SuperText: React.FC = () => {
                         </SelectItem>
                         <SelectItem value="O" style={{ fontSize: '21px', fontFamily: 'Arial', fontWeight: 'bold' }}>
                           <div className="px-3 py-1 rounded w-full text-center text-white" style={{ backgroundColor: '#228B22' }}>O — Open Unlimited</div>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
                   {/* Row 4: C, Title (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
@@ -820,22 +816,22 @@ const SuperText: React.FC = () => {
                     }}>C</div>
                   </div>
 
-                  <div className="col-span-2">
-                    <WordLimitedTextarea
-                      value={formData.title || ''}
-                      onChange={(e) => handleInputChange('title', e.target.value)}
-                      placeholder="Story Title"
-                      wordLimit={20}
-                      className="resize-none border-2 border-purple-400 focus:border-purple-500"
-                      style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}
-                      rows={1}
-                      compact
-                    />
-                  </div>
+                    <div>
+                      <WordLimitedTextarea
+                        value={formData.title || ''}
+                        onChange={(e) => handleInputChange('title', e.target.value)}
+                        placeholder="Story Title"
+                        wordLimit={20}
+                        className="resize-none border-2 border-purple-400 focus:border-purple-500 w-full"
+                        style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}
+                        rows={1}
+                        compact
+                      />
+                    </div>
 
                   {/* Row 5: D, Tagline (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
@@ -845,22 +841,22 @@ const SuperText: React.FC = () => {
                     }}>D</div>
                   </div>
 
-                  <div className="col-span-2">
-                    <WordLimitedTextarea
-                      value={formData.tagline || ''}
-                      onChange={(e) => handleInputChange('tagline', e.target.value)}
-                      placeholder="Story Tagline"
-                      wordLimit={15}
-                      className="resize-none border-2 border-green-400 focus:border-green-500"
-                      style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}
-                      rows={1}
-                      compact
-                    />
-                  </div>
+                    <div>
+                      <WordLimitedTextarea
+                        value={formData.tagline || ''}
+                        onChange={(e) => handleInputChange('tagline', e.target.value)}
+                        placeholder="Story Tagline"
+                        wordLimit={15}
+                        className="resize-none border-2 border-green-400 focus:border-green-500 w-full"
+                        style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}
+                        rows={1}
+                        compact
+                      />
+                    </div>
 
                   {/* Row 6: E, Author (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
@@ -870,22 +866,22 @@ const SuperText: React.FC = () => {
                     }}>E</div>
                   </div>
 
-                  <div className="col-span-2 flex items-center h-10 gap-2">
-                    <span className="text-[21px] font-bold" style={{fontFamily: 'Arial, sans-serif'}}>
-                      Author:
-                    </span>
-                    <AuthorCombobox 
-                      value={formData.author || ''}
-                      onValueChange={(value) => handleInputChange('author', value)}
-                      placeholder=""
-                      className="flex-1 border-2 border-yellow-400 hover:border-yellow-500 h-10"
-                      style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial, sans-serif'
-                      }}
-                      showAddButton={true}
-                    />
-                  </div>
+                    <div className="flex items-center h-10 gap-2">
+                      <span className="text-[21px] font-bold" style={{fontFamily: 'Arial, sans-serif'}}>
+                        Author:
+                      </span>
+                      <AuthorCombobox 
+                        value={formData.author || ''}
+                        onValueChange={(value) => handleInputChange('author', value)}
+                        placeholder=""
+                        className="flex-1 border-2 border-yellow-400 hover:border-yellow-500 h-10"
+                        style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial, sans-serif'
+                        }}
+                        showAddButton={true}
+                      />
+                    </div>
 
                   {/* Row 7: F, Excerpt (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
@@ -895,22 +891,22 @@ const SuperText: React.FC = () => {
                     }}>F</div>
                   </div>
 
-                  <div className="col-span-2">
-                    <WordLimitedTextarea
-                      value={formData.excerpt || ''}
-                      onChange={(e) => handleInputChange('excerpt', e.target.value)}
-                      placeholder="Story Excerpt"
-                      wordLimit={50}
-                      className="resize-none border-2 border-blue-400 focus:border-blue-500"
-                      style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold'
-                      }}
-                      rows={2}
-                      compact
-                    />
-                  </div>
+                    <div>
+                      <WordLimitedTextarea
+                        value={formData.excerpt || ''}
+                        onChange={(e) => handleInputChange('excerpt', e.target.value)}
+                        placeholder="Story Excerpt"
+                        wordLimit={50}
+                        className="resize-none border-2 border-blue-400 focus:border-blue-500 w-full"
+                        style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold'
+                        }}
+                        rows={2}
+                        compact
+                      />
+                    </div>
                 </div>
                 
                 {/* Instruction Box - positioned to the right with 4px gap */}
