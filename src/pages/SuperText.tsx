@@ -945,8 +945,8 @@ const SuperText: React.FC = () => {
                 <div ref={audioSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 p-6 relative" style={{
               borderColor: '#8B4513'
             }}>
-                  {/* Orange Dot A in top left corner */}
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">A</div>
+                  {/* Orange Dot 3A - Optional */}
+                  <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{ backgroundColor: '#FFA500', color: '#228B22' }}>3A</div>
                   <div className="flex items-center gap-2 mb-4">
                     <h2 className="text-xl font-bold" style={{
                   color: '#8B4513'
@@ -1006,8 +1006,8 @@ const SuperText: React.FC = () => {
 
                 {/* Column 2: Video Upload */}
                 <div ref={videoSectionRef} className="w-full bg-white/90 backdrop-blur-sm rounded-lg border-2 border-purple-400 p-6 relative">
-                  {/* Orange Dot B in top left corner */}
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">B</div>
+                  {/* Orange Dot 3B - Optional */}
+                  <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{ backgroundColor: '#FFA500', color: '#228B22' }}>3B</div>
                   <div className="flex items-center gap-2 mb-4">
                     <h2 className="text-xl font-bold text-purple-700">📹 Video Upload</h2>
                   </div>
@@ -1065,8 +1065,8 @@ const SuperText: React.FC = () => {
 
                 {/* Column 3: Text Upload */}
                 <div className="bg-white/90 backdrop-blur-sm border-2 border-orange-400 rounded-lg p-6 relative">
-                  {/* Orange Dot d in top left corner */}
-                  <div className="absolute -top-4 -left-4 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold">D</div>
+                  {/* Orange Dot 3C - Optional */}
+                  <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{ backgroundColor: '#FFA500', color: '#228B22' }}>3C</div>
                   <div className="flex items-center gap-2 mb-4">
                     <h2 className="text-xl font-bold text-orange-700">📄 Text Upload</h2>
                   </div>
@@ -1138,8 +1138,6 @@ const SuperText: React.FC = () => {
 
               {/* Combined AI Voice File & Voice Previews Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative">
-                {/* Blue Dot 4 in top left corner */}
-                <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">4</div>
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-bold text-green-700">Create AI Voice File</h2>
                 </div>
@@ -1248,8 +1246,8 @@ const SuperText: React.FC = () => {
 
           {/* Full Width Split Editor Section */}
           <div ref={textEditorSectionRef} className="w-full bg-white/95 backdrop-blur-sm rounded-lg border-2 border-green-400 p-4 mt-6 relative">
-            {/* Blue Dot 4 in top left corner */}
-            <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">3</div>
+            {/* Red Dot 3 - Required field */}
+            <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full flex items-center justify-center font-bold z-30" style={{ backgroundColor: '#DC143C', color: '#FFD700' }}>3</div>
             <div className="mb-4">
               <h2 className="text-xl font-bold text-green-700">{lookupResult ? `Editing Story${formData.story_code ? `: ${formData.story_code}` : ''}` : `Creating New Story${formData.story_code ? `: ${formData.story_code}` : ''}`}</h2>
             </div>

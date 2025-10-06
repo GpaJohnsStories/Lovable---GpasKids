@@ -39,7 +39,10 @@ const ColorPresetSelector: React.FC<ColorPresetSelectorProps> = ({ value, onChan
   }
 
   return (
-    <Select value={value} onValueChange={onChange}>
+    <div className="relative inline-block">
+      {/* Red Dot 4 - Required field */}
+      <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full flex items-center justify-center font-bold z-50" style={{ backgroundColor: '#DC143C', color: '#FFD700', fontSize: '16px' }}>4</div>
+      <Select value={value} onValueChange={onChange}>
       <SelectTrigger 
         className="h-8 rounded-full border-2 border-orange-500 bg-white hover:bg-orange-50 transition-colors"
         style={{ 
@@ -85,6 +88,7 @@ const ColorPresetSelector: React.FC<ColorPresetSelectorProps> = ({ value, onChan
         ))}
       </SelectContent>
     </Select>
+    </div>
   );
 };
 
