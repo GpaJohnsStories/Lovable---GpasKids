@@ -643,13 +643,6 @@ const SuperText: React.FC = () => {
                   <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
                 </div>
                 
-                {/* Text Status Box - positioned in top-right corner on large screens */}
-                 <div className="hidden lg:block absolute top-6 right-6">
-                   <SuperTextStoryStatus story={formData} publicationStatusCode={publicationStatusCode} onStatusChange={status => {
-                setPublicationStatusCode(status);
-                handleInputChange('publication_status_code', status.toString());
-              }} />
-                </div>
                 
                 {/* 7x3 Grid Layout - NO padding, NO gaps */}
                 <div className="grid grid-cols-[32px_192px_192px] w-[416px] auto-rows-min gap-0">
@@ -1142,13 +1135,6 @@ const SuperText: React.FC = () => {
             {/* Right Panel - Status and Actions */}
             <div className="space-y-3">
               
-              {/* Text Status Section - Hidden on large screens since it's now in Text Details box */}
-              <div className="lg:hidden">
-                <SuperTextStoryStatus story={formData} publicationStatusCode={publicationStatusCode} onStatusChange={status => {
-              setPublicationStatusCode(status);
-              handleInputChange('publication_status_code', status.toString());
-            }} />
-              </div>
 
               {/* Combined AI Voice File & Voice Previews Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative">
