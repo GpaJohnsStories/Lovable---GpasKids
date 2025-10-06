@@ -637,7 +637,7 @@ const SuperText: React.FC = () => {
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative z-20 lg:pr-[225px]">
                 
                 {/* Red Dot 1 - Required field */}
-                 <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full flex items-center justify-center font-bold z-30" style={{ backgroundColor: '#DC143C', color: '#3b82f6' }}>1</div>
+                 <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full flex items-center justify-center font-bold z-30" style={{ backgroundColor: '#DC143C', color: '#FFD700' }}>1</div>
                 
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
@@ -658,7 +658,7 @@ const SuperText: React.FC = () => {
                   <div className="flex items-center justify-center h-8">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
                       backgroundColor: '#DC143C',
-                      color: '#3b82f6'
+                      color: '#FFD700'
                     }}>A</div>
                   </div>
                   
@@ -739,7 +739,7 @@ const SuperText: React.FC = () => {
                   <div className="flex items-center justify-center h-10">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
                       backgroundColor: '#DC143C',
-                      color: '#3b82f6'
+                      color: '#FFD700'
                     }}>B</div>
                   </div>
 
@@ -821,7 +821,7 @@ const SuperText: React.FC = () => {
                   <div className="flex items-center justify-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
                       backgroundColor: '#DC143C',
-                      color: '#3b82f6'
+                      color: '#FFD700'
                     }}>C</div>
                   </div>
 
