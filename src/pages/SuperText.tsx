@@ -644,121 +644,112 @@ const SuperText: React.FC = () => {
                 </div>
                 
                 
-                {/* 7x3 Grid Layout - NO padding, NO gaps */}
-                <div className="grid grid-cols-[32px_192px_192px] w-[416px] auto-rows-min gap-0">
-                
-                  {/* Row 1: A, Text Code, Empty */}
-                  <div className="flex items-center justify-center h-8">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
-                      backgroundColor: '#DC143C',
-                      color: '#FFD700'
-                    }}>A</div>
-                  </div>
+                {/* Grid Layout with instruction box extending beyond */}
+                <div className="flex gap-0">
+                  {/* 7x3 Grid Layout - NO padding, NO gaps */}
+                  <div className="grid grid-cols-[32px_192px_192px] w-[416px] auto-rows-min gap-0">
                   
-                  <div className="h-8 flex items-center">
-                    <Input 
-                      ref={storyCodeRef} 
-                      type="text" 
-                      placeholder="TEXT CODE" 
-                      value={storyCode} 
-                      onChange={e => {
-                        const upperValue = e.target.value.toUpperCase();
-                        handleStoryCodeChange(upperValue);
-                      }} 
-                      onPaste={e => {
-                        const pastedText = e.clipboardData.getData('text');
-                        const upperValue = pastedText.toUpperCase();
-                        e.preventDefault();
-                        handleStoryCodeChange(upperValue);
-                      }} 
-                      onBlur={e => {
-                        const upperValue = e.target.value.toUpperCase();
-                        if (upperValue !== e.target.value) {
+                    {/* Row 1: A, Text Code, Empty */}
+                    <div className="flex items-center justify-center h-8">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
+                        backgroundColor: '#DC143C',
+                        color: '#FFD700'
+                      }}>A</div>
+                    </div>
+                    
+                    <div className="h-8 flex items-center">
+                      <Input 
+                        ref={storyCodeRef} 
+                        type="text" 
+                        placeholder="TEXT CODE" 
+                        value={storyCode} 
+                        onChange={e => {
+                          const upperValue = e.target.value.toUpperCase();
                           handleStoryCodeChange(upperValue);
-                        }
-                      }} 
-                      className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black py-0 h-8 leading-[21px]" 
-                      style={{
-                        width: '192px',
-                        fontStyle: 'normal'
-                      }} 
-                      autoCapitalize="characters" 
-                      spellCheck={false} 
-                      tabIndex={1} 
-                    />
-                  </div>
-                  
-                  <div className="h-8 flex items-center" style={{ paddingLeft: '100px' }}>
-                    <div className="bg-gradient-to-br from-yellow-300 to-yellow-400 border-2 border-orange-500 rounded px-4 py-2 shadow-md whitespace-nowrap" style={{
-                      fontSize: '18px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold',
-                      lineHeight: '1.3',
-                      minWidth: '280px'
-                    }}>
-                      <div style={{ color: '#DC143C' }}>Red dots are REQUIRED</div>
-                      <div style={{ color: '#228B22' }}>Orange dots are OPTIONAL</div>
+                        }} 
+                        onPaste={e => {
+                          const pastedText = e.clipboardData.getData('text');
+                          const upperValue = pastedText.toUpperCase();
+                          e.preventDefault();
+                          handleStoryCodeChange(upperValue);
+                        }} 
+                        onBlur={e => {
+                          const upperValue = e.target.value.toUpperCase();
+                          if (upperValue !== e.target.value) {
+                            handleStoryCodeChange(upperValue);
+                          }
+                        }} 
+                        className="border-4 border-orange-400 focus:border-orange-500 supertext-fs-21px-arial-black py-0 h-8 leading-[21px]" 
+                        style={{
+                          width: '192px',
+                          fontStyle: 'normal'
+                        }} 
+                        autoCapitalize="characters" 
+                        spellCheck={false} 
+                        tabIndex={1} 
+                      />
                     </div>
-                  </div>
-
-                  {/* Row 2: Blank, Status Display (spanning col 2-3) */}
-                  <div></div>
-                  <div className="col-span-2">
-                    <div className="bg-gray-100 border-2 border-orange-400" style={{
-                      fontSize: '21px',
-                      fontFamily: 'Arial',
-                      fontWeight: 'bold'
-                    }}>
-                      
-                      {/* YES/NO Buttons for Story Code Lookup */}
-                      {lookupStatus !== 'idle' && (
-                        <div className="mx-4 mb-4" style={{
-                          backgroundColor: lookupStatus === 'found' ? '#dff0d8' : '#f2dede',
-                          border: `2px solid ${lookupStatus === 'found' ? '#d6e9c6' : '#ebccd1'}`
-                        }}>
-                          <p className="p-3 m-0" style={{
-                            fontSize: '21px',
-                            fontFamily: 'Arial',
-                            fontWeight: 'bold',
-                            color: lookupStatus === 'found' ? '#3c763d' : '#a94442'
-                          }}>
-                            {lookupStatus === 'found' 
-                              ? `Found story: "${lookupResult?.title || 'Untitled'}". Load it?`
-                              : "Story code not found. Create new story?"
-                            }
-                          </p>
-                          <div className="pb-3 px-3">
-                            <YesNoButtons
-                              onYes={handleConfirmYes}
-                              onNo={handleConfirmNo}
-                              className="justify-center gap-4"
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Row 3: B, Category, Copyright */}
-                  <div className="flex items-center justify-center h-10">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
-                      backgroundColor: '#DC143C',
-                      color: '#FFD700'
-                    }}>B</div>
-                  </div>
-
-                  <div className="h-10 flex items-center">
-                    <Select value={formData.category || ''} onValueChange={value => {
-                      setCategory(value);
-                      handleInputChange('category', value);
-                    }}>
-                      <SelectTrigger className="w-[192px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100 h-10" style={{
+                    
+                    <div className="h-8"></div>
+  
+                    {/* Row 2: Blank, Status Display (spanning col 2-3) */}
+                    <div></div>
+                    <div className="col-span-2">
+                      <div className="bg-gray-100 border-2 border-orange-400" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
-                        fontWeight: 'bold',
-                        backgroundColor: '#F97316',
-                        color: 'white',
-                        borderColor: '#ea580c'
+                        fontWeight: 'bold'
+                      }}>
+                        
+                        {/* YES/NO Buttons for Story Code Lookup */}
+                        {lookupStatus !== 'idle' && (
+                          <div className="mx-4 mb-4" style={{
+                            backgroundColor: lookupStatus === 'found' ? '#dff0d8' : '#f2dede',
+                            border: `2px solid ${lookupStatus === 'found' ? '#d6e9c6' : '#ebccd1'}`
+                          }}>
+                            <p className="p-3 m-0" style={{
+                              fontSize: '21px',
+                              fontFamily: 'Arial',
+                              fontWeight: 'bold',
+                              color: lookupStatus === 'found' ? '#3c763d' : '#a94442'
+                            }}>
+                              {lookupStatus === 'found' 
+                                ? `Found story: "${lookupResult?.title || 'Untitled'}". Load it?`
+                                : "Story code not found. Create new story?"
+                              }
+                            </p>
+                            <div className="pb-3 px-3">
+                              <YesNoButtons
+                                onYes={handleConfirmYes}
+                                onNo={handleConfirmNo}
+                                className="justify-center gap-4"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+  
+                    {/* Row 3: B, Category, Copyright */}
+                    <div className="flex items-center justify-center h-10">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
+                        backgroundColor: '#DC143C',
+                        color: '#FFD700'
+                      }}>B</div>
+                    </div>
+  
+                    <div className="h-10 flex items-center">
+                      <Select value={formData.category || ''} onValueChange={value => {
+                        setCategory(value);
+                        handleInputChange('category', value);
+                      }}>
+                        <SelectTrigger className="w-[192px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100 h-10" style={{
+                          fontSize: '21px',
+                          fontFamily: 'Arial',
+                          fontWeight: 'bold',
+                          backgroundColor: '#F97316',
+                          color: 'white',
+                          borderColor: '#ea580c'
                       }} tabIndex={2}>
                         <SelectValue placeholder="Category" className="text-white" style={{
                           fontSize: '21px',
@@ -921,7 +912,22 @@ const SuperText: React.FC = () => {
                     />
                   </div>
                 </div>
+                
+                {/* Instruction Box - positioned to the right with 4px gap */}
+                <div className="flex items-start ml-1">
+                  <div className="bg-gradient-to-br from-yellow-300 to-yellow-400 border-2 border-orange-500 rounded px-4 py-2 shadow-md whitespace-nowrap" style={{
+                    fontSize: '18px',
+                    fontFamily: 'Arial',
+                    fontWeight: 'bold',
+                    lineHeight: '1.3',
+                    minWidth: '280px'
+                  }}>
+                    <div style={{ color: '#DC143C' }}>Red dots are REQUIRED</div>
+                    <div style={{ color: '#228B22' }}>Orange dots are OPTIONAL</div>
+                  </div>
+                </div>
               </div>
+            </div>
 
               {/* Story Photos Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6 relative">
