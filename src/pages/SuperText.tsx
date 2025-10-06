@@ -555,9 +555,54 @@ const SuperText: React.FC = () => {
         </div>
 
         <div className="pb-6">
-          {/* Last Updates Grid - positioned to align with right edge of box 4 */}
-          <div className="flex justify-end mb-4 lg:pr-[calc((100%-66.666667%)/2)]">
-            <LastUpdatesGrid story={formData} hideTitle={true} />
+          {/* Second row: Publication Status dropdown and Last Updates Grid */}
+          <div className="flex items-center justify-between gap-4 mb-4">
+            {/* Spacer to push content to align properly */}
+            <div className="flex-1" />
+            
+            {/* Publication Status Dropdown - centered below Save buttons */}
+            <div className="flex items-center gap-3">
+              <Label className="text-lg font-bold whitespace-nowrap" style={{ fontFamily: 'Arial, sans-serif' }}>
+                Set Publication Status BEFORE Saving:
+              </Label>
+              <Select
+                value={publicationStatusCode.toString()}
+                onValueChange={(value) => {
+                  const status = Number(value);
+                  setPublicationStatusCode(status);
+                  handleInputChange('publication_status_code', status.toString());
+                }}
+              >
+                <SelectTrigger className="w-[280px] h-10 text-base font-bold" style={{ fontFamily: 'Arial, sans-serif' }}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-white z-50">
+                  <SelectItem value="0" className="text-base font-bold" style={{ backgroundColor: '#228B22', color: 'white' }}>
+                    0 - Save & Pub, App & Rev
+                  </SelectItem>
+                  <SelectItem value="1" className="text-base font-bold" style={{ backgroundColor: '#10b981', color: 'white' }}>
+                    1 - Save & Pub, App Only
+                  </SelectItem>
+                  <SelectItem value="2" className="text-base font-bold" style={{ backgroundColor: '#FFD700', color: '#228B22' }}>
+                    2 - Save, NO PUB, No CoP
+                  </SelectItem>
+                  <SelectItem value="3" className="text-base font-bold" style={{ backgroundColor: '#3b82f6', color: 'white' }}>
+                    3 - Save, NO Gpa APR
+                  </SelectItem>
+                  <SelectItem value="4" className="text-base font-bold" style={{ backgroundColor: '#9c441a', color: 'white' }}>
+                    4 - Save, Formatting
+                  </SelectItem>
+                  <SelectItem value="5" className="text-base font-bold" style={{ backgroundColor: '#DC143C', color: '#FFD700' }}>
+                    5 - NOT SAVED
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Last Updates Grid - right aligned */}
+            <div className="flex-shrink-0">
+              <LastUpdatesGrid story={formData} hideTitle={true} />
+            </div>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
