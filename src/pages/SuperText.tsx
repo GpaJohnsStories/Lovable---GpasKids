@@ -807,7 +807,7 @@ const SuperText: React.FC = () => {
                     <AuthorCombobox 
                       value={formData.author || ''}
                       onValueChange={(value) => handleInputChange('author', value)}
-                      placeholder=""
+                      placeholder="Optional - Leave blank for WebText/Admin"
                       className="flex-1 border-2 border-yellow-400 hover:border-yellow-500 h-10"
                       style={{
                         fontSize: '21px',
