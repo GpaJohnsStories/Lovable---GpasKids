@@ -636,8 +636,8 @@ const SuperText: React.FC = () => {
               {/* Text Details Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-green-400 p-6 relative z-20 lg:pr-[225px]">
                 
-                {/* Blue Dot 1 in top left corner */}
-                 <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">1</div>
+                {/* Red Dot 1 - Required field */}
+                 <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full flex items-center justify-center font-bold z-30" style={{ backgroundColor: '#DC143C', color: '#3b82f6' }}>1</div>
                 
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
@@ -656,8 +656,9 @@ const SuperText: React.FC = () => {
                 
                   {/* Row 1: A, Text Code, Empty */}
                   <div className="flex items-center justify-center h-8">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                      backgroundColor: '#3b82f6'
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
+                      backgroundColor: '#DC143C',
+                      color: '#3b82f6'
                     }}>A</div>
                   </div>
                   
@@ -736,8 +737,9 @@ const SuperText: React.FC = () => {
 
                   {/* Row 3: B, Category, Copyright */}
                   <div className="flex items-center justify-center h-10">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                      backgroundColor: '#3b82f6'
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
+                      backgroundColor: '#DC143C',
+                      color: '#3b82f6'
                     }}>B</div>
                   </div>
 
@@ -817,8 +819,9 @@ const SuperText: React.FC = () => {
 
                   {/* Row 4: C, Title (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                      backgroundColor: '#3b82f6'
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
+                      backgroundColor: '#DC143C',
+                      color: '#3b82f6'
                     }}>C</div>
                   </div>
 
@@ -841,8 +844,9 @@ const SuperText: React.FC = () => {
 
                   {/* Row 5: D, Tagline (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                      backgroundColor: '#3b82f6'
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
+                      backgroundColor: '#FFA500',
+                      color: '#228B22'
                     }}>D</div>
                   </div>
 
@@ -865,8 +869,9 @@ const SuperText: React.FC = () => {
 
                   {/* Row 6: E, Author (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                      backgroundColor: '#3b82f6'
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
+                      backgroundColor: '#DC143C',
+                      color: '#3b82f6'
                     }}>E</div>
                   </div>
 
@@ -889,8 +894,9 @@ const SuperText: React.FC = () => {
 
                   {/* Row 7: F, Excerpt (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold" style={{
-                      backgroundColor: '#3b82f6'
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
+                      backgroundColor: '#DC143C',
+                      color: '#3b82f6'
                     }}>F</div>
                   </div>
 
@@ -915,8 +921,8 @@ const SuperText: React.FC = () => {
 
               {/* Story Photos Section */}
               <div className="bg-white/90 backdrop-blur-sm rounded-lg border-2 border-orange-400 p-6 relative">
-                {/* Blue Dot 2 in top left corner */}
-                 <div className="absolute -top-4 -left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center supertext-fs-21px-arial-white font-bold z-30">2</div>
+                {/* Orange Dot 2 - Optional field */}
+                 <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full flex items-center justify-center font-bold z-30" style={{ backgroundColor: '#FFA500', color: '#228B22' }}>2</div>
                 <div className="flex items-center gap-2 mb-4">
                   <h2 className="text-xl font-bold text-orange-700" style={{
                 fontSize: '21px',
