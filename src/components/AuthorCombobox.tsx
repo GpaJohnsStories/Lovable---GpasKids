@@ -95,24 +95,13 @@ export function AuthorCombobox({ value, onValueChange, placeholder = "Select aut
       <SearchableCombobox
         value={value}
         onValueChange={onValueChange}
-        options={authors}
-        placeholder={placeholder}
+        options={['', ...authors]}
+        placeholder=""
         emptyText="No authors found."
         allowCreate={false}
         className={className}
         style={style}
       />
-      {value && (
-        <Button
-          variant="ghost"
-          size="sm"
-          type="button"
-          onClick={() => onValueChange('')}
-          className="h-8 px-2 text-xs"
-        >
-          Clear
-        </Button>
-      )}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogTrigger asChild>
           <Button variant="outline" size="icon" type="button">
