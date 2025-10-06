@@ -689,11 +689,12 @@ const SuperText: React.FC = () => {
                   </div>
                   
                   <div className="h-8 flex items-center justify-center">
-                    <div className="bg-gradient-to-br from-yellow-300 to-yellow-400 border-2 border-orange-500 rounded px-3 py-1 shadow-md" style={{
-                      fontSize: '14px',
+                    <div className="bg-gradient-to-br from-yellow-300 to-yellow-400 border-2 border-orange-500 rounded px-4 py-2 shadow-md whitespace-nowrap" style={{
+                      fontSize: '18px',
                       fontFamily: 'Arial',
                       fontWeight: 'bold',
-                      lineHeight: '1.2'
+                      lineHeight: '1.3',
+                      minWidth: '280px'
                     }}>
                       <div style={{ color: '#DC143C' }}>Red dots are REQUIRED</div>
                       <div style={{ color: '#228B22' }}>Orange dots are OPTIONAL</div>
