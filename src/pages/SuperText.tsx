@@ -644,10 +644,10 @@ const SuperText: React.FC = () => {
                 </div>
                 
                 
-                {/* Grid Layout with instruction box extending beyond */}
-                <div className="flex gap-0">
+                {/* Grid Layout - full width */}
+                <div className="relative">
                   {/* 7x2 Grid Layout - Extended width for C, D, F fields */}
-                  <div className="grid grid-cols-[32px_1fr] auto-rows-min gap-0 flex-1">
+                  <div className="grid grid-cols-[32px_1fr] auto-rows-min gap-0">
                   
                     {/* Row 1: A, Text Code, Empty */}
                     <div className="flex items-center justify-center h-8">
@@ -910,8 +910,8 @@ const SuperText: React.FC = () => {
                     </div>
                 </div>
                 
-                {/* Instruction Box - positioned to the right with 4px gap */}
-                <div className="flex items-start ml-1">
+                {/* Instruction Box - positioned absolutely at top right */}
+                <div className="absolute top-0 right-0">
                   <div className="border-2 border-orange-500 rounded px-4 py-2 shadow-md whitespace-nowrap" style={{
                     fontSize: '20px',
                     fontFamily: 'Comic Sans MS, cursive, Arial',
