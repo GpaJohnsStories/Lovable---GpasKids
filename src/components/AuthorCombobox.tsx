@@ -91,7 +91,7 @@ export function AuthorCombobox({ value, onValueChange, placeholder = "Select aut
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 items-center w-full">
       <SearchableCombobox
         value={value}
         onValueChange={onValueChange}
@@ -102,6 +102,17 @@ export function AuthorCombobox({ value, onValueChange, placeholder = "Select aut
         className={className}
         style={style}
       />
+      {value && (
+        <Button
+          variant="ghost"
+          size="sm"
+          type="button"
+          onClick={() => onValueChange('')}
+          className="h-8 px-2 text-xs"
+        >
+          Clear
+        </Button>
+      )}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogTrigger asChild>
           <Button variant="outline" size="icon" type="button">
