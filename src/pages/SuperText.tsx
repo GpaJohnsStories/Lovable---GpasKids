@@ -562,9 +562,19 @@ const SuperText: React.FC = () => {
             
             {/* Publication Status Dropdown - centered below Save buttons */}
             <div className="flex items-center gap-3">
-              <Label className="text-lg font-bold whitespace-nowrap" style={{ fontFamily: 'Arial, sans-serif' }}>
-                Set Publication Status BEFORE Saving:
-              </Label>
+              <div className="px-4 py-2 rounded-lg border-4 border-orange-500 shadow-lg" style={{
+                backgroundColor: '#228B22',
+                boxShadow: '4px 4px 0px #d97706, 8px 8px 0px #92400e'
+              }}>
+                <span className="font-bold whitespace-nowrap" style={{ 
+                  fontFamily: 'Arial, sans-serif',
+                  fontSize: '24px',
+                  color: '#FFD700',
+                  textShadow: '2px 2px 0px #B8860B, 4px 4px 0px #8B6914, 6px 6px 0px #654321'
+                }}>
+                  Set Publication Status BEFORE Saving:
+                </span>
+              </div>
               <Select
                 value={publicationStatusCode.toString()}
                 onValueChange={(value) => {
