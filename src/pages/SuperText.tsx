@@ -583,7 +583,22 @@ const SuperText: React.FC = () => {
                   handleInputChange('publication_status_code', status.toString());
                 }}
               >
-                <SelectTrigger className="w-[280px] h-10 text-base font-bold" style={{ fontFamily: 'Arial, sans-serif' }}>
+                <SelectTrigger 
+                  className="w-[280px] h-10 text-base font-bold border-2" 
+                  style={{ 
+                    fontFamily: 'Arial, sans-serif',
+                    backgroundColor: publicationStatusCode === 0 ? '#228B22' : 
+                                   publicationStatusCode === 1 ? '#10b981' :
+                                   publicationStatusCode === 2 ? '#FFD700' :
+                                   publicationStatusCode === 3 ? '#3b82f6' :
+                                   publicationStatusCode === 4 ? '#9c441a' : '#DC143C',
+                    color: publicationStatusCode === 0 ? 'white' : 
+                          publicationStatusCode === 1 ? 'white' :
+                          publicationStatusCode === 2 ? '#228B22' :
+                          publicationStatusCode === 3 ? 'white' :
+                          publicationStatusCode === 4 ? 'white' : '#FFD700'
+                  }}
+                >
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-white z-50">
