@@ -692,11 +692,12 @@ const SuperText: React.FC = () => {
   
                     {/* Row 2: Blank, Status Display */}
                     <div></div>
-                    <div className="grid grid-cols-[192px_192px] gap-0">
+                    <div>
                       <div className="bg-gray-100 border-2 border-orange-400" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        maxWidth: '384px'
                       }}>
                         
                         {/* YES/NO Buttons for Story Code Lookup */}
@@ -736,7 +737,7 @@ const SuperText: React.FC = () => {
                       }}>B</div>
                     </div>
   
-                    <div className="h-10 grid grid-cols-[192px_192px] gap-0">
+                    <div className="h-10 flex gap-0">
                       <Select value={formData.category || ''} onValueChange={value => {
                         setCategory(value);
                         handleInputChange('category', value);
