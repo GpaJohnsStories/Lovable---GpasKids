@@ -498,6 +498,16 @@
   transform: translateY(-1px) !important;
 }
 
+/* Inline icon styling for story content */
+.inline-icon-55 {
+  width: 55px;
+  height: 55px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 4px;
+  object-fit: contain;
+}
+
 /* SuperAV Playback Controls Section */
 .playback-controls-section {
   background: linear-gradient(180deg, #ffffff, #f9f6f2);
