@@ -42,7 +42,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   
   // Use preset colors or fallback to props
   const finalBorderColor = colorPreset?.box_border_color_hex || borderColor;
-  const finalBackgroundColor = colorPreset?.background_color_hex ? `bg-[${colorPreset.background_color_hex}]` : backgroundColor;
+  const finalBackgroundColor = colorPreset?.background_color_hex || null;
+  const finalFontColor = colorPreset?.font_color_hex || null;
   
   // Define isSysWel only for SYS-WEL (blue template)
   const isSysWel = webtextCode === "SYS-WEL";
@@ -408,8 +409,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
     <>
       <div 
         id={id}
-        className={`border-4 rounded-lg pt-6 pr-6 pb-1.5 pl-6 ${finalBackgroundColor} relative w-full min-h-fit`}
-        style={{ borderColor: finalBorderColor }}
+        className={`border-4 rounded-lg pt-6 pr-6 pb-1.5 pl-6 ${!finalBackgroundColor ? backgroundColor : ''} relative w-full min-h-fit`}
+        style={{ 
+          borderColor: finalBorderColor,
+          ...(finalBackgroundColor && { backgroundColor: finalBackgroundColor })
+        }}
       >
         {/* Audio Button - Always visible in top right corner */}
         <div className="absolute top-1 right-1 z-[5]">
@@ -472,15 +476,17 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
           )}
           
           {/* Content that wraps around the floated photo with proportional scaling */}
-          <IsolatedStoryRenderer
-            content={getContent()}
-            className="proportional-content text-amber-900 leading-relaxed"
-            category="WebText"
-            fontSize={currentFontSize}
-            useRichCleaning={true}
-            showHeaderPreview={false} // Don't show header preview since we handle title separately
-            enableProportionalSizing={true}
-          />
+          <div style={finalFontColor ? { color: finalFontColor } : undefined}>
+            <IsolatedStoryRenderer
+              content={getContent()}
+              className={`proportional-content ${!finalFontColor ? 'text-amber-900' : ''} leading-relaxed`}
+              category="WebText"
+              fontSize={currentFontSize}
+              useRichCleaning={true}
+              showHeaderPreview={false} // Don't show header preview since we handle title separately
+              enableProportionalSizing={true}
+            />
+          </div>
           
           {/* Clear the float */}
           <div className="clear-both"></div>
