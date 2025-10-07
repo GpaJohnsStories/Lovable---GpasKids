@@ -30,7 +30,14 @@ const StoryCard = ({ story }: StoryCardProps) => {
   return (
     <div className="w-full max-w-md mx-auto md:mx-0 md:ml-0">
       <Card 
-        className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative border-2 border-amber-300 font-system" 
+        className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative font-system" 
+        style={{
+          border: story.category === 'Most Read Story' 
+            ? '4px solid #3b82f6'
+            : story.category === 'Most Popular Story'
+            ? '4px solid #F97316'
+            : '2px solid #fbbf24'
+        }}
         onClick={handleClick}
       >
         <CardContent className="p-3 relative">
