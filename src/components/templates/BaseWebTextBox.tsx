@@ -14,6 +14,7 @@ interface BaseWebTextBoxTheme {
   borderColor: string;
   backgroundColor: string;
   photoMatColor: string;
+  photoBorderColor?: string;
 }
 
 interface BaseWebTextBoxProps {
@@ -153,7 +154,7 @@ const BaseWebTextBox: React.FC<BaseWebTextBoxProps> = ({
                     className="rounded-lg overflow-hidden shadow-lg"
                     style={{
                       backgroundColor: theme.photoMatColor,
-                      border: `3px solid ${theme.borderColor}`
+                      border: `3px solid ${theme.photoBorderColor || theme.borderColor}`
                     }}
                     onClick={() => setShowTooltip(!showTooltip)}
                   >

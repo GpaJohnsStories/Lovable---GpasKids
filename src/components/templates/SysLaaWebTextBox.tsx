@@ -73,6 +73,7 @@ const SysLaaWebTextBox: React.FC<SysLaaWebTextBoxProps> = ({
     
     const borderColor = colorPreset.box_border_color_hex || "#f97316";
     const fontColor = colorPreset.font_color_hex || "#f97316";
+    const photoBorderColor = colorPreset.photo_border_color_hex || borderColor;
     
     // Always use rgba with 20% opacity for background
     // Convert hex to rgba if needed
@@ -97,7 +98,8 @@ const SysLaaWebTextBox: React.FC<SysLaaWebTextBoxProps> = ({
       primaryColor: fontColor,
       borderColor: borderColor,
       backgroundColor: backgroundColor,
-      photoMatColor: backgroundColor
+      photoMatColor: backgroundColor,
+      photoBorderColor: photoBorderColor
     };
   }, [colorPreset]);
 

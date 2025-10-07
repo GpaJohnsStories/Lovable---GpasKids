@@ -44,6 +44,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const finalBorderColor = colorPreset?.box_border_color_hex || borderColor;
   const finalBackgroundColor = colorPreset?.background_color_hex || null;
   const finalFontColor = colorPreset?.font_color_hex || null;
+  const finalPhotoBorderColor = colorPreset?.photo_border_color_hex || finalBorderColor;
   
   // Define isSysWel only for SYS-WEL (blue template)
   const isSysWel = webtextCode === "SYS-WEL";
@@ -456,7 +457,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                   src={iconUrl} 
                   alt={photos[0]?.alt || "webtext icon"}
                   className="w-auto h-48 md:h-64 lg:h-80 object-contain border rounded transition-transform hover:scale-105"
-                  style={{ borderColor: finalBorderColor }}
+                  style={{ borderColor: finalPhotoBorderColor }}
                   onLoad={(e) => {
                     const img = e.currentTarget;
                     const aspect = classifyImageAspect(img.naturalWidth, img.naturalHeight);
