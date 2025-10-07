@@ -164,7 +164,7 @@ const StorySection = () => {
                       className="px-6 py-3 rounded-lg font-bold text-center text-21px font-fun"
                       style={{
                         border: '3px solid #3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        backgroundColor: '#ADD8E6',
                         color: '#333333'
                       }}
                     >
