@@ -56,7 +56,7 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
   // Only render tooltips if they should be shown
   const ConditionalTooltip: React.FC<{ children: React.ReactNode; content: string }> = ({ children, content }) => {
     if (!shouldShowTooltips) {
-      return <>{children}</>;
+      return children as React.ReactElement;
     }
 
     return (
@@ -183,13 +183,19 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
 
         {/* Internal Link */}
         <div className="flex items-center gap-1">
-          <InternalLinkDialog onInsertLink={onInsertLink}>
-            <ConditionalTooltip content="Insert Internal Link">
-              <Button type="button" size="sm" className="h-8 px-2 btn-toolbar-yellow">
-                <Link2 className="h-4 w-4" />
-              </Button>
-            </ConditionalTooltip>
-          </InternalLinkDialog>
+          <ConditionalTooltip content="Insert Internal Link">
+            <div>
+              <InternalLinkDialog onInsertLink={onInsertLink}>
+                <Button type="button" size="sm" className="h-8 px-2" style={{
+                  backgroundColor: '#8B4513',
+                  color: 'white',
+                  border: 'none'
+                }}>
+                  <Link2 className="h-4 w-4" />
+                </Button>
+              </InternalLinkDialog>
+            </div>
+          </ConditionalTooltip>
         </div>
 
         {/* Page Break and Content Tools */}
