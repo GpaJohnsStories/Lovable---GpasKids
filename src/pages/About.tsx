@@ -355,6 +355,27 @@ const About = () => {
                     <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#2 AI Assistant</p>
                   </TooltipContent>
                 </Tooltip>
+                
+                {/* Gemini (#3 AI Assistant) */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="overflow-hidden rounded-lg border-4 shadow-sm cursor-pointer h-12 md:h-16 lg:h-20" style={{ borderColor: '#FF6F00' }}>
+                      <img
+                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203797044-k7zd8tg1w.png"
+                        alt="#3 AI Assistant"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        onLoad={() => console.log('Photo 4 loaded successfully')}
+                        onError={(e) => {
+                          console.error('Photo 4 failed to load:', e.currentTarget.src);
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs text-base font-serif text-blue-900 font-semibold">#3 AI Assistant</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
             </div>
             
