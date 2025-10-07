@@ -48,9 +48,11 @@ const StoryCard = ({ story }: StoryCardProps) => {
               </div>
             )}
             <div className="flex-1 flex flex-col items-center h-40">
-              <div className="mb-2">
-                {getCategoryButtonForStory(story.category, story.story_code)}
-              </div>
+              {story.category !== 'Most Read Story' && story.category !== 'Most Popular Story' && (
+                <div className="mb-2">
+                  {getCategoryButtonForStory(story.category, story.story_code)}
+                </div>
+              )}
               <div className="mb-2">
                 <div className="text-xs text-gray-600 font-medium">
                   👍 {story.thumbs_up_count || 0} | 👎 {story.thumbs_down_count || 0} | 😊 {story.ok_count || 0} | Reads: {(story.read_count || 0).toLocaleString()}

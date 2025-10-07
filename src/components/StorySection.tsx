@@ -156,7 +156,37 @@ const StorySection = () => {
       {featuredStories.length > 0 ? <div className="mb-12">
           {/* Featured Stories Section */}
           <div className="flex flex-col md:flex-row md:justify-between md:gap-6 space-y-8 md:space-y-0">
-            {featuredStories.map(story => <div key={story.id}>
+            {featuredStories.map(story => <div key={story.id} className="flex-1">
+                {/* Category header banner for Most Read Story */}
+                {story.category === 'Most Read Story' && (
+                  <div className="mb-3 flex justify-center">
+                    <div 
+                      className="px-6 py-3 rounded-lg border-3 font-bold text-center text-21px font-fun"
+                      style={{
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        color: '#333333'
+                      }}
+                    >
+                      Most Read Story
+                    </div>
+                  </div>
+                )}
+                {/* Category header banner for Most Popular Story */}
+                {story.category === 'Most Popular Story' && (
+                  <div className="mb-3 flex justify-center">
+                    <div 
+                      className="px-6 py-3 rounded-lg border-3 font-bold text-center text-21px font-fun"
+                      style={{
+                        borderColor: '#9c441a',
+                        backgroundColor: '#e8d3c0',
+                        color: '#654321'
+                      }}
+                    >
+                      Most Popular Story
+                    </div>
+                  </div>
+                )}
                 <StoryCard story={story} />
               </div>)}
           </div>
