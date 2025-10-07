@@ -361,7 +361,7 @@ const About = () => {
                   <TooltipTrigger asChild>
                     <div className="overflow-hidden rounded-lg border-4 shadow-sm cursor-pointer h-12 md:h-16 lg:h-20" style={{ borderColor: '#FF6F00' }}>
                       <img
-                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203797044-k7zd8tg1w.png"
+                        src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
                         alt="#3 AI Assistant"
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         onLoad={() => console.log('Photo 4 loaded successfully')}
@@ -382,6 +382,7 @@ const About = () => {
             <DeployedContent 
               storyCode="SYS-THY"
               includeAudio={false}
+              hidePhotos={true}
               className="text-lg text-purple-800 leading-relaxed font-normal"
               fontSize={fontSize}
               onFontSizeChange={setFontSize}
