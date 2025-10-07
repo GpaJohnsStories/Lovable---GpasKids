@@ -307,20 +307,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   };
 
   const handleInsertIconTokens = () => {
-    const textarea = editorRef.current;
-    if (!textarea) return;
-
-    const iconTokensText = `{{ICO-HOM}}{{/ICO-HOM}}
-{{ICO-N2K}}{{/ICO-N2K}}
-{{ICO-STO}}{{/ICO-STO}}
-{{ICO-LIB}}{{/ICO-LIB}}
-{{ICO-WRI}}{{/ICO-WRI}}
-{{ICO-ABT}}{{/ICO-ABT}}
-{{ICO-CLB}}{{/ICO-CLB}}
-
-`;
-
-    insertTextAtCursor(iconTokensText);
+    insertTextAtCursor('{{ICON}}{{/ICON}}');
   };
 
   const handleSelectAllPreview = () => {
