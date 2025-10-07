@@ -317,11 +317,11 @@ const About = () => {
                 {/* Lovable (#1 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="overflow-hidden rounded-lg border-4 border-yellow-400 shadow-sm cursor-pointer">
+                    <div className="overflow-hidden rounded-lg border-4 border-yellow-400 shadow-sm cursor-pointer h-12 md:h-16 lg:h-20">
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203773244-hhgj4xbfc.png"
                         alt="#1 AI Assistant"
-                        className="w-full h-12 md:h-16 lg:h-20 object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         onLoad={() => console.log('Photo 2 loaded successfully')}
                         onError={(e) => {
                           console.error('Photo 2 failed to load:', e.currentTarget.src);
