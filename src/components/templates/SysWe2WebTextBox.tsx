@@ -15,10 +15,25 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
   useEffect(() => {
     const fetchColorPreset = async () => {
       try {
+        // First, get the story's color_preset_id
+        const { data: storyData, error: storyError } = await supabase
+          .from('stories')
+          .select('color_preset_id')
+          .eq('story_code', code)
+          .single();
+        
+        if (storyError) {
+          console.error('Error fetching story:', storyError);
+        }
+
+        // Use the story's preset ID, or fallback to '2'
+        const presetId = storyData?.color_preset_id || '2';
+        
+        // Fetch the color preset
         const { data, error } = await supabase
           .from('color_presets')
           .select('*')
-          .eq('id', '2')
+          .eq('id', presetId)
           .single();
         
         if (error) {
@@ -46,7 +61,7 @@ const SysWe2WebTextBox: React.FC<SysWe2WebTextBoxProps> = ({ code, title, id }) 
     };
 
     fetchColorPreset();
-  }, []);
+  }, [code]);
 
   // Convert color preset to theme format
   const theme = useMemo(() => {
