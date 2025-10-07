@@ -15,6 +15,7 @@ import { toast } from '@/hooks/use-toast';
 import { useIconCache } from '@/contexts/IconCacheContext';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { classifyImageAspect, getResponsiveImageGutterClass, type ImageAspectType } from '@/utils/imageUtils';
+import { supabase } from '@/integrations/supabase/client';
 
 interface ProportionalWebTextBoxProps {
   webtextCode: string;
@@ -37,6 +38,11 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
   const [iconUrl, setIconUrl] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [fontScale, setFontScale] = useState<FontScaleStep>(DEFAULT_FONT_SCALE);
+  const [colorPreset, setColorPreset] = useState<any>(null);
+  
+  // Use preset colors or fallback to props
+  const finalBorderColor = colorPreset?.box_border_color_hex || borderColor;
+  const finalBackgroundColor = colorPreset?.background_color_hex ? `bg-[${colorPreset.background_color_hex}]` : backgroundColor;
   
   // Define isSysWel only for SYS-WEL (blue template)
   const isSysWel = webtextCode === "SYS-WEL";
@@ -103,6 +109,19 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
       // Fetch webtext content
       const webtextData = await lookupStoryByCode(webtextCode, true);
       setWebtext(webtextData.story);
+      
+      // Fetch color preset if story has one
+      if (webtextData.story?.color_preset_id) {
+        const { data: presetData, error: presetError } = await supabase
+          .from('color_presets')
+          .select('*')
+          .eq('id', webtextData.story.color_preset_id)
+          .single();
+        
+        if (!presetError && presetData) {
+          setColorPreset(presetData);
+        }
+      }
       
       // Set icon URL from the webtext story photos
       if (webtextData.story) {
@@ -389,8 +408,8 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
     <>
       <div 
         id={id}
-        className={`border-4 rounded-lg pt-6 pr-6 pb-1.5 pl-6 ${backgroundColor} relative w-full min-h-fit`}
-        style={{ borderColor }}
+        className={`border-4 rounded-lg pt-6 pr-6 pb-1.5 pl-6 ${finalBackgroundColor} relative w-full min-h-fit`}
+        style={{ borderColor: finalBorderColor }}
       >
         {/* Audio Button - Always visible in top right corner */}
         <div className="absolute top-1 right-1 z-[5]">
@@ -433,7 +452,7 @@ export const ProportionalWebTextBox: React.FC<ProportionalWebTextBoxProps> = ({
                   src={iconUrl} 
                   alt={photos[0]?.alt || "webtext icon"}
                   className="w-auto h-48 md:h-64 lg:h-80 object-contain border rounded transition-transform hover:scale-105"
-                  style={{ borderColor }}
+                  style={{ borderColor: finalBorderColor }}
                   onLoad={(e) => {
                     const img = e.currentTarget;
                     const aspect = classifyImageAspect(img.naturalWidth, img.naturalHeight);
