@@ -173,7 +173,8 @@ export const DeployedContent = ({
                 <img 
                   src={buildCacheBustedUrl(content.photo_link_1, getAssetVersionFromStory(content))} 
                   alt={content.photo_alt_1 || content.title || 'Story image'}
-                  className="w-full h-auto rounded-lg shadow-lg border-4 border-white cursor-pointer"
+                  className="w-full h-auto rounded-lg shadow-lg border-4 cursor-pointer"
+                  style={{ borderColor: '#CD7F32' }}
                   onLoad={(e) => {
                     const img = e.currentTarget;
                     const aspect = classifyImageAspect(img.naturalWidth, img.naturalHeight);
