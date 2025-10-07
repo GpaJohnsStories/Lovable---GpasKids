@@ -313,7 +313,7 @@ const About = () => {
               </div>
               
               {/* Right: Stacked logos - responsive sizing */}
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-3 w-full md:w-3/5 lg:w-2/3">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-2.5 w-full md:w-3/5 lg:w-2/3">
                 {/* Lovable (#1 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
