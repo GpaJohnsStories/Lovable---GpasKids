@@ -19,10 +19,25 @@ const SysLaaWebTextBox: React.FC<SysLaaWebTextBoxProps> = ({
   useEffect(() => {
     const fetchColorPreset = async () => {
       try {
+        // First, get the story's color_preset_id
+        const { data: storyData, error: storyError } = await supabase
+          .from('stories')
+          .select('color_preset_id')
+          .eq('story_code', code)
+          .single();
+        
+        if (storyError) {
+          console.error('Error fetching story:', storyError);
+        }
+
+        // Use the story's preset ID, or fallback to '1'
+        const presetId = storyData?.color_preset_id || '1';
+        
+        // Fetch the color preset
         const { data, error } = await supabase
           .from('color_presets')
           .select('*')
-          .eq('id', '1')
+          .eq('id', presetId)
           .single();
         
         if (error) {
@@ -50,7 +65,7 @@ const SysLaaWebTextBox: React.FC<SysLaaWebTextBoxProps> = ({
     };
 
     fetchColorPreset();
-  }, []);
+  }, [code]);
 
   // Convert color preset to theme format
   const theme = useMemo(() => {
