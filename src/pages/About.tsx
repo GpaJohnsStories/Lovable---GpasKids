@@ -5,13 +5,13 @@ import CookieFreeFooter from "@/components/CookieFreeFooter";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { SuperAV } from "@/components/SuperAV";
 import { DeployedContent } from "@/components/DeployedContent";
-import { useCachedIcon } from "@/hooks/useCachedIcon";
+
 import { AudioButton } from "@/components/AudioButton";
 import { useStoryCodeLookup } from "@/hooks/useStoryCodeLookup";
 import { supabase } from '@/integrations/supabase/client';
 
 const About = () => {
-  const { iconUrl: ab5IconUrl } = useCachedIcon('ICZ-AB5.png');
+  const ab5IconUrl = '/lovable-uploads/ICZ-AB5.png';
   const { lookupStoryByCode } = useStoryCodeLookup();
   const [superAVOpen, setSuperAVOpen] = useState(false);
   const [fontSize, setFontSize] = useState(16);
@@ -301,19 +301,15 @@ const About = () => {
             
             {/* Responsive layout: stacked on mobile, side-by-side on larger screens */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
-              {/* ICZ-AB5 Photo - responsive sizing with wood frame */}
-              <div className="w-full md:w-1/2 lg:w-3/5 rounded-lg shadow-xl flex items-center justify-center p-2 md:p-4 bg-gradient-to-br from-amber-800 via-amber-700 to-amber-900 border-4 md:border-8 border-amber-800" style={{
-                backgroundImage: 'linear-gradient(45deg, #92400e 25%, #a16207 25%, #a16207 50%, #92400e 50%, #92400e 75%, #a16207 75%)',
-                backgroundSize: '8px 8px',
-                boxShadow: 'inset 0 0 20px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.4)'
+              {/* ICZ-AB5 Photo - simple brown border */}
+              <div className="w-full md:w-1/2 lg:w-3/5 rounded-lg overflow-hidden" style={{
+                border: '4px solid #9c441a'
               }}>
-                {ab5IconUrl && (
-                  <img 
-                    src={ab5IconUrl} 
-                    alt="3 Helpful AI's Icon"
-                    className="w-full h-64 md:h-96 lg:h-80 object-contain hover:scale-105 transition-transform duration-300 rounded-sm shadow-inner"
-                  />
-                )}
+                <img 
+                  src={ab5IconUrl} 
+                  alt="3 Helpful AI's - Lovabe, Copilot, and Gemini"
+                  className="w-full h-64 md:h-96 lg:h-80 object-contain"
+                />
               </div>
               
               {/* Right: Stacked logos - responsive sizing */}
