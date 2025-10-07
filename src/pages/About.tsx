@@ -338,7 +338,7 @@ const About = () => {
                 {/* CoPilot (#2 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="overflow-hidden rounded-lg border-4 border-gray-400 bg-gray-200 shadow-sm cursor-pointer">
+                    <div className="overflow-hidden rounded-lg border-4 bg-gray-200 shadow-sm cursor-pointer" style={{ borderColor: '#CD7F32' }}>
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203785267-p40ovhg84.png"
                         alt="#2 AI Assistant"
