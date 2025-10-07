@@ -178,9 +178,9 @@ const StorySection = () => {
                     <div 
                       className="px-6 py-3 rounded-lg font-bold text-center text-21px font-fun"
                       style={{
-                        border: '3px solid #9c441a',
-                        backgroundColor: '#e8d3c0',
-                        color: '#654321'
+                        border: '3px solid #F97316',
+                        backgroundColor: 'rgba(249, 115, 22, 0.2)',
+                        color: '#F97316'
                       }}
                     >
                       Most Popular Story
