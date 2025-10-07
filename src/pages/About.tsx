@@ -363,7 +363,7 @@ const About = () => {
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203754720-ohwbb5t4t.png"
                         alt="#3 AI Assistant"
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
                         onLoad={() => console.log('Photo 4 loaded successfully')}
                         onError={(e) => {
                           console.error('Photo 4 failed to load:', e.currentTarget.src);
