@@ -338,11 +338,11 @@ const About = () => {
                 {/* CoPilot (#2 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="overflow-hidden rounded-lg border-4 bg-gray-200 shadow-sm cursor-pointer" style={{ borderColor: '#C0C0C0' }}>
+                    <div className="overflow-hidden rounded-lg border-4 bg-gray-200 shadow-sm cursor-pointer h-12 md:h-16 lg:h-20" style={{ borderColor: '#C0C0C0' }}>
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203785267-p40ovhg84.png"
                         alt="#2 AI Assistant"
-                        className="w-full h-16 md:h-24 lg:h-28 object-contain hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         onLoad={() => console.log('Photo 3 loaded successfully')}
                         onError={(e) => {
                           console.error('Photo 3 failed to load:', e.currentTarget.src);
