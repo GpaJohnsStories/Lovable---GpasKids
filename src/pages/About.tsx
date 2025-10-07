@@ -359,7 +359,7 @@ const About = () => {
                 {/* Claude (#3 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="overflow-hidden rounded-lg border-4 border-blue-400 bg-blue-100 shadow-sm cursor-pointer">
+                    <div className="overflow-hidden rounded-lg border-4 bg-blue-100 shadow-sm cursor-pointer" style={{ borderColor: '#CD7F32' }}>
                       <img
                         src="https://hlywucxwpzbqmzssmwpj.supabase.co/storage/v1/object/public/story-photos/story-photos/1752203797044-k7zd8tg1w.png"
                         alt="#3 AI Assistant"
