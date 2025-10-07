@@ -161,9 +161,9 @@ const StorySection = () => {
                 {story.category === 'Most Read Story' && (
                   <div className="mb-3 flex justify-center">
                     <div 
-                      className="px-6 py-3 rounded-lg border-3 font-bold text-center text-21px font-fun"
+                      className="px-6 py-3 rounded-lg font-bold text-center text-21px font-fun"
                       style={{
-                        borderColor: '#3b82f6',
+                        border: '3px solid #3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.2)',
                         color: '#333333'
                       }}
@@ -176,9 +176,9 @@ const StorySection = () => {
                 {story.category === 'Most Popular Story' && (
                   <div className="mb-3 flex justify-center">
                     <div 
-                      className="px-6 py-3 rounded-lg border-3 font-bold text-center text-21px font-fun"
+                      className="px-6 py-3 rounded-lg font-bold text-center text-21px font-fun"
                       style={{
-                        borderColor: '#9c441a',
+                        border: '3px solid #9c441a',
                         backgroundColor: '#e8d3c0',
                         color: '#654321'
                       }}
