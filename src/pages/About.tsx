@@ -301,19 +301,19 @@ const About = () => {
             
             {/* Responsive layout: stacked on mobile, side-by-side on larger screens */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
-              {/* ICZ-AB5 Photo - simple brown border */}
-              <div className="w-full md:w-1/2 lg:w-3/5 rounded-lg overflow-hidden" style={{
+              {/* ICZ-AB5 Photo - simple brown border, narrow to fit portrait aspect ratio */}
+              <div className="w-full md:w-2/5 lg:w-1/3 rounded-lg overflow-hidden mx-auto md:mx-0" style={{
                 border: '4px solid #9c441a'
               }}>
                 <img 
                   src={ab5IconUrl} 
                   alt="3 Helpful AI's - Lovabe, Copilot, and Gemini"
-                  className="w-full h-64 md:h-96 lg:h-80 object-contain"
+                  className="w-full h-auto object-contain"
                 />
               </div>
               
               {/* Right: Stacked logos - responsive sizing */}
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-3 w-full md:w-1/2 lg:w-2/5">
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-3 w-full md:w-3/5 lg:w-2/3">
                 {/* Lovable (#1 AI Assistant) */}
                 <Tooltip>
                   <TooltipTrigger asChild>
