@@ -96,6 +96,16 @@ const Story = () => {
         if (!isPrintMode) {
           sessionStorage.setItem('currentStoryPath', `/story/${storyCode}`);
           console.log('📖 Story loaded - stored currentStoryPath:', `/story/${storyCode}`);
+          
+          // Store last read story in localStorage for "Resume Reading" feature
+          const lastReadStory = {
+            story_code: data.story_code,
+            title: data.title,
+            author: data.author,
+            timestamp: new Date().toISOString()
+          };
+          localStorage.setItem('lastReadStory', JSON.stringify(lastReadStory));
+          console.log('📚 Stored last read story:', lastReadStory);
 
           // Increment read_count (only for normal views, not print mode)
           await supabase
