@@ -259,15 +259,17 @@ export const SuperAV: React.FC<SuperAVProps> = ({
   fontScale,
   onFontScaleChange,
 }) => {
-  // Convert legacy fontSize to scale if using old system
+  // Initialize scale from props, localStorage, or default
   const [currentScale, setCurrentScale] = useState<FontScaleStep>(() => {
+    // Priority: 1. fontScale prop, 2. localStorage, 3. DEFAULT_FONT_SCALE
     if (fontScale) return fontScale;
-    // Try to restore from localStorage
+    
     const stored = localStorage.getItem('superav-font-scale');
     if (stored && ['xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl', '4xl'].includes(stored)) {
       return stored as FontScaleStep;
     }
-    return pixelSizeToScale(fontSize);
+    
+    return DEFAULT_FONT_SCALE;
   });
 
 
@@ -454,7 +456,7 @@ export const SuperAV: React.FC<SuperAVProps> = ({
     if (fontScale && fontScale !== currentScale) {
       setCurrentScale(fontScale);
     }
-  }, [fontScale, currentScale]);
+  }, [fontScale]); // Remove currentScale from dependencies to prevent unnecessary re-runs
 
   // Save preferences to localStorage when they change
   useEffect(() => {
