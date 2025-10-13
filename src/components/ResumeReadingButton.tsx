@@ -33,7 +33,7 @@ const ResumeReadingButton = () => {
         textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
       }}
     >
-      Read Current Story: {lastReadStory.title}, {lastReadStory.author}, {lastReadStory.story_code}
+      Read Current Story: {lastReadStory.title}, By {lastReadStory.author}, Code: {lastReadStory.story_code}
     </button>
   );
 };
