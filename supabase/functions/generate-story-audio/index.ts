@@ -122,8 +122,9 @@ serve(async (req) => {
         textToRead += `. ${finalTagline}`
       }
       
-      if (finalAuthor) {
-        textToRead += `. By ${finalAuthor} —`
+      // Only include "Written by" for non-webtext stories with an author
+      if (finalAuthor && story.category !== 'Webtext') {
+        textToRead += `. Written by ${finalAuthor} —`
       }
       
       if (finalExcerpt) {
