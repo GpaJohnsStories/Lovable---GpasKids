@@ -108,29 +108,6 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         onClose();
       }
     },
-    {
-      id: "read-story",
-      icon: "!CO-MM4.gif", // Read Story icon - Main Menu 4
-      text: "Read Story",
-      tooltipText: readStoryIconName || "Read Story",
-      color: "#F97316",
-      onClick: () => {
-        console.log("Read Story clicked");
-        // If we're already on a story page, just close the menu
-        if (location.pathname.startsWith('/story/')) {
-          onClose();
-          return;
-        }
-        // Otherwise, navigate to the stored story path
-        const storedPath = sessionStorage.getItem('currentStoryPath');
-        if (storedPath) {
-          window.location.href = storedPath;
-        }
-        onClose();
-      },
-      disabled: !isStorySelected,
-      disabledMessage: "Select a story first to read"
-    },
     // {
     //   id: "osm",
     //   icon: "!CO-OSM.png", // OSM icon - Main Menu 6

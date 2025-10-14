@@ -5,7 +5,6 @@ import { useToast } from "@/hooks/use-toast";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import PublicStoriesTable from "@/components/PublicStoriesTable";
 import WelcomeHeader from "@/components/WelcomeHeader";
-import ResumeReadingButton from "@/components/ResumeReadingButton";
 
 
 const Library = () => {
@@ -40,10 +39,6 @@ const Library = () => {
           <h1 className="text-4xl font-bold text-orange-800 mb-2" style={{ fontFamily: "'Kalam', 'Caveat', cursive, sans-serif" }}>
             Library of Stories, Videos and Audio Files
           </h1>
-        </div>
-        
-        <div className="flex justify-center mb-6">
-          <ResumeReadingButton />
         </div>
         
         <div className="mb-8">

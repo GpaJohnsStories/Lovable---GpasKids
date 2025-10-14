@@ -209,7 +209,7 @@ const PublicStoriesTable: React.FC = () => {
   }, [filteredAndSortedStories, sortOption, sortDirection]);
 
   const handleStoryClick = (storyCode: string) => {
-    navigate(`/story/${storyCode}`);
+    window.open(`/story/${storyCode}`, '_blank');
   };
 
   const handleClearSearch = () => {
