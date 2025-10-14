@@ -53,30 +53,29 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
 }) => {
   const { shouldShowTooltips } = useTooltipContext();
 
-  // Only render tooltips if they should be shown
+  // Always wrap in TooltipTrigger to preserve button functionality
+  // Conditionally render TooltipContent based on shouldShowTooltips
   const ConditionalTooltip: React.FC<{ children: React.ReactNode; content: string }> = ({ children, content }) => {
-    if (!shouldShowTooltips) {
-      return children as React.ReactElement;
-    }
-
     return (
       <Tooltip>
         <TooltipTrigger asChild>
           {children}
         </TooltipTrigger>
-        <TooltipContent 
-          side="bottom" 
-          align="center"
-          className="bg-white border border-gray-300 shadow-lg"
-          style={{ 
-            fontFamily: 'Arial', 
-            fontSize: '21px', 
-            color: 'black',
-            backgroundColor: 'white'
-          }}
-        >
-          {content}
-        </TooltipContent>
+        {shouldShowTooltips && (
+          <TooltipContent 
+            side="bottom" 
+            align="center"
+            className="bg-white border border-gray-300 shadow-lg"
+            style={{ 
+              fontFamily: 'Arial', 
+              fontSize: '21px', 
+              color: 'black',
+              backgroundColor: 'white'
+            }}
+          >
+            {content}
+          </TooltipContent>
+        )}
       </Tooltip>
     );
   };
@@ -331,14 +330,10 @@ const StickyToolbar: React.FC<StickyToolbarProps> = ({
         {/* Color Preset Selector - aligned right */}
         {onColorPresetChange && (
           <div className="flex items-center gap-2">
-            <ConditionalTooltip content="Select color scheme for Live Preview">
-              <div>
-                <ColorPresetSelector
-                  value={colorPresetId || ''}
-                  onChange={onColorPresetChange}
-                />
-              </div>
-            </ConditionalTooltip>
+            <ColorPresetSelector
+              value={colorPresetId || ''}
+              onChange={onColorPresetChange}
+            />
           </div>
         )}
       </div>
