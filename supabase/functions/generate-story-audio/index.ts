@@ -97,15 +97,15 @@ serve(async (req) => {
       return cleaned
     }
     
-    // Extract header information from content tokens only
+    // Extract header information from content tokens, fallback to database fields
     const headerTokens = extractHeaderTokens(story.content || '')
     console.log(`🎵 Extracted header tokens:`, headerTokens)
     
-    // Use only tokens - no fallbacks to database fields
-    const finalTitle = headerTokens.title || ''
-    const finalTagline = headerTokens.tagline || ''
-    const finalAuthor = headerTokens.author || ''
-    const finalExcerpt = headerTokens.excerpt || ''
+    // Use tokens first, fallback to database fields
+    const finalTitle = headerTokens.title || story.title || ''
+    const finalTagline = headerTokens.tagline || story.tagline || ''
+    const finalAuthor = headerTokens.author || story.author || ''
+    const finalExcerpt = headerTokens.excerpt || story.excerpt || ''
     
     // Clean the main content (strip all tokens and HTML)
     const cleanedContent = cleanContentForTTS(story.content || '')
