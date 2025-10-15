@@ -8,36 +8,34 @@ import AuthorLink from "@/components/AuthorLink";
 
 interface StoryCardProps {
   story: StoryData;
+  borderColor?: string;
 }
 
-const StoryCard = ({ story }: StoryCardProps) => {
-  const navigate = useNavigate();
+const StoryCard = ({ story, borderColor }: StoryCardProps) => {
   
   const getFirstAvailablePhoto = (): string | undefined => {
     return story.photo_link_1 || story.photo_link_2 || story.photo_link_3;
   };
 
   const handleClick = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-    navigate(`/story/${story.story_code}`);
+    // Open story in new tab
+    window.open(`/story/${story.story_code}`, '_blank');
   };
 
   const firstPhoto = getFirstAvailablePhoto();
+
+  const getBorderStyle = () => {
+    if (borderColor) return `4px solid ${borderColor}`;
+    if (story.category === 'Most Read Story') return '4px solid #3b82f6';
+    if (story.category === 'Most Popular Story') return '4px solid #F97316';
+    return '2px solid #fbbf24';
+  };
 
   return (
     <div className="w-full max-w-md mx-auto md:mx-0 md:ml-0">
       <Card 
         className="story-card group cursor-pointer hover:shadow-lg transition-shadow relative font-system" 
-        style={{
-          border: story.category === 'Most Read Story' 
-            ? '4px solid #3b82f6'
-            : story.category === 'Most Popular Story'
-            ? '4px solid #F97316'
-            : '2px solid #fbbf24'
-        }}
+        style={{ border: getBorderStyle() }}
         onClick={handleClick}
       >
         <CardContent className="p-3 relative">

@@ -2,8 +2,7 @@
 import WelcomeHeader from "@/components/WelcomeHeader";
 import { ProportionalWebTextBox } from "@/components/ProportionalWebTextBox";
 import WebTextBox from "@/components/WebTextBox";
-import StaticWebtextBox from "@/components/StaticWebtextBox";
-import StorySection from "@/components/StorySection";
+import FeaturedStoriesGrid from "@/components/FeaturedStoriesGrid";
 import GpaJohnComments from "@/components/GpaJohnComments";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 
@@ -16,6 +15,9 @@ const Index = () => {
       <WelcomeHeader />
       
       <main className="container mx-auto px-4 pt-0">
+        {/* Featured Stories Grid */}
+        <FeaturedStoriesGrid />
+        
         {/* ===== BOX 1 START (Orange Announcements Box) ===== */}
         <GpaJohnComments />
         {/* ===== BOX 1 END ===== */}
@@ -26,9 +28,6 @@ const Index = () => {
           id="home-box-2"
         />
         {/* ===== BOX 2 END ===== */}
-        
-        
-        <StorySection />
       </main>
       
       {/* Contact Email Section - Mobile Width */}
