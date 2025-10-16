@@ -86,7 +86,7 @@ const WordLimitedTextarea = React.forwardRef<
   const isNearLimit = wordCount >= wordLimit * 0.9; // 90% of limit
 
   return (
-    <div className={compact ? "" : "space-y-2"}>
+    <div className={cn(compact ? "relative" : "space-y-2")}>
       <Textarea
         className={cn(
           className,
@@ -98,6 +98,18 @@ const WordLimitedTextarea = React.forwardRef<
         onPaste={handlePaste}
         {...props}
       />
+      {showWordCount && compact && (
+        <div 
+          className="absolute bottom-1 right-2 pointer-events-none"
+          style={{
+            fontFamily: 'Arial',
+            fontSize: '19px',
+            color: isAtLimit ? '#DC143C' : isNearLimit ? '#F97316' : '#666666'
+          }}
+        >
+          {wordCount}/{wordLimit}
+        </div>
+      )}
       {showWordCount && !compact && (
         <div className="flex justify-between text-xs">
           <span className={cn(
