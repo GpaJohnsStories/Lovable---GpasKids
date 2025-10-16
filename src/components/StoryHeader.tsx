@@ -5,7 +5,7 @@ import { AudioButton } from "@/components/AudioButton";
 import { SuperAV } from "@/components/SuperAV";
 import AuthorLink from "@/components/AuthorLink";
 import CopyrightIcon from "@/components/CopyrightIcon";
-import PrintIcon from "@/components/PrintIcon";
+// import PrintIcon from "@/components/PrintIcon";
 import { createSafeHeaderHtml } from "@/utils/headerTokens";
 
 interface StoryHeaderProps {
@@ -123,12 +123,13 @@ const StoryHeader = ({
             {!printMode && <AuthorLink authorName={author} variant="button" size="sm" />}
           </div>
           {/* Icons row */}
+          {/* Temporarily removed - will be restored with printing upgrade
           <div className="flex items-center gap-2">
-            {/* {!printMode && <CopyrightIcon copyrightStatus={copyrightStatus || '©'} />} */}
             {(copyrightStatus === 'L' || copyrightStatus === 'O') && !printMode && storyCode && (
               <PrintIcon storyCode={storyCode} />
             )}
           </div>
+          */}
         </div>
 
         {(description || descriptionHtml) && (
