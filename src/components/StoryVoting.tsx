@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import CreateCommentButton from "./CreateCommentButton";
 interface StoryVotingProps {
   storyId: string;
   storyCode: string;
@@ -83,7 +82,7 @@ const StoryVoting = ({
   return <div className="flex flex-col items-center space-y-4 px-6 pt-6 pb-3 bg-amber-50 rounded-lg border border-amber-200">
       <h3 className="text-2xl md:text-3xl font-bold text-orange-800 mb-2 font-handwritten">Did you like this story?</h3>
       
-      <div className="flex flex-col lg:flex-row items-center gap-4">
+      <div className="flex justify-center">
         {/* Voting Buttons */}
         <div className="flex space-x-4">
           <Button variant="ghost" onClick={() => handleVote('thumbs_up')} disabled={isVoting} className={getButtonClass('thumbs_up')}>
@@ -104,12 +103,6 @@ const StoryVoting = ({
             <span className="text-xs">({thumbsDownCount})</span>
           </Button>
         </div>
-
-        {/* Comment Button */}
-        <CreateCommentButton 
-          storyCode={storyCode}
-          storyTitle={storyTitle}
-        />
       </div>
     </div>;
 };
