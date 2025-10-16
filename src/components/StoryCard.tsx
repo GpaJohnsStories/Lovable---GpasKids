@@ -9,9 +9,10 @@ import AuthorLink from "@/components/AuthorLink";
 interface StoryCardProps {
   story: StoryData;
   borderColor?: string;
+  showCategoryButton?: boolean;
 }
 
-const StoryCard = ({ story, borderColor }: StoryCardProps) => {
+const StoryCard = ({ story, borderColor, showCategoryButton = true }: StoryCardProps) => {
   
   const getFirstAvailablePhoto = (): string | undefined => {
     return story.photo_link_1 || story.photo_link_2 || story.photo_link_3;
@@ -53,7 +54,7 @@ const StoryCard = ({ story, borderColor }: StoryCardProps) => {
               </div>
             )}
             <div className="flex-1 flex flex-col items-center h-40">
-              {story.category !== 'Most Read Story' && story.category !== 'Most Popular Story' && (
+              {showCategoryButton && story.category !== 'Most Read Story' && story.category !== 'Most Popular Story' && (
                 <div className="mb-2">
                   {getCategoryButtonForStory(story.category, story.story_code)}
                 </div>

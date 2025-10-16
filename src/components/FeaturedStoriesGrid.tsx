@@ -74,7 +74,7 @@ const FeaturedStoriesGrid = () => {
             </div>
           </div>
           {mostReadStory && (
-            <StoryCard story={mostReadStory as any} borderColor="#3b82f6" />
+            <StoryCard story={mostReadStory as any} borderColor="#3b82f6" showCategoryButton={false} />
           )}
         </div>
 
@@ -91,7 +91,7 @@ const FeaturedStoriesGrid = () => {
             </div>
           </div>
           {mostPopularStory && (
-            <StoryCard story={mostPopularStory as any} borderColor="#F97316" />
+            <StoryCard story={mostPopularStory as any} borderColor="#F97316" showCategoryButton={false} />
           )}
         </div>
       </div>
@@ -111,7 +111,7 @@ const FeaturedStoriesGrid = () => {
       {/* Rows 4-5: 4 Newest Stories in 2x2 grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {newestStories.map(story => (
-          <StoryCard key={story.id} story={story as any} borderColor="#16a34a" />
+          <StoryCard key={story.id} story={story as any} borderColor="#16a34a" showCategoryButton={false} />
         ))}
       </div>
     </div>
