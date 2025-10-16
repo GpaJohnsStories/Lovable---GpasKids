@@ -64,7 +64,7 @@ const StoryCard = ({ story, borderColor, showCategoryButton = true }: StoryCardP
                   👍 {story.thumbs_up_count || 0} | 👎 {story.thumbs_down_count || 0} | 😊 {story.ok_count || 0} | Reads: {(story.read_count || 0).toLocaleString()}
                 </div>
               </div>
-              <div className="flex-1 flex items-center justify-center">
+              <div className="flex-1 flex items-center justify-center pb-3">
                 <h3 className="h3-fun-24 font-bold text-amber-800 leading-tight text-center">
                   {story.title}
                 </h3>
