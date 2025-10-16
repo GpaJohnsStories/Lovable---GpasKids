@@ -53,7 +53,7 @@ const StoryCard = ({ story, borderColor, showCategoryButton = true }: StoryCardP
                 />
               </div>
             )}
-            <div className="flex-1 flex flex-col items-center h-40">
+            <div className="flex-1 flex flex-col items-center min-h-40 md:h-40">
               {showCategoryButton && story.category !== 'Most Read Story' && story.category !== 'Most Popular Story' && (
                 <div className="mb-2">
                   {getCategoryButtonForStory(story.category, story.story_code)}
