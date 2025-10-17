@@ -21,11 +21,11 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Use cached icons for Buddy and Menu button - v2.0 with proper icon caching
-  const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('!CO-BG1.jpg', true); // Force refresh
+  const { iconUrl: buddyIconUrl, isLoading: buddyLoading, error: buddyError } = useCachedIcon('!CO-BG1.gif', true); // Force refresh
   
   // Debug logging for Buddy icon
   console.log('🐕 Buddy Icon Debug:', {
-    iconPath: '!CO-BG1.jpg',
+    iconPath: '!CO-BG1.gif',
     iconUrl: buddyIconUrl,
     isLoading: buddyLoading,
     error: buddyError
@@ -102,7 +102,7 @@ const HeaderContent = ({ isHomePage, isAdminPage = false }: HeaderContentProps) 
                 {/* Show icon code if no icon available, otherwise show Buddy image */}
                 {(buddyError || !buddyIconUrl) && !buddyLoading ? (
                   <div className="w-full h-full bg-green-200 flex items-center justify-center text-green-800 text-xs font-bold rounded-[6px]">
-                    !CO-BG1.jpg
+                    !CO-BG1.gif
                   </div>
                 ) : buddyIconUrl && !buddyLoading && !buddyError ? (
                   <img 
