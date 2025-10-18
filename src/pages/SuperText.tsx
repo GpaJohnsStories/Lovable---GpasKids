@@ -564,12 +564,9 @@ const SuperText: React.FC = () => {
 
         <div className="pb-6">
           {/* Second row: Publication Status dropdown and Last Updates Grid */}
-          <div className="flex items-center justify-between gap-4 mb-4">
-            {/* Spacer to push content to align properly */}
-            <div className="flex-1" />
-            
-            {/* Publication Status Dropdown - centered below Save buttons */}
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 mb-4">
+            {/* Publication Status Dropdown */}
+            <div className="flex items-center gap-3 flex-wrap">
               <div className="px-4 py-2 rounded-lg border-4 border-orange-500 shadow-lg" style={{
                 backgroundColor: '#228B22',
                 boxShadow: '4px 4px 0px #d97706, 8px 8px 0px #92400e'
@@ -632,8 +629,8 @@ const SuperText: React.FC = () => {
               </Select>
             </div>
 
-            {/* Last Updates Grid - right aligned */}
-            <div className="flex-shrink-0">
+            {/* Last Updates Grid - always visible */}
+            <div className="w-full xl:w-auto">
               <LastUpdatesGrid story={formData} hideTitle={true} />
             </div>
           </div>
