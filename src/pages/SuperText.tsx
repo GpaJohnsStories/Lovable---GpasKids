@@ -193,6 +193,14 @@ const SuperText: React.FC = () => {
     handleInputChange('ai_voice_model', 'tts-1');
     handleInputChange('copyright_status', '');
     handleInputChange('publication_status_code', '5');
+    
+    // Clear timestamp and duration fields for LastUpdatesGrid
+    handleInputChange('audio_url', '');
+    handleInputChange('audio_duration_seconds', undefined);
+    handleInputChange('video_duration_seconds', undefined);
+    handleInputChange('created_at', '');
+    handleInputChange('updated_at', '');
+    handleInputChange('audio_generated_at', '');
 
     // Reset local state
     setStoryCode('');
