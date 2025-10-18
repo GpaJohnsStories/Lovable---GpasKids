@@ -51,10 +51,13 @@ const LastUpdatesGrid: React.FC<LastUpdatesGridProps> = ({ story, hideTitle = fa
 
   const getAudioStatusStyle = () => {
     const hasAudio = story?.audio_generated_at;
-    const isAudioOutdated = hasAudio && story?.updated_at && 
-      new Date(story.audio_generated_at) < new Date(story.updated_at);
     
-    // Red background if no audio or if audio is outdated
+    // Allow 2-minute grace period for audio generation after text save
+    // This handles cases where audio is generated immediately after saving
+    const isAudioOutdated = hasAudio && story?.updated_at && 
+      (new Date(story.audio_generated_at).getTime() + 120000) < new Date(story.updated_at).getTime();
+    
+    // Red background if no audio or if audio is outdated (more than 2 min before last text update)
     const shouldBeRed = !hasAudio || isAudioOutdated;
     
     return {
