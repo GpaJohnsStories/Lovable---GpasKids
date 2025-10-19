@@ -269,7 +269,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
         break;
       case "body":
         fontSize = "21px";
-        lineHeight = "21px";
+        lineHeight = "34px";
         margin = "10px 0";
         fontWeight = "normal";
         break;
