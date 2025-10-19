@@ -567,7 +567,7 @@ const SuperText: React.FC = () => {
           <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 mb-4">
             {/* Publication Status Dropdown */}
             <div className="flex items-center gap-3 flex-wrap">
-              <div className="px-4 py-2 rounded-lg border-4 border-orange-500 shadow-lg" style={{
+              <div className="px-4 py-2 rounded-lg border-4 border-orange-500 shadow-lg flex items-center gap-3" style={{
                 backgroundColor: '#228B22',
                 boxShadow: '4px 4px 0px #d97706, 8px 8px 0px #92400e'
               }}>
@@ -579,34 +579,33 @@ const SuperText: React.FC = () => {
                 }}>
                   Set Publication Status BEFORE Saving:
                 </span>
-              </div>
-              <Select
-                value={publicationStatusCode.toString()}
-                onValueChange={(value) => {
-                  const status = Number(value);
-                  setPublicationStatusCode(status);
-                  handleInputChange('publication_status_code', status.toString());
-                }}
-              >
-                <SelectTrigger 
-                  className="w-[280px] h-10 text-base font-bold border-2" 
-                  style={{ 
-                    fontFamily: 'Arial, sans-serif',
-                    backgroundColor: publicationStatusCode === 0 ? '#228B22' : 
-                                   publicationStatusCode === 1 ? '#10b981' :
-                                   publicationStatusCode === 2 ? '#FFD700' :
-                                   publicationStatusCode === 3 ? '#3b82f6' :
-                                   publicationStatusCode === 4 ? '#9c441a' : '#DC143C',
-                    color: publicationStatusCode === 0 ? 'white' : 
-                          publicationStatusCode === 1 ? 'white' :
-                          publicationStatusCode === 2 ? '#228B22' :
-                          publicationStatusCode === 3 ? 'white' :
-                          publicationStatusCode === 4 ? 'white' : '#FFD700'
+                <Select
+                  value={publicationStatusCode.toString()}
+                  onValueChange={(value) => {
+                    const status = Number(value);
+                    setPublicationStatusCode(status);
+                    handleInputChange('publication_status_code', status.toString());
                   }}
                 >
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-white z-50">
+                  <SelectTrigger 
+                    className="w-[280px] h-10 text-base font-bold border-2" 
+                    style={{ 
+                      fontFamily: 'Arial, sans-serif',
+                      backgroundColor: publicationStatusCode === 0 ? '#228B22' : 
+                                     publicationStatusCode === 1 ? '#10b981' :
+                                     publicationStatusCode === 2 ? '#FFD700' :
+                                     publicationStatusCode === 3 ? '#3b82f6' :
+                                     publicationStatusCode === 4 ? '#9c441a' : '#DC143C',
+                      color: publicationStatusCode === 0 ? 'white' : 
+                            publicationStatusCode === 1 ? 'white' :
+                            publicationStatusCode === 2 ? '#228B22' :
+                            publicationStatusCode === 3 ? 'white' :
+                            publicationStatusCode === 4 ? 'white' : '#FFD700'
+                    }}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white z-50">
                   <SelectItem value="0" className="text-base font-bold" style={{ backgroundColor: '#228B22', color: 'white' }}>
                     0 - Save & Pub, App & Rev
                   </SelectItem>
@@ -627,6 +626,7 @@ const SuperText: React.FC = () => {
                   </SelectItem>
                 </SelectContent>
               </Select>
+              </div>
             </div>
 
             {/* Last Updates Grid - always visible */}
