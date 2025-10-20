@@ -9,7 +9,7 @@ const Guide = () => {
   const location = useLocation();
   
   const webtextBoxes = [{
-    webtextCode: "SYS-G1A",
+    webtextCode: "SYS-WE2",
     borderColor: "#16a34a",
     // Fresh Green
     backgroundColor: "bg-green-600/20",
@@ -95,7 +95,7 @@ const Guide = () => {
           {/* Navigation Menu */}
           <div id="guide-navigation" className="bg-gray-100 rounded-lg p-3 mb-6 shadow-sm">
             <div className="flex flex-wrap justify-center gap-2">
-              <button onClick={() => document.getElementById('SYS-G1A')?.scrollIntoView({
+              <button onClick={() => document.getElementById('SYS-WE2')?.scrollIntoView({
               behavior: 'smooth'
             })} className="h-12 px-6 bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 active:from-green-700 active:to-green-800 text-white border-2 rounded-full font-bold transition-all duration-200 flex items-center justify-center text-center leading-tight whitespace-nowrap shadow-[0_6px_12px_rgba(0,0,0,0.15),0_3px_6px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.15),inset_0_2px_4px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98] active:shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]" style={{
               borderColor: "#16a34a",
