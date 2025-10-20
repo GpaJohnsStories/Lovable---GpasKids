@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from 'date-fns';
 import { Card, CardContent } from "@/components/ui/card";
@@ -52,21 +53,16 @@ const formatDuration = (seconds: number | undefined): string => {
 };
 
 const PublicStoriesTable: React.FC = () => {
-  const [stories, setStories] = useState<Story[]>([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [mediaFilter, setMediaFilter] = useState<MediaFilter>('all');
   const [sortOption, setSortOption] = useState<SortOption>('title');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchStories();
-  }, []);
-
-  const fetchStories = async () => {
-    setLoading(true);
-    try {
+  // Fetch stories with aggressive caching - stays in memory for entire session
+  const { data: stories = [], isLoading: loading } = useQuery({
+    queryKey: ['public-stories'],
+    queryFn: async () => {
       const { data, error } = await supabase
         .from('stories')
         .select(`
@@ -94,13 +90,14 @@ const PublicStoriesTable: React.FC = () => {
         .order('updated_at', { ascending: false });
 
       if (error) throw error;
-      setStories(data || []);
-    } catch (error) {
-      console.error('Error fetching stories:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+      return data || [];
+    },
+    staleTime: Infinity,           // Data never goes stale
+    gcTime: Infinity,               // Keep in cache forever
+    refetchOnWindowFocus: false,   // Don't refetch when tab regains focus
+    refetchOnMount: false,          // Don't refetch on component remount
+    refetchOnReconnect: false,      // Don't refetch on reconnect
+  });
 
   // Filter and sort stories
   const filteredAndSortedStories = useMemo(() => {
