@@ -10,45 +10,21 @@ const Guide = () => {
   
   const webtextBoxes = [{
     webtextCode: "SYS-WE2",
-    borderColor: "#16a34a",
-    // Fresh Green
-    backgroundColor: "bg-green-600/20",
     title: "Getting Started"
   }, {
     webtextCode: "SYS-G2A",
-    borderColor: "#dc2626",
-    // Red to match buddy's home roof
-    backgroundColor: "bg-red-600/20",
     title: "Home Page"
   }, {
     webtextCode: "SYS-G3A",
-    borderColor: "#F97316",
-    // Orange to match menu icons
-    backgroundColor: "bg-orange-600/20",
     title: "Story Library"
   }, {
     webtextCode: "SYS-G3B",
-    borderColor: "#3b82f6",
-    // Blue same as admin top banner
-    backgroundColor: "bg-blue-600/20",
     title: "Read A Story"
-  // }, {
-    // webtextCode: "SYS-G5A",
-    // borderColor: "#F97316",
-    // // Orange to match menu icons
-    // backgroundColor: "bg-orange-600/20",
-    // title: "Writing"
   }, {
     webtextCode: "SYS-G6A",
-    borderColor: "#60a5fa",
-    // Light blue
-    backgroundColor: "bg-blue-400/20",
     title: "About Us"
   }, {
     webtextCode: "SYS-G7A",
-    borderColor: "#4A7C59",
-    // Forest Green - leave color alone
-    backgroundColor: "bg-emerald-700/20",
     title: "We Are Safe!"
   }];
 
@@ -160,46 +136,9 @@ const Guide = () => {
           <div className="space-y-2 mb-1">
             {webtextBoxes.map((box, index) => <WebTextBox 
               key={index} 
-              webtextCode={box.webtextCode} 
-              borderColor={box.borderColor} 
-              backgroundColor={box.backgroundColor} 
+              code={box.webtextCode} 
               title={box.title} 
               id={box.webtextCode}
-              showReturn={true}
-              onReturnClick={() => {
-                // Smart return behavior
-                const handleSmartReturn = () => {
-                  // First try: Close tab (works for script-opened tabs even with noopener)
-                  try {
-                    window.close();
-                    // Brief delay to check if tab actually closed
-                    setTimeout(() => {
-                      // If we're still here, tab didn't close, try history
-                      if (window.history.length > 1) {
-                        window.history.back();
-                      } else {
-                        // Fallback: Scroll to navigation
-                        const navElement = document.getElementById('guide-navigation');
-                        if (navElement) {
-                          navElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                      }
-                    }, 100);
-                  } catch (e) {
-                    // If close() throws, try history or scroll
-                    if (window.history.length > 1) {
-                      window.history.back();
-                    } else {
-                      const navElement = document.getElementById('guide-navigation');
-                      if (navElement) {
-                        navElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    }
-                  }
-                };
-                
-                handleSmartReturn();
-              }}
             />)}
           </div>
         </div>
