@@ -3,8 +3,7 @@ import { useLocation } from 'react-router-dom';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 
-import { WebTextBox } from "@/components/WebTextBox";
-import BaseWebTextBox from "@/components/templates/BaseWebTextBox";
+import SysWe2WebTextBox from "@/components/templates/SysWe2WebTextBox";
 import { supabase } from "@/integrations/supabase/client";
 const Guide = () => {
   const location = useLocation();
@@ -135,37 +134,14 @@ const Guide = () => {
           
           {/* Stack of WebText Boxes */}
           <div className="space-y-2 mb-1">
-            {webtextBoxes.map((box, index) => {
-              // Direct test: Use BaseWebTextBox for SYS-G2A with color preset 6 (black font on red)
-              if (box.webtextCode === "SYS-G2A") {
-                return (
-                  <BaseWebTextBox
-                    key={index}
-                    code="SYS-G2A"
-                    title={box.title}
-                    id={box.webtextCode}
-                    theme={{
-                      primaryColor: "#333333",
-                      borderColor: "#dc2626",
-                      backgroundColor: "rgba(220, 38, 38, 0.2)",
-                      photoMatColor: "#ffffff",
-                      photoBorderColor: "#dc2626"
-                    }}
-                    cssClassPrefix="sysg2a"
-                  />
-                );
-              }
-              
-              // All others continue using the router
-              return (
-                <WebTextBox 
-                  key={index} 
-                  code={box.webtextCode} 
-                  title={box.title} 
-                  id={box.webtextCode}
-                />
-              );
-            })}
+            {webtextBoxes.map((box, index) => (
+              <SysWe2WebTextBox
+                key={index}
+                code={box.webtextCode}
+                title={box.title}
+                id={box.webtextCode}
+              />
+            ))}
           </div>
         </div>
       </main>
