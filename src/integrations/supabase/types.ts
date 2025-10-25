@@ -652,28 +652,13 @@ export type Database = {
         Args: { new_role: string; reason?: string; target_email: string }
         Returns: string
       }
-      debug_auth_context: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      emergency_admin_reset: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      emergency_promote_admin: {
-        Args: { user_email: string }
-        Returns: string
-      }
-      export_public_rls_policies_json: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      export_public_schema_json: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      debug_auth_context: { Args: never; Returns: Json }
+      emergency_admin_reset: { Args: never; Returns: string }
+      emergency_promote_admin: { Args: { user_email: string }; Returns: string }
+      export_public_rls_policies_json: { Args: never; Returns: Json }
+      export_public_schema_json: { Args: never; Returns: Json }
       get_all_buckets_metrics: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           bucket_name: string
           object_count: number
@@ -681,14 +666,8 @@ export type Database = {
           total_size_pretty: string
         }[]
       }
-      get_allowed_admin_email_hashes: {
-        Args: Record<PropertyKey, never>
-        Returns: string[]
-      }
-      get_allowed_admin_email_hashes_secure: {
-        Args: Record<PropertyKey, never>
-        Returns: string[]
-      }
+      get_allowed_admin_email_hashes: { Args: never; Returns: string[] }
+      get_allowed_admin_email_hashes_secure: { Args: never; Returns: string[] }
       get_bucket_metrics: {
         Args: { bucket_name: string }
         Returns: {
@@ -698,20 +677,20 @@ export type Database = {
         }[]
       }
       get_database_size: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           size_bytes: number
           size_pretty: string
         }[]
       }
       get_icon_library_count: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           icon_count: number
         }[]
       }
       get_scheduled_backups: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           active: boolean
           command: string
@@ -721,43 +700,22 @@ export type Database = {
         }[]
       }
       get_storage_totals: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           total_objects: number
           total_size_bytes: number
           total_size_pretty: string
         }[]
       }
-      has_admin_access: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_admin_safe: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_emergency_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_privileged_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_trusted_client: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_viewer: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      has_admin_access: { Args: never; Returns: boolean }
+      is_admin: { Args: never; Returns: boolean }
+      is_admin_safe: { Args: never; Returns: boolean }
+      is_emergency_admin: { Args: never; Returns: boolean }
+      is_privileged_admin: { Args: never; Returns: boolean }
+      is_trusted_client: { Args: never; Returns: boolean }
+      is_viewer: { Args: never; Returns: boolean }
       list_privileged_admins_masked: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           created_at: string
           email_domain: string
@@ -785,26 +743,14 @@ export type Database = {
         }
         Returns: undefined
       }
-      promote_user_to_admin: {
-        Args: { user_email: string }
-        Returns: string
-      }
-      promote_user_to_viewer: {
-        Args: { user_email: string }
-        Returns: string
-      }
+      promote_user_to_admin: { Args: { user_email: string }; Returns: string }
+      promote_user_to_viewer: { Args: { user_email: string }; Returns: string }
       remove_privileged_admin_secure: {
         Args: { admin_email: string }
         Returns: string
       }
-      simple_promote_to_admin: {
-        Args: { user_email: string }
-        Returns: string
-      }
-      validate_admin_context: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      simple_promote_to_admin: { Args: { user_email: string }; Returns: string }
+      validate_admin_context: { Args: never; Returns: boolean }
     }
     Enums: {
       story_category:

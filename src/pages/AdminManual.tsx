@@ -81,6 +81,13 @@ const AdminManual: React.FC = () => {
           title="Regular Maintenance Schedule"
           id="maintenance-schedule"
         />
+        
+        {/* BaseWebTextBox Refactor Project - November 2025 */}
+        <SysWe2WebTextBox 
+          code="ADM-MAK"
+          title="BaseWebTextBox Refactor Project - November 2025"
+          id="baseweb-refactor-project"
+        />
       </div>
     </>
   );
