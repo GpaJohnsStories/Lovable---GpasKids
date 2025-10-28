@@ -49,7 +49,6 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import ResetPasswordRequest from "./components/auth/ResetPasswordRequest";
 
-import UnifiedStoryDeprecated from "./components/admin/UnifiedStoryDeprecated";
 import SuperText from "./pages/SuperText";
 
 
@@ -155,10 +154,7 @@ function App() {
                                    
                                    <Route path="/buddys_admin/reference" element={<SecureAdminRoute><ReferenceDashboard /></SecureAdminRoute>} />
                                    <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMapContent /></SecureAdminRoute>} />
-                                  <Route path="/buddys_admin/super-text" element={<SuperText />} />
-
-                                   {/* Deprecated Unified Story System - Redirects to Super Text */}
-                                   <Route path="/buddys_admin/unified_story_system/*" element={<SecureAdminRoute><UnifiedStoryDeprecated /></SecureAdminRoute>} />
+                                   <Route path="/buddys_admin/super-text" element={<SuperText />} />
 
                                   {/* Catch-all route */}
                                   <Route path="*" element={<NotFound />} />

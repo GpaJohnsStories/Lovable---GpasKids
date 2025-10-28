@@ -81,7 +81,7 @@ const AdminStoriesToolbar = ({
         {/* Status Info */}
         <div className="text-sm text-amber-700">
           <p className="font-medium">
-            {currentView === 'stories' ? 'Unified Story Management System' : 'Author Bio Management'}
+            {currentView === 'stories' ? 'Story Management' : 'Author Bio Management'}
           </p>
           <p className="text-xs mt-1">
             {isViewer ? 'Viewing in read-only mode' : 'Full editing access with audio controls available'}
