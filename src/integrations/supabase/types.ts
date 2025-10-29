@@ -54,6 +54,7 @@ export type Database = {
           id: string
           setting_key: string
           setting_value: string
+          site: Database["public"]["Enums"]["site_identifier"]
           updated_at: string
         }
         Insert: {
@@ -62,6 +63,7 @@ export type Database = {
           id?: string
           setting_key: string
           setting_value: string
+          site?: Database["public"]["Enums"]["site_identifier"]
           updated_at?: string
         }
         Update: {
@@ -70,6 +72,7 @@ export type Database = {
           id?: string
           setting_key?: string
           setting_value?: string
+          site?: Database["public"]["Enums"]["site_identifier"]
           updated_at?: string
         }
         Relationships: []
@@ -90,6 +93,7 @@ export type Database = {
           native_language: string | null
           photo_alt: string | null
           photo_url: string | null
+          site: Database["public"]["Enums"]["site_identifier"]
           updated_at: string
         }
         Insert: {
@@ -107,6 +111,7 @@ export type Database = {
           native_language?: string | null
           photo_alt?: string | null
           photo_url?: string | null
+          site?: Database["public"]["Enums"]["site_identifier"]
           updated_at?: string
         }
         Update: {
@@ -124,6 +129,7 @@ export type Database = {
           native_language?: string | null
           photo_alt?: string | null
           photo_url?: string | null
+          site?: Database["public"]["Enums"]["site_identifier"]
           updated_at?: string
         }
         Relationships: []
@@ -142,6 +148,7 @@ export type Database = {
           pages: string | null
           photo_border_color_hex: string | null
           photo_border_color_name: string | null
+          site: Database["public"]["Enums"]["site_identifier"]
           updated_at: string
         }
         Insert: {
@@ -157,6 +164,7 @@ export type Database = {
           pages?: string | null
           photo_border_color_hex?: string | null
           photo_border_color_name?: string | null
+          site?: Database["public"]["Enums"]["site_identifier"]
           updated_at?: string
         }
         Update: {
@@ -172,6 +180,7 @@ export type Database = {
           pages?: string | null
           photo_border_color_hex?: string | null
           photo_border_color_name?: string | null
+          site?: Database["public"]["Enums"]["site_identifier"]
           updated_at?: string
         }
         Relationships: []
@@ -473,6 +482,7 @@ export type Database = {
           publication_status_code: number
           read_count: number
           reading_time_minutes: number | null
+          site: Database["public"]["Enums"]["site_identifier"]
           story_code: string
           tagline: string | null
           thumbs_down_count: number
@@ -517,6 +527,7 @@ export type Database = {
           publication_status_code?: number
           read_count?: number
           reading_time_minutes?: number | null
+          site?: Database["public"]["Enums"]["site_identifier"]
           story_code: string
           tagline?: string | null
           thumbs_down_count?: number
@@ -561,6 +572,7 @@ export type Database = {
           publication_status_code?: number
           read_count?: number
           reading_time_minutes?: number | null
+          site?: Database["public"]["Enums"]["site_identifier"]
           story_code?: string
           tagline?: string | null
           thumbs_down_count?: number
@@ -753,6 +765,7 @@ export type Database = {
       validate_admin_context: { Args: never; Returns: boolean }
     }
     Enums: {
+      site_identifier: "KIDS" | "FAITH" | "SHOP" | "ADMIN"
       story_category:
         | "Fun"
         | "Life"
@@ -888,6 +901,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      site_identifier: ["KIDS", "FAITH", "SHOP", "ADMIN"],
       story_category: [
         "Fun",
         "Life",
