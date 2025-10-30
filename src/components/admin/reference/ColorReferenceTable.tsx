@@ -419,6 +419,48 @@ const ColorReferenceTable = () => {
       howUsed: ["Video buttons", "Media upload elements"],
       whereUsed: ["SuperText Page, Add Video File Button"],
       notes: "Purple color for video-related buttons and media upload elements. Strong, creative color for multimedia content."
+    },
+    
+    // Color Preset Colors
+    {
+      name: "Beige - Tan",
+      hex: "#e8d3c0",
+      grouping: "Secondary",
+      howUsed: ["Background", "Content areas"],
+      whereUsed: ["Color Preset 1 - Story Text & Brown on Brown - Background"],
+      notes: "Warm beige/tan background color. Comfortable reading background with brown text."
+    },
+    {
+      name: "Black - Text",
+      hex: "#333333",
+      grouping: "Primary",
+      howUsed: ["Text content", "High contrast text"],
+      whereUsed: ["Color Presets 4, 5, 6, 7 - Font"],
+      notes: "Dark gray (almost black) for high contrast text. Used in multiple color presets for readability."
+    },
+    {
+      name: "Purple - Indigo",
+      hex: "#6366f1",
+      grouping: "Primary",
+      howUsed: ["Border", "Accent elements"],
+      whereUsed: ["Color Preset 5 - Black on Purple - Border"],
+      notes: "Indigo purple for borders and accents. Modern, creative color for special sections."
+    },
+    {
+      name: "Gray - Medium",
+      hex: "#9ca3af",
+      grouping: "Secondary",
+      howUsed: ["Border", "Placeholder elements"],
+      whereUsed: ["Color Preset 7 - To be set - Border"],
+      notes: "Medium gray for borders and placeholder elements. Neutral color for unassigned presets."
+    },
+    {
+      name: "Red - Dark Maroon",
+      hex: "#8b0000",
+      grouping: "Primary",
+      howUsed: ["Background", "Strong emphasis"],
+      whereUsed: ["Color Preset 8 - Yellow on Red - Background"],
+      notes: "Dark maroon red background. Strong, dramatic color for high-contrast yellow text."
     }
   ];
 
