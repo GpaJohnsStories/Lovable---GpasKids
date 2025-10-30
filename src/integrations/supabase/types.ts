@@ -143,6 +143,7 @@ export type Database = {
           created_at: string
           font_color_hex: string | null
           font_color_name: string | null
+          font_name: string | null
           id: string
           name: string
           pages: string | null
@@ -159,6 +160,7 @@ export type Database = {
           created_at?: string
           font_color_hex?: string | null
           font_color_name?: string | null
+          font_name?: string | null
           id: string
           name: string
           pages?: string | null
@@ -175,6 +177,7 @@ export type Database = {
           created_at?: string
           font_color_hex?: string | null
           font_color_name?: string | null
+          font_name?: string | null
           id?: string
           name?: string
           pages?: string | null

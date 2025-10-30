@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Pencil, Save, X } from 'lucide-react';
 
@@ -156,7 +157,7 @@ const ColorPresetsSection = () => {
           className="grid gap-2 min-w-[1000px]"
           style={{ 
             gridTemplateColumns: 'repeat(8, 1fr)',
-            gridTemplateRows: 'repeat(17, auto)',
+            gridTemplateRows: 'repeat(21, auto)',
             fontSize: '21px'
           }}
         >
@@ -190,7 +191,7 @@ const ColorPresetsSection = () => {
           {colorPresets.map((preset, presetIndex) => {
             const isLeftColumn = presetIndex < 4;
             const colStart = isLeftColumn ? 1 : 5;
-            const rowStart = isLeftColumn ? 2 + (presetIndex * 4) : 2 + ((presetIndex - 4) * 4);
+            const rowStart = isLeftColumn ? 2 + (presetIndex * 5) : 2 + ((presetIndex - 4) * 5);
             const presetData = colorPresetsData?.find(p => p.id === preset.number.toString());
             const isEditing = editingPreset === preset.number.toString();
             
@@ -416,21 +417,49 @@ const ColorPresetsSection = () => {
                   }}
                 />
 
-                {/* ROW 4, COL 1: Blank */}
+                {/* ROW 4: Font Name dropdown (spans all 4 columns) */}
+                <div 
+                  className="border px-2 py-0.5 flex items-center"
+                  style={{ 
+                    gridColumn: `${colStart} / ${colStart + 4}`,
+                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                  }}
+                >
+                  <span className="text-sm font-medium mr-2">Font:</span>
+                  {isEditing ? (
+                    <Select
+                      value={editValues.font_name || 'Kalam'}
+                      onValueChange={(value) => setEditValues({ ...editValues, font_name: value })}
+                    >
+                      <SelectTrigger className="h-7 text-sm flex-1">
+                        <SelectValue placeholder="Select font" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-background z-50">
+                        <SelectItem value="Kalam">Kalam</SelectItem>
+                        <SelectItem value="Georgia">Georgia</SelectItem>
+                        <SelectItem value="Lexend">Lexend</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <span className="text-sm">{presetData?.font_name || 'Kalam'}</span>
+                  )}
+                </div>
+
+                {/* ROW 5, COL 1: Blank */}
                 <div 
                   className="border px-2 py-0.5"
                   style={{ 
                     gridColumn: `${colStart} / ${colStart + 1}`,
-                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                    gridRow: `${rowStart + 4} / ${rowStart + 5}`
                   }}
                 />
                 
-                {/* ROW 4: Font detail */}
+                {/* ROW 5: Font Color detail */}
                 <div 
                   className="border px-2 py-0.5 text-sm"
                   style={{ 
                     gridColumn: `${colStart + 1} / ${colStart + 2}`,
-                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                    gridRow: `${rowStart + 4} / ${rowStart + 5}`
                   }}
                 >
                   {isEditing ? (
@@ -447,7 +476,7 @@ const ColorPresetsSection = () => {
                   className="border px-2 py-0.5 text-xs font-mono"
                   style={{ 
                     gridColumn: `${colStart + 2} / ${colStart + 3}`,
-                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                    gridRow: `${rowStart + 4} / ${rowStart + 5}`
                   }}
                 >
                   {isEditing ? (
@@ -465,7 +494,7 @@ const ColorPresetsSection = () => {
                   className="border px-2 py-0.5"
                   style={{ 
                     gridColumn: `${colStart + 3} / ${colStart + 4}`,
-                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                    gridRow: `${rowStart + 4} / ${rowStart + 5}`
                   }}
                 />
               </React.Fragment>
