@@ -417,21 +417,40 @@ const ColorPresetsSection = () => {
                   }}
                 />
 
-                {/* ROW 4: Font Name dropdown (spans all 4 columns) */}
+                {/* ROW 4, COL 1: Blank */}
                 <div 
-                  className="border px-2 py-0.5 flex items-center"
+                  className="border px-2 py-0.5"
                   style={{ 
-                    gridColumn: `${colStart} / ${colStart + 4}`,
+                    gridColumn: `${colStart} / ${colStart + 1}`,
+                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                  }}
+                />
+
+                {/* ROW 4, COL 2: Font Name Label */}
+                <div 
+                  className="border px-2 py-0.5 text-sm font-medium"
+                  style={{ 
+                    gridColumn: `${colStart + 1} / ${colStart + 2}`,
                     gridRow: `${rowStart + 3} / ${rowStart + 4}`
                   }}
                 >
-                  <span className="text-sm font-medium mr-2">Font:</span>
+                  Font Name:
+                </div>
+
+                {/* ROW 4, COL 3: Font Name Dropdown */}
+                <div 
+                  className="border px-2 py-0.5"
+                  style={{ 
+                    gridColumn: `${colStart + 2} / ${colStart + 3}`,
+                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                  }}
+                >
                   {isEditing ? (
                     <Select
                       value={editValues.font_name || 'Kalam'}
                       onValueChange={(value) => setEditValues({ ...editValues, font_name: value })}
                     >
-                      <SelectTrigger className="h-7 text-sm flex-1">
+                      <SelectTrigger className="h-7 text-sm">
                         <SelectValue placeholder="Select font" />
                       </SelectTrigger>
                       <SelectContent className="bg-background z-50">
@@ -444,6 +463,15 @@ const ColorPresetsSection = () => {
                     <span className="text-sm">{presetData?.font_name || 'Kalam'}</span>
                   )}
                 </div>
+
+                {/* ROW 4, COL 4: Blank */}
+                <div 
+                  className="border px-2 py-0.5"
+                  style={{ 
+                    gridColumn: `${colStart + 3} / ${colStart + 4}`,
+                    gridRow: `${rowStart + 3} / ${rowStart + 4}`
+                  }}
+                />
 
                 {/* ROW 5, COL 1: Blank */}
                 <div 
