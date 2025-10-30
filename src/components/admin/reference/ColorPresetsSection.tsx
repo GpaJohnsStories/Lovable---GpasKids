@@ -123,7 +123,7 @@ const ColorPresetsSection = () => {
 
   const ColorSwatch: React.FC<{ preset: ColorPreset }> = ({ preset }) => (
     <div
-      className="flex items-center justify-center h-20 text-center"
+      className="flex items-center justify-center py-2 text-center"
       style={{
         backgroundColor: preset.backgroundColor,
         border: `4px solid ${preset.borderColor}`,
@@ -138,8 +138,9 @@ const ColorPresetsSection = () => {
           fontWeight: 'bold',
           lineHeight: '1.2'
         }}
-        dangerouslySetInnerHTML={{ __html: 'ABC<br>abc<br>123' }}
-      />
+      >
+        ABC abc 123
+      </div>
     </div>
   );
 
