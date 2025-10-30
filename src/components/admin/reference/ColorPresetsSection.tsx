@@ -155,7 +155,7 @@ const ColorPresetsSection = () => {
           className="grid gap-2 min-w-[1000px]"
           style={{ 
             gridTemplateColumns: 'repeat(8, 1fr)',
-            gridTemplateRows: 'repeat(17, minmax(0, 1fr))',
+            gridTemplateRows: 'repeat(17, auto)',
             fontSize: '21px'
           }}
         >
