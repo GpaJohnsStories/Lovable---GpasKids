@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Search, X, AlertTriangle, Code, FileText, Settings } from "lucide-react";
+import { Search, X, Code, FileText, Settings } from "lucide-react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 // CSS Exception data with updated counts after cleanup
@@ -66,12 +66,12 @@ const cssExceptions = [
     status: "Review Required" as const,
   },
   {
-    description: "Direct dangerouslySetInnerHTML usage",
+    description: "Sanitized dangerouslySetInnerHTML usage",
     count: 20,
-    codeExample: "dangerouslySetInnerHTML={{__html: content}}",
-    location: "Story content rendering",
-    type: "Critical" as const,
-    status: "Security Review" as const,
+    codeExample: "dangerouslySetInnerHTML={createSafeHtml(content)}",
+    location: "CSS styles and sanitized story content",
+    type: "Intentional" as const,
+    status: "Approved Exception" as const,
   },
   {
     description: "Transform and transition effects",
@@ -91,7 +91,7 @@ const cssExceptions = [
   },
 ];
 
-type ExceptionType = "Critical" | "Performance" | "Maintainability" | "Legacy" | "Intentional";
+type ExceptionType = "Performance" | "Maintainability" | "Legacy" | "Intentional";
 type ExceptionStatus = "Needs Migration" | "Review Required" | "Approved Exception" | "Legacy Code" | "Security Review";
 
 const CssExceptionsSection = () => {
@@ -124,8 +124,6 @@ const CssExceptionsSection = () => {
 
   const getTypeIcon = (type: ExceptionType) => {
     switch (type) {
-      case "Critical":
-        return <AlertTriangle className="w-3 h-3 mr-1" />;
       case "Performance":
         return <FileText className="w-3 h-3 mr-1" />;
       case "Maintainability":
@@ -139,8 +137,6 @@ const CssExceptionsSection = () => {
 
   const getTypeBadgeVariant = (type: ExceptionType) => {
     switch (type) {
-      case "Critical":
-        return "destructive";
       case "Performance":
         return "outline";
       case "Maintainability":
@@ -248,8 +244,8 @@ const CssExceptionsSection = () => {
               <div className="text-sm text-muted-foreground">Need Migration</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-destructive">{cssExceptions.filter(e => e.type === "Critical").length}</div>
-              <div className="text-sm text-muted-foreground">Critical</div>
+              <div className="text-2xl font-bold text-green-600">{cssExceptions.filter(e => e.status === "Approved Exception").length}</div>
+              <div className="text-sm text-muted-foreground">Approved</div>
             </div>
           </div>
 
@@ -307,7 +303,6 @@ const CssExceptionsSection = () => {
               <strong>Exception Types:</strong>
             </p>
             <ul className="space-y-1 ml-4">
-              <li>• <strong>Critical:</strong> Security risks or functionality breaking changes</li>
               <li>• <strong>Performance:</strong> Inline styles affecting render performance</li>
               <li>• <strong>Maintainability:</strong> Hardcoded values that should use design system</li>
               <li>• <strong>Legacy:</strong> Old patterns pending migration</li>
