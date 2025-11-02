@@ -1075,7 +1075,7 @@ const SuperText: React.FC = () => {
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full rounded-md px-3 py-2 text-sm resize-none" style={{
+                        <textarea placeholder="Google Drive Access Not Yet Coded" rows={3} className="w-full rounded-md px-3 py-2 text-sm resize-none" style={{
                       whiteSpace: 'pre-wrap',
                       wordWrap: 'break-word',
                       border: '2px solid #8B4513'
@@ -1132,7 +1132,7 @@ const SuperText: React.FC = () => {
                     <div>
                       <Label className="font-semibold mb-2 block">Or Upload from Google Drive</Label>
                       <div className="space-y-2">
-                        <textarea placeholder="Paste Google Drive Share Code Here" rows={3} className="w-full border-2 border-purple-400 focus:border-purple-500 rounded-md px-3 py-2 text-sm resize-none" style={{
+                        <textarea placeholder="Google Drive Access Not Yet Coded" rows={3} className="w-full border-2 border-purple-400 focus:border-purple-500 rounded-md px-3 py-2 text-sm resize-none" style={{
                       whiteSpace: 'pre-wrap',
                       wordWrap: 'break-word'
                     }} />
