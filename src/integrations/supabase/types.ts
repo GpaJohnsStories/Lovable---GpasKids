@@ -380,6 +380,69 @@ export type Database = {
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          age_group: string | null
+          amazon_choice: boolean | null
+          category: string | null
+          character_pick: string | null
+          created_at: string | null
+          date_posted: string | null
+          description: string | null
+          display_order: number | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          price: string | null
+          product_url: string | null
+          rating: string | null
+          review_count: string | null
+          site: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          age_group?: string | null
+          amazon_choice?: boolean | null
+          category?: string | null
+          character_pick?: string | null
+          created_at?: string | null
+          date_posted?: string | null
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          price?: string | null
+          product_url?: string | null
+          rating?: string | null
+          review_count?: string | null
+          site?: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          age_group?: string | null
+          amazon_choice?: boolean | null
+          category?: string | null
+          character_pick?: string | null
+          created_at?: string | null
+          date_posted?: string | null
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          price?: string | null
+          product_url?: string | null
+          rating?: string | null
+          review_count?: string | null
+          site?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -479,9 +542,11 @@ export type Database = {
           photo_alt_1: string | null
           photo_alt_2: string | null
           photo_alt_3: string | null
+          photo_alt_4: string | null
           photo_link_1: string | null
           photo_link_2: string | null
           photo_link_3: string | null
+          photo_link_4: string | null
           publication_status_code: number
           read_count: number
           reading_time_minutes: number | null
@@ -524,9 +589,11 @@ export type Database = {
           photo_alt_1?: string | null
           photo_alt_2?: string | null
           photo_alt_3?: string | null
+          photo_alt_4?: string | null
           photo_link_1?: string | null
           photo_link_2?: string | null
           photo_link_3?: string | null
+          photo_link_4?: string | null
           publication_status_code?: number
           read_count?: number
           reading_time_minutes?: number | null
@@ -569,9 +636,11 @@ export type Database = {
           photo_alt_1?: string | null
           photo_alt_2?: string | null
           photo_alt_3?: string | null
+          photo_alt_4?: string | null
           photo_link_1?: string | null
           photo_link_2?: string | null
           photo_link_3?: string | null
+          photo_link_4?: string | null
           publication_status_code?: number
           read_count?: number
           reading_time_minutes?: number | null

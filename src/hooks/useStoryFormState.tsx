@@ -39,11 +39,11 @@ export interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
-  photo_link_4?: string;
+  photo_link_4: string;
   photo_alt_1: string;
   photo_alt_2: string;
   photo_alt_3: string;
-  photo_alt_4?: string;
+  photo_alt_4: string;
   video_url: string;
   ai_voice_name: string;
   ai_voice_model: string;
