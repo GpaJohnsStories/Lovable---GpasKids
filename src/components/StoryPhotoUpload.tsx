@@ -13,15 +13,17 @@ interface StoryPhotoUploadProps {
     photo_link_1: string;
     photo_link_2: string;
     photo_link_3: string;
+    photo_link_4: string;
   };
   photoAlts: {
     photo_alt_1: string;
     photo_alt_2: string;
     photo_alt_3: string;
+    photo_alt_4: string;
   };
   storyCode?: string; // Required for deterministic photo paths
-  onPhotoUpload: (photoNumber: 1 | 2 | 3, url: string) => void;
-  onPhotoRemove: (photoNumber: 1 | 2 | 3) => void;
+  onPhotoUpload: (photoNumber: 1 | 2 | 3 | 4, url: string) => void;
+  onPhotoRemove: (photoNumber: 1 | 2 | 3 | 4) => void;
   onAltTextChange: (field: string, value: string) => void;
 }
 
@@ -82,7 +84,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
     });
   };
 
-  const handleFileUpload = async (file: File, photoNumber: 1 | 2 | 3) => {
+  const handleFileUpload = async (file: File, photoNumber: 1 | 2 | 3 | 4) => {
     console.log('🖼️ Photo upload started for photo', photoNumber, 'with file:', file);
     
     if (!file) {
@@ -123,7 +125,7 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
         webpSize: (webpFile.size / 1024 / 1024).toFixed(2) + 'MB'
       });
       
-      // Use deterministic filename: stories/{STORY_CODE}/photo-{1|2|3}.webp
+      // Use deterministic filename: stories/{STORY_CODE}/photo-{1|2|3|4}.webp
       const fileName = `stories/${storyCode.trim()}/photo-${photoNumber}.webp`;
       console.log('📝 Using deterministic filename:', fileName);
 
@@ -163,11 +165,11 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
     }
   };
 
-  const handleUrlInput = (photoNumber: 1 | 2 | 3, url: string) => {
+  const handleUrlInput = (photoNumber: 1 | 2 | 3 | 4, url: string) => {
     onPhotoUpload(photoNumber, url);
   };
 
-  const renderPhotoSection = (photoNumber: 1 | 2 | 3) => {
+  const renderPhotoSection = (photoNumber: 1 | 2 | 3 | 4) => {
     const photoUrl = photoUrls[`photo_link_${photoNumber}` as keyof typeof photoUrls];
     const photoAlt = photoAlts[`photo_alt_${photoNumber}` as keyof typeof photoAlts];
     const isUploading = uploading[photoNumber];
@@ -274,8 +276,8 @@ const StoryPhotoUpload: React.FC<StoryPhotoUploadProps> = ({
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {[1, 2, 3].map(photoNumber => renderPhotoSection(photoNumber as 1 | 2 | 3))}
+      <div className="grid grid-cols-2 gap-2">
+        {[1, 2, 3, 4].map(photoNumber => renderPhotoSection(photoNumber as 1 | 2 | 3 | 4))}
       </div>
     </div>
   );

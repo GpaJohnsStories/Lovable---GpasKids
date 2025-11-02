@@ -1018,11 +1018,13 @@ const SuperText: React.FC = () => {
                 <StoryPhotoUpload photoUrls={{
               photo_link_1: formData.photo_link_1,
               photo_link_2: formData.photo_link_2,
-              photo_link_3: formData.photo_link_3
+              photo_link_3: formData.photo_link_3,
+              photo_link_4: formData.photo_link_4 || ''
             }} photoAlts={{
               photo_alt_1: formData.photo_alt_1,
               photo_alt_2: formData.photo_alt_2,
-              photo_alt_3: formData.photo_alt_3
+              photo_alt_3: formData.photo_alt_3,
+              photo_alt_4: formData.photo_alt_4 || ''
             }} storyCode={formData.story_code} onPhotoUpload={(photoNumber, url) => {
               handleInputChange(`photo_link_${photoNumber}` as keyof Story, url);
             }} onPhotoRemove={handlePhotoRemove} onAltTextChange={(field, value) => {

@@ -39,9 +39,11 @@ export interface Story {
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
+  photo_link_4?: string;
   photo_alt_1: string;
   photo_alt_2: string;
   photo_alt_3: string;
+  photo_alt_4?: string;
   video_url: string;
   ai_voice_name: string;
   ai_voice_model: string;
@@ -70,9 +72,11 @@ const initialFormData: Story = {
   photo_link_1: '',
   photo_link_2: '',
   photo_link_3: '',
+  photo_link_4: '',
   photo_alt_1: '',
   photo_alt_2: '',
   photo_alt_3: '',
+  photo_alt_4: '',
   video_url: '',
   ai_voice_name: 'Nova',
   ai_voice_model: 'tts-1',
@@ -263,6 +267,8 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
       
       setFormData({
         ...story,
+        photo_link_4: (story as any).photo_link_4 || '',
+        photo_alt_4: (story as any).photo_alt_4 || '',
         ai_voice_name: story.ai_voice_name || 'Nova',
         ai_voice_model: story.ai_voice_model || 'tts-1',
         copyright_status: story.copyright_status === 'S' ? 'L' : (story.copyright_status || '©')
@@ -280,11 +286,11 @@ export const useStoryFormState = (storyId?: string, skipDataFetch = false) => {
     }));
   };
 
-  const handlePhotoUpload = (photoNumber: 1 | 2 | 3, url: string) => {
+  const handlePhotoUpload = (photoNumber: 1 | 2 | 3 | 4, url: string) => {
     handleInputChange(`photo_link_${photoNumber}` as keyof Story, url);
   };
 
-  const handlePhotoRemove = async (photoNumber: 1 | 2 | 3) => {
+  const handlePhotoRemove = async (photoNumber: 1 | 2 | 3 | 4) => {
     const photoUrl = formData[`photo_link_${photoNumber}` as keyof Story] as string;
     
     // If there's a photo URL, try to delete it from storage
