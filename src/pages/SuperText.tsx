@@ -771,7 +771,7 @@ const SuperText: React.FC = () => {
                         }}
                       >
                         <SelectTrigger 
-                          className="w-[130px] h-8 border-4 border-orange-400 focus:border-orange-500"
+                          className="w-[140px] h-8 border-4 border-orange-400 focus:border-orange-500"
                           style={{
                             fontSize: '21px',
                             fontFamily: 'Arial',
