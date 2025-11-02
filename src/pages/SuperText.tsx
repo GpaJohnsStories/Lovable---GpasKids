@@ -544,7 +544,7 @@ const SuperText: React.FC = () => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button onClick={() => handleSave('cancel-all')} className="supertext-orange-btn px-4 py-3 rounded-full">
-                    Cancel ALL and Clear
+                    Cancel ALL & Clear
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
