@@ -907,7 +907,7 @@ const SuperText: React.FC = () => {
                     }}>B</div>
                   </div>
 
-                    <div>
+                    <div className="max-w-[700px]">
                       <CharacterLimitedTextarea
                         value={formData.title || ''}
                         onChange={(e) => handleInputChange('title', e.target.value)}
@@ -932,7 +932,7 @@ const SuperText: React.FC = () => {
                     }}>D</div>
                   </div>
 
-                    <div>
+                    <div className="max-w-[700px]">
                       <CharacterLimitedTextarea
                         value={formData.tagline || ''}
                         onChange={(e) => handleInputChange('tagline', e.target.value)}
@@ -957,7 +957,7 @@ const SuperText: React.FC = () => {
                     }}>E</div>
                   </div>
 
-                    <div className="flex items-center h-10 gap-2">
+                    <div className="flex items-center h-10 gap-2 max-w-[700px]">
                       <span className="text-[21px] font-bold" style={{fontFamily: 'Arial, sans-serif'}}>
                         Author:
                       </span>
@@ -982,7 +982,7 @@ const SuperText: React.FC = () => {
                     }}>F</div>
                   </div>
 
-                    <div>
+                    <div className="max-w-[700px]">
                       <CharacterLimitedTextarea
                         value={formData.excerpt || ''}
                         onChange={(e) => handleInputChange('excerpt', e.target.value)}
