@@ -644,8 +644,21 @@ const SuperText: React.FC = () => {
                 {/* Red Dot 1 - Required field */}
                  <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full flex items-center justify-center font-bold z-30" style={{ backgroundColor: '#DC143C', color: '#FFD700' }}>1</div>
                 
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center justify-between gap-4 mb-4">
                   <h2 className="text-xl font-bold supertext-fs-24px-arial-green">Text Details</h2>
+                  
+                  {/* Instruction Box - inline with title */}
+                  <div className="border-2 border-orange-500 rounded px-4 py-1 shadow-md flex items-center gap-3 shrink-0" style={{
+                    fontSize: '18px',
+                    fontFamily: 'Comic Sans MS, cursive, Arial',
+                    fontWeight: 'bold',
+                    backgroundColor: 'transparent',
+                    height: '32px'
+                  }}>
+                    <span style={{ color: '#DC143C' }}>Red dots = REQUIRED</span>
+                    <span style={{ color: '#999' }}>•</span>
+                    <span style={{ color: '#F97316' }}>Orange dots = OPTIONAL</span>
+                  </div>
                 </div>
                 
                 
@@ -915,21 +928,6 @@ const SuperText: React.FC = () => {
                     </div>
                 </div>
                 
-                {/* Instruction Box - positioned absolutely at top right */}
-                <div className="absolute top-0 right-0">
-                  <div className="border-2 border-orange-500 rounded px-4 py-2 shadow-md whitespace-nowrap" style={{
-                    fontSize: '20px',
-                    fontFamily: 'Comic Sans MS, cursive, Arial',
-                    fontWeight: 'bold',
-                    lineHeight: '1.3',
-                    minWidth: '280px',
-                    backgroundColor: 'transparent',
-                    textShadow: '2px 2px 0px rgba(0,0,0,0.2)'
-                  }}>
-                    <div style={{ color: '#DC143C' }}>Red dots are REQUIRED</div>
-                    <div style={{ color: '#F97316' }}>Orange dots are OPTIONAL</div>
-                  </div>
-                </div>
               </div>
             </div>
 
