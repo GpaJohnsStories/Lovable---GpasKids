@@ -18,6 +18,7 @@ import { getVoiceCharacter } from '@/utils/characterVoices';
 import SecureAdminRoute from '@/components/admin/SecureAdminRoute';
 import StoryVideoUpload from '@/components/StoryVideoUpload';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
+import { StoryCodeDialog } from '@/components/StoryCodeDialog';
 import SplitViewEditor from '@/components/editor/SplitViewEditor';
 import ConditionalEditorStyles from '@/components/rich-text-editor/ConditionalEditorStyles';
 import SuperTextStoryStatus from '@/components/SuperTextStoryStatus';
@@ -67,6 +68,7 @@ const SuperText: React.FC = () => {
   const [publicationStatusCode, setPublicationStatusCode] = React.useState(5);
   const [lookupResult, setLookupResult] = React.useState<Story | null>(null);
   const [lookupStatus, setLookupStatus] = React.useState<'idle' | 'found' | 'not-found'>('idle');
+  const [showLookupDialog, setShowLookupDialog] = React.useState(false);
   const [showSuperAV, setShowSuperAV] = React.useState(false);
   const [colorPresetId, setColorPresetId] = React.useState<string>('');
   
@@ -246,6 +248,7 @@ const SuperText: React.FC = () => {
         console.log('🚫 Invalid format - 4th position is not a dash:', newCode.charAt(3));
         setLookupStatus('idle');
         setLookupResult(null);
+        setShowLookupDialog(false);
         toast.error("Invalid story code format. 4th position must be a dash (e.g., ABC-123)");
         return;
       }
@@ -259,21 +262,28 @@ const SuperText: React.FC = () => {
       if (error) {
         setLookupStatus('idle');
         setLookupResult(null);
+        setShowLookupDialog(false);
         toast.error("Error looking up story code");
         return;
       }
       if (found && story) {
+        // Story found - set state and open dialog
         setLookupResult(story);
         setLookupStatus('found');
-        toast.success(`Found story: "${story.title}"`);
+        setShowLookupDialog(true);
+        console.log('📢 Opening dialog for found story:', story.title);
       } else {
+        // Story not found - set state and open dialog
         setLookupResult(null);
         setLookupStatus('not-found');
-        // Panel will show the message, no need for duplicate toast
+        setShowLookupDialog(true);
+        console.log('📢 Opening dialog for new story code');
       }
     } else {
+      // Code is not 7 characters - reset state
       setLookupStatus('idle');
       setLookupResult(null);
+      setShowLookupDialog(false);
     }
   }, [lookupStoryByCode, handleInputChange]);
   const handleStoryCodeLookup = useCallback(async () => {
@@ -307,10 +317,12 @@ const SuperText: React.FC = () => {
     }
   }, [storyCode, lookupStoryByCode, populateFormWithStory]);
 
-  // Confirmation handlers for the preview panel
+  // Confirmation handlers for the modal dialog
   const handleConfirmYes = useCallback(async () => {
+    console.log('✅ User clicked YES');
+    
     if (lookupStatus === 'found' && lookupResult) {
-      // Load the found story
+      // Load the found story into the form
       await populateFormWithStory(lookupResult, true);
       setCategory(lookupResult.category);
       setCopyrightStatus(lookupResult.copyright_status || '©');
@@ -318,15 +330,24 @@ const SuperText: React.FC = () => {
       setColorPresetId(lookupResult.color_preset_id || '');
       toast.success("Story data loaded successfully!");
     } else if (lookupStatus === 'not-found') {
-      // Ready for new story - just dismiss the panel
+      // Ready for new story - just reset status
       setLookupStatus('idle');
+      console.log('📝 Ready to create new story');
     }
+    
+    // Close the dialog
+    setShowLookupDialog(false);
   }, [lookupStatus, lookupResult, populateFormWithStory]);
   const handleConfirmNo = useCallback(() => {
+    console.log('❌ User clicked NO - clearing form');
+    
     // Clear the form completely
     clearForm();
     setLookupStatus('idle');
     setLookupResult(null);
+    
+    // Close the dialog
+    setShowLookupDialog(false);
   }, [clearForm]);
   const handleSave = async (action: 'save-and-clear' | 'save-only' | 'cancel-all') => {
     // Check if text code is empty for save actions
@@ -717,33 +738,6 @@ const SuperText: React.FC = () => {
                         fontWeight: 'bold',
                         maxWidth: '384px'
                       }}>
-                        
-                        {/* YES/NO Buttons for Story Code Lookup */}
-                        {lookupStatus !== 'idle' && (
-                          <div className="mx-4 mb-4" style={{
-                            backgroundColor: lookupStatus === 'found' ? '#dff0d8' : '#f2dede',
-                            border: `2px solid ${lookupStatus === 'found' ? '#d6e9c6' : '#ebccd1'}`
-                          }}>
-                            <p className="p-3 m-0" style={{
-                              fontSize: '21px',
-                              fontFamily: 'Arial',
-                              fontWeight: 'bold',
-                              color: lookupStatus === 'found' ? '#3c763d' : '#a94442'
-                            }}>
-                              {lookupStatus === 'found' 
-                                ? `Found story: "${lookupResult?.title || 'Untitled'}". Load it?`
-                                : "Story code not found. Create new story?"
-                              }
-                            </p>
-                            <div className="pb-3 px-3">
-                              <YesNoButtons
-                                onYes={handleConfirmYes}
-                                onNo={handleConfirmNo}
-                                className="justify-center gap-4"
-                              />
-                            </div>
-                          </div>
-                        )}
                       </div>
                     </div>
   
@@ -1332,6 +1326,18 @@ const SuperText: React.FC = () => {
       
       {/* SuperAV Modal */}
       {showSuperAV && formData.audio_url && <SuperAV isOpen={showSuperAV} onClose={() => setShowSuperAV(false)} title={formData.story_code || "Story Audio"} author={formData.author} voiceName={formData.ai_voice_name} audioUrl={formData.audio_url} />}
+      
+      {/* Story Code Lookup Modal Dialog */}
+      <StoryCodeDialog
+        open={showLookupDialog}
+        onOpenChange={setShowLookupDialog}
+        storyCode={storyCode}
+        storyTitle={lookupResult?.title}
+        mode={lookupStatus === 'found' ? 'found' : 'not-found'}
+        onEditExisting={handleConfirmYes}
+        onYes={handleConfirmYes}
+        onNo={handleConfirmNo}
+      />
     </SecureAdminRoute>;
 };
 export default SuperText;
