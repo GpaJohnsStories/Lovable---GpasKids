@@ -35,7 +35,6 @@ export interface Story {
   tagline: string;
   excerpt: string;
   story_code: string;
-  google_drive_link: string;
   photo_link_1: string;
   photo_link_2: string;
   photo_link_3: string;
@@ -68,7 +67,6 @@ const initialFormData: Story = {
   tagline: '',
   excerpt: '',
   story_code: '',
-  google_drive_link: '',
   photo_link_1: '',
   photo_link_2: '',
   photo_link_3: '',

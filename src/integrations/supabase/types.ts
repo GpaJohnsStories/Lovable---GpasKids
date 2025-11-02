@@ -533,7 +533,6 @@ export type Database = {
           created_at: string
           died_date: string | null
           excerpt: string | null
-          google_drive_link: string | null
           id: string
           native_country: string | null
           native_language: string | null
@@ -580,7 +579,6 @@ export type Database = {
           created_at?: string
           died_date?: string | null
           excerpt?: string | null
-          google_drive_link?: string | null
           id?: string
           native_country?: string | null
           native_language?: string | null
@@ -627,7 +625,6 @@ export type Database = {
           created_at?: string
           died_date?: string | null
           excerpt?: string | null
-          google_drive_link?: string | null
           id?: string
           native_country?: string | null
           native_language?: string | null

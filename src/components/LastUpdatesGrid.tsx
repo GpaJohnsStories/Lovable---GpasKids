@@ -11,7 +11,6 @@ interface Story {
   audio_generated_at?: string | null;
   copyright_status?: string;
   published?: string;
-  google_drive_link?: string;
   publication_status_code?: number;
 }
 
