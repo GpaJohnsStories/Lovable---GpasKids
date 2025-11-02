@@ -55,6 +55,7 @@ export interface Story {
   audio_generated_at?: string;
   publication_status_code?: number;
   color_preset_id?: string;
+  site?: "KIDS" | "FAITH" | "SHOP" | "ADMIN";
 }
 
 const initialFormData: Story = {

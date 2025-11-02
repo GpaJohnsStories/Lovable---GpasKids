@@ -57,6 +57,7 @@ interface Story {
   audio_generated_at?: string;
   publication_status_code?: number;
   color_preset_id?: string;
+  site?: "KIDS" | "FAITH" | "SHOP" | "ADMIN";
 }
 const SuperText: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -71,6 +72,7 @@ const SuperText: React.FC = () => {
   const [showLookupDialog, setShowLookupDialog] = React.useState(false);
   const [showSuperAV, setShowSuperAV] = React.useState(false);
   const [colorPresetId, setColorPresetId] = React.useState<string>('');
+  const [siteCode, setSiteCode] = React.useState<string>('');
   
 
   // Refs for section scrolling
@@ -166,6 +168,7 @@ const SuperText: React.FC = () => {
           setCopyrightStatus(story.copyright_status || '©');
           setPublicationStatusCode(story.publication_status_code || 5);
           setColorPresetId(story.color_preset_id || '');
+          setSiteCode(story.site || '');
           toast.success("Story data loaded successfully!");
         }
       };
@@ -174,6 +177,14 @@ const SuperText: React.FC = () => {
       setTimeout(autoLookup, 100);
     }
   }, [searchParams, lookupStoryByCode, populateFormWithStory]);
+  
+  // Sync siteCode state with formData.site
+  useEffect(() => {
+    if (formData.site) {
+      setSiteCode(formData.site);
+    }
+  }, [formData.site]);
+  
   const clearForm = useCallback(() => {
     // Reset form fields to initial values
     handleInputChange('id', ''); // CRITICAL: Clear the ID to prevent updating existing stories
@@ -210,6 +221,7 @@ const SuperText: React.FC = () => {
     setCopyrightStatus('');
     setPublicationStatusCode(5);
     setColorPresetId('');
+    setSiteCode('');
 
     // Clear category in form data
     handleInputChange('category', '');
@@ -711,7 +723,7 @@ const SuperText: React.FC = () => {
                   {/* 7x2 Grid Layout - Extended width for C, D, F fields */}
                   <div className="grid grid-cols-[32px_1fr] auto-rows-min gap-0">
                   
-                    {/* Row 1: A, Text Code, Empty */}
+                    {/* Row 1: A, Text Code + Site Code */}
                     <div className="flex items-center justify-center h-8">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
                         backgroundColor: '#DC143C',
@@ -719,7 +731,7 @@ const SuperText: React.FC = () => {
                       }}>A</div>
                     </div>
                     
-                    <div className="h-8 flex items-center">
+                    <div className="h-8 flex items-center gap-4">
                       <Input 
                         ref={storyCodeRef} 
                         type="text" 
@@ -750,6 +762,70 @@ const SuperText: React.FC = () => {
                         spellCheck={false} 
                         tabIndex={1} 
                       />
+                      
+                      <Select 
+                        value={siteCode} 
+                        onValueChange={(value) => {
+                          setSiteCode(value);
+                          handleInputChange('site', value);
+                        }}
+                      >
+                        <SelectTrigger 
+                          className="w-[192px] h-8 border-4 border-orange-400 focus:border-orange-500"
+                          style={{
+                            fontSize: '21px',
+                            fontFamily: 'Arial',
+                            fontWeight: 'bold',
+                            backgroundColor: !siteCode ? '#F97316' : 
+                                          siteCode === 'SHOP' ? '#228B22' :
+                                          siteCode === 'KIDS' ? '#FF8C42' :
+                                          siteCode === 'FAITH' ? '#8b5cf6' :
+                                          siteCode === 'ADMIN' ? '#60a5fa' : '#F97316',
+                            color: 'white'
+                          }}
+                          tabIndex={1.5}
+                        >
+                          <SelectValue placeholder="Website?" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white z-50">
+                          <SelectItem value="SHOP" style={{ 
+                            fontSize: '21px', 
+                            fontFamily: 'Arial', 
+                            fontWeight: 'bold',
+                            backgroundColor: '#228B22',
+                            color: 'white'
+                          }}>
+                            SHOP
+                          </SelectItem>
+                          <SelectItem value="KIDS" style={{ 
+                            fontSize: '21px', 
+                            fontFamily: 'Arial', 
+                            fontWeight: 'bold',
+                            backgroundColor: '#FF8C42',
+                            color: 'white'
+                          }}>
+                            KIDS
+                          </SelectItem>
+                          <SelectItem value="FAITH" style={{ 
+                            fontSize: '21px', 
+                            fontFamily: 'Arial', 
+                            fontWeight: 'bold',
+                            backgroundColor: '#8b5cf6',
+                            color: 'white'
+                          }}>
+                            FAITH
+                          </SelectItem>
+                          <SelectItem value="ADMIN" style={{ 
+                            fontSize: '21px', 
+                            fontFamily: 'Arial', 
+                            fontWeight: 'bold',
+                            backgroundColor: '#60a5fa',
+                            color: 'white'
+                          }}>
+                            ADMIN
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
   
                     {/* Row 2: Blank, Status Display */}
