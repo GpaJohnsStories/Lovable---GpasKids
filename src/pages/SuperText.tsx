@@ -826,34 +826,12 @@ const SuperText: React.FC = () => {
                           </SelectItem>
                         </SelectContent>
                       </Select>
-                    </div>
-  
-                    {/* Row 2: Blank, Status Display */}
-                    <div></div>
-                    <div>
-                      <div className="bg-gray-100 border-2 border-orange-400" style={{
-                        fontSize: '21px',
-                        fontFamily: 'Arial',
-                        fontWeight: 'bold',
-                        maxWidth: '384px'
-                      }}>
-                      </div>
-                    </div>
-  
-                    {/* Row 3: B, Category, Copyright */}
-                    <div className="flex items-center justify-center h-10">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
-                        backgroundColor: '#DC143C',
-                        color: '#FFD700'
-                      }}>B</div>
-                    </div>
-  
-                    <div className="h-10 flex gap-0">
+                      
                       <Select value={formData.category || ''} onValueChange={value => {
                         setCategory(value);
                         handleInputChange('category', value);
                       }}>
-                        <SelectTrigger className="w-[192px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100 h-10" style={{
+                        <SelectTrigger className="w-[192px] border-orange-400 focus:border-orange-500 [&>svg]:text-white [&>svg]:opacity-100 h-8" style={{
                           fontSize: '21px',
                           fontFamily: 'Arial',
                           fontWeight: 'bold',
@@ -893,7 +871,7 @@ const SuperText: React.FC = () => {
                         setCopyrightStatus(value);
                         handleInputChange('copyright_status', value);
                       }}>
-                        <SelectTrigger className="w-[192px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100 h-10" style={{
+                        <SelectTrigger className="w-[192px] text-white text-left border-2 [&>svg]:text-white [&>svg]:opacity-100 h-8" style={{
                         fontSize: '21px',
                         fontFamily: 'Arial',
                         fontWeight: 'bold',
@@ -919,13 +897,13 @@ const SuperText: React.FC = () => {
                         </SelectContent>
                       </Select>
                     </div>
-
-                  {/* Row 4: C, Title (spanning col 2-3) */}
+  
+                  {/* Row 2: B, Title (spanning col 2-3) */}
                   <div className="flex items-center justify-center">
                     <div className="w-8 h-8 rounded-full flex items-center justify-center supertext-fs-21px font-bold" style={{
                       backgroundColor: '#DC143C',
                       color: '#FFD700'
-                    }}>C</div>
+                    }}>B</div>
                   </div>
 
                     <div>
