@@ -524,11 +524,11 @@ const SuperText: React.FC = () => {
            
            <TooltipProvider>
              <Tooltip>
-               <TooltipTrigger asChild>
-                 <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !storyCode.trim()} className="supertext-orange-btn px-8 py-3 rounded-full">
-                   {isSaving ? 'Saving...' : 'Save & Clear Form'}
-                 </Button>
-               </TooltipTrigger>
+                <TooltipTrigger asChild>
+                  <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !storyCode.trim()} className="supertext-orange-btn px-4 py-3 rounded-full">
+                    {isSaving ? 'Saving...' : 'Save & Clear'}
+                  </Button>
+                </TooltipTrigger>
                <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
               fontFamily: 'Arial',
               fontSize: '21px',
