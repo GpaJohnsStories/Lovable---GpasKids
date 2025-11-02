@@ -10,6 +10,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, Dialog
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { YesNoButtons } from "@/components/ui/YesNoButtons";
 import { WordLimitedTextarea } from "@/components/ui/word-limited-textarea";
+import { CharacterLimitedTextarea } from "@/components/ui/character-limited-textarea";
 import { AuthorCombobox } from "@/components/AuthorCombobox";
 import { useStoryFormState } from '@/hooks/useStoryFormState';
 import { useStoryFormActions } from '@/hooks/useStoryFormActions';
@@ -907,11 +908,11 @@ const SuperText: React.FC = () => {
                   </div>
 
                     <div>
-                      <WordLimitedTextarea
+                      <CharacterLimitedTextarea
                         value={formData.title || ''}
                         onChange={(e) => handleInputChange('title', e.target.value)}
                         placeholder="Story Title"
-                        wordLimit={20}
+                        characterLimit={120}
                         className="resize-none border-2 border-purple-400 focus:border-purple-500 w-full"
                         style={{
                           fontSize: '21px',
@@ -932,11 +933,11 @@ const SuperText: React.FC = () => {
                   </div>
 
                     <div>
-                      <WordLimitedTextarea
+                      <CharacterLimitedTextarea
                         value={formData.tagline || ''}
                         onChange={(e) => handleInputChange('tagline', e.target.value)}
                         placeholder="Story Tagline"
-                        wordLimit={15}
+                        characterLimit={120}
                         className="resize-none border-2 border-green-400 focus:border-green-500 w-full"
                         style={{
                           fontSize: '21px',
@@ -982,11 +983,11 @@ const SuperText: React.FC = () => {
                   </div>
 
                     <div>
-                      <WordLimitedTextarea
+                      <CharacterLimitedTextarea
                         value={formData.excerpt || ''}
                         onChange={(e) => handleInputChange('excerpt', e.target.value)}
                         placeholder="Story Excerpt"
-                        wordLimit={50}
+                        characterLimit={250}
                         className="resize-none border-2 border-blue-400 focus:border-blue-500 w-full"
                         style={{
                           fontSize: '21px',
