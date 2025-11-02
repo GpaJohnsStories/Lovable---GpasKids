@@ -101,12 +101,15 @@ export const useStorySave = () => {
     setIsSaving(true);
     
     try {
-      const saveData = {
+      const saveData: any = {
         ...formData,
         ai_voice_name: formData.ai_voice_name || 'Nova',
         ai_voice_model: formData.ai_voice_model || 'tts-1',
         publication_status_code: formData.publication_status_code
       };
+      
+      // Remove google_drive_link if it exists (column was removed from database)
+      delete saveData.google_drive_link;
 
       let result;
       
