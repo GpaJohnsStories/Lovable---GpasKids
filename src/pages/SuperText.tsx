@@ -579,6 +579,29 @@ const SuperText: React.FC = () => {
                 </TooltipContent>
               </Tooltip>
              </TooltipProvider>
+             
+             <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button onClick={() => {
+                    textEditorSectionRef.current?.scrollIntoView({ 
+                      behavior: 'smooth', 
+                      block: 'start' 
+                    });
+                  }} className="supertext-brown-btn px-4 py-3 rounded-full">
+                    Format
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
+              fontFamily: 'Arial',
+              fontSize: '21px',
+              color: 'black',
+              backgroundColor: 'white'
+            }}>
+                  Jump to the text editor format menu
+                </TooltipContent>
+              </Tooltip>
+             </TooltipProvider>
            </div>
           </div>
         </div>
