@@ -565,8 +565,8 @@ const SuperText: React.FC = () => {
                   <Button onClick={() => window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
-              })} className="supertext-orange-btn px-8 py-3 rounded-full">
-                    Return To Top
+              })} className="supertext-green-btn px-4 py-3 rounded-full">
+                    Go To Top
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent side="bottom" align="center" className="bg-white border border-gray-300 shadow-lg" style={{
