@@ -364,7 +364,7 @@ const SuperText: React.FC = () => {
   }, [clearForm]);
   const handleSave = async (action: 'save-and-clear' | 'save-only' | 'cancel-all') => {
     // Check if text code is empty for save actions
-    if ((action === 'save-and-clear' || action === 'save-only') && !storyCode.trim()) {
+    if ((action === 'save-and-clear' || action === 'save-only') && !formData.story_code?.trim()) {
       toast.error("Please enter a text code before saving.");
       return;
     }
@@ -520,7 +520,7 @@ const SuperText: React.FC = () => {
            <TooltipProvider>
              <Tooltip>
                <TooltipTrigger asChild>
-                 <Button onClick={() => handleSave('save-only')} disabled={isSaving || !storyCode.trim()} className="supertext-orange-btn px-8 py-3 rounded-full">
+                 <Button onClick={() => handleSave('save-only')} disabled={isSaving || !formData.story_code?.trim()} className="supertext-orange-btn px-8 py-3 rounded-full">
                    {isSaving ? 'Saving...' : 'Save & Don\'t Clear'}
                  </Button>
                </TooltipTrigger>
@@ -538,7 +538,7 @@ const SuperText: React.FC = () => {
            <TooltipProvider>
              <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !storyCode.trim()} className="supertext-orange-btn px-4 py-3 rounded-full">
+                  <Button onClick={() => handleSave('save-and-clear')} disabled={isSaving || !formData.story_code?.trim()} className="supertext-orange-btn px-4 py-3 rounded-full">
                     {isSaving ? 'Saving...' : 'Save & Clear'}
                   </Button>
                 </TooltipTrigger>
