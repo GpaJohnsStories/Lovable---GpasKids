@@ -17,6 +17,76 @@ interface IsolatedStoryRendererProps {
   showHeaderPreview?: boolean; // Keep for compatibility but unused
   enableProportionalSizing?: boolean;
   colorPresetId?: string;
+  story?: any; // Photo/video data for token processing
+}
+
+/**
+ * Process SuperBox photo/video tokens in content
+ */
+function processSuperBoxTokens(content: string, story: any): string {
+  if (!content) return '';
+
+  let processed = content;
+
+  // 1. PHOTO Tokens - {{PHOTO-1, left}}, {{PHOTO-2, right}}, etc.
+  processed = processed.replace(
+    /\{\{PHOTO-(\d+),\s*(left|right|center)\}\}/gi,
+    (match, num, position) => {
+      const photoUrl = story[`photo_link_${num}`];
+      const photoAlt = story[`photo_alt_${num}`] || `Photo ${num}`;
+
+      if (!photoUrl) return '';
+
+      return `<img 
+        src="${photoUrl}" 
+        alt="${photoAlt}" 
+        class="super-box-photo photo-${position.toLowerCase()}" 
+        loading="lazy"
+      />`;
+    }
+  );
+
+  // 2. PHOTO-ALL Token - {{PHOTO, all}}
+  processed = processed.replace(
+    /\{\{PHOTO,\s*all\}\}/gi,
+    () => {
+      const photos = [];
+      for (let i = 1; i <= 4; i++) {
+        const photoUrl = story[`photo_link_${i}`];
+        const photoAlt = story[`photo_alt_${i}`] || `Photo ${i}`;
+        if (photoUrl) {
+          photos.push(`
+            <img 
+              src="${photoUrl}" 
+              alt="${photoAlt}" 
+              class="super-box-photo-grid-item" 
+              loading="lazy"
+            />
+          `);
+        }
+      }
+
+      if (photos.length === 0) return '';
+
+      return `<div class="super-box-photo-grid photo-count-${photos.length}">
+        ${photos.join('')}
+      </div>`;
+    }
+  );
+
+  // 3. VIDEO Token - {{VIDEO}}filename.mp4{{/VIDEO}}
+  processed = processed.replace(
+    /\{\{VIDEO\}\}([^{]+?)\{\{\/VIDEO\}\}/gi,
+    (match, filename) => {
+      const videoUrl = story.video_url || `/video/${filename.trim()}`;
+      return `<video controls class="super-box-video">
+        <source src="${videoUrl}" type="video/mp4" />
+        Your browser does not support video playback.
+      </video>`;
+    }
+  );
+
+  return processed;
 }
 
 /**
@@ -33,7 +103,8 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
   onFontSizeChange,
   showHeaderPreview = true, // Keep for compatibility but ignore
   enableProportionalSizing = false,
-  colorPresetId
+  colorPresetId,
+  story
 }) => {
   // Fetch color preset if provided
   const { data: colorPreset } = useQuery({
@@ -79,7 +150,12 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
       }
     }
     
-    // Process icon tokens before other processing
+    // Process photo/video tokens FIRST (if story data available)
+    if (story) {
+      processedContent = processSuperBoxTokens(processedContent, story);
+    }
+    
+    // Process icon tokens
     processedContent = processIconTokens(processedContent);
     
     // Wrap plain text in paragraphs if needed
@@ -130,6 +206,61 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
               margin: 0 4px;
               object-fit: contain;
               vertical-align: middle;
+            }
+            
+            /* Photo styling */
+            .super-box-photo {
+              max-width: 400px;
+              height: auto;
+              border: 3px solid #8B4513;
+              border-radius: 8px;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+              margin: 16px 0;
+            }
+            .super-box-photo.photo-left {
+              float: left;
+              margin-right: 20px;
+              margin-bottom: 20px;
+            }
+            .super-box-photo.photo-right {
+              float: right;
+              margin-left: 20px;
+              margin-bottom: 20px;
+            }
+            .super-box-photo.photo-center {
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+            }
+            
+            /* Photo grid styling */
+            .super-box-photo-grid {
+              display: grid;
+              gap: 16px;
+              margin: 24px 0;
+              clear: both;
+            }
+            .super-box-photo-grid.photo-count-1 { grid-template-columns: 1fr; }
+            .super-box-photo-grid.photo-count-2 { grid-template-columns: repeat(2, 1fr); }
+            .super-box-photo-grid.photo-count-3 { grid-template-columns: repeat(3, 1fr); }
+            .super-box-photo-grid.photo-count-4 { grid-template-columns: repeat(2, 1fr); }
+            .super-box-photo-grid-item {
+              width: 100%;
+              height: auto;
+              border: 3px solid #8B4513;
+              border-radius: 8px;
+              object-fit: cover;
+            }
+            
+            /* Video styling */
+            .super-box-video {
+              width: 100%;
+              max-width: 800px;
+              height: auto;
+              border: 3px solid #8B4513;
+              border-radius: 8px;
+              margin: 24px 0;
+              display: block;
             }
             
             /* Preserve inline font-family styles - no overrides */

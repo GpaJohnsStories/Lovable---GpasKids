@@ -1289,6 +1289,7 @@ const SuperText: React.FC = () => {
                 setColorPresetId(presetId);
                 handleInputChange('color_preset_id', presetId);
               }}
+              storyData={formData}
             />
           </div>
 

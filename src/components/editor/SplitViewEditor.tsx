@@ -18,6 +18,7 @@ interface SplitViewEditorProps {
   previewContent?: string | null;
   colorPresetId?: string;
   onColorPresetChange?: (presetId: string) => void;
+  storyData?: any; // Photo/video data for token preview
 }
 
 const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
@@ -31,6 +32,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
   previewContent = null,
   colorPresetId,
   onColorPresetChange,
+  storyData,
 }) => {
   console.log("🎯 SplitViewEditor: Rendering with content:", {
     content: content ? `"${content.substring(0, 100)}..."` : "undefined/empty",
@@ -428,6 +430,7 @@ const SplitViewEditor: React.FC<SplitViewEditorProps> = ({
                 onFontSizeChange={onFontSizeChange}
                 enableProportionalSizing={true}
                 colorPresetId={colorPresetId}
+                story={storyData}
               />
             </div>
             <StoryContentScrollToTop scrollContainerRef={storyContentRef} targetSelector="#format-menu" />
