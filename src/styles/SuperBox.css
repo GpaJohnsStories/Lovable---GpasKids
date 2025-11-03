@@ -77,7 +77,7 @@
 
 /* Main Content */
 .super-box-content {
-  font-size: var(--font-scale-base); /* 21px default, respects inline overrides */
+  /* font-size controlled by inline style in SuperBox.tsx - removed CSS variable to prevent conflicts */
   line-height: 1.6;
 }
 
