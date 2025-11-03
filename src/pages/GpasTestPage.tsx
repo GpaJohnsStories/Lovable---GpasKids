@@ -13,7 +13,7 @@ const GpasTestPage = () => {
       maxWidth: '1400px',
       margin: '0 auto'
     }}>
-      <SuperBox code="LIF-6BM" />
+      <SuperBox code="HOL-4TH" />
     </div>
   );
 };
