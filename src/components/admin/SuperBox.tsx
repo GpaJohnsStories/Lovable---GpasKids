@@ -126,12 +126,10 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
           </div>
         )}
 
-        {/* Audio Button - Top Right */}
-        {story.audio_url && (
-          <div className="super-box-audio-button">
-            <AudioButton code={story.story_code} onClick={() => setShowSuperAV(true)} />
-          </div>
-        )}
+        {/* Audio/Font Control Button - Top Right - Always visible */}
+        <div className="super-box-audio-button">
+          <AudioButton code={story.story_code} onClick={() => setShowSuperAV(true)} />
+        </div>
 
         {/* Title - Always from story.title */}
         <h2 className="super-box-title" style={titleStyle}>
@@ -198,20 +196,18 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
         `}</style>
       </div>
 
-      {/* SuperAV Audio Player Popup */}
-      {story.audio_url && (
-        <SuperAV
-          isOpen={showSuperAV}
-          onClose={() => setShowSuperAV(false)}
-          title={story.title}
-          author={story.author || undefined}
-          voiceName={story.ai_voice_name || undefined}
-          audioUrl={story.audio_url}
-          showAuthor={true}
-          fontScale={fontScale}
-          onFontScaleChange={handleFontScaleChange}
-        />
-      )}
+      {/* SuperAV Audio Player / Font Control Popup - Always available */}
+      <SuperAV
+        isOpen={showSuperAV}
+        onClose={() => setShowSuperAV(false)}
+        title={story.title}
+        author={story.author || undefined}
+        voiceName={story.ai_voice_name || undefined}
+        audioUrl={story.audio_url || undefined}
+        showAuthor={true}
+        fontScale={fontScale}
+        onFontScaleChange={handleFontScaleChange}
+      />
     </>
   );
 };
