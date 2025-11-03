@@ -36,6 +36,18 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
   const [fontScale, setFontScale] = useState<FontScaleStep>(DEFAULT_FONT_SCALE);
   const { lookupStoryByCode } = useStoryCodeLookup();
 
+  // Debug logging for font scale changes
+  React.useEffect(() => {
+    console.log(`[SuperBox ${code}] fontScale changed to:`, fontScale);
+    console.log(`[SuperBox ${code}] CSS var will be: var(--font-scale-${fontScale})`);
+  }, [fontScale, code]);
+
+  // Wrapped setter with logging
+  const handleFontScaleChange = (newScale: FontScaleStep) => {
+    console.log(`[SuperBox ${code}] handleFontScaleChange called with:`, newScale);
+    setFontScale(newScale);
+  };
+
   // Load story data
   const { data: story, isLoading, error } = useQuery({
     queryKey: ['superbox', code],
@@ -153,7 +165,21 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
           style={{ 
             color: preset?.font_color_hex || '#000000',
             fontFamily: preset?.font_name || 'inherit',
-            fontSize: `var(--font-scale-${fontScale})`,
+            fontSize: (() => {
+              const scaleToRem = {
+                'xs': '0.75rem',
+                'sm': '0.875rem',
+                'base': '1.3125rem',
+                'lg': '1.5rem',
+                'xl': '1.75rem',
+                '2xl': '2rem',
+                '3xl': '2.5rem',
+                '4xl': '3rem'
+              };
+              const remValue = scaleToRem[fontScale] || '1.3125rem';
+              console.log(`[SuperBox ${code}] Applying fontSize:`, remValue, `for fontScale:`, fontScale);
+              return remValue;
+            })(),
           }}
           dangerouslySetInnerHTML={{ __html: processedContent }}
         />
@@ -183,7 +209,7 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
           audioUrl={story.audio_url}
           showAuthor={true}
           fontScale={fontScale}
-          onFontScaleChange={setFontScale}
+          onFontScaleChange={handleFontScaleChange}
         />
       )}
     </>
