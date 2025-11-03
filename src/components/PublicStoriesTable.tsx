@@ -360,7 +360,12 @@ const PublicStoriesTable: React.FC = () => {
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="text-[18pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1">
+                <DropdownMenuContent 
+                  className="text-[18pt] !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1"
+                  style={{ zIndex: 9999 }}
+                  sideOffset={5}
+                  align="start"
+                >
                   <DropdownMenuItem disabled className="text-white cursor-default font-medium">
                     Select Media
                   </DropdownMenuItem>
@@ -397,16 +402,21 @@ const PublicStoriesTable: React.FC = () => {
                 <span className="text-white text-sm font-bold" style={{ fontFamily: 'Comic Sans MS, cursive' }}>3</span>
               </div>
               <div className="flex gap-1">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button 
-                      className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] flex-1 justify-between"
-                    >
-                      Sort On —
-                      <ChevronDown className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="text-[18pt] z-50 !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    className="text-[16pt] bg-[#A0522D] text-white font-bold hover:bg-[#8b4513] rounded-full h-10 px-5 shadow-lg ring-1 ring-[#8b4513] flex-1 justify-between"
+                  >
+                    Sort On —
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent 
+                  className="text-[18pt] !bg-[#A0522D] !bg-opacity-100 text-white shadow-lg border border-[#8b4513] rounded-2xl p-1"
+                  style={{ zIndex: 9999 }}
+                  sideOffset={5}
+                  align="start"
+                >
                     <DropdownMenuItem disabled className="text-white cursor-default font-medium">
                       Sort On —
                     </DropdownMenuItem>
