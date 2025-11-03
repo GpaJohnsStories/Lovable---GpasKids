@@ -3,7 +3,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import { ProportionalWebTextBox } from "@/components/ProportionalWebTextBox";
 import WebTextBox from "@/components/WebTextBox";
 import FeaturedStoriesGrid from "@/components/FeaturedStoriesGrid";
-import GpaJohnComments from "@/components/GpaJohnComments";
+import { SuperBox } from "@/components/admin/SuperBox";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 
 
@@ -19,7 +19,9 @@ const Index = () => {
         <FeaturedStoriesGrid />
         
         {/* ===== BOX 1 START (Orange Announcements Box) ===== */}
-        <GpaJohnComments />
+        <div className="mb-8">
+          <SuperBox code="SYS-LAA" />
+        </div>
         {/* ===== BOX 1 END ===== */}
         
         {/* ===== BOX 2 START (Green Buddy Box) ===== */}
