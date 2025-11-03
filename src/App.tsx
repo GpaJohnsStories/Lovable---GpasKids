@@ -50,6 +50,7 @@ import Register from "./components/auth/Register";
 import ResetPasswordRequest from "./components/auth/ResetPasswordRequest";
 
 import SuperText from "./pages/SuperText";
+import GpasTestPage from "./pages/GpasTestPage";
 
 
 // Security and Auth
@@ -155,6 +156,7 @@ function App() {
                                    <Route path="/buddys_admin/reference" element={<SecureAdminRoute><ReferenceDashboard /></SecureAdminRoute>} />
                                    <Route path="/buddys_admin/sitemap" element={<SecureAdminRoute><AdminSiteMapContent /></SecureAdminRoute>} />
                                    <Route path="/buddys_admin/super-text" element={<SuperText />} />
+                                   <Route path="/buddys_admin/gpas-test-page" element={<GpasTestPage />} />
 
                                   {/* Catch-all route */}
                                   <Route path="*" element={<NotFound />} />
