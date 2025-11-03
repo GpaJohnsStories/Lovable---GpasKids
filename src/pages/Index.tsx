@@ -25,10 +25,9 @@ const Index = () => {
         {/* ===== BOX 1 END ===== */}
         
         {/* ===== BOX 2 START (Green Buddy Box) ===== */}
-        <WebTextBox 
-          code="SYS-WE2"
-          id="home-box-2"
-        />
+        <div className="mb-8">
+          <SuperBox code="SYS-WE2" />
+        </div>
         {/* ===== BOX 2 END ===== */}
       </main>
       
