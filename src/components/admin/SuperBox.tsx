@@ -138,6 +138,13 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
           </p>
         )}
 
+        {/* Excerpt - If present */}
+        {story.excerpt && (
+          <p className="super-box-excerpt" style={{ color: preset?.font_color_hex || '#000000' }}>
+            {story.excerpt}
+          </p>
+        )}
+
         {/* Main Content with Token Processing */}
         <div
           className="super-box-content"
