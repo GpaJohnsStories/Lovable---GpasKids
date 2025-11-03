@@ -317,8 +317,8 @@
 /* Tablet/Desktop: Float photos (600px max width) */
 @media (min-width: 768px) {
   .super-box-photo {
-    width: 600px;
-    max-width: 100%;
+    max-width: 600px;
+    width: 100%;
   }
   
   .photo-left {
