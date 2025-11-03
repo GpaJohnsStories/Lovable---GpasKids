@@ -219,12 +219,12 @@ const IsolatedStoryRenderer: React.FC<IsolatedStoryRendererProps> = ({
             }
             .super-box-photo.photo-left {
               float: left;
-              margin-right: 20px;
+              margin-right: 30px;
               margin-bottom: 20px;
             }
             .super-box-photo.photo-right {
               float: right;
-              margin-left: 20px;
+              margin-left: 30px;
               margin-bottom: 20px;
             }
             .super-box-photo.photo-center {
