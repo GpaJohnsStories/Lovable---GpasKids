@@ -1,0 +1,203 @@
+/**
+ * SuperBox Component Styles
+ * 
+ * Child-friendly design with large fonts (min 21px/16pt), responsive layout,
+ * and high contrast for accessibility.
+ */
+
+/* Main Container */
+.super-box {
+  position: relative;
+  border: 4px solid;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* Audio Button - Top Right */
+.super-box-audio-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+}
+
+/* Error Banner - Inside Border, Top */
+.super-box-error-banner {
+  background: #dc2626;
+  color: white;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+  border-radius: 4px;
+}
+
+/* Title */
+.super-box-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Author and Tagline */
+.super-box-author,
+.super-box-tagline {
+  font-size: 21px;
+  text-align: center;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* Main Content */
+.super-box-content {
+  font-size: 21px;
+  line-height: 1.6;
+}
+
+/* Story Code Display - Bottom Right */
+.super-box-code {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 12px;
+  font-family: monospace;
+  opacity: 0.6;
+}
+
+/* Photo Styling */
+.super-box-photo {
+  max-width: 100%;
+  height: auto;
+  border: 3px solid;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+/* Mobile: Stack all photos (350px max width) */
+@media (max-width: 767px) {
+  .super-box-photo {
+    display: block;
+    width: 350px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .photo-left,
+  .photo-right {
+    float: none !important;
+  }
+}
+
+/* Tablet/Desktop: Float photos (600px max width) */
+@media (min-width: 768px) {
+  .super-box-photo {
+    width: 600px;
+    max-width: 100%;
+  }
+  
+  .photo-left {
+    float: left;
+    margin-right: 16px;
+  }
+  
+  .photo-right {
+    float: right;
+    margin-left: 16px;
+  }
+  
+  .photo-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Photo Grid for {{PHOTO, all}} */
+.super-box-photo-grid {
+  display: grid;
+  gap: 16px;
+  margin: 16px 0;
+  clear: both;
+}
+
+/* Responsive grid columns based on photo count */
+.photo-count-1 { 
+  grid-template-columns: 1fr; 
+}
+
+.photo-count-2 { 
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+}
+
+.photo-count-3,
+.photo-count-4 { 
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+}
+
+.super-box-photo-grid-item {
+  width: 100%;
+  height: auto;
+  border: 3px solid;
+  border-radius: 4px;
+}
+
+/* Video Styling */
+.super-box-video {
+  width: 100%;
+  max-width: 800px;
+  display: block;
+  margin: 16px auto;
+  border-radius: 4px;
+}
+
+/* Loading State */
+.super-box-loading {
+  border: 4px solid #9ca3af;
+  background: #f3f4f6;
+  padding: 24px;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  max-width: 1200px;
+}
+
+.super-box-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 12px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error State */
+.super-box-error {
+  border: 4px solid #dc2626;
+  background: #fef2f2;
+  color: #dc2626;
+  font-weight: bold;
+  padding: 24px;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  max-width: 1200px;
+}
+
+/* Clear floats after content */
+.super-box-content::after {
+  content: "";
+  display: table;
+  clear: both;
+}
