@@ -122,6 +122,14 @@ export const useStorySave = () => {
           .from('stories')
           .update({
             ...saveData,
+            // Explicitly convert empty strings to null for optional text fields
+            tagline: saveData.tagline?.trim() || null,
+            excerpt: saveData.excerpt?.trim() || null,
+            author: saveData.author?.trim() || saveData.author,
+            photo_alt_1: saveData.photo_alt_1?.trim() || null,
+            photo_alt_2: saveData.photo_alt_2?.trim() || null,
+            photo_alt_3: saveData.photo_alt_3?.trim() || null,
+            photo_alt_4: saveData.photo_alt_4?.trim() || null,
             updated_at: new Date().toISOString()
           })
           .eq('id', formData.id)
