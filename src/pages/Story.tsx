@@ -1,26 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { Badge } from "@/components/ui/badge";
-import { formatDistanceToNow } from 'date-fns';
-import { ExternalLink } from "lucide-react";
-import IsolatedStoryRenderer from "@/components/story/IsolatedStoryRenderer";
 import WelcomeHeader from "@/components/WelcomeHeader";
-import StoryHeader from "@/components/StoryHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
-import ContentProtection from "@/components/ContentProtection";
-
-import { Button } from "@/components/ui/button";
-import StoryPhotosGallery from "@/components/StoryPhotosGallery";
-import StoryVideoPlayer from "@/components/StoryVideoPlayer";
 import StoryVotingSection from "@/components/StoryVotingSection";
-import { getStoryPhotos, buildCacheBustedUrl, getAssetVersionFromStory } from "@/utils/storyUtils";
-import { AudioButton } from "@/components/AudioButton";
-import { SuperAV } from "@/components/SuperAV";
-import PrintWatermark from "@/components/PrintWatermark";
-import PrintBlackBox from "@/components/PrintBlackBox";
-import PrintCopyrightFooter from "@/components/PrintCopyrightFooter";
-import { extractHeaderTokens } from "@/utils/headerTokens";
+import { SuperBox } from "@/components/admin/SuperBox";
 
 
 interface StoryData {
@@ -54,16 +38,11 @@ interface StoryData {
 
 const Story = () => {
   const { storyCode } = useParams<{ storyCode: string }>();
-  const [searchParams] = useSearchParams();
   const [story, setStory] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentVote, setCurrentVote] = useState<'thumbs_up' | 'thumbs_down' | 'ok' | null>(null);
-  const [showSuperAV, setShowSuperAV] = useState(false);
-  
-  const [fontSize, setFontSize] = useState(21); // 16pt = 21px
   const navigate = useNavigate();
-  const isPrintMode = searchParams.get('print') === '1';
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -92,13 +71,11 @@ const Story = () => {
 
         setStory(data);
         
-        // Increment read_count (only for normal views, not print mode)
-        if (!isPrintMode) {
-          await supabase
-            .from('stories')
-            .update({ read_count: (data.read_count || 0) + 1 })
-            .eq('id', data.id);
-        }
+        // Increment read_count
+        await supabase
+          .from('stories')
+          .update({ read_count: (data.read_count || 0) + 1 })
+          .eq('id', data.id);
 
       } catch (err) {
         console.error("Unexpected error fetching story:", err);
@@ -111,37 +88,7 @@ const Story = () => {
     if (storyCode) {
       fetchStory();
     }
-  }, [storyCode, navigate, isPrintMode]);
-
-  // Auto-trigger print in print mode
-  useEffect(() => {
-    if (isPrintMode && story && !loading) {
-      const timer = setTimeout(() => {
-        window.print();
-        
-        // Handle post-print navigation - simplified to stay on story page
-        const handleAfterPrint = () => {
-          window.removeEventListener('afterprint', handleAfterPrint);
-          // Remove print parameter and stay on story page
-          const currentPath = window.location.pathname;
-          window.location.href = currentPath;
-        };
-        
-        // Handle browsers that support afterprint event
-        window.addEventListener('afterprint', handleAfterPrint);
-        
-        // Fallback for browsers that don't support afterprint
-        setTimeout(() => {
-          window.removeEventListener('afterprint', handleAfterPrint);
-          // Remove print parameter and stay on story page
-          const currentPath = window.location.pathname;
-          window.location.href = currentPath;
-        }, 3000); // 3 second fallback
-        
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [isPrintMode, story, loading]);
+  }, [storyCode, navigate]);
 
   const handleVoteUpdate = (newCounts: { thumbs_up_count: number; thumbs_down_count: number; ok_count: number }, newVote: 'thumbs_up' | 'thumbs_down' | 'ok' | null) => {
     if (story) {
@@ -180,141 +127,27 @@ const Story = () => {
     );
   }
 
-  const photos = getStoryPhotos(story);
-
-  // Extract header tokens from story content for dynamic rendering
-  const { tokens, contentWithoutTokens } = extractHeaderTokens(story.content || '');
-
   return (
-      <div className="min-h-screen bg-white">
-        {!isPrintMode && <WelcomeHeader />}
-        <div className={`container mx-auto px-4 pt-0 ${isPrintMode && story.copyright_status === 'O' ? 'print-footer-spacer' : ''}`}>
-          <StoryHeader
-            title={story.title}
-            category={story.category}
-            author={story.author}
-            createdAt={story.created_at}
-            tagline={story.tagline}
-            storyCode={story.story_code}
-            showStoryCode={true}
-            content={story.content}
-            description={story.excerpt}
-            audioUrl={story.audio_url}
-            audioSegments={story.audio_segments}
-            audioDuration={story.audio_duration}
-            aiVoiceName={story.ai_voice_name}
-            aiVoiceModel={story.ai_voice_model}
-            allowTextToSpeech={false}
-            copyrightStatus={story.copyright_status}
-            printMode={isPrintMode}
-            titleHtml={tokens.titleHtml}
-            taglineHtml={tokens.taglineHtml}
-            authorHtml={tokens.authorHtml}
-            descriptionHtml={tokens.excerptHtml}
-          />
+    <div className="min-h-screen bg-white">
+      <WelcomeHeader />
+      <div className="container mx-auto px-4 pt-0">
+        <main className="mb-8">
+          <SuperBox code={story.story_code} />
+        </main>
 
-          {/* Print Black Box - Show only in print mode */}
-          {isPrintMode && (
-            <PrintBlackBox 
-              storyContext={{
-                title: story.title,
-                story_code: story.story_code,
-                author: story.author,
-                category: story.category
-              }}
-            />
-          )}
-
-          <main className="mb-8">
-            {/* Photo Gallery using StoryPhotosGallery component */}
-            <StoryPhotosGallery photos={photos} storyTitle={story.title} />
-
-            {/* Video Player - Show if video exists */}
-            {story.video_url && (
-              <div className="mb-8">
-                <StoryVideoPlayer
-                  videoUrl={buildCacheBustedUrl(story.video_url, getAssetVersionFromStory(story))}
-                  title={story.title}
-                />
-              </div>
-            )}
-
-            {/* Font and Audio Controls positioned above story box - Hide in print mode */}
-            <div className="relative">
-              
-              {/* Audio Button - positioned on right */}
-              {!isPrintMode && (
-                <div className="absolute top-0 right-0 -mt-8 z-10">
-                  <AudioButton
-                    code={story.story_code}
-                    onClick={() => {
-                      console.log('Audio button clicked for story:', story.story_code);
-                      setShowSuperAV(true);
-                    }}
-                  />
-                </div>
-              )}
-              
-              <div 
-                className="bg-[#F5E6D3] border-2 border-[#9c441a] rounded-lg p-6 md:p-8 shadow-sm"
-              >
-                <IsolatedStoryRenderer 
-                  content={contentWithoutTokens || story.content || "No content available."}
-                  fontSize={fontSize}
-                  onFontSizeChange={setFontSize}
-                  category="STORY"
-                  useRichCleaning={true}
-                />
-              </div>
-            </div>
-          </main>
-
-          {/* Bottom Voting Section - Hide in print mode */}
-          {!isPrintMode && (
-            <StoryVotingSection
-              storyId={story.id}
-              storyCode={story.story_code}
-              storyTitle={story.title}
-              thumbsUpCount={story.thumbs_up_count}
-              thumbsDownCount={story.thumbs_down_count}
-              okCount={story.ok_count}
-              currentVote={currentVote}
-              onVoteUpdate={handleVoteUpdate}
-            />
-          )}
-        </div>
-        
-        {/* SuperAV Player - Hide in print mode */}
-        {!isPrintMode && (
-          <SuperAV
-            isOpen={showSuperAV}
-            onClose={() => setShowSuperAV(false)}
-            title={story.title}
-            author={story.author}
-            voiceName={story.ai_voice_name}
-            audioUrl={story.audio_url ? buildCacheBustedUrl(story.audio_url, getAssetVersionFromStory(story)) : undefined}
-            fontSize={fontSize}
-            onFontSizeChange={setFontSize}
-          />
-        )}
-        
-        {/* Print Watermark - Only show when printing and copyright is 'L' */}
-        <PrintWatermark show={isPrintMode && story.copyright_status === 'L'} />
-        
-        {/* Print Copyright Footer - Only for 'O' status stories in print mode */}
-        {isPrintMode && story.copyright_status === 'O' && (
-          <PrintCopyrightFooter 
-            storyContext={{
-              title: story.title,
-              story_code: story.story_code,
-              author: story.author,
-              category: story.category
-            }}
-          />
-        )}
-        
-        {!isPrintMode && <CookieFreeFooter />}
+        <StoryVotingSection
+          storyId={story.id}
+          storyCode={story.story_code}
+          storyTitle={story.title}
+          thumbsUpCount={story.thumbs_up_count}
+          thumbsDownCount={story.thumbs_down_count}
+          okCount={story.ok_count}
+          currentVote={currentVote}
+          onVoteUpdate={handleVoteUpdate}
+        />
       </div>
+      <CookieFreeFooter />
+    </div>
   );
 };
 
