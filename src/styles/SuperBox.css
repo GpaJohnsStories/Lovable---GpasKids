@@ -328,12 +328,12 @@
   
   .photo-left {
     float: left;
-    margin-right: 16px;
+    margin-right: 24px;
   }
   
   .photo-right {
     float: right;
-    margin-left: 16px;
+    margin-left: 24px;
   }
   
   .photo-center {
