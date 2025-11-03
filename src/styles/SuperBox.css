@@ -81,6 +81,11 @@
   line-height: 1.6;
 }
 
+/* Force all child elements to scale with parent fontSize - overrides inline styles from database */
+.super-box-content *:not(img):not(video) {
+  font-size: 1em !important;
+}
+
 /* ========================================
    HTML Element Styling for .super-box-content
    Ensures all SuperText toolbar formats display properly
