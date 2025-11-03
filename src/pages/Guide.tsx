@@ -3,30 +3,18 @@ import { useLocation } from 'react-router-dom';
 import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 
-import SysWe2WebTextBox from "@/components/templates/SysWe2WebTextBox";
-import { supabase } from "@/integrations/supabase/client";
+import { SuperBox } from "@/components/admin/SuperBox";
 const Guide = () => {
   const location = useLocation();
   
-  const webtextBoxes = [{
-    webtextCode: "SYS-WE2",
-    title: "Getting Started"
-  }, {
-    webtextCode: "SYS-G2A",
-    title: "Home Page"
-  }, {
-    webtextCode: "SYS-G3A",
-    title: "Story Library"
-  }, {
-    webtextCode: "SYS-G3B",
-    title: "Read A Story"
-  }, {
-    webtextCode: "SYS-G6A",
-    title: "About Us"
-  }, {
-    webtextCode: "SYS-G7A",
-    title: "We Are Safe!"
-  }];
+  const guideSections = [
+    "SYS-WE2",  // Getting Started
+    "SYS-G2A",  // Home Page
+    "SYS-G3A",  // Story Library
+    "SYS-G3B",  // Read A Story
+    "SYS-G6A",  // About Us
+    "SYS-G7A"   // We Are Safe!
+  ];
 
   // Auto-scroll to hash anchor when page loads or hash changes
   useEffect(() => {
@@ -132,15 +120,10 @@ const Guide = () => {
             </div>
           </div>
           
-          {/* Stack of WebText Boxes */}
+          {/* Stack of SuperBox Components */}
           <div className="space-y-2 mb-1">
-            {webtextBoxes.map((box, index) => (
-              <SysWe2WebTextBox
-                key={index}
-                code={box.webtextCode}
-                title={box.title}
-                id={box.webtextCode}
-              />
+            {guideSections.map((code) => (
+              <SuperBox key={code} code={code} />
             ))}
           </div>
         </div>
