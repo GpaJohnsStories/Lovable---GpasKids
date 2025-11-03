@@ -5,6 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { processIconTokens } from '@/utils/iconTokens';
 import { AudioButton } from '@/components/AudioButton';
 import { SuperAV } from '@/components/SuperAV';
+import { FontScaleStep, DEFAULT_FONT_SCALE } from '@/utils/fontScaleUtils';
 import '@/styles/SuperBox.css';
 
 /**
@@ -32,6 +33,7 @@ interface SuperBoxProps {
 
 export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
   const [showSuperAV, setShowSuperAV] = useState(false);
+  const [fontScale, setFontScale] = useState<FontScaleStep>(DEFAULT_FONT_SCALE);
   const { lookupStoryByCode } = useStoryCodeLookup();
 
   // Load story data
@@ -151,6 +153,7 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
           style={{ 
             color: preset?.font_color_hex || '#000000',
             fontFamily: preset?.font_name || 'inherit',
+            fontSize: `var(--font-scale-${fontScale})`,
           }}
           dangerouslySetInnerHTML={{ __html: processedContent }}
         />
@@ -179,6 +182,8 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
           voiceName={story.ai_voice_name || undefined}
           audioUrl={story.audio_url}
           showAuthor={true}
+          fontScale={fontScale}
+          onFontScaleChange={setFontScale}
         />
       )}
     </>
