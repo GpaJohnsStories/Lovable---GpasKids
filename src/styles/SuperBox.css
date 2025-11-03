@@ -314,10 +314,10 @@
   }
 }
 
-/* Tablet/Desktop: Float photos (600px max width) */
+/* Tablet/Desktop: Float photos (500px max width) */
 @media (min-width: 768px) {
   .super-box-photo {
-    max-width: 600px;
+    max-width: 500px;
     width: 100%;
   }
   
