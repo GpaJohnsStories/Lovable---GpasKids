@@ -422,7 +422,7 @@ const PublicStoriesTable: React.FC = () => {
                       Category
                       {sortOption === 'category' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setSortOption('read_count')} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
+                    <DropdownMenuItem onSelect={() => { setSortOption('read_count'); setSortDirection('desc'); }} className="text-white hover:bg-[#8b4513] rounded-lg flex items-center justify-between">
                       Times Story Read
                       {sortOption === 'read_count' && <Check className="h-4 w-4" />}
                     </DropdownMenuItem>
