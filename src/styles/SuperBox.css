@@ -120,21 +120,21 @@
 
 /* Headings */
 .super-box-content h1 {
-  font-size: 40px; /* 30pt */
+  font-size: 1.9em; /* Scales with parent font-size */
   font-weight: bold;
   margin: 24px 0 16px 0;
   line-height: 1.3;
 }
 
 .super-box-content h2 {
-  font-size: 30px; /* 23pt */
+  font-size: 1.43em; /* Scales with parent font-size */
   font-weight: bold;
   margin: 20px 0 12px 0;
   line-height: 1.3;
 }
 
 .super-box-content h3 {
-  font-size: 24px; /* 18pt */
+  font-size: 1.14em; /* Scales with parent font-size */
   font-weight: bold;
   margin: 16px 0 8px 0;
   line-height: 1.3;
@@ -143,7 +143,7 @@
 .super-box-content h4,
 .super-box-content h5,
 .super-box-content h6 {
-  font-size: 21px; /* 16pt - minimum per requirement #13 */
+  font-size: 1em; /* Scales with parent font-size (matches base) */
   font-weight: bold;
   margin: 12px 0 8px 0;
   line-height: 1.3;
@@ -192,7 +192,7 @@
   overflow-x: auto;
   margin: 16px 0;
   font-family: 'Courier New', monospace;
-  font-size: 18px; /* Slightly smaller but still readable */
+  font-size: 0.86em; /* Scales with parent font-size */
 }
 
 .super-box-content code {
