@@ -5,6 +5,18 @@
  * and high contrast for accessibility.
  */
 
+:root {
+  /* SuperBox font scale variables - ensures 21px minimum per requirement #13 */
+  --font-scale-xs: 0.75rem;      /* 12px */
+  --font-scale-sm: 0.875rem;     /* 14px */
+  --font-scale-base: 1.3125rem;  /* 21px - DEFAULT for children */
+  --font-scale-lg: 1.5rem;       /* 24px */
+  --font-scale-xl: 1.75rem;      /* 28px */
+  --font-scale-2xl: 2rem;        /* 32px */
+  --font-scale-3xl: 2.5rem;      /* 40px */
+  --font-scale-4xl: 3rem;        /* 48px */
+}
+
 /* Main Container */
 .super-box {
   position: relative;
@@ -65,7 +77,7 @@
 
 /* Main Content */
 .super-box-content {
-  font-size: 21px;
+  font-size: var(--font-scale-base); /* 21px default, respects inline overrides */
   line-height: 1.6;
 }
 
