@@ -81,6 +81,204 @@
   line-height: 1.6;
 }
 
+/* ========================================
+   HTML Element Styling for .super-box-content
+   Ensures all SuperText toolbar formats display properly
+   ======================================== */
+
+/* Lists - Bullet and Numbered */
+.super-box-content ul,
+.super-box-content ol {
+  margin: 16px 0;
+  padding-left: 40px; /* Space for bullets/numbers */
+  line-height: 1.6;
+}
+
+.super-box-content ul {
+  list-style-type: disc; /* Solid bullet points */
+}
+
+.super-box-content ol {
+  list-style-type: decimal; /* 1, 2, 3... */
+}
+
+.super-box-content li {
+  margin-bottom: 8px;
+  font-size: inherit; /* Inherit from parent (respects font scaling) */
+}
+
+/* Nested lists */
+.super-box-content ul ul {
+  list-style-type: circle; /* Hollow bullets for nested lists */
+  margin-top: 8px;
+}
+
+.super-box-content ol ol {
+  list-style-type: lower-alpha; /* a, b, c... for nested lists */
+  margin-top: 8px;
+}
+
+/* Headings */
+.super-box-content h1 {
+  font-size: 40px; /* 30pt */
+  font-weight: bold;
+  margin: 24px 0 16px 0;
+  line-height: 1.3;
+}
+
+.super-box-content h2 {
+  font-size: 30px; /* 23pt */
+  font-weight: bold;
+  margin: 20px 0 12px 0;
+  line-height: 1.3;
+}
+
+.super-box-content h3 {
+  font-size: 24px; /* 18pt */
+  font-weight: bold;
+  margin: 16px 0 8px 0;
+  line-height: 1.3;
+}
+
+.super-box-content h4,
+.super-box-content h5,
+.super-box-content h6 {
+  font-size: 21px; /* 16pt - minimum per requirement #13 */
+  font-weight: bold;
+  margin: 12px 0 8px 0;
+  line-height: 1.3;
+}
+
+/* Horizontal Rules */
+.super-box-content hr {
+  border: 0;
+  border-top: 2px solid currentColor; /* Use text color */
+  margin: 24px 0;
+  opacity: 0.5;
+}
+
+/* Links */
+.super-box-content a {
+  color: #0066cc; /* Blue for links */
+  text-decoration: underline;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.super-box-content a:hover {
+  color: #004499; /* Darker blue on hover */
+  text-decoration: underline;
+}
+
+.super-box-content a:visited {
+  color: #6600cc; /* Purple for visited links */
+}
+
+/* Blockquotes */
+.super-box-content blockquote {
+  margin: 16px 0;
+  padding: 12px 20px;
+  border-left: 4px solid currentColor;
+  background: rgba(0, 0, 0, 0.05);
+  font-style: italic;
+}
+
+/* Preformatted Text & Code */
+.super-box-content pre {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 12px;
+  overflow-x: auto;
+  margin: 16px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 18px; /* Slightly smaller but still readable */
+}
+
+.super-box-content code {
+  font-family: 'Courier New', monospace;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.95em;
+}
+
+/* Tables */
+.super-box-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: inherit;
+}
+
+.super-box-content th,
+.super-box-content td {
+  border: 2px solid currentColor;
+  padding: 12px;
+  text-align: left;
+}
+
+.super-box-content th {
+  background: rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+}
+
+/* Text Formatting - Ensure inheritance */
+.super-box-content strong,
+.super-box-content b {
+  font-weight: bold;
+}
+
+.super-box-content em,
+.super-box-content i {
+  font-style: italic;
+}
+
+.super-box-content u {
+  text-decoration: underline;
+}
+
+.super-box-content small {
+  font-size: 0.85em;
+}
+
+.super-box-content big {
+  font-size: 1.15em;
+}
+
+.super-box-content sup {
+  vertical-align: super;
+  font-size: 0.75em;
+}
+
+.super-box-content sub {
+  vertical-align: sub;
+  font-size: 0.75em;
+}
+
+/* Center tag (legacy HTML) */
+.super-box-content center {
+  text-align: center;
+  display: block;
+  margin: 8px 0;
+}
+
+/* Paragraphs - Ensure proper spacing */
+.super-box-content p {
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+/* First paragraph - no top margin */
+.super-box-content p:first-child {
+  margin-top: 0;
+}
+
+/* Last paragraph - no bottom margin */
+.super-box-content p:last-child {
+  margin-bottom: 0;
+}
+
 /* Story Code Display - Bottom Right */
 .super-box-code {
   position: absolute;
