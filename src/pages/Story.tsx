@@ -53,7 +53,7 @@ const Story = () => {
         const { data, error } = await supabase
           .from('stories')
           .select('*')
-          .eq('story_code', storyCode)
+          .eq('story_code', storyCode?.trim())
           .single();
 
         if (error) {
