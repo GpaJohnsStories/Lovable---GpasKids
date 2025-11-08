@@ -184,7 +184,7 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
 
         {/* Code Display - Bottom Right */}
         <div className="super-box-code" style={{ color: preset?.font_color_hex || '#000000' }}>
-          {story.story_code}
+          * {story.story_code}
         </div>
 
         {/* Apply photo border color to all photos via inline style injection */}
