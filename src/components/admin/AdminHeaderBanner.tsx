@@ -39,6 +39,7 @@ const AdminHeaderBanner = () => {
   const { iconUrl: commentsIconUrl } = useCachedIcon('!CO-MM5.gif');
   const { iconUrl: storyCreateIconUrl } = useCachedIcon('!CO-MM6.gif');
   const { iconUrl: biosIconUrl } = useCachedIcon('!CO-MM7.jpg');
+  const { iconUrl: specialDaysIconUrl } = useCachedIcon('ICO-BL1.gif');
 
 
   const handleLogout = async () => {
@@ -91,6 +92,18 @@ const AdminHeaderBanner = () => {
       hoverShadow: 'hover:shadow-[0_4px_0_#c2410c,0_6px_12px_rgba(0,0,0,0.4)]',
       textColor: 'text-white',
       description: 'Full story list with add/update, sorting and viewing services'
+    },
+    {
+      name: 'Special Days',
+      path: 'file:///G:/My%20Drive/000%20-%20GPAS%20WEBS/GpasAdmin/special-days.html',
+      icon: FileText,
+      bgColor: 'bg-[#814d2e]',
+      hoverColor: 'hover:bg-[#6d3f24]',
+      shadowColor: 'shadow-[0_6px_0_#6d3f24,0_8px_15px_rgba(0,0,0,0.3)]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#6d3f24,0_6px_12px_rgba(0,0,0,0.4)]',
+      textColor: 'text-white',
+      description: 'Manage special days calendar',
+      openInNewTab: true
     },
     {
       name: 'Super Text',
@@ -358,6 +371,46 @@ const AdminHeaderBanner = () => {
                 );
                 
                 return [librariesButton];
+              }
+
+              // Special handling for Special Days button
+              if (button.name === 'Special Days') {
+                const specialDaysButton = (
+                  <div 
+                    key={button.name}
+                    className="relative"
+                    onMouseEnter={() => setHoveredButton(button.name)}
+                    onMouseLeave={() => setHoveredButton(null)}
+                  >
+                    <a href={button.path} target="_blank" rel="noopener noreferrer">
+                      <div
+                        className="w-[55px] h-[55px] flex items-center justify-center rounded-md border-2 border-orange-300/50 hover:scale-105 transition-transform cursor-pointer"
+                        style={{ 
+                          backgroundColor: '#814d2e',
+                          minWidth: '55px',
+                          minHeight: '55px'
+                        }}
+                      >
+                        {specialDaysIconUrl ? (
+                          <img 
+                            src={specialDaysIconUrl} 
+                            alt="Special Days"
+                            className="w-12 h-12 object-contain"
+                          />
+                        ) : (
+                          <FileText className="w-12 h-12 text-white" />
+                        )}
+                      </div>
+                    </a>
+                    {hoveredButton === button.name && (
+                      <div className="nav-bubble opacity-100 visible">
+                        <b>Special Days</b>
+                      </div>
+                    )}
+                  </div>
+                );
+                
+                return specialDaysButton;
               }
 
               // Special handling for Super Text button as square icon button
