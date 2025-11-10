@@ -512,6 +512,39 @@ export type Database = {
         }
         Relationships: []
       }
+      special_days: {
+        Row: {
+          country: string | null
+          created_at: string | null
+          end_date: string
+          id: string
+          site: string
+          start_date: string
+          text_code: string
+          title: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string | null
+          end_date: string
+          id?: string
+          site: string
+          start_date: string
+          text_code: string
+          title: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string | null
+          end_date?: string
+          id?: string
+          site?: string
+          start_date?: string
+          text_code?: string
+          title?: string
+        }
+        Relationships: []
+      }
       stories: {
         Row: {
           ai_voice_model: string | null
@@ -789,6 +822,10 @@ export type Database = {
         }[]
       }
       has_admin_access: { Args: never; Returns: boolean }
+      increment_story_read_count: {
+        Args: { story_uuid: string }
+        Returns: undefined
+      }
       is_admin: { Args: never; Returns: boolean }
       is_admin_safe: { Args: never; Returns: boolean }
       is_emergency_admin: { Args: never; Returns: boolean }

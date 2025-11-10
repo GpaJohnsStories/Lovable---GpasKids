@@ -71,11 +71,10 @@ const Story = () => {
 
         setStory(data);
         
-        // Increment read_count
-        await supabase
-          .from('stories')
-          .update({ read_count: (data.read_count || 0) + 1 })
-          .eq('id', data.id);
+        // Increment read_count using secure function
+        await supabase.rpc('increment_story_read_count', {
+          story_uuid: data.id
+        });
 
       } catch (err) {
         console.error("Unexpected error fetching story:", err);
