@@ -5,6 +5,7 @@ import AdvancedSecurityDashboard from "./AdvancedSecurityDashboard";
 import WebAuthnManager from "./WebAuthnManager";
 import { MonthlyVisitsCard } from "./MonthlyVisitsCard";
 import { CountryVisitsCard } from "./CountryVisitsCard";
+import { StoryCountsCard } from "./StoryCountsCard";
 import { AdminSystemStatusCard } from "./AdminSystemStatusCard";
 import { BackupCenter } from "./BackupCenter";
 // import AdminHeaderBanner from "./AdminHeaderBanner";
@@ -123,6 +124,21 @@ const AdminOverview = () => {
             </CardHeader>
             <CardContent>
               <CountryVisitsCard />
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* Section 2.5: Story Counts by Category */}
+        <section id="storycounts">
+          <Card className="mb-6 border-teal-500 border-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-teal-700">
+                <BookOpen className="h-5 w-5" />
+                Story Counts by Category
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <StoryCountsCard />
             </CardContent>
           </Card>
         </section>
