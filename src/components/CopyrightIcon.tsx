@@ -13,26 +13,22 @@ const CopyrightIcon: React.FC<CopyrightIconProps> = ({ copyrightStatus }) => {
       case '©':
         return {
           iconPath: '!CO-CR1.jpg',
-          tooltip: '© Full Copyright - All rights reserved. Click for more information',
-          fragment: '#copyright'
+          tooltip: '© Full Copyright - All rights reserved. Click for more information'
         };
       case 'L':
         return {
           iconPath: '!CO-CR2.jpg',
-          tooltip: 'L Limited Sharing - Gpa John\'s Copyright. Click for more information',
-          fragment: '#copyright-2'
+          tooltip: 'L Limited Sharing - Gpa John\'s Copyright. Click for more information'
         };
       case 'O':
         return {
           iconPath: '!CO-CR3.jpg',
-          tooltip: 'O Open, No Copyright - Free to share. Click for more information',
-          fragment: '#copyright-3'
+          tooltip: 'O Open, No Copyright - Free to share. Click for more information'
         };
       default:
         return {
           iconPath: '!CO-CR1.jpg',
-          tooltip: '© Full Copyright - All rights reserved. Click for more information',
-          fragment: '#copyright'
+          tooltip: '© Full Copyright - All rights reserved. Click for more information'
         };
     }
   };
@@ -53,7 +49,7 @@ const CopyrightIcon: React.FC<CopyrightIconProps> = ({ copyrightStatus }) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <a href={`/copyright-info${config.fragment}`} target="_blank" rel="noopener noreferrer">
+        <a href="/copyright-info" target="_blank" rel="noopener noreferrer">
           <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-pointer ${status === '©' ? 'bg-red-500' : status === 'O' ? 'bg-green-500' : 'bg-yellow-500'}`}>
             {status}
           </span>
@@ -71,7 +67,7 @@ const CopyrightIcon: React.FC<CopyrightIconProps> = ({ copyrightStatus }) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <a href={`/copyright-info${config.fragment}`} target="_blank" rel="noopener noreferrer">
+        <a href="/copyright-info" target="_blank" rel="noopener noreferrer">
           <div className="w-8 h-8 rounded cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg border border-gray-300">
             <img 
               src={iconUrl} 

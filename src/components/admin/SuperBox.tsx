@@ -6,6 +6,7 @@ import { processIconTokens } from '@/utils/iconTokens';
 import { AudioButton } from '@/components/AudioButton';
 import { SuperAV } from '@/components/SuperAV';
 import { FontScaleStep, DEFAULT_FONT_SCALE } from '@/utils/fontScaleUtils';
+import CopyrightIcon from '@/components/CopyrightIcon';
 import '@/styles/SuperBox.css';
 
 /**
@@ -129,6 +130,11 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
         {/* Audio/Font Control Button - Top Right - Always visible */}
         <div className="super-box-audio-button">
           <AudioButton code={story.story_code} onClick={() => setShowSuperAV(true)} />
+        </div>
+
+        {/* Copyright Icon - Top Right, below SuperAV button, centered */}
+        <div className="super-box-copyright-icon">
+          <CopyrightIcon copyrightStatus={story.copyright_status || '©'} />
         </div>
 
         {/* Title - Always from story.title */}

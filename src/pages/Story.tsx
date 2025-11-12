@@ -5,7 +5,6 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import StoryVotingSection from "@/components/StoryVotingSection";
 import { SuperBox } from "@/components/admin/SuperBox";
-import CopyrightIcon from "@/components/CopyrightIcon";
 
 
 interface StoryData {
@@ -131,11 +130,6 @@ const Story = () => {
     <div className="min-h-screen bg-white">
       <WelcomeHeader />
       <div className="container mx-auto px-4 pt-0">
-        {/* Copyright Icon - Top left, below header */}
-        <div className="flex justify-start mt-2 mb-2">
-          <CopyrightIcon copyrightStatus={story.copyright_status || '©'} />
-        </div>
-        
         <main className="mb-8">
           <SuperBox code={story.story_code} />
         </main>
