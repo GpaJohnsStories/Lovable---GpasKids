@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
 
@@ -15,25 +14,25 @@ const CopyrightIcon: React.FC<CopyrightIconProps> = ({ copyrightStatus }) => {
         return {
           iconPath: '!CO-CR1.jpg',
           tooltip: '© Full Copyright - All rights reserved. Click for more information',
-          fragment: '#what-is-copyright'
+          fragment: '#copyright'
         };
       case 'L':
         return {
           iconPath: '!CO-CR2.jpg',
           tooltip: 'L Limited Sharing - Gpa John\'s Copyright. Click for more information',
-          fragment: '#what-is-limited-access'
+          fragment: '#copyright-2'
         };
       case 'O':
         return {
           iconPath: '!CO-CR3.jpg',
           tooltip: 'O Open, No Copyright - Free to share. Click for more information',
-          fragment: '#copyright-information-part-3'
+          fragment: '#copyright-3'
         };
       default:
         return {
           iconPath: '!CO-CR1.jpg',
           tooltip: '© Full Copyright - All rights reserved. Click for more information',
-          fragment: '#what-is-copyright'
+          fragment: '#copyright'
         };
     }
   };
@@ -51,28 +50,28 @@ const CopyrightIcon: React.FC<CopyrightIconProps> = ({ copyrightStatus }) => {
 
   if (error || !iconUrl) {
     // Fallback to text display if icon fails to load
-    return (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Link to={`/writing${config.fragment}`}>
-            <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-pointer ${status === '©' ? 'bg-red-500' : status === 'O' ? 'bg-green-500' : 'bg-yellow-500'}`}>
-              {status}
-            </span>
-          </Link>
-        </TooltipTrigger>
-        <TooltipContent>
-          <div className="text-xs">
-            {config.tooltip}
-          </div>
-        </TooltipContent>
-      </Tooltip>
-    );
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <a href={`/copyright-info${config.fragment}`} target="_blank" rel="noopener noreferrer">
+          <span className={`text-xs font-bold px-2 py-1 rounded text-white cursor-pointer ${status === '©' ? 'bg-red-500' : status === 'O' ? 'bg-green-500' : 'bg-yellow-500'}`}>
+            {status}
+          </span>
+        </a>
+      </TooltipTrigger>
+      <TooltipContent>
+        <div className="text-xs">
+          {config.tooltip}
+        </div>
+      </TooltipContent>
+    </Tooltip>
+  );
   }
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Link to={`/writing${config.fragment}`}>
+        <a href={`/copyright-info${config.fragment}`} target="_blank" rel="noopener noreferrer">
           <div className="w-8 h-8 rounded cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg border border-gray-300">
             <img 
               src={iconUrl} 
@@ -80,7 +79,7 @@ const CopyrightIcon: React.FC<CopyrightIconProps> = ({ copyrightStatus }) => {
               className="w-full h-full object-cover rounded"
             />
           </div>
-        </Link>
+        </a>
       </TooltipTrigger>
       <TooltipContent>
         <div className="text-xs">

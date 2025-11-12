@@ -15,7 +15,7 @@ import About from "./pages/About";
 import Story from "./pages/Story";
 import Library from "./pages/Library";
 
-import Writing from "./pages/Writing";
+import CopyrightInfo from "./pages/CopyrightInfo";
 import Guide from "./pages/Guide";
 import HelpGpa from "./pages/HelpGpa";
 
@@ -124,7 +124,7 @@ function App() {
                                   <Route path="/story/:storyCode" element={<Story />} />
                                   <Route path="/library" element={<Library />} />
                                   
-                                  <Route path="/writing" element={<Writing />} />
+                                  <Route path="/copyright-info" element={<CopyrightInfo />} />
                                   <Route path="/guide" element={<Guide />} />
                                   <Route path="/help-gpa" element={<HelpGpa />} />
                                   <Route path="/club" element={<Club />} />

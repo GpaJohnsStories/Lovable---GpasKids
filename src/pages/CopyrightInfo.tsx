@@ -6,7 +6,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { WebTextBox } from "@/components/WebTextBox";
 import copyrightSign from "@/assets/copyright-sign.jpg";
 
-const Writing = () => {
+const CopyrightInfo = () => {
   const location = useLocation();
   
 
@@ -134,4 +134,4 @@ const Writing = () => {
   );
 };
 
-export default Writing;
+export default CopyrightInfo;
