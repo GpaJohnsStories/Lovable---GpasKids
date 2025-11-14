@@ -1307,3 +1307,148 @@
 .preset-4-webtext .photo-border {
   border: 4px solid #6366f1; /* Indigo-600 */
 }
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  /* Hide all non-print UI elements */
+  header,
+  nav,
+  .welcome-header,
+  .super-box-audio-button,
+  .super-box-copyright-icon,
+  .story-voting-section,
+  .voting-buttons,
+  .audio-button,
+  .help-button,
+  .report-problem-button,
+  .scroll-to-top,
+  .cookie-free-footer,
+  button,
+  .floating-action-stack {
+    display: none !important;
+  }
+
+  /* Show print-only components */
+  .print-watermark,
+  .print-copyright-footer,
+  .print-black-box {
+    display: block !important;
+  }
+
+  /* Page setup */
+  @page {
+    margin: 0.75in;
+    size: letter portrait;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  /* Print Watermark - Centered diagonal overlay */
+  .print-watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    z-index: 1;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  .print-watermark-image {
+    width: 600px;
+    height: auto;
+    max-width: 80vw;
+  }
+
+  /* Print Copyright Footer - Bottom of each page */
+  .print-copyright-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 0;
+    border-top: 2px solid #333;
+    background: white;
+    font-size: 9pt;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+
+  /* Print Black Box - Top of first page */
+  .print-black-box {
+    border: 4px solid #000;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 16px;
+    margin-bottom: 24px;
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+
+  .print-black-box-title {
+    font-weight: bold;
+    font-size: 14pt;
+    margin-bottom: 12px;
+    text-align: center;
+    color: #000;
+  }
+
+  .print-black-box-content {
+    font-size: 11pt;
+    line-height: 1.4;
+    color: #000;
+  }
+
+  /* Story content styling for print */
+  .super-box-container {
+    position: relative;
+    z-index: 2;
+    background: white;
+  }
+
+  .super-box-title {
+    page-break-after: avoid;
+  }
+
+  .super-box-content {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Photo styling for print */
+  img {
+    max-width: 100%;
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  /* Prevent awkward page breaks */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Remove interactive elements */
+  a[href]:after {
+    content: none !important;
+  }
+
+  /* Ensure good contrast */
+  * {
+    color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
