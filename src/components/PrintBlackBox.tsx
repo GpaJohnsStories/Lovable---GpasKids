@@ -1,43 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
-import { usePersonalId } from '@/hooks/usePersonalId';
 import SecureStoryContent from '@/components/secure/SecureStoryContent';
-import { replaceTokens, TokenReplacementContext } from '@/utils/printTokens';
-import { stripLegacyTokens } from '@/utils/legacyTokenStripper';
 
-interface PrintBlackBoxProps {
-  storyContext?: {
-    title?: string;
-    story_code?: string;
-    author?: string;
-    category?: string;
-  };
-}
+interface PrintBlackBoxProps {}
 
-const PrintBlackBox: React.FC<PrintBlackBoxProps> = ({ storyContext }) => {
+const PrintBlackBox: React.FC<PrintBlackBoxProps> = () => {
   const [content, setContent] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const { lookupStoryByCode } = useStoryCodeLookup();
-  const { personalId } = usePersonalId();
 
   useEffect(() => {
     const fetchBlackBoxContent = async () => {
       try {
         const result = await lookupStoryByCode('PRT-CRO', true);
         if (result.found && result.story) {
-          // Use story title from database and strip legacy tokens from content
           setTitle(result.story.title || '');
-          
-          const cleanContent = stripLegacyTokens(result.story.content || '');
-          
-          // Process the cleaned content with print tokens
-          const tokenContext: TokenReplacementContext = {
-            personalId,
-            story: storyContext
-          };
-          const processedContent = replaceTokens(cleanContent, tokenContext);
-          setContent(processedContent);
+          setContent(result.story.content || '');
         }
       } catch (error) {
         console.error('Error fetching PRT-CRO content:', error);
@@ -47,7 +26,7 @@ const PrintBlackBox: React.FC<PrintBlackBoxProps> = ({ storyContext }) => {
     };
 
     fetchBlackBoxContent();
-  }, [lookupStoryByCode, personalId, storyContext]);
+  }, [lookupStoryByCode]);
 
   if (loading || !content) {
     return null;
