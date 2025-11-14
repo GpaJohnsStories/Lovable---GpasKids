@@ -1,40 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
-import { usePersonalId } from '@/hooks/usePersonalId';
 import SecureStoryContent from '@/components/secure/SecureStoryContent';
-import { replaceTokens, TokenReplacementContext } from '@/utils/printTokens';
-import { extractHeaderTokens } from '@/utils/headerTokens';
 
-interface PrintCopyrightFooterProps {
-  storyContext?: {
-    title?: string;
-    story_code?: string;
-    author?: string;
-    category?: string;
-  };
-}
+interface PrintCopyrightFooterProps {}
 
-const PrintCopyrightFooter: React.FC<PrintCopyrightFooterProps> = ({ storyContext }) => {
+const PrintCopyrightFooter: React.FC<PrintCopyrightFooterProps> = () => {
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const { lookupStoryByCode } = useStoryCodeLookup();
-  const { personalId } = usePersonalId();
 
   useEffect(() => {
     const fetchFooterContent = async () => {
       try {
         const result = await lookupStoryByCode('PRT-COF', true);
         if (result.found && result.story) {
-          // Extract header tokens and get clean content
-          const extracted = extractHeaderTokens(result.story.content || '');
-          
-          // Process the cleaned content with print tokens
-          const tokenContext: TokenReplacementContext = {
-            personalId,
-            story: storyContext
-          };
-          const processedContent = replaceTokens(extracted.contentWithoutTokens, tokenContext);
-          setContent(processedContent);
+          setContent(result.story.content || '');
         }
       } catch (error) {
         console.error('Error fetching PRT-COF content:', error);
@@ -44,7 +24,7 @@ const PrintCopyrightFooter: React.FC<PrintCopyrightFooterProps> = ({ storyContex
     };
 
     fetchFooterContent();
-  }, [lookupStoryByCode, personalId, storyContext]);
+  }, [lookupStoryByCode]);
 
   if (loading || !content) {
     return null;

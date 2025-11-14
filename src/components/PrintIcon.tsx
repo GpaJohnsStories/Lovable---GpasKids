@@ -13,13 +13,7 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log('Print icon clicked for story:', storyCode);
-    const printUrl = `/story/${storyCode}?print=1`;
-    const newWindow = window.open(printUrl, '_blank', 'noopener,noreferrer');
-    if (!newWindow) {
-      console.warn('Popup blocked - trying alternative method');
-      // Fallback: try to navigate in same tab
-      window.location.href = printUrl;
-    }
+    window.print();
   };
 
   // Show loading placeholder
@@ -42,7 +36,7 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
         </TooltipTrigger>
         <TooltipContent>
           <div className="text-xs">
-            Click to create PDF for printing
+            Print this story
           </div>
         </TooltipContent>
       </Tooltip>
@@ -64,7 +58,7 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
       </TooltipTrigger>
       <TooltipContent>
         <div className="text-xs">
-          Click to create PDF for printing
+          Print this story
         </div>
       </TooltipContent>
     </Tooltip>
