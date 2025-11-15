@@ -46,7 +46,7 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <button onClick={handleClick}>
+        <button onClick={handleClick} className="block">
           <div className="w-8 h-8 rounded cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg border border-gray-300">
             <img 
               src={iconUrl} 
