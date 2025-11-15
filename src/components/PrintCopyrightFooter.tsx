@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import SecureStoryContent from '@/components/secure/SecureStoryContent';
 
-interface PrintCopyrightFooterProps {}
+interface PrintCopyrightFooterProps {
+  show: boolean;
+}
 
-const PrintCopyrightFooter: React.FC<PrintCopyrightFooterProps> = () => {
+const PrintCopyrightFooter: React.FC<PrintCopyrightFooterProps> = ({ show }) => {
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const { lookupStoryByCode } = useStoryCodeLookup();
@@ -26,7 +28,7 @@ const PrintCopyrightFooter: React.FC<PrintCopyrightFooterProps> = () => {
     fetchFooterContent();
   }, [lookupStoryByCode]);
 
-  if (loading || !content) {
+  if (!show || loading || !content) {
     return null;
   }
 

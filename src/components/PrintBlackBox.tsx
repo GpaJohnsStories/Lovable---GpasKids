@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import SecureStoryContent from '@/components/secure/SecureStoryContent';
 
-interface PrintBlackBoxProps {}
+interface PrintBlackBoxProps {
+  show: boolean;
+}
 
-const PrintBlackBox: React.FC<PrintBlackBoxProps> = () => {
+const PrintBlackBox: React.FC<PrintBlackBoxProps> = ({ show }) => {
   const [content, setContent] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [loading, setLoading] = useState(true);
@@ -28,7 +30,7 @@ const PrintBlackBox: React.FC<PrintBlackBoxProps> = () => {
     fetchBlackBoxContent();
   }, [lookupStoryByCode]);
 
-  if (loading || !content) {
+  if (!show || loading || !content) {
     return null;
   }
 
