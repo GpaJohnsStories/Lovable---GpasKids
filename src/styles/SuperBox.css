@@ -36,14 +36,16 @@
   z-index: 10;
 }
 
-/* Copyright Icon - Top Right, below SuperAV button, centered */
+/* Copyright Icon - Top Right, below SuperAV button, stacked vertically */
 .super-box-copyright-icon {
   position: absolute;
   top: 80px; /* Below the audio button */
   right: 20px; /* Centered relative to audio button */
   z-index: 10;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
 /* Error Banner - Inside Border, Top */

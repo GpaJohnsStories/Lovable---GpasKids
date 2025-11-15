@@ -7,6 +7,10 @@ import { AudioButton } from '@/components/AudioButton';
 import { SuperAV } from '@/components/SuperAV';
 import { FontScaleStep, DEFAULT_FONT_SCALE } from '@/utils/fontScaleUtils';
 import CopyrightIcon from '@/components/CopyrightIcon';
+import PrintIcon from '@/components/PrintIcon';
+import PrintWatermark from '@/components/PrintWatermark';
+import PrintBlackBox from '@/components/PrintBlackBox';
+import PrintCopyrightFooter from '@/components/PrintCopyrightFooter';
 import '@/styles/SuperBox.css';
 
 /**
@@ -132,10 +136,13 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
           <AudioButton code={story.story_code} onClick={() => setShowSuperAV(true)} />
         </div>
 
-        {/* Copyright Icon - Top Right, below SuperAV button, centered */}
-        <div className="super-box-copyright-icon">
-          <CopyrightIcon copyrightStatus={story.copyright_status || '©'} />
-        </div>
+        {/* Copyright & Print Icons - Top Right, below SuperAV button, stacked vertically */}
+        {story.copyright_status !== '©' && (
+          <div className="super-box-copyright-icon">
+            <CopyrightIcon copyrightStatus={story.copyright_status || '©'} />
+            <PrintIcon storyCode={story.story_code} />
+          </div>
+        )}
 
         {/* Title - Always from story.title */}
         <h2 className="super-box-title" style={titleStyle}>
@@ -214,6 +221,11 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
         fontScale={fontScale}
         onFontScaleChange={handleFontScaleChange}
       />
+      
+      {/* Print Components - Conditionally rendered based on copyright status */}
+      <PrintWatermark show={story.copyright_status === 'L'} />
+      <PrintBlackBox show={story.copyright_status === 'L'} />
+      <PrintCopyrightFooter show={story.copyright_status !== '©'} />
     </>
   );
 };
