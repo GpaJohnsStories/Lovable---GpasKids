@@ -1135,6 +1135,16 @@
   .deployed-story-content i,
   .deployed-story-content b,
   .deployed-story-content li,
+  .super-box-content,
+  .super-box-content p,
+  .super-box-content span,
+  .super-box-content em,
+  .super-box-content strong,
+  .super-box-content i,
+  .super-box-content b,
+  .super-box-content li {
+    font-size: 21px !important; /* 16pt minimum for children */
+  }
   /* Removed proportional-content from forced font sizing to allow dynamic scaling */
   
   /* Keep titles and headings at larger sizes */
@@ -1152,7 +1162,8 @@
   /* Override any inline font sizes that might interfere */
   .story-content [style*="font-size"],
   .rendered-story-content [style*="font-size"],
-  .deployed-story-content [style*="font-size"] {
+  .deployed-story-content [style*="font-size"],
+  .super-box-content [style*="font-size"] {
     font-size: 21px !important; /* 16pt */
   }
   
@@ -1316,6 +1327,7 @@
   /* Hide all non-print UI elements */
   header,
   nav,
+  footer,
   .welcome-header,
   .super-box-audio-button,
   .super-box-copyright-icon,
@@ -1338,9 +1350,9 @@
     display: block !important;
   }
 
-  /* Page setup */
+  /* Page setup - 3/4 inch margins all around */
   @page {
-    margin: 0.75in;
+    margin: 0.75in 0.75in 0.75in 0.75in;
     size: letter portrait;
   }
 
@@ -1427,6 +1439,23 @@
     max-width: 100%;
     page-break-inside: avoid;
     page-break-after: auto;
+  }
+  
+  /* SuperBox photos - controlled sizing */
+  .super-box-photo {
+    max-width: 400px !important;
+    width: auto !important;
+    height: auto !important;
+    display: block !important;
+    margin: 12px auto !important;
+    page-break-inside: avoid;
+  }
+  
+  /* SuperBox photo grid items */
+  .super-box-photo-grid-item img {
+    max-width: 300px !important;
+    width: auto !important;
+    height: auto !important;
   }
 
   /* Prevent awkward page breaks */
