@@ -67,7 +67,7 @@ const CopyrightIcon: React.FC<CopyrightIconProps> = ({ copyrightStatus }) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <a href="/copyright-info" target="_blank" rel="noopener noreferrer">
+        <a href="/copyright-info" target="_blank" rel="noopener noreferrer" className="block">
           <div className="w-8 h-8 rounded cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg border border-gray-300">
             <img 
               src={iconUrl} 
