@@ -137,12 +137,22 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
         </div>
 
         {/* Copyright & Print Icons - Top Right, below SuperAV button, stacked vertically */}
-        {story.copyright_status && story.copyright_status !== '©' && (
-          <div className="super-box-copyright-icon">
-            <CopyrightIcon copyrightStatus={story.copyright_status} />
-            <PrintIcon storyCode={story.story_code} />
-          </div>
-        )}
+        {(() => {
+          const status = story.copyright_status?.trim();
+          const showIcons = status && (status === 'O' || status === 'L');
+          console.log('SuperBox copyright check:', { 
+            raw: story.copyright_status, 
+            trimmed: status, 
+            showIcons,
+            storyCode: story.story_code 
+          });
+          return showIcons ? (
+            <div className="super-box-copyright-icon">
+              <CopyrightIcon copyrightStatus={status} />
+              <PrintIcon storyCode={story.story_code} />
+            </div>
+          ) : null;
+        })()}
 
         {/* Title - Always from story.title */}
         <h2 className="super-box-title" style={titleStyle}>
