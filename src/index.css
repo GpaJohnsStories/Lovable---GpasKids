@@ -1362,6 +1362,42 @@
     font-size: 12pt;
     line-height: 1.5;
   }
+  
+  /* Remove all backgrounds - print on white paper with black ink */
+  .super-box,
+  .super-box-content,
+  div,
+  section,
+  article,
+  main,
+  .story-content,
+  .deployed-story-content {
+    background: white !important;
+    background-color: white !important;
+    background-image: none !important;
+  }
+  
+  /* Ensure text is black for printing */
+  .super-box-content,
+  .super-box-content p,
+  .super-box-content span,
+  .super-box-content div,
+  .super-box-content li,
+  .super-box-title,
+  .super-box-author,
+  .super-box-tagline,
+  .story-content,
+  .story-content p,
+  .story-content span,
+  p, span, div, li, td, th, h1, h2, h3, h4, h5, h6 {
+    color: black !important;
+  }
+  
+  /* Keep photos in their original colors - do not force to grayscale */
+  img {
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
 
   /* Print Watermark - Centered diagonal overlay */
   .print-watermark {
