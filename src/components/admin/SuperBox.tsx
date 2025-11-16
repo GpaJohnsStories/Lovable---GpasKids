@@ -123,6 +123,10 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
 
   return (
     <>
+      {/* Print Components - Must be BEFORE main content to appear at top when printed */}
+      <PrintWatermark show={story.copyright_status === 'L'} />
+      <PrintBlackBox show={story.copyright_status === 'L'} />
+      
       <div className="super-box" style={boxStyles} id={story.story_code}>
         {/* Error Banner - Inside border at top */}
         {missingFields.length > 0 && (
@@ -232,9 +236,7 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
         onFontScaleChange={handleFontScaleChange}
       />
       
-      {/* Print Components - Conditionally rendered based on copyright status */}
-      <PrintWatermark show={story.copyright_status === 'L'} />
-      <PrintBlackBox show={story.copyright_status === 'L'} />
+      {/* Print Copyright Footer - At end of document */}
       <PrintCopyrightFooter show={story.copyright_status !== '©'} />
     </>
   );
