@@ -137,9 +137,9 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
         </div>
 
         {/* Copyright & Print Icons - Top Right, below SuperAV button, stacked vertically */}
-        {story.copyright_status !== '©' && (
+        {story.copyright_status && story.copyright_status !== '©' && (
           <div className="super-box-copyright-icon">
-            <CopyrightIcon copyrightStatus={story.copyright_status || '©'} />
+            <CopyrightIcon copyrightStatus={story.copyright_status} />
             <PrintIcon storyCode={story.story_code} />
           </div>
         )}
