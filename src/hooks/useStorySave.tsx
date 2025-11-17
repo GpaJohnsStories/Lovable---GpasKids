@@ -111,6 +111,22 @@ export const useStorySave = () => {
       // Remove google_drive_link if it exists (column was removed from database)
       delete saveData.google_drive_link;
 
+      // Handle timestamps properly based on whether this is a new story or update
+      if (!formData.id) {
+        // NEW STORY: Remove all timestamp fields - let database defaults work
+        delete saveData.created_at;
+        delete saveData.updated_at;
+        delete saveData.audio_generated_at;
+      } else {
+        // UPDATE: Explicitly set updated_at, never send created_at
+        saveData.updated_at = new Date().toISOString();
+        delete saveData.created_at;
+        // Only include audio_generated_at if it has a real value
+        if (!saveData.audio_generated_at) {
+          delete saveData.audio_generated_at;
+        }
+      }
+
       let result;
       
       if (formData.id) {
