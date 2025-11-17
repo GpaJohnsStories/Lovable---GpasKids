@@ -50,7 +50,7 @@ export const handleStorySubmission = async (
   console.log('Story code check passed');
 
   try {
-    // Ensure only Supabase bucket URLs are saved for videos and clean timestamp fields
+    // Ensure only Supabase bucket URLs are saved for videos
     const safeFormData: any = {
       ...formData,
       video_url: formData.video_url && formData.video_url.includes('supabase') 
@@ -58,13 +58,21 @@ export const handleStorySubmission = async (
         : '' // Clear external URLs
     };
 
-    // Convert empty string timestamps to null to avoid Postgres errors
-    const timestampFields = ['audio_generated_at', 'born_date', 'died_date', 'created_at', 'updated_at'];
-    timestampFields.forEach(field => {
-      if (safeFormData[field] === '') {
-        safeFormData[field] = null;
+    // Handle timestamps properly based on whether this is a new story or update
+    if (!story?.id) {
+      // NEW STORY: Remove all timestamp fields - let database defaults work
+      delete safeFormData.created_at;
+      delete safeFormData.updated_at;
+      delete safeFormData.audio_generated_at;
+    } else {
+      // UPDATE: Explicitly set updated_at, never send created_at
+      safeFormData.updated_at = new Date().toISOString();
+      delete safeFormData.created_at;
+      // Only include audio_generated_at if it has a real value
+      if (!safeFormData.audio_generated_at) {
+        delete safeFormData.audio_generated_at;
       }
-    });
+    }
 
     if (story?.id) {
       // Update existing story

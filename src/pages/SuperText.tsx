@@ -212,9 +212,7 @@ const SuperText: React.FC = () => {
     handleInputChange('audio_url', '');
     handleInputChange('audio_duration_seconds', undefined);
     handleInputChange('video_duration_seconds', undefined);
-    handleInputChange('created_at', '');
-    handleInputChange('updated_at', '');
-    handleInputChange('audio_generated_at', '');
+    // Don't set timestamp fields - let database defaults handle them
 
     // Reset local state
     setStoryCode('');
