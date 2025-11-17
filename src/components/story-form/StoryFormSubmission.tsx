@@ -50,13 +50,21 @@ export const handleStorySubmission = async (
   console.log('Story code check passed');
 
   try {
-    // Ensure only Supabase bucket URLs are saved for videos
-    const safeFormData = {
+    // Ensure only Supabase bucket URLs are saved for videos and clean timestamp fields
+    const safeFormData: any = {
       ...formData,
       video_url: formData.video_url && formData.video_url.includes('supabase') 
         ? formData.video_url 
         : '' // Clear external URLs
     };
+
+    // Convert empty string timestamps to null to avoid Postgres errors
+    const timestampFields = ['audio_generated_at', 'born_date', 'died_date', 'created_at', 'updated_at'];
+    timestampFields.forEach(field => {
+      if (safeFormData[field] === '') {
+        safeFormData[field] = null;
+      }
+    });
 
     if (story?.id) {
       // Update existing story
