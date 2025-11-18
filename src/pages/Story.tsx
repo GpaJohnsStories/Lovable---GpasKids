@@ -5,6 +5,7 @@ import WelcomeHeader from "@/components/WelcomeHeader";
 import CookieFreeFooter from "@/components/CookieFreeFooter";
 import StoryVotingSection from "@/components/StoryVotingSection";
 import { SuperBox } from "@/components/admin/SuperBox";
+import ScreenCopyrightMessage from "@/components/ScreenCopyrightMessage";
 
 
 interface StoryData {
@@ -133,6 +134,9 @@ const Story = () => {
         <main className="mb-8">
           <SuperBox code={story.story_code} />
         </main>
+
+        {/* Screen Copyright Message - Between content and voting */}
+        <ScreenCopyrightMessage copyrightStatus={story.copyright_status || '©'} />
 
         <StoryVotingSection
           storyId={story.id}

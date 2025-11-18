@@ -2,49 +2,44 @@ import React, { useState, useEffect } from 'react';
 import { useStoryCodeLookup } from '@/hooks/useStoryCodeLookup';
 import SecureStoryContent from '@/components/secure/SecureStoryContent';
 
-interface PrintCopyrightFooterProps {
+interface PrintTopBoxProps {
   copyrightStatus: string;
 }
 
-const PrintCopyrightFooter: React.FC<PrintCopyrightFooterProps> = ({ copyrightStatus }) => {
+const PrintTopBox: React.FC<PrintTopBoxProps> = ({ copyrightStatus }) => {
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const { lookupStoryByCode } = useStoryCodeLookup();
 
-  // Map copyright status to print footer code
-  const footerCode = 
-    copyrightStatus === 'O' ? 'PRT-COF' :
-    copyrightStatus === 'L' ? 'PRT-LBP' :
-    null; // No printing for '©'
-
   useEffect(() => {
-    const fetchFooterContent = async () => {
-      if (!footerCode) {
+    const fetchTopBoxContent = async () => {
+      // Only show for Limited copyright
+      if (copyrightStatus !== 'L') {
         setLoading(false);
         return;
       }
-      
+
       try {
-        const result = await lookupStoryByCode(footerCode, true);
+        const result = await lookupStoryByCode('PRT-LTP', true);
         if (result.found && result.story) {
           setContent(result.story.content || '');
         }
       } catch (error) {
-        console.error(`Error fetching ${footerCode} content:`, error);
+        console.error('Error fetching PRT-LTP content:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchFooterContent();
-  }, [footerCode, lookupStoryByCode]);
+    fetchTopBoxContent();
+  }, [copyrightStatus, lookupStoryByCode]);
 
-  if (!footerCode || loading || !content) {
+  if (copyrightStatus !== 'L' || loading || !content) {
     return null;
   }
 
   return (
-    <div className="print-copyright-footer">
+    <div className="print-top-box">
       <SecureStoryContent 
         content={content}
         className=""
@@ -53,4 +48,4 @@ const PrintCopyrightFooter: React.FC<PrintCopyrightFooterProps> = ({ copyrightSt
   );
 };
 
-export default PrintCopyrightFooter;
+export default PrintTopBox;

@@ -9,7 +9,7 @@ import { FontScaleStep, DEFAULT_FONT_SCALE } from '@/utils/fontScaleUtils';
 import CopyrightIcon from '@/components/CopyrightIcon';
 import PrintIcon from '@/components/PrintIcon';
 import PrintWatermark from '@/components/PrintWatermark';
-import PrintBlackBox from '@/components/PrintBlackBox';
+import PrintTopBox from '@/components/PrintTopBox';
 import PrintCopyrightFooter from '@/components/PrintCopyrightFooter';
 import '@/styles/SuperBox.css';
 
@@ -125,7 +125,7 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
     <>
       {/* Print Components - Must be BEFORE main content to appear at top when printed */}
       <PrintWatermark show={story.copyright_status === 'L'} />
-      <PrintBlackBox show={story.copyright_status === 'L'} />
+      <PrintTopBox copyrightStatus={story.copyright_status || '©'} />
       
       <div className="super-box" style={boxStyles} id={story.story_code}>
         {/* Error Banner - Inside border at top */}
@@ -237,7 +237,7 @@ export const SuperBox: React.FC<SuperBoxProps> = ({ code }) => {
       />
       
       {/* Print Copyright Footer - At end of document */}
-      <PrintCopyrightFooter show={story.copyright_status !== '©'} />
+      <PrintCopyrightFooter copyrightStatus={story.copyright_status || '©'} />
     </>
   );
 };
