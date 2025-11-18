@@ -1202,51 +1202,34 @@
     color: #000000 !important;
   }
   
-  /* Print Copyright Footer - Fixed at bottom of every page */
-  .print-copyright-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    padding: 0.5rem 1rem;
-    background: white;
-    border-top: 1px solid #000;
-    font-size: 14pt !important;
-    font-family: Georgia, serif !important;
-    line-height: 0.9 !important;
-    text-align: center;
-    z-index: 1000;
-  }
-  
-  /* Force 14pt font and hide images in copyright footer */
-  .print-copyright-footer *,
-  .print-copyright-footer p,
-  .print-copyright-footer div,
-  .print-copyright-footer span,
-  .print-copyright-footer strong,
-  .print-copyright-footer b,
-  .print-copyright-footer em,
-  .print-copyright-footer i {
-    font-size: 14pt !important;
-    font-family: Georgia, serif !important;
-    line-height: 0.9 !important;
-    color: #000 !important;
-  }
-  
-  .print-copyright-footer img {
-    display: none !important;
-  }
-  
-  /* Add bottom margin to prevent content overlap with footer */
-  .print-footer-spacer {
-    margin-bottom: 4rem;
-  }
-  
   .print-watermark-image {
     max-width: 60%;
     max-height: 60%;
     object-fit: contain;
+  }
+}
+
+/* Hide print components on screen */
+.print-copyright-footer,
+.print-watermark,
+.print-black-box,
+.print-top-box {
+  display: none !important;
+}
+
+/* Screen Copyright Message - visible on screen, hidden in print */
+.screen-copyright-message {
+  max-width: 56rem;
+  margin: 0 auto 2rem;
+  padding: 1.5rem;
+  border-width: 4px;
+  border-style: solid;
+  border-radius: 0.5rem;
+}
+
+@media print {
+  .screen-copyright-message {
+    display: none !important;
   }
 }
 
@@ -1316,6 +1299,11 @@
    ============================================ */
 
 @media print {
+  /* Page margins - 3/4 inch (0.75in) on all sides */
+  @page {
+    margin: 0.75in;
+  }
+
   /* Hide all non-print UI elements */
   header,
   nav,
@@ -1331,15 +1319,69 @@
   .scroll-to-top,
   .cookie-free-footer,
   button,
-  .floating-action-stack {
+  .floating-action-stack,
+  .screen-copyright-message {
     display: none !important;
   }
 
   /* Show print-only components */
   .print-watermark,
   .print-copyright-footer,
-  .print-black-box {
+  .print-top-box {
     display: block !important;
+  }
+
+  /* Print Top Box - Top of first page for Limited copyright */
+  .print-top-box {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    page-break-after: avoid;
+  }
+
+  .print-top-box * {
+    color: #fff !important;
+    font-size: 12pt !important;
+    font-family: Georgia, serif !important;
+  }
+
+  /* Print Copyright Footer - Fixed at bottom of every page */
+  .print-copyright-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background: white;
+    border-top: 2px solid #000;
+    font-size: 14pt !important;
+    font-family: Georgia, serif !important;
+    line-height: 0.9 !important;
+    text-align: center;
+    z-index: 1000;
+    page-break-inside: avoid;
+  }
+  
+  /* Force 14pt font and hide images in copyright footer */
+  .print-copyright-footer *,
+  .print-copyright-footer p,
+  .print-copyright-footer div,
+  .print-copyright-footer span,
+  .print-copyright-footer strong,
+  .print-copyright-footer b,
+  .print-copyright-footer em,
+  .print-copyright-footer i {
+    font-size: 14pt !important;
+    font-family: Georgia, serif !important;
+    line-height: 0.9 !important;
+    color: #000 !important;
+  }
+  
+  .print-copyright-footer img {
+    display: none !important;
   }
 
   /* Page setup - 3/4 inch (0.75in) margins all around */
