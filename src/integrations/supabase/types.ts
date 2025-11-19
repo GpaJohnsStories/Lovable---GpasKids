@@ -313,37 +313,38 @@ export type Database = {
       }
       monthly_visits: {
         Row: {
-          admin_visits_count: number
           bot_visits_count: number
           created_at: string
           id: string
           month: number
-          other_excluded_count: number
           search_engine_visits_count: number
+          site_identifier: Database["public"]["Enums"]["site_identifier"] | null
           updated_at: string
           visit_count: number
           year: number
         }
         Insert: {
-          admin_visits_count?: number
           bot_visits_count?: number
           created_at?: string
           id?: string
           month: number
-          other_excluded_count?: number
           search_engine_visits_count?: number
+          site_identifier?:
+            | Database["public"]["Enums"]["site_identifier"]
+            | null
           updated_at?: string
           visit_count?: number
           year: number
         }
         Update: {
-          admin_visits_count?: number
           bot_visits_count?: number
           created_at?: string
           id?: string
           month?: number
-          other_excluded_count?: number
           search_engine_visits_count?: number
+          site_identifier?:
+            | Database["public"]["Enums"]["site_identifier"]
+            | null
           updated_at?: string
           visit_count?: number
           year?: number

@@ -10,9 +10,8 @@ interface MonthlyVisit {
   month: number;
   visit_count: number;
   bot_visits_count: number;
-  admin_visits_count: number;
-  search_engine_visits_count?: number;
-  other_excluded_count: number;
+  search_engine_visits_count: number;
+  site_identifier: string | null;
   created_at: string;
   updated_at: string;
 }
