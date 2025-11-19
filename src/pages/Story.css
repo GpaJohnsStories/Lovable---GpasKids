@@ -1,0 +1,275 @@
+/* ============================================
+   STORY PAGE PRINT STYLES
+   These styles ONLY apply to /story pages
+   ============================================ */
+
+/* Hide print components on screen */
+.print-copyright-footer,
+.print-watermark,
+.print-black-box,
+.print-top-box {
+  display: none !important;
+}
+
+/* Screen Copyright Message - visible on screen, hidden in print */
+.screen-copyright-message {
+  max-width: 56rem;
+  margin: 0 auto 2rem;
+  padding: 1.5rem;
+  border-width: 4px;
+  border-style: solid;
+  border-radius: 0.5rem;
+}
+
+@media print {
+  .screen-copyright-message {
+    display: none !important;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  /* Page margins - 3/4 inch (0.75in) on all sides */
+  @page {
+    margin: 0.75in;
+    size: letter portrait;
+  }
+
+  /* Hide all non-print UI elements */
+  header,
+  nav,
+  footer,
+  .welcome-header,
+  .super-box-audio-button,
+  .super-box-copyright-icon,
+  .story-voting-section,
+  .voting-buttons,
+  .audio-button,
+  .help-button,
+  .report-problem-button,
+  .scroll-to-top,
+  .cookie-free-footer,
+  button,
+  .floating-action-stack,
+  .screen-copyright-message {
+    display: none !important;
+  }
+
+  /* Show print-only components */
+  .print-watermark,
+  .print-copyright-footer,
+  .print-top-box {
+    display: block !important;
+  }
+
+  /* Print Top Box - Top of first page for Limited copyright */
+  .print-top-box {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    page-break-after: avoid;
+    position: relative;
+    z-index: 100;
+  }
+
+  .print-top-box * {
+    color: #fff !important;
+    font-size: 12pt !important;
+  }
+
+  /* Print Copyright Footer - Fixed at bottom of every page */
+  .print-copyright-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background: white;
+    border-top: 2px solid #000;
+    font-size: 14pt !important;
+    font-family: Georgia, serif !important;
+    line-height: 0.9 !important;
+    text-align: center;
+    z-index: 1000;
+    page-break-inside: avoid;
+  }
+  
+  /* Force 14pt font and hide images in copyright footer */
+  .print-copyright-footer *,
+  .print-copyright-footer p,
+  .print-copyright-footer div,
+  .print-copyright-footer span,
+  .print-copyright-footer strong,
+  .print-copyright-footer b,
+  .print-copyright-footer em,
+  .print-copyright-footer i {
+    font-size: 14pt !important;
+    font-family: Georgia, serif !important;
+    line-height: 0.9 !important;
+    color: #000 !important;
+  }
+  
+  .print-copyright-footer img {
+    display: none !important;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+  
+  /* Remove all backgrounds - print on white paper with black ink */
+  .super-box,
+  .super-box-content,
+  div,
+  section,
+  article,
+  main,
+  .story-content,
+  .deployed-story-content {
+    background: white !important;
+    background-color: white !important;
+    background-image: none !important;
+  }
+  
+  /* Ensure text is black for printing */
+  .super-box-content,
+  .super-box-content p,
+  .super-box-content span,
+  .super-box-content div,
+  .super-box-content li,
+  .super-box-title,
+  .super-box-author,
+  .super-box-tagline,
+  .story-content,
+  .story-content p,
+  .story-content span,
+  p, span, div, li, td, th, h1, h2, h3, h4, h5, h6 {
+    color: black !important;
+  }
+  
+  /* Keep photos in their original colors - do not force to grayscale */
+  img {
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+
+  /* Print Watermark - Centered diagonal overlay */
+  .print-watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    z-index: 500;
+    opacity: 0.15;
+    pointer-events: none;
+    width: 80%;
+    height: auto;
+  }
+
+  .print-watermark-image {
+    width: 600px;
+    height: auto;
+    max-width: 80vw;
+  }
+
+  /* Print Black Box - Top of first page */
+  .print-black-box {
+    display: block !important;
+    border: 6px solid #000;
+    background-color: white;
+    padding: 20px;
+    margin: 0 0 30px 0;
+    page-break-inside: avoid;
+    page-break-after: avoid;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .print-black-box-title {
+    font-weight: bold;
+    font-size: 14pt;
+    margin-bottom: 12px;
+    text-align: center;
+    color: #000;
+  }
+
+  .print-black-box-content {
+    font-size: 11pt;
+    line-height: 1.4;
+    color: #000;
+  }
+
+  /* Story content styling for print */
+  .super-box-container {
+    position: relative;
+    z-index: 2;
+    background: white;
+  }
+
+  .super-box-title {
+    page-break-after: avoid;
+  }
+
+  .super-box-content {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Photo styling for print */
+  img {
+    max-width: 100%;
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  
+  /* SuperBox photos - controlled sizing */
+  .super-box-photo {
+    max-width: 400px !important;
+    width: auto !important;
+    height: auto !important;
+    display: block !important;
+    margin: 12px auto !important;
+    page-break-inside: avoid;
+  }
+  
+  /* SuperBox photo grid items */
+  .super-box-photo-grid-item img {
+    max-width: 300px !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  /* Prevent awkward page breaks */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Remove interactive elements */
+  a[href]:after {
+    content: none !important;
+  }
+
+  /* Ensure good contrast */
+  * {
+    color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
