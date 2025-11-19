@@ -6,6 +6,7 @@ import CookieFreeFooter from "@/components/CookieFreeFooter";
 import StoryVotingSection from "@/components/StoryVotingSection";
 import { SuperBox } from "@/components/admin/SuperBox";
 import ScreenCopyrightMessage from "@/components/ScreenCopyrightMessage";
+import './Story.css';
 
 
 interface StoryData {
