@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCachedIcon } from '@/hooks/useCachedIcon';
+import { superPrint } from '@/lib/super-print';
 
 interface PrintIconProps {
   storyCode: string;
@@ -13,7 +14,7 @@ const PrintIcon: React.FC<PrintIconProps> = ({ storyCode }) => {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log('Print icon clicked for story:', storyCode);
-    window.print();
+    superPrint(storyCode);
   };
 
   // Show loading placeholder
