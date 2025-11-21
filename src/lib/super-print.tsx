@@ -4,7 +4,8 @@
 // Exports a single function: superPrint(storyCode: string, preloadedStory?: Story)
 
 import React from "react";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from '@/integrations/supabase/client';
+import DOMPurify from 'dompurify';
 
 // ----- Types -----
 type Story = {
@@ -38,12 +39,6 @@ type ColorPreset = {
   font_name: string | null; // Not used; we enforce Georgia except title
   photo_border_color_hex: string | null;
 };
-
-// ----- Supabase -----
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
-);
 
 // ----- Special copyright story codes -----
 const COPYRIGHT_CODES = {
@@ -167,16 +162,21 @@ async function fetchColorPresetById(id: string | null): Promise<ColorPreset | nu
 
 // Increment print count (best-effort)
 async function incrementPrintCount(storyId: string) {
-  // Assumes you have a print_count column; if not, no-op
   try {
-    const { error } = await supabase.rpc("increment_print_count", { target_story_id: storyId });
-    if (error) {
-      // Fallback: update with arithmetic if RPC not available
-      await supabase
-        .from("stories")
-        .update({ print_count: supabase.rpc("noop") }) // placeholder to avoid TS complaints
-        .eq("id", storyId);
-    }
+    // Fetch current count
+    const { data } = await supabase
+      .from("stories")
+      .select("print_count")
+      .eq("id", storyId)
+      .single();
+    
+    const currentCount = data?.print_count || 0;
+    
+    // Update with incremented count
+    await supabase
+      .from("stories")
+      .update({ print_count: currentCount + 1 })
+      .eq("id", storyId);
   } catch (e) {
     console.warn("incrementPrintCount failed:", e);
   }
