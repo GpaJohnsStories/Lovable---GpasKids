@@ -16,7 +16,7 @@ const GpasTestPage = () => {
         margin: "0 auto",
       }}
     >
-      <SuperBox code="HOL-4TH" />
+      <SuperBox code="WOR-FSK" />
 
       <button style={{ marginTop: "20px", padding: "10px 20px" }} onClick={() => superPrintO("WOR-FSK")}>
         Test Print WOR-FSK
