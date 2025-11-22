@@ -4,8 +4,8 @@
 // Exports a single function: superPrint(storyCode: string, preloadedStory?: Story)
 
 import React from "react";
-import { supabase } from '@/integrations/supabase/client';
-import DOMPurify from 'dompurify';
+import { supabase } from "@/integrations/supabase/client";
+import DOMPurify from "dompurify";
 
 // ----- Types -----
 type Story = {
@@ -46,7 +46,7 @@ const COPYRIGHT_CODES = {
   LIMITED_SCREEN: "PRT-LCS",
   LIMITED_TOP_PRINT: "PRT-LTP",
   LIMITED_BOTTOM_PRINT: "PRT-LBP",
-  OPEN_FOOTER: "PRT-COF"
+  OPEN_FOOTER: "PRT-COF",
 };
 
 // ----- Public assets -----
@@ -93,9 +93,7 @@ function parseTokensToHtml(story: Story): string {
     const { src, alt } = getPhotoByIndex(story, n);
     if (!src) return ""; // skip if missing
     const placeClass =
-      placement === "left" ? "sp-photo-left"
-      : placement === "right" ? "sp-photo-right"
-      : "sp-photo-center";
+      placement === "left" ? "sp-photo-left" : placement === "right" ? "sp-photo-right" : "sp-photo-center";
 
     const safeAlt = alt ? alt : "";
     return `
@@ -129,12 +127,7 @@ function parseTokensToHtml(story: Story): string {
 
 // Fetch a story by code
 async function fetchStoryByCode(storyCode: string): Promise<Story | null> {
-  const { data, error } = await supabase
-    .from("stories")
-    .select("*")
-    .eq("story_code", storyCode)
-    .limit(1)
-    .maybeSingle();
+  const { data, error } = await supabase.from("stories").select("*").eq("story_code", storyCode).limit(1).maybeSingle();
 
   if (error) {
     console.error("fetchStoryByCode error:", error);
@@ -146,12 +139,7 @@ async function fetchStoryByCode(storyCode: string): Promise<Story | null> {
 // Fetch a color preset by id
 async function fetchColorPresetById(id: string | null): Promise<ColorPreset | null> {
   if (!id) return null;
-  const { data, error } = await supabase
-    .from("color_presets")
-    .select("*")
-    .eq("id", id)
-    .limit(1)
-    .maybeSingle();
+  const { data, error } = await supabase.from("color_presets").select("*").eq("id", id).limit(1).maybeSingle();
 
   if (error) {
     console.error("fetchColorPresetById error:", error);
@@ -164,14 +152,10 @@ async function fetchColorPresetById(id: string | null): Promise<ColorPreset | nu
 async function incrementPrintCount(storyId: string) {
   try {
     // Fetch current count
-    const { data } = await supabase
-      .from("stories")
-      .select("print_count")
-      .eq("id", storyId)
-      .single();
-    
+    const { data } = await supabase.from("stories").select("print_count").eq("id", storyId).single();
+
     const currentCount = data?.print_count || 0;
-    
+
     // Update with incremented count
     await supabase
       .from("stories")
@@ -187,20 +171,20 @@ function buildPrintHtml(
   story: Story,
   storyPreset: ColorPreset | null,
   options: {
-    headerBoxHtml?: string;   // limited copyright top box
-    footerBoxHtml?: string;   // footer box per page (limited/open)
+    headerBoxHtml?: string; // limited copyright top box
+    footerBoxHtml?: string; // footer box per page (limited/open)
     showWatermark?: boolean;
-    titleColorHex?: string;   // from preset font color or box color
-  }
+    titleColorHex?: string; // from preset font color or box color
+  },
 ): string {
   const title = story.title || "";
   const author = story.author || "";
   const tagline = story.tagline || "";
 
-  const fontColor = (storyPreset?.font_color_hex ?? "#000");
-  const bgColor = (storyPreset?.background_color_hex ?? "#fff");
-  const boxBorder = (storyPreset?.box_border_color_hex ?? "#000");
-  const photoBorder = (storyPreset?.photo_border_color_hex ?? "#000");
+  const fontColor = storyPreset?.font_color_hex ?? "#000";
+  const bgColor = storyPreset?.background_color_hex ?? "#fff";
+  const boxBorder = storyPreset?.box_border_color_hex ?? "#000";
+  const photoBorder = storyPreset?.photo_border_color_hex ?? "#000";
   const titleColor = options.titleColorHex || fontColor;
 
   const contentHtml = parseTokensToHtml(story);
@@ -295,7 +279,9 @@ function buildPrintHtml(
     }
 
     /* Optional watermark */
-    ${options.showWatermark ? `
+    ${
+      options.showWatermark
+        ? `
     .sp-watermark {
       position: fixed;
       top: 40%;
@@ -305,7 +291,9 @@ function buildPrintHtml(
       pointer-events: none;
       width: 60%;
       max-width: 600px;
-    }` : ""}
+    }`
+        : ""
+    }
 
     /* Clear floats after content blocks to avoid overlap across pages */
     .sp-clear { clear: both; }
@@ -352,13 +340,17 @@ function buildPrintHtml(
 
 // Escape for title, author, tagline
 function escapeHtml(s: string): string {
-  return s.replace(/[&<>"']/g, (c) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  }[c] as string));
+  return s.replace(
+    /[&<>"']/g,
+    (c) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      })[c] as string,
+  );
 }
 
 // Build HTML for a copyright story record (rendered as-is)
@@ -378,10 +370,10 @@ async function printHtml(html: string) {
     iframe.style.width = "0";
     iframe.style.height = "0";
     iframe.style.border = "0";
-    
+
     // CSP-safe: use srcdoc instead of doc.write()
     iframe.srcdoc = html;
-    
+
     document.body.appendChild(iframe);
 
     iframe.onload = () => {
@@ -404,7 +396,7 @@ async function printHtml(html: string) {
 // preloadedStory: optional story object (if already fetched on /story page)
 export async function superPrint(storyCode: string, preloadedStory?: Story) {
   // 1) Load story (prefer cached/preloaded)
-  const story = preloadedStory ?? await fetchStoryByCode(storyCode);
+  const story = preloadedStory ?? (await fetchStoryByCode(storyCode));
   if (!story) {
     alert("Sorry, the story could not be found.");
     return;
@@ -425,7 +417,7 @@ export async function superPrint(storyCode: string, preloadedStory?: Story) {
         headerBoxHtml: undefined,
         footerBoxHtml: undefined,
         showWatermark: true, // optional watermark to reinforce “no print”
-        titleColorHex: undefined
+        titleColorHex: undefined,
       });
       // Instead of printing, show alert and return (no printing allowed)
       alert("This story cannot be printed due to full copyright.");
@@ -450,6 +442,9 @@ export async function superPrint(storyCode: string, preloadedStory?: Story) {
     if (lbp) {
       const lbpPreset = await fetchColorPresetById(lbp.color_preset_id);
       footerBoxHtml = buildCopyrightBoxHtml(lbp, lbpPreset);
+
+      // 👇 Add this line here
+      showWatermark = true;
     }
   } else if (story.copyright_status === "O") {
     const cof = await fetchStoryByCode(COPYRIGHT_CODES.OPEN_FOOTER);
@@ -467,7 +462,7 @@ export async function superPrint(storyCode: string, preloadedStory?: Story) {
     headerBoxHtml,
     footerBoxHtml,
     showWatermark,
-    titleColorHex: storyPreset?.font_color_hex ?? undefined
+    titleColorHex: storyPreset?.font_color_hex ?? undefined,
   });
 
   // 5) Trigger print
