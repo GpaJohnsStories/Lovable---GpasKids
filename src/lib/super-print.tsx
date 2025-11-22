@@ -378,12 +378,11 @@ async function printHtml(html: string) {
     iframe.style.width = "0";
     iframe.style.height = "0";
     iframe.style.border = "0";
+    
+    // CSP-safe: use srcdoc instead of doc.write()
+    iframe.srcdoc = html;
+    
     document.body.appendChild(iframe);
-
-    const doc = iframe.contentDocument!;
-    doc.open();
-    doc.write(html);
-    doc.close();
 
     iframe.onload = () => {
       // Give the browser a tick to layout before printing
