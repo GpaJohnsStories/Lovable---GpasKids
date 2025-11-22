@@ -2,6 +2,23 @@
 // Handles printing of "O" (Open/Public Domain) copyright stories
 // Self-contained, no shared code with superPrint-L
 
+export async function superPrintO(story_code: string) {
+  const { data: story, error } = await supabase
+    .from('stories')
+    .select('*')
+    .eq('story_code', story_code)
+    .single();
+
+  if (error || !story) {
+    alert('Story not found.');
+    return;
+  }
+
+  // ... rest of your code ...
+}
+
+
+
 import { createClient } from "@supabase/supabase-js";
 import React from "react";
 
@@ -121,4 +138,4 @@ interface ColorPreset {
 
   // 7. Close popup after printing
   printWindow.close();
-})(); // closes the function and immediately runs it
+
