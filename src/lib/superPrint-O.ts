@@ -28,8 +28,13 @@ interface ColorPreset {
   photo_border_color_hex: string;
 }
 
-export async function superPrintO(story_code: string) {
+// export async function superPrintO(story_code: string) {
   // 1. Load story
+
+// export async function superPrintO(story_code: string) {
+(async function testSuperPrintO() {
+  const story_code = 'WOR-FSK';  // hard-coded for testing
+  
   const { data: story, error } = await supabase
     .from('stories')
     .select('*')
