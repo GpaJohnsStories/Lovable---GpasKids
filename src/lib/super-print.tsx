@@ -2,8 +2,6 @@
 // A self-contained print module for gpaskids.com
 // Drop-in: no external dependencies beyond Supabase client
 // Exports a single function: superPrint(storyCode: string, preloadedStory?: Story)
-export async function superPrint(storyCode: string, preloadedStory?: Story) {
-  console.log("superPrint called with code:", storyCode);
 
 import React from "react";
 import { supabase } from '@/integrations/supabase/client';
