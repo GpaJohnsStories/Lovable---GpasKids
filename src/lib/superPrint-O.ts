@@ -138,4 +138,5 @@ interface ColorPreset {
 
   // 7. Close popup after printing
   printWindow.close();
+}
 
