@@ -6,7 +6,10 @@ import { createClient } from "@supabase/supabase-js";
 import React from "react";
 
 // Initialize Supabase client
-const supabase = createClient("YOUR_SUPABASE_URL", "YOUR_SUPABASE_ANON_KEY");
+const supabase = createClient(
+  "https://hlywucxwpzbqmzssmwpj.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhseXd1Y3h3cHpicW16c3Ntd3BqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg5MTQwNTMsImV4cCI6MjA2NDQ5MDA1M30.m72-z_MYxyijIqclV9hJplTNen02IdLLCOv7w3ZoHfY",
+);
 
 export async function superPrintO(story_code: string) {
   // 1. Fetch story from Supabase
