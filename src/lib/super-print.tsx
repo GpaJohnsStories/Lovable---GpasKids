@@ -253,6 +253,10 @@ function buildPrintHtml(
     .sp-photo figcaption {
       font-family: Georgia, serif;
       font-size: 16pt;
+      word-wrap: break-word;
+      white-space: normal;
+      width: 100%;
+
       line-height: 21px;
       color: #000;
       margin-top: 6px;
