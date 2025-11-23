@@ -314,10 +314,7 @@ function buildPrintHtml(
     <div class="sp-content">${contentHtml}</div>
     <div class="sp-clear"></div>
 
-    <div class="sp-footer">
-      <div>Printed by GpasKids.com on ${formatDate()}</div>
-      <div>Page <span class="pageNumber"></span></div>
-    </div>
+
 
     ${options.footerBoxHtml ? `<div class="sp-footer-box">${options.footerBoxHtml}</div>` : ""}
 
