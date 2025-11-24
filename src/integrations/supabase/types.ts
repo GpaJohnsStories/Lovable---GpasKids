@@ -498,7 +498,6 @@ export type Database = {
       privileged_admins: {
         Row: {
           created_at: string
-          email: string
           email_domain: string | null
           email_hash: string | null
           id: string
@@ -507,7 +506,6 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          email: string
           email_domain?: string | null
           email_hash?: string | null
           id?: string
@@ -516,7 +514,6 @@ export type Database = {
         }
         Update: {
           created_at?: string
-          email?: string
           email_domain?: string | null
           email_hash?: string | null
           id?: string
