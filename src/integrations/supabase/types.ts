@@ -251,6 +251,150 @@ export type Database = {
         }
         Relationships: []
       }
+      faith_index: {
+        Row: {
+          ai_voice_model: string | null
+          ai_voice_name: string | null
+          audio_duration_seconds: number | null
+          audio_generated_at: string | null
+          audio_segments: number | null
+          audio_url: string | null
+          author: string
+          bio_subject_name: string | null
+          book_title: string | null
+          born_date: string | null
+          category: Database["public"]["Enums"]["story_category"]
+          chapter_number: number | null
+          chapter_title: string | null
+          color_preset_id: string | null
+          content: string | null
+          copyright_status: string | null
+          created_at: string
+          died_date: string | null
+          excerpt: string | null
+          id: string
+          native_country: string | null
+          native_language: string | null
+          ok_count: number
+          page_path: string | null
+          photo_alt_1: string | null
+          photo_alt_2: string | null
+          photo_alt_3: string | null
+          photo_alt_4: string | null
+          photo_link_1: string | null
+          photo_link_2: string | null
+          photo_link_3: string | null
+          photo_link_4: string | null
+          print_count: number | null
+          publication_status_code: number
+          read_count: number
+          reading_time_minutes: number | null
+          site: Database["public"]["Enums"]["site_identifier"]
+          story_code: string
+          tagline: string | null
+          thumbs_down_count: number
+          thumbs_up_count: number
+          title: string
+          updated_at: string
+          video_duration_seconds: number | null
+          video_url: string | null
+        }
+        Insert: {
+          ai_voice_model?: string | null
+          ai_voice_name?: string | null
+          audio_duration_seconds?: number | null
+          audio_generated_at?: string | null
+          audio_segments?: number | null
+          audio_url?: string | null
+          author: string
+          bio_subject_name?: string | null
+          book_title?: string | null
+          born_date?: string | null
+          category: Database["public"]["Enums"]["story_category"]
+          chapter_number?: number | null
+          chapter_title?: string | null
+          color_preset_id?: string | null
+          content?: string | null
+          copyright_status?: string | null
+          created_at?: string
+          died_date?: string | null
+          excerpt?: string | null
+          id?: string
+          native_country?: string | null
+          native_language?: string | null
+          ok_count?: number
+          page_path?: string | null
+          photo_alt_1?: string | null
+          photo_alt_2?: string | null
+          photo_alt_3?: string | null
+          photo_alt_4?: string | null
+          photo_link_1?: string | null
+          photo_link_2?: string | null
+          photo_link_3?: string | null
+          photo_link_4?: string | null
+          print_count?: number | null
+          publication_status_code?: number
+          read_count?: number
+          reading_time_minutes?: number | null
+          site?: Database["public"]["Enums"]["site_identifier"]
+          story_code: string
+          tagline?: string | null
+          thumbs_down_count?: number
+          thumbs_up_count?: number
+          title: string
+          updated_at?: string
+          video_duration_seconds?: number | null
+          video_url?: string | null
+        }
+        Update: {
+          ai_voice_model?: string | null
+          ai_voice_name?: string | null
+          audio_duration_seconds?: number | null
+          audio_generated_at?: string | null
+          audio_segments?: number | null
+          audio_url?: string | null
+          author?: string
+          bio_subject_name?: string | null
+          book_title?: string | null
+          born_date?: string | null
+          category?: Database["public"]["Enums"]["story_category"]
+          chapter_number?: number | null
+          chapter_title?: string | null
+          color_preset_id?: string | null
+          content?: string | null
+          copyright_status?: string | null
+          created_at?: string
+          died_date?: string | null
+          excerpt?: string | null
+          id?: string
+          native_country?: string | null
+          native_language?: string | null
+          ok_count?: number
+          page_path?: string | null
+          photo_alt_1?: string | null
+          photo_alt_2?: string | null
+          photo_alt_3?: string | null
+          photo_alt_4?: string | null
+          photo_link_1?: string | null
+          photo_link_2?: string | null
+          photo_link_3?: string | null
+          photo_link_4?: string | null
+          print_count?: number | null
+          publication_status_code?: number
+          read_count?: number
+          reading_time_minutes?: number | null
+          site?: Database["public"]["Enums"]["site_identifier"]
+          story_code?: string
+          tagline?: string | null
+          thumbs_down_count?: number
+          thumbs_up_count?: number
+          title?: string
+          updated_at?: string
+          video_duration_seconds?: number | null
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       icon_library: {
         Row: {
           created_at: string
