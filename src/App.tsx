@@ -55,7 +55,6 @@ import GpasTestPage from "./pages/GpasTestPage";
 
 // Security and Auth
 import GlobalHelpProvider from "./components/GlobalHelpProvider";
-import ContentProtection from "./components/ContentProtection";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ScrollToTop from "./components/ScrollToTop";
 import CanonicalLink from "./components/seo/CanonicalLink";
@@ -68,18 +67,6 @@ import { BreakTimerProvider } from "./contexts/BreakTimerContext";
 import { AccessibilityEnhancements } from "./components/accessibility/AccessibilityEnhancements";
 
 const queryClient = new QueryClient();
-
-// Component to handle conditional content protection based on route
-const ConditionalContentProtection = ({ children }: { children: React.ReactNode }) => {
-  const location = useLocation();
-  const isAdminPage = location.pathname.startsWith('/buddys_admin');
-  
-  return (
-    <ContentProtection enableProtection={!isAdminPage}>
-      {children}
-    </ContentProtection>
-  );
-};
 
 // Component to conditionally render ReportProblemButton
 const ConditionalReportButton = () => {
@@ -110,10 +97,9 @@ function App() {
                     <HostRedirect />
                     <CanonicalLink />
                     <SuperAVProvider>
-                      <AuthProvider>
+                        <AuthProvider>
                         <GlobalHelpProvider>
                           <BreakTimerProvider>
-                            <ConditionalContentProtection>
                               <AccessibilityEnhancements>
                                 <FloatingActionStack />
                          
@@ -162,7 +148,6 @@ function App() {
                                   <Route path="*" element={<NotFound />} />
                                 </Routes>
                               </AccessibilityEnhancements>
-                            </ConditionalContentProtection>
                           </BreakTimerProvider>
                          </GlobalHelpProvider>
                       </AuthProvider>
