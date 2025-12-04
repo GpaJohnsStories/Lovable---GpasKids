@@ -429,6 +429,7 @@ export type Database = {
           created_at: string
           last_visit_date: string
           month: number
+          site_identifier: Database["public"]["Enums"]["site_identifier"] | null
           updated_at: string
           visit_count: number
           year: number
@@ -439,6 +440,9 @@ export type Database = {
           created_at?: string
           last_visit_date?: string
           month: number
+          site_identifier?:
+            | Database["public"]["Enums"]["site_identifier"]
+            | null
           updated_at?: string
           visit_count?: number
           year: number
@@ -449,6 +453,9 @@ export type Database = {
           created_at?: string
           last_visit_date?: string
           month?: number
+          site_identifier?:
+            | Database["public"]["Enums"]["site_identifier"]
+            | null
           updated_at?: string
           visit_count?: number
           year?: number
