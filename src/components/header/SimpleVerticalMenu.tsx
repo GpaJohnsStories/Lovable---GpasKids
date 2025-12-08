@@ -27,6 +27,7 @@ interface MainMenuItem {
   disabled?: boolean;
   disabledMessage?: string;
   tooltipText?: string;
+  rounded?: boolean;
 }
 
 const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => {
@@ -42,6 +43,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
   const { iconName: writingIconName } = useCachedIcon("!CO-MM6.gif");
   const { iconName: aboutIconName } = useCachedIcon("!CO-AB3.jpg");
   const { iconName: safeIconName } = useCachedIcon("!CO-MM8.jpg");
+  const { iconName: hgjIconName } = useCachedIcon("!CO-HGJ.gif");
   
   // Submenu icon names
   const { iconName: submitStoryIconName } = useCachedIcon("!CO-S61.jpg");
@@ -158,6 +160,18 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
         window.location.href = "/security";
         onClose();
       }
+    },
+    {
+      id: "help-grandpa-john",
+      icon: "!CO-HGJ.gif", // Help Grandpa John - round button
+      text: "Help Grandpa John",
+      tooltipText: hgjIconName || "Help Grandpa John",
+      color: "#F97316",
+      rounded: true, // Keep this button round
+      onClick: () => {
+        window.location.href = "/help-gpa";
+        onClose();
+      }
     }
   ];
 
@@ -204,6 +218,7 @@ const SimpleVerticalMenu = ({ isVisible, onClose }: SimpleVerticalMenuProps) => 
                   disabled={item.disabled}
                   disabledMessage={item.disabledMessage}
                   tooltipText={item.tooltipText}
+                  rounded={item.rounded}
                 />
                 
                 {/* Submenu buttons arranged horizontally in a line going left */}

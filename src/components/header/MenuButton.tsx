@@ -17,9 +17,10 @@ interface MenuButtonProps {
   disabledMessage?: string;
   level?: number; // For dynamic tooltip positioning
   tooltipText?: string; // Optional separate tooltip text
+  rounded?: boolean; // If true, button is circular (rounded-full)
 }
 
-const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, disabledMessage, level = 0, tooltipText }: MenuButtonProps) => {
+const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, disabledMessage, level = 0, tooltipText, rounded = false }: MenuButtonProps) => {
   const { iconUrl, iconName, isLoading, error } = useCachedIcon(icon);
   const { shouldShowTooltips, registerTooltip, unregisterTooltip } = useTooltipContext();
   const tooltipId = useId();
@@ -74,7 +75,7 @@ const MenuButton = ({ icon, text, color, onClick, customSize, disabled = false, 
       <TooltipTrigger asChild>
         <button
           onClick={handleClick}
-          className={`group relative flex items-center justify-center rounded-lg transform transition-all duration-200 flex-shrink-0 ${
+          className={`group relative flex items-center justify-center ${rounded ? 'rounded-full' : 'rounded-lg'} transform transition-all duration-200 flex-shrink-0 ${
             disabled ? 'cursor-not-allowed' : 'hover:scale-105 cursor-pointer active:scale-95'
           }`}
           style={{
