@@ -85,6 +85,7 @@ const PublicStoriesTable: React.FC = () => {
           ok_count,
           photo_link_1
         `)
+        .eq('site', 'KIDS')
         .lt('publication_status_code', 2)
         .not('category', 'in', '("WebText","BioText","Admin")')
         .order('updated_at', { ascending: false });
