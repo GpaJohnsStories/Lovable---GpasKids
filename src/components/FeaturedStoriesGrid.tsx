@@ -11,6 +11,7 @@ const FeaturedStoriesGrid = () => {
       const { data, error } = await supabase
         .from('stories')
         .select('*')
+        .eq('site', 'KIDS')
         .in('publication_status_code', [0, 1])
         .not('category', 'in', '("WebText","BioText","Admin")')
         .order('read_count', { ascending: false })
@@ -29,6 +30,7 @@ const FeaturedStoriesGrid = () => {
       const { data, error } = await supabase
         .from('stories')
         .select('*')
+        .eq('site', 'KIDS')
         .in('publication_status_code', [0, 1])
         .not('category', 'in', '("WebText","BioText","Admin")')
         .order('thumbs_up_count', { ascending: false })
@@ -47,6 +49,7 @@ const FeaturedStoriesGrid = () => {
       const { data, error } = await supabase
         .from('stories')
         .select('*')
+        .eq('site', 'KIDS')
         .in('publication_status_code', [0, 1])
         .not('category', 'in', '("WebText","BioText","Admin")')
         .order('updated_at', { ascending: false })
