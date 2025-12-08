@@ -50,7 +50,7 @@ const FeaturedStoriesGrid = () => {
         .in('publication_status_code', [0, 1])
         .not('category', 'in', '("WebText","BioText","Admin")')
         .order('updated_at', { ascending: false })
-        .limit(4);
+        .limit(2);
       
       if (error) throw error;
       return data || [];
@@ -59,8 +59,27 @@ const FeaturedStoriesGrid = () => {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      {/* Row 1 & 2: Most Read and Most Popular - Desktop 2-column, Mobile stacked */}
+      {/* Row 1: Newest Stories Label (full width) */}
+      <div className="flex justify-center mb-3">
+        <div className="text-21px font-fun font-bold text-center px-6 py-3 rounded-lg border-3"
+             style={{ 
+               border: '3px solid #16a34a', 
+               backgroundColor: 'rgba(22, 163, 74, 0.2)',
+               color: '#16a34a'
+             }}>
+          Newest Stories
+        </div>
+      </div>
+
+      {/* Row 2: 2 Newest Stories side by side */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {newestStories.map(story => (
+          <StoryCard key={story.id} story={story as any} borderColor="#16a34a" showCategoryButton={false} />
+        ))}
+      </div>
+
+      {/* Row 3 & 4: Most Read and Most Popular - Desktop 2-column, Mobile stacked */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Most Read Column */}
         <div className="flex flex-col gap-3">
           <div className="flex justify-center">
@@ -94,25 +113,6 @@ const FeaturedStoriesGrid = () => {
             <StoryCard story={mostPopularStory as any} borderColor="#F97316" showCategoryButton={false} />
           )}
         </div>
-      </div>
-
-      {/* Row 3: Newest Stories Label (full width) */}
-      <div className="flex justify-center mb-3">
-        <div className="text-21px font-fun font-bold text-center px-6 py-3 rounded-lg border-3"
-             style={{ 
-               border: '3px solid #16a34a', 
-               backgroundColor: 'rgba(22, 163, 74, 0.2)',
-               color: '#16a34a'
-             }}>
-          Newest Stories
-        </div>
-      </div>
-
-      {/* Rows 4-5: 4 Newest Stories in 2x2 grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {newestStories.map(story => (
-          <StoryCard key={story.id} story={story as any} borderColor="#16a34a" showCategoryButton={false} />
-        ))}
       </div>
     </div>
   );
