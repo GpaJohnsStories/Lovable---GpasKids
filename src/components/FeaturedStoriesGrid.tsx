@@ -52,7 +52,7 @@ const FeaturedStoriesGrid = () => {
         .eq('site', 'KIDS')
         .in('publication_status_code', [0, 1])
         .not('category', 'in', '("WebText","BioText","Admin")')
-        .order('updated_at', { ascending: false })
+        .order('created_at', { ascending: false })
         .limit(2);
       
       if (error) throw error;
