@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+GPASKIDS HEADER WITH MENU
+================================================================================
+
+PURPOSE:
+  Self-contained header component for the gpaskids website.
+  Includes orange banner, Buddy Help button, 3-line title, Safe For Kids shield,
+  Fluffy Menu button, and vertical dropdown menu.
+
+ICON SOURCE:
+  All icons loaded from GitHub repository:
+  https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/
+
+ICONS USED:
+  - ico-bdh.jpg = Buddy Help button (green) + Buddy's Guide menu item
+  - ico-sfk.gif = Safe For Kids shield
+  - ico-flm.jpg = Fluffy Menu button (gold)
+  - ico-bd1.jpg = Menu: Home
+  - ico-bdl.gif = Menu: Library
+  - ico-go4.png = Menu: About Us
+  - ico-max.jpg = Menu: Security
+  - ico-hgj.gif = Menu: Help Grandpa John
+
+DESIGN RULES:
+  - NO tooltips (except alt text for screen readers)
+  - NO hover effects (touch-friendly for tablets/phones)
+  - Large buttons for little fingers (min 48px touch targets)
+  - All text 16pt (21px) or larger
+
+CREATED: January 2026
+================================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GpasKids Header</title>
+  
+  <!-- Google Fonts: Kalam for friendly handwritten look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /*
+    ============================================================================
+    RESET & BASE STYLES
+    ============================================================================
+    */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Kalam', cursive, sans-serif;
+      font-size: 21px; /* Minimum 16pt for children */
+      line-height: 1.4;
+    }
+    
+    /*
+    ============================================================================
+    HEADER BANNER
+    Orange gradient with gold border and rounded corners
+    ============================================================================
+    */
+    .header-banner {
+      background: linear-gradient(135deg, #d97706 0%, #ea580c 50%, #d97706 100%);
+      border: 4px solid #fdba74; /* Gold border */
+      border-radius: 16px;
+      padding: 12px 16px;
+      margin: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /*
+    ============================================================================
+    HEADER CONTAINER
+    Flexbox layout: Left (Buddy + Title) | Right (Shield + Menu)
+    ============================================================================
+    */
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    /*
+    ============================================================================
+    LEFT SECTION: Buddy Button + Title
+    ============================================================================
+    */
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      min-width: 0;
+    }
+    
+    /*
+    BUDDY HELP BUTTON
+    Green gradient, 3D appearance, NO hover effects
+    Icon: ico-bdh.jpg
+    */
+    .buddy-button {
+      background: linear-gradient(180deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+      border: 3px solid #86efac;
+      border-radius: 12px;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 
+        0 4px 0 #166534,
+        0 6px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.1s, box-shadow 0.1s;
+      flex-shrink: 0;
+    }
+    
+    /* Press effect only - NO hover */
+    .buddy-button:active {
+      transform: translateY(2px);
+      box-shadow: 
+        0 2px 0 #166534,
+        0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    .buddy-button img {
+      width: 56px;
+      height: 56px;
+      display: block;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    
+    /*
+    TITLE SECTION
+    3 lines of text with different styles
+    */
+    .title-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    
+    /* Line 1: "Grandpa John's" - Navy blue */
+    .title-line-1 {
+      font-family: 'Kalam', cursive;
+      font-size: 24px;
+      font-weight: 700;
+      color: #0B3D91; /* Navy blue */
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    
+    /* Line 2: "Stories and Fun for Kids" - White */
+    .title-line-2 {
+      font-family: 'Kalam', cursive;
+      font-size: 28px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.2;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Line 3: "All completely FREE..." - White italic */
+    .title-line-3 {
+      font-size: 18px;
+      font-weight: 700;
+      font-style: italic;
+      color: #FFFFFF;
+      line-height: 1.3;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    
+    /*
+    ============================================================================
+    RIGHT SECTION: Shield + Menu Button + Dropdown
+    ============================================================================
+    */
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    
+    /*
+    SAFE FOR KIDS SHIELD
+    Icon: ico-sfk.gif
+    */
+    .safe-for-kids {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+    }
+    
+    /*
+    FLUFFY MENU BUTTON
+    Gold gradient, 3D appearance, NO hover effects
+    Icon: ico-flm.jpg
+    */
+    .menu-button {
+      background: linear-gradient(180deg, #fbbf24 0%, #eab308 50%, #ca8a04 100%);
+      border: 3px solid #fde68a;
+      border-radius: 12px;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 
+        0 4px 0 #a16207,
+        0 6px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    
+    /* Press effect only - NO hover */
+    .menu-button:active {
+      transform: translateY(2px);
+      box-shadow: 
+        0 2px 0 #a16207,
+        0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    .menu-button img {
+      width: 56px;
+      height: 56px;
+      display: block;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    
+    /*
+    ============================================================================
+    VERTICAL DROPDOWN MENU
+    Hidden by default, appears below menu button
+    ============================================================================
+    */
+    .vertical-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 8px;
+      background: #fef3c7; /* Warm cream */
+      border: 3px solid #f59e0b;
+      border-radius: 12px;
+      padding: 8px;
+      min-width: 200px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      
+      /* Hidden by default */
+      display: none;
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    
+    /* Menu open state */
+    .vertical-menu.menu-open {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+      animation: menuSlideIn 0.2s ease-out;
+    }
+    
+    @keyframes menuSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /*
+    MENU ITEMS
+    Large touch targets, NO hover effects
+    */
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #78350f; /* Dark amber text */
+      font-size: 21px;
+      font-weight: 600;
+      min-height: 48px; /* Touch target minimum */
+      transition: background-color 0.1s;
+    }
+    
+    /* Press effect only - NO hover */
+    .menu-item:active {
+      background-color: #fde68a;
+    }
+    
+    .menu-item img {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    
+    .menu-item span {
+      white-space: nowrap;
+    }
+    
+    /*
+    ============================================================================
+    RESPONSIVE STYLES
+    ============================================================================
+    */
+    
+    /* Tablet (768px and below) */
+    @media (max-width: 768px) {
+      .header-banner {
+        padding: 10px 12px;
+        margin: 6px;
+      }
+      
+      .title-line-1 {
+        font-size: 20px;
+      }
+      
+      .title-line-2 {
+        font-size: 24px;
+      }
+      
+      .title-line-3 {
+        font-size: 16px;
+      }
+      
+      .buddy-button img,
+      .menu-button img {
+        width: 48px;
+        height: 48px;
+      }
+      
+      .safe-for-kids {
+        width: 52px;
+        height: 52px;
+      }
+    }
+    
+    /* Mobile (480px and below) */
+    @media (max-width: 480px) {
+      .header-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .left-section {
+        justify-content: flex-start;
+      }
+      
+      .right-section {
+        justify-content: flex-end;
+        align-self: flex-end;
+      }
+      
+      .title-line-1 {
+        font-size: 18px;
+      }
+      
+      .title-line-2 {
+        font-size: 20px;
+      }
+      
+      .title-line-3 {
+        font-size: 14px;
+      }
+      
+      .buddy-button img,
+      .menu-button img {
+        width: 44px;
+        height: 44px;
+      }
+      
+      .safe-for-kids {
+        width: 44px;
+        height: 44px;
+      }
+      
+      .vertical-menu {
+        min-width: 180px;
+      }
+      
+      .menu-item {
+        padding: 10px;
+        font-size: 18px;
+      }
+      
+      .menu-item img {
+        width: 36px;
+        height: 36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+  ============================================================================
+  HEADER ELEMENT
+  Semantic HTML for accessibility
+  ============================================================================
+  -->
+  <header class="header-banner" role="banner">
+    <div class="header-container">
+      
+      <!--
+      LEFT SECTION: Buddy Button + Title
+      -->
+      <div class="left-section">
+        
+        <!-- Buddy Help Button - ico-bdh.jpg -->
+        <button 
+          class="buddy-button" 
+          id="buddy-button"
+          aria-label="Get help from Buddy"
+          onclick="navigateTo('/guide')"
+        >
+          <img 
+            src="https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/ico-bdh.jpg" 
+            alt="Buddy the friendly dog - Click for help"
+          >
+        </button>
+        
+        <!-- 3-Line Title -->
+        <div class="title-section">
+          <div class="title-line-1">Grandpa John's</div>
+          <div class="title-line-2">Stories and Fun for Kids</div>
+          <div class="title-line-3">All completely FREE - so kids can explore, learn, and smile!</div>
+        </div>
+        
+      </div>
+      
+      <!--
+      RIGHT SECTION: Shield + Menu Button + Dropdown
+      -->
+      <div class="right-section">
+        
+        <!-- Safe For Kids Shield - ico-sfk.gif -->
+        <img 
+          class="safe-for-kids" 
+          src="https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/ico-sfk.gif" 
+          alt="Safe For Kids - This site is safe for children"
+        >
+        
+        <!-- Fluffy Menu Button - ico-flm.jpg -->
+        <button 
+          class="menu-button" 
+          id="menu-button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="vertical-menu"
+          onclick="toggleMenu()"
+        >
+          <img 
+            src="https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/ico-flm.jpg" 
+            alt="Fluffy the cat - Click to open menu"
+          >
+        </button>
+        
+        <!--
+        VERTICAL DROPDOWN MENU
+        6 navigation items
+        -->
+        <nav 
+          class="vertical-menu" 
+          id="vertical-menu"
+          role="menu"
+          aria-label="Main navigation"
+        >
+          
+          <!-- Menu Item 1: Home - ico-bd1.jpg -->
+          <a 
+            href="/" 
+            class="menu-item" 
+            role="menuitem"
+          >
+            <img 
+              src="https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/ico-bd1.jpg" 
+              alt="Home icon"
+            >
+            <span>Home</span>
+          </a>
+          
+          <!-- Menu Item 2: Buddy's Guide - ico-bdh.jpg -->
+          <a 
+            href="/guide" 
+            class="menu-item" 
+            role="menuitem"
+          >
+            <img 
+              src="https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/ico-bdh.jpg" 
+              alt="Buddy's Guide icon"
+            >
+            <span>Buddy's Guide</span>
+          </a>
+          
+          <!-- Menu Item 3: Library - ico-bdl.gif -->
+          <a 
+            href="/library" 
+            class="menu-item" 
+            role="menuitem"
+          >
+            <img 
+              src="https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/ico-bdl.gif" 
+              alt="Library icon"
+            >
+            <span>Library</span>
+          </a>
+          
+          <!-- Menu Item 4: About Us - ico-go4.png -->
+          <a 
+            href="/about" 
+            class="menu-item" 
+            role="menuitem"
+          >
+            <img 
+              src="https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/ico-go4.png" 
+              alt="About Us icon"
+            >
+            <span>About Us</span>
+          </a>
+          
+          <!-- Menu Item 5: Security - ico-max.jpg -->
+          <a 
+            href="/security" 
+            class="menu-item" 
+            role="menuitem"
+          >
+            <img 
+              src="https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/ico-max.jpg" 
+              alt="Security icon"
+            >
+            <span>Security</span>
+          </a>
+          
+          <!-- Menu Item 6: Help Grandpa John - ico-hgj.gif -->
+          <a 
+            href="/help-gpa" 
+            class="menu-item" 
+            role="menuitem"
+          >
+            <img 
+              src="https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/ico-hgj.gif" 
+              alt="Help Grandpa John icon"
+            >
+            <span>Help Grandpa John</span>
+          </a>
+          
+        </nav>
+        
+      </div>
+      
+    </div>
+  </header>
+
+  <!--
+  ============================================================================
+  JAVASCRIPT
+  Menu toggle, click-outside detection, keyboard support
+  ============================================================================
+  -->
+  <script>
+    /*
+    ------------------------------------------------------------------------
+    ICON URL CONFIGURATION
+    All icons loaded from GitHub. Update base URL here if moving icons.
+    ------------------------------------------------------------------------
+    */
+    const ICON_BASE_URL = 'https://raw.githubusercontent.com/gpajohnsstories/gpakids/main/icons-core/';
+    
+    // Icon filenames for reference (used in HTML above):
+    // ico-bdh.jpg = Buddy Help + Guide menu
+    // ico-sfk.gif = Safe For Kids shield
+    // ico-flm.jpg = Fluffy Menu button
+    // ico-bd1.jpg = Home menu
+    // ico-bdl.gif = Library menu
+    // ico-go4.png = About Us menu
+    // ico-max.jpg = Security menu
+    // ico-hgj.gif = Help Grandpa John menu
+    
+    /*
+    ------------------------------------------------------------------------
+    MENU TOGGLE
+    Shows/hides the vertical dropdown menu
+    ------------------------------------------------------------------------
+    */
+    function toggleMenu() {
+      const menu = document.getElementById('vertical-menu');
+      const button = document.getElementById('menu-button');
+      const isOpen = menu.classList.contains('menu-open');
+      
+      if (isOpen) {
+        menu.classList.remove('menu-open');
+        button.setAttribute('aria-expanded', 'false');
+      } else {
+        menu.classList.add('menu-open');
+        button.setAttribute('aria-expanded', 'true');
+      }
+    }
+    
+    /*
+    ------------------------------------------------------------------------
+    CLOSE MENU ON CLICK OUTSIDE
+    ------------------------------------------------------------------------
+    */
+    document.addEventListener('click', function(event) {
+      const menu = document.getElementById('vertical-menu');
+      const menuButton = document.getElementById('menu-button');
+      
+      // If click is outside menu and menu button, close menu
+      if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+        menu.classList.remove('menu-open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    /*
+    ------------------------------------------------------------------------
+    CLOSE MENU ON ESCAPE KEY
+    ------------------------------------------------------------------------
+    */
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const menu = document.getElementById('vertical-menu');
+        const button = document.getElementById('menu-button');
+        menu.classList.remove('menu-open');
+        button.setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    /*
+    ------------------------------------------------------------------------
+    NAVIGATION HELPER
+    Used by Buddy button to navigate to guide page
+    ------------------------------------------------------------------------
+    */
+    function navigateTo(path) {
+      window.location.href = path;
+    }
+  </script>
+
+</body>
+</html>
