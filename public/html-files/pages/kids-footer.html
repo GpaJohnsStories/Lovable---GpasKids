@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+GPASKIDS FOOTER
+================================================================================
+
+PURPOSE:
+  Self-contained footer component for the gpaskids website.
+  Includes Cookie-Free icon, "Made with love" message, and copyright.
+  Copyright year updates automatically via JavaScript.
+
+FILE LOCATION:
+  html-files/pages/kids-footer.html
+
+ICON SOURCE:
+  All icons loaded from ../icons-core/ folder (relative path)
+  When copied to GitHub: gpajohnsstories/gpakids/html-files/icons-core/
+
+ICONS USED:
+  - ico-cff.png = Cookie-Free icon (links to /security)
+
+DESIGN RULES:
+  - NO tooltips (except alt text for screen readers)
+  - NO hover effects (touch-friendly for tablets/phones)
+  - Large touch targets (min 48px)
+  - All text 16pt (21px) or larger
+  - Copyright year auto-updates via JavaScript
+
+CREATED: January 2026
+================================================================================
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GpasKids Footer</title>
+
+    <!-- Google Fonts: Kalam for friendly handwritten look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet" />
+
+    <style>
+      /*
+      ============================================================================
+      RESET & BASE STYLES
+      ============================================================================
+      */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Kalam', cursive, sans-serif;
+        font-size: 21px; /* Minimum 16pt for children */
+        line-height: 1.4;
+      }
+
+      /*
+      ============================================================================
+      FOOTER CONTAINER
+      Amber/cream background with subtle top border
+      ============================================================================
+      */
+      .footer-banner {
+        background-color: #FEF3C7; /* Amber-100 */
+        border-top: 2px solid #FDE68A; /* Amber-200 */
+        padding: 8px 16px;
+      }
+
+      .footer-container {
+        max-width: 1152px; /* 6xl = 72rem */
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      /*
+      ============================================================================
+      LEFT SECTION: Cookie-Free Icon
+      Links to /security page
+      ============================================================================
+      */
+      .left-section {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+      }
+
+      .cookie-free-link {
+        display: block;
+        transition: transform 0.2s;
+      }
+
+      .cookie-free-link:active {
+        transform: scale(0.95);
+      }
+
+      .cookie-free-icon {
+        width: 80px;  /* w-20 = 80px */
+        height: 80px;
+        object-fit: contain;
+        border-radius: 50%;
+        transform: scale(1.5);
+        transform-origin: left center;
+      }
+
+      /*
+      ============================================================================
+      CENTER SECTION: Made with Love Message
+      Two lines of text with heart icon
+      ============================================================================
+      */
+      .center-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 16px;
+        color: #D97706; /* Amber-600 */
+        font-weight: 700;
+        font-size: 21px;
+        line-height: 1.3;
+      }
+
+      .love-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      /* Heart icon using CSS */
+      .heart-icon {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        position: relative;
+      }
+
+      .heart-icon::before,
+      .heart-icon::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 16px;
+        background: #EF4444; /* Red-500 */
+        border-radius: 10px 10px 0 0;
+        transform-origin: bottom;
+      }
+
+      .heart-icon::before {
+        left: 9px;
+        transform: rotate(-45deg);
+      }
+
+      .heart-icon::after {
+        left: 0;
+        transform: rotate(45deg);
+      }
+
+      /* Alternative: SVG heart (more reliable) */
+      .heart-svg {
+        width: 20px;
+        height: 20px;
+        fill: #EF4444;
+        flex-shrink: 0;
+      }
+
+      .lovable-line {
+        font-size: 19px;
+      }
+
+      /*
+      ============================================================================
+      RIGHT SECTION: Copyright
+      Year updates automatically via JavaScript
+      ============================================================================
+      */
+      .right-section {
+        color: #D97706; /* Amber-600 */
+        font-weight: 500;
+        font-size: 18px;
+        text-align: right;
+        flex-shrink: 0;
+      }
+
+      /*
+      ============================================================================
+      RESPONSIVE STYLES
+      ============================================================================
+      */
+
+      /* Tablet (768px and below) */
+      @media (max-width: 768px) {
+        .footer-container {
+          padding: 8px;
+        }
+
+        .cookie-free-icon {
+          width: 64px;
+          height: 64px;
+          transform: scale(1.3);
+        }
+
+        .center-section {
+          font-size: 18px;
+        }
+
+        .lovable-line {
+          font-size: 16px;
+        }
+
+        .right-section {
+          font-size: 16px;
+        }
+      }
+
+      /* Mobile (480px and below) */
+      @media (max-width: 480px) {
+        .footer-container {
+          flex-direction: column;
+          text-align: center;
+          gap: 8px;
+        }
+
+        .left-section {
+          justify-content: center;
+          width: 100%;
+        }
+
+        .cookie-free-icon {
+          transform: scale(1.2);
+          transform-origin: center center;
+        }
+
+        .center-section {
+          font-size: 17px;
+          padding: 0;
+        }
+
+        .lovable-line {
+          font-size: 15px;
+        }
+
+        .right-section {
+          text-align: center;
+          width: 100%;
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--
+    ============================================================================
+    FOOTER ELEMENT
+    Semantic HTML for accessibility
+    ============================================================================
+    -->
+    <footer class="footer-banner" role="contentinfo">
+      <div class="footer-container">
+        <!--
+        LEFT SECTION: Cookie-Free Icon
+        Links to security page
+        -->
+        <div class="left-section">
+          <a 
+            href="/security" 
+            class="cookie-free-link"
+            aria-label="Cookie-Free Website - Click for security information"
+          >
+            <img 
+              src="../icons-core/ico-cff.png" 
+              alt="Cookie-Free - No tracking, no ads, just safe stories!" 
+              class="cookie-free-icon"
+            />
+          </a>
+        </div>
+
+        <!--
+        CENTER SECTION: Made with Love Message
+        -->
+        <div class="center-section">
+          <div class="love-line">
+            <span>Made with</span>
+            <!-- SVG Heart Icon -->
+            <svg class="heart-svg" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span>for children</span>
+          </div>
+          <div class="lovable-line">with help from Lovable AI at Lovable.dev</div>
+        </div>
+
+        <!--
+        RIGHT SECTION: Copyright
+        Year is set automatically by JavaScript
+        -->
+        <div class="right-section">
+          © <span id="copyright-year">2025</span> Grandpa John's Stories
+        </div>
+      </div>
+    </footer>
+
+    <!--
+    ============================================================================
+    JAVASCRIPT
+    Auto-update copyright year
+    ============================================================================
+    -->
+    <script>
+      // Set copyright year to current year automatically
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
