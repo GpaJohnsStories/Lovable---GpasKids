@@ -9,9 +9,12 @@ PURPOSE:
   Includes orange banner, Buddy Help button, 3-line title, Safe For Kids shield,
   Fluffy Menu button, and vertical dropdown menu.
 
+FILE LOCATION:
+  html-files/pages/kids-menu-header.html
+
 ICON SOURCE:
-  All icons loaded from local /icons-core/ folder
-  (Synced from GitHub: gpajohnsstories/gpakids/icons-core/)
+  All icons loaded from ../icons-core/ folder (relative path)
+  When copied to GitHub: gpajohnsstories/gpakids/html-files/icons-core/
 
 ICONS USED:
   - ico-bdh.jpg = Buddy Help button (green) + Buddy's Guide menu item
@@ -430,7 +433,7 @@ CREATED: January 2026
           onclick="navigateTo('/guide')"
         >
           <img 
-            src="/icons-core/ico-bdh.jpg" 
+            src="../icons-core/ico-bdh.jpg" 
             alt="Buddy the friendly dog - Click for help"
           >
         </button>
@@ -452,7 +455,7 @@ CREATED: January 2026
         <!-- Safe For Kids Shield - ico-sfk.gif -->
         <img 
           class="safe-for-kids" 
-          src="/icons-core/ico-sfk.gif" 
+          src="../icons-core/ico-sfk.gif" 
           alt="Safe For Kids - This site is safe for children"
         >
         
@@ -466,7 +469,7 @@ CREATED: January 2026
           onclick="toggleMenu()"
         >
           <img 
-            src="/icons-core/ico-flm.jpg" 
+            src="../icons-core/ico-flm.jpg" 
             alt="Fluffy the cat - Click to open menu"
           >
         </button>
@@ -489,7 +492,7 @@ CREATED: January 2026
             role="menuitem"
           >
             <img 
-              src="/icons-core/ico-bd1.jpg" 
+              src="../icons-core/ico-bd1.jpg" 
               alt="Home icon"
             >
             <span>Home</span>
@@ -502,7 +505,7 @@ CREATED: January 2026
             role="menuitem"
           >
             <img 
-              src="/icons-core/ico-bdh.jpg" 
+              src="../icons-core/ico-bdh.jpg" 
               alt="Buddy's Guide icon"
             >
             <span>Buddy's Guide</span>
@@ -515,7 +518,7 @@ CREATED: January 2026
             role="menuitem"
           >
             <img 
-              src="/icons-core/ico-bdl.gif" 
+              src="../icons-core/ico-bdl.gif" 
               alt="Library icon"
             >
             <span>Library</span>
@@ -528,7 +531,7 @@ CREATED: January 2026
             role="menuitem"
           >
             <img 
-              src="/icons-core/ico-go4.png" 
+              src="../icons-core/ico-go4.png" 
               alt="About Us icon"
             >
             <span>About Us</span>
@@ -541,7 +544,7 @@ CREATED: January 2026
             role="menuitem"
           >
             <img 
-              src="/icons-core/ico-max.jpg" 
+              src="../icons-core/ico-max.jpg" 
               alt="Security icon"
             >
             <span>Security</span>
@@ -554,7 +557,7 @@ CREATED: January 2026
             role="menuitem"
           >
             <img 
-              src="/icons-core/ico-hgj.gif" 
+              src="../icons-core/ico-hgj.gif" 
               alt="Help Grandpa John icon"
             >
             <span>Help Grandpa John</span>
@@ -577,11 +580,11 @@ CREATED: January 2026
     /*
     ------------------------------------------------------------------------
     ICON URL CONFIGURATION
-    All icons loaded from local /icons-core/ folder
-    (Synced from GitHub: gpajohnsstories/gpakids/icons-core/)
+    All icons loaded from ../icons-core/ folder (relative path)
+    When copied to GitHub: gpajohnsstories/gpakids/html-files/icons-core/
     ------------------------------------------------------------------------
     */
-    const ICON_BASE_URL = '/icons-core/';
+    const ICON_BASE_URL = '../icons-core/';
     
     // Icon filenames for reference (used in HTML above):
     // ico-bdh.jpg = Buddy Help + Guide menu
