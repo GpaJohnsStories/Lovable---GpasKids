@@ -1,97 +1,43 @@
-# Welcome to your Lovable project
-
-## Project info
-
-**URL**: https://lovable.dev/projects/37a1286c-a0bf-481b-8daa-ca6740409270
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/37a1286c-a0bf-481b-8daa-ca6740409270) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/37a1286c-a0bf-481b-8daa-ca6740409270) and click on Share -> Publish.
-
-## Deploying to GoDaddy Shared Hosting
-
-To deploy this React app to GoDaddy shared hosting:
-
-1. **Build the production version:**
-   ```sh
-   npm run build
-   ```
-
-2. **Create deployment zip:**
-   - Navigate to the `dist` folder created by the build
-   - Select ALL contents inside the `dist` folder (not the folder itself)
-   - Create a zip file containing all these files
-   - The .htaccess file will be included automatically for proper routing
-
-3. **Upload to GoDaddy:**
-   - Log into your GoDaddy cPanel
-   - Go to File Manager
-   - Navigate to your domain's public_html folder
-   - Upload and extract the zip file
-   - Your React app should now be live!
-
-**Important:** Make sure your Supabase project allows your GoDaddy domain in CORS settings.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+New GpasSites Design Rules
+GENERAL RULES – Updated: 1/5/2026
+Public and admin sites share no components  
+Public headers, and accessibility tools MUST use iframes —
+Example:
+<iframe src="kids-menu-header.html"></iframe>  
+Public footers and static text blocks MUST use fetch + innerHTML —
+Example:  
+ fetch("kids-footer.html")
+.then(r => r.text())
+.then(html => footer.innerHTML = html);
+Story cards and product cards are site‑specific  
+Frequently used pages may use hard‑coded text for performance
+All future coding will be with only html and javascript, there will be no external css, tsx or ts files created. Styling must be done using inline <style> blocks inside each HTML file.
+Any section that is reusable in different pages should be created as stand alone and then loaded whenever it is needed. This way one change to any of these reusable sections will change all pages whenever they are loaded.
+These reusable sections include, but may also include others as we think of them…
+kids-menu-header.html
+kids-footer.html
+super-av.html
+(kids-break, high-contrast, and page-top) all of these 3 functions contained in one floating semi-transparent vertical box on the right side of the screen.
+Each recreated website file will contain these sections, in this order to provide consistency, readability and long-term maintainability…
+a - <head></head>
+b - <style></style>
+c - <body></body>
+d - <script></script>
+Each html file must be HEAVILY documented using clear, descriptive comments to explain what each function or group of codes is doing. Comments MUST also be used to clearly mark major sections, webtext placement, anchors, and reusable blocks to make it easy to search, understand, and maintain. This especially includes placement of webtext codes and anchors.
+All recreated html pages must use the same colors and ui design as the original tsx file.
+All webtext boxes and stories will be stored in github repos. I will give you the api keys and directory structure when needed.
+Supabase will be retained for the story table with its indexes. Once all webtext and stories are moved to github, the content field from the stories table will be deleted. Other current supabase tables may either be migrated to github, left as is or hard coded. This will be decided and the work done on a web page by page basis by Grandpa John.
+All of gpas websites will use 4 fonts only -- Kalam for fun, Lexend for Titles, Georgia for Stories and Gloria Hallelujah, cursive; color: #0B3D91 only for grandpa john's personal notes and signature.
+ALL Story files will be reformatted and migrated by Grandpa John to PDF files using MS Word to format and embed any photos and to format fonts, paragraphs, titles, etc. The story will then be uploaded as a full, print-ready PDF that includes fonts, etc. to proper github directory using the 7 digit code stored in the supabase story index.
+ALL Webtext that is NOT hardcoded into a page will be reformatted and migrated by Grandpa John to HTML files using a new admin tool taken from super-text to create clean html for the entire box, including titles, photo links, etc. These will be stored in their own directories on github with a 7 digit code similar to what is being used now.
+No inline junk
+No nested spans everywhere
+No mystery classes
+No hidden scripts
+All icons will be migrated by Grandpa John from supabase to github where they will be separated into 2 directories -- site code/icons-core/ or site code/icons-other/ and all file names will begin with "ICO", none with "!CO". Each website, kids, faith, shop, admin, will have its own icon directories so if an icon is used in more than one site, it will be in github more than once.
+All buttons and labels are to be 3d. Buttons are to be pill shaped with rounded ends. Labels are to be square or rectangle with only slightly rounded corners.
+SPECIFIC GPASKIDS SITE RULES
+FIRST — Recreate the gpaskids title/menu bar as kids-menu-header.html, including the vertical menu
+THEN, when #1 is complete, recreate the gpaskids footer bar as kids-footer.html.
+THEN, when #2 is complete, recreate the home or index file as kids-home.html (I will be using specific directory and file names for the url's instead of relying on default of index.html
+Except for story cards, replace all webtext with hard-coded text within the html file.
